@@ -15,6 +15,7 @@ import {
   BsFileEarmarkWord,
   BsDownload,
 } from "react-icons/bs";
+import { ImFileExcel } from "react-icons/im";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,7 +24,13 @@ import { Oval } from "react-loader-spinner";
 
 import axiosInstance, { del } from "@/app/utils/axiosMiddleware";
 
-const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpen,setIsMenuOpen }) => {
+const TableWithPagination = ({
+  data,
+  defaultItemsPerPage,
+  fetchReoprts,
+  isMenuOpen,
+  setIsMenuOpen,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
   const [totalPages, setTotalPages] = useState(0);
@@ -36,18 +43,21 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
   const [isOpen, setIsOpen] = useState(null);
   const [reportid, setReportid] = useState();
   const [reporttepname, setReportTepname] = useState();
+  const [isCIDownloading, setIsCIDownloading] = useState(false);
+  const [isCIXLDownloading, setIsCIXLDownloading] = useState(false);
   const router = useRouter();
 
   const ActionMenu = ({ item }) => {
-    const isGRIReport = item.report_type === "GRI Report: In accordance With" || item.report_type === "GRI Report: With Reference to";
-  
+    const isGRIReport =
+      item.report_type === "GRI Report: In accordance With" ||
+      item.report_type === "GRI Report: With Reference to";
     return (
       <div className="absolute bg-white shadow-lg rounded-lg py-2 mt-5 w-[211px] z-10 right-8">
         <button
-          className={`flex items-center p-2 w-full text-left   ${isGRIReport ? 'text-[#d1d5db]' : 'text-[#344054] gradient-sky-blue'}`}
+          className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
           onClick={() => {
             if (isGRIReport) {
-              // handleESGDownloaddocx()
+              handleDownloadESGpdf(item.id, item.name, false);
             } else {
               handleDownloadpdf(item.id, item.name);
             }
@@ -63,13 +73,15 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               strokeWidthSecondary={2}
             />
           ) : (
-            <BsFileEarmarkPdf className="mr-2" />
+            <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
           )}
           Download Report PDF
         </button>
-  
+
         <button
-          className={`flex items-center p-2 w-full text-left   ${isGRIReport ? 'text-[#d1d5db]' : 'text-[#344054] gradient-sky-blue'}`}
+          className={`flex items-center p-2 w-full text-left   ${
+            isGRIReport ? "text-[#d1d5db]" : "text-[#344054] gradient-sky-blue"
+          }`}
           onClick={() => {
             if (isGRIReport) {
               // handleESGDownloaddocx()
@@ -88,26 +100,63 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               strokeWidthSecondary={2}
             />
           ) : (
-            <BsFileEarmarkWord className="mr-2" />
+            <BsFileEarmarkWord className="mr-2 w-4 h-4" />
           )}
           Download Report Word
         </button>
-  
+
         {/* Conditional Rendering for Additional GRI Options */}
         {isGRIReport && (
           <>
-            <button className="flex items-center p-2 w-full text-left h text-[#d1d5db]">
-              <BsDownload className="mr-2 text-[#d1d5db]" /> Download Content Index
+            <button
+              className={
+                "flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"
+              }
+              onClick={() => handleDownloadESGpdf(item.id, item.name, true)}
+            >
+              {isCIDownloading ? (
+                <Oval
+                  height={20}
+                  width={20}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              ) : (
+                <BsFileEarmarkPdf className="mr-2 text-[#344054] w-4 h-4" />
+              )}
+              Download Content Index PDF
+            </button>
+            <button
+              className={
+                "flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"
+              }
+              onClick={() => handleDownloadExcel(item.id, item.name)}
+            >
+              {isCIXLDownloading ? (
+                <Oval
+                  height={20}
+                  width={20}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              ) : (
+                <ImFileExcel className="mr-2 text-[#344054] w-4 h-4" />
+              )}
+              Download Content Index Excel
             </button>
             <button
               onClick={() => console.log("Notify GRI")}
               className="flex items-center p-2 w-full text-left  text-[#d1d5db]"
             >
-              <MdOutlineEmail className="mr-2 text-[#d1d5db]" /> Notify GRI
+              <MdOutlineEmail className="mr-2 text-[#d1d5db] w-4 h-4" /> Notify GRI
             </button>
           </>
         )}
-  
+
         <button
           className={`flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]`}
           onClick={() => {
@@ -135,23 +184,37 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
             }
           }}
         >
-          <AiOutlineEdit className="mr-2" /> Edit Report
+          <AiOutlineEdit className="mr-2 w-4 h-4" /> Edit Report
         </button>
-  
+
         <button
           className="flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]"
           onClick={() =>
             openModal(item.id, item.name, item.report_type, item.start_date)
           }
         >
-          <MdDeleteOutline className="mr-2" /> Delete Report
+          <MdDeleteOutline className="mr-2 w-4 h-4" /> Delete Report
         </button>
       </div>
     );
   };
-  
+
   const toggleMenu = (itemId) => {
-    setIsMenuOpen(isMenuOpen === itemId ? null : itemId);
+    setIsMenuOpen(itemId === isMenuOpen ? null : itemId);
+  };
+
+  let timeoutId;
+
+  const handleMouseEnter = (itemId) => {
+    clearTimeout(timeoutId); // Clear any pending timeout
+    setIsMenuOpen(itemId); // Open the menu immediately
+  };
+
+  const handleMouseLeave = () => {
+    // Add a delay before hiding the menu
+    timeoutId = setTimeout(() => {
+      setIsMenuOpen(null);
+    }, 500); // Adjust delay as needed
   };
 
   const togglePopup = (itemId, itemName) => {
@@ -366,6 +429,105 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       Authorization: "Bearer " + token,
     },
   };
+
+  const handleDownloadESGpdf = async (id, name, contentIndex) => {
+    if (contentIndex) {
+      setIsCIDownloading(true);
+    } else {
+      setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
+    }
+
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?content_index=${contentIndex}&download=true`,
+        axiosConfig
+      );
+
+      if (!response.ok) {
+        if (contentIndex) {
+          setIsCIDownloading(false);
+        } else {
+          setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+        }
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute(
+        "download",
+        `${name} ${contentIndex ? " Content Index" : ""}.pdf`
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      if (contentIndex) {
+        setIsCIDownloading(false);
+      } else {
+        setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+      }
+      setIsMenuOpen(false);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+      toast.error("Error downloading the file", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+  const handleDownloadExcel = async (id, name) => {
+    setIsCIXLDownloading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/esg_report/content_index_excel/${id}/?download=true`,
+        axiosConfig
+      );
+
+      if (!response.ok) {
+        setIsCIXLDownloading(false);
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute(
+        "download",
+        `${name} Content Index.xlsx`
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setIsCIXLDownloading(false);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+      toast.error("Error downloading the file", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
+
   const handleDownloadpdf = async (id, name) => {
     // Set loading to true for the specific item
     setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
@@ -419,32 +581,6 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     }
   };
 
-  const handleESGDownloadpdf = async () => {
-    // Set loading to true for the specific item
-    setLoadingById((prevState) => ({ ...prevState, [reportid]: true }));
-
-    try {
-      const response = await fetch(
-        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportid}/?download=true`,
-        axiosConfig
-      );
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = downloadUrl;
-      link.setAttribute("download", `${reporttepname}.pdf`); // Setting the file name dynamically
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading the file:", error);
-    } finally {
-      // Set loading to false for the specific item
-      setLoadingById((prevState) => ({ ...prevState, [reportid]: false }));
-      setIsOpen(null);
-    }
-  };
   const handleESGDownloaddocx = async () => {
     setLoadingById((prevState) => ({ ...prevState, [reportid]: true }));
 
@@ -570,12 +706,20 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.created_by}
                   </td>
-                  <td className="py-3 px-6 relative text-center flex justify-center">
-                    <MdMoreVert
-                      onClick={() => toggleMenu(item.id)}
-                      className="cursor-pointer"
-                    />
-                    {isMenuOpen === item.id && <ActionMenu item={item} />}
+                  <td
+                    className="py-3 px-6 relative text-center flex justify-center"
+                   
+                  >
+                    <MdMoreVert className="cursor-pointer"  onMouseEnter={() => handleMouseEnter(item.id)}
+                    onMouseLeave={handleMouseLeave}/>
+                    {isMenuOpen === item.id && (
+                      <div
+                        onMouseEnter={() => handleMouseEnter(item.id)} // Ensure menu stays open
+                        onMouseLeave={handleMouseLeave} // Allow menu to close
+                      >
+                        <ActionMenu item={item} />
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}

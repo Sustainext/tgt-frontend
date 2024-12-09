@@ -36,64 +36,64 @@ const view_path = 'gri-environment-energy-302-1c-1e-consumed_fuel'
 const client_id = 1
 const user_id = 1
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
-//       EnergyType: {
-//         type: "string",
-//         title: "Energy Type",
-//         tooltiptext: "Indicate type of energy from the drop down",
-//         enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
-//         tooltiptext: "Indicate the type of energy purchased from the drop down"
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      EnergyType: {
+        type: "string",
+        title: "Energy Type",
+        tooltiptext: "Indicate type of energy from the drop down",
+        enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
+        tooltiptext: "Indicate the type of energy purchased from the drop down"
 
-//       },
-//       Source: {
-//         type: "string",
-//         title: "Source",
-//         enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
-//         tooltiptext: "Indicate where the energy comes from"
-//       },
-//       Purpose: {
-//         type: "string",
-//         title: "Purpose",
-//         tooltiptext: "Indicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion "
-//       },
-//       Renewable: {
-//         type: "string",
-//         title: "Renewable/ Non-renewable",
-//         enum: ['Renewable', 'Non-renewable'],
-//         tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
-//       },
+      },
+      Source: {
+        type: "string",
+        title: "Source",
+        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+        tooltiptext: "Indicate where the energy comes from"
+      },
+      Purpose: {
+        type: "string",
+        title: "Purpose",
+        tooltiptext: "Indicate the purpose it's being used for.ex: Furnace Heat Generation, Steam Generation"
+      },
+      Renewable: {
+        type: "string",
+        title: "Renewable/ Non-renewable",
+        enum: ['Renewable', 'Non-renewable'],
+        tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
+      },
 
-//       Quantity: {
-//         type: "string",
-//         title: "Quantity",
-//         tooltiptext: "Indicate the purchased quantity"
-//       },
-//       Unit: {
-//         type: "string",
-//         title: "Unit",
-//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-//         tooltiptext: "Indicate the purchased consumed"
-//       },
-//       AssignTo: {
-//         type: "string",
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//       },
+      Quantity: {
+        type: "string",
+        title: "Quantity",
+        tooltiptext: "Indicate the purchased quantity"
+      },
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+        tooltiptext: "Indicate the purchased consumed"
+      },
+      AssignTo: {
+        type: "string",
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+      },
 
-//       Remove: {
-//         type: "string",
+      Remove: {
+        type: "string",
 
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+      },
+      // Define other properties as needed
+    }
+  }
+};
 
 const uiSchema = {
   items: {
@@ -117,7 +117,7 @@ const uiSchema = {
 
     },
     Purpose: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+      'ui:widget': 'inputWidget', 
       'ui:options': {
         label: false
       },
@@ -306,7 +306,7 @@ const Consumedfuel = ({location, year, month}) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"

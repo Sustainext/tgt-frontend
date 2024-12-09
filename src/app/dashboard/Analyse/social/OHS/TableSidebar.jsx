@@ -20,8 +20,6 @@ const TableSidebar = () => {
       const links = [
         "ep1",
         "ep2",
-        "ep3",
-        "ep4",
       ];
 
       const threshold = 150;
@@ -57,16 +55,9 @@ const TableSidebar = () => {
         },
         {
           id: "ep2",
-          name: "Workers covered by an occupational health and safety management system ",
+          name: "Workers covered by an occupational health and safety management system",
         },
-        {
-          id: "ep3",
-          name: "Work related ill health ",
-        },
-        {
-          id: "ep4",
-          name: "Ill Health ",
-        },
+    
       ].map((link) => (
         <div key={link.id} className="self-stretch justify-end items-center gap-2 inline-flex">
           <a

@@ -456,11 +456,11 @@ const scrollToSection = (sectionRef, sectionId) => {
   <p className={`text-[12px] mb-2 cursor-pointer ${activeSection === 'section13_7' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section13_7Ref, 'section13_7')} >
     13.7. Collective Bargaining 
   </p>
-  <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section13_7_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section13_7_1Ref, 'section13_7_1')} >
+  {/* <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section13_7_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section13_7_1Ref, 'section13_7_1')} >
     13.7.1. Management of Material Topics
-  </p>
+  </p> */}
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section13_7_2' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section13_7_2Ref, 'section13_7_2')} >
-    13.7.2.  Operations and suppliers in which the right to freedom of association and collectie bargaining may be at risk 
+    13.7.1.  Operations and suppliers in which the right to freedom of association and collectie bargaining may be at risk 
   </p>
 
   <p className={`text-[12px] mb-2 cursor-pointer ${activeSection === 'section13_8' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section13_8Ref, 'section13_8')} >

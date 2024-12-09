@@ -162,12 +162,12 @@ const Section11 = ({ section13_3Ref, data }) => {
 
   const supplierHazardousTableData = data["408_1a_408_1b_analyse"]
     ? data["408_1a_408_1b_analyse"][
-        "operation_significant_risk_of_young_workers"
+        "suppliers_significant_risk_of_young_workers"
       ]?data["408_1a_408_1b_analyse"][
-        "operation_significant_risk_of_young_workers"
+        "suppliers_significant_risk_of_young_workers"
       ].length > 0
       ? data["408_1a_408_1b_analyse"][
-          "operation_significant_risk_of_young_workers"
+          "suppliers_significant_risk_of_young_workers"
         ].map((val, index) => {
           return {
             "Suppliers considered to have significant risk of young workers exposed to hazardous work ":

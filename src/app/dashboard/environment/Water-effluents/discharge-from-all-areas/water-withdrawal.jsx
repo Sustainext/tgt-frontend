@@ -42,26 +42,27 @@ const schema = {
         Source: {
         type: "string",
         title: "Source",
-        enum: ['Surface Water', 'Ground water', 'Sea water', 'Municipal water', 'Third party water', 'Other '],
+        enum: ['Surface Water', 'Ground water', 'Sea water', 'Municipal water', 'Third party water', 'Other (please specify)'],
         tooltiptext: "Indicate where the company withdraws water from or Where the company discharges water into.Include (where applicable)the breakdown od water withdrawal and discharge data by: Surface Water; Ground water; Seawater; Produced water Third-party water",
       },
       Watertype: {
         type: "string",
         title: "Water type",
         enum: ['Freshwater (Below or equal to 1000 mg/L Total Dissolved Solids)', 'other water (>1000 mg/L Total Dissolved Solids)'],
-        tooltiptext: "Provide a breakdown of total water withdrawal/discharge  from each of \ the sources by following categories of water: 1) Freshwater: water with concentration of total dissolved solids equal to or below 1,000 mg/L. 2) Other water: Other water constitutes any water that has a concentration of total dissolved solids higher than 1,000 mg/L."
+        tooltiptext: "<p> Provide a breakdown of total water withdrawal/discharge  from each of \ the sources by following categories of water: </p> <p>1) Freshwater: water with concentration of total dissolved solids equal to or below 1,000 mg/L. </p> <p> 2) Otherwater: Other water constitutes any water that has a concentration of total dissolved solids higher than 1,000 mg/L.</p> "
       },
       Unit: {
         type: "string",
         title: "Unit",
         enum: ['Litre', 'Megalitre', 'Cubic meter', 'Kilolitre', 'Million litres  per day'],
-        tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge"
+        tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge.",
+        display:"block",
       },
       Businessoperations: {
         type: "string",
         title: "Business operations",
         enum: ['Upstream operations', 'onsite water usage', 'Downstream operations'],
-        tooltiptext: "Indicate the business operations for which water is withdrawn or discharged Include: Upstream operations - Upstream operations include identifying, extracting, or producing materials. For example, raw material extraction & transportation. Downstream operations - It refer to the final processes in the production and sale of goods, where finished products are created and sold to consumers. For example, logistic and packaging, distribution of product etc. Onsite water usage - For example, in service based companies water is used onsite for cleaning and maintenance, general sanitation etc. "
+        tooltiptext: "<p>Indicate the business operations for which water is withdrawn or discharged </p> <p>Include: Upstream operations - Upstream operations include identifying, extracting, or producing materials. For example, raw material extraction & transportation. </p> <p>Downstream operations - It refer to the final processes in the production and sale of goods, where finished products are created and sold to consumers. For example, logistic and packaging, distribution of product etc.</p> <p>Onsite water usage - For example, in service based companies water is used onsite for cleaning and maintenance, general sanitation etc.  </p> "
       },
 
       withdrawal: {
@@ -302,7 +303,7 @@ const Waterwithdrawal = ({location, year, month}) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"
@@ -329,7 +330,7 @@ const Waterwithdrawal = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="wec3"
                   setFormData={updateFormDatanew}
                 />
               ),

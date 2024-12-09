@@ -32,61 +32,61 @@ const view_path = "gri-environment-water-303-4d-substances_of_concern";
 const client_id = 1;
 const user_id = 1;
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
-//         Discharge: {
-//         type: "string",
-//         title: "Do you discharge any substances of concern",
-//         enum: ['Yes', 'No'],
-//         tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
-//         display:"none",
-//       },
-//       Substanceconcern: {
-//         type: "string",
-//         title: "Substance of concern",
-//         tooltiptext: "Mention the substances of concern for which discharges are treated.In the context of GRI Standard, substances of concern are those that cause irreversible damage to the waterbody,ecosystem, or human health. For example: chemicals, pollutants, heavy metals, contaminants or any toxic substances.",
-//         display:"block",
-//       },
-//       Priority: {
-//         type: "string",
-//         title: "Method used to define priority",
-//         enum: ['international standard', 'authoritative list','others'],
-//         tooltiptext: "Indicate how does the company define the priority substances of concern",
-//         display:"block",
-//       },
-//       Noncompliance: {
-//         type: "string",
-//         title: "No of noncompliance incident",
-//         tooltiptext: "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
-//         display:"block",
-//       },
-//       Approach: {
-//         type: "string",
-//         title: "Approach for setting discharge limits for priority substances of concern",
-//         tooltiptext: "Provide a description of the approach used for setting discharge limits for priority substances of concern.",
-//         display:"block",
-//       },
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+        Discharge: {
+        type: "string",
+        title: "Do you discharge any substances of concern",
+        enum: ['Yes', 'No'],
+        tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
+        display:"none",
+      },
+      Substanceconcern: {
+        type: "string",
+        title: "Substance of concern",
+        tooltiptext: "Mention the substances of concern for which discharges are treated.In the context of GRI Standard, substances of concern are those that cause irreversible damage to the waterbody,ecosystem, or human health. For example: chemicals, pollutants, heavy metals, contaminants or any toxic substances.",
+        display:"block",
+      },
+      Priority: {
+        type: "string",
+        title: "Method used to define priority",
+        enum: ['international standard', 'authoritative list','Other (please specify)'],
+        tooltiptext: "Indicate how does the company define the priority substances of concern",
+        display:"block",
+      },
+      Noncompliance: {
+        type: "string",
+        title: "No. of non-compliance incidents",
+        tooltiptext: "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
+        display:"block",
+      },
+      Approach: {
+        type: "string",
+        title: "Approach for setting discharge limits for priority substances of concern",
+        tooltiptext: "Provide a description of the approach used for setting discharge limits for priority substances of concern.",
+        display:"block",
+      },
 
-//       AssignTo: {
-//         type: "string",
-//         title: "Assign To",
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//         title: "File Upload",
-//       },
-//       Remove: {
-//         type: "string",
-//         title: "Remove",
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+      AssignTo: {
+        type: "string",
+        title: "Assign To",
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+        title: "File Upload",
+      },
+      Remove: {
+        type: "string",
+        title: "Remove",
+      },
+      // Define other properties as needed
+    }
+  }
+};
 
 const uiSchema = {
   items: {
@@ -291,7 +291,7 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"
@@ -318,7 +318,7 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="wec4"
                   setFormData={updateFormDatanew}
                 />
               ),

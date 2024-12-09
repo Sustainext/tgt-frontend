@@ -1,51 +1,80 @@
-import React from 'react';
+const Table1 = ({ data }) => {
+  // Define table headers
+  const columns = [
+    {
+      mainHeader: "Gender",
+      subHeaders: ["Male", "Female", "Non-Binary"],
+    },
+    {
+      mainHeader: "Age Group",
+      subHeaders: ["< 30 years", "30-50 years", "> 50 years"],
+    },
+    {
+      mainHeader: "Diversity Groups",
+      subHeaders: ["Minority group", "Vulnerable Communities"],
+    },
+  ];
 
-const Table1 = ({ data, columns }) => {
-  // Check if all rows are empty objects
-  const isEmptyData = data.every(row => Object.keys(row).length === 0);
+  console.log("Rendering Table with Data:", data);
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full border-collapse block md:table w-full rounded-lg overflow-hidden">
-        <thead className="block md:table-header-group border">
-          <tr className="border border-gray-300 md:table-row gradient-background">
-            {columns.map((column, index) => (
+      <table    className="min-w-full w-full rounded-lg border-x border-t  border-gray-300"
+        style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+        <thead className="block md:table-header-group ">
+          <tr className="md:table-row gradient-background">
+            {/* Main headers */}
+            {columns.map((header, index) => (
               <th
-                key={column}
-                className={`px-2 py-3  text-[#727272] block md:table-cell text-[12px] ${
-                  index === 0 ? 'text-left' : 'text-center'
+                key={index}
+                colSpan={header.subHeaders.length}
+                className={`px-2 py-3 text-[#727272] block md:table-cell text-center text-[12px]  ${
+                  index === 0 ? "" : "border-l"
                 }`}
+              
               >
-                {column}
+                {header.mainHeader}
               </th>
             ))}
           </tr>
+          <tr className="border border-gray-300 md:table-row gradient-background">
+            {/* Sub-headers */}
+            {columns.flatMap((header) =>
+              header.subHeaders.map((subHeader, index) => (
+                <th
+                  key={index}
+                  className={`px-2 py-3 text-[#727272] block md:table-cell text-center text-[12px] border-t  border-l
+                  `}
+                
+                >
+                  {subHeader}
+                </th>
+              ))
+            )}
+          </tr>
         </thead>
         <tbody className="block md:table-row-group">
-          {data.length === 0 || isEmptyData ? (
-            <tr className="border border-gray-300 md:table-row">
-              <td
-                colSpan={columns.length}
-                className="text-center p-2 block md:table-cell text-[12px] font-normal text-slate-500 "
-              >
-                No data available
-              </td>
-            </tr>
-          ) : (
+          {data.length > 0 ? (
             data.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border border-gray-300 md:table-row">
-                {columns.map((column, colIndex) => (
+              <tr key={rowIndex} className=" md:table-row">
+                {row.map((cell, cellIndex) => (
                   <td
-                    key={colIndex}
-                    className={`p-2 block md:table-cell ${
-                      colIndex === 0 ? 'text-left font-normal text-slate-500' : 'text-center font-normal text-slate-500'
-                    } text-[12px]`}
+                    key={cellIndex}
+                    className={`p-2 block md:table-cell text-center font-normal text-slate-500 text-[12px] border-b ${
+                      cellIndex === 0 ? "" : "border-l"
+                    }`}
                   >
-                    {row[column] || 'N/A'}
+                    {cell !== undefined ? cell : "N/A"}
                   </td>
                 ))}
               </tr>
             ))
+          ) : (
+            <tr>
+              <td colSpan="8" className="text-center p-4 text-slate-500 text-[12px] border-b border-t border-gray-300 ">
+                No data available
+              </td>
+            </tr>
           )}
         </tbody>
       </table>

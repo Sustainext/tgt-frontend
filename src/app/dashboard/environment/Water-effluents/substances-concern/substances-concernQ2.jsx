@@ -265,7 +265,7 @@ const SubstancesconcernQ2 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"
@@ -292,7 +292,7 @@ const SubstancesconcernQ2 = ({ selectedOrg, year, selectedCorp }) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="wec5"
                   setFormData={updateFormDatanew}
                 />
               ),

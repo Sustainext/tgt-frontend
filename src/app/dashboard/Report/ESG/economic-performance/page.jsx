@@ -477,7 +477,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_6_1Ref, "section11_6_1")}
             >
-              11.6.1. Training on anti-corruption
+              11.6.1. Management of Material Topic
             </p>
           </div>
         </div>

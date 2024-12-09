@@ -51,7 +51,7 @@ const schema = {
       Materialsused: {
         type: "string",
         title: "Materials used",
-        enum: ['Aluminium batteries', 'Cobalt','Copper','Gold','iron','Lithium','Lubricants','Oil','Plastic','Solvents','Steel','Tantalum','Tin','Tungsten','Tires','Uranium','Zinc','Others'],
+        enum: ['Aluminium','Batteries', 'Cobalt','Copper','Gold','iron','Lithium','Lubricants','Oil','Plastic','Solvents','Steel','Tantalum','Tin','Tungsten','Tires','Uranium','Zinc','Other (please specify)'],
         tooltiptext: "What materials does the compa use to produce its goods or services?",
         display: "block",
       },
@@ -311,7 +311,7 @@ const NonRenewable = ({location, year, month}) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"

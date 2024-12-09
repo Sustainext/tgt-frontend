@@ -1,13 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Socialheader2 from "../../../socialheader2";
 import Screen1 from "./Screen1";
-
-const Section1 = () => {
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+const DiversityBoard = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -38,6 +39,7 @@ const Section1 = () => {
 
   return (
     <>
+    <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
@@ -46,7 +48,7 @@ const Section1 = () => {
               <div className="flex">
                          <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                    Diversity of the Board
+                  Diversity and Equal Opportunity
                   </p>
                 </div>
               </div>
@@ -62,7 +64,7 @@ const Section1 = () => {
               </button>
               <button
                 className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("8")}
+                onClick={() => toggleDrawer("51")}
               >
                 SDG 5
               </button>
@@ -78,8 +80,7 @@ const Section1 = () => {
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Percentage of employees receiving regular performance and career
-            development reviews (1/2)
+          Diversity of governance bodies 
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -95,20 +96,22 @@ const Section1 = () => {
                         </ReactTooltip> */}
           </h6>
         </div>
-        <div
-          className={`${
-            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
+       <div
+           className={`${
+            isOpen
+              ? "translate-x-[15%] block top-16"
+              : "translate-x-[120%] hidden top-16"
           }
-fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
+fixed right-[51px]  w-[360px] h-[92%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
-            data.map((program) => (
-              <>
+            data.map((program, index) => (
+              <div key={index}>
+                {/* Header */}
                 <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
-                  <div className="ml-2">{program.header}</div>
-
-                  <div className="ml-2 float-right">
+                  <div className="ml-2 h-[38px]">{program.header}</div>
+                  <div className="ml-2 float-right ">
                     <h5
                       className="text-[#727272] text-[17px] font-bold cursor-pointer"
                       onClick={toggleDrawerclose}
@@ -117,8 +120,23 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                     </h5>
                   </div>
                 </div>
-                <div> {program.data}</div>
-              </>
+
+                {/* Data Content */}
+                <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
+
+                {/* Footer (Learn more link) */}
+                <div className="pt-2 pb-4 ml-4">
+                  <a
+                    className="text-[14px] text-[#2196F3] pt-1 inline-flex"
+                    href={program.link}
+                    target="_blank"
+                  >
+                    Learn more <MdChevronRight className="text-lg pt-1" />
+                  </a>
+                </div>
+              </div>
             ))}
         </div>
       </div>
@@ -136,4 +154,4 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
     </>
   );
 };
-export default Section1;
+export default DiversityBoard;

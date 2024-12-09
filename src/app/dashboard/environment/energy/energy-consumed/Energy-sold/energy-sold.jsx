@@ -133,7 +133,7 @@ const uiSchema = {
 
     },
     Nameofentity: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+      'ui:widget': 'inputWidget', 
       'ui:options': {
         label: false
       },
@@ -322,7 +322,7 @@ const Energysold = ({location, year, month}) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"
@@ -349,7 +349,7 @@ const Energysold = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="ec3"
                   setFormData={updateFormDatanew}
                 />
               ),

@@ -5,23 +5,22 @@ const DynamicTable2 = ({ data, columns }) => {
   const isEmptyData = data.every(row => Object.keys(row).length === 0);
 
   return (
-    <div className="overflow-x-auto">
-    <table className="min-w-full border-collapse block md:table w-full rounded-lg overflow-hidden">
-      <thead className="block md:table-header-group border">
-        <tr className="border border-gray-300 md:table-row gradient-background">
+    <div className="">
+    <table className="min-w-full w-full rounded-lg border border-gray-300 "style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+           <thead className="block md:table-header-group ">
+             <tr className="md:table-row gradient-background ">
           {columns.map((column, index) => (
             <th
               key={column}
-              className={`px-2 py-3  text-[#727272] block md:table-cell text-[12px] ${
-                column === 'Percentage of suppliers screened using social criteria' ? 'text-center' : 'text-left'
-              }`}
+              className={`px-2 py-3  text-[#727272] block md:table-cell text-[12px] border-b border-gray-300 text-center
+              `}
             >
               {column}
             </th>
           ))}
         </tr>
       </thead>
-      <tbody className="block md:table-row-group">
+      <tbody className="block md:table-row-group ">
         {data.length === 0 || isEmptyData ? (
           <tr className="border border-gray-300 md:table-row">
             <td
@@ -41,7 +40,9 @@ const DynamicTable2 = ({ data, columns }) => {
                     colIndex === 0 ? 'text-center font-normal text-slate-500' : 'text-center font-normal text-slate-500'
                   } text-[12px]`}
                 >
-                      {row[column] !== undefined && row[column] !== null ? `${row[column]}%` : 'N/A'}
+                     {row[column] !== undefined && row[column] !== null 
+                      ? colIndex === 0 ? row[column] : `${row[column]}%`
+                      : 'N/A'}
                 </td>
               ))}
             </tr>

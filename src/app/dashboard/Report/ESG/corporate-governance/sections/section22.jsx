@@ -11,7 +11,7 @@ const Section22=({section9_6_3Ref,data})=>{
         <div id="section9_6_3" ref={section9_6_3Ref}>
 
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-9.6.3 Anti-trust, Anti-competitive Behavior, Monopoly Practices
+9.6.2 Anti-trust, Anti-competitive Behavior, Monopoly Practices
 </h3>
 <p className="text-sm mb-4">{data["206_1a"]?data["206_1a"].legal_actions_anti_competitive_behavior:"No data available"}</p>
 

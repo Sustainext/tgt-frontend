@@ -18,6 +18,8 @@ import {
   setSelectedRows,
   updateSelectedRow,
   toggleSelectAll,
+  setFocusedField,
+  clearFocusedField,
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AssignEmissionModal from "./assignEmissionModal";
@@ -60,7 +62,41 @@ const EmissionWidget = React.memo(
     const isFetching = useRef(false);
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
-    const quantityRef = useRef(null);
+    const quantity1Ref = useRef(null);
+    const quantity2Ref = useRef(null);
+    const focusedField = useSelector((state) => state.emissions.focusedField);
+
+    // Effect to handle focus based on Redux state
+    useEffect(() => {
+      if (focusedField.rowId === rowId && focusedField.field) {
+        if (focusedField.field === "quantity1" && quantity1Ref.current) {
+          quantity1Ref.current.focus();
+        } else if (focusedField.field === "quantity2" && quantity2Ref.current) {
+          quantity2Ref.current.focus();
+        }
+      }
+    }, [focusedField, rowId]);
+
+    const handleFocus = (fieldName) => {
+      dispatch(
+        setFocusedField({
+          rowId,
+          field: fieldName,
+        })
+      );
+    };
+
+    const handleBlur = (e) => {
+      const relatedTarget = e.relatedTarget;
+      const isMovingWithinWidget =
+        relatedTarget &&
+        (relatedTarget === quantity1Ref.current ||
+          relatedTarget === quantity2Ref.current);
+
+      if (!isMovingWithinWidget) {
+        dispatch(clearFocusedField());
+      }
+    };
 
     // Assign To
     const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
@@ -184,7 +220,13 @@ const EmissionWidget = React.memo(
       fetchBaseCategories();
     }, []);
 
+    // Create cache key function
+    const getCacheKey = (subcategory, region, year) => {
+      return `${subcategory}_${region}_${year}`;
+    };
+
     let wildcard = false;
+
     const fetchActivities = useCallback(
       async (page = 1, customFetchExecuted = false) => {
         if (isFetching.current) return;
@@ -193,15 +235,22 @@ const EmissionWidget = React.memo(
         const updateCacheAndActivities = (data, type = "default") => {
           setActivities((prevData) => {
             const updatedData = [...prevData, ...data];
-            updateCache(subcategory, updatedData);
+            // Update cache with composite key
+            const cacheKey = getCacheKey(subcategory, countryCode, year);
+            updateCache(cacheKey, updatedData);
             return updatedData;
           });
         };
 
-        // Check cache first
-        if (activityCache[subcategory]) {
-          console.log("Using cached activities", activityCache[subcategory]);
-          setActivities(activityCache[subcategory]);
+        // Check cache with composite key
+        const cacheKey = getCacheKey(subcategory, countryCode, year);
+        if (activityCache[cacheKey]) {
+          console.log(
+            "Using cached activities for",
+            cacheKey,
+            activityCache[cacheKey]
+          );
+          setActivities(activityCache[cacheKey]);
           isFetching.current = false;
           return;
         }
@@ -591,14 +640,23 @@ const EmissionWidget = React.memo(
     }, []);
 
     //file uplod code///
-    const [fileName, setFileName] = useState(value.file?.name ?? ""); // Fallback to empty string instead of null
+    const [fileName, setFileName] = useState(value.file?.name ?? "");
     const [showModal, setShowModal] = useState(false);
-    const [previewData, setPreviewData] = useState(value.file?.url ?? ""); // Fallback to empty string
-    const [fileType, setFileType] = useState(value.file?.type ?? ""); // Fallback to empty string
-    const [fileSize, setFileSize] = useState(value.file?.size ?? 0); // Fallback to 0
+    const [previewData, setPreviewData] = useState(value.file?.url ?? "");
+    const [fileType, setFileType] = useState(value.file?.type ?? "");
+    const [fileSize, setFileSize] = useState(value.file?.size ?? 0);
     const [uploadDateTime, setUploadDateTime] = useState(
       value.file?.uploadDateTime ?? ""
-    ); // Fallback to empty string
+    );
+    const [uploadedBy, setUploadedBy] = useState(value.file?.uploadedBy ?? "");
+    const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
+
+    useEffect(() => {
+      const storedEmail = localStorage.getItem("userEmail");
+      if (storedEmail) {
+        setLoggedInUserEmail(storedEmail);
+      }
+    });
 
     const uploadFileToAzure = async (file, newFileName) => {
       const arrayBuffer = await file.arrayBuffer();
@@ -642,54 +700,11 @@ const EmissionWidget = React.memo(
         setFileType(value.file?.type ?? "");
         setFileSize(value.file?.size ?? "");
         setUploadDateTime(value.file?.uploadDateTime ?? "");
+        setUploadedBy(value.file?.uploadedBy ?? "");
       } else {
         console.log("value prop is missing some data, not updating state");
       }
     }, [value]);
-
-    // const handleChange = async (event) => {
-    //   const selectedFile = event.target.files[0];
-
-    //   if (selectedFile) {
-    //     const newFileName = selectedFile.name;
-    //     const fileType = selectedFile.type;
-    //     const fileSize = selectedFile.size;
-    //     const uploadDateTime = new Date().toLocaleString();
-
-    //     console.log("Selected file details:", {
-    //       newFileName,
-    //       fileType,
-    //       fileSize,
-    //       uploadDateTime,
-    //     });
-
-    //     setFileName(newFileName); // Set the file name
-
-    //     const uploadUrl = await uploadFileToAzure(selectedFile, newFileName);
-
-    //     if (uploadUrl) {
-    //       const reader = new FileReader();
-    //       reader.onloadend = () => {
-    //         setPreviewData(reader.result); // For preview
-    //       };
-    //       reader.readAsDataURL(selectedFile);
-
-    //       onChange({
-    //         type: "file",
-    // value: uploadUrl,
-    // name: newFileName,
-    // url: uploadUrl,
-    // filetype: fileType,
-    // size: fileSize,
-    // uploadDateTime,
-    //       });
-
-    //       console.log("File uploaded successfully:", uploadUrl);
-    //     } else {
-    //       console.error("File upload failed");
-    //     }
-    //   }
-    // };
 
     const handleChange = async (event) => {
       const selectedFile = event.target.files[0];
@@ -728,6 +743,7 @@ const EmissionWidget = React.memo(
               type: fileType,
               size: fileSize,
               uploadDateTime,
+              uploadedBy: loggedInUserEmail,
             },
           });
           setFileType(fileType);
@@ -900,7 +916,9 @@ const EmissionWidget = React.memo(
                       : ""
                   }
 `}
-                  disabled={rowType === "assigned"}
+                  disabled={["assigned", "calculated", "approved"].includes(
+                    rowType
+                  )}
                 >
                   <option className="emissionscopc">Select Category</option>
                   {baseCategories.map((categoryName, index) => (
@@ -921,7 +939,9 @@ const EmissionWidget = React.memo(
                       ? "border-b border-zinc-800"
                       : ""
                   }`}
-                  disabled={rowType === "assigned"}
+                  disabled={["assigned", "calculated", "approved"].includes(
+                    rowType
+                  )}
                 >
                   <option className="emissionscopc">Select Sub-Category</option>
                   {subcategories.map((sub, index) => (
@@ -959,7 +979,9 @@ const EmissionWidget = React.memo(
                     onChange={(e) => setActivitySearch(e.target.value)}
                     onFocus={toggleDropdown}
                     className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 `}
-                    disabled={rowType === "assigned"}
+                    disabled={["assigned", "calculated", "approved"].includes(
+                      rowType
+                    )}
                   />
 
                   {isDropdownActive && (
@@ -973,7 +995,9 @@ const EmissionWidget = React.memo(
                         setActivitySearch("");
                       }}
                       className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[810px]`}
-                      disabled={rowType === "assigned"}
+                      disabled={["assigned", "calculated", "approved"].includes(
+                        rowType
+                      )}
                     >
                       <option value="" className="px-1">
                         {isFetching.current
@@ -1012,15 +1036,17 @@ const EmissionWidget = React.memo(
                     <>
                       <div className="flex justify-end ">
                         <input
-                          ref={quantityRef}
+                          ref={quantity1Ref}
                           type="number"
                           value={quantity}
                           onChange={handleQuantityChange}
+                          onFocus={() => handleFocus("quantity1")}
+                          onBlur={handleBlur}
                           placeholder="Enter Value"
                           className="focus:border-blue-500 focus:outline-none text-[12px] w-[7vw] text-right pe-1"
                           step="1"
                           min="0"
-                          disabled={rowType === "assigned"}
+                          disabled={["assigned", "approved"].includes(rowType)}
                         />
                         <select
                           value={unit}
@@ -1030,7 +1056,7 @@ const EmissionWidget = React.memo(
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
                           }`}
-                          disabled={rowType === "assigned"}
+                          disabled={["assigned", "approved"].includes(rowType)}
                         >
                           <option value="">Unit</option>
                           {units.map((unit, index) => (
@@ -1042,15 +1068,17 @@ const EmissionWidget = React.memo(
                       </div>
                       <div className="flex justify-end">
                         <input
-                          ref={quantityRef}
+                          ref={quantity2Ref}
                           type="number"
                           value={quantity2}
                           onChange={handleQuantity2Change}
+                          onFocus={() => handleFocus("quantity2")}
+                          onBlur={handleBlur}
                           placeholder="Enter Value"
                           className="focus:border-blue-500 focus:outline-none text-[12px] w-[6vw] text-right pe-1"
                           step="1"
                           min="0"
-                          disabled={rowType === "assigned"}
+                          disabled={["assigned", "approved"].includes(rowType)}
                         />
                         <select
                           value={unit2}
@@ -1060,7 +1088,7 @@ const EmissionWidget = React.memo(
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
                           }`}
-                          disabled={rowType === "assigned"}
+                          disabled={["assigned", "approved"].includes(rowType)}
                         >
                           <option value="">Unit</option>
                           {units2.map((unit, index) => (
@@ -1074,15 +1102,17 @@ const EmissionWidget = React.memo(
                   ) : (
                     <div className="flex justify-end">
                       <input
-                        ref={quantityRef}
+                        ref={quantity1Ref}
                         type="number"
                         value={quantity}
                         onChange={handleQuantityChange}
+                        onFocus={() => handleFocus("quantity1")}
+                        onBlur={handleBlur}
                         placeholder="Enter Value"
                         className="focus:border-blue-500 focus:outline-none text-[12px] w-[19.7vw] text-right pe-1"
                         step="1"
                         min="0"
-                        disabled={rowType === "assigned"}
+                        disabled={["assigned", "approved"].includes(rowType)}
                       />
                       <select
                         value={unit}
@@ -1092,7 +1122,7 @@ const EmissionWidget = React.memo(
                             ? "bg-white text-blue-500 "
                             : "bg-blue-500 text-white hover:bg-blue-600"
                         }`}
-                        disabled={rowType === "assigned"}
+                        disabled={["assigned", "approved"].includes(rowType)}
                       >
                         <option value="">Unit</option>
                         {units.map((unit, index) => (
@@ -1290,6 +1320,15 @@ const EmissionWidget = React.memo(
                                 </h2>
                                 <h2 className="text-[14px] leading-relaxed tracking-wide">
                                   {uploadDateTime}
+                                </h2>
+                              </div>
+                              <div className="mb-4">
+                                <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                                  UPLOADED BY
+                                </h2>
+                                <h2 className="text-[14px] leading-relaxed tracking-wide">
+                                  {uploadedBy.replace(/^"|"$/g, "") ||
+                                    "Unknown"}
                                 </h2>
                               </div>
                             </div>

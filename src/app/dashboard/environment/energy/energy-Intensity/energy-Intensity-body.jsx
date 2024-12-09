@@ -84,10 +84,9 @@ const Energyintensitybody = ({location, year, month,setLocationMessage, setYearM
     <>
       <div className="mx-3">
       <AccordionItem
-          title="Energy consumption outside organization"
-          tooltiptext={`This section is dedicated to the calculation of Energy Intensity Ratios based on organizational metrics. These ratios quantify the energy
-          demand per unit of activity, output, or any other organization-specific metric.`}
-          sdg={['GRI 302-3d']}
+          title="Energy intensity"
+          tooltiptext={`This section is dedicated to the calculation of Energy Intensity Ratios based on organizational metrics. These ratios quantify the energy demand per unit of activity, output, or any other organization-specific metric.`}
+          sdg={['GRI 302-3a','GRI 302-3b','GRI 302-3c','GRI 302-3d']}
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}

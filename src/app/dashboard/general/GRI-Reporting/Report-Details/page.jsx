@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import React, { useState, useEffect, useRef } from "react";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,6 +11,7 @@ import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen4 from "./screen4";
+import { Oval } from "react-loader-spinner";
 const ReportDetails = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
@@ -20,7 +21,11 @@ const ReportDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-
+  const screen1Ref = useRef(null);
+  const screen2Ref = useRef(null);
+  const screen3Ref = useRef(null);
+  const screen4Ref = useRef(null);
+  const [loopen, setLoOpen] = useState(false);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -40,17 +45,50 @@ const ReportDetails = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const handleSubmit = async () => {
+    LoaderOpen(); // Show loader
+    try {
+      const promises = [];
+      if (screen1Ref.current) {
+        promises.push(screen1Ref.current());
+      }
+      if (screen2Ref.current) {
+        promises.push(screen2Ref.current());
+      }
+      if (screen3Ref.current) {
+        promises.push(screen3Ref.current());
+      }
+      if (screen4Ref.current) {
+        promises.push(screen4Ref.current());
+      }
 
+      await Promise.all(promises); // Wait for all submissions to complete
+
+      toast.success("Data submitted successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      toast.error("Failed to submit data. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } finally {
+      LoaderClose(); // Hide loader
+    }
+  };
+  const LoaderOpen = () => setLoOpen(true); // Show loader
+  const LoaderClose = () => setLoOpen(false); // Hide loader
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
+            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">General</p>
               <div className="flex">
-                         <div className="h-[29px]">
+                <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
                     Report Details
                   </p>
@@ -70,7 +108,7 @@ const ReportDetails = () => {
           </div>
         </div>
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Reporting period, Frequency and Contact Point
             <MdInfoOutline
@@ -96,16 +134,20 @@ const ReportDetails = () => {
         </div>
         <div
           className={`${
-            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
-          } fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+            isOpen
+              ? "translate-x-[15%] block top-16"
+              : "translate-x-[120%] hidden top-16"
+          }
+fixed right-[51px]  w-[360px] h-[92%] bg-white  rounded-md
+transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
-            data.map((program) => (
-              <>
+            data.map((program, index) => (
+              <div key={index}>
+                {/* Header */}
                 <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
-                  <div className="ml-2">{program.header}</div>
-
-                  <div className="ml-2 float-right">
+                  <div className="ml-2 h-[38px]">{program.header}</div>
+                  <div className="ml-2 float-right ">
                     <h5
                       className="text-[#727272] text-[17px] font-bold cursor-pointer"
                       onClick={toggleDrawerclose}
@@ -114,8 +156,23 @@ const ReportDetails = () => {
                     </h5>
                   </div>
                 </div>
-                <div> {program.data}</div>
-              </>
+
+                {/* Data Content */}
+                <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
+
+                {/* Footer (Learn more link) */}
+                <div className="pt-2 pb-4 ml-4">
+                  <a
+                    className="text-[14px] text-[#2196F3] pt-1 inline-flex"
+                    href={program.link}
+                    target="_blank"
+                  >
+                    Learn more <MdChevronRight className="text-lg pt-1" />
+                  </a>
+                </div>
+              </div>
             ))}
         </div>
       </div>
@@ -135,6 +192,7 @@ const ReportDetails = () => {
         location={location}
         year={year}
         month={activeMonth}
+        ref={screen1Ref}
       />
 
       <Screen2
@@ -143,6 +201,7 @@ const ReportDetails = () => {
         location={location}
         year={year}
         month={activeMonth}
+        ref={screen2Ref}
       />
 
       <Screen3
@@ -151,14 +210,40 @@ const ReportDetails = () => {
         location={location}
         year={year}
         month={activeMonth}
+        ref={screen3Ref}
       />
-            <Screen4
+      <Screen4
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
+        ref={screen4Ref}
       />
+      <div className="mt-4">
+        <button
+          type="button"
+          className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end mr-1 ${
+            !selectedOrg || !year ? "cursor-not-allowed" : ""
+          }`}
+          onClick={handleSubmit}
+          disabled={!selectedOrg || !year}
+        >
+          Submit
+        </button>
+      </div>
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };

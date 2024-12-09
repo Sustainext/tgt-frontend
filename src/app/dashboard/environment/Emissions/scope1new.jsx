@@ -19,6 +19,7 @@ import {
 } from "@/lib/redux/features/emissionSlice";
 import { toast } from "react-toastify";
 import { debounce } from "lodash";
+import { MdError } from "react-icons/md";
 
 const local_schema = {
   type: "array",
@@ -54,7 +55,16 @@ const local_ui_schema = {
 
 const Scope1 = forwardRef(
   (
-    { location, year, month, successCallback, countryCode, setAccordionOpen },
+    {
+      location,
+      year,
+      month,
+      successCallback,
+      countryCode,
+      setAccordionOpen,
+      dataError,
+      showError,
+    },
     ref
   ) => {
     const dispatch = useDispatch();
@@ -81,17 +91,44 @@ const Scope1 = forwardRef(
       : [];
 
     // useImperativeHandle(ref, () => ({
-    //   updateFormData: () => updateFormData(formData),
+    //   updateFormData: () => {
+    //     const filteredFormData = formData.filter(
+    //       (row) => !["assigned"].includes(row.Emission?.rowType)
+    //     );
+
+    //     if (filteredFormData.length > 0) {
+    //       return updateFormData(filteredFormData);
+    //     }
+
+    //     return Promise.resolve();
+    //   },
     // }));
 
     useImperativeHandle(ref, () => ({
       updateFormData: () => {
-        const filteredFormData = formData.filter(
-          (row) => !["assigned"].includes(row.Emission?.rowType)
-        );
+        // Filter and format the data
+        const formattedData = formData
+          .filter((row) => {
+            // Only filter out assigned rows
+            return !["assigned"].includes(row.Emission?.rowType);
+          })
+          .map((row) => {
+            // Only reorder approved rows to put Emission first
+            if (row.Emission?.rowType === "approved") {
+              const { id, Emission, ...rest } = row;
+              return {
+                Emission,
+                id,
+                ...rest,
+              };
+            }
+            // Return other rows as is
+            return row;
+          });
 
-        if (filteredFormData.length > 0) {
-          return updateFormData(filteredFormData);
+        // Only proceed with update if we have data
+        if (formattedData.length > 0) {
+          return updateFormData(formattedData);
         }
 
         return Promise.resolve();
@@ -202,10 +239,10 @@ const Scope1 = forwardRef(
       [dispatch, location, year, month, successCallback]
     );
 
-    const updateCache = useCallback((subcategory, activities) => {
+    const updateCache = useCallback((cacheKey, activities) => {
       setActivityCache((prevCache) => ({
         ...prevCache,
-        [subcategory]: activities,
+        [cacheKey]: activities,
       }));
     }, []);
 
@@ -410,13 +447,19 @@ const Scope1 = forwardRef(
             }}
           />
         </div>
-        <div>
+        <div className="flex justify-between items-center">
           <button
             className="mt-4 text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
             onClick={handleAddNew}
           >
             + Add new
           </button>
+          {showError && (
+            <div className="text-xs text-red-500 mt-4 flex items-center">
+              <MdError />
+              <span>{dataError}</span>
+            </div>
+          )}
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

@@ -62,7 +62,8 @@ const schema = {
       Wastegenerated: {
         type: "string",
         title: "Waste generated",
-        display:"none",
+        tooltiptext: "Enter the amount of waste generated in the reporting period.",
+        display:"block",
 
       },
 
@@ -281,7 +282,7 @@ const Wastegeneratedeimpact = ({location, year, month}) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"

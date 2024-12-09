@@ -323,7 +323,7 @@ const Purchased = ({ location, year, month }) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"
@@ -350,7 +350,7 @@ const Purchased = ({ location, year, month }) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="ec1"
                   setFormData={updateFormDatanew}
                 />
               ),

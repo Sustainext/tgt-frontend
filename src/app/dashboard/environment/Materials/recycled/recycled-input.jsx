@@ -58,7 +58,7 @@ const schema = {
             Typeofrecycledmaterialused: {
                 type: "string",
                 title: "Type of recycled material used",
-                enum: ['Recycled plastic', 'Recycled metal', 'Recycled paper products', 'Recycled Glass', 'Natural materials', 'Others'],
+                enum: ['Recycled plastic', 'Recycled metal', 'Recycled paper products', 'Recycled Glass', 'Natural materials', 'Other (please specify)'],
                 tooltiptext: "What types of recycled materials does the company use?",
                 display: "block",
             },
@@ -327,7 +327,7 @@ const Recycledinput = ({location, year, month}) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"

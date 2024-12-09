@@ -159,6 +159,7 @@ const MyTask = () => {
           type: file.type,
           size: file.size,
           uploadDateTime: new Date().toLocaleString(),
+          uploadedBy: taskassigndata.assign_to_email,
         },
       };
 
@@ -1137,7 +1138,8 @@ const MyTask = () => {
 
   const [selectedLocation, setSelectedLocation] = useState();
   useEffect(() => {
-    setSelectedLocation(getLocationName(taskassigndata.location));
+    // setSelectedLocation(getLocationName(taskassigndata.location));
+    setSelectedLocation(taskassigndata.task_name.split("-")[0]);
   }, [taskassigndata]);
 
   const validateDecimalPlaces = (value) => {
@@ -1211,7 +1213,7 @@ const MyTask = () => {
             </button>
           </div>
 
-          <div className="p-1 h-[188px]">
+          <div className="p-1 h-[188px] table-scrollbar overflow-y-auto">
             {activeTab === "upcoming" && (
               <div>
                 {tasks.upcoming == "" ? (
@@ -1249,7 +1251,7 @@ const MyTask = () => {
                             <div className="flex justify-between" key={task.id}>
                               <div className="flex cursor-pointer">
                                 <div>
-                                  {task.roles === 2 || task.roles === 3 ? (
+                                  {task.roles === 3 ? (
                                     <FiCircle
                                       sx={{ fontSize: "20px", mt: -0.4 }}
                                       onClick={() => handleCompleted(task.id)}
@@ -1265,7 +1267,7 @@ const MyTask = () => {
                                   )}
                                 </div>
                                 <div className="w-72 truncate text-wrap text-neutral-800 text-[13px] font-normal leading-none ml-3 ">
-                                  {task.roles === 1 ? (
+                                  {task.roles === 1 || task.roles === 2 ? (
                                     <p
                                       className="py-1 cursor-pointer"
                                       onClick={() => {
@@ -1306,7 +1308,7 @@ const MyTask = () => {
                               <div>
                                 <div
                                   className={
-                                    task.roles === 1
+                                    task.roles === 1 || task.roles === 2
                                       ? `w-24 text-neutral-800 text-[13px] font-normal leading-none ml-3 ${
                                           task.task_status === "reject"
                                             ? "bg-[#FE5F54] text-white"
@@ -1315,7 +1317,7 @@ const MyTask = () => {
                                       : "w-24 text-neutral-800 text-[13px] font-normal leading-none ml-3 h-[20px]"
                                   }
                                 >
-                                  {task.roles === 1 ? (
+                                  {task.roles === 1 || task.roles === 2 ? (
                                     <p className="px-2 py-1 text-center text-[12px]">
                                       {task.task_status === "in_progress"
                                         ? "InProgress"
@@ -1343,7 +1345,7 @@ const MyTask = () => {
                                   </p>
                                 </div>
                                 <div className="w-[18px] cursor-pointer ">
-                                  {task.roles === 2 ? (
+                                  {task.roles === 3 ? (
                                     <FiTrash2
                                       sx={{
                                         color: "#0000008F",
@@ -1391,7 +1393,7 @@ const MyTask = () => {
                                 <div
                                   className={`w-72 truncate whitespace-nowrap text-neutral-800 text-[13px] font-normal leading-none ml-3`}
                                 >
-                                  {task.roles === 1 ? (
+                                  {task.roles === 1 || task.roles === 2 ? (
                                     <p
                                       className="py-1 cursor-pointer"
                                       onClick={() => {
@@ -1432,12 +1434,12 @@ const MyTask = () => {
                               <div>
                                 <div
                                   className={
-                                    task.roles === 1
+                                    task.roles === 1 || task.roles === 2
                                       ? "w-24  text-neutral-800 text-[13px] font-normal leading-none ml-3 bg-gray-200  h-[20px]"
                                       : "w-24  text-neutral-800 text-[13px] font-normal leading-none ml-3 h-[20px]"
                                   }
                                 >
-                                  {task.roles === 1 ? (
+                                  {task.roles === 1 || task.roles === 2 ? (
                                     <p className="px-2 py-1 text-center text-[12px]">
                                       {task.task_status === "in_progress"
                                         ? "InProgress"
@@ -1464,7 +1466,7 @@ const MyTask = () => {
                                   className="w-[18px] cursor-pointer "
                                   // onClick={handelDeleteGoal}
                                 >
-                                  {task.roles === 2 ? (
+                                  {task.roles === 3 ? (
                                     <FiTrash2
                                       sx={{
                                         color: "#0000008F",
@@ -1519,7 +1521,7 @@ const MyTask = () => {
                                 <div
                                   className={`w-[17rem] truncate whitespace-nowrap text-neutral-800 text-[13px] font-normal leading-none ml-3`}
                                 >
-                                  {task.roles === 1 ? (
+                                  {task.roles === 1 || task.roles === 2 ? (
                                     <p className="py-1 cursor-pointer">
                                       {task.task_name}
                                     </p>
@@ -1531,12 +1533,12 @@ const MyTask = () => {
                               <div>
                                 <div
                                   className={
-                                    task.roles === 1
+                                    task.roles === 1 || task.roles === 2
                                       ? "w-24  text-neutral-800 text-[13px] font-normal leading-none ml-3 bg-emerald-300 h-[20px] rounded-md"
                                       : "w-24  text-neutral-800 text-[13px] font-normal leading-none ml-3 h-[20px]"
                                   }
                                 >
-                                  {task.roles === 1 ? (
+                                  {task.roles === 1 || task.roles === 2 ? (
                                     <p className="px-2 py-1 text-center text-[12px]">
                                       {task.task_status === "in_progress"
                                         ? "InProgress"
@@ -1590,7 +1592,7 @@ const MyTask = () => {
                               <div
                                 className={`w-[20rem] truncate whitespace-nowrap text-neutral-800 text-[13px] font-normal leading-none ml-3`}
                               >
-                                {task.roles === 1 ? (
+                                {task.roles === 1 || task.roles === 2 ? (
                                   <p
                                     className="py-1 cursor-pointer"
                                     onClick={() => {
@@ -1629,12 +1631,12 @@ const MyTask = () => {
                               <div>
                                 <div
                                   className={
-                                    task.roles === 1
+                                    task.roles === 1 || task.roles === 2
                                       ? "w-24  text-neutral-800 text-[13px] font-normal leading-none ml-3 bg-orange-300 h-[20px] rounded-md"
                                       : "w-24  text-neutral-800 text-[13px] font-normal leading-none ml-3 h-[20px]"
                                   }
                                 >
-                                  {task.roles === 1 ? (
+                                  {task.roles === 1 || task.roles === 2 ? (
                                     <p className="px-2 py-1 text-center text-[12px] ">
                                       {task.task_status === "in_progress"
                                         ? "InProgress"

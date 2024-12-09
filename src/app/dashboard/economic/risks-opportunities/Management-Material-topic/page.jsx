@@ -46,7 +46,7 @@ const RiskMaterialtopic = () => {
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Risks & Opportunities
+                  Climate Risks and Opportunities
                   </p>
                 </div>
                 {/* <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
@@ -76,12 +76,12 @@ const RiskMaterialtopic = () => {
           </h6>
         </div>
         <div
-          className={`${
+           className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
           }
-fixed right-[51px]  w-[340px] h-[92%] bg-white  rounded-md
+fixed right-[51px]  w-[360px] h-[92%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
@@ -106,7 +106,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
 
                 {/* Footer (Learn more link) */}
-                <div className="pt-4 pb-4 ml-4">
+                <div className="pt-2 pb-4 ml-4">
                   <a
                     className="text-[14px] text-[#2196F3] pt-1 inline-flex"
                     href={program.link}

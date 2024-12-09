@@ -10,8 +10,10 @@ import {
   setdepartment,
   setworkemail,
   setroletype,
-  setphonenumber
-} from "../../../../../lib/redux/features/roles-permissionsSlice"; // Import your actions
+  setphonenumber,
+  fetchInitialDepartments,
+} from "../../../../../lib/redux/features/roles-permissionsSlice";
+import SearchableDepartmentDropdown from "../SearchableDepartmentDropdown";
 
 const PersonalDetailsForm = ({ onNext }) => {
   const dispatch = useDispatch(); // Initialize useDispatch
@@ -51,9 +53,9 @@ const PersonalDetailsForm = ({ onNext }) => {
       case "roleType":
         dispatch(setroletype(value));
         break;
-        case "phoneNumber":
-          dispatch(setphonenumber(value));
-          break;
+      case "phoneNumber":
+        dispatch(setphonenumber(value));
+        break;
       default:
         break;
     }
@@ -139,6 +141,10 @@ const PersonalDetailsForm = ({ onNext }) => {
     }
   }, [edit, currentUser, dispatch]);
 
+  useEffect(() => {
+    dispatch(fetchInitialDepartments());
+  }, [dispatch]);
+
   return (
     <>
       <div className="flex justify-items-center items-center gap-2 mt-6 mb-2">
@@ -166,7 +172,9 @@ const PersonalDetailsForm = ({ onNext }) => {
               placeholder="First Name"
               value={first_name}
               onChange={handleChange}
-              className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${edit ? 'bg-gray-200' : ''}`}
+              className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${
+                edit ? "bg-gray-200" : ""
+              }`}
               readOnly={edit} // Make this field read-only when editing
             />
             {errors.firstName && (
@@ -187,7 +195,9 @@ const PersonalDetailsForm = ({ onNext }) => {
               placeholder="Last Name"
               value={last_name}
               onChange={handleChange}
-              className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${edit ? 'bg-gray-200' : ''}`}
+              className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${
+                edit ? "bg-gray-200" : ""
+              }`}
               readOnly={edit} // Make this field read-only when editing
             />
             {errors.lastName && (
@@ -208,7 +218,9 @@ const PersonalDetailsForm = ({ onNext }) => {
               placeholder="Work Email"
               value={work_email}
               onChange={handleChange}
-              className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${edit ? 'bg-gray-200' : ''}`}
+              className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${
+                edit ? "bg-gray-200" : ""
+              }`}
               readOnly={edit} // Make this field read-only when editing
             />
             {errors.email && (
@@ -249,6 +261,7 @@ const PersonalDetailsForm = ({ onNext }) => {
               <option value="" disabled>
                 Select Role Type
               </option>
+              <option value="Admin">Admin</option>
               <option value="Manager">Manager</option>
               <option value="Employee">Employee</option>
             </select>
@@ -263,7 +276,7 @@ const PersonalDetailsForm = ({ onNext }) => {
             >
               Department*
             </label>
-            <select
+            {/* <select
               id="department"
               name="department"
               value={department}
@@ -278,7 +291,8 @@ const PersonalDetailsForm = ({ onNext }) => {
             </select>
             {errors.department && (
               <p className="text-red-500 text-xs mt-1">{errors.department}</p>
-            )}
+            )} */}
+            <SearchableDepartmentDropdown error={errors.department} />
           </div>
           <div>
             <label
@@ -300,7 +314,6 @@ const PersonalDetailsForm = ({ onNext }) => {
               <p className="text-red-500 text-xs mt-1">{errors.jobTitle}</p>
             )}
           </div>
-       
         </div>
         <div className="float-end">
           <button

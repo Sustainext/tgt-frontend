@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -17,7 +17,7 @@ const Reductionenergyconsumption = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
-
+  const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -37,7 +37,20 @@ const Reductionenergyconsumption = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+        setIsOpen(false); // Close drawer when clicking outside
+      }
+    };
 
+    // Attach event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Cleanup event listener
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
@@ -96,7 +109,7 @@ const Reductionenergyconsumption = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Reduction of energy consumption
             <MdInfoOutline
@@ -123,19 +136,22 @@ const Reductionenergyconsumption = () => {
           </h6>
         </div>
         <div
-          className={`${
-            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
+         ref={drawerRef}
+           className={`${
+            isOpen
+              ? "translate-x-[15%] block top-16"
+              : "translate-x-[120%] hidden top-16"
           }
-fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
+fixed right-[51px]  w-[360px] h-[92%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
-            data.map((program) => (
-              <>
+            data.map((program, index) => (
+              <div key={index}>
+                {/* Header */}
                 <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
-                  <div className="ml-2">{program.header}</div>
-
-                  <div className="ml-2 float-right">
+                  <div className="ml-2 h-[38px]">{program.header}</div>
+                  <div className="ml-2 float-right ">
                     <h5
                       className="text-[#727272] text-[17px] font-bold cursor-pointer"
                       onClick={toggleDrawerclose}
@@ -144,8 +160,23 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                     </h5>
                   </div>
                 </div>
-                <div> {program.data}</div>
-              </>
+
+                {/* Data Content */}
+                <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
+
+                {/* Footer (Learn more link) */}
+                <div className="pt-2 pb-4 ml-4"  onClick={toggleDrawerclose}>
+                  <a
+                    className="text-[14px] text-[#2196F3] pt-1 inline-flex"
+                    href={program.link}
+                    target="_blank"
+                  >
+                    Learn more <MdChevronRight className="text-lg pt-1" />
+                  </a>
+                </div>
+              </div>
             ))}
         </div>
       </div>
