@@ -65,7 +65,7 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
         </select>
       </div>
       {hasError && (
-        <div className="text-red-500 text-[12px] mt-1 text-center">
+        <div className="text-red-500 text-[12px] mt-2 text-center">
           {hasError}
         </div>
       )}

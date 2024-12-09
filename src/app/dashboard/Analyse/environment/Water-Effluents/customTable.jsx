@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
 function DynamicTable({ columns, data }) {
-  // Ensure data is an array
-  const dataRows = Array.isArray(data) ? data : [];
-  const totalsRow = dataRows.find((row) => row.Total); // Row with the "Total" key, if it exists
+  // Separate the data rows from the totals row
+  const dataRows = data.filter(row => !row.Total); // Rows without a "Total" key
+  const totalsRow = data.find(row => row.Total); // Row with the "Total" key, if it exists
 
   const renderHeaders = () => {
     return columns.map((column, index) => (
@@ -27,9 +27,7 @@ function DynamicTable({ columns, data }) {
       <tr key={rowIndex}>
         {columns.map((column, columnIndex) => (
           <td key={columnIndex} className={column.cellClass}>
-            {column.render
-              ? column.render(row[column.dataIndex], row)
-              : row[column.dataIndex]}
+            {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
           </td>
         ))}
       </tr>
@@ -48,20 +46,16 @@ function DynamicTable({ columns, data }) {
 
         {/* Dynamic Total Row */}
         {totalsRow && (
-          <tr className="">
-            <td
-              colSpan={columns.length - 2}
-              className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-[12px]"
-            >
+          <>
+            <tr className="">
+              <td colSpan={columns.length - 2} className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-[12px]">
               Total Water Consumption
-            </td>
-            <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">
-              {totalsRow.Total}
-            </td>
-            <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">
-              {totalsRow.Units || totalsRow.Unit}
-            </td>
-          </tr>
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">{totalsRow.Total}</td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">{totalsRow.Units || totalsRow.Unit}</td>
+            </tr>
+          
+          </>
         )}
       </tbody>
     </table>

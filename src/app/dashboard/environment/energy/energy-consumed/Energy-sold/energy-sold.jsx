@@ -316,13 +316,16 @@ const Energysold = ({location, year, month}) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  }, [location, year, month]);
+ 
+  
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => ({
       ...item, // Ensure each item retains its structure
     }));
     setFormData(newData); // Update the formData with new values
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submit button clicked"); // Debugging log

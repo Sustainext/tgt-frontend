@@ -172,9 +172,6 @@ const validateRows = (data) => {
     if (!row.Source) {
       rowErrors.Source = "Source is required";
     }
-    if (!row.Purpose) {
-      rowErrors.Purpose = "Purpose is required";
-    }
     if (!row.Renewable) {
       rowErrors.Renewable = "Renewable/Non-renewable is required";
     }
@@ -294,6 +291,7 @@ const Selfgenerated = ({location, year, month}) => {
     }));
     setFormData(newData); // Update the formData with new values
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submit button clicked"); // Debugging log
