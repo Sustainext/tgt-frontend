@@ -378,30 +378,7 @@ const Purchased = ({ location, year, month }) => {
             formContext={{ validationErrors }}
             widgets={{
 
-              inputWidget: (props) => (
-                <>
-                  <inputWidget {...props} />
-                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-                </>
-              ),
-              selectWidget: (props) => (
-                <>
-                  <selectWidget {...props} />
-                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-                </>
-              ),
-              inputnumberWidget: (props) => (
-                <>
-                  <inputnumberWidget {...props} />
-                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-                </>
-              ),
-              selectWidget3: (props) => (
-                <>
-                  <selectWidget3 {...props} />
-                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-                </>
-              ),
+              ...widgets,
 
               RemoveWidget: (props) => {
                 // Assuming the widget framework passes a unique ID that includes the index
@@ -421,7 +398,7 @@ const Purchased = ({ location, year, month }) => {
                   setFormData={updateFormDatanew}
                 />
               ),
-              ...widgets,
+             
             }}
 
           >
