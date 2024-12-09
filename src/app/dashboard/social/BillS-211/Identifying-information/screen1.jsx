@@ -117,7 +117,6 @@ const Screenone = ({ nextStep }) => {
       )
       .then((response) => {
         if (response.status == "200") {
-          console.log(response.status);
           toast.success("Details updated successfully", {
             position: "top-right",
             autoClose: 3000,
