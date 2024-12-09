@@ -31,7 +31,7 @@ const Section24=({section13_6_7Ref,data})=>{
     const data1=[
         {
             "Description of Incident ":"Committee 1",
-            "Incident Reporting Personnel ":"",
+            "Incident Reporting Personnel ":"Data",
             "Investigation team ":"Data",
             "Investigation Methods":"Data",
             "Hazard Identification & Risk Assessment":"Data",
@@ -51,7 +51,7 @@ const Section24=({section13_6_7Ref,data})=>{
     const data2=[
         {
             "Reporting channels ":"Committee 1",
-            "Reporting Processes ":"",
+            "Reporting Processes ":"Data",
             "Reporting encouragement ":"Data",
             "Reprisal Protection Measures ":"Data",
             "Feedback and Communication":"Data",
@@ -67,7 +67,7 @@ const Section24=({section13_6_7Ref,data})=>{
     const data3=[
         {
             "Process Quality Assurance":"Data",
-            "Personnel Competency Assurance":"",
+            "Personnel Competency Assurance":"Data",
             "Results Utilization and Improvement":"Data",
         }
     ]
@@ -81,8 +81,32 @@ const Section24=({section13_6_7Ref,data})=>{
     const data4=[
         {
             "Right to refuse unsafe work":"Committee 1",
-            "Policy and Process":"",
+            "Policy and Process":"Data",
             "Protection from Reprisals ":"Data",
+        }
+    ]
+
+    const col5=[
+        "Routine Hazard Identification & Risk Assessment",
+        "Non-Routine Hazard Identification & Risk Assessment",
+        "Process for hazard identification",
+        "Hierarchy of controls",
+        "Legal or guideline basis",
+        "List of legal requirements",
+        "List of Standards/Guidelines",
+        "Vulnerable Workers"
+    ]
+
+    const data5=[
+        {
+            "Routine Hazard Identification & Risk Assessment":"Committee 1",
+            "Non-Routine Hazard Identification & Risk Assessment":"Data",
+            "Process for hazard identification":"Data",
+            "Hierarchy of controls":"Data",
+            "Legal or guideline basis":"Data",
+            "List of legal requirements":"Data",
+            "List of Standards/Guidelines":"Data",
+            "Vulnerable Workers":"Data"
         }
     ]
     
@@ -112,7 +136,7 @@ const Section24=({section13_6_7Ref,data})=>{
         />
 
       
-            <p className="text-[15px]  mb-2 font-semibold">
+            {/* <p className="text-[15px]  mb-2 font-semibold">
             Process for hazard identification:
             </p>
             <p className="text-sm mb-4">{data["403-2a-process_for_hazard"]?data["403-2a-process_for_hazard"].Q3?data["403-2a-process_for_hazard"].Q3.selected?data["403-2a-process_for_hazard"].Q3.selected:data["403-2a-process_for_hazard"].Q3.otherValue:"No data available":"No data available"}</p>
@@ -161,24 +185,11 @@ const Section24=({section13_6_7Ref,data})=>{
             <p className="text-[15px]  mb-4 font-semibold">
             Results Utilization and Improvement:
             </p>
-            <p className="text-sm mb-4">{data["403-2b-quality_assurance"]?data["403-2b-quality_assurance"].data?data["403-2b-quality_assurance"].data.length>0?data["403-2b-quality_assurance"].data[0].Q3?data["403-2b-quality_assurance"].data[0].Q3:"No data available":"No data available":"No data available":"No data available"}</p>
+            <p className="text-sm mb-4">{data["403-2b-quality_assurance"]?data["403-2b-quality_assurance"].data?data["403-2b-quality_assurance"].data.length>0?data["403-2b-quality_assurance"].data[0].Q3?data["403-2b-quality_assurance"].data[0].Q3:"No data available":"No data available":"No data available":"No data available"}</p> */}
            
-           
-
-            <p className="text-[15px]  mb-2 font-semibold">
-            Work related incident investigation:  
-            </p>
-            <p className="text-sm mb-4">{data["403-2d"]?data["403-2d"].data?data["403-2d"].data.length>0?data["403-2d"].data[0].Q1?data["403-2d"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
-           
-            {/* <div className="rounded-md mb-4 shadow-md">
-                <LeaveTable columns={col1} data={data1}/>
-            </div>
-
-            <p className="text-[15px]  mb-2 font-semibold">
-            Hazard reporting and workers protection   
-            </p>
+          
             <div className="rounded-md mb-4 shadow-md">
-                <LeaveTable columns={col2} data={data2}/>
+                <LeaveTable columns={col5} data={data5}/>
             </div>
 
             <p className="text-[15px]  mb-2 font-semibold">
@@ -190,12 +201,28 @@ const Section24=({section13_6_7Ref,data})=>{
             </div>
 
             <p className="text-[15px]  mb-2 font-semibold">
+            Work related incident investigation:  
+            </p>
+           
+            <div className="rounded-md mb-4 shadow-md">
+                <LeaveTable columns={col1} data={data1}/>
+            </div>
+
+            <p className="text-[15px]  mb-2 font-semibold">
+            Hazard reporting and workers protection   
+            </p>
+            <div className="rounded-md mb-4 shadow-md">
+                <LeaveTable columns={col2} data={data2}/>
+            </div>
+
+
+            <p className="text-[15px]  mb-2 font-semibold">
             Worker right to refuse unsafe work 
             </p>
 
             <div className="rounded-md mb-4 shadow-md">
                 <LeaveTable columns={col4} data={data4}/>
-            </div> */}
+            </div>
 
 </div>
         </>
