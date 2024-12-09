@@ -80,16 +80,6 @@ const Section14=({section13_4_2Ref,data})=>{
     "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":"No data available",
     "Percentage of employee in minority group":"No data available"
 },
-]:[
-  {
-    "Percentage of female within organisation's governance bodies":"No data available",
-    "Percentage of male within organisation's governance bodies":"No data available",
-    "Percentage of Non-binary within organisation's governance bodies":"No data available",
-    "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":"No data available",
-    "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":"No data available",
-    "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":"No data available",
-    "Percentage of employee in minority group":"No data available"
-},
 ]
     
 
