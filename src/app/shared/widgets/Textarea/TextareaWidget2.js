@@ -112,11 +112,11 @@ const TextareaWidget2 = (props) => {
           rows={7}
         />
 
-        {/* {hasError && (
+        {hasError && (
           <div className="text-red-500 text-xs mt-1">
             This field is required
           </div>
-        )} */}
+        )}
       </div>
     </>
   );

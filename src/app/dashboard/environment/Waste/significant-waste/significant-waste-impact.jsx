@@ -248,32 +248,14 @@ const Significantwasteimpact = ({ selectedOrg, year, selectedCorp }) => {
     <>
       <div>
         <div>
-          {/* <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
-          /> */}
           <Form
             schema={r_schema}
             uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
+            widgets={widgets}
             formContext={{ validationErrors }}
-            widgets={{
-              TextareaWidgetnew: (props) => (
-                <>
-                  <TextareaWidget2 {...props} />
-                  {/* {renderError(
-                    parseInt(props.id.split("_")[1], 10),
-                    props.name
-                  )} */}
-                </>
-              ),
-            }}
           />
         </div>
         {loopen && (
