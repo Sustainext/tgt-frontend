@@ -6,7 +6,13 @@ import "react-tooltip/dist/react-tooltip.css";
 
 const TextareaWidget2 = (props) => {
   const { open } = GlobalState();
-  const { onChange, value = "", uiSchema = {} } = props;
+  const { onChange, value = "", uiSchema = {}, formContext, id, name } = props;
+
+  const { validationErrors } = formContext || {};
+  const rowIndex = parseInt(id.split("_")[1], 10);
+  const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
+  const hasError =
+    (!value || value.trim() === "") && rowErrors && rowErrors[name];
 
   const handleChange = (event) => {
     onChange(event.target.value);
@@ -97,11 +103,20 @@ const TextareaWidget2 = (props) => {
 
         <textarea
           placeholder="Enter a description..."
-          className={`backdrop:before: w-full border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer`}
+          className={`backdrop:before: w-full border appearance-none text-[12px] 
+            ${hasError ? "border-red-500" : "border-gray-400"} 
+            text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none 
+            focus:bg-white focus:border-gray-400 cursor-pointer`}
           value={value}
           onChange={handleChange}
           rows={7}
         />
+
+        {/* {hasError && (
+          <div className="text-red-500 text-xs mt-1">
+            This field is required
+          </div>
+        )} */}
       </div>
     </>
   );
