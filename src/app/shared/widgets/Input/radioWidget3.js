@@ -11,6 +11,7 @@ const RadioWidget3 = ({
   uiSchema = {},
   formContext,
   id,
+  name,
 }) => {
   const [inputState, setInputState] = useState(value); // Initialize state with the provided value
   useEffect(() => {
@@ -26,8 +27,7 @@ const RadioWidget3 = ({
   const { validationErrors } = formContext || {};
   const rowIndex = parseInt(id.split("_")[1], 10);
   const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
-  const hasError =
-    (!value || value.trim() === "") && rowErrors && rowErrors[name];
+  const hasError = !value && rowErrors && rowErrors[name];
 
   return (
     <div className="mb-6 px-1">
@@ -122,7 +122,8 @@ const RadioWidget3 = ({
               type="radio"
               name={options.name}
               value={option.value}
-              checked={inputState === option.value}
+              // checked={inputState === option.value}
+              checked={option.value === value}
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
               className="form-radio h-3 w-3"
@@ -132,7 +133,9 @@ const RadioWidget3 = ({
         ))}
       </div>
       {hasError && (
-        <div className="text-red-500 text-xs mt-1">{rowErrors[name]}</div>
+        <div className="text-red-500 text-[12px] mt-1">
+          Please select an option
+        </div>
       )}
     </div>
   );
