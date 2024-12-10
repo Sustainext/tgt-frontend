@@ -171,13 +171,35 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
 
+    if (!row.Discharge) {
+      rowErrors.Discharge = "Please select Yes or No.";
+    }
+    if (!row.Unit) {
+      rowErrors.Unit = "Unit  is required";
+    }
+    if (row.Discharge === "Yes") {
+      if (!row.Source) {
+        rowErrors.Source = "Source is required";
+      }
+      if (!row.Quantity) {
+        rowErrors.Quantity = "Quantity is required";
+      }
+    }
+
+    return rowErrors;
+  });
+};
 const WaterstressQ2 = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [enabledRows, setEnabledRows] = useState([]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const LoaderOpen = () => {
@@ -301,7 +323,18 @@ const WaterstressQ2 = ({ location, year, month }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddNew = () => {
@@ -335,7 +368,7 @@ const WaterstressQ2 = ({ location, year, month }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            formContext={{ enabledRows }}
+            formContext={{ enabledRows,validationErrors }}
             widgets={{
               ...widgets,
               SelectdisableWidget: (props) => {

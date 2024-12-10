@@ -163,12 +163,35 @@ const uiSchema = {
   },
 };
 
+const validateRows = (data, selectedOption) => {
+  const rowErrors = [];
+
+  if (selectedOption === "yes") {
+    data.forEach((row, index) => {
+      const errors = {};
+      if (!row.Reporting1) {
+        errors.Reporting1 = "Total water storage at the end is required.";
+      }
+      if (!row.Reporting2) {
+        errors.Reporting2 = "Total water storage at the beginning is required.";
+      }
+      if (!row.Unit) {
+        errors.Unit = "Unit is required.";
+      }
+      rowErrors[index] = errors;
+    });
+  }
+
+  return rowErrors;
+};
 const WaterstorageQ1 = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [selectOptionError, setSelectOptionError] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
 
@@ -286,6 +309,7 @@ const WaterstorageQ1 = ({ location, year, month }) => {
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
+    setSelectOptionError("");
   };
   const handleChange = (e) => {
     const newData = e.formData.map((item) => {
@@ -301,7 +325,25 @@ const WaterstorageQ1 = ({ location, year, month }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    if (!selectedOption) {
+      setSelectOptionError("Please select Yes or No.");
+     
+      return;
+    } else {
+      setSelectOptionError(""); // Clear the error if valid
+    }
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData, selectedOption);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddNew = () => {
@@ -320,7 +362,7 @@ const WaterstorageQ1 = ({ location, year, month }) => {
   };
   return (
     <>
-      <div className="w-full max-w-xs mb-4">
+      <div className="w-full max-w-xs mb-2">
         <label className="text-sm leading-5 text-gray-700 flex">
           Does water storage have a significant water-related impact?
           <div className="ml-2 relative">
@@ -354,6 +396,9 @@ const WaterstorageQ1 = ({ location, year, month }) => {
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
+        {selectOptionError && (
+            <p className="text-red-500 text-xs mt-1">{selectOptionError}</p>
+          )}
       </div>
       {selectedOption === "yes" && (
         <>
@@ -366,6 +411,7 @@ const WaterstorageQ1 = ({ location, year, month }) => {
                 formData={formData}
                 onChange={handleChange}
                 validator={validator}
+                formContext={{validationErrors }}
                 widgets={{
                   ...widgets,
                   RemoveWidget: (props) => (
@@ -398,7 +444,7 @@ const WaterstorageQ1 = ({ location, year, month }) => {
           </div>
         </>
       )}
-      <div className="mb-6">
+      <div className="mb-6 mt-">
         <button
           type="button"
           className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"

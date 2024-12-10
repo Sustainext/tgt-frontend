@@ -107,12 +107,12 @@ export default function Home() {
       console.log(hashedPassword);
 
       // Replace password with hashed password for login request
-      await login(email, hashedPassword, rememberMe);
+      await login(email, password, rememberMe);
 
       if (rememberMe) {
         localStorage.setItem(
           "rememberedUser",
-          JSON.stringify({ email, password: hashedPassword }) // Save hashed password
+          JSON.stringify({ email, password: password }) // Save hashed password
         );
       } else {
         localStorage.removeItem("rememberedUser");

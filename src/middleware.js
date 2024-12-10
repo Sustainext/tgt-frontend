@@ -2,6 +2,22 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 export function middleware(request) {
+  const currentPath = request.nextUrl.pathname;
+
+  if (currentPath === "/reset-password") {
+    const response = NextResponse.next();
+
+    // Clear all cookies
+    const allCookies = cookies();
+    allCookies.getAll().forEach((cookie) => {
+      response.cookies.delete(cookie.name);
+    });
+
+    // Optional: Add a notice for the user (if needed)
+    
+
+    return response; // No redirect, continue serving the `/reset-password` page
+  }
   const token = cookies().get("token")?.value;
   const admin = cookies().get("isAdmin")?.value === "true"; // Ensure admin is boolean
   const permissionCookie = cookies().get("permissions")?.value;
@@ -47,7 +63,7 @@ export function middleware(request) {
     "/dashboard/Users/manage-users",
   ];
 
-  const currentPath = request.nextUrl.pathname;
+ 
   const isRestrictedPath = restrictedPaths.some((path) =>
     currentPath.startsWith(path)
   );
@@ -140,5 +156,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/"], // Match all paths under /dashboard and the root path
+  matcher: ["/dashboard/:path*", "/","/reset-password"], // Match all paths under /dashboard and the root path
 };

@@ -232,6 +232,42 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data, selectedOption) => {
+  const rowErrors = [];
+
+  if (selectedOption === "yes") {
+    data.forEach((row, index) => {
+      const errors = {};
+      if (!row.Source) {
+        errors.Source = "Source is required.";
+      }
+      if (!row.Watertype) {
+        errors.Watertype = "Water type is required.";
+      }
+      if (!row.Businessoperations) {
+        errors.Businessoperations = "Business operations is required.";
+      }
+      if (!row.waterstress) {
+        errors.waterstress = "Name of water stress area is required.";
+      }
+      if (!row.Pincode) {
+        errors.Pincode = "Pin code is required.";
+      }
+      if (!row.Waterwithdrawal) {
+        errors.Waterwithdrawal = "Water withdrawal is required.";
+      }
+      if (!row.Waterdischarge) {
+        errors.Waterdischarge = "Water discharge is required.";
+      }
+      if (!row.Unit) {
+        errors.Unit = "Unit is required.";
+      }
+      rowErrors[index] = errors;
+    });
+  }
+
+  return rowErrors;
+};
 
 const WaterstressQ1 = ({ location, year, month }) => {
   const { open } = GlobalState();
@@ -240,8 +276,10 @@ const WaterstressQ1 = ({ location, year, month }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
   const [loopen, setLoOpen] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [selectOptionError, setSelectOptionError] = useState("");
   const toastShown = useRef(false);
-
+ 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -362,7 +400,25 @@ const WaterstressQ1 = ({ location, year, month }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    if (!selectedOption) {
+      setSelectOptionError("Please select Yes or No.");
+     
+      return;
+    } else {
+      setSelectOptionError(""); // Clear the error if valid
+    }
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData, selectedOption);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddNew = () => {
@@ -383,6 +439,7 @@ const WaterstressQ1 = ({ location, year, month }) => {
   // Handle changing the select dropdown
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
+    setSelectOptionError("");
   };
 
   return (
@@ -421,6 +478,9 @@ const WaterstressQ1 = ({ location, year, month }) => {
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
+        {selectOptionError && (
+            <p className="text-red-500 text-xs mt-1">{selectOptionError}</p>
+          )}
       </div>
       {selectedOption === "yes" && (
         <>
@@ -433,6 +493,7 @@ const WaterstressQ1 = ({ location, year, month }) => {
                 formData={formData}
                 onChange={handleChange}
                 validator={validator}
+                formContext={{validationErrors }}
                 widgets={{
                   ...widgets,
                   RemoveWidget: (props) => (
