@@ -45,17 +45,21 @@ const Section24=({section13_6_7Ref,data})=>{
     ? data["403-2d"]["data"].map((val) => ({
         "Description of Incident ": val.Descriptionincident || "No data available",
         "Incident Reporting Personnel ": val.Incidentreporting
-          ? val.Incidentreporting.join(", ") + (val.Incidentreporting_others ? `, ${val.Incidentreporting_others}` : "")
+          ? val.Incidentreporting.join(", ") +
+            (val.Incidentreporting_others ? `, ${val.Incidentreporting_others}` : "")
           : "No data available",
         "Investigation team ": val.Investigationteam
-          ? val.Investigationteam.join(", ")
+          ? val.Investigationteam.join(", ") +
+            (val.Investigationteam_others ? `, ${val.Investigationteam_others}` : "")
           : "No data available",
         "Investigation Methods": val.InvestigationMethods
-          ? val.InvestigationMethods.join(", ")
+          ? val.InvestigationMethods.join(", ") +
+            (val.InvestigationMethods_others ? `, ${val.InvestigationMethods_others}` : "")
           : "No data available",
         "Hazard Identification & Risk Assessment": val.HazardIdentification || "No data available",
         "Corrective Actions": val.CorrectiveActions
-          ? val.CorrectiveActions.join(", ")
+          ? val.CorrectiveActions.join(", ") +
+            (val.CorrectiveActions_others ? `, ${val.CorrectiveActions_others}` : "")
           : "No data available",
         "System Improvement": val.SystemImprovement || "No data available",
       }))
@@ -83,6 +87,7 @@ const Section24=({section13_6_7Ref,data})=>{
     ];
 
 
+
     const col2=[
         "Reporting channels ",
         "Reporting Processes ",
@@ -102,22 +107,35 @@ const Section24=({section13_6_7Ref,data})=>{
     ]
 
     const Tabledata2 = data["403-2b-hazard_reporting"]
-  ? data["403-2b-hazard_reporting"].length > 0
-    ? data["403-2b-hazard_reporting"].map((val) => ({
-        "Reporting channels ": val.Reportingchannels
-          ? val.Reportingchannels.join(", ")
-          : "No data available",
-        "Reporting Processes ": val.ReportingProcesses
-          ? val.ReportingProcesses.join(", ")
-          : "No data available",
-        "Reporting encouragement ": val.Reportingencouragement
-          ? val.Reportingencouragement.join(", ")
-          : "No data available",
-        "Reprisal Protection Measures ": val.ReprisalProtection || "No data available",
-        "Feedback and Communication": val.FeedbackCommunication
-          ? val.FeedbackCommunication.join(", ")
-          : "No data available",
-      }))
+    ? data["403-2b-hazard_reporting"].length > 0
+      ? data["403-2b-hazard_reporting"].map((val) => ({
+          "Reporting channels ": val.Reportingchannels
+            ? val.Reportingchannels.join(", ") +
+              (val.Reportingchannels_others ? `, ${val.Reportingchannels_others}` : "")
+            : "No data available",
+          "Reporting Processes ": val.ReportingProcesses
+            ? val.ReportingProcesses.join(", ") +
+              (val.ReportingProcesses_others ? `, ${val.ReportingProcesses_others}` : "")
+            : "No data available",
+          "Reporting encouragement ": val.Reportingencouragement
+            ? val.Reportingencouragement.join(", ") +
+              (val.Reportingencouragement_others ? `, ${val.Reportingencouragement_others}` : "")
+            : "No data available",
+          "Reprisal Protection Measures ": val.ReprisalProtection || "No data available",
+          "Feedback and Communication": val.FeedbackCommunication
+            ? val.FeedbackCommunication.join(", ") +
+              (val.FeedbackCommunication_others ? `, ${val.FeedbackCommunication_others}` : "")
+            : "No data available",
+        }))
+      : [
+          {
+            "Reporting channels ": "No data available",
+            "Reporting Processes ": "No data available",
+            "Reporting encouragement ": "No data available",
+            "Reprisal Protection Measures ": "No data available",
+            "Feedback and Communication": "No data available",
+          },
+        ]
     : [
         {
           "Reporting channels ": "No data available",
@@ -126,16 +144,8 @@ const Section24=({section13_6_7Ref,data})=>{
           "Reprisal Protection Measures ": "No data available",
           "Feedback and Communication": "No data available",
         },
-      ]
-  : [
-      {
-        "Reporting channels ": "No data available",
-        "Reporting Processes ": "No data available",
-        "Reporting encouragement ": "No data available",
-        "Reprisal Protection Measures ": "No data available",
-        "Feedback and Communication": "No data available",
-      },
-    ];
+      ];
+  
 
 
     const col3=[
@@ -196,7 +206,7 @@ const Section24=({section13_6_7Ref,data})=>{
         "Right to refuse unsafe work": val.Rightrefuse || "No data available",
         "Policy and Process": val.PolicyProcess || "No data available",
         "Protection from Reprisals ": val.Protectionreprisals
-          ? val.Protectionreprisals.join(", ")
+          ? val.Protectionreprisals.join(", ") + (val.Protectionreprisals_others ? ` (${val.Protectionreprisals_others})` : "")
           : "No data available",
       }))
     : [
@@ -240,25 +250,40 @@ const Section24=({section13_6_7Ref,data})=>{
     ]
 
     const Tabledata5 = data["403-2a-process_for_hazard"]
-  ? data["403-2a-process_for_hazard"].length > 0
-    ? data["403-2a-process_for_hazard"].map((val) => ({
-        "Routine Hazard Identification & Risk Assessment": val.RoutineHazard || "No data available",
-        "Non-Routine Hazard Identification & Risk Assessment": val.NonRoutineHazard
-          ? val.NonRoutineHazard.join(", ")
-          : "No data available",
-        "Process for hazard identification": val.Processforhazard
-          ? val.Processforhazard.join(", ") + (val.Processforhazard_others ? `, ${val.Processforhazard_others}` : "")
-          : "No data available",
-        "Hierarchy of controls": val.Hierarchycontrols
-          ? val.Hierarchycontrols.join(", ")
-          : "No data available",
-        "Legal or guideline basis": val.Legalguideline || "No data available",
-        "List of legal requirements": val.Listlegal || "No data available",
-        "List of Standards/Guidelines": val.ListStandards || "No data available",
-        "Vulnerable Workers": val.VulnerableWorkers
-          ? val.VulnerableWorkers.join(", ")
-          : "No data available",
-      }))
+    ? data["403-2a-process_for_hazard"].length > 0
+      ? data["403-2a-process_for_hazard"].map((val) => ({
+          "Routine Hazard Identification & Risk Assessment": val.RoutineHazard
+            ? `${val.RoutineHazard}${val.RoutineHazard_others ? ` (${val.RoutineHazard_others})` : ""}`
+            : "No data available",
+          "Non-Routine Hazard Identification & Risk Assessment": val.NonRoutineHazard
+            ? val.NonRoutineHazard.join(", ") + (val.NonRoutineHazard_others ? ` (${val.NonRoutineHazard_others})` : "")
+            : "No data available",
+          "Process for hazard identification": val.Processforhazard
+            ? val.Processforhazard.join(", ") + (val.Processforhazard_others ? `, ${val.Processforhazard_others}` : "")
+            : "No data available",
+          "Hierarchy of controls": val.Hierarchycontrols
+            ? val.Hierarchycontrols.join(", ") + (val.Hierarchycontrols_others ? `, ${val.Hierarchycontrols_others}` : "")
+            : "No data available",
+          "Legal or guideline basis": val.Legalguideline || "No data available",
+          "List of legal requirements": val.Listlegal || "No data available",
+          "List of Standards/Guidelines": val.ListStandards || "No data available",
+          "Vulnerable Workers": val.VulnerableWorkers
+            ? val.VulnerableWorkers.join(", ") +
+              (val.VulnerableWorkers_others ? `, ${val.VulnerableWorkers_others}` : "")
+            : "No data available",
+        }))
+      : [
+          {
+            "Routine Hazard Identification & Risk Assessment": "No data available",
+            "Non-Routine Hazard Identification & Risk Assessment": "No data available",
+            "Process for hazard identification": "No data available",
+            "Hierarchy of controls": "No data available",
+            "Legal or guideline basis": "No data available",
+            "List of legal requirements": "No data available",
+            "List of Standards/Guidelines": "No data available",
+            "Vulnerable Workers": "No data available",
+          },
+        ]
     : [
         {
           "Routine Hazard Identification & Risk Assessment": "No data available",
@@ -270,20 +295,8 @@ const Section24=({section13_6_7Ref,data})=>{
           "List of Standards/Guidelines": "No data available",
           "Vulnerable Workers": "No data available",
         },
-      ]
-  : [
-      {
-        "Routine Hazard Identification & Risk Assessment": "No data available",
-        "Non-Routine Hazard Identification & Risk Assessment": "No data available",
-        "Process for hazard identification": "No data available",
-        "Hierarchy of controls": "No data available",
-        "Legal or guideline basis": "No data available",
-        "List of legal requirements": "No data available",
-        "List of Standards/Guidelines": "No data available",
-        "Vulnerable Workers": "No data available",
-      },
-    ];
-
+      ];
+  
     
     return (
         <>
