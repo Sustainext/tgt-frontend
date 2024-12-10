@@ -388,7 +388,7 @@ const WaterstorageQ1 = ({ location, year, month }) => {
           </div>
         </label>
         <select
-          className="block w-[270px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+          className={`block w-[270px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 ${selectOptionError ? 'border-red-500' : 'border-gray-300'}`}
           value={selectedOption}
           onChange={handleSelectChange}
         >
