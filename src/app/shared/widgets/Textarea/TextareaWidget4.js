@@ -5,13 +5,15 @@ import "react-tooltip/dist/react-tooltip.css";
 
 const TextareaWidget4 = (props) => {
   const { onChange, value = "", uiSchema = {}, formContext, id, name } = props;
+
   const handleChange = (event) => {
     onChange(event.target.value);
   };
   const { validationErrors } = formContext || {};
   const rowIndex = parseInt(id.split("_")[1], 10);
   const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
-  const hasError = !value || value.trim() === "";
+  const hasError =
+    (!value || value.trim() === "") && rowErrors && rowErrors[name];
   return (
     <>
       <div className="mb-6">
@@ -52,13 +54,11 @@ const TextareaWidget4 = (props) => {
           text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none 
           focus:bg-white focus:border-gray-400 cursor-pointer`}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={handleChange}
           rows={7}
         />
         {hasError && (
-          <div className="text-red-500 text-[12px] mt-1">
-            {rowErrors[name] || "This field is required"}
-          </div>
+          <div className="text-red-500 text-[12px] mt-1">{rowErrors[name]}</div>
         )}
       </div>
     </>

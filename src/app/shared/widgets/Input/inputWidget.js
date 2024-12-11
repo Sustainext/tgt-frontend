@@ -29,9 +29,21 @@ const inputWidget = ({
   };
 
   const handleKeyDown = (event) => {
-    const allowedKeys = /^[a-zA-Z\s]*$/; // Allow only alphabets and spaces
-    if (!allowedKeys.test(event.key) && event.key.length === 1) {
-      event.preventDefault();
+    if (inputType === "number") {
+      const allowedKeys = /^[0-9]$/;
+      if (
+        !allowedKeys.test(event.key) &&
+        !["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"].includes(
+          event.key
+        )
+      ) {
+        event.preventDefault();
+      }
+    } else {
+      const allowedKeys = /^[a-zA-Z\s]*$/; // Allow only alphabets and spaces for text
+      if (!allowedKeys.test(event.key) && event.key.length === 1) {
+        event.preventDefault();
+      }
     }
   };
 
@@ -46,7 +58,7 @@ const inputWidget = ({
       <div className="relative w-[100%]">
         {id.startsWith("root_0") && (
           <>
-            <p className="flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px] ml-1">
+            <p className="flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px]  text-left">
               {label}
               <MdInfoOutline
                 data-tooltip-id={tooltipId}
@@ -83,7 +95,7 @@ const inputWidget = ({
           type={inputType}
           value={value}
           onChange={handleChange}
-          // onKeyDown={handleKeyDown}
+          onKeyDown={handleKeyDown}
         />
       </div>
       {hasError && (
