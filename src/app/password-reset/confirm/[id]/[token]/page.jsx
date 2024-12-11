@@ -11,6 +11,7 @@ import { MdKey } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
+import CryptoJS from "crypto-js";
 const PasswordReset = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [conshowPassword, setConshowPassword] = useState(false);
@@ -42,6 +43,7 @@ const PasswordReset = () => {
       setMessageColor('text-red-500');
     }
   };
+  const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
 
   const handleSetPassword = async (e) => {
     e.preventDefault();
@@ -50,8 +52,8 @@ const PasswordReset = () => {
     const data = {
       uid: id,
       token,
-      new_password1: password,
-      new_password2: password,
+      new_password1: hashedPassword,
+      new_password2: hashedPassword,
     };
 
     try {

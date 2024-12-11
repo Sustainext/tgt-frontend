@@ -84,8 +84,6 @@ const uiSchema = {
   },
 };
 
-
-
 const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
