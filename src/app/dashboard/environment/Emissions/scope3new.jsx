@@ -88,6 +88,10 @@ const Scope3 = forwardRef(
     const LoaderOpen = () => setLoOpen(true);
     const LoaderClose = () => setLoOpen(false);
 
+    const validationErrors = useSelector(
+      (state) => state.emissions.validationErrors
+    );
+
     const handleChange = useCallback(
       (e) => {
         // Update the form data
