@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import axiosInstance from "../../../../app/utils/axiosMiddleware";
 
 
 const Screen4Slice = createSlice({

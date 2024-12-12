@@ -234,7 +234,9 @@ const Purchased = ({ location, year, month }) => {
   };
 
   const updateFormData = async () => {
-    LoaderOpen();
+
+
+ LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
@@ -331,10 +333,8 @@ const Purchased = ({ location, year, month }) => {
     const errors = validateRows(formData);
     setValidationErrors(errors);
     console.log("Validation Errors:", errors); // Debugging log
-
-    const hasErrors = errors.some(
-      (rowErrors) => Object.keys(rowErrors).length > 0
-    );
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
     if (!hasErrors) {
       console.log("No validation errors, proceeding to update data"); // Debugging log
       updateFormData();
@@ -342,12 +342,11 @@ const Purchased = ({ location, year, month }) => {
       console.log("Validation errors found, submission aborted"); // Debugging log
     }
   };
+  
 
   const renderError = (rowIndex, fieldName) => {
     const rowErrors = validationErrors[rowIndex] || {};
-    return rowErrors[fieldName] ? (
-      <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div>
-    ) : null;
+    return rowErrors[fieldName] ? <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div> : null;
   };
 
   const handleAddNew = () => {
@@ -369,63 +368,42 @@ const Purchased = ({ location, year, month }) => {
     <>
       <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
-          <Form
-            className="flex"
+        <Form
+            className='flex'
             schema={r_schema}
             uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             formContext={{ validationErrors }}
-            // widgets={{
+            widgets={{
 
-            //   inputWidget: (props) => (
-            //     <>
-            //       <inputWidget {...props} />
-            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-            //     </>
-            //   ),
-            //   selectWidget: (props) => (
-            //     <>
-            //       <selectWidget {...props} />
-            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-            //     </>
-            //   ),
-            //   inputnumberWidget: (props) => (
-            //     <>
-            //       <inputnumberWidget {...props} />
-            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-            //     </>
-            //   ),
-            //   selectWidget3: (props) => (
-            //     <>
-            //       <selectWidget3 {...props} />
-            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-            //     </>
-            //   ),
+              ...widgets,
 
-            //   RemoveWidget: (props) => {
-            //     // Assuming the widget framework passes a unique ID that includes the index
-            //     // Make sure this ID fetching logic is correct
-            //     return (
-            //       <RemoveWidget
-            //         {...props}
-            //         index={props.id.split('_')[1]} // Pass the index
-            //         onRemove={handleRemove}
-            //       />
-            //     );
-            //   },
-            //   FileUploadWidget: (props) => (
-            //     <CustomFileUploadWidget
-            //       {...props}
-            //       scopes="ec1"
-            //       setFormData={updateFormDatanew}
-            //     />
-            //   ),
-            //   ...widgets,
-            // }}
-            widgets={widgets}
-          ></Form>
+              RemoveWidget: (props) => {
+                // Assuming the widget framework passes a unique ID that includes the index
+                // Make sure this ID fetching logic is correct
+                return (
+                  <RemoveWidget
+                    {...props}
+                    index={props.id.split('_')[1]} // Pass the index
+                    onRemove={handleRemove}
+                  />
+                );
+              },
+              FileUploadWidget: (props) => (
+                <CustomFileUploadWidget
+                  {...props}
+                  scopes="ec1"
+                  setFormData={updateFormDatanew}
+                />
+              ),
+             
+            }}
+
+          >
+          </Form>
+
         </div>
 
         {loopen && (

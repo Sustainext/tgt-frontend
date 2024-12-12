@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import 'react-tooltip/dist/react-tooltip.css';
 import { post } from '../utils/axiosMiddleware';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-
+import CryptoJS from "crypto-js";
 const ClientPasswordReset = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [conshowPassword, setConshowPassword] = useState(false);
@@ -39,14 +39,14 @@ const ClientPasswordReset = () => {
       setMessageColor('text-red-500');
     }
   };
-
+  const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
   const handleSetPassword = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     const data = {
-      password1: password,
-      password2: password,
+      password1: hashedPassword,
+      password2: hashedPassword,
     };
 
     try {

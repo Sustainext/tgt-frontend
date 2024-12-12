@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import axiosInstance from "../../../app/utils/axiosMiddleware";
 import { getMonthName } from "../../../app/utils/dateUtils";
 import { v4 as uuidv4 } from "uuid";
 import { set } from "lodash";

@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../../utils/axiosMiddleware";
-import Textareawithoutgri from  "../../../../../shared/widgets/Textarea/Textareawithoutgri"
+import Textareawithoutgri from "../../../../../shared/widgets/Textarea/Textareawithoutgri";
 const widgets = {
   Textareawithoutgri: Textareawithoutgri,
 };
@@ -58,7 +58,7 @@ const uiSchema = {
     textareaQ1: {
       "ui:title":
         "Please mention the standards used while compiling the information for 302 ?",
-      "ui:widget": "Textareawithoutgri", 
+      "ui:widget": "Textareawithoutgri",
       "ui:options": {
         label: false,
       },
@@ -66,7 +66,7 @@ const uiSchema = {
     textareaQ2: {
       "ui:title":
         "Please mention the methodologies used while compiling the information for 302 ?",
-      "ui:widget": "Textareawithoutgri", 
+      "ui:widget": "Textareawithoutgri",
       "ui:options": {
         label: false,
       },
@@ -74,7 +74,7 @@ const uiSchema = {
     textareaQ3: {
       "ui:title":
         "Please mention the assumptions used while compiling the information for 302 ?",
-      "ui:widget": "Textareawithoutgri", 
+      "ui:widget": "Textareawithoutgri",
       "ui:options": {
         label: false,
       },
@@ -83,7 +83,7 @@ const uiSchema = {
     textareaQ4: {
       "ui:title":
         "Please mention the calculation tools used while compiling the information for 302 ?",
-      "ui:widget": "Textareawithoutgri", 
+      "ui:widget": "Textareawithoutgri",
       "ui:options": {
         label: false,
       },
@@ -107,7 +107,6 @@ const validateRows = (data) => {
       rowErrors.textareaQ3 = "This field is required";
     }
 
- 
     return rowErrors;
   });
 };
@@ -233,8 +232,10 @@ const Standards = ({ location, year, month }) => {
     const errors = validateRows(formData);
     setValidationErrors(errors);
     console.log("Validation Errors:", errors); // Debugging log
-  
-    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
     if (!hasErrors) {
       console.log("No validation errors, proceeding to update data"); // Debugging log
       updateFormData();
@@ -242,17 +243,18 @@ const Standards = ({ location, year, month }) => {
       console.log("Validation errors found, submission aborted"); // Debugging log
     }
   };
-  
 
   const renderError = (rowIndex, fieldName) => {
     const rowErrors = validationErrors[rowIndex] || {};
-    return rowErrors[fieldName] ? <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div> : null;
+    return rowErrors[fieldName] ? (
+      <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div>
+    ) : null;
   };
   return (
     <>
       <div>
         <div>
-        <Form
+          <Form
             schema={schema}
             uiSchema={uiSchema}
             formData={formData}
@@ -260,21 +262,19 @@ const Standards = ({ location, year, month }) => {
             validator={validator}
             formContext={{ validationErrors }}
             widgets={{
-
               Textareawithoutgri: (props) => (
                 <>
                   <Textareawithoutgri {...props} />
-                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                  {renderError(
+                    parseInt(props.id.split("_")[1], 10),
+                    props.name
+                  )}
                 </>
               ),
-           
 
-            
               ...widgets,
             }}
-
-          >
-          </Form>
+          ></Form>
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

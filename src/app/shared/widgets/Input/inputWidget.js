@@ -17,8 +17,8 @@ const inputWidget = ({
   name,
 }) => {
   const { validationErrors } = formContext || {};
-  const rowIndex = parseInt(id.split("_")[1], 10);
-  const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
+  const rowIndex = parseInt(id.split('_')[1], 10);
+  const rowErrors = validationErrors && validationErrors[rowIndex] || {};
   const hasError = !value && rowErrors && rowErrors[name];
   console.log(id, "test"); // Log id for debugging
   const inputType = uiSchema["ui:inputtype"] || "text";
@@ -28,15 +28,12 @@ const inputWidget = ({
     onChange(event.target.value);
   };
 
+
   const handleKeyDown = (event) => {
     if (inputType === "number") {
       const allowedKeys = /^[0-9]$/;
-      if (
-        !allowedKeys.test(event.key) &&
-        !["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"].includes(
-          event.key
-        )
-      ) {
+      if (!allowedKeys.test(event.key) && 
+          !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'].includes(event.key)) {
         event.preventDefault();
       }
     } else {
@@ -88,9 +85,7 @@ const inputWidget = ({
       </div>
       <div className="relative">
         <input
-          className={`block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 ${
-            hasError ? "border-red-500" : "border-gray-300"
-          }`}
+          className={`block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 ${hasError ? 'border-red-500' : 'border-gray-300'}`}
           placeholder={placeholder || `Enter ${label || title}`}
           type={inputType}
           value={value}
@@ -99,7 +94,9 @@ const inputWidget = ({
         />
       </div>
       {hasError && (
-        <div className="text-red-500 text-[12px] mt-1">{hasError}</div>
+        <div className="text-red-500 text-[12px] mt-1">
+          {hasError}
+        </div>
       )}
     </div>
   );

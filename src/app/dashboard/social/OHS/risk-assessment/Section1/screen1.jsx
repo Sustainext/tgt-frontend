@@ -168,7 +168,7 @@ const uiSchema = {
         key: "VulnerableWorkers",
         title: "Vulnerable Workers",
         tooltip:
-          "List the specific regulations, or recognized standards/guidelines your processes are based on, if applicable.",
+          "How do you ensure these processes are accessible for workers with language barriers or sensory impairments? (Select all that apply)",
           layouttype:"multiselect",
       },
     ],

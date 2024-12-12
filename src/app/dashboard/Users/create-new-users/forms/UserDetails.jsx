@@ -318,7 +318,7 @@ const PersonalDetailsForm = ({ onNext }) => {
         <div className="float-end">
           <button
             type="submit"
-            className="mt-4 w-[120px] bg-[#007eef] hover:shadow-lg text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow"
+             className="bg-[#007eef] hover:shadow-lg text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow"
           >
             <span className="text-[12px] font-['Manrope']">Next</span>
             <MdChevronRight />

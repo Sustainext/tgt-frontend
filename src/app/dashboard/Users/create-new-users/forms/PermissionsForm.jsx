@@ -189,7 +189,18 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
   };
 
   useEffect(() => {
-    if (edit && currentUser) {
+    const isAdmin = role_type === "Admin"; 
+
+    if (isAdmin) {
+      // If admin, enable all permissions by default
+      dispatch(setCollect(true));
+      dispatch(setAnalyse(true));
+      dispatch(setReport(true));
+      dispatch(setOptimise(true));
+      dispatch(setTrack(true));
+      dispatch(setPermissionscheckbox(false)); // Override default permissions
+    }
+    else if (edit && currentUser) {
       dispatch(setCollect(currentUser.collect || false));
       dispatch(setAnalyse(currentUser.analyse || false));
       dispatch(setReport(currentUser.report || false));

@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { IoClose } from "react-icons/io5";
 import { AiOutlineEdit, AiOutlineWarning } from "react-icons/ai";
-import ProfileImage from "@/app/shared/components/ProfileImage";
+import ProfileImage from "../shared/components/ProfileImage";
 import { Oval } from "react-loader-spinner";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance, { patch } from "../utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
 
-const Modal = dynamic(() => import("@/app/shared/components/Modal"), {
+const Modal = dynamic(() => import("../shared/components/Modal"), {
   ssr: false,
 });
 
