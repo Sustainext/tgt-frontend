@@ -201,20 +201,27 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
       if (!row.Q1 || row.Q1.trim() === "") {
         rowErrors.Q1 = "This field is required";
-      } else if (isNaN(Number(row.Q1)) || Number(row.Q1) < 0) {
-        rowErrors.Q1 = "Please enter a valid non-negative number";
+      } else if (
+        isNaN(Number(row.Q1)) ||
+        Number(row.Q1) <= 0 ||
+        !Number.isInteger(Number(row.Q1))
+      ) {
+        rowErrors.Q1 = "Please enter a positive whole number";
       }
 
       if (!row.Q2 || row.Q2.trim() === "") {
         rowErrors.Q2 = "This field is required";
-      } else if (isNaN(Number(row.Q2)) || Number(row.Q2) < 0) {
-        rowErrors.Q2 = "Please enter a valid non-negative number";
+      } else if (
+        isNaN(Number(row.Q2)) ||
+        Number(row.Q2) <= 0 ||
+        !Number.isInteger(Number(row.Q2))
+      ) {
+        rowErrors.Q2 = "Please enter a positive whole number";
       }
 
-      // Additional validation to ensure Q1 is not greater than Q2
-      // if (Number(row.Q1) > Number(row.Q2)) {
-      //   rowErrors.Q1 = "Screened suppliers cannot exceed total suppliers";
-      // }
+      if (!rowErrors.Q1 && !rowErrors.Q2 && Number(row.Q1) > Number(row.Q2)) {
+        rowErrors.Q1 = "Screened suppliers cannot exceed total suppliers";
+      }
 
       return rowErrors;
     });

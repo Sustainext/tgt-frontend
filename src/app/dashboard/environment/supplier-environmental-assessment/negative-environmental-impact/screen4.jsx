@@ -172,8 +172,12 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
 
       if (!row.Q1 || row.Q1.trim() === "") {
         rowErrors.Q1 = "This field is required";
-      } else if (isNaN(Number(row.Q1)) || Number(row.Q1) < 0) {
-        rowErrors.Q1 = "Please enter a valid non-negative number";
+      } else if (
+        isNaN(Number(row.Q1)) ||
+        Number(row.Q1) < 0 ||
+        !Number.isInteger(Number(row.Q1))
+      ) {
+        rowErrors.Q1 = "Please enter a valid non-negative whole number";
       }
 
       return rowErrors;

@@ -187,14 +187,16 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
     return data.map((row) => {
       const rowErrors = {};
 
-      // Validate Q1 (number field)
       if (!row.Q1 || row.Q1.trim() === "") {
         rowErrors.Q1 = "This field is required";
-      } else if (isNaN(Number(row.Q1)) || Number(row.Q1) < 0) {
-        rowErrors.Q1 = "Please enter a valid non-negative number";
+      } else if (
+        isNaN(Number(row.Q1)) ||
+        Number(row.Q1) < 0 ||
+        !Number.isInteger(Number(row.Q1))
+      ) {
+        rowErrors.Q1 = "Please enter a valid non-negative whole number";
       }
 
-      // Validate Q2 only if Q1 is greater than 0
       if (Number(row.Q1) > 0) {
         if (!row.Q2 || row.Q2.trim() === "") {
           rowErrors.Q2 = "This field is required";
