@@ -15,7 +15,8 @@ const MaterialtopicWidget = (props) => {
   const { validationErrors } = formContext || {};
   const rowIndex = parseInt(id.split("_")[1], 10);
   const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
-  const hasError = !value || value.trim() === "";
+  const hasError =
+    (!value || value.trim() === "") && rowErrors && rowErrors[name];
 
   return (
     <>
