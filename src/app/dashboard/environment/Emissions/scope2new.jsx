@@ -131,8 +131,10 @@ const Scope2 = forwardRef(
               }
             });
 
+            // Preserve other scopes' validation errors while updating scope2
             dispatch(
               setValidationErrors({
+                ...validationErrors,
                 scope2: {
                   fields: newValidationFields,
                   messages: validationResult.messages,
@@ -141,7 +143,9 @@ const Scope2 = forwardRef(
               })
             );
           } else {
-            dispatch(setValidationErrors({}));
+            // Only remove validation errors for this scope
+            const { scope2, ...otherScopeErrors } = validationErrors;
+            dispatch(setValidationErrors(otherScopeErrors));
           }
         }
       },

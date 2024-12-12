@@ -122,8 +122,10 @@ const Scope3 = forwardRef(
               }
             });
 
+            // Preserve other scopes' validation errors while updating scope3
             dispatch(
               setValidationErrors({
+                ...validationErrors,
                 scope3: {
                   fields: newValidationFields,
                   messages: validationResult.messages,
@@ -132,51 +134,13 @@ const Scope3 = forwardRef(
               })
             );
           } else {
-            dispatch(setValidationErrors({}));
+            // Only remove validation errors for this scope
+            const { scope3, ...otherScopeErrors } = validationErrors;
+            dispatch(setValidationErrors(otherScopeErrors));
           }
         }
       },
       [dispatch, validationErrors]
-    );
-
-    const handleCombinedWidgetChange = useCallback(
-      (
-        index,
-        field,
-        value,
-        activityId,
-        unitType,
-        name,
-        url,
-        filetype,
-        size,
-        uploadDateTime
-      ) => {
-        const updatedFormData = [...formData];
-        const currentEmission = updatedFormData[index]?.Emission || {};
-
-        updatedFormData[index] = {
-          ...updatedFormData[index],
-          Emission: {
-            ...currentEmission,
-            [field]: value,
-            ...(activityId !== undefined && { activity_id: activityId }),
-            ...(unitType !== undefined && { unit_type: unitType }),
-            ...(name &&
-              url &&
-              filetype &&
-              size &&
-              uploadDateTime && {
-                file: { name, url, type: filetype, size, uploadDateTime },
-              }),
-          },
-        };
-
-        dispatch(
-          updateScopeDataLocal({ scope: 3, data: { data: updatedFormData } })
-        );
-      },
-      [formData, dispatch]
     );
 
     const handleAddNew = useCallback(() => {
