@@ -15,6 +15,7 @@ import CalculateSuccess from "./calculateSuccess";
 import {
   updateScopeData,
   updateScopeDataLocal,
+  setValidationErrors,
 } from "@/lib/redux/features/emissionSlice";
 import { debounce } from "lodash";
 import { validateEmissionsData } from "./emissionValidation";
@@ -353,103 +354,6 @@ const Scope3 = forwardRef(
         setRemoteUiSchema(scope3State.uiSchema);
       }
     }, [scope3State]);
-
-    // useEffect(() => {
-    //   const debouncedDataMerge = debounce(() => {
-    //     if (
-    //       (autoFill && previousMonthData.status === "succeeded") ||
-    //       assigned_data.status === "succeeded" ||
-    //       approved_data.status === "succeeded"
-    //     ) {
-    //       let updatedFormData = [...formData];
-
-    //       // Handle Assigned Data
-    //       if (assigned_data.status === 'succeeded') {
-    //         const assignedDataScope = assigned_data.scope3;
-
-    //         const formattedAssignedData = assignedDataScope.map(task => ({
-    //           ...task,
-    //           Emission: {
-    //             ...task.Emission,
-    //             rowType: 'assigned'
-    //           }
-    //         }));
-
-    //         updatedFormData = [
-    //           ...formattedAssignedData,
-    //           ...updatedFormData.filter(
-    //             (item) => !formattedAssignedData.some((assignedItem) => assignedItem.id === item.id)
-    //           ),
-
-    //         ];
-    //       }
-
-    //       // Handle Approved Data
-    //       if (approved_data.status === 'succeeded') {
-    //         const approvedDataScope = approved_data.scope3;
-
-    //         const formattedApprovedData = approvedDataScope.map(task => ({
-    //           ...task,
-    //           Emission: {
-    //             ...task.Emission,
-    //             rowType: 'approved'
-    //           }
-    //         }));
-
-    //         updatedFormData = [
-    //           ...formattedApprovedData,
-    //           ...updatedFormData.filter(
-    //             (item) => !formattedApprovedData.some((approvedItem) => approvedItem.id === item.id)
-    //           ),
-
-    //         ];
-    //       }
-
-    //       // Handle Previous Month Data (Auto-Fill)
-    //       if (autoFill && previousMonthData.status === "succeeded") {
-    //         console.log('Autofill triggered');
-    //         const prevMonthFormData = previousMonthData.scope3Data?.data || [];
-
-    //         const formattedPrevMonthData = prevMonthFormData.map((item) => {
-    //           const updatedEmission = { ...item.Emission };
-
-    //           // Resetting unit and quantity fields
-    //           updatedEmission.Unit = "";
-    //           updatedEmission.Quantity = "";
-
-    //           if (
-    //             updatedEmission.unit_type &&
-    //             updatedEmission.unit_type.includes("Over")
-    //           ) {
-    //             updatedEmission.Unit2 = "";
-    //             updatedEmission.Quantity2 = "";
-    //           }
-
-    //           return {
-    //             ...item,
-    //             Emission: updatedEmission,
-    //           };
-    //         });
-
-    //         updatedFormData = [
-    //           ...formattedPrevMonthData.filter(
-    //             (item) => !updatedFormData.some((existingItem) => existingItem.id === item.id),
-    //             ...updatedFormData,
-    //           )
-    //         ];
-    //       }
-
-    //       // Dispatch state update only once
-    //       dispatch(updateScopeDataLocal({ scope: 3, data: { data: updatedFormData } }));
-    //     }
-    //   }, 300);
-
-    //   debouncedDataMerge();
-
-    //   return () => {
-    //     debouncedDataMerge.cancel();
-    //   };
-    // }, [autoFill, previousMonthData.status, assigned_data.status, approved_data.status, year, month, location, formData]);
 
     // Add at the top of Scope3 component
     const [hasAutoFilled, setHasAutoFilled] = useState(false);
