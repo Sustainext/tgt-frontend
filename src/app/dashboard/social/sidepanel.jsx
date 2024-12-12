@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import {MdOutlineGroups2,MdKeyboardArrowDown} from "react-icons/md";
+import { LiaCanadianMapleLeaf } from "react-icons/lia";
+import { FaCanadianMapleLeaf } from "react-icons/fa";
 
 import { GiWoodPile } from "react-icons/gi";
 
@@ -246,7 +248,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               onClick={toggleBillS211}
             >
               <div className="w-[20%]">
-                <MdOutlineGroups2 className="w-5 h-5 mr-2" />
+                <FaCanadianMapleLeaf className="w-5 h-5 mr-2" />
               </div>
               <div className="w-[67%] text-left ">
                 <span className="indent-0 text-[13px]">Bill S-211</span>

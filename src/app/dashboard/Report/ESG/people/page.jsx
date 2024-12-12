@@ -143,26 +143,26 @@ const People=forwardRef(({ onSubmitSuccess }, ref) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-      "employee_policies_statement":employee_policies_statement,
-  "workforce_hire_retention_statement":workforce_hire_retention_statement ,
-  "standard_wage":standard_wage ,
-  "performance_review_process":performance_review_process ,
-  "forced_labor_position":forced_labor_position ,
-  "child_labor_position":child_labor_position ,
-  "employee_diversity_position":employee_diversity_position ,
-  "employee_skill_upgrade_programs":employee_skill_upgrade_programs ,
-  "remuneration_practices":remuneration_practices ,
-  "ohs_policies":ohs_policies ,
-  "hazard_risk_assessment": hazard_risk_assessment,
-  "work_related_health_injuries":work_related_health_injuries ,
-  "safety_training":safety_training ,
-  "ohs_management_system":ohs_management_system ,
-  "freedom_of_association_views":freedom_of_association_views ,
-  "violation_discrimination_policy":violation_discrimination_policy ,
-  "indigenous_rights_policy": indigenous_rights_policy ,
-  "parental_leaves": parental_leaves ,
-  "security_personnel_external_training":security_personnel_external_training,
-  "security_personnel_internal_training":security_personnel_internal_training
+      "employee_policies_statement":{"page":"screen_thirteen","label":"13. People","subLabel":"Add statement about company’s employees and their policies","type":"textarea","content":employee_policies_statement,"field":"employee_policies_statement","isSkipped":false},
+  "workforce_hire_retention_statement":{"page":"screen_thirteen","label":"13.1.2 Employee Hire, Turnover","subLabel":"Add statement about company’s workforce hire and retention","type":"textarea","content":workforce_hire_retention_statement,"field":"workforce_hire_retention_statement","isSkipped":false} ,
+  "parental_leaves": {"page":"screen_thirteen","label":"13.1.4 Parental Leaves","subLabel":"Add statement about company’s policy on parental leave","type":"textarea","content":parental_leaves,"field":"parental_leaves","isSkipped":false} ,
+  "standard_wage":{"page":"screen_thirteen","label":"13.1.5 Standard Wage","subLabel":"Add statement about company’s Policy on employee compensation","type":"textarea","content":standard_wage,"field":"standard_wage","isSkipped":false} ,
+  "performance_review_process":{"page":"screen_thirteen","label":"13.1.6 Performance and Career Development Reviews of Employees","subLabel":"Add statement about company’s process for performance review of employees","type":"textarea","content":performance_review_process,"field":"performance_review_process","isSkipped":false} ,
+  "forced_labor_position":{"page":"screen_thirteen","label":"13.2.3 Forced or Compulsory Labour","subLabel":"Add statement about company’s position on forced / compulsory labor","type":"textarea","content":forced_labor_position,"field":"forced_labor_position","isSkipped":false} ,
+  "child_labor_position":{"page":"screen_thirteen","label":"13.3 Incidents of Child Labour","subLabel":"Add statement about company’s position on child labor","type":"textarea","content":child_labor_position,"field":"child_labor_position","isSkipped":false} ,
+  "employee_diversity_position":{"page":"screen_thirteen","label":"13.4.2 Diversity of Governance Bodies and Employees","subLabel":"Add statement about company’s position on diversity of employees","type":"textarea","content":employee_diversity_position,"field":"employee_diversity_position","isSkipped":false} ,
+  "employee_skill_upgrade_programs":{"page":"screen_thirteen","label":"13.5.2 Programs for Upgrading Employee Skills and Transition Assistance Programs","subLabel":"Add statement about company’s programs for upgrading employee’s skills","type":"textarea","content":employee_skill_upgrade_programs,"field":"employee_skill_upgrade_programs","isSkipped":false} ,
+  "remuneration_practices":{"page":"screen_thirteen","label":"13.4.3 Remuneration","subLabel":"Add statement about company’s remuneration practices & policies.","type":"textarea","content":remuneration_practices,"field":"remuneration_practices","isSkipped":false} ,
+  "ohs_policies":{"page":"screen_thirteen","label":"13.6.4 Worker Participation, Consultation, and Communication on OHS","subLabel":"Add statement about company’s OHS policies","type":"textarea","content":ohs_policies,"field":"ohs_policies","isSkipped":false} ,
+  "hazard_risk_assessment": {"page":"screen_thirteen","label":"13.6.7 Hazard, Risk Identification and Investigation","subLabel":"Add statement about company’s process of Hazard and risk assessment","type":"textarea","content":hazard_risk_assessment,"field":"hazard_risk_assessment","isSkipped":false},
+  "work_related_health_injuries":{"page":"screen_thirteen","label":"13.6.8 Work-Related Ill-Health & Injuries","subLabel":"Add statement about work related ill health and injuries in company","type":"textarea","content":work_related_health_injuries,"field":"work_related_health_injuries","isSkipped":false} ,
+  "safety_training":{"page":"screen_thirteen","label":"13.6.9 Safety Training","subLabel":"Add statement about company’s safety training","type":"textarea","content":safety_training,"field":"safety_training","isSkipped":false} ,
+  "ohs_management_system":{"page":"screen_thirteen","label":"13.6.10 Workers Covered by OHS Management System","subLabel":"Add statement about company’s OHS management system","type":"textarea","content":ohs_management_system,"field":"ohs_management_system","isSkipped":false} ,
+  "freedom_of_association_views":{"page":"screen_thirteen","label":"13.7.2 Operations and Suppliers in Which the Right to Freedom of Association and Collective Bargaining May Be at Risk","subLabel":"Add statement about company’s views on freedom of association and collective bargaining","type":"textarea","content":freedom_of_association_views,"field":"freedom_of_association_views","isSkipped":false} ,
+  "violation_discrimination_policy":{"page":"screen_thirteen","label":"13.8 Incidents of Violation/Discrimination","subLabel":"Add statement about company’s policy for addressing violation/ discrimination","type":"textarea","content":violation_discrimination_policy,"field":"violation_discrimination_policy","isSkipped":false} ,
+  "indigenous_rights_policy": {"page":"screen_thirteen","label":"13.8.2 Incidents of Violation of Rights of Indigenous People","subLabel":"Add statement about company’s policy on violation of rights of indigenous people","type":"textarea","content":indigenous_rights_policy,"field":"indigenous_rights_policy","isSkipped":false} ,
+  "security_personnel_external_training":{"page":"screen_thirteen","label":"Percentage of security personnel who have received formal training from third-party organisation","subLabel":"","type":"textarea","content":security_personnel_external_training,"field":"security_personnel_external_training","isSkipped":false},
+  "security_personnel_internal_training":{"page":"screen_thirteen","label":"Percentage of security personnel who have received formal training in the organisation","subLabel":"","type":"textarea","content":security_personnel_internal_training,"field":"security_personnel_internal_training","isSkipped":false}
 
       }
   
@@ -251,26 +251,27 @@ const People=forwardRef(({ onSubmitSuccess }, ref) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setEmployeePoliciesStatement(response.data.employee_policies_statement));
-            dispatch(setWorkforceHireRetentionStatement(response.data.workforce_hire_retention_statement));
-            dispatch(setStandardWage(response.data.standard_wage));
-            dispatch(setPerformanceReviewProcess(response.data.performance_review_process));
-            dispatch(setForcedLaborPosition(response.data.forced_labor_position));
-            dispatch(setChildLaborPosition(response.data.child_labor_position));
-            dispatch(setEmployeeDiversityPosition(response.data.employee_diversity_position));
-            dispatch(setEmployeeSkillUpgradePrograms(response.data.employee_skill_upgrade_programs));
-            dispatch(setRemunerationPractices(response.data.remuneration_practices));
-            dispatch(setOHSPolicies(response.data.ohs_policies));
-            dispatch(setHazardRiskAssessment(response.data.hazard_risk_assessment));
-            dispatch(setWorkRelatedHealthInjuries(response.data.work_related_health_injuries));
-            dispatch(setSafetyTraining(response.data.safety_training));
-            dispatch(setOHSManagementSystem(response.data.ohs_management_system));
-            dispatch(setFreedomOfAssociationViews(response.data.freedom_of_association_views));
-            dispatch(setViolationDiscriminationPolicy(response.data.violation_discrimination_policy));
-            dispatch(setIndigenousRightsPolicy(response.data.indigenous_rights_policy));
-            dispatch(setParentalLeaves(response.data.parental_leaves));
-            dispatch(setSecurityPersonnelInternalTraining(response.data.security_personnel_internal_training));
-      dispatch(setSecurityPersonnelExternalTraining(response.data.security_personnel_external_training));
+            dispatch(setEmployeePoliciesStatement(response.data.employee_policies_statement?.content || ""));
+dispatch(setWorkforceHireRetentionStatement(response.data.workforce_hire_retention_statement?.content || ""));
+dispatch(setStandardWage(response.data.standard_wage?.content || ""));
+dispatch(setPerformanceReviewProcess(response.data.performance_review_process?.content || ""));
+dispatch(setForcedLaborPosition(response.data.forced_labor_position?.content || ""));
+dispatch(setChildLaborPosition(response.data.child_labor_position?.content || ""));
+dispatch(setEmployeeDiversityPosition(response.data.employee_diversity_position?.content || ""));
+dispatch(setEmployeeSkillUpgradePrograms(response.data.employee_skill_upgrade_programs?.content || ""));
+dispatch(setRemunerationPractices(response.data.remuneration_practices?.content || ""));
+dispatch(setOHSPolicies(response.data.ohs_policies?.content || ""));
+dispatch(setHazardRiskAssessment(response.data.hazard_risk_assessment?.content || ""));
+dispatch(setWorkRelatedHealthInjuries(response.data.work_related_health_injuries?.content || ""));
+dispatch(setSafetyTraining(response.data.safety_training?.content || ""));
+dispatch(setOHSManagementSystem(response.data.ohs_management_system?.content || ""));
+dispatch(setFreedomOfAssociationViews(response.data.freedom_of_association_views?.content || ""));
+dispatch(setViolationDiscriminationPolicy(response.data.violation_discrimination_policy?.content || ""));
+dispatch(setIndigenousRightsPolicy(response.data.indigenous_rights_policy?.content || ""));
+dispatch(setParentalLeaves(response.data.parental_leaves?.content || ""));
+dispatch(setSecurityPersonnelInternalTraining(response.data.security_personnel_internal_training?.content || ""));
+dispatch(setSecurityPersonnelExternalTraining(response.data.security_personnel_external_training?.content || ""));
+
           }
           
           LoaderClose();

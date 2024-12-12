@@ -297,361 +297,11 @@ const Screenthree = ({ nextStep, prevStep }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-      <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-      {isClicked ? (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-            <div className="w-[72%]">
-                <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Annual Report
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 3/8</div>
-                <div className="flex">
-                  <MdClose
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    onClick={handleeditClick}
-                  />
-                  <IoSaveOutline
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    // onClick={handleSubmit}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mx-4 mt-8">
-            <form className="w-[80%] text-left">
-              <div className="mb-5">
-                <label
-                  className="block text-gray-700 text-[15px] mb-2 ml-1"
-                  htmlFor="username"
-                >
-                  6.Does the entity currently have policies and due diligence
-                  processes in place related to forced labour and/or child
-                  labour?*
-                </label>
-                <div className="relative mb-1">
-                  <div>
-                     {" "}
-                    <input
-                      type="radio"
-                      id="Yes"
-                      name="radio"
-                      value="Yes"
-                      checked={reportradio === "Yes"}
-                      onChange={handleReportnradio}
-                    />
-                     {" "}
-                    <label htmlFor="Yes" className="text-[15px] text-gray-700">
-                      Yes
-                    </label>
-                    <br />
-                  </div>
-                  <div className="">
-                     {" "}
-                    <input
-                      type="radio"
-                      id="No"
-                      name="radio"
-                      value="No"
-                      checked={reportradio === "No"}
-                      onChange={handleReportnradio}
-                    />
-                     {" "}
-                    <label htmlFor="No" className="text-[15px] text-gray-700 ">
-                      No
-                    </label>
-                    <br />
-                  </div>
-                </div>
-                {error.reportradio && (
-                  <p className="text-red-500 ml-1">{error.reportradio}</p>
-                )}
-              </div>
-              {reportradio === "Yes" && (
-                <div className="mb-5">
-                  <label
-                    className="block text-gray-700 text-[15px] mb-2 ml-1"
-                    htmlFor="username"
-                  >
-                    6.1 If yes, which of the following elements of the due
-                    diligence process has the entity implemented in relation to
-                    forced labour and/or child labour? Select all that apply.*
-                  </label>
-                  <div>
-                    {options.map((option, index) => (
-                      <div key={index} className="mb-3 ml-2">
-                        <label className="text-[14px] text-gray-600">
-                          <input
-                            type="checkbox"
-                            value={option.value}
-                            checked={selectedOptions.includes(option.value)}
-                            onChange={handleCheckboxChange}
-                            className="mr-3"
-                          />
-                          {option.label}
-                        </label>
-                      </div>
-                    ))}
-                    {error.checkboxes && (
-                      <div className="text-red-500 ml-1">
-                        {error.checkboxes}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-              <div className="mb-5 mt-3">
-                <label
-                  className="block text-gray-700 text-[15px] mb-2"
-                  html
-                  htmlFor="industryCheckbox"
-                >
-                  7. Please provide additional information on the entity’s
-                  policies and due diligence processes in relation to forced
-                  labour and child labour (if applicable) (1,500 character
-                  limit).
-                </label>
-                <textarea
-                  id="countriesOfOperation"
-                  name="countriesOfOperation"
-                  placeholder="Enter a description..."
-                  className={`${
-                    open ? "w-full" : "w-full"
-                  }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                  value={reportingdescription}
-                  // value={formData.countriesOfOperation}
-                  // onChange={handleInputChange}
-                  rows={5}
-                  onChange={handleReportingdescription} // Specify the number of rows to determine the initial height
-                />
-                 {/* <div className="my-1">
-                  {error.reportingdescription && (
-                    <p className="text-red-500">{error.reportingdescription}</p>
-                  )}
-                </div> */}
-              </div>
-            </form>
-            <div className="w-[80%] mb-5">
-              <div className="float-right">
-                <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px] cursor-not-allowed"
-                  disabled
-                >
-                  &lt; Previous
-                </button>
-                <button
-                  type="button"
-                  disabled
-                  className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white cursor-not-allowed"
-                >
-                  {" "}
-                  Next &gt;
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="container mt-5">
-            <div className="flex">
-            <div className="w-[72%]">
-                <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Annual Report
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 3/8</div>
-                <div>
-                  {data !== null ? (
-                     <MdOutlineModeEditOutline
-                     className="text-[15.5px] ml-2 mt-1 cursor-pointer"
-
-                       onClick={handleeditClick}
-                     />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mx-4 mt-8">
-            {data !== null ? (
-              <>
-                <form className="w-[80%]  text-left">
+      <div className="mx-4 mt-2">
+      <form className="w-[80%] text-left">
                   <div className="mb-5">
                     <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
-                      htmlFor="username"
-                    >
-                      6.Does the entity currently have policies and due
-                      diligence processes in place related to forced labour
-                      and/or child labour?*
-                    </label>
-                    <div className="relative mb-1">
-                      <div>
-                         {" "}
-                        <input
-                          type="radio"
-                          id="Yes"
-                          name="radio"
-                          value="Yes"
-                          checked={reportradio === "Yes"}
-                          onChange={handleReportnradio}
-
-                        />
-                         {" "}
-                        <label
-                          htmlFor="Yes"
-                          className="text-[15px] text-gray-700"
-                        >
-                          Yes
-                        </label>
-                        <br />
-                      </div>
-                      <div className="">
-                         {" "}
-                        <input
-                          type="radio"
-                          id="No"
-                          name="radio"
-                          value="No"
-                          checked={reportradio === "No"}
-                          onChange={handleReportnradio}
-
-                        />
-                         {" "}
-                        <label
-                          htmlFor="No"
-                          className="text-[15px] text-gray-700 "
-                        >
-                          No
-                        </label>
-                        <br />
-                      </div>
-                    </div>
-                    {error.reportradio && (
-                      <p className="text-red-500 ml-1">{error.reportradio}</p>
-                    )}
-                  </div>
-
-                  {reportradio === "Yes" && (
-                    <div className="mb-5">
-                      <label
-                        className="block text-gray-700 text-[15px] mb-2 ml-1"
-                        htmlFor="username"
-                      >
-                        6.1 If yes, which of the following elements of the due
-                        diligence process has the entity implemented in relation
-                        to forced labour and/or child labour? Select all that
-                        apply.*
-                      </label>
-                      <div>
-                        {options.map((option, index) => (
-                          <div key={index} className="mb-3 ml-2">
-                            <label className="text-[14px] text-gray-600">
-                              <input
-                                type="checkbox"
-                                value={option.value}
-                                checked={selectedOptions.includes(option.value)}
-                                onChange={handleCheckboxChange}
-
-                                className="mr-3"
-                              />
-                              {option.label}
-                            </label>
-                          </div>
-                        ))}
-                        {error.checkboxes && (
-                          <div className="text-red-500 ml-1">
-                            {error.checkboxes}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                  <div className="mb-5 mt-3">
-                    <label
-                      className="block text-gray-700 text-[15px] mb-2"
-                      html
-                      htmlFor="industryCheckbox"
-                    >
-                      7. Please provide additional information on the entity’s
-                      policies and due diligence processes in relation to forced
-                      labour and child labour (if applicable) (1,500 character
-                      limit).
-                    </label>
-                    <textarea
-                      id="countriesOfOperation"
-                      name="countriesOfOperation"
-                      placeholder="Enter a description..."
-                      className={`${
-                        open ? "w-full" : "w-full"
-                      }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                      value={reportingdescription}
-                      // value={formData.countriesOfOperation}
-                      // onChange={handleInputChange}
-                      rows={5}
-                      onChange={handleReportingdescription}
-                      // Specify the number of rows to determine the initial height
-                    />
-                    {/* <div className="my-1">
-                      {error.reportingdescription && (
-                        <p className="text-red-500">
-                          {error.reportingdescription}
-                        </p>
-                      )}
-                    </div> */}
-                  </div>
-                </form>
-                <div className="w-[80%] mb-5 mt-5">
-                  <div className="float-right">
-                    <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                      onClick={prevStep}
-                    >
-                      &lt; Previous
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={coNextStep}
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
-                    >
-                      {" "}
-                      Next &gt;
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <form className="w-[80%] text-left">
-                  <div className="mb-5">
-                    <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
+                      className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                       htmlFor="username"
                     >
                       6.Does the entity currently have policies and due
@@ -672,7 +322,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                          {" "}
                         <label
                           htmlFor="Yes"
-                          className="text-[15px] text-gray-700"
+                          className="text-[14px] text-gray-700"
                         >
                           Yes
                         </label>
@@ -691,7 +341,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                          {" "}
                         <label
                           htmlFor="No"
-                          className="text-[15px] text-gray-700 "
+                          className="text-[14px] text-gray-700 "
                         >
                           No
                         </label>
@@ -706,7 +356,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                   {reportradio === "Yes" && (
                     <div className="mb-5">
                       <label
-                        className="block text-gray-700 text-[15px] mb-2 ml-1"
+                        className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                         htmlFor="username"
                       >
                         6.1 If yes, which of the following elements of the due
@@ -739,7 +389,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                   )}
                   <div className="mb-5 mt-3">
                     <label
-                      className="block text-gray-700 text-[15px] mb-2"
+                      className="block text-gray-700 text-[14px] font-[500] mb-2"
                       html
                       htmlFor="industryCheckbox"
                     >
@@ -789,11 +439,8 @@ const Screenthree = ({ nextStep, prevStep }) => {
                     </button>
                   </div>
                 </div>
-              </>
-            )}
-          </div>
-        </>
-      )}
+
+      </div>
     </>
   );
 };

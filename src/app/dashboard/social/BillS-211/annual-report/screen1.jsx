@@ -398,176 +398,11 @@ const Screenone = ({ nextStep, prevStep }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-      <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-      {isClicked ? (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-            <div className="w-[72%]">
-                <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Annual Report
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 1/8 </div>
-                <div className="flex">
-                  <MdClose
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    onClick={handleeditClick}
-                  />
-                  <IoSaveOutline
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    // onClick={handleSubmit}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="container ml-3 w-[78%]">
-            <div className="mb-5 mt-5 ml-2">
-              <label
-                className="block text-gray-700 text-[15px] mb-2"
-                htmlFor="industryCheckbox"
-              >
-                1. What steps has the entity taken in the previous financial
-                year to prevent and reduce the risk that forced labour or child
-                labour is used at any step of the production of goods in Canada
-                or elsewhere by the entity or of goods imported into Canada by
-                the entity? Select all that apply. *
-              </label>
-            </div>
-            <div className="mb-2">
-              <div className="gap-2">
-                {optionsTwo.map((option, index) => (
-                  <div key={index} className="flex items-center mb-2">
-                    <label className="ml-2 text-[15px] text-gray-600">
-                      <input
-                        type="checkbox"
-                        value={option.value}
-                        checked={selectedOptions.includes(option.value)}
-                        onChange={handleCheckboxChange}
-                        className="mr-3 pt-1"
-                      />
-                      {option.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-              <div className="my-1">
-                {error.selectedOptions && (
-                  <p className="text-red-500">{error.selectedOptions}</p>
-                )}
-              </div>
-            </div>
-            {selectedOptions.includes("other") && (
-              <div className="mb-5">
-                <input
-                  type="text"
-                  placeholder="Enter a description..."
-                  className={`${
-                    open ? "w-[90%]" : "w-[90%]"
-                  } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                  value={reportingentity}
-                  onChange={handleReportingentity}
-                ></input>
-                {error.reportingentity && (
-                  <div className="text-red-500 ml-1">
-                    {error.reportingentity}
-                  </div>
-                )}
-              </div>
-            )}
-            <div className="mb-5 mt-3">
-              <label
-                className="block text-gray-700 text-[15px] mb-2"
-                htmlFor="industryCheckbox"
-              >
-                2. Please provide additional information describing the steps
-                taken (if applicable) (1,500 character limit).
-              </label>
-              <textarea
-                id="countriesOfOperation"
-                name="countriesOfOperation"
-                placeholder="Enter a description..."
-                maxLength="1500"
-                className={`${
-                  open ? "w-full" : "w-full"
-                }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                value={reportingdescription}
-                // value={formData.countriesOfOperation}
-                // onChange={handleInputChange}
-                rows={5}
-                onChange={handleReportingdescription} // Specify the number of rows to determine the initial height
-              />
-              {/* <div className="my-1">
-                {error.reportingdescription && (
-                  <p className="text-red-500">{error.reportingdescription}</p>
-                )}
-              </div> */}
-            </div>
-          </div>
-          <div className="w-[80%] mb-5">
-            <div className="float-right">
-              <button
-                type="button"
-                disabled
-                className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white cursor-not-allowed"
-              >
-                {" "}
-                Next &gt;
-              </button>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="container mx-auto mt-5 ">
-            <div className="flex">
-            <div className="w-[72%]">
-                <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                 Annual Report
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 1/8 </div>
-                <div>
-                  {data !== null ? (
-                    <MdOutlineModeEditOutline
-                    className="text-[15.5px] ml-2 mt-1 cursor-pointer"
-
-                      onClick={handleeditClick}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {data !== null ? (
-            <>
-              <div className="ml-3 container w-[78%]">
-                <div className="mb-5 mt-5 ml-2">
+     <div className="mx-4 mt-2">
+     <form className="w-[78%] container text-left">
+                <div className="mb-5">
                   <label
-                    className="block text-gray-700 text-[15px] mb-2"
+                    className="block text-gray-700 text-[14px] font-[500] mb-2"
                     htmlFor="industryCheckbox"
                   >
                     1. What steps has the entity taken in the previous financial
@@ -581,92 +416,7 @@ const Screenone = ({ nextStep, prevStep }) => {
                   <div className="gap-2">
                     {optionsTwo.map((option, index) => (
                       <div key={index} className="flex items-center mb-2">
-                        <label className="ml-2 text-[15px] text-gray-600">
-                          <input
-                            type="checkbox"
-                            value={option.value}
-                            checked={selectedOptions.includes(option.value)}
-                            onChange={handleCheckboxChange}
-                            className="mr-3 pt-1"
-
-                          />
-                          {option.label}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                {selectedOptions.includes("other") && (
-                  <div className="mb-5 mt-3">
-                    <input
-                      type="text"
-                      placeholder="Enter a description..."
-                      className={`${
-                        open ? "w-[90%]" : "w-[90%]"
-                      } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                      value={reportingentity}
-
-                    ></input>
-                  </div>
-                )}
-                <div className="mb-5 mt-3">
-                  <label
-                    className="block text-gray-700 text-[15px] mb-2"
-                    htmlFor="industryCheckbox"
-                  >
-                    2. Please provide additional information describing the
-                    steps taken (if applicable) (1,500 character limit).
-                  </label>
-                  <textarea
-                    id="countriesOfOperation"
-                    name="countriesOfOperation"
-                    placeholder="Enter a description..."
-                    className={`${
-                      open ? "w-full" : "w-full"
-                    }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                    value={reportingdescription}
-
-                    // value={formData.countriesOfOperation}
-                    // onChange={handleInputChange}
-                    rows={5}
-                    // Specify the number of rows to determine the initial height
-                  />
-                </div>
-              </div>
-
-              <div className="w-[80%] mb-5">
-                <div className="float-right mr-3">
-                  <button
-                    type="button"
-                    onClick={coNextStep}
-                    className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
-                  >
-                    {" "}
-                    Next &gt;
-                  </button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <form className="w-[78%] container ml-3 text-left">
-                <div className="mb-5 mt-5 ml-2">
-                  <label
-                    className="block text-gray-700 text-[15px] mb-2"
-                    htmlFor="industryCheckbox"
-                  >
-                    1. What steps has the entity taken in the previous financial
-                    year to prevent and reduce the risk that forced labour or
-                    child labour is used at any step of the production of goods
-                    in Canada or elsewhere by the entity or of goods imported
-                    into Canada by the entity? Select all that apply. *
-                  </label>
-                </div>
-                <div className="mb-2">
-                  <div className="gap-2">
-                    {optionsTwo.map((option, index) => (
-                      <div key={index} className="flex items-center mb-2">
-                        <label className="ml-2 text-[15px] text-gray-600">
+                        <label className="ml-2 text-[14px] text-gray-600">
                           <input
                             type="checkbox"
                             value={option.value}
@@ -705,7 +455,7 @@ const Screenone = ({ nextStep, prevStep }) => {
                 )}
                 <div className="mb-5 mt-3">
                   <label
-                    className="block text-gray-700 text-[15px] mb-2"
+                    className="block text-gray-700 text-[14px] font-[500] mb-2"
                     htmlFor="industryCheckbox"
                   >
                     2. Please provide additional information describing the
@@ -734,7 +484,7 @@ const Screenone = ({ nextStep, prevStep }) => {
                   </div> */}
                 </div>
               </form>
-              <div className="w-[80%] mb-5">
+              <div className="w-[79%] mb-5">
                 <div className="float-right mr-3">
                   <button
                     type="button"
@@ -746,10 +496,7 @@ const Screenone = ({ nextStep, prevStep }) => {
                   </button>
                 </div>
               </div>
-            </>
-          )}
-        </>
-      )}
+     </div>
     </>
   );
 };

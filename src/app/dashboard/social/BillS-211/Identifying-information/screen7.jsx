@@ -249,218 +249,12 @@ const Screenseven = ({ prevStep, activeSteps }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-      <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-
-      {isClicked ? (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-              <div className="w-[70%]">
-              <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Identifying information
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 7/7</div>
-                <div className="flex">
-                <MdClose
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    onClick={handleeditClick}
-                  />
-                  <IoSaveOutline
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    // onClick={handleSubmit}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mx-4 mt-8">
-            <div className="mb-5">
-              <label
-                className="block text-gray-700 text-[15px]  mb-2 ml-1"
-                for="username"
-              >
-                10.In which country is the entity headquartered or principally
-                located? *
-              </label>
-              <div className="relative mb-1">
-                <select
-                  className={`${
-                    open ? "w-[78%]" : "w-[78%]"
-                  } rounded-md border-0 py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-                  value={entitylocated}
-                  onChange={handleEntitylocated}
-                >
-                  {/* <option value="default">Select country</option> */}
-                  {/* <option value="default">Select country</option> */}
-                  {countryname.map((option) => (
-                    <option value={option.name}>{option.name}</option>
-                  ))}
-                </select>
-              </div>
-              {error.entitylocated && (
-                <p className="text-red-500 ml-1 text-[12px]">{error.entitylocated}</p>
-              )}
-            </div>
-            {entitylocated === "Canada" && (
-              <div className="mb-5">
-                <label
-                  className="block text-gray-700 text-[15px] mb-2 ml-1"
-                  for="username"
-                >
-                  10.1 If in Canada: In which province or territory is the
-                  entity headquartered or principally located?*
-                </label>
-                <div className="relative mb-1">
-                  <select
-                    className={`${
-                      open ? "w-[78%]" : "w-[78%]"
-                    } rounded-md border-0 py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-                    value={territorylocated}
-                    onChange={handleTerritorylocated}
-                  >
-                    {canadian.map((option) => (
-                      <option value={option.name}>{option.name}</option>
-                    ))}
-                  </select>
-                </div>
-                {error.territorylocated && (
-                  <p className="text-red-500 ml-1 text-[12px]">{error.territorylocated}</p>
-                )}
-              </div>
-            )}
-
-            <div className="w-[80%] mb-5">
-              <div className="float-right">
-                <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                  onClick={prevStep}
-                >
-                  &lt; Previous
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-              <div className="w-[75%]">
-              <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Identifying information
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 7/7</div>
-                <div>
-                  {data !== null ? (
-                <MdOutlineModeEditOutline
-                className="text-[15.5px] ml-2 mt-1 cursor-pointer"
-
-                  onClick={handleeditClick}
-                />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          {data !== null ? (
-            <>
-              <div className="mx-4 mt-8">
+      <div className="mx-4 mt-2">
+      <form className="w-full text-left" onSubmit={handleSubmit}>
+              <div>
                 <div className="mb-5">
                   <label
-                    className="block text-gray-700 text-[15px]  mb-2 ml-1"
-                    for="username"
-                  >
-                    10.In which country is the entity headquartered or
-                    principally located? *
-                  </label>
-                  <div className="relative mb-1">
-                    <select
-                      className={`${
-                        open ? "w-[78%]" : "w-[78%]"
-                      } rounded-md border-0 py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-                      value={entitylocated}
-                      onChange={handleEntitylocated}
-                    >
-                      {/* <option value="default">Select country</option> */}
-                      {countryname.map((option) => (
-                        <option value={option.name}>{option.name}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                {entitylocated === "Canada" && (
-                  <div className="mb-5">
-                    <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
-                      for="username"
-                    >
-                      10.1 If in Canada: In which province or territory is the
-                      entity headquartered or principally located?*
-                    </label>
-                    <div className="relative mb-1">
-                      <select
-                        className={`${
-                          open ? "w-[78%]" : "w-[78%]"
-                        } rounded-md border-0 py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-                        value={territorylocated}
-                        onChange={handleTerritorylocated}
-
-                      >
-                        {canadian.map((option) => (
-                          <option value={option.name}>{option.name}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                )}
-
-                <div className="w-[79%] mb-5">
-                  <div className="float-right mr-3">
-                    <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                      onClick={prevStep}
-                    >
-                      &lt; Previous
-                    </button>
-                    <button
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[120px] text-[12px] bg-blue-500 text-white"
-
-                    >
-                       Submit
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            <form className="w-full text-left" onSubmit={handleSubmit}>
-              <div className="mx-4 mt-8">
-                <div className="mb-5">
-                  <label
-                    className="block text-gray-700 text-[15px]  mb-2 ml-1"
+                    className="block text-gray-700 text-[14px] font-[500]  mb-2 ml-1"
                     for="username"
                   >
                     10.In which country is the entity headquartered or
@@ -487,7 +281,7 @@ const Screenseven = ({ prevStep, activeSteps }) => {
                 {entitylocated === "Canada" && (
                   <div className="mb-5">
                     <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
+                      className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                       for="username"
                     >
                       10.1 If in Canada: In which province or territory is the
@@ -532,9 +326,7 @@ const Screenseven = ({ prevStep, activeSteps }) => {
                 </div>
               </div>
             </form>
-          )}
-        </>
-      )}
+      </div>
     </>
   );
 };

@@ -167,7 +167,8 @@ const TableWithPagination = ({
                 item.start_date,
                 item.end_date,
                 item.organization_country,
-                item.name
+                item.name,
+                item.created_at
               );
             } else {
               handleSetdata(
@@ -286,7 +287,8 @@ const TableWithPagination = ({
     startdate,
     enddate,
     organization_country,
-    name
+    name,
+    created_at
   ) => {
     const newdata = {
       id: id,
@@ -301,6 +303,8 @@ const TableWithPagination = ({
     window.localStorage.setItem("reportstartdate", startdate);
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
+    window.localStorage.setItem("reportCreatedOn", created_at);
+
     // sessionStorage.setItem('reportData',newdata);
     router.push("/dashboard/Report/ESG");
 
