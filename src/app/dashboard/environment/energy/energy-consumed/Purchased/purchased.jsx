@@ -194,7 +194,30 @@ const uiSchema = {
     },
   },
 };
-
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.EnergyType) {
+      rowErrors.EnergyType = "Energy Type is required";
+    }
+    if (!row.Source) {
+      rowErrors.Source = "Source is required";
+    }
+    if (!row.Purpose) {
+      rowErrors.Purpose = "Purpose is required";
+    }
+    if (!row.Renewable) {
+      rowErrors.Renewable = "Renewable/Non-renewable is required";
+    }
+    if (!row.Quantity) {
+      rowErrors.Quantity = "Quantity is required";
+    }
+    if (!row.Unit) {
+      rowErrors.Unit = "Unit is required";
+    }
+    return rowErrors;
+  });
+};
 const Purchased = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
@@ -202,6 +225,7 @@ const Purchased = ({ location, year, month }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const [validationErrors, setValidationErrors] = useState([]);
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -303,7 +327,27 @@ const Purchased = ({ location, year, month }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
+  };
+
+  const renderError = (rowIndex, fieldName) => {
+    const rowErrors = validationErrors[rowIndex] || {};
+    return rowErrors[fieldName] ? (
+      <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div>
+    ) : null;
   };
 
   const handleAddNew = () => {
@@ -332,29 +376,55 @@ const Purchased = ({ location, year, month }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            widgets={{
-              ...widgets,
+            formContext={{ validationErrors }}
+            // widgets={{
 
-              RemoveWidget: (props) => {
-                const match = props.id.match(/^root_(\d+)/);
-                const index = match ? parseInt(match[1], 10) : null;
+            //   inputWidget: (props) => (
+            //     <>
+            //       <inputWidget {...props} />
+            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+            //     </>
+            //   ),
+            //   selectWidget: (props) => (
+            //     <>
+            //       <selectWidget {...props} />
+            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+            //     </>
+            //   ),
+            //   inputnumberWidget: (props) => (
+            //     <>
+            //       <inputnumberWidget {...props} />
+            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+            //     </>
+            //   ),
+            //   selectWidget3: (props) => (
+            //     <>
+            //       <selectWidget3 {...props} />
+            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+            //     </>
+            //   ),
 
-                return (
-                  <RemoveWidget
-                    {...props}
-                    index={index}
-                    onRemove={handleRemove}
-                  />
-                );
-              },
-              FileUploadWidget: (props) => (
-                <CustomFileUploadWidget
-                  {...props}
-                  scopes="ec1"
-                  setFormData={updateFormDatanew}
-                />
-              ),
-            }}
+            //   RemoveWidget: (props) => {
+            //     // Assuming the widget framework passes a unique ID that includes the index
+            //     // Make sure this ID fetching logic is correct
+            //     return (
+            //       <RemoveWidget
+            //         {...props}
+            //         index={props.id.split('_')[1]} // Pass the index
+            //         onRemove={handleRemove}
+            //       />
+            //     );
+            //   },
+            //   FileUploadWidget: (props) => (
+            //     <CustomFileUploadWidget
+            //       {...props}
+            //       scopes="ec1"
+            //       setFormData={updateFormDatanew}
+            //     />
+            //   ),
+            //   ...widgets,
+            // }}
+            widgets={widgets}
           ></Form>
         </div>
 

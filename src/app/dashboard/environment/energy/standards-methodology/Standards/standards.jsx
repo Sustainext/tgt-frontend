@@ -97,13 +97,27 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.textareaQ2) {
+      rowErrors.textareaQ2 = "This field is required";
+    }
+    if (!row.textareaQ3) {
+      rowErrors.textareaQ3 = "This field is required";
+    }
 
+ 
+    return rowErrors;
+  });
+};
 const Standards = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
   const toastShown = useRef(false);
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -214,22 +228,53 @@ const Standards = ({ location, year, month }) => {
   }, [location, year, month]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    updateFormData();
+    e.preventDefault();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
+  };
+  
+
+  const renderError = (rowIndex, fieldName) => {
+    const rowErrors = validationErrors[rowIndex] || {};
+    return rowErrors[fieldName] ? <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div> : null;
   };
   return (
     <>
       <div>
         <div>
-          <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+        <Form
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            widgets={widgets}
-          />
+            formContext={{ validationErrors }}
+            widgets={{
+
+              Textareawithoutgri: (props) => (
+                <>
+                  <Textareawithoutgri {...props} />
+                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                </>
+              ),
+           
+
+            
+              ...widgets,
+            }}
+
+          >
+          </Form>
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

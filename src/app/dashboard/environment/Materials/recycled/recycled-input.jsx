@@ -195,7 +195,34 @@ const uiSchema = {
     }
 };
 
-
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Totalweight) {
+      rowErrors.Totalweight = "Total weight or volume of materials used is required";
+    }
+    if (!row.Recycledmaterialsused) {
+      rowErrors.Recycledmaterialsused = "Recycled materials used  is required";
+    }
+  
+    if (!row.Typeofrecycledmaterialused) {
+      rowErrors.Typeofrecycledmaterialused = "Type of recycled material used is required";
+    }
+    if (!row.Amountofmaterialrecycled) {
+      rowErrors.Amountofmaterialrecycled = "Type of recycled material used is required";
+    }
+    if (!row.Unit) {
+      rowErrors.Unit = "Unit is required";
+    }
+    if (!row.Amountofrecycledinputmaterialused) {
+      rowErrors.Amountofrecycledinputmaterialused = "Amount of recycled input material used is required";
+    }
+    if (!row.Unit2) {
+      rowErrors.Unit2 = "Unit is required";
+    }
+    return rowErrors;
+  });
+};
 const Recycledinput = ({location, year, month}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
