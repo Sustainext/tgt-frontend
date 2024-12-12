@@ -328,11 +328,6 @@ const Wastegeneratedeimpact = ({ location, year, month }) => {
     );
     if (!hasErrors) {
       updateFormData();
-    } else {
-      toast.error("Please fill in all required fields", {
-        position: "top-right",
-        autoClose: 3000,
-      });
     }
   };
 
