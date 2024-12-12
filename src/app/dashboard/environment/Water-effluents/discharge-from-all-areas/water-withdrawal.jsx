@@ -170,7 +170,32 @@ const uiSchema = {
   }
 };
 
-
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Source) {
+      rowErrors.Source = "Source is required";
+    }
+    if (!row.Watertype) {
+      rowErrors.Watertype = "Water type is required";
+    }
+  
+    if (!row.Unit) {
+      rowErrors.Unit = "Unit is required";
+    }
+    if (!row.Businessoperations) {
+      rowErrors.Businessoperations = "Business operations is required";
+    }
+    if (!row.withdrawal) {
+      rowErrors.withdrawal = "Total water withdrawal is required";
+    }
+    if (!row.discharge) {
+      rowErrors.discharge = "Total water discharge is required";
+    }
+  
+    return rowErrors;
+  });
+};
 
 const Waterwithdrawal = ({location, year, month}) => {
   const { open } = GlobalState();
@@ -178,6 +203,7 @@ const Waterwithdrawal = ({location, year, month}) => {
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
   const toastShown = useRef(false);
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -279,7 +305,18 @@ const Waterwithdrawal = ({location, year, month}) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddNew = () => {
@@ -312,6 +349,7 @@ const Waterwithdrawal = ({location, year, month}) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
+            formContext={{ validationErrors }}
             widgets={{
               ...widgets,
 

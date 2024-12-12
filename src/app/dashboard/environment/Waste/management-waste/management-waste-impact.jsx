@@ -164,6 +164,7 @@ const uiSchema = {
     },
   },
 };
+
 const Managementwasteimpact = ({ selectedOrg, year, selectedCorp }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
@@ -283,10 +284,63 @@ const Managementwasteimpact = ({ selectedOrg, year, selectedCorp }) => {
     }
   }, [selectedOrg, year, selectedCorp]);
 
+  // Add validation state
+  const [validationErrors, setValidationErrors] = useState([]);
+
+  // Add validation function
+  const validateRows = (data) => {
+    return data.map((row) => {
+      const rowErrors = {};
+
+      // Validate Q1
+      if (!row.Q1 || row.Q1.trim() === "") {
+        rowErrors.Q1 = "Actions to prevent waste generation is required";
+      }
+
+      // Validate Q2
+      if (!row.Q2 || row.Q2.trim() === "") {
+        rowErrors.Q2 = "Actions to manage significant impacts is required";
+      }
+
+      // Validate Q3
+      if (!row.Q3) {
+        rowErrors.Q3 = "Please select Yes or No";
+      }
+
+      // Validate Q4 only if Q3 is "Yes"
+      if (row.Q3 === "Yes" && (!row.Q4 || row.Q4.trim() === "")) {
+        rowErrors.Q4 = "Third party management process description is required";
+      }
+
+      // Validate Q5
+      if (!row.Q5 || row.Q5.trim() === "") {
+        rowErrors.Q5 = "Data collection process description is required";
+      }
+
+      return rowErrors;
+    });
+  };
+
+  // Add renderError helper
+  const renderError = (rowIndex, fieldName) => {
+    const rowErrors = validationErrors[rowIndex] || {};
+    return rowErrors[fieldName] ? (
+      <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div>
+    ) : null;
+  };
+
+  // Modify handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      updateFormData();
+    }
   };
 
   return (
@@ -300,6 +354,7 @@ const Managementwasteimpact = ({ selectedOrg, year, selectedCorp }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         {loopen && (

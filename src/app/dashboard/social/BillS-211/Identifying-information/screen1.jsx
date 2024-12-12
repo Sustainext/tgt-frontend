@@ -117,7 +117,6 @@ const Screenone = ({ nextStep }) => {
       )
       .then((response) => {
         if (response.status == "200") {
-          console.log(response.status);
           toast.success("Details updated successfully", {
             position: "top-right",
             autoClose: 3000,
@@ -255,278 +254,11 @@ const Screenone = ({ nextStep }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-      <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-      {isClicked ? (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-              <div className="w-[72%]">
-                <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Identifying information
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 1/7 </div>
-                <div className="flex">
-                  <MdClose
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    onClick={handleeditClick}
-                  />
-                  <IoSaveOutline
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    // onClick={handleSubmit}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mx-4 mt-5">
-            <form className="w-full text-left">
-              <div className="mb-5">
-                <label
-                  className="block text-gray-700 text-[15px]  mb-2 ml-1"
-                  htmlFor="username"
-                >
-                  1.This report is for which of the following?*
-                </label>
-                <div className="relative mb-1">
-                  <select
-                    className={`w-[78%] px-2 rounded-md text-[12px] border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-                    value={reportname}
-                    onChange={handleReportname}
-                  >
-                    <option className="text-sm" value="default">Select Entity</option>
-                    <option className="text-sm" value="Entity">Entity</option>
-                    <option className="text-sm" value="GovernmentInsititution">
-                      Government Insititution
-                    </option>
-                    {/* Add more options here as needed */}
-                  </select>
-
-                </div>
-                {error.reportname && (
-                  <p className="text-red-500 ml-1 text-[12px]">
-                    {error.reportname}
-                  </p>
-                )}
-              </div>
-              <div className="mb-5">
-                <label
-                  className="block text-gray-700 text-[15px] mb-2 ml-1"
-                  htmlFor="username"
-                >
-                  2.Legal name of reporting entity *
-                </label>
-                <div className="relative mb-1">
-                  <input
-                    type="text"
-                    placeholder="Entity Name"
-                    className={`${
-                      open ? "w-[78%]" : "w-[78%]"
-                    } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                    value={reportingentity}
-                    onChange={handleReportingentity}
-                  ></input>
-                </div>
-                {error.reportingentity && (
-                  <p className="text-red-500 ml-1 text-[12px]">
-                    {error.reportingentity}
-                  </p>
-                )}
-              </div>
-              <div className="mb-5">
-                <label
-                  className="block text-gray-700 text-[15px] mb-2 ml-1"
-                  htmlFor="username"
-                >
-                  3.Financial reporting year*
-                </label>
-                <div className="flex">
-                  <div className="w-[37%]">
-                    <div className="relative mb-1">
-                      <input
-                        type="date"
-                        value={reportingdateform}
-                        onChange={handleReportndate}
-                        className="w-full border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
-                      />
-                    </div>
-                    {error.reportingdateform && (
-                      <p className="text-red-500 ml-1 text-[12px]">
-                        {error.reportingdateform}
-                      </p>
-                    )}
-                  </div>
-                  <div className="w-[40%] ml-2">
-                    <div className="relative mb-1">
-                      <input
-                        type="date"
-                        value={reportingdateto}
-                        onChange={handleReportndateto}
-                        className="w-full border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
-                      />
-                    </div>
-                    {error.reportingdateto && (
-                      <p className="text-red-500 ml-1 text-[12px]">
-                        {error.reportingdateto}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="w-[78%] mb-5">
-                <div className="float-right">
-                  <button
-                    type="button"
-                    disabled
-                    className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white cursor-not-allowed"
-                  >
-                    {" "}
-                    Next &gt;
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-              <div className="w-[75%]">
-              <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Identifying information
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 1/7 </div>
-                <div>
-                  {data !== null ? (
-                    <MdOutlineModeEditOutline
-                    className="text-[15.5px] ml-2 mt-1 cursor-pointer"
-
-                      onClick={handleeditClick}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mx-4 mt-5">
-            {data !== null ? (
-              <>
+     <div className="mx-4 mt-2">
+     <form className="w-full text-left">
                 <div className="mb-5">
                   <label
-                    className="block text-gray-700 text-[15px]  mb-2 ml-1"
-                    htmlFor="username"
-                  >
-                    1.This report is for which of the following?*
-                  </label>
-                  <div className="relative mb-1">
-                    <select
-                    
-                      className={`${
-                        open ? "w-[78%]" : "w-[78%]"
-                      } rounded-md border-0 text-[12px] py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-                      value={reportname}
-
-                    >
-                     <option className="text-sm" value="default">Select Entity</option>
-                    <option className="text-sm" value="Entity">Entity</option>
-                    <option className="text-sm" value="GovernmentInsititution">
-                      Government Insititution
-                    </option>
-                      {/* Add more options here as needed */}
-                    </select>
-
-                  </div>
-                </div>
-                <div className="mb-5">
-                  <label
-                    className="block text-gray-700 text-[15px] mb-2 ml-1"
-                    htmlFor="username"
-                  >
-                    2.Legal name of reporting entity *
-                  </label>
-                  <div className="relative mb-1">
-                    <input
-                      type="text"
-                      placeholder="Entity Name"
-                      className={`${
-                        open ? "w-[78%]" : "w-[78%]"
-                      } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                      defaultValue={reportingentity}
-
-                    ></input>
-                  </div>
-                </div>
-                <div className="mb-5">
-                  <label
-                    className="block text-gray-700 text-[15px] mb-2 ml-1"
-                    htmlFor="username"
-                  >
-                    3.Financial reporting year*
-                  </label>
-                  <div className="flex">
-                    <div className="w-[37%]">
-                      <div className="relative mb-1">
-                        <input
-                          type="date"
-                          defaultValue={reportingdateform}
-
-                          className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
-                        />
-                      </div>
-                    </div>
-                    <div className="w-[40%] ml-2">
-                      <div className="relative mb-1">
-                        <input
-                          type="date"
-                          defaultValue={reportingdateto}
-
-                          className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-[78%] mb-5">
-                  <div className="float-right">
-                    <button
-                      type="button"
-                      onClick={coNextStep}
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
-                    >
-                      {" "}
-                      Next &gt;
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <form className="w-full text-left">
-                <div className="mb-5">
-                  <label
-                    className="block text-gray-700 text-[15px]  mb-2 ml-1"
+                    className="block text-gray-700 text-[14px] font-[500]  mb-2 ml-1"
                     htmlFor="username"
                   >
                     1.This report is for which of the following?*
@@ -554,7 +286,7 @@ const Screenone = ({ nextStep }) => {
                 </div>
                 <div className="mb-5">
                   <label
-                    className="block text-gray-700 text-[15px] mb-2 ml-1"
+                    className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                     htmlFor="username"
                   >
                     2.Legal name of reporting entity *
@@ -576,7 +308,7 @@ const Screenone = ({ nextStep }) => {
                 </div>
                 <div className="mb-5">
                   <label
-                    className="block text-gray-700 text-[15px] mb-2 ml-1"
+                    className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                     htmlFor="username"
                   >
                     3.Financial reporting year*
@@ -628,10 +360,7 @@ const Screenone = ({ nextStep }) => {
                   </div>
                 </div>
               </form>
-            )}
-          </div>
-        </>
-      )}
+     </div>
 
 
     </>

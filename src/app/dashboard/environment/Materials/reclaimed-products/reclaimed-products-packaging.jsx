@@ -20,6 +20,7 @@ import { Oval } from 'react-loader-spinner';
 import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
 import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
 import axiosInstance from "../../../../utils/axiosMiddleware";
+import InputnewnumberWidget from "../../../../shared/widgets/Input/inputnewnuberWidegt"
 const widgets = {
     inputWidget: inputWidget,
     dateWidget: dateWidget,
@@ -30,6 +31,7 @@ const widgets = {
     RemoveWidget: RemoveWidget,
     selectWidget3: selectWidget3,
     inputnumberWidget: inputnumberWidget,
+    inputnewnumberWidget:InputnewnumberWidget,
 };
 
 const view_path = 'gri-environment-materials-301-3a-3b-reclaimed_products'
@@ -154,7 +156,7 @@ const uiSchema = {
             },
         },
         Productcode: {
-            'ui:widget': 'inputWidget',
+            'ui:widget': 'inputnewnumberWidget',
             'ui:options': {
                 label: false
             },
@@ -246,7 +248,46 @@ const uiSchema = {
     }
 };
 
-
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Typesofproducts) {
+      rowErrors.Typesofproducts = "Types of products sold is required";
+    }
+    if (!row.Productclassification) {
+      rowErrors.Productclassification = "Product classification is required";
+    }
+  
+    if (!row.Productcode) {
+      rowErrors.Productcode = "Product code is required";
+    }
+    if (!row.Productname) {
+      rowErrors.Productname = "Product name is required";
+    }
+    if (!row.Amountofproducts) {
+      rowErrors.Amountofproducts = "Amount of products sold is required";
+    }
+    if (!row.Unit) {
+      rowErrors.Unit = "Unit is required";
+    }
+    if (!row.Recycledmaterialsused) {
+      rowErrors.Recycledmaterialsused = "Recycled materials used is required";
+    }
+    if (!row.Typesofrecycledmaterials) {
+      rowErrors.Typesofrecycledmaterials = "Types of recycled materials is required";
+    }
+    if (!row.Amountsproduct) {
+      rowErrors.Amountsproduct = "Amounts of product is required";
+    }
+    if (!row.Unit2) {
+      rowErrors.Unit2 = "Unit is required";
+    }
+    if (!row.Datacollectionmethod) {
+      rowErrors.Datacollectionmethod = "Data collection method is required";
+    }
+    return rowErrors;
+  });
+};
 
 const Reclaimedproductspackdging = ({location, year, month}) => {
     const { open } = GlobalState();
@@ -254,6 +295,7 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
+    const [validationErrors, setValidationErrors] = useState([]);
     const toastShown = useRef(false);
     const LoaderOpen = () => {
       setLoOpen(true);
@@ -355,7 +397,18 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
     };
     const handleSubmit = (e) => {
       e.preventDefault();
-      updateFormData();
+      console.log("Submit button clicked"); // Debugging log
+      const errors = validateRows(formData);
+      setValidationErrors(errors);
+      console.log("Validation Errors:", errors); // Debugging log
+    
+      const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+      if (!hasErrors) {
+        console.log("No validation errors, proceeding to update data"); // Debugging log
+        updateFormData();
+      } else {
+        console.log("Validation errors found, submission aborted"); // Debugging log
+      }
     };
   
     const handleAddNew = () => {
@@ -388,6 +441,7 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
               formData={formData}
               onChange={handleChange}
               validator={validator}
+              formContext={{ validationErrors }}
               widgets={{
                 ...widgets,
   

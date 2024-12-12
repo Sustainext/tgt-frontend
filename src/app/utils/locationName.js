@@ -1,5 +1,5 @@
 // locationUtils.js
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import axiosInstance from "../utils/axiosMiddleware";
 
 let locationCache = [];
 

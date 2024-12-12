@@ -6,11 +6,17 @@ import "react-tooltip/dist/react-tooltip.css";
 
 const MaterialtopicWidget = (props) => {
   const { open } = GlobalState();
-  const { onChange, value = "", uiSchema = {} } = props;
+  const { onChange, value = "", uiSchema = {}, formContext, id, name } = props;
 
   const handleChange = (event) => {
     onChange(event.target.value);
   };
+
+  const { validationErrors } = formContext || {};
+  const rowIndex = parseInt(id.split("_")[1], 10);
+  const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
+  const hasError =
+    (!value || value.trim() === "") && rowErrors && rowErrors[name];
 
   return (
     <>
@@ -20,16 +26,15 @@ const MaterialtopicWidget = (props) => {
             <div className="flex">
               <div className="relative flex">
                 <div>
-                <h6
-                  className="text-[15px] text-gray-700 font-[400] flex"
-                  style={{ display: uiSchema["ui:titiledisplay"] }}
-                >
-                  {uiSchema["ui:title"]}
-                
-                </h6>
+                  <h6
+                    className="text-[15px] text-gray-700 font-[400] flex"
+                    style={{ display: uiSchema["ui:titiledisplay"] }}
+                  >
+                    {uiSchema["ui:title"]}
+                  </h6>
                 </div>
                 <div>
-                <MdInfoOutline
+                  <MdInfoOutline
                     data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
                       /\s+/g,
                       "-"
@@ -54,13 +59,15 @@ const MaterialtopicWidget = (props) => {
                     }}
                   ></ReactTooltip>
                 </div>
-             
               </div>
             </div>
           </div>
 
           {/* Mapping through GRI values */}
-          <div className="w-[20%]"    style={{ display: uiSchema["ui:gridisplay"] }}>
+          <div
+            className="w-[20%]"
+            style={{ display: uiSchema["ui:gridisplay"] }}
+          >
             <div className="float-end flex flex-wrap gap-2">
               {uiSchema["ui:gri"]?.map((gri, index) => (
                 <div
@@ -78,11 +85,23 @@ const MaterialtopicWidget = (props) => {
 
         <textarea
           placeholder="Enter a description..."
-          className={`backdrop:before: w-full border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer`}
+          className={`w-full border appearance-none text-[12px] 
+          ${
+            hasError && validationErrors.length > 0
+              ? "border-red-500"
+              : "border-gray-400"
+          } 
+          text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none 
+          focus:bg-white focus:border-gray-400 cursor-pointer`}
           value={value}
-          onChange={handleChange}
-          rows={8}
+          onChange={(e) => onChange(e.target.value)}
+          rows={7}
         />
+        {hasError && (
+          <div className="text-red-500 text-[12px] mt-1">
+            This field is required
+          </div>
+        )}
       </div>
     </>
   );

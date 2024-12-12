@@ -15,9 +15,10 @@ import CalculateSuccess from "./calculateSuccess";
 import {
   updateScopeData,
   updateScopeDataLocal,
+  setValidationErrors,
 } from "@/lib/redux/features/emissionSlice";
 import { debounce } from "lodash";
-import { MdError } from "react-icons/md";
+import { validateEmissionsData } from "./emissionValidation";
 
 const Scope3 = forwardRef(
   (
@@ -88,53 +89,58 @@ const Scope3 = forwardRef(
     const LoaderOpen = () => setLoOpen(true);
     const LoaderClose = () => setLoOpen(false);
 
+    const validationErrors = useSelector(
+      (state) => state.emissions.validationErrors
+    );
+
     const handleChange = useCallback(
       (e) => {
+        // Update the form data
         dispatch(
           updateScopeDataLocal({ scope: 3, data: { data: e.formData } })
         );
+
+        // Get the current validation errors from Redux
+        const currentValidationErrors = validationErrors?.scope3?.fields || {};
+
+        // Only run validation if there are existing errors (meaning Calculate was clicked)
+        if (Object.keys(currentValidationErrors).length > 0) {
+          const validationResult = validateEmissionsData(
+            {
+              data: { data: e.formData },
+            },
+            "Scope 3"
+          );
+
+          if (validationResult.hasErrors) {
+            // Only keep validation errors for rows that previously had errors
+            const newValidationFields = {};
+            Object.keys(currentValidationErrors).forEach((rowIndex) => {
+              if (validationResult.fields[rowIndex]) {
+                newValidationFields[rowIndex] =
+                  validationResult.fields[rowIndex];
+              }
+            });
+
+            // Preserve other scopes' validation errors while updating scope3
+            dispatch(
+              setValidationErrors({
+                ...validationErrors,
+                scope3: {
+                  fields: newValidationFields,
+                  messages: validationResult.messages,
+                  emptyFields: validationResult.emptyFields,
+                },
+              })
+            );
+          } else {
+            // Only remove validation errors for this scope
+            const { scope3, ...otherScopeErrors } = validationErrors;
+            dispatch(setValidationErrors(otherScopeErrors));
+          }
+        }
       },
-      [dispatch]
-    );
-
-    const handleCombinedWidgetChange = useCallback(
-      (
-        index,
-        field,
-        value,
-        activityId,
-        unitType,
-        name,
-        url,
-        filetype,
-        size,
-        uploadDateTime
-      ) => {
-        const updatedFormData = [...formData];
-        const currentEmission = updatedFormData[index]?.Emission || {};
-
-        updatedFormData[index] = {
-          ...updatedFormData[index],
-          Emission: {
-            ...currentEmission,
-            [field]: value,
-            ...(activityId !== undefined && { activity_id: activityId }),
-            ...(unitType !== undefined && { unit_type: unitType }),
-            ...(name &&
-              url &&
-              filetype &&
-              size &&
-              uploadDateTime && {
-                file: { name, url, type: filetype, size, uploadDateTime },
-              }),
-          },
-        };
-
-        dispatch(
-          updateScopeDataLocal({ scope: 3, data: { data: updatedFormData } })
-        );
-      },
-      [formData, dispatch]
+      [dispatch, validationErrors]
     );
 
     const handleAddNew = useCallback(() => {
@@ -179,7 +185,10 @@ const Scope3 = forwardRef(
     const handleRemoveRow = useCallback(
       async (index) => {
         const parsedIndex = parseInt(index, 10);
+        console.log("Removing row at index:", parsedIndex);
+
         const rowToRemove = formData[parsedIndex];
+        console.log("Row being removed:", rowToRemove);
 
         if (!rowToRemove) {
           console.error("Row not found");
@@ -187,44 +196,94 @@ const Scope3 = forwardRef(
         }
 
         const rowType = rowToRemove.Emission?.rowType;
+        console.log("Row type:", rowType);
 
         if (rowType === "assigned" || rowType === "approved") {
-          // Prevent deletion for assigned or approved rows
           toast.error("Cannot delete assigned or approved rows");
           return;
         }
 
         const updatedData = formData.filter((_, i) => i !== parsedIndex);
-        console.log("updated data", updatedData, " for index ", parsedIndex);
+        console.log("Updated data after removal:", updatedData);
 
-        // Update local state
         dispatch(
           updateScopeDataLocal({ scope: 3, data: { data: updatedData } })
         );
 
+        // Debug validation errors
+        const currentValidationErrors = validationErrors?.scope3?.fields || {};
+        console.log("Current validation errors:", currentValidationErrors);
+        console.log("Full validation state:", validationErrors);
+
+        if (Object.keys(currentValidationErrors).length > 0) {
+          const newValidationFields = {};
+
+          Object.entries(currentValidationErrors).forEach(
+            ([rowIdx, errors]) => {
+              const currentIndex = parseInt(rowIdx);
+              console.log(
+                "Processing row index:",
+                currentIndex,
+                "with errors:",
+                errors
+              );
+
+              if (currentIndex < parsedIndex) {
+                console.log(
+                  "Keeping errors for row before deleted row:",
+                  currentIndex
+                );
+                newValidationFields[currentIndex] = errors;
+              } else if (currentIndex > parsedIndex) {
+                console.log(
+                  "Shifting errors for row after deleted row:",
+                  currentIndex,
+                  "to",
+                  currentIndex - 1
+                );
+                newValidationFields[currentIndex - 1] = errors;
+              } else {
+                console.log("Skipping errors for deleted row:", currentIndex);
+              }
+            }
+          );
+
+          console.log(
+            "New validation fields after processing:",
+            newValidationFields
+          );
+
+          if (Object.keys(newValidationFields).length > 0) {
+            console.log("Dispatching updated validation errors");
+            dispatch(
+              setValidationErrors({
+                scope3: {
+                  ...validationErrors.scope3,
+                  fields: newValidationFields,
+                },
+              })
+            );
+          } else {
+            console.log("Clearing all validation errors");
+            dispatch(setValidationErrors({}));
+          }
+        }
+
         if (rowType === "calculated") {
           try {
-            // Only call API for calculated rows
             await updateFormData(updatedData);
           } catch (error) {
             console.error("Failed to update form data:", error);
             toast.error("Failed to update data on the server");
-            // Optionally, revert the local state change here
             return;
           }
         }
 
-        // Check if we need to close the accordion
         if (parsedIndex === 0 && updatedData.length === 0) {
           setAccordionOpen(false);
         }
-
-        // Notify success
-        // if(rowType !== 'default') {
-        //   toast.success("Row removed successfully");
-        // }
       },
-      [formData, dispatch, setAccordionOpen]
+      [formData, dispatch, setAccordionOpen, validationErrors]
     );
 
     const updateFormData = useCallback(
@@ -259,103 +318,6 @@ const Scope3 = forwardRef(
         setRemoteUiSchema(scope3State.uiSchema);
       }
     }, [scope3State]);
-
-    // useEffect(() => {
-    //   const debouncedDataMerge = debounce(() => {
-    //     if (
-    //       (autoFill && previousMonthData.status === "succeeded") ||
-    //       assigned_data.status === "succeeded" ||
-    //       approved_data.status === "succeeded"
-    //     ) {
-    //       let updatedFormData = [...formData];
-
-    //       // Handle Assigned Data
-    //       if (assigned_data.status === 'succeeded') {
-    //         const assignedDataScope = assigned_data.scope3;
-
-    //         const formattedAssignedData = assignedDataScope.map(task => ({
-    //           ...task,
-    //           Emission: {
-    //             ...task.Emission,
-    //             rowType: 'assigned'
-    //           }
-    //         }));
-
-    //         updatedFormData = [
-    //           ...formattedAssignedData,
-    //           ...updatedFormData.filter(
-    //             (item) => !formattedAssignedData.some((assignedItem) => assignedItem.id === item.id)
-    //           ),
-
-    //         ];
-    //       }
-
-    //       // Handle Approved Data
-    //       if (approved_data.status === 'succeeded') {
-    //         const approvedDataScope = approved_data.scope3;
-
-    //         const formattedApprovedData = approvedDataScope.map(task => ({
-    //           ...task,
-    //           Emission: {
-    //             ...task.Emission,
-    //             rowType: 'approved'
-    //           }
-    //         }));
-
-    //         updatedFormData = [
-    //           ...formattedApprovedData,
-    //           ...updatedFormData.filter(
-    //             (item) => !formattedApprovedData.some((approvedItem) => approvedItem.id === item.id)
-    //           ),
-
-    //         ];
-    //       }
-
-    //       // Handle Previous Month Data (Auto-Fill)
-    //       if (autoFill && previousMonthData.status === "succeeded") {
-    //         console.log('Autofill triggered');
-    //         const prevMonthFormData = previousMonthData.scope3Data?.data || [];
-
-    //         const formattedPrevMonthData = prevMonthFormData.map((item) => {
-    //           const updatedEmission = { ...item.Emission };
-
-    //           // Resetting unit and quantity fields
-    //           updatedEmission.Unit = "";
-    //           updatedEmission.Quantity = "";
-
-    //           if (
-    //             updatedEmission.unit_type &&
-    //             updatedEmission.unit_type.includes("Over")
-    //           ) {
-    //             updatedEmission.Unit2 = "";
-    //             updatedEmission.Quantity2 = "";
-    //           }
-
-    //           return {
-    //             ...item,
-    //             Emission: updatedEmission,
-    //           };
-    //         });
-
-    //         updatedFormData = [
-    //           ...formattedPrevMonthData.filter(
-    //             (item) => !updatedFormData.some((existingItem) => existingItem.id === item.id),
-    //             ...updatedFormData,
-    //           )
-    //         ];
-    //       }
-
-    //       // Dispatch state update only once
-    //       dispatch(updateScopeDataLocal({ scope: 3, data: { data: updatedFormData } }));
-    //     }
-    //   }, 300);
-
-    //   debouncedDataMerge();
-
-    //   return () => {
-    //     debouncedDataMerge.cancel();
-    //   };
-    // }, [autoFill, previousMonthData.status, assigned_data.status, approved_data.status, year, month, location, formData]);
 
     // Add at the top of Scope3 component
     const [hasAutoFilled, setHasAutoFilled] = useState(false);
@@ -533,12 +495,12 @@ const Scope3 = forwardRef(
           >
             + Add new
           </button>
-          {showError && (
+          {/* {showError && (
             <div className="text-xs text-red-500 mt-4 flex items-center">
               <MdError />
               <span>{dataError}</span>
             </div>
-          )}
+          )} */}
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

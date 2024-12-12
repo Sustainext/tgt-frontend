@@ -109,11 +109,25 @@ const uiSchema = {
         }
     }
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Q1 || row.Q1.trim() === "") {
+      rowErrors.Q1 = "This field is required";
+    }
+    if (!row.Q2 || row.Q2.trim() === "") {
+      rowErrors.Q2 = "This field is required";
+    }
+ 
+    return rowErrors;
+  });
+};
 const Sharedresource = ({ selectedOrg, year, selectedCorp }) => {
     const { open } = GlobalState();
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
+    const [validationErrors, setValidationErrors] = useState([]);
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
     const getAuthToken = () => {
@@ -239,8 +253,18 @@ const Sharedresource = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form data:', formData);
-    updateFormData()
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
 
@@ -255,6 +279,7 @@ const Sharedresource = ({ selectedOrg, year, selectedCorp }) => {
           onChange={handleChange}
           validator={validator}
           widgets={widgets}
+          formContext={{ validationErrors }}
         />
         </div>
       </div>

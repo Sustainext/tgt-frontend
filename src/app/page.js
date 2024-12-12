@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../Context/auth";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
+import CryptoJS from "crypto-js";
 
 const PasswordInput = ({ value, onChange, required = true }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +17,6 @@ const PasswordInput = ({ value, onChange, required = true }) => {
   };
 
   const handleBlur = (e) => {
-    // Check if the related target is not the toggle button
     if (!buttonRef.current?.contains(e.relatedTarget)) {
       setIsFocused(false);
       setShowPassword(false);
@@ -26,11 +26,9 @@ const PasswordInput = ({ value, onChange, required = true }) => {
   const togglePassword = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
-    // Keep focus on input
     inputRef.current?.focus();
   };
 
-  // Handle component unmount
   useEffect(() => {
     const handleTabChange = () => {
       setShowPassword(false);
@@ -88,7 +86,6 @@ export default function Home() {
   const [rememberMe, setRememberMe] = useState(false);
   const { login } = useAuth();
   const [isMounted, setIsMounted] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -103,12 +100,19 @@ export default function Home() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
     try {
-      await login(email, password, rememberMe);
+      // Encrypt password using SHA-256
+      const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+      console.log(hashedPassword);
+
+      // Replace password with hashed password for login request
+      await login(email, hashedPassword, rememberMe);
+
       if (rememberMe) {
         localStorage.setItem(
           "rememberedUser",
-          JSON.stringify({ email, password })
+          JSON.stringify({ email, password: hashedPassword }) // Save hashed password
         );
       } else {
         localStorage.removeItem("rememberedUser");
@@ -137,7 +141,7 @@ export default function Home() {
               "url('https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/Home/authbg.webp')",
           }}
         >
-          <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2  h-screen">
+          <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 h-screen">
             <div className="mb-4">
               <img
                 src="https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/Home/sustainext-new-white-logo.webp"
@@ -145,12 +149,12 @@ export default function Home() {
                 className="h-28 w-auto"
               />
             </div>
-            <div className="bg-white shadow-lg rounded-lg p-16 max-w-md w-full my-20 mx-auto h-[456px] ">
+            <div className="bg-white shadow-lg rounded-lg p-16 max-w-md w-full my-20 mx-auto h-[456px]">
               <h2 className="text-left text-2xl font-extrabold text-gray-900">
                 Welcome back
               </h2>
               <p className="text-sm mb-6">Login to sustainable solutions</p>
-              <form className="" onSubmit={handleLogin}>
+              <form onSubmit={handleLogin}>
                 <div className="mb-4">
                   <label htmlFor="email" className="text-sm">
                     Email
@@ -207,7 +211,7 @@ export default function Home() {
                 <div>
                   <button
                     type="submit"
-                    className="group relative flex w-full justify-center rounded-md  bg-gradient-to-r from-[#007EEF] to-[#2AE4FF] hover:bg-gradient-to-r hover:from-[#00aeef] hover:to-[#6adf23] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="group relative flex w-full justify-center rounded-md bg-gradient-to-r from-[#007EEF] to-[#2AE4FF] hover:bg-gradient-to-r hover:from-[#00aeef] hover:to-[#6adf23] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Login
                   </button>

@@ -4,7 +4,16 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 const CommoninputWidget = (props) => {
-  const { onChange, value = "", uiSchema = {}, options, autofocus } = props;
+  const {
+    onChange,
+    value = "",
+    uiSchema = {},
+    options,
+    autofocus,
+    formContext,
+    id,
+    name,
+  } = props;
 
   const handleChange = (event) => {
     onChange(event.target.value);
@@ -21,6 +30,11 @@ const CommoninputWidget = (props) => {
       event.preventDefault();
     }
   };
+
+  const { validationErrors } = formContext || {};
+  const rowIndex = parseInt(id.split("_")[1], 10);
+  const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
+  const hasError = rowErrors && rowErrors[name];
   return (
     <>
       <div className="mb-6">
@@ -104,12 +118,18 @@ const CommoninputWidget = (props) => {
           </div>
         ) : (
           <input
-            type={uiSchema["ui:inputfildtype"]}
-            placeholder="Enter data"
-            className="backdrop:before:w-[48rem] py-4 border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+            type="number"
+            className={`w-full border appearance-none text-[12px] 
+          ${hasError ? "border-red-500" : "border-gray-400"} 
+          text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none 
+          focus:bg-white focus:border-gray-400`}
             value={value}
-            onChange={handleChange}
+            onChange={(e) => onChange(e.target.value)}
+            min="0"
           />
+        )}
+        {hasError && (
+          <p className="text-red-500 text-xs mt-1">{rowErrors[name]}</p>
         )}
       </div>
     </>

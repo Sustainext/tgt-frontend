@@ -1,19 +1,24 @@
-import React from 'react';
+import React from "react";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 const TextareaWidget4 = (props) => {
-  const { onChange, value = "", uiSchema = {} } = props;
+  const { onChange, value = "", uiSchema = {}, formContext, id, name } = props;
+
   const handleChange = (event) => {
     onChange(event.target.value);
   };
+  const { validationErrors } = formContext || {};
+  const rowIndex = parseInt(id.split("_")[1], 10);
+  const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
+  const hasError =
+    (!value || value.trim() === "") && rowErrors && rowErrors[name];
   return (
     <>
       <div className="mb-6">
         <div className="flex mb-2">
           <div className=" relative">
-           
             <p className="text-[14px] text-gray-700 font-[500] flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
@@ -43,12 +48,18 @@ const TextareaWidget4 = (props) => {
           </div>
         </div>
         <textarea
-          placeholder="Enter data"
-          className={`backdrop:before:w-[48rem] border appearance-none text-[14px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+          placeholder="Enter a description..."
+          className={`w-full border appearance-none text-[12px] 
+          ${hasError ? "border-red-500" : "border-gray-400"} 
+          text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none 
+          focus:bg-white focus:border-gray-400 cursor-pointer`}
           value={value}
           onChange={handleChange}
-          rows={4}
+          rows={7}
         />
+        {hasError && (
+          <div className="text-red-500 text-[12px] mt-1">{rowErrors[name]}</div>
+        )}
       </div>
     </>
   );

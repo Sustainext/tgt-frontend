@@ -153,13 +153,35 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+
+    if (!row.Discharge) {
+      rowErrors.Discharge = "Discharge third-party water is required";
+    }
+
+    if (row.Discharge === "Yes") {
+      if (!row.Volume) {
+        rowErrors.Volume = "Volume of water is required";
+      }
+      if (!row.Unit) {
+        rowErrors.Unit = "Unit is required";
+      }
+    }
+
+    return rowErrors;
+  });
+};
+
 
 const Waterdischarge = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [enabledRows, setEnabledRows] = useState([]);
   const [r_schema, setRemoteSchema] = useState({});
-  const [r_ui_schema, setRemoteUiSchema] = useState({}); // New state to track enabled state per row
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
 
@@ -237,7 +259,9 @@ const Waterdischarge = ({ location, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       const form_parent = response.data.form_data;
       setFormData(form_parent[0].data);
-      const initialEnabledRows = form_parent[0].data.map((item) => item.Discharge === "Yes");
+      const initialEnabledRows = form_parent[0].data.map(
+        (item) => item.Discharge === "Yes"
+      );
       setEnabledRows(initialEnabledRows); // This will ensure the rows are enabled or disabled based on the Discharge value
     } catch (error) {
       console.error("API call failed:", error);
@@ -255,7 +279,7 @@ const Waterdischarge = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]); 
+  }, [location, year, month]);
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => {
       const updatedItem = { ...item }; // Create a copy to avoid directly mutating state
@@ -282,7 +306,18 @@ const Waterdischarge = ({ location, year, month }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddNew = () => {
@@ -316,7 +351,7 @@ const Waterdischarge = ({ location, year, month }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            formContext={{ enabledRows }}
+            formContext={{ enabledRows,validationErrors }}
             widgets={{
               ...widgets,
               WaterinputWidget: (props) => {

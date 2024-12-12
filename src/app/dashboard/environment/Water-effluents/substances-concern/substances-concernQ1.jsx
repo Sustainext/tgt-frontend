@@ -165,12 +165,35 @@ const uiSchema = {
     },
   },
 };
-
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Discharge) {
+      rowErrors.Discharge = "substances of concern is required";
+    }
+    if (!row.Substanceconcern) {
+      rowErrors.Substanceconcern = "Substance of concern  is required";
+    }
+  
+    if (!row.Priority) {
+      rowErrors.Priority = "Method used to define priorityis is required";
+    }
+    if (!row.Noncompliance) {
+      rowErrors.Noncompliance = "No. of non-compliance incidents is required";
+    }
+    if (!row.Approach) {
+      rowErrors.Approach = "Approach for setting discharge is required";
+    }
+ 
+    return rowErrors;
+  });
+};
 const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const LoaderOpen = () => {
@@ -271,7 +294,18 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddNew = () => {
@@ -300,6 +334,7 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
+            formContext={{ validationErrors }}
             widgets={{
               ...widgets,
 

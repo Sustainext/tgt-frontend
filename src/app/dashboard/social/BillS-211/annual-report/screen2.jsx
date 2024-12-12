@@ -603,558 +603,11 @@ const Screentwo = ({ nextStep, prevStep }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-      <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-      {isClicked ? (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-            <div className="w-[72%]">
-                <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Annual Report
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 2/8</div>
-                <div className="flex">
-                  <MdClose
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    onClick={handleeditClick}
-                  />
-                  <IoSaveOutline
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    // onClick={handleSubmit}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mx-4 mt-8">
-            <form className="w-[80%] text-left">
-              <div className="mb-5">
-                <label
-                  className="block text-gray-700 text-[15px] mb-2 ml-1"
-                  htmlFor="username"
-                >
-                  3.Which of the following accurately describes the entity’s
-                  structure?*
-                </label>
-                <div className="relative mb-1">
-                  <div className="mb-2">
-                     {" "}
-                    <input
-                      type="radio"
-                      id="Corporation"
-                      name="radio"
-                      value="Corporation"
-                      checked={reportradio === "Corporation"}
-                      onChange={handleReportnradio}
-                    />
-                     {" "}
-                    <label
-                      htmlFor="Corporation"
-                      className="text-[15px] text-gray-700"
-                    >
-                      Corporation
-                    </label>
-                    <br />
-                  </div>
-                  <div className="mb-2">
-                     {" "}
-                    <input
-                      type="radio"
-                      id="Trust"
-                      name="radio"
-                      value="Trust"
-                      checked={reportradio === "Trust"}
-                      onChange={handleReportnradio}
-                    />
-                     {" "}
-                    <label
-                      htmlFor="Trust"
-                      className="text-[15px] text-gray-700 "
-                    >
-                      Trust
-                    </label>
-                    <br />
-                  </div>
-                  <div className="mb-2">
-                     {" "}
-                    <input
-                      type="radio"
-                      id="Partnership"
-                      name="radio"
-                      value="Partnership"
-                      checked={reportradio === "Partnership"}
-                      onChange={handleReportnradio}
-                    />
-                     {" "}
-                    <label
-                      htmlFor="Partnership"
-                      className="text-[15px] text-gray-700 "
-                    >
-                      Partnership
-                    </label>
-                    <br />
-                  </div>
-                  <div className="mb-4">
-                     {" "}
-                    <input
-                      type="radio"
-                      id="Other unincorporated organization"
-                      name="radio"
-                      value="Other unincorporated organization"
-                      checked={
-                        reportradio === "Other unincorporated organization"
-                      }
-                      onChange={handleReportnradio}
-                    />
-                     {" "}
-                    <label
-                      htmlFor="Other unincorporated organization"
-                      className="text-[15px] text-gray-700 "
-                    >
-                      Other unincorporated organization
-                    </label>
-                    <br />
-                  </div>
-                </div>
-                {error.reportradio && (
-                  <p className="text-red-500 ml-1">{error.reportradio}</p>
-                )}
-              </div>
-
-              <div className="mb-5">
-                <div className="mt-5">
-                  <div className="">
-                    <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-2"
-                      htmlFor="username"
-                    >
-                      4. Which of the following categorizations applies to the
-                      entity? Select all that apply
-                    </label>
-                  </div>
-
-                  <div className="ml-4">
-                    <div>
-                      <label className="ml-2 text-[15px] text-gray-600">
-                        <input
-                          type="checkbox"
-                          checked={isChecked}
-                          onChange={handleCheckboxChange("isChecked")}
-                          className="mr-3 pt-1"
-                        />
-                        Producing goods (including manufacturing, extracting,
-                        growing and processing)
-                      </label>
-                      {renderContent()}
-                    </div>
-                    <div>
-                      <label className="ml-2 text-[15px] text-gray-600">
-                        <input
-                          type="checkbox"
-                          checked={isCheckedone}
-                          onChange={handleCheckboxChange("isCheckedone")}
-                          className="mr-3 pt-1"
-                        />
-                        Selling goods
-                      </label>
-                      {renderContentone()}
-                    </div>
-                    <div>
-                      <label className="ml-2 text-[15px] text-gray-600">
-                        <input
-                          type="checkbox"
-                          checked={isCheckedoneone}
-                          onChange={handleCheckboxChange("isCheckedoneone")}
-                          className="mr-3 pt-1"
-                        />
-                        Distributing goods
-                      </label>
-                      {renderContenttwo()}
-                    </div>
-                    <div>
-                      <label className="ml-2 text-[15px] text-gray-600">
-                        <input
-                          type="checkbox"
-                          checked={isCheckeotherone}
-                          onChange={handleCheckotherone("isCheckeotherone")}
-                          className="mr-3 pt-1"
-                        />
-                        Importing into Canada goods produced outside Canada
-                      </label>
-                    </div>
-                    <div className="w-[80%] relative">
-                      <label className="ml-2 text-[15px]  text-gray-600">
-                        <input
-                          type="checkbox"
-                          checked={isCheckedothertwo}
-                          onChange={handleCheckothertwo("isCheckedothertwo")}
-                          className="mr-3 pt-1"
-                        />
-                        Controlling an entity engaged in producing, selling or
-                        distributing goods in Canada or outside Canada, or
-                        importing into Canada goods produced outside Canada
-                      </label>
-                    </div>
-                    {/* Display validation errors */}
-                    <div className="mt-5 ml-3 mb-5">
-                      {error.businessPresence && (
-                        <div className="text-red-500">
-                          {error.businessPresence}
-                        </div>
-                      )}
-                      {error.sizeThresholds && (
-                        <div className="text-red-500">
-                          {error.sizeThresholds}
-                        </div>
-                      )}
-                          {error.distributinggoods && (
-                            <div className="text-red-500">
-                              {error.distributinggoods}
-                            </div>
-                          )}
-                      {error.general && (
-                        <div className="text-red-500">{error.general}</div>
-                      )}
-                    </div>
-                    <div className="mb-5 mt-3">
-                      <label
-                        className="block text-gray-700 text-[15px] mb-2"
-                        html
-                        htmlFor="industryCheckbox"
-                      >
-                        5. Please provide additional information on the entity’s
-                        structure, activities and supply chains (1,500 character
-                        limit).
-                      </label>
-                      <textarea
-                        id="countriesOfOperation"
-                        name="countriesOfOperation"
-                        placeholder="Enter a description..."
-                        className={`${
-                          open ? "w-full" : "w-full"
-                        }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                        value={reportingdescription}
-                        maxLength="1500"
-                        // value={formData.countriesOfOperation}
-                        // onChange={handleInputChange}
-                        rows={5}
-                        onChange={handleReportingdescription} // Specify the number of rows to determine the initial height
-                      />
-                      {/* <div className="my-1">
-                        {error.reportingdescription && (
-                          <p className="text-red-500">
-                            {error.reportingdescription}
-                          </p>
-                        )}
-                      </div> */}
-                    </div>
-                  </div>
-                </div>
-                {error.reportingdate && (
-                  <p className="text-red-500 ml-1">{error.reportingdate}</p>
-                )}
-              </div>
-            </form>
-            <div className="w-[80%] mb-5">
-              <div className="float-right">
-                <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px] cursor-not-allowed"
-                  disabled
-                >
-                  &lt; Previous
-                </button>
-                <button
-                  type="button"
-                  disabled
-                  className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white cursor-not-allowed"
-                >
-                  {" "}
-                  Next &gt;
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-            <div className="w-[72%]">
-                <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Annual Report
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 2/8</div>
-                <div>
-                  {data !== null ? (
-                   <MdOutlineModeEditOutline
-                   className="text-[15.5px] ml-2 mt-1 cursor-pointer"
-
-                     onClick={handleeditClick}
-                   />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mx-4 mt-8">
-            {data !== null ? (
-              <>
-                <form className="w-[80%] text-left">
+     <div className="mx-4 mt-2">
+     <form className="w-[80%] text-left">
                   <div className="mb-5">
                     <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
-                      htmlFor="username"
-                    >
-                      3.Which of the following accurately describes the entity’s
-                      structure?*
-                    </label>
-                    <div className="relative mb-1">
-                      <div className="mb-2">
-                         {" "}
-                        <input
-                          type="radio"
-                          id="Corporation"
-                          name="radio"
-                          value="Corporation"
-                          checked={reportradio === "Corporation"}
-                          onChange={handleReportnradio}
-
-                        />
-                         {" "}
-                        <label
-                          htmlFor="Corporation"
-                          className="text-[15px] text-gray-700"
-                        >
-                          Corporation
-                        </label>
-                        <br />
-                      </div>
-                      <div className="mb-2">
-                         {" "}
-                        <input
-                          type="radio"
-                          id="Trust"
-                          name="radio"
-                          value="Trust"
-                          checked={reportradio === "Trust"}
-                          onChange={handleReportnradio}
-
-                        />
-                         {" "}
-                        <label
-                          htmlFor="Trust"
-                          className="text-[15px] text-gray-700 "
-                        >
-                          Trust
-                        </label>
-                        <br />
-                      </div>
-                      <div className="mb-2">
-                         {" "}
-                        <input
-                          type="radio"
-                          id="Partnership"
-                          name="radio"
-                          value="Partnership"
-                          checked={reportradio === "Partnership"}
-                          onChange={handleReportnradio}
-
-                        />
-                         {" "}
-                        <label
-                          htmlFor="Partnership"
-                          className="text-[15px] text-gray-700 "
-                        >
-                          Partnership
-                        </label>
-                        <br />
-                      </div>
-                      <div className="mb-4">
-                         {" "}
-                        <input
-                          type="radio"
-                          id="Other unincorporated organization"
-                          name="radio"
-                          value="Other unincorporated organization"
-                          checked={
-                            reportradio === "Other unincorporated organization"
-                          }
-                          onChange={handleReportnradio}
-
-                        />
-                         {" "}
-                        <label
-                          htmlFor="Other unincorporated organization"
-                          className="text-[15px] text-gray-700 "
-                        >
-                          Other unincorporated organization
-                        </label>
-                        <br />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-5">
-                    <div className="mt-5">
-                      <div className="">
-                        <label
-                          className="block text-gray-700 text-[15px] mb-2 ml-2"
-                          htmlFor="username"
-                        >
-                          4. Which of the following categorizations applies to
-                          the entity? Select all that apply
-                        </label>
-                      </div>
-
-                      <div className="ml-4">
-                        <div>
-                          <label className="ml-2 text-[15px] text-gray-600">
-                            <input
-                              type="checkbox"
-                              checked={isChecked}
-                              onChange={handleCheckboxChange("isChecked")}
-
-                              className="mr-3 pt-1"
-                            />
-                            Producing goods (including manufacturing,
-                            extracting, growing and processing)
-                          </label>
-                          {renderContentview()}
-                        </div>
-                        <div>
-                          <label className="ml-2 text-[15px] text-gray-600">
-                            <input
-                              type="checkbox"
-                              checked={isCheckedone}
-                              onChange={handleCheckboxChange("isCheckedone")}
-
-                              className="mr-3 pt-1"
-                            />
-                            Selling goods
-                          </label>
-                          {renderContentoneview()}
-                        </div>
-                        <div>
-                          <label className="ml-2 text-[15px] text-gray-600">
-                            <input
-                              type="checkbox"
-                              checked={isCheckedoneone}
-                              onChange={handleCheckboxChange("isCheckedoneone")}
-
-                              className="mr-3 pt-1"
-                            />
-                            Distributing goods
-                          </label>
-                          {renderContenttwoview()}
-                        </div>
-                        <div>
-                          <label className="ml-2 text-[15px] text-gray-600">
-                            <input
-                              type="checkbox"
-                              checked={isCheckeotherone}
-                              onChange={handleCheckotherone("isCheckeotherone")}
-
-                              className="mr-3 pt-1"
-                            />
-                            Importing into Canada goods produced outside Canada
-                          </label>
-                        </div>
-                        <div className="w-[80%] relative">
-                          <label className="ml-2 text-[15px]  text-gray-600">
-                            <input
-                              type="checkbox"
-                              checked={isCheckedothertwo}
-                              onChange={handleCheckothertwo(
-                                "isCheckedothertwo"
-                              )}
-
-                              className="mr-3 pt-1"
-                            />
-                            Controlling an entity engaged in producing, selling
-                            or distributing goods in Canada or outside Canada,
-                            or importing into Canada goods produced outside
-                            Canada
-                          </label>
-                        </div>
-                        {/* Display validation errors */}
-
-                        <div className="mb-5 mt-3">
-                          <label
-                            className="block text-gray-700 text-[15px] mb-2"
-                            html
-                            htmlFor="industryCheckbox"
-                          >
-                            5. Please provide additional information on the
-                            entity’s structure, activities and supply chains
-                            (1,500 character limit).
-                          </label>
-                          <textarea
-                            id="countriesOfOperation"
-                            name="countriesOfOperation"
-                            placeholder="Enter a description..."
-                            className={`${
-                              open ? "w-full" : "w-full"
-                            }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                            value={reportingdescription}
-                            // value={formData.countriesOfOperation}
-                            // onChange={handleInputChange}
-                            rows={5}
-                            // Specify the number of rows to determine the initial height
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-                <div className="w-[80%] mb-5">
-                  <div className="float-right">
-                    <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                      onClick={prevStep}
-                    >
-                      &lt; Previous
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={coNextStep}
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
-                    >
-                      {" "}
-                      Next &gt;
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <form className="w-[80%] text-left">
-                  <div className="mb-5">
-                    <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
+                      className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                       htmlFor="username"
                     >
                       3.Which of the following accurately describes the entity’s
@@ -1174,7 +627,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                          {" "}
                         <label
                           htmlFor="Corporation"
-                          className="text-[15px] text-gray-700"
+                          className="text-[14px] text-gray-700"
                         >
                           Corporation
                         </label>
@@ -1193,7 +646,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                          {" "}
                         <label
                           htmlFor="Trust"
-                          className="text-[15px] text-gray-700 "
+                          className="text-[14px] text-gray-700 "
                         >
                           Trust
                         </label>
@@ -1212,7 +665,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                          {" "}
                         <label
                           htmlFor="Partnership"
-                          className="text-[15px] text-gray-700 "
+                          className="text-[14px] text-gray-700 "
                         >
                           Partnership
                         </label>
@@ -1233,7 +686,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                          {" "}
                         <label
                           htmlFor="Other unincorporated organization"
-                          className="text-[15px] text-gray-700 "
+                          className="text-[14px] text-gray-700 "
                         >
                           Other unincorporated organization
                         </label>
@@ -1249,7 +702,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                     <div className="mt-5">
                       <div className="">
                         <label
-                          className="block text-gray-700 text-[15px] mb-2 ml-2"
+                          className="block text-gray-700 text-[14px] font-[500] mb-2 ml-2"
                           htmlFor="username"
                         >
                           4. Which of the following categorizations applies to
@@ -1259,7 +712,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
 
                       <div className="ml-4">
                         <div>
-                          <label className="ml-2 text-[15px] text-gray-600">
+                          <label className="ml-2 text-[14px] text-gray-600">
                             <input
                               type="checkbox"
                               checked={isChecked}
@@ -1272,7 +725,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                           {renderContent()}
                         </div>
                         <div>
-                          <label className="ml-2 text-[15px] text-gray-600">
+                          <label className="ml-2 text-[14px] text-gray-600">
                             <input
                               type="checkbox"
                               checked={isCheckedone}
@@ -1284,7 +737,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                           {renderContentone()}
                         </div>
                         <div>
-                          <label className="ml-2 text-[15px] text-gray-600">
+                          <label className="ml-2 text-[14px] text-gray-600">
                             <input
                               type="checkbox"
                               checked={isCheckedoneone}
@@ -1296,7 +749,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                           {renderContenttwo()}
                         </div>
                         <div>
-                          <label className="ml-2 text-[15px] text-gray-600">
+                          <label className="ml-2 text-[14px] text-gray-600">
                             <input
                               type="checkbox"
                               checked={isCheckeotherone}
@@ -1307,7 +760,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                           </label>
                         </div>
                         <div className="w-[80%] relative">
-                          <label className="ml-2 text-[15px]  text-gray-600">
+                          <label className="ml-2 text-[14px]  text-gray-600">
                             <input
                               type="checkbox"
                               checked={isCheckedothertwo}
@@ -1345,7 +798,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                         </div>
                         <div className="mb-5 mt-3">
                           <label
-                            className="block text-gray-700 text-[15px] mb-2"
+                            className="block text-gray-700 text-[14px] font-[500] mb-2"
                             html
                             htmlFor="industryCheckbox"
                           >
@@ -1401,11 +854,8 @@ const Screentwo = ({ nextStep, prevStep }) => {
                     </button>
                   </div>
                 </div>
-              </>
-            )}
-          </div>
-        </>
-      )}
+
+     </div>
 
     </>
   );

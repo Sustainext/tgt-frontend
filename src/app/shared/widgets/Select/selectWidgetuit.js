@@ -12,8 +12,14 @@ const SelectWidgetuit = ({
   schema = {},
   id,
   options,
+  formContext,
+  name,
   isEnabled = false,
 }) => {
+  const { validationErrors } = formContext || {};
+  const rowIndex = parseInt(id.split('_')[1], 10);
+  const rowErrors = validationErrors && validationErrors[rowIndex] || {};
+  const hasError = !value && rowErrors && rowErrors[name];
   const handleChange = (e) => {
     // Call props.onChange to ensure RJSF handles the state update
     onChange(e.target.value);
@@ -66,7 +72,7 @@ const SelectWidgetuit = ({
         <select
           className={`text-center py-1 text-[12px] w-[100px] rounded-md ${
             value ? "bg-white text-blue-500 shadow" : "bg-blue-500 text-white"
-          }`}
+          } ${hasError ? 'border-red-500' : 'border-gray-300'}`}
           value={value || ""}
           onChange={handleChange}
           disabled={!isEnabled}
@@ -81,6 +87,11 @@ const SelectWidgetuit = ({
           ))}
         </select>
       </div>
+      {hasError && (
+        <div className="text-red-500 text-[12px] mt-1">
+          {hasError}
+        </div>
+      )}
     </div>
   );
 };
