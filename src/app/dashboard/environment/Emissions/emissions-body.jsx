@@ -149,17 +149,21 @@ const Emissionsnbody = ({
     let hasAnyErrors = false;
     const validationErrors = {};
 
-    for (let i = 0; i < validationResults.length; i++) {
-      if (validationResults[i]?.result?.hasErrors) {
+    console.log("validation results", validationResults);
+
+    // Process validation results by scope name instead of array index
+    validationResults.forEach(({ scope, result }) => {
+      if (result.hasErrors) {
         hasAnyErrors = true;
-        const scopeName = `scope${i + 1}`;
-        validationErrors[scopeName] = {
-          fields: validationResults[i].result.fields,
-          messages: validationResults[i].result.messages,
-          emptyFields: validationResults[i].result.emptyFields,
+        // Convert "Scope 1" to "scope1" etc.
+        const scopeKey = scope.toLowerCase().replace(/\s+/g, "");
+        validationErrors[scopeKey] = {
+          fields: result.fields,
+          messages: result.messages,
+          emptyFields: result.emptyFields,
         };
       }
-    }
+    });
 
     if (hasAnyErrors) {
       // Store validation errors in redux state with all the validation info
