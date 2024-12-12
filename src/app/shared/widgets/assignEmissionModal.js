@@ -129,6 +129,18 @@ const AssignEmissionModal = ({
     }
   }, []);
 
+  const getTodayDate = () => {
+    const today = new Date();
+    let month = "" + (today.getMonth() + 1);
+    let day = "" + today.getDate();
+    const year = today.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -222,6 +234,11 @@ const AssignEmissionModal = ({
               className="w-full p-2 border rounded"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
+              min={getTodayDate()}
+              required
+              onClick={(e) => {
+                e.currentTarget.showPicker();
+              }}
             />
           </div>
 

@@ -362,7 +362,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-[480px] max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-lg p-6 w-[480px] max-h-[90vh] table-scrollbar overflow-y-auto">
         <h2 className="text-xl font-medium mb-1">
           Quick Add {type.charAt(0).toUpperCase() + type.slice(1)}
         </h2>
