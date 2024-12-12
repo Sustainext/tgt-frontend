@@ -36,6 +36,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setMarketing(false);
     setSupplyChain(false);
   };
+  
   const toggleSupplierSectionVisibility = () => {
     setIsSupplierVisible(!isSupplierVisible);
     setWasteVisible(false);
