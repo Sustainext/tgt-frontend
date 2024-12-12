@@ -134,10 +134,10 @@ const Companyoperations= forwardRef(({ onSubmitSuccess }, ref) =>
 const submitForm = async (type) => {
     LoaderOpen();
     const data={
-      "about_the_company":about_the_company,
-      "entities_included":entities_included,
-      "supply_chain_description":supply_chain_description,
-      "business_relations":business_relations
+      "about_the_company":{"page":"screen_two","label":"2. About the company and operations","subLabel":"Add statement about stakeholder engagement","type":"richTextarea","content":about_the_company,"field":"about_the_company","isSkipped":false},
+      "business_relations":{"page":"screen_two","label":"2.1.1 Activities, Value Chain, and Other Business Relationships","subLabel":"Add Introduction about company’s domain","type":"richTextarea","content":business_relations,"field":"business_relations","isSkipped":false},
+      "entities_included":{"page":"screen_two","label":"2.1.2 Entities Included in the Organization's Sustainability Reporting","subLabel":"Add statement about sustainability performance data for all entities","type":"richTextarea","content":entities_included,"field":"entities_included","isSkipped":false},
+      "supply_chain_description":{"page":"screen_two","label":"2.2 Supply Chain","subLabel":"Add statement about company's supply chain process","type":"richTextarea","content":supply_chain_description,"field":"supply_chain_description","isSkipped":false},
     }
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_two/${reportid}/`;
@@ -205,10 +205,11 @@ const loadFormData = async () => {
         const response = await axiosInstance.get(url);
         if(response.data){
           setScreentwoData(response.data)
-          dispatch(setAboutTheCompany(response.data.about_the_company));
-        dispatch(setBusinessRelation(response.data.business_relations));
-        dispatch(setEntitiesInclude(response.data.entities_included));
-        dispatch(setSupplyChain(response.data.supply_chain_description));
+          dispatch(setAboutTheCompany(response.data.about_the_company?.content || ""));
+          dispatch(setBusinessRelation(response.data.business_relations?.content || ""));
+          dispatch(setEntitiesInclude(response.data.entities_included?.content || ""));
+          dispatch(setSupplyChain(response.data.supply_chain_description?.content || ""));
+          
         }
         
         LoaderClose();

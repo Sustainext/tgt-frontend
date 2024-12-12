@@ -37,7 +37,7 @@ const StakeholderEngagement=forwardRef(({ onSubmitSuccess }, ref) => {
     const submitForm = async (type) => {
         LoaderOpen();
         const data={
-          "description":{page:"screen_six",label:"Stakeholder Engagement",type:"textarea",content:description},
+          "description":{"page":"screen_six","label":"6. Stakeholder Engagement","subLabel":"Add statement about stakeholder engagement","type":"textarea","content":description,"field":"description","isSkipped":false},
         }
     
         const url = `${process.env.BACKEND_API_URL}/esg_report/screen_six/${reportid}/`;
@@ -103,7 +103,7 @@ const StakeholderEngagement=forwardRef(({ onSubmitSuccess }, ref) => {
             const response = await axiosInstance.get(url);
             if(response.data){
                 setData(response.data)
-              dispatch(setdescription(response.data.description.content));
+              dispatch(setdescription(response.data.description?.content || ""));
             }
             
             LoaderClose();

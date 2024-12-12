@@ -347,150 +347,11 @@ const Screensix = ({ nextStep, prevStep }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-      <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-      {isClicked ? (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-              <div className="w-[73%]">
-              <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Identifying information
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 6/7 </div>
-                <div className="flex">
-                <MdClose
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    onClick={handleeditClick}
-                  />
-                  <IoSaveOutline
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    // onClick={handleSubmit}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="ml-3">
-            <div className="mb-5 mt-5 ml-2">
-              <label
-                className="block text-gray-700 text-[15px] mb-2"
-                htmlFor="industryCheckbox"
-              >
-                9. Which of the following sectors or industries does the entity
-                operate in? Select all that apply *
-              </label>
-            </div>
-            <div className="mb-2">
-              <div className="grid grid-cols-2 gap-1">
-                {optionsTwo.map((option, index) => (
-                  <div key={index} className="flex items-center">
-                    <label className="ml-2 text-[13px] text-gray-600">
-                      <input
-                        type="checkbox"
-                        value={option.value}
-                        checked={selectedOptions.includes(option.value)}
-                        onChange={handleCheckboxChange}
-                        className="mr-3 pt-1 cursor-pointer"
-                      />
-                      {option.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-              {error.checkboxes && (
-                <div className="text-red-500 ml-1 text-[12px]">{error.checkboxes}</div>
-              )}
-            </div>
-            <div className="mb-5">
-              {selectedOptions.includes("other") && (
+      <div className="mt-2">
+      <div className="mx-4">
                 <div className="mb-5">
-                  <input
-                    type="text"
-                    placeholder="Enter a description..."
-                    className={`${
-                      open ? "w-[80%]" : "w-[80%]"
-                    } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                    value={reportingentity}
-                    onChange={handleReportingentity}
-                  ></input>
-                  {error.reportingentity && (
-                    <div className="text-red-500 ml-1 text-[12px]">
-                      {error.reportingentity}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="w-[83%] mb-5">
-            <div className="float-right">
-              <button
-                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                disabled
-              >
-                &lt; Previous
-              </button>
-              <button
-                type="button"
-                disabled
-                className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white"
-              >
-                {" "}
-                Next &gt;
-              </button>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-              <div className="w-[79%]">
-              <p className="font-semibold text-[17px] mb-4 mx-4">
-                  {" "}
-                  Identifying information
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 6/7 </div>
-                <div>
-                  {data !== null ? (
-                       <MdOutlineModeEditOutline
-                       className="text-[15.5px] ml-2 mt-1 cursor-pointer"
-
-                         onClick={handleeditClick}
-                       />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          {data !== null ? (
-            <>
-              <div className="ml-3">
-                <div className="mb-5 mt-5 ml-2">
                   <label
-                    className="block text-gray-700 text-[15px] mb-2"
+                    className="block text-gray-700 text-[14px] font-[500] mb-2"
                     htmlFor="industryCheckbox"
                   >
                     9. Which of the following sectors or industries does the
@@ -501,74 +362,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                   <div className="grid grid-cols-2 gap-1">
                     {optionsTwo.map((option, index) => (
                       <div key={index} className="flex items-center">
-                        <label className="ml-2 text-[13px] text-gray-600">
-                          <input
-                            type="checkbox"
-                            value={option.value}
-                            checked={selectedOptions.includes(option.value)}
-                            onChange={handleCheckboxChange}
-                            className="mr-3 pt-1 cursor-pointer"
-
-                          />
-                          {option.label}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="mb-5">
-                  {selectedOptions.includes("other") && (
-                    <div className="mb-5">
-                      <input
-                        type="text"
-                        placeholder="Enter a description..."
-                        className={`${
-                          open ? "w-[80%]" : "w-[80%]"
-                        } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                        value={reportingentity}
-
-                      ></input>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="w-[83%] mb-5">
-                <div className="float-right mr-3">
-                  <button
-                    className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                    onClick={prevStep}
-                  >
-                    &lt; Previous
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={coNextStep}
-                    className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
-                  >
-                    {" "}
-                    Next &gt;
-                  </button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="ml-3">
-                <div className="mb-5 mt-5 ml-2">
-                  <label
-                    className="block text-gray-700 text-[15px] mb-2"
-                    htmlFor="industryCheckbox"
-                  >
-                    9. Which of the following sectors or industries does the
-                    entity operate in? Select all that apply *
-                  </label>
-                </div>
-                <div className="mb-2">
-                  <div className="grid grid-cols-2 gap-1">
-                    {optionsTwo.map((option, index) => (
-                      <div key={index} className="flex items-center">
-                        <label className="ml-2 text-[13px] text-gray-600">
+                        <label className="ml-2 text-[14px] text-gray-600">
                           <input
                             type="checkbox"
                             value={option.value}
@@ -625,10 +419,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                   </button>
                 </div>
               </div>
-            </>
-          )}
-        </>
-      )}
+      </div>
 
 
     </>

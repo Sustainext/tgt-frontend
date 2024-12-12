@@ -8,6 +8,8 @@ import Screenfive from "./screen5";
 import Screensix from "./screen6";
 import Screenseven from "./screen7";
 import { MdOutlineNavigateNext,MdOutlineNavigateBefore  } from "react-icons/md";
+import Socialheader2 from '../../socialheader2'
+
 const Identifyinginformation = ({ }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const nextStep = () => setCurrentStep(currentStep + 1);
@@ -18,6 +20,10 @@ const Identifyinginformation = ({ }) => {
       setCurrentStep(step);
     }
   };
+  const [activeMonth, setActiveMonth] = useState(1);
+  const [year, setYear] = useState();
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
 
   // State to keep track of selected options
 
@@ -25,9 +31,40 @@ const Identifyinginformation = ({ }) => {
 
   return (
     <>
-      {/* Pagination */}
-
-      {/* Step Content */}
+     <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <div className="w-full">
+            <div className="text-left mb-2 ml-3 pt-5">
+              <p className="text-[11px]">Social</p>
+              <div className="flex">
+                <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
+                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div className="container mx-auto mt-5">
+            <div className="flex">
+              <div className="w-[72%]">
+                <p className="font-semibold text-[17px] mb-4 mx-4">
+                  {" "}
+                  Identifying information
+                </p>
+              </div>
+            </div>
+          </div>
+     <Socialheader2
+        activeMonth={activeMonth}
+        setActiveMonth={setActiveMonth}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
+        year={year}
+        setYear={setYear}
+      />
       <div className="h-[600px] overflow-y-auto scrollable-content">
         {currentStep === 1 && (
           <Screenone

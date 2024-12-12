@@ -962,7 +962,11 @@ const EmissionWidget = React.memo(
                   onChange={(e) => handleCategoryChange(e.target.value)}
                   className={getFieldClass(
                     "Category",
-                    "text-[12px] focus:outline-none w-full py-1"
+                    `text-[12px] focus:outline-none w-full py-1 ${
+                      category && rowType === "default"
+                        ? "border-b border-zinc-800"
+                        : ""
+                    }`
                   )}
                   disabled={["assigned", "calculated", "approved"].includes(
                     rowType
@@ -991,7 +995,11 @@ const EmissionWidget = React.memo(
                   onChange={(e) => handleSubcategoryChange(e.target.value)}
                   className={getFieldClass(
                     "Subcategory",
-                    "text-[12px] focus:outline-none w-full py-1"
+                    `text-[12px] focus:outline-none w-full py-1 ${
+                      subcategory && rowType === "default"
+                        ? "border-b border-zinc-800"
+                        : ""
+                    }`
                   )}
                   disabled={["assigned", "calculated", "approved"].includes(
                     rowType
@@ -1051,7 +1059,7 @@ const EmissionWidget = React.memo(
                     }}
                   />
                   {scopeErrors["Activity"] && (
-                    <div className="text-[12px] text-red-500 absolute left-0 -bottom-6">
+                    <div className="text-[12px] text-red-500 absolute left-0 -bottom-[28px]">
                       {getErrorMessage("Activity")}
                     </div>
                   )}
@@ -1123,7 +1131,7 @@ const EmissionWidget = React.memo(
                           }
                           className={getFieldClass(
                             "Quantity",
-                            "text-[12px] focus:outline-none w-[7vw] text-right pe-1"
+                            "text-[12px] focus:outline-none w-[7vw] text-right pe-1 focus:border-b focus:border-blue-300"
                           )}
                           disabled={["assigned", "approved"].includes(
                             value.rowType
@@ -1175,7 +1183,7 @@ const EmissionWidget = React.memo(
                           placeholder="Enter Value"
                           className={getFieldClass(
                             "Quantity2",
-                            "text-[12px] focus:outline-none w-[7vw] text-right pe-1"
+                            "text-[12px] focus:outline-none w-[7vw] text-right pe-1 focus:border-b focus:border-blue-300"
                           )}
                           step="1"
                           min="0"
@@ -1230,7 +1238,7 @@ const EmissionWidget = React.memo(
                         min="0"
                         className={getFieldClass(
                           "Quantity",
-                          "text-[12px] focus:outline-none w-[7vw] text-right pe-1"
+                          "text-[12px] focus:outline-none w-[7vw] text-right pe-1 focus:border-b focus:border-blue-300"
                         )}
                         disabled={["assigned", "approved"].includes(
                           value.rowType

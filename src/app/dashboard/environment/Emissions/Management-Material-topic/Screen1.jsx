@@ -14,10 +14,8 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import MaterialtopicWidget from "../../../../shared/widgets/Textarea/MaterialtopicWidget";
 
 const widgets = {
-    MaterialtopicWidgets: MaterialtopicWidget,
+  MaterialtopicWidgets: MaterialtopicWidget,
 };
-
-
 
 const view_path = "gri_collect_emission_management_material_topic";
 const client_id = 1;
@@ -28,7 +26,7 @@ const schema = {
   items: {
     type: "object",
     properties: {
-        GRI33cd: {
+      GRI33cd: {
         type: "string",
         title:
           "Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.",
@@ -43,37 +41,37 @@ const schema = {
 };
 const uiSchema = {
   items: {
-    "ui:order": ["GRI33cd","GRI33e"],
+    "ui:order": ["GRI33cd", "GRI33e"],
     GRI33cd: {
-    "ui:title":
+      "ui:title":
         "Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.",
       "ui:tooltip":
         "<p>1) Mention the policies or commitments the organization has developed specifically for the selected material topics.</p> <br> <p> 2)Examples of actions taken to prevent or mitigate potential negative impacts (e.g., adaptation/modification measures, facility upgrading, training, red-flag systems).</p> <br> <p>Mitigation: Action(s) taken to reduce the extent of a negative impact.</p><br><p>3)Mention actions to address actual negative impacts, including actions to provide for or cooperate in their remediation. Remediation: Means to counteract or make good a negative impact or provision of remedy.</p>",
-        "ui:widget": "MaterialtopicWidgets",
-        "ui:titiledisplay":"none",
-        "ui:toltipdisplay":"none",
-        "ui:gridisplay":"none",
-        "ui:gri":["GRI 3-3-c","GRI 3-3-d"],
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
+      "ui:widget": "MaterialtopicWidgets",
+      "ui:titiledisplay": "none",
+      "ui:toltipdisplay": "none",
+      "ui:gridisplay": "none",
+      "ui:gri": ["GRI 3-3-c", "GRI 3-3-d"],
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      GRI33e: {
-        "ui:title":
-            "Mention the process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process. Also, specify lessons learned and how these have been incoporated to organisation's operational policies and procedures.",
-          "ui:tooltip":
-            "<p>1) Process used to track the effectiveness of the actions can include internal or external auditing or verification, impact assessments, measurement systems, stakeholder feedback, grievance mechanisms, external performance ratings, and benchmarking.</p> <br> <p>  2)Specify the goals, targets and indicators used to evaluate the progress. Also, describe the effectiveness of the actions taken, including progress toward the goals and targets.</p> <br> <p> 3)The organization can briefly describe lessons learned that have led to changes in its policies or practices (e.g., training for workers, giving additional attention to the performance of suppliers), or that have led to plans for changes that will manage impacts more successfully in the future.</p>",
-            "ui:widget": "MaterialtopicWidgets",
-            "ui:titiledisplay":"block",
-            "ui:toltipdisplay":"block",
-            "ui:gridisplay":"block",
-            "ui:gri":["GRI 3-3-e"],
-            "ui:horizontal": true,
-            "ui:options": {
-              label: false,
-            },
-          },
+    },
+    GRI33e: {
+      "ui:title":
+        "Mention the process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process. Also, specify lessons learned and how these have been incoporated to organisation's operational policies and procedures.",
+      "ui:tooltip":
+        "<p>1) Process used to track the effectiveness of the actions can include internal or external auditing or verification, impact assessments, measurement systems, stakeholder feedback, grievance mechanisms, external performance ratings, and benchmarking.</p> <br> <p>  2)Specify the goals, targets and indicators used to evaluate the progress. Also, describe the effectiveness of the actions taken, including progress toward the goals and targets.</p> <br> <p> 3)The organization can briefly describe lessons learned that have led to changes in its policies or practices (e.g., training for workers, giving additional attention to the performance of suppliers), or that have led to plans for changes that will manage impacts more successfully in the future.</p>",
+      "ui:widget": "MaterialtopicWidgets",
+      "ui:titiledisplay": "block",
+      "ui:toltipdisplay": "block",
+      "ui:gridisplay": "block",
+      "ui:gri": ["GRI 3-3-e"],
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
 
     "ui:options": {
       orderable: false,
@@ -83,8 +81,6 @@ const uiSchema = {
     },
   },
 };
-
-
 
 const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
@@ -105,7 +101,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const handleChange = (e) => {
     setFormData(e.formData);
   };
-
 
   const updateFormData = async () => {
     const data = {
@@ -188,19 +183,66 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   }, [selectedOrg, year, selectedCorp]);
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   updateFormData();
+  //   console.log("test form data", formData);
+  // };
+
+  const [validationErrors, setValidationErrors] = useState([]);
+
+  const validateRows = (data) => {
+    return data.map((row) => {
+      const rowErrors = {};
+
+      if (!row.GRI33cd || row.GRI33cd.trim() === "") {
+        rowErrors.GRI33cd =
+          "Organization's policies and actions description is required";
+      }
+
+      if (!row.GRI33e || row.GRI33e.trim() === "") {
+        rowErrors.GRI33e =
+          "Process tracking and effectiveness description is required";
+      }
+
+      return rowErrors;
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
-    console.log("test form data", formData);
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      toast.error("Please fill in all required fields", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
   };
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-      <div className="flex">
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 px-1 text-[15px] text-gray-700 font-[400]">
-           Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.
+            <h2 className="flex mx-2 px-1 text-[15px] text-gray-700 font-[400]">
+              Describe organisation's policies or commitments for the material
+              topic, along with actions taken to address, prevent or mitigate
+              potential negative impacts and mention the actions taken by the
+              organisation to manage actual and potential positive impacts.
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e14556`}
                 data-tooltip-html="<p>1) Mention the policies or commitments the organization has developed specifically for the selected material topics.</p> <br> <p> 2)Examples of actions taken to prevent or mitigate potential negative impacts (e.g., adaptation/modification measures, facility upgrading, training, red-flag systems).</p> <br> <p>Mitigation: Action(s) taken to reduce the extent of a negative impact.</p><br><p>3)Mention actions to address actual negative impacts, including actions to provide for or cooperate in their remediation. Remediation: Means to counteract or make good a negative impact or provision of remedy.</p>"
@@ -231,7 +273,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
               </div>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 3-3-d
+                  GRI 3-3-d
                 </div>
               </div>
             </div>
@@ -245,6 +287,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

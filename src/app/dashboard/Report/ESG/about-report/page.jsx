@@ -37,9 +37,9 @@ const AboutTheReport=forwardRef(({ onSubmitSuccess }, ref) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-        "description":description,
-        "framework_description":framework_description,
-        "external_assurance":external_assurance
+        "description":{"page":"screen_seven","label":"7. About the Report","subLabel":"Add statement about the report","type":"textarea","content":description,"field":"description","isSkipped":false},
+        "framework_description":{"page":"screen_seven","label":"7.2 Frameworks","subLabel":"Add statement about framework used in report","type":"textarea","content":framework_description,"field":"framework_description","isSkipped":false},
+        "external_assurance":{"page":"screen_seven","label":"7.3 External Assurance","subLabel":"Add statement about external assurance","type":"textarea","content":external_assurance,"field":"external_assurance","isSkipped":false}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_seven/${reportid}/`;
@@ -107,9 +107,10 @@ const AboutTheReport=forwardRef(({ onSubmitSuccess }, ref) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setAboutReport(response.data.description));
-          dispatch(setFramework(response.data.framework_description));
-          dispatch(setExternalAssurance(response.data.external_assurance));
+            dispatch(setAboutReport(response.data.description?.content || ""));
+            dispatch(setFramework(response.data.framework_description?.content || ""));
+            dispatch(setExternalAssurance(response.data.external_assurance?.content || ""));
+            
           }
           
           LoaderClose();
