@@ -237,7 +237,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
           </button>
 
           {/* Bill S-211 starts */}
-          {/* <div>
+          <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
                 activeTab === "Identifying Information" ||
@@ -306,7 +306,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                 </div>
               </>
             )}
-          </div> */}
+          </div>
   <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${

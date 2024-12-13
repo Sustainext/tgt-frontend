@@ -7,6 +7,8 @@ import Screenfour from "./screen4";
 import Screenfive from "./screen5";
 import Screensix from "./screen6";
 import Screenseven from "./screen7";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineNavigateNext,MdOutlineNavigateBefore  } from "react-icons/md";
 import Socialheader2 from '../../socialheader2'
 
@@ -21,9 +23,11 @@ const Identifyinginformation = ({ }) => {
     }
   };
   const [activeMonth, setActiveMonth] = useState(1);
-  const [year, setYear] = useState();
+  const [year, setYear] = useState("");
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
+
+  
 
   // State to keep track of selected options
 
@@ -54,7 +58,7 @@ const Identifyinginformation = ({ }) => {
                 </p>
               </div>
             </div>
-          </div>
+          </div>  
      <Socialheader2
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
@@ -65,34 +69,35 @@ const Identifyinginformation = ({ }) => {
         year={year}
         setYear={setYear}
       />
-      <div className="h-[600px] overflow-y-auto scrollable-content">
+      <div className="h-[450px] overflow-y-auto scrollable-content">
         {currentStep === 1 && (
           <Screenone
             nextStep={nextStep}
+            selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year}
             // handleChange={handleChange}
           />
         )}
       {currentStep === 2 && (
-          <Screentwo nextStep={nextStep} prevStep={prevStep} />
+          <Screentwo nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
         {currentStep === 3 && (
-          <Screenthree nextStep={nextStep} prevStep={prevStep} />
+          <Screenthree nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
          {currentStep === 4 && (
-          <Screenfour nextStep={nextStep} prevStep={prevStep} />
+          <Screenfour nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
          {currentStep === 5 && (
-          <Screenfive nextStep={nextStep} prevStep={prevStep} />
+          <Screenfive nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
           {currentStep === 6 && (
-          <Screensix nextStep={nextStep} prevStep={prevStep} />
+          <Screensix nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
            {currentStep === 7 && (
-          <Screenseven prevStep={prevStep}  />
+          <Screenseven prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year}  />
         )}
       </div>
       <div className="w-full">
-        <div className="flex justify-center space-x-4 mt-[15px] w-full">
+        <div className="flex justify-center  space-x-4 mt-[15px] w-full">
           {/* Previous Button */}
           <button
             className={`px-2  h-[27px] rounded-md text-dark ${currentStep===1?'text-gray-300':''}`}
@@ -129,6 +134,7 @@ const Identifyinginformation = ({ }) => {
           </button>
         </div>
       </div>
+      <ToastContainer style={{ fontSize: "12px" }} />
     </>
   );
 };
