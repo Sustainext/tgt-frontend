@@ -6,6 +6,8 @@ import CalculateSuccess from "./calculateSuccess";
 import {
   fetchEmissionsData,
   fetchUsers,
+  setValidationErrors,
+  clearValidationErrors,
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Scope1 from "./scope1new";
@@ -93,19 +95,19 @@ const Emissionsnbody = ({
   const [showError, setShowError] = useState(false);
 
   // When dataError changes
-  useEffect(() => {
-    if (scope1DataError || scope2DataError || scope3DataError) {
-      setShowError(true);
-      const timer = setTimeout(() => {
-        setShowError(false);
-        setScope1DataError("");
-        setScope2DataError("");
-        setScope3DataError("");
-      }, 6000);
+  // useEffect(() => {
+  //   if (scope1DataError || scope2DataError || scope3DataError) {
+  //     setShowError(true);
+  //     const timer = setTimeout(() => {
+  //       setShowError(false);
+  //       setScope1DataError("");
+  //       setScope2DataError("");
+  //       setScope3DataError("");
+  //     }, 6000);
 
-      return () => clearTimeout(timer); // Cleanup timeout
-    }
-  }, [scope1DataError, scope2DataError, scope3DataError]);
+  //     return () => clearTimeout(timer); // Cleanup timeout
+  //   }
+  // }, [scope1DataError, scope2DataError, scope3DataError]);
 
   const handleAccordionClick = () => {
     if (!location) {
@@ -144,35 +146,28 @@ const Emissionsnbody = ({
         result: validateEmissionsData(data, scope),
       }));
 
-    const errorMessages = formatValidationErrors(validationResults);
-    console.log(
-      "errorMessages.. validationResults",
-      errorMessages,
-      validationResults
-    );
-
-    // First set all errors that exist
     let hasAnyErrors = false;
-    for (let i = 0; i < validationResults.length; i++) {
-      if (
-        validationResults[i]?.result?.hasErrors &&
-        errorMessages[`Scope ${i + 1}`]?.length > 0
-      ) {
-        hasAnyErrors = true;
-        if (i === 0) {
-          setScope1DataError(errorMessages["Scope 1"][0]);
-        }
-        if (i === 1) {
-          setScope2DataError(errorMessages["Scope 2"][0]);
-        }
-        if (i === 2) {
-          setScope3DataError(errorMessages["Scope 3"][0]);
-        }
-      }
-    }
+    const validationErrors = {};
 
-    // Return if any errors were found
+    console.log("validation results", validationResults);
+
+    // Process validation results by scope name instead of array index
+    validationResults.forEach(({ scope, result }) => {
+      if (result.hasErrors) {
+        hasAnyErrors = true;
+        // Convert "Scope 1" to "scope1" etc.
+        const scopeKey = scope.toLowerCase().replace(/\s+/g, "");
+        validationErrors[scopeKey] = {
+          fields: result.fields,
+          messages: result.messages,
+          emptyFields: result.emptyFields,
+        };
+      }
+    });
+
     if (hasAnyErrors) {
+      // Store validation errors in redux state with all the validation info
+      dispatch(setValidationErrors(validationErrors));
       return;
     }
 

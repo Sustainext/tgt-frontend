@@ -1,23 +1,23 @@
-'use client'
-import React, { useState, useEffect, useRef} from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import { GlobalState } from '../../../../../Context/page';
-import dateWidget from '../../../../shared/widgets/Input/dateWidget';
-import selectWidget from '../../../../shared/widgets/Select/selectWidget';
-import inputWidget from '../../../../shared/widgets/Input/inputWidget';
-import CustomFileUploadWidget from '../../../../shared/widgets/CustomFileUploadWidget';
-import AssignToWidget from '../../../../shared/widgets/assignToWidget';
-import CustomSelectInputWidget from '../../../../shared/widgets/CustomSelectInputWidget';
-import RemoveWidget from '../../../../shared/widgets/RemoveWidget';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
+import { GlobalState } from "../../../../../Context/page";
+import dateWidget from "../../../../shared/widgets/Input/dateWidget";
+import selectWidget from "../../../../shared/widgets/Select/selectWidget";
+import inputWidget from "../../../../shared/widgets/Input/inputWidget";
+import CustomFileUploadWidget from "../../../../shared/widgets/CustomFileUploadWidget";
+import AssignToWidget from "../../../../shared/widgets/assignToWidget";
+import CustomSelectInputWidget from "../../../../shared/widgets/CustomSelectInputWidget";
+import RemoveWidget from "../../../../shared/widgets/RemoveWidget";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
-import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import { Oval } from "react-loader-spinner";
+import selectWidget3 from "../../../../shared/widgets/Select/selectWidget3";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget,
@@ -30,55 +30,58 @@ const widgets = {
   selectWidget3: selectWidget3,
 };
 
-const view_path = 'gri-environment-waste-306-4b-4c-4d-waste_diverted_from_disposal'
-const client_id = 1
-const user_id = 1
+const view_path =
+  "gri-environment-waste-306-4b-4c-4d-waste_diverted_from_disposal";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
-        Wastecategory: {
+      Wastecategory: {
         type: "string",
         title: "Waste category",
-        enum: ['Hazardous', 'Non Hazardous'],
+        enum: ["Hazardous", "Non Hazardous"],
         tooltiptext: "Select the waste category from the given dropdown.",
-        display:"block",
+        display: "block",
       },
       WasteType: {
         type: "string",
         title: "Waste Type",
-        tooltiptext: "Please specify the type of waste. e.g. Paper waste, E-waste, chemical waste etc. ",
-        display:"block",
+        tooltiptext:
+          "Please specify the type of waste. e.g. Paper waste, E-waste, chemical waste etc. ",
+        display: "block",
       },
       Unit: {
         type: "string",
         title: "Unit",
-        enum: ['g', 'Kgs', 't (metric tons)', 'ton (US short ton)', 'lbs'],
+        enum: ["g", "Kgs", "t (metric tons)", "ton (US short ton)", "lbs"],
         tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-        display:"block",
+        display: "block",
       },
       Wastediverted: {
         type: "string",
         title: "Waste Diverted",
         tooltiptext: "Enter the amount of waste diverted.",
-        display:"block",
-
+        display: "block",
       },
       RecoveryOperations: {
         type: "string",
         title: "Recovery Operations",
-        enum: ['Preparation for reuse', 'Recycling', 'Other (please specify)'],
-        tooltiptext: "<p>Recovery:Operation wherein products, components of products, or materials that have become waste are prepared to fulfill a purpose in place of new products, components, or materials that would otherwise have been used for that purpose. </p> <p> Recovery Methods:Preparation for reuse: Checking, cleaning, or repairing operations, by which products or components of products that have become waste are prepared to be put to use for the same purpose for which they were conceived.</p> <p>Recycling: Reprocessing of products or components of products that have become waste, to make new materials </p>",
-        display:"block",
+        enum: ["Preparation for reuse", "Recycling", "Other (please specify)"],
+        tooltiptext:
+          "<p>Recovery:Operation wherein products, components of products, or materials that have become waste are prepared to fulfill a purpose in place of new products, components, or materials that would otherwise have been used for that purpose. </p> <p> Recovery Methods:Preparation for reuse: Checking, cleaning, or repairing operations, by which products or components of products that have become waste are prepared to be put to use for the same purpose for which they were conceived.</p> <p>Recycling: Reprocessing of products or components of products that have become waste, to make new materials </p>",
+        display: "block",
       },
       Site: {
         type: "string",
         title: "Site",
-        enum: ['Onsite', 'Offsite'],
-        tooltiptext: "On-site: ‘Onsite’ means within the physical boundary  or administrative control of the reporting organization Off-site: ‘Offsite’ means outside the physical boundary \ or administrative control of the reporting organization",
-        display:"block",
+        enum: ["Onsite", "Offsite"],
+        tooltiptext:
+          "On-site: ‘Onsite’ means within the physical boundary  or administrative control of the reporting organization Off-site: ‘Offsite’ means outside the physical boundary  or administrative control of the reporting organization",
+        display: "block",
       },
       AssignTo: {
         type: "string",
@@ -93,89 +96,96 @@ const schema = {
         type: "string",
         title: "Remove",
       },
-    }
-  }
+    },
+  },
 };
 
 const uiSchema = {
-
   items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'Wastecategory', 'WasteType', 'Unit', 'Wastediverted','RecoveryOperations','Site','AssignTo', 'FileUpload', 'Remove'
+    classNames: "fieldset",
+    "ui:order": [
+      "Wastecategory",
+      "WasteType",
+      "Unit",
+      "Wastediverted",
+      "RecoveryOperations",
+      "Site",
+      "AssignTo",
+      "FileUpload",
+      "Remove",
     ],
     Wastecategory: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
         label: false,
       },
     },
     WasteType: {
-      'ui:widget': 'inputWidget', 
-      'ui:options': {
-        label: false
+      "ui:widget": "inputWidget",
+      "ui:options": {
+        label: false,
       },
     },
     Unit: {
-      'ui:widget': 'selectWidget3',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget3",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Wastediverted: {
-      'ui:widget': 'inputWidget',
-      'ui:inputtype':'number',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "inputWidget",
+      "ui:inputtype": "number",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
 
     RecoveryOperations: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Site: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "FileUploadWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false
+      "ui:options": {
+        label: false,
       },
     },
-      'ui:options': {
+    "ui:options": {
       orderable: false,
       addable: false,
       removable: false,
-      layout: 'horizontal',
-    }
-  }
+      layout: "horizontal",
+    },
+  },
 };
-const Wastedivertedimpact = ({location, year, month}) => {
+const Wastedivertedimpact = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -188,7 +198,6 @@ const Wastedivertedimpact = ({location, year, month}) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
 
   const updateFormData = async () => {
     LoaderOpen();
@@ -280,17 +289,15 @@ const Wastedivertedimpact = ({location, year, month}) => {
     }));
     setFormData(newData); // Update the formData with new values
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateFormData();
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   updateFormData();
+  // };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-  
   };
- 
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
@@ -300,9 +307,66 @@ const Wastedivertedimpact = ({location, year, month}) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
- 
   };
 
+  // Add validation state
+  const [validationErrors, setValidationErrors] = useState([]);
+
+  // Add validation function
+  const validateRows = (data) => {
+    return data.map((row) => {
+      const rowErrors = {};
+
+      if (!row.Wastecategory) {
+        rowErrors.Wastecategory = "Waste category is required";
+      }
+
+      if (!row.WasteType || row.WasteType.trim() === "") {
+        rowErrors.WasteType = "Waste type is required";
+      }
+
+      if (!row.Unit) {
+        rowErrors.Unit = "Unit is required";
+      }
+
+      if (!row.Wastediverted || row.Wastediverted.trim() === "") {
+        rowErrors.Wastediverted = "Waste diverted amount is required";
+      }
+
+      if (!row.RecoveryOperations) {
+        rowErrors.RecoveryOperations = "Recovery operation is required";
+      }
+
+      if (!row.Site) {
+        rowErrors.Site = "Site is required";
+      }
+
+      return rowErrors;
+    });
+  };
+
+  // Add renderError helper function
+  const renderError = (rowIndex, fieldName) => {
+    const rowErrors = validationErrors[rowIndex] || {};
+    return rowErrors[fieldName] ? (
+      <div className="text-red-500 text-[12px] mt-1">
+        {rowErrors[fieldName]}
+      </div>
+    ) : null;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      updateFormData();
+    }
+  };
 
   return (
     <>
@@ -315,13 +379,14 @@ const Wastedivertedimpact = ({location, year, month}) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
+            formContext={{ validationErrors }}
             widgets={{
               ...widgets,
 
               RemoveWidget: (props) => {
                 const match = props.id.match(/^root_(\d+)/);
                 const index = match ? parseInt(match[1], 10) : null;
-    
+
                 return (
                   <RemoveWidget
                     {...props}
@@ -379,4 +444,3 @@ const Wastedivertedimpact = ({location, year, month}) => {
 };
 
 export default Wastedivertedimpact;
-

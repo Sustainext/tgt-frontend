@@ -14,12 +14,17 @@ const SelectWidgetWaternew = ({
   schema = {},
   id,
   options,
+  formContext,
+  name,
 }) => {
   const [otherValue, setOtherValue] = useState(value || ""); // Initialize with value or empty
   const [showOtherInput, setShowOtherInput] = useState(
     value && !options?.enumOptions?.some((option) => option.value === value)
   ); // Initial state depends on if the value is an "Other" value.
-
+  const { validationErrors } = formContext || {};
+  const rowIndex = parseInt(id.split('_')[1], 10);
+  const rowErrors = validationErrors && validationErrors[rowIndex] || {};
+  const hasError = !value && rowErrors && rowErrors[name];
   const handleChange = (e) => {
     const selectedValue = e.target.value;
 
@@ -84,7 +89,7 @@ const SelectWidgetWaternew = ({
         {/* Render select or input based on state */}
         {!showOtherInput ? (
           <select
-            className={`block w-[40vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize`}
+            className={`block w-[40vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize ${hasError ? 'border-red-500' : 'border-gray-300'}`}
             value={value}
             onChange={handleChange}
           >
@@ -109,6 +114,11 @@ const SelectWidgetWaternew = ({
           />
         )}
       </div>
+      {hasError && (
+        <div className="text-red-500 text-[12px] mt-1">
+          {hasError}
+        </div>
+      )}
     </div>
   );
 };

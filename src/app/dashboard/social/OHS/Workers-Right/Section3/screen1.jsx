@@ -129,7 +129,7 @@ const uiSchema = {
         key: "HazardIdentification",
         title: "Hazard Identification & Risk Assessment",
         tooltip:
-          "What actions did the organization take to address hazards and risks identified in incident investigations, following the hierarchy of controls? (Select all that apply)",
+          "How did the investigation identify hazards and assess their risks? (e.g., analyzed incident cause, identified contributing factors, assessed potential harm)",
           layouttype:"input",
       },
       {

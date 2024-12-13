@@ -12,10 +12,15 @@ const WaterinputWidget = ({
   uiSchema = {},
   schema = {},
   id,
+  formContext,
+  name,
   isEnabled = false, // Add isEnabled prop with default value
 }) => {
   const inputRef = useRef();
-
+  const { validationErrors } = formContext || {};
+  const rowIndex = parseInt(id.split('_')[1], 10);
+  const rowErrors = validationErrors && validationErrors[rowIndex] || {};
+  const hasError = !value && rowErrors && rowErrors[name];
   // Focus input if enabled
   useEffect(() => {
     if (isEnabled && inputRef.current) {
@@ -69,7 +74,7 @@ const WaterinputWidget = ({
       <div>
         <input
           ref={inputRef} // Attach ref to input
-          className="block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholders pr-2"
+          className={`block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholders pr-2 ${hasError ? 'border-red-500' : 'border-gray-300'}`}
           placeholder={placeholder || `Enter ${label}`}
           type="number"
           value={value}
@@ -78,6 +83,11 @@ const WaterinputWidget = ({
           disabled={!isEnabled} // Use isEnabled prop to enable/disable input
         />
       </div>
+      {hasError && (
+        <div className="text-red-500 text-[12px] mt-1">
+          {hasError}
+        </div>
+      )}
     </div>
   );
 };

@@ -18,7 +18,7 @@ export const columns1 = [
 
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -53,7 +53,7 @@ export const columns2 = [
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -87,7 +87,7 @@ export const columns3 = [
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -121,7 +121,7 @@ export const columns4 = [
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -163,7 +163,7 @@ export const columns5 = [
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -197,7 +197,7 @@ export const columns6 = [
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -245,7 +245,7 @@ export const columns7 = [
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -357,7 +357,7 @@ export const columns10 = [
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -475,7 +475,7 @@ export const columns13 = [
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -510,7 +510,7 @@ export const columns14 = [
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -552,7 +552,7 @@ export const columns15 = [
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -607,3 +607,4 @@ export const columns17 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   }
 ];
+
