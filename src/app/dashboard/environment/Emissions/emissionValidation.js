@@ -8,22 +8,14 @@ export const baseEmissionSchema = {
   Category: ValidationRules.required("Category is required"),
   Subcategory: ValidationRules.required("Subcategory is required"),
   Activity: ValidationRules.required("Activity is required"),
-  Quantity: [
-    ValidationRules.required("Quantity is required"),
-    ValidationRules.number("Quantity must be a number"),
-    ValidationRules.min(0, "Quantity must be greater than 0"),
-  ],
+  Quantity: [ValidationRules.required("Quantity is required")],
   Unit: ValidationRules.required("Unit is required"),
 };
 
 // Extended schema for 'Over' unit types
 export const overUnitEmissionSchema = {
   ...baseEmissionSchema,
-  Quantity2: [
-    ValidationRules.required("Second quantity is required"),
-    ValidationRules.number("Second quantity must be a number"),
-    ValidationRules.min(0, "Second quantity must be greater than 0"),
-  ],
+  Quantity2: [ValidationRules.required("Second quantity is required")],
   Unit2: ValidationRules.required("Second unit is required"),
 };
 
@@ -96,8 +88,6 @@ export const validateEmissionsData = (formDataWrapper, scope) => {
     ["Quantity", "Quantity2"].forEach((field) => {
       if (emission[field] && isNaN(Number(emission[field]))) {
         fieldErrors[field] = `${field} must be a number`;
-      } else if (emission[field] && Number(emission[field]) <= 0) {
-        fieldErrors[field] = `${field} must be greater than 0`;
       }
     });
 
