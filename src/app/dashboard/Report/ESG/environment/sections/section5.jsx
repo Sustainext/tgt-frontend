@@ -23,7 +23,7 @@ const Section5=({section12_1_3Ref,data})=>{
         "Category",
         "Sub Category",
         "Activity",
-        "Value",
+        "Emission (tCO2e)",
         // "Value 2"
     ]
     return (
