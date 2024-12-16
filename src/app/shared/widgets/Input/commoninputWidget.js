@@ -35,6 +35,8 @@ const CommoninputWidget = (props) => {
   const rowIndex = parseInt(id.split("_")[1], 10);
   const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
   const hasError = rowErrors && rowErrors[name];
+  const isOptional = uiSchema["ui:title"].toLowerCase().includes("(if any)");
+
   return (
     <>
       <div className="mb-6">
@@ -128,7 +130,7 @@ const CommoninputWidget = (props) => {
             min="0"
           />
         )}
-        {hasError && (
+        {hasError && !isOptional && (
           <p className="text-red-500 text-xs mt-1">{rowErrors[name]}</p>
         )}
       </div>
