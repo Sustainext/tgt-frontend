@@ -56,7 +56,7 @@ const ScopeTable = ({ title, columns,data }) => {
 
     {/* Display Quantity */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-    {val.activity_value?val.activity_value+" "+val.activity_unit:"No data available"}
+    {val.emission?val.emission:"No data available"}
     </td>
   </tr>
               ))

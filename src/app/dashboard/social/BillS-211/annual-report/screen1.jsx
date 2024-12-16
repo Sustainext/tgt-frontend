@@ -442,7 +442,7 @@ const Screenone = ({ nextStep, prevStep }) => {
                       placeholder="Enter a description..."
                       className={`${
                         open ? "w-[90%]" : "w-[90%]"
-                      } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
+                      } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                       value={reportingentity}
                       onChange={handleReportingentity}
                     ></input>

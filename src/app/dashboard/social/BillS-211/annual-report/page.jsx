@@ -120,7 +120,7 @@ const Annualreport = () => {
 
           {/* Next Button */}
           <button
-            className={`px-2  h-[27px] rounded-md text-dark ${currentStep===7?'text-gray-300':''}`}
+            className={`px-2  h-[27px] rounded-md text-dark ${currentStep===8?'text-gray-300':''}`}
             disabled={currentStep === totalSteps}
             onClick={() => nextStep()}
             // style={{ display: currentStep === 7 ? "none" : "inline-block" }}
