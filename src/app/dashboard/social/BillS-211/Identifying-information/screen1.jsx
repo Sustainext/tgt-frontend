@@ -8,7 +8,7 @@ import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from "../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
 
-const Screenone = ({ nextStep, selectedCorp, selectedOrg, year }) => {
+const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => {
   const [error, setError] = useState({});
   const { open } = GlobalState();
   const [reportname, setReportname] = useState("Select Entity");
@@ -94,9 +94,17 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year }) => {
     // return () => {
     //   isMounted.current = false;
     // };
-    if(selectedOrg&&year){
-      fetchBillSone();
+    if(reportType=="Organization"){
+      if(selectedOrg&&year){
+        fetchBillSone();
+      }
     }
+    else{
+      if(selectedOrg&&year&&selectedCorp){
+        fetchBillSone();
+      }
+    }
+    
     setReportname("Select Entity")
     setReportingentit("")
     setReportingdateform("")
@@ -333,7 +341,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year }) => {
                 onClick={continueToNextStep}
                 disabled={!(selectedOrg && year)}
                 className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-                  !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : ""
+                 reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
                 }`}
               >
                 {" "}

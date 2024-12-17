@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import {MdOutlineGroups2,MdKeyboardArrowDown} from "react-icons/md";
 import { LiaCanadianMapleLeaf } from "react-icons/lia";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
+import axiosInstance from "../../utils/axiosMiddleware";
 
 import { GiWoodPile } from "react-icons/gi";
 
-const Aside = ({ activeTab, handleTabClick }) => {
+const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
   const [isEmission, setEmisssion] = useState(false);
   const [isBillS211, setBillS211] = useState(false);
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
@@ -21,6 +22,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
   const [Safety, setSafety] = useState(false);
   const [Marketing, setMarketing] = useState(false);
   const [Privacy, setPrivacy] = useState(false);
+  const [showBillS211,setShowBillS211]=useState(false)
   const toggleEmission = () => {
     setEmisssion(!isEmission);
     setWasteVisible(false);
@@ -219,6 +221,49 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsLegal(false);
     
   };
+
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
+
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+
+  const fetchBillS211 = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/canada_section/`,
+        axiosConfig
+      );
+
+      if (response.status === 200) {
+       if(response.data.enable_section){
+        setShowBillS211(response.data.enable_section)
+        handleTabClick(
+          "Identifying Information"
+        )
+        toggleBillS211()
+       }
+      }
+      
+    }  catch (error) {
+      console.error(error)
+    } 
+  };
+
+  useEffect(()=>{
+    fetchBillS211()
+  },[])
+
   useEffect(() => {
     if (activeTab === "Management of Material topic OHS") {
       setEmisssion(false);
@@ -228,6 +273,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
       setEnergySectionVisible(false);
       setIsSupplierVisible(false);
     }
+    
   }, [activeTab]);
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md h-full">
@@ -238,76 +284,81 @@ const Aside = ({ activeTab, handleTabClick }) => {
           </button>
 
           {/* Bill S-211 starts */}
-          <div>
-            <button
-              className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Identifying Information" ||
-                activeTab === "Annual report"
-                  ? "text-[#007EEF]"
-                  : "bg-white text-[#727272] "
-              }`}
-              onClick={toggleBillS211}
-            >
-              <div className="w-[20%]">
-                <FaCanadianMapleLeaf className="w-5 h-5 mr-2" />
-              </div>
-              <div className="w-[67%] text-left ">
-                <span className="indent-0 text-[13px]">Bill S-211</span>
-              </div>
-
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
-                
-
-                <MdKeyboardArrowDown
-                  className={`text-lg text-neutral-500 ${
-                    isBillS211 && "rotate-180"
-                  }`}
-                />
-              </div>
-            </button>
-
-           
-            {isBillS211 && (
-              <>
-                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  <div>
-                    <p
-                      className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Identifying Information"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Identifying Information"
-                        )
-                      }
-                    >
-                      Identifying Information
-                    </p>
-                  </div>
-
-                  <div>
-                    <p
-                      className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Annual report"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Annual report"
-                        )
-                      }
-                    >
-                      Annual report
-                    </p>
-                  </div>
-                  
-                </div>
-              </>
-            )}
-          </div>
+          {showBillS211?(
+             <div>
+             <button
+               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
+                 activeTab === "Identifying Information" ||
+                 activeTab === "Annual report"
+                   ? "text-[#007EEF]"
+                   : "bg-white text-[#727272] "
+               }`}
+               onClick={toggleBillS211}
+             >
+               <div className="w-[20%]">
+                 <FaCanadianMapleLeaf className="w-5 h-5 mr-2" />
+               </div>
+               <div className="w-[67%] text-left ">
+                 <span className="indent-0 text-[13px]">Bill S-211</span>
+               </div>
+ 
+               <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+                 
+ 
+                 <MdKeyboardArrowDown
+                   className={`text-lg text-neutral-500 ${
+                     isBillS211 && "rotate-180"
+                   }`}
+                 />
+               </div>
+             </button>
+ 
+            
+             {isBillS211 && (
+               <>
+                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                   <div>
+                     <p
+                       className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                         activeTab === "Identifying Information"
+                           ? "text-blue-400"
+                           : "bg-transparent text-[#727272]"
+                       }`}
+                       onClick={() =>
+                         handleTabClick(
+                           "Identifying Information"
+                         )
+                       }
+                     >
+                       Identifying Information
+                     </p>
+                   </div>
+ 
+                   <div>
+                     <p
+                       className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                         activeTab === "Annual report"
+                           ? "text-blue-400"
+                           : "bg-transparent text-[#727272]"
+                       }`}
+                       onClick={() =>
+                         handleTabClick(
+                           "Annual report"
+                         )
+                       }
+                     >
+                       Annual report
+                     </p>
+                   </div>
+                   
+                 </div>
+               </>
+             )}
+           </div>
+          ):(
+            <div></div>
+          )}
+         
   <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${

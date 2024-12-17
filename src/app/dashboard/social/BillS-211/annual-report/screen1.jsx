@@ -8,7 +8,7 @@ import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
 import { Oval } from "react-loader-spinner";
 
-const Screenone = ({ nextStep, prevStep,selectedCorp, selectedOrg, year }) => {
+const Screenone = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportType }) => {
   // State to track selected options
   const { open } = GlobalState();
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -101,8 +101,15 @@ const Screenone = ({ nextStep, prevStep,selectedCorp, selectedOrg, year }) => {
     // return () => {
     //   isMounted.current = false;
     // };
-    if(selectedOrg&&year){
-      fetchBillSone();
+    if(reportType=="Organization"){
+      if(selectedOrg&&year){
+        fetchBillSone();
+      }
+    }
+    else{
+      if(selectedOrg&&year&&selectedCorp){
+        fetchBillSone();
+      }
     }
     setReportingdescription("");
     setReportingentit("");
@@ -433,9 +440,9 @@ const Screenone = ({ nextStep, prevStep,selectedCorp, selectedOrg, year }) => {
                     type="button"
                     onClick={continueToNextStep}
                     disabled={!(selectedOrg && year)}
-                className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-                  !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : ""
-                }`}
+                    className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                      reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
+                     }`}
                   >
                     {" "}
                     Next &gt;

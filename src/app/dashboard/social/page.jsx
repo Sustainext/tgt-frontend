@@ -228,7 +228,7 @@ const Social = () => {
       <div className="w-full">
         <div className="flex">
           <div className="">
-            <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
+            <Aside activeTab={activeTab} handleTabClick={handleTabClick} setActiveTab={setActiveTab} />
           </div>
           <div
             className={`${

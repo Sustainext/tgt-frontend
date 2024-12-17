@@ -9,7 +9,7 @@ import Screensix from "./screen6";
 import Screenseven from "./screen7";
 import Screenend from "./screen8";
 import { MdOutlineNavigateNext,MdOutlineNavigateBefore  } from "react-icons/md";
-import Socialheader2 from '../../socialheader2'
+import SocialBillS211Header from '../../socialBillS211Header'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -28,6 +28,7 @@ const Annualreport = () => {
   const [year, setYear] = useState("");
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
+  const [reportType, setReportType] = useState("Organization");
 
   return (
     <>
@@ -55,7 +56,7 @@ const Annualreport = () => {
               </div>
             </div>
           </div>
-     <Socialheader2
+     <SocialBillS211Header
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
         selectedOrg={selectedOrg}
@@ -64,35 +65,37 @@ const Annualreport = () => {
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        reportType={reportType}
+        setReportType={setReportType}
       />
 
       <div className="h-[670px] overflow-y-auto scrollable-content">
         {currentStep === 1 && (
           <Screenone
             nextStep={nextStep}
-            selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year}
+            selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType}
             // handleChange={handleChange}
           />
         )}
          {currentStep === 2 && (
-          <Screentwo nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
+          <Screentwo nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
         {currentStep === 3 && (
-          <Screenthree nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
+          <Screenthree nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
         {currentStep === 4 && (
-          <Screenfour nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
+          <Screenfour nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
         {currentStep === 5 && (
-          <Screenfive nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
+          <Screenfive nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
         {currentStep === 6 && (
-          <Screensix nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
+          <Screensix nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
         {currentStep === 7 && (
-          <Screenseven nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
+          <Screenseven nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
-       {currentStep === 8 && <Screenend prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />}
+       {currentStep === 8 && <Screenend prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year}  reportType={reportType}/>}
       </div>
       <div className="w-full">
         <div className="flex justify-center space-x-4 mt-[15px] w-full">

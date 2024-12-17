@@ -8,7 +8,7 @@ import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
 import { Oval } from "react-loader-spinner";
 
-const Screenend = ({ prevStep,selectedCorp, selectedOrg, year }) => {
+const Screenend = ({ prevStep,selectedCorp, selectedOrg, year,reportType }) => {
     const { open } = GlobalState();
   const [error, setError] = useState({});
   const [reportradio, setReportnradio] = useState("");
@@ -93,8 +93,15 @@ const fetchBillSeight = async () => {
     // return () => {
     //   isMounted.current = false;
     // };
-    if(selectedOrg&&year){
-      fetchBillSeight();
+    if(reportType=="Organization"){
+      if(selectedOrg&&year){
+        fetchBillSeight();
+      }
+    }
+    else{
+      if(selectedOrg&&year&&selectedCorp){
+        fetchBillSeight();
+      }
     }
     setReportnradio("");
     setReportingdescription("");
@@ -486,9 +493,9 @@ const fetchBillSeight = async () => {
                       type="button"
                       onClick={continueToNextStep}
                       disabled={!(selectedOrg && year)}
-                className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-                  !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : ""
-                }`}
+                      className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                        reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
+                       }`}
                     >
                       {" "}
                       Submit

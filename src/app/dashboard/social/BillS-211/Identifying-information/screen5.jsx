@@ -8,7 +8,7 @@ import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
 import { Oval } from "react-loader-spinner";
 
-const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year }) => {
+const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType }) => {
   const [loopen, setLoOpen] = useState(false);
   const { open } = GlobalState();
 
@@ -89,8 +89,15 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year }) => {
     // return () => {
     //   isMounted.current = false;
     // };
-    if(selectedOrg&&year){
-      fetchBillSfive();
+    if(reportType=="Organization"){
+      if(selectedOrg&&year){
+        fetchBillSfive();
+      }
+    }
+    else{
+      if(selectedOrg&&year&&selectedCorp){
+        fetchBillSfive();
+      }
     }
     setCheckboxStates({
       businessInCanada: false,
@@ -529,7 +536,9 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year }) => {
                     type="button"
                     onClick={continueToNextStep}
                     disabled={!(selectedOrg&&year)}
-                      className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${!(selectedOrg&&year)?'opacity-30 cursor-not-allowed':''}`}
+                    className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                      reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
+                     }`}
                   >
                     {" "}
                     Next &gt;
