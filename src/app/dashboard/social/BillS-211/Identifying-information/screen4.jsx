@@ -140,11 +140,12 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp,selectedOrg,year }) => {
   };
   const handleReportingentity = (event) => {
     setReportingentit(event.target.value);
-    // console.log(event.target.value, "name");
+    setError((prev) => ({ ...prev, reportingentity: "" }));
   };
   
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
+    setError((prev) => ({ ...prev, reportradio: "" }));
   };
 
   const LoaderOpen = () => {

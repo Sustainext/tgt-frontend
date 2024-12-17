@@ -1,100 +1,133 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose  } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
+import { Oval } from "react-loader-spinner";
 
-
-const Screentwo = ({ nextStep, prevStep }) => {
+const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year }) => {
 
   const { open } = GlobalState();
   const [error, setError] = useState({});
   const [reportradio, setReportnradio] = useState("");
-  const [reportingdescription, setReportingdescription] = useState();
+  const [reportingdescription, setReportingdescription] = useState("");
   const [loopen, setLoOpen] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isCheckedone, setIsCheckedone] = useState(false);
   const [isCheckedoneone, setIsCheckedoneone] = useState(false);
   const [isCheckeotherone, setIsCheckeotherone] = useState(false);
   const [isCheckedothertwo, setIsCheckedothertwo] = useState(false);
-  const isMounted = useRef(true);
-  // const data = 1;
-  const [data, setData] = useState();
-  const coNextStep = () => {
-    nextStep();
+
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
   };
-//   const fetchBillsfive = async () => {
-//     LoaderOpen(); // Assume this is to show some loading UI
+  const token = getAuthToken();
 
-//     try {
-//       const response = await axios.get(
-//         `${
-//           process.env.REACT_APP_BACKEND_URL
-//         }/annual_report/?screen=2&user_id=${localStorage.getItem("user_id")}`
-//       );
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
 
-//       // If the request is successful but you specifically want to handle 404 inside here
-//       if (response.status === 200) {
-//         // Assuming you want to do something with the data for successful requests
-//         // setData(response.data); // Uncomment or modify as needed
-//         console.log(response.data, "bills 2115");
-//         // You might want to setData or handle the error differently here
-//         setData(response.data.structure_3);
-//         setReportingdescription(response.data.additional_information_entity_5);
-//         setReportnradio(response.data.structure_3);
-//         // setReportnradio(response.data.subject_to_supply_chain_legislation_7);
-//         // setReportingentit(response.data.other_laws_description_7_1);
+ 
+  const fetchBillStwo = async () => {
+    LoaderOpen(); // Assume this is to show some loading UI
 
-//         if (response.data.categorization_4 == null) {
-//           setCheckboxStates({});
-//         } else {
-//           setCheckboxStates(response.data.categorization_4);
-//           setIsChecked(response.data.categorization_4.Producing_goods);
-//           setIsCheckedone(response.data.categorization_4.Selling_goods);
-//           setIsCheckedoneone(response.data.categorization_4.Distributing_goods);
-//           setIsCheckeotherone(
-//             response.data.categorization_4
-//               .Importing_into_Canada_goods_produced_outside_Canada
-//           );
-//           setIsCheckedothertwo(
-//             response.data.categorization_4
-//               .Controlling_an_entity_engaged_in_producing
-//           );
-//         }
-//         LoaderClose();
-//       }
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         // Here you can check if error.response exists and then further check the status code
-//         if (error.response && error.response.status === 404) {
-//           // Handle 404 specifically
-//           console.log(error.response.data, "bills 211");
-//           // You might want to setData or handle the error differently here
-//           setData(error.response.data.detail); // Adjust according to your needs
-//         } else {
-//           // Handle other errors
-//           console.error("An error occurred:", error.message);
-//         }
-//       } else {
-//         // Handle non-Axios errors
-//         console.error("An unexpected error occurred:", error);
-//       }
-//       LoaderClose();
-//     }
-//   };
-//   useEffect(() => {
-//     if (isMounted.current) {
-//       fetchBillsfive();
-//       isMounted.current = false;
-//     }
-//     return () => {
-//       isMounted.current = false;
-//     };
-//   }, []);
+    try {
+      const response = await axiosInstance.get(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/annual-report/?screen=2&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        axiosConfig
+      );
+
+      if (response.status === 200) {
+        setReportingdescription(response.data.additional_information_entity_5);
+        setReportnradio(response.data.structure_3);
+
+        if (response.data.categorization_4 == null) {
+          setCheckboxStates({});
+        } else {
+          setCheckboxStates(response.data.categorization_4);
+          setIsChecked(response.data.categorization_4.Producing_goods);
+          setIsCheckedone(response.data.categorization_4.Selling_goods);
+          setIsCheckedoneone(response.data.categorization_4.Distributing_goods);
+          setIsCheckeotherone(
+            response.data.categorization_4.Importing_into_Canada_goods_produced_outside_Canada
+          );
+          setIsCheckedothertwo(
+            response.data.categorization_4.Controlling_an_entity_engaged_in_producing
+          );
+        }
+        LoaderClose();
+      }
+      else{
+        LoaderClose();
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } finally {
+      LoaderClose();
+    }
+  };
+  useEffect(() => {
+    // if (isMounted.current) {
+    
+    //   isMounted.current = false;
+    // }
+    // return () => {
+    //   isMounted.current = false;
+    // };
+    console.log("called it")
+    if(selectedOrg&&year){
+      fetchBillStwo();
+    }
+    setReportingdescription("");
+        setReportnradio("");
+        setIsChecked("");
+          setIsCheckedone("");
+          setIsCheckedoneone("");
+          setIsCheckeotherone("");
+          setIsCheckedothertwo("");
+        setCheckboxStates({
+          ProducinggoodsInCanada: false,
+          ProducinggoodsOutsideCanada: false,
+          SellinggoodsInCanada: false,
+          SellinggoodsOutsideCanada: false,
+          DistributinggoodsInCanada: false,
+          DistributinggoodsOutsideCanada: false,
+        })
+
+    
+  }, [selectedCorp,selectedOrg,year]);
+
   const handleCheckotherone = (name) => (event) => {
     if (name === "isCheckeotherone") {
       setIsCheckeotherone(event.target.checked);
@@ -105,12 +138,10 @@ const Screentwo = ({ nextStep, prevStep }) => {
       setIsCheckedothertwo(event.target.checked);
     }
   };
-  const handleeditClick = () => {
-    setIsClicked(!isClicked);
-    // fetchBillsfive();
-  };
+ 
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
+    setError((prev) => ({ ...prev, reportradio: "" }));
 
   };
 
@@ -164,6 +195,27 @@ const Screentwo = ({ nextStep, prevStep }) => {
       }
     } else {
       setCheckboxStates({ ...checkboxStates, [name]: event.target.checked });
+      const businessPresenceSelected = [
+        "ProducinggoodsInCanada",
+        "ProducinggoodsOutsideCanada",
+      ].some((key) => checkboxStates[key]);
+      if (!businessPresenceSelected) {
+        setError((prev) => ({ ...prev, businessPresence: "" }));
+      }
+      const sizeThresholdsSelected = [
+        "SellinggoodsInCanada",
+        "SellinggoodsOutsideCanada",
+      ].some((key) => checkboxStates[key]);
+      if (!sizeThresholdsSelected) {
+        setError((prev) => ({ ...prev, sizeThresholds: "" }));
+      }
+      const distributingGoods = [
+        "DistributinggoodsInCanada",
+        "DistributinggoodsOutsideCanada",
+      ].some((key) => checkboxStates[key]);
+      if (!distributingGoods) {
+        setError((prev) => ({ ...prev, distributinggoods: "" }));
+      }
     }
   };
 
@@ -367,124 +419,77 @@ const Screentwo = ({ nextStep, prevStep }) => {
       </>
     );
   };
-  const handleupdateform = async () => {
-    LoaderOpen();
-
-    const sandData = {
-      categorization_4: {
-        ...checkboxStates,
-        Producing_goods: isChecked,
-        Selling_goods: isCheckedone,
-        Distributing_goods: isCheckedoneone,
-        Importing_into_Canada_goods_produced_outside_Canada: isCheckeotherone,
-        Controlling_an_entity_engaged_in_producing: isCheckedothertwo,
-      },
-      structure_3: reportradio,
-      additional_information_entity_5: reportingdescription,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/annual_report/?screen=2`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Details updated successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          setIsClicked(false);
-        //   fetchBillsfive();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      })
-      .catch((error) => {
-        const errorMessage = "All form question fields are required.";
-        toast.error(errorMessage, {
-          // Corrected 'error.message'
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        LoaderClose();
-      });
-  };
+ 
   const submitForm = async () => {
-    LoaderOpen();
 
-    const sandData = {
-      categorization_4: {
-        ...checkboxStates,
-        Producing_goods: isChecked,
-        Selling_goods: isCheckedone,
-        Distributing_goods: isCheckedoneone,
-        Importing_into_Canada_goods_produced_outside_Canada: isCheckeotherone,
-        Controlling_an_entity_engaged_in_producing: isCheckedothertwo,
-      },
-      structure_3: reportradio,
-      additional_information_entity_5: reportingdescription,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/annual_report/?screen=2`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          nextStep();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
+    try{
+      LoaderOpen();
+
+      const sendData = {
+        categorization_4: {
+          ...checkboxStates,
+          Producing_goods: isChecked,
+          Selling_goods: isCheckedone,
+          Distributing_goods: isCheckedoneone,
+          Importing_into_Canada_goods_produced_outside_Canada: isCheckeotherone,
+          Controlling_an_entity_engaged_in_producing: isCheckedothertwo,
+        },
+        structure_3: reportradio,
+        additional_information_entity_5: reportingdescription?reportingdescription:null,
+        organization_id: selectedOrg,
+        corporate_id: selectedCorp?selectedCorp:null,
+        year: year
+      };
+      const response= await axiosInstance
+    .post(
+      `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=2`,
+      sendData,
+      axiosConfig
+    )
+    if (response.status == "200") {
+      console.log(response.status);
+      toast.success("added successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
-    //console.log(sandData);
+      LoaderClose();
+      nextStep();
+    } else {
+      toast.error("Error", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      LoaderClose();
+    }
+    }
+    catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    
+
   };
 
   const continueToNextStep = () => {
@@ -540,69 +545,12 @@ const Screentwo = ({ nextStep, prevStep }) => {
       setError(newErrors);
     }
   };
-  const validateForm = () => {
-    let newErrors = {};
-    // Validation for "Canadian business presence"
-    if (isChecked) {
-      const businessPresenceSelected = [
-        "ProducinggoodsInCanada",
-        "ProducinggoodsOutsideCanada",
-      ].some((key) => checkboxStates[key]);
-      if (!businessPresenceSelected) {
-        newErrors.businessPresence =
-          "Please select at least one option under 'Producing goods (including manufacturing, extracting, growing and processing)'.";
-      }
-    }
-
-    // Validation for "Meets size-related thresholds"
-    if (isCheckedone) {
-      const sizeThresholdsSelected = [
-        "SellinggoodsInCanada",
-        "SellinggoodsOutsideCanada",
-      ].some((key) => checkboxStates[key]);
-      if (!sizeThresholdsSelected) {
-        newErrors.sizeThresholds =
-          "Please select at least one option under 'Selling goods'.";
-      }
-    }
-    if (isCheckedoneone) {
-      const distributingGoods = [
-        "DistributinggoodsInCanada",
-        "DistributinggoodsOutsideCanada",
-      ].some((key) => checkboxStates[key]);
-      if (!distributingGoods) {
-        newErrors.distributinggoods =
-          "Please select at least one option under 'Distributing goods'.";
-      }
-    }
-
-    // Ensure that at least one of the main categories is checked
-    if (!isChecked && !isCheckedone && !isCheckedoneone) {
-      newErrors.general =
-        "Please select at least one category and fill in the details.";
-    }
-
-    if (!reportradio) {
-      newErrors.reportradio = "This field is required. Please fill it out.";
-    }
-
-    return newErrors;
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length === 0) {
-      setError({}); // Clear any existing errors
-      await handleupdateform(); // Proceed with the form submission
-    } else {
-      setError(formErrors); // Update the state with the validation errors
-    }
-  };
+ 
+ 
 
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px" }} />
+      
      <div className="mx-4 mt-2">
      <form className="w-[80%] text-left">
                   <div className="mb-5">
@@ -694,7 +642,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                       </div>
                     </div>
                     {error.reportradio && (
-                      <p className="text-red-500 ml-1">{error.reportradio}</p>
+                      <p className="text-red-500 ml-1 text-[12px] mt-1">{error.reportradio}</p>
                     )}
                   </div>
 
@@ -776,24 +724,24 @@ const Screentwo = ({ nextStep, prevStep }) => {
                           </label>
                         </div>
                         {/* Display validation errors */}
-                        <div className="mt-5 ml-3 mb-5">
+                        <div className="mt-5 ml-1 mb-5">
                           {error.businessPresence && (
-                            <div className="text-red-500">
+                            <div className="text-red-500 text-[12px] mt-1">
                               {error.businessPresence}
                             </div>
                           )}
                           {error.sizeThresholds && (
-                            <div className="text-red-500">
+                            <div className="text-red-500 text-[12px] mt-1">
                               {error.sizeThresholds}
                             </div>
                           )}
                             {error.distributinggoods && (
-                            <div className="text-red-500">
+                            <div className="text-red-500 text-[12px] mt-1">
                               {error.distributinggoods}
                             </div>
                           )}
                           {error.general && (
-                            <div className="text-red-500">{error.general}</div>
+                            <div className="text-red-500 text-[12px] mt-1">{error.general}</div>
                           )}
                         </div>
                         <div className="mb-5 mt-3">
@@ -831,7 +779,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                       </div>
                     </div>
                     {error.reportingdate && (
-                      <p className="text-red-500 ml-1">{error.reportingdate}</p>
+                      <p className="text-red-500 text-[12px] mt-1">{error.reportingdate}</p>
                     )}
                   </div>
                 </form>
@@ -847,7 +795,10 @@ const Screentwo = ({ nextStep, prevStep }) => {
                     <button
                       type="button"
                       onClick={continueToNextStep}
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
+                      disabled={!(selectedOrg && year)}
+                className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                  !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : ""
+                }`}
                     >
                       {" "}
                       Next &gt;
@@ -856,7 +807,18 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 </div>
 
      </div>
-
+     {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };

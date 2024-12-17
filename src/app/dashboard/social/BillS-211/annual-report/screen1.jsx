@@ -1,96 +1,121 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose  } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
+import { Oval } from "react-loader-spinner";
 
-const Screenone = ({ nextStep, prevStep }) => {
+const Screenone = ({ nextStep, prevStep,selectedCorp, selectedOrg, year }) => {
   // State to track selected options
   const { open } = GlobalState();
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [isClicked, setIsClicked] = useState(false);
-  const [reportingdescription, setReportingdescription] = useState();
-  const isMounted = useRef(true);
+  const [reportingdescription, setReportingdescription] = useState("");
   const [error, setError] = useState("");
   const [reportingentity, setReportingentit] = useState("");
   const [loopen, setLoOpen] = useState(false);
-  // const data = 1;
-  const [data, setData] = useState();
+
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
+
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+
+ 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const coNextStep = () => {
-    nextStep();
+  
+  const fetchBillSone = async () => {
+    LoaderOpen(); // Assume this is to show some loading UI
+
+    try {
+      const response = await axiosInstance.get(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/annual-report/?screen=1&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        axiosConfig
+      );
+
+
+      // If the request is successful but you specifically want to handle 404 inside here
+      if (response.status === 200) {
+        setReportingdescription(response.data.additional_information_2);
+        setReportingentit(response.data.steps_taken_description_1);
+        if (response.data.steps_taken_1 == null) {
+          setSelectedOptions([]);
+        } else {
+          setSelectedOptions(response.data.steps_taken_1);
+        }
+        LoaderClose();
+      }
+      else{
+        LoaderClose();
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } finally {
+      LoaderClose();
+    }
+   
   };
-//   const fetchBillsreport = async () => {
-//     LoaderOpen(); // Assume this is to show some loading UI
-
-//     try {
-//       const response = await axios.get(
-//         `${
-//           process.env.REACT_APP_BACKEND_URL
-//         }/annual_report/?screen=1&user_id=${localStorage.getItem("user_id")}`
-//       );
-
-//       // If the request is successful but you specifically want to handle 404 inside here
-//       if (response.status === 200) {
-//         // Assuming you want to do something with the data for successful requests
-//         // setData(response.data); // Uncomment or modify as needed
-//         console.log(response.data, "bills 2114");
-//         // You might want to setData or handle the error differently here
-//         setData(response.data.steps_taken_1);
-//         setReportingdescription(response.data.additional_information_2);
-//         setReportingentit(response.data.steps_taken_description_1);
-//         if (response.data.steps_taken_1 == null) {
-//           setSelectedOptions([]);
-//         } else {
-//           setSelectedOptions(response.data.steps_taken_1);
-//         }
-//         LoaderClose();
-//       }
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         // Here you can check if error.response exists and then further check the status code
-//         if (error.response && error.response.status === 404) {
-//           // Handle 404 specifically
-//           console.log(error.response.data, "bills 211");
-//           // You might want to setData or handle the error differently here
-//           setData(error.response.data.detail); // Adjust according to your needs
-//         } else {
-//           // Handle other errors
-//           console.error("An error occurred:", error.message);
-//         }
-//       } else {
-//         // Handle non-Axios errors
-//         console.error("An unexpected error occurred:", error);
-//       }
-//       LoaderClose();
-//     }
-//   };
-//   useEffect(() => {
-//     if (isMounted.current) {
-//      // fetchBillsreport();
-//       isMounted.current = false;
-//     }
-//     return () => {
-//       isMounted.current = false;
-//     };
-//   }, []);
-  // State to track and display any errors
-
-  // Destructure from useProSidebar hook
+  useEffect(() => {
+    // if (isMounted.current) {
+    
+    //   isMounted.current = false;
+    // }
+    // return () => {
+    //   isMounted.current = false;
+    // };
+    if(selectedOrg&&year){
+      fetchBillSone();
+    }
+    setReportingdescription("");
+    setReportingentit("");
+    setSelectedOptions([])
+    
+  }, [selectedCorp,selectedOrg,year]);
+  
   const handleReportingdescription = (event) => {
     setReportingdescription(event.target.value);
   };
   const handleReportingentity = (event) => {
     setReportingentit(event.target.value);
-    // console.log(event.target.value, "name");
+    setError((prev) => ({ ...prev, reportingentity: "" }));
   };
   // Define your options for the checkboxes
   const optionsTwo = [
@@ -205,15 +230,13 @@ const Screenone = ({ nextStep, prevStep }) => {
     // Add the rest of your options here
   ];
 
-  const handleeditClick = () => {
-    setIsClicked(!isClicked);
-   // fetchBillsreport();
-  };
+ 
   // Handle checkbox changes
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
     if (event.target.checked) {
       setSelectedOptions([...selectedOptions, value]); // Add to selected options
+      setError((prev) => ({ ...prev, selectedOptions: "" }));
     } else {
       setSelectedOptions(selectedOptions.filter((option) => option !== value)); // Remove from selected options
     }
@@ -223,125 +246,73 @@ const Screenone = ({ nextStep, prevStep }) => {
 
   const submitForm = async () => {
     let unewentities;
-    if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      // Check if reportingentity is not filled out
+    if (selectedOptions.includes("Other, please specify:")) {
       unewentities = reportingentity;
     } else {
       unewentities = null;
     }
-    LoaderOpen();
 
-    const sandData = {
+    try{
+      LoaderOpen();
+
+    const sendData = {
       steps_taken_description_1: unewentities,
-      additional_information_2: reportingdescription,
+      additional_information_2: reportingdescription?reportingdescription:null,
       steps_taken_1: selectedOptions,
-      user_id: parseInt(localStorage.getItem("user_id")),
+      organization_id: selectedOrg,
+        corporate_id: selectedCorp?selectedCorp:null,
+        year: year
     };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/annual_report/?screen=1`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          nextStep();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
+    const response= await axiosInstance
+    .post(
+      `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=1`,
+      sendData,
+      axiosConfig
+    )
+    if (response.status == "200") {
+      toast.success("Data added successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
-    //console.log(sandData);
-  };
-  const handleupdateform = async () => {
-    let newentities;
-    if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      // Check if reportingentity is not filled out
-      newentities = reportingentity;
+      LoaderClose();
+      nextStep();
     } else {
-      newentities = null;
-    }
-    LoaderOpen();
-
-    const sandData = {
-      steps_taken_description_1: newentities,
-      additional_information_2: reportingdescription,
-      steps_taken_1: selectedOptions,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/annual_report/?screen=1`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Details updated successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          setIsClicked(false);
-         // fetchBillsreport();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      })
-      .catch((error) => {
-        const errorMessage = "All form question fields are required.";
-        toast.error(errorMessage, {
-          // Corrected 'error.message'
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        LoaderClose();
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
+      LoaderClose();
+    }
+    }
+    catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    
   };
+ 
   const continueToNextStep = () => {
     let newErrors = {};
 
@@ -350,7 +321,7 @@ const Screenone = ({ nextStep, prevStep }) => {
         "Please select at least one sector or industry.";
     }
 
-    if (selectedOptions.includes("other")) {
+    if (selectedOptions.includes("Other, please specify:")) {
       // If it's an array and "other" is one of the options
       if (!reportingentity) {
         // Check if reportingentity is not filled out
@@ -366,38 +337,10 @@ const Screenone = ({ nextStep, prevStep }) => {
     }
   };
 
-  const validateForm = () => {
-    let newErrors = {};
-
-    if (selectedOptions.length === 0) {
-      newErrors.selectedOptions =
-        "Please select at least one sector or industry.";
-    }
-
-    if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      if (!reportingentity) {
-        // Check if reportingentity is not filled out
-        newErrors.reportingentity = "Please enter a description";
-      }
-    }
-
-    return newErrors;
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length === 0) {
-      setError({}); // Clear any existing errors
-      await handleupdateform(); // Proceed with the form submission
-    } else {
-      setError(formErrors); // Update the state with the validation errors
-    }
-  };
+  
+ 
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px" }} />
      <div className="mx-4 mt-2">
      <form className="w-[78%] container text-left">
                 <div className="mb-5">
@@ -419,8 +362,8 @@ const Screenone = ({ nextStep, prevStep }) => {
                         <label className="ml-2 text-[14px] text-gray-600">
                           <input
                             type="checkbox"
-                            value={option.value}
-                            checked={selectedOptions.includes(option.value)}
+                            value={option.label}
+                            checked={selectedOptions.includes(option.label)}
                             onChange={handleCheckboxChange}
                             className="mr-3 pt-1"
                           />
@@ -431,11 +374,11 @@ const Screenone = ({ nextStep, prevStep }) => {
                   </div>
                   <div className="my-1">
                     {error.selectedOptions && (
-                      <p className="text-red-500">{error.selectedOptions}</p>
+                      <p className="text-red-500 text-[12px] mt-1">{error.selectedOptions}</p>
                     )}
                   </div>
                 </div>
-                {selectedOptions.includes("other") && (
+                {selectedOptions.includes("Other, please specify:") && (
                   <div className="mb-5 mt-3">
                     <input
                       type="text"
@@ -447,7 +390,7 @@ const Screenone = ({ nextStep, prevStep }) => {
                       onChange={handleReportingentity}
                     ></input>
                     {error.reportingentity && (
-                      <div className="text-red-500 ml-1">
+                      <div className="text-red-500 ml-1 text-[12px] mt-1">
                         {error.reportingentity}
                       </div>
                     )}
@@ -467,7 +410,7 @@ const Screenone = ({ nextStep, prevStep }) => {
                     placeholder="Enter a description..."
                     className={`${
                       open ? "w-full" : "w-full"
-                    }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
+                    }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                     value={reportingdescription}
                     maxLength="1500"
                     // value={formData.countriesOfOperation}
@@ -489,7 +432,10 @@ const Screenone = ({ nextStep, prevStep }) => {
                   <button
                     type="button"
                     onClick={continueToNextStep}
-                    className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
+                    disabled={!(selectedOrg && year)}
+                className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                  !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : ""
+                }`}
                   >
                     {" "}
                     Next &gt;
@@ -497,6 +443,19 @@ const Screenone = ({ nextStep, prevStep }) => {
                 </div>
               </div>
      </div>
+
+     {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };

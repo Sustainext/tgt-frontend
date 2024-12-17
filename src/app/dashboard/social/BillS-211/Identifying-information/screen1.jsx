@@ -246,7 +246,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year }) => {
                 value={reportname}
                 onChange={handleReportname}
               >
-                <option disabled className="text-sm" value="Select Entity">
+                <option className="text-sm" value="Select Entity">
                   Select Entity
                 </option>
                 <option className="text-sm" value="Entity">

@@ -10,6 +10,8 @@ import Screenseven from "./screen7";
 import Screenend from "./screen8";
 import { MdOutlineNavigateNext,MdOutlineNavigateBefore  } from "react-icons/md";
 import Socialheader2 from '../../socialheader2'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Annualreport = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -23,7 +25,7 @@ const Annualreport = () => {
   };
 
   const [activeMonth, setActiveMonth] = useState(1);
-  const [year, setYear] = useState();
+  const [year, setYear] = useState("");
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
 
@@ -68,28 +70,29 @@ const Annualreport = () => {
         {currentStep === 1 && (
           <Screenone
             nextStep={nextStep}
+            selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year}
             // handleChange={handleChange}
           />
         )}
          {currentStep === 2 && (
-          <Screentwo nextStep={nextStep} prevStep={prevStep} />
+          <Screentwo nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
         {currentStep === 3 && (
-          <Screenthree nextStep={nextStep} prevStep={prevStep} />
+          <Screenthree nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
         {currentStep === 4 && (
-          <Screenfour nextStep={nextStep} prevStep={prevStep} />
+          <Screenfour nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
         {currentStep === 5 && (
-          <Screenfive nextStep={nextStep} prevStep={prevStep} />
+          <Screenfive nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
         {currentStep === 6 && (
-          <Screensix nextStep={nextStep} prevStep={prevStep} />
+          <Screensix nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
         {currentStep === 7 && (
-          <Screenseven nextStep={nextStep} prevStep={prevStep} />
+          <Screenseven nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />
         )}
-       {currentStep === 8 && <Screenend prevStep={prevStep} />}
+       {currentStep === 8 && <Screenend prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} />}
       </div>
       <div className="w-full">
         <div className="flex justify-center space-x-4 mt-[15px] w-full">
@@ -129,6 +132,7 @@ const Annualreport = () => {
           </button>
         </div>
       </div>
+      <ToastContainer style={{ fontSize: "12px" }} />
     </>
   );
 };

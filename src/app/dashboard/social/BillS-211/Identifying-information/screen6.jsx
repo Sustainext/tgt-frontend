@@ -108,7 +108,8 @@ const Screensix = ({ nextStep, prevStep,selectedCorp,selectedOrg,year }) => {
 
   const handleReportingentity = (event) => {
     setReportingentit(event.target.value);
-    // console.log(event.target.value, "name");
+    setError((prev) => ({ ...prev, reportingentity: "" }));
+   
   };
   const optionsTwo = [
     {

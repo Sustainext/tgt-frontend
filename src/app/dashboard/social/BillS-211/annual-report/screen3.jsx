@@ -1,85 +1,112 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose  } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
+import { Oval } from "react-loader-spinner";
 
-const Screenthree = ({ nextStep, prevStep }) => {
+const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year }) => {
 
   const { open } = GlobalState();
   const [error, setError] = useState({});
   const [reportradio, setReportnradio] = useState("");
-  const [reportingdescription, setReportingdescription] = useState();
+  const [reportingdescription, setReportingdescription] = useState("");
   const [loopen, setLoOpen] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-  const isMounted = useRef(true);
-  const [data, setData] = useState();
+  
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const coNextStep = () => {
-    nextStep();
+
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
   };
-//   const fetchBillsreport = async () => {
-//     LoaderOpen(); // Assume this is to show some loading UI
+  const token = getAuthToken();
 
-//     try {
-//       const response = await axios.get(
-//         `${
-//           process.env.REACT_APP_BACKEND_URL
-//         }/annual_report/?screen=3&user_id=${localStorage.getItem("user_id")}`
-//       );
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
 
-//       // If the request is successful but you specifically want to handle 404 inside here
-//       if (response.status === 200) {
-//         // Assuming you want to do something with the data for successful requests
-//         // setData(response.data); // Uncomment or modify as needed
-//         console.log(response.data, "bills 2114");
-//         // You might want to setData or handle the error differently here
-//         setData(response.data.policies_in_place_6);
-//         setReportnradio(response.data.policies_in_place_6);
-//         setReportingdescription(response.data.additional_info_policies_7);
-//         if (response.data.elements_implemented_6_1 == null) {
-//           setSelectedOptions([]);
-//         } else {
-//           setSelectedOptions(response.data.elements_implemented_6_1);
-//         }
-//         LoaderClose();
-//       }
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         // Here you can check if error.response exists and then further check the status code
-//         if (error.response && error.response.status === 404) {
-//           // Handle 404 specifically
-//           console.log(error.response.data, "bills 211");
-//           // You might want to setData or handle the error differently here
-//           setData(error.response.data.detail); // Adjust according to your needs
-//         } else {
-//           // Handle other errors
-//           console.error("An error occurred:", error.message);
-//         }
-//       } else {
-//         // Handle non-Axios errors
-//         console.error("An unexpected error occurred:", error);
-//       }
-//       LoaderClose();
-//     }
-//   };
-//   useEffect(() => {
-//     if (isMounted.current) {
-//       fetchBillsreport();
-//       isMounted.current = false;
-//     }
-//     return () => {
-//       isMounted.current = false;
-//     };
-//   }, []);
+ 
+  const fetchBillSthree = async () => {
+    LoaderOpen(); // Assume this is to show some loading UI
+
+    try {
+      const response = await axiosInstance.get(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/annual-report/?screen=3&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        axiosConfig
+      );
+
+      // If the request is successful but you specifically want to handle 404 inside here
+      if (response.status === 200) {
+        setReportnradio(response.data.policies_in_place_6);
+        setReportingdescription(response.data.additional_info_policies_7);
+        if (response.data.elements_implemented_6_1 == null) {
+          setSelectedOptions([]);
+        } else {
+          setSelectedOptions(response.data.elements_implemented_6_1);
+        }
+        LoaderClose();
+      }
+      else{
+        LoaderClose();
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } finally {
+      LoaderClose();
+    }
+  };
+  useEffect(() => {
+    // if (isMounted.current) {
+    
+    //   isMounted.current = false;
+    // }
+    // return () => {
+    //   isMounted.current = false;
+    // };
+    if(selectedOrg&&year){
+      fetchBillSthree();
+    }
+    setReportnradio("");
+    setReportingdescription("");
+    setSelectedOptions([])
+
+    
+  }, [selectedCorp,selectedOrg,year]);
   const options = [
     {
       label:
@@ -123,86 +150,18 @@ const Screenthree = ({ nextStep, prevStep }) => {
     }
   };
 
-  const handleeditClick = () => {
-    setIsClicked(!isClicked);
-    // fetchBillsreport();
-  };
+ 
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
-    console.log(event.target.value, "setReportnradio");
+    setError((prev) => ({ ...prev, reportradio: "" }));
   };
 
   const handleReportingdescription = (event) => {
     setReportingdescription(event.target.value);
-    console.log(event.target.value, "setReportingdescription");
+   
   };
 
-  const handleupdateform = async () => {
-    let newentities;
-    if (reportradio === "No") {
-      newentities = [];
-    } else {
-      newentities = selectedOptions;
-    }
-    LoaderOpen();
-
-    const sandData = {
-      policies_in_place_6: reportradio,
-      elements_implemented_6_1: newentities,
-      additional_info_policies_7: reportingdescription,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/annual_report/?screen=3`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Details updated successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          setIsClicked(false);
-        //   fetchBillsreport();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      })
-      .catch((error) => {
-        const errorMessage = "All form question fields are required.";
-        toast.error(errorMessage, {
-          // Corrected 'error.message'
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        LoaderClose();
-      });
-  };
+  
   const submitForm = async () => {
     let unewentities;
     if (reportradio === "No") {
@@ -210,49 +169,66 @@ const Screenthree = ({ nextStep, prevStep }) => {
     } else {
       unewentities = selectedOptions;
     }
-    LoaderOpen();
+    try{
+      LoaderOpen();
 
-    const sandData = {
-      policies_in_place_6: reportradio,
-      elements_implemented_6_1: unewentities,
-      additional_info_policies_7: reportingdescription,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/annual_report/?screen=3`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          nextStep();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
+      const sendData = {
+        policies_in_place_6: reportradio,
+        elements_implemented_6_1: unewentities,
+        additional_info_policies_7: reportingdescription?reportingdescription:null,
+        organization_id: selectedOrg,
+        corporate_id: selectedCorp?selectedCorp:null,
+        year: year
+      };
+      const response= await axiosInstance
+    .post(
+      `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=3`,
+      sendData,
+      axiosConfig
+    )
+    if (response.status == "200") {
+      toast.success("Data added successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
-    //console.log(sandData);
+      LoaderClose();
+      nextStep();
+    } else {
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      LoaderClose();
+    }
+    }
+    catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    
+    
   };
   const continueToNextStep = () => {
     let newErrors = {};
@@ -273,30 +249,10 @@ const Screenthree = ({ nextStep, prevStep }) => {
       setError(newErrors);
     }
   };
-  const validateForm = () => {
-    let newErrors = {};
-    if (reportradio === "Yes") {
-      if (selectedOptions.length === 0) {
-        newErrors.checkboxes = "Please select at least one option.";
-      }
-    }
-
-    return newErrors;
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length === 0) {
-      setError({}); // Clear any existing errors
-      await handleupdateform(); // Proceed with the form submission
-    } else {
-      setError(formErrors); // Update the state with the validation errors
-    }
-  };
+  
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px" }} />
+     
       <div className="mx-4 mt-2">
       <form className="w-[80%] text-left">
                   <div className="mb-5">
@@ -349,7 +305,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                       </div>
                     </div>
                     {error.reportradio && (
-                      <p className="text-red-500 ml-1">{error.reportradio}</p>
+                      <p className="text-red-500 ml-1 text-[12px] mt-1">{error.reportradio}</p>
                     )}
                   </div>
 
@@ -366,7 +322,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                       </label>
                       <div>
                         {options.map((option, index) => (
-                          <div key={index} className="mb-3 ml-2">
+                          <div key={index} className="mb-2 ml-2">
                             <label className="text-[14px] text-gray-600">
                               <input
                                 type="checkbox"
@@ -380,7 +336,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                           </div>
                         ))}
                         {error.checkboxes && (
-                          <div className="text-red-500 ml-1">
+                          <div className="text-red-500 ml-1 text-[12px] mt-1">
                             {error.checkboxes}
                           </div>
                         )}
@@ -432,7 +388,10 @@ const Screenthree = ({ nextStep, prevStep }) => {
                     <button
                       type="button"
                       onClick={continueToNextStep}
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
+                      disabled={!(selectedOrg && year)}
+                className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                  !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : ""
+                }`}
                     >
                       {" "}
                       Next &gt;
@@ -441,6 +400,18 @@ const Screenthree = ({ nextStep, prevStep }) => {
                 </div>
 
       </div>
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };

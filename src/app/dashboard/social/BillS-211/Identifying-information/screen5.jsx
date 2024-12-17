@@ -128,6 +128,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year }) => {
   const handleCheckboxChangenew = (name) => (event) => {
     if (name === "isCheckednew") {
       setIsCheckednew(event.target.checked);
+      setError((prev) => ({ ...prev, general: "" }));
     }
 
     // console.log(event.target.value, "name");
@@ -136,6 +137,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year }) => {
     const { checked } = event.target;
     if (name === "isChecked") {
       setIsChecked(event.target.checked);
+
       if (!checked) {
         setCheckboxStates((prevState) => ({
           ...prevState,
@@ -144,6 +146,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year }) => {
           hasAssetsInCanada: false,
         }));
       }
+      
     } else if (name === "isCheckedone") {
       setIsCheckedone(event.target.checked);
       if (!checked) {
@@ -156,6 +159,22 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year }) => {
       }
     } else {
       setCheckboxStates({ ...checkboxStates, [name]: event.target.checked });
+      const businessPresenceSelected = [
+        "businessInCanada",
+        "doesBusinessInCanada",
+        "hasAssetsInCanada",
+      ].some((key) => checkboxStates[key]);
+      if (!businessPresenceSelected) {
+        setError((prev) => ({ ...prev, businessPresence: "" }));
+      }
+      const sizeThresholdsSelected = [
+        "largeAssetSize",
+        "largeRevenue",
+        "largeEmployees",
+      ].some((key) => checkboxStates[key]);
+      if (!sizeThresholdsSelected) {
+        setError((prev) => ({ ...prev, sizeThresholds: "" }));
+      }
     }
   };
 

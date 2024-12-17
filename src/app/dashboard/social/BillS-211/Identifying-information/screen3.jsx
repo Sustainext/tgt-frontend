@@ -170,7 +170,9 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp,selectedOrg,year }) => {
     setEntities(newEntities);
   };
 
-  const handleReportnradio = (event) => setReportnradiojoint(event.target.value);
+  const handleReportnradio = (event) =>{ setReportnradiojoint(event.target.value);
+    setError((prev) => ({ ...prev, reportradiojoint: "" }));
+  }
 
   const handleReportnbusinessnumber = (event) =>
     setReportingbusinessnumber(event.target.value);
