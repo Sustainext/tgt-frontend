@@ -145,7 +145,12 @@ const SocialBillS211Header = ({
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
-                    onClick={() => handleReportTypeChange("Organization")}
+                    onClick={() => {handleReportTypeChange("Organization")
+                        setSelectedCorp("")
+                        
+                    }
+
+                    }
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Organization
@@ -155,7 +160,13 @@ const SocialBillS211Header = ({
                     className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
-                    onClick={() => handleReportTypeChange("Corporate")}
+                    onClick={() => {handleReportTypeChange("Corporate")
+
+                        setErrors((prevErrors) => ({
+                            ...prevErrors,
+                            corporate: selectedCorp ? "" : "Please select Corporate",
+                          }));
+                    }}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Corporate
