@@ -69,7 +69,7 @@ const Section6=({section12_1_4Ref,data})=>{
         "Category",
         "Sub Category",
         "Activity",
-        "Value",
+        "Emission (tCO2e)",
         // "Value 2"
     ]
 

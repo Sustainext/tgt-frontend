@@ -1,192 +1,71 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose,MdDelete   } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
-const Screenthree = ({ nextStep, prevStep }) => {
+import { Oval } from "react-loader-spinner";
+
+
+const Screenthree = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType }) => {
   const [error, setError] = useState({});
   const { open } = GlobalState();
   const [reportradiojoint, setReportnradiojoint] = useState("");
-  const [reportingbusinessnumber, setReportingbusinessnumber] = useState();
+  const [reportingbusinessnumber, setReportingbusinessnumber] = useState("");
   const [loopen, setLoOpen] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-  // const data = 1;
-
-  const [data, setData] = useState(null);
-  const isMounted = useRef(true);
-//   const fetchBillsthree = async () => {
-//     LoaderOpen(); // Assume this is to show some loading UI
-
-//     try {
-//       const response = await axios.get(
-//         `${
-//           process.env.REACT_APP_BACKEND_URL
-//         }/identifying-information/?screen=3&user_id=${localStorage.getItem(
-//           "user_id"
-//         )}`
-//       );
-
-//       // If the request is successful but you specifically want to handle 404 inside here
-//       if (response.status === 200) {
-//         // Assuming you want to do something with the data for successful requests
-//         // setData(response.data); // Uncomment or modify as needed
-//         console.log(response.data, "bills 2110");
-//         // You might want to setData or handle the error differently here
-//         setData(response.data.is_joint_report_6);
-//         setReportingbusinessnumber(response.data.business_number_5);
-//         setReportnradiojoint(response.data.is_joint_report_6);
-//         if (response.data.legal_name_and_business_numbers_6_1_2 == null) {
-//           setEntities([{ legalName: "", businessNumber: "" }]);
-//         } else {
-//           setEntities(response.data.legal_name_and_business_numbers_6_1_2);
-//         }
-
-//         LoaderClose();
-//       }
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         // Here you can check if error.response exists and then further check the status code
-//         if (error.response && error.response.status === 404) {
-//           // Handle 404 specifically
-//           console.log(error.response.data, "bills 211");
-//           // You might want to setData or handle the error differently here
-//           setData(error.response.data.detail); // Adjust according to your needs
-//         } else {
-//           // Handle other errors
-//           console.error("An error occurred:", error.message);
-//         }
-//       } else {
-//         // Handle non-Axios errors
-//         console.error("An unexpected error occurred:", error);
-//       }
-//       LoaderClose();
-//     }
-//   };
-//   useEffect(() => {
-//     if (isMounted.current) {
-//        //fetchBillsthree();
-//       isMounted.current = false;
-//     }
-//     return () => {
-//       isMounted.current = false;
-//     };
-//   }, []);
-  const coNextStep = () => {
-    nextStep();
-  };
-  const handleeditClick = () => {
-    setIsClicked(!isClicked);
-     //fetchBillsthree();
-  };
-  const handleReportnradio = (event) => {
-    setReportnradiojoint(event.target.value);
-    console.log(event.target.value, "setReportnradio");
-  };
-  const handleReportnbusinessnumber = (event) => {
-    setReportingbusinessnumber(event.target.value);
-    console.log(event.target.value, "setReportingdate");
-  };
-
-  const LoaderOpen = () => {
-    setLoOpen(true);
-  };
-  const LoaderClose = () => {
-    setLoOpen(false);
-  };
   const [entities, setEntities] = useState([
     { legalName: "", businessNumber: "" },
   ]);
 
-  const handleInputChange = (index, type, value) => {
-    const newEntities = [...entities];
-    newEntities[index][type] = value;
-    // Also reset the corresponding error
-    setError((prevErrors) => ({ ...prevErrors, [`${type}${index}`]: "" }));
 
-    setEntities(newEntities);
-  };
-
-  const handleAddEntity = () => {
-    setEntities([...entities, { legalName: "", businessNumber: "" }]);
-  };
-
-  const handleRemoveEntity = (index) => {
-    const newEntities = [...entities];
-    newEntities.splice(index, 1);
-    setEntities(newEntities);
-    // Remove errors related to the entity
-    setError((prevErrors) => {
-      const newErrors = { ...prevErrors };
-      delete newErrors[`legalName${index}`];
-      delete newErrors[`businessNumber${index}`];
-      return newErrors;
-    });
-  };
-  const handleupdateform = async () => {
-    LoaderOpen();
-    let newentities;
-    let numbersbusiness;
-    if (reportradiojoint === "No") {
-      newentities = [{ legalName: "", businessNumber: "" }];
-    } else {
-      newentities = entities;
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
     }
-    if (reportingbusinessnumber === "") {
-      numbersbusiness = null;
-    } else {
-      numbersbusiness = reportingbusinessnumber;
-    }
-    const sandData = {
-      legal_name_and_business_numbers_6_1_2: newentities,
+    return "";
+  };
+  const token = getAuthToken();
 
-      is_joint_report_6: reportradiojoint,
-      business_number_5: numbersbusiness,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/identifying-information/?screen=3`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Details updated successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          setIsClicked(false);
-           //fetchBillsthree();
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+
+  const fetchBillSthree = async () => {
+    LoaderOpen(); 
+
+    try {
+      const response = await axiosInstance.get(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/identifying-information/?screen=3&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        axiosConfig
+      );
+      if (response.status === 200) {
+        setReportingbusinessnumber(response.data.business_number_5);
+        setReportnradiojoint(response.data.is_joint_report_6);
+        if (!response.data.legal_name_and_business_numbers_6_1_2) {
+          setEntities([{ legalName: "", businessNumber: "" }]);
         } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
+          setEntities(response.data.legal_name_and_business_numbers_6_1_2);
         }
-      })
-      .catch((error) => {
-        const errorMessage = "All form question fields are required.";
-        toast.error(errorMessage, {
-          // Corrected 'error.message'
+
+        LoaderClose();
+      }
+      else if(response.status==404){
+        setReportingbusinessnumber("");
+        setReportnradiojoint("");
+        setEntities([{ legalName: "", businessNumber: "" }]);
+        LoaderClose();
+      }
+      else{
+        LoaderClose();
+        toast.error("Oops, something went wrong", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -194,27 +73,144 @@ const Screenthree = ({ nextStep, prevStep }) => {
           progress: undefined,
           theme: "colored",
         });
-        LoaderClose();
+      }
+    } catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
+    }
+    finally {
+      LoaderClose();
+    }
   };
-  const submitForm = async () => {
-    LoaderOpen();
+  useEffect(() => {
+    // if (isMounted.current) {
+    
+    //   isMounted.current = false;
+    // }
+    // return () => {
+    //   isMounted.current = false;
+    // };
+    if(reportType=="Organization"){
+      if(selectedOrg&&year){
+        fetchBillSthree();
+      }
+    }
+    else{
+      if(selectedOrg&&year&&selectedCorp){
+        fetchBillSthree();
+      }
+    }
+    setReportingbusinessnumber("");
+    setReportnradiojoint("");
+    setEntities([{ legalName: "", businessNumber: "" }]);
+    
+  }, [selectedCorp,selectedOrg,year]);
 
-    const sandData = {
-      legal_name_and_business_numbers_6_1_2: entities,
-      is_joint_report_6: reportradiojoint,
-      business_number_5: reportingbusinessnumber,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/identifying-information/?screen=3`,
-        sandData
-      )
-      .then((response) => {
+ 
+  // const handleReportnradio = (event) => {
+  //   setReportnradiojoint(event.target.value);
+    
+  // };
+  // const handleReportnbusinessnumber = (event) => {
+  //   setReportingbusinessnumber(event.target.value);
+   
+  // };
+
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
+  
+
+  // const handleInputChange = (index, type, value) => {
+  //   const newEntities = [...entities];
+  //   newEntities[index][type] = value;
+  //   // Also reset the corresponding error
+  //   setError((prevErrors) => ({ ...prevErrors, [`${type}${index}`]: "" }));
+
+  //   setEntities(newEntities);
+  // };
+
+  // const handleAddEntity = () => {
+  //   setEntities([...entities, { legalName: "", businessNumber: "" }]);
+  // };
+
+  // const handleRemoveEntity = (index) => {
+  //   const newEntities = [...entities];
+  //   newEntities.splice(index, 1);
+  //   setEntities(newEntities);
+  //   // Remove errors related to the entity
+  //   setError((prevErrors) => {
+  //     const newErrors = { ...prevErrors };
+  //     delete newErrors[`legalName${index}`];
+  //     delete newErrors[`businessNumber${index}`];
+  //     return newErrors;
+  //   });
+  // };
+ 
+ 
+  const handleInputChange = (index, type, value) => {
+    const newEntities = [...entities];
+    newEntities[index][type] = value;
+    setEntities(newEntities);
+    setError((prevErrors) => ({ ...prevErrors, [`${type}${index}`]: "" }));
+  };
+
+  const handleAddEntity = () => {
+    setEntities([...entities, { legalName: "", businessNumber: "" }]);
+  };
+
+  const handleRemoveEntity = (index) => {
+    const newEntities = entities.filter((_, i) => i !== index);
+    setEntities(newEntities);
+  };
+
+  const handleReportnradio = (event) =>{ setReportnradiojoint(event.target.value);
+    setError((prev) => ({ ...prev, reportradiojoint: "" }));
+  }
+
+  const handleReportnbusinessnumber = (event) =>
+    setReportingbusinessnumber(event.target.value);
+
+  const handleKeyDown = (event) => {
+    if (["+", "-", "."].includes(event.key)) {
+      event.preventDefault();
+    }
+  };
+
+  const submitForm = async () => {
+
+    try{
+      LoaderOpen();
+
+      const sendData = {
+        legal_name_and_business_numbers_6_1_2: entities,
+        is_joint_report_6: reportradiojoint,
+        business_number_5: reportingbusinessnumber,
+        organization_id: selectedOrg,
+        corporate_id: selectedCorp?selectedCorp:null,
+        year: year
+      };
+     const response= await axiosInstance
+        .post(
+          `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=3`,
+          sendData,
+          axiosConfig
+        )
         if (response.status == "200") {
-          console.log(response.status);
-          toast.success("added successfully", {
+          toast.success("Data added successfully", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -227,7 +223,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
           LoaderClose();
           nextStep();
         } else {
-          toast.error("Error", {
+          toast.error("Oops, something went wrong", {
             position: "top-right",
             autoClose: 1000,
             hideProgressBar: false,
@@ -239,8 +235,20 @@ const Screenthree = ({ nextStep, prevStep }) => {
           });
           LoaderClose();
         }
+    }catch (error) {
+      LoaderClose();
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
-    //console.log(sandData);
+    } 
+   
   };
 
   const continueToNextStep = () => {
@@ -266,39 +274,9 @@ const Screenthree = ({ nextStep, prevStep }) => {
       setError(newErrors);
     }
   };
-  const validateForm = () => {
-    let newErrors = {};
-    if (reportradiojoint === "Yes") {
-      entities.forEach((entity, index) => {
-        if (!entity.legalName.trim()) {
-          newErrors[`legalName${index}`] = "Legal name is required";
-        }
-
-      });
-    }
-
-    return newErrors;
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length === 0) {
-      setError({}); // Clear any existing errors
-      await handleupdateform(); // Proceed with the form submission
-    } else {
-      setError(formErrors); // Update the state with the validation errors
-    }
-  };
-  const handleKeyDown = (event) => {
-    // Prevent 'e', '+', '-', and '.' from being entered
-    if (["e", "E", "+", "-", "."].includes(event.key)) {
-      event.preventDefault();
-    }
-  };
+  
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px" }} />
      
       <div className="mx-4 mt-2">
       <form className="w-full text-left">
@@ -474,7 +452,10 @@ const Screenthree = ({ nextStep, prevStep }) => {
                     <button
                       type="button"
                       onClick={continueToNextStep}
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
+                      disabled={!(selectedOrg&&year)}
+                      className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                        reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
+                       }`}
                     >
                       {" "}
                       Next &gt;
@@ -484,7 +465,18 @@ const Screenthree = ({ nextStep, prevStep }) => {
               </form>
 
       </div>
-
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };
