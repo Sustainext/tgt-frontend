@@ -125,15 +125,6 @@ const Scope1 = forwardRef(
     const LoaderOpen = () => setLoOpen(true);
     const LoaderClose = () => setLoOpen(false);
 
-    // const handleChange = useCallback(
-    //   (e) => {
-    //     dispatch(
-    //       updateScopeDataLocal({ scope: 1, data: { data: e.formData } })
-    //     );
-    //   },
-    //   [dispatch]
-    // );
-
     const validationErrors = useSelector(
       (state) => state.emissions.validationErrors
     );
