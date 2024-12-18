@@ -1,26 +1,21 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose,MdDeleteOutline   } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
 import { countryname } from "../../data/countryname"
-const Screenseven = ({ prevStep, activeSteps }) => {
+import { Oval } from "react-loader-spinner";
+
+const Screenseven = ({ prevStep, activeSteps,selectedCorp,selectedOrg,year,reportType }) => {
   const [error, setError] = useState({});
   const { open } = GlobalState();
-  const [entitylocated, setEntitylocated] = useState();
-  const [territorylocated, setTerritorylocated] = useState();
+  const [entitylocated, setEntitylocated] = useState("");
+  const [territorylocated, setTerritorylocated] = useState("");
   const [loopen, setLoOpen] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-//   const isMounted = useRef(true);
-  // const data = 1;
-  const [data, setData] = useState(null);
-//   const goToSomeStep = () => {
-
-//     activeSteps(102);
-//   };
+ 
   const canadian = [
     { code: "spoo", name: "Select province" },
     { code: "AB", name: "Alberta" },
@@ -37,170 +32,41 @@ const Screenseven = ({ prevStep, activeSteps }) => {
     { code: "SK", name: "Saskatchewan" },
     { code: "YT", name: "Yukon" },
   ];
-//   const fetchBillsone = async () => {
-//     LoaderOpen(); // Assume this is to show some loading UI
-
-//     try {
-//       const response = await axios.get(
-//         `${
-//           process.env.REACT_APP_BACKEND_URL
-//         }/identifying-information/?screen=7&user_id=${localStorage.getItem(
-//           "user_id"
-//         )}`
-//       );
-
-//       // If the request is successful but you specifically want to handle 404 inside here
-//       if (response.status === 200) {
-//         // Assuming you want to do something with the data for successful requests
-//         // setData(response.data); // Uncomment or modify as needed
-//         console.log(response.data, "bills 2115");
-//         // You might want to setData or handle the error differently here
-//         setData(response.data.country_10);
-//         setEntitylocated(response.data.country_10);
-//         setTerritorylocated(response.data.province_or_territory_10_1);
-//         LoaderClose();
-//       }
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         // Here you can check if error.response exists and then further check the status code
-//         if (error.response && error.response.status === 404) {
-//           // Handle 404 specifically
-//           console.log(error.response.data, "bills 211");
-//           // You might want to setData or handle the error differently here
-//           setData(error.response.data.detail); // Adjust according to your needs
-//         } else {
-//           // Handle other errors
-//           console.error("An error occurred:", error.message);
-//         }
-//       } else {
-//         // Handle non-Axios errors
-//         console.error("An unexpected error occurred:", error);
-//       }
-//       LoaderClose();
-//     }
-//   };
-//   useEffect(() => {
-//     if (isMounted.current) {
-//       //fetchBillsone();
-//       isMounted.current = false;
-//     }
-//     return () => {
-//       isMounted.current = false;
-//     };
-//   }, []);
-  const LoaderOpen = () => {
-    setLoOpen(true);
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
   };
-  const LoaderClose = () => {
-    setLoOpen(false);
-  };
-  const handleeditClick = () => {
-    setIsClicked(!isClicked);
-    //fetchBillsone();
-  };
-  const handleEntitylocated = (event) => {
-    setEntitylocated(event.target.value);
+  const token = getAuthToken();
 
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   };
-  const handleTerritorylocated = (event) => {
-    setTerritorylocated(event.target.value);
 
-  };
-  const submitForm = async () => {
-    LoaderOpen();
+  const fetchBillSseven = async () => {
+    LoaderOpen(); 
 
-    const sandData = {
-      country_10: entitylocated,
-      province_or_territory_10_1: territorylocated,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/identifying-information/?screen=7`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          // console.log(response.status);
-          toast.success("Added  successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          //fetchBillsone();
-        //   goToSomeStep();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      });
-    //console.log(sandData);
-  };
-  const handleupdateform = async (e) => {
-    e.preventDefault();
-    LoaderOpen();
-
-    const sandData = {
-      country_10: entitylocated,
-      province_or_territory_10_1: territorylocated,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/identifying-information/?screen=7`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Details updated successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          setIsClicked(false);
-          //fetchBillsone();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      })
-      .catch((error) => {
-        const errorMessage = "All form question fields are required.";
-        toast.error(errorMessage, {
-          // Corrected 'error.message'
+    try {
+      const response = await axiosInstance.get(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/identifying-information/?screen=7&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        axiosConfig
+      );
+      // If the request is successful but you specifically want to handle 404 inside here
+      if (response.status === 200) {
+        setEntitylocated(response.data.country_10);
+        setTerritorylocated(response.data.province_or_territory_10_1);
+        LoaderClose();
+      }
+      else{
+        LoaderClose();
+        toast.error("Oops, something went wrong", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -208,8 +74,126 @@ const Screenseven = ({ prevStep, activeSteps }) => {
           progress: undefined,
           theme: "colored",
         });
-        LoaderClose();
+      }
+    }  catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
+    }
+    finally {
+      LoaderClose();
+    }
+  };
+  useEffect(() => {
+    // if (isMounted.current) {
+    
+    //   isMounted.current = false;
+    // }
+    // return () => {
+    //   isMounted.current = false;
+    // };
+    if(reportType=="Organization"){
+      if(selectedOrg&&year){
+        fetchBillSseven();
+      }
+    }
+    else{
+      if(selectedOrg&&year&&selectedCorp){
+        fetchBillSseven();
+      }
+    }
+    setEntitylocated("");
+    setTerritorylocated("");
+  }, [selectedCorp,selectedOrg,year]);
+
+
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
+ 
+  const handleEntitylocated = (event) => {
+    setEntitylocated(event.target.value);
+   if(event.target.value!=='Select country'){
+    setError((prev) => ({ ...prev, entitylocated: "" }));
+   }
+
+  };
+  const handleTerritorylocated = (event) => {
+    setTerritorylocated(event.target.value);
+    if(event.target.value!=='Select province'){
+      setError((prev) => ({ ...prev, territorylocated: "" }));
+     }
+
+  };
+  const submitForm = async () => {
+    try{
+      LoaderOpen();
+
+    const sendData = {
+      country_10: entitylocated,
+      province_or_territory_10_1: territorylocated,
+     organization_id: selectedOrg,
+        corporate_id: selectedCorp?selectedCorp:null,
+        year: year
+    };
+  const response=  await axiosInstance
+    .post(
+      `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=7`,
+         sendData,
+         axiosConfig
+     )
+     if (response.status == "200") {
+      toast.success("Data Added  successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      LoaderClose();
+    } else {
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      LoaderClose();
+    }
+    } catch (error) {
+      LoaderClose();
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } 
+    
+    
   };
 
   const validateForm = () => {
@@ -235,6 +219,7 @@ const Screenseven = ({ prevStep, activeSteps }) => {
 
     return newErrors;
   };
+  
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
@@ -317,7 +302,10 @@ const Screenseven = ({ prevStep, activeSteps }) => {
                       &lt; Previous
                     </button>
                     <button
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
+                      disabled={!(selectedOrg&&year)}
+                      className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                        reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
+                       }`}
                       type="submit"
                     >
                       Submit
@@ -327,6 +315,19 @@ const Screenseven = ({ prevStep, activeSteps }) => {
               </div>
             </form>
       </div>
+
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };

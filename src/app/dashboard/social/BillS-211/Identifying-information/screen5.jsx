@@ -1,87 +1,118 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose,MdDeleteOutline   } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
+import { Oval } from "react-loader-spinner";
 
-const Screenfive = ({ nextStep, prevStep }) => {
+const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType }) => {
   const [loopen, setLoOpen] = useState(false);
   const { open } = GlobalState();
-  const [isClicked, setIsClicked] = useState(false);
-  const isMounted = useRef(true);
-  // const data = 1;
-  const [data, setData] = useState(null);
-  const coNextStep = () => {
-    nextStep();
+
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
   };
-//   const fetchBillsfive = async () => {
-//     LoaderOpen(); // Assume this is to show some loading UI
+  const token = getAuthToken();
 
-//     try {
-//       const response = await axios.get(
-//         `${
-//           process.env.REACT_APP_BACKEND_URL
-//         }/identifying-information/?screen=5&user_id=${localStorage.getItem(
-//           "user_id"
-//         )}`
-//       );
-
-//       // If the request is successful but you specifically want to handle 404 inside here
-//       if (response.status === 200) {
-//         // Assuming you want to do something with the data for successful requests
-//         // setData(response.data); // Uncomment or modify as needed
-//         console.log(response.data, "bills 2115");
-//         // You might want to setData or handle the error differently here
-//         setData(response.data.categorizations_8);
-//         // setReportnradio(response.data.subject_to_supply_chain_legislation_7);
-//         // setReportingentit(response.data.other_laws_description_7_1);
-
-//         if (response.data.categorizations_8 == null) {
-//           setCheckboxStates({});
-//         } else {
-//           setCheckboxStates(response.data.categorizations_8);
-//           setIsChecked(response.data.categorizations_8.isChecked);
-//           setIsCheckedone(response.data.categorizations_8.isCheckedone);
-//           setIsCheckednew(response.data.categorizations_8.isCheckednew);
-//         }
-//         LoaderClose();
-//       }
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         // Here you can check if error.response exists and then further check the status code
-//         if (error.response && error.response.status === 404) {
-//           // Handle 404 specifically
-//           console.log(error.response.data, "bills 211");
-//           // You might want to setData or handle the error differently here
-//           setData(error.response.data.detail); // Adjust according to your needs
-//         } else {
-//           // Handle other errors
-//           console.error("An error occurred:", error.message);
-//         }
-//       } else {
-//         // Handle non-Axios errors
-//         console.error("An unexpected error occurred:", error);
-//       }
-//       LoaderClose();
-//     }
-//   };
-//   useEffect(() => {
-//     if (isMounted.current) {
-//      //fetchBillsfive();
-
-//       isMounted.current = false;
-//     }
-//     return () => {
-//       isMounted.current = false;
-//     };
-//   }, []);
-  const handleeditClick = () => {
-    setIsClicked(!isClicked);
-   //fetchBillsfive();
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   };
+  
+  const fetchBillSfive = async () => {
+    LoaderOpen(); 
+
+    try {
+      const response = await axiosInstance.get(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/identifying-information/?screen=5&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        axiosConfig
+      );
+
+      
+      if (response.status === 200) {
+
+        if (!response.data.categorizations_8) {
+          setCheckboxStates({});
+        } else {
+          setCheckboxStates(response.data.categorizations_8);
+          setIsChecked(response.data.categorizations_8.isChecked);
+          setIsCheckedone(response.data.categorizations_8.isCheckedone);
+          setIsCheckednew(response.data.categorizations_8.isCheckednew);
+        }
+        LoaderClose();
+      }
+      else{
+        LoaderClose();
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    finally {
+      LoaderClose();
+    }
+  };
+  useEffect(() => {
+    // if (isMounted.current) {
+    
+    //   isMounted.current = false;
+    // }
+    // return () => {
+    //   isMounted.current = false;
+    // };
+    if(reportType=="Organization"){
+      if(selectedOrg&&year){
+        fetchBillSfive();
+      }
+    }
+    else{
+      if(selectedOrg&&year&&selectedCorp){
+        fetchBillSfive();
+      }
+    }
+    setCheckboxStates({
+      businessInCanada: false,
+      doesBusinessInCanada: false,
+      hasAssetsInCanada: false,
+      largeAssetSize: false,
+      largeRevenue: false,
+      largeEmployees: false,
+    });
+          setIsChecked(false);
+          setIsCheckedone(false);
+          setIsCheckednew(false);
+    
+  }, [selectedCorp,selectedOrg,year]);
+ 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -104,6 +135,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
   const handleCheckboxChangenew = (name) => (event) => {
     if (name === "isCheckednew") {
       setIsCheckednew(event.target.checked);
+      setError((prev) => ({ ...prev, general: "" }));
     }
 
     // console.log(event.target.value, "name");
@@ -112,6 +144,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
     const { checked } = event.target;
     if (name === "isChecked") {
       setIsChecked(event.target.checked);
+
       if (!checked) {
         setCheckboxStates((prevState) => ({
           ...prevState,
@@ -120,6 +153,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
           hasAssetsInCanada: false,
         }));
       }
+      
     } else if (name === "isCheckedone") {
       setIsCheckedone(event.target.checked);
       if (!checked) {
@@ -132,6 +166,22 @@ const Screenfive = ({ nextStep, prevStep }) => {
       }
     } else {
       setCheckboxStates({ ...checkboxStates, [name]: event.target.checked });
+      const businessPresenceSelected = [
+        "businessInCanada",
+        "doesBusinessInCanada",
+        "hasAssetsInCanada",
+      ].some((key) => checkboxStates[key]);
+      if (!businessPresenceSelected) {
+        setError((prev) => ({ ...prev, businessPresence: "" }));
+      }
+      const sizeThresholdsSelected = [
+        "largeAssetSize",
+        "largeRevenue",
+        "largeEmployees",
+      ].some((key) => checkboxStates[key]);
+      if (!sizeThresholdsSelected) {
+        setError((prev) => ({ ...prev, sizeThresholds: "" }));
+      }
     }
   };
 
@@ -178,108 +228,44 @@ const Screenfive = ({ nextStep, prevStep }) => {
     }
   };
   const submitForm = async () => {
-    LoaderOpen();
+    try{
+      LoaderOpen();
 
-    const sandData = {
+    const sendData = {
       categorizations_8: {
         ...checkboxStates,
         isChecked: isChecked,
         isCheckedone: isCheckedone,
         isCheckednew: isCheckednew,
       },
-      user_id: parseInt(localStorage.getItem("user_id")),
+      organization_id: selectedOrg,
+      corporate_id: selectedCorp?selectedCorp:null,
+      year: year
     };
-    await axios
+   const response= await axiosInstance
       .post(
-        `${process.env.REACT_APP_BACKEND_URL}/identifying-information/?screen=5`,
-        sandData
+       `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=5`,
+          sendData,
+          axiosConfig
       )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Report has been added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-
-          nextStep();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      });
-    //console.log(sandData);
-  };
-  const handleupdateform = async (e) => {
-    e.preventDefault();
-    LoaderOpen();
-
-    const sandData = {
-      categorizations_8: {
-        ...checkboxStates,
-        isChecked: isChecked,
-        isCheckedone: isCheckedone,
-        isCheckednew: isCheckednew,
-      },
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/identifying-information/?screen=5`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Details updated successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          setIsClicked(false);
-         //fetchBillsfive();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      })
-      .catch((error) => {
-        const errorMessage = "All form question fields are required.";
-        toast.error(errorMessage, {
-          // Corrected 'error.message'
+      if (response.status == "200") {
+        toast.success("Data added successfully", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+
+        nextStep();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -288,8 +274,24 @@ const Screenfive = ({ nextStep, prevStep }) => {
           theme: "colored",
         });
         LoaderClose();
+      }
+    }catch (error) {
+      LoaderClose();
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
+    } 
+    
+    
   };
+ 
   const renderContent = () => {
     const options = [
       {
@@ -454,7 +456,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
   };
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px" }} />
+      
       <div>
       <div className="mt-2">
                 <div className="ml-4">
@@ -533,7 +535,10 @@ const Screenfive = ({ nextStep, prevStep }) => {
                   <button
                     type="button"
                     onClick={continueToNextStep}
-                    className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
+                    disabled={!(selectedOrg&&year)}
+                    className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                      reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
+                     }`}
                   >
                     {" "}
                     Next &gt;
@@ -541,7 +546,18 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 </div>
               </div>
       </div>
-
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };

@@ -1,81 +1,117 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose,MdDeleteOutline   } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
-const Screenfour = ({ nextStep, prevStep }) => {
+import { Oval } from "react-loader-spinner";
+
+
+const Screenfour = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType }) => {
   const [error, setError] = useState({});
   const { open } = GlobalState();
   const [reportradio, setReportnradio] = useState("");
   const [reportingentity, setReportingentit] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [loopen, setLoOpen] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-  const isMounted = useRef(true);
-  // const data = 1;
-  const [data, setData] = useState(null);
-  const coNextStep = () => {
-    nextStep();
+  
+
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
   };
-//   const fetchBillsfour = async () => {
-//     LoaderOpen(); // Assume this is to show some loading UI
+  const token = getAuthToken();
 
-//     try {
-//       const response = await axios.get(
-//         `${
-//           process.env.REACT_APP_BACKEND_URL
-//         }/identifying-information/?screen=4&user_id=${localStorage.getItem(
-//           "user_id"
-//         )}`
-//       );
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+ 
+  const fetchBillSfour = async () => {
+    LoaderOpen(); // Assume this is to show some loading UI
 
-//       // If the request is successful but you specifically want to handle 404 inside here
-//       if (response.status === 200) {
-//         // Assuming you want to do something with the data for successful requests
-//         // setData(response.data); // Uncomment or modify as needed
-//         console.log(response.data, "bills 2114");
-//         // You might want to setData or handle the error differently here
-//         setData(response.data.subject_to_supply_chain_legislation_7);
-//         setReportnradio(response.data.subject_to_supply_chain_legislation_7);
-//         setReportingentit(response.data.other_laws_description_7_1);
-//         if (response.data.applicable_laws_7_1 == null) {
-//           setSelectedOptions([]);
-//         } else {
-//           setSelectedOptions(response.data.applicable_laws_7_1);
-//         }
-//         LoaderClose();
-//       }
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         // Here you can check if error.response exists and then further check the status code
-//         if (error.response && error.response.status === 404) {
-//           // Handle 404 specifically
-//           console.log(error.response.data, "bills 211");
-//           // You might want to setData or handle the error differently here
-//           setData(error.response.data.detail); // Adjust according to your needs
-//         } else {
-//           // Handle other errors
-//           console.error("An error occurred:", error.message);
-//         }
-//       } else {
-//         // Handle non-Axios errors
-//         console.error("An unexpected error occurred:", error);
-//       }
-//       LoaderClose();
-//     }
-//   };
-//   useEffect(() => {
-//     if (isMounted.current) {
-//       // // fetchBillsfour();
-//       isMounted.current = false;
-//     }
-//     return () => {
-//       isMounted.current = false;
-//     };
-//   }, []);
+    try {
+      const response = await axiosInstance.get(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/identifying-information/?screen=4&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        axiosConfig
+      );
+
+      if (response.status === 200) {
+        setReportnradio(response.data.subject_to_supply_chain_legislation_7);
+        setReportingentit(response.data.other_laws_description_7_1);
+        if (response.data.applicable_laws_7_1 == null) {
+          setSelectedOptions([]);
+        } else {
+          setSelectedOptions(response.data.applicable_laws_7_1);
+        }
+        LoaderClose();
+      }
+      else if(response.status==404){
+        setReportnradio("");
+        setReportingentit("");
+        setSelectedOptions([]);
+        LoaderClose();
+      }
+      else{
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    finally {
+      LoaderClose();
+    }
+  };
+  useEffect(() => {
+    // if (isMounted.current) {
+    
+    //   isMounted.current = false;
+    // }
+    // return () => {
+    //   isMounted.current = false;
+    // };
+    if(reportType=="Organization"){
+      if(selectedOrg&&year){
+        fetchBillSfour();
+      }
+    }
+    else{
+      if(selectedOrg&&year&&selectedCorp){
+        fetchBillSfour();
+      }
+    }
+    setReportnradio("");
+    setReportingentit("");
+    setSelectedOptions([]);
+    
+  }, [selectedCorp,selectedOrg,year]);
   const options = [
     {
       label: "The United Kingdom’s Modern Slavery Act 2015",
@@ -111,15 +147,12 @@ const Screenfour = ({ nextStep, prevStep }) => {
   };
   const handleReportingentity = (event) => {
     setReportingentit(event.target.value);
-    // console.log(event.target.value, "name");
+    setError((prev) => ({ ...prev, reportingentity: "" }));
   };
-  const handleeditClick = () => {
-    setIsClicked(!isClicked);
-    // // fetchBillsfour();
-  };
+  
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
-    console.log(event.target.value, "setReportnradio");
+    setError((prev) => ({ ...prev, reportradio: "" }));
   };
 
   const LoaderOpen = () => {
@@ -128,83 +161,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const handleupdateform = async () => {
-    let newentities;
-    let oherinpute;
-    if (reportradio === "No") {
-      newentities = [];
-      oherinpute = null;
-    } else {
-      newentities = selectedOptions;
-      oherinpute = reportingentity;
-    }
-
-    if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      // Check if reportingentity is not filled out
-      oherinpute = reportingentity;
-    } else {
-      oherinpute = null;
-    }
-    LoaderOpen();
-
-    const sandData = {
-      subject_to_supply_chain_legislation_7: reportradio,
-      other_laws_description_7_1: oherinpute,
-      applicable_laws_7_1: newentities,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/identifying-information/?screen=4`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Details updated successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          setIsClicked(false);
-          // // fetchBillsfour();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      })
-      .catch((error) => {
-        const errorMessage = "All form question fields are required.";
-        toast.error(errorMessage, {
-          // Corrected 'error.message'
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        LoaderClose();
-      });
-  };
+ 
   const submitForm = async () => {
     let unewentities;
     let uoherinpute;
@@ -217,29 +174,30 @@ const Screenfour = ({ nextStep, prevStep }) => {
     }
 
     if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      // Check if reportingentity is not filled out
       uoherinpute = reportingentity;
     } else {
       uoherinpute = null;
     }
-    LoaderOpen();
 
-    const sandData = {
-      subject_to_supply_chain_legislation_7: reportradio,
-      other_laws_description_7_1: uoherinpute,
-      applicable_laws_7_1: unewentities,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/identifying-information/?screen=4`,
-        sandData
-      )
-      .then((response) => {
+    try{
+      LoaderOpen();
+
+      const send = {
+        subject_to_supply_chain_legislation_7: reportradio,
+        other_laws_description_7_1: uoherinpute,
+        applicable_laws_7_1: unewentities,
+        organization_id: selectedOrg,
+          corporate_id: selectedCorp?selectedCorp:null,
+          year: year
+      };
+     const response= await axiosInstance
+        .post(
+          `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=4`,
+          send,
+          axiosConfig
+        )
         if (response.status == "200") {
-          console.log(response.status);
-          toast.success("added successfully", {
+          toast.success("Data added successfully", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -252,7 +210,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
           LoaderClose();
           nextStep();
         } else {
-          toast.error("Error", {
+          toast.error("Oops, something went wrong", {
             position: "top-right",
             autoClose: 1000,
             hideProgressBar: false,
@@ -264,8 +222,21 @@ const Screenfour = ({ nextStep, prevStep }) => {
           });
           LoaderClose();
         }
+    }catch (error) {
+      LoaderClose();
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
-    //console.log(sandData);
+    } 
+
+   
   };
   const continueToNextStep = () => {
     let newErrors = {};
@@ -294,40 +265,8 @@ const Screenfour = ({ nextStep, prevStep }) => {
     }
   };
 
-  const validateForm = () => {
-    let newErrors = {};
-    if (!reportradio) {
-      newErrors.reportradio = "This field is required. Please fill it out.";
-    }
-    if (reportradio === "Yes") {
-      if (selectedOptions.length === 0) {
-        newErrors.checkboxes = "Please select at least one option.";
-      }
-    }
-    if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      if (!reportingentity) {
-        // Check if reportingentity is not filled out
-        newErrors.reportingentity = "Please enter a description";
-      }
-    }
-
-    return newErrors;
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length === 0) {
-      setError({}); // Clear any existing errors
-      await handleupdateform(); // Proceed with the form submission
-    } else {
-      setError(formErrors); // Update the state with the validation errors
-    }
-  };
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="mx-4 mt-2">
       <form className="w-full text-left">
                 <div className="mb-5">
@@ -449,7 +388,10 @@ const Screenfour = ({ nextStep, prevStep }) => {
                     <button
                       type="button"
                       onClick={continueToNextStep}
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
+                      disabled={!(selectedOrg&&year)}
+                      className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                        reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
+                       }`}
                     >
                       {" "}
                       Next &gt;
@@ -458,7 +400,18 @@ const Screenfour = ({ nextStep, prevStep }) => {
                 </div>
               </form>
       </div>
-
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };
