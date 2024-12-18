@@ -208,45 +208,47 @@ const PerformanceTable = ({ value = {}, onChange }) => {
     ))
   )}
 
-  {/* Gender Rows */}
-  {genders.map((row, index) => (
-    <tr key={`gender-${index}`}>
-      {index === 0 && (
-        <td
-          className="border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000] gradient-background text-center"
-          rowSpan={genders.length}
-        >
-          Gender
-        </td>
-      )}
-      <td className="border-l border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000]">
-        {row.gender}
-      </td>
-      <td className="border-l border-t border-gray-300 px-4 py-2 text-center">
-        <input
-          type="number"
-          value={row.performance}
-          onChange={(e) =>
-            handleGenderChange(index, "performance", e.target.value)
-          }
-          className="border p-1 w-full text-center text-[12px]"
-        />
-      </td>
-      <td className="border-t border-l border-gray-300 px-4 py-2 text-center">
-        <input
-          type="number"
-          value={row.careerDevelopment}
-          onChange={(e) =>
-            handleGenderChange(index, "careerDevelopment", e.target.value)
-          }
-          className="border p-1 w-full text-center text-[12px]"
-        />
-      </td>
-    </tr>
-  ))}
+
+{employeeCategories.length > 0 &&
+            genders.map((row, index) => (
+              <tr key={`gender-${index}`}>
+                {index === 0 && (
+                  <td
+                    className="border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000] gradient-background text-center"
+                    rowSpan={genders.length}
+                  >
+                    Gender
+                  </td>
+                )}
+                <td className="border-l border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000]">
+                  {row.gender}
+                </td>
+                <td className="border-l border-t border-gray-300 px-4 py-2 text-center">
+                  <input
+                    type="number"
+                    value={row.performance}
+                    onChange={(e) =>
+                      handleGenderChange(index, "performance", e.target.value)
+                    }
+                    className="border p-1 w-full text-center text-[12px]"
+                  />
+                </td>
+                <td className="border-t border-l border-gray-300 px-4 py-2 text-center">
+                  <input
+                    type="number"
+                    value={row.careerDevelopment}
+                    onChange={(e) =>
+                      handleGenderChange(index, "careerDevelopment", e.target.value)
+                    }
+                    className="border p-1 w-full text-center text-[12px]"
+                  />
+                </td>
+              </tr>
+            ))}
+
 
   {/* Totals Row */}
-  {employeeCategories.length > 0 || genders.length > 0 ? (
+  {employeeCategories.length > 0 ? (
     <tr>
       <td className="border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000] gradient-background text-center">
         Total employee
