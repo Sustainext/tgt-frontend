@@ -205,7 +205,7 @@ const MyTask = () => {
     const resultsPerPage = 500;
     const axiosConfig = {
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_CLIMATIQ_KEY}`,
+        Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
         Accept: "application/json",
         "Content-type": "application/json",
       },
