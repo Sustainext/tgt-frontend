@@ -192,7 +192,7 @@ const validateRows = (data) => {
       rowErrors.Source = "Source is required";
     }
     if (!row.Totalweight) {
-      rowErrors.Totalweight = "otal weight/volume is required";
+      rowErrors.Totalweight = "Total weight/volume is required";
     }
     if (!row.Unit) {
       rowErrors.Unit = "Unit is required";
