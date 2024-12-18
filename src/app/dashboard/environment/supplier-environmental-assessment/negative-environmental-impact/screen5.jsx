@@ -187,6 +187,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
     return data.map((row) => {
       const rowErrors = {};
 
+      // Validation for Q1 remains required
       if (!row.Q1 || row.Q1.trim() === "") {
         rowErrors.Q1 = "This field is required";
       } else if (
@@ -197,7 +198,11 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
         rowErrors.Q1 = "Please enter a valid non-negative whole number";
       }
 
-      if (Number(row.Q1) > 0) {
+      // Q2 is only required if Q1 is greater than 0 and the field doesn't contain "(if any)"
+      const q2Title = uiSchema.items.Q2["ui:title"];
+      const isOptional = q2Title.toLowerCase().includes("(if any)");
+
+      if (Number(row.Q1) > 0 && !isOptional) {
         if (!row.Q2 || row.Q2.trim() === "") {
           rowErrors.Q2 = "This field is required";
         }
