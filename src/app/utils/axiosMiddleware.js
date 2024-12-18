@@ -51,7 +51,7 @@ axiosInstance.interceptors.response.use(
           const { access } = refreshTokenResponse?.data;
 
           localStorage.setItem("token", access);
-
+          Cookies.set("token", access, { secure: true, sameSite: "strict" });
           originalRequest.headers["Authorization"] = `Bearer ${access}`;
           return axiosInstance(originalRequest);
         } else {
@@ -59,6 +59,8 @@ axiosInstance.interceptors.response.use(
           // Dispatch the global event here
           if (typeof window !== "undefined") {
             Cookies.remove("token");
+            Cookies.remove("permissions");
+            Cookies.remove("true");
             const event = new CustomEvent("api-error", {
               detail: {
                 redirectToLogin: true,
@@ -73,7 +75,9 @@ axiosInstance.interceptors.response.use(
         console.error("Token refresh failed:", refreshError);
         // Dispatch the global event here
         if (typeof window !== "undefined") {
-          Cookies.remove("token");
+            Cookies.remove("token");
+            Cookies.remove("permissions");
+            Cookies.remove("true");
           const event = new CustomEvent("api-error", {
             detail: {
               redirectToLogin: true,

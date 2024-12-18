@@ -150,7 +150,7 @@ const validateRows = (data) => {
     }
   
     if (!row.Assumptionsconsidered) {
-      rowErrors.Assumptionsconsidered = "Assumptions considered required";
+      rowErrors.Assumptionsconsidered = "Assumptions considered is required";
     }
 
  

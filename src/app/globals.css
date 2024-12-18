@@ -1,10 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 body{
   height: 100vh;
   zoom: 0.8;
   overflow-x: hidden;
+ 
 
 }
 button,
@@ -427,4 +430,40 @@ color:"#ACACAC";
   .gradient-sky-blue:hover {
     background: linear-gradient(90deg, rgba(0, 126, 239, 0.05) 7.92%, rgba(42, 228, 255, 0.05) 89.75%);
   }
-  
+
+  .gt >.goog-te-banner-frame >iframe {display: none !important;} 
+  #google_translate_element .goog-te-banner-frame {
+    display: none !important;
+  }
+.goog-te-gadget img {
+  display: none !important; /* Hides the Google icon */
+}
+
+
+
+/* Customize the Dropdown Style */
+.goog-te-combo {
+  background-color: #ffffff; /* Background color of the dropdown */
+  border: 1px solid #ccc;    /* Border color */
+  border-radius: 4px;        /* Rounded corners */
+  padding: 8px;              /* Padding inside the dropdown */
+  font-size: 14px;           /* Font size */
+  color: #000;               /* Text color */
+  cursor: pointer;           /* Pointer cursor on hover */
+}
+
+/* Change Dropdown Arrow Icon */
+.goog-te-combo::after {
+  content: '▼';              /* Custom arrow */
+  float: right;              /* Align arrow to the right */
+  margin-right: 10px;        /* Space between arrow and text */
+  color: #000;               /* Arrow color */
+}
+
+/* Optional: Adjust overall spacing */
+.goog-te-gadget-simple {
+  margin: 0;                 /* Remove default margins */
+  padding: 5px;              /* Add some padding */
+  border: none;              /* Remove borders */
+  background-color: transparent; /* Transparent background */
+}
