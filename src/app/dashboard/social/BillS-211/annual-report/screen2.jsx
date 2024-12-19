@@ -564,7 +564,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                       className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                       htmlFor="username"
                     >
-                      3.Which of the following accurately describes the entity’s
+                      3. Which of the following accurately describes the entity’s
                       structure?*
                     </label>
                     <div className="relative mb-1">
@@ -659,8 +659,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                           className="block text-gray-700 text-[14px] font-[500] mb-2 ml-2"
                           htmlFor="username"
                         >
-                          4. Which of the following categorizations applies to
-                          the entity? Select all that apply
+                          4. Which of the following accurately describes the entity’s activities? Select all that apply*
                         </label>
                       </div>
 
@@ -757,8 +756,8 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                             htmlFor="industryCheckbox"
                           >
                             5. Please provide additional information on the
-                            entity’s structure, activities and supply chains
-                            (1,500 character limit).
+                            entity’s structure, activities and supply chains.
+    
                           </label>
                           <textarea
                             id="countriesOfOperation"

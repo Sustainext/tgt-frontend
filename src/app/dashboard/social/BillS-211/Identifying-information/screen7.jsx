@@ -242,7 +242,7 @@ const Screenseven = ({ prevStep, activeSteps,selectedCorp,selectedOrg,year,repor
                     className="block text-gray-700 text-[14px] font-[500]  mb-2 ml-1"
                     for="username"
                   >
-                    10.In which country is the entity headquartered or
+                    10. For entities only: In which country is the entity headquartered or
                     principally located? *
                   </label>
                   <div className="relative mb-1">

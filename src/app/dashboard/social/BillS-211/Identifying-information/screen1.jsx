@@ -129,11 +129,37 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
     }
   };
 
+  // const handleReportndate = (event) => {
+  //   const value = event.target.value;
+  //   setReportingdateform(value);
+  //   if (value !== "") {
+  //     setError((prev) => ({ ...prev, reportingdateform: "" }));
+  //   }
+  // };
+
+  // const handleReportndateto = (event) => {
+  //   const value = event.target.value;
+  //   setReportingdateto(value);
+  //   if (value !== "") {
+  //     setError((prev) => ({ ...prev, reportingdateto: "" }));
+  //   }
+  // };
+
   const handleReportndate = (event) => {
     const value = event.target.value;
     setReportingdateform(value);
     if (value !== "") {
       setError((prev) => ({ ...prev, reportingdateform: "" }));
+    }
+
+    // Ensure to date is not less than from date
+    if (reportingdateto && value > reportingdateto) {
+      setError((prev) => ({
+        ...prev,
+        reportingdateto: "To date cannot be earlier than from date.",
+      }));
+    } else {
+      setError((prev) => ({ ...prev, reportingdateto: "" }));
     }
   };
 
@@ -141,6 +167,16 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
     const value = event.target.value;
     setReportingdateto(value);
     if (value !== "") {
+      setError((prev) => ({ ...prev, reportingdateto: "" }));
+    }
+
+    // Ensure to date is not less than from date
+    if (reportingdateform && value < reportingdateform) {
+      setError((prev) => ({
+        ...prev,
+        reportingdateto: "To date cannot be earlier than from date.",
+      }));
+    } else {
       setError((prev) => ({ ...prev, reportingdateto: "" }));
     }
   };
@@ -229,6 +265,9 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
     if (!reportingdateto) {
       newErrors.reportingdateto = "Please select a date";
     }
+    if(reportingdateto<reportingdateform){
+      newErrors.reportingdateto = "To date cannot be earlier than from date.";
+    }
     if (Object.keys(newErrors).length === 0) {
       setError({});
       submitForm();
@@ -246,7 +285,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
               className="block text-gray-700 text-[14px] font-[500]  mb-2 ml-1"
               htmlFor="username"
             >
-              1.This report is for which of the following?*
+              1. This report is for which of the following?*
             </label>
             <div className="relative mb-1">
               <select
@@ -277,7 +316,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
               className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
               htmlFor="username"
             >
-              2.Legal name of reporting entity *
+              2. Legal name of reporting entity or government institution *
             </label>
             <div className="relative mb-1">
               <input
@@ -299,7 +338,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
               className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
               htmlFor="username"
             >
-              3.Financial reporting year*
+              3. Financial reporting year*
             </label>
             <div className="flex">
               <div className="w-[37%]">

@@ -35,14 +35,14 @@ const Section27=({section12_5_4Ref,data})=>{
           (acc, val) => {
             if (val.total_waste_generated !== undefined) {
               wasteDirectedMaterialType = {
-                total: val.total_waste_generated.toFixed(2),
+                total: val.total_waste_generated,
                 unit: val.units,
               };
             } else {
               acc.push({
                 'Disposal Method':val.disposal_method, 
                 'Material Type':val.material_type, 
-                "Qty of total waste":val.total_waste.toFixed(2),
+                "Qty of total waste":val.total_waste,
                 '% of total waste':val.contribution+"%",
                 'Unit':val.units
               });
@@ -80,13 +80,13 @@ const Section27=({section12_5_4Ref,data})=>{
             (acc, val) => {
               if (val.total_waste_generated !== undefined) {
                 hazardeousWasteDirectedToDisposal = {
-                  total: val.total_waste_generated.toFixed(2),
+                  total: val.total_waste_generated,
                   unit: val.units,
                 };
               } else {
                 acc.push({
                   'Waste Type':val.material_type, 
-                  'Quantity':val.total_waste.toFixed(2), 
+                  'Quantity':val.total_waste, 
                   'Unit':val.units,
                   'Incineration (with energy) %':val.inceneration_with_energy_percentage+"%", 
                   'Incineration (without energy) %':val.inceneration_without_energy_percentage+"%",
@@ -124,13 +124,13 @@ const Section27=({section12_5_4Ref,data})=>{
                 (acc, val) => {
                   if (val.total_waste_generated !== undefined) {
                     NonhazardeousWasteDirectedToDisposal = {
-                      total: val.total_waste_generated.toFixed(2),
+                      total: val.total_waste_generated,
                       unit: val.units,
                     };
                   } else {
                     acc.push({
                       'Waste Type':val.material_type, 
-                      'Quantity':val.total_waste.toFixed(2), 
+                      'Quantity':val.total_waste, 
                       'Unit':val.units,
                       'Incineration (with energy) %':val.inceneration_with_energy_percentage+"%", 
                       'Incineration (without energy) %':val.inceneration_without_energy_percentage+"%",
