@@ -85,8 +85,8 @@ const Section6=({section12_1_4Ref,data})=>{
     ? data["305_123_analyse"]["all_emission_by_source"].length>0?data["305_123_analyse"]["all_emission_by_source"].map((val) => {
         return {
           'Source': val.source || "No data available", 
-          'Percentage contribution': val.contribution !== undefined ? val.contribution.toFixed(2) + "%" : "No data available", 
-          'Total Emission': val.total !== undefined ? val.total.toFixed(2) : "No data available", 
+          'Percentage contribution': val.contribution !== undefined ? val.contribution + "%" : "No data available", 
+          'Total Emission': val.total !== undefined ? val.total : "No data available", 
           'Unit': val.Units || "No data available" 
         };
       })
@@ -121,8 +121,8 @@ const Section6=({section12_1_4Ref,data})=>{
       ? data["305_123_analyse"]["all_emission_by_location"].length>0?data["305_123_analyse"]["all_emission_by_location"].map((val) => {
           return {
             'Location': val.location || "No data available", 
-            'Percentage contribution': val.contribution !== undefined ? val.contribution.toFixed(2) + "%" : "No data available", 
-            'Total Emission': val.total !== undefined ? val.total.toFixed(2) : "No data available", 
+            'Percentage contribution': val.contribution !== undefined ? val.contribution + "%" : "No data available", 
+            'Total Emission': val.total !== undefined ? val.total : "No data available", 
             'Unit': val.Units || "No data available" 
           };
         })
@@ -155,8 +155,8 @@ const Section6=({section12_1_4Ref,data})=>{
           ? data["305_123_analyse"]["all_emission_by_scope"].length>0?data["305_123_analyse"]["all_emission_by_scope"].map((val) => {
               return {
                 'Scope': val.scope || "No data available", 
-                'Percentage contribution': val.contribution !== undefined ? val.contribution.toFixed(2) + "%" : "No data available", 
-                'Total Emission': val.total !== undefined ? val.total.toFixed(2) : "No data available", 
+                'Percentage contribution': val.contribution !== undefined ? val.contribution + "%" : "No data available", 
+                'Total Emission': val.total !== undefined ? val.total : "No data available", 
                 'Unit': val.Units || "No data available" 
               };
             })

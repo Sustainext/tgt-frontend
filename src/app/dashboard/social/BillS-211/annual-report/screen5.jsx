@@ -435,7 +435,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportT
                     >
                       12. Please provide additional information on any measures
                       the entity has taken to remediate any forced labour or
-                      child labour (if applicable) (1,500 character limit).
+                      child labour (if applicable).
                     </label>
                     <textarea
                       id="countriesOfOperation"

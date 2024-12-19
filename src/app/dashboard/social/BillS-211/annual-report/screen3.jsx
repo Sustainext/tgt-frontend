@@ -358,8 +358,7 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
                     >
                       7. Please provide additional information on the entity’s
                       policies and due diligence processes in relation to forced
-                      labour and child labour (if applicable) (1,500 character
-                      limit).
+                      labour and child labour (if applicable).
                     </label>
                     <textarea
                       id="countriesOfOperation"
