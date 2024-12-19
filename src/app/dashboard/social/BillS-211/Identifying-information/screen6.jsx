@@ -1,13 +1,14 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose,MdDeleteOutline   } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
+import { Oval } from "react-loader-spinner";
 
-const Screensix = ({ nextStep, prevStep }) => {
+const Screensix = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType }) => {
   // State to track selected options
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [reportingentity, setReportingentit] = useState("");
@@ -15,77 +16,107 @@ const Screensix = ({ nextStep, prevStep }) => {
   const [error, setError] = useState("");
   const { open } = GlobalState();
   const [loopen, setLoOpen] = useState(false);
-  const isMounted = useRef(true);
-  // const data = 1;
-  const [data, setData] = useState();
-  const coNextStep = () => {
-    nextStep();
-  };
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-//   const fetchBillssix = async () => {
-//     LoaderOpen(); // Assume this is to show some loading UI
 
-//     try {
-//       const response = await axios.get(
-//         `${
-//           process.env.REACT_APP_BACKEND_URL
-//         }/identifying-information/?screen=6&user_id=${localStorage.getItem(
-//           "user_id"
-//         )}`
-//       );
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
 
-//       // If the request is successful but you specifically want to handle 404 inside here
-//       if (response.status === 200) {
-//         // Assuming you want to do something with the data for successful requests
-//         // setData(response.data); // Uncomment or modify as needed
-//         console.log(response.data, "bills 2116");
-//         // You might want to setData or handle the error differently here
-//         setData(response.data.sectors_or_industries_9);
-//         // setReportnradio(response.data.subject_to_supply_chain_legislation_7);
-//         setReportingentit(response.data.sectors_or_industries_description_9);
-//         if (response.data.sectors_or_industries_9 == null) {
-//           setSelectedOptions([]);
-//         } else {
-//           setSelectedOptions(response.data.sectors_or_industries_9);
-//         }
-//         LoaderClose();
-//       }
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         // Here you can check if error.response exists and then further check the status code
-//         if (error.response && error.response.status === 404) {
-//           // Handle 404 specifically
-//           console.log(error.response.data, "bills 211");
-//           // You might want to setData or handle the error differently here
-//           setData(error.response.data.detail); // Adjust according to your needs
-//         } else {
-//           // Handle other errors
-//           console.error("An error occurred:", error.message);
-//         }
-//       } else {
-//         // Handle non-Axios errors
-//         console.error("An unexpected error occurred:", error);
-//       }
-//       LoaderClose();
-//     }
-//   };
-//   useEffect(() => {
-//     if (isMounted.current) {
-//       //fetchBillssix();
-//       isMounted.current = false;
-//     }
-//     return () => {
-//       isMounted.current = false;
-//     };
-//   }, []);
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+
+  const fetchBillSsix = async () => {
+    LoaderOpen(); 
+
+    try {
+      const response = await axiosInstance.get(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/identifying-information/?screen=6&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        axiosConfig
+      );
+
+     
+      if (response.status === 200) {
+       
+        setReportingentit(response.data.sectors_or_industries_description_9);
+        if (!response.data.sectors_or_industries_9) {
+          setSelectedOptions([]);
+        } else {
+          setSelectedOptions(response.data.sectors_or_industries_9);
+        }
+        LoaderClose();
+      }
+      else{
+        LoaderClose();
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    }  catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    finally {
+      LoaderClose();
+    }
+  };
+  useEffect(() => {
+    // if (isMounted.current) {
+    
+    //   isMounted.current = false;
+    // }
+    // return () => {
+    //   isMounted.current = false;
+    // };
+    if(reportType=="Organization"){
+      if(selectedOrg&&year){
+        fetchBillSsix();
+      }
+    }
+    else{
+      if(selectedOrg&&year&&selectedCorp){
+        fetchBillSsix();
+      }
+    }
+    setReportingentit("")
+    setSelectedOptions([])
+  }, [selectedCorp,selectedOrg,year]);
+ 
+
   const handleReportingentity = (event) => {
     setReportingentit(event.target.value);
-    // console.log(event.target.value, "name");
+    setError((prev) => ({ ...prev, reportingentity: "" }));
+   
   };
   const optionsTwo = [
     {
@@ -152,10 +183,7 @@ const Screensix = ({ nextStep, prevStep }) => {
     // Add the rest of your options here
   ];
 
-  const handleeditClick = () => {
-    setIsClicked(!isClicked);
-    //fetchBillssix();
-  };
+  
   // Handle checkbox changes
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
@@ -197,115 +225,33 @@ const Screensix = ({ nextStep, prevStep }) => {
       setError(newErrors);
     }
   };
-  const validateForm = () => {
-    let newErrors = {};
-    if (selectedOptions.length === 0) {
-      newErrors.checkboxes = "Please select at least one option.";
-    }
-    if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      if (!reportingentity) {
-        // Check if reportingentity is not filled out
-        newErrors.reportingentity = "Please enter a description";
-      }
-    }
-
-    return newErrors;
-  };
-
-  const handleupdateform = async () => {
-    let newentities;
-    if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      // Check if reportingentity is not filled out
-      newentities = reportingentity;
-    } else {
-      newentities = null;
-    }
-
-    LoaderOpen();
-
-    const sandData = {
-      sectors_or_industries_9: selectedOptions,
-      sectors_or_industries_description_9: newentities,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/identifying-information/?screen=6`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Details updated successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          setIsClicked(false);
-          //fetchBillssix();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      })
-      .catch((error) => {
-        const errorMessage = "All form question fields are required.";
-        toast.error(errorMessage, {
-          // Corrected 'error.message'
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        LoaderClose();
-      });
-  };
+ 
   const submitForm = async () => {
     let snewentities;
     if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      // Check if reportingentity is not filled out
       snewentities = reportingentity;
     } else {
       snewentities = null;
     }
-    LoaderOpen();
 
-    const sandData = {
-      sectors_or_industries_9: selectedOptions,
-      sectors_or_industries_description_9: snewentities,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/identifying-information/?screen=6`,
-        sandData
-      )
-      .then((response) => {
+    try{
+      LoaderOpen();
+
+      const sendData = {
+        sectors_or_industries_9: selectedOptions,
+        sectors_or_industries_description_9: snewentities,
+        organization_id: selectedOrg,
+        corporate_id: selectedCorp?selectedCorp:null,
+        year: year
+      };
+     const response= await axiosInstance
+     .post(
+      `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=6`,
+         sendData,
+         axiosConfig
+     )
         if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Report has been added successfully", {
+          toast.success("Data added successfully", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -318,7 +264,7 @@ const Screensix = ({ nextStep, prevStep }) => {
           LoaderClose();
           nextStep();
         } else {
-          toast.error("Error", {
+          toast.error("Oops, something went wrong", {
             position: "top-right",
             autoClose: 1000,
             hideProgressBar: false,
@@ -330,252 +276,50 @@ const Screensix = ({ nextStep, prevStep }) => {
           });
           LoaderClose();
         }
-      });
-    //console.log(sandData);
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length === 0) {
-      setError({}); // Clear any existing errors
-      await handleupdateform(); // Proceed with the form submission
-    } else {
-      setError(formErrors); // Update the state with the validation errors
     }
+    catch (error) {
+      LoaderClose();
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } 
+    
+   
+    
   };
+  
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center shadow-sm border-gray-100">
-        <div
-          className={`${
-            open ? "w-[95%] " : "w-[95%]"
-          } flex justify-between items-center`}
-        >
-          <div className="text-left mb-5 ml-6 mt-4">
-            <p className="text-[11px]">Social</p>
-           <p className="gradient-text text-[22px] h-[24px]">
-              Bill S-211 - Fighting Bill Forced Labour and Child Labour in
-              Supply Chains Act
-            </p>
-          </div>
-        </div>
-      </div>
-      {isClicked ? (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-              <div className="w-[73%]">
-                <p className="font-bold  text-md mx-4 ">
-                  {" "}
-                  Identifying information
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 6/7 </div>
-                <div className="flex">
-                <MdClose
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    onClick={handleeditClick}
-                  />
-                  <IoSaveOutline
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    // onClick={handleSubmit}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="ml-3">
-            <div className="mb-5 mt-5 ml-2">
-              <label
-                className="block text-gray-700 text-[15px] mb-2"
-                htmlFor="industryCheckbox"
-              >
-                9. Which of the following sectors or industries does the entity
-                operate in? Select all that apply *
-              </label>
-            </div>
-            <div className="mb-2">
-              <div className="grid grid-cols-2 gap-2">
-                {optionsTwo.map((option, index) => (
-                  <div key={index} className="flex items-center">
-                    <label className="ml-2 text-[13px] text-gray-600">
-                      <input
-                        type="checkbox"
-                        value={option.value}
-                        checked={selectedOptions.includes(option.value)}
-                        onChange={handleCheckboxChange}
-                        className="mr-3 pt-1"
-                      />
-                      {option.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-              {error.checkboxes && (
-                <div className="text-red-500 ml-1">{error.checkboxes}</div>
-              )}
-            </div>
-            <div className="mb-5">
-              {selectedOptions.includes("other") && (
+      
+      <div className="mt-2">
+      <div className="mx-4">
                 <div className="mb-5">
-                  <input
-                    type="text"
-                    placeholder="Enter a description..."
-                    className={`${
-                      open ? "w-[80%]" : "w-[80%]"
-                    } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                    value={reportingentity}
-                    onChange={handleReportingentity}
-                  ></input>
-                  {error.reportingentity && (
-                    <div className="text-red-500 ml-1">
-                      {error.reportingentity}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="w-[80%] mb-5">
-            <div className="float-right">
-              <button
-                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                disabled
-              >
-                &lt; Previous
-              </button>
-              <button
-                type="button"
-                disabled
-                className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white"
-              >
-                {" "}
-                Next &gt;
-              </button>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-              <div className="w-[79%]">
-                <p className="font-bold  text-md mx-4 ">
-                  {" "}
-                  Identifying information
-                </p>
-              </div>
-              <div className="text-md flex">
-                <div> 6/7 </div>
-                <div>
-                  {data !== null ? (
-                       <MdOutlineModeEditOutline
-                       className="text-[15.5px] ml-2 mt-1 cursor-pointer"
-
-                         onClick={handleeditClick}
-                       />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          {data !== null ? (
-            <>
-              <div className="ml-3">
-                <div className="mb-5 mt-5 ml-2">
                   <label
-                    className="block text-gray-700 text-[15px] mb-2"
+                    className="block text-gray-700 text-[14px] font-[500] mb-2"
                     htmlFor="industryCheckbox"
                   >
-                    9. Which of the following sectors or industries does the
+                    9. For entities only: Which of the following sectors or industries does the
                     entity operate in? Select all that apply *
                   </label>
                 </div>
                 <div className="mb-2">
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-1">
                     {optionsTwo.map((option, index) => (
                       <div key={index} className="flex items-center">
-                        <label className="ml-2 text-[13px] text-gray-600">
+                        <label className="ml-2 text-[14px] text-gray-600">
                           <input
                             type="checkbox"
                             value={option.value}
                             checked={selectedOptions.includes(option.value)}
                             onChange={handleCheckboxChange}
-                            className="mr-3 pt-1"
-
-                          />
-                          {option.label}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="mb-5">
-                  {selectedOptions.includes("other") && (
-                    <div className="mb-5">
-                      <input
-                        type="text"
-                        placeholder="Enter a description..."
-                        className={`${
-                          open ? "w-[80%]" : "w-[80%]"
-                        } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                        value={reportingentity}
-
-                      ></input>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="w-[85%] mb-5">
-                <div className="float-right mr-3">
-                  <button
-                    className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                    onClick={prevStep}
-                  >
-                    &lt; Previous
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={coNextStep}
-                    className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
-                  >
-                    {" "}
-                    Next &gt;
-                  </button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="ml-3">
-                <div className="mb-5 mt-5 ml-2">
-                  <label
-                    className="block text-gray-700 text-[15px] mb-2"
-                    htmlFor="industryCheckbox"
-                  >
-                    9. Which of the following sectors or industries does the
-                    entity operate in? Select all that apply *
-                  </label>
-                </div>
-                <div className="mb-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    {optionsTwo.map((option, index) => (
-                      <div key={index} className="flex items-center">
-                        <label className="ml-2 text-[13px] text-gray-600">
-                          <input
-                            type="checkbox"
-                            value={option.value}
-                            checked={selectedOptions.includes(option.value)}
-                            onChange={handleCheckboxChange}
-                            className="mr-3 pt-1"
+                            className="mr-3 pt-1 cursor-pointer"
                           />
                           {option.label}
                         </label>
@@ -583,7 +327,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                     ))}
                   </div>
                   {error.checkboxes && (
-                    <div className="text-red-500 ml-1">{error.checkboxes}</div>
+                    <div className="text-red-500 ml-1 text-[12px]">{error.checkboxes}</div>
                   )}
                 </div>
                 <div className="mb-5">
@@ -594,12 +338,12 @@ const Screensix = ({ nextStep, prevStep }) => {
                         placeholder="Enter a description..."
                         className={`${
                           open ? "w-[80%]" : "w-[80%]"
-                        } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
+                        } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                         value={reportingentity}
                         onChange={handleReportingentity}
                       ></input>
                       {error.reportingentity && (
-                        <div className="text-red-500 ml-1">
+                        <div className="text-red-500 ml-1 text-[12px]">
                           {error.reportingentity}
                         </div>
                       )}
@@ -607,7 +351,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                   )}
                 </div>
               </div>
-              <div className="w-[85%] mb-5">
+              <div className="w-[83%] mb-5">
                 <div className="float-right mr-3">
                   <button
                     className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
@@ -619,18 +363,29 @@ const Screensix = ({ nextStep, prevStep }) => {
                   <button
                     type="button"
                     onClick={continueToNextStep}
-                    className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
+                    disabled={!(selectedOrg&&year)}
+                    className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                      reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
+                     }`}
                   >
                     {" "}
                     Next &gt;
                   </button>
                 </div>
               </div>
-            </>
-          )}
-        </>
+      </div>
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
       )}
-
 
     </>
   );

@@ -20,6 +20,7 @@ import { Oval } from 'react-loader-spinner';
 import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
 import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
 import axiosInstance from "../../../../utils/axiosMiddleware";
+import TextareasectionWidgets from "../../../../shared/widgets/Textarea/TextareasectionWidgets"
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -30,6 +31,7 @@ const widgets = {
   RemoveWidget: RemoveWidget,
   selectWidget3: selectWidget3,
   inputnumberWidget: inputnumberWidget,
+  TextareasectionWidgets:TextareasectionWidgets,
 };
 
 const view_path = 'gri-environment-energy-302-4a-4b-reduction_of_energy_consumption'
@@ -75,11 +77,15 @@ const schema = {
       },
       Baseyear: {
         type: "string",
-        title: "Base year",
+        title: "Base year/Baseline",
         enum: yearRange,
-        tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
+        tooltiptext: "Indicate the base year/baseline used for comparing energy saved before the intervention"
       },
-
+      Rationalebaseyear: {
+        type: "string",
+        title: "Rationale for choosing base year",
+        tooltiptext: "Explain the rationale for choosing base year"
+      },
       Energyreductionis: {
         type: "string",
         title: "Energy reduction is",
@@ -113,7 +119,7 @@ const uiSchema = {
   items: {
     classNames: 'fieldset',
     'ui:order': [
-      'Typeofintervention', 'Quantitysavedduetointervention', 'Unit', 'Energytypereduced','Baseyear','Energyreductionis','Methodologyused','AssignTo', 'FileUpload', 'Remove'
+      'Typeofintervention', 'Quantitysavedduetointervention', 'Unit', 'Energytypereduced','Baseyear','Rationalebaseyear','Energyreductionis','Methodologyused','AssignTo', 'FileUpload', 'Remove'
     ],
     Typeofintervention: {
       'ui:widget': 'selectWidget',
@@ -145,6 +151,12 @@ const uiSchema = {
     Baseyear: {
       'ui:widget': 'selectWidget',
       'ui:inputtype':'number',
+      'ui:options': {
+        label: false
+      },
+    },
+    Rationalebaseyear: {
+      'ui:widget': 'TextareasectionWidgets',
       'ui:options': {
         label: false
       },
@@ -190,7 +202,37 @@ const uiSchema = {
     }
   }
 };
-
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Typeofintervention) {
+      rowErrors.Typeofintervention = "Type of intervention is required";
+    }
+    if (!row.Quantitysavedduetointervention) {
+      rowErrors.Quantitysavedduetointervention = "Quantity saved due to intervention is required";
+    }
+  
+    if (!row.Unit) {
+      rowErrors.Unit = "Unit is required";
+    }
+    if (!row.Energytypereduced) {
+      rowErrors.Energytypereduced = "Energy type reduced is required";
+    }
+    if (!row.Baseyear) {
+      rowErrors.Baseyear = "Base year/Baseline is required";
+    }
+    if (!row.Rationalebaseyear) {
+      rowErrors.Rationalebaseyear = "Rationale for choosing base year is required";
+    }
+    if (!row.Energyreductionis) {
+      rowErrors.Energyreductionis = "Energy reduction  is required";
+    }
+    if (!row.Methodologyused) {
+      rowErrors.Methodologyused = "Methodology used is required";
+    }
+    return rowErrors;
+  });
+};
 const Reductionenergy = ({location, year, month}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
@@ -198,7 +240,7 @@ const Reductionenergy = ({location, year, month}) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({})
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-
+ const [validationErrors, setValidationErrors] = useState([]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -323,7 +365,18 @@ const Reductionenergy = ({location, year, month}) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddNew = () => {
@@ -350,11 +403,9 @@ const Reductionenergy = ({location, year, month}) => {
     <>
 
 
-        <div className={`overflow-auto custom-scrollbar flex`}>
+        <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
-          <div>
-         
-          </div>
+    
 
           <Form
           className='flex'
@@ -363,6 +414,7 @@ const Reductionenergy = ({location, year, month}) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
+            formContext={{ validationErrors }}
             widgets={{
               ...widgets,
               RemoveWidget: (props) => {

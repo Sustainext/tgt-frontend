@@ -7,7 +7,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { GoDownload } from "react-icons/go";
 import { IoMailOutline } from "react-icons/io5";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { MdExitToApp,MdKeyboardArrowDown } from "react-icons/md";
 import { FaArrowLeftLong } from "react-icons/fa6";
 

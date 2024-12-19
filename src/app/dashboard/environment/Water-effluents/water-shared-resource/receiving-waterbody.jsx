@@ -52,12 +52,25 @@ const uiSchema = {
     },
   },
 };
-
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Q1) {
+      rowErrors.Q1 = "This field is required";
+    }
+   
+    if (row.Q1 === "Yes" && (!row.details || row.details.trim() === "")) {
+      rowErrors.details = "Details are required when 'Yes' is selected.";
+    }
+    return rowErrors;
+  });
+};
 const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{ Q1: "", details: "" }]); // Initial form data
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const getAuthToken = () => {
@@ -88,6 +101,7 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
   // };
   const handleChange = (e) => {
     setFormData(e.formData);
+    
   };
   // The below code on updateFormData
   let axiosConfig = {
@@ -196,8 +210,19 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   return (
@@ -247,21 +272,33 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
           onChange={handleChange}
           uiSchema={r_ui_schema}
           validator={validator}
-          widgets={widgets} // Make sure this is passed to the Form
+          widgets={widgets}
+          formContext={{validationErrors }}
         >
           {formData[0].Q1 === "Yes" && (
             <>
               <h2 className="mb-2 text-sm">If yes please specify</h2>
               <textarea
                 placeholder="Enter a description..."
-                className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full `}
+                className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full ${
+                  validationErrors[0]?.details ? "border-red-500" : "border-gray-300"
+                } `}
                 id="details"
                 value={formData[0].details}
-                onChange={(e) =>
-                  setFormData([{ ...formData[0], details: e.target.value }])
-                }
+                onChange={(e) => {
+                  setFormData([{ ...formData[0], details: e.target.value }]);
+                  if (validationErrors[0]?.details) {
+                    // Clear the "details" error if it exists
+                    const updatedErrors = [...validationErrors];
+                    updatedErrors[0].details = null;
+                    setValidationErrors(updatedErrors);
+                  }
+                }}
                 rows={7}
               />
+        {validationErrors[0]?.details && (
+      <p className="text-red-500 text-xs mt-1">{validationErrors[0].details}</p>
+    )}
             </>
           )}
         </Form>

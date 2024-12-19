@@ -9,6 +9,9 @@ import Screensix from "./screen6";
 import Screenseven from "./screen7";
 import Screenend from "./screen8";
 import { MdOutlineNavigateNext,MdOutlineNavigateBefore  } from "react-icons/md";
+import SocialBillS211Header from '../../socialBillS211Header'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Annualreport = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -21,49 +24,87 @@ const Annualreport = () => {
     }
   };
 
-  // State to keep track of selected options
-
-  // Handler for checkbox change
+  const [activeMonth, setActiveMonth] = useState(1);
+  const [year, setYear] = useState("");
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
+  const [reportType, setReportType] = useState("Organization");
 
   return (
     <>
-      {/* Pagination */}
+       <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <div className="w-full">
+            <div className="text-left mb-2 ml-3 pt-5">
+              <p className="text-[11px]">Social</p>
+              <div className="flex">
+                <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
+                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div className="container mx-auto mt-5">
+            <div className="flex">
+              <div className="w-[72%]">
+                <p className="font-semibold text-[17px] mb-4 mx-4">
+                  {" "}
+                  Annual Report
+                </p>
+              </div>
+            </div>
+          </div>
+     <SocialBillS211Header
+        activeMonth={activeMonth}
+        setActiveMonth={setActiveMonth}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
+        year={year}
+        setYear={setYear}
+        reportType={reportType}
+        setReportType={setReportType}
+      />
 
       <div className="h-[670px] overflow-y-auto scrollable-content">
         {currentStep === 1 && (
           <Screenone
             nextStep={nextStep}
+            selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType}
             // handleChange={handleChange}
           />
         )}
          {currentStep === 2 && (
-          <Screentwo nextStep={nextStep} prevStep={prevStep} />
+          <Screentwo nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
         {currentStep === 3 && (
-          <Screenthree nextStep={nextStep} prevStep={prevStep} />
+          <Screenthree nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
         {currentStep === 4 && (
-          <Screenfour nextStep={nextStep} prevStep={prevStep} />
+          <Screenfour nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
         {currentStep === 5 && (
-          <Screenfive nextStep={nextStep} prevStep={prevStep} />
+          <Screenfive nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
         {currentStep === 6 && (
-          <Screensix nextStep={nextStep} prevStep={prevStep} />
+          <Screensix nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
         {currentStep === 7 && (
-          <Screenseven nextStep={nextStep} prevStep={prevStep} />
+          <Screenseven nextStep={nextStep} prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year} reportType={reportType} />
         )}
-       {currentStep === 8 && <Screenend prevStep={prevStep} />}
+       {currentStep === 8 && <Screenend prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year}  reportType={reportType}/>}
       </div>
-      <div className="w-full mb-5">
-        <div className="flex justify-center space-x-4 mt-[10px] w-full">
+      <div className="w-full">
+        <div className="flex justify-center space-x-4 mt-[15px] w-full">
           {/* Previous Button */}
           <button
-            className="px-2  h-[27px] rounded-md text-dark hover:bg-gray-300"
+            className={`px-2  h-[27px] rounded-md text-dark ${currentStep===1?'text-gray-300':''}`}
             disabled={currentStep === 1}
             onClick={() => prevStep()}
-            style={{ display: currentStep === 1 ? "none" : "inline-block" }}
+            // style={{ display: currentStep === 1 ? "none" : "inline-block" }}
           >
             <MdOutlineNavigateBefore />
           </button>
@@ -85,15 +126,16 @@ const Annualreport = () => {
 
           {/* Next Button */}
           <button
-            className="px-2  h-[27px] rounded-md text-dark hover:bg-gray-300"
+            className={`px-2  h-[27px] rounded-md text-dark ${currentStep===8?'text-gray-300':''}`}
             disabled={currentStep === totalSteps}
             onClick={() => nextStep()}
-            style={{ display: currentStep === 8 ? "none" : "inline-block" }}
+            // style={{ display: currentStep === 7 ? "none" : "inline-block" }}
           >
             <MdOutlineNavigateNext />
           </button>
         </div>
       </div>
+      <ToastContainer style={{ fontSize: "12px" }} />
     </>
   );
 };

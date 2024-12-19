@@ -30,6 +30,11 @@ const Section6=({section12_1_4Ref,data})=>{
       dispatch(setBiogenicCO2305(value))
     }
     const config = {
+      enter: "BR", // Or customize behavior on Enter key
+  cleanHTML: true,
+      enablePasteHTMLFilter: false, 
+    askBeforePasteHTML: false, 
+    askBeforePasteFromWord: false,
       style: {
         fontSize: "14px",
         color:"#667085"
@@ -64,7 +69,8 @@ const Section6=({section12_1_4Ref,data})=>{
         "Category",
         "Sub Category",
         "Activity",
-        "Value"
+        "Emission (tCO2e)",
+        // "Value 2"
     ]
 
     const col1=[
@@ -73,15 +79,35 @@ const Section6=({section12_1_4Ref,data})=>{
         "Total Emission",
         "Unit"
     ]
-    const data1=[
+
+    const TabledataBySource =
+  data["305_123_analyse"] && data["305_123_analyse"]["all_emission_by_source"]
+    ? data["305_123_analyse"]["all_emission_by_source"].length>0?data["305_123_analyse"]["all_emission_by_source"].map((val) => {
+        return {
+          'Source': val.source || "No data available", 
+          'Percentage contribution': val.contribution !== undefined ? val.contribution + "%" : "No data available", 
+          'Total Emission': val.total !== undefined ? val.total : "No data available", 
+          'Unit': val.Units || "No data available" 
+        };
+      })
+    : [
         {
-           
-        "Source":"data",
-        "Percentage contribution":"data",
-        "Total Emission":"data",
-        "Unit":"data"
+          'Source': "No data available",
+          'Percentage contribution': "No data available",
+          'Total Emission': "No data available",
+          'Unit': "No data available"
         }
-    ]
+      ]:[
+        {
+          'Source': "No data available",
+          'Percentage contribution': "No data available",
+          'Total Emission': "No data available",
+          'Unit': "No data available"
+        }
+      ];
+
+
+   
     const col2=[
       
         "Location",
@@ -89,15 +115,66 @@ const Section6=({section12_1_4Ref,data})=>{
         "Total Emission",
         "Unit"
     ]
-    const data2=[
-        {
-           
-        "Location":"data",
-        "Percentage contribution":"data",
-        "Total Emission":"data",
-        "Unit":"data"
-        }
-    ]
+   
+    const TabledataByLocation =
+    data["305_123_analyse"] && data["305_123_analyse"]["all_emission_by_location"]
+      ? data["305_123_analyse"]["all_emission_by_location"].length>0?data["305_123_analyse"]["all_emission_by_location"].map((val) => {
+          return {
+            'Location': val.location || "No data available", 
+            'Percentage contribution': val.contribution !== undefined ? val.contribution + "%" : "No data available", 
+            'Total Emission': val.total !== undefined ? val.total : "No data available", 
+            'Unit': val.Units || "No data available" 
+          };
+        })
+      : [
+          {
+            'Location': "No data available",
+            'Percentage contribution': "No data available",
+            'Total Emission': "No data available",
+            'Unit': "No data available"
+          }
+        ]:[
+          {
+            'Location': "No data available",
+            'Percentage contribution': "No data available",
+            'Total Emission': "No data available",
+            'Unit': "No data available"
+          }
+        ];
+
+
+        const col4=[
+          "Scope",
+          "Percentage contribution",
+          "Total Emission",
+          "Unit"
+        ]
+
+        const TabledataByScope =
+        data["305_123_analyse"] && data["305_123_analyse"]["all_emission_by_scope"]
+          ? data["305_123_analyse"]["all_emission_by_scope"].length>0?data["305_123_analyse"]["all_emission_by_scope"].map((val) => {
+              return {
+                'Scope': val.scope || "No data available", 
+                'Percentage contribution': val.contribution !== undefined ? val.contribution + "%" : "No data available", 
+                'Total Emission': val.total !== undefined ? val.total : "No data available", 
+                'Unit': val.Units || "No data available" 
+              };
+            })
+          : [
+              {
+                'Scope': "No data available",
+                'Percentage contribution': "No data available",
+                'Total Emission': "No data available",
+                'Unit': "No data available"
+              }
+            ]:[
+              {
+                'Scope': "No data available",
+                'Percentage contribution': "No data available",
+                'Total Emission': "No data available",
+                'Unit': "No data available"
+              }
+            ];
 
     const col3=[
         "Method",
@@ -144,25 +221,25 @@ const Section6=({section12_1_4Ref,data})=>{
             Scope 3
             </p>
             <div className="shadow-md rounded-md mb-4">
-<ScopeTable columns={scope3col} data={data["305_123_collect"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-3"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-3"]:"":""}/>
+<ScopeTable columns={scope3col} data={data["305_123_collect"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-3"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-3"].length>0?data["305_123_collect"]["gri-environment-emissions-301-a-scope-3"]:[]:[]:[]}/>
 </div>
             <p className="text-[15px]  mb-2 font-semibold">
             Top Emissions by Source
         </p>
 <div className="shadow-md rounded-md mb-4">
-<AnalyseTable columns={col1} data={data["305_123_analyse"]?data["305_123_analyse"]["all_emission_by_source"]?data["305_123_analyse"]["all_emission_by_source"]:[]:[]}/>
+<AnalyseTable columns={col1} data={TabledataBySource}/>
 </div>
 <p className="text-[15px]  mb-2 font-semibold">
 Top Emissions by Location
         </p>
 <div className="shadow-md rounded-md mb-4">
-<AnalyseTable columns={col2} data={data["305_123_analyse"]?data["305_123_analyse"]["all_emission_by_location"]?data["305_123_analyse"]["all_emission_by_location"]:[]:[]}/>
+<AnalyseTable columns={col2} data={TabledataByLocation}/>
 </div>
 <p className="text-[15px]  mb-2 font-semibold">
 Emissions by Scope
         </p>
 <div className="shadow-md rounded-md mb-4">
-<AnalyseTable columns={col1} data={data["305_123_analyse"]?data["305_123_analyse"]["all_emission_by_scope"]?data["305_123_analyse"]["all_emission_by_scope"]:[]:[]}/>
+<AnalyseTable columns={col4} data={TabledataByScope}/>
 </div>
 <p className="text-[15px]  mb-2 font-semibold">
 305-3-c. Biogenic CO2 emissions

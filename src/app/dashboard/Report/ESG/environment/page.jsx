@@ -159,28 +159,28 @@ const scrollToSection = (sectionRef, sectionId) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-      "environmental_responsibility_statement":environmental_responsibility_statement,
-  "emissions":emissions ,
-  "scope_one_emissions":scope_one_emissions ,
-  "scope_two_emissions":scope_two_emissions ,
-  "scope_three_emissions":scope_three_emissions ,
-  "ghg_emission_intensity_tracking":ghg_emission_intensity_tracking ,
-  "ghg_emission_reduction_efforts":ghg_emission_reduction_efforts ,
-  "ozone_depleting_substance_elimination":ozone_depleting_substance_elimination ,
-  "material_management_strategy":material_management_strategy ,
-  "recycling_process":recycling_process ,
-  "reclamation_recycling_process": reclamation_recycling_process,
-  "water_withdrawal_tracking":water_withdrawal_tracking ,
-  "water_consumption_goals":water_consumption_goals ,
-  "energy_consumption_within_organization":energy_consumption_within_organization ,
-  "energy_consumption_outside_organization":energy_consumption_outside_organization ,
-  "energy_intensity_tracking":energy_intensity_tracking ,
-  "energy_consumption_reduction_commitment": energy_consumption_reduction_commitment ,
-  "significant_spills": significant_spills ,
-  "habitat_protection_restoration_commitment": habitat_protection_restoration_commitment ,
-  "air_quality_protection_commitment": air_quality_protection_commitment,
-  "biogenic_c02_emissions_305_3c":biogenic_c02_emissions_305_3c,
-  "biogenic_c02_emissions":biogenic_c02_emissions
+      "environmental_responsibility_statement":{"page":"screen_twelve","label":"12. Environment","subLabel":"Add statement about company’s responsibility to minimize the environmental impact","type":"textarea","content":environmental_responsibility_statement,"field":"environmental_responsibility_statement","isSkipped":false},
+  "emissions":{"page":"screen_twelve","label":"12.1 Emissions","subLabel":"Add statement about company’s strategy to reduce emission","type":"textarea","content":emissions,"field":"emissions","isSkipped":false} ,
+  "scope_one_emissions":{"page":"screen_twelve","label":"12.1.2 Scope 1 GHG Emissions","subLabel":"Add statement about company’s scope 1 emissions","type":"textarea","content":scope_one_emissions,"field":"scope_one_emissions","isSkipped":false} ,
+  "scope_two_emissions":{"page":"screen_twelve","label":"12.1.3 Scope 2 GHG Emissions","subLabel":"Add statement about company’s scope 2 emissions","type":"textarea","content":scope_two_emissions,"field":"scope_two_emissions","isSkipped":false} ,
+  "scope_three_emissions":{"page":"screen_twelve","label":"12.1.4 Scope 3 GHG Emissions","subLabel":"Add statement about company’s scope 3 emissions","type":"textarea","content":scope_three_emissions,"field":"scope_three_emissions","isSkipped":false} ,
+  "ghg_emission_intensity_tracking":{"page":"screen_twelve","label":"12.1.5 GHG Emission Intensity","subLabel":"Add statement about tracking of GHG emission intensity","type":"richTextarea","content":ghg_emission_intensity_tracking,"field":"ghg_emission_intensity_tracking","isSkipped":false} ,
+  "ghg_emission_reduction_efforts":{"page":"screen_twelve","label":"12.1.6 Reduction in GHG Emissions","subLabel":"Add statement about efforts to reduce GHG emission","type":"richTextarea","content":ghg_emission_reduction_efforts,"field":"ghg_emission_reduction_efforts","isSkipped":false} ,
+  "ozone_depleting_substance_elimination":{"page":"screen_twelve","label":"12.1.7 Ozone Depleting Substances","subLabel":"Add statement about company’s commitment to eliminate use of ozone depleting substance","type":"richTextarea","content":ozone_depleting_substance_elimination,"field":"ozone_depleting_substance_elimination","isSkipped":false} ,
+  "material_management_strategy":{"page":"screen_twelve","label":"12.2 Materials","subLabel":"Add statement about company’s material management strategy","type":"textarea","content":material_management_strategy,"field":"material_management_strategy","isSkipped":false} ,
+  "recycling_process":{"page":"screen_twelve","label":"12.2.2 Recycled Input Materials Used","subLabel":"Add statement about company’s process for recycling","type":"textarea","content":recycling_process,"field":"recycling_process","isSkipped":false} ,
+  "reclamation_recycling_process": {"page":"screen_twelve","label":"12.2.3 Reclaimed Products and Their Packaging Materials","subLabel":"Add statement about company’s reclamation and recycling process","type":"textarea","content":reclamation_recycling_process,"field":"reclamation_recycling_process","isSkipped":false},
+  "water_withdrawal_tracking":{"page":"screen_twelve","label":"12.3.2 Water Withdrawal","subLabel":"Add statement about company’s tracking of water withdrawal","type":"textarea","content":water_withdrawal_tracking,"field":"water_withdrawal_tracking","isSkipped":false} ,
+  "water_consumption_goals":{"page":"screen_twelve","label":"12.3.4 Water Consumption","subLabel":"Add statement about company’s water consumption goals","type":"textarea","content":water_consumption_goals,"field":"water_consumption_goals","isSkipped":false} ,
+  "energy_consumption_within_organization":{"page":"screen_twelve","label":"12.4.2 Energy Consumption within the Organization","subLabel":"Add statement about company’s energy consumption within organisation","type":"textarea","content":energy_consumption_within_organization,"field":"energy_consumption_within_organization","isSkipped":false} ,
+  "energy_consumption_outside_organization":{"page":"screen_twelve","label":"12.4.3 Energy Consumption Outside of the Organization","subLabel":"Add statement about company’s energy consumption outside of the organisation","type":"textarea","content":energy_consumption_outside_organization,"field":"energy_consumption_outside_organization","isSkipped":false} ,
+  "energy_intensity_tracking":{"page":"screen_twelve","label":"12.4.4 Energy Intensity","subLabel":"Add statement about tracking the Energy Intensity","type":"textarea","content":energy_intensity_tracking,"field":"energy_intensity_tracking","isSkipped":false} ,
+  "energy_consumption_reduction_commitment": {"page":"screen_twelve","label":"12.4.5 Reduction in Energy consumption","subLabel":"Add statement about company’s commitment to reduce energy consumption","type":"textarea","content":energy_consumption_reduction_commitment,"field":"energy_consumption_reduction_commitment","isSkipped":false} ,
+  "significant_spills": {"page":"screen_twelve","label":"12.5.6 Significant Spills","subLabel":"Add statement about company’s programs for preventing and managing significant spills","type":"richTextarea","content":significant_spills,"field":"significant_spills","isSkipped":false} ,
+  "habitat_protection_restoration_commitment": {"page":"screen_twelve","label":"12.6.2 Habitat Protected and Restored","subLabel":"Add statement about company’s commitment to protect and restore habitats","type":"richTextarea","content":habitat_protection_restoration_commitment,"field":"habitat_protection_restoration_commitment","isSkipped":false} ,
+  "air_quality_protection_commitment": {"page":"screen_twelve","label":"12.7 Air Quality","subLabel":"Add statement about company’s commitment to protect and maintain air quality","type":"richTextarea","content":air_quality_protection_commitment,"field":"air_quality_protection_commitment","isSkipped":false},
+  "biogenic_c02_emissions_305_3c":{"page":"screen_twelve","label":"305-3-c. Biogenic CO2 emissions","subLabel":"","type":"richTextarea","content":biogenic_c02_emissions_305_3c,"field":"biogenic_c02_emissions_305_3c","isSkipped":false},
+  "biogenic_c02_emissions":{"page":"screen_twelve","label":"Biogenic CO2 emissions","subLabel":"","type":"richTextarea","content":biogenic_c02_emissions,"field":"biogenic_c02_emissions","isSkipped":false}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_twelve/${reportid}/`;
@@ -268,28 +268,29 @@ const scrollToSection = (sectionRef, sectionId) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setEnvironmentStatement(response.data.environmental_responsibility_statement));
-          dispatch(setEmission(response.data.emissions));
-          dispatch(setScopeOneEmission(response.data.scope_one_emissions));
-          dispatch(setScopeTwoEmission(response.data.scope_two_emissions));
-          dispatch(setScopeThreeEmission(response.data.scope_three_emissions));
-      dispatch(setGHGEmissionIntensityTracking(response.data.ghg_emission_intensity_tracking));
-      dispatch(setGHGEmissionReductionEfforts(response.data.ghg_emission_reduction_efforts));
-      dispatch(setOzoneDepletingSubstanceElimination(response.data.ozone_depleting_substance_elimination));
-      dispatch(setMaterialManagementStrategy(response.data.material_management_strategy));
-      dispatch(setRecyclingProcess(response.data.recycling_process));
-      dispatch(setReclamationRecyclingProcess(response.data.reclamation_recycling_process));
-      dispatch(setWaterWithdrawalTracking(response.data.water_withdrawal_tracking));
-      dispatch(setWaterConsumptionGoals(response.data.water_consumption_goals));
-      dispatch(setEnergyConsumptionWithinOrganization(response.data.energy_consumption_within_organization));
-      dispatch(setEnergyConsumptionOutsideOrganization(response.data.energy_consumption_outside_organization));
-      dispatch(setEnergyIntensityTracking(response.data.energy_intensity_tracking));
-      dispatch(setEnergyConsumptionReductionCommitment(response.data.energy_consumption_reduction_commitment));
-      dispatch(setSignificantSpills(response.data.significant_spills));
-      dispatch(setHabitatProtectionRestorationCommitment(response.data.habitat_protection_restoration_commitment));
-      dispatch(setAirQualityProtectionCommitment(response.data.air_quality_protection_commitment))
-      dispatch(setBiogenicCO2Emission(response.data.biogenic_c02_emissions))
-      dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c))
+            dispatch(setEnvironmentStatement(response.data.environmental_responsibility_statement?.content || ""));
+dispatch(setEmission(response.data.emissions?.content || ""));
+dispatch(setScopeOneEmission(response.data.scope_one_emissions?.content || ""));
+dispatch(setScopeTwoEmission(response.data.scope_two_emissions?.content || ""));
+dispatch(setScopeThreeEmission(response.data.scope_three_emissions?.content || ""));
+dispatch(setGHGEmissionIntensityTracking(response.data.ghg_emission_intensity_tracking?.content || ""));
+dispatch(setGHGEmissionReductionEfforts(response.data.ghg_emission_reduction_efforts?.content || ""));
+dispatch(setOzoneDepletingSubstanceElimination(response.data.ozone_depleting_substance_elimination?.content || ""));
+dispatch(setMaterialManagementStrategy(response.data.material_management_strategy?.content || ""));
+dispatch(setRecyclingProcess(response.data.recycling_process?.content || ""));
+dispatch(setReclamationRecyclingProcess(response.data.reclamation_recycling_process?.content || ""));
+dispatch(setWaterWithdrawalTracking(response.data.water_withdrawal_tracking?.content || ""));
+dispatch(setWaterConsumptionGoals(response.data.water_consumption_goals?.content || ""));
+dispatch(setEnergyConsumptionWithinOrganization(response.data.energy_consumption_within_organization?.content || ""));
+dispatch(setEnergyConsumptionOutsideOrganization(response.data.energy_consumption_outside_organization?.content || ""));
+dispatch(setEnergyIntensityTracking(response.data.energy_intensity_tracking?.content || ""));
+dispatch(setEnergyConsumptionReductionCommitment(response.data.energy_consumption_reduction_commitment?.content || ""));
+dispatch(setSignificantSpills(response.data.significant_spills?.content || ""));
+dispatch(setHabitatProtectionRestorationCommitment(response.data.habitat_protection_restoration_commitment?.content || ""));
+dispatch(setAirQualityProtectionCommitment(response.data.air_quality_protection_commitment?.content || ""));
+dispatch(setBiogenicCO2Emission(response.data.biogenic_c02_emissions?.content || ""));
+dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c?.content || ""));
+
           }
           
           LoaderClose();

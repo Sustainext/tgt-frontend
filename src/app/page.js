@@ -1,16 +1,90 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../Context/auth";
-import { useRouter } from "next/navigation";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
+import CryptoJS from "crypto-js";
+
+const PasswordInput = ({ value, onChange, required = true }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = (e) => {
+    if (!buttonRef.current?.contains(e.relatedTarget)) {
+      setIsFocused(false);
+      setShowPassword(false);
+    }
+  };
+
+  const togglePassword = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+    inputRef.current?.focus();
+  };
+
+  useEffect(() => {
+    const handleTabChange = () => {
+      setShowPassword(false);
+      setIsFocused(false);
+    };
+
+    document.addEventListener("visibilitychange", handleTabChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleTabChange);
+      setShowPassword(false);
+      setIsFocused(false);
+    };
+  }, []);
+
+  return (
+    <div className="relative flex items-center">
+      <input
+        ref={inputRef}
+        type={showPassword ? "text" : "password"}
+        value={value}
+        onChange={onChange}
+        required={required}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500
+          text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500
+          focus:border-indigo-500 focus:z-10 sm:text-sm"
+        placeholder="Password"
+        autoComplete="current-password"
+      />
+      {isFocused && (
+        <button
+          ref={buttonRef}
+          type="button"
+          aria-label={showPassword ? "Hide password" : "Show password"}
+          className="absolute right-3 z-20 text-gray-600 cursor-pointer hover:text-gray-800"
+          onMouseDown={togglePassword}
+          tabIndex={-1}
+        >
+          {showPassword ? (
+            <AiOutlineEyeInvisible className="h-5 w-5" />
+          ) : (
+            <AiOutlineEye className="h-5 w-5" />
+          )}
+        </button>
+      )}
+    </div>
+  );
+};
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const { login } = useAuth();
-  const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -26,10 +100,20 @@ export default function Home() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
     try {
-      await login(email, password, rememberMe);
+      // Encrypt password using SHA-256
+      const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+      console.log(hashedPassword);
+
+      // Replace password with hashed password for login request
+      await login(email, hashedPassword, rememberMe);
+
       if (rememberMe) {
-        localStorage.setItem("rememberedUser", JSON.stringify({ email, password }));
+        localStorage.setItem(
+          "rememberedUser",
+          JSON.stringify({ email, password: hashedPassword }) // Save hashed password
+        );
       } else {
         localStorage.removeItem("rememberedUser");
       }
@@ -57,7 +141,7 @@ export default function Home() {
               "url('https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/Home/authbg.webp')",
           }}
         >
-          <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2  h-screen">
+          <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 h-screen">
             <div className="mb-4">
               <img
                 src="https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/Home/sustainext-new-white-logo.webp"
@@ -65,12 +149,12 @@ export default function Home() {
                 className="h-28 w-auto"
               />
             </div>
-            <div className="bg-white shadow-lg rounded-lg p-16 max-w-md w-full my-20 mx-auto h-[456px] ">
+            <div className="bg-white shadow-lg rounded-lg p-16 max-w-md w-full my-20 mx-auto h-[456px]">
               <h2 className="text-left text-2xl font-extrabold text-gray-900">
                 Welcome back
               </h2>
               <p className="text-sm mb-6">Login to sustainable solutions</p>
-              <form className="" onSubmit={handleLogin}>
+              <form onSubmit={handleLogin}>
                 <div className="mb-4">
                   <label htmlFor="email" className="text-sm">
                     Email
@@ -89,20 +173,11 @@ export default function Home() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-                <div className="mb-6">
+                <div className="mb-6 relative">
                   <label htmlFor="password" className="text-sm">
                     Password
                   </label>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500
-                text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500
-                focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Password"
+                  <PasswordInput
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -136,23 +211,12 @@ export default function Home() {
                 <div>
                   <button
                     type="submit"
-                    className="group relative flex w-full justify-center rounded-md  bg-gradient-to-r from-[#007EEF] to-[#2AE4FF] hover:bg-gradient-to-r hover:from-[#00aeef] hover:to-[#6adf23] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="group relative flex w-full justify-center rounded-md bg-gradient-to-r from-[#007EEF] to-[#2AE4FF] hover:bg-gradient-to-r hover:from-[#00aeef] hover:to-[#6adf23] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Login
                   </button>
                 </div>
               </form>
-              {/* <div className="mt-6 text-center">
-                <p className="text-sm">
-                  Don't have an account?{" "}
-                  <a
-                    href="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Sign up
-                  </a>
-                </p>
-              </div> */}
             </div>
           </div>
         </div>

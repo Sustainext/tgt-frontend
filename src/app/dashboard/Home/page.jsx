@@ -2,10 +2,11 @@
 import MyGoals from "./MyGoals";
 import MyTasks from "./MyTasks";
 import Preferences from "./Preferences/page";
-
+import GoogleTranslateWidget  from '../gt';
 const HomeDashboard = () =>  {
   return (
     <>
+{/* <GoogleTranslateWidget/> */}
       <div className="flex space-x-3 pe-4 ">
         <div className="w-2/5 space-y-4 mb-8">
           <div>

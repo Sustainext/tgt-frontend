@@ -261,8 +261,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
               <GiPublicSpeaker style={{ fontSize: "100px" }} />
             </div>
             <div className="text-xl font-bold my-4">
-              <span>Coming </span>
-              <span>Soon!</span>
+              <span>Loading... </span>
             </div>
           </div>
         )}

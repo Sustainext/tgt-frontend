@@ -2,7 +2,8 @@
 import { useState } from "react";
 
 // Dynamic Table Component
-const ScopeTable = ({ title, columns, data }) => {
+const ScopeTable = ({ title, columns,data }) => {
+
   return (
     <div>
       <div
@@ -35,27 +36,54 @@ const ScopeTable = ({ title, columns, data }) => {
             </tr>
           </thead>
           <tbody>
-  <tr className="text-[13px]">
+            {data && data.length>0?(
+              data.map((val)=>(
+                <tr className="text-[13px]">
     {/* Display Category */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-      {data?data.Category?data.Category:"No data available":"No data available"}
+      {val.category?val.category:"No data available"}
     </td>
 
     {/* Display Subcategory */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-    {data?data.Activity?data.Activity:"No data available":"No data available"}
+    {val.subcategory?val.subcategory:"No data available"}
     </td>
 
     {/* Display Activity */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-    {data?data.Category?data.Category:"No data available":"No data available"}
+    {val.activity?val.activity:"No data available"}
     </td>
 
     {/* Display Quantity */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-    {data?data.Quantity?data.Quantity+" "+data.Unit:"No data available":"No data available"}
+    {val.emission?val.emission:"No data available"}
     </td>
   </tr>
+              ))
+            ):(
+              <tr className="text-[13px]">
+    {/* Display Category */}
+    <td className="border-t border-r border-gray-200 p-4 text-left">
+      {"No data available"}
+    </td>
+
+    {/* Display Subcategory */}
+    <td className="border-t border-r border-gray-200 p-4 text-left">
+    {"No data available"}
+    </td>
+
+    {/* Display Activity */}
+    <td className="border-t border-r border-gray-200 p-4 text-left">
+    {"No data available"}
+    </td>
+
+    {/* Display Quantity */}
+    <td className="border-t border-r border-gray-200 p-4 text-left">
+    {"No data available"}
+    </td>
+  </tr>
+            )}
+  
 </tbody>
 
         </table>

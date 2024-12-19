@@ -1,29 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
 
-const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchema = {}, schema = {}, id, options }) => {
+const SelectWidget = ({
+  onChange,
+  value = "",
+  placeholder,
+  label,
+  title,
+  uiSchema = {},
+  schema = {},
+  id,
+  options,
+  formContext,
+  name,
+}) => {
+  const { validationErrors } = formContext || {};
+  const rowIndex = parseInt(id.split('_')[1], 10);
+  const rowErrors = validationErrors && validationErrors[rowIndex] || {};
+  const hasError = !value && rowErrors && rowErrors[name];
   const [otherValue, setOtherValue] = useState(value || ""); // Initialize with value or empty
-  const [showOtherInput, setShowOtherInput] = useState(value && !options?.enumOptions?.some(option => option.value === value)); // Initial state depends on if the value is an "Other" value.
+  const [showOtherInput, setShowOtherInput] = useState(
+    value && !options?.enumOptions?.some((option) => option.value === value)
+  ); // Initial state depends on if the value is an "Other" value.
 
   const handleChange = (e) => {
     const selectedValue = e.target.value;
 
     if (selectedValue === "Other (please specify)") {
-      setShowOtherInput(true);  // Show the input field for "Other"
-      setOtherValue("");  // Reset any other input value
-      onChange("");  // Reset the main value in the parent state to empty
+      setShowOtherInput(true); // Show the input field for "Other"
+      setOtherValue(""); // Reset any other input value
+      onChange(""); // Reset the main value in the parent state to empty
     } else {
-      setShowOtherInput(false);  // Hide the "Other" input field
-      onChange(selectedValue);  // Set the selected value in the parent state
+      setShowOtherInput(false); // Hide the "Other" input field
+      onChange(selectedValue); // Set the selected value in the parent state
     }
   };
 
   const handleOtherInputChange = (e) => {
     const inputValue = e.target.value;
     setOtherValue(inputValue);
-    onChange(inputValue);  // Send the "Other" input value to the parent
+    onChange(inputValue); // Send the "Other" input value to the parent
   };
 
   const randomId = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
@@ -33,31 +51,32 @@ const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchem
 
   return (
     <div className="mb-3 px-1">
-      <div className="relative w-[68%]">
+      <div className="relative w-[100%]">
         {id.startsWith("root_0") && (
           <>
             <p className="flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px] ml-1">
               {label}
               <MdInfoOutline
                 data-tooltip-id={tooltipId}
-                data-tooltip-content={schema.tooltiptext}
-                className="mt-1 ml-2 w-[30px] text-[14px]"
+                data-tooltip-html={schema.tooltiptext}
+                className="mt-0.5 ml-2 w-[30px] text-[14px]"
+                style={{ display: schema.display }}
               />
               <ReactTooltip
                 id={tooltipId}
                 place="top"
                 effect="solid"
                 style={{
-                  width: "400px",
+                  minWidth: "300px", // Minimum width
+                  maxWidth: "700px", // Maximum width
                   backgroundColor: "#000",
                   color: "white",
                   fontSize: "12px",
                   boxShadow: 3,
                   borderRadius: "8px",
-                  padding: "10px",
-                  zIndex: "1000",
+                  zIndex:100,
                 }}
-              />
+              ></ReactTooltip>
             </p>
           </>
         )}
@@ -67,7 +86,7 @@ const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchem
         {/* Render select or input based on state */}
         {!showOtherInput ? (
           <select
-            className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize`}
+            className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize table-scrollbar ${hasError ? 'border-red-500' : 'border-gray-300'}`}
             value={value}
             onChange={handleChange}
           >
@@ -79,7 +98,6 @@ const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchem
                 {option.label}
               </option>
             ))}
-    
           </select>
         ) : (
           <input
@@ -93,6 +111,11 @@ const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchem
           />
         )}
       </div>
+      {hasError && (
+        <div className="text-red-500 text-[12px] mt-1">
+          {hasError}
+        </div>
+      )}
     </div>
   );
 };

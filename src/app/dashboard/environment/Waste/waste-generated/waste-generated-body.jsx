@@ -88,8 +88,7 @@ const Wastegeneratedbody = ({location, year, month,setLocationMessage,setYearMes
       <div className="mx-3">
       <AccordionItem
           title="Waste generated"
-          tooltiptext={`This section documents the data corresponding to the total weight of waste generated
-          and any contextual information necessary to understand how the data has been complied. `}
+          tooltiptext={`This section documents the data corresponding to the total weight of waste generated and any contextual information necessary to understand how the data has been complied.`}
           sdg={['GRI 306-3a','GRI 306-3b','GRI 306-3c']}
           display="block"
           location={location}
@@ -100,7 +99,7 @@ const Wastegeneratedbody = ({location, year, month,setLocationMessage,setYearMes
 
           <Wastegeneratedeimpact location={location} year={year} month={month}/>
         </AccordionItem>
-        <AccordionItem
+        {/* <AccordionItem
           title="Contextual Information to understand data compilation"
           tooltiptext={`This section documents the data corresponding to the contextual information necessary
           to understand the data and how the data has beencompiled.`}
@@ -113,7 +112,7 @@ const Wastegeneratedbody = ({location, year, month,setLocationMessage,setYearMes
         >
 
           <Wastecontextualinformation location={location} year={year} month={month}/>
-        </AccordionItem>
+        </AccordionItem> */}
 
         {/* Add more accordion items here */}
       </div>

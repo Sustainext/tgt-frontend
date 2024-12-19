@@ -34,7 +34,8 @@ const inputWidget3 = (props) => {
           place="top"
           effect="solid"
           style={{
-            width: "300px",
+            minWidth: "200px", // Minimum width
+            maxWidth: "500px", // Maximum width
             backgroundColor: "#000",
             color: "white",
             fontSize: "12px",

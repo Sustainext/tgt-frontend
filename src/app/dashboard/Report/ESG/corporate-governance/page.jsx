@@ -106,10 +106,10 @@ const scrollToSection = (sectionRef, sectionId) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-       "statement": statement ,
-    "board_gov_statement": board_gov_statement,
-    "remuneration_policies": remuneration_policies,
-    "policy_not_public_reason": policy_not_public_reason
+       "statement": {"page":"screen_nine","label":"9. Corporate Governance","subLabel":"Add statement about company’s corporate governance","type":"textarea","content":statement,"field":"statement","isSkipped":false} ,
+    "board_gov_statement": {"page":"screen_nine","label":"9.1.1 Governance structure and composition","subLabel":"Add statement about company’s board of directors","type":"textarea","content":board_gov_statement,"field":"board_gov_statement","isSkipped":false},
+    "remuneration_policies": {"page":"screen_nine","label":"9.3.7 Remuneration Policies & Process to Determine Remuneration","subLabel":"Add statement about company’s remuneration policies","type":"textarea","content":remuneration_policies,"field":"remuneration_policies","isSkipped":false},
+    "policy_not_public_reason": {"page":"screen_nine","label":"9.6.2 Reason why policy is not publicly available","subLabel":"Add statement about company’s sustainability policies","type":"textarea","content":policy_not_public_reason,"field":"policy_not_public_reason","isSkipped":false}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_nine/${reportid}/`;
@@ -178,10 +178,11 @@ const scrollToSection = (sectionRef, sectionId) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setStatement(response.data.statement));
-          dispatch(setBoardGov(response.data.board_gov_statement));
-          dispatch(setRemunerationPolicies(response.data.remuneration_policies));
-          dispatch(setPolicyPublic(response.data.policy_not_public_reason));
+            dispatch(setStatement(response.data.statement?.content || ""));
+            dispatch(setBoardGov(response.data.board_gov_statement?.content || ""));
+            dispatch(setRemunerationPolicies(response.data.remuneration_policies?.content || ""));
+            dispatch(setPolicyPublic(response.data.policy_not_public_reason?.content || ""));
+            
           }
           
           LoaderClose();
@@ -339,21 +340,21 @@ const scrollToSection = (sectionRef, sectionId) => {
     9.6 Policy
   </p>
   
-  <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_1Ref, 'section9_6_1')}>
+  {/* <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_1Ref, 'section9_6_1')}>
     9.6.1 Management of material topic
    
-  </p>
+  </p> */}
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_2' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_2Ref, 'section9_6_2')}>
-    9.6.2 Embedding policy Commitment
+    9.6.1 Embedding policy Commitment
   </p>
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_3' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_3Ref, 'section9_6_3')}>
-    9.6.3 Anti-trust, anti-competitive behavior, monopoly practices
+    9.6.2 Anti-trust, anti-competitive behavior, monopoly practices
   </p>
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_4' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_4Ref, 'section9_6_4')}>
-    9.6.4 Defined benefit plan obligations and other retirement plans
+    9.6.3 Defined benefit plan obligations and other retirement plans
   </p>
 
   

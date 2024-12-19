@@ -191,8 +191,7 @@ const EconomicTrack = ({ contentSize, dashboardData }) => {
               <GiPublicSpeaker style={{ fontSize: "100px" }} />
             </div>
             <div className="text-xl font-bold my-4">
-              <span className="">Coming </span>
-              <span className="">Soon !</span>
+              <span className="">Loading... </span>
             </div>
           </div>
         )}

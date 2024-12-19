@@ -51,7 +51,7 @@ const Section18=({section12_3_4Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterConsumedByBusinessOperation = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Units,
                 };
               } else {
@@ -91,7 +91,7 @@ const Section18=({section12_3_4Ref,data})=>{
               if (val.Total !== undefined) {
               } else {
                 acc.push({
-                 "Total water Consumption": val.total_water_consumption.toFixed(2),
+                 "Total water Consumption": val.total_water_consumption,
           'Water consumption from areas with water stress': val.water_consumption_from_areas_with_water_stress,
           
           "Unit": val.Unit
@@ -125,7 +125,7 @@ const Section18=({section12_3_4Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterConsumedByLocation = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Unit,
                 };
               } else {
@@ -166,7 +166,7 @@ const Section18=({section12_3_4Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterConsumedBySource = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Units,
                 };
               } else {
@@ -208,7 +208,7 @@ const Section18=({section12_3_4Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterConsumedByStressArea = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Units,
                 };
               } else {

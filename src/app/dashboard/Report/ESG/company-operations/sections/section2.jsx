@@ -28,7 +28,7 @@ const Section2 = ({
   const content3 = useSelector((state) => state.screen2Slice.entities_included);
   const loadContent = () => {
     dispatch(
-      setBusinessRelation(
+      setEntitiesInclude(
         `<p>This report includes sustainability performance data from all entities under ${
           orgName ? orgName : "[Company Name]"
         } operational control.</p>`
@@ -38,7 +38,7 @@ const Section2 = ({
 
   const loadContent2 = () => {
     dispatch(
-      setEntitiesInclude(
+      setBusinessRelation(
         `<p>
         ${
           orgName ? orgName : "[Company Name]"
@@ -49,6 +49,11 @@ const Section2 = ({
     );
   };
   const config = {
+    enter: "BR", // Or customize behavior on Enter key
+  cleanHTML: true,
+    enablePasteHTMLFilter: false, 
+    askBeforePasteHTML: false, 
+    askBeforePasteFromWord: false,
     style: {
       fontSize: "14px",
       color: "#667085",
@@ -93,10 +98,10 @@ const Section2 = ({
   };
 
   const handleEditorChange = (value) => {
-    dispatch(setBusinessRelation(value));
+    dispatch(setEntitiesInclude(value));
   };
   const handleChange = (value) => {
-    dispatch(setEntitiesInclude(value));
+    dispatch(setBusinessRelation(value));
   };
   return (
     <>
@@ -129,7 +134,7 @@ const Section2 = ({
         <div className="mb-4">
           <JoditEditor
             // ref={editor}
-            value={content3}
+            value={content2}
             config={config}
             tabIndex={1}
             onBlur={handleChange}
@@ -224,7 +229,7 @@ const Section2 = ({
         <div className="mb-4">
           <JoditEditor
             // ref={editor}
-            value={content2}
+            value={content3}
             config={config}
             tabIndex={1}
             onBlur={handleEditorChange}

@@ -98,12 +98,12 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
     LoaderOpen();
     const data = {
       company_economic_performance_statement:
-        company_economic_performance_statement,
-      financial_assistance_from_government:
-        financial_assistance_from_government,
+      {"page":"screen_eleven","label":"11. Economic Performance","subLabel":"Add statement about company’s economic performance","type":"textarea","content":company_economic_performance_statement,"field":"company_economic_performance_statement","isSkipped":false},
       introduction_to_economic_value_creation:
-        introduction_to_economic_value_creation,
-    };
+      {"page":"screen_eleven","label":"11.1.2 Economic Value Creation","subLabel":"Add introduction for company’s economic value creation","type":"textarea","content":introduction_to_economic_value_creation,"field":"introduction_to_economic_value_creation","isSkipped":false},
+      financial_assistance_from_government:
+      {"page":"screen_eleven","label":"11.1.3 Financial Assistance Received from Government","subLabel":"Add introduction about financial assistance received from government","type":"textarea","content":financial_assistance_from_government,"field":"financial_assistance_from_government","isSkipped":false},
+         };
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
     try {
@@ -170,9 +170,10 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
         console.error("API response data11", response.data);
         setData(response.data)
         dispatch(setgetdata(response.data));
-      dispatch(setCompanyeconomic(response.data.company_economic_performance_statement));
-      dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation));
-      dispatch(setFinancialassistanc(response.data.financial_assistance_from_government));
+        dispatch(setCompanyeconomic(response.data.company_economic_performance_statement?.content || ""));
+        dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation?.content || ""));
+        dispatch(setFinancialassistanc(response.data.financial_assistance_from_government?.content || ""));
+        
       }
 
       LoaderClose();
@@ -476,7 +477,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_6_1Ref, "section11_6_1")}
             >
-              11.6.1. Training on anti-corruption
+              11.6.1. Management of Material Topic
             </p>
           </div>
         </div>

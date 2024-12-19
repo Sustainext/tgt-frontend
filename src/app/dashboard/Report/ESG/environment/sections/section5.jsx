@@ -23,7 +23,8 @@ const Section5=({section12_1_3Ref,data})=>{
         "Category",
         "Sub Category",
         "Activity",
-        "Value"
+        "Emission (tCO2e)",
+        // "Value 2"
     ]
     return (
         <>
@@ -55,7 +56,7 @@ const Section5=({section12_1_3Ref,data})=>{
             Scope 2
             </p>
             <div className="shadow-md rounded-md mb-4">
-<ScopeTable columns={col2} data={data["305_123_collect"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-2"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-2"]:"":""}/>
+<ScopeTable columns={col2} data={data["305_123_collect"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-2"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-2"].length>0?data["305_123_collect"]["gri-environment-emissions-301-a-scope-2"]:[]:[]:[]}/>
 </div>
            
 </div>

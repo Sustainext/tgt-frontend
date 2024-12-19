@@ -12,43 +12,30 @@ const nextConfig = {
     NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: "16",
   },
 
-
   images: {
-    domains: ["udm-staging-be.sustainext.ai","sustainextstorage1.blob.core.windows.net"],
+    domains: [
+      "udm-staging-be.sustainext.ai",
+      "sustainextstorage1.blob.core.windows.net",
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {
-
     ignoreBuildErrors: true,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Handling build errors
     config.plugins.push(
       new webpack.DefinePlugin({
         "process.env.IGNORE_BUILD_ERRORS": JSON.stringify("true"),
       })
     );
- 
+
     return config;
   },
   distDir: "custom_build",
   experimental: {
     missingSuspenseWithCSRBailout: false,
-  },
-  async headers() {
-    return [
-      {
-        source: "/(.*)", // Match all routes
-        headers: [
-          {
-            key: "X-Frame-Options",
-            value: "DENY", // or 'SAMEORIGIN'
-          },
-        ],
-      },
-    ];
   },
 };
 

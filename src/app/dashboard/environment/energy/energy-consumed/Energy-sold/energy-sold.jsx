@@ -1,24 +1,24 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import dateWidget from '../../../../../shared/widgets/Input/dateWidget';
-import selectWidget from '../../../../../shared/widgets/Select/selectWidget';
-import inputWidget from '../../../../../shared/widgets/Input/inputWidget';
-import { GlobalState } from '../../../../../../Context/page';
-import CustomFileUploadWidget from '../../../../../shared/widgets/CustomFileUploadWidget';
-import AssignToWidget from '../../../../../shared/widgets/assignToWidget';
-import CustomSelectInputWidget from '../../../../../shared/widgets/CustomSelectInputWidget';
-import RemoveWidget from '../../../../../shared/widgets/RemoveWidget';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
+import dateWidget from "../../../../../shared/widgets/Input/dateWidget";
+import selectWidget from "../../../../../shared/widgets/Select/selectWidget";
+import inputWidget from "../../../../../shared/widgets/Input/inputWidget";
+import { GlobalState } from "../../../../../../Context/page";
+import CustomFileUploadWidget from "../../../../../shared/widgets/CustomFileUploadWidget";
+import AssignToWidget from "../../../../../shared/widgets/assignToWidget";
+import CustomSelectInputWidget from "../../../../../shared/widgets/CustomSelectInputWidget";
+import RemoveWidget from "../../../../../shared/widgets/RemoveWidget";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
-import selectWidget3 from '../../../../../shared/widgets/Select/selectWidget3';
-import inputnumberWidget from "../../../../../shared/widgets/Input/inputnumberWidget"
+import { Oval } from "react-loader-spinner";
+import selectWidget3 from "../../../../../shared/widgets/Select/selectWidget3";
+import inputnumberWidget from "../../../../../shared/widgets/Input/inputnumberWidget";
 import axiosInstance from "../../../../../utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget,
@@ -32,9 +32,9 @@ const widgets = {
   inputnumberWidget: inputnumberWidget,
 };
 
-const view_path = 'gri-environment-energy-302-1d-energy_sold'
-const client_id = 1
-const user_id = 1
+const view_path = "gri-environment-energy-302-1d-energy_sold";
+const client_id = 1;
+const user_id = 1;
 
 // const schema = {
 //   type: 'array',
@@ -103,108 +103,137 @@ const user_id = 1
 
 const uiSchema = {
   items: {
-    'ui:order': [
-      'EnergyType', 'Source', 'Typeofentity', 'Nameofentity', 'Renewable','Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
+    "ui:order": [
+      "EnergyType",
+      "Source",
+      "Typeofentity",
+      "Nameofentity",
+      "Renewable",
+      "Quantity",
+      "Unit",
+      "AssignTo",
+      "FileUpload",
+      "Remove",
     ],
     EnergyType: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
         label: false,
         // Include tooltiptext in uiSchema
       },
-
-
     },
     Source: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-
     },
     Typeofentity: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-
     },
     Nameofentity: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false
+      "ui:widget": "inputWidget",
+      "ui:options": {
+        label: false,
       },
     },
     Renewable: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-
     },
-   Quantity: {
-      'ui:widget': 'inputnumberWidget',
-      'ui:inputtype':'number',
-      'ui:options': {
+    Quantity: {
+      "ui:widget": "inputnumberWidget",
+      "ui:inputtype": "number",
+      "ui:options": {
         label: false,
       },
     },
 
     Unit: {
-      'ui:widget': 'selectWidget3',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget3",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
-      'ui:options': {
-        label: false
+      "ui:options": {
+        label: false,
       },
     },
     FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "FileUploadWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false
+      "ui:options": {
+        label: false,
       },
     },
-    classNames: 'fieldset',
-      'ui:options': {
+    classNames: "fieldset",
+    "ui:options": {
       orderable: false,
       addable: false,
       removable: false,
-      layout: 'horizontal',
-    }
-  }
+      layout: "horizontal",
+    },
+  },
 };
-
-const Energysold = ({location, year, month}) => {
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.EnergyType) {
+      rowErrors.EnergyType = "Energy Type is required";
+    }
+    if (!row.Source) {
+      rowErrors.Source = "Source is required";
+    }
+    if (!row.Typeofentity) {
+      rowErrors.Typeofentity = "Type of entity is required";
+    }
+    if (!row.Nameofentity) {
+      rowErrors.Nameofentity = "Name of entity is required";
+    }
+    if (!row.Renewable) {
+      rowErrors.Renewable = "Renewable/Non-renewable is required";
+    }
+    if (!row.Quantity) {
+      rowErrors.Quantity = "Quantity is required";
+    }
+    if (!row.Unit) {
+      rowErrors.Unit = "Unit is required";
+    }
+    return rowErrors;
+  });
+};
+const Energysold = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const [validationErrors, setValidationErrors] = useState([]);
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
 
   const updateFormData = async () => {
     LoaderOpen();
@@ -289,24 +318,44 @@ const Energysold = ({location, year, month}) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  }, [location, year, month]);
+
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => ({
       ...item, // Ensure each item retains its structure
     }));
     setFormData(newData); // Update the formData with new values
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
+  };
+
+  const renderError = (rowIndex, fieldName) => {
+    const rowErrors = validationErrors[rowIndex] || {};
+    return rowErrors[fieldName] ? (
+      <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div>
+    ) : null;
   };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-  
   };
- 
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
@@ -316,13 +365,11 @@ const Energysold = ({location, year, month}) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
- 
   };
-
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"
@@ -331,17 +378,52 @@ const Energysold = ({location, year, month}) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
+            formContext={{ validationErrors }}
             widgets={{
-              ...widgets,
+              inputWidget: (props) => (
+                <>
+                  <inputWidget {...props} />
+                  {renderError(
+                    parseInt(props.id.split("_")[1], 10),
+                    props.name
+                  )}
+                </>
+              ),
+              selectWidget: (props) => (
+                <>
+                  <selectWidget {...props} />
+                  {renderError(
+                    parseInt(props.id.split("_")[1], 10),
+                    props.name
+                  )}
+                </>
+              ),
+              inputnumberWidget: (props) => (
+                <>
+                  <inputnumberWidget {...props} />
+                  {renderError(
+                    parseInt(props.id.split("_")[1], 10),
+                    props.name
+                  )}
+                </>
+              ),
+              selectWidget3: (props) => (
+                <>
+                  <selectWidget3 {...props} />
+                  {renderError(
+                    parseInt(props.id.split("_")[1], 10),
+                    props.name
+                  )}
+                </>
+              ),
 
               RemoveWidget: (props) => {
-                const match = props.id.match(/^root_(\d+)/);
-                const index = match ? parseInt(match[1], 10) : null;
-    
+                // Assuming the widget framework passes a unique ID that includes the index
+                // Make sure this ID fetching logic is correct
                 return (
                   <RemoveWidget
                     {...props}
-                    index={index}
+                    index={props.id.split("_")[1]} // Pass the index
                     onRemove={handleRemove}
                   />
                 );
@@ -349,10 +431,11 @@ const Energysold = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec3"
+                  scopes="ec6"
                   setFormData={updateFormDatanew}
                 />
               ),
+              ...widgets,
             }}
           ></Form>
         </div>
@@ -394,6 +477,4 @@ const Energysold = ({location, year, month}) => {
   );
 };
 
-
 export default Energysold;
-

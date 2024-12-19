@@ -18,10 +18,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
+import SelectdisableWidget from "../../../../shared/widgets/Select/selectdisableWidget";
+import InputdiableWidget from "../../../../shared/widgets/Input/inputdisableWidget"
 const widgets = {
-  inputWidget: inputWidget,
+  InputdiableWidget: InputdiableWidget,
   dateWidget: dateWidget,
-  selectWidget: selectWidget,
+  SelectdisableWidget: SelectdisableWidget,
+  selectWidget:selectWidget,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
@@ -32,61 +35,61 @@ const view_path = "gri-environment-water-303-4d-substances_of_concern";
 const client_id = 1;
 const user_id = 1;
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
-//         Discharge: {
-//         type: "string",
-//         title: "Do you discharge any substances of concern",
-//         enum: ['Yes', 'No'],
-//         tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
-//         display:"none",
-//       },
-//       Substanceconcern: {
-//         type: "string",
-//         title: "Substance of concern",
-//         tooltiptext: "Mention the substances of concern for which discharges are treated.In the context of GRI Standard, substances of concern are those that cause irreversible damage to the waterbody,ecosystem, or human health. For example: chemicals, pollutants, heavy metals, contaminants or any toxic substances.",
-//         display:"block",
-//       },
-//       Priority: {
-//         type: "string",
-//         title: "Method used to define priority",
-//         enum: ['international standard', 'authoritative list','others'],
-//         tooltiptext: "Indicate how does the company define the priority substances of concern",
-//         display:"block",
-//       },
-//       Noncompliance: {
-//         type: "string",
-//         title: "No of noncompliance incident",
-//         tooltiptext: "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
-//         display:"block",
-//       },
-//       Approach: {
-//         type: "string",
-//         title: "Approach for setting discharge limits for priority substances of concern",
-//         tooltiptext: "Provide a description of the approach used for setting discharge limits for priority substances of concern.",
-//         display:"block",
-//       },
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+        Discharge: {
+        type: "string",
+        title: "Do you discharge any substances of concern",
+        enum: ['Yes', 'No'],
+        tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
+        display:"none",
+      },
+      Substanceconcern: {
+        type: "string",
+        title: "Substance of concern",
+        tooltiptext: "Mention the substances of concern for which discharges are treated.In the context of GRI Standard, substances of concern are those that cause irreversible damage to the waterbody,ecosystem, or human health. For example: chemicals, pollutants, heavy metals, contaminants or any toxic substances.",
+        display:"block",
+      },
+      Priority: {
+        type: "string",
+        title: "Method used to define priority",
+        enum: ['international standard', 'authoritative list','Other (please specify)'],
+        tooltiptext: "Indicate how does the company define the priority substances of concern",
+        display:"block",
+      },
+      Noncompliance: {
+        type: "string",
+        title: "No. of non-compliance incidents",
+        tooltiptext: "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
+        display:"block",
+      },
+      Approach: {
+        type: "string",
+        title: "Approach for setting discharge limits for priority substances of concern",
+        tooltiptext: "Provide a description of the approach used for setting discharge limits for priority substances of concern.",
+        display:"block",
+      },
 
-//       AssignTo: {
-//         type: "string",
-//         title: "Assign To",
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//         title: "File Upload",
-//       },
-//       Remove: {
-//         type: "string",
-//         title: "Remove",
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+      AssignTo: {
+        type: "string",
+        title: "Assign To",
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+        title: "File Upload",
+      },
+      Remove: {
+        type: "string",
+        title: "Remove",
+      },
+      // Define other properties as needed
+    }
+  }
+};
 
 const uiSchema = {
   items: {
@@ -109,20 +112,20 @@ const uiSchema = {
       },
     },
     Substanceconcern: {
-      "ui:widget": "inputWidget",
+      "ui:widget": "InputdiableWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
       },
     },
     Priority: {
-      "ui:widget": "selectWidget",
+      "ui:widget": "SelectdisableWidget",
       "ui:options": {
         label: false,
       },
     },
     Noncompliance: {
-      "ui:widget": "inputWidget",
+      "ui:widget": "InputdiableWidget",
       "ui:inputtype": "number",
       "ui:horizontal": true,
       "ui:options": {
@@ -130,7 +133,7 @@ const uiSchema = {
       },
     },
     Approach: {
-      "ui:widget": "inputWidget",
+      "ui:widget": "InputdiableWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -165,12 +168,39 @@ const uiSchema = {
     },
   },
 };
-
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Discharge) {
+      rowErrors.Discharge = "substances of concern is required";
+    }
+    if (row.Discharge === "Yes") {
+   
+  
+    if (!row.Substanceconcern) {
+      rowErrors.Substanceconcern = "Substance of concern  is required";
+    }
+  
+    if (!row.Priority) {
+      rowErrors.Priority = "Method used to define priority is required";
+    }
+    if (!row.Noncompliance) {
+      rowErrors.Noncompliance = "No. of non-compliance incidents is required";
+    }
+    if (!row.Approach) {
+      rowErrors.Approach = "Approach for setting discharge is required";
+    }
+  }
+    return rowErrors;
+  });
+};
 const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [enabledRows, setEnabledRows] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const LoaderOpen = () => {
@@ -247,6 +277,10 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       const form_parent = response.data.form_data;
       setFormData(form_parent[0].data);
+      const initialEnabledRows = form_parent[0].data.map(
+        (item) => item.Discharge === "Yes"
+      );
+      setEnabledRows(initialEnabledRows);
     } catch (error) {
       console.error("API call failed:", error);
     } finally {
@@ -263,20 +297,50 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
       }
     }
   }, [selectedOrg, year, selectedCorp]);
+
+
   const handleChange = (e) => {
-    const newData = e.formData.map((item, index) => ({
-      ...item, // Ensure each item retains its structure
-    }));
-    setFormData(newData); // Update the formData with new values
+    const newData = e.formData.map((item, index) => {
+      const updatedItem = { ...item }; 
+
+      if (updatedItem.Discharge === "Yes") {
+        setEnabledRows((prev) => {
+          const newEnabledRows = [...prev];
+          newEnabledRows[index] = true; 
+          return newEnabledRows;
+        });
+      } else if (updatedItem.Discharge === "No") {
+        setEnabledRows((prev) => {
+          const newEnabledRows = [...prev];
+          newEnabledRows[index] = false; 
+          return newEnabledRows;
+        });
+      
+      }
+      return updatedItem;
+    });
+    setFormData(newData); 
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
+    setEnabledRows((prev) => [...prev, false]); 
   };
 
   const updateFormDatanew = (updatedData) => {
@@ -287,11 +351,14 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
+    setEnabledRows((prev) => prev.filter((_, i) => i !== index)); 
   };
-
+  useEffect(() => {
+    console.log("Enabled rows updated test", enabledRows);
+  }, [enabledRows]);
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"
@@ -300,9 +367,31 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
+            formContext={{enabledRows, validationErrors }}
             widgets={{
               ...widgets,
-
+              InputdiableWidget: (props) => {
+                const match = props.id.match(/^root_(\d+)/);
+                const index = match ? parseInt(match[1], 10) : null;
+                const isEnabled = index !== null ? enabledRows[index] : false; // Get the enable state for the row
+                return (
+                  <InputdiableWidget
+                    {...props}
+                    isEnabled={isEnabled} // Pass it as a prop if needed
+                  />
+                );
+              },
+  SelectdisableWidget: (props) => {
+                const match = props.id.match(/^root_(\d+)/);
+                const index = match ? parseInt(match[1], 10) : null;
+                const isEnabled = index !== null ? enabledRows[index] : false; // Get the enable state for the row
+                return (
+                  <SelectdisableWidget
+                    {...props}
+                    isEnabled={isEnabled} // Pass it as a prop if needed
+                  />
+                );
+              },
               RemoveWidget: (props) => {
                 const match = props.id.match(/^root_(\d+)/);
                 const index = match ? parseInt(match[1], 10) : null;

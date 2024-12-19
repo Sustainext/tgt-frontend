@@ -11,9 +11,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import GeneralWorkersEmployees from "../../../../../shared/widgets/Table/generalWorkersEmployees";
+import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiselectTableWidget"
 // Simple Custom Table Widget
 const widgets = {
-  TableWidget: GeneralWorkersEmployees,
+  TableWidget: MultiselectTableWidget,
 };
 
 const view_path = "gri-social-ohs-403-2a-process_for_hazard-new";
@@ -119,48 +120,56 @@ const uiSchema = {
         title: "Routine Hazard Identification & Risk Assessment",
         tooltip:
           "Specify the exact timeframe or schedule for routine hazard identification.",
+          layouttype:"select",
       },
       {
         key: "NonRoutineHazard",
         title: "Non-Routine Hazard Identification & Risk Assessment",
         tooltip:
           "What events or circumstances prompt you to conduct hazard identification and risk assessment outside of routine schedules? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
         key: "Processforhazard",
         title: "Process for hazard identification",
         tooltip:
           "Select the methods used to identify work-related hazards on both a routine and non-routine basis. (Select all that apply) ",
+          layouttype:"multiselect",
       },
       {
         key: "Hierarchycontrols",
         title: "Hierarchy of controls",
         tooltip:
-          "Select the methods used to identify. How do you prioritize and implement controls to address identified hazards? (Select all that apply)",
+          "How do you prioritize and implement controls to address identified hazards? (Select all that apply) ",
+          layouttype:"multiselect",
       },
       {
         key: "Legalguideline",
         title: "Legal or guideline basis",
         tooltip:
           "Are your hazard identification, risk assessment, and control processes based on any specific laws, regulations, or recognized standards/guidelines?",
+          layouttype:"select",
       },
       {
         key: "Listlegal",
         title: "List of legal requirements (if applicable)",
         tooltip:
           "List the specific laws or regulations your processes are based on, if applicable.",
+          layouttype:"input",
       },
       {
         key: "ListStandards",
         title: "List of Standards/Guidelines (if applicable)",
         tooltip:
           "List the specific laws or regulations your processes are based on, if applicable.",
+          layouttype:"input",
       },
       {
         key: "VulnerableWorkers",
         title: "Vulnerable Workers",
         tooltip:
-          "List the specific regulations, or recognized standards/guidelines your processes are based on, if applicable.",
+          "How do you ensure these processes are accessible for workers with language barriers or sensory impairments? (Select all that apply)",
+          layouttype:"multiselect",
       },
     ],
   },
@@ -169,9 +178,9 @@ const Screen1 = ({location, year}) => {
   const initialFormData = [
     {
       RoutineHazard: "",
-      NonRoutineHazard: "",
-      Processforhazard: "",
-      Hierarchycontrols: "",
+      NonRoutineHazard: [],
+      Processforhazard: [],
+      Hierarchycontrols: [],
       Legalguideline: "",
       Listlegal: "",
       ListStandards: "",

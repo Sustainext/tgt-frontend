@@ -20,6 +20,7 @@ import { Oval } from 'react-loader-spinner';
 import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
 import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget";
 import axiosInstance from "../../../../utils/axiosMiddleware";
+import TextareasectionWidgets from "../../../../shared/widgets/Textarea/TextareasectionWidgets"
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -30,6 +31,7 @@ const widgets = {
   RemoveWidget: RemoveWidget,
   selectWidget3: selectWidget3,
   inputnumberWidget: inputnumberWidget,
+  TextareasectionWidgets:TextareasectionWidgets,
 };
 
 const view_path = 'gri-environment-energy-302-5a-5b-reduction_in_energy_in_products_and_servies'
@@ -61,7 +63,7 @@ const schema = {
 
       Quantity: {
         type: "string",
-        title: "Quantity",
+        title: "Quantity of reduced energy requirement",
         tooltiptext: "Indicate the quantity of reduced energy requirement"
       },
       Unit: {
@@ -72,9 +74,14 @@ const schema = {
       },
       Baseyear: {
         type: "string",
-        title: "Base year",
+        title: "Base year/Baseline",
         enum: yearRange,
-        tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
+        tooltiptext: "Indicate the base year/baseline used for comparing energy saved before the intervention"
+      },
+      Rationalebaseyear: {
+        type: "string",
+        title: "Rationale for choosing base year",
+        tooltiptext: "Explain the rationale for choosing base year"
       },
 
       AssignTo: {
@@ -98,7 +105,7 @@ const uiSchema = {
   items: {
     classNames: 'fieldset',
     'ui:order': [
-      'ProductServices', 'Quantity', 'Unit', 'Baseyear','AssignTo', 'FileUpload', 'Remove'
+      'ProductServices', 'Quantity', 'Unit', 'Baseyear','Rationalebaseyear','AssignTo', 'FileUpload', 'Remove'
     ],
 
     ProductServices: {
@@ -127,7 +134,12 @@ const uiSchema = {
         label: false
       },
     },
-
+    Rationalebaseyear: {
+      'ui:widget': 'TextareasectionWidgets',
+      'ui:options': {
+        label: false
+      },
+    },
     AssignTo: {
       "ui:widget": "AssignTobutton",
       'ui:horizontal': true,
@@ -157,7 +169,29 @@ const uiSchema = {
   }
 };
 
-
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.ProductServices) {
+      rowErrors.ProductServices = "Product / Services is required";
+    }
+    if (!row.Quantity) {
+      rowErrors.Quantity = "Quantity of reduced energy requirement is required";
+    }
+  
+    if (!row.Unit) {
+      rowErrors.Unit = "Unit is required";
+    }
+    if (!row.Baseyear) {
+      rowErrors.Baseyear = "Base year/Baseline is required";
+    }
+    if (!row.Rationalebaseyear) {
+      rowErrors.Rationalebaseyear = "Rationale for choosing base year is required";
+    }
+ 
+    return rowErrors;
+  });
+};
 const Productsservices = ({location, year, month}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
@@ -165,7 +199,7 @@ const Productsservices = ({location, year, month}) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({})
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-
+  const [validationErrors, setValidationErrors] = useState([]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -290,7 +324,24 @@ const Productsservices = ({location, year, month}) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
+  };
+  
+
+  const renderError = (rowIndex, fieldName) => {
+    const rowErrors = validationErrors[rowIndex] || {};
+    return rowErrors[fieldName] ? <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div> : null;
   };
 
   const handleAddNew = () => {
@@ -317,29 +368,57 @@ const Productsservices = ({location, year, month}) => {
     <>
 
 
-        <div className={`overflow-auto custom-scrollbar flex`}>
+        <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
-          <div>
-         
-          </div>
+          
 
           <Form
-          className='flex'
             schema={schema}
             uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
+            formContext={{ validationErrors }}
             widgets={{
-              ...widgets,
+
+              inputWidget: (props) => (
+                <>
+                  <inputWidget {...props} />
+                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                </>
+              ),
+              selectWidget: (props) => (
+                <>
+                  <selectWidget {...props} />
+                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                </>
+              ),
+              TextareasectionWidgets: (props) => (
+                <>
+                  <TextareasectionWidgets {...props} />
+                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                </>
+              ),
+              inputnumberWidget: (props) => (
+                <>
+                  <inputnumberWidget {...props} />
+                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                </>
+              ),
+              selectWidget3: (props) => (
+                <>
+                  <selectWidget3 {...props} />
+                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                </>
+              ),
+
               RemoveWidget: (props) => {
-                const match = props.id.match(/^root_(\d+)/);
-                const index = match ? parseInt(match[1], 10) : null;
-    
+                // Assuming the widget framework passes a unique ID that includes the index
+                // Make sure this ID fetching logic is correct
                 return (
                   <RemoveWidget
                     {...props}
-                    index={index}
+                    index={props.id.split('_')[1]} // Pass the index
                     onRemove={handleRemove}
                   />
                 );
@@ -347,14 +426,15 @@ const Productsservices = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ps1"
+                  scopes="ec4"
                   setFormData={updateFormDatanew}
                 />
-              )
-
+              ),
+              ...widgets,
             }}
 
-          />
+          >
+          </Form>
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

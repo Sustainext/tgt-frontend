@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
-import axiosInstance from "@/app/utils/axiosMiddleware";
 import {
   fetchPreviousMonthData,
   fetchEmissionsData,
@@ -13,8 +12,9 @@ import {
   setYear,
   setMonth,
   setCountryCode,
-  setLocationsRedux,
   clearSelectedRows,
+  fetchLocations,
+  setValidationErrors,
 } from "@/lib/redux/features/emissionSlice";
 
 const monthMapping = {
@@ -50,21 +50,17 @@ const EmissionsHeader = ({
     (state) => state.emissions
   );
 
-  const [locations, setLocations] = useState([]);
+  const {
+    data: locations,
+    status: locationsStatus,
+    error: locationsError,
+  } = useSelector((state) => state.emissions.locations);
 
   useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await axiosInstance.get("/sustainapp/get_location");
-        setLocations(response.data);
-        setLocationsRedux(response.data);
-      } catch (error) {
-        console.error("Error fetching locations:", error);
-      }
-    };
-
-    fetchLocations();
-  }, []);
+    if (locationsStatus === "idle") {
+      dispatch(fetchLocations());
+    }
+  }, [locationsStatus, dispatch]);
 
   useEffect(() => {
     if (location && year) {
@@ -72,8 +68,10 @@ const EmissionsHeader = ({
       dispatch(fetchPreviousMonthData({ location, year, month }));
       dispatch(fetchAssignedTasks({ location, year, month }));
       dispatch(fetchApprovedTasks({ location, year, month }));
+      dispatch(fetchLocations());
       dispatch(clearSelectedRows());
     }
+    dispatch(setValidationErrors({}));
   }, [location, year, month, dispatch]);
 
   const handleChange = (event) => {
@@ -99,6 +97,20 @@ const EmissionsHeader = ({
     }
   };
 
+  const getLocationSelectorMessage = (status, error = null) => {
+    switch (status) {
+      case "loading":
+        return "Loading locations...";
+      case "failed":
+        return error?.message || "Failed to load locations";
+      case "succeeded":
+        return "Select location";
+      case "idle":
+      default:
+        return "Select location";
+    }
+  };
+
   return (
     <>
       <div className="ml-2 mb-5">
@@ -106,12 +118,14 @@ const EmissionsHeader = ({
           <div className="relative">
             <select
               name="location"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={location}
               onChange={handleChange}
             >
-              <option value="">Select location</option>
-              {locations.map((loc, index) => (
+              <option value="">
+                {getLocationSelectorMessage(locationsStatus, locationsError)}
+              </option>
+              {locations?.map((loc, index) => (
                 <option key={index} value={loc.id}>
                   {loc.name}
                 </option>
@@ -135,7 +149,7 @@ const EmissionsHeader = ({
           <div className="ml-3 relative">
             <select
               name="year"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={year}
               onChange={handleChange}
             >

@@ -15,15 +15,22 @@ import {
   BsFileEarmarkWord,
   BsDownload,
 } from "react-icons/bs";
+import { ImFileExcel } from "react-icons/im";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
- 
+
 import axiosInstance, { del } from "@/app/utils/axiosMiddleware";
- 
-const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpen,setIsMenuOpen }) => {
+
+const TableWithPagination = ({
+  data,
+  defaultItemsPerPage,
+  fetchReoprts,
+  isMenuOpen,
+  setIsMenuOpen,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
   const [totalPages, setTotalPages] = useState(0);
@@ -36,17 +43,21 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
   const [isOpen, setIsOpen] = useState(null);
   const [reportid, setReportid] = useState();
   const [reporttepname, setReportTepname] = useState();
+  const [isCIDownloading, setIsCIDownloading] = useState(false);
+  const [isCIXLDownloading, setIsCIXLDownloading] = useState(false);
   const router = useRouter();
- 
+
   const ActionMenu = ({ item }) => {
-    const isGRIReport = item.report_type === "GRI Report: In accordance With" || item.report_type === "GRI Report: With Reference to";
+    const isGRIReport =
+      item.report_type === "GRI Report: In accordance With" ||
+      item.report_type === "GRI Report: With Reference to";
     return (
       <div className="absolute bg-white shadow-lg rounded-lg py-2 mt-5 w-[211px] z-10 right-8">
         <button
           className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
           onClick={() => {
             if (isGRIReport) {
-              handleDownloadESGpdf(item.id,item.name)
+              handleDownloadESGpdf(item.id, item.name, false);
             } else {
               handleDownloadpdf(item.id, item.name);
             }
@@ -62,13 +73,15 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               strokeWidthSecondary={2}
             />
           ) : (
-            <BsFileEarmarkPdf className="mr-2" />
+            <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
           )}
           Download Report PDF
         </button>
- 
+
         <button
-          className={`flex items-center p-2 w-full text-left   ${isGRIReport ? 'text-[#d1d5db]' : 'text-[#344054] gradient-sky-blue'}`}
+          className={`flex items-center p-2 w-full text-left   ${
+            isGRIReport ? "text-[#d1d5db]" : "text-[#344054] gradient-sky-blue"
+          }`}
           onClick={() => {
             if (isGRIReport) {
               // handleESGDownloaddocx()
@@ -87,26 +100,64 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               strokeWidthSecondary={2}
             />
           ) : (
-            <BsFileEarmarkWord className="mr-2" />
+            <BsFileEarmarkWord className="mr-2 w-4 h-4" />
           )}
           Download Report Word
         </button>
- 
+
         {/* Conditional Rendering for Additional GRI Options */}
         {isGRIReport && (
           <>
-            <button className="flex items-center p-2 w-full text-left h text-[#d1d5db]">
-              <BsDownload className="mr-2 text-[#d1d5db]" /> Download Content Index
+            <button
+              className={
+                "flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"
+              }
+              onClick={() => handleDownloadESGpdf(item.id, item.name, true)}
+            >
+              {isCIDownloading ? (
+                <Oval
+                  height={20}
+                  width={20}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              ) : (
+                <BsFileEarmarkPdf className="mr-2 text-[#344054] w-4 h-4" />
+              )}
+              Download Content Index PDF
+            </button>
+            <button
+              className={
+                "flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"
+              }
+              onClick={() => handleDownloadExcel(item.id, item.name)}
+            >
+              {isCIXLDownloading ? (
+                <Oval
+                  height={20}
+                  width={20}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              ) : (
+                <ImFileExcel className="mr-2 text-[#344054] w-4 h-4" />
+              )}
+              Download Content Index Excel
             </button>
             <button
               onClick={() => console.log("Notify GRI")}
               className="flex items-center p-2 w-full text-left  text-[#d1d5db]"
             >
-              <MdOutlineEmail className="mr-2 text-[#d1d5db]" /> Notify GRI
+              <MdOutlineEmail className="mr-2 text-[#d1d5db] w-4 h-4" /> Notify
+              GRI
             </button>
           </>
         )}
- 
+
         <button
           className={`flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]`}
           onClick={() => {
@@ -117,7 +168,8 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                 item.start_date,
                 item.end_date,
                 item.organization_country,
-                item.name
+                item.name,
+                item.created_at
               );
             } else {
               handleSetdata(
@@ -133,25 +185,39 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
             }
           }}
         >
-          <AiOutlineEdit className="mr-2" /> Edit Report
+          <AiOutlineEdit className="mr-2 w-4 h-4" /> Edit Report
         </button>
- 
+
         <button
           className="flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]"
           onClick={() =>
             openModal(item.id, item.name, item.report_type, item.start_date)
           }
         >
-          <MdDeleteOutline className="mr-2" /> Delete Report
+          <MdDeleteOutline className="mr-2 w-4 h-4" /> Delete Report
         </button>
       </div>
     );
   };
- 
+
   const toggleMenu = (itemId) => {
-    setIsMenuOpen(isMenuOpen === itemId ? null : itemId);
+    setIsMenuOpen(itemId === isMenuOpen ? null : itemId);
   };
- 
+
+  let timeoutId;
+
+  const handleMouseEnter = (itemId) => {
+    clearTimeout(timeoutId); // Clear any pending timeout
+    setIsMenuOpen(itemId); // Open the menu immediately
+  };
+
+  const handleMouseLeave = () => {
+    // Add a delay before hiding the menu
+    timeoutId = setTimeout(() => {
+      setIsMenuOpen(null);
+    }, 500); // Adjust delay as needed
+  };
+
   const togglePopup = (itemId, itemName) => {
     setIsOpen((currentOpenPopupId) =>
       currentOpenPopupId === itemId ? null : itemId
@@ -173,9 +239,9 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
   const closeModal = () => {
     setIsModalOpen(false);
   };
- 
+
   // Function to handle the download
- 
+
   const handleSetdata = (
     id,
     organization_name,
@@ -196,7 +262,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       report_by: report_by,
     };
     window.localStorage.setItem("reportid", id);
- 
+
     window.localStorage.setItem("reportstartdate", startdate);
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
@@ -212,17 +278,18 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     }
     // sessionStorage.setItem('reportData',newdata);
     router.push("/dashboard/Report/GHG/Ghgtemplates");
- 
+
     window.localStorage.setItem("reportname", name);
   };
- 
+
   const handleSetESGdata = (
     id,
     organization_name,
     startdate,
     enddate,
     organization_country,
-    name
+    name,
+    created_at
   ) => {
     const newdata = {
       id: id,
@@ -237,38 +304,40 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     window.localStorage.setItem("reportstartdate", startdate);
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
+    window.localStorage.setItem("reportCreatedOn", created_at);
+
     // sessionStorage.setItem('reportData',newdata);
     router.push("/dashboard/Report/ESG");
- 
+
     window.localStorage.setItem("reportname", name);
   };
- 
+
   useEffect(() => {
     setTotalPages(Math.ceil(data.length / itemsPerPage));
   }, [data.length, itemsPerPage]);
- 
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
- 
+
   // Change items per page
   const onItemsPerPageChange = (event) => {
     setItemsPerPage(parseInt(event.target.value, 10));
     setCurrentPage(1); // Reset to first page
   };
- 
+
   const firstItemIndex = (currentPage - 1) * itemsPerPage + 1;
   const lastItemIndex = Math.min(currentPage * itemsPerPage, data.length);
- 
+
   const handleDelete = async () => {
     LoaderOpen();
     const reportId = dataDelete.id;
- 
+
     await axiosInstance
       .delete(`/sustainapp/ghgreport/${reportId}`)
       .then((response) => {
         if (response.status === 204) {
           const { name, report_type, start_date } = dataDelete;
           const year = new Date(start_date).getFullYear();
- 
+
           toast.error(
             <div>
               <div className="mb-2 flex">
@@ -298,7 +367,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               icon: false,
             }
           );
- 
+
           LoaderClose();
           fetchReoprts();
           closeModal();
@@ -323,7 +392,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     const isAsc = sort.column === column && sort.direction === "asc";
     setSort({ column, direction: isAsc ? "desc" : "asc" });
   };
- 
+
   // Sorting data
   // Sorting data
   const sortedData = useMemo(() => {
@@ -344,7 +413,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       return data;
     }
   }, [data, sort]);
- 
+
   const currentItems = sortedData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -361,31 +430,46 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       Authorization: "Bearer " + token,
     },
   };
- 
-  const handleDownloadESGpdf = async (id,name) => {
-    setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
+
+  const handleDownloadESGpdf = async (id, name, contentIndex) => {
+    if (contentIndex) {
+      setIsCIDownloading(true);
+    } else {
+      setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
+    }
+
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?download=true`,
+        `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?content_index=${contentIndex}&download=true`,
         axiosConfig
       );
- 
+
       if (!response.ok) {
-        setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+        if (contentIndex) {
+          setIsCIDownloading(false);
+        } else {
+          setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+        }
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
-       
       }
- 
+
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
- 
+
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", `${name}.pdf`);
+      link.setAttribute(
+        "download",
+        `${name} ${contentIndex ? " Content Index" : ""}.pdf`
+      );
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+      if (contentIndex) {
+        setIsCIDownloading(false);
+      } else {
+        setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+      }
       setIsMenuOpen(false);
     } catch (error) {
       console.error("Error downloading the file:", error);
@@ -401,11 +485,50 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       });
     }
   };
- 
+  const handleDownloadExcel = async (id, name) => {
+    setIsCIXLDownloading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/esg_report/content_index_excel/${id}/?download=true`,
+        axiosConfig
+      );
+
+      if (!response.ok) {
+        setIsCIXLDownloading(false);
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${name} Content Index.xlsx`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setIsCIXLDownloading(false);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+      toast.error("Error downloading the file", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
   const handleDownloadpdf = async (id, name) => {
     // Set loading to true for the specific item
     setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
- 
+
     try {
       const response = await fetch(
         `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${id}/?download=true`,
@@ -413,7 +536,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       );
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
- 
+
       const link = document.createElement("a");
       link.href = downloadUrl;
       link.setAttribute("download", `${name}.pdf`); // Setting the file name dynamically
@@ -430,16 +553,16 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
   };
   const handleDownloaddocx = async (id, name) => {
     setLoadingById((prevState) => ({ ...prevState, [id]: true }));
- 
+
     try {
       const response = await fetch(
         `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${id}/`,
         axiosConfig
       );
- 
+
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
- 
+
       const link = document.createElement("a");
       link.href = downloadUrl;
       link.setAttribute("download", `${name}.docx`); // Setting the file name dynamically
@@ -454,19 +577,19 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       setIsMenuOpen(false);
     }
   };
- 
+
   const handleESGDownloaddocx = async () => {
     setLoadingById((prevState) => ({ ...prevState, [reportid]: true }));
- 
+
     try {
       const response = await fetch(
         `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${reportid}/`,
         axiosConfig
       );
- 
+
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
- 
+
       const link = document.createElement("a");
       link.href = downloadUrl;
       link.setAttribute("download", `${reporttepname}.docx`); // Setting the file name dynamically
@@ -481,7 +604,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       setIsOpen(null);
     }
   };
- 
+
   return (
     <>
       <div>
@@ -553,7 +676,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               </th>
             </tr>
           </thead>
- 
+
           <tbody className="text-gray-600 text-sm font-light">
             {data.length > 0 &&
               currentItems.map((item, index) => (
@@ -573,7 +696,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.created_by}
                   </td>
- 
+
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.last_report_date}
                   </td>
@@ -582,16 +705,24 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                   </td>
                   <td className="py-3 px-6 relative text-center flex justify-center">
                     <MdMoreVert
-                      onClick={() => toggleMenu(item.id)}
                       className="cursor-pointer"
+                      onMouseEnter={() => handleMouseEnter(item.id)}
+                      onMouseLeave={handleMouseLeave}
                     />
-                    {isMenuOpen === item.id && <ActionMenu item={item} />}
+                    {isMenuOpen === item.id && (
+                      <div
+                        onMouseEnter={() => handleMouseEnter(item.id)} // Ensure menu stays open
+                        onMouseLeave={handleMouseLeave} // Allow menu to close
+                      >
+                        <ActionMenu item={item} />
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}
           </tbody>
         </table>
- 
+
         <div className="justify-end items-center gap-2 flex w-[100%] mt-4">
           <div>
             <label className="text-black text-opacity-60 text-xs font-normal leading-[15px] text-[15px]">
@@ -609,12 +740,12 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               ))}
             </select>
           </div>
- 
+
           <div className="ml-4 flex mr-1">
             <div>
               <span className="text-black  text-xs font-normal leading-[15px] text-[15px]">{`${firstItemIndex}-${lastItemIndex} of ${data.length}`}</span>
             </div>
- 
+
             <div className="ml-4 mt-1">
               <button
                 onClick={() => paginate(Math.max(1, currentPage - 1))}
@@ -680,7 +811,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
  
  
     </div>  */}
- 
+
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6  rounded-lg shadow-lg ml-40 w-[513px]">
@@ -701,7 +832,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                 irreversible. Are you sure you want to delete this report?
               </div>
             </div>
- 
+
             <div className="flex gap-5">
               <div className="w-[50%]">
                 <button
@@ -711,7 +842,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                   Cancel
                 </button>
               </div>
- 
+
               <div className="w-[50%]">
                 <button
                   className="px-4 py-2 border border-[#EF5350] w-full text-white bg-[#EF5350] font-bold rounded text-[12px]"
@@ -739,6 +870,5 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     </>
   );
 };
- 
+
 export default TableWithPagination;
- 

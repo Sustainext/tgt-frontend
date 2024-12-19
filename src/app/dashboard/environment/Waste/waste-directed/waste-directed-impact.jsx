@@ -1,23 +1,23 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import { GlobalState } from '../../../../../Context/page';
-import dateWidget from '../../../../shared/widgets/Input/dateWidget';
-import selectWidget from '../../../../shared/widgets/Select/selectWidget';
-import inputWidget from '../../../../shared/widgets/Input/inputWidget';
-import CustomFileUploadWidget from '../../../../shared/widgets/CustomFileUploadWidget';
-import AssignToWidget from '../../../../shared/widgets/assignToWidget';
-import CustomSelectInputWidget from '../../../../shared/widgets/CustomSelectInputWidget';
-import RemoveWidget from '../../../../shared/widgets/RemoveWidget';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
+import { GlobalState } from "../../../../../Context/page";
+import dateWidget from "../../../../shared/widgets/Input/dateWidget";
+import selectWidget from "../../../../shared/widgets/Select/selectWidget";
+import inputWidget from "../../../../shared/widgets/Input/inputWidget";
+import CustomFileUploadWidget from "../../../../shared/widgets/CustomFileUploadWidget";
+import AssignToWidget from "../../../../shared/widgets/assignToWidget";
+import CustomSelectInputWidget from "../../../../shared/widgets/CustomSelectInputWidget";
+import RemoveWidget from "../../../../shared/widgets/RemoveWidget";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
-import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import { Oval } from "react-loader-spinner";
+import selectWidget3 from "../../../../shared/widgets/Select/selectWidget3";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget,
@@ -30,54 +30,64 @@ const widgets = {
   selectWidget3: selectWidget3,
 };
 
-const view_path = 'gri-environment-waste-306-5a-5b-5c-5d-5e-waste_diverted_to_disposal'
-const client_id = 1
-const user_id = 1
+const view_path =
+  "gri-environment-waste-306-5a-5b-5c-5d-5e-waste_diverted_to_disposal";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
-        Wastecategory: {
+      Wastecategory: {
         type: "string",
         title: "Waste category",
-        enum: ['Hazardous', 'Non Hazardous'],
+        enum: ["Hazardous", "Non Hazardous"],
         tooltiptext: "Select the waste category from the given dropdown.",
-        display:"block",
+        display: "block",
       },
       WasteType: {
         type: "string",
         title: "Waste Type",
-        tooltiptext: "Please specify the type of waste. e.g. Paper waste, E-waste, chemical waste etc. ",
-        display:"block",
+        tooltiptext:
+          "Please specify the type of waste. e.g. Paper waste, E-waste, chemical waste etc. ",
+        display: "block",
       },
       Unit: {
         type: "string",
         title: "Unit",
-        enum: ['g', 'Kgs', 't (metric tons)', 'ton (US short ton)', 'lbs'],
+        enum: ["g", "Kgs", "t (metric tons)", "ton (US short ton)", "lbs"],
         tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-        display:"block",
+        display: "block",
       },
       Wastedisposed: {
         type: "string",
-        title: "Waste disposed (No.)",
-        display:"none",
-
+        title: "Waste Disposed",
+        tooltiptext: "Enter the amount of waste disposed.",
+        display: "block",
       },
       Methodofdisposal: {
         type: "string",
-        title: "Method of disposal",
-        enum: ['Inceneration (with energy recovery)', 'Inceneration (without energy recovery)', 'Landfilling','External Vendor','Other (please specify)'],
-        tooltiptext: "Disposal: Any operation which is not recovery, even where the operation has as a secondary consequence the recovery of energy Landfilling: Final depositing of solid waste at, below, or above ground level at engineered disposal sites Incineration: Controlled burning of waste at high temperatures",
-        display:"block",
+        title: "Method of Disposal",
+        enum: [
+          "Inceneration (with energy recovery)",
+          "Inceneration (without energy recovery)",
+          "Landfilling",
+          "External Vendor",
+          "Other (please specify)",
+        ],
+        tooltiptext:
+          "<p>Disposal: Any operation which is not recovery, even where the operation has as a secondary consequence the recovery of energy</p> <p>Landfilling: Final depositing of solid waste at, below, or above ground level at engineered disposal sites Incineration: Controlled burning of waste at high temperatures</p>",
+        display: "block",
       },
       Site: {
         type: "string",
         title: "Site",
-        enum: ['Onsite', 'Offsite'],
-        tooltiptext: "On-site: ‘Onsite’ means within the physical boundary  or administrative control of the reporting organization Off-site: ‘Offsite’ means outside the physical boundary \ or administrative control of the reporting organization",
-        display:"block",
+        enum: ["Onsite", "Offsite"],
+        tooltiptext:
+          "<p>On-site: ‘Onsite’ means within the physical boundary  or administrative control of the reporting organization Off-site: ‘Offsite’ means outside the physical boundary  or administrative control of the reporting organization</p>",
+        display: "block",
       },
       AssignTo: {
         type: "string",
@@ -92,90 +102,97 @@ const schema = {
         type: "string",
         title: "Remove",
       },
-    }
-  }
+    },
+  },
 };
 
 const uiSchema = {
-
   items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'Wastecategory', 'WasteType', 'Unit', 'Wastedisposed','Methodofdisposal','Site','AssignTo', 'FileUpload', 'Remove'
+    classNames: "fieldset",
+    "ui:order": [
+      "Wastecategory",
+      "WasteType",
+      "Unit",
+      "Wastedisposed",
+      "Methodofdisposal",
+      "Site",
+      "AssignTo",
+      "FileUpload",
+      "Remove",
     ],
     Wastecategory: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
         label: false,
       },
     },
     WasteType: {
-      'ui:widget': 'inputWidget',
-      'ui:options': {
-        label: false
+      "ui:widget": "inputWidget",
+      "ui:options": {
+        label: false,
       },
     },
     Unit: {
-      'ui:widget': 'selectWidget3',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget3",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Wastedisposed: {
-      'ui:widget': 'inputWidget',
-      'ui:inputtype':'number',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "inputWidget",
+      "ui:inputtype": "number",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
 
     Methodofdisposal: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Site: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "FileUploadWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false
+      "ui:options": {
+        label: false,
       },
     },
-      'ui:options': {
+    "ui:options": {
       orderable: false,
       addable: false,
       removable: false,
-      layout: 'horizontal',
-    }
-  }
+      layout: "horizontal",
+    },
+  },
 };
 
-const Wastedirectedimpact = ({location, year, month}) => {
+const Wastedirectedimpact = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -188,7 +205,6 @@ const Wastedirectedimpact = ({location, year, month}) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
 
   const updateFormData = async () => {
     LoaderOpen();
@@ -280,17 +296,15 @@ const Wastedirectedimpact = ({location, year, month}) => {
     }));
     setFormData(newData); // Update the formData with new values
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateFormData();
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   updateFormData();
+  // };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-  
   };
- 
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
@@ -300,13 +314,70 @@ const Wastedirectedimpact = ({location, year, month}) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
- 
   };
 
+  // Add validation state
+  const [validationErrors, setValidationErrors] = useState([]);
+
+  // Add validation function
+  const validateRows = (data) => {
+    return data.map((row) => {
+      const rowErrors = {};
+
+      if (!row.Wastecategory) {
+        rowErrors.Wastecategory = "Waste category is required";
+      }
+
+      if (!row.WasteType || row.WasteType.trim() === "") {
+        rowErrors.WasteType = "Waste type is required";
+      }
+
+      if (!row.Unit) {
+        rowErrors.Unit = "Unit is required";
+      }
+
+      if (!row.Wastedisposed || row.Wastedisposed.trim() === "") {
+        rowErrors.Wastedisposed = "Waste disposed amount is required";
+      }
+
+      if (!row.Methodofdisposal) {
+        rowErrors.Methodofdisposal = "Method of disposal is required";
+      }
+
+      if (!row.Site) {
+        rowErrors.Site = "Site is required";
+      }
+
+      return rowErrors;
+    });
+  };
+
+  // Add renderError helper
+  const renderError = (rowIndex, fieldName) => {
+    const rowErrors = validationErrors[rowIndex] || {};
+    return rowErrors[fieldName] ? (
+      <div className="text-red-500 text-[12px] mt-1">
+        {rowErrors[fieldName]}
+      </div>
+    ) : null;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      updateFormData();
+    }
+  };
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"
@@ -315,13 +386,14 @@ const Wastedirectedimpact = ({location, year, month}) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
+            formContext={{ validationErrors }}
             widgets={{
               ...widgets,
 
               RemoveWidget: (props) => {
                 const match = props.id.match(/^root_(\d+)/);
                 const index = match ? parseInt(match[1], 10) : null;
-    
+
                 return (
                   <RemoveWidget
                     {...props}
@@ -379,4 +451,3 @@ const Wastedirectedimpact = ({location, year, month}) => {
 };
 
 export default Wastedirectedimpact;
-

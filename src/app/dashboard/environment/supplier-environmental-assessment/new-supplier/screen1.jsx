@@ -13,6 +13,7 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import RichtextWidget from "../../../../shared/widgets/Economic/RichtextWidget";
+
 const widgets = {
   inputWidget: CommoninputWidget,
   inputWidget2: inputWidget2,
@@ -101,6 +102,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleChange = (e) => {
     setFormData(e.formData);
+    setValidationErrors([]); // Reset validation errors
   };
 
   const updateFormData = async () => {
@@ -184,19 +186,90 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   }, [selectedOrg, year, selectedCorp]);
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   updateFormData();
+  //   console.log("test form data", formData);
+  // };
+
+  const [validationErrors, setValidationErrors] = useState([]);
+
+  // Add validation function
+  const validateRows = (data) => {
+    return data.map((row) => {
+      const rowErrors = {};
+
+      if (!row.Q1 || row.Q1.trim() === "") {
+        rowErrors.Q1 = "This field is required";
+      } else if (
+        isNaN(Number(row.Q1)) ||
+        Number(row.Q1) <= 0 ||
+        !Number.isInteger(Number(row.Q1))
+      ) {
+        rowErrors.Q1 = "Please enter a positive whole number";
+      }
+
+      if (!row.Q2 || row.Q2.trim() === "") {
+        rowErrors.Q2 = "This field is required";
+      } else if (
+        isNaN(Number(row.Q2)) ||
+        Number(row.Q2) <= 0 ||
+        !Number.isInteger(Number(row.Q2))
+      ) {
+        rowErrors.Q2 = "Please enter a positive whole number";
+      }
+
+      if (!rowErrors.Q1 && !rowErrors.Q2 && Number(row.Q1) > Number(row.Q2)) {
+        rowErrors.Q1 = "Screened suppliers cannot exceed total suppliers";
+      }
+
+      return rowErrors;
+    });
+  };
+
+  // Add renderError helper
+  const renderError = (rowIndex, fieldName) => {
+    const rowErrors = validationErrors[rowIndex] || {};
+    return rowErrors[fieldName] ? (
+      <div className="text-red-500 text-[12px] mt-1">
+        {rowErrors[fieldName]}
+      </div>
+    ) : null;
+  };
+
+  // Update handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
-    console.log("test form data", formData);
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      // toast.error("Please fill in all required fields correctly", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      // });
+    }
   };
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Number of new suppliers that were screened using environmental criteria.
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Number of new suppliers that were screened using environmental
+              criteria.
               {/* <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html="Specify the total number of operations assessed for risks related to corruption."
@@ -236,6 +309,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

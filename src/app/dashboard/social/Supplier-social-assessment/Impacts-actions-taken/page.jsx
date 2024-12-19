@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -50,7 +50,7 @@ const Suppliersscreened = () => {
               <div className="flex">
                          <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                    Supplier Social Assessment 2016
+                  Supply Chain Labor Standards
                   </p>
                 </div>
               </div>
@@ -88,7 +88,7 @@ const Suppliersscreened = () => {
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            New suppliers that were screened using social criteria
+          Negative social impacts in the supply chain and actions taken		
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -104,20 +104,22 @@ const Suppliersscreened = () => {
                         </ReactTooltip> */}
           </h6>
         </div>
-        <div
-          className={`${
-            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
+       <div
+           className={`${
+            isOpen
+              ? "translate-x-[15%] block top-16"
+              : "translate-x-[120%] hidden top-16"
           }
-fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
+fixed right-[51px]  w-[360px] h-[92%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
-            data.map((program) => (
-              <>
+            data.map((program, index) => (
+              <div key={index}>
+                {/* Header */}
                 <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
-                  <div className="ml-2">{program.header}</div>
-
-                  <div className="ml-2 float-right">
+                  <div className="ml-2 h-[38px]">{program.header}</div>
+                  <div className="ml-2 float-right ">
                     <h5
                       className="text-[#727272] text-[17px] font-bold cursor-pointer"
                       onClick={toggleDrawerclose}
@@ -126,8 +128,23 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                     </h5>
                   </div>
                 </div>
-                <div> {program.data}</div>
-              </>
+
+                {/* Data Content */}
+                <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
+
+                {/* Footer (Learn more link) */}
+                <div className="pt-2 pb-4 ml-4">
+                  <a
+                    className="text-[14px] text-[#2196F3] pt-1 inline-flex"
+                    href={program.link}
+                    target="_blank"
+                  >
+                    Learn more <MdChevronRight className="text-lg pt-1" />
+                  </a>
+                </div>
+              </div>
             ))}
         </div>
       </div>

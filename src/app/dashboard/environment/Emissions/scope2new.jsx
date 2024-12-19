@@ -15,13 +15,24 @@ import CalculateSuccess from "./calculateSuccess";
 import {
   updateScopeData,
   updateScopeDataLocal,
+  setValidationErrors,
 } from "@/lib/redux/features/emissionSlice";
 import { debounce } from "lodash";
 import { toast } from "react-toastify";
+import { validateEmissionsData } from "./emissionValidation";
 
 const Scope2 = forwardRef(
   (
-    { location, year, month, successCallback, countryCode, setAccordionOpen },
+    {
+      location,
+      year,
+      month,
+      successCallback,
+      countryCode,
+      setAccordionOpen,
+      dataError,
+      showError,
+    },
     ref
   ) => {
     const dispatch = useDispatch();
@@ -54,12 +65,29 @@ const Scope2 = forwardRef(
 
     useImperativeHandle(ref, () => ({
       updateFormData: () => {
-        const filteredFormData = formData.filter(
-          (row) => !["assigned"].includes(row.Emission?.rowType)
-        );
+        // Filter and format the data
+        const formattedData = formData
+          .filter((row) => {
+            // Only filter out assigned rows
+            return !["assigned"].includes(row.Emission?.rowType);
+          })
+          .map((row) => {
+            // Only reorder approved rows to put Emission first
+            if (row.Emission?.rowType === "approved") {
+              const { id, Emission, ...rest } = row;
+              return {
+                Emission,
+                id,
+                ...rest,
+              };
+            }
+            // Return other rows as is
+            return row;
+          });
 
-        if (filteredFormData.length > 0) {
-          return updateFormData(filteredFormData);
+        // Only proceed with update if we have data
+        if (formattedData.length > 0) {
+          return updateFormData(formattedData);
         }
 
         return Promise.resolve();
@@ -69,13 +97,59 @@ const Scope2 = forwardRef(
     const LoaderOpen = () => setLoOpen(true);
     const LoaderClose = () => setLoOpen(false);
 
+    const validationErrors = useSelector(
+      (state) => state.emissions.validationErrors
+    );
+
+    // Update handleChange
     const handleChange = useCallback(
       (e) => {
+        // Update the form data
         dispatch(
           updateScopeDataLocal({ scope: 2, data: { data: e.formData } })
         );
+
+        // Get the current validation errors from Redux
+        const currentValidationErrors = validationErrors?.scope2?.fields || {};
+
+        // Only run validation if there are existing errors (meaning Calculate was clicked)
+        if (Object.keys(currentValidationErrors).length > 0) {
+          const validationResult = validateEmissionsData(
+            {
+              data: { data: e.formData },
+            },
+            "Scope 2"
+          );
+
+          if (validationResult.hasErrors) {
+            // Only keep validation errors for rows that previously had errors
+            const newValidationFields = {};
+            Object.keys(currentValidationErrors).forEach((rowIndex) => {
+              if (validationResult.fields[rowIndex]) {
+                newValidationFields[rowIndex] =
+                  validationResult.fields[rowIndex];
+              }
+            });
+
+            // Preserve other scopes' validation errors while updating scope2
+            dispatch(
+              setValidationErrors({
+                ...validationErrors,
+                scope2: {
+                  fields: newValidationFields,
+                  messages: validationResult.messages,
+                  emptyFields: validationResult.emptyFields,
+                },
+              })
+            );
+          } else {
+            // Only remove validation errors for this scope
+            const { scope2, ...otherScopeErrors } = validationErrors;
+            dispatch(setValidationErrors(otherScopeErrors));
+          }
+        }
       },
-      [dispatch]
+      [dispatch, validationErrors]
     );
 
     const handleAddNew = useCallback(() => {
@@ -114,7 +188,10 @@ const Scope2 = forwardRef(
     const handleRemoveRow = useCallback(
       async (index) => {
         const parsedIndex = parseInt(index, 10);
+        console.log("Removing row at index:", parsedIndex);
+
         const rowToRemove = formData[parsedIndex];
+        console.log("Row being removed:", rowToRemove);
 
         if (!rowToRemove) {
           console.error("Row not found");
@@ -122,6 +199,7 @@ const Scope2 = forwardRef(
         }
 
         const rowType = rowToRemove.Emission?.rowType;
+        console.log("Row type:", rowType);
 
         if (rowType === "assigned" || rowType === "approved") {
           toast.error("Cannot delete assigned or approved rows");
@@ -129,10 +207,70 @@ const Scope2 = forwardRef(
         }
 
         const updatedData = formData.filter((_, i) => i !== parsedIndex);
+        console.log("Updated data after removal:", updatedData);
 
         dispatch(
           updateScopeDataLocal({ scope: 2, data: { data: updatedData } })
         );
+
+        // Debug validation errors
+        const currentValidationErrors = validationErrors?.scope2?.fields || {};
+        console.log("Current validation errors:", currentValidationErrors);
+        console.log("Full validation state:", validationErrors);
+
+        if (Object.keys(currentValidationErrors).length > 0) {
+          const newValidationFields = {};
+
+          Object.entries(currentValidationErrors).forEach(
+            ([rowIdx, errors]) => {
+              const currentIndex = parseInt(rowIdx);
+              console.log(
+                "Processing row index:",
+                currentIndex,
+                "with errors:",
+                errors
+              );
+
+              if (currentIndex < parsedIndex) {
+                console.log(
+                  "Keeping errors for row before deleted row:",
+                  currentIndex
+                );
+                newValidationFields[currentIndex] = errors;
+              } else if (currentIndex > parsedIndex) {
+                console.log(
+                  "Shifting errors for row after deleted row:",
+                  currentIndex,
+                  "to",
+                  currentIndex - 1
+                );
+                newValidationFields[currentIndex - 1] = errors;
+              } else {
+                console.log("Skipping errors for deleted row:", currentIndex);
+              }
+            }
+          );
+
+          console.log(
+            "New validation fields after processing:",
+            newValidationFields
+          );
+
+          if (Object.keys(newValidationFields).length > 0) {
+            console.log("Dispatching updated validation errors");
+            dispatch(
+              setValidationErrors({
+                scope2: {
+                  ...validationErrors.scope2,
+                  fields: newValidationFields,
+                },
+              })
+            );
+          } else {
+            console.log("Clearing all validation errors");
+            dispatch(setValidationErrors({}));
+          }
+        }
 
         if (rowType === "calculated") {
           try {
@@ -148,7 +286,7 @@ const Scope2 = forwardRef(
           setAccordionOpen(false);
         }
       },
-      [formData, dispatch, setAccordionOpen]
+      [formData, dispatch, setAccordionOpen, validationErrors]
     );
 
     const updateFormData = useCallback(
@@ -170,10 +308,10 @@ const Scope2 = forwardRef(
       [dispatch, location, year, month, successCallback]
     );
 
-    const updateCache = useCallback((subcategory, activities) => {
+    const updateCache = useCallback((cacheKey, activities) => {
       setActivityCache((prevCache) => ({
         ...prevCache,
-        [subcategory]: activities,
+        [cacheKey]: activities,
       }));
     }, []);
 
@@ -350,13 +488,19 @@ const Scope2 = forwardRef(
             }}
           />
         </div>
-        <div>
+        <div className="flex justify-between items-center">
           <button
             className="mt-4 text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
             onClick={handleAddNew}
           >
             + Add new
           </button>
+          {/* {showError && (
+            <div className="text-xs text-red-500 mt-4 flex items-center">
+              <MdError />
+              <span>{dataError}</span>
+            </div>
+          )} */}
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

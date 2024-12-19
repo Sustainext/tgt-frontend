@@ -34,7 +34,7 @@ const Section21=({section9_6_2Ref,orgName,data})=>{
         <div id="section9_6_2" ref={section9_6_2Ref}>
 
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-9.6.2 Embedding Policy Commitment
+9.6.1 Embedding Policy Commitment
 </h3>
 <p className="text-[15px] text-[#344054] mb-2">
 {orgName ? orgName : "[Company Name]"} is committed to integrating sustainable development into our core business strategy. Our approach focuses on reducing environmental impact, enhancing social value, and maintaining strong governance. We aim to create long-term value for our stakeholders while contributing to a more sustainable future. 
@@ -75,7 +75,7 @@ const Section21=({section9_6_2Ref,orgName,data})=>{
         </p>
         {data["2_23_a"]?data["2_23_a"][3].column1_details && (
             <p className="text-sm mb-4">
-                {data["2_23_a"][2].column1_details}
+                {data["2_23_a"][3].column1_details}
             </p>
         ):""}
 
@@ -87,7 +87,7 @@ const Section21=({section9_6_2Ref,orgName,data})=>{
         </p>
         {data["2_23_a"]?data["2_23_a"][4].column1_details && (
             <p className="text-sm mb-4">
-                {data["2_23_a"][2].column1_details}
+                {data["2_23_a"][4].column1_details}
             </p>
         ):""}
     </div>

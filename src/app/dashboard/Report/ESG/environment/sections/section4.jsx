@@ -35,7 +35,8 @@ const Section4=({section12_1_2Ref,data})=>{
         "Category",
         "Sub Category",
         "Activity",
-        "Value"
+        "Emission (tCO2e)",
+        // "Value 2"
     ]
     const Tabledata=[
         {
@@ -46,6 +47,11 @@ const Section4=({section12_1_2Ref,data})=>{
         }
     ]
     const config = {
+      enter: "BR", // Or customize behavior on Enter key
+  cleanHTML: true,
+      enablePasteHTMLFilter: false, 
+    askBeforePasteHTML: false, 
+    askBeforePasteFromWord: false,
         style: {
           fontSize: "14px",
           color:"#667085"
@@ -111,7 +117,7 @@ const Section4=({section12_1_2Ref,data})=>{
             Scope 1
             </p>
             <div className="shadow-md rounded-md mb-4">
-<ScopeTable columns={col2} data={data["305_123_collect"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-1"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-1"]:"":""}/>
+<ScopeTable columns={col2} data={data["305_123_collect"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-1"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-1"].length>0?data["305_123_collect"]["gri-environment-emissions-301-a-scope-1"]:[]:[]:[]}/>
 </div>
             <p className="text-[15px]  mb-2 font-semibold">
             Biogenic CO2 emissions

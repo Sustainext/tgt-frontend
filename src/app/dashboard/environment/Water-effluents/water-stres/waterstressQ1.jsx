@@ -49,7 +49,7 @@ const schema = {
           "Sea water",
           "Municipal water",
           "Third party water",
-          "Other",
+          "Other (please specify)",
         ],
         tooltiptext:
           "Indicate where the company withdraws water from or Where the company discharges water into.Include (where applicable)the breakdown of water withdrawal and discharge data by: Surface Water; Ground water; Seawater; Produced water Third-party water",
@@ -232,6 +232,42 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data, selectedOption) => {
+  const rowErrors = [];
+
+  if (selectedOption === "yes") {
+    data.forEach((row, index) => {
+      const errors = {};
+      if (!row.Source) {
+        errors.Source = "Source is required.";
+      }
+      if (!row.Watertype) {
+        errors.Watertype = "Water type is required.";
+      }
+      if (!row.Businessoperations) {
+        errors.Businessoperations = "Business operations is required.";
+      }
+      if (!row.waterstress) {
+        errors.waterstress = "Name of water stress area is required.";
+      }
+      if (!row.Pincode) {
+        errors.Pincode = "Pin code is required.";
+      }
+      if (!row.Waterwithdrawal) {
+        errors.Waterwithdrawal = "Water withdrawal is required.";
+      }
+      if (!row.Waterdischarge) {
+        errors.Waterdischarge = "Water discharge is required.";
+      }
+      if (!row.Unit) {
+        errors.Unit = "Unit is required.";
+      }
+      rowErrors[index] = errors;
+    });
+  }
+
+  return rowErrors;
+};
 
 const WaterstressQ1 = ({ location, year, month }) => {
   const { open } = GlobalState();
@@ -240,8 +276,10 @@ const WaterstressQ1 = ({ location, year, month }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
   const [loopen, setLoOpen] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [selectOptionError, setSelectOptionError] = useState("");
   const toastShown = useRef(false);
-
+ 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -362,7 +400,25 @@ const WaterstressQ1 = ({ location, year, month }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    if (!selectedOption) {
+      setSelectOptionError("Please select Yes or No.");
+     
+      return;
+    } else {
+      setSelectOptionError(""); // Clear the error if valid
+    }
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData, selectedOption);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddNew = () => {
@@ -383,6 +439,7 @@ const WaterstressQ1 = ({ location, year, month }) => {
   // Handle changing the select dropdown
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
+    setSelectOptionError("");
   };
 
   return (
@@ -390,7 +447,7 @@ const WaterstressQ1 = ({ location, year, month }) => {
       <div className="w-full max-w-xs mb-2">
         <label className="text-sm leading-5 text-gray-700 flex">
           Do you withdraw/discharge water from water stress areas?
-          <div className="ml-2">
+          {/* <div className="ml-2 relative">
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="This section documents data corresponding to total water withdrawn and total water discharge from areas with water stress."
@@ -410,10 +467,10 @@ const WaterstressQ1 = ({ location, year, month }) => {
                 textAlign: "left",
               }}
             ></ReactTooltip>
-          </div>
+          </div> */}
         </label>
         <select
-          className="block w-[270px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+          className={`block w-[270px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 ${selectOptionError ? 'border-red-500' : 'border-gray-300'}`}
           value={selectedOption}
           onChange={handleSelectChange}
         >
@@ -421,10 +478,13 @@ const WaterstressQ1 = ({ location, year, month }) => {
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
+        {selectOptionError && (
+            <p className="text-red-500 text-xs mt-1">{selectOptionError}</p>
+          )}
       </div>
       {selectedOption === "yes" && (
         <>
-          <div className={`overflow-auto custom-scrollbar flex`}>
+          <div className={`overflow-auto custom-scrollbar flex py-4`}>
             <div>
               <Form
                 className="flex"
@@ -433,6 +493,7 @@ const WaterstressQ1 = ({ location, year, month }) => {
                 formData={formData}
                 onChange={handleChange}
                 validator={validator}
+                formContext={{validationErrors }}
                 widgets={{
                   ...widgets,
                   RemoveWidget: (props) => (

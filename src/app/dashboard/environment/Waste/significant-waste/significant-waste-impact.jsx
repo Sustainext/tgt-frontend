@@ -1,124 +1,137 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import { GlobalState } from '../../../../../Context/page';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import { GlobalState } from "../../../../../Context/page";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
 import TextareaWidget2 from "../../../../shared/widgets/Textarea/TextareaWidget2";
-import axios from 'axios';
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
-    TextareaWidgetnew: TextareaWidget2,
+  TextareaWidgetnew: TextareaWidget2,
 };
 
-const view_path = 'gri-environment-waste-306-1-significant_waste'
-const client_id = 1
-const user_id = 1
+const view_path = "gri-environment-waste-306-1-significant_waste";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
-    type: 'array',
-    items: {
-        type: 'object',
-        properties: {
-            Q1: {
-                type: "string",
-                format: 'textarea',
-            },
-            Q2: {
-                type: "string",
-                format: 'textarea',
-            },
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      Q1: {
+        type: "string",
+        format: "textarea",
+      },
+      Q2: {
+        type: "string",
+        format: "textarea",
+      },
 
-            // Define other properties as needed
-        }
-    }
+      // Define other properties as needed
+    },
+  },
 };
-
 
 const uiSchema = {
-    items: {
-        Q1: {
-            "ui:hadding": "Impact Analysis: Inputs, Activities, Outputs",
-            "ui:title": "Describe the inputs, activities, and outputs that lead or could lead to these impacts",
-            "ui:tooltipshadding": "Please specify the inputs, activities, and outputs that lead or could lead to actual and potential waste related impacts.Include: The types of inputs and outputs can include raw materials, process and manufacturing materials, leaks and losses, waste, by-products, products, or packaging.",
-            "ui:haddingdisplay": "block",
-            "ui:titlediplay": "block",
-            "ui:haddingtooltipdisplay": "block",
-            "ui:titletooltipdisplay": "none",
-            "ui:Gri": "GRI 306-1a",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
-            'ui:options': {
-                label: false
-            },
-        },
-        Q2: {
-            "ui:hadding": "Activities resulting into waste",
-            "ui:title": "Describe whether these impacts relate to waste generated in the organization’s own activities or to waste generated upstream or downstream in its value chain.",
-            "ui:tooltipshadding": "Please provide the description of the impacts relate to waste generated in the organization’s own activities or to waste generated upstream or downstream in its value chain. Impacts: effect the organization has or could have on the economy,environment, and people, including on their human rights, which in turn can indicate its contribution (negative or positive) to sustainable development.",
-            "ui:haddingdisplay": "block",
-            "ui:titlediplay": "block",
-            "ui:haddingtooltipdisplay": "block",
-            "ui:titletooltipdisplay": "none",
-            "ui:Gri": "GRI 306-1b",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
-            'ui:options': {
-                label: false
-            },
-        },
-        'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
-        }
-    }
+  items: {
+    Q1: {
+      "ui:hadding": "Impact Analysis within the organisation",
+      "ui:title":
+        "Describe the inputs, activities, and outputs that lead or could lead to actual and potential waste related impacts.",
+      "ui:tooltipshadding":
+        "<p>Please specify the inputs, activities, and outputs that lead or could lead to actual and potential waste related impacts.</p> <p>Include: The types of inputs and outputs can include raw materials, process and manufacturing materials, leaks and losses, waste, by-products, products, or packaging. </p>  ",
+      "ui:tooltipstitle":
+        "Specify and describe the  inputs, activities, and outputs that lead or could lead to actual and potential waste related impacts.",
+      "ui:haddingdisplay": "block",
+      "ui:titlediplay": "block",
+      "ui:haddingtooltipdisplay": "block",
+      "ui:titletooltipdisplay": "block",
+      "ui:Gri": "GRI 306-1a",
+      "ui:widget": "TextareaWidgetnew",
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q2: {
+      "ui:hadding":
+        "Assessment of Waste-Related Impacts Across the Value Chain	",
+      "ui:title":
+        "Explain whether the actual and potential waste-related impacts are associated with waste generated by the organization’s own activities or with waste generated upstream or downstream within its value chain.",
+      "ui:tooltipshadding":
+        "<p>Please provide the description of the impacts relate to waste generated in the organization’s own activities or to waste generated upstream or downstream in its value chain.  </p> <p>Impacts: effect the organization has or could have on the economy, environment, and people, including on their human rights, which in turn can indicate its contribution (negative or positive) to sustainable development. </p>  ",
+      "ui:tooltipstitle":
+        "Provide a description if the actual and potential waste-related impacts are associated with waste generated by the organization’s own activities or with waste generated upstream or downstream within its value chain.",
+      "ui:haddingdisplay": "block",
+      "ui:haddingdisplay": "block",
+      "ui:titlediplay": "block",
+      "ui:haddingtooltipdisplay": "block",
+      "ui:titletooltipdisplay": "block",
+      "ui:Gri": "GRI 306-1a",
+      "ui:widget": "TextareaWidgetnew",
+      "ui:options": {
+        label: false,
+      },
+    },
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
+  },
 };
-const Significantwasteimpact = ({location, year, month}) => {
-    const { open } = GlobalState();
-    const [formData, setFormData] = useState([{}]);
-    const [r_schema, setRemoteSchema] = useState({})
-    const [r_ui_schema, setRemoteUiSchema] = useState({})
-    const [loopen, setLoOpen] = useState(false);
-    const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
 
-    const LoaderOpen = () => {
-      setLoOpen(true);
-    };
-    const LoaderClose = () => {
-      setLoOpen(false);
-    };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Q1 || row.Q1.trim() === "") {
+      rowErrors.Q1 = "This field is required";
+    }
+    if (!row.Q2 || row.Q2.trim() === "") {
+      rowErrors.Q2 = "This field is required";
+    }
+    return rowErrors;
+  });
+};
+
+const Significantwasteimpact = ({ selectedOrg, year, selectedCorp }) => {
+  const { open } = GlobalState();
+  const [formData, setFormData] = useState([{}]);
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [loopen, setLoOpen] = useState(false);
+  const toastShown = useRef(false);
+  const [validationErrors, setValidationErrors] = useState([]);
+
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
   const handleChange = (e) => {
     setFormData(e.formData);
   };
 
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  };
   const updateFormData = async () => {
+    LoaderOpen();
     const data = {
-      client_id : client_id,
-      user_id : user_id,
+      client_id: client_id,
+      user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month
-    }
+    };
 
-    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-    try{
-      const response = await axios.post(url, data, axiosConfig);
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    try {
+      const response = await axiosInstance.post(url, data);
 
       if (response.status === 200) {
         toast.success("Data added successfully", {
@@ -133,8 +146,7 @@ const Significantwasteimpact = ({location, year, month}) => {
         });
         LoaderClose();
         loadFormData();
-
-      }else {
+      } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
@@ -162,66 +174,84 @@ const Significantwasteimpact = ({location, year, month}) => {
     }
   };
 
-    const loadFormData = async () => {
-      LoaderOpen();
-      setFormData([{}])
-      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-      try {
-          const response = await axios.get(url, axiosConfig);
-          console.log('API called successfully:', response.data);
-          setRemoteSchema(response.data.form[0].schema);
-          setRemoteUiSchema(response.data.form[0].ui_schema);
-          const form_parent = response.data.form_data;
-          setFormData(form_parent[0].data);
-      } catch (error) {
-          console.error('API call failed:', error);
-      } finally {
-          LoaderClose();
-      }
+  const loadFormData = async () => {
+    LoaderOpen();
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      const form_parent = response.data.form_data;
+      setFormData(form_parent[0].data);
+    } catch (error) {
+      console.error("API call failed:", error);
+    } finally {
+      LoaderClose();
+    }
   };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
+  }, [r_schema, r_ui_schema]);
 
   // console log the form data change
   useEffect(() => {
-    console.log('Form data is changed -', formData)
-  },[formData])
+    console.log("Form data is changed -", formData);
+  }, [formData]);
 
   // fetch backend and replace initialized forms
-  useEffect (()=> {
-    if (location && year && month) {
-        loadFormData();
-        toastShown.current = false; // Reset the flag when valid data is present
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false;
     } else {
-        // Only show the toast if it has not been shown already
-       if (!toastShown.current) {
-
-            toastShown.current = true; // Set the flag to true after showing the toast
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-  },[location, year, month])
+  }, [selectedOrg, year, selectedCorp]);
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Form data:", formData);
+  //   updateFormData();
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form data:', formData);
-    updateFormData()
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      updateFormData();
+    }
   };
 
+  const renderError = (rowIndex, fieldName) => {
+    const rowErrors = validationErrors[rowIndex] || {};
+    return rowErrors[fieldName] ? (
+      <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div>
+    ) : null;
+  };
 
   return (
     <>
       <div>
         <div>
-        <Form
-          schema={r_schema}
-          uiSchema={r_ui_schema}
-          formData={formData}
-          onChange={handleChange}
-          validator={validator}
-          widgets={widgets}
-        />
+          <Form
+            schema={r_schema}
+            uiSchema={r_ui_schema}
+            formData={formData}
+            onChange={handleChange}
+            validator={validator}
+            widgets={widgets}
+            formContext={{ validationErrors }}
+          />
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -236,11 +266,17 @@ const Significantwasteimpact = ({location, year, month}) => {
           </div>
         )}
       </div>
-      <div className='mb-4'>
-      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      <div className="mb-4">
+        <button
+          type="button"
+          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
       </div>
-        </>
-    );
+    </>
+  );
 };
 
 export default Significantwasteimpact;

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import CustomTableWidget7 from "../../../../../shared/widgets/Table/tableWidget7"
+import CustomTableWidget14 from "../../../../../shared/widgets/Table/tableWidget14"
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -14,7 +14,7 @@ import axiosInstance from "@/app/utils/axiosMiddleware"
 
 // Simple Custom Table Widget
 const widgets = {
-  TableWidget: CustomTableWidget7,
+  TableWidget: CustomTableWidget14,
 
 };
 
@@ -48,7 +48,7 @@ const uiSchema = {
   "ui:widget": "TableWidget",
   'ui:options': {
     titles: [
-      { title: "Employee Category", tooltip: "Please add the number of employees per employee category.", colSpan: 1,  tooltipdispaly:"block", },
+      { title: "Employee Category", tooltip: "Please specify the name of the employee category.", colSpan: 1,  tooltipdispaly:"block", },
       { title: "Gender", tooltip: "Please specify the gender of individuals.", colSpan: 4,    tooltipdispaly:"none", },
       { title: "Age Group", tooltip: "Please specify the age group of individuals.", colSpan: 4,  tooltipdispaly:"none", },
       { title: "Diversity groups", tooltip: "Please specify the diversity group. Indicator of diversity: indicator of diversity for which the organization gathers data Examples: age, ancestry and ethnic origin, citizenship, creed, disability, gender", colSpan: 2,  tooltipdispaly:"block", },
@@ -62,7 +62,7 @@ const uiSchema = {
       { title: "< 30 years", title2: "LessThan30", tooltip: "Please specify the number of individuals under 30 years old.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
       { title: "30-50 years", title2: "Between30and50", tooltip: "Please specify the number of individuals between 30 and 50 years old.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
       { title: "> 50 years", title2: "MoreThan50", tooltip: "Please specify the number of individuals over 50 years old.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
-      { title: "Total number of employee", title2: "totalAge", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "Total number of employees", title2: "totalAge", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
       { title: "Minority group", title2: "Minoritygroup",tooltip: "Please specify the number of minority group individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
       { title: "Vulnerable Groups", title2: "vulnerableCommunities", tooltip: "Please specify the type of vulnerable group and the number of individuals from the vulnerable groups present in the organisation's governance body.", colSpan: 1, type: "number",  tooltipdispaly:"block", },
 
@@ -70,7 +70,7 @@ const uiSchema = {
   }
 };
 
-const Screen1 = ({ location, year }) => {
+const Screen1 = ({ location, year,month }) => {
   const initialFormData = [
     {
       category: "",
@@ -111,6 +111,7 @@ const Screen1 = ({ location, year }) => {
       form_data: formData,
       location: location,
       year,
+      month,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -163,7 +164,7 @@ const Screen1 = ({ location, year }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -178,7 +179,7 @@ const Screen1 = ({ location, year }) => {
   };
 
   useEffect(() => {
-    if (location && year) {
+    if (location && year && month) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -186,7 +187,7 @@ const Screen1 = ({ location, year }) => {
         toastShown.current = true;
       }
     }
-  }, [location, year]);
+  }, [location, year,month]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

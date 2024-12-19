@@ -77,10 +77,10 @@ const scrollToSection = (sectionRef, sectionId) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-       "commitment_statement": commitment_statement ,
-    "product_info_labelling": product_info_labelling,
-    "marketing_practices": marketing_practices,
-    "conclusion": conclusion
+       "commitment_statement": {"page":"screen_fifteen","label":"15.1 Products and Services","subLabel":"Add statement about company’s commitment to products and services","type":"textarea","content":commitment_statement,"field":"commitment_statement","isSkipped":false} ,
+    "product_info_labelling": {"page":"screen_fifteen","label":"15.2 Product and Service Information and Labelling","subLabel":"Add statement about company’s product and service information and labelling","type":"textarea","content":product_info_labelling,"field":"product_info_labelling","isSkipped":false},
+    "marketing_practices": {"page":"screen_fifteen","label":"15.2.2 Marketing","subLabel":"Add statement about company’s marketing practices","type":"textarea","content":marketing_practices,"field":"marketing_practices","isSkipped":false},
+    "conclusion": {"page":"screen_fifteen","label":"Conclusion","subLabel":"Add a conclusion to the report","type":"richTextarea","content":conclusion,"field":"conclusion","isSkipped":false}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fifteen/${reportid}/`;
@@ -149,10 +149,11 @@ const scrollToSection = (sectionRef, sectionId) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setCommitmentStatement(response.data.commitment_statement));
-          dispatch(setProductInfo(response.data.product_info_labelling));
-          dispatch(setMarketingPractices(response.data.marketing_practices));
-          dispatch(setConclusion(response.data.conclusion));
+            dispatch(setCommitmentStatement(response.data.commitment_statement?.content || ""));
+            dispatch(setProductInfo(response.data.product_info_labelling?.content || ""));
+            dispatch(setMarketingPractices(response.data.marketing_practices?.content || ""));
+            dispatch(setConclusion(response.data.conclusion?.content || ""));
+            
           }
           
           LoaderClose();
@@ -189,7 +190,7 @@ const scrollToSection = (sectionRef, sectionId) => {
             <Section6 section15_2_1Ref={section15_2_1Ref} data={data} />
             <Section7 section15_2_2Ref={section15_2_2Ref} data={data} />
             <Section8 section15_3Ref={section15_3Ref} data={data} />
-            <Section9 section15_3_1Ref={section15_3_1Ref} orgName={orgName} />
+            <Section9 section15_3_1Ref={section15_3_1Ref} orgName={orgName} data={data} />
         
         
 

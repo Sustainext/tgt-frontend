@@ -128,7 +128,7 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_water_analysis`,
+        `/sustainapp/get_water_analysis_api/`,
         {
           params: params,
         }
@@ -139,19 +139,19 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
 
       const {
         total_water_consumption,
-        total_water_consumption_in_water_stress_areas,
+        total_water_consumption_in_water_stress_areas_by_area,
         total_water_consumption_by_business_operation,
         total_water_consumption_by_location,
         total_water_consumption_by_source,
         total_fresh_water_withdrawal_by_business_operation,
-        total_fresh_water_withdrawal_by_source_from_water_stress_area,
-        total_fresh_water_withdrawal_by_location_country,
+        total_fresh_water_withdrawal_by_source,
+        get_total_fresh_water_withdrawal_by_location_country,
         total_water_withdrawal_by_water_type,
         water_withdrawal_from_third_parties,
-        total_water_discharge_by_location,
-        total_water_discharge_by_source_and_type_of_water,
+        get_total_fresh_water_discharge_by_location_country,
+        total_water_discharge_by_water_type,
         total_water_discharge_from_water_stress_area_by_business_operation,
-        total_water_discharge_by_business_operation,
+        total_fresh_water_discharge_by_business_operation,
         total_water_discharge_by_water_type_from_water_stress_area,
         third_party_water_discharge_sent_to_use_for_other_organizations,
         change_in_water_storage,
@@ -159,7 +159,7 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
 
       setWaterConsumption(total_water_consumption);
       setWaterConsumptionInWaterStress(
-        total_water_consumption_in_water_stress_areas
+        total_water_consumption_in_water_stress_areas_by_area
       );
       setWaterConsumptionByBusinessOperation(
         total_water_consumption_by_business_operation
@@ -170,22 +170,22 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
         total_fresh_water_withdrawal_by_business_operation
       );
       setFreshWaterWithdrawalBySourceInWaterStress(
-        total_fresh_water_withdrawal_by_source_from_water_stress_area
+        total_fresh_water_withdrawal_by_source
       );
       setFreshWaterWithdrawalByLocation(
-        total_fresh_water_withdrawal_by_location_country
+        get_total_fresh_water_withdrawal_by_location_country
       );
       setWaterWithdrawalByWaterType(total_water_withdrawal_by_water_type);
       setWaterWithdrawalFromThirdParties(water_withdrawal_from_third_parties);
-      setWaterDischargeByLocation(total_water_discharge_by_location);
+      setWaterDischargeByLocation(get_total_fresh_water_discharge_by_location_country);
       setWaterDischargeBySourceAndType(
-        total_water_discharge_by_source_and_type_of_water
+        total_water_discharge_by_water_type
       );
       setWaterDischargeFromWaterStressByBusinessOperation(
         total_water_discharge_from_water_stress_area_by_business_operation
       );
       setWaterDischargeByBusinessOperation(
-        total_water_discharge_by_business_operation
+        total_fresh_water_discharge_by_business_operation
       );
       setWaterDischargeByWaterTypeFromWaterStress(
         total_water_discharge_by_water_type_from_water_stress_area

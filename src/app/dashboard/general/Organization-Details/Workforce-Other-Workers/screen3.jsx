@@ -15,7 +15,7 @@ const widgets = {
   inputWidget: inputWidget2,
 };
 
-const view_path = "	gri-general-workforce_other_workers-fluctuations-2-8c";
+const view_path = "gri-general-workforce_other_workers-fluctuations-2-8c";
 const client_id = 1;
 const user_id = 1;
 

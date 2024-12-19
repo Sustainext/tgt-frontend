@@ -12,6 +12,7 @@ import Managementwaste from "./Waste/management-waste/management-waste";
 import Wastegenerated from "./Waste/waste-generated/waste-generated";
 import Wastediverted from "./Waste/waste-diverted/waste-diverted";
 import Wastedirected from "./Waste/waste-directed/waste-directed";
+import Datacollectionmethodology from "./Waste/Data-collection-methodology/Data-collection-methodology"
 import Weightvolume from "./Materials/weight-volume/weight-volume";
 import Recycled from "./Materials/recycled/recycled";
 import Reclaimedproducts from "./Materials/reclaimed-products/reclaimed-products";
@@ -36,6 +37,7 @@ import {
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
+import Standardsmethodology from "./energy/standards-methodology/standards-methodology"
 
 const environment = () => {
   const { open } = GlobalState();
@@ -67,6 +69,7 @@ const environment = () => {
       "Energy Intensity",
       "Reduction of energy consumption",
       "Reductions in energy requirements of products and services",
+      "Standards, methodologies, assumptions and calculation tools used",
     ];
 
     // List of tabs related to Waste
@@ -76,6 +79,7 @@ const environment = () => {
       "Waste generated",
       "Waste Diverted from disposal",
       "Waste diverted to disposal",
+      "Data Collection Methodology",
     ];
 
     // List of tabs related to Materials
@@ -114,7 +118,7 @@ const environment = () => {
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Supplier Environmental Assessment"));
     } else if (materialnewTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Materials"));
+      dispatch(setHeadertext2("Management of Material Topic"));
     } else {
       dispatch(setHeadertext2(`${activeTab}`));
     }
@@ -160,6 +164,11 @@ const environment = () => {
               "Reductions in energy requirements of products and services" && (
               <Energyproductsservices />
             )}
+               {activeTab ===
+              "Standards, methodologies, assumptions and calculation tools used" && (
+              <Standardsmethodology />
+            )}
+            
             {/* waste start */}
             {activeTab === "Management of Material topic waste" && (
               <WasteMaterialtopic />
@@ -174,6 +183,7 @@ const environment = () => {
             {activeTab === "Waste generated" && <Wastegenerated />}
             {activeTab === "Waste Diverted from disposal" && <Wastediverted />}
             {activeTab === "Waste diverted to disposal" && <Wastedirected />}
+            {activeTab === "Data Collection Methodology" && <Datacollectionmethodology />}    
             {/* Materials  start */}
             {activeTab === "Management of Material topic Materials" && (
               <MaterialsMaterialtopic />

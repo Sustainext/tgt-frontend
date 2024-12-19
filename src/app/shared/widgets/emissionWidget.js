@@ -1,3 +1,5 @@
+//emission widget
+
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { scope1Info, scope2Info, scope3Info } from "../data/scopeInfo";
@@ -18,6 +20,8 @@ import {
   setSelectedRows,
   updateSelectedRow,
   toggleSelectAll,
+  setFocusedField,
+  clearFocusedField,
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AssignEmissionModal from "./assignEmissionModal";
@@ -60,7 +64,75 @@ const EmissionWidget = React.memo(
     const isFetching = useRef(false);
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
-    const quantityRef = useRef(null);
+    const quantity1Ref = useRef(null);
+    const quantity2Ref = useRef(null);
+    const focusedField = useSelector((state) => state.emissions.focusedField);
+
+    // Get validation errors from Redux
+    const validationErrors = useSelector(
+      (state) => state.emissions.validationErrors
+    );
+    // Access the fields object within the scope
+    const scopeErrors = validationErrors?.[scope]?.fields?.[index] || {};
+
+    // Function to get field class based on validation state
+    const getFieldClass = useCallback(
+      (fieldName, baseClass = "") => {
+        const hasError = scopeErrors[fieldName];
+        return `${baseClass} ${
+          hasError ? "border-b border-red-500" : ""
+        }`.trim();
+      },
+      [scopeErrors]
+    );
+
+    // Function to get error message for a field
+    const getErrorMessage = (fieldName) => {
+      // console.log("scopeErrors:", scopeErrors, scopeErrors[fieldName]);
+
+      return scopeErrors[fieldName];
+    };
+
+    // Function for placeholder/option validation styling
+    const getPlaceholderClass = useCallback(
+      (fieldName) => {
+        const hasError = scopeErrors[fieldName];
+        return hasError ? "text-red-500" : "";
+      },
+      [scopeErrors]
+    );
+
+    // Effect to handle focus based on Redux state
+    useEffect(() => {
+      if (focusedField.rowId === rowId && focusedField.field) {
+        if (focusedField.field === "quantity1" && quantity1Ref.current) {
+          quantity1Ref.current.focus();
+        } else if (focusedField.field === "quantity2" && quantity2Ref.current) {
+          quantity2Ref.current.focus();
+        }
+      }
+    }, [focusedField, rowId]);
+
+    const handleFocus = (fieldName) => {
+      dispatch(
+        setFocusedField({
+          rowId,
+          field: fieldName,
+        })
+      );
+    };
+
+    const handleBlur = (e) => {
+      const relatedTarget = e.relatedTarget;
+      const isMovingWithinWidget =
+        relatedTarget &&
+        (relatedTarget === quantity1Ref.current ||
+          relatedTarget === quantity2Ref.current);
+
+      if (!isMovingWithinWidget) {
+        dispatch(clearFocusedField());
+      }
+    };
 
     // Assign To
     const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
@@ -184,7 +256,13 @@ const EmissionWidget = React.memo(
       fetchBaseCategories();
     }, []);
 
+    // Create cache key function
+    const getCacheKey = (subcategory, region, year) => {
+      return `${subcategory}_${region}_${year}`;
+    };
+
     let wildcard = false;
+
     const fetchActivities = useCallback(
       async (page = 1, customFetchExecuted = false) => {
         if (isFetching.current) return;
@@ -193,15 +271,22 @@ const EmissionWidget = React.memo(
         const updateCacheAndActivities = (data, type = "default") => {
           setActivities((prevData) => {
             const updatedData = [...prevData, ...data];
-            updateCache(subcategory, updatedData);
+            // Update cache with composite key
+            const cacheKey = getCacheKey(subcategory, countryCode, year);
+            updateCache(cacheKey, updatedData);
             return updatedData;
           });
         };
 
-        // Check cache first
-        if (activityCache[subcategory]) {
-          console.log("Using cached activities", activityCache[subcategory]);
-          setActivities(activityCache[subcategory]);
+        // Check cache with composite key
+        const cacheKey = getCacheKey(subcategory, countryCode, year);
+        if (activityCache[cacheKey]) {
+          console.log(
+            "Using cached activities for",
+            cacheKey,
+            activityCache[cacheKey]
+          );
+          setActivities(activityCache[cacheKey]);
           isFetching.current = false;
           return;
         }
@@ -818,7 +903,17 @@ const EmissionWidget = React.memo(
             </button>
           </div>
         )}
-        <table className="min-w-full w-full">
+        <table
+          className={`min-w-full w-full ${
+            scopeErrors["Category"] ||
+            scopeErrors["Subcategory"] ||
+            scopeErrors["Activity"] ||
+            scopeErrors["Quantity"] ||
+            scopeErrors["Unit"]
+              ? "mb-2"
+              : ""
+          }`}
+        >
           {id.startsWith("root_0") && (
             <thead className="bg-gray-50">
               <tr>
@@ -852,43 +947,63 @@ const EmissionWidget = React.memo(
             </thead>
           )}
           <tbody className="bg-white">
-            <tr className="border-b border-gray-200">
+            <tr className={`border-b border-gray-200`}>
               {/* Checkbox */}
               {renderFirstColumn()}
 
               {/* Category Dropdown */}
-              <td className="py-2 px-1 pl-2 w-[15vw]">
+              <td
+                className={`py-2 px-1 pl-2 w-[15vw] relative ${
+                  scopeErrors["Category"] ? "" : ""
+                }`}
+              >
                 <select
                   value={category}
                   onChange={(e) => handleCategoryChange(e.target.value)}
-                  className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 ${
-                    category && rowType === "default"
-                      ? "border-b border-zinc-800"
-                      : ""
-                  }
-`}
-                  disabled={rowType === "assigned"}
+                  className={getFieldClass(
+                    "Category",
+                    `text-[12px] focus:outline-none w-full py-1 ${
+                      category && rowType === "default"
+                        ? "border-b border-zinc-800"
+                        : ""
+                    }`
+                  )}
+                  disabled={["assigned", "calculated", "approved"].includes(
+                    rowType
+                  )}
                 >
-                  <option className="emissionscopc">Select Category</option>
+                  <option className={getPlaceholderClass("Category")}>
+                    Select Category
+                  </option>
                   {baseCategories.map((categoryName, index) => (
                     <option key={index} value={categoryName}>
                       {categoryName}
                     </option>
                   ))}
                 </select>
+                {scopeErrors["Category"] && (
+                  <div className="text-[12px] text-red-500 absolute left-3 -bottom-[18px]">
+                    {getErrorMessage("Category")}
+                  </div>
+                )}
               </td>
 
               {/* Sub-Category Dropdown */}
-              <td className="py-2 px-1 w-[15vw]">
+              <td className="py-2 px-1 w-[15vw] relative">
                 <select
                   value={subcategory}
                   onChange={(e) => handleSubcategoryChange(e.target.value)}
-                  className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 ${
-                    subcategory && rowType === "default"
-                      ? "border-b border-zinc-800"
-                      : ""
-                  }`}
-                  disabled={rowType === "assigned"}
+                  className={getFieldClass(
+                    "Subcategory",
+                    `text-[12px] focus:outline-none w-full py-1 ${
+                      subcategory && rowType === "default"
+                        ? "border-b border-zinc-800"
+                        : ""
+                    }`
+                  )}
+                  disabled={["assigned", "calculated", "approved"].includes(
+                    rowType
+                  )}
                 >
                   <option className="emissionscopc">Select Sub-Category</option>
                   {subcategories.map((sub, index) => (
@@ -897,6 +1012,11 @@ const EmissionWidget = React.memo(
                     </option>
                   ))}
                 </select>
+                {scopeErrors["Subcategory"] && (
+                  <div className="text-[12px] text-red-500 absolute left-2 -bottom-[18px]">
+                    {getErrorMessage("Subcategory")}
+                  </div>
+                )}
               </td>
 
               {/* Activity Dropdown */}
@@ -925,9 +1045,24 @@ const EmissionWidget = React.memo(
                     value={activitySearch}
                     onChange={(e) => setActivitySearch(e.target.value)}
                     onFocus={toggleDropdown}
-                    className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 `}
-                    disabled={rowType === "assigned"}
+                    className={getFieldClass(
+                      "Activity",
+                      "text-[12px] focus:outline-none w-full py-1"
+                    )}
+                    disabled={["assigned", "calculated", "approved"].includes(
+                      value.rowType
+                    )}
+                    style={{
+                      "::placeholder": {
+                        color: scopeErrors["Activity"] ? "#EF4444" : "inherit",
+                      },
+                    }}
                   />
+                  {scopeErrors["Activity"] && (
+                    <div className="text-[12px] text-red-500 absolute left-0 -bottom-[28px]">
+                      {getErrorMessage("Activity")}
+                    </div>
+                  )}
 
                   {isDropdownActive && (
                     <select
@@ -940,7 +1075,9 @@ const EmissionWidget = React.memo(
                         setActivitySearch("");
                       }}
                       className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[810px]`}
-                      disabled={rowType === "assigned"}
+                      disabled={["assigned", "calculated", "approved"].includes(
+                        rowType
+                      )}
                     >
                       <option value="" className="px-1">
                         {isFetching.current
@@ -977,27 +1114,50 @@ const EmissionWidget = React.memo(
                 <div className="grid grid-flow-col-dense">
                   {unit_type.includes("Over") ? (
                     <>
-                      <div className="flex justify-end ">
+                      <div className="flex justify-end relative">
                         <input
-                          ref={quantityRef}
+                          ref={quantity1Ref}
                           type="number"
                           value={quantity}
                           onChange={handleQuantityChange}
-                          placeholder="Enter Value"
-                          className="focus:border-blue-500 focus:outline-none text-[12px] w-[7vw] text-right pe-1"
+                          onFocus={() => handleFocus("quantity1")}
+                          onBlur={handleBlur}
                           step="1"
                           min="0"
-                          disabled={rowType === "assigned"}
+                          placeholder={
+                            scopeErrors["Quantity"]
+                              ? "Enter Data *"
+                              : "Enter Data"
+                          }
+                          className={getFieldClass(
+                            "Quantity",
+                            "text-[12px] focus:outline-none w-[7vw] text-right pe-1 focus:border-b focus:border-blue-300"
+                          )}
+                          disabled={["assigned", "approved"].includes(
+                            value.rowType
+                          )}
+                          style={{
+                            "::placeholder": {
+                              color: scopeErrors["Quantity"]
+                                ? "#EF4444"
+                                : "inherit",
+                            },
+                          }}
                         />
+                        {scopeErrors["Quantity"] && (
+                          <div className="text-[12px] text-red-500 absolute left-[2rem] -bottom-6">
+                            {getErrorMessage("Quantity")}
+                          </div>
+                        )}
                         <select
                           value={unit}
                           onChange={(e) => handleUnitChange(e.target.value)}
-                          className={` text-[12px] w-[100px]   text-center rounded-md py-1 shadow ${
+                          className={`text-[12px] w-[100px]   text-center rounded-md py-1 shadow ${
                             unit
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
                           }`}
-                          disabled={rowType === "assigned"}
+                          disabled={["assigned", "approved"].includes(rowType)}
                         >
                           <option value="">Unit</option>
                           {units.map((unit, index) => (
@@ -1006,19 +1166,41 @@ const EmissionWidget = React.memo(
                             </option>
                           ))}
                         </select>
+                        {scopeErrors["Unit"] && (
+                          <div className="text-[12px] text-red-500 absolute right-1 -bottom-6">
+                            {getErrorMessage("Unit")}
+                          </div>
+                        )}
                       </div>
-                      <div className="flex justify-end">
+                      <div className="flex justify-end relative">
                         <input
-                          ref={quantityRef}
+                          ref={quantity2Ref}
                           type="number"
                           value={quantity2}
                           onChange={handleQuantity2Change}
+                          onFocus={() => handleFocus("quantity2")}
+                          onBlur={handleBlur}
                           placeholder="Enter Value"
-                          className="focus:border-blue-500 focus:outline-none text-[12px] w-[6vw] text-right pe-1"
+                          className={getFieldClass(
+                            "Quantity2",
+                            "text-[12px] focus:outline-none w-[7vw] text-right pe-1 focus:border-b focus:border-blue-300"
+                          )}
                           step="1"
                           min="0"
-                          disabled={rowType === "assigned"}
+                          disabled={["assigned", "approved"].includes(rowType)}
+                          style={{
+                            "::placeholder": {
+                              color: scopeErrors["Quantity"]
+                                ? "#EF4444"
+                                : "inherit",
+                            },
+                          }}
                         />
+                        {scopeErrors["Quantity2"] && (
+                          <div className="text-[12px] text-red-500 absolute left-[2rem] -bottom-6">
+                            {getErrorMessage("Quantity2")}
+                          </div>
+                        )}
                         <select
                           value={unit2}
                           onChange={(e) => handleUnit2Change(e.target.value)}
@@ -1027,7 +1209,7 @@ const EmissionWidget = React.memo(
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
                           }`}
-                          disabled={rowType === "assigned"}
+                          disabled={["assigned", "approved"].includes(rowType)}
                         >
                           <option value="">Unit</option>
                           {units2.map((unit, index) => (
@@ -1036,21 +1218,44 @@ const EmissionWidget = React.memo(
                             </option>
                           ))}
                         </select>
+                        {scopeErrors["Unit2"] && (
+                          <div className="text-[12px] text-red-500 absolute right-1 -bottom-6">
+                            {getErrorMessage("Unit2")}
+                          </div>
+                        )}
                       </div>
                     </>
                   ) : (
-                    <div className="flex justify-end">
+                    <div className="flex justify-end relative">
                       <input
-                        ref={quantityRef}
+                        ref={quantity1Ref}
                         type="number"
                         value={quantity}
                         onChange={handleQuantityChange}
-                        placeholder="Enter Value"
-                        className="focus:border-blue-500 focus:outline-none text-[12px] w-[19.7vw] text-right pe-1"
+                        onFocus={() => handleFocus("quantity1")}
+                        onBlur={handleBlur}
                         step="1"
                         min="0"
-                        disabled={rowType === "assigned"}
+                        className={getFieldClass(
+                          "Quantity",
+                          "text-[12px] focus:outline-none w-[7vw] text-right pe-1 focus:border-b focus:border-blue-300"
+                        )}
+                        disabled={["assigned", "approved"].includes(
+                          value.rowType
+                        )}
+                        style={{
+                          "::placeholder": {
+                            color: scopeErrors["Quantity"]
+                              ? "#EF4444"
+                              : "inherit",
+                          },
+                        }}
                       />
+                      {scopeErrors["Quantity"] && (
+                        <div className="text-[12px] text-red-500 absolute left-[3rem] -bottom-7">
+                          {getErrorMessage("Quantity")}
+                        </div>
+                      )}
                       <select
                         value={unit}
                         onChange={(e) => handleUnitChange(e.target.value)}
@@ -1059,7 +1264,12 @@ const EmissionWidget = React.memo(
                             ? "bg-white text-blue-500 "
                             : "bg-blue-500 text-white hover:bg-blue-600"
                         }`}
-                        disabled={rowType === "assigned"}
+                        disabled={["assigned", "approved"].includes(rowType)}
+                        style={{
+                          border: {
+                            color: scopeErrors["Unit"] ? "#EF4444" : "inherit",
+                          },
+                        }}
                       >
                         <option value="">Unit</option>
                         {units.map((unit, index) => (
@@ -1068,6 +1278,11 @@ const EmissionWidget = React.memo(
                           </option>
                         ))}
                       </select>
+                      {scopeErrors["Unit"] && (
+                        <div className="text-[12px] text-red-500 absolute right-2 -bottom-7">
+                          {getErrorMessage("Unit")}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

@@ -19,7 +19,8 @@ const widgets = {
   RichtextWidget: RichtextWidget,
 };
 
-const view_path = "gri-supplier_environmental_assessment-negative_environmental-308-2a";
+const view_path =
+  "gri-supplier_environmental_assessment-negative_environmental-308-2a";
 const client_id = 1;
 const user_id = 1;
 
@@ -30,10 +31,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title:
-          "Number of Suppliers Assessed for Environmental Impacts:",
+        title: "Number of Suppliers Assessed for Environmental Impacts:",
       },
-     
     },
   },
 };
@@ -42,8 +41,7 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title":
-        "Number of Suppliers Assessed for Environmental Impacts:",
+      "ui:title": "Number of Suppliers Assessed for Environmental Impacts:",
       "ui:tooltip":
         "<p>Specify the total number of suppliers that were assessed for their environmental impacts during the reporting period.</p>",
       "ui:tooltipdisplay": "none",
@@ -80,10 +78,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const LoaderClose = () => {
     setLoOpen(false);
-  };
-
-  const handleChange = (e) => {
-    setFormData(e.formData);
   };
 
   const updateFormData = async () => {
@@ -167,19 +161,70 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   }, [selectedOrg, year, selectedCorp]);
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   updateFormData();
+  //   console.log("test form data", formData);
+  // };
+
+  const [validationErrors, setValidationErrors] = useState([]);
+
+  // Add validation function
+  const validateRows = (data) => {
+    return data.map((row) => {
+      const rowErrors = {};
+
+      if (!row.Q1 || row.Q1.trim() === "") {
+        rowErrors.Q1 = "This field is required";
+      } else if (
+        isNaN(Number(row.Q1)) ||
+        Number(row.Q1) <= 0 ||
+        !Number.isInteger(Number(row.Q1))
+      ) {
+        rowErrors.Q1 = "Please enter a positive whole number";
+      }
+
+      return rowErrors;
+    });
+  };
+
+  const handleChange = (e) => {
+    setFormData(e.formData);
+    setValidationErrors([]); // Reset validation errors
+  };
+
+  // Update handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
-    console.log("test form data", formData);
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      // toast.error("Please enter a valid number", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      // });
+    }
   };
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Number of Suppliers Assessed for Environmental Impacts:
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Number of Suppliers Assessed for Environmental Impacts:
               <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html="Specify the total number of suppliers that were assessed 
@@ -220,6 +265,7 @@ for their environmental impacts during the reporting period."
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

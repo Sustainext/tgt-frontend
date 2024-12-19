@@ -33,9 +33,9 @@ const SustainibilityRoadmap=forwardRef(({ onSubmitSuccess }, ref) =>{
     const submitForm = async (type) => {
         LoaderOpen();
         const data={
-          "description":description,
+          "description":{"page":"screen_four","label":"4. Sustainability Roadmap","subLabel":"","type":"richTextarea","content":description,"field":"description","isSkipped":false},
         }
-    
+        
         const url = `${process.env.BACKEND_API_URL}/esg_report/screen_four/${reportid}/`;
         try {
             const response = await axiosInstance.put(url, data);
@@ -98,7 +98,7 @@ const SustainibilityRoadmap=forwardRef(({ onSubmitSuccess }, ref) =>{
         try {
             const response = await axiosInstance.get(url);
             if(response.data){
-              dispatch(setdescription(response.data.description));
+              dispatch(setdescription(response.data.description.content));
             }
             
             LoaderClose();

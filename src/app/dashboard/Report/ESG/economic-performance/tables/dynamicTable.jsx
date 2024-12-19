@@ -48,7 +48,7 @@ const DynamicTable = ({ data, columns,title }) => {
                 <td className="p-4 block md:table-cell text-center text-[12px] border-r border-t border-gray-300">{item.loc}</td>
                 <td className="p-4 block md:table-cell text-center text-[12px] border-r border-t border-gray-300">{item.total_communicated}</td>
                 <td className="p-4 block md:table-cell text-center text-[12px] border-r border-t border-gray-300">{item.total_region}</td>
-                <td className="p-4 block md:table-cell text-center text-[12px] border-r border-t border-gray-300">{item.percentage.toFixed(2)}%</td>
+                <td className="p-4 block md:table-cell text-center text-[12px] border-r border-t border-gray-300">{item.percentage}%</td>
               </tr>
             ))
           )}

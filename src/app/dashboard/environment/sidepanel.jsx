@@ -90,7 +90,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     }
   }, [activeTab]);
   return (
-    <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-l h-full">
+    <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md  h-full">
       <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
           <button className="flex items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
@@ -178,7 +178,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   "Energy consumption outside of the organization" ||
                 activeTab === "Energy Intensity" ||
                 activeTab === "Reduction of energy consumption" ||
-                activeTab === "Management of Material topic energy" ||
+                activeTab === "Management of Material topic energy" || 
+                activeTab === "Standards, methodologies, assumptions and calculation tools used" ||  
                 activeTab ===
                   "Reductions in energy requirements of products and services"
                   ? "text-[#007EEF]"
@@ -308,6 +309,23 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       Reductions in energy requirements of products and services
                     </p>
                   </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Standards, methodologies, assumptions and calculation tools used"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Standards, methodologies, assumptions and calculation tools used"
+                        )
+                      }
+                    >
+                      Standards, methodologies, assumptions and calculation tools used
+                    </p>
+                  </div>
                 </div>
               </>
             )}
@@ -321,6 +339,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   "Management of significant waste related impacts" || activeTab === "Management of Material topic waste" ||
                 activeTab === "Waste generated" ||
                 activeTab === "Waste Diverted from disposal" ||
+                activeTab === "Data Collection Methodology" ||  
                 activeTab === "Waste diverted to disposal"
                   ? "text-blue-400"
                   : "bg-transparent text-[#727272]"
@@ -452,6 +471,20 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       Waste Directed to disposal
                     </p>
                   </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Data Collection Methodology"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Data Collection Methodology")
+                      }
+                    >
+                      Data Collection Methodology
+                    </p>
+                  </div>
                 </div>
               </>
             )}
@@ -510,6 +543,11 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       }
                     >
                       Management of Material topic
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                    Topic Disclosure
                     </p>
                   </div>
                   <div>

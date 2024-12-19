@@ -34,15 +34,11 @@ const Section25 = ({ section13_6_8Ref, data }) => {
           (val, index) => {
             return {
               "Rate of fatalities as a result of work-related injury ":
-                val.rate_of_fatalities_as_a_result_of_work_related_injury.toFixed(
-                  2
-                ),
+                val.rate_of_fatalities_as_a_result_of_work_related_injury,
               "Rate of high-consequence work-related injuries (excluding fatalities)":
-                val.rate_of_high_consequence_work_related_injuries_excluding_fatalities.toFixed(
-                  2
-                ),
+                val.rate_of_high_consequence_work_related_injuries_excluding_fatalities,
               "Rate of recordable work-related injuries ":
-                val.rate_of_recordable_work_related_injuries.toFixed(2),
+                val.rate_of_recordable_work_related_injuries,
             };
           }
         )
@@ -74,15 +70,11 @@ const Section25 = ({ section13_6_8Ref, data }) => {
         ].map((val, index) => {
           return {
             "Rate of fatalities as a result of work-related injury ":
-              val.rate_of_fatalities_as_a_result_of_work_related_injury.toFixed(
-                2
-              ),
+              val.rate_of_fatalities_as_a_result_of_work_related_injury,
             "Rate of high-consequence work-related injuries (excluding fatalities)":
-              val.rate_of_high_consequence_work_related_injuries_excluding_fatalities.toFixed(
-                2
-              ),
+              val.rate_of_high_consequence_work_related_injuries_excluding_fatalities,
             "Rate of recordable work-related injuries ":
-              val.rate_of_recordable_work_related_injuries.toFixed(2),
+              val.rate_of_recordable_work_related_injuries,
           };
         })
       : [

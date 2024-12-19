@@ -36,10 +36,10 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <MdOutlineDiversity1 className="w-5 h-5 mr-5" />
                 )}
                 {tab === "General" && (
-                  <MdOutlineDiversity2 className="w-5 h-5 mr-5" />
+                  <MdOutlineDiversity1 className="w-5 h-5 mr-5" />
                 )}
                 {tab === "Economic" && (
-                  <MdOutlineDiversity3 className="w-5 h-5 mr-5" />
+                  <MdOutlineDiversity1 className="w-5 h-5 mr-5" />
                 )}
                 <span className="mr-7">{tab}</span>
               </button>

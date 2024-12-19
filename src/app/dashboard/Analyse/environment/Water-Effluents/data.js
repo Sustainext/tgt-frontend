@@ -2,15 +2,15 @@
 export const columns1 = [
   {
     label: "Total water Consumption",
-    dataIndex: "total_water_consumption",
+    dataIndex: "water_consumption",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
       "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
   },
   {
-    label: "Water consumption from areas with water stress ",
-    dataIndex: "water_consumption_from_areas_with_water_stress",
+    label: "Water consumption from areas with water stress",
+    dataIndex: "water_consumption_water_stress",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
@@ -30,7 +30,7 @@ export const columns1 = [
 export const columns2 = [
   {
     label: "Name of water stress area",
-    dataIndex: "WaterStress",
+    dataIndex: "water_stress_area",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -39,33 +39,33 @@ export const columns2 = [
 
   {
     label: "Contribution %",
-    dataIndex: "consumption_percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Water Consumption",
-    dataIndex: "total_consumed",
+    dataIndex: "consumption",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns2.totalLabelKey = "Total Water Consumption";
 //Total Water Consumption by business operation
 export const columns3 = [
   {
     label: "Business Operation",
-    dataIndex: "Businessoperations",
+    dataIndex: "business_operation",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -73,28 +73,28 @@ export const columns3 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "consumption_percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Total water Consumption",
-    dataIndex: "total_consumed",
+    dataIndex: "consumption",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns3.totalLabelKey = "Total Water Consumption";
 //Total Water Consumption by Location
 export const columns4 = [
   {
@@ -107,33 +107,33 @@ export const columns4 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "consumption_contribution",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Total water Consumption",
-    dataIndex: "total_consumption",
+    dataIndex: "total_water_consumption",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns4.totalLabelKey = "Total Water Consumption";
 //Total Water Consumption by source
 export const columns5 = [
   {
     label: "Source",
-    dataIndex: "Source",
+    dataIndex: "source",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -141,7 +141,7 @@ export const columns5 = [
   },
   {
     label: "Water Type",
-    dataIndex: "WaterType",
+    dataIndex: "watertype",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -149,33 +149,33 @@ export const columns5 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "consumption_percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Total water Consumption",
-    dataIndex: "total_consumed",
+    dataIndex: "consumption",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns5.totalLabelKey = "Total Water Consumption";
 //Total Fresh Water withdrawal by business operation
 export const columns6 = [
   {
     label: "Business Operation",
-    dataIndex: "Businessoperations",
+    dataIndex: "business_operation",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -183,33 +183,33 @@ export const columns6 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "withdrawal_percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
-    label: "Total water withdrawal",
-    dataIndex: "Total Withdrawal",
+    label: "Total Water Withdrawal",
+    dataIndex: "withdrawal",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns6.totalLabelKey = "Total Water Withdrawal";
 //Total Fresh Water withdrawal by source (from water stress area)
 export const columns7 = [
   {
     label: "Source",
-    dataIndex: "Source",
+    dataIndex: "source",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -217,35 +217,35 @@ export const columns7 = [
   },
   {
     label: "Name of Water Stress Area",
-    dataIndex: "WaterStress",
+    dataIndex: "water_stress",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Water Type",
-    dataIndex: "WaterType",
+    dataIndex: "water_type",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Contribution %",
-    dataIndex: "withdrawal_percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Total water withdrawal",
-    dataIndex: "Total Withdrawal",
+    dataIndex: "total_withdrawal",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -253,7 +253,7 @@ export const columns7 = [
   },
 
 ];
-
+columns7.totalLabelKey = "Total Water Withdrawal from areas with water stress";
 //Total Fresh Water withdrawal by Location/Country
 export const columns8 = [
   {
@@ -266,34 +266,34 @@ export const columns8 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "withdrawal_contribution",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Total water Withdrawal",
-    dataIndex: "total_withdrawal",
+    dataIndex: "total_water_withdrawal",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns8.totalLabelKey = "Total Water Withdrawal";
 //Total Water withdrawal by Water type
 export const columns9 = [
 
   {
     label: "Water Type",
-    dataIndex: "Watertype",
+    dataIndex: "water_type",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -301,7 +301,7 @@ export const columns9 = [
   },
   {
     label: "Source",
-    dataIndex: "Source",
+    dataIndex: "source",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -309,33 +309,33 @@ export const columns9 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "withdrawal_percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Total water Consumption",
-    dataIndex: "total_consumed",
+    dataIndex: "total_water_withdrawal",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns9.totalLabelKey = "Total Water Withdrawal";
 //Water withdrawal from third-parties
 export const columns10 = [
   {
     label: "Source of Water withdrawal from third party",
-    dataIndex: "Source",
+    dataIndex: "source",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -343,21 +343,21 @@ export const columns10 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "withdrawal_percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Water Withdrawal",
-    dataIndex: "Total Withdrawal",
+    dataIndex: "quantity",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -377,33 +377,33 @@ export const columns11 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "discharge_contribution",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Total water Discharge",
-    dataIndex: "total_discharge",
+    dataIndex: "total_water_discharge",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "unit",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns11.totalLabelKey = "Total Water Discharge";
 //Total Water Discharge by source and type of water
 export const columns12 = [
   {
     label: "Source",
-    dataIndex: "Source",
+    dataIndex: "source",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -411,7 +411,7 @@ export const columns12 = [
   },
   {
     label: "Type of water",
-    dataIndex: "WaterType",
+    dataIndex: "water_type",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -426,26 +426,26 @@ export const columns12 = [
   },
   {
     label: "Total water Discharge",
-    dataIndex: "discharge_percentage",
+    dataIndex: "total_water_discharge",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns12.totalLabelKey = "Total Water Discharge";
 //Total Water Discharge (from water stress area) by Business Operation
 export const columns13 = [
   {
     label: "Name of Water Stress Area",
-    dataIndex: "WaterStress",
+    dataIndex: "water_stress",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -453,7 +453,7 @@ export const columns13 = [
   },
   {
     label: "Business Operation",
-    dataIndex: "Businessoperations",
+    dataIndex: "business_operation",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -461,34 +461,34 @@ export const columns13 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "discharge_percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Total water Discharge",
-    dataIndex: "Total Discharge",
+    dataIndex: "total_discharge",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns13.totalLabelKey = "Total Water Discharge";
 //Total Water Discharge by Business Operation
 export const columns14 = [
 
   {
     label: "Business Operation",
-    dataIndex: "Businessoperations",
+    dataIndex: "business_operation",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -496,33 +496,33 @@ export const columns14 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "discharge_percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Total water Discharge",
-    dataIndex: "Total Discharge",
+    dataIndex: "discharge",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns14.totalLabelKey = "Total Water Discharge";
 //Total Water Discharge by Water type (from water stress area)
 export const columns15 = [
   {
     label: "Name of Water Stress Area",
-    dataIndex: "WaterStress",
+    dataIndex: "water_stress",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -530,7 +530,7 @@ export const columns15 = [
   },
   {
     label: "Type of water",
-    dataIndex: "Watertype",
+    dataIndex: "water_type",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -538,33 +538,33 @@ export const columns15 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "discharge_percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Total water Discharge",
-    dataIndex: "Total Discharge",
+    dataIndex: "total_discharge",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns15.totalLabelKey = "Total Water Discharge";
 //Third-party Water discharge sent to use for other organizations
 export const columns16 = [
   {
     label: "Volume of third-party water send  to use for other organizations",
-    dataIndex: "Volume",
+    dataIndex: "volume",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -572,7 +572,7 @@ export const columns16 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "Discharge Percentage",
+    dataIndex: "contribution",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
@@ -580,19 +580,19 @@ export const columns16 = [
 
   {
     label: "Units",
-    dataIndex: "Units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns16.totalLabelKey = "Total Water Consumption";
 //Change in water storage
 export const columns17 = [
   {
     label: "Change in water storage",
-    dataIndex: "WaterStorage",
+    dataIndex: "change_in_water_storage",
     headerClass:
       "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -607,3 +607,4 @@ export const columns17 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   }
 ];
+columns17.totalLabelKey = "Total Water Consumption";

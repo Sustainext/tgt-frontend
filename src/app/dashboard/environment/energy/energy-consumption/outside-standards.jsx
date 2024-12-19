@@ -58,7 +58,7 @@ const uiSchema = {
       "ui:title":
         "Please report the standards used while compiling the information for Energy Consumption outside the organization.",
       "ui:Gri": "GRI 302-2b",
-      "ui:widget": "TextareaWidgetnew", // Use your custom widget for QuantityUnit
+      "ui:widget": "TextareaWidgetnew", 
       "ui:options": {
         label: false,
       },
@@ -67,7 +67,7 @@ const uiSchema = {
       "ui:title":
         "Please report the methodologies used while compiling the information for Energy Consumption outside the organization.",
       "ui:Gri": "GRI 302-2b",
-      "ui:widget": "TextareaWidgetnew", // Use your custom widget for QuantityUnit
+      "ui:widget": "TextareaWidgetnew", 
       "ui:options": {
         label: false,
       },
@@ -76,7 +76,7 @@ const uiSchema = {
       "ui:title":
         "Please report the assumptions used while compiling the information for Energy Consumption outside the organization.",
       "ui:Gri": "GRI 302-2b",
-      "ui:widget": "TextareaWidgetnew", // Use your custom widget for QuantityUnit
+      "ui:widget": "TextareaWidgetnew", 
       "ui:options": {
         label: false,
       },
@@ -86,7 +86,7 @@ const uiSchema = {
       "ui:title":
         "Please report the calculation tools used while compiling the information for Energy Consumption outside the organization.",
       "ui:Gri": "GRI 302-2b",
-      "ui:widget": "TextareaWidgetnew", // Use your custom widget for QuantityUnit
+      "ui:widget": "TextareaWidgetnew", 
       "ui:options": {
         label: false,
       },

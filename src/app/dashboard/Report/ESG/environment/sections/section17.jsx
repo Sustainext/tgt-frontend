@@ -43,7 +43,7 @@ const Section17=({section12_3_3Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterDischargeBySource = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Units,
                 };
               } else {
@@ -52,7 +52,7 @@ const Section17=({section12_3_3Ref,data})=>{
         
           'Water Type': val.Watertype,
           'Contribution %': val.discharge_percentage+"%",
-          'Total Water Consumption': val.total_consumed.toFixed(2),
+          'Total Water Consumption': val.total_consumed,
           Unit: val.units
                 });
               }
@@ -87,14 +87,14 @@ const Section17=({section12_3_3Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterDischargeByBusiness = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Units,
                 };
               } else {
                 acc.push({
                   "Business Operation": val.Businessoperations,
           'Contribution %': val.discharge_percentage+"%",
-          'Total water withdrawal': val['Total Withdrawal'].toFixed(2),
+          'Total water withdrawal': val['Total Withdrawal'],
           "Unit": val.Units
                 });
               }
@@ -126,14 +126,14 @@ const Section17=({section12_3_3Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterDischargeByLocation = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Unit,
                 };
               } else {
                 acc.push({
                   "Location/country": val.location,
                   'Contribution %': val.discharge_contribution+"%",
-                  'Total water withdrawal': val.total_discharge.toFixed(2),
+                  'Total water withdrawal': val.total_discharge,
                   "Unit": val.unit
                 });
               }
@@ -165,7 +165,7 @@ const Section17=({section12_3_3Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterDischargeByBusinessOperation = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Units,
                 };
               } else {
@@ -173,7 +173,7 @@ const Section17=({section12_3_3Ref,data})=>{
                   "Name of Water Stress Area": val.WaterStress,
             "Business Operation":val.Businessoperations,
           "Contribution %":val.discharge_percentage+"%",
-          'Total water Discharge': val['Total Discharge'].toFixed(2),
+          'Total water Discharge': val['Total Discharge'],
           "Unit": val.Units
                 });
               }
@@ -205,7 +205,7 @@ const Section17=({section12_3_3Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterDischargeByStressArea = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Units,
                 };
               } else {
@@ -213,7 +213,7 @@ const Section17=({section12_3_3Ref,data})=>{
                   "Name of Water Stress Area": val.WaterStress,
             "Type of water":val.WaterType,
           "Contribution %":val.discharge_percentage+"%",
-          'Total water Discharge': val['Total Discharge'].toFixed(2),
+          'Total water Discharge': val['Total Discharge'],
           "Unit": val.Units
                 });
               }
@@ -324,7 +324,7 @@ Water discharge (from water stress areas) by water type
 Total Water Discharge by Water type (from water stress area)
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column5} data={data5} consumption="Total Water Consumption" unit={"Megalitre"} total={'212123545'}/>
+<WaterTable columns={column5} data={data5} consumption="Total Water Consumption" unit={waterDischargeByStressArea.unit} total={waterDischargeByStressArea.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">

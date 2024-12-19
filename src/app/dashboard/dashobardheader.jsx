@@ -23,7 +23,7 @@ const DashboardHeader = () => {
   const { logout, userDetails } = useAuth(); // Get userDetails from Auth context
   const router = useRouter();
   const profileRef = useRef(null);
-
+  const drawerRef = useRef(null);
   // Redux selectors
   const text1 = useSelector((state) => state.header.headertext1);
   const text2 = useSelector((state) => state.header.headertext2);
@@ -161,7 +161,20 @@ const DashboardHeader = () => {
 
     return () => observer.disconnect();
   }, []);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+        setDropdownVisible(false); // Close drawer when clicking outside
+      }
+    };
 
+    // Attach event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Cleanup event listener
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <>
       <div className="flex bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-4 w-full mx-2 z-[1000]">
@@ -235,7 +248,11 @@ const DashboardHeader = () => {
                 </div>
               </div>
               {dropdownVisible && (
-                <div className="w-[220px] absolute -right-[2px] mt-3 bg-white border border-gray-300 rounded shadow-lg">
+                <div
+                  ref={drawerRef}
+                  className="w-[220px] absolute -right-[2px] mt-3 bg-white border border-gray-300 rounded shadow-lg"
+                  onMouseEnter={() => setDropdownVisible(true)} // Prevent closing when mouse enters dropdown
+                >
                   <div className="self-stretch bg-white rounded shadow flex-col justify-start items-start flex">
                     <div className="self-stretch h-[45px] flex-col justify-start items-start flex">
                       <div className="self-stretch px-4 py-1 justify-start items-center inline-flex border-b-2 border-gray-300">

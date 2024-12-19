@@ -13,7 +13,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 302-1 Energy consumption within the organization
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-black mb-4">
               Compilation requirement:
             </p>
@@ -48,18 +48,11 @@ export const Energydata = [
               sold.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   {
     category: ["2"],
@@ -81,7 +74,7 @@ export const Energydata = [
             Sustainable Development Goal 7: Ensure access to affordable,
             reliable, sustainable and modern energy for all
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 7.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, increase substantially the share of renewable energy in
@@ -103,18 +96,11 @@ export const Energydata = [
               Energy intensity measured in terms of primary energy and GDP
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal7"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal7",
   },
   {
     category: ["3"],
@@ -137,7 +123,7 @@ export const Energydata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[606px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -165,18 +151,11 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["4"],
@@ -198,7 +177,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production patterns
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of
@@ -216,18 +195,11 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal12"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal12",
   },
   {
     category: ["5"],
@@ -249,7 +221,7 @@ export const Energydata = [
             Sustainable Development Goal 13: Take urgent action to combat
             climate change and its impacts
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 13.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Strengthen resilience and adaptive capacity to climate-related
@@ -274,18 +246,11 @@ export const Energydata = [
               risk reduction strategies
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal13"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal3",
   },
   {
     category: ["6"],
@@ -296,7 +261,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             New employee hires and employee turnover
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">GRI Guidance:</p>
             <p className="text-[11px] text-[#727272] mb-2">
               An organization can use the following age groups:
@@ -317,6 +282,7 @@ export const Energydata = [
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   {
     category: ["7"],
@@ -338,7 +304,7 @@ export const Energydata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               End all forms of discrimination against all women and girls
@@ -381,7 +347,7 @@ export const Energydata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -440,7 +406,7 @@ export const Energydata = [
             Sustainable Development Goal 10: Reduce inequality within and among
             countries
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 10.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Ensure equal opportunity and reduce inequalities of outcome,
@@ -475,7 +441,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             New employee hires and employee turnover
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Data reported under this disclosure provide a measure of an
@@ -524,7 +490,7 @@ export const Energydata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, end preventable deaths of newborns and children under 5
@@ -572,7 +538,7 @@ export const Energydata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Eliminate all forms of violence against all women and girls in the
@@ -625,7 +591,7 @@ export const Energydata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -662,7 +628,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             New employee hires and employee turnover
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Data reported under this disclosure provide a measure of an
@@ -704,7 +670,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 302-2 Energy consumption outside of the organization
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -762,18 +728,11 @@ export const Energydata = [
               sells, and the end-of-life treatment of products.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   {
     category: ["16"],
@@ -788,7 +747,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 302-3 Energy intensity
           </p>
-          <div className="h-[678px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -855,18 +814,11 @@ export const Energydata = [
               to other organizations.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   {
     category: ["17"],
@@ -881,7 +833,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 302-4 Reduction of energy consumption
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -943,18 +895,11 @@ export const Energydata = [
               travelled or per time unit (hour, average working day)
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   {
     category: ["18"],
@@ -970,7 +915,7 @@ export const Energydata = [
             Disclosure 302-5 Reductions in energy requirements of products and
             services
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#727272] mb-2">
               The description of how the organization interacts with water can
               include information on specific catchments where water is
@@ -1021,18 +966,11 @@ export const Energydata = [
               travelled or per time unit (hour, average working day).
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   //  screen one//
   {
@@ -1055,7 +993,7 @@ export const Energydata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.9</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, reduce the global maternal mortality ratio to less than
@@ -1130,18 +1068,11 @@ export const Energydata = [
               national and global health risks
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal3"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal3",
   },
   {
     category: ["20"],
@@ -1163,7 +1094,7 @@ export const Energydata = [
             Sustainable Development Goal 6: Ensure availability and sustainable
             management of water and sanitation for all
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, improve water quality by reducing pollution, eliminating
@@ -1218,18 +1149,11 @@ export const Energydata = [
               communities in water and sanitation management
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal6"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal6",
   },
   {
     category: ["21"],
@@ -1251,7 +1175,7 @@ export const Energydata = [
             Sustainable Development Goal 11: Make cities and human settlements
             inclusive, safe, resilient and sustainable
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 11.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, reduce the adverse per capita environmental impact of
@@ -1271,18 +1195,11 @@ export const Energydata = [
               PM10) in cities (population weighted)
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal11"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal11",
   },
   {
     category: ["22"],
@@ -1304,7 +1221,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production patterns
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, achieve the environmentally sound management of chemicals
@@ -1337,18 +1254,11 @@ export const Energydata = [
               National recycling rate, tons of material recycled
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal12"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal12",
   },
   // screen two //
 
@@ -1374,7 +1284,7 @@ export const Energydata = [
             forests, combat desertification, and halt and reverse land
             degradation and halt biodiversity loss
           </p>
-          <div className="h-[570px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 15</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, ensure the conservation, restoration and sustainable use
@@ -1394,18 +1304,11 @@ export const Energydata = [
               type
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
-              href="https://sdgs.un.org/goals/goal15"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal15",
   },
   {
     category: ["24"],
@@ -1422,7 +1325,7 @@ export const Energydata = [
             impacts
           </p>
 
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#727272] mb-2">
               When reporting on this disclosure, the organization can specify
               the types of inputs and outputs.
@@ -1503,18 +1406,11 @@ export const Energydata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12521"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
   {
     category: ["25"],
@@ -1530,7 +1426,7 @@ export const Energydata = [
             Disclosure 306-2 Management of significant waste related impacts
           </p>
 
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#727272] mb-2">
               Actions, including circularity measures, to prevent waste
               generation and to manage significant impacts from waste generated
@@ -1636,18 +1532,11 @@ export const Energydata = [
               its value chain.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12521"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
   {
     category: ["26"],
@@ -1663,7 +1552,7 @@ export const Energydata = [
             Disclosure 306-3 Waste generated
           </p>
 
-          <div className="h-[680px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -1727,18 +1616,11 @@ export const Energydata = [
               assurance, or audits of waste-related data.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12521"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
   {
     category: ["27"],
@@ -1754,7 +1636,7 @@ export const Energydata = [
             Disclosure 306-4 Waste diverted from disposal
           </p>
 
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -1790,10 +1672,7 @@ export const Energydata = [
                 The materials that are present in the waste (e.g., biomass,
                 metals, non-metallic minerals, plastics, textiles)
               </li>
-              <li className="text-[11px] text-[#727272]">
-                The materials that are present in the waste (e.g., biomass,
-                metals, non-metallic minerals,plastics, textiles).
-              </li>
+           
             </ul>
             <p className="text-[13px] text-[#222222] mb-2">
               Guidance for Disclosures 306-4-b and 306-4-c
@@ -1835,18 +1714,11 @@ export const Energydata = [
               assurance, or audits of waste-related data.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12521"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
   {
     category: ["28"],
@@ -1862,7 +1734,7 @@ export const Energydata = [
             Disclosure 306-5 Waste directed to disposal
           </p>
 
-          <div className="h-[684px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -1939,18 +1811,11 @@ export const Energydata = [
               collectors, external assurance, or audits of waste-related data.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12521"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
   // Water section//
   {
@@ -1973,7 +1838,7 @@ export const Energydata = [
             Sustainable Development Goal 6: Ensure availability and sustainable
             management of water and sanitation for all
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, improve water quality by reducing pollution, eliminating
@@ -2045,18 +1910,11 @@ export const Energydata = [
               communities in water and sanitation management.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal6"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal6",
   },
   {
     category: ["30"],
@@ -2078,7 +1936,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production pattern
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 12.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, achieve the environmentally sound management of chemicals
@@ -2103,18 +1961,11 @@ export const Energydata = [
               (b) Proportion of hazardous waste treated, by type of treatment
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal12"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal12",
   },
   {
     category: ["31"],
@@ -2130,7 +1981,7 @@ export const Energydata = [
             Disclosure 303-1 Interactions with water as a shared resource
           </p>
 
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#727272] mb-2">
               The description of how the organization interacts with water can
               include information on specific catchments where water is
@@ -2275,18 +2126,11 @@ export const Energydata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12488"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   {
     category: ["32"],
@@ -2301,7 +2145,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-2 Management of water discharge related impacts
           </p>
-          <div className="h-[640px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#727272] mb-2">
               Water quality refers to the physical, chemical, biological, and
               taste-related characteristics of water. It is a measure of water
@@ -2316,18 +2160,11 @@ export const Energydata = [
               receiving waterbody.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12488"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   {
     category: ["33"],
@@ -2342,7 +2179,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-3 Water withdrawal
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#222222] mb-2">
               Compilation Requirement:
             </p>
@@ -2404,18 +2241,11 @@ export const Energydata = [
               organization’s water stewardship efforts and practices.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12488"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   {
     category: ["34"],
@@ -2430,7 +2260,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-4 Water discharge
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#222222] mb-2">
               Compilation Requirement:
             </p>
@@ -2495,18 +2325,11 @@ export const Energydata = [
               facility in areas with water stress.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12488"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   {
     category: ["035"],
@@ -2521,7 +2344,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-5 Water consumption
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#222222] mb-2">
               Guidance for Disclosure 303-5
             </p>
@@ -2555,18 +2378,11 @@ export const Energydata = [
               availability.
             </p>
           </div>
-          <div className="mt-5">
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12488"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   // Materials sdg and gri content
   // screen one //
@@ -2589,7 +2405,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -2612,18 +2428,11 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["36"],
@@ -2645,7 +2454,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production pattern
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of
@@ -2663,18 +2472,11 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal12"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal12",
   },
   {
     category: ["37"],
@@ -2690,7 +2492,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-5 Water consumption
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#222222] mb-2">
               Renewable Materials:
             </p>
@@ -2710,7 +2512,7 @@ export const Energydata = [
               years, such as Fossil Fuel, Glass, Fuel.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">
-              Internally sourced materials
+            Externally sourced materials
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
@@ -2744,18 +2546,11 @@ export const Energydata = [
               manipulation, such as reporting it as ‘dry weight’.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+    link: "https://globalreporting.org/pdf.ashx?id=12456&page=1",
   },
   // section two//
   {
@@ -2772,7 +2567,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 301-2 Recycled input materials used
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#222222] mb-2">Input materials</p>
 
             <p className="text-[11px] text-[#727272] mb-2">
@@ -2823,18 +2618,11 @@ export const Energydata = [
               units.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://globalreporting.org/pdf.ashx?id=12456&page=1",
   },
   {
     category: ["39"],
@@ -2855,7 +2643,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[650px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -2878,18 +2666,11 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["40"],
@@ -2911,7 +2692,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production pattern
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of
@@ -2952,18 +2733,11 @@ export const Energydata = [
               (b) proportion of hazardous waste treated, by type of treatment
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal12"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+   
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal12",
   },
   // section 3//
   {
@@ -2980,12 +2754,12 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 301-3 Reclaimed products and their packaging materials
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#727272] mb-2">
               <b>Reclaimed products</b> are products that have been used and
               then collected, processed, and marketed for reuse. Reclaimed
               products can be reused in their original form or they can be used
-              to manufacture new products.
+              to manufacture new products.Examples include refurbished electronics, recycled clothing, reclaimed wood, and reclaimed building materials.
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
@@ -3006,8 +2780,8 @@ export const Energydata = [
                 Exclude rejects and recalls of products
               </li>
               <li className="text-[11px] text-[#727272]">
-                Calculate the percentage of reclaimed products and their
-                packaging materials
+              · calculate the percentage of reclaimed products and their packaging materials
+              for each product category using the following formula:
               </li>
             </ul>
             <p className="text-[11px] text-[#727272] mb-2">
@@ -3023,18 +2797,11 @@ export const Energydata = [
               packaging separately.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+    link: "https://globalreporting.org/pdf.ashx?id=12456&page=1",
   },
   {
     category: ["42"],
@@ -3055,7 +2822,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -3078,18 +2845,11 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["43"],
@@ -3111,7 +2871,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production pattern
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of
@@ -3130,18 +2890,10 @@ export const Energydata = [
             </p>
           </div>
 
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal12"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal12",
   },
   {
     category: ["45"],
@@ -3163,7 +2915,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production patterns
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 12.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, achieve the environmentally sound management of chemicals
@@ -3196,18 +2948,11 @@ export const Energydata = [
               National recycling rate, tons of material recycled
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal12"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal12",
   },
   {
     category: ["46"],
@@ -3229,7 +2974,7 @@ export const Energydata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[629px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.9</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, reduce the global maternal mortality ratio to less than
@@ -3303,18 +3048,11 @@ export const Energydata = [
               national and global health risks
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal3"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal3",
   },
   {
     category: ["47"],
@@ -3336,7 +3074,7 @@ export const Energydata = [
             Sustainable Development Goal 6: Ensure availability and sustainable
             management of water and sanitation for all
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, improve water quality by reducing pollution, eliminating
@@ -3380,28 +3118,22 @@ export const Energydata = [
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
             <p className="text-[11px] text-[#727272] mb-4">
-              Amount of water- and sanitation-related official development
-              assistance that is part of a government-coordinated spending plan
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-              Support and strengthen the participation of local communities in
-              improving water and sanitation management
+              Proportion of local administrative units with established and
+              operational policies and procedures for participation of local
+              communities in water and sanitation management
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal6"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal6",
   },
   {
     category: ["48"],
@@ -3423,7 +3155,7 @@ export const Energydata = [
             Sustainable Development Goal 11: Make cities and human settlements
             inclusive, safe, resilient and sustainable
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 11.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, reduce the adverse per capita environmental impact of
@@ -3443,18 +3175,11 @@ export const Energydata = [
               PM10) in cities (population weighted)
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal11"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal11",
   },
   {
     category: ["49"],
@@ -3476,7 +3201,7 @@ export const Energydata = [
             Sustainable Development Goal 6: Ensure availability and sustainable
             management of water and sanitation for all
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, protect and restore water-related ecosystems, including
@@ -3503,28 +3228,22 @@ export const Energydata = [
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
             <p className="text-[11px] text-[#727272] mb-4">
-              Amount of water- and sanitation-related official development
-              assistance that is part of a government-coordinated spending plan
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-              Support and strengthen the participation of local communities in
-              improving water and sanitation management
+              Proportion of local administrative units with established and
+              operational policies and procedures for participation of local
+              communities in water and sanitation management
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://sdgs.un.org/goals/goal6"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal6",
   },
   {
     category: ["50"],
@@ -3539,7 +3258,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-5 Water consumption
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#222222] mb-2">
               Guidance for Disclosure 303-5
             </p>
@@ -3574,18 +3293,11 @@ export const Energydata = [
               availability.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12488"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   {
     category: ["51"],
@@ -3601,7 +3313,7 @@ export const Energydata = [
           Disclosure 301-1 Materials used by weight or volume
           </p>
 
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#222222] mb-2">
             Renewable Materials:
             </p>
@@ -3617,11 +3329,15 @@ export const Energydata = [
             <p className="text-[11px] text-[#727272] mb-2">
             Materials that cannot be replenished naturally over time. They are typically formed from geological processes that take millions of years, such as Fossil Fuel, Glass, Fuel.
 </p>
-            <p className="text-[11px] text-[#222222] mb-2">Internally sourced materials  </p>
+            <p className="text-[11px] text-[#222222] mb-2">Internally sourced materials</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Materials that the company makes itself.
+            Materials that the company makes itself. 
             </p>
-            <p className="text-[11px] text-[#222222] mb-2">Estimation  </p>
+            <p className="text-[11px] text-[#222222] mb-2">Externally sourced materials</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Materials that the company buys from other companies. 
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Estimation</p>
             <p className="text-[11px] text-[#727272] mb-2">
             Process of making an approximate calculation of something.
             </p>
@@ -3638,17 +3354,10 @@ export const Energydata = [
             The reported usage data are to reflect the material in its original state, and not to be presented with further data manipulation, such as reporting it as ‘dry weight’.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] pt-1 flex"
-              href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
-              target="_blank"
-            >
-            Learn more <MdChevronRight className="text-lg pt-1" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://globalreporting.org/pdf.ashx?id=12456&page=1",
   },
 ];

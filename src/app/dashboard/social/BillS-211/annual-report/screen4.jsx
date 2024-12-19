@@ -1,89 +1,124 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose  } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from '../../../../../Context/page';
+import { Oval } from "react-loader-spinner";
 
-const Screenfour = ({ nextStep, prevStep }) => {
+const Screenfour = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportType }) => {
     const { open } = GlobalState();
   const [error, setError] = useState({});
   const [reportradio, setReportnradio] = useState("");
-  const [reportingdescription, setReportingdescription] = useState();
+  const [reportingdescription, setReportingdescription] = useState("");
   const [reportingentity, setReportingentity] = useState("");
   const [reportingentityone, setReportingentityone] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [selectedOptionsone, setSelectedOptionsone] = useState([]);
-  const isMounted = useRef(true);
-  const [data, setData] = useState();
-//   const fetchBillsreport = async () => {
-//     LoaderOpen(); // Assume this is to show some loading UI
 
-//     try {
-//       const response = await axios.get(
-//         `${
-//           process.env.REACT_APP_BACKEND_URL
-//         }/annual_report/?screen=4&user_id=${localStorage.getItem("user_id")}`
-//       );
-
-//       // If the request is successful but you specifically want to handle 404 inside here
-//       if (response.status === 200) {
-//         // Assuming you want to do something with the data for successful requests
-//         // setData(response.data); // Uncomment or modify as needed
-//         console.log(response.data, "bills 2114");
-//         // You might want to setData or handle the error differently here
-//         setData(response.data.risk_identified_8);
-//         setReportnradio(response.data.risk_identified_8);
-//         setReportingdescription(response.data.additional_info_entity_10);
-//         setReportingentity(response.data.risk_aspects_description_8_1);
-//         setReportingentityone(response.data.risk_activaties_description_9);
-//         if (response.data.risk_aspects_8_1 == null) {
-//           setSelectedOptions([]);
-//         } else {
-//           setSelectedOptions(response.data.risk_aspects_8_1);
-//         }
-//         if (response.data.risk_activaties_9 == null) {
-//           setSelectedOptionsone([]);
-//         } else {
-//           setSelectedOptionsone(response.data.risk_activaties_9);
-//         }
-//         LoaderClose();
-//       }
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         // Here you can check if error.response exists and then further check the status code
-//         if (error.response && error.response.status === 404) {
-//           // Handle 404 specifically
-//           console.log(error.response.data, "bills 211");
-//           // You might want to setData or handle the error differently here
-//           setData(error.response.data.detail); // Adjust according to your needs
-//         } else {
-//           // Handle other errors
-//           console.error("An error occurred:", error.message);
-//         }
-//       } else {
-//         // Handle non-Axios errors
-//         console.error("An unexpected error occurred:", error);
-//       }
-//       LoaderClose();
-//     }
-//   };
-//   useEffect(() => {
-//     if (isMounted.current) {
-//       fetchBillsreport();
-//       isMounted.current = false;
-//     }
-//     return () => {
-//       isMounted.current = false;
-//     };
-//   }, []);
-  const coNextStep = () => {
-    nextStep();
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
   };
+  const token = getAuthToken();
+
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  
+  const fetchBillSfour = async () => {
+    LoaderOpen(); // Assume this is to show some loading UI
+
+    try {
+      const response = await axiosInstance.get(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/annual-report/?screen=4&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        axiosConfig
+      );
+      // If the request is successful but you specifically want to handle 404 inside here
+      if (response.status === 200) {
+        setReportnradio(response.data.risk_identified_8);
+        setReportingdescription(response.data.additional_info_entity_10);
+        setReportingentity(response.data.risk_aspects_description_8_1);
+        setReportingentityone(response.data.risk_activaties_description_9);
+        if (response.data.risk_aspects_8_1 == null) {
+          setSelectedOptions([]);
+        } else {
+          setSelectedOptions(response.data.risk_aspects_8_1);
+        }
+        if (response.data.risk_activaties_9 == null) {
+          setSelectedOptionsone([]);
+        } else {
+          setSelectedOptionsone(response.data.risk_activaties_9);
+        }
+        LoaderClose();
+      }
+      else{
+        LoaderClose();
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } finally {
+      LoaderClose();
+    }
+  };
+  useEffect(() => {
+    // if (isMounted.current) {
+    
+    //   isMounted.current = false;
+    // }
+    // return () => {
+    //   isMounted.current = false;
+    // };
+    if(reportType=="Organization"){
+      if(selectedOrg&&year){
+        fetchBillSfour();
+      }
+    }
+    else{
+      if(selectedOrg&&year&&selectedCorp){
+        fetchBillSfour();
+      }
+    }
+    setReportnradio("");
+        setReportingdescription("");
+        setReportingentity("");
+        setReportingentityone("");
+        setSelectedOptionsone([])
+        setSelectedOptions([])
+    
+  }, [selectedCorp,selectedOrg,year]);
+ 
   const options = [
     {
       label: "The sector or industry it operates in",
@@ -192,23 +227,22 @@ const Screenfour = ({ nextStep, prevStep }) => {
     }
   };
 
-  const handleeditClick = () => {
-    setIsClicked(!isClicked);
-    // fetchBillsreport();
-  };
+  
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
-    console.log(event.target.value, "setReportnradio");
+    setError((prev) => ({ ...prev, reportradio: "" }));
   };
   const handleReportingdescription = (event) => {
     setReportingdescription(event.target.value);
-    console.log(event.target.value, "setReportingdescription");
+    
   };
   const handleReportingentityone = (event) => {
     setReportingentityone(event.target.value);
+    setError((prev) => ({ ...prev, reportingentityone: "" }));
   };
   const handleReportingentity = (event) => {
     setReportingentity(event.target.value);
+    setError((prev) => ({ ...prev, reportingentity: "" }));
   };
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -216,76 +250,62 @@ const Screenfour = ({ nextStep, prevStep }) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const handleupdateform = async () => {
-    let newentities;
-    let newentitiestwo;
+  
+  const submitForm = async () => {
+    let unewentities;
+    let unewentitiestwo;
 
-    if (selectedOptions.includes("other")) {
+    if (selectedOptions.includes("Other, please specify:")) {
       // If it's an array and "other" is one of the options
       // Check if reportingentity is not filled out
-      newentities = reportingentity;
+      unewentities = reportingentity;
     } else {
-      newentities = null;
+      unewentities = null;
     }
-    if (selectedOptionsone.includes("other")) {
+    if (selectedOptionsone.includes("Other, please specify:")) {
       // If it's an array and "other" is one of the options
       // Check if reportingentity is not filled out
-      newentitiestwo = reportingentityone;
+      unewentitiestwo = reportingentityone;
     } else {
-      newentitiestwo = null;
+      unewentitiestwo = null;
     }
-    LoaderOpen();
+    try{
+      LoaderOpen();
 
-    const sandData = {
-      risk_identified_8: reportradio,
-      risk_aspects_8_1: selectedOptions,
-      risk_activaties_9: selectedOptionsone,
-      risk_aspects_description_8_1: newentities,
-      risk_activaties_description_9: newentitiestwo,
-      additional_info_entity_10: reportingdescription,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
+      const sendData = {
+        risk_identified_8: reportradio,
+        risk_aspects_8_1: selectedOptions,
+        risk_activaties_9: selectedOptionsone,
+        risk_aspects_description_8_1: unewentities,
+        risk_activaties_description_9: unewentitiestwo,
+        additional_info_entity_10: reportingdescription?reportingdescription:null,
+        organization_id: selectedOrg,
+        corporate_id: selectedCorp?selectedCorp:null,
+        year: year
+      };
+      const response= await axiosInstance
       .post(
-        `${process.env.REACT_APP_BACKEND_URL}/annual_report/?screen=4`,
-        sandData
+        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=4`,
+        sendData,
+        axiosConfig
       )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("Details updated successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          setIsClicked(false);
-        //   fetchBillsreport();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      })
-      .catch((error) => {
-        const errorMessage = "All form question fields are required.";
-        toast.error(errorMessage, {
-          // Corrected 'error.message'
+      if (response.status == "200") {
+        toast.success("Data added successfully", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        nextStep();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -294,72 +314,21 @@ const Screenfour = ({ nextStep, prevStep }) => {
           theme: "colored",
         });
         LoaderClose();
+      }
+    } catch (error) {
+      LoaderClose();
+      console.error("API call failed:", error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
-  };
-  const submitForm = async () => {
-    let unewentities;
-    let unewentitiestwo;
-
-    if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      // Check if reportingentity is not filled out
-      unewentities = reportingentity;
-    } else {
-      unewentities = null;
     }
-    if (selectedOptionsone.includes("other")) {
-      // If it's an array and "other" is one of the options
-      // Check if reportingentity is not filled out
-      unewentitiestwo = reportingentityone;
-    } else {
-      unewentitiestwo = null;
-    }
-    LoaderOpen();
-
-    const sandData = {
-      risk_identified_8: reportradio,
-      risk_aspects_8_1: selectedOptions,
-      risk_activaties_9: selectedOptionsone,
-      risk_aspects_description_8_1: unewentities,
-      risk_activaties_description_9: unewentitiestwo,
-      additional_info_entity_10: reportingdescription,
-      user_id: parseInt(localStorage.getItem("user_id")),
-    };
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/annual_report/?screen=4`,
-        sandData
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          console.log(response.status);
-          toast.success("added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          nextStep();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      });
-    //console.log(sandData);
   };
   const continueToNextStep = () => {
     let newErrors = {};
@@ -376,14 +345,14 @@ const Screenfour = ({ nextStep, prevStep }) => {
       newErrors.checkboxesone = "Please select at least one option.";
     }
 
-    if (selectedOptions.includes("other")) {
+    if (selectedOptions.includes("Other, please specify:")) {
       // If it's an array and "other" is one of the options
       if (!reportingentity) {
         // Check if reportingentity is not filled out
         newErrors.reportingentity = "Please enter a description";
       }
     }
-    if (selectedOptionsone.includes("other")) {
+    if (selectedOptionsone.includes("Other, please specify:")) {
       // If it's an array and "other" is one of the options
       if (!reportingentityone) {
         // Check if reportingentity is not filled out
@@ -397,590 +366,19 @@ const Screenfour = ({ nextStep, prevStep }) => {
       setError(newErrors);
     }
   };
-  const validateForm = () => {
-    let newErrors = {};
-
-    if(reportradio === "Yes" || reportradio === "Yesone"){
-      if (selectedOptions.length === 0) {
-        newErrors.checkboxes = "Please select at least one option.";
-      }
-    }
-    if (selectedOptionsone.length === 0) {
-      newErrors.checkboxesone = "Please select at least one option.";
-    }
-
-    if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      if (!reportingentity) {
-        // Check if reportingentity is not filled out
-        newErrors.reportingentity = "Please enter a description";
-      }
-    }
-    if (selectedOptionsone.includes("other")) {
-      // If it's an array and "other" is one of the options
-      if (!reportingentityone) {
-        // Check if reportingentity is not filled out
-        newErrors.reportingentityone = "Please enter a description";
-      }
-    }
-    return newErrors;
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length === 0) {
-      setError({}); // Clear any existing errors
-      await handleupdateform(); // Proceed with the form submission
-    } else {
-      setError(formErrors); // Update the state with the validation errors
-    }
-  };
+  
 
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center shadow-sm border-gray-100">
-        <div
-          className={`${
-            open ? "w-[95%] " : "w-[95%]"
-          } flex justify-between items-center`}
-        >
-          <div className="text-left mb-5 ml-6 mt-4">
-            <p className="text-[11px]">Social</p>
-           <p className="gradient-text text-[22px] h-[24px]">
-              Bill S-211 - Fighting Bill Forced Labour and Child Labour in
-              Supply Chains Act
-            </p>
-          </div>
-        </div>
-      </div>
-      {isClicked ? (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-              <div className="w-[80%] relative">
-                <p className="font-bold  text-md mx-4 "> Annual Report</p>
-              </div>
-              <div className="text-md flex">
-                <div> 4/8</div>
-                <div className="flex">
-                  <MdClose
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    onClick={handleeditClick}
-                  />
-                  <IoSaveOutline
-                     className="text-[17.5px] ml-2 mt-1 cursor-pointer"
-
-                    // onClick={handleSubmit}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mx-4 mt-8">
-            <form className="w-[90%] text-left">
-              <div className="mb-5">
-                <label
-                  className="block text-gray-700 text-[15px] mb-2 ml-1"
-                  htmlFor="username"
-                >
-                  8.Has the entity identified parts of its activities and supply
-                  chains that carry a risk of forced labour or child labour
-                  being used?*
-                </label>
-                <div className="relative mb-1">
-                  <div className="mb-3">
-                     {" "}
-                    <input
-                      type="radio"
-                      id="Yes"
-                      name="radio"
-                      value="Yes"
-                      checked={reportradio === "Yes"}
-                      onChange={handleReportnradio}
-                    />
-                     {" "}
-                    <label htmlFor="Yes" className="text-[15px] text-gray-700">
-                      Yes, we have identified risks to the best of our knowledge
-                      and will continue to strive to identify emerging risks.
-                    </label>
-                    <br />
-                  </div>
-                  <div className="mb-3">
-                     {" "}
-                    <input
-                      type="radio"
-                      id="Yesone"
-                      name="radio"
-                      value="Yesone"
-                      checked={reportradio === "Yesone"}
-                      onChange={handleReportnradio}
-                    />
-                     {" "}
-                    <label
-                      htmlFor="Yesone"
-                      className="text-[15px] text-gray-700"
-                    >
-                      Yes, we have started the process of identifying risks, but
-                      there are still gaps in our assessments.
-                    </label>
-                    <br />
-                  </div>
-                  <div className="mb-3">
-                     {" "}
-                    <input
-                      type="radio"
-                      id="No"
-                      name="radio"
-                      value="No"
-                      checked={reportradio === "No"}
-                      onChange={handleReportnradio}
-                    />
-                     {" "}
-                    <label htmlFor="No" className="text-[15px] text-gray-700 ">
-                      No, we have not started the process of identifying risks.
-                    </label>
-                    <br />
-                  </div>
-                </div>
-                {error.reportradio && (
-                  <p className="text-red-500 ml-1">{error.reportradio}</p>
-                )}
-              </div>
-              {(reportradio === "Yes" || reportradio === "Yesone") && (
+     
+     <div className="mx-4 mt-2">
+     <form className="w-[80%] text-left">
                   <div className="mb-5">
                     <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
+                      className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                       htmlFor="username"
                     >
-                      8.1 If yes, has the entity identified forced labour or
-                      child labour risks related to any of the following aspects
-                      of its activities and supply chains? Select all that
-                      apply. *
-                    </label>
-                    <div className="grid grid-cols-2">
-                      {options.map((option, index) => (
-                        <div key={index} className="mb-3 ml-2">
-                          <label className="text-[14px] text-gray-600">
-                            <input
-                              type="checkbox"
-                              value={option.value}
-                              checked={selectedOptions.includes(option.value)}
-                              onChange={handleCheckboxChange}
-                              className="mr-3"
-                            />
-                            {option.label}
-                          </label>
-                        </div>
-                      ))}
-
-                      {selectedOptions.includes("other") && (
-                        <div className="mb-5">
-                          <input
-                            type="text"
-                            placeholder="Enter a description..."
-                            className={`${
-                              open ? "w-[90%]" : "w-[90%]"
-                            } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                            value={reportingentity}
-                            onChange={handleReportingentity}
-                          ></input>
-                          {error.reportingentity && (
-                            <div className="text-red-500 ml-1">
-                              {error.reportingentity}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                    {error.checkboxes && (
-                      <div className="text-red-500 ml-1">
-                        {error.checkboxes}
-                      </div>
-                    )}
-                  </div>
-  )}
-              <div className="mb-5">
-                <label
-                  className="block text-gray-700 text-[15px] mb-2 ml-1"
-                  htmlFor="username"
-                >
-                  9. Has the entity identified forced labour or child labour
-                  risks in its activities and supply chains related to any of
-                  the following sectors and industries? Select all that apply. *
-                </label>
-                <div className="grid grid-cols-2">
-                  {optionsone.map((optionsone, index) => (
-                    <div key={index} className="mb-3 ml-2">
-                      <label className="text-[14px] text-gray-600">
-                        <input
-                          type="checkbox"
-                          value={optionsone.value}
-                          checked={selectedOptionsone.includes(
-                            optionsone.value
-                          )}
-                          onChange={handleCheckboxChangeone}
-                          className="mr-3"
-                        />
-                        {optionsone.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  {selectedOptionsone.includes("other") && (
-                    <div className="mb-5">
-                      <input
-                        type="text"
-                        placeholder="Enter a description..."
-                        className={`${
-                          open ? "w-[90%]" : "w-[90%]"
-                        } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                        value={reportingentityone}
-                        onChange={handleReportingentityone}
-                      ></input>
-                      {error.reportingentityone && (
-                        <div className="text-red-500 ml-1">
-                          {error.reportingentityone}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-                {error.checkboxesone && (
-                  <div className="text-red-500 ml-1">{error.checkboxesone}</div>
-                )}
-              </div>
-              <div className="mb-5">
-                <label
-                  className="block text-gray-700 text-[15px] mb-2"
-                  html
-                  htmlFor="industryCheckbox"
-                >
-                  10. Please provide additional information on the parts of the
-                  entity’s activities and supply chains that carry a risk of
-                  forced labour or child labour being used, as well as the steps
-                  that the entity has taken to assess and manage that risk (if
-                  applicable) (1,500 character limit).
-                </label>
-                <textarea
-                  id="countriesOfOperation"
-                  name="countriesOfOperation"
-                  placeholder="Enter a description..."
-                  className={`${
-                    open ? "w-[90%]" : "w-[90%]"
-                  }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                  value={reportingdescription}
-                  // value={formData.countriesOfOperation}
-                  // onChange={handleInputChange}
-                  rows={5}
-                  onChange={handleReportingdescription} // Specify the number of rows to determine the initial height
-                />
-                {/* <div className="my-1">
-                  {error.reportingdescription && (
-                    <p className="text-red-500">{error.reportingdescription}</p>
-                  )}
-                </div> */}
-              </div>
-            </form>
-            <div className="w-[90%] mb-5">
-              <div className="float-right">
-                <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                  disabled
-                >
-                  &lt; Previous
-                </button>
-                <button
-                  type="button"
-                  disabled
-                  className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white"
-                >
-                  {" "}
-                  Next &gt;
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="container mx-auto mt-5">
-            <div className="flex">
-              <div className="w-[85%]">
-                <p className="font-bold  text-md mx-4 "> Annual Report</p>
-              </div>
-              <div className="text-md flex">
-                <div> 4/8</div>
-                <div>
-                  {data !== null ? (
-                    <MdOutlineModeEditOutline
-                    className="text-[15.5px] ml-2 mt-1 cursor-pointer"
-
-                      onClick={handleeditClick}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mx-4 mt-8">
-            {data !== null ? (
-              <>
-                <form className="w-[90%] text-left">
-                  <div className="mb-5">
-                    <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
-                      htmlFor="username"
-                    >
-                      8.Has the entity identified parts of its activities and
-                      supply chains that carry a risk of forced labour or child
-                      labour being used?*
-                    </label>
-                    <div className="relative mb-1">
-                      <div className="mb-3">
-                         {" "}
-                        <input
-                          type="radio"
-                          id="Yes"
-                          name="radio"
-                          value="Yes"
-                          checked={reportradio === "Yes"}
-                          onChange={handleReportnradio}
-
-                        />
-                         {" "}
-                        <label
-                          htmlFor="Yes"
-                          className="text-[15px] text-gray-700"
-                        >
-                          Yes, we have identified risks to the best of our
-                          knowledge and will continue to strive to identify
-                          emerging risks.
-                        </label>
-                        <br />
-                      </div>
-                      <div className="mb-3">
-                         {" "}
-                        <input
-                          type="radio"
-                          id="Yesone"
-                          name="radio"
-                          value="Yesone"
-                          checked={reportradio === "Yesone"}
-                          onChange={handleReportnradio}
-
-                        />
-                         {" "}
-                        <label
-                          htmlFor="Yesone"
-                          className="text-[15px] text-gray-700"
-                        >
-                          Yes, we have started the process of identifying risks,
-                          but there are still gaps in our assessments.
-                        </label>
-                        <br />
-                      </div>
-                      <div className="mb-3">
-                         {" "}
-                        <input
-                          type="radio"
-                          id="No"
-                          name="radio"
-                          value="No"
-                          checked={reportradio === "No"}
-                          onChange={handleReportnradio}
-
-                        />
-                         {" "}
-                        <label
-                          htmlFor="No"
-                          className="text-[15px] text-gray-700 "
-                        >
-                          No, we have not started the process of identifying
-                          risks.
-                        </label>
-                        <br />
-                      </div>
-                    </div>
-                    {error.reportradio && (
-                      <p className="text-red-500 ml-1">{error.reportradio}</p>
-                    )}
-                  </div>
-                  {(reportradio === "Yes" || reportradio === "Yesone") && (
-                  <div className="mb-5">
-                    <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
-                      htmlFor="username"
-                    >
-                      8.1 If yes, has the entity identified forced labour or
-                      child labour risks related to any of the following aspects
-                      of its activities and supply chains? Select all that
-                      apply. *
-                    </label>
-                    <div className="grid grid-cols-2">
-                      {options.map((option, index) => (
-                        <div key={index} className="mb-3 ml-2">
-                          <label className="text-[14px] text-gray-600">
-                            <input
-                              type="checkbox"
-                              value={option.value}
-                              checked={selectedOptions.includes(option.value)}
-                              onChange={handleCheckboxChange}
-                              className="mr-3"
-
-                            />
-                            {option.label}
-                          </label>
-                        </div>
-                      ))}
-
-                      {selectedOptions.includes("other") && (
-                        <div className="mb-5">
-                          <input
-                            type="text"
-                            placeholder="Enter a description..."
-                            className={`${
-                              open ? "w-[90%]" : "w-[90%]"
-                            } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                            value={reportingentity}
-                            onChange={handleReportingentity}
-
-                          ></input>
-                          {error.reportingentity && (
-                            <div className="text-red-500 ml-1">
-                              {error.reportingentity}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                    {error.checkboxes && (
-                      <div className="text-red-500 ml-1">
-                        {error.checkboxes}
-                      </div>
-                    )}
-                  </div>
-  )}
-                  <div className="mb-5">
-                    <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
-                      htmlFor="username"
-                    >
-                      9. Has the entity identified forced labour or child labour
-                      risks in its activities and supply chains related to any
-                      of the following sectors and industries? Select all that
-                      apply. *
-                    </label>
-                    <div className="grid grid-cols-2">
-                      {optionsone.map((optionsone, index) => (
-                        <div key={index} className="mb-3 ml-2">
-                          <label className="text-[14px] text-gray-600">
-                            <input
-                              type="checkbox"
-                              value={optionsone.value}
-                              checked={selectedOptionsone.includes(
-                                optionsone.value
-                              )}
-                              onChange={handleCheckboxChangeone}
-
-                              className="mr-3"
-                            />
-                            {optionsone.label}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                    <div>
-                      {selectedOptionsone.includes("other") && (
-                        <div className="mb-5">
-                          <input
-                            type="text"
-                            placeholder="Enter a description..."
-                            className={`${
-                              open ? "w-[90%]" : "w-[90%]"
-                            } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                            value={reportingentityone}
-                            onChange={handleReportingentityone}
-
-                          ></input>
-                        </div>
-                      )}
-                    </div>
-                    {error.checkboxesone && (
-                      <div className="text-red-500 ml-1">
-                        {error.checkboxesone}
-                      </div>
-                    )}
-                  </div>
-                  <div className="mb-5">
-                    <label
-                      className="block text-gray-700 text-[15px] mb-2"
-                      html
-                      htmlFor="industryCheckbox"
-                    >
-                      10. Please provide additional information on the parts of
-                      the entity’s activities and supply chains that carry a
-                      risk of forced labour or child labour being used, as well
-                      as the steps that the entity has taken to assess and
-                      manage that risk (if applicable) (1,500 character limit).
-                    </label>
-                    <textarea
-                      id="countriesOfOperation"
-                      name="countriesOfOperation"
-                      placeholder="Enter a description..."
-                      className={`${
-                        open ? "w-[90%]" : "w-[90%]"
-                      }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                      value={reportingdescription}
-                      // value={formData.countriesOfOperation}
-                      // onChange={handleInputChange}
-                      rows={5}
-                      onChange={handleReportingdescription}
-                      // Specify the number of rows to determine the initial height
-                    />
-                    {/* <div className="my-1">
-                      {error.reportingdescription && (
-                        <p className="text-red-500">
-                          {error.reportingdescription}
-                        </p>
-                      )}
-                    </div> */}
-                  </div>
-                </form>
-                <div className="w-[90%] mb-5">
-                  <div className="float-right">
-                    <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                      onClick={prevStep}
-                    >
-                      &lt; Previous
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={coNextStep}
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
-                    >
-                      {" "}
-                      Next &gt;
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <form className="w-[90%] text-left">
-                  <div className="mb-5">
-                    <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
-                      htmlFor="username"
-                    >
-                      8.Has the entity identified parts of its activities and
+                      8. Has the entity identified parts of its activities and
                       supply chains that carry a risk of forced labour or child
                       labour being used?*
                     </label>
@@ -998,7 +396,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                          {" "}
                         <label
                           htmlFor="Yes"
-                          className="text-[15px] text-gray-700"
+                          className="text-[14px] text-gray-700"
                         >
                           Yes, we have identified risks to the best of our
                           knowledge and will continue to strive to identify
@@ -1019,7 +417,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                          {" "}
                         <label
                           htmlFor="Yesone"
-                          className="text-[15px] text-gray-700"
+                          className="text-[14px] text-gray-700"
                         >
                           Yes, we have started the process of identifying risks,
                           but there are still gaps in our assessments.
@@ -1039,7 +437,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                          {" "}
                         <label
                           htmlFor="No"
-                          className="text-[15px] text-gray-700 "
+                          className="text-[14px] text-gray-700 "
                         >
                           No, we have not started the process of identifying
                           risks.
@@ -1048,13 +446,13 @@ const Screenfour = ({ nextStep, prevStep }) => {
                       </div>
                     </div>
                     {error.reportradio && (
-                      <p className="text-red-500 ml-1">{error.reportradio}</p>
+                      <p className="text-red-500 ml-1 text-[12px] mt-1">{error.reportradio}</p>
                     )}
                   </div>
                   {(reportradio === "Yes" || reportradio === "Yesone") && (
                   <div className="mb-5">
                     <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
+                      className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                       htmlFor="username"
                     >
                       8.1 If yes, has the entity identified forced labour or
@@ -1064,12 +462,12 @@ const Screenfour = ({ nextStep, prevStep }) => {
                     </label>
                     <div className="grid grid-cols-2">
                       {options.map((option, index) => (
-                        <div key={index} className="mb-3 ml-2">
+                        <div key={index} className="mb-1 ml-2">
                           <label className="text-[14px] text-gray-600">
                             <input
                               type="checkbox"
-                              value={option.value}
-                              checked={selectedOptions.includes(option.value)}
+                              value={option.label}
+                              checked={selectedOptions.includes(option.label)}
                               onChange={handleCheckboxChange}
                               className="mr-3"
                             />
@@ -1078,19 +476,19 @@ const Screenfour = ({ nextStep, prevStep }) => {
                         </div>
                       ))}
 
-                      {selectedOptions.includes("other") && (
+                      {selectedOptions.includes("Other, please specify:") && (
                         <div className="mb-5">
                           <input
                             type="text"
                             placeholder="Enter a description..."
                             className={`${
                               open ? "w-[90%]" : "w-[90%]"
-                            } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
+                            } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                             value={reportingentity}
                             onChange={handleReportingentity}
                           ></input>
                           {error.reportingentity && (
-                            <div className="text-red-500 ml-1">
+                            <div className="text-red-500 ml-1 text-[12px] mt-1">
                               {error.reportingentity}
                             </div>
                           )}
@@ -1098,7 +496,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                       )}
                     </div>
                     {error.checkboxes && (
-                      <div className="text-red-500 ml-1">
+                      <div className="text-red-500 ml-1 text-[12px] mt-1">
                         {error.checkboxes}
                       </div>
                     )}
@@ -1106,7 +504,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
   )}
                   <div className="mb-5">
                     <label
-                      className="block text-gray-700 text-[15px] mb-2 ml-1"
+                      className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                       htmlFor="username"
                     >
                       9. Has the entity identified forced labour or child labour
@@ -1114,15 +512,15 @@ const Screenfour = ({ nextStep, prevStep }) => {
                       of the following sectors and industries? Select all that
                       apply. *
                     </label>
-                    <div className="grid grid-cols-2">
+                    <div className="grid grid-cols-2 gap-1">
                       {optionsone.map((optionsone, index) => (
-                        <div key={index} className="mb-3 ml-2">
+                        <div key={index} className="ml-2">
                           <label className="text-[14px] text-gray-600">
                             <input
                               type="checkbox"
-                              value={optionsone.value}
+                              value={optionsone.label}
                               checked={selectedOptionsone.includes(
-                                optionsone.value
+                                optionsone.label
                               )}
                               onChange={handleCheckboxChangeone}
                               className="mr-3"
@@ -1133,19 +531,19 @@ const Screenfour = ({ nextStep, prevStep }) => {
                       ))}
                     </div>
                     <div>
-                      {selectedOptionsone.includes("other") && (
+                      {selectedOptionsone.includes("Other, please specify:") && (
                         <div className="mb-5">
                           <input
                             type="text"
                             placeholder="Enter a description..."
                             className={`${
                               open ? "w-[90%]" : "w-[90%]"
-                            } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
+                            } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                             value={reportingentityone}
                             onChange={handleReportingentityone}
                           ></input>
                           {error.reportingentityone && (
-                            <div className="text-red-500 ml-1">
+                            <div className="text-red-500 ml-1 text-[12px] mt-1">
                               {error.reportingentityone}
                             </div>
                           )}
@@ -1153,14 +551,14 @@ const Screenfour = ({ nextStep, prevStep }) => {
                       )}
                     </div>
                     {error.checkboxesone && (
-                      <div className="text-red-500 ml-1">
+                      <div className="text-red-500 ml-1 text-[12px] mt-1">
                         {error.checkboxesone}
                       </div>
                     )}
                   </div>
                   <div className="mb-5">
                     <label
-                      className="block text-gray-700 text-[15px] mb-2"
+                      className="block text-gray-700 text-[14px] font-[500] mb-2"
                       html
                       htmlFor="industryCheckbox"
                     >
@@ -1168,14 +566,14 @@ const Screenfour = ({ nextStep, prevStep }) => {
                       the entity’s activities and supply chains that carry a
                       risk of forced labour or child labour being used, as well
                       as the steps that the entity has taken to assess and
-                      manage that risk (if applicable) (1,500 character limit).
+                      manage that risk (if applicable).
                     </label>
                     <textarea
                       id="countriesOfOperation"
                       name="countriesOfOperation"
                       placeholder="Enter a description..."
                       className={`${
-                        open ? "w-[90%]" : "w-[90%]"
+                        open ? "w-full" : "w-full"
                       }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                       value={reportingdescription}
                       // value={formData.countriesOfOperation}
@@ -1192,7 +590,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                     </div> */}
                   </div>
                 </form>
-                <div className="w-[90%] mb-5">
+                <div className="w-[80%] mb-5">
                   <div className="float-right">
                     <button
                       className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
@@ -1204,19 +602,30 @@ const Screenfour = ({ nextStep, prevStep }) => {
                     <button
                       type="button"
                       onClick={continueToNextStep}
-                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white"
+                      disabled={!(selectedOrg && year)}
+                      className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                        reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
+                       }`}
                     >
                       {" "}
                       Next &gt;
                     </button>
                   </div>
                 </div>
-              </>
-            )}
-          </div>
-        </>
-      )}
 
+     </div>
+     {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };

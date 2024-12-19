@@ -1,25 +1,27 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import { GlobalState } from '../../../../../Context/page';
-import dateWidget from '../../../../shared/widgets/Input/dateWidget';
-import selectWidget from '../../../../shared/widgets/Select/selectWidget';
-import inputWidget from '../../../../shared/widgets/Input/inputWidget';
-import CustomFileUploadWidget from '../../../../shared/widgets/CustomFileUploadWidget';
-import AssignToWidget from '../../../../shared/widgets/assignToWidget';
-import CustomSelectInputWidget from '../../../../shared/widgets/CustomSelectInputWidget';
-import RemoveWidget from '../../../../shared/widgets/RemoveWidget';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
+import { GlobalState } from "../../../../../Context/page";
+import dateWidget from "../../../../shared/widgets/Input/dateWidget";
+import selectWidget from "../../../../shared/widgets/Select/selectWidget";
+import inputWidget from "../../../../shared/widgets/Input/inputWidget";
+import CustomFileUploadWidget from "../../../../shared/widgets/CustomFileUploadWidget";
+import AssignToWidget from "../../../../shared/widgets/assignToWidget";
+import CustomSelectInputWidget from "../../../../shared/widgets/CustomSelectInputWidget";
+import RemoveWidget from "../../../../shared/widgets/RemoveWidget";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
-import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
-import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
+import { Oval } from "react-loader-spinner";
+import selectWidget3 from "../../../../shared/widgets/Select/selectWidget3";
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget";
 import axiosInstance from "../../../../utils/axiosMiddleware";
+import WaterinputWidget from "../../../../shared/widgets/Input/WaterinputWidget";
+import SelectdisableWidget from "../../../../shared/widgets/Select/selectdisableWidget";
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -30,39 +32,57 @@ const widgets = {
   RemoveWidget: RemoveWidget,
   selectWidget3: selectWidget3,
   inputnumberWidget: inputnumberWidget,
+  WaterinputWidget: WaterinputWidget,
+  SelectdisableWidget: SelectdisableWidget,
 };
-
-const view_path = 'gri-environment-water-303-3b-water_withdrawal_areas_water_stress'
-const client_id = 1
-const user_id = 1
-
+const view_path =
+  "gri-environment-water-303-3b-water_withdrawal_areas_water_stress";
+const client_id = 1;
+const user_id = 1;
 const schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
-        Discharge: {
+      Discharge: {
         type: "string",
         title: "Do you withdraw water from third-parties?",
-        enum: ['Yes', 'No'],
-        tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
+        enum: ["Yes", "No"],
+        tooltiptext:
+          "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
       },
       Source: {
         type: "string",
         title: "Source",
-        enum: ['Surface Water', 'Ground water','Sea water','Municipal water','Third party water','Other'],
-        tooltiptext: "Indicate where does the third-party withdraw water from? ",
+        enum: [
+          "Surface Water",
+          "Ground water",
+          "Sea water",
+          "Municipal water",
+          "Third party water",
+          "Other (please specify)",
+        ],
+        tooltiptext:
+          "Indicate where does the third-party withdraw water from? ",
       },
       Quantity: {
         type: "string",
         title: "Quantity",
-        tooltiptext: "Please specify the amount of water withdrawal from third-parties"
+        tooltiptext:
+          "Please specify the amount of water withdrawal from third-parties",
       },
       Unit: {
         type: "string",
         title: "Unit",
-        enum: ['Litre', 'Megalitre', 'Cubic meter', 'Kilolitre', 'Million litres  per day'],
-        tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge."
+        enum: [
+          "Litre",
+          "Megalitre",
+          "Cubic meter",
+          "Kilolitre",
+          "Million litres  per day",
+        ],
+        tooltiptext:
+          "Select the correct unit corresponding to the quantity of water withdrawal/discharge.",
       },
 
       AssignTo: {
@@ -79,81 +99,107 @@ const schema = {
         title: "Remove",
       },
       // Define other properties as needed
-    }
-  }
+    },
+  },
 };
 
 const uiSchema = {
-
   items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'Discharge','Source', 'Quantity', 'Unit',  'AssignTo', 'FileUpload', 'Remove'
+    classNames: "fieldset",
+    "ui:order": [
+      "Discharge",
+      "Source",
+      "Quantity",
+      "Unit",
+      "AssignTo",
+      "FileUpload",
+      "Remove",
     ],
     Discharge: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
         label: false,
       },
     },
     Source: {
-        'ui:widget': 'selectWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
+      "ui:widget": "SelectdisableWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      Quantity: {
-        'ui:widget': 'inputnumberWidget',
-        'ui:options': {
-          label: false
-        },
+    },
+    Quantity: {
+      "ui:widget": "WaterinputWidget",
+      "ui:options": {
+        label: false,
       },
+    },
     Unit: {
-      'ui:widget': 'selectWidget3',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget3",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
 
     AssignTo: {
       "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "FileUploadWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false
+      "ui:options": {
+        label: false,
       },
     },
-      'ui:options': {
+    "ui:options": {
       orderable: false,
       addable: false,
       removable: false,
-      layout: 'horizontal',
-    }
-  }
+      layout: "horizontal",
+    },
+  },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
 
+    if (!row.Discharge) {
+      rowErrors.Discharge = "Please select Yes or No.";
+    }
+    if (!row.Unit) {
+      rowErrors.Unit = "Unit  is required";
+    }
+    if (row.Discharge === "Yes") {
+      if (!row.Source) {
+        rowErrors.Source = "Source is required";
+      }
+      if (!row.Quantity) {
+        rowErrors.Quantity = "Quantity is required";
+      }
+    }
 
-
-const WaterstressQ2 = ({location, year, month}) => {
+    return rowErrors;
+  });
+};
+const WaterstressQ2 = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
+  const [enabledRows, setEnabledRows] = useState([]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const LoaderOpen = () => {
@@ -162,7 +208,6 @@ const WaterstressQ2 = ({location, year, month}) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
 
   const updateFormData = async () => {
     LoaderOpen();
@@ -231,6 +276,10 @@ const WaterstressQ2 = ({location, year, month}) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       const form_parent = response.data.form_data;
       setFormData(form_parent[0].data);
+      const initialEnabledRows = form_parent[0].data.map(
+        (item) => item.Discharge === "Yes"
+      );
+      setEnabledRows(initialEnabledRows);
     } catch (error) {
       console.error("API call failed:", error);
     } finally {
@@ -240,31 +289,59 @@ const WaterstressQ2 = ({location, year, month}) => {
   useEffect(() => {
     if (location && year && month) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false; 
     } else {
-      // Only show the toast if it has not been shown already
+     
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true; 
       }
     }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  }, [location, year, month]); 
   const handleChange = (e) => {
-    const newData = e.formData.map((item, index) => ({
-      ...item, // Ensure each item retains its structure
-    }));
-    setFormData(newData); // Update the formData with new values
+    const newData = e.formData.map((item, index) => {
+      const updatedItem = { ...item }; 
+
+      if (updatedItem.Discharge === "Yes") {
+        setEnabledRows((prev) => {
+          const newEnabledRows = [...prev];
+          newEnabledRows[index] = true; 
+          return newEnabledRows;
+        });
+      } else if (updatedItem.Discharge === "No") {
+        setEnabledRows((prev) => {
+          const newEnabledRows = [...prev];
+          newEnabledRows[index] = false; 
+          return newEnabledRows;
+        });
+        updatedItem.Source = ""; 
+        updatedItem.Quantity = "";
+        updatedItem.otherValue = ""; 
+      }
+      return updatedItem;
+    });
+    setFormData(newData); 
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-  
+    setEnabledRows((prev) => [...prev, false]); 
   };
- 
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
@@ -274,13 +351,15 @@ const WaterstressQ2 = ({location, year, month}) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
- 
+    setEnabledRows((prev) => prev.filter((_, i) => i !== index)); 
   };
-
+  useEffect(() => {
+    console.log("Enabled rows updated test", enabledRows);
+  }, [enabledRows]);
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"
@@ -289,13 +368,35 @@ const WaterstressQ2 = ({location, year, month}) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
+            formContext={{ enabledRows,validationErrors }}
             widgets={{
               ...widgets,
-
+              SelectdisableWidget: (props) => {
+                const match = props.id.match(/^root_(\d+)/);
+                const index = match ? parseInt(match[1], 10) : null;
+                const isEnabled = index !== null ? enabledRows[index] : false; // Get the enable state for the row
+                return (
+                  <SelectdisableWidget
+                    {...props}
+                    isEnabled={isEnabled} // Pass it as a prop if needed
+                  />
+                );
+              },
+              WaterinputWidget: (props) => {
+                const match = props.id.match(/^root_(\d+)/);
+                const index = match ? parseInt(match[1], 10) : null;
+                const isEnabled = index !== null ? enabledRows[index] : false; // Get the enable state for the row
+                return (
+                  <WaterinputWidget
+                    {...props}
+                    isEnabled={isEnabled} // Pass it as a prop if needed
+                  />
+                );
+              },
               RemoveWidget: (props) => {
                 const match = props.id.match(/^root_(\d+)/);
                 const index = match ? parseInt(match[1], 10) : null;
-    
+
                 return (
                   <RemoveWidget
                     {...props}
@@ -351,5 +452,4 @@ const WaterstressQ2 = ({location, year, month}) => {
     </>
   );
 };
-
 export default WaterstressQ2;
