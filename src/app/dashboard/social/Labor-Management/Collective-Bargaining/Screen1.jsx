@@ -55,6 +55,21 @@ const uiSchema = {
     ],
   },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.significantrisk) {
+      rowErrors.significantrisk = "This field is required";
+    }
+    if (!row.TypeofOperation) {
+      rowErrors.TypeofOperation = "This field is required";
+    }
+    if (!row.geographicareas) {
+      rowErrors.geographicareas = "This field is required";
+    }
+    return rowErrors;
+  });
+};
 const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const initialFormData = [
     {
@@ -66,6 +81,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
 
@@ -172,8 +188,18 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddCommittee = () => {
@@ -245,6 +271,7 @@ or collective bargaining may be violated or at significant risk."
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
             // formContext={{
             //   onRemove: handleRemoveCommittee,
             // }}
