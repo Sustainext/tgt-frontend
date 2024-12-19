@@ -253,7 +253,7 @@ export const columns7 = [
   },
 
 ];
-columns7.totalLabelKey = "Total Water Withdrawal";
+columns7.totalLabelKey = "Total Water Withdrawal from areas with water stress";
 //Total Fresh Water withdrawal by Location/Country
 export const columns8 = [
   {
@@ -364,7 +364,7 @@ export const columns10 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-columns10.totalLabelKey = "Total Water Withdrawal";
+
 //Total Water Discharge by Location
 export const columns11 = [
   {
