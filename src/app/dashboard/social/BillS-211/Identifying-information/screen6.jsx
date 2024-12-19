@@ -305,7 +305,7 @@ const Screensix = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
                     className="block text-gray-700 text-[14px] font-[500] mb-2"
                     htmlFor="industryCheckbox"
                   >
-                    9. Which of the following sectors or industries does the
+                    9. For entities only: Which of the following sectors or industries does the
                     entity operate in? Select all that apply *
                   </label>
                 </div>

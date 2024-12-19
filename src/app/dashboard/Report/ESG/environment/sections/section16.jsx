@@ -58,7 +58,7 @@ const Section16=({section12_3_2Ref,data})=>{
           (acc, val) => {
             if (val.Total !== undefined) {
               waterWithdrawlBySource = {
-                total: val.Total.toFixed(2),
+                total: val.Total,
                 unit: val.Units,
               };
             } else {
@@ -100,7 +100,7 @@ const Section16=({section12_3_2Ref,data})=>{
           (acc, val) => {
             if (val.Total !== undefined) {
               waterWithdrawlByBusinessOperation = {
-                total: val.Total.toFixed(2),
+                total: val.Total,
                 unit: val.Units,
               };
             } else {
@@ -139,14 +139,14 @@ const Section16=({section12_3_2Ref,data})=>{
           (acc, val) => {
             if (val.Total !== undefined) {
               waterWithdrawlByLocation = {
-                total: val.Total.toFixed(2),
+                total: val.Total,
                 unit: val.Unit,
               };
             } else {
               acc.push({
                 "Location/country": val.location,
           'Contribution %': val.withdrawal_contribution+"%",
-          'Total water withdrawal': val.total_withdrawal.toFixed(2),
+          'Total water withdrawal': val.total_withdrawal,
           "Unit": val.unit
               });
             }
@@ -179,7 +179,7 @@ const Section16=({section12_3_2Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterWithdrawlByWaterType = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Units,
                 };
               } else {
@@ -219,7 +219,7 @@ const Section16=({section12_3_2Ref,data})=>{
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterWithdrawlByThirdParties = {
-                  total: val.Total.toFixed(2),
+                  total: val.Total,
                   unit: val.Units,
                 };
               } else {

@@ -246,7 +246,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
                     className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                     htmlFor="username"
                   >
-                    4.Is this a revised version of a report already submitted
+                    4. Is this a revised version of a report already submitted
                     this reporting year?*
                   </label>
                   <div className="relative mb-1 flex">
@@ -325,7 +325,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
                       >
                         4.2 Describe the changes made to the original report,
                         including by listing the questions or sections that were
-                        revised (1,500 character limit)*
+                        revised*
                       </label>
                       <div className="relative">
                         <textarea

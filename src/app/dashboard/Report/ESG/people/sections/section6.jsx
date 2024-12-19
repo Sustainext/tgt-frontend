@@ -34,9 +34,9 @@ const Section6=({section13_1_5Ref,data})=>{
               
             {
               "Location":val.Location,
-              "Male":val.Male.toFixed(2),
-              "Female":val.Female.toFixed(2),
-              "Non-binary":val["Non-binary"].toFixed(2)
+              "Male":val.Male,
+              "Female":val.Female,
+              "Non-binary":val["Non-binary"]
           
           }
               

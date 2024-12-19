@@ -378,7 +378,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportT
                       className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                       htmlFor="username"
                     >
-                      8.Has the entity identified parts of its activities and
+                      8. Has the entity identified parts of its activities and
                       supply chains that carry a risk of forced labour or child
                       labour being used?*
                     </label>
@@ -566,7 +566,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportT
                       the entity’s activities and supply chains that carry a
                       risk of forced labour or child labour being used, as well
                       as the steps that the entity has taken to assess and
-                      manage that risk (if applicable) (1,500 character limit).
+                      manage that risk (if applicable).
                     </label>
                     <textarea
                       id="countriesOfOperation"

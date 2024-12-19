@@ -36,14 +36,14 @@ const Section25=({section12_5_2Ref,data})=>{
           (acc, val) => {
             if (val.total_waste_generated !== undefined) {
               wasteGeneratedByMaterial = {
-                total: val.total_waste_generated.toFixed(2),
+                total: val.total_waste_generated,
                 unit: val.units,
               };
             } else {
               acc.push({
                'Material Type':val.material_type, 
         'Contribution %':val.contribution+"%", 
-        "Total in Qty":val.total_waste.toFixed(2),
+        "Total in Qty":val.total_waste,
         'Unit':val.units
               });
             }
@@ -75,7 +75,7 @@ const Section25=({section12_5_2Ref,data})=>{
             (acc, val) => {
               if (val.total_waste_generated !== undefined) {
                 wasteGeneratedByLocation = {
-                  total: val.total_waste_generated.toFixed(2),
+                  total: val.total_waste_generated,
                   unit: val.units,
                 };
               } else {
@@ -83,7 +83,7 @@ const Section25=({section12_5_2Ref,data})=>{
                 'Location':val.location, 
         'Material Type':val.material_type, 
         'Contribution %':val.contribution+"%",
-        'Qty of total waste':val.total_waste.toFixed(2), 
+        'Qty of total waste':val.total_waste, 
         'Unit':val.units
                 });
               }
@@ -115,14 +115,14 @@ const Section25=({section12_5_2Ref,data})=>{
             (acc, val) => {
               if (val.total_waste_generated !== undefined) {
                 hazardousAndNonHazardousWasteComposition = {
-                  total: val.total_waste_generated.toFixed(2),
+                  total: val.total_waste_generated,
                   unit: val.units,
                 };
               } else {
                 acc.push({
                   'Total Waste by Category':val.material_type, 
                   'Contribution %':val.contribution+"%",
-                  'Total in Qty':val.total_waste.toFixed(2) ,
+                  'Total in Qty':val.total_waste ,
                   'Unit':val.units
                 });
               }
