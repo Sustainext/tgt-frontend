@@ -174,6 +174,36 @@ const uiSchema = {
     ],
   },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.RoutineHazard) {
+      rowErrors.RoutineHazard = "This field is required";
+    }
+    if (!row.NonRoutineHazard) {
+      rowErrors.NonRoutineHazard = "This field is required";
+    }
+    if (!row.Processforhazard) {
+      rowErrors.Processforhazard = "This field is required";
+    }
+    if (!row.Hierarchycontrols) {
+      rowErrors.Hierarchycontrols = "This field is required";
+    }
+    if (!row.Legalguideline) {
+      rowErrors.Legalguideline = "This field is required";
+    }
+    if (!row.Listlegal) {
+      rowErrors.Listlegal = "This field is required";
+    }
+    if (!row.ListStandards) {
+      rowErrors.ListStandards = "This field is required";
+    }
+    if (!row.VulnerableWorkers) {
+      rowErrors.VulnerableWorkers = "This field is required";
+    }
+    return rowErrors;
+  });
+};
 const Screen1 = ({location, year}) => {
   const initialFormData = [
     {
