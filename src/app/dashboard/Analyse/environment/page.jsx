@@ -11,7 +11,7 @@ import SupplierEnvironmentalImpact from  "./supplier-enironmental-assessment/pag
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,setMiddlename
 } from "../../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 
@@ -27,7 +27,7 @@ const environment = () => {
   useEffect(() => {
     dispatch(setHeadertext1("Analyse"));
     dispatch(setHeaderdisplay("block"));
-
+    dispatch(setMiddlename("Environment"));
     // Dynamically set header text 2 based on the active tab
     switch (activeTab) {
       case "Emissions":
