@@ -12,7 +12,7 @@ const SDGCards = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const isMounted = useRef(true);
   const [loopen, setLoOpen] = useState(false);
-  const { open } = GlobalState();
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
