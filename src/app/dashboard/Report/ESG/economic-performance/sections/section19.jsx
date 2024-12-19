@@ -41,9 +41,7 @@ const Section19 = ({ section11_5_4Ref }) => {
       // For each location, iterate over the array of employee data
       data[location].forEach((employeeData) => {
         const percentage = parseFloat(employeeData.percentage);
-        const formattedPercentage = percentage.endsWith(".00")
-          ? percentage.slice(0, -3)
-          : percentage;
+        const formattedPercentage = percentage
 
         // If the location is not already in the formattedData, initialize it
         if (!formattedData[location]) {
@@ -72,9 +70,7 @@ const Section19 = ({ section11_5_4Ref }) => {
       // For each location, iterate over the array of business partner data
       data[location].forEach((partnerData) => {
         const percentage = parseFloat(partnerData.percentage);
-        const formattedPercentage = percentage.endsWith(".00")
-          ? percentage.slice(0, -3)
-          : percentage;
+        const formattedPercentage = percentage
 
         // If the location is not already in the formattedData, initialize it
         if (!formattedData[location]) {
@@ -103,9 +99,7 @@ const Section19 = ({ section11_5_4Ref }) => {
       // For each location, iterate over the array of employee data
       data[location].forEach((employeeData) => {
         const percentage = parseFloat(employeeData.percentage);
-        const formattedPercentage = percentage.endsWith(".00")
-          ? percentage.slice(0, -3)
-          : percentage;
+        const formattedPercentage = percentage
 
         // If the location is not already in the formattedData, initialize it
         if (!formattedData[location]) {
