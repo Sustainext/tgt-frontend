@@ -1,74 +1,62 @@
+// app/api/climatiq/route.js
 import { NextResponse } from "next/server";
 
+const CLIMATIQ_API_KEY = process.env.CLIMATIQ_KEY;
+const BASE_URL = "https://api.climatiq.io";
+
+async function fetchClimatiqData(params) {
+  const { subcategory, page, region, year, source } = params;
+  const resultsPerPage = 500;
+
+  const url = source
+    ? `${BASE_URL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`
+    : `${BASE_URL}/data/v1/search?results_per_page=${resultsPerPage}&year=${year}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${CLIMATIQ_API_KEY}`,
+      Accept: "application/json",
+      "Content-type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Climatiq API error: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
 export async function GET(request) {
-  const searchParams = request.nextUrl.searchParams;
-
-  console.log(
-    "Incoming parameters:",
-    Object.fromEntries(searchParams.entries())
-  );
-
-  const baseURL = "https://api.climatiq.io";
-
   try {
-    const climatiqParams = new URLSearchParams();
-    climatiqParams.append(
-      "results_per_page",
-      searchParams.get("resultsPerPage") || "500"
-    );
-    climatiqParams.append("page", searchParams.get("page") || "1");
+    const { searchParams } = new URL(request.url);
+    const subcategory = searchParams.get("subcategory");
+    const page = searchParams.get("page") || 1;
+    const region = searchParams.get("region") || "*";
+    const year = searchParams.get("year");
+    const source = searchParams.get("source");
 
-    if (searchParams.get("year")) {
-      climatiqParams.append("year", searchParams.get("year"));
-    }
-
-    if (searchParams.get("region")) {
-      climatiqParams.append("region", searchParams.get("region"));
-    }
-
-    if (searchParams.get("category")) {
-      climatiqParams.append("category", searchParams.get("category"));
-    }
-
-    if (searchParams.get("source")) {
-      climatiqParams.append("source", searchParams.get("source"));
-    }
-
-    if (process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION) {
-      climatiqParams.append(
-        "data_version",
-        `^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`
+    if (!subcategory || !year) {
+      return NextResponse.json(
+        { error: "Missing required parameters" },
+        { status: 400 }
       );
     }
 
-    const url = `${baseURL}/data/v1/search?${climatiqParams.toString()}`;
-    console.log("Climatiq API URL:", url);
-
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+    const data = await fetchClimatiqData({
+      subcategory,
+      page,
+      region,
+      year,
+      source,
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Climatiq API Error:", {
-        status: response.status,
-        statusText: response.statusText,
-        errorData,
-      });
-      throw new Error(JSON.stringify(errorData));
-    }
-
-    const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error("API Route Error:", error);
+    console.error("Error fetching climatiq data:", error);
     return NextResponse.json(
-      { error: error.message || "Failed to fetch data from Climatiq" },
-      { status: 400 }
+      { error: "Failed to fetch climatiq data" },
+      { status: 500 }
     );
   }
 }
