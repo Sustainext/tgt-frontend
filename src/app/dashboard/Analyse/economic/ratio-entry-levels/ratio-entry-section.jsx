@@ -34,16 +34,12 @@ const Ratioentrysection = ({ selectedOrg, selectedCorp, year }) => {
 
       const formatcollectivebargaining = (data) => {
         return data.map((data) => {
-          const Male = parseFloat(data.Male).toFixed(2);
-          const formattedMale = Male.endsWith(".00") ? Male.slice(0, -3) : Male;
-          const Female = parseFloat(data.Female).toFixed(2);
-          const formattedFemale = Female.endsWith(".00")
-            ? Female.slice(0, -3)
-            : Female;
-          const Nonbinary = parseFloat(data["Non-binary"]).toFixed(2);
-          const formattedNonbinary = Nonbinary.endsWith(".00")
-            ? Nonbinary.slice(0, -3)
-            : Nonbinary;
+          const Male = parseFloat(data.Male);
+          const formattedMale = Male;
+          const Female = parseFloat(data.Female);
+          const formattedFemale = Female
+          const Nonbinary = parseFloat(data["Non-binary"]);
+          const formattedNonbinary = Nonbinary
           return {
             Location: data.Location,
             Male: formattedMale,

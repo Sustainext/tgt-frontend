@@ -130,7 +130,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       const roundedWasteGeneratedByMaterial = waste_generated_by_material.map(
         (item) => ({
           ...item,
-          total_waste: item.total_waste.toFixed(2),
+          total_waste: item.total_waste,
         })
       );
       roundedWasteGeneratedByMaterial.push({
@@ -138,7 +138,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
         contribution: "",
         totalrow: 2,
         total_waste:
-          waste_generated_by_material_total.total_waste_generated.toFixed(2),
+          waste_generated_by_material_total.total_waste_generated,
         units: "t (metric tons)",
       });
       setWastedata1(roundedWasteGeneratedByMaterial);
@@ -149,7 +149,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       const wastegeneratedbylocation = waste_generated_by_location.map(
         (item) => ({
           ...item,
-          total_waste: item.total_waste.toFixed(2),
+          total_waste: item.total_waste,
         })
       );
       wastegeneratedbylocation.push({
@@ -158,7 +158,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
         contribution: "",
         totalrow: 2,
         total_waste:
-          waste_generated_by_location_total.total_waste_generated.toFixed(2),
+          waste_generated_by_location_total.total_waste_generated,
         units: "t (metric tons)",
       });
       setWastedata2(wastegeneratedbylocation);
@@ -169,13 +169,13 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       const wastegeneratedbycategory =
         hazardous_and_non_hazardous_waste_composition.map((item) => ({
           ...item,
-          total_waste: item.total_waste.toFixed(2),
+          total_waste: item.total_waste,
         }));
       wastegeneratedbycategory.push({
         material_type: "Total",
         contribution: "",
         totalrow: 2,
-        total_waste: nonhazardous_total.total_waste_generated.toFixed(2),
+        total_waste: nonhazardous_total.total_waste_generated,
         units: "t (metric tons)",
       });
       setWastedata3(wastegeneratedbycategory);
@@ -186,7 +186,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       const wastedirectedtodisposalbymaterialtype =
         waste_directed_to_disposal_by_material_type.map((item) => ({
           ...item,
-          total_waste: item.total_waste.toFixed(2),
+          total_waste: item.total_waste,
         }));
       wastedirectedtodisposalbymaterialtype.push({
         disposal_method: "",
@@ -195,9 +195,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
         totalrow: 3,
         maprow: 1,
         total_waste:
-          waste_directed_to_disposal_by_material_total.total_waste_generated.toFixed(
-            2
-          ),
+          waste_directed_to_disposal_by_material_total.total_waste_generated,
         units: "t (metric tons)",
       });
       setWastedata4(wastedirectedtodisposalbymaterialtype);
@@ -208,7 +206,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       const wastedivertedfromdisposalbymaterialtype =
         waste_diverted_from_disposal_by_material_type.map((item) => ({
           ...item,
-          total_waste: item.total_waste.toFixed(2),
+          total_waste: item.total_waste,
         }));
       wastedivertedfromdisposalbymaterialtype.push({
         recovery_operation: "",
@@ -217,9 +215,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
         totalrow: 3,
         maprow: 1,
         total_waste:
-          waste_diverted_from_disposal_by_material_type_total.total_waste_generated.toFixed(
-            2
-          ),
+          waste_diverted_from_disposal_by_material_type_total.total_waste_generated,
         units: "t (metric tons)",
       });
       setWastedata5(wastedivertedfromdisposalbymaterialtype);
@@ -229,14 +225,12 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       const hazardouswastedivertedformdisposaltotal =
         hazardous_waste_diverted_form_disposal.map((item) => ({
           ...item,
-          total_waste: item.total_waste.toFixed(2),
+          total_waste: item.total_waste,
         }));
       hazardouswastedivertedformdisposaltotal.push({
         material_type: "Total",
         total_waste:
-          hazardous_waste_diverted_form_disposal_total.total_waste_generated.toFixed(
-            2
-          ),
+          hazardous_waste_diverted_form_disposal_total.total_waste_generated,
 
         units: "t (metric tons)",
         recycled_percentage: "",
@@ -252,14 +246,12 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       const non_hazardeouswastedivertedfromdisposal =
         non_hazardeous_waste_diverted_from_disposal.map((item) => ({
           ...item,
-          total_waste: item.total_waste.toFixed(2),
+          total_waste: item.total_waste,
         }));
       non_hazardeouswastedivertedfromdisposal.push({
         material_type: "Total",
         total_waste:
-          hnon_hazardeous_waste_diverted_from_disposal_total.total_waste_generated.toFixed(
-            2
-          ),
+          hnon_hazardeous_waste_diverted_from_disposal_total.total_waste_generated,
 
         units: "t (metric tons)",
         recycled_percentage: "",
@@ -275,14 +267,12 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       const hazardeous_wastedirectedtodisposal =
         hazardeous_waste_directed_to_disposal.map((item) => ({
           ...item,
-          total_waste: item.total_waste.toFixed(2),
+          total_waste: item.total_waste,
         }));
       hazardeous_wastedirectedtodisposal.push({
         material_type: "Total",
         total_waste:
-          hazardeous_waste_directed_to_disposal_total.total_waste_generated.toFixed(
-            2
-          ),
+          hazardeous_waste_directed_to_disposal_total.total_waste_generated,
 
         units: "t (metric tons)",
         inceneration_with_energy_percentage: "",
@@ -300,14 +290,12 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       const non_hazardeouswastedirectedtodisposal =
         non_hazardeous_waste_directed_to_disposal.map((item) => ({
           ...item,
-          total_waste: item.total_waste.toFixed(2),
+          total_waste: item.total_waste,
         }));
       non_hazardeouswastedirectedtodisposal.push({
         material_type: "Total",
         total_waste:
-          non_hazardeous_waste_directed_to_disposal_total.total_waste_generated.toFixed(
-            2
-          ),
+          non_hazardeous_waste_directed_to_disposal_total.total_waste_generated,
 
         units: "t (metric tons)",
         inceneration_with_energy_percentage: "",

@@ -36,11 +36,9 @@ const AnalyseAnnualtotalsection = ({ selectedOrg, selectedCorp, year }) => {
         return data.map((data, index) => {
           return {
             "Ratio of annual total compensation":
-              data.ratio_of_annual_total_compensation.toFixed(2),
+              data.ratio_of_annual_total_compensation,
             "Ratio of percentage increase in annual total compensation":
-              data.ratio_of_percentage_increase_in_annual_total_compensation.toFixed(
-                2
-              ),
+              data.ratio_of_percentage_increase_in_annual_total_compensation,
           };
         });
       };
