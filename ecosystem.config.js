@@ -3,7 +3,7 @@ const { watch } = require("fs");
 module.exports = {
   apps: [
     {
-      name: "poc_sgs",
+      name: "poc-sgs",
       script: "npm",
       args: "run start",
       // watch: false,
