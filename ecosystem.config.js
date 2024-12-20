@@ -11,7 +11,7 @@ module.exports = {
       interpreter: "none", // use the system's default interpreter
       env: {
         NODE_ENV: "production",
-        PORT: 3003, // you can set the port here
+        PORT: 3008, // you can set the port here
       },
     },
   ],
