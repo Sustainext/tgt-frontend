@@ -195,9 +195,13 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const validateRows = (data) => {
     return data.map((row) => {
       const rowErrors = {};
-      if (!row.Q1 || row.Q1.trim() === "") {
-        rowErrors.Q1 = "Contextual information is required";
+      if (!row.GRI33cd) {
+        rowErrors.GRI33cd = "This field is required";
       }
+      if (!row.GRI33e) {
+        rowErrors.GRI33e = "This field is required";
+      }
+    
       return rowErrors;
     });
   };
