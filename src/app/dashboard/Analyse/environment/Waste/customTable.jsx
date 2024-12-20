@@ -1,6 +1,7 @@
 import React from 'react';
 
 function DynamicTable({ columns, data }) {
+  console.log(data,"waste data");
   const renderHeaders = () => {
     return columns.map((column, index) => (
       <th key={index} className={column.headerClass}>
@@ -31,7 +32,7 @@ function DynamicTable({ columns, data }) {
                 {row.material_type}
               </td>
               <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">
-              {Number(row.total_waste).toFixed(2)}
+              {Number(row.total_waste)}
               </td>
               {row.maprow === 1 && (
                 <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]"></td>

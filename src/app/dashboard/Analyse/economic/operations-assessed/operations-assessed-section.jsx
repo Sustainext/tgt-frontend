@@ -30,10 +30,8 @@ const Operationsassessedsection = ({ selectedOrg, selectedCorp, year }) => {
 
       const formatcollectivebargaining = (data) => {
         return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage).toFixed(2);
-          const formattedPercentage = percentage.endsWith(".00")
-            ? percentage.slice(0, -3)
-            : percentage;
+          const percentage = data.percentage;
+          const formattedPercentage = percentage
           return {
             "Organisation/Corporation": data.org_or_corp,
             "Total number of operations assessed for risks related to corruption":
