@@ -93,21 +93,21 @@ const AnalyseEmission = () => {
         sno: String(index + 1),
         location: loc.location,
         ageContribution: `${loc.contribution}%`,
-        totalemissions: String((loc.total/1000).toFixed(3)),
+        totalemissions: String((loc.total/1000)),
         units: "tCO₂e"
       }));
       const formattedScope = all_emission_by_scope.map((s, index) => ({
         sno: String(index + 1),
         scope: s.scope,
         ageContribution: `${s.contribution}%`,
-        totalemissions: String((s.total/1000).toFixed(3)),
+        totalemissions: String((s.total/1000)),
         units: "tCO₂e"
       }));
       const formattedSource = top_5_emisson_by_source.map((src, index) => ({
         sno: String(index + 1),
         source: src.source,
         ageContribution: `${src.contribution}%`,
-        totalemissions: String((src.total/1000).toFixed(3)),
+        totalemissions: String((src.total/1000)),
         units: "tCO₂e"
       }));
       const formattedLocationAll = all_emission_by_location
@@ -115,7 +115,7 @@ const AnalyseEmission = () => {
         sno: String(index + 1),
         location: loc.location,
         ageContribution: `${loc.contribution}%`,
-        totalemissions: String((loc.total/1000).toFixed(3)),
+        totalemissions: String((loc.total/1000)),
         units: "tCO₂e"
       }));
       const formattedSourceAll = all_emission_by_source
@@ -123,7 +123,7 @@ const AnalyseEmission = () => {
         sno: String(index + 1),
         source: loc.source,
         ageContribution: `${loc.contribution}%`,
-        totalemissions: String((loc.total/1000).toFixed(3)),
+        totalemissions: String((loc.total/1000)),
         units: "tCO₂e"
       }));
       
