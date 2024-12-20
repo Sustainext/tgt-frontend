@@ -3,7 +3,7 @@ const { watch } = require("fs");
 module.exports = {
   apps: [
     {
-      name: "udm_staging",
+      name: "poc_sgs",
       script: "npm",
       args: "run start",
       // watch: false,
