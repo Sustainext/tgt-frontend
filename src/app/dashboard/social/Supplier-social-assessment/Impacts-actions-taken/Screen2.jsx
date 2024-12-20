@@ -56,6 +56,23 @@ const uiSchema = {
     ],
   },
 };
+
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Suppliers) {
+      rowErrors.Suppliers = "This field is required";
+    }
+    if (!row.Locationofsupplier) {
+      rowErrors.Locationofsupplier = "This field is required";
+    }
+    if (!row.Significantsocialimpacts) {
+      rowErrors.Significantsocialimpacts = "This field is required";
+    }
+    return rowErrors;
+  });
+};
+
 const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const initialFormData = [
     {
@@ -66,6 +83,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   ];
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -169,9 +187,16 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    updateFormData();
+    e.preventDefault();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddCommittee = () => {
@@ -244,9 +269,10 @@ negative social impacts."
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              onRemove: handleRemoveCommittee,
-            }}
+            formContext={{ validationErrors }}
+            // formContext={{
+            //   onRemove: handleRemoveCommittee,
+            // }}
           />
         </div>
         <div className="flex right-1 mx-2">

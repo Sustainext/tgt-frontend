@@ -60,9 +60,28 @@ const uiSchema = {
   },
 };
 
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+
+    if (!row.Q1 || row.Q1.trim() === "") {
+      rowErrors.Q1 = "This field is required";
+    } else if (
+      isNaN(Number(row.Q1)) ||
+      Number(row.Q1) <= 0 ||
+      !Number.isInteger(Number(row.Q1))
+    ) {
+      rowErrors.Q1 = "Please enter a positive whole number";
+    }
+
+    return rowErrors;
+  });
+};
+
 const Screen2 = ({ location, year}) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -170,8 +189,20 @@ const Screen2 = ({ location, year}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
-    console.log("test form data", formData);
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      // toast.error("Please enter a valid number", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      // });
+    }
   };
 
   return (
@@ -213,6 +244,7 @@ const Screen2 = ({ location, year}) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">
