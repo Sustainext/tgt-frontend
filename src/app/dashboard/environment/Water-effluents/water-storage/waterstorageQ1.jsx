@@ -185,6 +185,7 @@ const validateRows = (data, selectedOption) => {
   return rowErrors;
 };
 const WaterstorageQ1 = ({ location, year, month }) => {
+
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -284,28 +285,20 @@ const WaterstorageQ1 = ({ location, year, month }) => {
       LoaderClose();
     }
   };
-  //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
 
-  // console log the form data change
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
 
   // fetch backend and replace initialized forms
-  // useEffect(() => {
-  //   if (location && year && month) {
-  //     loadFormData();
-  //     toastShown.current = false; // Reset the flag when valid data is present
-  //   } else {
-  //     // Only show the toast if it has not been shown already
-  //     if (!toastShown.current) {
-  //       toastShown.current = true; // Set the flag to true after showing the toast
-  //     }
-  //   }
-  // }, [location, year, month]);
+  useEffect(() => {
+    if (location && year && month) {
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
+    } else {
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
+    }
+  }, [location, year, month]);
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);

@@ -272,17 +272,18 @@ const Wastedivertedimpact = ({ location, year, month }) => {
       LoaderClose();
     }
   };
-  // useEffect(() => {
-  //   if (location && year && month) {
-  //     loadFormData();
-  //     toastShown.current = false; // Reset the flag when valid data is present
-  //   } else {
-  //     // Only show the toast if it has not been shown already
-  //     if (!toastShown.current) {
-  //       toastShown.current = true; // Set the flag to true after showing the toast
-  //     }
-  //   }
-  // }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  useEffect(() => {
+    if (location && year && month) {
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
+    } else {
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
+    }
+  }, [location, year, month]); 
+  
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => ({
       ...item, // Ensure each item retains its structure
