@@ -195,9 +195,9 @@ const validateRows = (data) => {
     if (!row.Listlegal) {
       rowErrors.Listlegal = "This field is required";
     }
-    if (!row.ListStandards) {
-      rowErrors.ListStandards = "This field is required";
-    }
+    // if (!row.ListStandards) {
+    //   rowErrors.ListStandards = "This field is required";
+    // }
     if (!row.VulnerableWorkers) {
       rowErrors.VulnerableWorkers = "This field is required";
     }
@@ -221,6 +221,7 @@ const Screen1 = ({location, year}) => {
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
   const toastShown = useRef(false);
 
   const LoaderOpen = () => {
@@ -383,6 +384,7 @@ const Screen1 = ({location, year}) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
 
