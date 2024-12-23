@@ -80,8 +80,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   ];
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
-  const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [validationErrors, setValidationErrors] = useState([]);
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
 

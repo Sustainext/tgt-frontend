@@ -381,12 +381,7 @@ const Screenseven = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
                     html
                     htmlFor="industryCheckbox"
                   >
-                    16. Please provide additional information on any measures
-                    the entity has taken to remediate the loss of income to the
-                    most vulnerable families that results from any measure taken
-                    to eliminate the use of forced labour or child labour in its
-                    activities and supply chains (if applicable) (1,500
-                    character limit).
+                    16. Please provide additional information on the training the entity provides to employees on forced labour and child labour (if applicable).
                   </label>
                   <textarea
                     id="countriesOfOperation"

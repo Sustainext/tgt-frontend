@@ -11,7 +11,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget2,
   RadioWidget2: RadioWidget2,
@@ -75,20 +75,29 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data) => {
 
+  const errors = {};
+  data.forEach((row) => {
+    if (!row.Q1) {
+      errors.Q1 = "This field is required";
+    }
+    if (row.Q1 === "Yes") {
+      if (!row.Q2) {
+        errors.Q2 = "This field is required";
+      }
+ 
+    }
+  });
+  return errors;
+};
 const Screen1 = ({ location, year }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+  const [validationErrors, setValidationErrors] = useState([]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -101,12 +110,7 @@ const Screen1 = ({ location, year }) => {
     setFormData(e.formData);
   };
 
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
+
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -120,7 +124,7 @@ const Screen1 = ({ location, year }) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axios.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -171,7 +175,7 @@ const Screen1 = ({ location, year }) => {
     setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
-      const response = await axios.get(url, axiosConfig);
+      const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -206,9 +210,16 @@ const Screen1 = ({ location, year }) => {
   }, [location, year]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    updateFormData();
+    e.preventDefault();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+  
+    const hasErrors = Object.keys(errors).length > 0;
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("validation error");
+    }
   };
 
   return (
@@ -267,6 +278,7 @@ const Screen1 = ({ location, year }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

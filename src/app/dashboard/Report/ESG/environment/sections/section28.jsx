@@ -37,13 +37,13 @@ const Section28=({section12_5_5Ref,data})=>{
             (acc, val) => {
               if (val.total_waste_generated !== undefined) {
                 wasteDivertedDisposalMaterialType = {
-                  total: val.total_waste_generated.toFixed(2),
+                  total: val.total_waste_generated,
                 };
               } else {
                 acc.push({
                  'Recovery operation':val.recovery_operation, 
               'Material Type':val.material_type, 
-              "Qty of total waste":val.total_waste.toFixed(2),
+              "Qty of total waste":val.total_waste,
               '% of total waste':val.contribution+"%",
               'Unit':val.units
                 });
@@ -81,13 +81,13 @@ const Section28=({section12_5_5Ref,data})=>{
             (acc, val) => {
               if (val.total_waste_generated !== undefined) {
                 nonHazardeousWasteDivertedFromDisposal = {
-                  total: val.total_waste_generated.toFixed(2),
+                  total: val.total_waste_generated,
                   unit: val.units,
                 };
               } else {
                 acc.push({
                 'Waste Type':val.material_type, 
-        'Quantity':val.total_waste.toFixed(2), 
+        'Quantity':val.total_waste, 
         'Unit':val.units,
         'Recycled %':val.recycled_percentage+"%", 
         'Preparation of reuse %':val.preparation_of_reuse_percentage+"%",
@@ -119,13 +119,13 @@ const Section28=({section12_5_5Ref,data})=>{
             (acc, val) => {
               if (val.total_waste_generated !== undefined) {
                 hazardeousWasteDivertedFromDisposal = {
-                  total: val.total_waste_generated.toFixed(2),
+                  total: val.total_waste_generated,
                   unit: val.units,
                 };
               } else {
                 acc.push({
                 'Waste Type':val.material_type, 
-        'Quantity':val.total_waste.toFixed(2), 
+        'Quantity':val.total_waste, 
         'Unit':val.units,
         'Recycled %':val.recycled_percentage+"%", 
         'Preparation of reuse %':val.preparation_of_reuse_percentage+"%",

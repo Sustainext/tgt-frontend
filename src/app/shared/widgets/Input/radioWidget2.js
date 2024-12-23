@@ -9,11 +9,16 @@ const RadioWidget2 = ({
   autofocus,
   onChange,
   uiSchema = {},
+  formContext,name
 }) => {
   const [inputState, setInputState] = useState(value); // Initialize state with the provided value
   useEffect(() => {
     setInputState(value);
   }, [value]);
+
+  const { validationErrors } = formContext || {};
+  const rowErrors = validationErrors || {};
+  const hasError = !value && rowErrors && rowErrors[name]
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -64,12 +69,21 @@ const RadioWidget2 = ({
               checked={inputState === option.value}
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className="form-radio h-3 w-3"
+              className={`form-radio h-3 w-3 ${
+            hasError
+              ? "border-red-500"
+              : "border-gray-400"
+          } `}
             />
             {option.label}
           </label>
         ))}
       </div>
+      {hasError && (
+          <div className="text-red-500 text-[12px] mt-1">
+           {hasError}
+          </div>
+        )}
     </div>
   );
 };

@@ -38,10 +38,8 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
 
       const formatNewSppliers = (data) => {
         return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage).toFixed(2);
-          const formattedPercentage = percentage.endsWith(".00")
-            ? percentage.slice(0, -3)
-            : percentage;
+          const percentage = parseFloat(data.percentage);
+          const formattedPercentage = percentage
           return {
             "Organisation/Corporation": data.org_or_corp,
             "Percentage of new suppliers that were screened using environmental criteria":
@@ -51,10 +49,8 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
       };
       const formatNegativeEnvImpact = (data) => {
         return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage).toFixed(2);
-          const formattedPercentage = percentage.endsWith(".00")
-            ? percentage.slice(0, -3)
-            : percentage;
+          const percentage = parseFloat(data.percentage);
+          const formattedPercentage = percentage
           return {
             "Organisation/Corporation": data.org_or_corp,
             "Percentage of suppliers identified as having significant actual and potential negative environmental impacts with which improvements were agreed upon as a result of assessment":
@@ -64,10 +60,8 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
       };
       const formatTerminatedRelationship = (data) => {
         return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage).toFixed(2);
-          const formattedPercentage = percentage.endsWith(".00")
-            ? percentage.slice(0, -3)
-            : percentage;
+          const percentage = parseFloat(data.percentage);
+          const formattedPercentage = percentage
           return {
             "Organisation/Corporation": data.org_or_corp,
             "Percentage of Suppliers identified as having significant actual and potential negative environmental impacts with terminated Relationship":

@@ -178,28 +178,18 @@ const validateRows = (data) => {
   return data.map((row) => {
     const rowErrors = {};
     if (!row.RoutineHazard) {
-      rowErrors.RoutineHazard = "This field is required";
+      rowErrors.RoutineHazard = "This field is required.";
     }
-    if (!row.NonRoutineHazard) {
-      rowErrors.NonRoutineHazard = "This field is required";
-    }
-    if (!row.Processforhazard) {
-      rowErrors.Processforhazard = "This field is required";
-    }
-    if (!row.Hierarchycontrols) {
-      rowErrors.Hierarchycontrols = "This field is required";
-    }
+    ["NonRoutineHazard", "Processforhazard", "Hierarchycontrols", "VulnerableWorkers"].forEach((key) => {
+      if (!row[key] || row[key].length === 0) {
+        rowErrors[key] = "This field is required.";
+      }
+    });
     if (!row.Legalguideline) {
-      rowErrors.Legalguideline = "This field is required";
+      rowErrors.Legalguideline = "This field is required.";
     }
     if (!row.Listlegal) {
-      rowErrors.Listlegal = "This field is required";
-    }
-    // if (!row.ListStandards) {
-    //   rowErrors.ListStandards = "This field is required";
-    // }
-    if (!row.VulnerableWorkers) {
-      rowErrors.VulnerableWorkers = "This field is required";
+      rowErrors.Listlegal = "This field is required.";
     }
     return rowErrors;
   });
@@ -214,7 +204,7 @@ const Screen1 = ({location, year}) => {
       Legalguideline: "",
       Listlegal: "",
       ListStandards: "",
-      VulnerableWorkers: "",
+      VulnerableWorkers:[],
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -323,17 +313,13 @@ const Screen1 = ({location, year}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submit button clicked"); // Debugging log
     const errors = validateRows(formData);
     setValidationErrors(errors);
-    console.log("Validation Errors:", errors); // Debugging log
-  
-    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    const hasErrors = errors.some((rowErrors) => Object.keys(rowErrors).length > 0);
     if (!hasErrors) {
-      console.log("No validation errors, proceeding to update data"); // Debugging log
-      updateFormData();
+      toast.success("Form submitted successfully!");
     } else {
-      console.log("Validation errors found, submission aborted"); // Debugging log
+      toast.error("Please fix validation errors before submitting.");
     }
   };
 

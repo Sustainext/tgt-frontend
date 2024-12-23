@@ -68,8 +68,8 @@ const validateRows = (data) => {
 const Screen1 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [r_ui_schema, setRemoteUiSchema] = useState({});
-    const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
 

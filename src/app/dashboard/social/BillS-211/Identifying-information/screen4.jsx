@@ -274,7 +274,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                     className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                     htmlFor="username"
                   >
-                    7.Is the entity also subject to reporting requirements under
+                    7. For entities only: Is the entity also subject to reporting requirements under
                     supply chain legislation in another jurisdiction? *
                   </label>
                   <div className="relative mb-1 flex">
