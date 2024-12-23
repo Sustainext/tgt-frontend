@@ -357,54 +357,30 @@ const Consumedfuel = ({location, year, month}) => {
             onChange={handleChange}
             validator={validator}
             formContext={{ validationErrors }}
-            widgets={widgets}
-            // widgets={{
+            widgets={{
 
-            //   inputWidget: (props) => (
-            //     <>
-            //       <inputWidget {...props} />
-            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-            //     </>
-            //   ),
-            //   selectWidget: (props) => (
-            //     <>
-            //       <selectWidget {...props} />
-            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-            //     </>
-            //   ),
-            //   inputnumberWidget: (props) => (
-            //     <>
-            //       <inputnumberWidget {...props} />
-            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-            //     </>
-            //   ),
-            //   selectWidget3: (props) => (
-            //     <>
-            //       <selectWidget3 {...props} />
-            //       {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
-            //     </>
-            //   ),
+              ...widgets,
 
-            //   RemoveWidget: (props) => {
-            //     // Assuming the widget framework passes a unique ID that includes the index
-            //     // Make sure this ID fetching logic is correct
-            //     return (
-            //       <RemoveWidget
-            //         {...props}
-            //         index={props.id.split('_')[1]} // Pass the index
-            //         onRemove={handleRemove}
-            //       />
-            //     );
-            //   },
-            //   FileUploadWidget: (props) => (
-            //     <CustomFileUploadWidget
-            //       {...props}
-            //       scopes="ec5"
-            //       setFormData={updateFormDatanew}
-            //     />
-            //   ),
-            //   ...widgets,
-            // }}
+              RemoveWidget: (props) => {
+                // Assuming the widget framework passes a unique ID that includes the index
+                // Make sure this ID fetching logic is correct
+                return (
+                  <RemoveWidget
+                    {...props}
+                    index={props.id.split('_')[1]} // Pass the index
+                    onRemove={handleRemove}
+                  />
+                );
+              },
+              FileUploadWidget: (props) => (
+                <CustomFileUploadWidget
+                  {...props}
+                  scopes="ec16"
+                  setFormData={updateFormDatanew}
+                />
+              ),
+             
+            }}
 
           >
           </Form>
