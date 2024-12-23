@@ -22,6 +22,7 @@ import { unitTypes } from "../../shared/data/units";
 import axiosInstance, { post, del, patch } from "../../utils/axiosMiddleware";
 import { BlobServiceClient } from "@azure/storage-blob";
 import { getLocationName } from "../../utils/locationName";
+import { fetchClimatiqActivities } from "../../utils/climatiqApi";
 
 const MyTask = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -194,194 +195,195 @@ const MyTask = () => {
 
   let wildcard = false;
 
-  async function fetchActivities(
-    category,
-    page,
-    customFetchExecuted,
-    region,
-    year
-  ) {
-    const baseURL = "https://api.climatiq.io";
-    const resultsPerPage = 500;
-    const axiosConfig = {
-      headers: {
-        Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
-        Accept: "application/json",
-        "Content-type": "application/json",
-      },
-    };
-    let currentYear = year;
-    if (year == "2024") currentYear = "2023";
-    let wildcardResultZero = false;
+  // async function fetchActivities(
+  //   category,
+  //   page,
+  //   customFetchExecuted,
+  //   region,
+  //   year
+  // ) {
+  //   const baseURL = "https://api.climatiq.io";
+  //   const resultsPerPage = 500;
+  //   const axiosConfig = {
+  //     headers: {
+  //       Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
+  //       Accept: "application/json",
+  //       "Content-type": "application/json",
+  //     },
+  //   };
+  //   let currentYear = year;
+  //   if (year == "2024") currentYear = "2023";
+  //   let wildcardResultZero = false;
 
-    let activitiesData = [];
-    let totalResults = 0;
-    let totalPrivateResults = 0;
-    let totalPages;
-    let totalPagesCustom = 0;
-    let wildcardActivitiesData = [];
-    let yearlyResponseData = [];
-    let newActivitiesData = [];
-    let customFetchData = [];
-    let multipleSourceData = [];
-    let finalActivitiesData = [];
+  //   let activitiesData = [];
+  //   let totalResults = 0;
+  //   let totalPrivateResults = 0;
+  //   let totalPages;
+  //   let totalPagesCustom = 0;
+  //   let wildcardActivitiesData = [];
+  //   let yearlyResponseData = [];
+  //   let newActivitiesData = [];
+  //   let customFetchData = [];
+  //   let multipleSourceData = [];
+  //   let finalActivitiesData = [];
 
-    try {
-      if (!wildcard) {
-        const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+  //   try {
+  //     if (!wildcard) {
+  //       const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
 
-        const response = await axios.get(url, axiosConfig);
-        activitiesData = response.data.results;
-        totalResults = response.data.results.length;
-        totalPages = response.data.last_page;
-        totalPrivateResults = activitiesData.reduce((count, activity) => {
-          if (activity.access_type === "private") {
-            count += 1;
-          }
-          return count;
-        }, 0);
-      }
+  //       const response = await axios.get(url, axiosConfig);
+  //       activitiesData = response.data.results;
+  //       totalResults = response.data.results.length;
+  //       totalPages = response.data.last_page;
+  //       totalPrivateResults = activitiesData.reduce((count, activity) => {
+  //         if (activity.access_type === "private") {
+  //           count += 1;
+  //         }
+  //         return count;
+  //       }, 0);
+  //     }
 
-      const effectiveCount = totalResults - totalPrivateResults;
-      if (effectiveCount <= 5) {
-        wildcard = true; // Set wildcard state to true immediately
-      }
-      if (wildcard) {
-        const wildcardResponse = await axios.get(
-          `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
-          axiosConfig
-        );
-        wildcardActivitiesData = wildcardResponse.data.results;
-        totalPages = wildcardResponse.data.last_page;
+  //     const effectiveCount = totalResults - totalPrivateResults;
+  //     if (effectiveCount <= 5) {
+  //       wildcard = true; // Set wildcard state to true immediately
+  //     }
+  //     if (wildcard) {
+  //       const wildcardResponse = await axios.get(
+  //         `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
+  //         axiosConfig
+  //       );
+  //       wildcardActivitiesData = wildcardResponse.data.results;
+  //       totalPages = wildcardResponse.data.last_page;
 
-        if (totalPages === 0) wildcardResultZero = true;
-      }
+  //       if (totalPages === 0) wildcardResultZero = true;
+  //     }
 
-      if (wildcardResultZero) {
-        for (let i = currentYear - 1; i >= 2019; i--) {
-          const yearlyResponse = await axios.get(
-            `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
-            axiosConfig
-          );
-          const yearlyActivitiesData = yearlyResponse.data.results;
-          totalPages = yearlyResponse.data.last_page;
-          yearlyResponseData = [...yearlyResponseData, ...yearlyActivitiesData];
-          if (yearlyActivitiesData.length !== 0) break;
-        }
-      }
+  //     if (wildcardResultZero) {
+  //       for (let i = currentYear - 1; i >= 2019; i--) {
+  //         const yearlyResponse = await axios.get(
+  //           `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
+  //           axiosConfig
+  //         );
+  //         const yearlyActivitiesData = yearlyResponse.data.results;
+  //         totalPages = yearlyResponse.data.last_page;
+  //         yearlyResponseData = [...yearlyResponseData, ...yearlyActivitiesData];
+  //         if (yearlyActivitiesData.length !== 0) break;
+  //       }
+  //     }
 
-      newActivitiesData = wildcardActivitiesData.filter(
-        (activity) => activity.access_type !== "private"
-      );
+  //     newActivitiesData = wildcardActivitiesData.filter(
+  //       (activity) => activity.access_type !== "private"
+  //     );
 
-      const CombinedActivitiesData = [
-        ...activitiesData,
-        ...newActivitiesData,
-        ...yearlyResponseData,
-      ];
+  //     const CombinedActivitiesData = [
+  //       ...activitiesData,
+  //       ...newActivitiesData,
+  //       ...yearlyResponseData,
+  //     ];
 
-      const categoriesToAppend = [
-        "Vehicles",
-        "Clothing and Footwear",
-        "DIY and Gardening Equipment",
-        "Domestic Services",
-        "Education",
-        "Electrical Equipment",
-        "Equipment Rental",
-        "Food and Beverage Services",
-        "Furnishings and Household",
-        "General Retail",
-        "Government Activities",
-        "Health and Social Care",
-        "Information and Communication Services",
-        "Office Equipment",
-        "Paper Products",
-        "Plastics and Rubber Products",
-        "Professional Services and Activities",
-        "Waste Management",
-        "Water Treatment",
-        "Electrical Equipment",
-        "Furnishings and Household",
-        "Office Equipment",
-        "Restaurants and Accommodation",
-        "Vehicles",
-      ];
+  //     const categoriesToAppend = [
+  //       "Vehicles",
+  //       "Clothing and Footwear",
+  //       "DIY and Gardening Equipment",
+  //       "Domestic Services",
+  //       "Education",
+  //       "Electrical Equipment",
+  //       "Equipment Rental",
+  //       "Food and Beverage Services",
+  //       "Furnishings and Household",
+  //       "General Retail",
+  //       "Government Activities",
+  //       "Health and Social Care",
+  //       "Information and Communication Services",
+  //       "Office Equipment",
+  //       "Paper Products",
+  //       "Plastics and Rubber Products",
+  //       "Professional Services and Activities",
+  //       "Waste Management",
+  //       "Water Treatment",
+  //       "Electrical Equipment",
+  //       "Furnishings and Household",
+  //       "Office Equipment",
+  //       "Restaurants and Accommodation",
+  //       "Vehicles",
+  //     ];
 
-      const categoryMappings = {
-        Vehicles: [{ source: "EXIOBASE", year: "2019" }],
-        "Clothing and Footwear": [{ source: "EXIOBASE", year: "2019" }],
-        "DIY and Gardening Equipment": [{ source: "EPA", year: "2019" }],
-        "Domestic Services": [{ source: "EXIOBASE", year: "2019" }],
-        Education: [{ source: "EXIOBASE", year: "2019" }],
-        "Electrical Equipment": [{ source: "EXIOBASE", year: "2019" }],
-        "Equipment Rental": [{ source: "EXIOBASE", year: "2019" }],
-        "Food and Beverage Services": [
-          { source: "EPA", year: "2019" },
-          { source: "BEIS", year: "2019" },
-        ],
-        "Furnishings and Household": [{ source: "EXIOBASE", year: "2019" }],
-        "General Retail": [{ source: "EXIOBASE", year: "2019" }],
-        "Government Activities": [{ source: "EXIOBASE", year: "2019" }],
-        "Health and Social Care": [{ source: "EXIOBASE", year: "2019" }],
-        "Information and Communication Services": [
-          { source: "EXIOBASE", year: "2019" },
-        ],
-        "Post and Telecommunication": [{ source: "EXIPOBASE", year: "2019" }],
-        "Office Equipment": [
-          { source: "EXIOBASE", year: "2019" },
-          { source: "EPA", year: "2018" },
-          { source: "EPA", year: "2019" },
-        ],
-        "Paper Products": [{ source: "EXIOBASE", year: "2019" }],
-        "Plastics and Rubber Products": [{ source: "EXIOBASE", year: "2019" }],
-        "Professional Services and Activities": [
-          { source: "EXIOBASE", year: "2019" },
-        ],
-        "Waste Management": [{ source: "EXIOBASE", year: "2019" }],
-        "Water Treatment": [{ source: "EXIOBASE", year: "2019" }],
-        "Restaurants and Accommodation": [{ source: "EXIOBASE", year: "2019" }],
-      };
+  //     const categoryMappings = {
+  //       Vehicles: [{ source: "EXIOBASE", year: "2019" }],
+  //       "Clothing and Footwear": [{ source: "EXIOBASE", year: "2019" }],
+  //       "DIY and Gardening Equipment": [{ source: "EPA", year: "2019" }],
+  //       "Domestic Services": [{ source: "EXIOBASE", year: "2019" }],
+  //       Education: [{ source: "EXIOBASE", year: "2019" }],
+  //       "Electrical Equipment": [{ source: "EXIOBASE", year: "2019" }],
+  //       "Equipment Rental": [{ source: "EXIOBASE", year: "2019" }],
+  //       "Food and Beverage Services": [
+  //         { source: "EPA", year: "2019" },
+  //         { source: "BEIS", year: "2019" },
+  //       ],
+  //       "Furnishings and Household": [{ source: "EXIOBASE", year: "2019" }],
+  //       "General Retail": [{ source: "EXIOBASE", year: "2019" }],
+  //       "Government Activities": [{ source: "EXIOBASE", year: "2019" }],
+  //       "Health and Social Care": [{ source: "EXIOBASE", year: "2019" }],
+  //       "Information and Communication Services": [
+  //         { source: "EXIOBASE", year: "2019" },
+  //       ],
+  //       "Post and Telecommunication": [{ source: "EXIPOBASE", year: "2019" }],
+  //       "Office Equipment": [
+  //         { source: "EXIOBASE", year: "2019" },
+  //         { source: "EPA", year: "2018" },
+  //         { source: "EPA", year: "2019" },
+  //       ],
+  //       "Paper Products": [{ source: "EXIOBASE", year: "2019" }],
+  //       "Plastics and Rubber Products": [{ source: "EXIOBASE", year: "2019" }],
+  //       "Professional Services and Activities": [
+  //         { source: "EXIOBASE", year: "2019" },
+  //       ],
+  //       "Waste Management": [{ source: "EXIOBASE", year: "2019" }],
+  //       "Water Treatment": [{ source: "EXIOBASE", year: "2019" }],
+  //       "Restaurants and Accommodation": [{ source: "EXIOBASE", year: "2019" }],
+  //     };
 
-      if (
-        categoriesToAppend.includes(category) &&
-        categoryMappings[category] &&
-        !customFetchExecuted
-      ) {
-        for (const entry of categoryMappings[category]) {
-          const source = entry.source;
-          const year = entry.year;
+  //     if (
+  //       categoriesToAppend.includes(category) &&
+  //       categoryMappings[category] &&
+  //       !customFetchExecuted
+  //     ) {
+  //       for (const entry of categoryMappings[category]) {
+  //         const source = entry.source;
+  //         const year = entry.year;
 
-          const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
-          const response = await axios.get(url, axiosConfig);
-          customFetchData = customFetchData.concat(response.data.results);
-          finalActivitiesData = [
-            ...customFetchData,
-            ...activitiesData,
-            ...newActivitiesData,
-            ...yearlyResponseData,
-          ];
-          totalPagesCustom = response.data.last_page;
-        }
-      }
+  //         const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+  //         const response = await axios.get(url, axiosConfig);
+  //         customFetchData = customFetchData.concat(response.data.results);
+  //         finalActivitiesData = [
+  //           ...customFetchData,
+  //           ...activitiesData,
+  //           ...newActivitiesData,
+  //           ...yearlyResponseData,
+  //         ];
+  //         totalPagesCustom = response.data.last_page;
+  //       }
+  //     }
 
-      setIsActivityFetched(true);
-      if (!customFetchExecuted) {
-        return {
-          activitiesData: [...CombinedActivitiesData, ...customFetchData],
-          pages: totalPages,
-          pagesCustom: totalPagesCustom,
-        };
-      } else {
-        return {
-          activitiesData: CombinedActivitiesData,
-          pages: totalPages,
-        };
-      }
-    } catch (error) {
-      console.error("Error fetching data from different regions: ", error);
-      throw error;
-    }
-  }
+  //     setIsActivityFetched(true);
+  //     if (!customFetchExecuted) {
+  //       return {
+  //         activitiesData: [...CombinedActivitiesData, ...customFetchData],
+  //         pages: totalPages,
+  //         pagesCustom: totalPagesCustom,
+  //       };
+  //     } else {
+  //       return {
+  //         activitiesData: CombinedActivitiesData,
+  //         pages: totalPages,
+  //       };
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data from different regions: ", error);
+  //     throw error;
+  //   }
+  // }
+
   const fetchClintlist = async () => {
     const stringWithQuotes = localStorage.getItem("token");
     const stringWithoutQuotes = stringWithQuotes.replace(/"/g, "");
@@ -504,126 +506,159 @@ const MyTask = () => {
     assign_to_email,
     file_data
   ) => {
-    if (activity === null || activity === "") {
-      setIsActivityReceived(false);
-    } else {
-      setIsActivityReceived(true);
-    }
-    setIsFillModalOpen(true);
-    setIsOpen(false);
-    setSelectedActivityName(activity);
-
-    setTaskAssigndata({
-      ...taskassigndata,
-      id,
-      task_name,
-      assign_to_user_name,
-      assign_by_user_name,
-      assign_by_email,
-      category,
-      deadline,
-      factor_id,
-      location,
-      month,
-      scope,
-      subcategory,
-      year,
-      activity,
-      value1,
-      value2,
-      unit1,
-      unit2,
-      file,
-      filename,
-      status,
-      assign_to_email,
-      file_data,
-    });
-
-    let page = 1;
-    let customFetchExecuted = false;
-
-    console.log(
-      "task assign data on click",
-      id,
-      task_name,
-      assign_to_user_name,
-      assign_by_user_name,
-      assign_by_email,
-      category,
-      deadline,
-      factor_id,
-      location,
-      month,
-      scope,
-      subcategory,
-      year,
-      activity,
-      value1,
-      value2,
-      unit1,
-      unit2,
-      file,
-      filename,
-      status
-    );
     try {
-      if (activity !== "") {
-        let unitTypeExtractedArray = activity?.split("-");
-        let ExtractedUnitType = unitTypeExtractedArray?.pop();
+      // Set initial loading state
+      setIsSearching(true);
+
+      // Handle activity received state
+      if (activity === null || activity === "") {
+        setIsActivityReceived(false);
+      } else {
+        setIsActivityReceived(true);
+      }
+
+      // Open modal and update UI states
+      setIsFillModalOpen(true);
+      setIsOpen(false);
+      setSelectedActivityName(activity);
+
+      // Update task assignment data
+      setTaskAssigndata({
+        ...taskassigndata,
+        id,
+        task_name,
+        assign_to_user_name,
+        assign_by_user_name,
+        assign_by_email,
+        category,
+        deadline,
+        factor_id,
+        location,
+        month,
+        scope,
+        subcategory,
+        year,
+        activity,
+        value1,
+        value2,
+        unit1,
+        unit2,
+        file,
+        filename,
+        status,
+        assign_to_email,
+        file_data,
+      });
+
+      // Extract and set unit type if activity exists
+      if (activity) {
+        const unitTypeExtractedArray = activity.split("-");
+        const ExtractedUnitType =
+          unitTypeExtractedArray[unitTypeExtractedArray.length - 1]?.trim();
         setSelectedActivity({
           ...selectedActivity,
           unit_type: ExtractedUnitType,
         });
       }
-      const response = await fetchActivities(
+
+      // Only proceed with fetching if we have the required data
+      if (!subcategory || !year) {
+        console.warn("Missing required parameters for fetching activities:", {
+          subcategory,
+          year,
+        });
+        return;
+      }
+
+      // Initial fetch
+      const initialResponse = await fetchActivities(
         subcategory,
-        page,
-        customFetchExecuted,
+        1, // first page
+        false, // initial fetch is not custom
         region,
         year
       );
-      let { activitiesData, pages, pagesCustom } = response;
 
-      activitiesData.sort((a, b) => {
-        return a.access_type === "private" && b.access_type !== "private"
-          ? -1
-          : a.access_type !== "private" && b.access_type === "private"
-          ? 1
-          : 0;
-      });
+      const { activitiesData, pages, pagesCustom } = initialResponse;
 
+      // Set initial activities
       setActivitiesList(activitiesData);
 
+      // Fetch additional pages if they exist
       if (pages > 1) {
         for (let i = 2; i <= pages; i++) {
-          customFetchExecuted =
+          const isCustomFetch =
             pagesCustom > 1 && i <= pagesCustom ? false : true;
+
           const additionalResponse = await fetchActivities(
             subcategory,
             i,
-            customFetchExecuted,
+            isCustomFetch,
             region,
             year
           );
-          const additionalActivities = additionalResponse.activitiesData;
 
-          activitiesData = [...activitiesData, ...additionalActivities];
-          activitiesData.sort((a, b) => {
-            return a.access_type === "private" && b.access_type !== "private"
-              ? -1
-              : a.access_type !== "private" && b.access_type === "private"
-              ? 1
-              : a.name.localeCompare(b.name);
-          });
+          // Merge with existing data
+          const updatedActivitiesData = [
+            ...activitiesData,
+            ...additionalResponse.activitiesData,
+          ];
 
+          // Update activities list periodically or on final page
           if (i % 3 === 0 || i === pages) {
-            setActivitiesList([...activitiesData]);
+            setActivitiesList([...updatedActivitiesData]);
           }
         }
       }
     } catch (error) {
-      console.error("Error fetching activities data:", error);
+      console.error("Error in handleOpenModalAddData:", error);
+      toast.error("Failed to load activities. Please try again.");
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  // Helper function for fetching activities
+  const fetchActivities = async (
+    subcategory,
+    page,
+    customFetchExecuted,
+    region,
+    year
+  ) => {
+    try {
+      let currentYear = year;
+      if (year === "2024") {
+        currentYear = "2023";
+      }
+
+      const response = await fetchClimatiqActivities({
+        subcategory,
+        page,
+        customFetchExecuted,
+        region,
+        year: currentYear,
+      });
+
+      const activitiesData = response.results || [];
+
+      // Sort activities
+      activitiesData.sort((a, b) => {
+        if (a.access_type === "private" && b.access_type !== "private")
+          return -1;
+        if (a.access_type !== "private" && b.access_type === "private")
+          return 1;
+        return a.name.localeCompare(b.name);
+      });
+
+      return {
+        activitiesData,
+        pages: response.totalPages || 0,
+        pagesCustom: response.hasCustomData ? response.totalPages : 0,
+      };
+    } catch (error) {
+      console.error("Error fetching activities:", error);
+      throw new Error(`Failed to fetch activities: ${error.message}`);
     }
   };
 
