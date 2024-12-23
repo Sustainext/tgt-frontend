@@ -363,7 +363,7 @@ const Selfgenerated = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec16"
+                  scopes="ec168"
                   setFormData={updateFormDatanew}
                 />
               ),
