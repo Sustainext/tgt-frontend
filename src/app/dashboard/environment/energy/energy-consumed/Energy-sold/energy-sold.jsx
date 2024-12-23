@@ -397,7 +397,7 @@ const Energysold = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec16"
+                  scopes="ec146"
                   setFormData={updateFormDatanew}
                 />
               ),
