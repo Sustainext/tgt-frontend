@@ -375,7 +375,7 @@ const Consumedfuel = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec16"
+                  scopes="ec165"
                   setFormData={updateFormDatanew}
                 />
               ),
