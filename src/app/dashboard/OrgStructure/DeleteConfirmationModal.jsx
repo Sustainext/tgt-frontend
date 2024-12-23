@@ -203,20 +203,18 @@ const DeleteConfirmationModal = ({
                     <p className="text-gray-600 text-sm">
                       This process will delete the entire organization along
                       with the corporates and locations under them.{" "}
-              
                     </p>
                   ) : entityType === "corporate" ? (
                     <p className="text-gray-600 text-sm">
                       This process will delete the corporate entity along with
                       all locations under it.{" "}
-                      
                     </p>
                   ) : (
                     <p className="text-gray-600 text-sm">
                       This process will delete this location{" "}
-                      <span className="line-through">
+                      {/* <span className="line-through">
                         and it is irreversible.
-                      </span>
+                      </span> */}
                     </p>
                   )}
                 </div>

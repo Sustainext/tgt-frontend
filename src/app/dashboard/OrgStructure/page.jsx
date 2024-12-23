@@ -743,7 +743,7 @@ const OrgTree = ({ data }) => {
                         ={" "}
                         <g className="opacity-0 group-hover/add-bottom:opacity-100 transition-opacity duration-200">
                           <rect
-                            x="0"
+                            x="10"
                             y="-14"
                             width="130"
                             height="28"
@@ -752,7 +752,7 @@ const OrgTree = ({ data }) => {
                             filter="drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1))"
                           />
                           <text
-                            x="65"
+                            x="75"
                             y="0"
                             fontSize="11"
                             fill="#4B5563"
