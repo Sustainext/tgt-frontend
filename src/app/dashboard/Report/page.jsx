@@ -529,8 +529,8 @@ const Report = () => {
               Report
             </h1>
             <p className="text-[14px] text-[#667085]">
-              All the reports generated for the organization can be
-              accessed here
+              All the reports generated for the organization can be accessed
+              here
             </p>
           </div>
           <div

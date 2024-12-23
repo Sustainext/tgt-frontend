@@ -1,24 +1,24 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import { GlobalState } from '../../../../../Context/page';
-import dateWidget from '../../../../shared/widgets/Input/dateWidget';
-import selectWidget from '../../../../shared/widgets/Select/selectWidget';
-import inputWidget from '../../../../shared/widgets/Input/inputWidget';
-import CustomFileUploadWidget from '../../../../shared/widgets/CustomFileUploadWidget';
-import AssignToWidget from '../../../../shared/widgets/assignToWidget';
-import CustomSelectInputWidget from '../../../../shared/widgets/CustomSelectInputWidget';
-import RemoveWidget from '../../../../shared/widgets/RemoveWidget';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
+import { GlobalState } from "../../../../../Context/page";
+import dateWidget from "../../../../shared/widgets/Input/dateWidget";
+import selectWidget from "../../../../shared/widgets/Select/selectWidget";
+import inputWidget from "../../../../shared/widgets/Input/inputWidget";
+import CustomFileUploadWidget from "../../../../shared/widgets/CustomFileUploadWidget";
+import AssignToWidget from "../../../../shared/widgets/assignToWidget";
+import CustomSelectInputWidget from "../../../../shared/widgets/CustomSelectInputWidget";
+import RemoveWidget from "../../../../shared/widgets/RemoveWidget";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
-import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
-import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
+import { Oval } from "react-loader-spinner";
+import selectWidget3 from "../../../../shared/widgets/Select/selectWidget3";
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget,
@@ -32,57 +32,91 @@ const widgets = {
   inputnumberWidget: inputnumberWidget,
 };
 
-const view_path = 'gri-environment-materials-301-1a-renewable_materials'
-const client_id = 1
-const user_id = 1
+const view_path = "gri-environment-materials-301-1a-renewable_materials";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
       Typeofmaterial: {
         type: "string",
         title: "Type of material",
-        enum: ['Raw materials', 'Associated process materials','Semi-manufactured goods or parts','Materials for packaging purposes'],
+        enum: [
+          "Raw materials",
+          "Associated process materials",
+          "Semi-manufactured goods or parts",
+          "Materials for packaging purposes",
+        ],
         tooltiptext: "Select the waste category from the given dropdown.",
         display: "none",
       },
       Materialsused: {
         type: "string",
         title: "Materials used",
-        enum: ['Cardboard', 'Glass','Hemp','Kenaf','Natural Rubber','Paper','Timber','Wool','Other (please specify)'],
-        tooltiptext: "What materials does the company use to produce its goods or services?",
+        enum: [
+          "Cardboard",
+          "Glass",
+          "Hemp",
+          "Kenaf",
+          "Natural Rubber",
+          "Paper",
+          "Timber",
+          "Wool",
+          "Other (please specify)",
+        ],
+        tooltiptext:
+          "What materials does the company use to produce its goods or services?",
         display: "block",
       },
       Source: {
         type: "string",
         title: "Source",
-        enum: ['Externally sourced', 'Internally sourced'],
-        tooltiptext: "Where does the company get its materials from? Internally sourced materials: Materials that the company makes itself.Externally sourced materials: Materials that the company buys from other companies.",
+        enum: ["Externally sourced", "Internally sourced"],
+        tooltiptext:
+          "Where does the company get its materials from? Internally sourced materials: Materials that the company makes itself.Externally sourced materials: Materials that the company buys from other companies.",
         display: "block",
       },
       Totalweight: {
         type: "string",
         title: "Total weight/volume",
-        tooltiptext: "How much material is used for the production of goods or services?(Please specify the total weight or volume.)",
+        tooltiptext:
+          "How much material is used for the production of goods or services?(Please specify the total weight or volume.)",
         display: "block",
-
       },
       Unit: {
         type: "string",
         title: "Unit",
-        enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg','Liter','Milligram','Milliliter','Fluid Ounce fl Oz','Gallon Gal','Pint Pt','Pound Lb','Quart Qt','Cubic foot ft3','Metric ton','US short ton (tn)'],
+        enum: [
+          "Cubic centimeter cm3",
+          "Cubic decimeter dm3",
+          "Cubic meter m3",
+          "Gram",
+          "Kilogram Kg",
+          "Liter",
+          "Milligram",
+          "Milliliter",
+          "Fluid Ounce fl Oz",
+          "Gallon Gal",
+          "Pint Pt",
+          "Pound Lb",
+          "Quart Qt",
+          "Cubic foot ft3",
+          "Metric ton",
+          "US short ton (tn)",
+        ],
         tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
         display: "none",
       },
       Datasource: {
         type: "string",
         title: "Data source",
-        enum: ['Estimated', 'Direct measurement'],
-        tooltiptext: "What is the source of the data for the total weight or volume of materials used? Estimation: process of making an approximate calculation of something.Direct measurement: process of measuring something directly. For example, a company might directly measure the total weight or volume of materials used by weighing or measuring each batch of materials used.",
+        enum: ["Estimated", "Direct measurement"],
+        tooltiptext:
+          "What is the source of the data for the total weight or volume of materials used? Estimation: process of making an approximate calculation of something.Direct measurement: process of measuring something directly. For example, a company might directly measure the total weight or volume of materials used by weighing or measuring each batch of materials used.",
         display: "block",
-
       },
       AssignTo: {
         type: "string",
@@ -97,86 +131,93 @@ const schema = {
         type: "string",
         title: "Remove",
       },
-
-    }
-  }
+    },
+  },
 };
 
 const uiSchema = {
   items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'Typeofmaterial', 'Materialsused', 'Source', 'Totalweight','Unit','Datasource','AssignTo', 'FileUpload', 'Remove'
+    classNames: "fieldset",
+    "ui:order": [
+      "Typeofmaterial",
+      "Materialsused",
+      "Source",
+      "Totalweight",
+      "Unit",
+      "Datasource",
+      "AssignTo",
+      "FileUpload",
+      "Remove",
     ],
     Typeofmaterial: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
         label: false,
       },
     },
     Materialsused: {
-      'ui:widget': 'selectWidget',
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:options": {
+        label: false,
       },
     },
     Source: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Totalweight: {
-      'ui:widget': 'inputnumberWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "inputnumberWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
 
     Unit: {
-      'ui:widget': 'selectWidget3',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget3",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Datasource: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "FileUploadWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false
+      "ui:options": {
+        label: false,
       },
     },
-      'ui:options': {
+    "ui:options": {
       orderable: false,
       addable: false,
       removable: false,
-      layout: 'horizontal',
-    }
-  }
+      layout: "horizontal",
+    },
+  },
 };
 const validateRows = (data) => {
   return data.map((row) => {
@@ -187,7 +228,7 @@ const validateRows = (data) => {
     if (!row.Materialsused) {
       rowErrors.Materialsused = "Materials used is required";
     }
-  
+
     if (!row.Source) {
       rowErrors.Source = "Source is required";
     }
@@ -203,7 +244,7 @@ const validateRows = (data) => {
     return rowErrors;
   });
 };
-const Renewable = ({location, year, month}) => {
+const Renewable = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -217,7 +258,6 @@ const Renewable = ({location, year, month}) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
 
   const updateFormData = async () => {
     LoaderOpen();
@@ -315,8 +355,10 @@ const Renewable = ({location, year, month}) => {
     const errors = validateRows(formData);
     setValidationErrors(errors);
     console.log("Validation Errors:", errors); // Debugging log
-  
-    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
     if (!hasErrors) {
       console.log("No validation errors, proceeding to update data"); // Debugging log
       updateFormData();
@@ -324,19 +366,18 @@ const Renewable = ({location, year, month}) => {
       console.log("Validation errors found, submission aborted"); // Debugging log
     }
   };
-  
 
   const renderError = (rowIndex, fieldName) => {
     const rowErrors = validationErrors[rowIndex] || {};
-    return rowErrors[fieldName] ? <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div> : null;
+    return rowErrors[fieldName] ? (
+      <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div>
+    ) : null;
   };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-  
   };
- 
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
@@ -346,15 +387,13 @@ const Renewable = ({location, year, month}) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
- 
   };
-
 
   return (
     <>
       <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
-        <Form
+          <Form
             schema={schema}
             uiSchema={uiSchema}
             formData={formData}
@@ -362,35 +401,49 @@ const Renewable = ({location, year, month}) => {
             validator={validator}
             formContext={{ validationErrors }}
             widgets={{
-
               inputWidget: (props) => (
                 <>
                   <inputWidget {...props} />
-                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                  {renderError(
+                    parseInt(props.id.split("_")[1], 10),
+                    props.name
+                  )}
                 </>
               ),
               selectWidget: (props) => (
                 <>
                   <selectWidget {...props} />
-                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                  {renderError(
+                    parseInt(props.id.split("_")[1], 10),
+                    props.name
+                  )}
                 </>
               ),
               TextareasectionWidgets: (props) => (
                 <>
                   <TextareasectionWidgets {...props} />
-                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                  {renderError(
+                    parseInt(props.id.split("_")[1], 10),
+                    props.name
+                  )}
                 </>
               ),
               inputnumberWidget: (props) => (
                 <>
                   <inputnumberWidget {...props} />
-                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                  {renderError(
+                    parseInt(props.id.split("_")[1], 10),
+                    props.name
+                  )}
                 </>
               ),
               selectWidget3: (props) => (
                 <>
                   <selectWidget3 {...props} />
-                  {renderError(parseInt(props.id.split('_')[1], 10), props.name)}
+                  {renderError(
+                    parseInt(props.id.split("_")[1], 10),
+                    props.name
+                  )}
                 </>
               ),
 
@@ -400,7 +453,7 @@ const Renewable = ({location, year, month}) => {
                 return (
                   <RemoveWidget
                     {...props}
-                    index={props.id.split('_')[1]} // Pass the index
+                    index={props.id.split("_")[1]} // Pass the index
                     onRemove={handleRemove}
                   />
                 );
@@ -414,9 +467,7 @@ const Renewable = ({location, year, month}) => {
               ),
               ...widgets,
             }}
-
-          >
-          </Form>
+          ></Form>
         </div>
 
         {loopen && (

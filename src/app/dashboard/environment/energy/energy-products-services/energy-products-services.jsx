@@ -137,7 +137,7 @@ const Energyproductsservices = () => {
           </h6>
         </div>
         <div
-           ref={drawerRef} 
+          ref={drawerRef}
           className={`${
             isOpen
               ? "translate-x-[15%] block top-16"

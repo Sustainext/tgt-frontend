@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -57,8 +57,8 @@ const Waterstres = () => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
-            <p className="text-[11px]">Environment</p>
+            <div className="text-left mb-2 ml-3 pt-5">
+              <p className="text-[11px]">Environment</p>
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-2">
@@ -123,8 +123,8 @@ const Waterstres = () => {
           </h6>
         </div>
         <div
-         ref={drawerRef}
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"

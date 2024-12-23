@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -57,8 +57,8 @@ const Reductionenergyconsumption = () => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
-            <p className="text-[11px]">Environment</p>
+            <div className="text-left mb-2 ml-3 pt-5">
+              <p className="text-[11px]">Environment</p>
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
@@ -136,8 +136,8 @@ const Reductionenergyconsumption = () => {
           </h6>
         </div>
         <div
-         ref={drawerRef}
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -167,7 +167,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
 
                 {/* Footer (Learn more link) */}
-                <div className="pt-2 pb-4 ml-4"  onClick={toggleDrawerclose}>
+                <div className="pt-2 pb-4 ml-4" onClick={toggleDrawerclose}>
                   <a
                     className="text-[14px] text-[#2196F3] pt-1 inline-flex"
                     href={program.link}

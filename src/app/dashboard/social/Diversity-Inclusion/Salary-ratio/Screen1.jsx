@@ -15,7 +15,7 @@ import CurrencyselectWidget from "../../../../shared/widgets/Select/currencysele
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: CustomTableWidget8,
-  CurrencyselectWidget:CurrencyselectWidget,
+  CurrencyselectWidget: CurrencyselectWidget,
 };
 
 const view_path = "gri-social-salary_ratio-405-2a-number_of_individuals";
@@ -30,7 +30,6 @@ const schema = {
       Q1: {
         type: "string",
         title: "Select a currency to fill the  below table",
-       
       },
       Q2: {
         type: "array",
@@ -48,8 +47,6 @@ const schema = {
           },
         },
       },
-  
- 
     },
   },
 };
@@ -82,7 +79,8 @@ const uiSchema = {
         titles: [
           {
             title: "Basic Salary per Employee Category",
-            tooltip: "What is the ratio of the basic salary of women to men for each employee category. Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties.",
+            tooltip:
+              "What is the ratio of the basic salary of women to men for each employee category. Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties.",
             colSpan: 1,
           },
           {
@@ -92,7 +90,8 @@ const uiSchema = {
           },
           {
             title: "Significant Location of Operation",
-            tooltip: "This section allows you to enter the organization's significant locations of operation.",
+            tooltip:
+              "This section allows you to enter the organization's significant locations of operation.",
             colSpan: 1,
           },
         ],
@@ -143,8 +142,6 @@ const uiSchema = {
       layout: "horizontal",
     },
   },
-
-
 };
 
 const Screen1 = ({ location, year, month }) => {
@@ -153,15 +150,14 @@ const Screen1 = ({ location, year, month }) => {
       Q1: "",
       Q2: [
         {
-      category: "",
-      male: 0,
-      female: 0,
-      nonBinary: 0,
-      locationandoperation: "",
+          category: "",
+          male: 0,
+          female: 0,
+          nonBinary: 0,
+          locationandoperation: "",
         },
       ],
     },
-    
   ];
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
@@ -285,11 +281,17 @@ const Screen1 = ({ location, year, month }) => {
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-           Ratio of basic salary of women to men
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Ratio of basic salary of women to men
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data 
@@ -341,17 +343,17 @@ locations of operation. "
           />
         </div>
 
-    <div className='mt-4'>
+        <div className="mt-4">
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
-              }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !location || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
             disabled={!location || !year}
           >
             Submit
           </button>
-
         </div>
       </div>
       {loopen && (
