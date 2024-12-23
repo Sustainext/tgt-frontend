@@ -285,7 +285,7 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTy
                     className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                     htmlFor="username"
                   >
-                    5.Business number(s) (if applicable):
+                    5. For entities only: Business number(s) (if applicable):
                   </label>
                   <div className="relative mb-1 flex">
                     <input
@@ -305,7 +305,7 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTy
                     className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                     htmlFor="username"
                   >
-                    6.Is this a joint report?*
+                    6. For entities only: Is this a joint report?*
                   </label>
                   <div className="relative mb-1 flex">
                     <div>

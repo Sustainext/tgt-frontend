@@ -14,7 +14,7 @@ const EconomicTable3 = ({ operationsAssessed = [] }) => {
     ? operationsAssessed.map((operation) => ({
         Operation: operation.total_number_of_operations_assesed,
         TotalOperation: operation.number_of_operations,
-        Percentage: `${operation.percentage.toFixed(2)}%`,
+        Percentage: `${operation.percentage}%`,
       }))
     : [{
         Operation: "No data available",

@@ -60,7 +60,7 @@ export const columns2 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns2.totalLabelKey = "Total Water Consumption";
 //Total Water Consumption by business operation
 export const columns3 = [
   {
@@ -94,7 +94,7 @@ export const columns3 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns3.totalLabelKey = "Total Water Consumption";
 //Total Water Consumption by Location
 export const columns4 = [
   {
@@ -128,7 +128,7 @@ export const columns4 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns4.totalLabelKey = "Total Water Consumption";
 //Total Water Consumption by source
 export const columns5 = [
   {
@@ -170,7 +170,7 @@ export const columns5 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns5.totalLabelKey = "Total Water Consumption";
 //Total Fresh Water withdrawal by business operation
 export const columns6 = [
   {
@@ -189,7 +189,7 @@ export const columns6 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
   {
-    label: "Total water withdrawal",
+    label: "Total Water Withdrawal",
     dataIndex: "withdrawal",
     headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
     cellClass:
@@ -204,7 +204,7 @@ export const columns6 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns6.totalLabelKey = "Total Water Withdrawal";
 //Total Fresh Water withdrawal by source (from water stress area)
 export const columns7 = [
   {
@@ -253,7 +253,7 @@ export const columns7 = [
   },
 
 ];
-
+columns7.totalLabelKey = "Total Water Withdrawal from areas with water stress";
 //Total Fresh Water withdrawal by Location/Country
 export const columns8 = [
   {
@@ -287,7 +287,7 @@ export const columns8 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns8.totalLabelKey = "Total Water Withdrawal";
 //Total Water withdrawal by Water type
 export const columns9 = [
 
@@ -330,7 +330,7 @@ export const columns9 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns9.totalLabelKey = "Total Water Withdrawal";
 //Water withdrawal from third-parties
 export const columns10 = [
   {
@@ -398,7 +398,7 @@ export const columns11 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns11.totalLabelKey = "Total Water Discharge";
 //Total Water Discharge by source and type of water
 export const columns12 = [
   {
@@ -440,7 +440,7 @@ export const columns12 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns12.totalLabelKey = "Total Water Discharge";
 //Total Water Discharge (from water stress area) by Business Operation
 export const columns13 = [
   {
@@ -482,7 +482,7 @@ export const columns13 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns13.totalLabelKey = "Total Water Discharge";
 //Total Water Discharge by Business Operation
 export const columns14 = [
 
@@ -517,7 +517,7 @@ export const columns14 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns14.totalLabelKey = "Total Water Discharge";
 //Total Water Discharge by Water type (from water stress area)
 export const columns15 = [
   {
@@ -559,7 +559,7 @@ export const columns15 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns15.totalLabelKey = "Total Water Discharge";
 //Third-party Water discharge sent to use for other organizations
 export const columns16 = [
   {
@@ -587,7 +587,7 @@ export const columns16 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   },
 ];
-
+columns16.totalLabelKey = "Total Water Consumption";
 //Change in water storage
 export const columns17 = [
   {
@@ -607,4 +607,4 @@ export const columns17 = [
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
   }
 ];
-
+columns17.totalLabelKey = "Total Water Consumption";

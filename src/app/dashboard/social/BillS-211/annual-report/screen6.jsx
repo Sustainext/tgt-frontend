@@ -307,8 +307,7 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                       the entity has taken to remediate the loss of income to
                       the most vulnerable families that results from any measure
                       taken to eliminate the use of forced labour or child
-                      labour in its activities and supply chains (if applicable)
-                      (1,500 character limit).
+                      labour in its activities and supply chains (if applicable).
                     </label>
                     <textarea
                       id="countriesOfOperation"

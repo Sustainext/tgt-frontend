@@ -72,18 +72,14 @@ const Screen2 = ({ isBoxOpen,location,dateRange }) => {
       function formatArray3(operations) {
         return operations.map((operation, index) => ({
           "Rate of fatalities as a result of work-related injury": Number(
-            operation.rate_of_fatalities_as_a_result_of_work_related_injury.toFixed(
-              2
-            )
+            operation.rate_of_fatalities_as_a_result_of_work_related_injury
           ),
           "Rate of high-consequence work-related injuries (excluding fatalities)":
             Number(
-              operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities.toFixed(
-                2
-              )
+              operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities
             ),
           "Rate  of recordable work-related injuries": Number(
-            operation.rate_of_recordable_work_related_injuries.toFixed(2)
+            operation.rate_of_recordable_work_related_injuries
           ),
         }));
       }
@@ -91,18 +87,14 @@ const Screen2 = ({ isBoxOpen,location,dateRange }) => {
       function formatArray4(operations) {
         return operations.map((operation, index) => ({
           "Rate of fatalities as a result of work-related injury": Number(
-            operation.rate_of_fatalities_as_a_result_of_work_related_injury.toFixed(
-              2
-            )
+            operation.rate_of_fatalities_as_a_result_of_work_related_injury
           ),
           "Rate of high-consequence work-related injuries (excluding fatalities)":
             Number(
-              operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities.toFixed(
-                2
-              )
+              operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities
             ),
           "Rate  of recordable work-related injuries": Number(
-            operation.rate_of_recordable_work_related_injuries.toFixed(2)
+            operation.rate_of_recordable_work_related_injuries
           ),
         }));
       }

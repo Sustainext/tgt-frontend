@@ -311,7 +311,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
         {options.map((option) => (
           <div className="ml-6 mt-2" key={option.key}>
             <label
-              className={`ml-2 text-[15px] ${
+              className={`ml-2 text-[14px] ${
                 isChecked ? "text-gray-600" : "text-gray-400"
               }`}
             >
@@ -354,7 +354,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
         {options.map((option) => (
           <div className="ml-6 mt-2" key={option.key}>
             <label
-              className={`ml-2 text-[15px] ${
+              className={`ml-2 text-[14px] ${
                 isCheckedone ? "text-gray-600" : "text-gray-400"
               }`}
             >
@@ -461,15 +461,15 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
       <div className="mt-2">
                 <div className="ml-4">
                   <label
-                    className="block text-gray-700 text-[15px] font-[500] mb-2 ml-2"
+                    className="block text-gray-700 text-[14px] font-[500] mb-2 ml-2"
                     htmlFor="username"
                   >
-                    8. Which of the following categorizations applies to the
-                    entity? Select all that apply
+                    8. For entities only: Which of the following categorizations applies to the
+                    entity? Select all that apply*
                   </label>
                 </div>
                 <div className="ml-4">
-                  <label className="ml-2 text-[15px] text-gray-600">
+                  <label className="ml-2 text-[14px] text-gray-600">
                     <input
                       type="checkbox"
                       name="isCheckednew"
@@ -482,7 +482,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                 </div>
                 <div className="ml-4">
                   <div>
-                    <label className="ml-2 text-[15px] text-gray-600">
+                    <label className="ml-2 text-[14px] text-gray-600">
                       <input
                         type="checkbox"
                         name="isChecked"
@@ -495,7 +495,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                     {renderContent()}
                   </div>
                   <div>
-                    <label className="ml-2 text-[15px] text-gray-600">
+                    <label className="ml-2 text-[14px] text-gray-600">
                       <input
                         type="checkbox"
                         name="isCheckedone"

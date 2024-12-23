@@ -36,7 +36,7 @@ const Section13=({section12_2_3Ref,data})=>{
                 "Type of Product":val.type_of_product,
                 "Product Code":val.product_code,
                 "Product Name":val.product_name,
-                "Percentage of reclaimed products and their packaging materials (%)":val.percentage_of_reclaimed_products+"%"
+                "Percentage of reclaimed products and their packaging materials (%)":val.total_quantity+"%"
             }
             
         )

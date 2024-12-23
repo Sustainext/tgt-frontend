@@ -1,9 +1,9 @@
 import React from 'react';
 
 function DynamicTable({ columns, data }) {
-  // Separate the data rows from the totals row
   const dataRows = data.filter(row => !row.Total); // Rows without a "Total" key
   const totalsRow = data.find(row => row.Total); // Row with the "Total" key, if it exists
+  const totalLabel = columns.totalLabelKey || "Total"; // Dynamic Total Label
 
   const renderHeaders = () => {
     return columns.map((column, index) => (
@@ -46,16 +46,20 @@ function DynamicTable({ columns, data }) {
 
         {/* Dynamic Total Row */}
         {totalsRow && (
-          <>
-            <tr className="">
-              <td colSpan={columns.length - 2} className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-[12px]">
-              Total Water Consumption
-              </td>
-              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">{totalsRow.Total}</td>
-              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">{totalsRow.Units || totalsRow.Unit}</td>
-            </tr>
-          
-          </>
+          <tr>
+            <td
+              colSpan={columns.length - 2}
+              className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-[12px]"
+            >
+              {totalLabel}
+            </td>
+            <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">
+              {totalsRow.Total}
+            </td>
+            <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">
+              {totalsRow.Units || totalsRow.Unit}
+            </td>
+          </tr>
         )}
       </tbody>
     </table>

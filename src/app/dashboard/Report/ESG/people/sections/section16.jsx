@@ -72,19 +72,19 @@ const Section16=({section13_5Ref,section13_5_1Ref,data})=>{
             Average training hours per employee:
             </p>
             <p className="text-sm mb-4">{data["404_1a_analyse"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
-              val.average_training_hours_per_employee.toFixed(2)
+              val.average_training_hours_per_employee
             )):"No data available":"No data available":"No data available"}</p>
             <p className="text-[15px]  mb-2 font-semibold">
             Average training hours per female employee: 
             </p>
             <p className="text-sm mb-4">{data["404_1a_analyse"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
-              val.average_training_hours_per_female_employee.toFixed(2)
+              val.average_training_hours_per_female_employee
             )):"No data available":"No data available":"No data available"}</p>
             <p className="text-[15px]  mb-2 font-semibold">
             Average training hours per male employee:
             </p>
             <p className="text-sm mb-4">{data["404_1a_analyse"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
-              val.average_training_hours_per_male_employee.toFixed(2)
+              val.average_training_hours_per_male_employee
             )):"No data available":"No data available":"No data available"}</p>
              <p className="text-[15px]  mb-2 font-semibold">
             Percentage of security personnel who have received formal training in the organisation: 

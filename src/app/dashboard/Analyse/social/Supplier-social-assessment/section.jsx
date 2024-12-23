@@ -51,7 +51,7 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
             "Organisation/Corporation":
             data.org_or_corp,
             "Percentage of suppliers screened using social criteria":
-              data.percentage.toFixed(2),
+              data.percentage,
           },
         ];
       };
@@ -60,9 +60,9 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
         return [
           {
             "Percentage of suppliers having negative social impacts with which improvements were agreed upon":
-              data.percentage_negative.toFixed(2),
+              data.percentage_negative,
             "Percentage of suppliers having negative social impacts with which services were terminated":
-              data.percentage_improved.toFixed(2),
+              data.percentage_improved,
           },
         ];
       };

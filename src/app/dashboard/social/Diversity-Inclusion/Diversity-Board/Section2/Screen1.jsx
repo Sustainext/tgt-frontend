@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import CustomTableWidget7 from "../../../../../shared/widgets/Table/tableWidget7"
+import CustomTableWidget14 from "../../../../../shared/widgets/Table/tableWidget14"
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -14,7 +14,7 @@ import axiosInstance from "@/app/utils/axiosMiddleware"
 
 // Simple Custom Table Widget
 const widgets = {
-  TableWidget: CustomTableWidget7,
+  TableWidget: CustomTableWidget14,
 
 };
 

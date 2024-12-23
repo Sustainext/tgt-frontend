@@ -455,8 +455,7 @@ const fetchBillSeight = async () => {
                       18. Please provide additional information on how the
                       entity assesses its effectiveness in ensuring that forced
                       labour and child labour are not being used in its
-                      activities and supply chains (if applicable). (1,500
-                      character limit)
+                      activities and supply chains (if applicable).
                     </label>
                     <textarea
                       id="countriesOfOperation"

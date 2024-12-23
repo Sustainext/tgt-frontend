@@ -359,7 +359,7 @@ const Screenone = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                     year to prevent and reduce the risk that forced labour or
                     child labour is used at any step of the production of goods
                     in Canada or elsewhere by the entity or of goods imported
-                    into Canada by the entity? Select all that apply. *
+                    into Canada by the entity? Select all that apply.*
                   </label>
                 </div>
                 <div className="mb-2">
@@ -409,7 +409,7 @@ const Screenone = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                     htmlFor="industryCheckbox"
                   >
                     2. Please provide additional information describing the
-                    steps taken (if applicable) (1,500 character limit).
+                    steps taken (if applicable).
                   </label>
                   <textarea
                     id="countriesOfOperation"

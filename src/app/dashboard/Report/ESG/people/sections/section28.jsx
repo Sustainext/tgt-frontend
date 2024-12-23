@@ -28,7 +28,7 @@ const Section28=({section13_7Ref,data})=>{
             
           {
             "Organisation/Corporation":val.org_or_corp,
-            "Percentage of total employees covered by collective bargaining agreements":val.percentage.toFixed(2)+"%"
+            "Percentage of total employees covered by collective bargaining agreements":val.percentage+"%"
         
         }
             
