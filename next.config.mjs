@@ -8,7 +8,7 @@ const nextConfig = {
       "https://superset-dev.sustainext.ai/superset/dashboard/11/?standalone=3&refreshTime=120",
     NEXT_APP_SUPERSET_URL_ENV_WASTE:
       "https://superset-dev.sustainext.ai/superset/dashboard/12/?standalone=3&refreshTime=120",
-    NEXT_PUBLIC_APP_CLIMATIQ_KEY: "98YJN6V0VC4M5KPQNSVHWCVEM8NT",
+    CLIMATIQ_KEY: "98YJN6V0VC4M5KPQNSVHWCVEM8NT",
     NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: "16",
   },
 
