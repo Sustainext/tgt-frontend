@@ -21,30 +21,26 @@ const Section14=({section13_4_2Ref,data})=>{
       dispatch(setEmployeeDiversityPosition(e.target.value))
     }
 
-    const col=[
-      "Percentage of female within organisation's governance bodies",
-      "Percentage of male within organisation's governance bodies",
-      "Percentage of Non-binary within organisation's governance bodies",
-      "Percentage of employee within age group of (under 30 years old) organisation's governance bodies",
-      "Percentage of employee within age group of (30-50 years old) organisation's governance bodies",
-      "Percentage of employee within age group of (over 50 years old) organisation's governance bodies",
-      "Percentage of employee in minority group"
-    ] 
+    const [Categorycolumns2] = useState([
+      { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
+      { header: "Age Group", subHeaders: ["<30 years", "30-50 years", ">50 years"] },
+      { header: "Diversity groups", subHeaders: ["Minority group","Vulnerable Communities"] }
+    ]);
 
-    const TableData=data["405-2a_analyse"]?data["405-2a_analyse"]["percentage_of_employees_within_government_bodies"]?
+    const Categorydata2=data["405_1a_analyse"]?data["405_1a_analyse"]["percentage_of_employees_within_government_bodies"]?.length>0?
 
-    data["405-2a_analyse"]["percentage_of_employees_within_government_bodies"].length>0?
-    data["405-2a_analyse"]["percentage_of_employees_within_government_bodies"].map((val,index)=>{
+    data["405_1a_analyse"]["percentage_of_employees_within_government_bodies"].map((val,index)=>{
         return (
             
           {
-            "Percentage of female within organisation's governance bodies":val.percentage_of_female_with_org_governance,
-            "Percentage of male within organisation's governance bodies":val.percentage_of_male_with_org_governance,
-            "Percentage of Non-binary within organisation's governance bodies":val.percentage_of_non_binary_with_org_governance,
-            "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":val.percentage_of_employees_within_30_age_group,
-            "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":val.percentage_of_employees_within_30_to_50_age_group,
-            "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":val.percentage_of_employees_more_than_50_age_group,
-            "Percentage of employee in minority group":val.percentage_of_employees_in_minority_group
+          Male: val.male,
+          Female: val.female,
+          "Non-Binary": val.nonBinary,
+          "<30 years": val.lessThan30,
+          "30-50 years": val.between30and50,
+          ">50 years": val.moreThan50,
+          "Minority group": val.minorityGroup,
+          "Vulnerable Communities": val.vulnerableCommunities
         
         }
             
@@ -52,53 +48,48 @@ const Section14=({section13_4_2Ref,data})=>{
     })
 :[
   {
-      "Percentage of female within organisation's governance bodies":"No data available",
-      "Percentage of male within organisation's governance bodies":"No data available",
-      "Percentage of Non-binary within organisation's governance bodies":"No data available",
-      "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":"No data available",
-      "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":"No data available",
-      "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":"No data available",
-      "Percentage of employee in minority group":"No data available"
+     
+          Male: "No data available",
+          Female: "No data available",
+          "Non-Binary": "No data available",
+          "<30 years": "No data available",
+          "30-50 years": "No data available",
+          ">50 years": "No data available",
+          "Minority group": "No data available",
+          "Vulnerable Communities": "No data available"
 },
 ]:[
   {
-    "Percentage of female within organisation's governance bodies":"No data available",
-    "Percentage of male within organisation's governance bodies":"No data available",
-    "Percentage of Non-binary within organisation's governance bodies":"No data available",
-    "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":"No data available",
-    "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":"No data available",
-    "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":"No data available",
-    "Percentage of employee in minority group":"No data available"
-},
-]:[
-  {
-    "Percentage of female within organisation's governance bodies":"No data available",
-    "Percentage of male within organisation's governance bodies":"No data available",
-    "Percentage of Non-binary within organisation's governance bodies":"No data available",
-    "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":"No data available",
-    "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":"No data available",
-    "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":"No data available",
-    "Percentage of employee in minority group":"No data available"
+   
+          Male: "No data available",
+          Female: "No data available",
+          "Non-Binary": "No data available",
+          "<30 years": "No data available",
+          "30-50 years": "No data available",
+          ">50 years": "No data available",
+          "Minority group": "No data available",
+          "Vulnerable Communities": "No data available"
 },
 ]
+   
     
 
       const [Categorycolumns] = useState([
-        { header: "Type of Employees", subHeaders: [] }, // No sub-headers for this column
+        { header: "Employee Category", subHeaders: [] }, // No sub-headers for this column
         { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
         { header: "Age Group", subHeaders: ["<30 years", "30-50 years", ">50 years"] },
-        { header: "Diversity groups", subHeaders: ["Minority group"] }
+        { header: "Diversity groups", subHeaders: ["Minority group","Vulnerable Communities"] }
       ]);
     
      
 
-      const Categorydata=data["405-2a_analyse"]?data["405-2a_analyse"]["number_of_employee_per_employee_category"].length>0?
+      const Categorydata=data["405_1a_analyse"]?data["405_1a_analyse"]["number_of_employee_per_employee_category"]?.length>0?
 
-    data["405-2a_analyse"]["number_of_employee_per_employee_category"].map((val,index)=>{
+    data["405_1a_analyse"]["number_of_employee_per_employee_category"].map((val,index)=>{
         return (
             
           {
-            "Type of Employees": val.Category,
+            "Employee Category": val.Category,
           Male: val.percentage_of_male_with_org_governance,
           Female: val.percentage_of_female_with_org_governance,
           "Non-Binary": val.percentage_of_non_binary_with_org_governance,
@@ -106,6 +97,7 @@ const Section14=({section13_4_2Ref,data})=>{
           "30-50 years": val.percentage_of_employees_within_30_to_50_age_group,
           ">50 years": val.percentage_of_employees_more_than_50_age_group,
           "Minority group": val.percentage_of_employees_in_minority_group,
+          "Vulnerable Communities": val.percentage_of_employees_in_vulnerable_communities
         
         }
             
@@ -113,7 +105,7 @@ const Section14=({section13_4_2Ref,data})=>{
     })
 :[
   {
-      "Type of Employees": "No data available",
+      "Employee Category": "No data available",
           Male: "No data available",
           Female: "No data available",
           "Non-Binary": "No data available",
@@ -121,10 +113,11 @@ const Section14=({section13_4_2Ref,data})=>{
           "30-50 years": "No data available",
           ">50 years": "No data available",
           "Minority group": "No data available",
+          "Vulnerable Communities": "No data available"
 },
 ]:[
   {
-    "Type of Employees": "No data available",
+    "Employee Category": "No data available",
           Male: "No data available",
           Female: "No data available",
           "Non-Binary": "No data available",
@@ -132,6 +125,7 @@ const Section14=({section13_4_2Ref,data})=>{
           "30-50 years": "No data available",
           ">50 years": "No data available",
           "Minority group": "No data available",
+          "Vulnerable Communities": "No data available"
 },
 ]
 
@@ -166,7 +160,7 @@ const Section14=({section13_4_2Ref,data})=>{
         Percentage of individuals within the organization’s governance bodies by diversity categories. 
             </p>
             <div className="shadow-md rounded-md mb-4">
-                <LeaveTable columns={col} data={TableData} />
+                <EmployeeCategoryTable columns={Categorycolumns2} data={Categorydata2} />
             </div>
             <p className="text-[15px]  mb-2 font-semibold">
             Percentage of Employees per employee category 
