@@ -5,12 +5,15 @@ import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen5 from "./screen5";
 import Socialheader3 from "../../../socialheader3";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Section1 = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
   return (
     <>
+     <ToastContainer style={{ fontSize: "12px" }} />
       <Socialheader3
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
