@@ -18,6 +18,7 @@ import Ohsservices from "./OHS/ohs-services/page";
 import Workinvolvement from "./OHS/work-involvement/page";
 import Ohstraining from "./OHS/ohs-training/page";
 import Promotionhealth from "./OHS/promotion-health/page";
+import HealthRiskAddressed from "./OHS/Health-Risk-Addressed/page";
 import Preventionohsimpact from "./OHS/prevention-ohs-Impact/page";
 import Ohsmanagementsystemcoverage from "./OHS/ohs-management-system-coverage/page";
 import Injuries from "./OHS/Injuries/page";
@@ -123,6 +124,7 @@ const Social = () => {
       "OHS Training",
       "Promotion of Health",
       "Prevention of OHS Impact",
+      "Health Risk Addressed",
       "OHS Management System Coverage",
       "Injuries",
       "Ill-health",
@@ -271,6 +273,7 @@ const Social = () => {
             {activeTab === "Worker Involvement in OHS" && <Workinvolvement />}
             {activeTab === "OHS Training" && <Ohstraining />}
             {activeTab === "Promotion of Health" && <Promotionhealth />}
+            {activeTab === "Health Risk Addressed" && <HealthRiskAddressed />}
             {activeTab === "Prevention of OHS Impact" && (
               <Preventionohsimpact />
             )}

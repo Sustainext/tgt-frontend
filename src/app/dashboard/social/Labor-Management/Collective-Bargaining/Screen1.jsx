@@ -55,7 +55,6 @@ const uiSchema = {
     ],
   },
 };
-
 const validateRows = (data) => {
   return data.map((row) => {
     const rowErrors = {};
@@ -71,7 +70,6 @@ const validateRows = (data) => {
     return rowErrors;
   });
 };
-
 const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const initialFormData = [
     {

@@ -5,8 +5,8 @@ import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-import Section1 from "./Section1/page";
-const Promotionhealth = () => {
+import Section2 from "./Section2/page";
+const HealthRiskAddressed = () => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -67,13 +67,12 @@ const Promotionhealth = () => {
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px]  font-semibold flex">
-            Promotion of worker health
+          Health risk addressed
           </h6>
         </div>
         <div className="mb-4">
           <p className="text-[12px] text-[#71717a] ml-3">
-            For employee and for workers who are not employees but whose work
-            and/or workplace is controlled by the organization
+          For employee and for workers who are not employees but whose work and/or workplace is controlled by the organization:
           </p>
         </div>
 
@@ -122,8 +121,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         </div>
       </div>
 
-      <Section1 />
+      <Section2 />
     </>
   );
 };
-export default Promotionhealth;
+export default HealthRiskAddressed;

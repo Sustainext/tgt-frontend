@@ -9,13 +9,18 @@ const CheckboxWidget3 = ({
   autofocus,
   onChange,
   uiSchema = {},
+  formContext,
+  name,
 }) => {
   const defaultState = {
     selected: [], // Array for multiple selections
     otherValue: "",
   };
+  const { validationErrors } = formContext || {};
+  const rowErrors = validationErrors || {};
+  const isValueEmpty = !value.selected || value.selected.length === 0;
+  const hasError = isValueEmpty && rowErrors[name];
 
-  // Initialize state
   const [inputState, setInputState] = useState({
     selected: value.selected || defaultState.selected,
     otherValue: value.otherValue || defaultState.otherValue,
@@ -128,6 +133,11 @@ const CheckboxWidget3 = ({
           className="block py-4 px-2 text-gray-500 text-[12px] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 capitalize w-full"
           placeholder="Enter data"
         />
+      )}
+            {hasError && (
+        <div className="text-red-500 text-[12px] mt-1">
+          {hasError}
+        </div>
       )}
     </div>
   );
