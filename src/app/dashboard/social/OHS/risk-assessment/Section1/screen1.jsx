@@ -174,26 +174,6 @@ const uiSchema = {
     ],
   },
 };
-const validateRows = (data) => {
-  return data.map((row) => {
-    const rowErrors = {};
-    if (!row.RoutineHazard) {
-      rowErrors.RoutineHazard = "This field is required.";
-    }
-    ["NonRoutineHazard", "Processforhazard", "Hierarchycontrols", "VulnerableWorkers"].forEach((key) => {
-      if (!row[key] || row[key].length === 0) {
-        rowErrors[key] = "This field is required.";
-      }
-    });
-    if (!row.Legalguideline) {
-      rowErrors.Legalguideline = "This field is required.";
-    }
-    if (!row.Listlegal) {
-      rowErrors.Listlegal = "This field is required.";
-    }
-    return rowErrors;
-  });
-};
 const Screen1 = ({location, year}) => {
   const initialFormData = [
     {
@@ -204,14 +184,13 @@ const Screen1 = ({location, year}) => {
       Legalguideline: "",
       Listlegal: "",
       ListStandards: "",
-      VulnerableWorkers:[],
+      VulnerableWorkers: "",
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
-  const [validationErrors, setValidationErrors] = useState([]);
   const toastShown = useRef(false);
 
   const LoaderOpen = () => {
@@ -312,15 +291,9 @@ const Screen1 = ({location, year}) => {
   }, [location, year]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const errors = validateRows(formData);
-    setValidationErrors(errors);
-    const hasErrors = errors.some((rowErrors) => Object.keys(rowErrors).length > 0);
-    if (!hasErrors) {
-      toast.success("Form submitted successfully!");
-    } else {
-      toast.error("Please fix validation errors before submitting.");
-    }
+    e.preventDefault(); // Prevent the default form submission
+    console.log("Form data:", formData);
+    updateFormData();
   };
 
   return (
@@ -370,7 +343,6 @@ const Screen1 = ({location, year}) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{ validationErrors }}
           />
         </div>
 

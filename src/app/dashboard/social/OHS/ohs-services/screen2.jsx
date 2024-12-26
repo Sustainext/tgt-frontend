@@ -84,9 +84,12 @@ const validateRows = (data) => {
     if (!row.Q1) {
       errors.Q1 = "This field is required";
     }
-    if (!row.Q2) {
-      errors.Q2 = "This field is required";
+    if (row.Q1 === "Yes") {
+      if (!row.Q2) {
+        errors.Q2 = "This field is required";
+      }
     }
+   
   });
   return errors;
 };
