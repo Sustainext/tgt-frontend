@@ -84,9 +84,24 @@ const uiSchema = {
   },
 };
 
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.GRI33cd) {
+      rowErrors.GRI33cd = "This field is required";
+    }
+    if (!row.GRI33e) {
+      rowErrors.GRI33e = "This field is required";
+    }
+  
+    return rowErrors;
+  });
+};
+
 const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -188,8 +203,21 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
-    console.log("test form data", formData);
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      // toast.error("Please fill in all required fields", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      // });
+      console.log("errror");
+    }
   };
 
   return (
@@ -243,6 +271,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

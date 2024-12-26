@@ -4,7 +4,12 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 const inputWidget2 = (props) => {
-  const { onChange, value = "", uiSchema = {} } = props;
+  const { onChange, value = "", uiSchema = {},formContext,name } = props;
+
+  const { validationErrors } = formContext || {};
+  const rowErrors = validationErrors || {};
+  const hasError = !value && rowErrors && rowErrors[name]
+
   const handleChange = (event) => {
     onChange(event.target.value);
   };
@@ -45,11 +50,20 @@ const inputWidget2 = (props) => {
         </div>
         <textarea
           placeholder="Enter data"
-          className={`backdrop:before:w-[48rem] border appearance-none text-[12px] border-gray-400 text-gray-700 font-[500] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+          className={`backdrop:before:w-[48rem] ${
+            hasError
+              ? "border-red-500"
+              : "border-gray-400"
+          } border appearance-none text-[12px] border-gray-400 text-gray-700 font-[500] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
           value={value}
           onChange={handleChange}
           rows={4}
         />
+         {hasError && (
+          <div className="text-red-500 text-[12px] mt-1">
+           {hasError}
+          </div>
+        )}
       </div>
     </>
   );

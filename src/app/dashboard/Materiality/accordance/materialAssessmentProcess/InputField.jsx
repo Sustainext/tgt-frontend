@@ -31,6 +31,7 @@ const InputField = ({ handleTabClick }) => {
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
+    const [dataSubmit,setDataSubmit] = useState(false)
     const [loopen, setLoOpen] = useState(true);
     const [stakeholderOption,setStakeHolderOption]=useState([])
     const [dataPresent,setDatapresent]=useState(false)
@@ -111,6 +112,7 @@ const InputField = ({ handleTabClick }) => {
       useEffect(()=>{
         fetchDetails()
         fetchData()
+        fetchMaterialityStatusData()
       },[])
 
     
@@ -229,6 +231,63 @@ const InputField = ({ handleTabClick }) => {
         setFormData(e.formData);
     };
 
+    const fetchMaterialityStatusData=async()=>{
+      LoaderOpen()
+      const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/get_materiality_dashboard_status/${assessment_id}/`;
+      try {
+        const response = await axiosInstance.get(url);
+        if (response.status === 200) {
+          console.log(response,"look")
+          LoaderClose()
+          if(response.data.status=='completed'){
+            markComplete()
+          }
+         
+        }
+      } catch (error) {
+        LoaderClose()
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    }
+
+    const markComplete=async()=>{
+      const markComplete={
+        "status":"completed",
+    }
+    const CompleteUrl = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/${assessment_id}/`
+    try{
+      const response = await axiosInstance.patch(CompleteUrl,markComplete);
+
+      if(response.status==200){
+        // setTimeout(()=>{
+        //   handleTabClick('managementApproach')
+        // },1500)
+      }
+    }
+    catch(error){
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    }
+
+
     const handleSubmit = async(e) => {
         e.preventDefault();
         if(showTextbox && !textboxValue){
@@ -257,9 +316,11 @@ const InputField = ({ handleTabClick }) => {
                 progress: undefined,
                 theme: "light",
               });
+              fetchMaterialityStatusData()
               setTimeout(()=>{
                 handleTabClick('managementApproach')
               },1500)
+              
              
         }
 

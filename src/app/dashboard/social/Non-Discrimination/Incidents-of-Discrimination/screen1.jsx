@@ -80,6 +80,26 @@ const uiSchema = {
     ],
   },
 };
+
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.typeofincident) {
+      rowErrors.typeofincident = "This field is required";
+    }
+    if (!row.totalnumberofincidentsofdiscrimination) {
+      rowErrors.totalnumberofincidentsofdiscrimination = "This field is required";
+    }
+    if (!row.describetheincident) {
+      rowErrors.describetheincident = "This field is required";
+    }
+    if (!row.otherDetails && row.typeofincident=='Others') {
+      rowErrors.otherDetails = "This field is required";
+    }
+    return rowErrors;
+  });
+};
+
 const Screen1 = ({ location, year, month }) => {
   const initialFormData = [
     {
@@ -91,6 +111,7 @@ const Screen1 = ({ location, year, month }) => {
   ];
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -194,8 +215,14 @@ const Screen1 = ({ location, year, month }) => {
   }, [location, year, month]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleRemoveCommittee = (index) => {
@@ -258,9 +285,10 @@ reporting period"
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              onRemove: handleRemoveCommittee,
-            }}
+            formContext={{ validationErrors }}
+            // formContext={{
+            //   onRemove: handleRemoveCommittee,
+            // }}
           />
         </div>
 

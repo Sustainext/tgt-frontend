@@ -53,22 +53,22 @@ const Section16=({section12_3_2Ref,data})=>{
      
       const data2 =
     data["water_analyse"] &&
-    data["water_analyse"]["total_fresh_water_withdrawal_by_source_from_water_stress_area"].length > 0
-      ? data["water_analyse"]["total_fresh_water_withdrawal_by_source_from_water_stress_area"].reduce(
+    data["water_analyse"]["total_fresh_water_withdrawal_by_source"].length > 0
+      ? data["water_analyse"]["total_fresh_water_withdrawal_by_source"].reduce(
           (acc, val) => {
             if (val.Total !== undefined) {
               waterWithdrawlBySource = {
                 total: val.Total,
-                unit: val.Units,
+                unit: val.Unit,
               };
             } else {
               acc.push({
-                Source: val.Source,
-                'Name of Water Stress Area': val.WaterStress,
-                'Water Type': val.WaterType,
-                'Contribution %': val.withdrawal_percentage+"%",
-                'Total Water Consumption': val['Total Withdrawal'],
-                Unit: val.Units
+                Source: val.source,
+                'Name of Water Stress Area': val.water_stress,
+                'Water Type': val.water_type,
+                'Contribution %': val.contribution+"%",
+                'Total Water Consumption': val.total_withdrawal,
+                Unit: val.Unit
               });
             }
             return acc;
@@ -105,10 +105,10 @@ const Section16=({section12_3_2Ref,data})=>{
               };
             } else {
               acc.push({
-               "Business Operation": val.Businessoperations,
-          'Contribution %': val.withdrawal_percentage+"%",
-          'Total water withdrawal': val['Total Withdrawal'],
-          "Unit": val.Units
+               "Business Operation": val.business_operation,
+          'Contribution %': val.contribution+"%",
+          'Total water withdrawal': val.withdrawal,
+          "Unit": val.Unit
               });
             }
             return acc;
@@ -134,8 +134,8 @@ const Section16=({section12_3_2Ref,data})=>{
 
       const data3 =
     data["water_analyse"] &&
-    data["water_analyse"]["total_fresh_water_withdrawal_by_location_country"].length > 0
-      ? data["water_analyse"]["total_fresh_water_withdrawal_by_location_country"].reduce(
+    data["water_analyse"]["get_total_fresh_water_withdrawal_by_location_country"].length > 0
+      ? data["water_analyse"]["get_total_fresh_water_withdrawal_by_location_country"].reduce(
           (acc, val) => {
             if (val.Total !== undefined) {
               waterWithdrawlByLocation = {
@@ -145,9 +145,9 @@ const Section16=({section12_3_2Ref,data})=>{
             } else {
               acc.push({
                 "Location/country": val.location,
-          'Contribution %': val.withdrawal_contribution+"%",
-          'Total water withdrawal': val.total_withdrawal,
-          "Unit": val.unit
+          'Contribution %': val.contribution+"%",
+          'Total water withdrawal': val.total_water_withdrawal,
+          "Unit": val.Unit
               });
             }
             return acc;
@@ -180,15 +180,15 @@ const Section16=({section12_3_2Ref,data})=>{
               if (val.Total !== undefined) {
                 waterWithdrawlByWaterType = {
                   total: val.Total,
-                  unit: val.Units,
+                  unit: val.Unit,
                 };
               } else {
                 acc.push({
-                  "Water type": val.Watertype,
-                  'Source': val.Source,
-                  "Contribution %":val.withdrawal_percentage+"%",
-                  'Total water withdrawal': val.total_consumed,
-                  "Unit": val.Units
+                  "Water type": val.water_type,
+                  'Source': val.source,
+                  "Contribution %":val.contribution+"%",
+                  'Total water withdrawal': val.total_water_withdrawal,
+                  "Unit": val.Unit
                 });
               }
               return acc;
@@ -224,10 +224,10 @@ const Section16=({section12_3_2Ref,data})=>{
                 };
               } else {
                 acc.push({
-                  "Source of Water withdrawal from third party": val.Source,
-          "Contribution %": val.withdrawal_percentage+"%",
-          'Water Withdrawal': val['Total Withdrawal'],
-          "Unit": val.Units
+                  "Source of Water withdrawal from third party": val.source,
+          "Contribution %": val.contribution+"%",
+          'Water Withdrawal': val.quantity,
+          "Unit": val.Unit
                 });
               }
               return acc;
@@ -275,7 +275,7 @@ const Section16=({section12_3_2Ref,data})=>{
 Total Fresh Water withdrawal by business operation
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column1} data={data1} consumption="Total Water Withdrawal" 
+<WaterTable columns={column1} data={data1} consumption="Total water withdrawal" 
             unit={waterWithdrawlByBusinessOperation.unit}
             total={waterWithdrawlByBusinessOperation.total}/>
 </div>
@@ -284,7 +284,7 @@ Total Fresh Water withdrawal by business operation
 Total Fresh Water withdrawal by source (from water stress area)
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column2} data={data2} consumption="Total Water Consumption"  unit={waterWithdrawlBySource.unit}
+<WaterTable columns={column2} data={data2} consumption="Total water withdrawal from areas with Water stress"  unit={waterWithdrawlBySource.unit}
             total={waterWithdrawlBySource.total}/>
 </div>
 
@@ -292,7 +292,7 @@ Total Fresh Water withdrawal by source (from water stress area)
 Total Fresh Water withdrawal by Location/Country
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column3} data={data3} consumption="Total Water Withdrawal"  unit={waterWithdrawlBySource.unit}
+<WaterTable columns={column3} data={data3} consumption="Total water withdrawal"  unit={waterWithdrawlBySource.unit}
             total={waterWithdrawlBySource.total} />
 </div>
 
@@ -304,7 +304,7 @@ Water withdrawal by water type
 Total Water withdrawal by Water type
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column4} data={data4} consumption="Total Water Consumption" unit={waterWithdrawlByWaterType.unit}
+<WaterTable columns={column4} data={data4} consumption="Total water withdrawal" unit={waterWithdrawlByWaterType.unit}
             total={waterWithdrawlByWaterType.total}/>
 </div>
 
@@ -312,9 +312,10 @@ Total Water withdrawal by Water type
 Water withdrawal from third-parties
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column5} data={data5} consumption="Total Water Withdrawal" 
-unit={waterWithdrawlByThirdParties.unit}
-total={waterWithdrawlByThirdParties.total}
+<WaterTable columns={column5} data={data5} 
+// consumption="" 
+// unit={waterWithdrawlByThirdParties.unit}
+// total={waterWithdrawlByThirdParties.total}
 
 />
 </div>

@@ -24,7 +24,7 @@ const EmployeeCategoryTable = ({columns,data}) => {
                   key={index}
                   colSpan={col.subHeaders.length || 1}
                   rowSpan={col.subHeaders.length ? 1 : 2}
-                  className="text-[12px] border-r px-4 py-4 text-gray-500 text-left border-b"
+                  className="text-[12px] border-r px-4 py-4 text-gray-500 text-center border-b"
                 >
                   {col.header}
                 </th>
