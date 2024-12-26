@@ -156,11 +156,11 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       male: "",
       female: "",
       others: "",
-      totalEmployees: "",
+      totalTrainingHours: "",
       male1: "",
       female1: "",
       others1: "",
-      totalTrainingHours: "",
+      totalEmployees: "",
     },
   ];
 

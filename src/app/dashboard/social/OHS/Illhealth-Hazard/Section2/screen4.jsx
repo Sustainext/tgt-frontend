@@ -87,14 +87,32 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data) => {
 
+  const errors = {};
+  data.forEach((row) => {
+    if (!row.Q1) {
+      errors.Q1 = "This field is required";
+    }
+    if (row.Q1 === "Yes") {
+      if (!row.Q2) {
+        errors.Q2 = "This field is required";
+      }
+      if (!row.Q3) {
+        errors.Q3 = "This field is required";
+      }
+    }
+   
+  });
+  return errors;
+};
 const Screen4 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-
+const [validationErrors, setValidationErrors] = useState([]);
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -168,6 +186,7 @@ const Screen4 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
+    setValidationErrors();
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -206,8 +225,15 @@ const Screen4 = ({ location, year, month }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+  
+    const hasErrors = Object.keys(errors).length > 0;
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("validation error");
+    }
   };
 
   return (
@@ -263,6 +289,7 @@ const Screen4 = ({ location, year, month }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

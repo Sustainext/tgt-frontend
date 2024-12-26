@@ -73,6 +73,21 @@ const uiSchema = {
     ],
   },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.Processquality) {
+      rowErrors.Processquality = "This field is required";
+    }
+    if (!row.Personnelcompetency) {
+      rowErrors.Personnelcompetency = "This field is required";
+    }
+    if (!row.Resultsutilization) {
+      rowErrors.Resultsutilization = "This field is required";
+    }
+    return rowErrors;
+  });
+};
 const Screen2 = ({location, year}) => {
   const initialFormData = [
     {
@@ -84,6 +99,7 @@ const Screen2 = ({location, year}) => {
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
 
@@ -185,9 +201,19 @@ const Screen2 = ({location, year}) => {
   }, [location, year]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    updateFormData();
+    e.preventDefault();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   return (
@@ -238,6 +264,7 @@ the quality and effectiveness of its occupational health and safety management s
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
 
