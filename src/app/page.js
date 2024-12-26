@@ -6,7 +6,12 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 import CryptoJS from "crypto-js";
 
-const PasswordInput = ({ value, onChange, required = true }) => {
+const PasswordInput = ({
+  value,
+  onChange,
+  required = true,
+  disabled = false,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
@@ -52,15 +57,16 @@ const PasswordInput = ({ value, onChange, required = true }) => {
         value={value}
         onChange={onChange}
         required={required}
+        disabled={disabled}
         onFocus={handleFocus}
         onBlur={handleBlur}
         className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500
           text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500
-          focus:border-indigo-500 focus:z-10 sm:text-sm"
+          focus:border-indigo-500 focus:z-10 sm:text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
         placeholder="Password"
         autoComplete="current-password"
       />
-      {isFocused && (
+      {isFocused && !disabled && (
         <button
           ref={buttonRef}
           type="button"
@@ -84,27 +90,35 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const { login } = useAuth();
 
   useEffect(() => {
     setIsMounted(true);
     const rememberedUser = localStorage.getItem("rememberedUser");
     if (rememberedUser) {
-      const { email, password } = JSON.parse(rememberedUser);
-      setEmail(email);
-      setPassword(password);
-      setRememberMe(true);
+      try {
+        const { email, password } = JSON.parse(rememberedUser);
+        setEmail(email);
+        setPassword(password);
+        setRememberMe(true);
+      } catch (error) {
+        console.error("Error parsing remembered user:", error);
+        localStorage.removeItem("rememberedUser");
+      }
     }
   }, []);
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     try {
       // Encrypt password using SHA-256
-      const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
-      console.log(hashedPassword);
+      const hashedPassword = CryptoJS.SHA256(password).toString(
+        CryptoJS.enc.Hex
+      );
 
       // Replace password with hashed password for login request
       await login(email, hashedPassword, rememberMe);
@@ -112,13 +126,15 @@ export default function Home() {
       if (rememberMe) {
         localStorage.setItem(
           "rememberedUser",
-          JSON.stringify({ email, password: hashedPassword }) // Save hashed password
+          JSON.stringify({ email, password: hashedPassword })
         );
       } else {
         localStorage.removeItem("rememberedUser");
       }
-    } catch (e) {
-      console.log("Could not login");
+    } catch (error) {
+      console.error("Could not login:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -166,11 +182,12 @@ export default function Home() {
                     autoComplete="email"
                     required
                     className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500
-                text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500
-                focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500
+                      focus:border-indigo-500 focus:z-10 sm:text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
                     placeholder="Email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    disabled={isLoading}
                   />
                 </div>
                 <div className="mb-6 relative">
@@ -180,6 +197,7 @@ export default function Home() {
                   <PasswordInput
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    disabled={isLoading}
                   />
                 </div>
                 <div className="flex items-center justify-between mb-6">
@@ -188,9 +206,10 @@ export default function Home() {
                       id="remember_me"
                       name="remember_me"
                       type="checkbox"
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded disabled:cursor-not-allowed"
                       checked={rememberMe}
                       onChange={handleRememberMeChange}
+                      disabled={isLoading}
                     />
                     <label
                       htmlFor="remember_me"
@@ -211,9 +230,10 @@ export default function Home() {
                 <div>
                   <button
                     type="submit"
-                    className="group relative flex w-full justify-center rounded-md bg-gradient-to-r from-[#007EEF] to-[#2AE4FF] hover:bg-gradient-to-r hover:from-[#00aeef] hover:to-[#6adf23] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="group relative flex w-full justify-center rounded-md bg-gradient-to-r from-[#007EEF] to-[#2AE4FF] hover:bg-gradient-to-r hover:from-[#00aeef] hover:to-[#6adf23] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isLoading}
                   >
-                    Login
+                    {isLoading ? "Logging in..." : "Login"}
                   </button>
                 </div>
               </form>
