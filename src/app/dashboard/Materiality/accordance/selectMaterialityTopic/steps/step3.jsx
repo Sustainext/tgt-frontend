@@ -29,6 +29,7 @@ const Step3 = ({handleTabClick,handlePrevious}) => {
   const [isModalOpen,setIsModalOpen]=useState(false)
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({});
+    const [dataSubmit,setDataSubmit] = useState(false)
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
     const [dataPresent,setDatapresent]=useState(false)
@@ -166,9 +167,61 @@ const Step3 = ({handleTabClick,handlePrevious}) => {
 
     useEffect(()=>{
       fetchDetails()
+      fetchMaterialityStatusData()
     },[])
 
-    
+    const fetchMaterialityStatusData=async()=>{
+      LoaderOpen()
+      const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/get_materiality_dashboard_status/${assessment_id}/`;
+      try {
+        const response = await axiosInstance.get(url);
+        if (response.status === 200) {
+          LoaderClose()
+          if(response.data.status=='completed'){
+              markComplete()
+          }
+         
+        }
+      } catch (error) {
+        LoaderClose()
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    }
+
+    const markComplete=async()=>{
+      const markComplete={
+        "status":"completed",
+    }
+    const CompleteUrl = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/${assessment_id}/`
+    try{
+      const response = await axiosInstance.patch(CompleteUrl,markComplete);
+
+      if(response.status==200){
+        // setIsModalOpen(true)
+      }
+    }
+    catch(error){
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    }
 
    
     const handleSubmit = async(e) => {
@@ -186,6 +239,7 @@ const Step3 = ({handleTabClick,handlePrevious}) => {
       try {
         const response = dataPresent?await axiosInstance.put(url,data):await axiosInstance.post(url,data);
         if(response.status>=200&&response.status<300){
+          fetchMaterialityStatusData()
           setIsModalOpen(true)
         }
         else{

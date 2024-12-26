@@ -180,6 +180,30 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
     }));
   };
 
+  //next button disabled
+  const isNextButtonDisabled = () => {
+    const sections = ["environment", "social", "governance"];
+    for (let section of sections) {
+      const topics = disclosureTopics[section];
+      if (topics) {
+        for (let topic of topics) {
+          const topicId = Object.keys(topic)[0];
+          const disclosures = topic[topicId];
+          const isAnyDisclosureSelected = disclosures.some(
+            (disclosure) =>
+              selectedDisclosures[disclosure.selected_material_topic_id]?.includes(
+                disclosure.disclosure_id
+              )
+          );
+          if (!isAnyDisclosureSelected) {
+            return true; // Disable if any topic lacks a selected disclosure
+          }
+        }
+      }
+    }
+    return false; // Enable if all topics have at least one selected disclosure
+  };
+
   // Function to render topics and disclosures
   const renderDisclosureTopics = (sectionData, sectionTitle) => {
     return (
@@ -385,7 +409,7 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
       )}
 
       {/* Buttons */}
-      <div className="flex justify-end w-full gap-4 mt-4">
+      <div className="flex justify-end w-full gap-4 mt-4 relative">
         <button
           className="w-auto h-full mr-2 py-2 px-3 text-[#727272] cursor-pointer"
           onClick={() => {
@@ -395,14 +419,36 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
           {"<"} Previous
         </button>
         <button
-          className="w-[16%] h-full mr-4 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+          // className={`w-[16%] h-full mr-4 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer`}
+          className={`w-[15%] h-full mr-6 py-2 px-2 bg-[#007EEF] ${
+            isNextButtonDisabled()
+              ? "opacity-30 cursor-not-allowed"
+              : "cursor-pointer"
+          } text-white rounded-[8px] shadow`}
           onClick={() => {
             const formattedDisclosures = formatSelectedDisclosures();
             handleSubmit(formattedDisclosures);
           }}
+          data-tooltip-html={
+           "<p>Please select at least one disclosure from each topic.</p>"
+          }
+          data-tooltip-id={`nextButtonTooltip`}
+          disabled={isNextButtonDisabled()}
         >
           Next {">"}
         </button>
+        {isNextButtonDisabled() && (
+          <ReactTooltip
+            id="nextButtonTooltip"
+            place="top"
+            effect="solid"
+            backgroundColor="#000"
+            textColor="white"
+            fontSize="12px"
+            borderRadius="8px"
+            delayShow={200}
+          />
+        )}
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
