@@ -32,28 +32,28 @@ const Section17=({section12_3_3Ref,data})=>{
         'Source', 
         'Water Type', 
         'Contribution %', 
-        'Total Water Consumption', 
+        'Total water Discharge', 
         'Unit'
       ];
 
       const data2 =
       data["water_analyse"] &&
-      data["water_analyse"]["total_water_discharge_by_source_and_type_of_water"].length > 0
-        ? data["water_analyse"]["total_water_discharge_by_source_and_type_of_water"].reduce(
+      data["water_analyse"]["total_water_discharge_by_water_type"].length > 0
+        ? data["water_analyse"]["total_water_discharge_by_water_type"].reduce(
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterDischargeBySource = {
                   total: val.Total,
-                  unit: val.Units,
+                  unit: val.Unit,
                 };
               } else {
                 acc.push({
-                  Source: val.Source,
+                  Source: val.source,
         
-          'Water Type': val.Watertype,
-          'Contribution %': val.discharge_percentage+"%",
-          'Total Water Consumption': val.total_consumed,
-          Unit: val.units
+          'Water Type': val.water_type,
+          'Contribution %': val.contribution+"%",
+          'Total water Discharge': val.total_water_discharge,
+          Unit: val.Unit
                 });
               }
               return acc;
@@ -66,7 +66,7 @@ const Section17=({section12_3_3Ref,data})=>{
         
           'Water Type': 'No data available',
           'Contribution %': 'No data available',
-          'Total Water Consumption': 'No data available',
+          'Total water Discharge': 'No data available',
           Unit: 'No data available'
             },
           ];
@@ -75,27 +75,27 @@ const Section17=({section12_3_3Ref,data})=>{
       const column1 = [
         'Business Operation', 
         'Contribution %', 
-        'Total water withdrawal', 
+        'Total water Discharge', 
         'Unit', 
       ];
 
 
       const data1 =
       data["water_analyse"] &&
-      data["water_analyse"]["total_water_discharge_by_business_operation"].length > 0
-        ? data["water_analyse"]["total_water_discharge_by_business_operation"].reduce(
+      data["water_analyse"]["total_fresh_water_discharge_by_business_operation"].length > 0
+        ? data["water_analyse"]["total_fresh_water_discharge_by_business_operation"].reduce(
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterDischargeByBusiness = {
                   total: val.Total,
-                  unit: val.Units,
+                  unit: val.Unit,
                 };
               } else {
                 acc.push({
-                  "Business Operation": val.Businessoperations,
-          'Contribution %': val.discharge_percentage+"%",
-          'Total water withdrawal': val['Total Withdrawal'],
-          "Unit": val.Units
+                  "Business Operation": val.business_operation,
+          'Contribution %': val.contribution+"%",
+          'Total water Discharge': val.discharge,
+          "Unit": val.Unit
                 });
               }
               return acc;
@@ -106,7 +106,7 @@ const Section17=({section12_3_3Ref,data})=>{
             {
               "Business Operation": 'No data available',
           'Contribution %': 'No data available',
-          'Total water withdrawal': 'No data available',
+          'Total water Discharge': 'No data available',
           "Unit": 'No data available'
             },
           ]
@@ -114,15 +114,15 @@ const Section17=({section12_3_3Ref,data})=>{
       const column3 = [
         'Location/country', 
         'Contribution %', 
-        'Total water withdrawal', 
+        'Total water Discharge', 
         'Unit', 
       ];
     
 
       const data3 =
       data["water_analyse"] &&
-      data["water_analyse"]["total_water_discharge_by_location"].length > 0
-        ? data["water_analyse"]["total_water_discharge_by_location"].reduce(
+      data["water_analyse"]["get_total_fresh_water_discharge_by_location_country"].length > 0
+        ? data["water_analyse"]["get_total_fresh_water_discharge_by_location_country"].reduce(
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterDischargeByLocation = {
@@ -132,9 +132,9 @@ const Section17=({section12_3_3Ref,data})=>{
               } else {
                 acc.push({
                   "Location/country": val.location,
-                  'Contribution %': val.discharge_contribution+"%",
-                  'Total water withdrawal': val.total_discharge,
-                  "Unit": val.unit
+                  'Contribution %': val.contribution+"%",
+                  'Total water Discharge': val.total_water_discharge,
+                  "Unit": val.Unit
                 });
               }
               return acc;
@@ -145,7 +145,7 @@ const Section17=({section12_3_3Ref,data})=>{
             {
               "Location/country": 'No data available',
               'Contribution %': 'No data available',
-              'Total water withdrawal': 'No data available',
+              'Total water Discharge': 'No data available',
               "Unit": 'No data available'
             },
           ];
@@ -166,15 +166,15 @@ const Section17=({section12_3_3Ref,data})=>{
               if (val.Total !== undefined) {
                 waterDischargeByBusinessOperation = {
                   total: val.Total,
-                  unit: val.Units,
+                  unit: val.Unit,
                 };
               } else {
                 acc.push({
-                  "Name of Water Stress Area": val.WaterStress,
-            "Business Operation":val.Businessoperations,
-          "Contribution %":val.discharge_percentage+"%",
-          'Total water Discharge': val['Total Discharge'],
-          "Unit": val.Units
+                  "Name of Water Stress Area": val.water_stress,
+            "Business Operation":val.business_operation,
+          "Contribution %":val.contribution+"%",
+          'Total water Discharge': val.total_discharge,
+          "Unit": val.Unit
                 });
               }
               return acc;
@@ -206,15 +206,15 @@ const Section17=({section12_3_3Ref,data})=>{
               if (val.Total !== undefined) {
                 waterDischargeByStressArea = {
                   total: val.Total,
-                  unit: val.Units,
+                  unit: val.Unit,
                 };
               } else {
                 acc.push({
-                  "Name of Water Stress Area": val.WaterStress,
-            "Type of water":val.WaterType,
-          "Contribution %":val.discharge_percentage+"%",
-          'Total water Discharge': val['Total Discharge'],
-          "Unit": val.Units
+                  "Name of Water Stress Area": val.water_stress,
+            "Type of water":val.water_type,
+          "Contribution %":val.contribution+"%",
+          'Total water Discharge': val.total_discharge,
+          "Unit": val.Unit
                 });
               }
               return acc;
@@ -245,9 +245,9 @@ const Section17=({section12_3_3Ref,data})=>{
               if (val.Total !== undefined) {
               } else {
                 acc.push({
-                  "Volume of third-party water send  to use for other organizations": val.Volume,
-          "Contribution %":val['Discharge Percentage']+"%",
-          "Unit": val.Units
+                  "Volume of third-party water send  to use for other organizations": val.volume,
+          "Contribution %":val.contribution+"%",
+          "Unit": val.Unit
                 });
               }
               return acc;
@@ -278,7 +278,7 @@ const Section17=({section12_3_3Ref,data})=>{
 Total Water Discharge by Location
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column3} data={data3} consumption="Total Water Discharge" unit={waterDischargeByLocation.unit}
+<WaterTable columns={column3} data={data3} consumption="Total water discharge" unit={waterDischargeByLocation.unit}
             total={waterDischargeByLocation.total}/>
 </div>
 
@@ -286,7 +286,7 @@ Total Water Discharge by Location
 Total Water Discharge by source and type of water
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column2} data={data2} consumption="Total Water Consumption" unit={waterDischargeBySource.unit}
+<WaterTable columns={column2} data={data2} consumption="Total water discharge" unit={waterDischargeBySource.unit}
             total={waterDischargeBySource.total}/>
 </div>
 {/* <p className="text-[15px]  mb-2 font-semibold">
@@ -297,7 +297,7 @@ Water withdrawal by water type
 Total Water Discharge (from water stress area) by Business Operation
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column4} data={data4} consumption="Total Water Consumption" 
+<WaterTable columns={column4} data={data4} consumption="Total water discharge" 
 unit={waterDischargeByBusinessOperation.unit}
 total={waterDischargeByBusinessOperation.total}
 />
@@ -308,7 +308,7 @@ total={waterDischargeByBusinessOperation.total}
 Total Water Discharge by Business Operation
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column1} data={data1} consumption="Total Water Consumption" 
+<WaterTable columns={column1} data={data1} consumption="Total water discharge" 
 unit={waterDischargeByBusiness.unit}
 total={waterDischargeByBusiness.total}
 />
@@ -324,7 +324,7 @@ Water discharge (from water stress areas) by water type
 Total Water Discharge by Water type (from water stress area)
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column5} data={data5} consumption="Total Water Consumption" unit={waterDischargeByStressArea.unit} total={waterDischargeByStressArea.total}/>
+<WaterTable columns={column5} data={data5} consumption="Total water discharge" unit={waterDischargeByStressArea.unit} total={waterDischargeByStressArea.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">

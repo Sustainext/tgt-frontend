@@ -37,7 +37,7 @@ const CommoninputWidget = (props) => {
   const hasError = !value&&rowErrors && rowErrors[name];
   const isOptional = uiSchema["ui:title"].toLowerCase().includes("(if any)");
 
-  console.log(validationErrors,formContext,"seee")
+  
 
   return (
     <>

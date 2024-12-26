@@ -52,14 +52,14 @@ const Section18=({section12_3_4Ref,data})=>{
               if (val.Total !== undefined) {
                 waterConsumedByBusinessOperation = {
                   total: val.Total,
-                  unit: val.Units,
+                  unit: val.Unit,
                 };
               } else {
                 acc.push({
-                  "Business Operation": val.Businessoperations,
-          'Contribution %': val.consumption_percentage+"%",
-          'Total water Consumption': val.total_consumed,
-          "Unit": val.Units
+                  "Business Operation": val.business_operation,
+          'Contribution %': val.contribution+"%",
+          'Total water Consumption': val.consumption,
+          "Unit": val.Unit
                 });
               }
               return acc;
@@ -91,8 +91,8 @@ const Section18=({section12_3_4Ref,data})=>{
               if (val.Total !== undefined) {
               } else {
                 acc.push({
-                 "Total water Consumption": val.total_water_consumption,
-          'Water consumption from areas with water stress': val.water_consumption_from_areas_with_water_stress,
+                 "Total water Consumption": val.water_consumption,
+          'Water consumption from areas with water stress': val.water_consumption_water_stress,
           
           "Unit": val.Unit
                 });
@@ -131,9 +131,9 @@ const Section18=({section12_3_4Ref,data})=>{
               } else {
                 acc.push({
                   "Location/country": val.location,
-                  'Contribution %': val.consumption_contribution+"%",
-                  'Total water consumption': val.total_consumption,
-                  "Unit": val.unit
+                  'Contribution %': val.contribution+"%",
+                  'Total water consumption': val.total_water_consumption,
+                  "Unit": val.Unit
                 });
               }
               return acc;
@@ -167,15 +167,15 @@ const Section18=({section12_3_4Ref,data})=>{
               if (val.Total !== undefined) {
                 waterConsumedBySource = {
                   total: val.Total,
-                  unit: val.Units,
+                  unit: val.Unit,
                 };
               } else {
                 acc.push({
-                  Source: val.Source,
-                  'Water Type': val.WaterType,
-                  'Contribution %': val.consumption_percentage+"%",
-                  'Total Water Consumption': val.total_consumed,
-                  Unit: val.Units
+                  Source: val.source,
+                  'Water Type': val.watertype,
+                  'Contribution %': val.contribution+"%",
+                  'Total Water Consumption': val.consumption,
+                  Unit: val.Unit
                 });
               }
               return acc;
@@ -203,20 +203,20 @@ const Section18=({section12_3_4Ref,data})=>{
 
       const data5 =
       data["water_analyse"] &&
-      data["water_analyse"]["total_water_consumption_in_water_stress_areas"].length > 0
-        ? data["water_analyse"]["total_water_consumption_in_water_stress_areas"].reduce(
+      data["water_analyse"]["total_water_consumption_in_water_stress_areas_by_area"].length > 0
+        ? data["water_analyse"]["total_water_consumption_in_water_stress_areas_by_area"].reduce(
             (acc, val) => {
               if (val.Total !== undefined) {
                 waterConsumedByStressArea = {
                   total: val.Total,
-                  unit: val.Units,
+                  unit: val.Unit,
                 };
               } else {
                 acc.push({
-                  "Name of Water Stress Area": val.WaterStress,
-                  "Contribution %": val.consumption_percentage+"%",
-                  'Water Consumption': val.total_consumed,
-                  "Unit": val.Units
+                  "Name of Water Stress Area": val.water_stress_area,
+                  "Contribution %": val.contribution+"%",
+                  'Water Consumption': val.consumption,
+                  "Unit": val.Unit
                 });
               }
               return acc;
@@ -247,7 +247,7 @@ const Section18=({section12_3_4Ref,data})=>{
               } else {
                 acc.push({
                   "Unit": val.Unit,
-          "Change in water storage":val.WaterStorage,
+          "Change in water storage":val.change_in_water_storage,
                 });
               }
               return acc;
