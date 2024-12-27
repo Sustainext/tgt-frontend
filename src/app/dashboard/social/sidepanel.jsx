@@ -371,6 +371,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                 activeTab === "Promotion of Health" ||
                 activeTab === "Prevention of OHS Impact" ||
                 activeTab === "OHS Management System Coverage" ||
+                activeTab === " Health Risk Addressed" ||  
                 activeTab === "Injuries" ||
                 activeTab === "Ill-health" ||
                 activeTab === "Hazard Reporting" ||
@@ -531,6 +532,18 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Health Risk Addressed"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Health Risk Addressed")}
+                    >
+                      Health Risk Addressed
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Prevention of OHS Impact"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
@@ -540,6 +553,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Prevention of OHS Impact
                     </p>
                   </div>
+           
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                      Topic disclosure

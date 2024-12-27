@@ -23,11 +23,11 @@ const CustomTableWidget9 = ({
     "male",
     "female",
     "others",
-    "totalEmployees",
+    "totalTrainingHours",
     "male1",
     "female1",
     "others1",
-    "totalTrainingHours",
+    "totalEmployees",
   ];
 
   // Update fields and automatically compute totals
@@ -37,7 +37,7 @@ const CustomTableWidget9 = ({
 
     // Automatically compute totals if relevant fields are modified
     if (["male", "female", "others"].includes(key)) {
-      newData[index]["totalEmployees"] = [
+      newData[index]["totalTrainingHours"] = [
         newData[index]["male"],
         newData[index]["female"],
         newData[index]["others"],
@@ -46,7 +46,7 @@ const CustomTableWidget9 = ({
         .toString();
     }
     if (["male1", "female1", "others1"].includes(key)) {
-      newData[index]["totalTrainingHours"] = [
+      newData[index]["totalEmployees"] = [
         newData[index]["male1"],
         newData[index]["female1"],
         newData[index]["others1"],
@@ -66,11 +66,11 @@ const CustomTableWidget9 = ({
       male: "",
       female: "",
       others: "",
-      totalEmployees: "",
+      totalTrainingHours: "",
       male1: "",
       female1: "",
       others1: "",
-      totalTrainingHours: "",
+      totalEmployees: "",
     };
     const newData = [...tableData, newRow];
     setTableData(newData);
@@ -236,8 +236,8 @@ const CustomTableWidget9 = ({
                         }
                         required={required}
                         readOnly={
-                          key === "totalEmployees" ||
-                          key === "totalTrainingHours"
+                          key === "totalTrainingHours" ||
+                          key === "totalEmployees"
                         }
                         value={item[key]}
                         onChange={(newValue) =>
@@ -270,7 +270,7 @@ const CustomTableWidget9 = ({
   );
 };
 
-const InputField = ({ type, required, value, onChange }) => {
+const InputField = ({ type, required, value, onChange,readOnly }) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
@@ -291,6 +291,7 @@ const InputField = ({ type, required, value, onChange }) => {
       type={type === "number" ? "number" : "text"}
       required={required}
       value={inputValue}
+      readOnly={readOnly}
       onChange={handleInputChange}
       style={{ width: "100%" }}
       placeholder="Enter data"

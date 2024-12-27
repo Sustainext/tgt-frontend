@@ -55,8 +55,8 @@ const uiSchema = {
     },
   },
 };
-
 const validateRows = (data) => {
+
   const errors = {};
   data.forEach((row) => {
     if (!row.Q1) {
@@ -65,7 +65,6 @@ const validateRows = (data) => {
   });
   return errors;
 };
-
 const Screen1 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -178,7 +177,7 @@ const Screen1 = ({ location, year, month }) => {
     e.preventDefault();
     const errors = validateRows(formData);
     setValidationErrors(errors);
- 
+  
     const hasErrors = Object.keys(errors).length > 0;
     if (!hasErrors) {
       updateFormData();

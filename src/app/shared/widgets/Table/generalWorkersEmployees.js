@@ -3,6 +3,7 @@ import { debounce } from "lodash";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { MdInfoOutline, MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
+
 const GeneralWorkersEmployees = ({
   id,
   options,
@@ -10,14 +11,20 @@ const GeneralWorkersEmployees = ({
   required,
   onChange,
   schema,
-  formContext,
+  formContext = {},
 }) => {
-  const [localValue, setLocalValue] = useState(value);
+  const [localValue, setLocalValue] = useState(value || []);
   const [othersInputs, setOthersInputs] = useState([]);
+  const [localErrors, setLocalErrors] = useState(formContext.validationErrors || []);
+  const [isValueEmpty, setIsValueEmpty] = useState(localValue.length === 0);
+
+  useEffect(() => {
+    setLocalErrors(formContext.validationErrors || []);
+  }, [formContext.validationErrors]);
 
   useEffect(() => {
     const initializeOthersInputs = () => {
-      const newOthersInputs = value.map((row) => {
+      const newOthersInputs = localValue.map((row) => {
         let rowOthers = {};
         Object.keys(row).forEach((key) => {
           if (row[key] === "Others (please specify)" || row[key + "_others"]) {
@@ -28,9 +35,9 @@ const GeneralWorkersEmployees = ({
       });
       setOthersInputs(newOthersInputs);
     };
-    setLocalValue(value);
     initializeOthersInputs();
-  }, [value]);
+    setIsValueEmpty(localValue.length === 0);
+  }, [localValue]);
 
   const handleFieldChange = (index, key, newValue) => {
     const updatedValues = [...localValue];
@@ -54,7 +61,23 @@ const GeneralWorkersEmployees = ({
       setOthersInputs(updatedOthersInputs);
     }
 
+    // Clear error for this specific field
+    const updatedErrors = [...localErrors];
+    if (updatedErrors[index]) {
+      delete updatedErrors[index][key];
+      if (Object.keys(updatedErrors[index]).length === 0) {
+        updatedErrors.splice(index, 1); // Remove the entire row if no errors are left
+      }
+    }
+
+    setLocalErrors(updatedErrors);
     setLocalValue(updatedValues);
+
+    // Hide the error if there is at least one valid row
+    const hasValidRow = updatedValues.some((row) =>
+      Object.values(row).some((val) => val.trim() !== "")
+    );
+    setIsValueEmpty(!hasValidRow);
   };
 
   const handleAddRow = () => {
@@ -64,6 +87,7 @@ const GeneralWorkersEmployees = ({
     });
     setLocalValue([...localValue, newRow]);
     setOthersInputs([...othersInputs, {}]); // Add an empty object for the new row in othersInputs
+    setIsValueEmpty(false); // New row added, no longer empty
   };
 
   const handleDeleteRow = (index) => {
@@ -74,6 +98,9 @@ const GeneralWorkersEmployees = ({
     const updatedOthersInputs = [...othersInputs];
     updatedOthersInputs.splice(index, 1); // Remove the corresponding entry in othersInputs
     setOthersInputs(updatedOthersInputs);
+
+    // Check if the table is now empty
+    setIsValueEmpty(updatedValues.length === 0);
   };
 
   const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
@@ -84,6 +111,11 @@ const GeneralWorkersEmployees = ({
 
   return (
     <div style={{ maxHeight: "400px" }} className="mb-2">
+      {isValueEmpty && (
+        <div className="text-red-500 text-[12px] mb-2">
+          Please add at least one row with valid data.
+        </div>
+      )}
       <table
         id={id}
         className="rounded-md border border-gray-300 w-full"
@@ -139,7 +171,7 @@ const GeneralWorkersEmployees = ({
                 const propertySchema = schema.items.properties[key];
                 const isEnum =
                   propertySchema && propertySchema.hasOwnProperty("enum");
-
+                const error = localErrors[rowIndex]?.[key];
                 return (
                   <td
                     key={cellIndex}
@@ -154,7 +186,9 @@ const GeneralWorkersEmployees = ({
                           onChange={(e) =>
                             handleFieldChange(rowIndex, key, e.target.value)
                           }
-                          className="text-[12px] pl-2 py-2 w-full border-b"
+                          className={`text-[12px] pl-2 py-2 w-full ${
+                            error ? "border-red-500 " : "border-gray-300"
+                          } border-b`}
                           required={required}
                         >
                           <option value="">Select</option>
@@ -192,9 +226,16 @@ const GeneralWorkersEmployees = ({
                         onChange={(e) =>
                           handleFieldChange(rowIndex, key, e.target.value)
                         }
-                        className="text-[12px] pl-2 py-2 w-full"
+                        className={`text-[12px] pl-2 py-2 w-full ${
+                          error ? "border-red-500 " : "border-gray-300"
+                        } border-b`}
                         placeholder="Enter"
                       />
+                    )}
+                    {error && (
+                      <div className="text-red-500 text-[12px] mt-1 text-left">
+                        {error}
+                      </div>
                     )}
                   </td>
                 );

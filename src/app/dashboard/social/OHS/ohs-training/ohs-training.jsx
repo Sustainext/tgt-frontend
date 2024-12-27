@@ -10,7 +10,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: CustomTableWidget,
@@ -67,6 +67,27 @@ const uiSchema = {
     ],
   },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.occupational) {
+      rowErrors.occupational = "This field is required";
+    }
+    if (!row.generictraining) {
+      rowErrors.generictraining = "This field is required";
+    }
+    if (!row.specificworkre) {
+      rowErrors.specificworkre = "This field is required";
+    }
+    if (!row.hazardousactivities) {
+      rowErrors.hazardousactivities = "This field is required";
+    }
+    if (!row.hazardoussituations) {
+      rowErrors.hazardoussituations = "This field is required";
+    }
+    return rowErrors;
+  });
+};
 const Ohstrainingscreen = ({ location, year }) => {
   const initialFormData = [
     {
@@ -82,13 +103,7 @@ const Ohstrainingscreen = ({ location, year }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+  const [validationErrors, setValidationErrors] = useState([]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -101,12 +116,6 @@ const Ohstrainingscreen = ({ location, year }) => {
     setFormData(e.formData);
   };
 
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -121,7 +130,7 @@ const Ohstrainingscreen = ({ location, year }) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axios.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -172,7 +181,7 @@ const Ohstrainingscreen = ({ location, year }) => {
     setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
-      const response = await axios.get(url, axiosConfig);
+      const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -208,8 +217,18 @@ const Ohstrainingscreen = ({ location, year }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddCommittee = () => {
@@ -280,6 +299,7 @@ const Ohstrainingscreen = ({ location, year }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors}}
           />
         </div>
         {location && year && (

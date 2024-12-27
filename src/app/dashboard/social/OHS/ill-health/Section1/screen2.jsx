@@ -63,6 +63,25 @@ const uiSchema = {
     ],
   },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.employeeCategory) {
+      rowErrors.employeeCategory = "This field is required";
+    }
+    if (!row.fatalities) {
+      rowErrors.fatalities = "This field is required";
+    }
+    if (!row.highconsequence) {
+      rowErrors.highconsequence = "This field is required";
+    }
+    if (!row.recordable) {
+      rowErrors.recordable = "This field is required";
+    }
+
+    return rowErrors;
+  });
+};
 const Screen2 = ({ location, year, month }) => {
   const initialFormData = [
     {
@@ -77,7 +96,7 @@ const Screen2 = ({ location, year, month }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-
+const [validationErrors, setValidationErrors] = useState([]);
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -190,8 +209,18 @@ const Screen2 = ({ location, year, month }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddCommittee = () => {
@@ -273,6 +302,7 @@ const Screen2 = ({ location, year, month }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors}}
             // formContext={{
             //   onRemove: handleRemoveCommittee,
             // }}

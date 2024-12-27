@@ -11,7 +11,7 @@ import { update } from "lodash";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
   TableWidget: CustomTableWidget2,
 };
@@ -60,28 +60,34 @@ const uiSchema = {
     ],
   },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const errors = {};
+    if (!row.coveredbythesystem) {
+      errors.coveredbythesystem = "This field is required";
+    }
+    if (!row.internallyaudited) {
+      errors.internallyaudited = "This field is required";
+    }
+    if (!row.externalparty) {
+      errors.externalparty = "This field is required";
+    }
+    return errors;
+  });
+};
 
 const Screen1 = ({ location, year }) => {
   const initialFormData = [
-    { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
-    { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
-    { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
+    { coveredbythesystem: "", internallyaudited: "", externalparty: ""},
+    { coveredbythesystem: "", internallyaudited: "", externalparty: ""},
+    { coveredbythesystem: "", internallyaudited: "", externalparty: ""},
   ];
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
-
-  // const token = localStorage.getItem('token')?.replace(/"/g, "");
-  console.log(token, "token chke");
+ const [validationErrors, setValidationErrors] = useState([]);
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -92,12 +98,7 @@ const Screen1 = ({ location, year }) => {
   const handleChange = (e) => {
     setFormData(e.formData); // Ensure you are extracting formData from the event
   };
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
+
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -111,7 +112,7 @@ const Screen1 = ({ location, year }) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axios.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -156,9 +157,10 @@ const Screen1 = ({ location, year }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
+    setValidationErrors();
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
-      const response = await axios.get(url, axiosConfig);
+      const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -195,8 +197,18 @@ const Screen1 = ({ location, year }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   return (
@@ -250,6 +262,7 @@ const Screen1 = ({ location, year }) => {
           onChange={handleChange}
           validator={validator}
           widgets={widgets}
+          formContext={{ validationErrors }}
         />
         <div className="mt-4">
           <button
