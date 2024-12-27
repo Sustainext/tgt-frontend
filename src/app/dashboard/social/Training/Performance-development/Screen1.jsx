@@ -64,12 +64,12 @@ const Screen1 = ({  location, year,month }) => {
     
       ],
       genders: [
-        { gender: "Male", performance: "", careerDevelopment: "" },
-        { gender: "Female", performance: "", careerDevelopment: "" },
-        { gender: "Non-Binary", performance: "", careerDevelopment: "" },
+        { gender: "Male", performance1: "", careerDevelopment1: "" },
+        { gender: "Female", performance1: "", careerDevelopment1: "" },
+        { gender: "Non-Binary", performance1: "", careerDevelopment1: "" },
       ],
-      totalPerformance: 82,
-      totalCareerDevelopment: 78,
+      totalPerformance: 0,
+      totalCareerDevelopment:0,
     },
   ]);
   const [r_schema, setRemoteSchema] = useState({})

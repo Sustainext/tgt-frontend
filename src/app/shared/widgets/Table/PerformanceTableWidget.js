@@ -11,8 +11,8 @@ const PerformanceTable = ({ value = {}, onChange }) => {
     let totalCareerDevelopment = 0;
 
     genders.forEach((row) => {
-      totalPerformance += parseInt(row.performance || 0, 10);
-      totalCareerDevelopment += parseInt(row.careerDevelopment || 0, 10);
+      totalPerformance += parseInt(row.performance1 || 0, 10);
+      totalCareerDevelopment += parseInt(row.careerDevelopment1 || 0, 10);
     });
 
     return { totalPerformance, totalCareerDevelopment };
@@ -228,7 +228,7 @@ const PerformanceTable = ({ value = {}, onChange }) => {
                     type="number"
                     value={row.performance}
                     onChange={(e) =>
-                      handleGenderChange(index, "performance", e.target.value)
+                      handleGenderChange(index, "performance1", e.target.value)
                     }
                     className="border p-1 w-full text-center text-[12px]"
                   />
@@ -238,7 +238,7 @@ const PerformanceTable = ({ value = {}, onChange }) => {
                     type="number"
                     value={row.careerDevelopment}
                     onChange={(e) =>
-                      handleGenderChange(index, "careerDevelopment", e.target.value)
+                      handleGenderChange(index, "careerDevelopment1", e.target.value)
                     }
                     className="border p-1 w-full text-center text-[12px]"
                   />
