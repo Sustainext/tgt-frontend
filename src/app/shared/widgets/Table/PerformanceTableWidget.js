@@ -226,7 +226,7 @@ const PerformanceTable = ({ value = {}, onChange }) => {
                 <td className="border-l border-t border-gray-300 px-4 py-2 text-center">
                   <input
                     type="number"
-                    value={row.performance}
+                    value={row.performance1}
                     onChange={(e) =>
                       handleGenderChange(index, "performance1", e.target.value)
                     }
@@ -236,7 +236,7 @@ const PerformanceTable = ({ value = {}, onChange }) => {
                 <td className="border-t border-l border-gray-300 px-4 py-2 text-center">
                   <input
                     type="number"
-                    value={row.careerDevelopment}
+                    value={row.careerDevelopment1}
                     onChange={(e) =>
                       handleGenderChange(index, "careerDevelopment1", e.target.value)
                     }
