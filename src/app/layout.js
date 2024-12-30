@@ -19,7 +19,13 @@ export default function RootLayout({ children }) {
 
         {/* <script src="https://widget.fluentc.io/fluentcWidget.min.js"></script> */}
         <script src="https://widget.fluentc.io/fluentcWidgetV2.min.js"></script>
-        
+        <script async src="https://global.localizecdn.com/localize.js"></script>
+          <script>
+            {`!function(a){if(!a.Localize){a.Localize={};for(var e=["translate","untranslate","phrase","initialize","translatePage","setLanguage","getLanguage","getSourceLanguage","detectLanguage","getAvailableLanguages","untranslatePage","bootstrap","prefetch","on","off","hideWidget","showWidget"],t=0;t<e.length;t++)a.Localize[e[t]]=function(){}}}(window);`}
+          </script>
+          <script>
+            {`Localize.initialize({ key: 'hVnnD1ID8v4LZ', rememberLanguage: true, });`}
+          </script>
       </head>
 
       <body className="min-h-[100vh]">
