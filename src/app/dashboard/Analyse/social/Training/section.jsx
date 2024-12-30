@@ -24,7 +24,7 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const fetchData = async (params) => {
+  const fetchData = async () => {
 
     LoaderOpen();
     setTable1([]);
@@ -33,10 +33,9 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
     setTable4([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_training_social_analysis`,
-        {
-          params: params,
-        }
+        `sustainapp/get_training_social_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`,
+
+
       );
 
       const data = response.data;

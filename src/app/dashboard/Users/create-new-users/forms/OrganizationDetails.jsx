@@ -84,19 +84,23 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
   useEffect(() => {
     const fetchCorporates = async () => {
       if (selections.organization.length > 0) {
-        setLoadingCorporates(true); // Start loading corporates
+        setLoadingCorporates(true);
         try {
           const response = await axiosInstance.get(`/sustainapp/roles/corporates/`, {
-            params: { organization_ids: selections.organization.join(",") }, // Pass comma-separated organization IDs
+            params: { organization_ids: selections.organization.join(",") },
           });
-          setCorporates(response.data);
+          setCorporates(response.data || []);
         } catch (error) {
           console.error("Failed fetching corporates:", error);
+          setCorporates([]);
         } finally {
-          setLoadingCorporates(false); // Stop loading corporates
+          setLoadingCorporates(false);
         }
+      } else {
+        setCorporates([]); // Clear corporates if no organization is selected
       }
     };
+  
     fetchCorporates();
   }, [selections.organization]);
 

@@ -60,6 +60,8 @@ const PerformanceTable = ({ value = {}, onChange }) => {
     onChange({
       ...value,
       genders: updatedGenders,
+      totalPerformance: totals.totalPerformance,
+      totalCareerDevelopment: totals.totalCareerDevelopment,
     });
 
     // Uncomment this to use debounce for better performance
