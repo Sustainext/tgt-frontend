@@ -4,7 +4,11 @@ import CheckboxTable from "../../common/CheckboxTable";
 import { useSelector, useDispatch } from "react-redux";
 import { MdPerson, MdChevronRight } from "react-icons/md";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import { setOrgList, setCorpList, setLocList } from "../../../../../lib/redux/features/roles-permissionsSlice";
+import {
+  setOrgList,
+  setCorpList,
+  setLocList,
+} from "../../../../../lib/redux/features/roles-permissionsSlice";
 
 const OrganizationDetailsForm = ({ onNext, onPrev }) => {
   const dispatch = useDispatch();
@@ -32,9 +36,12 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
         dispatch(setOrgList(newOrgList));
 
         try {
-          const response = await axiosInstance.get(`/sustainapp/roles/corporates/`, {
-            params: { organization_ids: newOrgList.join(",") },
-          });
+          const response = await axiosInstance.get(
+            `/sustainapp/roles/corporates/`,
+            {
+              params: { organization_ids: newOrgList.join(",") },
+            }
+          );
           const validCorporates = response.data || [];
           setCorporates(validCorporates);
 
@@ -49,9 +56,12 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
         }
 
         try {
-          const response = await axiosInstance.get(`/sustainapp/roles/locations/`, {
-            params: { corporate_ids: selections.corporate.join(",") },
-          });
+          const response = await axiosInstance.get(
+            `/sustainapp/roles/locations/`,
+            {
+              params: { corporate_ids: selections.corporate.join(",") },
+            }
+          );
           const validLocations = response.data || [];
           setLocations(validLocations);
 
@@ -73,9 +83,12 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
         dispatch(setCorpList(newCorpList));
 
         try {
-          const response = await axiosInstance.get(`/sustainapp/roles/locations/`, {
-            params: { corporate_ids: newCorpList.join(",") },
-          });
+          const response = await axiosInstance.get(
+            `/sustainapp/roles/locations/`,
+            {
+              params: { corporate_ids: newCorpList.join(",") },
+            }
+          );
           const validLocations = response.data || [];
           setLocations(validLocations);
 
@@ -128,9 +141,12 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
       const fetchCorporates = async () => {
         setLoadingCorporates(true);
         try {
-          const response = await axiosInstance.get(`/sustainapp/roles/corporates/`, {
-            params: { organization_ids: selections.organization.join(",") },
-          });
+          const response = await axiosInstance.get(
+            `/sustainapp/roles/corporates/`,
+            {
+              params: { organization_ids: selections.organization.join(",") },
+            }
+          );
           const validCorporates = response.data || [];
           setCorporates(validCorporates);
 
@@ -156,9 +172,12 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
       const fetchLocations = async () => {
         setLoadingLocations(true);
         try {
-          const response = await axiosInstance.get(`/sustainapp/roles/locations/`, {
-            params: { corporate_ids: selections.corporate.join(",") },
-          });
+          const response = await axiosInstance.get(
+            `/sustainapp/roles/locations/`,
+            {
+              params: { corporate_ids: selections.corporate.join(",") },
+            }
+          );
           const validLocations = response.data || [];
           setLocations(validLocations);
 
@@ -216,12 +235,16 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
           />
         </div>
         <div className="flex justify-end items-center gap-1">
-          <button onClick={onPrev} className="px-4 py-2 text-gray-600">
-            <MdChevronRight className="rotate-180" />
+          <button onClick={onPrev} className="px-4 py-2 text-gray-600 flex">
+            <MdChevronRight className="rotate-180 mt-1" />
             Previous
           </button>
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-            Next <MdChevronRight />
+          <button
+            type="submit"
+            className="bg-[#007eef] hover:shadow-lg text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow"
+          >
+            <span className="text-[12px] font-['Manrope']">Next</span>
+            <MdChevronRight />
           </button>
         </div>
       </form>
