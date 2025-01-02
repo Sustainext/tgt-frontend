@@ -118,6 +118,7 @@ export default function DashboardLayout({ children }) {
   //     }
   //   }, []);
 
+  //version 1
   // useEffect(() => {
   //   // Dynamically load the Weglot script
   //   const script = document.createElement("script");
@@ -140,6 +141,7 @@ export default function DashboardLayout({ children }) {
 
   const pathname = usePathname();
 
+  //version 2
   useEffect(() => {
     const initializeWeglot = () => {
       if (typeof Weglot !== "undefined") {
