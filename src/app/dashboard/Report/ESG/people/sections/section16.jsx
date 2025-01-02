@@ -23,17 +23,17 @@ const Section16=({section13_5Ref,section13_5_1Ref,data})=>{
         "Average training hours of non-binary employee in category"
     ]
 
-    const Tabledata=data["404_social_analyse"]?data["404_social_analyse"]["average_training_hours_per_employee_category"].length>0?
+    const Tabledata=data["404_social_analyse"]?data["404_social_analyse"]["average_hours_of_training_provided_to_employees_per_category"].length>0?
 
-    data["404_social_analyse"]["average_training_hours_per_employee_category"].map((val,index)=>{
+    data["404_social_analyse"]["average_hours_of_training_provided_to_employees_per_category"].map((val,index)=>{
         return (
             
           {
             "Categories":val.category,
-        "Average training hours per employee category":val.average_training_hours_per_employee,
-        "Average training hours of male employee in category":val.average_training_hours_per_male_employee,
-        "Average training hours of female employee in category":val.average_training_hours_per_male_employee,
-        "Average training hours of non-binary employee in category":val.average_training_hours_per_non_binary_employee
+        "Average training hours per employee category":val.avg_training_hrs_per_employee,
+        "Average training hours of male employee in category":val.avg_training_hrs_male_employee,
+        "Average training hours of female employee in category":val.avg_training_hrs_female_employee,
+        "Average training hours of non-binary employee in category":val.avg_training_hrs_other_employee
         
         }
             
@@ -56,6 +56,41 @@ const Section16=({section13_5Ref,section13_5_1Ref,data})=>{
     "Average training hours of non-binary employee in category":"No data available"
 },
 ]
+
+const col2=[
+  "Security Personnel (in organisation)",
+  "Security Personnel (from third-party organisation)"
+]
+
+const Tabledata2=data["analysis_security_personnel"]?data["analysis_security_personnel"]["security_personnel"]?
+data["analysis_security_personnel"]["security_personnel"].length>0?
+    data["analysis_security_personnel"]["security_personnel"]?.map((val,index)=>{
+        return (
+            
+          {
+            "Security Personnel (in organisation)":val.sp_in_org + "%",
+            "Security Personnel (from third-party organisation)":val.sp_3rd_org +"%"
+        
+        }
+            
+        )
+    })
+:[
+  {
+   "Security Personnel (in organisation)":"No data available",
+    "Security Personnel (from third-party organisation)":"No data available"
+},
+]:[
+  {
+   "Security Personnel (in organisation)":"No data available",
+  "Security Personnel (from third-party organisation)":"No data available"
+},
+]:[
+  {
+   "Security Personnel (in organisation)":"No data available",
+  "Security Personnel (from third-party organisation)":"No data available"
+},
+]
     
     
     return (
@@ -71,25 +106,43 @@ const Section16=({section13_5Ref,section13_5_1Ref,data})=>{
             <p className="text-[15px]  mb-2 font-semibold">
             Average training hours per employee:
             </p>
-            <p className="text-sm mb-4">{data["404_1a_analyse"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
+            <p className="text-sm mb-4">{data["404_social_analyse"]?data["404_social_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_social_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_social_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
               val.average_training_hours_per_employee
             )):"No data available":"No data available":"No data available"}</p>
             <p className="text-[15px]  mb-2 font-semibold">
             Average training hours per female employee: 
             </p>
-            <p className="text-sm mb-4">{data["404_1a_analyse"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
+            <p className="text-sm mb-4">{data["404_social_analyse"]?data["404_social_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_social_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_social_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
               val.average_training_hours_per_female_employee
             )):"No data available":"No data available":"No data available"}</p>
             <p className="text-[15px]  mb-2 font-semibold">
             Average training hours per male employee:
             </p>
-            <p className="text-sm mb-4">{data["404_1a_analyse"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
+            <p className="text-sm mb-4">{data["404_social_analyse"]?data["404_social_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_social_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_social_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
               val.average_training_hours_per_male_employee
             )):"No data available":"No data available":"No data available"}</p>
-             <p className="text-[15px]  mb-2 font-semibold">
+            
+            <p className="text-[15px]  mb-2 font-semibold">
+            Average hours of training provided to employees by category
+            </p>
+            <div className="shadow-md mb-4 rounded-md">
+                <LeaveTable columns={col} data={Tabledata}/>
+            </div>
+
+            <p className="text-[15px]  mb-1 font-semibold">
+            Security personnel trained in human rights policies or procedures
+            </p>
+            <p className="text-[14px]  mb-2">
+            Percentage of security personnel who have received formal training
+            </p>
+            <div className="shadow-md mb-4 rounded-md">
+                <LeaveTable columns={col2} data={Tabledata2}/>
+            </div>
+
+{/* <p className="text-[15px]  mb-2 font-semibold">
             Percentage of security personnel who have received formal training in the organisation: 
             </p>
-            {/* <p className="text-sm mb-4">No data available</p> */}
+            
             <textarea
             placeholder="Enter the data"
             onChange={handleChangetrainingIntheOrg}
@@ -100,20 +153,15 @@ const Section16=({section13_5Ref,section13_5_1Ref,data})=>{
             <p className="text-[15px]  mb-2 font-semibold">
             Percentage of security personnel who have received formal training from third-party organisation: 
             </p>
-            {/* <p className="text-sm mb-4">No data available</p> */}
+            
             <textarea
             placeholder="Enter the data"
             onChange={handleChangetrainingOutsidetheOrg}
           value={trainingOutsidetheOrg}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
-        />
-            <p className="text-[15px]  mb-2 font-semibold">
-            Average hours of training provided to employees
-            </p>
-            <div className="shadow-md mb-4 rounded-md">
-                <LeaveTable columns={col} data={Tabledata}/>
-            </div>
+        /> */}
+
         </div>
         <div id="section13_5_1" ref={section13_5_1Ref}>
 
