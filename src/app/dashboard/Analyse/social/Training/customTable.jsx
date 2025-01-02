@@ -61,10 +61,10 @@ const Table = ({ data }) => {
                 <td className="border-l border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000]">
                   {row.category}
                 </td>
-                <td className="border-l border-t border-gray-300 px-4 py-2 text-center">
+                <td className="border-l border-t border-gray-300 px-4 py-2 text-center text-[12px]">
                   {row.performance_percentage}%
                 </td>
-                <td className="border-t border-l border-gray-300 px-4 py-2 text-center">
+                <td className="border-t border-l border-gray-300 px-4 py-2 text-center text-[12px]">
                   {row.career_development_percentage}%
                 </td>
               </tr>

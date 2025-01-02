@@ -32,13 +32,13 @@ const social = () => {
   };
   useEffect(() => {
     const headerTextMapping = {
-      Tab5: "Employment",
-      Tab1: "Occupational health and safety",
+      Tab1: "Employment",
+      Tab2: "Occupational health and safety",
       Tab3: "Child Labour",
       Tab4: "Forced or Compulsory Labour",
       Tab5: "Diversity & Inclusion",
-      Tab7: "Supplier Social assessment",
-      Tab6: "Training",
+      Tab6: "Supplier Social assessment",
+      Tab7: "Training",
       Tab8: "Non-Discrimination",
       Tab9: "Collective Bargaining",
       Tab10: "Community Development",
@@ -61,13 +61,13 @@ const social = () => {
         <div className="sticky top-14 bg-white z-[100]">
           <Header activeTab={activeTab} setIsBoxOpen={setIsBoxOpen} />
         </div>
-        {activeTab === "Tab5" && <AnalyseEmployment />}
-        {activeTab === "Tab1" && <AnalyseOHS />}
+        {activeTab === "Tab1" && <AnalyseEmployment />}
+        {activeTab === "Tab2" && <AnalyseOHS />}
         {activeTab === "Tab3" && <AnalyseChildlabour />}
         {activeTab === "Tab4" && <AnalyseCompulsorylabour />}
         {activeTab === "Tab5" && <AnalyseDiversityInclusion />}
-        {activeTab === "Tab7" && <AnalyseSuppliersocialassessment />}
-        {activeTab === "Tab6" && <AnalyseTraining />}
+        {activeTab === "Tab6" && <AnalyseSuppliersocialassessment />}
+        {activeTab === "Tab7" && <AnalyseTraining />}
         {activeTab === "Tab8" && <AnalyseNonDiscrimination />}
         {activeTab === "Tab9" && <AnalyseCollectiveBargaining />}
         {activeTab === "Tab10" && <AnalyseCommunityDevelopment />}
