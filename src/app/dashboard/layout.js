@@ -7,7 +7,7 @@ import Sidenav from './sidebar';
 import { GlobalState } from '../../Context/page';
 import StoreProvider from '../../Context/storeProvider';
 import GlobalErrorHandler from '../shared/components/GlobalErrorHandler';
-
+import LanguageSelector from './LanguageSelector';
 export default function DashboardLayout({ children }) {
   const { open } = GlobalState();
   const router = useRouter();
@@ -60,6 +60,7 @@ export default function DashboardLayout({ children }) {
           <div className={`mx-2 w-full ${open ? 'ml-[243px]' : 'ml-[74px]'}`}>
             <div className="mb-5">
               <DashboardHeader />
+              {/* <LanguageSelector/> */}
               {/* Elfsight Widget */}
               <div className="elfsight-widget mb-5">
                 <div className="elfsight-app-1163c096-07de-4281-9338-996a26b6eec8" data-elfsight-app-lazy></div>

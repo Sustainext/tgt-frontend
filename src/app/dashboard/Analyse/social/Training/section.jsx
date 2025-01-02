@@ -14,7 +14,6 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
   const [table1, setTable1] = useState([]);
   const [table2, setTable2] = useState([]);
   const [table3, setTable3] = useState([]);
-  const [table4, setTable4] = useState([]);
   const toastShown = useRef(false);
 
   
@@ -30,7 +29,7 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
     setTable1([]);
     setTable2([]);
     setTable3([]);
-    setTable4([]);
+ 
     try {
       const response = await axiosInstance.get(
         `sustainapp/get_training_social_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`,
@@ -42,37 +41,21 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
 
       const {
         average_hours_of_training_provided_to_employees,
-        average_training_hours_per_employee_category,
+        average_hours_of_training_provided_to_employees_per_category,
         percentage_of_employees_receiving_regular_performance_and_career_development_reviews,
-        percentage_of_employees_receiving_regular_performance_and_career_development_reviews_by_gender,
+      
       } = data;
 
       const formatTable1 = (data) => {
         return data.map((data, index) => {
-          const average_training_hours_per_employee = parseFloat(
-            data.average_training_hours_per_employee
-          ).toFixed(2);
-          const formattedPercentage1 =
-            average_training_hours_per_employee.endsWith(".00")
-              ? average_training_hours_per_employee.slice(0, -3)
-              : average_training_hours_per_employee;
-          const formattedPercentageWithIcon1 = formattedPercentage1 + "%";
-          const average_training_hours_per_female_employee = parseFloat(
-            data.average_training_hours_per_female_employee
-          ).toFixed(2);
-          const formattedPercentage2 =
-            average_training_hours_per_female_employee.endsWith(".00")
-              ? average_training_hours_per_female_employee.slice(0, -3)
-              : average_training_hours_per_employee;
-          const average_training_hours_per_male_employee = parseFloat(
-            data.average_training_hours_per_male_employee
-          ).toFixed(2);
-          const formattedPercentage3 =
-            average_training_hours_per_male_employee.endsWith(".00")
-              ? average_training_hours_per_male_employee.slice(0, -3)
-              : average_training_hours_per_male_employee;
+      
+          const formattedPercentage1 = data.average_training_hours_per_employee + "%";
+      
+          const formattedPercentage2 = data.average_training_hours_per_female_employee + "%";
+          const formattedPercentage3 = data.average_training_hours_per_male_employee + "%";
+             
           return {
-            "Average training hours per employee": formattedPercentageWithIcon1,
+            "Average training hours per employee": formattedPercentage1,
             "Average training hours per Female employee": formattedPercentage2,
             "Average training hours per Male employee": formattedPercentage3,
           };
@@ -80,34 +63,12 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
       };
       const formatTable2 = (data) => {
         return data.map((data, index) => {
-          const average_training_hours_per_employee = parseFloat(
-            data.average_training_hours_per_employee
-          ).toFixed(2);
-          const formattedPercentage1 =
-            average_training_hours_per_employee.endsWith(".00")
-              ? average_training_hours_per_employee.slice(0, -3)
-              : average_training_hours_per_employee;
-          const average_training_hours_per_female_employee = parseFloat(
-            data.average_training_hours_per_female_employee
-          ).toFixed(2);
-          const formattedPercentage2 =
-            average_training_hours_per_female_employee.endsWith(".00")
-              ? average_training_hours_per_female_employee.slice(0, -3)
-              : average_training_hours_per_female_employee;
-          const average_training_hours_per_male_employee = parseFloat(
-            data.average_training_hours_per_male_employee
-          ).toFixed(2);
-          const formattedPercentage3 =
-            average_training_hours_per_male_employee.endsWith(".00")
-              ? average_training_hours_per_male_employee.slice(0, -3)
-              : average_training_hours_per_male_employee;
-          const average_training_hours_per_non_binary_employee = parseFloat(
-            data.average_training_hours_per_male_employee
-          ).toFixed(2);
-          const formattedPercentage4 =
-            average_training_hours_per_non_binary_employee.endsWith(".00")
-              ? average_training_hours_per_non_binary_employee.slice(0, -3)
-              : average_training_hours_per_non_binary_employee;
+        
+          const formattedPercentage1 = data.avg_training_hrs_per_employee + "%";
+          const formattedPercentage2 = data.avg_training_hrs_male_employee + "%";
+           const formattedPercentage3 = data.avg_training_hrs_female_employee + "%";
+         const formattedPercentage4 = data.avg_training_hrs_other_employee + "%";
+          
           return {
             Categories: data.category,
             "Average training hours per employee category":
@@ -121,94 +82,16 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
           };
         });
       };
-      const formatTable3 = (data) => {
-        return data.map((data, index) => {
-          const percentage_of_employees_who_received_regular_performance_reviews =
-            parseFloat(
-              data.percentage_of_employees_who_received_regular_performance_reviews
-            ).toFixed(2);
-          const formattedPercentage1 =
-            percentage_of_employees_who_received_regular_performance_reviews.endsWith(
-              ".00"
-            )
-              ? percentage_of_employees_who_received_regular_performance_reviews.slice(
-                  0,
-                  -3
-                )
-              : percentage_of_employees_who_received_regular_performance_reviews;
-          const percentage_of_employees_who_received_regular_career_development_reviews =
-            parseFloat(
-              data.percentage_of_employees_who_received_regular_career_development_reviews
-            ).toFixed(2);
-          const formattedPercentage2 =
-            percentage_of_employees_who_received_regular_career_development_reviews.endsWith(
-              ".00"
-            )
-              ? percentage_of_employees_who_received_regular_career_development_reviews.slice(
-                  0,
-                  -3
-                )
-              : percentage_of_employees_who_received_regular_career_development_reviews;
-
-          return {
-            "Employee Category": data.Category,
-            "Percentage of employees who received regular performance review":
-              formattedPercentage1,
-            "Percentage of employees who received regular career development review":
-              formattedPercentage2,
-          };
-        });
-      };
-      const formatTable4 = (data) => {
-        return data.map((data, index) => {
-          const percentage_of_employees_who_received_regular_performance_reviews =
-            parseFloat(
-              data.percentage_of_employees_who_received_regular_performance_reviews
-            ).toFixed(2);
-          const formattedPercentage1 =
-            percentage_of_employees_who_received_regular_performance_reviews.endsWith(
-              ".00"
-            )
-              ? percentage_of_employees_who_received_regular_performance_reviews.slice(
-                  0,
-                  -3
-                )
-              : percentage_of_employees_who_received_regular_performance_reviews;
-          const percentage_of_employees_who_received_regular_career_development_reviews =
-            parseFloat(
-              data.percentage_of_employees_who_received_regular_career_development_reviews
-            ).toFixed(2);
-          const formattedPercentage2 =
-            percentage_of_employees_who_received_regular_career_development_reviews.endsWith(
-              ".00"
-            )
-              ? percentage_of_employees_who_received_regular_career_development_reviews.slice(
-                  0,
-                  -3
-                )
-              : percentage_of_employees_who_received_regular_career_development_reviews;
-
-          return {
-            Gender: data.Gender,
-            "Percentage of employees who received regular performance review":
-              formattedPercentage1,
-            "Percentage of employees who received regular career development review":
-              formattedPercentage2,
-          };
-        });
-      };
+   
+     
       setTable1(formatTable1(average_hours_of_training_provided_to_employees));
-      setTable2(formatTable2(average_training_hours_per_employee_category));
+      setTable2(formatTable2(average_hours_of_training_provided_to_employees_per_category));
       setTable3(
-        formatTable3(
+        
           percentage_of_employees_receiving_regular_performance_and_career_development_reviews
-        )
+        
       );
-      setTable4(
-        formatTable4(
-          percentage_of_employees_receiving_regular_performance_and_career_development_reviews_by_gender
-        )
-      );
+   
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -307,7 +190,7 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <Table columns={columns3} data={table3} />
+                  <Table  data={table3} />
                 </div>
               </div>
             </div>
