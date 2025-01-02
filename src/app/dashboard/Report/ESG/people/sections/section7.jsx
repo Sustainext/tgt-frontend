@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import PerformanceReviewTable from "../tables/performanceTable";
 import LeaveTable from "../tables/leaveTable";
+import TrainingTable from '../tables/trainingTable'
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,33 +25,7 @@ const Section7=({section13_1_6Ref,data})=>{
     "Percentage of employees who received regular performance review",
     "Percentage of employees who received regular career development review"
    ]
-   const Tabledata=data["404_social_analyse"]?data["404_social_analyse"]["percentage_of_employees_receiving_regular_performance_and_career_development_reviews"].length>0?
-
-   data["404_social_analyse"]["percentage_of_employees_receiving_regular_performance_and_career_development_reviews"].map((val,index)=>{
-       return (
-           
-         {
-          "Employee Category":val.Category,
-          "Percentage of employees who received regular performance review":val.percentage_of_employees_who_received_regular_performance_reviews+"%",
-          "Percentage of employees who received regular career development review":val.percentage_of_employees_who_received_regular_career_development_reviews+"%"
-       
-       }
-           
-       )
-   })
-:[
- {
-  "Employee Category":"No data available",
-  "Percentage of employees who received regular performance review":"No data available",
-  "Percentage of employees who received regular career development review":"No data available"
-},
-]:[
- {
-  "Employee Category":"No data available",
-  "Percentage of employees who received regular performance review":"No data available",
-  "Percentage of employees who received regular career development review":"No data available"
-},
-]
+   const Tabledata=data["404_social_analyse"]?data["404_social_analyse"]["percentage_of_employees_receiving_regular_performance_and_career_development_reviews"]?data["404_social_analyse"]["percentage_of_employees_receiving_regular_performance_and_career_development_reviews"]:[]:[]
     
     return (
         <>
@@ -81,7 +56,7 @@ const Section7=({section13_1_6Ref,data})=>{
         Percentage of employees receiving regular performance and career development reviews 
         </p>
         <div className="shadow-md rounded-md mb-4">
-                <LeaveTable columns={col} data={Tabledata} />
+                <TrainingTable data={Tabledata} />
         </div>
             
             
