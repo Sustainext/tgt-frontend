@@ -121,13 +121,9 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
-                <div>
-                  <p className="text-[15px] font-bold">
-                    Average hours of training provided to employees
-                  </p>
-                </div>
+              
                 <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500 text-[13px]">
+                <p className="text-[15px] font-bold">
                     Average hours of training provided to employees
                   </p>
 
@@ -147,13 +143,9 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
                 id="ep2"
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
-                <div>
-                  <p className="text-[15px] font-bold">
-                    Average hours of training provided to employees
-                  </p>
-                </div>
+                
                 <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500 text-[13px]">
+                 <p className="text-[15px] font-bold">
                     Average hours of training provided to employees
                   </p>
 
@@ -173,13 +165,9 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
                 id="ep3"
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
-                <div>
-                  <p className="text-[15px] font-bold">
-                  Percentage of employees receiving regular performance and career development reviews
-                  </p>
-                </div>
+                
                 <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500">
+                  <p className="text-[15px] font-bold">
                   Percentage of employees receiving regular performance and career development reviews
                   </p>
 
