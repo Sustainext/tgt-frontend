@@ -44,7 +44,7 @@ const DynamicTable2 = ({ data, columns }) => {
                          {row[column] !== undefined && row[column] !== null 
                       ? colIndex === 0 
                         ? row[column] 
-                        : `${row[column]}%`
+                        : `${row[column]}`
                       : 'N/A'}
                   </td>
                 ))}
