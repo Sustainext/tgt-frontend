@@ -8,7 +8,9 @@ import "react-tooltip/dist/react-tooltip.css";
 import Reclaimedproductsbody from "./reclaimed-products-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Reclaimedproducts = () => {
+import MaterialTopBar from '../materialTopBar'
+
+const Reclaimedproducts = ({apiData}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -51,49 +53,33 @@ const Reclaimedproducts = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const sdgData=[
+    {
+        tagName:' GRI 301-3',
+        toggle:'41',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+    {
+        tagName:'SDG 8',
+        toggle:'42',
+        textColor:"#fff",
+        bgColor:"bg-red-900"
+    },
+    {
+        tagName:'SDG 12',
+        toggle:'43',
+        textColor:"#fff",
+        bgColor:"bg-yellow-600"
+    },
+    
+]
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
-            <p className="text-[11px]">Environment</p>
-              <div className="flex">
-                <div>
-                 <p className="gradient-text text-[22px] font-bold py-2">
-                    Materials
-                  </p>
-                </div>
-                {/* <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md" >
-                                    <p className="text-gray-500 text-[12px] pt-0.5 px-2">Material Topic</p>
-                                </div> */}
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end pt-5 me-1">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("41")}
-              >
-                GRI 301-3
-              </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("42")}
-              >
-                SDG 8
-              </button>
-              <button
-                className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                onClick={() => toggleDrawer("43")}
-              >
-                SDG 12
-              </button>
-            </div>
-          </div>
-        </div>
+        <MaterialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
