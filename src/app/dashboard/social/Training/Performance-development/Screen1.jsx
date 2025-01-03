@@ -64,12 +64,12 @@ const Screen1 = ({  location, year,month }) => {
     
       ],
       genders: [
-        { gender: "Male", performance: "", careerDevelopment: "" },
-        { gender: "Female", performance: "", careerDevelopment: "" },
-        { gender: "Non-Binary", performance: "", careerDevelopment: "" },
+        { gender: "Male", performance1: "", careerDevelopment1: "" },
+        { gender: "Female", performance1: "", careerDevelopment1: "" },
+        { gender: "Non-Binary", performance1: "", careerDevelopment1: "" },
       ],
-      totalPerformance: 82,
-      totalCareerDevelopment: 78,
+      totalPerformance: 0,
+      totalCareerDevelopment:0,
     },
   ]);
   const [r_schema, setRemoteSchema] = useState({})
@@ -99,9 +99,9 @@ const Screen1 = ({  location, year,month }) => {
       
         ],
         genders: [
-          { gender: "Male", performance: "", careerDevelopment: "" },
-          { gender: "Female", performance: "", careerDevelopment: "" },
-          { gender: "Non-Binary", performance: "", careerDevelopment: "" },
+          { gender: "Male", performance1: "", careerDevelopment1: "" },
+          { gender: "Female", performance1: "", careerDevelopment1: "" },
+          { gender: "Non-Binary", performance1: "", careerDevelopment1: "" },
         ],
         totalPerformance: 0,
         totalCareerDevelopment: 0,
@@ -122,9 +122,9 @@ const Screen1 = ({  location, year,month }) => {
         
           ],
           genders: [
-            { gender: "Male", performance: "", careerDevelopment: "" },
-            { gender: "Female", performance: "", careerDevelopment: "" },
-            { gender: "Non-Binary", performance: "", careerDevelopment: "" },
+            { gender: "Male", performance1: "", careerDevelopment1: "" },
+            { gender: "Female", performance1: "", careerDevelopment1: "" },
+            { gender: "Non-Binary", performance1: "", careerDevelopment1: "" },
           ],
           totalPerformance: 0,
           totalCareerDevelopment: 0,
@@ -212,7 +212,7 @@ const Screen1 = ({  location, year,month }) => {
         <div className='mb-4 flex'>
          <div className="w-[80%] relative">
           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Number of suppliers identified having significant actual and potential negative social impacts.
+             Number of employees receiving regular performance and career development reviews
               <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the number of
 suppliers identified as having significant actual and potential

@@ -11,8 +11,8 @@ const PerformanceTable = ({ value = {}, onChange }) => {
     let totalCareerDevelopment = 0;
 
     genders.forEach((row) => {
-      totalPerformance += parseInt(row.performance || 0, 10);
-      totalCareerDevelopment += parseInt(row.careerDevelopment || 0, 10);
+      totalPerformance += parseInt(row.performance1 || 0, 10);
+      totalCareerDevelopment += parseInt(row.careerDevelopment1 || 0, 10);
     });
 
     return { totalPerformance, totalCareerDevelopment };
@@ -60,6 +60,8 @@ const PerformanceTable = ({ value = {}, onChange }) => {
     onChange({
       ...value,
       genders: updatedGenders,
+      totalPerformance: totals.totalPerformance,
+      totalCareerDevelopment: totals.totalCareerDevelopment,
     });
 
     // Uncomment this to use debounce for better performance
@@ -226,9 +228,9 @@ const PerformanceTable = ({ value = {}, onChange }) => {
                 <td className="border-l border-t border-gray-300 px-4 py-2 text-center">
                   <input
                     type="number"
-                    value={row.performance}
+                    value={row.performance1}
                     onChange={(e) =>
-                      handleGenderChange(index, "performance", e.target.value)
+                      handleGenderChange(index, "performance1", e.target.value)
                     }
                     className="border p-1 w-full text-center text-[12px]"
                   />
@@ -236,9 +238,9 @@ const PerformanceTable = ({ value = {}, onChange }) => {
                 <td className="border-t border-l border-gray-300 px-4 py-2 text-center">
                   <input
                     type="number"
-                    value={row.careerDevelopment}
+                    value={row.careerDevelopment1}
                     onChange={(e) =>
-                      handleGenderChange(index, "careerDevelopment", e.target.value)
+                      handleGenderChange(index, "careerDevelopment1", e.target.value)
                     }
                     className="border p-1 w-full text-center text-[12px]"
                   />
