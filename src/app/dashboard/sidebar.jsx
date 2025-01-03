@@ -25,6 +25,17 @@ import { GlobalState } from "../../Context/page";
 import { CiSettings } from "react-icons/ci";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMaterialityData,
+  setCorpID,
+  setCorpName,
+  setMaterialityYear,
+  setOrgName,
+  setOrgID,
+  setStartDate,
+  setEndDate,
+} from "../../lib/redux/features/materialitySlice";
 
 const Sidenav = () => {
   const { open, setOpen } = GlobalState();
@@ -32,6 +43,25 @@ const Sidenav = () => {
   const [permissions, setPermissions] = useState({});
   const [newrole, setRole] = useState(""); // Ensure role is initialized
 
+  //materiality variables
+  const dispatch = useDispatch();
+  const { corporate_id, organization_id, start_date, end_date, data, loading, error } = useSelector(
+    (state) => state.materialitySlice
+  );
+
+  const loadMaterialityDashboard=()=>{
+    dispatch(
+      fetchMaterialityData(
+        {
+        corporate:'',
+        organization:'',
+        start_date:'',
+        end_date:'',
+      }
+    )
+    );
+  }
+  
   // Load permissions and role from localStorage or API
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -290,7 +320,7 @@ const Sidenav = () => {
             </div>
           </div>
           <ul className="pt-2 overflow-y-scroll h-[110vh] scrollable-content">
-            {Menus.filter(hasPermission).map((menu, index) => (
+            {/* {Menus.filter(hasPermission).map((menu, index) => (
               <React.Fragment key={menu.id}>
                 {menu.submenu ? (
                   <li
@@ -447,7 +477,174 @@ const Sidenav = () => {
                   </ul>
                 )}
               </React.Fragment>
-            ))}
+            ))} */}
+            {Menus.filter(hasPermission).map((menu, index) => (
+  <React.Fragment key={menu.id}>
+    {menu.submenu ? (
+      <li
+        className={`text-white text-sm flex items-center gap-x-4 cursor-pointer rounded-md mt-2 w-full p-2
+          ${submenuOpen[index] || isSubmenuActive(menu) ? "bg-[#081746]" : ""}
+          ${!open && activeIndex === menu.id ? "bg-[#081746]" : ""}`}
+        onClick={() => {
+          toggleSubmenu(index);
+          setActiveIndex(menu.id);
+
+          // Check if the clicked menu is "Collect" and call loadMaterialityDashboard
+          if (menu.title === "Collect") {
+            loadMaterialityDashboard();
+          }
+          else{
+            dispatch(setCorpID(''))
+            dispatch(setCorpName(''))
+            dispatch(setOrgID(''))
+            dispatch(setOrgName(''))
+            dispatch(setMaterialityYear(''))
+            dispatch(setStartDate(''))
+            dispatch(setEndDate(''))
+          }
+        }}
+      >
+        <span
+          className={`text-2xl flex items-center justify-center w-12 h-8 rounded-md ${
+            !open ? "hover:bg-[#007EEF]" : ""
+          }
+          ${!open && (activeIndex === menu.id || isSubmenuActive(menu)) ? "bg-[#081746]" : ""}`}
+          data-tooltip-id={`tooltip-${index}`}
+          data-tooltip-content={menu.title}
+          onClick={() => setOpen(!open)}
+        >
+          {menu.icon ? menu.icon : <LiaHomeSolid />}
+        </span>
+        <span className={`text-sm font-medium flex-1 ${!open && "hidden"}`}>
+          {menu.title}
+        </span>
+        {menu.submenu && open && (
+          <MdKeyboardArrowDown
+            className={`text-2xl ${submenuOpen[index] ? "rotate-180" : ""}`}
+          />
+        )}
+        {!open && (
+          <ReactTooltip
+            id={`tooltip-${index}`}
+            place="right"
+            effect="solid"
+            style={{
+              fontSize: "10px",
+              background: "#0a0528",
+              boxShadow: 3,
+              borderRadius: "8px",
+              zIndex: 1000,
+            }}
+          />
+        )}
+      </li>
+    ) : (
+      <Link href={menu.link} key={menu.id}>
+        <li
+          className={`text-white text-sm flex items-center gap-x-4 cursor-pointer rounded-md mt-2 w-full p-2
+            ${open ? "hover:bg-[#007EEF]" : ""} ${
+            open && activeIndex === menu.id ? "bg-[#081746]" : ""
+          } ${!open && activeIndex === menu.id ? "bg-[#081746]" : ""}`}
+          onClick={() => {
+            setActiveIndex(menu.id);
+            setOpen(!open);
+
+            // Check if the clicked menu is "Collect" and call loadMaterialityDashboard
+            if (menu.title === "Collect") {
+              loadMaterialityDashboard();
+            }
+            else{
+              dispatch(setCorpID(''))
+              dispatch(setCorpName(''))
+              dispatch(setOrgID(''))
+              dispatch(setOrgName(''))
+              dispatch(setMaterialityYear(''))
+              dispatch(setStartDate(''))
+              dispatch(setEndDate(''))
+            }
+          }}
+        >
+          <span
+            className={`text-2xl flex items-center justify-center w-12 h-8 rounded-md ${
+              !open ? "hover:bg-[#007EEF]" : ""
+            }
+              ${!open && activeIndex === menu.id ? "bg-[#081746]" : ""}`}
+            data-tooltip-id={`tooltip-${index}`}
+            data-tooltip-content={menu.title}
+          >
+            {menu.icon ? menu.icon : <LiaHomeSolid />}
+          </span>
+          <span className={`text-sm font-medium flex-1 ${!open && "hidden"}`}>
+            {menu.title}
+          </span>
+
+          {menu.lockiconshow && open && (
+            <span className="text-2xl flex items-center justify-center w-5 h-8 rounded-md">
+              {menu.lockicon}
+            </span>
+          )}
+          {!open && (
+            <ReactTooltip
+              id={`tooltip-${index}`}
+              place="right"
+              effect="solid"
+              style={{
+                fontSize: "10px",
+                background: "#0a0528",
+                boxShadow: 3,
+                borderRadius: "8px",
+                zIndex: 1000,
+              }}
+            />
+          )}
+        </li>
+      </Link>
+    )}
+    {menu.spacing && (
+      <hr className="bg-[rgba(217, 217, 217, 1)] h-[0.0625rem] my-4 mx-3 opacity-30" />
+    )}
+    {menu.submenu && submenuOpen[index] && open && (
+      <ul>
+        {menu.submenuItems.map((submenuItem) => (
+          <Link href={submenuItem.link} key={submenuItem.id}>
+            <li
+              className={`text-white text-sm p-2 px-5 mx-5 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md  mt-2 ${
+                activeIndex === submenuItem.id ? "bg-[#081746]" : ""
+              }`}
+              onClick={() => {
+                setActiveIndex(submenuItem.id);
+                setOpen(!open);
+
+                if (submenuItem.title === "Environment") {
+                  loadMaterialityDashboard();
+                }
+                else{
+                  dispatch(setCorpID(''))
+                  dispatch(setCorpName(''))
+                  dispatch(setOrgID(''))
+                  dispatch(setOrgName(''))
+                  dispatch(setMaterialityYear(''))
+                  dispatch(setStartDate(''))
+                  dispatch(setEndDate(''))
+                }
+              }}
+            >
+              <span className="text-2xl block float-left">
+                {submenuItem.icon ? submenuItem.icon : <LiaHomeSolid />}
+              </span>
+              <span
+                className={`text-sm font-medium flex-1 ${!open && "hidden"}`}
+              >
+                {submenuItem.title}
+              </span>
+            </li>
+          </Link>
+        ))}
+      </ul>
+    )}
+  </React.Fragment>
+))}
+
           </ul>
         </div>
       </div>
