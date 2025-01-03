@@ -30,6 +30,24 @@ import {
 import axiosInstance from "../../../utils/axiosMiddleware";
 import { Oval } from "react-loader-spinner";
 
+import {
+  setCollect,
+  setAnalyse,
+  setReport,
+  setOptimise,
+  setTrack,
+  setPermissionscheckbox,
+  setOrgList,
+  setCorpList,
+  setLocList,
+  setfirstname,
+  setlastname,
+  setjobtitle,
+  setdepartment,
+  setworkemail,
+  setroletype,
+  setphonenumber,
+} from "../../../../lib/redux/features/roles-permissionsSlice";
 const ManageUsers = () => {
   const [searchFocus, setSearchFocus] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -58,6 +76,22 @@ const ManageUsers = () => {
     dispatch(setHeadertext1("Users"));
     dispatch(setHeaderdisplay("none"));
     dispatch(setHeadertext2("Manage Users"));
+      dispatch(setCollect(true));
+            dispatch(setAnalyse(true));
+            dispatch(setReport(false));
+            dispatch(setOptimise(false));
+            dispatch(setTrack(false));
+            dispatch(setPermissionscheckbox(false));
+            dispatch(setOrgList([]));
+            dispatch(setCorpList([]));
+            dispatch(setLocList([]));
+            dispatch(setfirstname(""));
+            dispatch(setlastname(""));
+            dispatch(setjobtitle(""));
+            dispatch(setdepartment(""));
+            dispatch(setworkemail(""));
+            dispatch(setroletype(""));
+            dispatch(setphonenumber(""));
   }, [dispatch]);
   const allUsers = useSelector((state) => state.roleprmission.userlist);
 
