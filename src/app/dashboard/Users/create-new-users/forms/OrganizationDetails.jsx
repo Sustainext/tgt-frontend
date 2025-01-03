@@ -9,7 +9,7 @@ import {
   setCorpList,
   setLocList,
 } from "../../../../../lib/redux/features/roles-permissionsSlice";
-
+import { useSearchParams } from "next/navigation";
 const OrganizationDetailsForm = ({ onNext, onPrev }) => {
   const dispatch = useDispatch();
   const [organizations, setOrganizations] = useState([]);
@@ -19,7 +19,9 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
   const [loadingOrganizations, setLoadingOrganizations] = useState(true);
   const [loadingCorporates, setLoadingCorporates] = useState(false);
   const [loadingLocations, setLoadingLocations] = useState(false);
-
+  const searchParams = useSearchParams();
+  const edit = searchParams.get("edit") === "true"; // Check if in edit mode
+  const currentUser = useSelector((state) => state.roleprmission.userlist);
   const selections = useSelector((state) => ({
     organization: state.roleprmission.org_list,
     corporate: state.roleprmission.corp_list,
@@ -198,6 +200,27 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
     }
   }, [selections.corporate]);
 
+  useEffect(() => {
+    if (edit && currentUser) {
+      const orgIds = currentUser.orgs
+        ? currentUser.orgs.map((org) => org.id)
+        : [];
+      const corpIds = currentUser.corps
+        ? currentUser.corps.map((corp) => corp.id)
+        : [];
+      const locIds = currentUser.locs
+        ? currentUser.locs.map((loc) => loc.id)
+        : [];
+
+      dispatch(setOrgList(orgIds));
+      dispatch(setCorpList(corpIds));
+      dispatch(setLocList(locIds));
+    } else {
+      dispatch(setOrgList([]));
+      dispatch(setCorpList([]));
+      dispatch(setLocList([]));
+    }
+  }, [edit, currentUser, dispatch]);
   return (
     <div className="py-6">
       <div className="flex justify-items-center items-center gap-2 mt-6 mb-2">
@@ -235,13 +258,18 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
           />
         </div>
         <div className="flex justify-end items-center gap-1">
-          <button onClick={onPrev} className="px-4 py-2 text-gray-600 flex">
-            <MdChevronRight className="rotate-180 mt-1" />
-            Previous
+          <button
+            className="mt-4 bg-transparent text-black/40 font-bold py-2 px-4 rounded flex justify-center items-center gap-2"
+            onClick={onPrev}
+          >
+            <MdChevronRight className="w-4 h-4 rotate-180" />
+            <div className="text-black/40 text-[12px] font-bold font-['Manrope'] leading-[15px]">
+              Previous
+            </div>
           </button>
           <button
             type="submit"
-            className="bg-[#007eef] hover:shadow-lg text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow"
+            className="mt-4 bg-[#007eef] hover:shadow-lg text-[12px] text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow whitespace-nowrap"
           >
             <span className="text-[12px] font-['Manrope']">Next</span>
             <MdChevronRight />
