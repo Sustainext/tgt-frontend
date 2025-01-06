@@ -11,7 +11,8 @@ import { useDispatch } from "react-redux";
 const OptimiseApp = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-
+  const userid = typeof window !== 'undefined' ? localStorage.getItem("user_id") : '';
+  console.log(`https://sustainext-eoptimize-v2.streamlit.app?user_id=${userid}&embedded=true&embed_options=light_theme`);
   useEffect(() => {
     dispatch(setHeadertext1(""));
     dispatch(setHeaderdisplay("none"));
@@ -35,7 +36,7 @@ const OptimiseApp = () => {
         )} */}
 
         <iframe
-          src="https://sustainext-optimise.streamlit.app/?embedded=true&embed_options=light_theme"
+             src={`https://sustainext-eoptimize-v2.streamlit.app?user_id=${userid}&embedded=true&embed_options=light_theme`}
           title="Optimise App"
           width="100%"
           height="100%"
