@@ -7,7 +7,7 @@ const Table = ({ data }) => {
   const genders = data.filter((item) => item.gender);
 
   return (
-    <div className="p-4">
+    <div>
       <table
         className="min-w-full rounded-md border border-gray-300 w-full"
         style={{ borderCollapse: "separate", borderSpacing: 0 }}

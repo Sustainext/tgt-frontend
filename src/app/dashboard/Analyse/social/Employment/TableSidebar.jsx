@@ -21,7 +21,8 @@ const TableSidebar = () => {
         "ep1",
         "ep2",
         "ep3",
-
+        "ep4",
+        "ep5",
       ];
 
       const threshold = 150;
@@ -63,7 +64,14 @@ const TableSidebar = () => {
           id: "ep3",
           name: "Parental Leave",
         },
-
+        {
+          id: "ep4",
+          name: "Return to work rate and retention rate of employee",
+        },
+        {
+          id: "ep5",
+          name: "Percentage of employee per employee category ",
+        },
       ].map((link) => (
         <div key={link.id} className="self-stretch justify-end items-center gap-2 inline-flex">
           <a

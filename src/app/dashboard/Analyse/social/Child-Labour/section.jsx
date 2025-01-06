@@ -6,7 +6,7 @@ import DynamicTable from "./customTable"
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2, columns3, columns4,columns5,columns6 } from "./data";
 import { Oval } from "react-loader-spinner";
-const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
+const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen }) => {
   const [childdata1, setChilddata1] = useState([]);
   const [childdata2, setChilddata2] = useState([]);
   const [childdata3, setChilddata3] = useState([]);
@@ -28,7 +28,7 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_child_labor_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`
+        `/sustainapp/get_child_labor_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`
       );
 
       const data = response.data;
@@ -84,16 +84,16 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
     }
   };
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      fetchData();
-      toastShown.current = false;
+ useEffect(() => {
+    if (selectedOrg && dateRange.start<dateRange.end) {
+        fetchData();
+        toastShown.current = false;
     } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
+        if (!toastShown.current) {
+            toastShown.current = true;
+        }
     }
-  }, [selectedOrg, year, selectedCorp]);
+}, [selectedOrg, dateRange, selectedCorp]);
 
   return (
     <div>

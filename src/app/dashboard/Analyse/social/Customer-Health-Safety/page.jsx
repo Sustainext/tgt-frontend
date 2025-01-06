@@ -10,7 +10,7 @@ const AnalyseCustomerHealthSafety = () => {
     });
     const [selectedOrg, setSelectedOrg] = useState("");
     const [selectedCorp, setSelectedCorp] = useState("");
-    const [selectedLocation, setSelectedLocation] = useState("");
+  
   
     return (
       <>
@@ -22,8 +22,7 @@ const AnalyseCustomerHealthSafety = () => {
           setSelectedCorp={setSelectedCorp}
           dateRange={dateRange}
           setDateRange={setDateRange}
-          selectedLocation={selectedLocation}
-          setSelectedLocation={setSelectedLocation}
+     
         />
         <Section
           selectedOrg={selectedOrg}

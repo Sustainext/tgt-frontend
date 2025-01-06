@@ -49,10 +49,9 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
       const formatTable1 = (data) => {
         return data.map((data, index) => {
       
-          const formattedPercentage1 = data.average_training_hours_per_employee + "%";
-      
-          const formattedPercentage2 = data.average_training_hours_per_female_employee + "%";
-          const formattedPercentage3 = data.average_training_hours_per_male_employee + "%";
+          const formattedPercentage1 = data.average_training_hours_per_employee;
+          const formattedPercentage2 = data.average_training_hours_per_female_employee;
+          const formattedPercentage3 = data.average_training_hours_per_male_employee;
              
           return {
             "Average training hours per employee": formattedPercentage1,
@@ -64,10 +63,10 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
       const formatTable2 = (data) => {
         return data.map((data, index) => {
         
-          const formattedPercentage1 = data.avg_training_hrs_per_employee + "%";
-          const formattedPercentage2 = data.avg_training_hrs_male_employee + "%";
-           const formattedPercentage3 = data.avg_training_hrs_female_employee + "%";
-         const formattedPercentage4 = data.avg_training_hrs_other_employee + "%";
+          const formattedPercentage1 = data.avg_training_hrs_per_employee;
+          const formattedPercentage2 = data.avg_training_hrs_male_employee;
+           const formattedPercentage3 = data.avg_training_hrs_female_employee;
+         const formattedPercentage4 = data.avg_training_hrs_other_employee;
           
           return {
             Categories: data.category,
@@ -121,13 +120,9 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
-                <div>
-                  <p className="text-[15px] font-bold">
-                    Average hours of training provided to employees
-                  </p>
-                </div>
+              
                 <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500 text-[13px]">
+                  <p className="text-[15px] font-bold">
                     Average hours of training provided to employees
                   </p>
 
@@ -147,13 +142,9 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
                 id="ep2"
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
-                <div>
-                  <p className="text-[15px] font-bold">
-                    Average hours of training provided to employees
-                  </p>
-                </div>
+            
                 <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500 text-[13px]">
+                  <p className="text-[15px] font-bold">
                     Average hours of training provided to employees
                   </p>
 
@@ -173,13 +164,9 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
                 id="ep3"
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
-                <div>
+               
+                <div className="flex justify-between items-center">
                   <p className="text-[15px] font-bold">
-                  Percentage of employees receiving regular performance and career development reviews
-                  </p>
-                </div>
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500">
                   Percentage of employees receiving regular performance and career development reviews
                   </p>
 
