@@ -16,6 +16,7 @@ import AnalyseMarketingLabeling from "./Marketing-Labeling/page";
 import AnalyseCommunityDevelopment from "./Community-Development/page";
 import AnalyseCustomerprivacy from "./Customer-Privacy/page";
 import AnalyseSecurityPersonnelt from "./Security-Personnel/page";
+import AnalyseHumanRightsCommunityImpact from "./Human-Rights-Community-Impact/page"
 import {
   setHeadertext1,
   setHeadertext2,
@@ -32,17 +33,17 @@ const social = () => {
   };
   useEffect(() => {
     const headerTextMapping = {
-      Tab1: "Employment",
-      Tab2: "Occupational health and safety",
-      Tab3: "Child Labour",
-      Tab4: "Forced or Compulsory Labour",
-      Tab5: "Diversity & Inclusion",
-      Tab6: "Supplier Social assessment",
-      Tab7: "Training",
-      Tab8: "Non-Discrimination",
-      Tab9: "Collective Bargaining",
-      Tab10: "Community Development",
-      Tab12: "Customer Health and Safety",
+      Tab1: "Occupational health and safety",
+      Tab2: "Human Rights and Community Impact",
+      Tab3: "Labor Management",
+      Tab4: "Child and Forced Labour",
+      Tab5: "Employee hire and turnover",
+      Tab6: "Training and Development",
+      Tab7: "Customer Privacy & Data Security",
+      Tab8: "Product Safety & Quality",
+      Tab9: "Marketing and Labeling",
+      Tab10: "Supply Chain Labor Standards",
+      Tab12: " Non-discrimination",
       Tab13: "Marketing and Labeling",
       Tab14: "Customer Privacy",
       Tab15: "Security Personnel",
@@ -61,20 +62,18 @@ const social = () => {
         <div className="sticky top-14 bg-white z-[100]">
           <Header activeTab={activeTab} setIsBoxOpen={setIsBoxOpen} />
         </div>
-        {activeTab === "Tab1" && <AnalyseEmployment />}
-        {activeTab === "Tab2" && <AnalyseOHS />}
-        {activeTab === "Tab3" && <AnalyseChildlabour />}
-        {activeTab === "Tab4" && <AnalyseCompulsorylabour />}
-        {activeTab === "Tab5" && <AnalyseDiversityInclusion />}
-        {activeTab === "Tab6" && <AnalyseSuppliersocialassessment />}
-        {activeTab === "Tab7" && <AnalyseTraining />}
-        {activeTab === "Tab8" && <AnalyseNonDiscrimination />}
-        {activeTab === "Tab9" && <AnalyseCollectiveBargaining />}
-        {activeTab === "Tab10" && <AnalyseCommunityDevelopment />}
-        {activeTab === "Tab12" && <AnalyseCustomerHealthSafety />}
-        {activeTab === "Tab13" && <AnalyseMarketingLabeling />}
-        {activeTab === "Tab14" && <AnalyseCustomerprivacy />}
-        {activeTab === "Tab15" && <AnalyseSecurityPersonnelt />}
+        {activeTab === "Tab1" && <AnalyseOHS />}
+        {activeTab === "Tab2" && <AnalyseHumanRightsCommunityImpact />}
+        {activeTab === "Tab3" && <AnalyseCollectiveBargaining />}
+        {activeTab === "Tab4" && <AnalyseChildlabour />}
+        {activeTab === "Tab5" && <AnalyseEmployment />}
+        {activeTab === "Tab6" && <AnalyseTraining />}
+        {activeTab === "Tab7" && <AnalyseCustomerprivacy />}
+        {activeTab === "Tab8" && <AnalyseCustomerHealthSafety />}
+        {activeTab === "Tab9" && <AnalyseMarketingLabeling />}
+        {activeTab === "Tab10" && <AnalyseSuppliersocialassessment />}
+        {activeTab === "Tab12" && <AnalyseNonDiscrimination />}
+    
       </div>
     </div>
   );

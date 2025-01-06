@@ -6,7 +6,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2 } from "./data";
 
 import { Oval } from "react-loader-spinner";
-const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
+const Section = ({ selectedOrg, selectedCorp, dateRange, isBoxOpen }) => {
   const [Suppliersocialassessment1, setSuppliersocialassessment1] = useState(
     []
   );
@@ -35,7 +35,7 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
     setSuppliersocialassessment2([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_supplier_social_assessment_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`,
+        `/sustainapp/get_supplier_social_assessment_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`,
      
       );
       const data = response.data;
@@ -88,17 +88,17 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
-      fetchData();
-      toastShown.current = false;
+    if (selectedOrg && dateRange.start<dateRange.end) {
+        fetchData();
+        toastShown.current = false;
     } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
+        if (!toastShown.current) {
+            toastShown.current = true;
+        }
         setSuppliersocialassessment1([]);
         setSuppliersocialassessment2([]);
-      }
     }
-  }, [selectedOrg, year, selectedCorp]);
+}, [selectedOrg, dateRange, selectedCorp]);
 
   return (
     <div>

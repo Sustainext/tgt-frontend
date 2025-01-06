@@ -28,7 +28,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
 
   const gri = [
     {
-      category: "Tab1",
+      category: "Tab2",
       tag: "GRI 401",
       data: [
         { tagid: "1", infoid: "19" },
@@ -37,7 +37,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
-      category: "Tab2",
+      category: "Tab1",
       tag: "GRI 403",
       data: [
         { tagid: "4", infoid: "22" },
@@ -219,28 +219,28 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
           <div className="h-[35px]">
             <div className="h-[30px] flex justify-start items-end gap-3">
               <div className="gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem]">
-                {activeTab === "Tab1"
-                  ? "Employment 2016"
-                  : activeTab === "Tab2"
+                {activeTab === "Tab2"
+                  ? "Human Rights and Community Impact"
+                  : activeTab === "Tab1"
                   ? "Occupational Health and Safety 2018"
                   : activeTab === "Tab3"
-                  ? "Operations and suppliers at significant risk for incidents of child labor"
+                  ? "Labor Management"
                   : activeTab === "Tab4"
                   ? "Forced or Compulsory Labor 2016"
                   : activeTab === "Tab5"
-                  ? "Diversity of the Board"
+                  ? "Employment"
                   : activeTab === "Tab6"
-                  ? "Supplier Social Assessment 2016"
+                  ? "Training and Development"
                   : activeTab === "Tab7"
-                  ? "Training"
+                  ? "Customer Privacy & Data Security"
                   : activeTab === "Tab8"
-                  ? "Non-Discrimination 2016"
+                  ? "Product safety and quality"
                   : activeTab === "Tab9"
-                  ? "Collective Bargaining"
+                  ? "Marketing and labeling"
                   : activeTab === "Tab10"
-                  ? "Local Communities 2016"
+                  ? "Supply Chain Labor Standards"
                   : activeTab === "Tab12"
-                  ? "Customer Health and Safety 2016"
+                  ? " Non-discrimination"
                   : activeTab === "Tab13"
                   ? "Marketing and labeling"
                    : activeTab === "Tab14"

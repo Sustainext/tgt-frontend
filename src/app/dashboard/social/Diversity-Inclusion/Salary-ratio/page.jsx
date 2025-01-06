@@ -4,7 +4,7 @@ import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Socialheader3 from "../../socialheader3";
+import Socialheader2 from "../../socialheader2";
 import Screen1 from "./Screen1";
 import Screen2 from "./Screen2";
 import Screen3 from "./Screen3";
@@ -17,7 +17,8 @@ const Salaryratio = () => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -147,17 +148,17 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <Socialheader3
-        activeMonth={activeMonth}
-        setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
+      <Socialheader2
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
       />
-      <Screen1 location={location} year={year} month={activeMonth} />
-      <Screen2 location={location} year={year} month={activeMonth} />
-      <Screen3 location={location} year={year} month={activeMonth} />
+      <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} />
+      <Screen2 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} />
+      <Screen3 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} />
     </>
   );
 };
