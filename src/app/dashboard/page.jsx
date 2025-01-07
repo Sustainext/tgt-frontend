@@ -25,7 +25,10 @@ const Dashboard = () => {
     <>
       <div>
         <div className="ms-6">
-          <div className="my-4 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed " translate="no">
+          <div
+            className="my-4 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed "
+            translate="no"
+          >
             Sustainext HQ
           </div>
 
@@ -50,7 +53,7 @@ const Dashboard = () => {
                 onClick={() => handleTabChange("tab2")}
               >
                 ESG Performance
-              </button>
+              </button> */}
               <button
                 className={`px-4 py-1 rounded-b-none text-sm font-bold leading-[15px] ${
                   activeTab === "tab3"
@@ -59,8 +62,8 @@ const Dashboard = () => {
                 }`}
                 onClick={() => handleTabChange("tab3")}
               >
-                Tasks
-              </button> */}
+                All Tasks
+              </button>
               {/* <div className="ml-auto mb-2">
                 <div>
                   <button className="right-10 top-18 ms-2 bg-gradient-to-r from-[#364161] to-[#06081f] hover:bg-gray-600 text-white font-bold py-2 mr-4 px-2 rounded text-xs take-a-tour">
