@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { Tooltip } from "react-tooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../../../lib/redux/features/emissionSlice";
+import TaskDetailsModal from "./TaskDetailsModal";
 
 const MyTask = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -218,9 +219,15 @@ const MyTask = () => {
     setIsModalOpen(true);
   };
 
+  // const handleCloseModal = () => {
+  //   setIsModalOpen(false);
+  // };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    resetForm();
   };
+
   const handleCloseModalReviewtask = () => {
     setReviewtask(false);
     setApprove(false);
@@ -538,70 +545,70 @@ const MyTask = () => {
   const datahandleChange = (e) => {
     setaddgoles({ ...addgoles, [e.target.name]: e.target.value });
   };
-  const submitForm = async (e) => {
-    e.preventDefault();
-    LoaderOpen();
+  // const submitForm = async (e) => {
+  //   e.preventDefault();
+  //   LoaderOpen();
 
-    const sandData = {
-      ...addgoles,
-      assigned_to: parseInt(localStorage.getItem("user_id")),
-      assigned_by: parseInt(localStorage.getItem("user_id")),
-      task_name: formData.task_name || "test",
-      deadline: formData.deadline,
-      status: formData.status,
-      description: formData.description,
-      user_client: 1,
-      roles: 3,
-    };
-    await post(`/organization_task_dashboard/`, sandData)
-      .then((response) => {
-        if (response.status == "201") {
-          toast.success("Task has been added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          handleCloseModal();
-          fetchMytaskDetails();
-          setaddgoles({});
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      })
-      .catch((error) => {
-        const errorMessage = "Oops, something went wrong";
-        toast.error(errorMessage, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        LoaderClose();
-        handleCloseModal();
-        fetchMytaskDetails();
-        setaddgoles({});
-      });
-  };
+  //   const sandData = {
+  //     ...addgoles,
+  //     assigned_to: parseInt(localStorage.getItem("user_id")),
+  //     assigned_by: parseInt(localStorage.getItem("user_id")),
+  //     task_name: formData.task_name || "test",
+  //     deadline: formData.deadline,
+  //     status: formData.status,
+  //     description: formData.description,
+  //     user_client: 1,
+  //     roles: 3,
+  //   };
+  //   await post(`/organization_task_dashboard/`, sandData)
+  //     .then((response) => {
+  //       if (response.status == "201") {
+  //         toast.success("Task has been added successfully", {
+  //           position: "top-right",
+  //           autoClose: 3000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         });
+  //         LoaderClose();
+  //         handleCloseModal();
+  //         fetchMytaskDetails();
+  //         setaddgoles({});
+  //       } else {
+  //         toast.error("Error", {
+  //           position: "top-right",
+  //           autoClose: 1000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "colored",
+  //         });
+  //         LoaderClose();
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       const errorMessage = "Oops, something went wrong";
+  //       toast.error(errorMessage, {
+  //         position: "top-right",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "colored",
+  //       });
+  //       LoaderClose();
+  //       handleCloseModal();
+  //       fetchMytaskDetails();
+  //       setaddgoles({});
+  //     });
+  // };
 
   const handleCompleted = async (id, roles) => {
     try {
@@ -1088,6 +1095,116 @@ const MyTask = () => {
     });
   };
 
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const handleEditTask = (task) => {
+    setIsEditMode(true);
+    setFormData({
+      task_name: task.task_name,
+      description: task.description || "",
+      deadline: task.deadline,
+      assigned_to: task.assigned_to?.toString() || "",
+      status: task.status || "not_started",
+      id: task.id,
+    });
+    setIsModalOpen(true);
+  };
+
+  // Modify submitForm to handle both create and edit
+  const submitForm = async (e) => {
+    e.preventDefault();
+    LoaderOpen();
+
+    const sandData = {
+      ...formData,
+      assigned_to: parseInt(formData.assigned_to),
+      assigned_by: parseInt(localStorage.getItem("user_id")),
+      user_client: 1,
+      roles: 3,
+    };
+
+    try {
+      if (isEditMode) {
+        // Update existing task
+        const response = await patch(
+          `/organization_task_dashboard/${formData.id}/`,
+          sandData
+        );
+        if (response.status === 200) {
+          toast.success("Task has been updated successfully");
+        } else {
+          toast.error("Error updating task");
+        }
+      } else {
+        // Create new task
+        const response = await post(`/organization_task_dashboard/`, sandData);
+        if (response.status === 201) {
+          toast.success("Task has been added successfully");
+        } else {
+          toast.error("Error creating task");
+        }
+      }
+
+      handleCloseModal();
+      fetchMytaskDetails();
+      resetForm();
+    } catch (error) {
+      toast.error("An error occurred");
+    } finally {
+      LoaderClose();
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      task_name: "",
+      description: "",
+      deadline: "",
+      assigned_to: "",
+      status: "not_started",
+    });
+    setIsEditMode(false);
+  };
+
+  const handleDelete = async (id) => {
+    LoaderOpen();
+    try {
+      const response = await del(`/organization_task_dashboard/${id}/`);
+      if (response.status === 204) {
+        toast.success("Task has been deleted successfully");
+        fetchMytaskDetails();
+      } else {
+        toast.error("Error deleting task");
+      }
+    } catch (error) {
+      toast.error("Error deleting task");
+    } finally {
+      LoaderClose();
+    }
+  };
+
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [showConfirmUpdate, setShowConfirmUpdate] = useState(false);
+
+  const handleDeleteClick = () => {
+    setShowConfirmDelete(true);
+    setShowConfirmUpdate(false);
+  };
+
+  const handleUpdateClick = () => {
+    setShowConfirmDelete(false);
+    setShowConfirmUpdate(true);
+  };
+
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(true);
+
+  // Open modal when clicking on a task (completed)
+  const handleTaskClick = (task) => {
+    setSelectedTask(task);
+    setIsDetailsModalOpen(true);
+  };
+
   return (
     <>
       <div className="rounded-lg shadow border border-gray-200 p-4 px-6 h-[470px] overflow-x-auto">
@@ -1205,7 +1322,16 @@ const MyTask = () => {
                                     {task.task_name}
                                   </p>
                                 ) : (
-                                  <p className="py-1 text-[#007eef]">
+                                  // For self-created tasks
+                                  <p
+                                    className="py-1 text-[#007eef] cursor-pointer"
+                                    onClick={() => {
+                                      if (task.roles === 3) {
+                                        // Check if it's a self-created task
+                                        handleEditTask(task);
+                                      }
+                                    }}
+                                  >
                                     {task.task_name}
                                   </p>
                                 )}
@@ -1403,6 +1529,7 @@ const MyTask = () => {
                                     className="py-1 cursor-pointer"
                                     data-tooltip-id={`task-tooltip-${task.id}`}
                                     data-tooltip-content={task.task_name}
+                                    onClick={() => handleTaskClick(task)}
                                   >
                                     {task.task_name}
                                   </p>
@@ -1594,17 +1721,19 @@ const MyTask = () => {
           </button>
         </div>
       </div>
+
       {isModalOpen && (
         <div className="modal-overlay z-50">
           <div className="modal-center">
-            <div className="modal-content bg-white rounded-lg shadow-xl p-6 min-w-[450px] max-w-[450px]">
+            <div className="modal-content bg-white rounded-lg shadow-xl p-6 min-w-[450px] max-w-[450px] relative">
               {/* Header */}
               <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                Add Tasks
+                {isEditMode ? "Edit Task" : "Add Task"}
               </h2>
               <p className="text-gray-600 text-sm mb-6">
-                Add tasks with descriptions and deadlines to keep your goals on
-                track.
+                {isEditMode
+                  ? "Update task details and deadline"
+                  : "Add tasks with descriptions and deadlines to keep your goals on track."}
               </p>
 
               <form onSubmit={submitForm} className="space-y-6">
@@ -1767,39 +1896,130 @@ const MyTask = () => {
                   </select>
                 </div>
 
-                {/* Action Buttons */}
+                {/* Action Buttons
                 <div className="flex gap-4 pt-2">
                   <button
                     type="button"
-                    onClick={handleCloseModal}
-                    className="flex-1 px-4 py-2.5 text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    onClick={() => {
+                      if (isEditMode) {
+                        // Show confirmation before delete
+                        if (
+                          window.confirm(
+                            "Are you sure you want to delete this task?"
+                          )
+                        ) {
+                          handleDelete(formData.id);
+                          handleCloseModal();
+                        }
+                      } else {
+                        handleCloseModal();
+                      }
+                    }}
+                    className={`flex-1 px-4 py-2.5 rounded-md focus:outline-none focus:ring-2 focus:ring-[#007eef] focus:ring-offset-2 ${
+                      isEditMode
+                        ? "text-white bg-red-500 hover:bg-red-600 border-red-500"
+                        : "text-gray-700 bg-white border border-gray-200 hover:bg-gray-50"
+                    }`}
                   >
-                    Cancel
+                    {isEditMode ? "Delete Task" : "Cancel"}
                   </button>
                   <button
                     type="submit"
                     disabled={!isFormValid}
-                    className={`flex-1 px-4 py-2.5 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                    className={`flex-1 px-4 py-2.5 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#007eef] focus:ring-offset-2 ${
                       !isFormValid
                         ? "bg-blue-300 cursor-not-allowed"
-                        : "bg-blue-500 hover:bg-blue-600"
+                        : "bg-[#007eef] hover:bg-blue-600"
                     }`}
                   >
-                    Add Task
+                    {isEditMode ? "Update Task" : "Add Task"}
                   </button>
-                </div>
+                </div> */}
+                {isEditMode ? (
+                  <div className="space-y-4">
+                    {/* Primary Buttons - Always Visible */}
+                    <div className="flex gap-4">
+                      <button
+                        type="button"
+                        onClick={handleDeleteClick}
+                        className="flex-1 px-4 py-2.5 text-white bg-red-500 hover:bg-red-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+                      >
+                        Delete Task
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleUpdateClick}
+                        className="flex-1 px-4 py-2.5 text-[#007eef] border border-[#007eef] hover:bg-blue-50 rounded-md focus:outline-none focus:ring-2 focus:ring-[#007eef] focus:ring-offset-2 transition-colors"
+                      >
+                        Update
+                      </button>
+                    </div>
+
+                    {/* Confirmation Sections */}
+                    {showConfirmDelete && (
+                      <div className="space-y-2">
+                        <p className="text-center text-sm text-gray-600">
+                          Click on delete to proceed
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(formData.id)}
+                          className="w-full px-4 py-2.5 text-white bg-[#007eef] rounded-md hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-[#007eef] focus:ring-offset-2"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
+
+                    {showConfirmUpdate && (
+                      <div className="space-y-2">
+                        <p className="text-center text-sm text-gray-600">
+                          Click on update to proceed
+                        </p>
+                        <button
+                          type="submit"
+                          className="w-full px-4 py-2.5 text-white bg-[#007eef] rounded-md hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-[#007eef] focus:ring-offset-2"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex gap-4">
+                    <button
+                      type="button"
+                      onClick={handleCloseModal}
+                      className="flex-1 px-4 py-2.5 text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-[#007eef] focus:ring-offset-2"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={!isFormValid}
+                      className={`flex-1 px-4 py-2.5 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#007eef] focus:ring-offset-2 ${
+                        !isFormValid
+                          ? "bg-blue-300 cursor-not-allowed"
+                          : "bg-[#007eef] hover:bg-blue-600"
+                      }`}
+                    >
+                      Add Task
+                    </button>
+                  </div>
+                )}
               </form>
 
               {/* Close Button */}
               <button
+                className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors focus:outline-none"
                 onClick={handleCloseModal}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-500"
               >
                 <svg
                   className="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     strokeLinecap="round"
@@ -2799,6 +3019,11 @@ const MyTask = () => {
           </div>
         </div>
       )}
+      <TaskDetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={() => setIsDetailsModalOpen(false)}
+        task={selectedTask}
+      />
       {loopen ||
         (isSearching && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
