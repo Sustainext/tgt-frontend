@@ -21,7 +21,8 @@ import Link from "next/link";
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
+  setMiddlename
 } from "../../../../lib/redux/features/topheaderSlice";
 const AddNewUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -48,9 +49,17 @@ const AddNewUser = () => {
   useEffect(() => {
 
     if (edit === "true") {
+      dispatch(setHeadertext1("User"));
+      dispatch(setHeaderdisplay("none"));
       dispatch(setHeadertext2("Manage Users"));
+      dispatch(setMiddlename("Social"));
+     
     } else {
+      dispatch(setHeadertext1("User"));
+      dispatch(setHeaderdisplay("none"));
       dispatch(setHeadertext2("Create New User"));
+      dispatch(setMiddlename("Social"));
+ 
     }
   }, [dispatch, edit]);
   return (

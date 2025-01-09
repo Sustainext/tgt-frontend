@@ -242,7 +242,7 @@ const LocationDropdownTableGrid = ({
                           onChange={(e) =>
                             updateField(locationName, 0, title.tittlekey, e.target.value)
                           }
-                          onKeyDown={handleKeyDown} 
+                          onKeyDown={title.widgettype === "number" ? handleKeyDown : undefined}
                         />
                       </td>
                     ))}
@@ -277,7 +277,7 @@ const LocationDropdownTableGrid = ({
                             onChange={(e) =>
                               updateField(locationName, rowIndex, title.tittlekey, e.target.value)
                             }
-                            onKeyDown={handleKeyDown} 
+                            onKeyDown={title.widgettype === "number" ? handleKeyDown : undefined}
                           />
                         </td>
                       ))}

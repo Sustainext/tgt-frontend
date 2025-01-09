@@ -6,7 +6,8 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader2 from '../../socialheader2';
 import Screen1 from './Screen1'
-import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";import { useSelector } from 'react-redux';
 import SocialTopBar from '../../socialTopBar'
 
 const Impactsactionstaken = ({apiData}) => {
@@ -73,6 +74,7 @@ const Impactsactionstaken = ({apiData}) => {
 
     return (
         <>
+             <ToastContainer style={{ fontSize: "12px" }} />
             <div className="flex flex-col justify-start overflow-x-hidden ">
             <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Supply Chain Labor Standards'} topic={'SocSupplyChainLabour'} />
                

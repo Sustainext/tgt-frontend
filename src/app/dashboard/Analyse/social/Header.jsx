@@ -29,102 +29,143 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
   const gri = [
     {
       category: "Tab1",
-      tag: "GRI 401",
-      data: [
-        { tagid: "1", infoid: "19" },
-        { tagid: "2", infoid: "20" },
-        { tagid: "3", infoid: "21" },
+      tags: [
+        {
+          label: "GRI 403",
+          data: [
+            { tagid: "4", infoid: "22" },
+            { tagid: "8", infoid: "23" },
+            { tagid: "9", infoid: "24" },
+            { tagid: "10", infoid: "25" },
+          ],
+        },
+  
       ],
     },
     {
       category: "Tab2",
-      tag: "GRI 403",
-      data: [
-        { tagid: "4", infoid: "22" },
-        { tagid: "8", infoid: "23" },
-        { tagid: "9", infoid: "24" },
-        { tagid: "10", infoid: "25" },
+      tags: [
+        {
+          label: "GRI 413",
+          data: [
+            { tagid: "1", infoid: "37" },
+          
+          ],
+        },
+        {
+          label: "GRI 410",
+          data: [
+            { tagid: "1", infoid: "52" },
+          ],
+        },
       ],
     },
     {
       category: "Tab3",
-      tag: "GRI 408",
-      data: [{ tagid: "1", infoid: "26" }],
+      tags: [
+        {
+          label: "GRI 407",
+          data: [{ tagid: "1a", infoid: "36" }],
+        },
+  
+      ],
     },
     {
       category: "Tab4",
-      tag: "GRI 409",
-      data: [{ tagid: "1", infoid: "27" }],
+      tags: [
+        {
+          label: "GRI 408",
+          data: [{ tagid: "1", infoid: "26" }],
+        },
+        {
+          label: "GRI 409",
+          data: [{ tagid: "1", infoid: "27" }],
+        },
+      ],
     },
     {
       category: "Tab5",
-      tag: "GRI 405",
-      data: [{ tagid: "1", infoid: "28" }],
+      tags: [
+        {
+          label: "GRI 401",
+          data: [
+            { tagid: "1", infoid: "19" },
+        { tagid: "3", infoid: "21" },
+          ],
+        },
+        {
+          label: "GRI 405",
+          data: [{ tagid: "1", infoid: "28" }],
+        },
+      ],
     },
     {
       category: "Tab6",
-      tag: "GRI 414",
-      data: [
-        { tagid: "1", infoid: "29" },
-        { tagid: "2", infoid: "30" },
+      tags: [
+        {
+          label: "GRI 404",
+          data: [ { tagid: "1", infoid: "38" },
+            { tagid: "3", infoid: "39" }],
+        },
+  
       ],
     },
     {
       category: "Tab7",
-      tag: "GRI 404",
-      data: [
-        { tagid: "1", infoid: "38" },
-        { tagid: "3", infoid: "39" }
+      tags: [
+        {
+          label: "GRI 418",
+          data: [{ tagid: "1", infoid: "34" }],
+        },
+  
       ],
     },
     {
       category: "Tab8",
-      tag: "GRI 406",
-      data: [{ tagid: "1", infoid: "35" }],
-    },
-    {
-      category: "Tab9",
-      tag: "GRI 407",
-      data: [{ tagid: "1", infoid: "36" }],
-    },
-    {
-      category: "Tab10",
-      tag: "GRI 413",
-      data: [{ tagid: "1", infoid: "37" }],
-    },
-    {
-      category: "Tab12",
-      tag: "GRI 416",
-      data: [{ tagid: "1", infoid: "32" }],
-    },
-    {
-      category: "Tab13",
-      tag: "GRI 417",
-      data: [{ tagid: "1", infoid: "33" }],
-    },
-    {
-      category: "Tab14",
-      tag: "GRI 418",
-      data: [{ tagid: "1", infoid: "34" }],
-    },
-    {
-      category: "Tab15",
-      tag: "GRI 410",
-      data: [{ tagid: "1", infoid: "52" }],
-    },
-  ];
-  const sdg = [
-    {
-      category: "Tab1",
-      data: [
-        { id: "sd10", label: "SDG 3", bgColor: "bg-[#4C9F38]" },
-        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
-        { id: "sd12", label: "SDG 8", bgColor: "bg-red-900" },
-        { id: "sd13", label: "SDG 10", bgColor: "bg-pink-500" },
+      tags: [
+        {
+          label: "GRI 416",
+          data: [{ tagid: "1", infoid: "32" }],
+        },
+  
       ],
     },
     {
-      category: "Tab2",
+      category: "Tab9",
+      tags: [
+        {
+          label: "GRI 417",
+          data: [{ tagid: "1", infoid: "33" }],
+        },
+  
+      ],
+    },
+    {
+      category: "Tab10",
+      tags: [
+        {
+          label: "GRI 414",
+          data: [  { tagid: "1", infoid: "29" },
+            { tagid: "2", infoid: "30" },],
+        },
+  
+      ],
+    },
+    {
+      category: "Tab12",
+      tags: [
+        {
+          label: "GRI 406",
+          data: [{ tagid: "1", infoid: "35" }],
+        },
+  
+      ],
+    },
+  ];
+
+  const sdg = [
+    {
+      category: "Tab1",
       data: [
         { id: "sd14", label: "SDG 3", bgColor: "bg-[#4C9F38]" },
         { id: "sd15", label: "SDG 8", bgColor: "bg-red-900" },
@@ -132,11 +173,15 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
+      category: "Tab2",
+      data: [
+        { id: "sd29", label: "SDG 16", bgColor: "bg-blue-950" },
+      ],
+    },
+    {
       category: "Tab3",
       data: [
-        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
         { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
-        { id: "sd17", label: "SDG 16", bgColor: "bg-blue-950" },
       ],
     },
     {
@@ -144,25 +189,20 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       data: [
         { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
         { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd30", label: "SDG 16", bgColor: "bg-blue-950" },
       ],
     },
     {
       category: "Tab5",
       data: [
-        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
-        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd10", label: "SDG 3", bgColor: "bg-[#4C9F38]" },
+        { id: "sd31", label: "SDG 5", bgColor: "bg-orange-600" },
+        { id: "sd12", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd13", label: "SDG 10", bgColor: "bg-pink-500" },
       ],
     },
     {
       category: "Tab6",
-      data: [
-        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
-        { id: "sd15", label: "SDG 8", bgColor: "bg-red-900" },
-        { id: "sd16", label: "SDG 16", bgColor: "bg-blue-950" },
-      ],
-    },
-    {
-      category: "Tab7",
       data: [
         { id: "sd21", label: "SDG 4", bgColor: "bg-[#C22033]"},
         { id: "sd22", label: "SDG 5", bgColor: "bg-orange-600"},
@@ -171,44 +211,34 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
-      category: "Tab8",
+      category: "Tab7",
       data: [
-        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
-        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd20", label: "SDG 16", bgColor: "bg-blue-950" },
       ],
     },
     {
       category: "Tab9",
       data: [
-        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd19", label: "SDG 12", bgColor: "bg-[#CD8B2A]" },
       ],
     },
     {
       category: "Tab10",
       data: [
         { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
+        { id: "sd15", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd16", label: "SDG 16", bgColor: "bg-blue-950" },
+      ],
+    },
+    {
+      category: "Tab12",
+      data: [
+        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
         { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
       ],
     },
-    {
-      category: "Tab13",
-      data: [
-        { id: "sd19", label: "SDG 12", bgColor: "bg-[#CD8B2A]" },
-      ],
-    },
-    {
-      category: "Tab14",
-      data: [
-        { id: "sd20", label: "SDG 16", bgColor: "bg-blue-950" },
-      ],
-    },
-    {
-      category: "Tab15",
-      data: [
-        { id: "sd29", label: "SDG 16", bgColor: "bg-blue-950" },
-      ],
-    },
   ];
+
   return (
     <>
       <div className="flex justify-between items-center border-b border-gray-200 pb-4 z-[100] relative">
@@ -219,28 +249,28 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
           <div className="h-[35px]">
             <div className="h-[30px] flex justify-start items-end gap-3">
               <div className="gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem]">
-                {activeTab === "Tab1"
-                  ? "Employment 2016"
-                  : activeTab === "Tab2"
+                {activeTab === "Tab2"
+                  ? "Human Rights and Community Impact"
+                  : activeTab === "Tab1"
                   ? "Occupational Health and Safety 2018"
                   : activeTab === "Tab3"
-                  ? "Operations and suppliers at significant risk for incidents of child labor"
+                  ? "Labor Management"
                   : activeTab === "Tab4"
                   ? "Forced or Compulsory Labor 2016"
                   : activeTab === "Tab5"
-                  ? "Diversity of the Board"
+                  ? "Employment"
                   : activeTab === "Tab6"
-                  ? "Supplier Social Assessment 2016"
+                  ? "Training and Development"
                   : activeTab === "Tab7"
-                  ? "Training"
+                  ? "Customer Privacy & Data Security"
                   : activeTab === "Tab8"
-                  ? "Non-Discrimination 2016"
+                  ? "Product safety and quality"
                   : activeTab === "Tab9"
-                  ? "Collective Bargaining"
+                  ? "Marketing and labeling"
                   : activeTab === "Tab10"
-                  ? "Local Communities 2016"
+                  ? "Supply Chain Labor Standards"
                   : activeTab === "Tab12"
-                  ? "Customer Health and Safety 2016"
+                  ? " Non-discrimination"
                   : activeTab === "Tab13"
                   ? "Marketing and labeling"
                    : activeTab === "Tab14"
@@ -260,21 +290,23 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
           </div>
         </div>
         <div className="flex flex-col border-l gap-2 absolute right-12 top-8">
-          <div className="flex">
-            {gri
-              .filter((g) => g.category === activeTab)
-              .map((g) =>
-                g.data.map((item) => (
+        <div className="flex">
+          {gri
+            .filter((g) => g.category === activeTab)
+            .flatMap((g) =>
+              g.tags.map((tag, index) =>
+                tag.data.map((item) => (
                   <button
-                    key={item.tagid}
-                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                    key={`${tag.label}-${item.tagid}`}
+                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[80px] h-[22px] ml-2 text-center"
                     onClick={() => toggleDrawer(item.infoid)}
                   >
-                    {g.tag} - {item.tagid}
+                    {tag.label} - {item.tagid}
                   </button>
                 ))
-              )}
-          </div>
+              )
+            )}
+        </div>
           <div className="flex">
             {sdg
               .filter((s) => s.category === activeTab)

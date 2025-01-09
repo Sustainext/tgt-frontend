@@ -2,10 +2,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import TableSidebar from "./TableSidebar";
 import DynamicTable2 from "./customTable2";
+import DynamicTable from "./customTable"
 import axiosInstance from "../../../../utils/axiosMiddleware";
-import { columns1, columns2, columns3, columns4 } from "./data";
+import { columns1, columns2, columns3, columns4,columns5,columns6 } from "./data";
 import { Oval } from "react-loader-spinner";
-const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
+const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen }) => {
   const [childdata1, setChilddata1] = useState([]);
   const [childdata2, setChilddata2] = useState([]);
   const [childdata3, setChilddata3] = useState([]);
@@ -27,7 +28,7 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_child_labor_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`
+        `/sustainapp/get_child_labor_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`
       );
 
       const data = response.data;
@@ -83,16 +84,16 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
     }
   };
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      fetchData();
-      toastShown.current = false;
+ useEffect(() => {
+    if (selectedOrg && dateRange.start<dateRange.end) {
+        fetchData();
+        toastShown.current = false;
     } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
+        if (!toastShown.current) {
+            toastShown.current = true;
+        }
     }
-  }, [selectedOrg, year, selectedCorp]);
+}, [selectedOrg, dateRange, selectedCorp]);
 
   return (
     <div>
@@ -207,6 +208,50 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
               <div className="mb-4">
                 <DynamicTable2 columns={columns4} data={childdata4} />
               </div>
+            </div>
+          </div>
+          <div className="mb-6">
+            <div
+              id="ep5"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
+            >
+              <div className="flex justify-between items-center mb-2">
+                <p>
+                  Operations considered to have significant risk for incidents
+                  of forced or compulsary labor
+                </p>
+
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 409-1a
+                  </div>
+                </div>
+              </div>
+              <div className="mb-4">
+                <DynamicTable columns={columns5} data={[]} />
+              </div>
+            </div>
+          </div>
+          <div className="mb-6">
+            <div
+              id="ep6"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
+            >
+              <div className="flex justify-between items-center mb-2">
+                <p>
+                  Suppliers at significant risk for incidents of forced or
+                  compulsory labor
+                </p>
+
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 409-1a
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mb-4">
+              <DynamicTable columns={columns6} data={[]} />
             </div>
           </div>
         </div>
