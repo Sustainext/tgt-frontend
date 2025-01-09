@@ -6,6 +6,8 @@ import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import {Socialdata} from "../../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Securitypersonnel = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
@@ -35,6 +37,7 @@ const Securitypersonnel = () => {
   }, [category])
   return (
     <>
+      <ToastContainer style={{ fontSize: "12px" }} />
      <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>

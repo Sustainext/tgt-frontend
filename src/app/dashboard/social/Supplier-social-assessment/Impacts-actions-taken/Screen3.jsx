@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget3 from "../../../../shared/widgets/Input/inputWidget3";
+import inputWidget6 from "../../../../shared/widgets/Input/inputWidget6";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -13,7 +13,7 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
-  inputWidget: inputWidget3,
+  inputWidget: inputWidget6,
 };
 
 const view_path = "gri-social-impacts_and_actions-414-2c-significant_actual";
