@@ -15,7 +15,7 @@ const Section2 = ({ section8_1_1Ref, data }) => {
   useEffect(() => {
     if (data?.["8_1_1"]) {
       const parseData = (response) => {
-        const categories = ["environment","social"]; // Extend with other ESG pillars if needed.
+        const categories = ["environment","social","governance"]; // Extend with other ESG pillars if needed.
         let rows = [];
 
         categories.forEach((category) => {
