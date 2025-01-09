@@ -123,6 +123,14 @@ const CommoninputWidget = (props) => {
               </label>
             ))}
           </div>
+        ) :  uiSchema["ui:widgetType"] === "inputtext" ? ( 
+          <input
+          type={uiSchema["ui:inputfildtype"]}
+          placeholder="Enter data"
+          className="backdrop:before:w-[48rem] py-4 border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+          value={value}
+          onChange={handleChange}
+        />
         ) : (
           <input
             type="number"

@@ -44,7 +44,7 @@ const uiSchema = {
         "Whether these investments and services are commercial, in-kind, or pro bono engagements.",
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
-      "ui:widgetType": "input",
+      "ui:widgetType": "inputtext",
       "ui:inputfildtype": "text",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,

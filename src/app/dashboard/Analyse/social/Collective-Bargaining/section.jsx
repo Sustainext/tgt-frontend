@@ -5,7 +5,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import Table1 from "./Table";
 import { columns1, columns2 } from "./data"; // Assuming these are correct
 import { Oval } from "react-loader-spinner";
-const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
+const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
 
   const [loopen, setLoOpen] = useState(false);
   const [operationBargainingData, setOperationBargainingData] = useState([]);
@@ -21,7 +21,7 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `sustainapp/get_collective_bargaining_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`,
+        `sustainapp/get_collective_bargaining_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`,
       
       );
       const { operation_bargaining, supplier_bargaining } = response.data;
@@ -33,9 +33,8 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && year) {
+    if (selectedOrg && dateRange.start<dateRange.end) {
         fetchData();
         toastShown.current = false;
     } else {
@@ -43,7 +42,8 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
             toastShown.current = true;
         }
     }
-}, [selectedOrg, year, selectedCorp]);
+}, [selectedOrg, dateRange, selectedCorp]);
+ 
 
   return (
     <div>

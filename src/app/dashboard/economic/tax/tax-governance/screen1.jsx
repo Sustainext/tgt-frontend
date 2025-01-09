@@ -44,7 +44,7 @@ const schema = {
       },
       Q4: {
         type: "string",
-        title: "Please explain how the framework for compliance with the tax governance and control is evaluated.",
+        title: "Please explanation how the framework for compliance with the tax governance and control is evaluated.",
 
       },
 
@@ -74,7 +74,7 @@ const uiSchema = {
     },
     Q2: {
       "ui:title":
-      "Please provide an explaination of how the approach to tax is embedded within the organization.",
+      "Please provide an explanation of how the approach to tax is embedded within the organization.",
     "ui:tooltip":
       "The organization can describe processes, projects, programs, and initiatives that support adherence to the approach to tax and tax strategy. For examples, please refer to the guidance by clicking the GRI 207-2 tag on the top right of the screen.",
     "ui:tooltipdisplay": "block",

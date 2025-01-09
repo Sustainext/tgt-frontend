@@ -4609,55 +4609,10 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-            Sustainable Development Goal 3: Ensure healthy lives and promote
-            well-being for all at all ages
+          Sustainable Development Goal 3: Ensure healthy lives and promote well-being for all at all ages
           </p>
           <div className="">
-            <p className="text-[13px] text-[#222222] mb-2">Target 3.3</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-              By 2030, end the epidemics of AIDS, tuberculosis, malaria and
-              neglected tropical diseases and combat hepatitis, water-borne
-              diseases and other communicable diseases.
-            </p>
-            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
-            <p className="text-[11px] text-[#222222] mb-2">3.3.1</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-              Number of new HIV infections per 1,000 uninfected population, by
-              sex, age and key populations.
-            </p>
-            <p className="text-[11px] text-[#222222] mb-2">3.3.2</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-              Tuberculosis incidence per 100,000 population.
-            </p>
-            <p className="text-[11px] text-[#222222] mb-2">3.3.3</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-              Malaria incidence per 1,000 population.
-            </p>
-            <p className="text-[11px] text-[#222222] mb-2">3.3.4</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-              Hepatitis B incidence per 100,000 population.
-            </p>
-            <p className="text-[11px] text-[#222222] mb-2">3.3.5</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-              Number of people requiring interventions against neglected
-              tropical diseases.
-            </p>
-            <p className="text-[13px] text-[#222222] mb-2">Target 3.4</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-              By 2030, reduce by one third premature mortality from
-              non-communicable diseases through prevention and treatment and
-              promote mental health and well-being.
-            </p>
-            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
-            <p className="text-[11px] text-[#222222] mb-2">3.4.1</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-              Mortality rate attributed to cardiovascular disease, cancer,
-              diabetes or chronic respiratory disease.
-            </p>
-            <p className="text-[11px] text-[#222222] mb-2">3.4.2</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-              Suicide mortality rate.
-            </p>
+           
             <p className="text-[13px] text-[#222222] mb-2">Target 3.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, halve the number of global deaths and injuries from road
@@ -5452,5 +5407,103 @@ export const Energydata = [
       </>,
     ],
     link: "https://sdgs.un.org/goals/goal16",
+  },
+  {
+    category: ["sd30"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels
+          </p>
+          <div className="">
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            End abuse, exploitation, trafficking and all forms of violence against and torture of children
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of children aged 1–17 years who experienced any physical punishment and/or psychological aggression by caregivers in the past month
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.2.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Number of victims of human trafficking per 100,000 population, by sex, age and form of exploitation
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.2.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of young women and men aged 18–29 years who experienced sexual violence by age 18
+            </p>
+           
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal16",
+  },
+  {
+    category: ["sd31"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-05.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-orange-600 text-[17px] font-bold ml-2">SDG 5</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 5: Achieve gender equality and empower all women and girls
+          </p>
+          <div className="">
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            End all forms of discrimination against all women and girls everywhere
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Recognize and value unpaid care and domestic work through the provision of public services, infrastructure and social protection policies and the promotion of shared responsibility within the household and the family as nationally appropriate
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of time spent on unpaid domestic and care work, by sex, age and location
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Ensure women’s full and effective participation and equal opportunities for leadership at all levels of decision-making in political, economic and public life
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of seats held by women in (a) national parliaments and (b) local governments
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">5.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of women in managerial positions
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal5",
   },
 ];

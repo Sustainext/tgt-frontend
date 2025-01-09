@@ -61,9 +61,9 @@ export default function DashboardLayout({ children }) {
               <DashboardHeader />
      
               {/* Elfsight Widget */}
-              <div className="elfsight-widget mb-5">
+              {/* <div className="elfsight-widget mb-5">
                 <div className="elfsight-app-1163c096-07de-4281-9338-996a26b6eec8" data-elfsight-app-lazy></div>
-              </div>
+              </div> */}
               {/* Main Content */}
               <div>{children}</div>
             </div>

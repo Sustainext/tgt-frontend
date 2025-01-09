@@ -18,6 +18,8 @@ const TableSidebar2 = () => {
   useEffect(() => {
     const handleScroll = () => {
       const links = [
+        "ep1",
+        "ep2",
         "ep3",
         "ep4",
         "ep5",
@@ -51,6 +53,14 @@ const TableSidebar2 = () => {
       </div>
       {[
       
+      {
+        id: "ep1",
+        name: "Formal joint management-worker health and safety committees",
+      },
+      {
+        id: "ep2",
+        name: "Workers covered by an occupational health and safety management system",
+      },
         {
           id: "ep3",
           name: "Workers covered by an occupational health and safety management system ",

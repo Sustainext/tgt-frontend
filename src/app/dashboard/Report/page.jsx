@@ -16,6 +16,7 @@ import {
 import { useDispatch } from "react-redux";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { GoArrowRight } from "react-icons/go";
+import { IoIosWarning } from "react-icons/io";
 import Link from "next/link";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -42,6 +43,52 @@ const Report = () => {
   const [massgeshow, setMassgeshow] = useState(false);
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(null);
+  const [materialityAssessmentLen,setMaterialityAssessmentLen]=useState([])
+  const [assessment_id,setAssessmentId]=useState(null)
+
+
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
+
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  
+  const getMaterialityAssessment= async()=>{
+    if(firstSelection&&startdate&&enddate&&selectedOrg){
+      try{
+        const response = await axiosInstance.get(
+          `${
+            process.env.BACKEND_API_URL
+          }/materiality_dashboard/get_materiality_assessment_for_report/?start_date=${startdate}&end_date=${enddate}&organization_id=${selectedOrg}&report_by=${firstSelection}&corporate_id=${selectedCorp?selectedCorp:null}`,
+          axiosConfig
+        );
+        if(response.status==200){
+          console.log(response.data,"look")
+          setMaterialityAssessmentLen(response.data)
+          if(response.data.length==1){
+            setAssessmentId(response.data[0].id)
+          }
+        }
+        
+      }
+      catch(err){
+        console.error(err)
+      }
+    }
+  }
+
+  useEffect(()=>{
+    getMaterialityAssessment()
+  },[firstSelection,startdate,enddate,selectedOrg,selectedCorp])
+
   useEffect(() => {
     dispatch(setHeadertext1(""));
     dispatch(setHeaderdisplay("none"));
@@ -242,6 +289,7 @@ const Report = () => {
       organization: selectedOrg,
       corporate: selectedCorp,
       investment_corporates: selectedEntities,
+      assessment_id:assessment_id?assessment_id:null
     };
 
     await post(`/sustainapp/report_create/`, sandData)
@@ -516,7 +564,14 @@ const Report = () => {
     setSelectedCorp();
     setFirstSelection();
     setMassgeshow(false);
+    setMaterialityAssessmentLen([])
     setError({});
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "long" }; 
+    return date.toLocaleDateString(undefined, options);
   };
 
   return (
@@ -788,7 +843,7 @@ const Report = () => {
                       </div>
                     </div>
                   )}
-                  <div className="grid grid-cols-1 md:grid-cols-2 mb-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 mb-3">
                     <div>
                       <label
                         htmlFor="sdate"
@@ -838,6 +893,31 @@ const Report = () => {
                       )}
                     </div>
                   </div>
+                  {/* materiality assessment */}
+                  {materialityAssessmentLen&&materialityAssessmentLen.length>1?(
+                     <div>
+                     <div className="flex gap-2 mb-2">
+                       <IoIosWarning className="text-[#F98845] w-5 h-5" />
+                     <p className="text-[14px] text-[#F98845] font-[500]">More than one materiality assessment is present in the  selected date range</p>
+                     </div>
+                     <div>
+                       <p className="text-neutral-800 text-[13px] font-normal">Select Materiality Assessment *</p>
+                       <select className="mt-1 block w-[34%] py-2 bg-white rounded-md focus:outline-none sm:text-sm mb-2"
+                       onChange={(e) => setAssessmentId(e.target.value)}
+                       >
+                       <option  value="" disabled selected>Select Assessment</option>
+                       {materialityAssessmentLen&&materialityAssessmentLen.map((val)=>(
+                       <option class="text-black text-sm hover:bg-blue-100" value={val.id}>{`${formatDate(val.start_date)} - ${formatDate(val.end_date)}`}</option>
+                       ))}
+                     </select>
+                     <p className="text-[#ACACAC] text-[12px] font-normal">Select one of the materiality assessment found in the date range</p>
+                     </div>
+                     
+                 </div>
+                  ):(
+                    <div></div>
+                  )}
+                 
                   <div className="flex justify-center mt-10">
                     <div className="">
                       <button
