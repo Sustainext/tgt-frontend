@@ -48,7 +48,7 @@ const uiSchema = {
         "<p>Provide a detailed description of the significant actual and potential negative environmental impacts that were identified in the supply chain during the reporting period. This could include details on the type of impacts, the suppliers involved, and the steps taken to address these impacts.</p><p>Supply chain: </p><p>range of activities carried out by entities upstream from the organization, which provide products or services that are used in the development of the organization’s own products or services.</p>",
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
-      "ui:widgetType": "input",
+      "ui:widgetType": "inputtext",
       "ui:inputfildtype": "text",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,

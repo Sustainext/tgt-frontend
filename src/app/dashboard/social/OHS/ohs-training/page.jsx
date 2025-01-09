@@ -6,6 +6,8 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Socialheader3 from "../../socialheader3";
 import Ohstrainingscreen from "./ohs-training";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import SocialTopBar from '../../socialTopBar'
 
 const Ohstraining = ({apiData}) => {
@@ -53,6 +55,7 @@ const Ohstraining = ({apiData}) => {
 
   return (
     <>
+     <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
       <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
        

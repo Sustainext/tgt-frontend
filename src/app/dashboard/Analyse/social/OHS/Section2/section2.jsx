@@ -13,7 +13,7 @@ import {
   data2,
 } from "../data";
 import { Oval } from "react-loader-spinner";
-const Screen2 = ({ isBoxOpen,location,dateRange }) => {
+const Screen2 = ({ isBoxOpen,selectedLocation,dateRange,selectedOrg, selectedCorp, }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const toastShown = useRef(false);
   const [OHSdata1, setOHSData1] = useState([]);
@@ -42,7 +42,7 @@ const Screen2 = ({ isBoxOpen,location,dateRange }) => {
     setOHSData6([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_ohs_analysis?location=${location}&start=${dateRange.start}&end=${dateRange.end}`,
+        `/sustainapp/get_ohs_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&location=${selectedLocation}&start=${dateRange.start}&end=${dateRange.end}`,
      
       );
 
@@ -158,7 +158,7 @@ const Screen2 = ({ isBoxOpen,location,dateRange }) => {
  
   useEffect(() => {
     // Only fetch data if both start and end dates are present
-    if (location && dateRange.start && dateRange.end) {
+    if (selectedOrg && dateRange.start && dateRange.end) {
       fetchData();
       toastShown.current = false;
     } else if (!toastShown.current) {
@@ -170,7 +170,7 @@ const Screen2 = ({ isBoxOpen,location,dateRange }) => {
       setOHSData5([]);
       setOHSData6([]);
     }
-  }, [location, dateRange]);
+  }, [selectedOrg,selectedLocation, selectedCorp,dateRange]);
 
 
   return (
@@ -180,7 +180,56 @@ const Screen2 = ({ isBoxOpen,location,dateRange }) => {
       </div>
       <div className="flex">
         <div className={`ps-4 w-[100%] me-4`}>
-        
+        <div className="mb-6">
+            <p className="text-black text-[15px] font-bold  ">
+              Formal joint management-worker health and safety committees
+            </p>
+            <div
+              id="ep1"
+              className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 "
+            >
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-black text-[13px] font-[400]">
+                  Formal joint management-worker health and safety committees
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 403-4b
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <DynamicTable2 columns={columns1} data={OHSdata1} />
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <p className="text-black text-[15px] font-bold  ">
+              Workers covered by an occupational health and safety management
+              system 
+            </p>
+            <div
+              id="ep2"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
+            >
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-black text-[13px] font-[400]">
+                  Percentage of employees/workers who are not employees
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 403-8a
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <DynamicTable2 columns={columns2} data={OHSdata2} />
+              </div>
+            </div>
+          </div>
           <div className="mb-6">
             <p className="text-black text-[15px] font-bold  ">
               Work related ill health  

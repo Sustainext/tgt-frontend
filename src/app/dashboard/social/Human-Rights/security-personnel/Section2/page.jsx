@@ -6,6 +6,8 @@ import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import {Socialdata} from "../../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import SocialTopBar from '../../../socialTopBar'
 
 const Securitypersonnel2 = ({apiData}) => {
@@ -55,6 +57,7 @@ const Securitypersonnel2 = ({apiData}) => {
 ]
   return (
     <>
+     <ToastContainer style={{ fontSize: "12px" }} />
         <div className="flex flex-col justify-start overflow-x-hidden ">
            <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Human Rights and Community Impact'} topic={'SocCommunityRelation'} />
                

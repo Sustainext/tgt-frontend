@@ -103,7 +103,7 @@ const uiSchema = {
       "Provide a link to the tax strategy if it is publicly available and if the organization has a tax strategy but the strategy is not publicly available, the organization can provide an abstract or summary of the strategy.",
     "ui:tooltipdisplay": "block",
     "ui:titledisplay": "block",
-    "ui:widgetType": "input",
+    "ui:widgetType": "inputtext",
     "ui:inputfildtype": "text",
     "ui:widget": "inputWidget",
     "ui:horizontal": true,

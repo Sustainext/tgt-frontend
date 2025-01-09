@@ -13,9 +13,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import CheckboxWidget3 from "../../../../shared/widgets/Input/checkboxWidget3"
+import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 const widgets = {
   inputWidget: inputWidget2,
   RadioWidget: CheckboxWidget3,
+  RadioWidget2: RadioWidget2,
 };
 
 const view_path = "gri-social-ohs-403-1a-ohs_management_system";
@@ -53,14 +55,30 @@ const schema = {
       Q4: {
         type: "string",
         title: "Standards/Guidelines",
-        format: "textarea",
+        enum: ["Yes", "No"],
       },
-      Q5: {
-        type: "string",
-        title: "List of Standards/Guidelines (if applicable)",
-        format: "textarea",
+    
+    },
+    dependencies: {
+      Q4: {
+        oneOf: [
+          {
+            properties: {
+              Q4: {
+                enum: ["Yes"],
+              },
+              Q5: {
+                type: "string",
+                title: "List of Standards/Guidelines (if applicable)",
+                format: "textarea",
+              },
+              
+            },
+          },
+        ],
       },
     },
+
   },
 };
 
@@ -106,7 +124,7 @@ const uiSchema = {
       "ui:tooltip":
         "Indicate whether any recognized risk management or management system standards/guidelines were adopted in developing the system. Example: ISO 45001 (Occupational Health and Safety Management Systems)OHSAS 18001 (Occupational Health and Safety Assessment Series) National or industry-specific standards",
       "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
+      "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -174,10 +192,16 @@ console.log(formData,"test error fromdata");
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
   const handleChange = (e) => {
-    setFormData(e.formData);
+    let newFormData = { ...e.formData[0] };
+    if (newFormData.Q4 === "No") {
+      newFormData.Q5 = "";
+    }
+    setFormData([newFormData]);
   };
+  // const handleChange = (e) => {
+  //   setFormData(e.formData);
+  // };
 
 
   const updateFormData = async () => {
@@ -330,8 +354,8 @@ console.log(formData,"test error fromdata");
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
