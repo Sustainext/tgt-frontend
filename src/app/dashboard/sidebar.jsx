@@ -35,6 +35,7 @@ import {
   setOrgID,
   setStartDate,
   setEndDate,
+  setIsYearChanged
 } from "../../lib/redux/features/materialitySlice";
 
 const Sidenav = () => {
@@ -45,7 +46,7 @@ const Sidenav = () => {
 
   //materiality variables
   const dispatch = useDispatch();
-  const { corporate_id, organization_id, start_date, end_date, data, loading, error } = useSelector(
+  const { corporate_id, organization_id, start_date, end_date, data, loading, error,materiality_year } = useSelector(
     (state) => state.materialitySlice
   );
 
@@ -53,10 +54,10 @@ const Sidenav = () => {
     dispatch(
       fetchMaterialityData(
         {
-        corporate:'',
-        organization:'',
-        start_date:'',
-        end_date:'',
+        corporate:corporate_id?corporate_id:'',
+        organization:organization_id?organization_id:'',
+        start_date:materiality_year?`${materiality_year}-01-01`:'',
+        end_date:materiality_year?`${materiality_year}-12-31`:'',
       }
     )
     );
@@ -501,6 +502,7 @@ const Sidenav = () => {
             dispatch(setMaterialityYear(''))
             dispatch(setStartDate(''))
             dispatch(setEndDate(''))
+            dispatch(setIsYearChanged(false))
           }
         }}
       >
@@ -561,6 +563,7 @@ const Sidenav = () => {
               dispatch(setMaterialityYear(''))
               dispatch(setStartDate(''))
               dispatch(setEndDate(''))
+              dispatch(setIsYearChanged(false))
             }
           }}
         >
@@ -615,18 +618,18 @@ const Sidenav = () => {
                 setActiveIndex(submenuItem.id);
                 setOpen(!open);
 
-                if (submenuItem.title === "Environment") {
-                  loadMaterialityDashboard();
-                }
-                else{
-                  dispatch(setCorpID(''))
-                  dispatch(setCorpName(''))
-                  dispatch(setOrgID(''))
-                  dispatch(setOrgName(''))
-                  dispatch(setMaterialityYear(''))
-                  dispatch(setStartDate(''))
-                  dispatch(setEndDate(''))
-                }
+                // if (submenuItem.title === "Environment") {
+                //   loadMaterialityDashboard();
+                // }
+                // else{
+                //   dispatch(setCorpID(''))
+                //   dispatch(setCorpName(''))
+                //   dispatch(setOrgID(''))
+                //   dispatch(setOrgName(''))
+                //   dispatch(setMaterialityYear(''))
+                //   dispatch(setStartDate(''))
+                //   dispatch(setEndDate(''))
+                // }
               }}
             >
               <span className="text-2xl block float-left">

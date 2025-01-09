@@ -7,10 +7,17 @@ import { MdOutlineClear } from "react-icons/md";
 import Socialheader2 from "../../socialheader2";
 import Screen1 from "./Screen1";
 import { MdChevronRight } from "react-icons/md";
-const LaborManagementMaterialtopic = () => {
-  const [year, setYear] = useState();
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
+import { useSelector } from "react-redux";
+
+const LaborManagementMaterialtopic = ({apiData}) => {
+   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
+      (state) => state.materialitySlice
+    );
+    const materialityEnvData=apiData&&apiData.social?apiData.social:{}
+    const [year, setYear] = useState(materiality_year?materiality_year:'');
+    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
+    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
+ 
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState();
@@ -50,11 +57,15 @@ const LaborManagementMaterialtopic = () => {
                   Labor Management
                   </p>
                 </div>
-                {/* <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
-                  <p className="text-gray-500 text-[12px] pt-0.5 px-2">
-                    Material Topic
-                  </p>
-                </div> */}
+                {materialityEnvData&&materialityEnvData.SocLabourManagement?.is_material_topic?(
+                    <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
+                    <p className="text-gray-500 text-[12px] pt-0.5 px-2">
+                      Material Topic
+                    </p>
+                  </div>
+                ):(
+                    <div></div>
+                )}
               </div>
             </div>
           </div>

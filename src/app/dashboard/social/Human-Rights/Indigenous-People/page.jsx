@@ -10,7 +10,9 @@ import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./screen1"
 import Screen2 from "./screen2"
-const IndigenousPeople = () => {
+import SocialTopBar from '../../socialTopBar'
+
+const IndigenousPeople = ({apiData}) => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState();
@@ -38,32 +40,30 @@ const IndigenousPeople = () => {
         setData(newData);
     }, [category])
 
+    const sdgData=[
+      {
+          tagName:'GRI 411 - 1',
+          toggle:'59',
+          textColor:"#007EEF",
+          bgColor:"bg-slate-200"
+      },
+      {
+          tagName:'SDG 2',
+          toggle:'60',
+          textColor:"#fff",
+          bgColor:"bg-yellow-600"
+      },
+     
+     
+     
+  ]
+
     return (
         <>
            <ToastContainer style={{ fontSize: "12px" }} />
             <div className="flex flex-col justify-start overflow-x-hidden ">
-                <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-                    <div className='w-full'>
-                       <div className="text-left mb-2 ml-3 pt-5">
-                            <p className="text-[11px]">Social</p>
-                            <div className='flex'>
-                                <div>
-                                   <p className="gradient-text text-[22px] font-bold py-2">
-                                   Human Rights and Community Impact
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                 <div className="w-full float-end pt-5 me-1">
-                        <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('59')}>GRI 411 - 1</button>
-                            <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('60')}>SDG 2</button>
-                        </div>
-                    </div>
-                </div>
+            <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Human Rights and Community Impact'} topic={'SocCommunityRelation'} />
+                
 
 
                 <div className="ml-3 flex">

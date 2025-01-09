@@ -6,7 +6,9 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Socialheader3 from "../../socialheader3";
 import Ohstrainingscreen from "./ohs-training";
-const Ohstraining = () => {
+import SocialTopBar from '../../socialTopBar'
+
+const Ohstraining = ({apiData}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -34,39 +36,26 @@ const Ohstraining = () => {
     setData(newData);
   }, [category]);
 
+  const sdgData=[
+    {
+        tagName:'GRI 403 - 5',
+        toggle:'30',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+    {
+      tagName:'SDG 8',
+      toggle:'31',
+      textColor:"#fff",
+      bgColor:"bg-red-900"
+  },  
+]
+
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold py-2">
-                    Occupational Health and Safety
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end pt-5 me-1">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("30")}
-              >
-                GRI 403 - 5
-              </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("31")}
-              >
-                SDG 8
-              </button>
-            </div>
-          </div>
-        </div>
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
+       
 
    
         <div className="ml-3 flex relative">
