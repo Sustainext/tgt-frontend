@@ -10,15 +10,21 @@ import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./Screen1";
 import Screen2 from "./Screen2";
 import Screen3 from "./Screen3";
-const CollectiveBargaining = () => {
+import { useSelector } from "react-redux";
+import SocialTopBar from '../../socialTopBar'
+
+const CollectiveBargaining = ({apiData}) => {
+   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
+      (state) => state.materialitySlice
+    );
+    const [year, setYear] = useState(materiality_year?materiality_year:'');
+    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
+    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -39,40 +45,30 @@ const CollectiveBargaining = () => {
     setData(newData);
   }, [category]);
 
+  const sdgData=[
+    {
+        tagName:'GRI 407 - 1',
+        toggle:'58',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+    {
+        tagName:'SDG 8',
+        toggle:'22',
+        textColor:"#fff",
+        bgColor:"bg-red-900"
+    },
+   
+   
+   
+]
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-[80%] relative">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                  Labour Management
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-[20%] mt-2 float-end ">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("58")}
-              >
-                GRI 407 - 1
-              </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("22")}
-              >
-                SDG 8
-              </button>
-            </div>
-          </div>
-        </div>
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Labour Management'} topic={'SocLabourManagement'} />
+        
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

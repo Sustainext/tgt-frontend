@@ -10,7 +10,9 @@ import Screen2 from "./Screen2";
 import Screen3 from "./Screen3";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Salaryratio = () => {
+import SocialTopBar from '../../socialTopBar'
+
+const Salaryratio = ({apiData}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -39,52 +41,41 @@ const Salaryratio = () => {
     setData(newData);
   }, [category]);
 
+  const sdgData=[
+    {
+        tagName:'GRI 405 - 1',
+        toggle:'52',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+    {
+        tagName:'SDG 5',
+        toggle:'2',
+        textColor:"#fff",
+        bgColor:"bg-orange-600"
+    },
+    {
+      tagName:'SDG 8',
+      toggle:'8',
+      textColor:"#fff",
+      bgColor:"bg-red-900"
+  },
+  {
+    tagName:'SDG 10',
+    toggle:'53',
+    textColor:"#fff",
+    bgColor:"bg-[#E01A83]"
+},
+  
+   
+]
+
   return (
     <>
      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                         <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Diversity and Equal Opportunity
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end ">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("52")}
-              >
-                GRI 405 - 1
-              </button>
-              <button
-                className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("2")}
-              >
-                SDG 5
-              </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("8")}
-              >
-                SDG 8
-              </button>
-              <button
-                className="text-[#fff] bg-[#E01A83] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("53")}
-              >
-                SDG 10
-              </button>
-            </div>
-          </div>
-        </div>
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Diversity and Equal Opportunity'} topic={'SocDiversityEqualOpp'} />
+       
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

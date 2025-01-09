@@ -6,7 +6,9 @@ import { Socialdata } from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Section1 from "./Section1/page";
-const Illhealth = () => {
+import SocialTopBar from '../../socialTopBar'
+
+const Illhealth = ({apiData}) => {
 
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
@@ -32,33 +34,43 @@ const Illhealth = () => {
         setData(newData);
     }, [category])
 
+    const sdgData=[
+      {
+          tagName:'GRI 403 - 10',
+          toggle:'42',
+          textColor:"#007EEF",
+          bgColor:"bg-slate-200"
+      },
+      {
+        tagName:'SDG 3',
+        toggle:'43',
+        textColor:"#fff",
+        bgColor:"bg-green-600"
+    },
+    {
+      tagName:'SDG 8',
+      toggle:'44',
+      textColor:"#fff",
+      bgColor:"bg-red-900"
+  },
+  {
+    tagName:'SDG 16',
+    toggle:'45',
+    textColor:"#fff",
+    bgColor:"bg-blue-900"
+},
+   
+     
+     
+     
+     
+  ]
+
     return (
         <>
             <div className="flex flex-col justify-start overflow-x-hidden ">
-                <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-                    <div className='w-full'>
-                       <div className="text-left mb-2 ml-3 pt-5">
-                            <p className="text-[11px]">Social</p>
-                            <div className='flex'>
-                                <div>
-                                   <p className="gradient-text text-[22px] font-bold py-2">
-                                    Occupational Health and Safety
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                 <div className="w-full float-end pt-5 me-1">
-                        <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('42')}>GRI 403 - 10</button>
-                            <button className="text-[#fff] bg-green-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('43')}>SDG 3</button>
-                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('44')}>SDG 8</button>
-                            <button className="text-[#fff] bg-blue-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('45')}>SDG 16</button>
-                        </div>
-                    </div>
-                </div>
+            <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
+               
 
 
                 <div className="ml-3 flex">

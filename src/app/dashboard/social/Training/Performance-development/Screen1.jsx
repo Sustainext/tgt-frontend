@@ -212,7 +212,7 @@ const Screen1 = ({  location, year,month }) => {
         <div className='mb-4 flex'>
          <div className="w-[80%] relative">
           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Number of suppliers identified having significant actual and potential negative social impacts.
+             Number of employees receiving regular performance and career development reviews
               <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the number of
 suppliers identified as having significant actual and potential
