@@ -47,6 +47,8 @@ const materialitySlice = createSlice({
     materiality_year: "",
     start_date: "",
     end_date: "",
+    assessment_year:"",
+    is_year_changed:false,
     data: null,
     loading: false,
     error: null,
@@ -76,6 +78,12 @@ const materialitySlice = createSlice({
     setEndDate: (state, action) => {
       state.end_date = action.payload;
     },
+    setAssessmentYear: (state, action) => {
+      state.assessment_year = action.payload;
+    },
+    setIsYearChanged: (state, action) => {
+      state.is_year_changed = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -95,7 +103,8 @@ const materialitySlice = createSlice({
             state.corporate_name = action.payload.corporate_name; 
         }
         if(action.payload.year){
-            state.materiality_year = action.payload.year; 
+            state.materiality_year = action.payload.year;
+            state.assessment_year=action.payload.year; 
         }
         if(action.payload.start_date && action.payload.end_date){
             state.start_date = action.payload.start_date;  
@@ -118,6 +127,7 @@ state.corporate_id = '';
      
 state.corporate_name = '';
 state.materiality_year = ''; 
+state.assessment_year='';
       
 state.start_date = ''; 
 state.end_date = '';   
@@ -135,6 +145,8 @@ export const {
   setMaterialityYear,
   setStartDate,
   setEndDate,
+  setAssessmentYear,
+  setIsYearChanged
 } = materialitySlice.actions;
 
 export default materialitySlice.reducer;

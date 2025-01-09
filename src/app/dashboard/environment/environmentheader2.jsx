@@ -14,6 +14,7 @@ import {
   setStartDate,
   setEndDate,
   setMaterialityYear,
+  setIsYearChanged
 } from "../../../lib/redux/features/materialitySlice";
 
 const EnvironmentHeade2 = ({
@@ -28,7 +29,7 @@ const EnvironmentHeade2 = ({
 }) => {
 
   const dispatch = useDispatch();
-  const { corporate_id, organization_id,materiality_year, start_date, end_date, data, loading, error } = useSelector(
+  const { corporate_id, organization_id,materiality_year, start_date, end_date, data,assessment_year,is_year_changed, loading, error } = useSelector(
     (state) => state.materialitySlice
   );
 
@@ -38,6 +39,7 @@ const EnvironmentHeade2 = ({
     year: year,
     month: activeMonth,
   });
+  // const[isYearChanged,setIsyearChanged]=useState(false)
   const [reportType, setReportType] = useState("Organization");
   const handleReportTypeChange = (type) => {
     setReportType(type);
@@ -46,6 +48,7 @@ const EnvironmentHeade2 = ({
 
   const [organisations, setOrganisations] = useState([]);
   const [corporates, setCorporates] = useState([]);
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -59,6 +62,8 @@ const EnvironmentHeade2 = ({
       setActiveMonth(monthMapping[value]);
     } else if (name === "year") {
       setYear(value);
+      // setIsyearChanged(true)
+      dispatch(setIsYearChanged(true))
       dispatch(setMaterialityYear(value))
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -122,7 +127,9 @@ const EnvironmentHeade2 = ({
         corporate: selectedCorp,
         organization: selectedOrg,
         start_date:year?`${year}-01-01`:'',
-        end_date:year?`${year}-12-31`:'',
+          end_date:  year?`${year}-12-31`:'',
+        // start_date: year==assessment_year?start_date?start_date:`${year}-01-01`:is_year_changed?`${year}-01-01`:start_date?start_date:`${year}-01-01`,
+        //   end_date: year==assessment_year?end_date?end_date:`${year}-12-31`:is_year_changed?`${year}-12-31`:end_date?end_date:`${year}-12-31`,
       })
     );
   }

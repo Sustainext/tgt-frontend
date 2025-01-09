@@ -56,7 +56,7 @@ const environment = () => {
   );
  
   const dispatch = useDispatch();
-  const { corporate_id, organization_id, start_date, end_date, data, loading, error } = useSelector(
+  const { corporate_id, organization_id, start_date, end_date, data,materiality_year, loading, error } = useSelector(
     (state) => state.materialitySlice
   );
   
@@ -66,8 +66,8 @@ const environment = () => {
       fetchMaterialityData({
         corporate: corporate_id,
         organization: organization_id,
-        start_date,
-        end_date,
+        start_date:materiality_year?`${materiality_year}-01-01`:'',
+        end_date:materiality_year?`${materiality_year}-12-31`:'',
       })
     );
   }

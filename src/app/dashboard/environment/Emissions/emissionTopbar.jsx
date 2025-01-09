@@ -15,8 +15,7 @@ const EmissionTopBar=({toggleDrawer,apiData})=>{
                         Emission
                       </p>
                     </div>
-                  </div>
-                  {materialityEnvData&&materialityEnvData.EnvGhgEmission?.is_material_topic?(
+                    {materialityEnvData&&materialityEnvData.EnvGhgEmission?.is_material_topic?(
                     <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
                     <p className="text-gray-500 text-[12px] pt-0.5 px-2">
                       Material Topic
@@ -25,6 +24,8 @@ const EmissionTopBar=({toggleDrawer,apiData})=>{
                 ):(
                     <div></div>
                 )}
+                  </div>
+                  
                 </div>
               </div>
               <div className="w-full float-end me-2">
