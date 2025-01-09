@@ -25,6 +25,7 @@ import { Tooltip } from "react-tooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../../../lib/redux/features/emissionSlice";
 import TaskDetailsModal from "./TaskDetailsModal";
+import { Oval } from "react-loader-spinner";
 
 const MyTask = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -1201,6 +1202,9 @@ const MyTask = () => {
 
   // Open modal when clicking on a task (completed)
   const handleTaskClick = (task) => {
+    console.log("Handle task triggered");
+
+    console.log("Task clicked:", task);
     setSelectedTask(task);
     setIsDetailsModalOpen(true);
   };
@@ -1524,7 +1528,9 @@ const MyTask = () => {
                           >
                             <div className="flex cursor-pointer">
                               <div className="w-[17rem] truncate text-[#007eef] text-[13px] font-normal leading-none ml-3">
-                                {task.roles === 1 || task.roles === 2 ? (
+                                {task.roles === 1 ||
+                                task.roles === 2 ||
+                                task.roles === 4 ? (
                                   <p
                                     className="py-1 cursor-pointer"
                                     data-tooltip-id={`task-tooltip-${task.id}`}
@@ -1546,7 +1552,9 @@ const MyTask = () => {
                             </div>
                             <div>
                               <div className="col-span-3">
-                                {(task.roles === 1 || task.roles === 2) && (
+                                {(task.roles === 1 ||
+                                  task.roles === 2 ||
+                                  task.roles === 4) && (
                                   <div>
                                     <span
                                       className={`
@@ -2043,7 +2051,7 @@ const MyTask = () => {
           } bg-black bg-opacity-50`}
         >
           <div className="z-10 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-5 rounded-lg shadow-lg w-[395px] h-[550px] overflow-y-auto scrollable-content">
+            <div className="bg-white p-5 rounded-lg shadow-lg w-[395px] h-[650px] overflow-y-auto scrollable-content">
               <div className="div">
                 <div className="mb-5">
                   <div className="flex">
@@ -3028,7 +3036,15 @@ const MyTask = () => {
         (isSearching && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="flex items-center justify-center">
-              <FiLoader className="animate-spin text-gray-500" size={48} />
+              {/* <FiLoader className="animate-spin text-gray-500" size={48} /> */}
+              <Oval
+                height={40}
+                width={40}
+                color="#0000FF"
+                secondaryColor="#ddd"
+                strokeWidth={4}
+                strokeWidthSecondary={4}
+              />
             </div>
           </div>
         ))}

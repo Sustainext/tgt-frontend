@@ -8,6 +8,8 @@ import {
   setHeaderdisplay,
 } from "../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
+import TasksPage from "./Home/Tasks";
+
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const dispatch = useDispatch();
@@ -77,7 +79,7 @@ const Dashboard = () => {
               <div className="flex-grow">
                 {activeTab === "tab1" && <HomeDashboard />}
 
-                {/* {activeTab === "tab2" && <DemoForm />} */}
+                {activeTab === "tab3" && <TasksPage />}
               </div>
             </div>
           </div>

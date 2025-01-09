@@ -1,6 +1,8 @@
 "use client";
 import MyGoals from "./MyGoals";
-import MyTasks from "./MyTasks";
+// import MyTasks from "./MyTasks";
+import MyTasks from "./TasksNew/MyTask";
+// import MyGoals from "./MyGoals/MyGoals";
 import Preferences from "./Preferences/page";
 
 const HomeDashboard = () => {
@@ -11,7 +13,7 @@ const HomeDashboard = () => {
           <div>
             <MyTasks />
           </div>
-          <div className="col-start-1 row-start-2 rounded-lg  min-h-[46vh]">
+          <div className="col-start-1 row-start-2 rounded-lg">
             <MyGoals />
           </div>
         </div>

@@ -1,9 +1,13 @@
-"use client";
 import React, { useState, useEffect, useRef } from "react";
-import { FiPlus, FiCheckCircle, FiTrash2, FiCircle } from "react-icons/fi";
+import {
+  FiPlus,
+  FiCheckCircle,
+  FiTrash2,
+  FiCircle,
+  FiCalendar,
+} from "react-icons/fi";
 import { toast } from "react-toastify";
 import Moment from "react-moment";
-import axios from "axios";
 import { useAuth } from "../../../Context/auth";
 import axiosInstance, { del, patch, post } from "../../utils/axiosMiddleware";
 
@@ -12,18 +16,20 @@ const MyGoals = () => {
   const isMounted = useRef(true);
   const [goals, setGoals] = useState({});
   const [loopen, setLoOpen] = useState(false);
-  const [addgoles, setaddgoles] = useState({
+  const [addgoals, setAddgoals] = useState({
     title: "",
+    description: "",
+    organization: "",
+    status: "not_started",
     deadline: "",
   });
 
-  const { title, deadline } = addgoles;
   const { userDetails, token } = useAuth();
   const [userId, setUserId] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
+  const [activeTab, setActiveTab] = useState("upcoming");
 
   useEffect(() => {
-    console.log("user details and token", userDetails, token);
     if (userDetails) {
       setUserId(userDetails?.user_detail[0]?.id);
     }
@@ -32,155 +38,12 @@ const MyGoals = () => {
     }
   }, [userDetails, token]);
 
-  // const options = {
-  //   headers: {
-  //     Authorization: `Bearer ${accessToken}`
-  //   }
-  // };
+  const LoaderOpen = () => setLoOpen(true);
+  const LoaderClose = () => setLoOpen(false);
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
-  const getTodayDate = () => {
-    const today = new Date();
-    let month = "" + (today.getMonth() + 1);
-    let day = "" + today.getDate();
-    const year = today.getFullYear();
-
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-
-    return [year, month, day].join("-");
-  };
-
-  const LoaderOpen = () => {
-    setLoOpen(true);
-  };
-
-  const LoaderClose = () => {
-    setLoOpen(false);
-  };
-
-  const handleCompleted = async (id) => {
-    LoaderOpen();
-    const sandData = {
-      completed: true,
-    };
-    await patch(`/mygoal/${id}/`, sandData)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success("Goal has been completed successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          fetchMygoleDetails();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      })
-      .finally(() => LoaderClose());
-  };
-
-  const handleDelete = async (id) => {
-    LoaderOpen();
-    await del(`/mygoal/${id}/`)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success("Goal has been deleted successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          fetchMygoleDetails();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      })
-      .finally(() => LoaderClose());
-  };
-
-  const datahandleChange = (e) => {
-    setaddgoles({ ...addgoles, [e.target.name]: e.target.value });
-  };
-
-  const submitForm = async (e) => {
-    e.preventDefault();
-    LoaderOpen();
-
-    const sandData = {
-      ...addgoles,
-      assigned_to: userId,
-      completed: false,
-    };
-    await post(`/mygoal/`, sandData)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success("Goal has been added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          handleCloseModal();
-          fetchMygoleDetails();
-          setaddgoles({ title: "", deadline: "" });
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      })
-      .finally(() => LoaderClose());
-  };
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const [activeTab, setActiveTab] = useState("upcoming");
-
-  const fetchMygoleDetails = async () => {
+  const fetchMyGoalDetails = async () => {
     try {
       LoaderOpen();
       const response = await axiosInstance.get(
@@ -190,365 +53,324 @@ const MyGoals = () => {
       LoaderClose();
     } catch (error) {
       LoaderClose();
-      console.log(error);
+      console.error(error);
     }
   };
 
   useEffect(() => {
     if (userId && accessToken) {
-      fetchMygoleDetails();
+      fetchMyGoalDetails();
     }
   }, [userId, accessToken]);
 
+  const handleStatusChange = async (id) => {
+    LoaderOpen();
+    const sandData = { completed: true };
+    try {
+      const response = await patch(`/mygoal/${id}/`, sandData);
+      if (response.status === 200) {
+        toast.success("Goal has been completed successfully");
+        fetchMyGoalDetails();
+      }
+    } catch (error) {
+      toast.error("Error updating goal status");
+    }
+    LoaderClose();
+  };
+
+  const handleDelete = async (id) => {
+    LoaderOpen();
+    try {
+      const response = await del(`/mygoal/${id}/`);
+      if (response.status === 200) {
+        toast.success("Goal has been deleted successfully");
+        fetchMyGoalDetails();
+      }
+    } catch (error) {
+      toast.error("Error deleting goal");
+    }
+    LoaderClose();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    LoaderOpen();
+    const sandData = {
+      ...addgoals,
+      assigned_to: userId,
+      completed: false,
+    };
+
+    try {
+      const response = await post(`/mygoal/`, sandData);
+      if (response.status === 200) {
+        toast.success("Goal has been added successfully");
+        handleCloseModal();
+        fetchMyGoalDetails();
+        setAddgoals({
+          title: "",
+          description: "",
+          organization: "",
+          status: "not_started",
+          deadline: "",
+        });
+      }
+    } catch (error) {
+      toast.error("Error adding goal");
+    }
+    LoaderClose();
+  };
+
   return (
-    <>
-      <div className="rounded-lg shadow border border-gray-200 p-4 h-[320px] ">
-        <div className="flex justify-between mb-4">
-          <div className="text-neutral-800 text-[15px] font-bold leading-tight">
-            My Goals
-          </div>
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-semibold text-gray-900">
+          Organization Goals
+        </h1>
+        <button
+          onClick={handleOpenModal}
+          className="flex items-center text-blue-500 hover:text-blue-600 gap-2"
+        >
+          <FiPlus className="w-5 h-5" />
+          <span>Add Goals</span>
+        </button>
+      </div>
 
-          <div
-            className="text-sky-600 text-[10px] cursor-pointer font-normal leading-[13px] flex items-center me-2 space-x-2"
-            onClick={handleOpenModal}
-          >
-            <FiPlus style={{ fontSize: "18px" }} />
-            <span>Add goal</span>
-          </div>
+      <div className="border-b border-gray-200">
+        <nav className="flex space-x-8">
+          {["upcoming", "overdue", "completed"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`py-4 px-1 text-sm font-medium border-b-2 ${
+                activeTab === tab
+                  ? "border-blue-500 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              }`}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      <div className="mt-6">
+        <div className="grid grid-cols-12 gap-4 px-4 py-3 text-sm font-medium text-gray-500 bg-gray-50 rounded-t-lg">
+          <div className="col-span-6">Tasks</div>
+          <div className="col-span-3 text-center">Status</div>
+          <div className="col-span-3 text-right">Due date</div>
         </div>
-        <div>
-          <div className={`flex my-6 border-b text-sm text-start`}>
-            <button
-              className={`pr-2 py-1 rounded-b-none text-xs font-bold leading-[15px] ${
-                activeTab === "upcoming"
-                  ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
-                  : "border-transparent text-neutral-500"
-              }`}
-              onClick={() => setActiveTab("upcoming")}
-            >
-              Upcoming
-            </button>
-            <button
-              className={`px-4 py-1 rounded-b-none text-xs font-bold leading-[15px] ${
-                activeTab === "overdue"
-                  ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
-                  : "border-transparent text-neutral-500"
-              }`}
-              onClick={() => setActiveTab("overdue")}
-            >
-              Overdue
-            </button>
-            <button
-              className={`px-4 py-1 rounded-b-none text-xs font-bold leading-[15px] ${
-                activeTab === "completed"
-                  ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
-                  : "border-transparent text-neutral-500"
-              }`}
-              onClick={() => setActiveTab("completed")}
-            >
-              Completed
-            </button>
-          </div>
 
-          <div className="p-4 h-[188px] overflow-y-auto table-scrollbar">
-            {activeTab === "upcoming" && (
-              <div>
-                {goals.upcoming == "" ? (
-                  <div className="justify-center items-center ">
-                    <div className="flex justify-center items-center pb-5">
-                      <FiCheckCircle
-                        style={{ color: "#ACACAC", fontSize: "36px" }}
-                      />
-                    </div>
-                    <div>
-                      <p className="text-[14px] text-[#101828] font-bold text-center">
-                        Start by creating a goal
-                      </p>
-                    </div>
-                    <div className="mb-2">
-                      <p className="text-[12px] text-[#667085] text-center">
-                        All task created or assigned to you will be here
-                      </p>
-                    </div>
-                    <div className="flex justify-center items-center">
-                      <button
-                        className="bg-[#007EEF] text-white w-[150px] p-1 rounded-md shadow-md"
-                        onClick={handleOpenModal}
-                      >
-                        Add a goal
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <div className="space-y-3 mb-6 mt-2 ">
-                      {goals.upcoming &&
-                        goals.upcoming.map((ugoals) => (
-                          <div className="flex justify-between" key={ugoals.id}>
-                            <div className="flex cursor-pointer">
-                              <div>
-                                <FiCircle
-                                  style={{ fontSize: "21px", mt: -1.3 }}
-                                  onClick={() => handleCompleted(ugoals.id)}
-                                />
-                              </div>
-                              <div className="w-auto text-neutral-800 text-[13px] font-normal leading-none ml-3 ">
-                                {ugoals.title}
-                              </div>
-                            </div>
-                            <div className="flex">
-                              <div className="w-[68px] text-neutral-500 text-xs font-normal leading-[15px]">
-                                <Moment format="DD/MM/YYYY">
-                                  {ugoals.deadline}
-                                </Moment>
-                              </div>
-                              <div className="w-[18px] cursor-pointer ">
-                                <FiTrash2
-                                  style={{
-                                    color: "#0000008F",
-                                    fontSize: "18px",
-                                    mt: -1,
-                                  }}
-                                  onClick={() => handleDelete(ugoals.id)}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeTab === "overdue" && (
-              <div>
-                {goals.overdue == "" ? (
-                  <div className="h-screen justify-center items-center ">
-                    <h4 className="text-center">No data found</h4>
-                  </div>
-                ) : (
-                  <div>
-                    <div className="space-y-3 mb-6 nt-2">
-                      {goals.overdue &&
-                        goals.overdue.map((ugoals) => (
-                          <>
-                            {ugoals.completed == false ? (
-                              <div
-                                className="flex justify-between"
-                                key={ugoals.id}
-                              >
-                                <div className="flex cursor-pointer">
-                                  <div>
-                                    <FiCircle
-                                      style={{
-                                        fontSize: "21px",
-                                        mt: -1.1,
-                                        color: "#cc0000",
-                                        cursor: "pointer",
-                                      }}
-                                      onClick={() => handleCompleted(ugoals.id)}
-                                    />
-                                  </div>
-                                  <div className="w-auto text-red-600 text-[13px] font-normal leading-none ml-3 ">
-                                    {ugoals.title}
-                                  </div>
-                                </div>
-                                <div className="flex">
-                                  <div className="w-[68px] text-red-600 text-xs font-normal leading-[15px]">
-                                    <Moment format="DD/MM/YYYY">
-                                      {ugoals.deadline}
-                                    </Moment>
-                                  </div>
-                                  <div className="w-[18px] cursor-pointer ">
-                                    <FiTrash2
-                                      style={{
-                                        color: "#cc0000",
-                                        fontSize: "18px",
-                                        mt: -1,
-                                      }}
-                                      onClick={() => handleDelete(ugoals.id)}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            ) : null}
-                          </>
-                        ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-            {activeTab === "completed" && (
-              <div>
-                {goals.completed == "" ? (
-                  <div className="h-screen justify-center items-center ">
-                    <h4 className="text-center">No data found</h4>
-                  </div>
-                ) : (
-                  <div>
-                    <div className="space-y-3 mb-6 mt-2">
-                      {goals.completed &&
-                        goals.completed.map((ugoals) => (
-                          <div className="flex justify-between" key={ugoals.id}>
-                            <div className="flex">
-                              <div>
-                                <FiCheckCircle
-                                  style={{
-                                    fontSize: "21px",
-                                    mt: -1.3,
-                                    color: "#3DCA7C",
-                                  }}
-                                />
-                              </div>
-                              <div className="w-auto text-neutral-800 text-[13px] font-normal leading-none ml-3 ">
-                                {ugoals.title}
-                              </div>
-                            </div>
-                            <div className="flex">
-                              <div className="w-[68px] text-neutral-500 text-xs font-normal leading-[15px]">
-                                <Moment format="DD/MM/YYYY">
-                                  {ugoals.deadline}
-                                </Moment>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="px-[5px] py-1 rounded flex-col justify-center items-center inline-flex">
-          <div className="justify-center items-center gap-2 inline-flex">
-            <div className="h-[18px] flex-col justify-center items-center inline-flex">
-              <div className="w-[18px] h-[18px] relative flex-col justify-start items-start flex" />
+        <div className="max-h-[400px] overflow-y-auto">
+          {activeTab === "upcoming" && goals.upcoming?.length === 0 ? (
+            <div className="text-center py-12">
+              <FiCheckCircle className="mx-auto h-12 w-12 text-gray-400" />
+              <h3 className="mt-4 text-sm font-medium text-gray-900">
+                Start by creating a goal
+              </h3>
+              <p className="mt-2 text-sm text-gray-500">
+                Add goals to track your progress
+              </p>
+              <button
+                onClick={handleOpenModal}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                Add a goal
+              </button>
             </div>
-          </div>
+          ) : (
+            <div className="space-y-1">
+              {goals[activeTab]?.map((goal) => (
+                <div
+                  key={goal?.id}
+                  className="grid grid-cols-12 gap-4 px-4 py-3 hover:bg-gray-50 items-center border-b"
+                >
+                  <div className="col-span-6 flex items-center gap-3">
+                    <button
+                      onClick={() => handleStatusChange(goal.id)}
+                      className="text-gray-400 hover:text-blue-500"
+                    >
+                      {goal?.completed ? (
+                        <FiCheckCircle className="h-5 w-5 text-green-500" />
+                      ) : (
+                        <FiCircle className="h-5 w-5" />
+                      )}
+                    </button>
+                    <span className="text-sm text-gray-900">{goal?.title}</span>
+                  </div>
+                  <div className="col-span-3 text-center">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      In Progress
+                    </span>
+                  </div>
+                  <div className="col-span-3 flex justify-end items-center gap-2">
+                    <span className="text-sm text-gray-500">
+                      <Moment format="DD/MM/YYYY">{goal?.deadline}</Moment>
+                    </span>
+                    {!goal?.completed && (
+                      <button
+                        onClick={() => handleDelete(goal?.id)}
+                        className="text-gray-400 hover:text-red-500"
+                      >
+                        <FiTrash2 className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
       {isModalOpen && (
-        <div className="modal-overlay z-50">
-          <div className="modal-center">
-            <div className="modal-content">
-              <div className="flex justify-between items-center drop-shadow-lg border-b-2 py-6 w-full">
-                <h2 className="self-stretch text-black text-opacity-90 text-[22px] font-normal leading-relaxed flex space-x-8 items-center ms-6">
-                  <span>Add Goal</span>
-                </h2>
-                <button
-                  className="absolute top-2 right-2 mt-4 text-gray-500 hover:text-gray-700 focus:outline-none"
-                  onClick={handleCloseModal}
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Add Organization Goals
+              </h2>
+              <button
+                onClick={handleCloseModal}
+                className="text-gray-400 hover:text-gray-500"
+              >
+                <span className="sr-only">Close</span>
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div className="my-6 mx-8 ">
-                <div className="mb-2 py-4 px-3">
-                  <div>
-                    <form className="w-full text-left" onSubmit={submitForm}>
-                      <div className="mr-2 mb-4 w-[101%]">
-                        <label
-                          htmlFor="cname"
-                          className="block text-neutral-800 text-[13px] font-normal"
-                        >
-                          Goal Title
-                        </label>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
 
-                        <div className="mt-2 mr-2">
-                          <input
-                            id="title"
-                            title="title"
-                            type="text"
-                            name="title"
-                            autoComplete="off"
-                            required
-                            placeholder="Enter Goal Title"
-                            onChange={datahandleChange}
-                            value={title}
-                            className="block  w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
-                      </div>
-                      <div className="flex ">
-                        <div className="col-span-2 mb-4 flex-1">
-                          <div>
-                            <label
-                              htmlFor="dateField"
-                              className="block text-neutral-800 text-[13px] font-normal"
-                            >
-                              Deadline
-                            </label>
-                            <div className="mt-2 ">
-                              <input
-                                id="deadline"
-                                title="deadline" // Use name instead of title
-                                type="date"
-                                name="deadline"
-                                autoComplete="off"
-                                onChange={datahandleChange}
-                                value={deadline}
-                                min={getTodayDate()}
-                                required
-                                className="block w-full px-1 rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex justify-center mt-5">
-                        <input
-                          type="submit"
-                          value="Save"
-                          className="w-[30%] h-auto  px-[22px] py-2 bg-blue-500 text-white rounded shadow flex-col justify-center items-center inline-flex cursor-pointer"
-                        />
-                      </div>
-                    </form>
+            <p className="text-sm text-gray-500 mb-6">
+              Add goals with descriptions and deadlines to keep your goals on
+              track.
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Status
+                </label>
+                <select
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                  value={addgoals.status}
+                  onChange={(e) =>
+                    setAddgoals({ ...addgoals, status: e.target.value })
+                  }
+                >
+                  <option value="not_started">Not Started</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Goal Name
+                </label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="Enter goal name"
+                  value={addgoals.title}
+                  onChange={(e) =>
+                    setAddgoals({ ...addgoals, title: e.target.value })
+                  }
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Organization
+                </label>
+                <select
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                  value={addgoals.organization}
+                  onChange={(e) =>
+                    setAddgoals({ ...addgoals, organization: e.target.value })
+                  }
+                >
+                  <option value="">Select Organization</option>
+                  <option value="org1">Organization 1</option>
+                  <option value="org2">Organization 2</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Goal Description
+                </label>
+                <textarea
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  rows={3}
+                  placeholder="Enter goal description"
+                  value={addgoals.description}
+                  onChange={(e) =>
+                    setAddgoals({ ...addgoals, description: e.target.value })
+                  }
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Due Date
+                </label>
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <input
+                    type="date"
+                    className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 pr-12 sm:text-sm border-gray-300 rounded-md"
+                    value={addgoals.deadline}
+                    onChange={(e) =>
+                      setAddgoals({ ...addgoals, deadline: e.target.value })
+                    }
+                    required
+                  />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <FiCalendar className="h-5 w-5 text-gray-400" />
                   </div>
                 </div>
               </div>
-            </div>
+
+              <div className="flex justify-end space-x-3 pt-4">
+                <button
+                  type="button"
+                  onClick={handleCloseModal}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Add Goal
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
+
       {loopen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="flex items-center justify-center space-x-2 text-sm text-white">
-            <svg
-              className="w-6 h-6 animate-spin"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 4.75V7.25M12 12V14.75M12 19V21.25M4.75 12H7.25M16.75 12H19.25M7.29 7.29L8.7 8.7M15.29 15.29L16.7 16.7M7.29 16.7L8.7 15.29M15.29 8.7L16.7 7.29"
-              />
-            </svg>
-            <span>Loading...</span>
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="flex items-center space-x-2">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+            <span className="text-white">Loading...</span>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
