@@ -3,6 +3,19 @@
 import { useEffect, useState } from "react";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMaterialityData,
+  setCorpID,
+  setOrgID,
+  setOrgName,
+  setCorpName,
+  setYear,
+  setStartDate,
+  setEndDate,
+  setMaterialityYear,
+  setIsYearChanged
+} from "../../../lib/redux/features/materialitySlice";
 
 const EconomicHeader2 = ({
   activeMonth,
@@ -14,6 +27,12 @@ const EconomicHeader2 = ({
   year,
   setYear,
 }) => {
+
+  const dispatch = useDispatch();
+  const { corporate_id, organization_id,materiality_year, start_date, end_date, assessment_year,is_year_changed, data, loading, error } = useSelector(
+    (state) => state.materialitySlice
+  );
+
   const [formState, setFormState] = useState({
     selectedCorp: selectedCorp,
     selectedOrg: selectedOrg,
@@ -46,6 +65,7 @@ const EconomicHeader2 = ({
       setActiveMonth(monthMapping[value]);
     } else if (name === "year") {
       setYear(value);
+      dispatch(setMaterialityYear(value))
       setErrors((prevErrors) => ({
         ...prevErrors,
         year: value ? "" : "Please select year",
@@ -101,6 +121,54 @@ const EconomicHeader2 = ({
     fetchCorporates();
   }, [selectedOrg]);
 
+
+  const loadMaterialityDashboard=()=>{
+    if(selectedOrg&&year){
+      dispatch(
+        fetchMaterialityData({
+          corporate: selectedCorp,
+          organization: selectedOrg,
+          start_date:year?`${year}-01-01`:'',
+          end_date:  year?`${year}-12-31`:'',
+          // start_date: year==assessment_year?start_date?start_date:`${year}-01-01`:is_year_changed?`${year}-01-01`:start_date?start_date:`${year}-01-01`,
+          // end_date: year==assessment_year?end_date?end_date:`${year}-12-31`:is_year_changed?`${year}-12-31`:end_date?end_date:`${year}-12-31`,
+        })  
+      );
+    }
+    else{
+      dispatch(
+        fetchMaterialityData({
+          corporate: '',
+          organization:'',
+          start_date:'',
+          end_date:'',
+        })
+      );
+    }
+    
+    }
+  
+  
+  
+    useEffect(()=>{
+  
+      if(organization_id){
+        setSelectedOrg(organization_id)
+      }
+      if(corporate_id){
+        setSelectedCorp(corporate_id)
+      }
+      if(materiality_year){
+        setYear(materiality_year)
+      }
+      setErrors({
+        organization: organization_id || selectedOrg?"":"Please select Organisation",
+        corporate: corporate_id || selectedCorp?"":"Please select Corporate",
+        year: materiality_year || year ? "" : "Please select year",
+      })
+  
+    },[organization_id,corporate_id,materiality_year])
+
   useEffect(() => {
     setFormState({
       selectedCorp: selectedCorp,
@@ -108,11 +176,21 @@ const EconomicHeader2 = ({
       year: year,
       month: activeMonth,
     });
+    dispatch(setOrgID(selectedOrg))
+    dispatch(setCorpID(selectedCorp))
+    dispatch(setMaterialityYear(year))
+    loadMaterialityDashboard()
   }, [selectedOrg, selectedCorp, year]);
 
   const handleOrgChange = (e) => {
     const newOrg = e.target.value;
+    const selectedOption = e.target.selectedOptions[0];
+    const newOrgName = selectedOption.getAttribute('name');
     setSelectedOrg(newOrg);
+    dispatch(setOrgID(newOrg))
+    dispatch(setOrgName(newOrgName))
+    dispatch(setCorpID(""))
+    dispatch(setCorpName(""))
     setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -122,7 +200,11 @@ const EconomicHeader2 = ({
 
   const handleCorpChange = (e) => {
     const newCorp = e.target.value;
+    const selectedOption = e.target.selectedOptions[0];
+    const newCorpName = selectedOption.getAttribute('name');
     setSelectedCorp(newCorp);
+    dispatch(setCorpID(newCorp))
+    dispatch(setCorpName(newCorpName))
     setErrors((prevErrors) => ({
       ...prevErrors,
       corporate: newCorp ? "" : "Please select Corporate",
@@ -183,7 +265,7 @@ const EconomicHeader2 = ({
                       <option value="01">Select Organization</option>
                       {organisations &&
                         organisations.map((org) => (
-                          <option key={org.id} value={org.id}>
+                          <option key={org.id} value={org.id} name={org.name}>
                             {org.name}
                           </option>
                         ))}
@@ -212,7 +294,7 @@ const EconomicHeader2 = ({
                         <option value="">Select Corporate </option>
                         {corporates &&
                           corporates.map((corp) => (
-                            <option key={corp.id} value={corp.id}>
+                            <option key={corp.id} value={corp.id} name={corp.name}>
                               {corp.name}
                             </option>
                           ))}

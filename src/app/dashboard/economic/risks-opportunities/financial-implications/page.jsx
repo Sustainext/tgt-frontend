@@ -8,16 +8,22 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EconomicHeader2 from "../../EconomicHeader2";
 import Screen1 from "./screen1";
+import { useSelector } from "react-redux";
 // import Screen2 from "./screen2";
 const Financialimplications = () => {
+  const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
+      (state) => state.materialitySlice
+    );
+    const [year, setYear] = useState(materiality_year?materiality_year:'');
+    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
+    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState();
+  
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
+ 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
