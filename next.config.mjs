@@ -1,6 +1,6 @@
 const nextConfig = {
   env: {
-    BACKEND_API_URL: "https://udm-be-dev.sustainext.ai",
+    BACKEND_API_URL: "https://udm-be.sustainext.ai",
     // BACKEND_API_URL: 'http://127.0.0.1:8000',
     NEXT_APP_ZOHO_URL_EMISSIONS:
       "https://analytics.zoho.in/open-view/283231000002209106",
