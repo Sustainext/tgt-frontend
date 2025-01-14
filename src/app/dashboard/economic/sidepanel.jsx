@@ -294,7 +294,16 @@ const Aside = ({ activeTab, handleTabClick,apiData }) => {
                 Climate Risks and Opportunities
                 </span>
               </div>
-              <span className="w-[15%] ml-5"></span>
+              {materialityEnvData&&materialityEnvData.ClimateRisksAndOpportunities?.is_material_topic?(
+                <div className="w-[15%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[15%] ml-5"></span>
+              )}
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span> */}
@@ -311,7 +320,9 @@ const Aside = ({ activeTab, handleTabClick,apiData }) => {
             {isEnergySectionVisible && (
               <>
                  <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  <div>
+                  {materialityEnvData&&materialityEnvData.ClimateRisksAndOpportunities?.is_material_topic?(
+                      <div>
+                         <div>
                     <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -330,6 +341,11 @@ const Aside = ({ activeTab, handleTabClick,apiData }) => {
                       Management of Material topic
                     </p>
                   </div>
+                      </div>
+                  ):(
+                    <div></div>
+                  )}
+                 
                   <div>
                     <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure

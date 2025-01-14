@@ -4,7 +4,7 @@ import React from "react";
 
 
 const EconomicTopBar=({toggleDrawer,sdgData,apiData,title,topic})=>{
-    const materialityEnvData=apiData&&apiData.social?apiData.social:{}
+    const materialityEnvData=apiData&&apiData.governance?apiData.governance:{}
     return (
         <>
          <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">

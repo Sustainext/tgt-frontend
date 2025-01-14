@@ -8,10 +8,11 @@ import EconomicHeader2 from "../../EconomicHeader2";
 import Screen1 from "./Screen1";
 import { useSelector } from "react-redux";
 
-const RiskMaterialtopic = () => {
+const RiskMaterialtopic = ({apiData}) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
       (state) => state.materialitySlice
     );
+    const materialityEnvData=apiData&&apiData.governance?apiData.governance:{}
     const [year, setYear] = useState(materiality_year?materiality_year:'');
     const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
     const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
@@ -55,11 +56,15 @@ const RiskMaterialtopic = () => {
                   Climate Risks and Opportunities
                   </p>
                 </div>
-                {/* <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
-                  <p className="text-gray-500 text-[12px] pt-0.5 px-2">
-                    Material Topic
-                  </p>
-                </div> */}
+                {materialityEnvData&&materialityEnvData.ClimateRisksAndOpportunities?.is_material_topic?(
+                    <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
+                    <p className="text-gray-500 text-[12px] pt-0.5 px-2">
+                      Material Topic
+                    </p>
+                  </div>
+                ):(
+                    <div></div>
+                )}
               </div>
             </div>
           </div>
