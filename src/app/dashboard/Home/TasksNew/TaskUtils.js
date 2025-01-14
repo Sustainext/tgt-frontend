@@ -44,7 +44,7 @@ export const TABS = [
   { id: "upcoming", label: "Upcoming" },
   { id: "overdue", label: "Overdue" },
   { id: "completed", label: "Completed" },
-  { id: "forreview", label: "For Review" },
+  { id: "for_review", label: "For Review" },
 ];
 
 export const TABLE_HEADERS = [

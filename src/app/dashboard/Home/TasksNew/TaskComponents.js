@@ -53,33 +53,6 @@ const TaskTable = ({ children, headers }) => (
   </div>
 );
 
-//  const TaskRow = ({ task, onTaskClick, onEditClick }) => (
-//   <div className="flex justify-between border-b border-[#ebeced] pb-2">
-//     <div className="flex cursor-pointer">
-//       <div className="w-72 truncate text-[#007eef] text-[13px] font-normal leading-none ml-3">
-//         <p
-//           className="py-1 cursor-pointer"
-//           onClick={() =>
-//             task.roles === 3 ? onEditClick(task) : onTaskClick(task)
-//           }
-//         >
-//           {task.task_name}
-//         </p>
-//       </div>
-//     </div>
-//     <div className="col-span-3">
-//       {(task.roles === 1 || task.roles === 2) && (
-//         <TaskStatusBadge status={task.task_status} />
-//       )}
-//     </div>
-//     <div className="flex mr-4">
-//       <div className="w-[68px] text-neutral-500 text-xs font-normal leading-[15px]">
-//         {task.deadline}
-//       </div>
-//     </div>
-//   </div>
-// );
-
 const EmptyState = ({ onAction }) => (
   <div className="justify-center items-center">
     <div className="flex justify-center items-center pb-5 pt-[4rem]">
@@ -151,23 +124,45 @@ const TaskStatusBadge = ({ status }) => {
   );
 };
 
-const TaskRow = ({ task, onTaskClick, onEditClick }) => {
+const TaskRow = ({ task, onTaskClick, onEditClick, activeTab }) => {
+  const handleClick = () => {
+    if (activeTab === "forreview") {
+      onTaskClick(task);
+      return;
+    }
+
+    // For completed tab
+    if (activeTab === "completed" && (task.roles === 1 || task.roles === 2 || task.roles === 4)) {
+      onTaskClick(task);
+      return;
+    }
+
+    // For other tabs, use role-based logic
+    if (activeTab !== "forreview" && activeTab !== "completed") {
+      if (task.roles === 3) {
+        onEditClick(task);
+      } else if (task.roles === 1 || task.roles === 2) {
+        onTaskClick(task);
+      }
+    }
+  };
+
   return (
-    <div className="flex justify-between border-b border-[#ebeced] pb-2">
+    <div className="flex justify-between border-b border-[#ebeced] py-2">
       <div className="flex cursor-pointer">
         <div className="w-72 truncate text-[#007eef] text-[13px] font-normal leading-none ml-3">
           <p
-            className="py-2 cursor-pointer"
-            onClick={() =>
-              task.roles === 3 ? onEditClick(task) : onTaskClick(task)
-            }
+            className="py-1 cursor-pointer"
+            data-tooltip-id={`task-tooltip-${task.id}`}
+            data-tooltip-content={task.task_name}
+            onClick={handleClick}
           >
             {task.task_name}
           </p>
         </div>
       </div>
       <div className="col-span-3">
-        {(task.roles === 1 || task.roles === 2) && (
+        {(task.roles === 1 || task.roles === 2 || task.roles === 4) && (
           <TaskStatusBadge status={task.task_status} />
         )}
       </div>
@@ -179,7 +174,6 @@ const TaskRow = ({ task, onTaskClick, onEditClick }) => {
     </div>
   );
 };
-
 // Export everything
 export {
   TaskHeader,
