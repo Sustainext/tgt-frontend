@@ -66,15 +66,12 @@ export function AuthProvider({ children }) {
         body: JSON.stringify({ username, password, remember_me }),
       });
 
+      const userData = await response.json();
+
       if (!response.ok) {
-        if (response.status === 400) {
-          throw new Error("Incorrect username or password");
-        } else {
-          throw new Error("Failed to login");
-        }
+        throw new Error(userData.message);
       }
 
-      const userData = await response.json();
       const receivedToken = userData.key.access;
       const refreshToken = userData.key.refresh;
       const client_key = userData.client_key;
@@ -106,8 +103,9 @@ export function AuthProvider({ children }) {
       localStorage.setItem("userEmail", userDetails.user_detail[0].email);
 
     } catch (error) {
+      console.log(error,"error")
       console.error("Login error:", error);
-      toast.error("Failed to login: " + error.message, {
+      toast.error(error.message, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
