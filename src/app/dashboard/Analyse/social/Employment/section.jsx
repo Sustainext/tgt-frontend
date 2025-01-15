@@ -65,7 +65,7 @@ const Section = ({
       } = data;
       const formattedLocation = new_employee_hires.map((neh) => ({
         type: neh.type_of_employee,
-        Totalnoofemployees:"N/a",
+        Totalnoofemployees:neh.total,
         male: neh.percentage_of_male_employee,
         female: neh.percentage_of_female_employee,
         nonBinary: neh.percentage_of_non_binary_employee,
@@ -75,7 +75,7 @@ const Section = ({
       }));
       const formattedScope = employee_turnover.map((et) => ({
         type: et.type_of_employee,
-        Totalnoofemployees:"N/a",
+        Totalnoofemployees:et.total,
         male: et.percentage_of_male_employee,
         female: et.percentage_of_female_employee,
         nonBinary: et.percentage_of_non_binary_employee,

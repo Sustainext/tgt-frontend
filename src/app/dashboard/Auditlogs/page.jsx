@@ -155,7 +155,7 @@ const AuditLogs = () => {
         "User Role": log.UserRole,
         "Date & Time": formatDate(log.TimeGenerated),
         "IP Address": log.IPAddress,
-        "Logs": JSON.stringify(log.LogDetails || {}),
+        "Logs": JSON.stringify(log.Logs || {}),
       }));
 
       const worksheet = XLSX.utils.json_to_sheet(formattedLogs);
@@ -244,7 +244,7 @@ const AuditLogs = () => {
         </div>
       </div>
 
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="bg-white shadow-md rounded-lg overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-[#ECF9FE]">
             <tr>
@@ -335,10 +335,15 @@ const AuditLogs = () => {
                   </div>
                 )}
               </th>
-
               <th className="px-6 py-3 text-left text-[14px] text-gray-500 font-[500] normal-case">
                 Date & Time
               </th>
+              {/* <th className="px-6 py-3 text-left text-[14px] text-gray-500 font-[500] normal-case">
+                IP Address
+              </th>
+              <th className="px-6 py-3 text-left text-[14px] text-gray-500 font-[500] normal-case">
+                Log Details
+              </th> */}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -374,6 +379,23 @@ const AuditLogs = () => {
                       </p>
                     </div>
                   </td>
+                  {/* <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
+                    {log.IPAddress}
+                  </td> */}
+                  {/* <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
+                    
+                    <div className="flex">
+                    <div className="w-64 truncate">
+                        {log.Logs}
+                    </div>
+                      <p
+                        className="text-[#007EEF] text-[12px] ml-2 cursor-pointer"
+                        onClick={() => handleOpenModal(log)}
+                      >
+                        See Details
+                      </p>
+                    </div>
+                  </td> */}
                 </tr>
               ))
             ) : (
@@ -531,6 +553,28 @@ const AuditLogs = () => {
                     {selectedLog.UserRole}
                   </p>
                 </div>
+
+                {/* <div>
+                  <p className="text-[#344054] text-[16px] font-medium">
+                    Log Details
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[#667085] text-[16px]">
+                    {selectedLog.Logs}
+                  </p>
+                </div> */}
+
+                {/* <div>
+                  <p className="text-[#344054] text-[16px] font-medium">
+                    IP Address
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[#667085] text-[16px]">
+                    {selectedLog.IPAddress}
+                  </p>
+                </div> */}
 
                 <div>
                   <p className="text-[#344054] text-[16px] font-medium">

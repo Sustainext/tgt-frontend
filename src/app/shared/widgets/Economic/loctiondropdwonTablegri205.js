@@ -69,7 +69,7 @@ const LocationDropdownTableGrid = ({
   const debouncedOnChange = useCallback(
     debounce((newData) => {
       onChange(newData);
-    }, 500),
+    }, 1000),
     [onChange]
   );
 
@@ -239,6 +239,7 @@ const LocationDropdownTableGrid = ({
                           className="w-full p-2 rounded text-[12px]"
                           placeholder="Enter Value"
                           value=""
+                    
                           onChange={(e) =>
                             updateField(locationName, 0, title.tittlekey, e.target.value)
                           }
@@ -274,6 +275,7 @@ const LocationDropdownTableGrid = ({
                             className="w-full p-2 rounded text-[12px]"
                             placeholder="Enter Value"
                             value={row[title.tittlekey] || ""}
+                  
                             onChange={(e) =>
                               updateField(locationName, rowIndex, title.tittlekey, e.target.value)
                             }

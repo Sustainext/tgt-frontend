@@ -19,6 +19,7 @@ import {
   MdOutlinePersonAddAlt,
   MdLockOutline,
 } from "react-icons/md";
+import { TbNotes } from "react-icons/tb";
 import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
 import { GlobalState } from "../../Context/page";
@@ -205,11 +206,11 @@ const Sidenav = () => {
       id: 5,
       title: "Optimise",
       icon: <MdOutlineSettingsSuggest />,
-      link: "#",
+      link: "/dashboard/Optimise",
       permission: "optimise",
       role: true,
       lockicon: <MdLockOutline />,
-      lockiconshow: true,
+      lockiconshow: false,
     },
     {
       id: 6,
@@ -253,9 +254,20 @@ const Sidenav = () => {
       role: true,
       lockicon: <MdLockOutline />,
       lockiconshow: false,
+      spacing: true,
     },
+ 
     {
       id: 9,
+      title: "Audit logs",
+      icon: <TbNotes/>,
+      link: "/dashboard/Auditlogs",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+    },
+    {
+      id: 10,
       title: "Settings",
       icon: <CiSettings />,
       link: "/dashboard/Settings",

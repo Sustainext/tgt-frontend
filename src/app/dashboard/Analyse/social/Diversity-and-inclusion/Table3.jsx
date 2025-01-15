@@ -2,7 +2,7 @@ import React from 'react';
 
 const Table3 = ({ data }) => {
   const columns = [
-    "Basic Salary per Employee Category",
+    "Employee Category",
     "Male",
     "Female",
     "Non-Binary",
@@ -15,23 +15,24 @@ const Table3 = ({ data }) => {
         <thead className="block md:table-header-group border">
           <tr className="border border-gray-300 md:table-row gradient-background">
             <th
-              className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300"
+              className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300 w-[25%]"
               rowSpan="2"
             >
               {columns[0]}
             </th>
             <th
-              className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300"
-              colSpan="3"
-            >
-              Gender
-            </th>
-            <th
-              className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300"
+              className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300 w-[25%]"
               rowSpan="2"
             >
               {columns[4]}
             </th>
+            <th
+              className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300w-[50%]"
+              colSpan="3"
+            >
+              Ratio of Remuneration by Gender
+            </th>
+        
           </tr>
           <tr className="border border-gray-300 md:table-row gradient-background">
             <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">

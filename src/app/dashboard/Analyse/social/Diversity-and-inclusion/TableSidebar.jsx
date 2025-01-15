@@ -20,7 +20,8 @@ const TableSidebar = () => {
       const links = [
         "ep1",
         "ep2",
-
+        "ep3",
+        "ep4",
       ];
 
       const threshold = 150;
@@ -54,6 +55,19 @@ const TableSidebar = () => {
           id: "ep1",
           name: "Percentage of individuals within the organization’s governance bodies",
         },
+        {
+          id: "ep2",
+          name: "Ratio of basic salary by Gender",
+        },
+        {
+          id: "ep3",
+          name: "Ratio of remuneration by Gender",
+        },
+        {
+          id: "ep4",
+          name: "Ratio of the entry-level wage to the minimum wage by gender and significant locations of operation 			",
+        },
+      
       ].map((link) => (
         <div key={link.id} className="self-stretch justify-end items-center gap-2 inline-flex">
           <a
