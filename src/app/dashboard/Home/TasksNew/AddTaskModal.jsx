@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { getTodayDate } from "./TaskUtils";
+import {toast} from "react-toastify";
 
 const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
+  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
   const [formData, setFormData] = useState({
     task_name: "",
     description: "",
@@ -15,6 +17,11 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
 
   if (!isOpen) return null;
 
+  const handleStatusChange = (status) => {
+    setFormData({ ...formData, status });
+    setIsStatusDropdownOpen(false);
+  };
+
   const handleFormChange = (e) => {
     setFormData({
       ...formData,
@@ -24,22 +31,41 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isFormValid) return;
-
-    const submissionData = {
-      ...formData,
-      task_name: formData.task_name.trim(),
-      assigned_to: parseInt(formData.assigned_to),
-      deadline: formData.deadline,
-      description: formData.description?.trim(),
-      status: formData.status,
-    };
-
+    console.log("Submit function triggered");
+    
+    if (!isFormValid) {
+      console.log("Form validation failed");
+      toast.error("Please fill in all required fields");
+      return;
+    }
+  
     try {
-      await onSubmit(submissionData);
-      onClose();
+      console.log("Preparing submission data...");
+      const submissionData = {
+        task_name: formData.task_name.trim(),
+        assigned_to: parseInt(formData.assigned_to),
+        deadline: formData.deadline,
+        description: formData.description?.trim(),
+        assigned_by: parseInt(localStorage.getItem("user_id")),
+        user_client: 1,
+        roles: 3,
+        task_status: formData.status
+      };
+      console.log("Submission data:", submissionData);
+  
+      // Call the onSubmit function with the correct structure
+      const response = await onSubmit(null, "create", submissionData);
+      console.log("Submit response:", response);
+  
+      if (response) {
+        toast.success("Task has been added successfully");
+        onClose();
+      } else {
+        throw new Error("Failed to add task");
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error(error.message || "Failed to add task");
     }
   };
 
@@ -62,13 +88,85 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
                 Status
               </label>
               <div className="relative">
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full border-[1.5px] border-gray-300"></span>
-                  <span>Not Started</span>
-                </div>
+                <button
+                  type="button"
+                  className="flex items-center w-full rounded-md py-2 text-left text-sm text-gray-700 bg-white focus:outline-none"
+                  onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
+                >
+                  <div className="flex items-center gap-2">
+                    {formData.status === "not_started" && (
+                      <span className="w-4 h-4 rounded-full border-[1.5px] border-gray-300"></span>
+                    )}
+                    {formData.status === "in_progress" && (
+                      <span className="w-4 h-4 rounded-full bg-[#FDB022]"></span>
+                    )}
+                    {formData.status === "completed" && (
+                      <span className="w-4 h-4 rounded-full bg-[#12B76A]"></span>
+                    )}
+                    <span>
+                      {formData.status === "not_started" && "Not Started"}
+                      {formData.status === "in_progress" && "In Progress"}
+                      {formData.status === "completed" && "Completed"}
+                    </span>
+                    <svg
+                      className="w-5 h-5 text-gray-400 ml-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                </button>
+
+                {/* Dropdown Menu */}
+                {isStatusDropdownOpen && (
+                  <div className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg py-1">
+                    {[
+                      {
+                        id: "not_started",
+                        label: "Not Started",
+                        icon: (
+                          <span className="w-4 h-4 rounded-full border-[1.5px] border-gray-300"></span>
+                        ),
+                      },
+                      {
+                        id: "in_progress",
+                        label: "In Progress",
+                        icon: (
+                          <span className="w-4 h-4 rounded-full bg-[#FDB022]"></span>
+                        ),
+                      },
+                      {
+                        id: "completed",
+                        label: "Completed",
+                        icon: (
+                          <span className="w-4 h-4 rounded-full bg-[#12B76A]"></span>
+                        ),
+                      },
+                    ].map((status) => (
+                      <button
+                        key={status.id}
+                        type="button"
+                        className="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => handleStatusChange(status.id)}
+                      >
+                        <div className="flex items-center gap-2">
+                          {status.icon}
+                          <span>{status.label}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               <p className="mt-1 text-xs text-gray-500">
-                Status is set to "Not Started" by default.
+                Select 'completed' status to move the task to completed section
               </p>
             </div>
 

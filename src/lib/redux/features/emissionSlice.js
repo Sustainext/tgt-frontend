@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../../../app/utils/axiosMiddleware";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 import { getMonthName } from "../../../app/utils/dateUtils";
 import { v4 as uuidv4 } from "uuid";
 import { set } from "lodash";
@@ -155,9 +155,50 @@ export const fetchPreviousMonthData = createAsyncThunk(
   }
 );
 
+// export const updateScopeData = createAsyncThunk(
+//   "emissions/updateScopeData",
+//   async ({ scope, data, location, year, month }) => {
+//     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+//     const body = {
+//       client_id: 1,
+//       user_id: 1,
+//       path: `gri-environment-emissions-301-a-scope-${scope}`,
+//       form_data: data.data,
+//       location,
+//       year,
+//       month,
+//     };
+
+//     try {
+//       const response = await axiosInstance.post(url, body);
+//       return { scope, data: response.data, params: { location, year, month } };
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// );
+
 export const updateScopeData = createAsyncThunk(
   "emissions/updateScopeData",
-  async ({ scope, data, location, year, month }) => {
+  async ({ scope, data, location, year, month }, thunkAPI) => {
+    // Validate required parameters
+    if (!scope || !location || !year || !month) {
+      console.error('Missing required parameters:', { scope, location, year, month });
+      return thunkAPI.rejectWithValue({
+        message: 'Missing required parameters',
+        details: { scope, location, year, month }
+      });
+    }
+
+    // Validate data structure
+    if (!data || !Array.isArray(data.data)) {
+      console.error('Invalid data structure:', data);
+      return thunkAPI.rejectWithValue({
+        message: 'Invalid data structure',
+        details: { data }
+      });
+    }
+
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     const body = {
       client_id: 1,
@@ -170,10 +211,23 @@ export const updateScopeData = createAsyncThunk(
     };
 
     try {
+      console.log('Updating scope data with:', { url, body });
       const response = await axiosInstance.post(url, body);
+      console.log('Update scope response:', response.data);
       return { scope, data: response.data, params: { location, year, month } };
     } catch (error) {
-      throw error;
+      console.error('Error updating scope data:', {
+        error: error.response?.data || error.message,
+        requestBody: body,
+        scope,
+        location,
+        year,
+        month
+      });
+      return thunkAPI.rejectWithValue({
+        message: error.response?.data?.message || error.message,
+        details: error.response?.data
+      });
     }
   }
 );
@@ -395,10 +449,9 @@ const emissionsSlice = createSlice({
     },
     scopeReRender: false,
     focusedField: {
-      rowId: null,
-      field: null,
+      rowId: null, // 'scope1_0', 'scope2_1', etc.
+      field: null, // 'quantity1', 'quantity2'
     },
-    validationErrors: {},
   },
   reducers: {
     setUserData: (state, action) => {
@@ -581,12 +634,6 @@ const emissionsSlice = createSlice({
         field: null,
       };
     },
-    setValidationErrors: (state, action) => {
-      state.validationErrors = action.payload;
-    },
-    clearValidationErrors: (state) => {
-      state.validationErrors = {};
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -637,15 +684,30 @@ const emissionsSlice = createSlice({
       .addCase(updateScopeData.pending, (state) => {
         state.updateScopeStatus = "loading";
       })
+      // .addCase(updateScopeData.fulfilled, (state, action) => {
+      //   state.updateScopeStatus = "succeeded";
+      //   const { scope, data, params } = action.payload;
+      //   state[`scope${scope}Data`].data = data;
+      //   state.updateScopeParams = params;
+      // })
       .addCase(updateScopeData.fulfilled, (state, action) => {
-        state.updateScopeStatus = "succeeded";
+        console.log('Successfully updated scope data:', action.payload);
+        state.updateScopeStatus = 'succeeded';
         const { scope, data, params } = action.payload;
         state[`scope${scope}Data`].data = data;
         state.updateScopeParams = params;
+        state.approvedTasks[`scope${scope}`] = [];
       })
       .addCase(updateScopeData.rejected, (state, action) => {
-        state.updateScopeStatus = "failed";
-        state.updateScopeError = action.error.message;
+        console.error('Failed to update scope data:', {
+          error: action.payload || action.error.message,
+          state: {
+            updateScopeStatus: state.updateScopeStatus,
+            scopeData: state[`scope${action.meta.arg.scope}Data`]
+          }
+        });
+        state.updateScopeStatus = 'failed';
+        state.updateScopeError = action.payload?.message || action.error.message;
       })
       .addCase(fetchPreviousMonthData.pending, (state) => {
         state.previousMonthData.status = "loading";
@@ -754,8 +816,6 @@ export const {
   toggleScopeReRender,
   setFocusedField,
   clearFocusedField,
-  setValidationErrors,
-  clearValidationErrors,
 } = emissionsSlice.actions;
 
 export default emissionsSlice.reducer;

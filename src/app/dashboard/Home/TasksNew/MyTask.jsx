@@ -38,6 +38,7 @@ import AddTaskModal from "./AddTaskModal";
 import TaskDeleteModal from "./TaskDeleteModal";
 import FillModal from "./FillModal";
 import ReviewTaskModal from "./ReviewTaskModal";
+import TaskFillModal from "./TaskFillModal";
 
 // Import utilities
 import {
@@ -52,6 +53,7 @@ import {
 } from "./TaskUtils";
 
 import { fetchUsers } from "../../../../lib/redux/features/emissionSlice";
+import ViewReviewTaskModal from "./ViewReviewTaskModal";
 
 const MyTask = () => {
   // Redux
@@ -111,6 +113,9 @@ const MyTask = () => {
 
   const [clintlist, setClintlist] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
+
+  // Add this state near other modal states
+  const [isSelfTaskFillModalOpen, setSelfTaskFillModalOpen] = useState(false);
 
   // Add this useEffect to fetch client list if needed
   useEffect(() => {
@@ -306,19 +311,109 @@ const MyTask = () => {
   //   }
   // };
 
+  // const handleOpenModalAddData = async (task) => {
+  //   try {
+  //     setIsSearching(true);
+
+  //     if (task.activity === null || task.activity === "") {
+  //       setIsActivityReceived(false);
+  //     } else {
+  //       setIsActivityReceived(true);
+  //     }
+
+  //     setIsFillModalOpen(true);
+  //     setSelectedActivityName(task.activity);
+
+  //     setTaskAssigndata({
+  //       id: task.id,
+  //       task_name: task.task_name,
+  //       assign_to_user_name: task.assign_to_user_name,
+  //       assign_by_user_name: task.assign_by_user_name,
+  //       assign_by_email: task.assign_by_email,
+  //       category: task.category,
+  //       deadline: task.deadline,
+  //       factor_id: task.factor_id,
+  //       location: task.location,
+  //       month: task.month,
+  //       scope: task.scope,
+  //       subcategory: task.subcategory,
+  //       year: task.year,
+  //       activity: task.activity,
+  //       value1: task.value1,
+  //       value2: task.value2,
+  //       unit1: task.unit1,
+  //       unit2: task.unit2,
+  //       file: task.file,
+  //       filename: task.filename,
+  //       status: task.task_status,
+  //       assign_to_email: task.assign_to_email,
+  //       file_data: task.file_data,
+  //     });
+
+  //     if (task.activity) {
+  //       const unitTypeExtractedArray = task.activity.split("-");
+  //       const extractedUnitType =
+  //         unitTypeExtractedArray[unitTypeExtractedArray.length - 1]?.trim();
+  //       setSelectedActivity({
+  //         ...selectedActivity,
+  //         unit_type: extractedUnitType,
+  //       });
+  //     }
+
+  //     // Only fetch activities if activity is not received and required parameters are present
+  //     if (!task.activity && task.subcategory && task.year) {
+  //       const initialResponse = await fetchActivities(
+  //         task.subcategory,
+  //         1,
+  //         false,
+  //         task.region,
+  //         task.year
+  //       );
+
+  //       setActivitiesList(initialResponse.activitiesData);
+
+  //       if (initialResponse.pages > 1) {
+  //         for (let i = 2; i <= initialResponse.pages; i++) {
+  //           const isCustomFetch =
+  //             initialResponse.pagesCustom > 1 &&
+  //             i <= initialResponse.pagesCustom
+  //               ? false
+  //               : true;
+  //           const additionalResponse = await fetchActivities(
+  //             task.subcategory,
+  //             i,
+  //             isCustomFetch,
+  //             task.region,
+  //             task.year
+  //           );
+  //           setActivitiesList((prev) => [
+  //             ...prev,
+  //             ...additionalResponse.activitiesData,
+  //           ]);
+  //         }
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error in handleOpenModalAddData:", error);
+  //     toast.error("Failed to load activities. Please try again.");
+  //   } finally {
+  //     setIsSearching(false);
+  //   }
+  // };
+
   const handleOpenModalAddData = async (task) => {
     try {
       setIsSearching(true);
-  
+
       if (task.activity === null || task.activity === "") {
         setIsActivityReceived(false);
       } else {
         setIsActivityReceived(true);
       }
-  
+
       setIsFillModalOpen(true);
       setSelectedActivityName(task.activity);
-  
+
       setTaskAssigndata({
         id: task.id,
         task_name: task.task_name,
@@ -344,7 +439,7 @@ const MyTask = () => {
         assign_to_email: task.assign_to_email,
         file_data: task.file_data,
       });
-  
+
       if (task.activity) {
         const unitTypeExtractedArray = task.activity.split("-");
         const extractedUnitType =
@@ -354,7 +449,7 @@ const MyTask = () => {
           unit_type: extractedUnitType,
         });
       }
-  
+
       // Only fetch activities if activity is not received and required parameters are present
       if (!task.activity && task.subcategory && task.year) {
         const initialResponse = await fetchActivities(
@@ -364,13 +459,14 @@ const MyTask = () => {
           task.region,
           task.year
         );
-  
+
         setActivitiesList(initialResponse.activitiesData);
-  
+
         if (initialResponse.pages > 1) {
           for (let i = 2; i <= initialResponse.pages; i++) {
             const isCustomFetch =
-              initialResponse.pagesCustom > 1 && i <= initialResponse.pagesCustom
+              initialResponse.pagesCustom > 1 &&
+              i <= initialResponse.pagesCustom
                 ? false
                 : true;
             const additionalResponse = await fetchActivities(
@@ -394,7 +490,7 @@ const MyTask = () => {
       setIsSearching(false);
     }
   };
-  
+
   const handleReviewtask = (
     id,
     task_name,
@@ -565,13 +661,22 @@ const MyTask = () => {
   };
 
   const handleTaskClick = (task) => {
+    console.log("Task clicked:", task);
+    
     if (activeTab === "completed") {
-      if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
+      if (task.roles === 3) {
+        // Open ViewReviewTaskModal for role 3 tasks in review
+        console.log('Opening ViewReviewTaskModal for role 3 tasks in review');
+        
+        setSelectedTask(task);
+        toggleModal("isReviewViewModalOpen", true);
+      }
+      else if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
         setSelectedTask(task);
         toggleModal("isDetailsModalOpen", true);
       }
     } else if (activeTab === "for_review") {
-      if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
+        if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
         // Handle review task
         setTaskAssigndata({
           id: task.id,
@@ -661,13 +766,30 @@ const MyTask = () => {
                 activeTab={activeTab}
                 onTaskClick={handleTaskClick}
                 onEditClick={() => {
-                  setTaskFormData(task);
-                  toggleModal("isModalOpen", true);
+                  // Check if the task was created and assigned to the same person
+                  // if (task.assign_by_email === task.assign_to_email) {
+                  //   setTaskFormData(task);
+                  //   toggleModal("isModalOpen", true);
+                  // } else {
+                  // If different people, open the fill modal for data submission
+                  setSelectedTask(task);
+                  setSelfTaskFillModalOpen(true);
+                  // }
                 }}
               />
             ))
           ) : (
-            <EmptyState onAction={() => toggleModal("isModalOpen", true)} />
+            <EmptyState
+              onAction={() => {
+                // Only allow creating new tasks if user is logged in
+                const currentUserEmail = localStorage.getItem("user_email");
+                if (currentUserEmail) {
+                  toggleModal("isModalOpen", true);
+                } else {
+                  toast.error("Please log in to create tasks");
+                }
+              }}
+            />
           )}
         </TaskTable>
 
@@ -725,8 +847,10 @@ const MyTask = () => {
       <AddTaskModal
         isOpen={modalStates.isModalOpen}
         onClose={() => toggleModal("isModalOpen", false)}
-        task={taskFormData}
-        onSubmit={handleTaskAction}
+        onSubmit={async (id, action, data) => {
+          console.log("onSubmit called with:", { id, action, data });
+          return await handleTaskAction(id, action, data);
+        }}
         users={users}
       />
 
@@ -750,6 +874,45 @@ const MyTask = () => {
         onClose={() => toggleModal("isModalOpenDelete", false)}
         onConfirm={() => deleteTask(selectedTask?.id)}
         taskName={selectedTask?.name}
+      />
+
+      {/* Self Task Fill Modal */}
+      <TaskFillModal
+        isOpen={isSelfTaskFillModalOpen}
+        onClose={() => {
+          setSelfTaskFillModalOpen(false);
+          setSelectedTask(null);
+        }}
+        task={selectedTask}
+        onSubmit={async (updatedTask) => {
+          try {
+            const response = await handleTaskAction(updatedTask.id, "update", {
+              ...updatedTask,
+              task_status: "under_review",
+            });
+
+            if (response) {
+              toast.success("Task has been submitted for review");
+              setSelfTaskFillModalOpen(false);
+              setSelectedTask(null);
+              await fetchTasks();
+            }
+          } catch (error) {
+            console.error("Error submitting task:", error);
+            toast.error("Failed to submit task");
+          }
+        }}
+        onFileUpload={handleFileUpload}
+      />
+
+      {/* View Review Task Modal */}
+      <ViewReviewTaskModal
+        isOpen={modalStates.isReviewViewModalOpen}
+        onClose={() => {
+          toggleModal("isReviewViewModalOpen", false);
+          setSelectedTask(null);
+        }}
+        task={selectedTask}
       />
 
       {/* Loading Spinner */}

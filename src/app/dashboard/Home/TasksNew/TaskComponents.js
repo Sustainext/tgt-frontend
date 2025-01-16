@@ -132,7 +132,7 @@ const TaskRow = ({ task, onTaskClick, onEditClick, activeTab }) => {
     }
 
     // For completed tab
-    if (activeTab === "completed" && (task.roles === 1 || task.roles === 2 || task.roles === 4)) {
+    if (activeTab === "completed" && (task.roles === 1 || task.roles === 2 || task.roles === 3 || task.roles === 4)) {
       onTaskClick(task);
       return;
     }

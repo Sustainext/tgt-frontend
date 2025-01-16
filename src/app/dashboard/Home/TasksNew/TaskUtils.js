@@ -62,6 +62,7 @@ export const INITIAL_MODAL_STATES = {
   isReviewtask: false,
   isApprove: false,
   isPdfViewerOpen: false,
+  isReviewViewModalOpen: false,
 };
 
 export const INITIAL_TASK_DATA = {
