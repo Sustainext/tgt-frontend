@@ -1,34 +1,34 @@
 import React from 'react';
 
 const DynamicTable = ({ data, columns }) => {
-  // Check if all rows are empty objects
-  const isEmptyData = data.every(row => Object.keys(row).length === 0);
+  // Function to check if a row is an empty object
+  const isEmptyRow = (row) => Object.keys(row).length === 0;
 
+  // Check if data is empty or all rows are empty objects
+  const isDataEmpty = data.length === 0 || data.every(isEmptyRow);
+console.log(data, "test data");
   return (
-<div className="">
+    <div className="">
     <table className="min-w-full w-full rounded-lg border-x border-t border-gray-300 "style={{ borderCollapse: "separate", borderSpacing: 0 }}>
            <thead className="block md:table-header-group ">
              <tr className="md:table-row gradient-background ">
             {columns.map((column, index) => (
               <th
-                key={column}
+                key={column.accessor}
                 className={`px-2 py-3  text-[#727272] block md:table-cell text-[12px] border-b border-gray-300 ${
                   index === 0 ? 'text-left' : 'text-center'
                 }`}
               >
-                {column}
+                {column.Header}
               </th>
             ))}
           </tr>
         </thead>
         <tbody className="block md:table-row-group">
-          {data.length === 0 || isEmptyData ? (
+          {isDataEmpty ? (
             <tr className="border border-gray-300 md:table-row">
-              <td
-                colSpan={columns.length}
-                className="text-center p-2 block md:table-cell text-[12px] font-normal text-slate-500 border-b border-gray-300 "
-              >
-                No data available
+              <td colSpan={columns.length}   className="text-center py-4 text-[12px] font-[400] border-b border-gray-300">
+                No available data
               </td>
             </tr>
           ) : (
@@ -39,9 +39,9 @@ const DynamicTable = ({ data, columns }) => {
                     key={colIndex}
                     className={`p-2 block md:table-cell border-b  border-gray-300 ${
                       colIndex === 0 ? 'text-left font-bold' : 'text-center font-normal text-slate-500'
-                    } text-[12px]`}
+                    } text-sm`}
                   >
-                    {row[column] || 'N/A'}
+                    {row[column.accessor]}
                   </td>
                 ))}
               </tr>

@@ -152,6 +152,22 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
+      category: "Tab11",
+      tags: [
+        {
+          label: "GRI 405",
+          data: [
+            { tagid: "1", infoid: "28" },
+        { tagid: "2", infoid: "53" },
+          ],
+        },
+        {
+          label: "GRI 202",
+          data: [{ tagid: "1", infoid: "48" }],
+        },
+      ],
+    },
+    {
       category: "Tab12",
       tags: [
         {
@@ -231,6 +247,16 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
+      category: "Tab11",
+      data: [
+        { id: "sd26", label: "SDG 1", bgColor: "bg-[#EA1D2D]"},
+        { id: "sd32", label: "SDG 5", bgColor: "bg-orange-600"},
+        { id: "sd33", label: "SDG 8", bgColor: "bg-red-900"},
+        { id: "sd13", label: "SDG 10", bgColor: "bg-[#E01A83]"},
+        // { id: "sd16", label: "SDG 16", bgColor: "bg-blue-950" },
+      ],
+    },
+    {
       category: "Tab12",
       data: [
         { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
@@ -269,6 +295,8 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                   ? "Marketing and labeling"
                   : activeTab === "Tab10"
                   ? "Supply Chain Labor Standards"
+                  : activeTab === "Tab11"
+                  ? "Diversity & Equal Oppportunity"
                   : activeTab === "Tab12"
                   ? " Non-discrimination"
                   : activeTab === "Tab13"

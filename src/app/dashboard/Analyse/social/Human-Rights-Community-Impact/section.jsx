@@ -9,6 +9,7 @@ import { Oval } from "react-loader-spinner";
 
 const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpen }) => {
   const [OperationsWithLocalCommunity, setOperationsWithLocalCommunity] = useState([]);
+  const [Securitypersonnel, setSecuritypersonnel] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
 
@@ -20,9 +21,10 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
     setOperationsWithLocalCommunity([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_community_development_analysis??corporate=${selectedCorp}&organisation=${selectedOrg}&location=${selectedLocation}&start=${dateRange.start}&end=${dateRange.end}`
+        `/sustainapp/get_human_rights_and_community_impact_analysis??corporate=${selectedCorp}&organisation=${selectedOrg}&location=${selectedLocation}&start=${dateRange.start}&end=${dateRange.end}`
       );
       setOperationsWithLocalCommunity(response.data.community_engagement);
+      setSecuritypersonnel(response.data.security_personnel);
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -86,7 +88,7 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
               </div>
 
               <div className="mb-4">
-              <Table2 data={[]} columns={columns2} />
+              <Table2 data={Securitypersonnel} columns={columns2} />
               </div>
             </div>
           </div>

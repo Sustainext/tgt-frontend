@@ -81,13 +81,13 @@ const PasswordReset = () => {
     } catch (error) {
       // Extract error messages from the backend response
       if (error.response && error.response.data) {
-        const errorMessage = error.response.data.new_password2 
-          ? error.response.data.new_password2[0] 
+        const errorMessage = error.response.data.non_field_errors 
+          ? error.response.data.non_field_errors[0] 
           : "Oops, something went wrong";
   
         toast.error(errorMessage, {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
