@@ -1,7 +1,7 @@
 'use client';
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState } from 'react';
+import Select from 'react-select';
 import { MdOutlineDeleteOutline, MdAdd, MdInfoOutline } from 'react-icons/md';
-import Select, { components } from 'react-select';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 
@@ -11,26 +11,25 @@ const CustomTableWidget8 = ({
   value = [],
   required,
   onChange,
-  formContext,
   locationdata,
 }) => {
-  const locationOptions = useMemo(
-    () =>
-      locationdata.map((loc) => ({
-        value: loc.location_name,
-        label: loc.location_name,
-      })),
-    [locationdata]
-  );
+  const [localData, setLocalData] = useState(value);
 
-  const updateField = useCallback(
-    (index, key, newValue) => {
-      const newData = [...value];
-      newData[index][key] = newValue;
-      onChange(newData); // Update the parent component's state
-    },
-    [value, onChange]
-  );
+  const locationOptions = locationdata.map((loc) => ({
+    value: loc.location_name,
+    label: loc.location_name,
+  }));
+
+  const updateField = (index, key, newValue) => {
+    const updatedRows = localData.map((row, rowIndex) =>
+      rowIndex === index ? { ...row, [key]: newValue } : row
+    );
+    setLocalData(updatedRows);
+  };
+
+  const syncWithParent = () => {
+    onChange(localData);
+  };
 
   const handleAddRow = () => {
     const newRow = {
@@ -40,13 +39,69 @@ const CustomTableWidget8 = ({
       nonBinary: 0,
       locationandoperation: [],
     };
-    const newData = [...value, newRow];
-    onChange(newData);
+    setLocalData([...localData, newRow]);
+    syncWithParent(); // Update parent
   };
 
   const handleRemoveRow = (index) => {
-    const newData = value.filter((_, i) => i !== index);
-    onChange(newData);
+    const updatedRows = localData.filter((_, rowIndex) => rowIndex !== index);
+    setLocalData(updatedRows);
+    syncWithParent(); // Update parent
+  };
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      border: 'none',
+      boxShadow: 'none',
+      padding: 0,
+      margin: 0,
+      minHeight: 'auto',
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      textAlign: 'left',
+    }),
+    input: (provided) => ({
+      ...provided,
+      margin: 0,
+      padding: 0,
+    }),
+    menu: (provided) => ({
+      ...provided,
+      position: 'relative',
+      zIndex: 1000,
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      maxHeight: '200px',
+    }),
+  };
+
+  const CustomOption = (props) => {
+    const { data, isSelected, innerRef, innerProps } = props;
+
+    return (
+      <div
+        ref={innerRef}
+        {...innerProps}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          backgroundColor: isSelected ? '#e0e0e0' : 'white',
+          padding: '8px',
+          cursor: 'pointer',
+        }}
+      >
+        <input
+          type="checkbox"
+          checked={isSelected}
+          readOnly
+          style={{ marginRight: '8px' }}
+        />
+        {data.label}
+      </div>
+    );
   };
 
   return (
@@ -56,7 +111,7 @@ const CustomTableWidget8 = ({
         className="rounded-md w-full border border-gray-300"
         style={{ borderCollapse: 'separate', borderSpacing: 0 }}
       >
-        <thead className="gradient-background">
+         <thead className="gradient-background">
           <tr>
             {options.titles.map((item, idx) => {
               const uniqueId = Math.floor(Math.random() * 1000000);
@@ -65,15 +120,17 @@ const CustomTableWidget8 = ({
                   key={`header-${idx}`}
                   className={`text-[12px] px-2 py-2 ${
                     idx === 0
-                      ? 'text-center'
-                      : 'text-center border-l border-gray-300'
+                      ? 'text-center w-[25%]'
+                      : idx === 1
+                      ? 'text-center border-l border-gray-300 w-[50%]'
+                      : 'text-center border-l border-gray-300 w-[25%]'
                   }`}
                   colSpan={item.colSpan}
                 >
                   <div className="relative">
                     <p className={`flex justify-center`}>
                       {item.title}
-                      {(idx === 0 || idx === 2) && (
+                      {(idx === 0 || idx === 2 || idx === 1) && (
                         <>
                           <MdInfoOutline
                             data-tooltip-id={`tooltip-${uniqueId}`}
@@ -101,7 +158,7 @@ const CustomTableWidget8 = ({
                 </th>
               );
             })}
-            <th></th>
+            <th className='w-[2%]'></th>
           </tr>
           <tr>
             {options.subTitles.map((item, idx) => (
@@ -123,55 +180,53 @@ const CustomTableWidget8 = ({
         </thead>
 
         <tbody>
-          {value.map((item, rowIndex) => (
-            <tr key={`row-${rowIndex}`}>
-              {Object.keys(item).map((key, cellIndex) => (
+          {localData.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {Object.keys(row).map((key, cellIndex) => (
                 <td
-                  key={`cell-${rowIndex}-${cellIndex}`}
-                  className={`${
-                    cellIndex === 4 ? 'border-t' : 'border-r border-t'
-                  } border-gray-300 p-3`}
+                  key={cellIndex}
+                  className={`p-3 ${
+                    cellIndex ===4 ? 'border-t' : 'border-r border-t'
+                  } border-gray-300`}
                 >
                   {key === 'locationandoperation' ? (
                     <Select
                       isMulti
-                      value={
-                        item[key]?.map((val) => ({
-                          value: val,
-                          label: val,
-                        })) || []
-                      }
+                      value={row[key]?.map((val) => ({
+                        value: val,
+                        label: val,
+                      })) || []}
                       onChange={(selectedOptions) => {
-                        const updatedValues = selectedOptions.map(
-                          (option) => option.value
-                        );
+                        const updatedValues = selectedOptions.map((opt) => opt.value);
                         updateField(rowIndex, key, updatedValues);
                       }}
+                      onBlur={syncWithParent} // Sync with parent on blur
                       options={locationOptions}
-                      className="text-[12px] w-full"
+                      className="text-[12px] w-full border-b"
+                      styles={customStyles}
                       placeholder="Select options"
                       closeMenuOnSelect={false}
                       hideSelectedOptions={false}
                       components={{ Option: CustomOption }}
-                      styles={customStyles}
                     />
                   ) : (
-                    <InputField
+                    <input
                       type={
-                        key === 'male' ||
-                        key === 'female' ||
-                        key === 'nonBinary'
+                        key === 'male' || key === 'female' || key === 'nonBinary'
                           ? 'number'
                           : 'text'
                       }
                       required={required}
-                      value={item[key]}
-                      onChange={(newValue) => updateField(rowIndex, key, newValue)}
+                      value={row[key] || ''}
+                      onChange={(e) => updateField(rowIndex, key, e.target.value)}
+                      onBlur={syncWithParent} // Sync with parent on blur
+                      className="text-[12px] pl-2 py-2  border border-gray-300 rounded-md w-full"
+                      placeholder="Enter data"
                     />
                   )}
                 </td>
               ))}
-              <td className="border-t border-gray-300 p-3">
+              <td className="p-3 border-t border-gray-300">
                 <button onClick={() => handleRemoveRow(rowIndex)}>
                   <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                 </button>
@@ -180,101 +235,17 @@ const CustomTableWidget8 = ({
           ))}
         </tbody>
       </table>
-      <div className="flex right-1 mx-2">
+      <div className="flex mx-2">
         <button
           type="button"
-          className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+          className="text-[#007EEF] text-[13px] flex items-center mt-5 mb-5"
           onClick={handleAddRow}
         >
-          Add category <MdAdd className="text-lg" />
+          Add category <MdAdd className="text-lg ml-1" />
         </button>
       </div>
     </div>
   );
-};
-
-const InputField = ({ type, required, value, onChange }) => {
-  const [inputValue, setInputValue] = useState(value);
-
-  useEffect(() => {
-    setInputValue(value);
-  }, [value]);
-
-  const handleInputChange = (e) => {
-    let newValue = e.target.value;
-    if (type === 'number') {
-      newValue = parseInt(newValue, 10) || 0; // Ensure numeric input
-    }
-    setInputValue(newValue);
-    onChange(newValue); // Update parent state
-  };
-
-  return (
-    <input
-      type={type === 'number' ? 'number' : 'text'}
-      required={required}
-      value={inputValue}
-      onChange={handleInputChange}
-      style={{ width: '100%' }}
-      placeholder="Enter data"
-      className="text-sm pl-2 py-2 text-center border border-gray-300 rounded-md"
-    />
-  );
-};
-
-const CustomOption = (props) => {
-  const { data, isSelected, innerRef, innerProps } = props;
-
-  return (
-    <div
-      ref={innerRef}
-      {...innerProps}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        backgroundColor: isSelected ? '#e0e0e0' : 'white',
-        padding: '8px',
-        cursor: 'pointer',
-      }}
-    >
-      <input
-        type="checkbox"
-        checked={isSelected}
-        readOnly
-        style={{ marginRight: '8px' }}
-      />
-      {data.label}
-    </div>
-  );
-};
-
-const customStyles = {
-  control: (provided) => ({
-    ...provided,
-    border: 'none',
-    boxShadow: 'none',
-    padding: 0,
-    margin: 0,
-    minHeight: 'auto',
-  }),
-  placeholder: (provided) => ({
-    ...provided,
-    textAlign: 'left',
-  }),
-  input: (provided) => ({
-    ...provided,
-    margin: 0,
-    padding: 0,
-  }),
-  menu: (provided) => ({
-    ...provided,
-    position: 'relative',
-    zIndex: 1000,
-  }),
-  menuList: (provided) => ({
-    ...provided,
-    maxHeight: '200px',
-  }),
 };
 
 export default CustomTableWidget8;

@@ -3868,6 +3868,32 @@ export const Energydata = [
     ],
     link: "https://www.globalreporting.org/pdf.ashx?id=12644&page=1",
   },
+  {
+    category: ["53"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 405: Diversity and Equal Opportunity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 405-2: Diversity and Equal Opportunity 2016
+          </p>
+          <div>
+         
+            <p className="text-[11px] text-[#727272] mb-4">
+            The reporting organization can draw from the information used for Disclosure 405-1 to identify the total number of employees in each employee category bygender.
+            </p>
+          </div>
+      
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
+  },
+  
   //  sdg contet start//
   {
     category: ["sd1"],
@@ -5478,6 +5504,7 @@ export const Energydata = [
             <p className="text-[11px] text-[#727272] mb-4">
             End all forms of discrimination against all women and girls everywhere
             </p>
+            
             <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
             Recognize and value unpaid care and domestic work through the provision of public services, infrastructure and social protection policies and the promotion of shared responsibility within the household and the family as nationally appropriate
@@ -5505,5 +5532,102 @@ export const Energydata = [
       </>,
     ],
     link: "https://sdgs.un.org/goals/goal5",
+  },
+  {
+    category: ["sd32"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-05.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-orange-600 text-[17px] font-bold ml-2">SDG 5</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 5: Achieve gender equality and empower all women and girls
+          </p>
+          <div className="">
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            End all forms of discrimination against all women and girls everywhere
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Whether or not legal frameworks are in place to promote, enforce and monitor equality and non‑discrimination on the basis of sex
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Achieve gender equality and empower all women and girls
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of time spent on unpaid domestic and care work, by sex, age and location
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">Ensure women’s full and effective participation and equal opportunities for leadership at all levels of decision-making in political, economic and public lifeEnsure women’s full and effective participation and equal opportunities for leadership at all levels of decision-making in political, economic and public life
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of seats held by women in (a) national parliaments and (b) local governments
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">5.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of seats held by women in (a) national parliaments and (b) local governments
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal5",
+  },
+  {
+    category: ["sd33"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 8: Decent work and economic growth
+          </p>
+          <div className="">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, achieve full and productive employment and decent work for all women and men, including for young people and persons with disabilities, and equal pay for work of equal value
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Average hourly earnings of female and male employees, by occupation, age and persons with disabilities
+            </p>
+         
+        
+            <p className="text-[11px] text-[#222222] mb-2">8.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Unemployment rate, by sex, age and persons with disabilities
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
 ];

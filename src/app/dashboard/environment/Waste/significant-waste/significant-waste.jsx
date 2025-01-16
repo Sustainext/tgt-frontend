@@ -88,7 +88,7 @@ const Significantwaste = ({apiData}) => {
     },
     {
         tagName:'SDG 12',
-        toggle:'48',
+        toggle:'45',
         textColor:"#fff",
         bgColor:"bg-yellow-600"
     },

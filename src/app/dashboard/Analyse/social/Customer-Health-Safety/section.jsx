@@ -38,10 +38,8 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
 
       const formatcustomerhealth = (data) => {
         return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage).toFixed(2);
-          const formattedPercentage = percentage.endsWith(".00")
-            ? percentage.slice(0, -3)
-            : percentage;
+          const percentage = parseFloat(data.percentage);
+          const formattedPercentage = percentage
           return {
             "Organisation/Corporation": data.org_or_corp,
             "Percentage of significant product and service categories for which health and safety impacts are assessed for improvement":

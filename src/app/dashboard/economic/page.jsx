@@ -37,19 +37,52 @@ import {
   setHeaderdisplay,
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { GlobalState } from "@/Context/page";
+import {
+  fetchMaterialityData,
+  setCorpID,
+  setOrgID,
+  setOrgName,
+  setCorpName,
+  setYear,
+  setStartDate,
+  setEndDate,
+} from "../../../lib/redux/features/materialitySlice";
+
+
 const Economic = () => {
   const { open } = GlobalState();
   const [activeTab, setActiveTab] = useState(
     "Management of Material topic Economic Performance"
   );
+ 
+
   const dispatch = useDispatch();
+  const { corporate_id, organization_id, start_date, end_date, data,materiality_year, loading, error } = useSelector(
+    (state) => state.materialitySlice
+  );
+  
+
+  const loadMaterialityDashboard=()=>{
+   dispatch(
+      fetchMaterialityData({
+        corporate: corporate_id,
+        organization: organization_id,
+        start_date:materiality_year?`${materiality_year}-01-01`:'',
+        end_date:materiality_year?`${materiality_year}-12-31`:'',
+      })
+    );
+  }
 
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    loadMaterialityDashboard()
+  }, [dispatch]);
 
   useEffect(() => {
     // List of tabs related to Energy\
@@ -133,7 +166,7 @@ const Economic = () => {
       <div className="w-full">
         <div className="flex">
           <div className="">
-            <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
+            <Aside activeTab={activeTab} handleTabClick={handleTabClick} apiData={data} />
           </div>
           <div
             className={`${
@@ -145,33 +178,33 @@ const Economic = () => {
             {/* Emissions start */}
             {activeTab ===
               "Management of Material topic Economic Performance" && (
-              <EconomicperformanceMaterialtopic />
+              <EconomicperformanceMaterialtopic apiData={data} />
             )}
             {activeTab === "Direct economic value generated & distributed" && (
-              <Directeconomic />
+              <Directeconomic apiData={data} />
             )}
             {/* {activeTab ===
               "Defined benefit plan obligations and other retirement plans" && (
               <Definedbenefit />
             )} */}
             {activeTab === "Financial assistance received from government" && (
-              <Financialassistance />
+              <Financialassistance apiData={data} />
             )}
             {/* Energy start */}
             {activeTab === "Management of Material topic risks" && (
-              <RiskMaterialtopic />
+              <RiskMaterialtopic apiData={data} />
             )}
             {activeTab === "Financial Implications due to climate change" && (
-              <Financialimplications />
+              <Financialimplications apiData={data} />
             )}
-            {activeTab === "Climate related Risks" && <Climaterelatedrisks />}
+            {activeTab === "Climate related Risks" && <Climaterelatedrisks apiData={data} />}
             {activeTab === "Climate Related Opportunities" && (
-              <Climaterelated />
+              <Climaterelated apiData={data} />
             )}
 
             {/* waste start */}
             {activeTab === "Management of Material topic Market" && (
-              <MarketpresenceMaterialtopic />
+              <MarketpresenceMaterialtopic apiData={data} />
             )}
             {/* {activeTab ===
               "Ratios of Standard Entry level wage by gender compared to local minimum wage" && (
@@ -179,19 +212,19 @@ const Economic = () => {
             )} */}
             {activeTab ===
               "Proportion of senior management hired from the local community" && (
-              <PortionOfSeniorManagement />
+              <PortionOfSeniorManagement apiData={data} />
             )}
 
             {/* Materials  start */}
             {activeTab === "Management of Material topic Indirect Economic" && (
-              <IndirecteconomicimpactsMaterialtopic />
+              <IndirecteconomicimpactsMaterialtopic apiData={data} />
             )}
             {activeTab ===
               "Infrastructure investments and services supported" && (
-              <Infrastructureinvestmentsservices />
+              <Infrastructureinvestmentsservices apiData={data} />
             )}
             {activeTab === "Significant indirect economic impacts" && (
-              <Significantindirecteconomic />
+              <Significantindirecteconomic apiData={data} />
             )}
 
             {/* Water start */}
@@ -202,48 +235,48 @@ const Economic = () => {
 
             {/* Supplier start */}
             {activeTab === "Management of Material topic Anti" && (
-              <AnticorruptionMaterialtopic />
+              <AnticorruptionMaterialtopic apiData={data} />
             )}
             {activeTab ===
               "Operations assessed for risks related to corruption" && (
-              <Operationsassessed />
+              <Operationsassessed apiData={data} />
             )}
             {activeTab ===
               "Communication and training about anti-corruption policies and procedures" && (
-              <Communicationtraining />
+              <Communicationtraining apiData={data} />
             )}
             {activeTab ===
               "Confirmed incidents of corruption and actions taken" && (
-              <Confirmedincidents />
+              <Confirmedincidents apiData={data} />
             )}
 
             {activeTab === "Public legal cases regarding corruption" && (
-              <Publiclegal />
+              <Publiclegal apiData={data} />
             )}
             {activeTab === "Anti Competitive Behavior" && (
-              <Anticompetitivebehavior />
+              <Anticompetitivebehavior apiData={data} />
             )}
 
             {activeTab === "Management of Material topic Tax" && (
-              <TaxMaterialtopic />
+              <TaxMaterialtopic apiData={data} />
             )}
-            {activeTab === "Approach to tax" && <Approachtotax />}
+            {activeTab === "Approach to tax" && <Approachtotax apiData={data} />}
             {activeTab === "Tax governance, control, and risk management" && (
-              <Taxgovernance />
+              <Taxgovernance apiData={data} />
             )}
             {activeTab ===
               "Stakeholder engagement and management of concerns related to tax" && (
-              <Stakeholderengagement />
+              <Stakeholderengagement apiData={data} />
             )}
             {activeTab === "Country-by-country reporting" && (
-              <Countrybycountryreporting />
+              <Countrybycountryreporting apiData={data} />
             )}
 
             {activeTab ===
               "Management of Material topic Political Influence" && (
-              <PoliticalInfluenceMaterialtopic />
+              <PoliticalInfluenceMaterialtopic apiData={data} />
             )}
-            {activeTab === "Political Contribution" && <PoliticalInvolvement />}
+            {activeTab === "Political Contribution" && <PoliticalInvolvement apiData={data} />}
           </div>
         </div>
       </div>

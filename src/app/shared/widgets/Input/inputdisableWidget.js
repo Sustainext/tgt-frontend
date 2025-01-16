@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect,useCallback  } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
-
+import _ from "lodash";
 const InputdiableWidget = ({
   onChange,
-  value,
+  value = "",
   placeholder,
   label,
   title,
@@ -26,13 +26,12 @@ const InputdiableWidget = ({
   const [inputValue, setInputValue] = useState(value);
   const inputRef = useRef(null);
 
-
+  const debounceOnChange = useCallback(_.debounce(onChange, 500), [onChange]);
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
-    setInputValue(newValue); 
-    onChange(newValue); 
-    console.log(newValue);
+    setInputValue(newValue);
+    debounceOnChange(newValue);
   };
 
   const handleKeyDown = (event) => {
@@ -58,7 +57,9 @@ const InputdiableWidget = ({
       }
     }
   };
-
+  const handleBlur = () => {
+    debounceOnChange.flush(); // Ensure the final value is sent immediately
+  };
   const tooltipId = schema.title
     ? `tooltip-${schema.title.replace(/\s+/g, "-")}`
     : `tooltip-${id}`;
@@ -108,6 +109,7 @@ const InputdiableWidget = ({
           onChange={handleInputChange} // Update local state and notify parent
           onKeyDown={handleKeyDown}
           disabled={!isEnabled}
+          onBlur={handleBlur}
         />
       </div>
       {hasError && (

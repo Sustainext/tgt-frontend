@@ -27,7 +27,7 @@ const Table = ({ data }) => {
             <th className="border-l border-gray-300 px-4 py-2 text-center text-[12px] text-[#00000] h-[54px]">
               <div className="flex items-center relative">
                 <p>
-                Number of employees who received regular career development review
+                Percentage of employees who received regular career development review
                 </p>
                
               </div>

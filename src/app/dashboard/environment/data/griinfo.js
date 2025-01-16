@@ -250,7 +250,7 @@ export const Energydata = [
         </div>
       </>,
     ],
-    link: "https://sdgs.un.org/goals/goal3",
+    link: "https://sdgs.un.org/goals/goal13",
   },
   {
     category: ["6"],
