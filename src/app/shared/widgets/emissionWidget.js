@@ -1446,7 +1446,7 @@ const EmissionWidget = React.memo(
           isOpen={isInfoModalOpen}
           onClose={closeInfoModal}
           data={{
-            calculatedAt: new Date().toISOString(),
+            // calculatedAt: value.updated_At || new Date().toISOString(),
             scope: scope,
             category: value.Category,
             subCategory: value.Subcategory,

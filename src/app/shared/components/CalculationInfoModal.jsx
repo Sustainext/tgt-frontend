@@ -51,7 +51,7 @@ const CalculationInfoModal = ({ isOpen, onClose, data }) => {
             {result.co2e} tCO<sub>2</sub>e
           </p>
           <p className="text-sm text-gray-500 mt-1">
-            Calculated at {format(new Date(calculatedAt), 'd MMM yyyy HH:mm:ss aa')}
+            Calculated at {format(new Date(result.updated_at), 'd MMM yyyy HH:mm:ss aa')}
           </p>
         </div>
 

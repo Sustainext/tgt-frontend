@@ -196,9 +196,14 @@ export const updateScopeData = createAsyncThunk(
 );
 
 const calculateTotalClimatiqScore = (data) => {
-  if (data && data.result && Array.isArray(data.result)) {
-    const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
-    return (total / 1000).toFixed(3);
+  console.log('Calculating total climatiq score for data:', data);
+  
+  if (data && data.result) {
+    // const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
+    const total = data.total_emission;
+    console.log('Total climatiq score:', total);
+    
+    return total;
   }
   return 0;
 };
@@ -626,6 +631,7 @@ const emissionsSlice = createSlice({
         state.climatiqData.totalScore = calculateTotalClimatiqScore(
           action.payload.climatiqData
         );
+        // state.climatiqData.totalScore = action.payload.total_emission || 0;
         state.climatiqData.scope1 = action.payload.scope_wise_data.scope_1 || 0;
         state.climatiqData.scope2 = action.payload.scope_wise_data.scope_2 || 0;
         state.climatiqData.scope3 = action.payload.scope_wise_data.scope_3 || 0;
