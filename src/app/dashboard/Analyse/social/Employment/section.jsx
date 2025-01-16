@@ -21,6 +21,7 @@ const Section = ({
   const [childdata2, setChilddata2] = useState([]);
   const [childdata4, setChilddata4] = useState([]);
   const [childdata5, setChilddata5] = useState([]);
+  const [childdata3, setChilddata3] = useState([]);
   const [fulltimebe, setFulltimebe] = useState([]);
   const [parttimebe, setParttimbe] = useState([]);
   const [tempebe, setTempebe] = useState([]);
@@ -62,6 +63,7 @@ const Section = ({
         benefits,
         parental_leave,
         return_to_work_rate_and_retention_rate_of_employee,
+        number_of_employee_per_employee_category,
       } = data;
       const formattedLocation = new_employee_hires.map((neh) => ({
         type: neh.type_of_employee,
@@ -96,10 +98,22 @@ const Section = ({
           Male: rt.male,
           Female: rt.female,
         }));
+        const formattedemployeecategory = number_of_employee_per_employee_category.map((etc) => ({
+          "Employee category": etc.Category,
+          Male: etc.percentage_of_male_with_org_governance,
+          Female: etc.percentage_of_female_with_org_governance,
+          NonBinary: etc.percentage_of_non_binary_with_org_governance,
+          ageBelow30: etc.percentage_of_employees_within_30_age_group,
+          age30To50: etc.percentage_of_employees_within_30_to_50_age_group,
+          ageAbove50: etc.percentage_of_employees_more_than_50_age_group,
+          Minoritygroup:etc.percentage_of_employees_in_minority_group,
+          VulnerableCommunities:etc.percentage_of_employees_in_vulnerable_communities,
+        }));
       setChilddata1(formattedLocation);
       setChilddata2(formattedScope);
       setChilddata4(formattedSuppliers);
       setChilddata5(returnemployee);
+      setChilddata3(formattedemployeecategory);
       const {
         benefits_full_time_employees,
         benefits_part_time_employees,
@@ -419,7 +433,7 @@ const Section = ({
                 </div>
 
                 <div>
-                  <Table columns={columns6} data={[]} />
+                  <Table columns={columns6} data={childdata3} />
                 </div>
                 </div>
           </div>

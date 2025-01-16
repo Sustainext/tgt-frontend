@@ -19,10 +19,7 @@ const Section = ({
   const [childdata1, setChilddata1] = useState([]);
   const [childdata2, setChilddata2] = useState([]);
   const [childdata4, setChilddata4] = useState([]);
-  const [childdata5, setChilddata5] = useState([]);
-  const [fulltimebe, setFulltimebe] = useState([]);
-  const [parttimebe, setParttimbe] = useState([]);
-  const [tempebe, setTempebe] = useState([]);
+  const [childdata3, setChilddata3] = useState([]);
   const toastShown = useRef(false);
   const [loopen, setLoOpen] = useState(false);
   const [locationdata, setLocationdata] = useState([]);
@@ -35,12 +32,12 @@ const Section = ({
   const fetchData = async () => {
     setChilddata1([]);
     setChilddata2([]);
-
+    setChilddata3([]);
     setChilddata4([]);
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_employment_analysis`,
+        `/sustainapp/get_diversity_inclusion_analyse`,
         {
           params: {
             organisation: selectedOrg,
@@ -52,91 +49,29 @@ const Section = ({
         }
       );
 
-      const data = response.data.data;
+      const data = response.data;
       console.log(data, "testing");
 
-      const {
-        new_employee_hires,
-        employee_turnover,
-        benefits,
-        parental_leave,
-        return_to_work_rate_and_retention_rate_of_employee,
-      } = data;
-      const formattedLocation = new_employee_hires.map((neh) => ({
-        type: neh.type_of_employee,
-        Totalnoofemployees:neh.total,
-        male: neh.percentage_of_male_employee,
-        female: neh.percentage_of_female_employee,
-        nonBinary: neh.percentage_of_non_binary_employee,
-        ageBelow30: neh.yearsold30,
-        age30To50: neh.yearsold30to50,
-        ageAbove50: neh.yearsold50,
-      }));
-      const formattedScope = employee_turnover.map((et) => ({
-        type: et.type_of_employee,
-        Totalnoofemployees:et.total,
-        male: et.percentage_of_male_employee,
-        female: et.percentage_of_female_employee,
-        nonBinary: et.percentage_of_non_binary_employee,
-        ageBelow30: et.yearsold30,
-        age30To50: et.yearsold30to50,
-        ageAbove50: et.yearsold50,
-      }));
+      const formattedData = data.percentage_of_employees_within_government_bodies.map((item) => [
+        item.male,
+        item.female,
+        item.nonBinary,
+        item.lessThan30,
+        item.between30and50,
+        item.moreThan50,
+        item.minorityGroup,
+        item.vulnerableCommunities,
+      ]);
+      
+      
+     
+      setChilddata1(formattedData);
+      setChilddata2(data.ratio_of_basic_salary_of_women_to_men);
+      setChilddata4(data.marketing_presence);
+      setChilddata3(data.ratio_of_remuneration_of_women_to_men);
 
-      const formattedSuppliers = parental_leave.map((pl) => ({
-        "Employee category": pl.employee_category,
-        Male: pl.male,
-        Female: pl.female,
-        Total: pl.total,
-      }));
-      const returnemployee =
-        return_to_work_rate_and_retention_rate_of_employee.map((rt) => ({
-          "Employee category": rt.employee_category,
-          Male: rt.male,
-          Female: rt.female,
-        }));
-      setChilddata1(formattedLocation);
-      setChilddata2(formattedScope);
-      setChilddata4(formattedSuppliers);
-      setChilddata5(returnemployee);
-      const {
-        benefits_full_time_employees,
-        benefits_part_time_employees,
-        benefits_temporary_employees,
-      } = benefits;
 
-      const formattedFullTimeBenefits = benefits_full_time_employees.map(
-        (bft) => ({
-          hadername: bft.name,
-          selected: bft.selectedLocations,
-        })
-      );
-
-      const formattedPartTimeBenefits = benefits_part_time_employees.map(
-        (bpt) => ({
-          hadername: bpt.name,
-          selected: bpt.selectedLocations,
-        })
-      );
-
-      const formattedTemporaryBenefits = benefits_temporary_employees.map(
-        (bt) => ({
-          hadername: bt.name,
-          selected: bt.selectedLocations,
-        })
-      );
-
-      // Update state with formatted benefits data
-      setFulltimebe(formattedFullTimeBenefits);
-      setParttimbe(formattedPartTimeBenefits);
-      setTempebe(formattedTemporaryBenefits);
-
-      const resultArray = Object.keys(data).map((key) => ({
-        key: key,
-        value: data[key],
-      }));
-
-      setAnalyseData(resultArray);
+  
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -195,7 +130,7 @@ const Section = ({
                   </div>
                   <div className="mb-4">
                     <Table1
-                   data={[]}
+                   data={childdata1}
                     />
                   </div>
                 </div>
@@ -219,7 +154,7 @@ const Section = ({
                   </div>
                   <div className="mb-4">
                     <Table3
-                   data={[]}
+                   data={childdata2}
                     />
                   </div>
                 </div>
@@ -242,7 +177,7 @@ const Section = ({
                   </div>
                   <div className="mb-4">
                     <Table3
-                   data={[]}
+                   data={childdata3}
                     />
                   </div>
                 </div>
@@ -265,7 +200,7 @@ const Section = ({
                   </div>
                   <div className="mb-4">
                     <Table2
-                   data={[]}
+                   data={childdata4}
                     />
                   </div>
                 </div>

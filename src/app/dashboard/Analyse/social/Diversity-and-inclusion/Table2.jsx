@@ -8,7 +8,7 @@ const Table2 = ({ data }) => {
     "Non-Binary",
 
   ];
-
+console.log(data,"markete table");
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full border-collapse block md:table w-full rounded-lg overflow-hidden">
@@ -53,27 +53,25 @@ const Table2 = ({ data }) => {
               </td>
             </tr>
           ) : (
-            data?.map((row, rowIndex) => (
-              row.Q2.map((entry, entryIndex) => (
-                <tr key={`${rowIndex}-${entryIndex}`} className="border border-gray-300 md:table-row">
+           
+              data.map((entry) => (
+                <tr className="border border-gray-300 md:table-row">
                   <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.category}
+                    {entry.Location}
                   </td>
                   <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.male}
+                    {entry.Male}
                   </td>
                   <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.female}
+                    {entry.Female}
                   </td>
                   <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.nonBinary}
+                  {entry['Non-binary']}
                   </td>
-                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.locationandoperation}
-                  </td>
+               
                 </tr>
               ))
-            ))
+            
           )}
         </tbody>
       </table>

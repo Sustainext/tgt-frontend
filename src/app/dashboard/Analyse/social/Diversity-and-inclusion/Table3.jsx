@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 const Table3 = ({ data }) => {
@@ -8,7 +9,7 @@ const Table3 = ({ data }) => {
     "Non-Binary",
     "Significant Location of Operations",
   ];
-
+console.log("test data",data);
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full border-collapse block md:table w-full rounded-lg overflow-hidden">
@@ -64,6 +65,9 @@ const Table3 = ({ data }) => {
                     {entry.category}
                   </td>
                   <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                    {entry.locationandoperation}
+                  </td>
+                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
                     {entry.male}
                   </td>
                   <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
@@ -72,9 +76,7 @@ const Table3 = ({ data }) => {
                   <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
                     {entry.nonBinary}
                   </td>
-                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.locationandoperation}
-                  </td>
+             
                 </tr>
               ))
             ))
