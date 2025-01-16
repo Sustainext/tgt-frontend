@@ -10,7 +10,9 @@ import EconomicHeader5 from "../../EconomicHeader5";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
-const Climaterelatedrisks = () => {
+import EconomicTopBar from '../../economicTopBar.jsx'
+
+const Climaterelatedrisks = ({apiData}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [year, setYear] = useState();
@@ -39,40 +41,29 @@ const Climaterelatedrisks = () => {
     setData(newData);
   }, [category]);
 
+  const sdgData=[
+    {
+        tagName:'GRI 201 - 2',
+        toggle:'118',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+   
+    {
+      tagName:'SDG 13',
+      toggle:'119',
+      textColor:"#fff",
+      bgColor:"bg-[#48773C]"
+  },
+   
+]
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-[60%]">
-           <div className="text-left mb-2 ml-3 pt-5">
-                <p className="text-[11px]">Economic</p>
-              <div className="flex">
-                <div>
-                 <p className="gradient-text text-[22px] font-bold py-2">
-                 Climate Risks and Opportunities
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-[40%] float-end ">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("118")}
-              >
-                GRI 201 - 2
-              </button>
-              <button
-                className="text-[#fff] bg-[#48773C] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("119")}
-              >
-                SDG 13
-              </button>
-            </div>
-          </div>
-        </div>
+        <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Climate Risks and Opportunities'} topic={'ClimateRisksAndOpportunities'} />
+        
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">

@@ -10,7 +10,7 @@ import Socialheader3 from "../../socialheader3";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
-import SocialTopBar from '../../socialheader'
+import SocialTopBar from '../../socialTopBar'
 
 const SoicalProcurementPractices = ({apiData}) => {
   const [activeMonth, setActiveMonth] = useState("");

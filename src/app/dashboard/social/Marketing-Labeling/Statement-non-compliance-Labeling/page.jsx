@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./screen1";
 import { useSelector } from "react-redux";
-import SocialTopBar from '../../socialheader'
+import SocialTopBar from '../../socialTopBar'
 
 const StatementnoncomplianceLabeling = ({apiData}) => {
    const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
