@@ -15,7 +15,7 @@ import CurrencyselectWidget from "../../../../shared/widgets/Select/currencysele
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: CustomTableWidget8,
-  CurrencyselectWidget:CurrencyselectWidget,
+  CurrencyselectWidget: CurrencyselectWidget,
 };
 
 const view_path = "gri-social-salary_ratio-405-2a-number_of_individuals";
@@ -30,7 +30,6 @@ const schema = {
       Q1: {
         type: "string",
         title: "Select a currency to fill the  below table",
-       
       },
       Q2: {
         type: "array",
@@ -48,8 +47,6 @@ const schema = {
           },
         },
       },
-  
- 
     },
   },
 };
@@ -92,7 +89,8 @@ const uiSchema = {
           },
           {
             title: "Significant Location of Operation",
-            tooltip: "This section allows you to enter the organization's significant locations of operation.",
+            tooltip:
+              "This section allows you to enter the organization's significant locations of operation.",
             colSpan: 1,
           },
         ],
@@ -143,8 +141,6 @@ const uiSchema = {
       layout: "horizontal",
     },
   },
-
-
 };
 
 const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
@@ -161,7 +157,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         },
       ],
     },
-    
   ];
   const [locationdata, setLocationdata] = useState();
   const [formData, setFormData] = useState(initialFormData);
@@ -300,7 +295,13 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
@@ -375,7 +376,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           >
             Submit
           </button>
-
         </div>
       </div>
       {loopen && (

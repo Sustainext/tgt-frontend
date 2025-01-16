@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -19,7 +19,7 @@ const Energyconsumption = ({apiData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
-  const drawerRef = useRef(null); 
+  const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -120,8 +120,8 @@ const Energyconsumption = ({apiData}) => {
           </h6>
         </div>
         <div
-            ref={drawerRef} 
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -151,7 +151,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
 
                 {/* Footer (Learn more link) */}
-                <div className="pt-2 pb-4 ml-4"    onClick={toggleDrawerclose}>
+                <div className="pt-2 pb-4 ml-4" onClick={toggleDrawerclose}>
                   <a
                     className="text-[14px] text-[#2196F3] pt-1 inline-flex"
                     href={program.link}

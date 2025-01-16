@@ -1,5 +1,11 @@
 import React from "react";
-import { MdOutlineDiversity1, MdOutlineGroup, MdPublic } from "react-icons/md";
+import {
+  MdOutlineDiversity1,
+  MdOutlineDiversity2,
+  MdOutlineDiversity3,
+  MdOutlineGroup,
+  MdPublic,
+} from "react-icons/md";
 
 const Aside = ({ activeTab, handleTabClick }) => {
   return (
