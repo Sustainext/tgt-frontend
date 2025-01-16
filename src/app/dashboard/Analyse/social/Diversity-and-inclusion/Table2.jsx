@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 
-const Table3 = ({ data }) => {
+const Table2 = ({ data }) => {
   const columns = [
-    "Employee Category",
+    "Location",
     "Male",
     "Female",
     "Non-Binary",
-    "Significant Location of Operations",
+
   ];
-  console.log("test data", data);
+console.log(data,"markete table");
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full border-collapse block md:table w-full rounded-lg overflow-hidden">
@@ -16,34 +16,31 @@ const Table3 = ({ data }) => {
           <tr className="border border-gray-300 md:table-row gradient-background">
             <th
               className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300 w-[25%]"
-              rowSpan="2"
+            
             >
               {columns[0]}
             </th>
             <th
               className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300 w-[25%]"
-              rowSpan="2"
+          
             >
-              {columns[4]}
-            </th>
-            <th
-              className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300w-[50%]"
-              colSpan="3"
-            >
-              Ratio of Remuneration by Gender
-            </th>
-          </tr>
-          <tr className="border border-gray-300 md:table-row gradient-background">
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
               {columns[1]}
             </th>
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
+     
+            <th
+              className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300 w-[25%]"
+           
+            >
               {columns[2]}
             </th>
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
+            <th
+              className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300 w-[25%]"
+          
+            >
               {columns[3]}
             </th>
           </tr>
+   
         </thead>
         <tbody className="block md:table-row-group">
           {data?.length === 0 ? (
@@ -56,32 +53,25 @@ const Table3 = ({ data }) => {
               </td>
             </tr>
           ) : (
-            data?.map((row, rowIndex) =>
-              row.Q2.map((entry, entryIndex) => (
-                <tr
-                  key={`${rowIndex}-${entryIndex}`}
-                  className="border border-gray-300 md:table-row"
-                >
+           
+              data.map((entry) => (
+                <tr className="border border-gray-300 md:table-row">
                   <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.category}
+                    {entry.Location}
                   </td>
                   <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {Array.isArray(entry.locationandoperation)
-                      ? entry.locationandoperation.join(", ")
-                      : entry.locationandoperation}
+                    {entry.Male}
                   </td>
                   <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.male}
+                    {entry.Female}
                   </td>
                   <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.female}
+                  {entry['Non-binary']}
                   </td>
-                  <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.nonBinary}
-                  </td>
+               
                 </tr>
               ))
-            )
+            
           )}
         </tbody>
       </table>
@@ -89,4 +79,4 @@ const Table3 = ({ data }) => {
   );
 };
 
-export default Table3;
+export default Table2;
