@@ -3,9 +3,9 @@ import React from "react";
 const Table3 = ({ data }) => {
   const columns = [
     "Employee Category",
-    "Male",
-    "Female",
-    "Non-Binary",
+    "Women to men",
+    "Non-Binary to Men",
+    "Non-binary to Women",
     "Significant Location of Operations",
   ];
   console.log("test data", data);
@@ -30,7 +30,7 @@ const Table3 = ({ data }) => {
               className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300w-[50%]"
               colSpan="3"
             >
-              Ratio of Remuneration by Gender
+             Ratio of basic salary by Gender
             </th>
           </tr>
           <tr className="border border-gray-300 md:table-row gradient-background">
