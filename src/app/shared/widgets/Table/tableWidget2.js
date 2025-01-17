@@ -79,8 +79,4 @@ const CustomTableWidget2 = ({ id, options, value, required, onChange }) => {
     );
 };
 
-<<<<<<< HEAD
 export default CustomTableWidget2;
-=======
-export default CustomTableWidget2;
->>>>>>> 738a1cae5d564aa03d5aecd63ae6dc354dae62f6

@@ -19,10 +19,11 @@ import {
 import { useDispatch } from "react-redux";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import Moment from "react-moment";
-const AuditLogs = () => {
+const AuditLogsbackup = () => {
   const dispatch = useDispatch();
   const [logs, setLogs] = useState([{}]);
   useEffect(() => {
+    // Update header with step-related information
     dispatch(setHeadertext2("Audit logs"));
     dispatch(setHeaderdisplay("none"));
     dispatch(setMiddlename("List"));
@@ -39,16 +40,22 @@ const AuditLogs = () => {
   const [data, setData] = useState(false);
 
   const handleOpenModal = (log) => {
-    setSelectedLog(log);
+    setSelectedLog(log); // Set the selected log
     setIsOpen4(true);
   };
   const handleCloseModal = () => {
     setIsOpen4(false);
   };
-  const [statusFilter, setStatusFilter] = useState({});
-  const [statusFilter2, setStatusFilter2] = useState({});
-  const [statusFilter3, setStatusFilter3] = useState({});
+  const [statusFilter, setStatusFilter] = useState({
 
+  });
+  const [statusFilter2, setStatusFilter2] = useState({
+
+  });
+  const [statusFilter3, setStatusFilter3] = useState({
+  
+  });
+ 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest(".filter-dropdown")) {
@@ -80,29 +87,26 @@ const AuditLogs = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
 
-  const filteredLogs = logs.filter((log) => {
-    const eventTypeFilterActive = Object.values(statusFilter).some(
-      (value) => value
-    );
-    const eventDetailsFilterActive = Object.values(statusFilter2).some(
-      (value) => value
-    );
-    const userRoleFilterActive = Object.values(statusFilter3).some(
-      (value) => value
-    );
+  const totalPages = Math.ceil(logs.length / rowsPerPage);
 
+  const filteredLogs = logs.filter((log) => {
+    // Filter by EventType if any filter is active
+    const eventTypeFilterActive = Object.values(statusFilter).some((value) => value);
+    const eventDetailsFilterActive = Object.values(statusFilter2).some((value) => value);
+    const userRoleFilterActive = Object.values(statusFilter3).some((value) => value);
+  
     const eventTypeMatch = eventTypeFilterActive
       ? statusFilter[log.EventType] || false
       : true;
-
+  
     const eventDetailsMatch = eventDetailsFilterActive
       ? statusFilter2[log.EventDetails] || false
       : true;
-
+  
     const userRoleMatch = userRoleFilterActive
       ? statusFilter3[log.UserRole] || false
       : true;
-
+  
     // Search Filter with fallback for undefined/null values
     const searchValue = searchQuery.toLowerCase();
     const searchMatch =
@@ -111,23 +115,17 @@ const AuditLogs = () => {
       (log.Action || "").toLowerCase().includes(searchValue) ||
       (log.EventType || "").toLowerCase().includes(searchValue) ||
       (log.EventDetails || "").toLowerCase().includes(searchValue);
-
+  
     // Return combined filter conditions
     return eventTypeMatch && eventDetailsMatch && userRoleMatch && searchMatch;
   });
-
-  const totalPages = Math.ceil(filteredLogs.length / rowsPerPage);
-
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages || 1); 
-    }
-  }, [totalPages, currentPage]);
-
+  
   const paginatedLogs = filteredLogs.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
+  
+  
 
   const handlePageChange = (page) => setCurrentPage(page);
 
@@ -165,9 +163,7 @@ const AuditLogs = () => {
   }, [fromDate, toDate]);
   const formatDate = (isoDate) => {
     const date = new Date(isoDate);
-    const formattedDate = `${
-      date.getMonth() + 1
-    }/${date.getDate()}/${date.getFullYear()}`;
+    const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     const hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, "0");
     const seconds = date.getSeconds().toString().padStart(2, "0");
@@ -176,40 +172,39 @@ const AuditLogs = () => {
     return `${formattedDate} ${formattedTime}`;
   };
   const handleFileDownload = () => {
-    // Use filteredLogs for download
-    if (filteredLogs.length > 0) {
-      const formattedLogs = filteredLogs.map((log) => ({
+    if (logs.length > 0) {
+      const formattedLogs = logs.map((log) => ({
         "Event Type": log.EventType,
         "Event Details": log.EventDetails,
-        Action: log.Action,
-        Status: log.Status,
+        "Action": log.Action,
+        "Status": log.Status,
         "User Email": log.UserEmail,
         "User Role": log.UserRole,
         "Date & Time": formatDate(log.TimeGenerated),
         "IP Address": log.IPAddress,
-        Logs: JSON.stringify(log.Logs || {}),
+        "Logs": JSON.stringify(log.Logs || {}),
       }));
 
       const worksheet = XLSX.utils.json_to_sheet(formattedLogs);
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Filtered Audit Logs");
-      XLSX.writeFile(workbook, "Filtered_AuditLogs.csv");
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Audit Logs");
+      XLSX.writeFile(workbook, "AuditLogs.csv");
     } else {
       alert("No data available for download.");
     }
   };
-
   const loadFormData = async () => {
     LoaderOpen();
-
+  
     const url = `${process.env.BACKEND_API_URL}/sustainapp/get_org_logs/`;
     const params = { from_date: fromDate, to_date: toDate }; // Add date parameters
-
+  
     try {
       const response = await axiosInstance.get(url, { params }); // Pass params in API call
       console.log("API called successfully:", response.data.results);
       setLogs(response.data.results || []); // Ensure it's an array
       setData(true); // Set data availability
+
     } catch (error) {
       console.error("Error fetching logs:", error);
       setLogs([]); // Reset to an empty array on error
@@ -218,52 +213,52 @@ const AuditLogs = () => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (logs.length > 0) {
-      // Extract unique values and filter out undefined/null
-      const uniqueEventTypes = [
-        ...new Set(logs.map((log) => log.EventType).filter(Boolean)),
-      ];
-      const uniqueEventDetails = [
-        ...new Set(logs.map((log) => log.EventDetails).filter(Boolean)),
-      ];
-      const uniqueUserRoles = [
-        ...new Set(logs.map((log) => log.UserRole).filter(Boolean)),
-      ];
+useEffect(() => {
+  if (logs.length > 0) {
+    // Extract unique values and filter out undefined/null
+    const uniqueEventTypes = [
+      ...new Set(logs.map((log) => log.EventType).filter(Boolean)),
+    ];
+    const uniqueEventDetails = [
+      ...new Set(logs.map((log) => log.EventDetails).filter(Boolean)),
+    ];
+    const uniqueUserRoles = [
+      ...new Set(logs.map((log) => log.UserRole).filter(Boolean)),
+    ];
 
-      // Initialize filter states
-      const eventTypeFilter = uniqueEventTypes.reduce((acc, value) => {
-        acc[value] = false;
-        return acc;
-      }, {});
+    // Initialize filter states
+    const eventTypeFilter = uniqueEventTypes.reduce((acc, value) => {
+      acc[value] = false;
+      return acc;
+    }, {});
 
-      const eventDetailsFilter = uniqueEventDetails.reduce((acc, value) => {
-        acc[value] = false;
-        return acc;
-      }, {});
+    const eventDetailsFilter = uniqueEventDetails.reduce((acc, value) => {
+      acc[value] = false;
+      return acc;
+    }, {});
 
-      const userRoleFilter = uniqueUserRoles.reduce((acc, value) => {
-        acc[value] = false;
-        return acc;
-      }, {});
+    const userRoleFilter = uniqueUserRoles.reduce((acc, value) => {
+      acc[value] = false;
+      return acc;
+    }, {});
 
-      setStatusFilter(eventTypeFilter);
-      setStatusFilter2(eventDetailsFilter);
-      setStatusFilter3(userRoleFilter);
-    } else {
-      // Reset filters if logs are empty
-      setStatusFilter({});
-      setStatusFilter2({});
-      setStatusFilter3({});
-    }
-  }, [logs]);
+    setStatusFilter(eventTypeFilter);
+    setStatusFilter2(eventDetailsFilter);
+    setStatusFilter3(userRoleFilter);
+  } else {
+    // Reset filters if logs are empty
+    setStatusFilter({});
+    setStatusFilter2({});
+    setStatusFilter3({});
+  }
+}, [logs]);
 
   return (
     <div className="p-6 min-h-screen">
       <div className="flex justify-between items-center mb-6 border-b h-[66px]">
         <h1
           className="gradient-text text-[22px] h-[22px]"
-          style={{ lineHeight: "14px", marginTop: "10px" }}
+          style={{ lineHeight: "14px",marginTop:"10px" }}
         >
           Audit Logs
         </h1>
@@ -422,32 +417,30 @@ const AuditLogs = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {data && paginatedLogs.length > 0 ? (
-              paginatedLogs.map((log, index) => (
-                <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
-                    {log.EventType}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
-                    {log.EventDetails}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
-                    {log.Action}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
-                    {log.Status}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
-                    {log.UserEmail}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
-                    {log.UserRole}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085] ">
+  {data && paginatedLogs.length > 0 ? (
+    paginatedLogs.map((log, index) => (
+      <tr key={index}>
+        <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
+          {log.EventType}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
+          {log.EventDetails}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
+          {log.Action}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
+          {log.Status}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
+          {log.UserEmail}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085]">
+          {log.UserRole}
+        </td>
+       <td className="px-6 py-4 whitespace-nowrap text-[13px] border-r text-[#667085] ">
                     <div className="flex">
-                      <Moment format="M/D/YYYY | h:mm:ss A">
-                        {log.TimeGenerated}
-                      </Moment>
+                    <Moment format="M/D/YYYY | h:mm:ss A">{log.TimeGenerated}</Moment>
                       <p
                         className="text-[#007EEF] text-[12px] ml-2 cursor-pointer"
                         onClick={() => handleOpenModal(log)}
@@ -456,19 +449,20 @@ const AuditLogs = () => {
                       </p>
                     </div>
                   </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan={7}
-                  className="px-6 py-4 text-center whitespace-nowrap text-[13px] text-[#667085]"
-                >
-                  No data available
-                </td>
-              </tr>
-            )}
-          </tbody>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td
+        colSpan={7}
+        className="px-6 py-4 text-center whitespace-nowrap text-[13px] text-[#667085]"
+      >
+        No data available
+      </td>
+    </tr>
+  )}
+</tbody>
+
         </table>
       </div>
 
@@ -643,9 +637,8 @@ const AuditLogs = () => {
                 </div>
                 <div>
                   <p className="text-[#667085] text-[16px]">
-                    <Moment format="M/D/YYYY | h:mm:ss A">
-                      {selectedLog.TimeGenerated}
-                    </Moment>
+                  <Moment format="M/D/YYYY | h:mm:ss A">{selectedLog.TimeGenerated}</Moment>
+               
                   </p>
                 </div>
               </div>
@@ -669,4 +662,4 @@ const AuditLogs = () => {
   );
 };
 
-export default AuditLogs;
+export default AuditLogsbackup;
