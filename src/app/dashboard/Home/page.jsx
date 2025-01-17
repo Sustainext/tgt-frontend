@@ -5,6 +5,8 @@ import MyTasks from "./TasksNew/MyTask";
 // import MyGoals from "./MyGoals/MyGoals";
 import Preferences from "./Preferences/page";
 
+import FrameworkProgress from './FrameworkProgress/page'
+
 const HomeDashboard = () => {
   return (
     <>
@@ -15,6 +17,22 @@ const HomeDashboard = () => {
           </div>
           <div className="col-start-1 row-start-2 rounded-lg">
             <MyGoals />
+          </div>
+        </div>
+        <div className="w-1/2 space-y-4 mb-8">
+          <div className="grid grid-cols-2 gap-4">
+            <div >
+            <FrameworkProgress/>
+            </div>
+            {/* <div >
+            <FrameworkProgress/>
+            </div>
+            <div>
+              <FrameworkProgress/>
+            </div>
+            <div >
+            <FrameworkProgress/>
+            </div> */}
           </div>
         </div>
         {/* <div className="row-span-2 col-start-2 row-start-1 rounded-lg shadow border border-gray-200 p-4 h-[660px] w-3/5 overflow-auto table-scrollbar">
