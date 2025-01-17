@@ -4,7 +4,7 @@ import Aside from "./sidepanel";
 import Parentalleave from "./Employment/Parental-Leave/page";
 import Benefits from "./Employment/Benefits/page";
 import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page";
-import Definedbenefit from "./Employment/defined-benefit/page"
+import Definedbenefit from "./Employment/defined-benefit/page";
 import EmploymentMaterialtopic from "./Employment/Management-Material-topic/page";
 import LaborManagementMaterialtopic from "./Labor-Management/Management-Material-topic/page";
 import Noticeperiod from "./Labor-Management/Notice-Period/page";
@@ -12,8 +12,8 @@ import CollectiveBargaining from "./Labor-Management/Collective-Bargaining/page"
 import OHSMaterialtopic from "./OHS/Management-Material-topic/page";
 import Ohsmanagment from "./OHS/ohs-management/page";
 import Riskassessment from "./OHS/risk-assessment/page";
-import WorkersRight from "./OHS/Workers-Right/page"
-import HazardReporting from "./OHS/Hazard-Reporting/page"
+import WorkersRight from "./OHS/Workers-Right/page";
+import HazardReporting from "./OHS/Hazard-Reporting/page";
 import Ohsservices from "./OHS/ohs-services/page";
 import Workinvolvement from "./OHS/work-involvement/page";
 import Ohstraining from "./OHS/ohs-training/page";
@@ -24,7 +24,7 @@ import Ohsmanagementsystemcoverage from "./OHS/ohs-management-system-coverage/pa
 import Injuries from "./OHS/Injuries/page";
 import Illhealth from "./OHS/ill-health/page";
 import InjuriesHazards from "./OHS/Injuries-Hazards/page";
-import IllhealthHazard from "./OHS/Illhealth-Hazard/page"
+import IllhealthHazard from "./OHS/Illhealth-Hazard/page";
 import TrainingMaterialtopic from "./Training/Management-Material-topic/page";
 import Traininghours from "./Training/Training-hours/page";
 import Skillupgrade from "./Training/skill-upgrade/page";
@@ -37,34 +37,34 @@ import NonDiscriminationMaterialtopic from "./Non-Discrimination/Management-Mate
 import IncidentsofDiscrimination from "./Non-Discrimination/Incidents-of-Discrimination/page";
 import HumanRightsMaterialtopic from "./Human-Rights/Management-Material-topic/page";
 import CommunityEngagement from "./Human-Rights/Community-Engagement/page";
-import ImpactonCommunity from "./Human-Rights/Impact-on-Community/page"
-import IndigenousPeople from "./Human-Rights/Indigenous-People/page"
-import Securitypersonnel from "./Human-Rights/security-personnel/Section1/page"
-import Securitypersonnel2 from "./Human-Rights/security-personnel/Section2/page"
-import ChildForcedLabourMaterialtopic from "./Child-Forced-Labour/Management-Material-topic/page"
-import Childlabour from "./Child-Forced-Labour/child-labour/page"
-import Forcedorcompulsorylabour from "./Child-Forced-Labour/forced-or-compulsory-labour/page"
-import SupplierMaterialtopic from "./Supplier-social-assessment/Management-Material-topic/page"
-import Suppliersscreened from "./Supplier-social-assessment/Impacts-actions-taken/page"
-import Impactsactionstaken from "./Supplier-social-assessment/Suppliers-screened/page"
-import SoicalProcurementPractices from "./Supplier-social-assessment/procurement-practices/page"
-import HealthSafetyMaterialtopic from "./Customer-Health-Safety/Management-Material-topic/page"
-import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page"
-import Compliance from "./Customer-Health-Safety/Compliance/Section1/page"
-import ProductsService from "./Customer-Health-Safety/Products-Service/Section2/page"
-import MarketingLabelingMaterialtopic from "./Marketing-Labeling/Management-Material-topic/page"
-import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/Section1/page"
-import ProductServicelabelling2 from "./Marketing-Labeling/Product-Service-labelling/Section2/page"
-import NoncomplianceincidentsLabelling from "./Marketing-Labeling/Non-compliance-incidents-Labelling/page"
-import StatementnoncomplianceLabeling  from "./Marketing-Labeling/Statement-non-compliance-Labeling/page"
-import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance-incidents-Marketing/page"
-import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page"
-import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material-topic/page"
-import CustomerPrivacy from "./Customer-Privacy/Section1/page"
-import CustomerPrivacy2 from "./Customer-Privacy/Section2/page"
-import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page"
-import IdentifingInformation from './BillS-211/Identifying-information/page'
-import AnnualReport from './BillS-211/annual-report/page'
+import ImpactonCommunity from "./Human-Rights/Impact-on-Community/page";
+import IndigenousPeople from "./Human-Rights/Indigenous-People/page";
+import Securitypersonnel from "./Human-Rights/security-personnel/Section1/page";
+import Securitypersonnel2 from "./Human-Rights/security-personnel/Section2/page";
+import ChildForcedLabourMaterialtopic from "./Child-Forced-Labour/Management-Material-topic/page";
+import Childlabour from "./Child-Forced-Labour/child-labour/page";
+import Forcedorcompulsorylabour from "./Child-Forced-Labour/forced-or-compulsory-labour/page";
+import SupplierMaterialtopic from "./Supplier-social-assessment/Management-Material-topic/page";
+import Suppliersscreened from "./Supplier-social-assessment/Impacts-actions-taken/page";
+import Impactsactionstaken from "./Supplier-social-assessment/Suppliers-screened/page";
+import SoicalProcurementPractices from "./Supplier-social-assessment/procurement-practices/page";
+import HealthSafetyMaterialtopic from "./Customer-Health-Safety/Management-Material-topic/page";
+import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page";
+import Compliance from "./Customer-Health-Safety/Compliance/Section1/page";
+import ProductsService from "./Customer-Health-Safety/Products-Service/Section2/page";
+import MarketingLabelingMaterialtopic from "./Marketing-Labeling/Management-Material-topic/page";
+import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/Section1/page";
+import ProductServicelabelling2 from "./Marketing-Labeling/Product-Service-labelling/Section2/page";
+import NoncomplianceincidentsLabelling from "./Marketing-Labeling/Non-compliance-incidents-Labelling/page";
+import StatementnoncomplianceLabeling from "./Marketing-Labeling/Statement-non-compliance-Labeling/page";
+import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance-incidents-Marketing/page";
+import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page";
+import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material-topic/page";
+import CustomerPrivacy from "./Customer-Privacy/Section1/page";
+import CustomerPrivacy2 from "./Customer-Privacy/Section2/page";
+import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page";
+import IdentifingInformation from "./BillS-211/Identifying-information/page";
+import AnnualReport from "./BillS-211/annual-report/page";
 
 import {
   setHeadertext1,
@@ -137,12 +137,10 @@ const Social = () => {
       "Benefits",
       "Parental Leave",
       "Retirement Benefits",
-      ,"Diversity of Employees",
+      ,
+      "Diversity of Employees",
     ];
-    const BillS211Tabs = [
-      "Identifying Information",
-      "Annual report"
-    ];
+    const BillS211Tabs = ["Identifying Information", "Annual report"];
     const energyTabs = ["Notice Period", "Collective Bargaining"];
 
     // List of tabs related to Waste
@@ -172,7 +170,11 @@ const Social = () => {
     ];
 
     // List of tabs related to Water
-    const waterTabs = ["Diversity of the Board", "Salary Ratio","Entry Level Wage"];
+    const waterTabs = [
+      "Diversity of the Board",
+      "Salary Ratio",
+      "Entry Level Wage",
+    ];
 
     // List of tabs related to Supplier
     const supplierTabs = ["Incidents of Discrimination"];
@@ -183,16 +185,11 @@ const Social = () => {
       "Security Personnel",
       "Security Personnel2",
     ];
-    const TaxTabs = [
-      "Child Labour",
-      "Forced or Compulsory Labour",
-  
-    ];
+    const TaxTabs = ["Child Labour", "Forced or Compulsory Labour"];
     const SupplyTabs = [
       "Suppliers Screened",
       "Impacts & Actions Taken",
       "Procurement Practices",
-  
     ];
     const SafetyTabs = [
       "Product/Service Safety",
@@ -206,14 +203,8 @@ const Social = () => {
       "Statement of non compliance - Labeling",
       "Non compliance incidents - Marketing",
       "Statement of non compliance - Marketing",
-
     ];
-    const PrivacyTabs = [
-      "Customer Privacy",
-      "Statement of Fact"
-   
-
-    ];
+    const PrivacyTabs = ["Customer Privacy", "Statement of Fact"];
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Employment"));
@@ -235,19 +226,15 @@ const Social = () => {
       dispatch(setHeadertext2("Child and Forced Labour"));
     } else if (SupplyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Supply Chain Labor Standards"));
-    } 
-    else if (SafetyTabs.includes(activeTab)) {
+    } else if (SafetyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Product Safety & Quality"));
-    }
-    else if (MarketingTabs.includes(activeTab)) {
+    } else if (MarketingTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Marketing and Labeling"));
-    } 
-    else if (PrivacyTabs.includes(activeTab)) {
+    } else if (PrivacyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Customer Privacy & Data Security"));
-    }else if (BillS211Tabs.includes(activeTab)) {
+    } else if (BillS211Tabs.includes(activeTab)) {
       dispatch(setHeadertext2("Bill S-211"));
-    }
-     else {
+    } else {
       dispatch(setHeadertext2(`${activeTab}`));
     }
     dispatch(setHeadertext1("Collect"));

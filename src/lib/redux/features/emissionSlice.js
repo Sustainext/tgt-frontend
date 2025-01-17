@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../app/utils/axiosMiddleware";
 import { getMonthName } from "../../../app/utils/dateUtils";
 import { v4 as uuidv4 } from "uuid";
-import { set } from "lodash";
 
 export const fetchEmissionsData = createAsyncThunk(
   "emissions/fetchEmissionsData",
@@ -71,6 +70,7 @@ export const fetchEmissionsData = createAsyncThunk(
         ...processScope(scope2Response, "scope2"),
         ...processScope(scope3Response, "scope3"),
         params: { location, year, month },
+        scope_wise_data: climatiqResponse.data.scope_wise_data || {},
       };
     } catch (error) {
       console.error("Error fetching emissions data:", error);
@@ -80,6 +80,23 @@ export const fetchEmissionsData = createAsyncThunk(
     }
   }
 );
+
+const findClimatiqDataById = (rawData, searchId) => {
+  console.log("Raw Data:", rawData,searchId);
+  
+  if (!rawData || !rawData.result || !Array.isArray(rawData.result)) return null;
+  const foundItem = rawData.result.find(item => {
+    console.log("Checking item:", { itemId: item.unique_id, searchId });
+    return item.unique_id === searchId;
+  });
+ 
+  console.log("Search result:", foundItem);
+  return foundItem || null;
+};
+
+export const searchClimatiqDataById = (state, searchId) => {
+  return findClimatiqDataById(state.emissions.climatiqData.rawData, searchId);
+};
 
 export const fetchPreviousMonthData = createAsyncThunk(
   "emissions/fetchPreviousMonthData",
@@ -179,9 +196,14 @@ export const updateScopeData = createAsyncThunk(
 );
 
 const calculateTotalClimatiqScore = (data) => {
-  if (data && data.result && Array.isArray(data.result)) {
-    const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
-    return (total / 1000).toFixed(3);
+  console.log('Calculating total climatiq score for data:', data);
+  
+  if (data && data.result) {
+    // const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
+    const total = data.total_emission;
+    console.log('Total climatiq score:', total);
+    
+    return total;
   }
   return 0;
 };
@@ -322,6 +344,9 @@ const emissionsSlice = createSlice({
     climatiqData: {
       rawData: {},
       totalScore: 0,
+      scope1: 0,
+      scope2: 0,
+      scope3: 0,
       status: "idle",
       error: null,
       params: null,
@@ -606,6 +631,10 @@ const emissionsSlice = createSlice({
         state.climatiqData.totalScore = calculateTotalClimatiqScore(
           action.payload.climatiqData
         );
+        // state.climatiqData.totalScore = action.payload.total_emission || 0;
+        state.climatiqData.scope1 = action.payload.scope_wise_data.scope_1 || 0;
+        state.climatiqData.scope2 = action.payload.scope_wise_data.scope_2 || 0;
+        state.climatiqData.scope3 = action.payload.scope_wise_data.scope_3 || 0;
         state.scope1Data.data = action.payload.scope1Data;
         state.scope2Data.data = action.payload.scope2Data;
         state.scope3Data.data = action.payload.scope3Data;
@@ -642,6 +671,7 @@ const emissionsSlice = createSlice({
         const { scope, data, params } = action.payload;
         state[`scope${scope}Data`].data = data;
         state.updateScopeParams = params;
+        state.approvedTasks[`scope${scope}`] = [];
       })
       .addCase(updateScopeData.rejected, (state, action) => {
         state.updateScopeStatus = "failed";

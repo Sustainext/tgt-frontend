@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -86,7 +86,8 @@ const Benefits = ({apiData}) => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Benefits provided to full-time employees that are not provided to temporary or part-time employees
+            Benefits provided to full-time employees that are not provided to
+            temporary or part-time employees
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -102,8 +103,8 @@ const Benefits = ({apiData}) => {
                         </ReactTooltip> */}
           </h6>
         </div>
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"

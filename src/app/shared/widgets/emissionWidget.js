@@ -11,7 +11,7 @@ import { TbUpload } from "react-icons/tb";
 import debounce from "lodash/debounce";
 import { toast } from "react-toastify";
 import { BlobServiceClient } from "@azure/storage-blob";
-import { MdClose } from "react-icons/md";
+import { MdClose, MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiFileExcel2Line } from "react-icons/ri";
 import { BsFiletypePdf, BsFileEarmarkImage } from "react-icons/bs";
 import { Tooltip as ReactTooltip } from "react-tooltip";
@@ -28,6 +28,7 @@ import AssignEmissionModal from "./assignEmissionModal";
 import MultipleAssignEmissionModal from "./MultipleAssignEmissionModal";
 import { getMonthName } from "@/app/utils/dateUtils";
 import { fetchClimatiqActivities } from "../../utils/climatiqApi.js";
+import CalculationInfoModal from "@/app/shared/components/CalculationInfoModal";
 
 const EmissionWidget = React.memo(
   ({
@@ -257,333 +258,6 @@ const EmissionWidget = React.memo(
       fetchBaseCategories();
     }, []);
 
-    // Create cache key function
-    const getCacheKey = (subcategory, region, year) => {
-      return `${subcategory}_${region}_${year}`;
-    };
-
-    let wildcard = false;
-
-    // const fetchActivities = useCallback(
-    //   async (page = 1, customFetchExecuted = false) => {
-    //     if (isFetching.current) return;
-    //     isFetching.current = true;
-
-    //     const updateCacheAndActivities = (data, type = "default") => {
-    //       setActivities((prevData) => {
-    //         const updatedData = [...prevData, ...data];
-    //         // Update cache with composite key
-    //         const cacheKey = getCacheKey(subcategory, countryCode, year);
-    //         updateCache(cacheKey, updatedData);
-    //         return updatedData;
-    //       });
-    //     };
-
-    //     // Check cache with composite key
-    //     const cacheKey = getCacheKey(subcategory, countryCode, year);
-    //     if (activityCache[cacheKey]) {
-    //       console.log(
-    //         "Using cached activities for",
-    //         cacheKey,
-    //         activityCache[cacheKey]
-    //       );
-    //       setActivities(activityCache[cacheKey]);
-    //       isFetching.current = false;
-    //       return;
-    //     }
-
-    //     const baseURL = "https://api.climatiq.io";
-    //     const resultsPerPage = 500;
-    //     const axiosConfig = {
-    //       headers: {
-    //         Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
-    //         Accept: "application/json",
-    //         "Content-type": "application/json",
-    //       },
-    //     };
-
-    //     if (!category || !subcategory || !year || !countryCode) {
-    //       console.warn(
-    //         "Category, Subcategory, Year, and CountryCode are required"
-    //       );
-    //       isFetching.current = false;
-    //       return;
-    //     }
-
-    //     const region = countryCode || "*";
-    //     let currentYear = year;
-    //     if (year === "2024") currentYear = "2023";
-    //     let wildcardResultZero = false;
-
-    //     let totalResults = 0;
-    //     let totalPrivateResults = 0;
-    //     let totalPages = 1;
-    //     let totalPagesCustom = 0;
-    //     let activitiesData = [];
-    //     let wildcardActivitiesData = [];
-    //     let yearlyResponseData = [];
-    //     let customFetchData = [];
-
-    //     try {
-    //       while (page <= totalPages) {
-    //         if (!wildcard) {
-    //           const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
-    //           const response = await axios.get(url, axiosConfig);
-
-    //           activitiesData = [...activitiesData, ...response.data.results];
-    //           updateCacheAndActivities(response.data.results);
-
-    //           totalResults = response.data.results.length;
-    //           totalPages = response.data.last_page;
-    //           totalPrivateResults = activitiesData.reduce((count, activity) => {
-    //             if (activity.access_type === "private") {
-    //               count += 1;
-    //             }
-    //             return count;
-    //           }, 0);
-    //         }
-
-    //         const effectiveCount = totalResults - totalPrivateResults;
-    //         if (effectiveCount <= 5) {
-    //           wildcard = true;
-    //         }
-
-    //         if (wildcard) {
-    //           const wildcardResponse = await axios.get(
-    //             `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
-    //             axiosConfig
-    //           );
-
-    //           wildcardActivitiesData = [
-    //             ...wildcardActivitiesData,
-    //             ...wildcardResponse.data.results,
-    //           ];
-    //           updateCacheAndActivities(wildcardResponse.data.results);
-
-    //           totalPages = wildcardResponse.data.last_page;
-
-    //           if (totalPages === 0) wildcardResultZero = true;
-
-    //           if (wildcardResultZero) {
-    //             for (let i = currentYear - 1; i >= 2019; i--) {
-    //               const yearlyResponse = await axios.get(
-    //                 `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
-    //                 axiosConfig
-    //               );
-    //               const yearlyActivitiesData = yearlyResponse.data.results;
-    //               totalPages = yearlyResponse.data.last_page;
-    //               yearlyResponseData = [
-    //                 ...yearlyResponseData,
-    //                 ...yearlyActivitiesData,
-    //               ];
-    //               if (yearlyActivitiesData.length !== 0) break;
-    //             }
-    //             updateCacheAndActivities(yearlyResponseData);
-    //           }
-
-    //           if (
-    //             categoriesToAppend.includes(subcategory) &&
-    //             categoryMappings[subcategory] &&
-    //             !customFetchExecuted
-    //           ) {
-    //             for (const entry of categoryMappings[subcategory]) {
-    //               const source = entry.source;
-    //               const year = entry.year;
-
-    //               const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
-
-    //               const response = await axios.get(url, axiosConfig);
-    //               customFetchData = customFetchData.concat(
-    //                 response.data.results
-    //               );
-    //               totalPagesCustom = response.data.last_page;
-    //             }
-    //             updateCacheAndActivities(customFetchData);
-    //             customFetchExecuted = true;
-    //           }
-    //         }
-    //         page++;
-    //       }
-    //     } catch (error) {
-    //       console.error("Error fetching data from different regions: ", error);
-    //     } finally {
-    //       isFetching.current = false;
-    //     }
-    //   },
-    //   []
-    // );
-
-    // const fetchActivities = useCallback(
-    //   async (page = 1, customFetchExecuted = false) => {
-    //     if (isFetching.current) return;
-    //     isFetching.current = true;
-
-    //     const updateCacheAndActivities = (data, type = "default") => {
-    //       setActivities((prevData) => {
-    //         const updatedData = [...prevData, ...data];
-    //         const cacheKey = getCacheKey(subcategory, countryCode, year);
-    //         updateCache(cacheKey, updatedData);
-    //         return updatedData;
-    //       });
-    //     };
-
-    //     const cacheKey = getCacheKey(subcategory, countryCode, year);
-    //     if (activityCache[cacheKey]) {
-    //       console.log(
-    //         "Using cached activities for",
-    //         cacheKey,
-    //         activityCache[cacheKey]
-    //       );
-    //       setActivities(activityCache[cacheKey]);
-    //       isFetching.current = false;
-    //       return;
-    //     }
-
-    //     if (!category || !subcategory || !year || !countryCode) {
-    //       console.warn(
-    //         "Category, Subcategory, Year, and CountryCode are required"
-    //       );
-    //       isFetching.current = false;
-    //       return;
-    //     }
-
-    //     const region = countryCode || "*";
-    //     let currentYear = year;
-    //     if (year === "2024") currentYear = "2023";
-    //     let wildcardResultZero = false;
-
-    //     let totalResults = 0;
-    //     let totalPrivateResults = 0;
-    //     let totalPages = 1;
-    //     let totalPagesCustom = 0;
-    //     let activitiesData = [];
-    //     let wildcardActivitiesData = [];
-    //     let yearlyResponseData = [];
-    //     let customFetchData = [];
-
-    //     try {
-    //       while (page <= totalPages) {
-    //         if (!wildcard) {
-    //           const params = new URLSearchParams({
-    //             page: page.toString(),
-    //             year: currentYear.toString(),
-    //             region: `${region}*`,
-    //             category: subcategory,
-    //             resultsPerPage: "500",
-    //           });
-
-    //           console.log(
-    //             "Fetching from API with params:",
-    //             Object.fromEntries(params.entries())
-    //           );
-
-    //           const response = await fetch(`/api/climatiq?${params}`);
-    //           const data = await response.json();
-
-    //           if (!response.ok) {
-    //             throw new Error(data.error || "Failed to fetch data");
-    //           }
-
-    //           activitiesData = [...activitiesData, ...data.results];
-    //           updateCacheAndActivities(data.results);
-
-    //           totalResults = data.results.length;
-    //           totalPages = data.last_page;
-    //           totalPrivateResults = activitiesData.reduce((count, activity) => {
-    //             if (activity.access_type === "private") {
-    //               count += 1;
-    //             }
-    //             return count;
-    //           }, 0);
-    //         }
-
-    //         const effectiveCount = totalResults - totalPrivateResults;
-    //         if (effectiveCount <= 5) {
-    //           wildcard = true;
-    //         }
-
-    //         if (wildcard) {
-    //           const wildcardParams = new URLSearchParams({
-    //             page: page.toString(),
-    //             year: currentYear.toString(),
-    //             region: "*",
-    //             category: subcategory,
-    //             resultsPerPage: "500",
-    //           });
-
-    //           const response = await fetch(`/api/climatiq?${wildcardParams}`);
-    //           const data = await response.json();
-
-    //           wildcardActivitiesData = [
-    //             ...wildcardActivitiesData,
-    //             ...data.results,
-    //           ];
-    //           updateCacheAndActivities(data.results);
-
-    //           totalPages = data.last_page;
-
-    //           if (totalPages === 0) wildcardResultZero = true;
-
-    //           if (wildcardResultZero) {
-    //             for (let i = currentYear - 1; i >= 2019; i--) {
-    //               const yearlyParams = new URLSearchParams({
-    //                 page: page.toString(),
-    //                 year: i.toString(),
-    //                 region: `${region}*`,
-    //                 category: subcategory,
-    //                 resultsPerPage: "500",
-    //               });
-
-    //               const yearlyResponse = await fetch(
-    //                 `/api/climatiq?${yearlyParams}`
-    //               );
-    //               const yearlyData = await yearlyResponse.json();
-    //               const yearlyActivitiesData = yearlyData.results;
-    //               totalPages = yearlyData.last_page;
-    //               yearlyResponseData = [
-    //                 ...yearlyResponseData,
-    //                 ...yearlyActivitiesData,
-    //               ];
-    //               if (yearlyActivitiesData.length !== 0) break;
-    //             }
-    //             updateCacheAndActivities(yearlyResponseData);
-    //           }
-
-    //           if (
-    //             categoriesToAppend.includes(subcategory) &&
-    //             categoryMappings[subcategory] &&
-    //             !customFetchExecuted
-    //           ) {
-    //             for (const entry of categoryMappings[subcategory]) {
-    //               const customParams = new URLSearchParams({
-    //                 page: page.toString(),
-    //                 year: entry.year.toString(),
-    //                 region: "*",
-    //                 category: subcategory,
-    //                 source: entry.source,
-    //                 resultsPerPage: "500",
-    //               });
-
-    //               const response = await fetch(`/api/climatiq?${customParams}`);
-    //               const data = await response.json();
-    //               customFetchData = customFetchData.concat(data.results);
-    //               totalPagesCustom = data.last_page;
-    //             }
-    //             updateCacheAndActivities(customFetchData);
-    //             customFetchExecuted = true;
-    //           }
-    //         }
-    //         page++;
-    //       }
-    //     } catch (error) {
-    //       console.error("Error fetching data from different regions: ", error);
-    //     } finally {
-    //       isFetching.current = false;
-    //     }
-    //   },
-    //   []
-    // );
-
     const fetchActivities = useCallback(
       async (page = 1, customFetchExecuted = false) => {
         if (isFetching.current) return;
@@ -721,6 +395,7 @@ const EmissionWidget = React.memo(
           Activity: newActivity,
           activity_id: foundActivity ? foundActivity.activity_id : "",
           unit_type: foundActivity ? foundActivity.unit_type : "",
+          factor: foundActivity ? foundActivity.factor : "",
           Quantity: "",
           Quantity2: "",
           Unit: "",
@@ -736,6 +411,22 @@ const EmissionWidget = React.memo(
       },
       [activities, onChange, value, updateSelectedRowIfNeeded]
     );
+
+    useEffect(() => {
+      if (activities.length > 0 && value.Activity && !value.factor) {
+        const foundActivity = activities.find(
+          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value.Activity
+        );
+        
+        if (foundActivity) {
+          const updatedValue = {
+            ...value,
+            factor: foundActivity.factor || foundActivity.co2_factor || "0"
+          };
+          onChange(updatedValue);
+        }
+      }
+    }, [activities, value.Activity]);
 
     const debouncedHandleQuantityChange = useCallback(
       debounce((nextValue) => {
@@ -1057,6 +748,18 @@ const EmissionWidget = React.memo(
       }
     }, [value.assigned_to]);
 
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+
+    const openInfoModal = () => {
+      setIsInfoModalOpen(true);
+    };
+    const closeInfoModal = () => {
+      setIsInfoModalOpen(false);
+    };
+    const handleInfoClick = () => {
+      openInfoModal();
+    };
+
     const renderFirstColumn = () => {
       switch (rowType) {
         case "calculated":
@@ -1136,13 +839,13 @@ const EmissionWidget = React.memo(
                 <th className=" h-[44px]  border-b border-gray-300 text-[12px] text-left text-[#667085]">
                   Activity
                 </th>
-                <th className="h-[44px]  border-b border-gray-300 text-[12px] text-center text-[#667085]">
+                <th className="h-[44px]  border-b border-gray-300 text-[12px] text-right text-[#667085]">
                   Quantity
                 </th>
                 <th className=" h-[44px]  border-b border-gray-300 text-[12px] text-center text-[#667085]">
                   Assignee
                 </th>
-                <th className=" h-[44px]  border-b border-gray-300 text-[12px] text-center text-[#667085]">
+                <th className=" h-[44px]  border-b border-gray-300 text-[12px] text-left text-[#667085]">
                   Actions
                 </th>
               </tr>
@@ -1511,8 +1214,8 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Actions - Delete & Upload */}
-              <td className="py-3 w-[3vw]">
-                <div className=" flex justify-center">
+              <td className="py-3 w-[5vw]">
+                <div className=" flex justify-left">
                   <div className="pt-1">
                     <label className="cursor-pointer">
                       <LuTrash2
@@ -1521,7 +1224,6 @@ const EmissionWidget = React.memo(
                       />
                     </label>
                   </div>
-
                   <div className="pt-1">
                     <input
                       type="file"
@@ -1691,6 +1393,16 @@ const EmissionWidget = React.memo(
                       </div>
                     )}
                   </div>
+                  {value.rowType === "calculated" && (
+                    <div className="pt-1 ms-2">
+                      <label className="cursor-pointer">
+                        <MdOutlineRemoveRedEye
+                          className="text-gray-500 hover:text-blue-500"
+                          onClick={openInfoModal}
+                        />
+                      </label>
+                    </div>
+                  )}
                 </div>
               </td>
             </tr>
@@ -1729,6 +1441,23 @@ const EmissionWidget = React.memo(
             scope,
             countryCode,
           }}
+        />
+        <CalculationInfoModal
+          isOpen={isInfoModalOpen}
+          onClose={closeInfoModal}
+          data={{
+            // calculatedAt: value.updated_At || new Date().toISOString(),
+            scope: scope,
+            category: value.Category,
+            subCategory: value.Subcategory,
+            activity: value.Activity,
+            quantity: value.Quantity,
+            unit: value.Unit,
+            emissionFactorName: value.activity_id,
+            emissionFactorValue: value.factor,
+            unique_id: value.unique_id || "0",
+          }}
+          rowData={value}
         />
       </div>
     );

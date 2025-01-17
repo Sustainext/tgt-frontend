@@ -213,46 +213,6 @@ const Scope1 = forwardRef(
       );
     }, [formData, dispatch]);
 
-    // const handleRemoveRow = useCallback(
-    //   async (index) => {
-    //     const parsedIndex = parseInt(index, 10);
-    //     const rowToRemove = formData[parsedIndex];
-
-    //     if (!rowToRemove) {
-    //       console.error("Row not found");
-    //       return;
-    //     }
-
-    //     const rowType = rowToRemove.Emission?.rowType;
-
-    //     if (rowType === "assigned" || rowType === "approved") {
-    //       toast.error("Cannot delete assigned or approved rows");
-    //       return;
-    //     }
-
-    //     const updatedData = formData.filter((_, i) => i !== parsedIndex);
-
-    //     dispatch(
-    //       updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
-    //     );
-
-    //     if (rowType === "calculated") {
-    //       try {
-    //         await updateFormData(updatedData);
-    //       } catch (error) {
-    //         console.error("Failed to update form data:", error);
-    //         toast.error("Failed to update data on the server");
-    //         return;
-    //       }
-    //     }
-
-    //     if (parsedIndex === 0 && updatedData.length === 0) {
-    //       setAccordionOpen(false);
-    //     }
-    //   },
-    //   [formData, dispatch, setAccordionOpen]
-    // );
-
     const handleRemoveRow = useCallback(
       async (index) => {
         const parsedIndex = parseInt(index, 10);

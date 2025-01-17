@@ -19,7 +19,7 @@ import {
   formatValidationErrors,
 } from "./emissionValidation";
 
-const AccordionItem = ({ title, children, scops, icons, onAccordionClick }) => {
+const AccordionItem = ({ title, children, scops, icons, onAccordionClick, scope }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleAccordionClick = () => {
@@ -28,6 +28,8 @@ const AccordionItem = ({ title, children, scops, icons, onAccordionClick }) => {
       setIsOpen(!isOpen);
     }
   };
+
+  const scope_emission = useSelector((state) => state.emissions.climatiqData[scope]);
 
   return (
     <div className="shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200">
@@ -47,7 +49,24 @@ const AccordionItem = ({ title, children, scops, icons, onAccordionClick }) => {
           </h5>
         </div>
         <div className="w-[30%]">
-          <div className="float-end">
+          <div className="float-end flex items-center justify-end">
+            <div className="h-4 opacity-80 justify-start items-center inline-flex mr-4">
+              <div className="text-[#0056a4] text-xs font-medium font-['Manrope'] leading-none">
+                GHG Emissions =
+              </div>
+              <div>
+                <span class="text-[#146152] text-xs font-medium font-['Manrope'] leading-none">
+                  {" "}
+                  {scope_emission} tCO
+                </span>
+                <sub class="text-[#146152] text-xs font-medium font-['Manrope'] leading-none">
+                  2
+                </sub>
+                <span class="text-[#146152] text-xs font-medium font-['Manrope'] leading-none">
+                  e
+                </span>
+              </div>
+            </div>
             <span>
               <MdKeyboardArrowDown
                 className={`text-2xl ${isOpen && "rotate-180"}`}
@@ -239,6 +258,7 @@ const Emissionsnbody = ({
           scops="Scope 1"
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
+          scope="scope1"
         >
           {({ setAccordionOpen }) => (
             <Scope1
@@ -261,6 +281,7 @@ const Emissionsnbody = ({
           scops="Scope 2"
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
+          scope="scope2"
         >
           {({ setAccordionOpen }) => (
             <Scope2
@@ -284,6 +305,7 @@ const Emissionsnbody = ({
           scops="Scope 3"
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
+          scope="scope3"
         >
           {({ setAccordionOpen }) => (
             <Scope3

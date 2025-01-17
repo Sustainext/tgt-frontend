@@ -1,9 +1,9 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Energydata } from "../../../../shared/data/Energydata";
-import { MdOutlineClear,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdChevronRight } from "react-icons/md";
 import EnvironmentHeade2 from "../../environmentheader2";
 import Screen1 from "./Screen1";
 import { useSelector } from "react-redux";
@@ -65,7 +65,7 @@ const WaterMaterialtopic = ({apiData}) => {
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Water and effluents
+                    Water and effluents
                   </p>
                 </div>
                 {materialityEnvData&&materialityEnvData.EnvWaterEffluent?.is_material_topic?(
@@ -100,7 +100,7 @@ const WaterMaterialtopic = ({apiData}) => {
         </div>
         <div
           ref={drawerRef}
-           className={`${
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"

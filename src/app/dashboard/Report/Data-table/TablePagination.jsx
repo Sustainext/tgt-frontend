@@ -152,7 +152,8 @@ const TableWithPagination = ({
               onClick={() => console.log("Notify GRI")}
               className="flex items-center p-2 w-full text-left  text-[#d1d5db]"
             >
-              <MdOutlineEmail className="mr-2 text-[#d1d5db] w-4 h-4" /> Notify GRI
+              <MdOutlineEmail className="mr-2 text-[#d1d5db] w-4 h-4" /> Notify
+              GRI
             </button>
           </>
         )}
@@ -503,10 +504,7 @@ const TableWithPagination = ({
 
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute(
-        "download",
-        `${name} Content Index.xlsx`
-      );
+      link.setAttribute("download", `${name} Content Index.xlsx`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -526,7 +524,6 @@ const TableWithPagination = ({
       });
     }
   };
-
 
   const handleDownloadpdf = async (id, name) => {
     // Set loading to true for the specific item
@@ -706,12 +703,12 @@ const TableWithPagination = ({
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.created_by}
                   </td>
-                  <td
-                    className="py-3 px-6 relative text-center flex justify-center"
-                   
-                  >
-                    <MdMoreVert className="cursor-pointer"  onMouseEnter={() => handleMouseEnter(item.id)}
-                    onMouseLeave={handleMouseLeave}/>
+                  <td className="py-3 px-6 relative text-center flex justify-center">
+                    <MdMoreVert
+                      className="cursor-pointer"
+                      onMouseEnter={() => handleMouseEnter(item.id)}
+                      onMouseLeave={handleMouseLeave}
+                    />
                     {isMenuOpen === item.id && (
                       <div
                         onMouseEnter={() => handleMouseEnter(item.id)} // Ensure menu stays open
@@ -777,14 +774,14 @@ const TableWithPagination = ({
                 {columns.Header} <KeyboardArrowDownIcon/>
               </th>
             ))}
-
-
+ 
+ 
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-
+ 
             <tr
-
+ 
               className="border-b border-gray-200 hover:bg-[#e0f2fe] text-center"
             >
               <td className="py-3 px-6 text-center whitespace-nowrap">
@@ -799,20 +796,20 @@ const TableWithPagination = ({
               <td className="py-3 px-6 text-center whitespace-nowrap">
               2022-12-06
               </td>
-
+ 
               <td className="py-3 px-6 text-center whitespace-nowrap">
               2024-02-06
               </td>
               <td className="py-3 px-6 text-center whitespace-nowrap">
-
+ 
               <a href="https://sustainextstorage1.blob.core.windows.net/sustainext/new-report-file.pdf" target="_blank" download="filename.pdf"> <DownloadIcon/></a>
               </td>
             </tr>
-
+ 
         </tbody>
       </table>
-
-
+ 
+ 
     </div>  */}
 
       {isModalOpen && (

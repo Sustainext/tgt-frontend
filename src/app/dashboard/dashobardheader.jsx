@@ -216,8 +216,7 @@ const DashboardHeader = () => {
               <span className="text-[#007EEF]">Hi,</span>
               <span className="me-4 text-[#007EEF]">{userData.username}</span>
             </div>
-            <div className="relative cursor-pointer" onClick={toggleDropdown}
->
+            <div className="relative cursor-pointer" onClick={toggleDropdown}>
               <div className="flex justify-center items-center">
                 <div
                   style={{
@@ -249,8 +248,11 @@ const DashboardHeader = () => {
                 </div>
               </div>
               {dropdownVisible && (
-                <div  ref={drawerRef}  className="w-[220px] absolute -right-[2px] mt-3 bg-white border border-gray-300 rounded shadow-lg"  onMouseEnter={() => setDropdownVisible(true)} // Prevent closing when mouse enters dropdown
-            >
+                <div
+                  ref={drawerRef}
+                  className="w-[220px] absolute -right-[2px] mt-3 bg-white border border-gray-300 rounded shadow-lg"
+                  onMouseEnter={() => setDropdownVisible(true)} // Prevent closing when mouse enters dropdown
+                >
                   <div className="self-stretch bg-white rounded shadow flex-col justify-start items-start flex">
                     <div className="self-stretch h-[45px] flex-col justify-start items-start flex">
                       <div className="self-stretch px-4 py-1 justify-start items-center inline-flex border-b-2 border-gray-300">

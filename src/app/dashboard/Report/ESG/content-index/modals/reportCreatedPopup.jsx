@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import GRISVG from "../../../../../../../public/gri.svg";
 import CorrectSVG from "../../../../../../../public/correct.svg";
 import Image from "next/image";
@@ -147,10 +147,7 @@ const ReportCreatedPopup = ({
 
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute(
-        "download",
-        `${name} Content Index.xlsx`
-      );
+      link.setAttribute("download", `${name} Content Index.xlsx`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -214,9 +211,7 @@ const ReportCreatedPopup = ({
                     <IoIosArrowDown className="mt-1" />
                   </button>
                   {isHovered && (
-                    <div
-                      className="absolute bg-white border border-gray-200 rounded-md shadow-md  w-full"
-                    >
+                    <div className="absolute bg-white border border-gray-200 rounded-md shadow-md  w-full">
                       <div
                         className="p-3 hover:bg-blue-50 cursor-pointer flex items-center gap-2"
                         onClick={() => {
