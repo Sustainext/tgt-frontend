@@ -1,6 +1,6 @@
 import React from "react";
 
-const Table3 = ({ data }) => {
+const Table4 = ({ data }) => {
   const columns = [
     "Employee Category",
     "Women to men",
@@ -30,7 +30,7 @@ const Table3 = ({ data }) => {
               className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300w-[50%]"
               colSpan="3"
             >
-             Ratio of basic salary by Gender
+             Ratio of Remuneration by Gender
             </th>
           </tr>
           <tr className="border border-gray-300 md:table-row gradient-background">
@@ -89,4 +89,4 @@ const Table3 = ({ data }) => {
   );
 };
 
-export default Table3;
+export default Table4;
