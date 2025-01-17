@@ -153,17 +153,18 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-
-  useEffect(() => {
-    if (location && year) {
+ useEffect(() => {
+    if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false;
+      toastShown.current = false; // Reset the flag when valid data is present
     } else {
+      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true;
+        toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year]);
+  }, [selectedOrg, year, selectedCorp]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -220,13 +221,13 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
             widgets={widgets}
           />
         </div>
-    <div className='mt-4'>
+        <div className='mt-4'>
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
               }`}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

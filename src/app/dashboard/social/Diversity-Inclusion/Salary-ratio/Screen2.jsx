@@ -171,13 +171,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+
 
   const LoaderOpen = () => {
     setLoOpen(true);

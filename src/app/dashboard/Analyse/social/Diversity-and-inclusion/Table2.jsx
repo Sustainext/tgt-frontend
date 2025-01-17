@@ -47,7 +47,7 @@ console.log(data,"markete table");
             <tr className="border border-gray-300 md:table-row">
               <td
                 colSpan={columns.length}
-                className="text-center p-2 block md:table-cell text-[12px] font-[400] h-20 border-r border-gray-300"
+                className="text-center p-2 block md:table-cell text-[12px] font-[400]  border-r border-gray-300"
               >
                 No data available
               </td>
@@ -56,16 +56,16 @@ console.log(data,"markete table");
            
               data.map((entry) => (
                 <tr className="border border-gray-300 md:table-row">
-                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                  <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
                     {entry.Location}
                   </td>
-                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                  <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
                     {entry.Male}
                   </td>
-                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                  <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
                     {entry.Female}
                   </td>
-                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                  <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
                   {entry['Non-binary']}
                   </td>
                
