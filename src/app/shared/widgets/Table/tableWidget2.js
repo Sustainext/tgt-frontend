@@ -1,109 +1,82 @@
-import React, { useState, useRef, useCallback } from "react";
-import "react-tooltip/dist/react-tooltip.css";
-import { Tooltip as ReactTooltip } from "react-tooltip";
+
+'use client'
+import React, { useState, useEffect, useCallback } from 'react';
+import { debounce } from 'lodash';
 import { MdInfoOutline } from "react-icons/md";
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 
-const InputdiableWidget = ({
-  onChange,
-  value = "",
-  placeholder,
-  label,
-  title,
-  uiSchema = {},
-  schema = {},
-  id,
-  formContext,
-  name,
-  isEnabled = false,
-}) => {
-  const { validationErrors } = formContext || {};
-  const rowIndex = parseInt(id.split("_")[1], 10);
-  const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
-  const hasError = rowErrors && rowErrors[name];
+const CustomTableWidget2 = ({ id, options, value, required, onChange }) => {
+    const [localValue, setLocalValue] = useState(value);
 
-  const inputType = uiSchema["ui:inputtype"] || "text";
+    // Update local state immediately on user input
+    const handleFieldChange = (index, key, newValue) => {
+        const updatedValues = [...localValue];
+        if (!updatedValues[index]) {
+            updatedValues[index] = {};
+        }
+        updatedValues[index][key] = newValue;
+        setLocalValue(updatedValues);
+    };
 
-  const [inputValue, setInputValue] = useState(value);
-  const inputRef = useRef(null);
+    // Debounce external state updates
+    const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
 
-  // Debounce input change handler
-  const debouncedChangeHandler = useCallback(debounce((newValue) => {
-    onChange(newValue); // Notify parent component
-  }, 100), [onChange]); // Adjust debounce time as needed
+    // Use effect to update external state when local state changes
+    useEffect(() => {
+        debouncedUpdate(localValue);
+    }, [localValue, debouncedUpdate]);
 
-  const handleInputChange = (event) => {
-    const newValue = event.target.value;
-    setInputValue(newValue); // Update local state
-    debouncedChangeHandler(newValue);
-  };
-
-  const handleKeyDown = (event) => {
-    const allowedControlKeys = [
-      "Backspace",
-      "ArrowLeft",
-      "ArrowRight",
-      "Delete",
-      "Tab",
-    ];
-
-    if (inputType === "number") {
-      // Allow numeric input and control keys
-      const isNumber = /^[0-9]$/.test(event.key);
-      if (!isNumber && !allowedControlKeys.includes(event.key)) {
-        event.preventDefault();
-      }
-    } else if (inputType === "text") {
-      // Allow all printable characters and control keys
-      const isPrintableCharacter = event.key.length === 1;
-      if (!isPrintableCharacter && !allowedControlKeys.includes(event.key)) {
-        event.preventDefault();
-      }
-    }
-  };
-
-  return (
-    <div className="mb-3 px-1">
-      <div className="relative w-[100%]">
-        {id.startsWith("root_0") && (
-          <>
-            <p className="flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px] text-left">
-              {label}
-              <MdInfoOutline
-                data-tooltip-id={`tooltip-${id}`}
-                data-tooltip-content={schema.tooltiptext}
-                className="mt-0.5 ml-2 w-[30px] text-[14px]"
-                style={{ display: schema.display }}
-              />
-              <ReactTooltip
-                id={`tooltip-${id}`}
-                place="top"
-                effect="solid"
-              />
-            </p>
-          </>
-        )}
-      </div>
-      <div className="relative">
-        <input
-          ref={inputRef}
-          className={`block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 ${
-            hasError ? "border-red-500" : "border-gray-300"
-          }`}
-          placeholder={placeholder || `Enter ${label || title}`}
-          type={inputType}
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          onFocus={() => inputRef.current && inputRef.current.focus()}
-          onBlur={() => inputRef.current && inputRef.current.blur()}
-          disabled={!isEnabled}
-        />
-      </div>
-      {hasError && (
-        <div className="text-red-500 text-[12px] mt-1">{hasError}</div>
-      )}
-    </div>
-  );
+    useEffect(() => {
+        setLocalValue(value);
+      }, [value]);
+    return (
+        <div style={{ overflowX: "auto", maxHeight: "400px" }} className='mb-2'>
+            <table id={id} className="rounded-md border border-gray-300 w-full">
+                <thead className="gradient-background">
+                    <tr>
+                        <th className="border border-gray-300" style={{ textAlign: "left" }}> </th>
+                        {options.titles.map((item, idx) => (
+                            <th key={idx} className="text-[12px] border border-gray-300 px-2 w-auto">
+                                <div className="flex items-center">
+                                    <p>{item.title}</p>
+                                    <MdInfoOutline
+                                        data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
+                                        data-tooltip-content={item.tooltip}
+                                        className="ml-2 cursor-pointer w-[20%]"
+                                    />
+                                    <ReactTooltip
+                                        id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
+                                        place="top"
+                                        effect="solid"
+                                        className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                    />
+                                </div>
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {options.rowLabels.map((rowLabel, rowIndex) => (
+                        <tr key={rowIndex}>
+                            <td className="border border-gray-300 p-3 text-[13px]">{rowLabel}</td>
+                            {options.titles.map((column, columnIndex) => (
+                                <td key={columnIndex} className="border border-gray-300 p-3">
+                                    <input
+                                        type="text"
+                                        required={required}
+                                        value={localValue[rowIndex] && localValue[rowIndex][column.key] || ""}
+                                        onChange={(e) => handleFieldChange(rowIndex, column.key, e.target.value)}
+                                        className="text-sm pl-2 py-2 w-full"
+                                        placeholder="Enter data"
+                                    />
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 };
 
-export default InputdiableWidget;
+export default CustomTableWidget2;

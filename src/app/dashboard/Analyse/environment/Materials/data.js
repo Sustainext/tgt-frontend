@@ -224,7 +224,7 @@ export const columns1 = [
 
   export const columns4 = [
     {
-      label: "Type of product",
+      label: "Product Category",
       dataIndex: "type",
       headerClass:
         "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
