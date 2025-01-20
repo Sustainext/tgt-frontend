@@ -76,6 +76,7 @@ export function AuthProvider({ children }) {
       const refreshToken = userData.key.refresh;
       const client_key = userData.client_key;
       const newrole = userData.admin;
+      const customrole = userData.custom_role;
       const permissions = userData.permissions;
       setToken(receivedToken);
       saveToLocalStorage("token", receivedToken);
@@ -84,6 +85,7 @@ export function AuthProvider({ children }) {
       saveToLocalStorage("permissions", permissions);
       saveToLocalStorage("custom_role", newrole);
       saveToLocalStorage("isAdmin", newrole);
+      saveToLocalStorage("textcustomrole", customrole);
       Cookies.set("permissions", JSON.stringify(permissions), { secure: true, sameSite: "strict" });
       Cookies.set("isAdmin", JSON.stringify(newrole), { secure: true, sameSite: "strict" });
       const isFirstLogin = userData.needs_password_reset;
