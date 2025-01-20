@@ -53,7 +53,8 @@ import {
 } from "./TaskUtils";
 
 import { fetchUsers } from "../../../../lib/redux/features/emissionSlice";
-import ViewReviewTaskModal from "./ViewReviewTaskModal";
+import ViewMyTaskDetailsModal from "./ViewMyTaskDetailsModal";
+import MyTaskReviewModal from "./MyTaskReviewModal";
 
 const MyTask = () => {
   // Redux
@@ -661,22 +662,29 @@ const MyTask = () => {
   };
 
   const handleTaskClick = (task) => {
-    console.log("Task clicked:", task);
-    
-    if (activeTab === "completed") {
-      if (task.roles === 3) {
-        // Open ViewReviewTaskModal for role 3 tasks in review
-        console.log('Opening ViewReviewTaskModal for role 3 tasks in review');
-        
+    console.log("Task clicked:", task, activeTab);
+
+    if(activeTab === "upcoming" || activeTab === "overdue") {
+      if (task.roles === 1 || task.roles === 2) {
+        handleOpenModalAddData(task);
+      } else if (task.roles === 3) {
+        //Open My TaskFillModal when assignee == assigner
         setSelectedTask(task);
-        toggleModal("isReviewViewModalOpen", true);
+        setSelfTaskFillModalOpen(true);
+        //Add condition to open Edit My Task Modal when assignee == assigner
       }
-      else if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
+    }
+    else if (activeTab === "completed") {
+      if (task.roles === 3) {
+        setSelectedTask(task);
+        toggleModal("isMyTaskDetailModalOpen", true);
+      } else if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
         setSelectedTask(task);
         toggleModal("isDetailsModalOpen", true);
       }
-    } else if (activeTab === "for_review") {
-        if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
+    } 
+    else if (activeTab === "for_review") {
+      if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
         // Handle review task
         setTaskAssigndata({
           id: task.id,
@@ -703,13 +711,14 @@ const MyTask = () => {
         });
         toggleModal("isReviewtask", true);
       }
-    } else {
-      if (task.roles === 1 || task.roles === 2) {
-        handleOpenModalAddData(task);
-      } else if (task.roles === 3) {
-        setTaskFormData(task);
-        toggleModal("isModalOpen", true);
+      else {
+        setSelectedTask(task);
+        toggleModal("isMyTaskReviewModalOpen", true);
       }
+    } 
+    else {
+      console.log('Invalid activeTab:', activeTab);
+      
     }
   };
 
@@ -765,17 +774,6 @@ const MyTask = () => {
                 task={task}
                 activeTab={activeTab}
                 onTaskClick={handleTaskClick}
-                onEditClick={() => {
-                  // Check if the task was created and assigned to the same person
-                  // if (task.assign_by_email === task.assign_to_email) {
-                  //   setTaskFormData(task);
-                  //   toggleModal("isModalOpen", true);
-                  // } else {
-                  // If different people, open the fill modal for data submission
-                  setSelectedTask(task);
-                  setSelfTaskFillModalOpen(true);
-                  // }
-                }}
               />
             ))
           ) : (
@@ -905,11 +903,20 @@ const MyTask = () => {
         onFileUpload={handleFileUpload}
       />
 
-      {/* View Review Task Modal */}
-      <ViewReviewTaskModal
-        isOpen={modalStates.isReviewViewModalOpen}
+      {/* View Detailed My Task Modal */}
+      <ViewMyTaskDetailsModal
+        isOpen={modalStates.isMyTaskDetailModalOpen}
         onClose={() => {
-          toggleModal("isReviewViewModalOpen", false);
+          toggleModal("isMyTaskDetailModalOpen", false);
+          setSelectedTask(null);
+        }}
+        task={selectedTask}
+      />
+
+      <MyTaskReviewModal
+        isOpen={modalStates.isMyTaskReviewModalOpen}
+        onClose={() => {
+          toggleModal("isMyTaskReviewModalOpen", false);
           setSelectedTask(null);
         }}
         task={selectedTask}

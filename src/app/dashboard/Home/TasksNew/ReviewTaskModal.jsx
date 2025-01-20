@@ -81,7 +81,7 @@ const ReviewTaskModal = ({
       } bg-black bg-opacity-50`}
     >
       <div className="z-10 flex items-center justify-center bg-opacity-50">
-        <div className="bg-white p-5 rounded-lg shadow-lg w-[395px] h-[650px] overflow-y-auto scrollable-content">
+        <div className="bg-white p-5 rounded-lg shadow-lg w-[395px] h-[650px] overflow-y-auto scrollable-content table-scrollbar">
           {/* Header */}
           <div className="mb-5">
             <div className="flex">

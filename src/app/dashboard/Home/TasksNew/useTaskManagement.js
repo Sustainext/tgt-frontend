@@ -181,6 +181,8 @@ export const useModalState = (initialStates = {}) => {
   const [modalStates, setModalStates] = useState(initialStates);
 
   const toggleModal = (modalName, value = null) => {
+    console.log("modalName", modalName);
+    
     setModalStates((prev) => ({
       ...prev,
       [modalName]: value === null ? !prev[modalName] : value,

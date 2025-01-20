@@ -44,11 +44,11 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg w-[480px] max-h-[90vh] overflow-y-auto table-scrollbar">
+      <div className="bg-white rounded-lg w-[395px] max-h-[90vh] overflow-y-auto table-scrollbar">
         <div className="p-6">
           {/* Header */}
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold">My Tasks</h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold">My Tasks</h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600"
@@ -65,14 +65,14 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
                 type="text"
                 value={task?.task_name || ""}
                 disabled
-                className="w-full py-2 text-gray-600 bg-white font-semibold text-lg"
+                className="w-full pt-2 text-gray-600 bg-white font-semibold text-md"
               />
             </div>
 
             <hr className="bg-gray-300" />
 
             {/* Status */}
-            <div className="flex items-start space-x-16">
+            <div className="flex items-start space-x-4">
               <label className="text-sm font-medium text-gray-600 w-24">
                 Status
               </label>
@@ -82,7 +82,7 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
             </div>
 
             {/* Dates */}
-            <div className="flex items-start space-x-16">
+            <div className="flex items-start space-x-4">
               <label className="text-sm font-medium text-gray-600 w-24">
                 Assigned on
               </label>
@@ -94,7 +94,7 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
               />
             </div>
 
-            <div className="flex items-start space-x-16">
+            <div className="flex items-start space-x-4">
               <label className="text-sm font-medium text-gray-600 w-24">
                 Due Date
               </label>
@@ -107,7 +107,7 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
             </div>
 
             {/* Assigned By */}
-            <div className="flex items-start space-x-16">
+            <div className="flex items-start space-x-4">
               <label className="text-sm font-medium text-gray-600 w-24">
                 Assigned by
               </label>
@@ -118,7 +118,7 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
             </div>
 
             {/* Description */}
-            <div className="flex items-start space-x-16">
+            <div className="flex items-start space-x-4">
               <label className="text-sm font-medium text-gray-600 w-24">
                 Description
               </label>
@@ -183,7 +183,7 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+              className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm"
             >
               Submit
             </button>

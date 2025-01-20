@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import axiosInstance from "../../../app/utils/axiosMiddleware";
 import { getMonthName } from "../../../app/utils/dateUtils";
 import { v4 as uuidv4 } from "uuid";
-import { set } from "lodash";
 
 export const fetchEmissionsData = createAsyncThunk(
   "emissions/fetchEmissionsData",
@@ -71,6 +70,7 @@ export const fetchEmissionsData = createAsyncThunk(
         ...processScope(scope2Response, "scope2"),
         ...processScope(scope3Response, "scope3"),
         params: { location, year, month },
+        scope_wise_data: climatiqResponse.data.scope_wise_data || {},
       };
     } catch (error) {
       console.error("Error fetching emissions data:", error);
@@ -80,6 +80,23 @@ export const fetchEmissionsData = createAsyncThunk(
     }
   }
 );
+
+const findClimatiqDataById = (rawData, searchId) => {
+  console.log("Raw Data:", rawData,searchId);
+  
+  if (!rawData || !rawData.result || !Array.isArray(rawData.result)) return null;
+  const foundItem = rawData.result.find(item => {
+    console.log("Checking item:", { itemId: item.unique_id, searchId });
+    return item.unique_id === searchId;
+  });
+ 
+  console.log("Search result:", foundItem);
+  return foundItem || null;
+};
+
+export const searchClimatiqDataById = (state, searchId) => {
+  return findClimatiqDataById(state.emissions.climatiqData.rawData, searchId);
+};
 
 export const fetchPreviousMonthData = createAsyncThunk(
   "emissions/fetchPreviousMonthData",
@@ -155,50 +172,9 @@ export const fetchPreviousMonthData = createAsyncThunk(
   }
 );
 
-// export const updateScopeData = createAsyncThunk(
-//   "emissions/updateScopeData",
-//   async ({ scope, data, location, year, month }) => {
-//     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
-//     const body = {
-//       client_id: 1,
-//       user_id: 1,
-//       path: `gri-environment-emissions-301-a-scope-${scope}`,
-//       form_data: data.data,
-//       location,
-//       year,
-//       month,
-//     };
-
-//     try {
-//       const response = await axiosInstance.post(url, body);
-//       return { scope, data: response.data, params: { location, year, month } };
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-// );
-
 export const updateScopeData = createAsyncThunk(
   "emissions/updateScopeData",
-  async ({ scope, data, location, year, month }, thunkAPI) => {
-    // Validate required parameters
-    if (!scope || !location || !year || !month) {
-      console.error('Missing required parameters:', { scope, location, year, month });
-      return thunkAPI.rejectWithValue({
-        message: 'Missing required parameters',
-        details: { scope, location, year, month }
-      });
-    }
-
-    // Validate data structure
-    if (!data || !Array.isArray(data.data)) {
-      console.error('Invalid data structure:', data);
-      return thunkAPI.rejectWithValue({
-        message: 'Invalid data structure',
-        details: { data }
-      });
-    }
-
+  async ({ scope, data, location, year, month }) => {
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     const body = {
       client_id: 1,
@@ -211,31 +187,23 @@ export const updateScopeData = createAsyncThunk(
     };
 
     try {
-      console.log('Updating scope data with:', { url, body });
       const response = await axiosInstance.post(url, body);
-      console.log('Update scope response:', response.data);
       return { scope, data: response.data, params: { location, year, month } };
     } catch (error) {
-      console.error('Error updating scope data:', {
-        error: error.response?.data || error.message,
-        requestBody: body,
-        scope,
-        location,
-        year,
-        month
-      });
-      return thunkAPI.rejectWithValue({
-        message: error.response?.data?.message || error.message,
-        details: error.response?.data
-      });
+      throw error;
     }
   }
 );
 
 const calculateTotalClimatiqScore = (data) => {
-  if (data && data.result && Array.isArray(data.result)) {
-    const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
-    return (total / 1000).toFixed(3);
+  console.log('Calculating total climatiq score for data:', data);
+  
+  if (data && data.result) {
+    // const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
+    const total = data.total_emission;
+    console.log('Total climatiq score:', total);
+    
+    return total;
   }
   return 0;
 };
@@ -376,6 +344,9 @@ const emissionsSlice = createSlice({
     climatiqData: {
       rawData: {},
       totalScore: 0,
+      scope1: 0,
+      scope2: 0,
+      scope3: 0,
       status: "idle",
       error: null,
       params: null,
@@ -449,9 +420,10 @@ const emissionsSlice = createSlice({
     },
     scopeReRender: false,
     focusedField: {
-      rowId: null, // 'scope1_0', 'scope2_1', etc.
-      field: null, // 'quantity1', 'quantity2'
+      rowId: null,
+      field: null,
     },
+    validationErrors: {},
   },
   reducers: {
     setUserData: (state, action) => {
@@ -634,6 +606,12 @@ const emissionsSlice = createSlice({
         field: null,
       };
     },
+    setValidationErrors: (state, action) => {
+      state.validationErrors = action.payload;
+    },
+    clearValidationErrors: (state) => {
+      state.validationErrors = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -653,6 +631,10 @@ const emissionsSlice = createSlice({
         state.climatiqData.totalScore = calculateTotalClimatiqScore(
           action.payload.climatiqData
         );
+        // state.climatiqData.totalScore = action.payload.total_emission || 0;
+        state.climatiqData.scope1 = action.payload.scope_wise_data.scope_1 || 0;
+        state.climatiqData.scope2 = action.payload.scope_wise_data.scope_2 || 0;
+        state.climatiqData.scope3 = action.payload.scope_wise_data.scope_3 || 0;
         state.scope1Data.data = action.payload.scope1Data;
         state.scope2Data.data = action.payload.scope2Data;
         state.scope3Data.data = action.payload.scope3Data;
@@ -684,30 +666,16 @@ const emissionsSlice = createSlice({
       .addCase(updateScopeData.pending, (state) => {
         state.updateScopeStatus = "loading";
       })
-      // .addCase(updateScopeData.fulfilled, (state, action) => {
-      //   state.updateScopeStatus = "succeeded";
-      //   const { scope, data, params } = action.payload;
-      //   state[`scope${scope}Data`].data = data;
-      //   state.updateScopeParams = params;
-      // })
       .addCase(updateScopeData.fulfilled, (state, action) => {
-        console.log('Successfully updated scope data:', action.payload);
-        state.updateScopeStatus = 'succeeded';
+        state.updateScopeStatus = "succeeded";
         const { scope, data, params } = action.payload;
         state[`scope${scope}Data`].data = data;
         state.updateScopeParams = params;
         state.approvedTasks[`scope${scope}`] = [];
       })
       .addCase(updateScopeData.rejected, (state, action) => {
-        console.error('Failed to update scope data:', {
-          error: action.payload || action.error.message,
-          state: {
-            updateScopeStatus: state.updateScopeStatus,
-            scopeData: state[`scope${action.meta.arg.scope}Data`]
-          }
-        });
-        state.updateScopeStatus = 'failed';
-        state.updateScopeError = action.payload?.message || action.error.message;
+        state.updateScopeStatus = "failed";
+        state.updateScopeError = action.error.message;
       })
       .addCase(fetchPreviousMonthData.pending, (state) => {
         state.previousMonthData.status = "loading";
@@ -816,6 +784,8 @@ export const {
   toggleScopeReRender,
   setFocusedField,
   clearFocusedField,
+  setValidationErrors,
+  clearValidationErrors,
 } = emissionsSlice.actions;
 
 export default emissionsSlice.reducer;

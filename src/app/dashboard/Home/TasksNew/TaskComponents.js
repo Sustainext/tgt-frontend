@@ -124,48 +124,33 @@ const TaskStatusBadge = ({ status }) => {
   );
 };
 
-const TaskRow = ({ task, onTaskClick, onEditClick, activeTab }) => {
-  const handleClick = () => {
-    if (activeTab === "forreview") {
-      onTaskClick(task);
-      return;
-    }
-
-    // For completed tab
-    if (activeTab === "completed" && (task.roles === 1 || task.roles === 2 || task.roles === 3 || task.roles === 4)) {
-      onTaskClick(task);
-      return;
-    }
-
-    // For other tabs, use role-based logic
-    if (activeTab !== "forreview" && activeTab !== "completed") {
-      if (task.roles === 3) {
-        onEditClick(task);
-      } else if (task.roles === 1 || task.roles === 2) {
-        onTaskClick(task);
-      }
-    }
-  };
+const TaskRow = ({ task, onTaskClick }) => {
 
   return (
     <div className="flex justify-between border-b border-[#ebeced] py-2">
-      <div className="flex cursor-pointer">
+      <div className="flex w-[26rem] cursor-pointer">
         <div className="w-72 truncate text-[#007eef] text-[13px] font-normal leading-none ml-3">
           <p
             className="py-1 cursor-pointer"
             data-tooltip-id={`task-tooltip-${task.id}`}
             data-tooltip-content={task.task_name}
-            onClick={handleClick}
+            onClick={()=>onTaskClick(task)}
           >
             {task.task_name}
           </p>
         </div>
       </div>
-      <div className="col-span-3">
-        {(task.roles === 1 || task.roles === 2 || task.roles === 4) && (
-          <TaskStatusBadge status={task.task_status} />
-        )}
+
+      {/* Status Column */}
+      <div className="flex-grow">
+        <div className="text-left">
+          {(task.roles === 1 ||
+            task.roles === 2 ||
+            task.roles === 3 ||
+            task.roles === 4) && <TaskStatusBadge status={task.task_status} />}
+        </div>
       </div>
+
       <div className="flex mr-4">
         <div className="w-[68px] text-neutral-500 text-xs font-normal leading-[15px]">
           <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
