@@ -19,7 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { BlobServiceClient } from "@azure/storage-blob";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-
+import { useSelector } from "react-redux";
 const widgets = {
   TableWidget: CustomTableWidget9,
 };
@@ -178,7 +178,13 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [file, setFile] = useState(null);
   const [newfile, setNewfile] = useState(null);
   const [fleg, setfleg] = useState(null);
-
+  const text1 = useSelector((state) => state.header.headertext1);
+    const text2 = useSelector((state) => state.header.headertext2);
+    const middlename = useSelector((state) => state.header.middlename);
+    const useremail = typeof window !== 'undefined' ? localStorage.getItem("userEmail") : '';
+    const roles = typeof window !== 'undefined' 
+    ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
+    : '';
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -341,11 +347,52 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
       return url;
     } catch (error) {
+      LoginlogDetails("Failed", "Uploaded");
       console.error("Error uploading file:", error.message);
       return null;
     }
   };
+  const getIPAddress = async () => {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.error("Error fetching IP address:", error);
+      return null;
+    }
+  };
 
+
+  const LoginlogDetails = async (status, actionType) => {
+    const backendUrl = process.env.BACKEND_API_URL;
+    const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
+  
+    try {
+      const ipAddress = await getIPAddress();
+  
+      
+      const data = {
+        event_type: text1,
+        event_details: "File",
+        action_type: actionType,
+        status: status,
+        user_email:useremail,
+        user_role:roles,
+        ip_address: ipAddress,
+        logs: `${text1} > ${middlename} > ${text2}`,
+      };
+  
+      const response = await axiosInstance.post(userDetailsUrl, data);
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error logging login details:", error);
+ 
+      return null;
+    }
+  };
+  
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
     const newFileName = selectedFile ? selectedFile.name : null;
@@ -363,6 +410,9 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         setFileSize(selectedFile.size);
         setUploadDateTime(new Date().toLocaleString());
       };
+      setTimeout(() => {
+        LoginlogDetails("Success", "Uploaded");
+      }, 500);
     }
   };
 
@@ -469,19 +519,34 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-
   const handleDelete = () => {
-    setFileName(null);
-    setPreviewData(null);
-    setFileType("");
-    setFileSize("");
-    setUploadDateTime("");
-    setFile(null);
-    setShowModal(false);
-    setFile(null);
-    setfleg(null);
-    setNewfile("");
+    try {
+      setFileName(null);
+      setPreviewData(null);
+      setFileType("");
+      setFileSize("");
+      setUploadDateTime("");
+      setFile(null);
+      setShowModal(false);
+      setFile(null);
+      setfleg(null);
+      setNewfile("");
+  
+      // Call LoginlogDetails with a "Success" status for deletion
+      setTimeout(() => {
+        LoginlogDetails("Success", "Deleted");
+      }, 500);
+    } catch (error) {
+      console.error("Error deleting file:", error.message);
+      // Call LoginlogDetails with a "Failed" status for deletion
+      setTimeout(() => {
+        LoginlogDetails("Failed", "Deleted");
+      }, 500);
+    }
   };
+  // const handleDelete = () => {
+    
+  // };
 
   return (
     <>

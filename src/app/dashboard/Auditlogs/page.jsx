@@ -189,11 +189,11 @@ const AuditLogs = () => {
         "IP Address": log.IPAddress,
         Logs: JSON.stringify(log.Logs || {}),
       }));
-
+      const currentDate = new Date().toISOString().split("T")[0];
       const worksheet = XLSX.utils.json_to_sheet(formattedLogs);
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Filtered Audit Logs");
-      XLSX.writeFile(workbook, "Filtered_AuditLogs.csv");
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Audit_Log");
+      XLSX.writeFile(workbook, `Audit_Log_${currentDate}.csv`);
     } else {
       alert("No data available for download.");
     }

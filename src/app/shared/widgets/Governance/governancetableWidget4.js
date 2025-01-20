@@ -4,8 +4,56 @@ import { MdFilePresent, MdOutlineFileUpload, MdInfoOutline } from "react-icons/m
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { BlobServiceClient } from "@azure/storage-blob";
-
+import { useSelector } from "react-redux";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const GovernancetableWidget4 = ({ id, value = [], onChange, schema, uiSchema }) => {
+      const text1 = useSelector((state) => state.header.headertext1);
+        const text2 = useSelector((state) => state.header.headertext2);
+        const middlename = useSelector((state) => state.header.middlename);
+        const useremail = typeof window !== 'undefined' ? localStorage.getItem("userEmail") : '';
+        const roles = typeof window !== 'undefined' 
+        ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
+        : '';
+        const getIPAddress = async () => {
+            try {
+              const response = await fetch("https://api.ipify.org?format=json");
+              const data = await response.json();
+              return data.ip;
+            } catch (error) {
+              console.error("Error fetching IP address:", error);
+              return null;
+            }
+          };
+        
+        
+          const LoginlogDetails = async (status, actionType) => {
+            const backendUrl = process.env.BACKEND_API_URL;
+            const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
+          
+            try {
+              const ipAddress = await getIPAddress();
+          
+              
+              const data = {
+                event_type: text1,
+                event_details: "File",
+                action_type: actionType,
+                status: status,
+                user_email:useremail,
+                user_role:roles,
+                ip_address: ipAddress,
+                logs: `${text1} > ${middlename} > ${text2}`,
+              };
+          
+              const response = await axiosInstance.post(userDetailsUrl, data);
+          
+              return response.data;
+            } catch (error) {
+              console.error("Error logging login details:", error);
+         
+              return null;
+            }
+          };
     const [internalValue, setInternalValue] = useState(value);
     useEffect(() => {
       setInternalValue(value);
@@ -43,6 +91,9 @@ const GovernancetableWidget4 = ({ id, value = [], onChange, schema, uiSchema }) 
 
             setInternalValue(updatedValue);
             debouncedOnChange(updatedValue);
+            setTimeout(() => {
+                LoginlogDetails("Success", "Uploaded");
+              }, 500);
         }
     };
 
@@ -73,6 +124,7 @@ const GovernancetableWidget4 = ({ id, value = [], onChange, schema, uiSchema }) 
             const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
             return url;
         } catch (error) {
+            LoginlogDetails("Failed", "Uploaded");
             console.error("Error uploading file:", error.message);
             return null;
         }
