@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from 'react-redux';
 import { setMessage, setMessageimage } from "../../../../../../lib/redux/features/ESGSlice/screen1Slice";
 import { BlobServiceClient } from "@azure/storage-blob";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section1 = ({ orgName,selectedfile,setSelectedFile }) => {
@@ -15,6 +16,14 @@ const Section1 = ({ orgName,selectedfile,setSelectedFile }) => {
   const [error, setError] = useState("");
   const imagePreview = useSelector(state => state.screen1Slice.message_image); 
   const [imageviw, setImageview] = useState("");
+      const text1 = useSelector((state) => state.header.headertext1);
+          const text2 = useSelector((state) => state.header.headertext2);
+          const middlename = useSelector((state) => state.header.middlename);
+          const useremail = typeof window !== 'undefined' ? localStorage.getItem("userEmail") : '';
+          const roles = typeof window !== 'undefined' 
+          ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
+          : '';
+    
   const uploadFileToAzure = async (file, newFileName) => {
     // Read file content as ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
@@ -46,10 +55,12 @@ const Section1 = ({ orgName,selectedfile,setSelectedFile }) => {
       const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
       return url;
     } catch (error) {
+      LoginlogDetails("Failed", "Uploaded");
       console.error("Error uploading file:", error.message);
       return null;
     }
   };
+
   const loadContent = () => {
     dispatch(setMessage(`
       <p>At ${orgName ? orgName : "[Company Name]"}, our commitment to sustainability and responsible business practices is deeply rooted in our mission and values. As a leading manufacturing company, we recognize our role in driving positive environmental, social, and governance (ESG) impacts. This ESG report, aligned with the Global Reporting Initiative (GRI) standards, marks a significant milestone in our journey towards greater transparency and accountability. 
@@ -73,6 +84,7 @@ const Section1 = ({ orgName,selectedfile,setSelectedFile }) => {
   const handleImageChange = async (e) => {
     const selectedFile = e.target.files[0];
     setSelectedFile(e.target.files[0])
+ 
     let errorMessages = "";
   
     if (!selectedFile) {
@@ -89,14 +101,19 @@ const Section1 = ({ orgName,selectedfile,setSelectedFile }) => {
       try {
         // Upload the file to Azure Blob Storage
         const url = await uploadFileToAzure(selectedFile, newFileName);
-  
+    
         if (url) {
+              setTimeout(() => {
+          LoginlogDetails("Success", "Uploaded");
+        }, 500);
           setImageview(url);
           dispatch(setMessageimage(url));
         } else {
           errorMessages = "Failed to upload image to Azure.";
         }
+   
       } catch (error) {
+        LoginlogDetails("Failed", "Uploaded");
         console.error("Error uploading image:", error);
         errorMessages = "An error occurred while uploading the image.";
       }
@@ -153,9 +170,51 @@ const Section1 = ({ orgName,selectedfile,setSelectedFile }) => {
 
   const handleFileCancel=()=>{
     setSelectedFile('')
+    setTimeout(() => {
+      LoginlogDetails("Success", "Deleted");
+    }, 500);
     dispatch(setMessageimage(''));
   }
+  const getIPAddress = async () => {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.error("Error fetching IP address:", error);
+      return null;
+    }
+  };
 
+
+  const LoginlogDetails = async (status, actionType) => {
+    const backendUrl = process.env.BACKEND_API_URL;
+    const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
+  
+    try {
+      const ipAddress = await getIPAddress();
+  
+      
+      const data = {
+        event_type: "Report",
+        event_details: "File",
+        action_type: actionType,
+        status: status,
+        user_email:useremail,
+        user_role:roles,
+        ip_address: ipAddress,
+        logs: `${text1} > ${middlename} > ${text2}`,
+      };
+  
+      const response = await axiosInstance.post(userDetailsUrl, data);
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error logging login details:", error);
+ 
+      return null;
+    }
+  };
   return (
     <>
       <div>
