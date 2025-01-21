@@ -16,9 +16,11 @@ import {
   updateScopeData,
   updateScopeDataLocal,
   setValidationErrors,
+  fetchAssignedTasks
 } from "@/lib/redux/features/emissionSlice";
 import { debounce } from "lodash";
 import { validateEmissionsData } from "./emissionValidation";
+import { del } from "../../../utils/axiosMiddleware";
 
 const Scope3 = forwardRef(
   (
@@ -182,109 +184,132 @@ const Scope3 = forwardRef(
       );
     }, [formData, dispatch]);
 
-    const handleRemoveRow = useCallback(
-      async (index) => {
-        const parsedIndex = parseInt(index, 10);
-        console.log("Removing row at index:", parsedIndex);
-
-        const rowToRemove = formData[parsedIndex];
-        console.log("Row being removed:", rowToRemove);
-
-        if (!rowToRemove) {
-          console.error("Row not found");
-          return;
-        }
-
-        const rowType = rowToRemove.Emission?.rowType;
-        console.log("Row type:", rowType);
-
-        if (rowType === "assigned" || rowType === "approved") {
-          toast.error("Cannot delete assigned or approved rows");
-          return;
-        }
-
-        const updatedData = formData.filter((_, i) => i !== parsedIndex);
-        console.log("Updated data after removal:", updatedData);
-
-        dispatch(
-          updateScopeDataLocal({ scope: 3, data: { data: updatedData } })
-        );
-
-        // Debug validation errors
-        const currentValidationErrors = validationErrors?.scope3?.fields || {};
-        console.log("Current validation errors:", currentValidationErrors);
-        console.log("Full validation state:", validationErrors);
-
-        if (Object.keys(currentValidationErrors).length > 0) {
-          const newValidationFields = {};
-
-          Object.entries(currentValidationErrors).forEach(
-            ([rowIdx, errors]) => {
-              const currentIndex = parseInt(rowIdx);
-              console.log(
-                "Processing row index:",
-                currentIndex,
-                "with errors:",
-                errors
+    const deleteTask = async (taskId) => {
+          try {
+            const response = await del(`organization_task_dashboard/${taskId}`);
+            if (response.status === 204) {
+              toast.success("Task deleted successfully");
+              
+            } else {
+              console.log('response after delete failed', response);
+              
+              toast.error("Failed to delete task");
+            }
+          }
+          catch(error) {
+            console.error("Error deleting task:", error);
+          }}
+            
+    
+        const handleRemoveRow = useCallback(
+          async (index) => {
+            const parsedIndex = parseInt(index, 10);
+            console.log("Removing row at index:", parsedIndex);
+    
+            const rowToRemove = formData[parsedIndex];
+            console.log("Row being removed:", rowToRemove);
+    
+            if (!rowToRemove) {
+              console.error("Row not found");
+              return;
+            }
+    
+            const rowType = rowToRemove.Emission?.rowType;
+            console.log("Row type:", rowType);
+    
+            if (rowType === "approved") {
+              toast.error("Cannot delete approved task row");
+              return;
+            }
+    
+            else if (rowType === "assigned") {
+              const deletedRow = await deleteTask(rowToRemove.id);
+              console.log("Deleted row:", deletedRow);
+              dispatch(fetchAssignedTasks())
+            }
+    
+            const updatedData = formData.filter((_, i) => i !== parsedIndex);
+            console.log("Updated data after removal:", updatedData);
+    
+            dispatch(
+              updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
+            );
+    
+            // Debug validation errors
+            const currentValidationErrors = validationErrors?.scope1?.fields || {};
+            console.log("Current validation errors:", currentValidationErrors);
+            console.log("Full validation state:", validationErrors);
+    
+            if (Object.keys(currentValidationErrors).length > 0) {
+              const newValidationFields = {};
+    
+              Object.entries(currentValidationErrors).forEach(
+                ([rowIdx, errors]) => {
+                  const currentIndex = parseInt(rowIdx);
+                  console.log(
+                    "Processing row index:",
+                    currentIndex,
+                    "with errors:",
+                    errors
+                  );
+    
+                  if (currentIndex < parsedIndex) {
+                    console.log(
+                      "Keeping errors for row before deleted row:",
+                      currentIndex
+                    );
+                    newValidationFields[currentIndex] = errors;
+                  } else if (currentIndex > parsedIndex) {
+                    console.log(
+                      "Shifting errors for row after deleted row:",
+                      currentIndex,
+                      "to",
+                      currentIndex - 1
+                    );
+                    newValidationFields[currentIndex - 1] = errors;
+                  } else {
+                    console.log("Skipping errors for deleted row:", currentIndex);
+                  }
+                }
               );
-
-              if (currentIndex < parsedIndex) {
-                console.log(
-                  "Keeping errors for row before deleted row:",
-                  currentIndex
+    
+              console.log(
+                "New validation fields after processing:",
+                newValidationFields
+              );
+    
+              if (Object.keys(newValidationFields).length > 0) {
+                console.log("Dispatching updated validation errors");
+                dispatch(
+                  setValidationErrors({
+                    scope1: {
+                      ...validationErrors.scope1,
+                      fields: newValidationFields,
+                    },
+                  })
                 );
-                newValidationFields[currentIndex] = errors;
-              } else if (currentIndex > parsedIndex) {
-                console.log(
-                  "Shifting errors for row after deleted row:",
-                  currentIndex,
-                  "to",
-                  currentIndex - 1
-                );
-                newValidationFields[currentIndex - 1] = errors;
               } else {
-                console.log("Skipping errors for deleted row:", currentIndex);
+                console.log("Clearing all validation errors");
+                dispatch(setValidationErrors({}));
               }
             }
-          );
-
-          console.log(
-            "New validation fields after processing:",
-            newValidationFields
-          );
-
-          if (Object.keys(newValidationFields).length > 0) {
-            console.log("Dispatching updated validation errors");
-            dispatch(
-              setValidationErrors({
-                scope3: {
-                  ...validationErrors.scope3,
-                  fields: newValidationFields,
-                },
-              })
-            );
-          } else {
-            console.log("Clearing all validation errors");
-            dispatch(setValidationErrors({}));
-          }
-        }
-
-        if (rowType === "calculated") {
-          try {
-            await updateFormData(updatedData);
-          } catch (error) {
-            console.error("Failed to update form data:", error);
-            toast.error("Failed to update data on the server");
-            return;
-          }
-        }
-
-        if (parsedIndex === 0 && updatedData.length === 0) {
-          setAccordionOpen(false);
-        }
-      },
-      [formData, dispatch, setAccordionOpen, validationErrors]
-    );
+    
+            if (rowType === "calculated") {
+              try {
+                await updateFormData(updatedData);
+              } catch (error) {
+                console.error("Failed to update form data:", error);
+                toast.error("Failed to update data on the server");
+                return;
+              }
+            }
+    
+            if (parsedIndex === 0 && updatedData.length === 0) {
+              setAccordionOpen(false);
+            }
+          },
+          [formData, dispatch, setAccordionOpen, validationErrors]
+        );
 
     const updateFormData = useCallback(
       async (data) => {

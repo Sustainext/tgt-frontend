@@ -358,23 +358,22 @@ const EmissionWidget = React.memo(
       }
     }, [category]);
 
-    useEffect(() => {
-      if (activities.length > 0 && value.Activity) {
-        const initialActivity = activities.find(
-          (act) =>
-            `${act.name} - ( ${act.source} ) - ${act.unit_type}` ===
-            value.Activity
-        );
-        if (initialActivity) {
-          const activityId = initialActivity.activity_id;
-          setActivityId(activityId);
-          setUnitType(initialActivity.unit_type);
-        }
-      }
-    }, [activities, value.Activity]);
+    // useEffect(() => {
+    //   if (activities.length > 0 && value.Activity) {
+    //     const initialActivity = activities.find(
+    //       (act) =>
+    //         `${act.name} - ( ${act.source} ) - ${act.unit_type}` ===
+    //         value.Activity
+    //     );
+    //     if (initialActivity) {
+    //       const activityId = initialActivity.activity_id;
+    //       setActivityId(activityId);
+    //       setUnitType(initialActivity.unit_type);
+    //     }
+    //   }
+    // }, [activities, value.Activity]);
 
     useEffect(() => {
-      console.log("Unit type changed:", unit_type);
       const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
       console.log("Unit config found:", unitConfig);
 
@@ -462,8 +461,11 @@ const EmissionWidget = React.memo(
       [activities, onChange, value, updateSelectedRowIfNeeded]
     );
 
+    const [hasUpdatedFactor, setHasUpdatedFactor] = useState(false);
+
+    // bug causing
     useEffect(() => {
-      if (activities.length > 0 && value.Activity && !value.factor) {
+      if (activities.length > 0 && value.Activity && !value.factor && rowType !== "assigned") {
         const foundActivity = activities.find(
           (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value.Activity
         );
@@ -671,20 +673,20 @@ const EmissionWidget = React.memo(
       }
     };
 
-    useEffect(() => {
-      console.log(value, " is the new value passed to the component"); // Log to check incoming data
+    // useEffect(() => {
+    //   console.log(value, " is the new value passed to the component"); 
 
-      if (value?.url && value?.name) {
-        setFileName(value.file?.name); // Ensure fileName is updated only when value contains the correct data
-        setPreviewData(value.file?.url);
-        setFileType(value.file?.type ?? "");
-        setFileSize(value.file?.size ?? "");
-        setUploadDateTime(value.file?.uploadDateTime ?? "");
-        setUploadedBy(value.file?.uploadedBy ?? "");
-      } else {
-        console.log("value prop is missing some data, not updating state");
-      }
-    }, [value]);
+    //   if (value?.url && value?.name) {
+    //     setFileName(value.file?.name); 
+    //     setPreviewData(value.file?.url);
+    //     setFileType(value.file?.type ?? "");
+    //     setFileSize(value.file?.size ?? "");
+    //     setUploadDateTime(value.file?.uploadDateTime ?? "");
+    //     setUploadedBy(value.file?.uploadedBy ?? "");
+    //   } else {
+    //     console.log("value prop is missing some data, not updating state");
+    //   }
+    // }, [value]);
 
     const handleChange = async (event) => {
       const selectedFile = event.target.files[0];
@@ -805,11 +807,21 @@ const EmissionWidget = React.memo(
       dispatch(toggleSelectAll({ scope, isChecked }));
     };
 
+    // useEffect(() => {
+    //   if (
+    //     value.assigned_to &&
+    //     value.assigned_to !== "" &&
+    //     rowType === "default"
+    //   ) {
+    //     setRowType("assigned");
+    //   }
+    // }, [value.assigned_to]);
     useEffect(() => {
       if (
         value.assigned_to &&
         value.assigned_to !== "" &&
-        rowType === "default"
+        rowType === "default" &&
+        !["calculated", "approved"].includes(rowType)  // Add this check
       ) {
         setRowType("assigned");
       }
