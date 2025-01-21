@@ -18,11 +18,14 @@ export async function fetchClimatiqActivities({
   year,
   customFetchExecuted = false,
 }) {
+  // Adjust year if it's 2025
+  const adjustedYear = year === "2025" || year === 2025 ? "2024" : year;
+
   const cacheKey = createCacheKey({
     subcategory,
     page,
     region,
-    year,
+    year: adjustedYear,
     customFetchExecuted,
   });
 
@@ -34,13 +37,17 @@ export async function fetchClimatiqActivities({
   }
 
   let activitiesData = [];
-  let totalPages = 1;
   let wildcardActivitiesData = [];
   let yearlyResponseData = [];
   let customFetchData = [];
 
   // Helper function to make the API call
   const fetchData = async (params) => {
+    // Ensure year is adjusted in the helper function as well
+    if (params.year === "2025" || params.year === 2025) {
+      params.year = "2024";
+    }
+
     if (
       params.region &&
       !params.region.endsWith("*") &&
@@ -57,20 +64,47 @@ export async function fetchClimatiqActivities({
     return response.json();
   };
 
+  // Helper function to fetch all pages
+  const fetchAllPages = async (params, initialResponse) => {
+    const allResults = [...initialResponse.results];
+    const totalPages = initialResponse.last_page;
+
+    if (totalPages > 1) {
+      const pagePromises = [];
+      for (let pageNum = 2; pageNum <= totalPages; pageNum++) {
+        pagePromises.push(
+          fetchData({
+            ...params,
+            page: pageNum,
+          })
+        );
+      }
+
+      const pageResults = await Promise.all(pagePromises);
+      pageResults.forEach((result) => {
+        allResults.push(...result.results);
+      });
+    }
+
+    return allResults;
+  };
+
   try {
     // Initial fetch with region
     const initialData = await fetchData({
       subcategory,
-      page,
       region,
-      year,
+      year: adjustedYear,
+      page,
     });
 
-    activitiesData = initialData.results;
-    totalPages = initialData.last_page;
+    activitiesData = await fetchAllPages(
+      { subcategory, region, year: adjustedYear },
+      initialData
+    );
 
     // Check if we need to do a wildcard search
-    const totalResults = initialData.results.length;
+    const totalResults = activitiesData.length;
     const totalPrivateResults = activitiesData.reduce(
       (count, activity) => count + (activity.access_type === "private" ? 1 : 0),
       0
@@ -80,28 +114,33 @@ export async function fetchClimatiqActivities({
 
     if (effectiveCount <= 5) {
       // Wildcard search
-      const wildcardData = await fetchData({
+      const wildcardInitialData = await fetchData({
         subcategory,
         page,
         region: "*",
-        year,
+        year: adjustedYear,
       });
 
-      wildcardActivitiesData = wildcardData.results;
-      totalPages = wildcardData.last_page;
+      wildcardActivitiesData = await fetchAllPages(
+        { subcategory, region: "*", year: adjustedYear },
+        wildcardInitialData
+      );
 
-      if (wildcardData.last_page === 0) {
+      if (wildcardInitialData.last_page === 0) {
         // Historical data search
-        for (let i = parseInt(year) - 1; i >= 2019; i--) {
-          const yearlyData = await fetchData({
+        for (let i = parseInt(adjustedYear) - 1; i >= 2019; i--) {
+          const yearlyInitialData = await fetchData({
             subcategory,
             page,
             region,
             year: i,
           });
 
-          if (yearlyData.results.length > 0) {
-            yearlyResponseData = yearlyData.results;
+          if (yearlyInitialData.results.length > 0) {
+            yearlyResponseData = await fetchAllPages(
+              { subcategory, region, year: i },
+              yearlyInitialData
+            );
             break;
           }
         }
@@ -114,18 +153,26 @@ export async function fetchClimatiqActivities({
       categoryMappings[subcategory] &&
       !customFetchExecuted
     ) {
-      // Use Promise.all to fetch custom activities in parallel
-      const customFetchPromises = categoryMappings[subcategory].map((entry) =>
-        fetchData({
+      const customFetchPromises = categoryMappings[subcategory].map(async (entry) => {
+        const initialCustomData = await fetchData({
           subcategory,
           page,
-          year: entry.year,
+          year: entry.year === "2025" || entry.year === 2025 ? "2024" : entry.year,
           source: entry.source,
-        })
-      );
+        });
+
+        return fetchAllPages(
+          {
+            subcategory,
+            year: entry.year === "2025" || entry.year === 2025 ? "2024" : entry.year,
+            source: entry.source,
+          },
+          initialCustomData
+        );
+      });
 
       const customResults = await Promise.all(customFetchPromises);
-      customFetchData = customResults.flatMap((result) => result.results);
+      customFetchData = customResults.flat();
     }
 
     // Combine all results
@@ -145,7 +192,7 @@ export async function fetchClimatiqActivities({
 
     const result = {
       results: combinedResults,
-      totalPages,
+      totalPages: 1, // Since we're returning all results, we set totalPages to 1
       hasCustomData: customFetchData.length > 0,
     };
 

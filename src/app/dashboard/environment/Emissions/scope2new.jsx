@@ -16,10 +16,12 @@ import {
   updateScopeData,
   updateScopeDataLocal,
   setValidationErrors,
+  fetchAssignedTasks
 } from "@/lib/redux/features/emissionSlice";
 import { debounce } from "lodash";
 import { toast } from "react-toastify";
 import { validateEmissionsData } from "./emissionValidation";
+import { del } from "../../../utils/axiosMiddleware";
 
 const Scope2 = forwardRef(
   (
@@ -185,6 +187,23 @@ const Scope2 = forwardRef(
       );
     }, [formData, dispatch]);
 
+    const deleteTask = async (taskId) => {
+      try {
+        const response = await del(`organization_task_dashboard/${taskId}`);
+        if (response.status === 204) {
+          toast.success("Task deleted successfully");
+          
+        } else {
+          console.log('response after delete failed', response);
+          
+          toast.error("Failed to delete task");
+        }
+      }
+      catch(error) {
+        console.error("Error deleting task:", error);
+      }}
+        
+
     const handleRemoveRow = useCallback(
       async (index) => {
         const parsedIndex = parseInt(index, 10);
@@ -201,20 +220,26 @@ const Scope2 = forwardRef(
         const rowType = rowToRemove.Emission?.rowType;
         console.log("Row type:", rowType);
 
-        if (rowType === "assigned" || rowType === "approved") {
-          toast.error("Cannot delete assigned or approved rows");
+        if (rowType === "approved") {
+          toast.error("Cannot delete approved task row");
           return;
+        }
+
+        else if (rowType === "assigned") {
+          const deletedRow = await deleteTask(rowToRemove.id);
+          console.log("Deleted row:", deletedRow);
+          dispatch(fetchAssignedTasks())
         }
 
         const updatedData = formData.filter((_, i) => i !== parsedIndex);
         console.log("Updated data after removal:", updatedData);
 
         dispatch(
-          updateScopeDataLocal({ scope: 2, data: { data: updatedData } })
+          updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
         );
 
         // Debug validation errors
-        const currentValidationErrors = validationErrors?.scope2?.fields || {};
+        const currentValidationErrors = validationErrors?.scope1?.fields || {};
         console.log("Current validation errors:", currentValidationErrors);
         console.log("Full validation state:", validationErrors);
 
@@ -260,8 +285,8 @@ const Scope2 = forwardRef(
             console.log("Dispatching updated validation errors");
             dispatch(
               setValidationErrors({
-                scope2: {
-                  ...validationErrors.scope2,
+                scope1: {
+                  ...validationErrors.scope1,
                   fields: newValidationFields,
                 },
               })
