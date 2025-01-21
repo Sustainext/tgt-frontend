@@ -29,6 +29,7 @@ import WasteMaterialtopic from "./Waste/Management-Material-topic/page";
 import MaterialsMaterialtopic from "./Materials/Management-Material-topic/page";
 import WaterMaterialtopic from "./Water-effluents/Management-Material-topic/page";
 import SupplierMaterialtopic from "./supplier-environmental-assessment/Management-Material-topic/page";
+import SignificantSpills from './Waste/significant-spills/page'
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -92,6 +93,7 @@ const environment = () => {
       "Management of Material topic Materials",
       "Management of Material topic waste",
       "Management of Material topic energy",
+      "Management of Material topic effluent",
     ];
     const emissionTabs = ["GHG Emissions"];
     const energyTabs = [
@@ -134,6 +136,9 @@ const environment = () => {
       "New suppliers that were screened using environmental criteria",
       "Negative environmental impacts in the supply chain and actions taken",
     ];
+    // const effluentTab = [
+    //   "Significant Spills",
+    // ];
 
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
@@ -148,7 +153,11 @@ const environment = () => {
       dispatch(setHeadertext2("Water and effluents"));
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Supplier Environmental Assessment"));
-    } else if (materialnewTabs.includes(activeTab)) {
+    } 
+    // else if (effluentTab.includes(activeTab)) {
+    //   dispatch(setHeadertext2("Effluents"));
+    // } 
+    else if (materialnewTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Management of Material Topic"));
     } else {
       dispatch(setHeadertext2(`${activeTab}`));
@@ -215,6 +224,8 @@ const environment = () => {
             {activeTab === "Waste Diverted from disposal" && <Wastediverted apiData={data} />}
             {activeTab === "Waste diverted to disposal" && <Wastedirected apiData={data} />}
             {activeTab === "Data Collection Methodology" && <Datacollectionmethodology apiData={data} />}    
+            {activeTab === "Significant Spills" && <SignificantSpills apiData={data} isSidepanelOpen={open} />}
+            
             {/* Materials  start */}
             {activeTab === "Management of Material topic Materials" && (
               <MaterialsMaterialtopic apiData={data} />

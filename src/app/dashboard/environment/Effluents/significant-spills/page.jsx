@@ -1,24 +1,31 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
-import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import React, { useState, useEffect, useRef } from "react";
+import EnvironmentHeader2 from "../../environmentheader2";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Wastedirectedbody from "./waste-directed-body";
+import Screen1 from "./screen1";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import WasteTopBar from '../wasteTopBar'
+import EffluentTopBar from '../effluentTopBar'
+import { useSelector } from "react-redux";
 
-
-const Wastedirected = ({apiData}) => {
+const SignificantSpills = ({apiData,isSidepanelOpen}) => {
+    const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
+        (state) => state.materialitySlice
+      );
+      const materialityEnvData=apiData&&apiData.environment?apiData.environment:{}
+      const [year, setYear] = useState(materiality_year?materiality_year:'');
+      const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
+      const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [locationMessage, setLocationMessage] = useState("");
+  const [organisationMessage, setOrganisationMessage] = useState("");
+  const [corporateMessage, setCorporateMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
   const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
@@ -57,70 +64,69 @@ const Wastedirected = ({apiData}) => {
 
   const sdgData=[
     {
-        tagName:'GRI 306 - 5',
-        toggle:'28',
+        tagName:'GRI 306 - 3',
+        toggle:'52',
         textColor:"#007EEF",
         bgColor:"bg-slate-200"
     },
-    {
-        tagName:'SDG 3',
-        toggle:'46',
-        textColor:"#fff",
-        bgColor:"bg-[#4C9F38]"
-    },
-    {
-        tagName:'SDG 6',
-        toggle:'49',
-        textColor:"#fff",
-        bgColor:"bg-cyan-500"
-    },
-    {
-        tagName:'SDG 11',
-        toggle:'48',
-        textColor:"#fff",
-        bgColor:"bg-[#FD9D24]"
-    },
-    {
-      tagName:'SDG 12',
-      toggle:'45',
-      textColor:"#fff",
-      bgColor:"bg-yellow-600"
-  },
   {
+    tagName:'SDG 3',
+    toggle:'19',
+    textColor:"#fff",
+    bgColor:"bg-[#2D9A47]"
+},
+{
+    tagName:'SDG 6',
+    toggle:'49',
+    textColor:"#fff",
+    bgColor:"bg-[#26BDE2]"
+},
+{
+    tagName:'SDG 12',
+    toggle:'30',
+    textColor:"#fff",
+    bgColor:"bg-[#BF8B2E]"
+},
+{
     tagName:'SDG 15',
     toggle:'23',
     textColor:"#fff",
     bgColor:"bg-[#56C02B]"
 },
 ]
-
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
-       
+        <EffluentTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Waste Directed to disposal
-            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section is dedicated to the calculation of Energy Intensity Ratios based on organizational metrics. These ratios quantify the energy demand per unit of activity, output, or any other organization-specific metric" className="mt-1.5 ml-2 text-[15px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                            width: "290px", backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: 'left',
-                        }}>
-
-                        </ReactTooltip> */}
+         Significant Spills
+            <MdInfoOutline
+              data-tooltip-id={`tooltip-$e1`}
+              data-tooltip-content="This section documents the data corresponding to the significant spills."
+              className="mt-1.5 ml-2 text-[15px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$e1`}
+              place="top"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+              }}
+            ></ReactTooltip>
           </h6>
         </div>
         <div
-        ref={drawerRef}
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -163,26 +169,35 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <EnvironmentHeader
-        activeMonth={activeMonth}
-        setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
+       <EnvironmentHeader2
+             activeMonth={activeMonth}
+             setActiveMonth={setActiveMonth}
+             selectedOrg={selectedOrg}
+             setSelectedOrg={setSelectedOrg}
+             selectedCorp={selectedCorp}
+             setSelectedCorp={setSelectedCorp}
+             year={year}
+             setYear={setYear}
+             organisationMessage={organisationMessage}
+             setOrganisationMessage={setOrganisationMessage}
+             corporateMessage={corporateMessage}
+             setCorporateMessage={setCorporateMessage}
+             setYearMessage={setYearMessage}
+             yearMessage={yearMessage}
+           />
+      <Screen1
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
-        locationMessage={locationMessage}
-        setLocationMessage={setLocationMessage}
-        yearMessage={yearMessage}
+        setOrganisationMessage={setOrganisationMessage}
+        setCorporateMessage={setCorporateMessage}
         setYearMessage={setYearMessage}
-      />
-      <Wastedirectedbody
-        location={location}
-        year={year}
-        month={activeMonth}
-        setLocationMessage={setLocationMessage}
-        setYearMessage={setYearMessage}
+        isSidepanelOpen={isSidepanelOpen}
       />
     </>
   );
 };
-export default Wastedirected;
+export default SignificantSpills;

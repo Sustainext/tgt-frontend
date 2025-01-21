@@ -22,6 +22,7 @@ const Section3=({section13_1_2Ref,data})=>{
 
     const columns = [
       "Type of Employees",
+      "Total no of employees",
       "Percentage of Male Employees",
       "Percentage of Female Employees",
       "Percentage of Non-Binary Employees",
@@ -37,12 +38,13 @@ const Section3=({section13_1_2Ref,data})=>{
             
           {
           "Type of Employees": val.type_of_employee,
-        "Percentage of Male Employees": val.percentage_of_male_employee,
-        "Percentage of Female Employees": val.percentage_of_female_employee,
-        "Percentage of Non-Binary Employees": val.percentage_of_non_binary_employee,
-        "Percentage of Employees < 30 years old": val.yearsold30,
-        "Percentage of Employees 30-50 years old": val.yearsold30to50,
-        "Percentage of Employees > 50 years old": val.yearsold50,
+          "Total no of employees":val.total,
+        "Percentage of Male Employees":val.percentage_of_male_employee? val.percentage_of_male_employee + "%" :'',
+        "Percentage of Female Employees":val.percentage_of_female_employee? val.percentage_of_female_employee + "%" :'',
+        "Percentage of Non-Binary Employees": val.percentage_of_non_binary_employee? val.percentage_of_non_binary_employee + "%":'',
+        "Percentage of Employees < 30 years old":val.yearsold30? val.yearsold30 + "%":'',
+        "Percentage of Employees 30-50 years old":val.yearsold30to50? val.yearsold30to50 + "%":'',
+        "Percentage of Employees > 50 years old":val.yearsold50? val.yearsold50 + "%":'',
         
         }
             
@@ -51,6 +53,7 @@ const Section3=({section13_1_2Ref,data})=>{
 :[
   {
      "Type of Employees": "No data available",
+     "Total no of employees":"No data available",
         "Percentage of Male Employees": "No data available",
         "Percentage of Female Employees": "No data available",
         "Percentage of Non-Binary Employees": "No data available",
@@ -61,6 +64,7 @@ const Section3=({section13_1_2Ref,data})=>{
 ]:[
   {
   "Type of Employees": "No data available",
+  "Total no of employees":"No data available",
         "Percentage of Male Employees": "No data available",
         "Percentage of Female Employees": "No data available",
         "Percentage of Non-Binary Employees": "No data available",
@@ -71,6 +75,7 @@ const Section3=({section13_1_2Ref,data})=>{
 ]:[
   {
   "Type of Employees": "No data available",
+  "Total no of employees":"No data available",
         "Percentage of Male Employees": "No data available",
         "Percentage of Female Employees": "No data available",
         "Percentage of Non-Binary Employees": "No data available",
@@ -88,12 +93,13 @@ data["401_social_analyse"]["data"]["employee_turnover"].map((val,index)=>{
         
       {
       "Type of Employees": val.type_of_employee,
-    "Percentage of Male Employees": val.percentage_of_male_employee,
-    "Percentage of Female Employees": val.percentage_of_female_employee,
-    "Percentage of Non-Binary Employees": val.percentage_of_non_binary_employee,
-    "Percentage of Employees < 30 years old": val.yearsold30,
-    "Percentage of Employees 30-50 years old": val.yearsold30to50,
-    "Percentage of Employees > 50 years old": val.yearsold50,
+      "Total no of employees":val.total,
+    "Percentage of Male Employees": val.percentage_of_male_employee?val.percentage_of_male_employee + "%":'' ,
+    "Percentage of Female Employees": val.percentage_of_female_employee? val.percentage_of_female_employee + "%" :'',
+    "Percentage of Non-Binary Employees": val.percentage_of_non_binary_employee? val.percentage_of_non_binary_employee + "%" :'',
+    "Percentage of Employees < 30 years old": val.yearsold30? val.yearsold30 + "%":'',
+    "Percentage of Employees 30-50 years old":val.yearsold30to50? val.yearsold30to50 + "%":'',
+    "Percentage of Employees > 50 years old": val.yearsold50? val.yearsold50 + "%" :'',
     
     }
         
@@ -102,6 +108,7 @@ data["401_social_analyse"]["data"]["employee_turnover"].map((val,index)=>{
 :[
 {
  "Type of Employees": "No data available",
+ "Total no of employees":"No data available",
     "Percentage of Male Employees": "No data available",
     "Percentage of Female Employees": "No data available",
     "Percentage of Non-Binary Employees": "No data available",
@@ -112,6 +119,7 @@ data["401_social_analyse"]["data"]["employee_turnover"].map((val,index)=>{
 ]:[
 {
 "Type of Employees": "No data available",
+"Total no of employees":"No data available",
     "Percentage of Male Employees": "No data available",
     "Percentage of Female Employees": "No data available",
     "Percentage of Non-Binary Employees": "No data available",
@@ -122,6 +130,7 @@ data["401_social_analyse"]["data"]["employee_turnover"].map((val,index)=>{
 ]:[
 {
 "Type of Employees": "No data available",
+"Total no of employees":"No data available",
     "Percentage of Male Employees": "No data available",
     "Percentage of Female Employees": "No data available",
     "Percentage of Non-Binary Employees": "No data available",

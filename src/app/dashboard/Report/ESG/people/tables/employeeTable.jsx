@@ -41,6 +41,9 @@ const EmployeeInfoTable = ({columns,data}) => {
                   {row["Type of Employees"]}
                 </td>
                 <td className="border-t border-r border-gray-200 p-4 text-left">
+                  {row["Total no of employees"]}
+                </td>
+                <td className="border-t border-r border-gray-200 p-4 text-left">
                   {row["Percentage of Male Employees"]}
                 </td>
                 <td className="border-t border-r border-gray-200 p-4 text-left">
