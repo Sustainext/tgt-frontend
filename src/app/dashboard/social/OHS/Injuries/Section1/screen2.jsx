@@ -41,7 +41,7 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        title: "Employee Category",
+        title: "Worker Category",
         tooltip:
           "Please specify the category of workers who are not employees but whose work and/or workplace is controlled by the organization.",
           type:"text",
@@ -71,8 +71,8 @@ const uiSchema = {
         type:"text",
       },
       {
-        title: "Number of hours worked",
-        tooltip: "Please specify employee's numberof hours worked.",
+        title: "Total number of hours worked by worker category",
+        tooltip: "Please provide the total number of hours worked by total number of workers within each specific worker category.",
         type:"number",
       },
     ],
