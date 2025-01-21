@@ -42,6 +42,31 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
     });
   };
 
+    const getStatusBadgeClasses = (status) => {
+      const baseClasses = "text-[8px] px-[6px] rounded-full";
+      const statusMap = {
+
+        in_progress: "bg-[#FDB022]",
+        approved: "bg-[#12B76A]",
+        under_review: "bg-orange-400",
+        completed: "bg-[#12B76A]",
+        reject: "bg-red-500",
+      };
+      return `${baseClasses} ${statusMap[status] || "bg-gray-100 text-gray-600"}`;
+    }
+
+  const getStatusLabel = (status) => {
+    const labels = {
+      not_started: "Not Started",
+      in_progress: "In Progress",
+      under_review: "Under Review",
+      completed: "Completed",
+      approved: "Approved",
+      reject: "Rejected",
+    };
+    return labels[status] || status;
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg w-[395px] max-h-[90vh] overflow-y-auto table-scrollbar">
@@ -76,8 +101,8 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
               <label className="text-sm font-medium text-gray-600 w-24">
                 Status
               </label>
-              <span className="px-3 py-1 text-sm bg-orange-100 text-orange-600 rounded-md">
-                In Progress
+              <span className={`px-3 py-1 text-sm rounded-md ${getStatusBadgeClasses(task.task_status)}`}>
+                {getStatusLabel(task.task_status)}
               </span>
             </div>
 

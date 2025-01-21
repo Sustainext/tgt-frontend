@@ -107,6 +107,7 @@ const TaskStatusBadge = ({ status }) => {
 
   const getStatusLabel = (status) => {
     const labels = {
+      not_started: "Not Started",
       in_progress: "In Progress",
       under_review: "Under Review",
       completed: "Completed",
