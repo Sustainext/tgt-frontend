@@ -95,7 +95,7 @@ const LocationSelectWidget = ({
               {`Select ${label}` || "Select..."}
             </option>
             {(locationData || []).map((option) => (
-              <option key={option.location_id} value={option.location_id}>
+              <option key={option.location_id} value={option.location_name}>
                 {option.location_name}
               </option>
             ))}
