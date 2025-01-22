@@ -1953,7 +1953,7 @@ export const Energydata = [
               commitments and obligations in transmitting information as
               required by each relevant agreement.
             </p>
-            <p className="text-[11px] text-[#222222] mb-2">12.2.2</p>
+            <p className="text-[11px] text-[#222222] mb-2">12.4.2</p>
             <p className="text-[11px] text-[#727272] mb-1">
               (a) Hazardous waste generated per capita; and
             </p>
@@ -3359,5 +3359,58 @@ export const Energydata = [
       </>,
     ],
     link: "https://globalreporting.org/pdf.ashx?id=12456&page=1",
+  },
+  {
+    category: ["52"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 306: Effluents and Waste 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 306-3 Significant Spills
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+            Requirements
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+            The reporting organization shall report the following information:
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+            a. Total number and total volume of recorded significant spills.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+            b. The following additional information for each spill that was reported in the
+organization’s financial statements:
+
+</p>
+            <p className="text-[11px] text-[#727272] mb-2">i. Location of spill;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            ii. Volume of spill;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">iii. Material of spill, categorized by: oil spills (soil or water surfaces), fuel spills
+(soil or water surfaces), spills of wastes (soil or water surfaces), spills of
+chemicals (mostly soil or water surfaces), and other (to be specified by the
+organization).</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            c. Impacts of significant spills.
+
+            </p>
+           
+          </div>
+        
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=15010",
   },
 ];

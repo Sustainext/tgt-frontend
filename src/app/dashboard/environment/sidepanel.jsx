@@ -11,7 +11,7 @@ import {
   MdOutlineEmojiNature,
 } from "react-icons/md";
 
-import { GiWoodPile } from "react-icons/gi";
+import { GiWoodPile,GiWaterfall } from "react-icons/gi";
 
 const Aside = ({ activeTab, handleTabClick, apiData }) => {
   const [isEmission, setEmisssion] = useState(false);
@@ -20,6 +20,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
   const [isWaterVisible, setWaterVisible] = useState(false);
   const [isMaterialsVisible, setMaterialsVisible] = useState(false);
   const [isSupplierVisible, setIsSupplierVisible] = useState(false);
+  // const [isEffluentVisible, setIsEffluentVisible] = useState(false);
 
   const materialityEnvData=apiData&&apiData.environment?apiData.environment:{}
 
@@ -63,6 +64,16 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
   };
+
+  // const toggleEffluentVisible = () => {
+  //   setIsEffluentVisible(!isEffluentVisible)
+  //   setWaterVisible(false);
+  //   setEnergySectionVisible(false);
+  //   setWasteVisible(false);
+  //   setMaterialsVisible(false);
+  //   setIsSupplierVisible(false);
+  //   setEmisssion(false);
+  // };
 
   const toggleMaterialsVisible = () => {
     setMaterialsVisible(!isMaterialsVisible);
@@ -393,7 +404,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                 <MdOutlineDeleteOutline className="w-5 h-5 mr-2" />
               </div>
               <div className="w-[50%] text-left ml-2">
-                <span className="indent-0">Waste</span>
+                <span className="indent-0">Waste Management</span>
               </div>
               {materialityEnvData&&materialityEnvData.EnvWasteManagement?.is_material_topic?(
                 <div className="w-[20%] flex justify-end">
@@ -545,10 +556,119 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                       Data Collection Methodology
                     </p>
                   </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Significant Spills"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Significant Spills")
+                      }
+                    >
+                      Significant Spills
+                    </p>
+                  </div>
                 </div>
               </>
             )}
           </div>
+          {/* effluent start */}
+          {/* <div>
+            <button
+              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
+              ${
+                activeTab === "Significant Spills" ||
+                activeTab === "Management of Material topic effluent"
+                  ? "text-[#007EEF]"
+                  : "bg-transparent text-[#727272] "
+              }`}
+              onClick={toggleEffluentVisible}
+            >
+              <div className="w-[15%]">
+                <GiWaterfall className="w-5 h-5 mr-2" />
+              </div>
+              <div className="w-[50%] text-left ml-2">
+                <span className="indent-0">Effluents</span>
+              </div>
+              {materialityEnvData&&materialityEnvData.EnvWasteManagement?.is_material_topic?(
+                <div className="w-[20%] flex justify-end">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span  className="w-[20%]"></span>
+              )}
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
+               
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isEffluentVisible && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+    
+            {isEffluentVisible && (
+              <>
+                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData&&materialityEnvData.EnvWasteManagement?.is_material_topic?(
+                    <div>
+                      <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Mandatory Management Disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Management of Material topic effluent"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Management of Material topic effluent")
+                      }
+                    >
+                      Management of Material topic
+                    </p>
+                  </div>
+                    </div>
+                  ):(
+                    <div></div>
+                  )}
+                
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                    Topic Disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Significant Spills"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Significant Spills")
+                      }
+                    >
+                      {" "}
+                      Significant Spills
+                    </p>
+                  </div>
+                 
+                </div>
+              </>
+            )}
+          </div> */}
+
           {/* Materials start  */}
 
           <div>

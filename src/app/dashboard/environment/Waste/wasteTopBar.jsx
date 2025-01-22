@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-const WasteTopBar=({toggleDrawer,sdgData,apiData})=>{
+const WasteTopBar=({toggleDrawer,sdgData,apiData,SignificantSpills})=>{
   const materialityEnvData=apiData&&apiData.environment?apiData.environment:{}
     return (
         <>
@@ -12,7 +12,7 @@ const WasteTopBar=({toggleDrawer,sdgData,apiData})=>{
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                    Waste
+                    Waste Management
                   </p>
                 </div>
                 {materialityEnvData&&materialityEnvData.EnvWasteManagement?.is_material_topic?(
@@ -29,6 +29,16 @@ const WasteTopBar=({toggleDrawer,sdgData,apiData})=>{
           </div>
           <div className="w-full float-end pt-5 me-1">
             <div className="flex float-end border-l">
+              {SignificantSpills?(
+                <div>
+                  <button
+                className={`text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[100px] h-[22px] ml-2 text-center pt-0.5`}
+                onClick={() => toggleDrawer('52')}
+              >GRI 306-3, 2016</button>
+                </div>
+              ):(
+                <div></div>
+              )}
             {sdgData&&sdgData.map((val)=>(
                     <button
                     className={`text-[${val.textColor}] ${val.bgColor} rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5`}

@@ -331,16 +331,16 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-  // useEffect(() => {
-  //   if (selectedOrg && year) {
-  //     loadFormData();
-  //     toastShown.current = false;
-  //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true;
-  //     }
-  //   }
-  // }, [selectedOrg, year, selectedCorp]);
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -401,8 +401,8 @@ Note: Compile the EVG&D from data in the organization’s audited financial or p
         </div>
         <div className="mx-2 mb-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
