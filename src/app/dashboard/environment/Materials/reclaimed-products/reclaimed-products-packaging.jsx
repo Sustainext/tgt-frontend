@@ -45,8 +45,8 @@ const schema = {
         properties: {
             Typesofproducts: {
                 type: "string",
-                title: "Types of products sold ",
-                tooltiptext: "What types of products did the company sell in the reporting period?",
+                title: "Product Category",
+                tooltiptext: "What product categories did the company sell during the reporting period?",
                 display: "block",
 
             },
@@ -388,13 +388,22 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
           toastShown.current = true; // Set the flag to true after showing the toast
         }
       }
-    }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+    }, [location, year, month]);
+
     const handleChange = (e) => {
-      const newData = e.formData.map((item, index) => ({
-        ...item, // Ensure each item retains its structure
-      }));
-      setFormData(newData); // Update the formData with new values
-    };
+      const updatedFormData = e.formData.map((item, index) => {
+          const updatedItem = { ...item };
+  
+          // Check if Unit is updated and update Unit2
+          if (updatedItem.Unit && updatedItem.Unit !== formData[index]?.Unit) {
+              updatedItem.Unit2 = updatedItem.Unit; // Mirror the value of Unit to Unit2
+          }
+  
+          return updatedItem;
+      });
+  
+      setFormData(updatedFormData);
+  };
     const handleSubmit = (e) => {
       e.preventDefault();
       console.log("Submit button clicked"); // Debugging log

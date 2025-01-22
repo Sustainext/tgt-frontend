@@ -69,8 +69,8 @@ const uiSchema = {
         type:"text",
       },
       {
-        title: "Number of hours worked",
-        tooltip: "Please specify employee's number of hours worked.",
+        title: "Total number of hours worked by employee category",
+        tooltip: "Please provide the total number of hours worked by total number of employees within each specific employee category.",
         type:"number",
       },
     ],

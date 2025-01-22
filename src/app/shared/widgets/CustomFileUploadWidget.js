@@ -110,10 +110,7 @@ const CustomFileUploadWidget = ({
       return response.data;
     } catch (error) {
       console.error("Error logging login details:", error);
-      if (error.redirectToLogin) {
-        router.push("/");
-        localStorage.clear();
-      }
+  
       return null;
     }
   };

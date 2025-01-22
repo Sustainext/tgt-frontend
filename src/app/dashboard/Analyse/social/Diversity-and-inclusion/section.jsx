@@ -4,6 +4,7 @@ import TableSidebar from "./TableSidebar";
 import Table1 from "./Table1";
 import Table3 from "./Table3";
 import Table2 from "./Table2";
+import Table4 from "./Table4";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2, columns3, columns4, columns5,columns6 } from "./data";
 import { Oval } from "react-loader-spinner";
@@ -176,7 +177,7 @@ const Section = ({
                     </div>
                   </div>
                   <div className="mb-4">
-                    <Table3
+                    <Table4
                    data={childdata3}
                     />
                   </div>

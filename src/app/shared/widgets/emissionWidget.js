@@ -29,7 +29,7 @@ import MultipleAssignEmissionModal from "./MultipleAssignEmissionModal";
 import { getMonthName } from "@/app/utils/dateUtils";
 import { fetchClimatiqActivities } from "../../utils/climatiqApi.js";
 import CalculationInfoModal from "@/app/shared/components/CalculationInfoModal";
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const EmissionWidget = React.memo(
   ({
     value = {},
@@ -69,6 +69,56 @@ const EmissionWidget = React.memo(
     const quantity1Ref = useRef(null);
     const quantity2Ref = useRef(null);
     const focusedField = useSelector((state) => state.emissions.focusedField);
+   const text1 = useSelector((state) => state.header.headertext1);
+    const text2 = useSelector((state) => state.header.headertext2);
+    const middlename = useSelector((state) => state.header.middlename);
+    const useremail = typeof window !== 'undefined' ? localStorage.getItem("userEmail") : '';
+    const roles = typeof window !== 'undefined' 
+    ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
+    : '';
+
+//file log code//
+    const getIPAddress = async () => {
+      try {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+        return data.ip;
+      } catch (error) {
+        console.error("Error fetching IP address:", error);
+        return null;
+      }
+    };
+  
+  
+    const LoginlogDetails = async (status, actionType) => {
+      const backendUrl = process.env.BACKEND_API_URL;
+      const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
+    
+      try {
+        const ipAddress = await getIPAddress();
+    
+        
+        const data = {
+          event_type: text1,
+          event_details: "File",
+          action_type: actionType,
+          status: status,
+          user_email:useremail,
+          user_role:roles,
+          ip_address: ipAddress,
+          logs: `${text1} > ${middlename} > ${text2}`,
+        };
+    
+        const response = await axiosInstance.post(userDetailsUrl, data);
+    
+        return response.data;
+      } catch (error) {
+        console.error("Error logging login details:", error);
+ 
+        return null;
+      }
+    };
+//file log code end//
 
     // Get validation errors from Redux
     const validationErrors = useSelector(
@@ -308,23 +358,22 @@ const EmissionWidget = React.memo(
       }
     }, [category]);
 
-    useEffect(() => {
-      if (activities.length > 0 && value.Activity) {
-        const initialActivity = activities.find(
-          (act) =>
-            `${act.name} - ( ${act.source} ) - ${act.unit_type}` ===
-            value.Activity
-        );
-        if (initialActivity) {
-          const activityId = initialActivity.activity_id;
-          setActivityId(activityId);
-          setUnitType(initialActivity.unit_type);
-        }
-      }
-    }, [activities, value.Activity]);
+    // useEffect(() => {
+    //   if (activities.length > 0 && value.Activity) {
+    //     const initialActivity = activities.find(
+    //       (act) =>
+    //         `${act.name} - ( ${act.source} ) - ${act.unit_type}` ===
+    //         value.Activity
+    //     );
+    //     if (initialActivity) {
+    //       const activityId = initialActivity.activity_id;
+    //       setActivityId(activityId);
+    //       setUnitType(initialActivity.unit_type);
+    //     }
+    //   }
+    // }, [activities, value.Activity]);
 
     useEffect(() => {
-      console.log("Unit type changed:", unit_type);
       const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
       console.log("Unit config found:", unitConfig);
 
@@ -412,8 +461,11 @@ const EmissionWidget = React.memo(
       [activities, onChange, value, updateSelectedRowIfNeeded]
     );
 
+    const [hasUpdatedFactor, setHasUpdatedFactor] = useState(false);
+
+    // bug causing
     useEffect(() => {
-      if (activities.length > 0 && value.Activity && !value.factor) {
+      if (activities.length > 0 && value.Activity && !value.factor && rowType !== "assigned") {
         const foundActivity = activities.find(
           (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value.Activity
         );
@@ -615,25 +667,26 @@ const EmissionWidget = React.memo(
         const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
         return url;
       } catch (error) {
+        LoginlogDetails("Failed", "Deleted");
         console.error("Error uploading file:", error.message);
         return null;
       }
     };
 
-    useEffect(() => {
-      console.log(value, " is the new value passed to the component"); // Log to check incoming data
+    // useEffect(() => {
+    //   console.log(value, " is the new value passed to the component"); 
 
-      if (value?.url && value?.name) {
-        setFileName(value.file?.name); // Ensure fileName is updated only when value contains the correct data
-        setPreviewData(value.file?.url);
-        setFileType(value.file?.type ?? "");
-        setFileSize(value.file?.size ?? "");
-        setUploadDateTime(value.file?.uploadDateTime ?? "");
-        setUploadedBy(value.file?.uploadedBy ?? "");
-      } else {
-        console.log("value prop is missing some data, not updating state");
-      }
-    }, [value]);
+    //   if (value?.url && value?.name) {
+    //     setFileName(value.file?.name); 
+    //     setPreviewData(value.file?.url);
+    //     setFileType(value.file?.type ?? "");
+    //     setFileSize(value.file?.size ?? "");
+    //     setUploadDateTime(value.file?.uploadDateTime ?? "");
+    //     setUploadedBy(value.file?.uploadedBy ?? "");
+    //   } else {
+    //     console.log("value prop is missing some data, not updating state");
+    //   }
+    // }, [value]);
 
     const handleChange = async (event) => {
       const selectedFile = event.target.files[0];
@@ -677,6 +730,10 @@ const EmissionWidget = React.memo(
           });
           setFileType(fileType);
 
+     setTimeout(() => {
+          LoginlogDetails("Success", "Uploaded");
+        }, 500);
+
           console.log("File uploaded successfully:", uploadUrl);
         } else {
           console.error("File upload failed");
@@ -693,21 +750,33 @@ const EmissionWidget = React.memo(
     };
 
     const handleDelete = () => {
-      const resetValue = {
-        type: "file",
-        value: "",
-        name: "",
-        url: "",
-        type: "",
-        size: "",
-        uploadDateTime: "",
-      };
+      try {
+        const resetValue = {
+          type: "file",
+          value: "",
+          name: "",
+          url: "",
+          type: "",
+          size: "",
+          uploadDateTime: "",
+        };
+  
+        setFileName("");
+        setPreviewData(null);
+        onChange(resetValue);
+        setShowModal(false);
 
-      setFileName("");
-      setPreviewData(null);
-      onChange(resetValue);
-      setShowModal(false);
-    };
+        setTimeout(() => {
+          LoginlogDetails("Success", "Deleted");
+        }, 500);
+      } catch (error) {
+        console.error("Error deleting file:", error.message);
+        // Call LoginlogDetails with a "Failed" status for deletion
+        setTimeout(() => {
+          LoginlogDetails("Failed", "Deleted");
+        }, 500);
+      }
+    }
 
     const handleClickonRemove = () => {
       onRemove(index);
@@ -738,11 +807,21 @@ const EmissionWidget = React.memo(
       dispatch(toggleSelectAll({ scope, isChecked }));
     };
 
+    // useEffect(() => {
+    //   if (
+    //     value.assigned_to &&
+    //     value.assigned_to !== "" &&
+    //     rowType === "default"
+    //   ) {
+    //     setRowType("assigned");
+    //   }
+    // }, [value.assigned_to]);
     useEffect(() => {
       if (
         value.assigned_to &&
         value.assigned_to !== "" &&
-        rowType === "default"
+        rowType === "default" &&
+        !["calculated", "approved"].includes(rowType)  // Add this check
       ) {
         setRowType("assigned");
       }
