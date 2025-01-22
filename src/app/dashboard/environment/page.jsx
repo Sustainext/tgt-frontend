@@ -93,7 +93,7 @@ const environment = () => {
       "Management of Material topic Materials",
       "Management of Material topic waste",
       "Management of Material topic energy",
-      "Management of Material topic effluent",
+      // "Management of Material topic effluent",
     ];
     const emissionTabs = ["GHG Emissions"];
     const energyTabs = [
