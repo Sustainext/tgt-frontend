@@ -75,7 +75,7 @@ const Section14=({section13_4_2Ref,data})=>{
     
 
       const [Categorycolumns] = useState([
-        { header: "Employee Category", subHeaders: [] }, // No sub-headers for this column
+        { header: "Number of employees per employee category", subHeaders: [] }, // No sub-headers for this column
         { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
         { header: "Age Group", subHeaders: ["<30 years", "30-50 years", ">50 years"] },
         { header: "Diversity groups", subHeaders: ["Minority group","Vulnerable Communities"] }
@@ -83,13 +83,13 @@ const Section14=({section13_4_2Ref,data})=>{
     
      
 
-      const Categorydata=data["405_1a_analyse"]?data["405_1a_analyse"]["number_of_employee_per_employee_category"]?.length>0?
+      const Categorydata=data["401_social_analyse"]?data["401_social_analyse"]["data"]?data["401_social_analyse"]["data"]["number_of_employee_per_employee_category"]?.length>0?
 
-    data["405_1a_analyse"]["number_of_employee_per_employee_category"].map((val,index)=>{
+      data["401_social_analyse"]["data"]["number_of_employee_per_employee_category"].map((val,index)=>{
         return (
             
           {
-            "Employee Category": val.Category,
+            "Number of employees per employee category": val.Category,
           Male: val.percentage_of_male_with_org_governance,
           Female: val.percentage_of_female_with_org_governance,
           "Non-Binary": val.percentage_of_non_binary_with_org_governance,
@@ -105,7 +105,7 @@ const Section14=({section13_4_2Ref,data})=>{
     })
 :[
   {
-      "Employee Category": "No data available",
+      "Number of employees per employee category": "No data available",
           Male: "No data available",
           Female: "No data available",
           "Non-Binary": "No data available",
@@ -117,7 +117,19 @@ const Section14=({section13_4_2Ref,data})=>{
 },
 ]:[
   {
-    "Employee Category": "No data available",
+    "Number of employees per employee category": "No data available",
+          Male: "No data available",
+          Female: "No data available",
+          "Non-Binary": "No data available",
+          "<30 years": "No data available",
+          "30-50 years": "No data available",
+          ">50 years": "No data available",
+          "Minority group": "No data available",
+          "Vulnerable Communities": "No data available"
+},
+]:[
+  {
+    "Number of employees per employee category": "No data available",
           Male: "No data available",
           Female: "No data available",
           "Non-Binary": "No data available",
