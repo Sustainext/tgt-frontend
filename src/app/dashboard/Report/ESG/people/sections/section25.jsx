@@ -29,7 +29,7 @@ const Section25 = ({ section13_6_8Ref, data }) => {
   ];
 
   const Tabledata1 = data["get_403_analyse"]
-    ? data["get_403_analyse"]["rate_of_injuries_for_all_employees"].length > 0
+    ? data["get_403_analyse"]["rate_of_injuries_for_all_employees"]?.length > 0
       ? data["get_403_analyse"]["rate_of_injuries_for_all_employees"].map(
           (val, index) => {
             return {
@@ -64,7 +64,7 @@ const Section25 = ({ section13_6_8Ref, data }) => {
   const Tabledata2 = data["get_403_analyse"]
     ? data["get_403_analyse"][
         "rate_of_injuries_for_not_included_in_company_employees"
-      ].length > 0
+      ]?.length > 0
       ? data["get_403_analyse"][
           "rate_of_injuries_for_not_included_in_company_employees"
         ].map((val, index) => {
