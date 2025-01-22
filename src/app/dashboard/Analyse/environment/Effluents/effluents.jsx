@@ -7,10 +7,10 @@ import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from "react-loader-spinner";
 import TableSidebar from "./TableSidebar";
 const Effluents = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
-  const [newSuppliers, setNewSuppliers] = useState([]);
-  const [negativeEnvImpact, setNegativeEnvImpact] = useState([]);
-  const [terminatedRelationship, setTerminatedRelationship] = useState([]);
 
+  const [Effdata1, setEffdata1] = useState([]);
+  const [Effdata2, setEffdata2] = useState([]);
+  const [Effdata3, setEffdata3] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
 
@@ -21,59 +21,73 @@ const Effluents = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
   const fetchData = async () => {
     LoaderOpen();
-    setNewSuppliers([]);
+  
+    setEffdata1([]);
+    setEffdata2([]);
+    setEffdata3([]);
+  
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_analyze_supplier_assesment?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`
+        `/sustainapp/get_analyze_waste_significant_spills?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`
       );
-
+  
       const data = response.data;
+      console.log(data, "testing");
+  
+      const {
+        total_number_and_volume_by_material,
+        total_number_and_volume_by_location,
+        total_number_and_volume_significant_spills,
+      } = response.data;
+      
+      const formattedMaterialData = formatMaterialData(total_number_and_volume_by_material || []);
+      const formattedLocationData = formatLocationData(total_number_and_volume_by_location || []);
+      const formattedSignificantSpillsData = formatSignificantSpillsData(total_number_and_volume_significant_spills || []);
+      
+      setEffdata1(formattedMaterialData);
+      setEffdata2(formattedLocationData);
+      setEffdata3(formattedSignificantSpillsData);
+  
+      function formatMaterialData(materialData) {
+        return materialData.map((item) => ({
+          "Material of the spill": item.material || "N/A",
+          "Volume of the spill": item.volume_of_spills || "N/A",
+          Unit: item.unit || "N/A",
+        }));
+      }
+      
+      function formatLocationData(locationData) {
+        return locationData.map((item) => ({
+          "Location of the spill": item.location || "N/A",
+          "Volume of the spill": item.volume_of_spills || "N/A",
+          Unit: item.unit || "N/A",
+        }));
+      }
+      
+      function formatSignificantSpillsData(significantSpills) {
+        return significantSpills.map((item) => ({
+          "Total number of Significant spill": item.number_of_significant_spills || "N/A",
+          "Total volume of Significant spill": item.volume_of_spills || "N/A",
+          Unit: item.unit || "N/A",
+        }));
+      }
+      
+  
 
-      const formatNewSppliers = (data) => {
-        return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage);
-          const formattedPercentage = percentage;
-          return {
-            "Organisation/Corporation": data.org_or_corp,
-            "Percentage of new suppliers that were screened using environmental criteria":
-              formattedPercentage,
-          };
-        });
-      };
-      const formatNegativeEnvImpact = (data) => {
-        return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage);
-          const formattedPercentage = percentage;
-          return {
-            "Organisation/Corporation": data.org_or_corp,
-            "Percentage of suppliers identified as having significant actual and potential negative environmental impacts with which improvements were agreed upon as a result of assessment":
-              formattedPercentage,
-          };
-        });
-      };
-      const formatTerminatedRelationship = (data) => {
-        return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage);
-          const formattedPercentage = percentage;
-          return {
-            "Organisation/Corporation": data.org_or_corp,
-            "Percentage of Suppliers identified as having significant actual and potential negative environmental impacts with terminated Relationship":
-              formattedPercentage,
-          };
-        });
-      };
-      setNewSuppliers(formatNewSppliers(data.gri_308_1a));
-      setTerminatedRelationship(formatTerminatedRelationship(data.gri_308_2e));
-      setNegativeEnvImpact(formatNegativeEnvImpact(data.gri_308_2d));
       LoaderClose();
     } catch (error) {
-      console.error("There was a problem with the fetch operation:", error);
       LoaderClose();
+  
+   
+  
+      setEffdata1([]);
+      setEffdata2([]);
+      setEffdata3([]);
     }
   };
+
 
   useEffect(() => {
     if (selectedOrg && year) {
@@ -108,7 +122,7 @@ const Effluents = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <DynamicTable2 columns={columns1} data={newSuppliers} />
+                  <DynamicTable2 columns={columns1} data={Effdata1} />
                 </div>
               </div>
             </div>
@@ -130,7 +144,7 @@ const Effluents = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <DynamicTable2 columns={columns2} data={negativeEnvImpact} />
+                  <DynamicTable2 columns={columns2} data={Effdata2} />
                 </div>
               </div>
             </div>
@@ -154,7 +168,7 @@ const Effluents = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
                 <div className="mb-4">
                   <DynamicTable2
                     columns={columns3}
-                    data={terminatedRelationship}
+                    data={Effdata3}
                   />
                 </div>
               </div>
