@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { getTodayDate } from "./TaskUtils";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
@@ -12,8 +13,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
     status: "not_started",
   });
 
-  const isFormValid =
-    formData.task_name && formData.deadline;
+  const isFormValid = formData.task_name && formData.deadline;
 
   if (!isOpen) return null;
 
@@ -32,15 +32,23 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submit function triggered");
-    
+
     if (!isFormValid) {
       console.log("Form validation failed");
-      toast.error("Please fill in all required fields");
+      toast.error("Please fill in all required fields", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       return;
     }
-  
+
     try {
-      console.log("Preparing submission data...");
       const submissionData = {
         task_name: formData.task_name.trim(),
         assigned_to: parseInt(formData.assigned_to),
@@ -49,16 +57,25 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
         assigned_by: parseInt(localStorage.getItem("user_id")),
         user_client: 1,
         roles: 3,
-        task_status: formData.status
+        task_status: formData.status,
       };
       console.log("Submission data:", submissionData);
-  
+
       // Call the onSubmit function with the correct structure
       const response = await onSubmit(null, "create", submissionData);
       console.log("Submit response:", response);
-  
+
       if (response) {
-        toast.success("Task has been added successfully");
+        toast.success("Task has been added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         onClose();
       } else {
         throw new Error("Failed to add task");
@@ -74,16 +91,17 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
       <div className="modal-center">
         <div className="modal-content bg-white rounded-lg shadow-xl p-6 min-w-[450px] max-w-[450px] relative">
           {/* Header */}
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
-            Add Task
-          </h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Add Task</h2>
           <p className="text-gray-600 text-sm mb-6">
-            Add tasks with descriptions and deadlines to keep your goals on track.
+            Add tasks with descriptions and deadlines to keep your goals on
+            track.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Status Dropdown */}
-            <div className={`${formData.assigned_to !== "" ? "opacity-70" : ""}`}>
+            <div
+              className={`${formData.assigned_to !== "" ? "opacity-70" : ""}`}
+            >
               <label className={`block text-sm font-medium text-gray-700 mb-1`}>
                 Status
               </label>

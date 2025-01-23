@@ -150,8 +150,7 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload,fileData 
                 Description
               </label>
               <p className="flex-1 text-sm text-gray-600">
-                {task?.description ||
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
+                {task?.description || "-"}              
               </p>
             </div>
 

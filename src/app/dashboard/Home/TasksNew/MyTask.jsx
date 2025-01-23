@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
-  FiPlus,
-  FiX,
-  FiUser,
-  FiFile,
-  FiChevronDown,
   FiArrowRight,
 } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import Moment from "react-moment";
+import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { BlobServiceClient } from "@azure/storage-blob";
 import { unitTypes } from "@/app/shared/data/units";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 // Import custom hooks
 import {
@@ -923,6 +919,10 @@ const MyTask = () => {
           setSelectedTask(null);
         }}
         task={selectedTask}
+        onApprove={submitApprove}
+        onReassign={submitReAssign}
+        onReject={submitReject}
+        userlist={clintlist}
       />
 
       <EditTaskModal
@@ -951,7 +951,8 @@ const MyTask = () => {
                 deadline: data.dueDate,
                 description: data.description?.trim(),
                 task_status: data.status,
-                file_data: data.file
+                file_data: data.file,
+                comments_assignee: data.comments,
               };
 
               const success = await handleTaskAction(
@@ -959,6 +960,7 @@ const MyTask = () => {
                 "update",
                 updatedData
               );
+              console.log("Edit Task Modal Response:", success);
               if (success) {
                 toast.success("Task updated successfully");
                 toggleModal("isMyTaskEditModalOpen", false);

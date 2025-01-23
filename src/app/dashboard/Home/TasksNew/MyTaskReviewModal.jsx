@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { format } from "date-fns";
 import { FiX } from "react-icons/fi";
+import {MdFilePresent} from "react-icons/md";
 
 const MyTaskReviewModal = ({
   isOpen,
@@ -9,13 +9,13 @@ const MyTaskReviewModal = ({
   onApprove,
   onReject,
   onReassign,
-  clintlist = [],
+  userlist = [],
 }) => {
   const [showFilePreview, setShowFilePreview] = useState(false);
   const [selectedUser, setSelectedUser] = useState("");
   const [newDueDate, setNewDueDate] = useState("");
   const [comments, setComments] = useState("");
-  const [isApprove, setIsApprove] = useState(false);
+  const [isApprove, setIsApprove] = useState(true);
   const [isModalOpenReassign, setIsModalOpenReassign] = useState(false);
   const [isModalOpenReject, setIsModalOpenReject] = useState(false);
   const [usernameasssin, setUsernameassin] = useState("");
@@ -48,12 +48,19 @@ const MyTaskReviewModal = ({
         deadline: date,
         comments: comments,
       });
+      setIsModalOpenReject(false);
+      setDate("");
+      setComments("");
     } else if (isModalOpenReassign) {
       onReassign(task.id, {
         assigned_to: usernameasssin,
         deadline: date,
         comments: comments,
       });
+      setIsModalOpenReassign(false);
+      setDate("");
+      setComments("");
+
     } else if (isApprove) {
       onApprove(task.id);
     }
@@ -85,7 +92,11 @@ const MyTaskReviewModal = ({
                 onClick={onClose}
                 className="text-gray-400 hover:text-gray-500"
               >
-                <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
                   <path
                     fillRule="evenodd"
                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -94,6 +105,15 @@ const MyTaskReviewModal = ({
                 </svg>
               </button>
             </div>
+
+            <div className="space-y-4">
+              {/* Task Name */}
+              <div className="text-gray-600 text-md font-semibold">
+                {task.task_name}
+              </div>
+            </div>
+
+            <hr className="my-6" />
 
             {/* Task Details */}
             <div className="space-y-4">
@@ -134,10 +154,13 @@ const MyTaskReviewModal = ({
                 {/* Description */}
                 <div className="text-gray-600 text-sm">Description</div>
                 <div className="col-span-2 text-sm">
-                  {task?.description ||
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
+                  {task?.description || "-"}                
                 </div>
+              </div>
 
+              <hr className="my-6" />
+
+              <div className="grid grid-cols-3 gap-y-6">
                 {/* Comments */}
                 <div className="text-gray-600 text-sm">Comments</div>
                 <div className="col-span-2 text-sm whitespace-pre-wrap">
@@ -148,7 +171,7 @@ const MyTaskReviewModal = ({
                 <div className="text-gray-600 text-sm">Attachment</div>
                 <div className="col-span-2">
                   <div className="flex items-center gap-2 text-sm">
-                    <img src="/pdf-icon.svg" alt="PDF" className="w-4 h-4" />
+                    <MdFilePresent className="w-7 h-7 text-green-600" />
                     <div>
                       <button
                         onClick={() => setShowFilePreview(true)}
@@ -225,14 +248,16 @@ const MyTaskReviewModal = ({
                 {isModalOpenReassign && (
                   <>
                     <div className="mb-5">
-                      <h5 className="text-left text-sm mb-1">Assign new user</h5>
+                      <h5 className="text-left text-sm mb-1">
+                        Assign new user
+                      </h5>
                       <select
                         className="block w-full rounded-md border-0 py-2 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
                         value={usernameasssin}
                         onChange={(e) => setUsernameassin(e.target.value)}
                       >
                         <option value="">Select new user</option>
-                        {clintlist?.map((item, index) => (
+                        {userlist?.map((item, index) => (
                           <option key={index} value={item.id}>
                             {item.username}
                           </option>

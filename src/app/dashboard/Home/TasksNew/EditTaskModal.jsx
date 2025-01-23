@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiFile } from "react-icons/fi";
 import ImageUpload from "../../../shared/components/ImageUpload";
+import { useFileUpload } from "./useTaskManagement";
 
 const EditTaskModal = ({ isOpen, onClose, onSubmit, task = {} }) => {
   const [formData, setFormData] = useState({
@@ -17,6 +18,8 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, task = {} }) => {
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showUpdateConfirm, setShowUpdateConfirm] = useState(false);
+
+  const { uploadFile } = useFileUpload();
 
   useEffect(() => {
     if (task) {
@@ -46,11 +49,19 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, task = {} }) => {
     setIsStatusDropdownOpen(false);
   };
 
-  const handleFileUpload = (file) => {
-    setFormData((prev) => ({
-      ...prev,
-      file,
-    }));
+  const handleFileUpload = async (file) => {
+    try {
+      const file_data = await uploadFile(file);
+      console.log('file uploaded', file_data);
+      
+      setFormData(prev => ({
+        ...prev,
+        file: file_data
+      }));
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      toast.error("Failed to upload file");
+    }
   };
 
   const handleDeleteClick = () => {
@@ -200,6 +211,7 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, task = {} }) => {
                 value={formData.assignedOn}
                 onChange={handleInputChange}
                 className="w-full p-2 border-b rounded-md focus:ring-2 focus:ring-blue-500"
+                disabled
               />
               <div></div>
             </div>
@@ -255,7 +267,7 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, task = {} }) => {
             <h5 className="text-sm my-3">Upload supporting documentation:</h5>
             <div className="relative text-black rounded-md flex items-center">
               {task.file_data?.url ? (
-                <div className="flex items-center space-x-2 py-4 border border-gray-300 rounded-md w-full">
+                <div className="flex items-center space-x-2 px-8 py-4 border border-gray-300 rounded-md w-full">
                   <FiFile className="text-green-600" size={20} />
                   <div>
                     <p className="text-sm text-blue-500 truncate w-64">

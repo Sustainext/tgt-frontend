@@ -51,31 +51,30 @@ const ViewMyTaskDetailsModal = ({ isOpen, onClose, task }) => {
               {/* Assigned on */}
               <div className="text-gray-600 text-sm">Assigned on</div>
               <div className="col-span-2 text-sm">
-                {task?.assigned_date || "24/10/2025"}
+                {new Date(task.created_at).toISOString().split("T")[0] || ""}
               </div>
 
               {/* Due Date */}
               <div className="text-gray-600 text-sm">Due Date</div>
               <div className="col-span-2 text-sm">
-                {task?.deadline || "24/10/2025"}
+                {task?.deadline}
               </div>
 
               {/* Assigned By */}
               <div className="text-gray-600 text-sm">Assigned by</div>
               <div className="col-span-2">
                 <p className="text-sm">
-                  {task?.assign_by_user_name || "George Washington Bunny"}
+                  {task?.assign_by_user_name}
                 </p>
                 <p className="text-sm text-gray-500">
-                  {task?.assign_by_email || "Bugs@acmecorp.com"}
+                  {task?.assign_by_email}
                 </p>
               </div>
 
               {/* Description */}
               <div className="text-gray-600 text-sm">Description</div>
               <div className="col-span-2 text-sm">
-                {task?.description ||
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
+                {task?.description || "-"}
               </div>
             </div>
 
@@ -85,8 +84,7 @@ const ViewMyTaskDetailsModal = ({ isOpen, onClose, task }) => {
             <div className="grid grid-cols-3 gap-y-6">
               <div className="text-gray-600 text-sm">Comments</div>
               <div className="col-span-2 text-sm whitespace-pre-wrap">
-                {task?.comments ||
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."}
+                {task?.comments || "-"}
               </div>
 
               {/* Attachment */}
@@ -99,7 +97,7 @@ const ViewMyTaskDetailsModal = ({ isOpen, onClose, task }) => {
                       href={task?.file_data?.url}
                       className="text-blue-600 hover:underline"
                     >
-                      Document1.PDF
+                      {task?.file_data.name}
                     </a>
                     <p className="text-xs text-gray-500">Mar 27 • 1.3 MB</p>
                   </div>
