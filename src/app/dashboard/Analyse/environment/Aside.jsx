@@ -65,7 +65,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <span className="mr-12">Waste</span>
           </button>
 
-          <button
+          {/* <button
             className={`flex items-center justify-start px-2 py-2 mb-2 focus:outline-none w-full ${
               activeTab === "Effluents"
                 ? "text-[#007EEF] border-l-4 border-[#007EEF]"
@@ -88,7 +88,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
             )}
 
             <span className="mr-12">Effluents</span>
-          </button>
+          </button> */}
 
           <button
             className={`flex items-center justify-start px-2 py-2 mb-2 focus:outline-none w-full ${

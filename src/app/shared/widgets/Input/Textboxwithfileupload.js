@@ -1,5 +1,6 @@
-import React from 'react';
-import { MdInfoOutline, MdOutlineFileUpload, MdFilePresent } from "react-icons/md";
+import React, { useEffect, useState } from "react";
+import { MdInfoOutline, MdOutlineFileUpload, MdFilePresent,MdDelete,
+  MdClose, } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { BlobServiceClient } from "@azure/storage-blob";
@@ -7,6 +8,12 @@ import { useSelector } from "react-redux";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 const Textboxwithfileupload = (props) => {
   const { onChange, value = {}, uiSchema } = props;
+    const [showModal, setShowModal] = useState(false);
+    const [fileType, setFileType] = useState(value.filetype || "");
+    const [fileSize, setFileSize] = useState(value.filesize || "");
+    const [uploadDateTime, setUploadDateTime] = useState(value.updatetime || "");
+    const [fileURL, setFileURL] = useState(value.fileURL || "");
+    const [fileName, setFileName] = useState(value.fileName || "");
   const text1 = useSelector((state) => state.header.headertext1);
     const text2 = useSelector((state) => state.header.headertext2);
     const middlename = useSelector((state) => state.header.middlename);
@@ -14,6 +21,28 @@ const Textboxwithfileupload = (props) => {
     const roles = typeof window !== 'undefined' 
     ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
     : '';
+      useEffect(() => {
+        if (value && Object.keys(value).length > 0) {
+          setFileType(value.filetype || "");
+          setFileSize(value.filesize || "");
+          setUploadDateTime(value.updatetime || "");
+          setFileURL(value.fileURL || "");
+          setFileName(value.fileName || "");
+        } else {
+          setFileType("");
+          setFileSize("");
+          setUploadDateTime("");
+          setFileURL("");
+          setFileName("");
+        }
+      }, [value]);
+      const handlePreview = () => {
+        setShowModal(true);
+      };
+    
+      const handleCloseModal = () => {
+        setShowModal(false);
+      };
     const getIPAddress = async () => {
       try {
         const response = await fetch("https://api.ipify.org?format=json");
@@ -61,9 +90,40 @@ const Textboxwithfileupload = (props) => {
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const uploadedFileUrl = await uploadFileToAzure(file);
-      onChange({ ...value, fileURL: uploadedFileUrl, fileName: file.name });
+
+    if (!file) return; // Exit if no file selected
+
+    // Reset the input value to allow reselecting the same file
+    const fileInput = document.getElementById("fileInput");
+    if (fileInput) fileInput.value = "";
+
+    console.log("Uploading file: new", file);
+    const uploadedFileUrl = await uploadFileToAzure(file);
+
+    if (uploadedFileUrl) {
+      console.log(
+        "Uploaded file:",
+        uploadedFileUrl,
+        file.name,
+        file.type,
+        file.size,
+        new Date().toLocaleString()
+      );
+      onChange({
+        ...value,
+        fileURL: uploadedFileUrl,
+        fileName: file.name,
+        filetype: file.type,
+        filesize: file.size,
+        updatetime: new Date().toLocaleString(),
+      });
+
+      setFileType(file.type);
+      setFileSize(file.size);
+      setUploadDateTime(new Date().toLocaleString());
+      setFileURL(uploadedFileUrl);
+      setFileName(file.name);
+
       setTimeout(() => {
         LoginlogDetails("Success", "Uploaded");
       }, 500);
@@ -99,7 +159,41 @@ const Textboxwithfileupload = (props) => {
       return null;
     }
   };
+  const handleDelete = () => {
+    try {
+      setFileType("");
+      setFileSize("");
+      setUploadDateTime("");
+      setFileURL("");
+      setFileName("");
+      onChange({
+        ...value,
+        fileURL: "",
+        fileName: "",
+        filetype: "",
+        filesize: "",
+        updatetime: "",
+      });
 
+      // Reset the file input element
+      const fileInput = document.getElementById("fileInput");
+      if (fileInput) fileInput.value = "";
+
+      setShowModal(false);
+
+      // Call LoginlogDetails with a "Success" status for deletion
+      setTimeout(() => {
+        LoginlogDetails("Success", "Deleted");
+      }, 500);
+    } catch (error) {
+      console.error("Error deleting file:", error.message);
+
+      // Call LoginlogDetails with a "Failed" status for deletion
+      setTimeout(() => {
+        LoginlogDetails("Failed", "Deleted");
+      }, 500);
+    }
+  };
   return (
     <>
       <div className="mb-6">
@@ -177,7 +271,7 @@ const Textboxwithfileupload = (props) => {
             />
             {value.fileName ? (
               <label className="flex cursor-pointer">
-                <div className="flex items-center text-center mt-2">
+                <div className="flex items-center text-center mt-2"      onClick={handlePreview}>
                   <div className="truncate text-sky-600 text-[13px] flex text-center">
                     <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> 
                     <p className='flex items-center'>{value.fileName}</p>
@@ -196,6 +290,114 @@ const Textboxwithfileupload = (props) => {
             )}
           </div>
         </div>
+          {showModal && (
+                  <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-12">
+                      <div className="flex justify-between mt-4 mb-4">
+                        <div>
+                          <h5 className="mb-4 ml-2 font-semibold">  {fileName}</h5>
+                        </div>
+                        <div className="flex">
+                          <div className="mb-4">
+                            <button
+                              className="px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white"
+                              onClick={handleDelete}
+                            >
+                              <MdDelete className="text-xl" /> Delete File
+                            </button>
+                          </div>
+                          <div>
+                            <button
+                              className="px-4 py-2 text-xl rounded"
+                              onClick={handleCloseModal}
+                            >
+                              <MdClose />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between">
+                        <div className="relative w-[760px] h-[580px]">
+                          {fileName ? (
+                            fileType.startsWith("image") ? (
+                              <img
+                                src={fileURL}
+                                alt="Preview"
+                                className="max-w-full max-h-full object-contain"
+                              />
+                            ) : fileType === "application/pdf" ? (
+                              <iframe
+                                src={fileURL}
+                                title="PDF Preview"
+                                className="w-full h-full"
+                              />
+                            ) : (
+                              <p>
+                                File preview not available. Please download and verify
+                              </p>
+                            )
+                          ) : fileType.startsWith("image") ? (
+                            <img
+                              src={fileURL}
+                              alt="Preview"
+                              className="max-w-full max-h-full object-contain"
+                            />
+                          ) : fileType === "application/pdf" ? (
+                            <iframe
+                              src={fileURL}
+                              title="PDF Preview"
+                              className="w-full h-full"
+                            />
+                          ) : (
+                            <p>
+                              File preview not available. Please download and verify
+                            </p>
+                          )}
+                        </div>
+        
+                        <div className="w-[211px]">
+                          <div className="mb-4 mt-2">
+                            <h2 className="text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide">
+                              File information
+                            </h2>
+                          </div>
+                          <div className="mb-4">
+                            <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                              FILE NAME
+                            </h2>
+                            <h2 className="text-[14px] truncate leading-relaxed tracking-wide">
+                              {fileName}
+                            </h2>
+                          </div>
+                          <div className="mb-4">
+                            <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                              FILE SIZE
+                            </h2>
+                            <h2 className="text-[14px] leading-relaxed tracking-wide">
+                              {(fileSize / 1024).toFixed(2)} KB
+                            </h2>
+                          </div>
+                          <div className="mb-4">
+                            <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                              FILE TYPE
+                            </h2>
+                            <h2 className="text-[14px] leading-relaxed tracking-wide">
+                              {fileType}
+                            </h2>
+                          </div>
+                          <div className="mb-4">
+                            <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                              UPLOAD DATE & TIME
+                            </h2>
+                            <h2 className="text-[14px] leading-relaxed tracking-wide">
+                              {uploadDateTime}
+                            </h2>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
       </div>
     </>
   );

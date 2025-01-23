@@ -179,7 +179,7 @@ const Screen2 = ({
           ),
           "Rate of high-consequence work-related injuries (excluding fatalities)":
             Number(
-              operation.rrate_of_high_consequence_work_related_injuries_excluding_fatalities
+              operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities
             ),
           "Rate  of recordable work-related injuries": Number(
             operation.rate_of_recordable_work_related_injuries
