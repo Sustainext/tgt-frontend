@@ -83,15 +83,14 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
   };
-  const handleemssionClick = (option) => {
-    // Handle clicking on an option in the Energy dropdown list
-    handleTabClick(`${option}`);
-    setEnergySectionVisible(false);
-    setWasteVisible(false);
-    setWaterVisible(false);
-    setMaterialsVisible(false); // Hide the section after clicking an option
-    setIsSupplierVisible(false);
-  };
+  // const handleemssionClick = (option) => {
+  //   handleTabClick(`${option}`);
+  //   setEnergySectionVisible(false);
+  //   setWasteVisible(false);
+  //   setWaterVisible(false);
+  //   setMaterialsVisible(false); 
+  //   setIsSupplierVisible(false);
+  // };
 
   //Management of Material topic emission
   useEffect(() => {
@@ -556,7 +555,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                       Data Collection Methodology
                     </p>
                   </div>
-                  <div>
+                  {/* <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Significant Spills"
@@ -569,7 +568,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                     >
                       Significant Spills
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </>
             )}
