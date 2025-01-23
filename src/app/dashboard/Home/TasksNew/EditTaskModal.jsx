@@ -1,69 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from '@/components/ui/card';
+import React, { useState, useEffect } from "react";
+import { FiFile } from "react-icons/fi";
+import ImageUpload from "../../../shared/components/ImageUpload";
 
-const EditTaskModal = ({ isOpen, onClose, onSubmit, initialTask = {} }) => {
-  const [taskData, setTaskData] = useState({
-    taskName: '',
-    status: 'not_started',
-    assignedOn: '',
-    dueDate: '',
-    description: '',
-    comments: '',
-    file: null
+const EditTaskModal = ({ isOpen, onClose, onSubmit, task = {} }) => {
+  const [formData, setFormData] = useState({
+    taskName: "",
+    status: "not_started",
+    assignedOn: "",
+    dueDate: "",
+    description: "",
+    comments: "",
+    assigned_to: "",
+    file: null,
   });
-  
+
+  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showUpdateConfirm, setShowUpdateConfirm] = useState(false);
 
   useEffect(() => {
-    if (initialTask) {
-      setTaskData({
-        taskName: initialTask.taskName || '',
-        status: initialTask.status || 'not_started',
-        assignedOn: initialTask.assignedOn || '',
-        dueDate: initialTask.dueDate || '',
-        description: initialTask.description || '',
-        comments: initialTask.comments || '',
-        file: initialTask.file || null
+    if (task) {
+      setFormData({
+        taskName: task.task_name || "",
+        status: task.task_status || "not_started",
+        assignedOn: new Date(task.created_at).toISOString().split("T")[0] || "",
+        dueDate: task.deadline || "",
+        comments: task.comments_assignee || "",
+        file: task.file_data || null,
       });
     }
-  }, [initialTask]);
+  }, [task]);
 
   if (!isOpen) return null;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setTaskData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setTaskData(prev => ({
-        ...prev,
-        file
-      }));
-    }
+  const handleStatusChange = (status) => {
+    setFormData((prev) => ({ ...prev, status }));
+    setIsStatusDropdownOpen(false);
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const file = e.dataTransfer.files[0];
-    if (file) {
-      setTaskData(prev => ({
-        ...prev,
-        file
-      }));
-    }
+  const handleFileUpload = (file) => {
+    setFormData((prev) => ({
+      ...prev,
+      file,
+    }));
   };
 
   const handleDeleteClick = () => {
@@ -76,16 +63,22 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, initialTask = {} }) => {
     setShowUpdateConfirm(true);
   };
 
-  const handleSubmit = () => {
-    onSubmit(taskData);
+  const handleAction = (action) => {
+    if (action === 'delete') {
+      onSubmit({ ...formData, action: 'delete' });
+      // setShowDeleteConfirm(false);
+    } else if (action === 'update') {
+      onSubmit({ ...formData, action: 'update' });
+      // setShowUpdateConfirm(false);
+    }
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <Card className="bg-white w-[480px] p-6 rounded-lg shadow-xl">
+      <div className="bg-white w-[480px] max-h-[95vh] p-6 rounded-lg shadow-xl overflow-auto table-scrollbar">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold">Edit Tasks</h2>
-          <button 
+          <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600"
           >
@@ -96,108 +89,186 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, initialTask = {} }) => {
         <div className="space-y-4">
           {/* Task Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Task Name</label>
             <input
               type="text"
               name="taskName"
-              value={taskData.taskName}
+              value={formData.taskName}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border-b rounded-md focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          {/* Status */}
+          <hr className="my-6" />
+
+          {/* Status Dropdown */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <select
-              name="status"
-              value={taskData.status}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="not_started">Not Started</option>
-              <option value="in_progress">In Progress</option>
-              <option value="completed">Completed</option>
-            </select>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Status
+            </label>
+            <div className="relative">
+              <button
+                type="button"
+                className="flex items-center w-full rounded-md py-2 text-left text-sm text-gray-700 bg-white focus:outline-none"
+                onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
+              >
+                <div className="flex items-center gap-2">
+                  {formData.status === "not_started" && (
+                    <span className="w-4 h-4 rounded-full border-[1.5px] border-gray-300"></span>
+                  )}
+                  {formData.status === "in_progress" && (
+                    <span className="w-4 h-4 rounded-full bg-[#FDB022]"></span>
+                  )}
+                  {formData.status === "completed" && (
+                    <span className="w-4 h-4 rounded-full bg-[#12B76A]"></span>
+                  )}
+                  <span>
+                    {formData.status === "not_started" && "Not Started"}
+                    {formData.status === "in_progress" && "In Progress"}
+                    {formData.status === "completed" && "Completed"}
+                  </span>
+                  <svg
+                    className="w-5 h-5 text-gray-400 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </button>
+
+              {/* Dropdown Menu */}
+              {isStatusDropdownOpen && (
+                <div className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg py-1">
+                  {[
+                    {
+                      id: "not_started",
+                      label: "Not Started",
+                      icon: (
+                        <span className="w-4 h-4 rounded-full border-[1.5px] border-gray-300"></span>
+                      ),
+                    },
+                    {
+                      id: "in_progress",
+                      label: "In Progress",
+                      icon: (
+                        <span className="w-4 h-4 rounded-full bg-[#FDB022]"></span>
+                      ),
+                    },
+                    {
+                      id: "completed",
+                      label: "Completed",
+                      icon: (
+                        <span className="w-4 h-4 rounded-full bg-[#12B76A]"></span>
+                      ),
+                    },
+                  ].map((status) => (
+                    <button
+                      key={status.id}
+                      type="button"
+                      className="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => handleStatusChange(status.id)}
+                    >
+                      <div className="flex items-center gap-2">
+                        {status.icon}
+                        <span>{status.label}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <p className="mt-1 text-xs text-gray-500">
+              Select 'completed' status to move the task to completed section
+            </p>
           </div>
 
           {/* Dates */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Assigned on</label>
+          <div className="">
+            <div className="grid grid-cols-3 gap-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1 pt-2">
+                Assigned on
+              </label>
               <input
                 type="date"
                 name="assignedOn"
-                value={taskData.assignedOn}
+                value={formData.assignedOn}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border-b rounded-md focus:ring-2 focus:ring-blue-500"
               />
+              <div></div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
+            <div className="grid grid-cols-3 gap-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1 pt-3">
+                Due Date
+              </label>
               <input
                 type="date"
                 name="dueDate"
-                value={taskData.dueDate}
+                value={formData.dueDate}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border-b rounded-md focus:ring-2 focus:ring-blue-500"
               />
+              <div></div>
             </div>
           </div>
 
           {/* Description */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <div className="grid grid-cols-3 gap-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Description
+            </label>
             <textarea
               name="description"
-              value={taskData.description}
+              value={formData.description}
               onChange={handleInputChange}
               rows={3}
-              className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 resize-none"
+              className="col-span-2 w-full p-2 border-b rounded-md focus:ring-2 focus:ring-blue-500 resize-none text-sm"
             />
+            <div></div>
           </div>
+
+          <hr className="my-6" />
 
           {/* Comments */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Comments</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Comments
+            </label>
             <textarea
               name="comments"
-              value={taskData.comments}
+              value={formData.comments}
               onChange={handleInputChange}
               placeholder="Add details about the task..."
               rows={3}
-              className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 resize-none"
+              className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 resize-none focus:outline-none"
             />
           </div>
 
           {/* File Upload */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Upload Document</label>
-            <div
-              className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center"
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-center">
-                  <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                  </svg>
+            <h5 className="text-sm my-3">Upload supporting documentation:</h5>
+            <div className="relative text-black rounded-md flex items-center">
+              {task.file_data?.url ? (
+                <div className="flex items-center space-x-2 py-4 border border-gray-300 rounded-md w-full">
+                  <FiFile className="text-green-600" size={20} />
+                  <div>
+                    <p className="text-sm text-blue-500 truncate w-64">
+                      {task.file_data.name}
+                    </p>
+                    <p className="text-sm text-gray-400">
+                      {(task.file_data.size / (1024 * 1024)).toFixed(2)} MB
+                    </p>
+                  </div>
                 </div>
-                <div className="text-sm text-gray-600">
-                  Drag & drop files or <label className="text-blue-500 cursor-pointer hover:text-blue-600">Browse
-                    <input
-                      type="file"
-                      className="hidden"
-                      onChange={handleFileChange}
-                      accept="image/*, application/pdf, .doc, .docx, .ppt, .pptx"
-                    />
-                  </label>
-                </div>
-                <div className="text-xs text-gray-500">
-                  Supported formats: JPEG, PNG, PDF, Word, PPT
-                </div>
-              </div>
+              ) : (
+                <ImageUpload onFileSelect={handleFileUpload} />
+              )}
             </div>
           </div>
 
@@ -220,9 +291,12 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, initialTask = {} }) => {
 
             {showDeleteConfirm && (
               <div className="space-y-2">
-                <p className="text-center text-sm text-gray-600">Click on delete to proceed</p>
+                <p className="text-center text-sm text-gray-600">
+                  Click on delete to proceed
+                </p>
                 <button
-                  onClick={handleSubmit}
+                  onClick={() => handleAction('delete')}
+                  type="button"
                   className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
                 >
                   Delete
@@ -232,9 +306,12 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, initialTask = {} }) => {
 
             {showUpdateConfirm && (
               <div className="space-y-2">
-                <p className="text-center text-sm text-gray-600">Click on update to proceed</p>
+                <p className="text-center text-sm text-gray-600">
+                  Click on update to proceed
+                </p>
                 <button
-                  onClick={handleSubmit}
+                  onClick={() => handleAction('update')}
+                  type="button"
                   className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
                 >
                   Update
@@ -243,7 +320,7 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, initialTask = {} }) => {
             )}
           </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

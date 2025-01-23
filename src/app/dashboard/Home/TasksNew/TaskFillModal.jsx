@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FiX, FiUpload } from "react-icons/fi";
 import ImageUpload from "@/app/shared/components/ImageUpload";
 
-const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
+const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload,fileData }) => {
   const [comments, setComments] = useState("");
   const [dragActive, setDragActive] = useState(false);
 
@@ -38,8 +38,10 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
     e.preventDefault();
     onSubmit({
       ...task,
-      comments,
+      comments_assignee: comments,
+      file_data: fileData,
     });
+    setComments("");
   };
 
     const getStatusBadgeClasses = (status) => {
@@ -165,45 +167,31 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload }) => {
                 onChange={(e) => setComments(e.target.value)}
                 placeholder="Add details about the task..."
                 rows={4}
-                className="mt-1 w-full p-3 border border-gray-200 rounded-md text-gray-600 placeholder-gray-400 resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="mt-1 w-full p-3 border border-gray-200 rounded-md text-gray-600 placeholder-gray-400 resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none"
               />
             </div>
 
             {/* File Upload */}
-            {/* <div>
-              <label className="block text-sm font-medium text-gray-600 mb-2">
-                Upload Document
-              </label>
-              <div
-                className={`border-2 border-dashed rounded-lg p-6 bg-blue-100 ${
-                  dragActive ? "border-blue-500 bg-blue-50" : "border-gray-300"
-                }`}
-                onDragEnter={handleDrag}
-                onDragLeave={handleDrag}
-                onDragOver={handleDrag}
-                onDrop={handleDrop}
-              >
-                <div className="flex flex-col items-center justify-center">
-                  <FiUpload className="w-6 h-6 text-gray-400 mb-2" />
-                  <p className="text-sm text-gray-600">
-                    Drag & drop files or{" "}
-                    <label className="text-blue-500 cursor-pointer hover:text-blue-600">
-                      Browse
-                      <input
-                        type="file"
-                        className="hidden"
-                        onChange={handleFileInput}
-                        accept=".jpeg,.jpg,.png,.pdf,.doc,.docx,.ppt,.pptx"
-                      />
-                    </label>
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Supported formats: JPEG, PNG, PDF, Word, PPT
-                  </p>
+            <div>
+            <h5 className="text-sm my-3">Upload supporting documentation:</h5>
+            <div className="relative text-black rounded-md flex items-center">
+              {task.file_data?.url ? (
+                <div className="flex items-center space-x-2 px-8 py-4 border border-gray-300 rounded-md w-full">
+                  <FiFile className="text-green-600" size={20} />
+                  <div>
+                    <p className="text-sm text-blue-500 truncate w-64">
+                      {task.file_data.name}
+                    </p>
+                    <p className="text-sm text-gray-400">
+                      {(task.file_data.size / (1024 * 1024)).toFixed(2)} MB
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div> */}
-            <ImageUpload />
+              ) : (
+                <ImageUpload onFileSelect={onFileUpload} />
+              )}
+            </div>
+          </div>
 
             {/* Submit Button */}
             <button

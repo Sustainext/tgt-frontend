@@ -55,6 +55,7 @@ import {
 import { fetchUsers } from "../../../../lib/redux/features/emissionSlice";
 import ViewMyTaskDetailsModal from "./ViewMyTaskDetailsModal";
 import MyTaskReviewModal from "./MyTaskReviewModal";
+import EditTaskModal from "./EditTaskModal";
 
 const MyTask = () => {
   // Redux
@@ -664,17 +665,22 @@ const MyTask = () => {
   const handleTaskClick = (task) => {
     console.log("Task clicked:", task, activeTab);
 
-    if(activeTab === "upcoming" || activeTab === "overdue") {
+    if (activeTab === "upcoming" || activeTab === "overdue") {
       if (task.roles === 1 || task.roles === 2) {
         handleOpenModalAddData(task);
       } else if (task.roles === 3) {
-        //Open My TaskFillModal when assignee == assigner
-        setSelectedTask(task);
-        setSelfTaskFillModalOpen(true);
+        //Open My TaskFillModal when assignee != assigner
+        if (task.assigned_to === null) {
+          setSelectedTask(task);
+          toggleModal("isMyTaskEditModalOpen", true);
+        }
         //Add condition to open Edit My Task Modal when assignee == assigner
+        else {
+          setSelectedTask(task);
+          setSelfTaskFillModalOpen(true);
+        }
       }
-    }
-    else if (activeTab === "completed") {
+    } else if (activeTab === "completed") {
       if (task.roles === 3) {
         setSelectedTask(task);
         toggleModal("isMyTaskDetailModalOpen", true);
@@ -682,8 +688,7 @@ const MyTask = () => {
         setSelectedTask(task);
         toggleModal("isDetailsModalOpen", true);
       }
-    } 
-    else if (activeTab === "for_review") {
+    } else if (activeTab === "for_review") {
       if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
         // Handle review task
         setTaskAssigndata({
@@ -710,15 +715,12 @@ const MyTask = () => {
           file_data: task.file_data,
         });
         toggleModal("isReviewtask", true);
-      }
-      else {
+      } else {
         setSelectedTask(task);
         toggleModal("isMyTaskReviewModalOpen", true);
       }
-    } 
-    else {
-      console.log('Invalid activeTab:', activeTab);
-      
+    } else {
+      console.log("Invalid activeTab:", activeTab);
     }
   };
 
@@ -882,6 +884,7 @@ const MyTask = () => {
           setSelectedTask(null);
         }}
         task={selectedTask}
+        fileData={taskassigndata.file_data}
         onSubmit={async (updatedTask) => {
           try {
             const response = await handleTaskAction(updatedTask.id, "update", {
@@ -920,6 +923,56 @@ const MyTask = () => {
           setSelectedTask(null);
         }}
         task={selectedTask}
+      />
+
+      <EditTaskModal
+        isOpen={modalStates.isMyTaskEditModalOpen}
+        onClose={() => {
+          toggleModal("isMyTaskEditModalOpen", false);
+          setSelectedTask(null);
+        }}
+        task={selectedTask}
+        onSubmit={async (data) => {
+          console.log("Edit Task Modal Submit:", data);
+          try {
+            if (data.action === "delete") {
+              // Handle delete
+              const success = await deleteTask(selectedTask?.id);
+              if (success) {
+                toast.success("Task deleted successfully");
+                toggleModal("isMyTaskEditModalOpen", false);
+                setSelectedTask(null);
+                await fetchTasks();
+              }
+            } else {
+              // Handle update
+              const updatedData = {
+                task_name: data.taskName.trim(),
+                deadline: data.dueDate,
+                description: data.description?.trim(),
+                task_status: data.status,
+                file_data: data.file
+              };
+
+              const success = await handleTaskAction(
+                selectedTask?.id,
+                "update",
+                updatedData
+              );
+              if (success) {
+                toast.success("Task updated successfully");
+                toggleModal("isMyTaskEditModalOpen", false);
+                setSelectedTask(null);
+                await fetchTasks();
+              }
+            }
+          } catch (error) {
+            handleApiError(
+              error,
+              data.action === "delete" ? "deleting" : "updating"
+            );
+          }
+        }}
       />
 
       {/* Loading Spinner */}

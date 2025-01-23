@@ -64,6 +64,7 @@ export const INITIAL_MODAL_STATES = {
   isPdfViewerOpen: false,
   isMyTaskDetailModalOpen: false,
   isMyTaskReviewModalOpen: false,
+  isMyTaskEditModalOpen: false,
 };
 
 export const INITIAL_TASK_DATA = {

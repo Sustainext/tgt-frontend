@@ -13,7 +13,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
   });
 
   const isFormValid =
-    formData.task_name && formData.deadline && formData.assigned_to;
+    formData.task_name && formData.deadline;
 
   if (!isOpen) return null;
 
@@ -83,8 +83,8 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Status Dropdown */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+            <div className={`${formData.assigned_to !== "" ? "opacity-70" : ""}`}>
+              <label className={`block text-sm font-medium text-gray-700 mb-1`}>
                 Status
               </label>
               <div className="relative">
@@ -92,6 +92,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
                   type="button"
                   className="flex items-center w-full rounded-md py-2 text-left text-sm text-gray-700 bg-white focus:outline-none"
                   onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
+                  disabled={formData.assigned_to !== ""}
                 >
                   <div className="flex items-center gap-2">
                     {formData.status === "not_started" && (
@@ -226,7 +227,6 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
                 name="assigned_to"
                 value={formData.assigned_to}
                 onChange={handleFormChange}
-                required
                 className="block w-full rounded-md border border-gray-200 px-4 py-2.5 text-gray-700 bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs outline-none"
               >
                 <option value="">Select User</option>
