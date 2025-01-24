@@ -36,6 +36,8 @@ const EnvironmentHeader = ({
   setLocationMessage,
   yearMessage,
   setYearMessage,
+  setLocationname,
+  setMonthname,
 }) => {
   const [formState, setFormState] = useState({
     location: location,
@@ -68,9 +70,15 @@ const EnvironmentHeader = ({
     }));
 
     if (name === "month") {
-      setActiveMonth(monthMapping[value]);
+      const monthNumber = monthMapping[value];
+      setActiveMonth(monthNumber);
+      setMonthname(value); // Update month name
+      console.log(value ,"month name");
     } else if (name === "location") {
       setLocation(Number(value));
+      const selectedLocation = locations.find((loc) => loc.id === Number(value));
+      setLocationname(selectedLocation?.name || ""); // Update location name
+      console.log(selectedLocation?.name ,"loaction name");
     } else if (name === "year") {
       setYear(value);
     }
@@ -98,7 +106,7 @@ const EnvironmentHeader = ({
               >
                 <option value="">Select location</option>
                 {locations.map((location, index) => (
-                  <option key={index} value={location.id}>
+                  <option key={index} value={location.id} name={location.name}>
                     {location.name}
                   </option>
                 ))}

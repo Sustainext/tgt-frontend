@@ -218,7 +218,7 @@ const validateRows = (data) => {
     return rowErrors;
   });
 };
-const Purchased = ({ location, year, month }) => {
+const Purchased = ({ location, year, month,monthname,locationname }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -396,9 +396,9 @@ const Purchased = ({ location, year, month }) => {
                   {...props}
                   scopes="ec1"
                   setFormData={updateFormDatanew}
-                  location={location}
+                  locationname={locationname}
                   year={year}
-                  month={month}
+                  monthname={monthname}
                   sectionname="Direct Purchased Heating, Cooling, Electricity and Steam"
                   tabname="Energy consumed inside the organization"
                 />

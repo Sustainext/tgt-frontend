@@ -84,7 +84,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const EnergyConsumedBody = ({location, year, month,setLocationMessage, setYearMessage}) => {
+const EnergyConsumedBody = ({location, year, month,setLocationMessage, setYearMessage,locationname,monthname}) => {
 
   return (
     <>
@@ -103,7 +103,8 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage, setYearMe
           setYearMessage={setYearMessage}
         >
        
-          <Purchased  location={location} year={year} month={month}/>
+          <Purchased  location={location} year={year} month={month}  locationname={locationname}
+        monthname={monthname}/>
        
          
         </AccordionItem>

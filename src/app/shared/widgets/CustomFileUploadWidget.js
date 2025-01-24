@@ -16,9 +16,9 @@ const CustomFileUploadWidget = ({
   scopes,
   setFormData,
   label,
-  location,
+  locationname,
   year,
-  month,
+  monthname,
   sectionname,
   tabname,
 }) => {
@@ -26,6 +26,7 @@ const CustomFileUploadWidget = ({
     const text2 = useSelector((state) => state.header.headertext2);
     const middlename = useSelector((state) => state.header.middlename);
   const [fileName, setFileName] = useState(value?.name || null);
+  const [logfileName, setLogFileName] = useState(value?.name || null);
   const [showModal, setShowModal] = useState(false);
   const [previewData, setPreviewData] = useState(value?.url || null);
   const [fileType, setFileType] = useState(value?.type || "");
@@ -91,23 +92,25 @@ const CustomFileUploadWidget = ({
   };
 
 
-  const LoginlogDetails = async (status, actionType) => {
+  const LoginlogDetails = async (status, actionType,newFileName) => {
     const backendUrl = process.env.BACKEND_API_URL;
     const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
   
     try {
       const ipAddress = await getIPAddress();
   
-      
+     
+  
+  
       const data = {
         event_type: text1,
         event_details: "File",
         action_type: actionType,
         status: status,
-        user_email:useremail,
-        user_role:roles,
+        user_email: useremail,
+        user_role: roles,
         ip_address: ipAddress,
-        logs: `${text1} > ${middlename} > ${text2} > ${tabname} > ${sectionname} > ${fileName}`,
+        logs: `${text1} > ${middlename} > ${text2} > ${locationname} > ${year} > ${monthname} > ${tabname} > ${sectionname} > ${newFileName}`,
       };
   
       const response = await axiosInstance.post(userDetailsUrl, data);
@@ -115,10 +118,10 @@ const CustomFileUploadWidget = ({
       return response.data;
     } catch (error) {
       console.error("Error logging login details:", error);
-  
       return null;
     }
   };
+  
   
   useEffect(() => {
     console.log(value, " is the new value");
@@ -139,6 +142,7 @@ const CustomFileUploadWidget = ({
     const newFileName = selectedFile ? selectedFile.name : null;
     console.log(selectedFile, " is the selectedFile");
     setFileName(newFileName);
+    setLogFileName(newFileName);
 
     if (selectedFile) {
       const reader = new FileReader();
@@ -168,8 +172,8 @@ const CustomFileUploadWidget = ({
 
         uploadAndSetState();
         setTimeout(() => {
-          LoginlogDetails("Success", "Uploaded");
-        }, 500);
+          LoginlogDetails("Success", "Uploaded",newFileName);
+        }, 1000);
         
       };
     }
@@ -200,7 +204,7 @@ const CustomFileUploadWidget = ({
   
       // Call LoginlogDetails with a "Success" status for deletion
       setTimeout(() => {
-        LoginlogDetails("Success", "Deleted");
+        LoginlogDetails("Success", "Deleted",logfileName);
       }, 500);
     } catch (error) {
       console.error("Error deleting file:", error.message);
