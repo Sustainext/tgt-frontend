@@ -107,7 +107,7 @@ const CustomFileUploadWidget = ({
         user_email:useremail,
         user_role:roles,
         ip_address: ipAddress,
-        logs: `${text1} > ${middlename} > ${text2} > ${tabname} > ${sectionname} > ${location} > ${year} > ${month} >${fileName}`,
+        logs: `${text1} > ${middlename} > ${text2} > ${tabname} > ${sectionname} > ${fileName}`,
       };
   
       const response = await axiosInstance.post(userDetailsUrl, data);
@@ -283,7 +283,7 @@ const CustomFileUploadWidget = ({
               </div>
             </div>
             <div className="flex justify-between">
-              <div className="relative w-[540px] h-[450px]">
+              <div className="relative w-[55vw] h-[45vw]">
                 {fileType.startsWith("image") ? (
                   <img
                     src={previewData}
