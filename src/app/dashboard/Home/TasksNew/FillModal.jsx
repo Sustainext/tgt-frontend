@@ -138,7 +138,7 @@ const FillModal = ({
                     />
                     <div className="absolute right-1 top-0.5">
                       <select
-                        className="cursor-pointer appearance-none px-2 py-0.5 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[10px] bg-[#007EEF] text-white w-[50px]"
+                        className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[10px] bg-[#007EEF] text-white w-[50px]"
                         value={taskassigndata.unit1}
                         onChange={(e) => onTaskDataChange({ unit1: e.target.value })}
                       >

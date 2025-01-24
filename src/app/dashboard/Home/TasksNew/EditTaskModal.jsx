@@ -26,6 +26,7 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, task = {} }) => {
       setFormData({
         taskName: task.task_name || "",
         status: task.task_status || "not_started",
+        description: task.description || "",
         assignedOn: new Date(task.created_at).toISOString().split("T")[0] || "",
         dueDate: task.deadline || "",
         comments: task.comments_assignee || "",

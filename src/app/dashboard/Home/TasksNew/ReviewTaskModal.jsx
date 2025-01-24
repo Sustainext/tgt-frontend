@@ -14,7 +14,7 @@ const ReviewTaskModal = ({
   selectedLocation,
 }) => {
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
-  const [isApprove, setIsApprove] = useState(false);
+  const [isApprove, setIsApprove] = useState(true);
   const [isModalOpenReassign, setIsModalOpenReassign] = useState(false);
   const [isModalOpenReject, setIsModalOpenReject] = useState(false);
   const [comments, setComments] = useState("");

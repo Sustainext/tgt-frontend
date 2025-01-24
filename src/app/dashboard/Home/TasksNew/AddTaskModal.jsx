@@ -66,16 +66,6 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
       console.log("Submit response:", response);
 
       if (response) {
-        toast.success("Task has been added successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
         onClose();
       } else {
         throw new Error("Failed to add task");

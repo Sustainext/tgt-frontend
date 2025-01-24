@@ -9,7 +9,7 @@ const TaskHeader = ({ onAddTask }) => (
       Upcoming Tasks
     </div>
     <div
-      className="text-sky-600 text-[10px] cursor-pointer font-normal leading-[13px] flex items-center me-2 space-x-2"
+      className="text-sky-600 text-sm cursor-pointer font-normal leading-[13px] flex items-center me-2 space-x-2"
       onClick={onAddTask}
     >
       <FiPlus style={{ fontSize: "18px" }} />
@@ -39,7 +39,7 @@ const TaskTabs = ({ activeTab, onTabChange, tabs }) => (
 );
 
 const TaskTable = ({ children, headers }) => (
-  <div className="bg-white rounded-lg flex flex-col h-[calc(100vh-280px)]">
+  <div className="bg-white rounded-lg flex flex-col h-[calc(78vh-280px)]">
     <div className="grid grid-cols-12 gap-4 py-3 text-sm text-gray-500 px-4 border-y border-gray-200">
       {headers.map((header, index) => (
         <div key={index} className={header.className}>

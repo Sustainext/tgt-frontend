@@ -235,7 +235,7 @@ const MyGoals = () => {
         </h1>
         <button
           onClick={handleOpenModal}
-          className="text-sky-600 text-[10px] cursor-pointer font-normal leading-[13px] flex items-center me-2 space-x-2"
+          className="text-sky-600 text-sm cursor-pointer font-normal leading-[13px] flex items-center me-2 space-x-2"
         >
           <FiPlus className="w-5 h-5" />
           Add Goal

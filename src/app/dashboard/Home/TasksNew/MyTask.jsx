@@ -220,184 +220,6 @@ const MyTask = () => {
     }
   };
 
-  // const handleOpenModalAddData = async (task) => {
-  //   try {
-  //     setIsSearching(true);
-
-  //     if (task.activity === null || task.activity === "") {
-  //       setIsActivityReceived(false);
-  //     } else {
-  //       setIsActivityReceived(true);
-  //     }
-
-  //     setIsFillModalOpen(true);
-  //     setSelectedActivityName(task.activity);
-
-  //     setTaskAssigndata({
-  //       id: task.id,
-  //       task_name: task.task_name,
-  //       assign_to_user_name: task.assign_to_user_name,
-  //       assign_by_user_name: task.assign_by_user_name,
-  //       assign_by_email: task.assign_by_email,
-  //       category: task.category,
-  //       deadline: task.deadline,
-  //       factor_id: task.factor_id,
-  //       location: task.location,
-  //       month: task.month,
-  //       scope: task.scope,
-  //       subcategory: task.subcategory,
-  //       year: task.year,
-  //       activity: task.activity,
-  //       value1: task.value1,
-  //       value2: task.value2,
-  //       unit1: task.unit1,
-  //       unit2: task.unit2,
-  //       file: task.file,
-  //       filename: task.filename,
-  //       status: task.task_status,
-  //       assign_to_email: task.assign_to_email,
-  //       file_data: task.file_data,
-  //     });
-
-  //     if (task.activity) {
-  //       const unitTypeExtractedArray = task.activity.split("-");
-  //       const extractedUnitType =
-  //         unitTypeExtractedArray[unitTypeExtractedArray.length - 1]?.trim();
-  //       setSelectedActivity({
-  //         ...selectedActivity,
-  //         unit_type: extractedUnitType,
-  //       });
-  //     }
-
-  //     if (task.subcategory && task.year) {
-  //       const initialResponse = await fetchActivities(
-  //         task.subcategory,
-  //         1,
-  //         false,
-  //         task.region,
-  //         task.year
-  //       );
-
-  //       setActivitiesList(initialResponse.activitiesData);
-
-  //       if (initialResponse.pages > 1) {
-  //         for (let i = 2; i <= initialResponse.pages; i++) {
-  //           const isCustomFetch =
-  //             initialResponse.pagesCustom > 1 &&
-  //             i <= initialResponse.pagesCustom
-  //               ? false
-  //               : true;
-  //           const additionalResponse = await fetchActivities(
-  //             task.subcategory,
-  //             i,
-  //             isCustomFetch,
-  //             task.region,
-  //             task.year
-  //           );
-  //           setActivitiesList((prev) => [
-  //             ...prev,
-  //             ...additionalResponse.activitiesData,
-  //           ]);
-  //         }
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error in handleOpenModalAddData:", error);
-  //     toast.error("Failed to load activities. Please try again.");
-  //   } finally {
-  //     setIsSearching(false);
-  //   }
-  // };
-
-  // const handleOpenModalAddData = async (task) => {
-  //   try {
-  //     setIsSearching(true);
-
-  //     if (task.activity === null || task.activity === "") {
-  //       setIsActivityReceived(false);
-  //     } else {
-  //       setIsActivityReceived(true);
-  //     }
-
-  //     setIsFillModalOpen(true);
-  //     setSelectedActivityName(task.activity);
-
-  //     setTaskAssigndata({
-  //       id: task.id,
-  //       task_name: task.task_name,
-  //       assign_to_user_name: task.assign_to_user_name,
-  //       assign_by_user_name: task.assign_by_user_name,
-  //       assign_by_email: task.assign_by_email,
-  //       category: task.category,
-  //       deadline: task.deadline,
-  //       factor_id: task.factor_id,
-  //       location: task.location,
-  //       month: task.month,
-  //       scope: task.scope,
-  //       subcategory: task.subcategory,
-  //       year: task.year,
-  //       activity: task.activity,
-  //       value1: task.value1,
-  //       value2: task.value2,
-  //       unit1: task.unit1,
-  //       unit2: task.unit2,
-  //       file: task.file,
-  //       filename: task.filename,
-  //       status: task.task_status,
-  //       assign_to_email: task.assign_to_email,
-  //       file_data: task.file_data,
-  //     });
-
-  //     if (task.activity) {
-  //       const unitTypeExtractedArray = task.activity.split("-");
-  //       const extractedUnitType =
-  //         unitTypeExtractedArray[unitTypeExtractedArray.length - 1]?.trim();
-  //       setSelectedActivity({
-  //         ...selectedActivity,
-  //         unit_type: extractedUnitType,
-  //       });
-  //     }
-
-  //     // Only fetch activities if activity is not received and required parameters are present
-  //     if (!task.activity && task.subcategory && task.year) {
-  //       const initialResponse = await fetchActivities(
-  //         task.subcategory,
-  //         1,
-  //         false,
-  //         task.region,
-  //         task.year
-  //       );
-
-  //       setActivitiesList(initialResponse.activitiesData);
-
-  //       if (initialResponse.pages > 1) {
-  //         for (let i = 2; i <= initialResponse.pages; i++) {
-  //           const isCustomFetch =
-  //             initialResponse.pagesCustom > 1 &&
-  //             i <= initialResponse.pagesCustom
-  //               ? false
-  //               : true;
-  //           const additionalResponse = await fetchActivities(
-  //             task.subcategory,
-  //             i,
-  //             isCustomFetch,
-  //             task.region,
-  //             task.year
-  //           );
-  //           setActivitiesList((prev) => [
-  //             ...prev,
-  //             ...additionalResponse.activitiesData,
-  //           ]);
-  //         }
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error in handleOpenModalAddData:", error);
-  //     toast.error("Failed to load activities. Please try again.");
-  //   } finally {
-  //     setIsSearching(false);
-  //   }
-  // };
 
   const handleOpenModalAddData = async (task) => {
     try {
@@ -483,59 +305,9 @@ const MyTask = () => {
       }
     } catch (error) {
       console.error("Error in handleOpenModalAddData:", error);
-      toast.error("Failed to load activities. Please try again.");
     } finally {
       setIsSearching(false);
     }
-  };
-
-  const handleReviewtask = (
-    id,
-    task_name,
-    assign_to_user_name,
-    category,
-    deadline,
-    factor_id,
-    location,
-    month,
-    scope,
-    subcategory,
-    year,
-    activity,
-    value1,
-    value2,
-    unit1,
-    unit2,
-    file,
-    filename,
-    assign_to_email,
-    filesize,
-    file_data
-  ) => {
-    toggleModal("isReviewtask", true);
-    setTaskAssigndata({
-      id,
-      task_name,
-      assign_to_user_name,
-      category,
-      deadline,
-      factor_id,
-      location,
-      month,
-      scope,
-      subcategory,
-      year,
-      activity,
-      value1,
-      value2,
-      unit1,
-      unit2,
-      file,
-      filename,
-      assign_to_email,
-      filesize,
-      file_data,
-    });
   };
 
   // Add these functions in your MyTask component
@@ -939,7 +711,6 @@ const MyTask = () => {
               // Handle delete
               const success = await deleteTask(selectedTask?.id);
               if (success) {
-                toast.success("Task deleted successfully");
                 toggleModal("isMyTaskEditModalOpen", false);
                 setSelectedTask(null);
                 await fetchTasks();
@@ -962,7 +733,6 @@ const MyTask = () => {
               );
               console.log("Edit Task Modal Response:", success);
               if (success) {
-                toast.success("Task updated successfully");
                 toggleModal("isMyTaskEditModalOpen", false);
                 setSelectedTask(null);
                 await fetchTasks();

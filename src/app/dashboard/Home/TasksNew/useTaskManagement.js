@@ -41,7 +41,7 @@ export const useTaskManagement = () => {
       } else {
         response = await patch(`/organization_task_dashboard/${id}/`, data);
         if (response.status === 200) {
-          toast.success(`Task ${action}d successfully`);
+          // toast.success(`Task ${action}d successfully`);
           await fetchTasks();
           return true;
         }

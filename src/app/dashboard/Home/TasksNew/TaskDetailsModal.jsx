@@ -28,7 +28,7 @@ const TaskDetailsModal = ({ isOpen, onClose, task }) => {
           </button>
 
           {/* Task Name */}
-          <h2 className="text-lg font-medium text-gray-900 mb-6">
+          <h2 className="text-md font-medium text-gray-900 mb-6">
             {task.task_name}
           </h2>
 
