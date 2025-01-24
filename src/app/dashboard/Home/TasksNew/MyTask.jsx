@@ -548,15 +548,7 @@ const MyTask = () => {
             ))
           ) : (
             <EmptyState
-              onAction={() => {
-                // Only allow creating new tasks if user is logged in
-                const currentUserEmail = localStorage.getItem("user_email");
-                if (currentUserEmail) {
-                  toggleModal("isModalOpen", true);
-                } else {
-                  toast.error("Please log in to create tasks");
-                }
-              }}
+              onAddTask={() => toggleModal("isModalOpen", true)}
             />
           )}
         </TaskTable>

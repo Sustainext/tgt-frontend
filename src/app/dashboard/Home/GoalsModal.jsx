@@ -9,9 +9,11 @@ const GoalsModal = ({
   onSubmit,
   onChange,
   onDelete,
+  handleStatusChange,
 }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showUpdateConfirm, setShowUpdateConfirm] = useState(false);
+  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
 
   if (!isOpen) return null;
 
@@ -63,23 +65,94 @@ const GoalsModal = ({
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-4 space-y-4">
-          {/* Status */}
+          {/* Status Dropdown */}
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-1">
+            <label className={`block text-sm font-medium text-gray-700 mb-1`}>
               Status
             </label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={onChange}
-              className="w-full p-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 text-sm"
-            >
-              <option value="not_started">Not Started</option>
-              <option value="in_progress">In Progress</option>
-              <option value="completed">Completed</option>
-            </select>
-            <p className="text-gray-400 text-xs mt-1">
-              Select "completed" status to move the goals to completed section
+            <div className="relative">
+              <button
+                type="button"
+                className="flex items-center w-full rounded-md py-2 text-left text-sm text-gray-700 bg-white focus:outline-none"
+                onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
+              >
+                <div className="flex items-center gap-2">
+                  {formData.status === "not_started" && (
+                    <span className="w-4 h-4 rounded-full border-[1.5px] border-gray-300"></span>
+                  )}
+                  {formData.status === "in_progress" && (
+                    <span className="w-4 h-4 rounded-full bg-[#FDB022]"></span>
+                  )}
+                  {formData.status === "completed" && (
+                    <span className="w-4 h-4 rounded-full bg-[#12B76A]"></span>
+                  )}
+                  <span>
+                    {formData.status === "not_started" && "Not Started"}
+                    {formData.status === "in_progress" && "In Progress"}
+                    {formData.status === "completed" && "Completed"}
+                  </span>
+                  <svg
+                    className="w-5 h-5 text-gray-400 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </button>
+
+              {/* Dropdown Menu */}
+              {isStatusDropdownOpen && (
+                <div className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg py-1">
+                  {[
+                    {
+                      id: "not_started",
+                      label: "Not Started",
+                      icon: (
+                        <span className="w-4 h-4 rounded-full border-[1.5px] border-gray-300"></span>
+                      ),
+                    },
+                    {
+                      id: "in_progress",
+                      label: "In Progress",
+                      icon: (
+                        <span className="w-4 h-4 rounded-full bg-[#FDB022]"></span>
+                      ),
+                    },
+                    {
+                      id: "completed",
+                      label: "Completed",
+                      icon: (
+                        <span className="w-4 h-4 rounded-full bg-[#12B76A]"></span>
+                      ),
+                    },
+                  ].map((status) => (
+                    <button
+                      key={status.id}
+                      type="button"
+                      className="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => {
+                        handleStatusChange(status.id);
+                        setIsStatusDropdownOpen(false);
+                      }}
+                    >
+                      <div className="flex items-center gap-2">
+                        {status.icon}
+                        <span>{status.label}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <p className="mt-1 text-xs text-gray-500">
+              Select 'completed' status to move the task to completed section
             </p>
           </div>
 

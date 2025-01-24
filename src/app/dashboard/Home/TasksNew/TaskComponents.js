@@ -53,7 +53,7 @@ const TaskTable = ({ children, headers }) => (
   </div>
 );
 
-const EmptyState = ({ onAction }) => (
+const EmptyState = ({ onAddTask }) => (
   <div className="justify-center items-center">
     <div className="flex justify-center items-center pb-5 pt-[4rem]">
       <FiCheckCircle style={{ color: "#ACACAC", fontSize: "36px" }} />
@@ -71,7 +71,7 @@ const EmptyState = ({ onAction }) => (
     <div className="flex justify-center items-center">
       <button
         className="bg-[#007EEF] text-white w-[150px] p-1 rounded-md shadow-md"
-        onClick={onAction}
+        onClick={onAddTask}
       >
         Add a task
       </button>

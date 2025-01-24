@@ -188,7 +188,7 @@ const MyGoals = () => {
               Start by creating a goal
             </p>
             <button
-              className="bg-[#007EEF] text-white w-[150px] px-2 py-1 rounded-md shadow-md mt-4"
+              className="bg-[#007EEF] text-white w-[150px] px-2 py-1 rounded-md shadow-md mt-4 text-sm"
               onClick={handleOpenModal}
             >
               Add a goal
@@ -200,7 +200,7 @@ const MyGoals = () => {
       return (
         <div
           key={goal.id}
-          className="grid grid-cols-12 gap-4 px-4 py-3 items-center hover:bg-gray-50 cursor-pointer border-b border-gray-200"
+          className="grid grid-cols-12 gap-4 px-4 py-3 items-center hover:bg-gray-50 cursor-pointer border-b border-gray-200 text-sm"
           onClick={() => handleEditModal(goal)}
         >
           <div className="col-span-5 flex items-center gap-3">
@@ -209,7 +209,7 @@ const MyGoals = () => {
             </span>
           </div>
           <div className="col-span-4">
-            <div
+            <div className="flex items-center gap-2"><div
               className={`w-2 h-2 rounded-full ${
                 goal.status === "completed"
                   ? "bg-green-500"
@@ -218,6 +218,7 @@ const MyGoals = () => {
                   : "bg-gray-300"
               }`}
             ></div>
+            <div>{goal.status || "Not Started"}</div></div>
           </div>
           <div className="col-span-3 flex justify-between">
             <Moment format="DD/MM/YYYY">{goal.deadline}</Moment>
@@ -279,6 +280,7 @@ const MyGoals = () => {
           onSubmit={handleSubmit}
           onChange={handleInputChange}
           onDelete={handleDelete}
+          handleStatusChange={handleStatusChange}
         />
       )}
     </div>
