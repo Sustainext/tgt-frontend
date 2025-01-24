@@ -396,6 +396,11 @@ const Purchased = ({ location, year, month }) => {
                   {...props}
                   scopes="ec1"
                   setFormData={updateFormDatanew}
+                  location={location}
+                  year={year}
+                  month={month}
+                  sectionname="Direct Purchased Heating, Cooling, Electricity and Steam"
+                  tabname="Energy consumed inside the organization"
                 />
               ),
              

@@ -15,7 +15,12 @@ const CustomFileUploadWidget = ({
   value = {},
   scopes,
   setFormData,
-  label
+  label,
+  location,
+  year,
+  month,
+  sectionname,
+  tabname,
 }) => {
     const text1 = useSelector((state) => state.header.headertext1);
     const text2 = useSelector((state) => state.header.headertext2);
@@ -102,7 +107,7 @@ const CustomFileUploadWidget = ({
         user_email:useremail,
         user_role:roles,
         ip_address: ipAddress,
-        logs: `${text1} > ${middlename} > ${text2}`,
+        logs: `${text1} > ${middlename} > ${text2} > ${tabname} > ${sectionname} > ${location} > ${year} > ${month} >${fileName}`,
       };
   
       const response = await axiosInstance.post(userDetailsUrl, data);
