@@ -6,6 +6,7 @@ import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import dateWidget from "../../../../shared/widgets/Input/dateWidget";
 import selectWidget from "../../../../shared/widgets/Select/selectWidget";
+import CustomUnitWidget from '../../../../shared/widgets/Select/CustomUnitWidget'
 import inputWidget from "../../../../shared/widgets/Input/inputWidget";
 import CustomFileUploadWidget from "../../../../shared/widgets/CustomFileUploadWidget";
 import AssignToWidget from "../../../../shared/widgets/assignToWidget";
@@ -33,6 +34,7 @@ const widgets = {
   selectWidget3: selectWidget3,
   DisabledTextAreaWidget: DisabledTextAreaWidget,
   LocationSelectWidget: LocationSelectWidget,
+  CustomUnitWidget:CustomUnitWidget
 };
 
 const view_path = "gri_environment_waste_significant_spills_306_3b_3c_q1";
@@ -82,6 +84,7 @@ const schema = {
           "Gallon (US)",
           "Barrel (bb)",
           "Thousands of barrel",
+          "Other (please specify)"
         ],
         tooltiptext: "Select the correct unit from the given dropdown",
         display: "block",
@@ -151,7 +154,7 @@ const uiSchema = {
       },
     },
     Unit: {
-      "ui:widget": "selectWidget3",
+      "ui:widget": "CustomUnitWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -417,8 +420,8 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
             <div>
               <Form
                 className="flex"
-                schema={schema}
-                uiSchema={uiSchema}
+                schema={r_schema}
+                uiSchema={r_ui_schema}
                 formData={formData}
                 onChange={handleChange}
                 validator={validator}
