@@ -71,13 +71,13 @@ const Table3 = ({ data }) => {
                       : entry.locationandoperation}
                   </td>
                   <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.male}
+                    {entry.women_to_men}
                   </td>
                   <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.female}
+                    {entry.non_binary_to_men}
                   </td>
                   <td className="p-2 block md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                    {entry.nonBinary}
+                    {entry.non_binary_to_women}
                   </td>
                 </tr>
               ))

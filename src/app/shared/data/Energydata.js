@@ -3862,7 +3862,6 @@ export const Energydata = [
               identification and registering.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -3879,21 +3878,67 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          GRI 405-2: Diversity and Equal Opportunity 2016
+            GRI 405-2: Diversity and Equal Opportunity 2016
           </p>
           <div>
-         
             <p className="text-[11px] text-[#727272] mb-4">
-            The reporting organization can draw from the information used for Disclosure 405-1 to identify the total number of employees in each employee category bygender.
+              The reporting organization can draw from the information used for
+              Disclosure 405-1 to identify the total number of employees in each
+              employee category bygender.
             </p>
           </div>
-      
         </div>
       </>,
     ],
     link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
-  
+  {
+    category: ["54"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 306: Effluents and Waste 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 306-3 Significant Spills
+          </p>
+          <div>
+            <p className="text-[11px] text-black mb-2">Requirements</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The reporting organization shall report the following information:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-42">
+              a. Total number and total volume of recorded significant spills.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              b. The following additional information for each spill that was
+              reported in the organization’s financial statements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              i. Location of spill;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              ii. Volume of spill;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              iii. Material of spill, categorized by: oil spills (soil or water
+              surfaces), fuel spills
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              (soil or water surfaces), spills of wastes (soil or water
+              surfaces), spills of chemicals (mostly soil or water surfaces),
+              and other (to be specified by the organization). c. Impacts of
+              significant spills.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
+  },
   //  sdg contet start//
   {
     category: ["sd1"],
@@ -4635,10 +4680,10 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 3: Ensure healthy lives and promote well-being for all at all ages
+            Sustainable Development Goal 3: Ensure healthy lives and promote
+            well-being for all at all ages
           </p>
           <div className="">
-           
             <p className="text-[13px] text-[#222222] mb-2">Target 3.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, halve the number of global deaths and injuries from road
@@ -5428,7 +5473,6 @@ export const Energydata = [
               area they live after dark.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -5451,29 +5495,35 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels
+            Promote peaceful and inclusive societies for sustainable
+            development, provide access to justice for all and build effective,
+            accountable and inclusive institutions at all levels
           </p>
           <div className="">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            End abuse, exploitation, trafficking and all forms of violence against and torture of children
+              End abuse, exploitation, trafficking and all forms of violence
+              against and torture of children
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">16.2.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of children aged 1–17 years who experienced any physical punishment and/or psychological aggression by caregivers in the past month
+              Proportion of children aged 1–17 years who experienced any
+              physical punishment and/or psychological aggression by caregivers
+              in the past month
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">16.2.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Number of victims of human trafficking per 100,000 population, by sex, age and form of exploitation
+              Number of victims of human trafficking per 100,000 population, by
+              sex, age and form of exploitation
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">16.2.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of young women and men aged 18–29 years who experienced sexual violence by age 18
+              Proportion of young women and men aged 18–29 years who experienced
+              sexual violence by age 18
             </p>
-           
           </div>
         </div>
       </>,
@@ -5497,35 +5547,44 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 5: Achieve gender equality and empower all women and girls
+            Sustainable Development Goal 5: Achieve gender equality and empower
+            all women and girls
           </p>
           <div className="">
             <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            End all forms of discrimination against all women and girls everywhere
+              End all forms of discrimination against all women and girls
+              everywhere
             </p>
-            
+
             <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Recognize and value unpaid care and domestic work through the provision of public services, infrastructure and social protection policies and the promotion of shared responsibility within the household and the family as nationally appropriate
+              Recognize and value unpaid care and domestic work through the
+              provision of public services, infrastructure and social protection
+              policies and the promotion of shared responsibility within the
+              household and the family as nationally appropriate
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#727272] mb-2">5.4.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of time spent on unpaid domestic and care work, by sex, age and location
+              Proportion of time spent on unpaid domestic and care work, by sex,
+              age and location
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Ensure women’s full and effective participation and equal opportunities for leadership at all levels of decision-making in political, economic and public life
+              Ensure women’s full and effective participation and equal
+              opportunities for leadership at all levels of decision-making in
+              political, economic and public life
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#727272] mb-2">5.5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of seats held by women in (a) national parliaments and (b) local governments
+              Proportion of seats held by women in (a) national parliaments and
+              (b) local governments
             </p>
             <p className="text-[11px] text-[#727272] mb-2">5.5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of women in managerial positions
+              Proportion of women in managerial positions
             </p>
           </div>
         </div>
@@ -5550,38 +5609,50 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 5: Achieve gender equality and empower all women and girls
+            Sustainable Development Goal 5: Achieve gender equality and empower
+            all women and girls
           </p>
           <div className="">
             <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            End all forms of discrimination against all women and girls everywhere
+              End all forms of discrimination against all women and girls
+              everywhere
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#727272] mb-2">5.1.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Whether or not legal frameworks are in place to promote, enforce and monitor equality and non‑discrimination on the basis of sex
+              Whether or not legal frameworks are in place to promote, enforce
+              and monitor equality and non‑discrimination on the basis of sex
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Achieve gender equality and empower all women and girls
+              Achieve gender equality and empower all women and girls
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#727272] mb-2">5.4.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of time spent on unpaid domestic and care work, by sex, age and location
+              Proportion of time spent on unpaid domestic and care work, by sex,
+              age and location
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.5</p>
-            <p className="text-[11px] text-[#727272] mb-4">Ensure women’s full and effective participation and equal opportunities for leadership at all levels of decision-making in political, economic and public lifeEnsure women’s full and effective participation and equal opportunities for leadership at all levels of decision-making in political, economic and public life
+            <p className="text-[11px] text-[#727272] mb-4">
+              Ensure women’s full and effective participation and equal
+              opportunities for leadership at all levels of decision-making in
+              political, economic and public lifeEnsure women’s full and
+              effective participation and equal opportunities for leadership at
+              all levels of decision-making in political, economic and public
+              life
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#727272] mb-2">5.5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of seats held by women in (a) national parliaments and (b) local governments
+              Proportion of seats held by women in (a) national parliaments and
+              (b) local governments
             </p>
             <p className="text-[11px] text-[#727272] mb-2">5.5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of seats held by women in (a) national parliaments and (b) local governments
+              Proportion of seats held by women in (a) national parliaments and
+              (b) local governments
             </p>
           </div>
         </div>
@@ -5606,20 +5677,22 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 8: Decent work and economic growth
+            Sustainable Development Goal 8: Decent work and economic growth
           </p>
           <div className="">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, achieve full and productive employment and decent work for all women and men, including for young people and persons with disabilities, and equal pay for work of equal value
+              By 2030, achieve full and productive employment and decent work
+              for all women and men, including for young people and persons with
+              disabilities, and equal pay for work of equal value
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">8.5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Average hourly earnings of female and male employees, by occupation, age and persons with disabilities
+              Average hourly earnings of female and male employees, by
+              occupation, age and persons with disabilities
             </p>
-         
-        
+
             <p className="text-[11px] text-[#222222] mb-2">8.5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Unemployment rate, by sex, age and persons with disabilities
@@ -5629,5 +5702,139 @@ export const Energydata = [
       </>,
     ],
     link: "https://sdgs.un.org/goals/goal8",
+  },
+  {
+    category: ["sd34"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-06.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-cyan-500 text-[17px] font-bold ml-2">SDG 6</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 6: Ensure availability and sustainable management of water and sanitation for all
+          </p>
+          <div className="">
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.6</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2020, protect and restore water-related ecosystems, including mountains, forests, wetlands, rivers, aquifers and lakes.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.6.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Change in the extent of water-related ecosystems over time.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Target 6.a</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, expand international cooperation and capacity-building support to developing countries in water- and sanitation-related activities and programmes, including water harvesting, desalination, water efficiency, wastewater treatment, recycling and reuse technologies.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.a.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Amount of water- and sanitation-related official development assistance that is part of a government-coordinated spending plan.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Support and strengthen the participation of local communities in improving water and sanitation management.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of local administrative units with established and operational policies and procedures for participation of local communities in water and sanitation management.
+            </p>
+           
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal6",
+  },
+  {
+    category: ["sd35"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-12.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-yellow-600 text-[17px] font-bold ml-2">SDG 12</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 12: Ensure sustainable consumption and production pattern
+          </p>
+          <div className="">
+            <p className="text-[13px] text-[#222222] mb-2">Target 12.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2020, achieve the environmentally sound management of chemicals and all wastes throughout their life cycle, in accordance with agreed international frameworks, and significantly reduce their release to air, water and soil in order to minimize their adverse impacts on human health and the environment
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">12.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Number of parties to international multilateral environmental agreements on hazardous waste, and other chemicals that meet their commitments and obligations in transmitting information as required by each relevant agreement
+            </p>
+          
+            <p className="text-[11px] text-[#222222] mb-2">12.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            (a) Hazardous waste generated per capita; and (b) proportion of hazardous waste treated, by type of treatment
+            </p>
+          
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal12",
+  },
+  {
+    category: ["sd36"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-15.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-600 text-[17px] font-bold ml-2">SDG 15</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 15: Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss
+          </p>
+          <div className="h-[544px]">
+            <p className="text-[13px] text-[#222222] mb-2">Target 15.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2020, ensure the conservation, restoration and sustainable use of terrestrial and inland freshwater ecosystems and their services, in particular forests, wetlands, mountains and drylands, in line with obligations under international agreements
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">15.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Forest area as a proportion of total land area
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">15.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of important sites for terrestrial and freshwater biodiversity that are covered by protected areas, by ecosystem type
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal15",
   },
 ];

@@ -86,8 +86,14 @@ export function AuthProvider({ children }) {
       saveToLocalStorage("custom_role", newrole);
       saveToLocalStorage("isAdmin", newrole);
       saveToLocalStorage("textcustomrole", customrole);
-      Cookies.set("permissions", JSON.stringify(permissions), { secure: true, sameSite: "strict" });
-      Cookies.set("isAdmin", JSON.stringify(newrole), { secure: true, sameSite: "strict" });
+      Cookies.set("permissions", JSON.stringify(permissions), {
+        secure: true,
+        sameSite: "strict",
+      });
+      Cookies.set("isAdmin", JSON.stringify(newrole), {
+        secure: true,
+        sameSite: "strict",
+      });
       const isFirstLogin = userData.needs_password_reset;
       // const isFirstLogin = 1;
       if (isFirstLogin) {
@@ -101,12 +107,21 @@ export function AuthProvider({ children }) {
       setUserDetails(userDetails);
       saveToLocalStorage("userData", userDetails);
       saveToLocalStorage("user_id", userDetails.user_detail[0].id);
-      localStorage.setItem("userName", userDetails.user_detail[0].first_name + " "+ userDetails.user_detail[0].last_name);
+      localStorage.setItem(
+        "userName",
+        userDetails.user_detail[0].first_name +
+          " " +
+          userDetails.user_detail[0].last_name
+      );
       localStorage.setItem("userEmail", userDetails.user_detail[0].email);
-      LoginlogDetails(userDetails.user_detail[0].email, userData.custom_role,"Success", receivedToken);
-
+      LoginlogDetails(
+        userDetails.user_detail[0].email,
+        userData.custom_role,
+        "Success",
+        receivedToken
+      );
     } catch (error) {
-      console.log(error,"error")
+      console.log(error, "error");
       console.error("Login error:", error);
       toast.error(error.message, {
         position: "top-right",
@@ -130,6 +145,7 @@ export function AuthProvider({ children }) {
       return null;
     }
   };
+
   const getDeviceDetails = () => {
     const userAgent = navigator.userAgent;
     const platform = navigator.platform;
@@ -147,32 +163,32 @@ export function AuthProvider({ children }) {
       return null;
     }
   };
-  const LoginlogDetails = async (useremail,roles,loginstatus,token) => {
+  const LoginlogDetails = async (useremail, roles, loginstatus, token) => {
     const backendUrl = process.env.BACKEND_API_URL;
     const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
-  
+
     try {
       const ipAddress = await getIPAddress();
       const deviceDetails = getDeviceDetails();
       const location = await getLocation();
-      
+
       const data = {
         event_type: "Authentication",
         event_details: "Access",
         action_type: "Login",
         status: loginstatus,
-        user_email:useremail,
-        user_role:roles,
+        user_email: useremail,
+        user_role: roles,
         ip_address: ipAddress,
         logs: `Device: ${deviceDetails}, Location: ${location}`,
       };
-  
+      saveToLocalStorage("ip_address", ipAddress);
       const response = await axiosInstance.post(userDetailsUrl, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       return response.data;
     } catch (error) {
       console.error("Error logging login details:", error);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { MdInfoOutline, MdOutlineFileUpload, MdFilePresent, MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
+import { MdInfoOutline, MdOutlineFileUpload, MdFilePresent, MdAdd, MdOutlineDeleteOutline,  MdDelete,
+  MdClose, } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { BlobServiceClient } from "@azure/storage-blob";
@@ -8,7 +9,7 @@ import { useSelector } from "react-redux";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 const FileUploadWithAddRowAndCol = (props) => {
   const { onChange, value = { MembershipAssociations: [[]], fileName: '', fileUrl: '' }, uiSchema = {} } = props;
-  const [fileInfo, setFileInfo] = useState({ fileName: value.fileName || "", fileUrl: value.fileUrl || "" });
+  const [fileInfo, setFileInfo] = useState({ fileName: value.fileName || "", fileUrl: value.fileUrl || "",fileType:value.fileType || "",fileSize:value.fileSize || "",uploadDateTime:value.uploadDateTime || ""  });
   const [localMembershipAssociations, setLocalMembershipAssociations] = useState(value.MembershipAssociations);
       const text1 = useSelector((state) => state.header.headertext1);
         const text2 = useSelector((state) => state.header.headertext2);
@@ -17,6 +18,7 @@ const FileUploadWithAddRowAndCol = (props) => {
         const roles = typeof window !== 'undefined' 
         ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
         : '';
+          const [showModal, setShowModal] = useState(false);
   // Ensure there is always at least one row with one column in MembershipAssociations
   useEffect(() => {
     if (
@@ -32,7 +34,7 @@ const FileUploadWithAddRowAndCol = (props) => {
     }
 
     // Update file info if it changes in props
-    setFileInfo({ fileName: value.fileName || "", fileUrl: value.fileUrl || "" });
+    setFileInfo({ fileName: value.fileName || "", fileUrl: value.fileUrl || "",fileType:value.fileType || "",fileSize:value.fileSize || "",uploadDateTime:value.uploadDateTime || ""  });
 
     console.log('Initialized localMembershipAssociations:', value.MembershipAssociations);
   }, [value, onChange]);
@@ -44,7 +46,13 @@ const FileUploadWithAddRowAndCol = (props) => {
     }, 300),
     [value, onChange]
   );
+  const handlePreview = () => {
+    setShowModal(true);
+  };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   const handleTextChange = (rowIndex, colIndex, event) => {
     const updatedMembershipAssociations = [...localMembershipAssociations];
     updatedMembershipAssociations[rowIndex][colIndex] = event.target.value;
@@ -115,7 +123,10 @@ const FileUploadWithAddRowAndCol = (props) => {
     if (file) {
       const fileUrl = await uploadFileToAzure(file);
       if (fileUrl) {
-        const newFileInfo = { fileName: file.name, fileUrl };
+        const newFileInfo = { 
+          fileName: file.name,fileUrl:fileUrl,fileType:file.type,fileSize:file.size,uploadDateTime:new Date().toLocaleString()
+         
+        };
         setFileInfo(newFileInfo);
         onChange({ ...value, ...newFileInfo });
         setTimeout(() => {
@@ -153,7 +164,32 @@ const FileUploadWithAddRowAndCol = (props) => {
       return null;
     }
   };
+  const handleDelete = () => {
+    try {
+     
+      const newFileInfo = { 
+        fileName:"",fileUrl:"",fileType:"",fileSize:"",uploadDateTime:""
+       
+      };
+      setFileInfo(newFileInfo);
+      onChange({ ...value, ...newFileInfo });
 
+      const fileInput = document.getElementById("fileInput");
+      if (fileInput) fileInput.value = "";
+
+      setShowModal(false);
+
+      setTimeout(() => {
+        LoginlogDetails("Success", "Deleted");
+      }, 500);
+    } catch (error) {
+      console.error("Error deleting file:", error.message);
+
+      setTimeout(() => {
+        LoginlogDetails("Failed", "Deleted");
+      }, 500);
+    }
+  };
   return (
     <>
       <div className="mb-6">
@@ -236,8 +272,8 @@ const FileUploadWithAddRowAndCol = (props) => {
               style={{ display: "none" }}
             />
             {fileInfo.fileName ? (
-              <label htmlFor={`fileInput-${uiSchema["ui:title"]}`} className="flex cursor-pointer">
-                <div className="flex items-center text-center mt-2">
+              <label  className="flex cursor-pointer"   >
+                <div className="flex items-center text-center mt-2" onClick={handlePreview}>
                   <div className="truncate text-sky-600 text-sm flex text-center">
                     <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {fileInfo.fileName}
                   </div>
@@ -255,6 +291,94 @@ const FileUploadWithAddRowAndCol = (props) => {
             )}
           </div>
         </div>
+           {showModal && (
+                <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
+                  <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-12">
+                    <div className="flex justify-between mt-4 mb-4">
+                      <div>
+                        <h5 className="mb-4 ml-2 font-semibold">{fileInfo.fileName}</h5>
+                      </div>
+                      <div className="flex">
+                        <div className="mb-4">
+                          <button
+                            className="px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white"
+                            onClick={handleDelete}
+                          >
+                            <MdDelete className="text-xl" /> Delete File
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            className="px-4 py-2 text-xl rounded"
+                            onClick={handleCloseModal}
+                          >
+                            <MdClose />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <div className="relative w-[760px] h-[580px]">
+                    
+                        {fileInfo.fileType.startsWith("image") ? (
+                          <img
+                            src={fileInfo.fileUrl} 
+                            alt="Preview"
+                            className="max-w-full max-h-full object-contain"
+                          />
+                        ) : fileInfo.fileType === "application/pdf" ? (
+                          <iframe
+                            src={fileInfo.fileUrl} 
+                            title="PDF Preview"
+                            className="w-full h-full"
+                          />
+                        ) : (
+                          <p>File preview not available. Please download and verify.</p>
+                        )}
+                      </div>
+                      <div className="w-[211px]">
+                        <div className="mb-4 mt-2">
+                          <h2 className="text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide">
+                            File information
+                          </h2>
+                        </div>
+                        <div className="mb-4">
+                          <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                            FILE NAME
+                          </h2>
+                          <h2 className="text-[14px] truncate leading-relaxed tracking-wide">
+                            {fileInfo.fileName}
+                          </h2>
+                        </div>
+                        <div className="mb-4">
+                          <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                            FILE SIZE
+                          </h2>
+                          <h2 className="text-[14px] leading-relaxed tracking-wide">
+                            {(fileInfo.fileSize / 1024).toFixed(2)} KB
+                          </h2>
+                        </div>
+                        <div className="mb-4">
+                          <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                            FILE TYPE
+                          </h2>
+                          <h2 className="text-[14px] leading-relaxed tracking-wide">
+                            {fileInfo.fileType}
+                          </h2>
+                        </div>
+                        <div className="mb-4">
+                          <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                            UPLOAD DATE & TIME
+                          </h2>
+                          <h2 className="text-[14px] leading-relaxed tracking-wide">
+                            {fileInfo.uploadDateTime}
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
       </div>
     </>
   );

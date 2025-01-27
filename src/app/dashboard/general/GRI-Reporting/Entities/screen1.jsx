@@ -116,16 +116,17 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
       //   LoaderClose();
       // }
     } catch (error) {
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      console.log("test data",error);
+      // toast.error("Oops, something went wrong", {
+      //   position: "top-right",
+      //   autoClose: 1000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "colored",
+      // });
       LoaderClose();
     }
   };
