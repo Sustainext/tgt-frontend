@@ -555,7 +555,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                       Data Collection Methodology
                     </p>
                   </div>
-                  {/* <div>
+                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Significant Spills"
@@ -568,7 +568,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                     >
                       Significant Spills
                     </p>
-                  </div> */}
+                  </div>
                 </div>
               </>
             )}

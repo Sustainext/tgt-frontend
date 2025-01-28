@@ -85,7 +85,7 @@ const CustomUnitWidget =  ({onChange, value = "", placeholder, label, title, uiS
         <div>
             <input
             type="text"
-            className={`block text-center py-1.5 text-[12px] w-[100px]  border-b-2 border-gray-300 ${
+            className={`block text-center py-2 text-[12px] w-[100px]  border-b-2 border-gray-300 ${
               id.startsWith("root_0") ? "mt-[0.38rem]" : "mt-0.5"
             }`}
             placeholder={`Specify other ${label}`}

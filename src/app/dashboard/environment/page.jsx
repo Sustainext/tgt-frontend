@@ -29,7 +29,7 @@ import WasteMaterialtopic from "./Waste/Management-Material-topic/page";
 import MaterialsMaterialtopic from "./Materials/Management-Material-topic/page";
 import WaterMaterialtopic from "./Water-effluents/Management-Material-topic/page";
 import SupplierMaterialtopic from "./supplier-environmental-assessment/Management-Material-topic/page";
-// import SignificantSpills from './Waste/significant-spills/page'
+import SignificantSpills from './Waste/significant-spills/page'
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -224,7 +224,7 @@ const environment = () => {
             {activeTab === "Waste Diverted from disposal" && <Wastediverted apiData={data} />}
             {activeTab === "Waste diverted to disposal" && <Wastedirected apiData={data} />}
             {activeTab === "Data Collection Methodology" && <Datacollectionmethodology apiData={data} />}    
-            {/* {activeTab === "Significant Spills" && <SignificantSpills apiData={data} isSidepanelOpen={open} />} */}
+           {activeTab === "Significant Spills" && <SignificantSpills apiData={data} isSidepanelOpen={open} />}
             
             {/* Materials  start */}
             {activeTab === "Management of Material topic Materials" && (
