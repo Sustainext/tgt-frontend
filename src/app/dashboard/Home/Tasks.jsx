@@ -4,6 +4,7 @@ import Moment from "react-moment";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../utils/axiosMiddleware";
 import TaskDetailsModal from "./TaskDetailsModal";
+import {MdFilePresent} from "react-icons/md";
 
 const TasksPage = () => {
   const [activeTab, setActiveTab] = useState("upcoming");
@@ -74,6 +75,8 @@ const TasksPage = () => {
 
   const getStatusLabel = (status) => {
     switch (status) {
+      case "not_started":
+        return "Not Started";
       case "in_progress":
         return "In Progress";
       case "under_review":
@@ -90,7 +93,7 @@ const TasksPage = () => {
   };
 
   return (
-    <div className="p-6 border rounded-lg shadow-md">
+    <div className="p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
@@ -102,7 +105,7 @@ const TasksPage = () => {
           <input
             type="text"
             placeholder="Search"
-            className="pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="pl-10 pr-4 py-2 min-w-[25vw] border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={searchQuery}
             onChange={handleSearch}
           />
@@ -137,11 +140,12 @@ const TasksPage = () => {
       <div className="bg-white rounded-lg flex flex-col h-[calc(100vh-280px)]">
         {/* Table Header */}
         <div className="grid grid-cols-9 gap-4 px-6 py-4 border-b border-gray-200 gradient-background text-sm font-medium text-gray-500">
-          <div className="col-span-4">Tasks</div>
+          <div className="col-span-3">Tasks</div>
           <div className="col-span-1">Status</div>
-          <div className="col-span-2">Assigned by</div>
+          <div className="col-span-2">Assigner</div>
           <div className="col-span-1">Assigned on</div>
           <div className="col-span-1">Due Date</div>
+          <div className="col-span-1">Attachment</div>
         </div>
 
         {/* Table Body */}
@@ -166,9 +170,8 @@ const TasksPage = () => {
               <div
                 key={task.id}
                 className="grid grid-cols-9 gap-4 px-6 py-4 hover:bg-gray-50 cursor-pointer"
-                onClick={() => handleTaskClick(task)}
               >
-                <div className="col-span-4 text-blue-600 truncate">
+                <div className="col-span-3 text-blue-600 truncate" onClick={() => handleTaskClick(task)}>
                   {task.task_name}
                 </div>
                 <div className="col-span-1 flex items-center space-x-2">
@@ -177,12 +180,12 @@ const TasksPage = () => {
                       task.task_status
                     )}`}
                   />
-                  <span className="text-gray-900">
+                  <span className="text-gray-900 font-semibold">
                     {getStatusLabel(task.task_status)}
                   </span>
                 </div>
                 <div className="col-span-2">
-                  <div className="text-gray-900">{task.assigned_by_name}</div>
+                  <div className="text-gray-900 font-semibold">{task.assign_by_user_name}</div>
                   <div className="text-gray-500 text-sm">
                     {task.assign_by_email}
                   </div>
@@ -193,23 +196,14 @@ const TasksPage = () => {
                 <div className="col-span-1 text-gray-500">
                   <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
                 </div>
+                <div className={`col-span-1 ${task.file_data?.name ? "text-blue-500":"text-gray-400"} flex items-start justify-start gap-1`}>
+                <span>{task.file_data?.name && <MdFilePresent className="text-2xl text-green-500"/>}</span> <span>{task.file_data?.name || "No attachment"}</span>
+                </div>
               </div>
             ))
           )}
         </div>
       </div>
-      {/* {isLoading && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
-          <Oval
-            height={80}
-            width={80}
-            color="#0000FF"
-            secondaryColor="#ddd"
-            strokeWidth={4}
-            strokeWidthSecondary={4}
-          />
-        </div>
-      )} */}
 
       {/* Pagination */}
       <div className="flex items-center justify-center gap-6 mt-4">
