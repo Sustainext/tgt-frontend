@@ -37,8 +37,8 @@ const InputredonlyWidget = (props) => {
         ></ReactTooltip>
       </p>
       <input
-        className={`backdrop:before:w-[48rem]   border appearance-none text-[12px] border-gray-400 text-neutral-900 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
-        placeholder={`Enter Value`}
+        className={`backdrop:before:w-[48rem]   border appearance-none text-[12px] border-gray-200 text-neutral-900 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-200  w-full`}
+        placeholder={`Auto Calculated`}
         type="number"
         value={value}
         readOnly 

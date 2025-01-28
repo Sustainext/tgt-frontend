@@ -4,6 +4,7 @@ import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import inputWidget3 from "../../../../shared/widgets/Input/inputWidget3";
 import AddmultiInput from "../../../../shared/widgets/Economic/addmultiInput";
+import AddMultiInputNew from "../../../../shared/widgets/Economic/addMutliInputNew";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -19,6 +20,7 @@ const widgets = {
   selectWidget:CurrencyselectWidget,
   AddmultiInput:AddmultiInput,
   InputredonlyWidget:InputredonlyWidget,
+  AddMultiInputNew:AddMultiInputNew
 };
 
 const view_path = "gri-economic-direct_economic_value-report-201-1a-1b";
@@ -62,13 +64,9 @@ const schema = {
       },
       Q8: {
         type: "string",
-        title: "Enter Country name",
-      },
-      Q9: {
-        type: "string",
         title: "Community investments",
       },
-      Q10: {
+      Q9: {
         type: "string",
         title: "Economic value retained",
       },
@@ -79,7 +77,7 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10"],
+    "ui:order": ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9"],
     Q1: {
       "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
       "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
@@ -162,32 +160,22 @@ const uiSchema = {
         "ui:tooltip":
           "An organization can calculate payments to governments as all of the organization’s taxes plus related penalties paid at the international, national, and local levels. Organization taxes can include corporate, income, and property..",
         "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
-      Q8: {
-        "ui:title":
-          "Enter Country name",
-        "ui:tooltip":
-          "Enter Country name",
-        "ui:tooltipdisplay": "none",
-        "ui:titledisplay": "none",
-        "ui:widget": "AddmultiInput",
+        "ui:widget": "AddMultiInputNew",
         "ui:inputtype1": "text",
         "ui:inputtype2": "number",
-        "ui:widgetplaceholder": "Enter Country name",
+        "ui:widgetplaceholder": "Enter Country",
         "ui:widgetplaceholder2": "Enter Value",
-        "ui:widgtclass":"block w-[30vw] py-2 mb-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300",
-        "ui:widgtclass2":"backdrop:before:w-[48rem] mb-2 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full",
+        "ui:widgtclass":"mb-2 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full",
+        "ui:widgtclass2":"mb-2 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full",
+       "ui:topHeading1":"Country Name",
+       "ui:topHeading2":"Payments to governments by country",
         "ui:horizontal": true,
         "ui:options": {
           label: false,
         },
       },
-      Q9: {
+      
+      Q8: {
         "ui:title":
           "2.5) Community investments",
         "ui:tooltip":
@@ -199,7 +187,7 @@ const uiSchema = {
           label: false,
         },
       },
-      Q10: {
+      Q9: {
         "ui:title":
           "3.Economic value retained",
         "ui:tooltip":
@@ -239,24 +227,29 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleChange = (e) => {
     const updatedFormData = e.formData;
+    let Currency=updatedFormData[0]?.Q1 || "";
   
     // Calculate Q3 dynamically as the sum of Q4, Q5, Q6, Q7, Q9
-    const totalDistributed = 
-      Number(updatedFormData[0]?.Q4 || 0) +
-      Number(updatedFormData[0]?.Q5 || 0) +
-      Number(updatedFormData[0]?.Q6 || 0) +
-      Number(updatedFormData[0]?.Q7 || 0) +
-      Number(updatedFormData[0]?.Q9 || 0);
+    const totalDistributed =
+    Number(updatedFormData[0]?.Q4 || 0) +
+    Number(updatedFormData[0]?.Q5 || 0) +
+    Number(updatedFormData[0]?.Q6 || 0) +
+    Number(
+      updatedFormData[0]?.Q7.reduce((total, val) => {
+        return total + Number(val.paymentCode || 0);
+      }, 0) || 0
+    ) +
+    Number(updatedFormData[0]?.Q8 || 0);
   
     // Update Q3 with the calculated value
-    updatedFormData[0].Q3 = totalDistributed.toString();
+    updatedFormData[0].Q3 = totalDistributed.toString() + Currency;
   
-    // Calculate Q10 as the difference between Q2 and Q3
+    // Calculate Q9 as the difference between Q2 and Q3
     const economicValueRetained = 
       Number(updatedFormData[0]?.Q2 || 0) - Number(updatedFormData[0]?.Q3 || 0);
   
-    // Update Q10 with the calculated value
-    updatedFormData[0].Q10 = economicValueRetained.toString();
+    // Update Q9 with the calculated value
+    updatedFormData[0].Q9 = economicValueRetained.toString();
   
     setFormData(updatedFormData);
   };
@@ -401,8 +394,8 @@ Note: Compile the EVG&D from data in the organization’s audited financial or p
         </div>
         <div className="mx-2 mb-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
