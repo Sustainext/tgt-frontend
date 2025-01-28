@@ -38,7 +38,7 @@ const MyGoals = () => {
     try {
       LoaderOpen();
       const response = await axiosInstance.get(
-        `/mygoal/?assigned_to=${userId}`
+        `/sustainapp/my_goal/?assigned_to=${userId}`
       );
       setGoals(response.data);
     } catch (error) {
@@ -112,13 +112,13 @@ const MyGoals = () => {
     try {
       if (isEditing) {
         // Update goal
-        const response = await patch(`/mygoal/${currentGoal.id}/`, formData);
+        const response = await patch(`/sustainapp/my_goal/${currentGoal.id}/`, formData);
         if (response.status === 200) {
           toast.success("Goal updated successfully!");
         }
       } else {
         // Add new goal
-        const response = await post(`/mygoal/`, {
+        const response = await post(`/sustainapp/my_goal/`, {
           ...formData,
           assigned_to: userId,
           completed: false,
@@ -143,7 +143,7 @@ const MyGoals = () => {
     }
     LoaderOpen();
     try {
-      const response = await del(`/mygoal/${currentGoal.id}/`);
+      const response = await del(`/sustainapp/my_goal/${currentGoal.id}/`);
       if (response.status === 200) {
         toast.success("Goal deleted successfully!");
       }
@@ -167,7 +167,7 @@ const MyGoals = () => {
             Start by creating a goal
           </p>
           <button
-            className="bg-[#007EEF] text-white w-[150px] p-2 rounded-md shadow-md mt-4"
+            className="bg-[#007EEF] text-white w-[150px] px-2 py-1.5 rounded-md shadow-md mt-4 text-sm"
             onClick={handleOpenModal}
           >
             Add a goal
@@ -218,7 +218,7 @@ const MyGoals = () => {
                   : "bg-gray-300"
               }`}
             ></div>
-            <div>{goal.status || "Not Started"}</div></div>
+            <div>{goal.status_display || "Not Started"}</div></div>
           </div>
           <div className="col-span-3 flex justify-between">
             <Moment format="DD/MM/YYYY">{goal.deadline}</Moment>

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiX } from "react-icons/fi";
+import { toast } from "react-toastify";
+import axiosInstance from "../../utils/axiosMiddleware";
 
 const GoalsModal = ({
   isOpen,
@@ -14,6 +16,7 @@ const GoalsModal = ({
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showUpdateConfirm, setShowUpdateConfirm] = useState(false);
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
+  const [organizations, setOrganizations] = useState([]);
 
   if (!isOpen) return null;
 
@@ -27,7 +30,13 @@ const GoalsModal = ({
   };
 
   const handleDeleteClick = () => {
+    setShowUpdateConfirm(false)
     setShowDeleteConfirm(true);
+  };
+
+  const handleUpdateClick = () => {
+    setShowDeleteConfirm(false);
+    setShowUpdateConfirm(true);
   };
 
   const handleConfirmDelete = () => {
@@ -39,6 +48,20 @@ const GoalsModal = ({
     onSubmit({ preventDefault: () => {} });
     setShowUpdateConfirm(false);
   };
+
+  const fetchOrganizations = async () => {
+    try {
+      const response = await axiosInstance.get(`/orggetonly`);
+      setOrganizations(response.data);
+    } catch (error) {
+      toast.error("Error fetching goals");
+    } 
+  };
+
+  useEffect(() => {
+    if(!organizations.length)
+    fetchOrganizations();
+  }, []);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
@@ -183,8 +206,11 @@ const GoalsModal = ({
               className="w-full p-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 text-sm"
             >
               <option value="">Select Organization</option>
-              <option value="org1">Organization 1</option>
-              <option value="org2">Organization 2</option>
+              {organizations.map((organization) => (
+                <option key={organization.id} value={organization.id}>
+                  {organization.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -224,13 +250,14 @@ const GoalsModal = ({
                 <button
                   type="button"
                   onClick={handleDeleteClick}
-                  className="flex-1 py-2 text-red-500 bg-white border border-red-500 rounded-lg hover:bg-red-50 text-sm"
+                  className={`flex-1 py-2 border border-red-500 rounded-lg text-sm ${showDeleteConfirm ? "bg-red-500 text-white" : "text-red-500 bg-white hover:bg-red-50"}`}
                 >
                   Delete Goal
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 text-sm"
+                  onClick={handleUpdateClick}
+                  className={`flex-1 py-2 rounded-lg text-sm ${showUpdateConfirm ? "bg-blue-500 text-white" : "text-blue-500 bg-whiten border border-blue-500 hover:bg-blue-50"}`}
                 >
                   Update
                 </button>
@@ -246,7 +273,7 @@ const GoalsModal = ({
                     onClick={handleConfirmDelete}
                     className="w-full py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 text-sm"
                   >
-                    Delete
+                    Submit
                   </button>
                 </div>
               )}
@@ -261,7 +288,7 @@ const GoalsModal = ({
                     onClick={handleConfirmUpdate}
                     className="w-full py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 text-sm"
                   >
-                    Update
+                    Submit
                   </button>
                 </div>
               )}
