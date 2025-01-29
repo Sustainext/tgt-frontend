@@ -10,9 +10,13 @@ import Selfgenerated from "./Self-generated/self-generated"
 import Energysold from "./Energy-sold/energy-sold"
 import Standards from "./Standards/standards"
 import Source from "./Source/source";
+import { useDispatch } from "react-redux";
+import {f_setTabName} from '../../../../../lib/redux/features/FileInfoSlice'
+
 const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage  }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
+  const dispatch = useDispatch();
   const handleClick = () => {
     if (!location) {
       setLocationMessage("Please select location")
@@ -25,6 +29,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
       return;
     }
     setIsOpen(!isOpen);
+    dispatch(f_setTabName(title))
   };
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 `}>

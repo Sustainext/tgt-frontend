@@ -49,6 +49,7 @@ import {
   setStartDate,
   setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
+import {f_setSectionName} from '../../../lib/redux/features/FileInfoSlice'
 
 const environment = () => {
   const { open } = GlobalState();
@@ -78,6 +79,7 @@ const environment = () => {
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    dispatch(f_setSectionName(tab));
   };
 
   useEffect(() => {
