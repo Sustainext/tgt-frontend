@@ -227,33 +227,36 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleChange = (e) => {
     const updatedFormData = e.formData;
-    let Currency=updatedFormData[0]?.Q1 || "";
+    // let Currency=updatedFormData[0]?.Q1 || "";
+    if (updatedFormData[0]?.Q4 || updatedFormData[0]?.Q5 || updatedFormData[0]?.Q6 || updatedFormData[0]?.Q7.length>0  || updatedFormData[0]?.Q8) {
+      const totalDistributed =
+      Number(updatedFormData[0]?.Q4 || 0) +
+      Number(updatedFormData[0]?.Q5 || 0) +
+      Number(updatedFormData[0]?.Q6 || 0) +
+      Number(
+        updatedFormData[0]?.Q7.reduce((total, val) => {
+          return total + Number(val.paymentCode || 0);
+        }, 0) || 0
+      ) +
+      Number(updatedFormData[0]?.Q8 || 0);
+    
+      // Update Q3 with the calculated value
+      updatedFormData[0].Q3 = totalDistributed!=0?totalDistributed.toString():''
+    
+      // Calculate Q9 as the difference between Q2 and Q3
+      const economicValueRetained = 
+        Number(updatedFormData[0]?.Q2 || 0) - Number(updatedFormData[0]?.Q3 || 0);
+    
+      // Update Q9 with the calculated value
+      updatedFormData[0].Q9 = economicValueRetained!=0?economicValueRetained.toString():'';
+    
+      setFormData(updatedFormData);
+  }
   
-    // Calculate Q3 dynamically as the sum of Q4, Q5, Q6, Q7, Q9
-    const totalDistributed =
-    Number(updatedFormData[0]?.Q4 || 0) +
-    Number(updatedFormData[0]?.Q5 || 0) +
-    Number(updatedFormData[0]?.Q6 || 0) +
-    Number(
-      updatedFormData[0]?.Q7.reduce((total, val) => {
-        return total + Number(val.paymentCode || 0);
-      }, 0) || 0
-    ) +
-    Number(updatedFormData[0]?.Q8 || 0);
-  
-    // Update Q3 with the calculated value
-    updatedFormData[0].Q3 = totalDistributed.toString() + Currency;
-  
-    // Calculate Q9 as the difference between Q2 and Q3
-    const economicValueRetained = 
-      Number(updatedFormData[0]?.Q2 || 0) - Number(updatedFormData[0]?.Q3 || 0);
-  
-    // Update Q9 with the calculated value
-    updatedFormData[0].Q9 = economicValueRetained.toString();
-  
-    setFormData(updatedFormData);
+   
   };
-
+ 
+ 
   const updateFormData = async () => {
     const data = {
       client_id: client_id,
@@ -338,8 +341,9 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
-    // console.log("test form data", formData);
+    console.log("test form data", formData);
   };
+  console.log("test form data", formData);
 
   return (
     <>

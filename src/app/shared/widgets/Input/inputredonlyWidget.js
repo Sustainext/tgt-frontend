@@ -6,7 +6,7 @@ const InputredonlyWidget = (props) => {
   const { onChange, value = "", label, formContext, id, name, uiSchema = {} } = props;
 
 
-
+console.log(value,"see")
   return (
     <div className="mb-3 relative">
       <p className="flex text-[14px] text-gray-700 font-[500] mb-3">
@@ -38,10 +38,10 @@ const InputredonlyWidget = (props) => {
       </p>
       <input
         className={`backdrop:before:w-[48rem]   border appearance-none text-[12px] border-gray-200 text-neutral-900 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-200  w-full`}
-        placeholder={`Auto Calculated`}
+        placeholder={!value ? 'Auto Calculated' : ''} // Conditionally set placeholder
         type="number"
-        value={value}
-        readOnly 
+        value={value || ''}
+        readOnly
  
 
       />

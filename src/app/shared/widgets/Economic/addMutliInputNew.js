@@ -33,7 +33,7 @@ const AddMultiInputNew = (props) => {
     onChange(updatedValue);
   };
 
-  const valuesToRender = Array.isArray(value) && value.length > 0 ? value : [{}];
+  const valuesToRender = Array.isArray(value) && value.length > 0 ? value : [];
 
   return (
     <div className="mb-3 relative">
