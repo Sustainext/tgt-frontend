@@ -9,8 +9,10 @@ import {
   fetchAssignedTasks,
   fetchApprovedTasks,
   setLocation,
+  f_setLocationName,
   setYear,
   setMonth,
+  f_setMonthName,
   setCountryCode,
   clearSelectedRows,
   fetchLocations,
@@ -83,6 +85,7 @@ const EmissionsHeader = ({
     if (name === "month") {
       const monthNumber = monthMapping[value];
       dispatch(setMonth(monthNumber));
+      dispatch(f_setMonthName(value))
     } else if (name === "location") {
       const selectedLocation = locations.find(
         (loc) => loc.id === Number(value)
@@ -90,6 +93,7 @@ const EmissionsHeader = ({
       if (selectedLocation) {
         dispatch(setCountryCode(selectedLocation.country));
         setLocationname(selectedLocation.name);
+        dispatch(f_setLocationName(selectedLocation.name))
       }
       dispatch(setLocation(Number(value)));
     } else if (name === "year") {

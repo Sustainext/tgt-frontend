@@ -338,8 +338,10 @@ const emissionsSlice = createSlice({
       error: null,
     },
     location: "",
+    locationName:"",
     year: "",
     month: 1,
+    monthName:"Jan",
     countryCode: "",
     climatiqData: {
       rawData: {},
@@ -435,11 +437,17 @@ const emissionsSlice = createSlice({
     setLocation: (state, action) => {
       state.location = action.payload;
     },
+    f_setLocationName: (state, action) => {
+      state.locationName = action.payload;
+    },
     setYear: (state, action) => {
       state.year = action.payload;
     },
     setMonth: (state, action) => {
       state.month = action.payload;
+    },
+    f_setMonthName: (state, action) => {
+      state.monthName = action.payload;
     },
     setCountryCode: (state, action) => {
       state.countryCode = action.payload;
@@ -764,8 +772,10 @@ export const {
   setUserData,
   setLocationsRedux,
   setLocation,
+  f_setLocationName,
   setYear,
   setMonth,
+  f_setMonthName,
   setCountryCode,
   updateScopeDataLocal,
   resetPreviousMonthData,
