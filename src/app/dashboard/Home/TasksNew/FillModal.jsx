@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { FiX, FiUser, FiFile, FiChevronDown } from "react-icons/fi";
 import Moment from "react-moment";
 import ImageUpload from "../../../shared/components/ImageUpload";
@@ -18,7 +18,7 @@ const FillModal = ({
   onFileUpload,
   onSubmit,
   isBeforeToday,
-  validateDecimalPlaces
+  validateDecimalPlaces,
 }) => {
   if (!isOpen) return null;
 
@@ -28,10 +28,7 @@ const FillModal = ({
         <div className="mb-4">
           <div className="flex justify-between">
             <h5 className="text-base font-bold">My Task</h5>
-            <FiX 
-              className="cursor-pointer"
-              onClick={onClose}
-            />
+            <FiX className="cursor-pointer" onClick={onClose} />
           </div>
           <p className="text-sm font-bold">
             Collect &gt; Environment &gt; Emissions
@@ -42,16 +39,24 @@ const FillModal = ({
           <div className="w-4/5">
             <h5 className="text-sm text-gray-500 mb-0.5">Assigned by</h5>
             <div className="flex items-center">
-              <FiUser size={14}/>
+              <FiUser size={14} />
               <div className="ml-2">
                 <p className="text-sm">{taskassigndata.assign_by_user_name}</p>
-                <p className="text-sm text-gray-500">{taskassigndata.assign_by_email}</p>
+                <p className="text-sm text-gray-500">
+                  {taskassigndata.assign_by_email}
+                </p>
               </div>
             </div>
           </div>
           <div className="w-1/5">
             <h5 className="text-sm text-gray-500 mb-0.5">Due date</h5>
-            <p className={`text-sm ${isBeforeToday(taskassigndata.deadline) ? "text-red-500" : "text-black"}`}>
+            <p
+              className={`text-sm ${
+                isBeforeToday(taskassigndata.deadline)
+                  ? "text-red-500"
+                  : "text-black"
+              }`}
+            >
               <Moment format="DD/MM/YYYY">{taskassigndata.deadline}</Moment>
             </p>
           </div>
@@ -140,11 +145,16 @@ const FillModal = ({
                       <select
                         className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[10px] bg-[#007EEF] text-white w-[50px]"
                         value={taskassigndata.unit1}
-                        onChange={(e) => onTaskDataChange({ unit1: e.target.value })}
+                        onChange={(e) =>
+                          onTaskDataChange({ unit1: e.target.value })
+                        }
                       >
                         <option className="text-[10px]">Unit</option>
                         {unitTypes
-                          .filter((unit) => unit.unit_type === selectedActivity.unit_type)
+                          .filter(
+                            (unit) =>
+                              unit.unit_type === selectedActivity.unit_type
+                          )
                           .map((unit) => {
                             const unitValues = Object.values(unit.units);
                             if (unitValues.length >= 2) {
@@ -155,7 +165,9 @@ const FillModal = ({
                           .flat()
                           .flat()
                           .map((unitName) => (
-                            <option key={unitName} className="text-[10px]">{unitName}</option>
+                            <option key={unitName} className="text-[10px]">
+                              {unitName}
+                            </option>
                           ))}
                       </select>
                     </div>
@@ -179,11 +191,16 @@ const FillModal = ({
                       <select
                         className="cursor-pointer appearance-none px-2 py-0.5 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[10px] bg-[#007EEF] text-white w-[50px]"
                         value={taskassigndata.unit2}
-                        onChange={(e) => onTaskDataChange({ unit2: e.target.value })}
+                        onChange={(e) =>
+                          onTaskDataChange({ unit2: e.target.value })
+                        }
                       >
                         <option className="text-[10px]">Unit</option>
                         {unitTypes
-                          .filter((unit) => unit.unit_type === selectedActivity.unit_type)
+                          .filter(
+                            (unit) =>
+                              unit.unit_type === selectedActivity.unit_type
+                          )
                           .map((unit) => {
                             const unitValues = Object.values(unit.units);
                             if (unitValues.length >= 2) {
@@ -194,7 +211,9 @@ const FillModal = ({
                           .flat()
                           .flat()
                           .map((unitName) => (
-                            <option key={unitName} className="text-[10px]">{unitName}</option>
+                            <option key={unitName} className="text-[10px]">
+                              {unitName}
+                            </option>
                           ))}
                       </select>
                     </div>
@@ -219,16 +238,23 @@ const FillModal = ({
                     <select
                       className="cursor-pointer appearance-none px-2 py-0.5 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[10px] bg-[#007EEF] text-white w-[50px]"
                       value={taskassigndata.unit1}
-                      onChange={(e) => onTaskDataChange({ unit1: e.target.value })}
+                      onChange={(e) =>
+                        onTaskDataChange({ unit1: e.target.value })
+                      }
                     >
                       <option className="text-[10px]">Unit</option>
                       {unitTypes
-                        .filter((unit) => unit.unit_type === selectedActivity.unit_type)
+                        .filter(
+                          (unit) =>
+                            unit.unit_type === selectedActivity.unit_type
+                        )
                         .reduce((acc, unit) => {
                           return [...acc, ...Object.values(unit.units).flat()];
                         }, [])
                         .map((unitName) => (
-                          <option key={unitName} className="text-[10px]">{unitName}</option>
+                          <option key={unitName} className="text-[10px]">
+                            {unitName}
+                          </option>
                         ))}
                     </select>
                   </div>
@@ -242,13 +268,19 @@ const FillModal = ({
             <div className="relative text-black rounded-md flex items-center">
               {taskassigndata.file_data?.url ? (
                 <div className="flex items-center space-x-2 px-8 py-4 border border-gray-300 rounded-md w-full">
-                  <FiFile className="text-green-600" size={20} />
+                  <FiFile
+                    className="text-green-600"
+                    style={{ fontSize: "28px" }}
+                  />
                   <div>
                     <p className="text-sm text-blue-500 truncate w-64">
                       {taskassigndata.file_data.name}
                     </p>
                     <p className="text-sm text-gray-400">
-                      {(taskassigndata.file_data.size / (1024 * 1024)).toFixed(2)} MB
+                      {(taskassigndata.file_data.size / (1024 * 1024)).toFixed(
+                        2
+                      )}{" "}
+                      MB
                     </p>
                   </div>
                 </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { FiPlus, FiCheckCircle } from "react-icons/fi";
 import { Oval } from "react-loader-spinner";
 import Moment from "react-moment";
+import { Tooltip } from "react-tooltip";
 
 const TaskHeader = ({ onAddTask }) => (
   <div className="flex justify-between mb-4">
@@ -126,19 +127,36 @@ const TaskStatusBadge = ({ status }) => {
 };
 
 const TaskRow = ({ task, onTaskClick }) => {
-
   return (
     <div className="flex justify-between border-b border-[#ebeced] py-2">
       <div className="flex w-[26rem] cursor-pointer">
-        <div className="w-72 truncate text-[#007eef] text-[13px] font-normal leading-none ml-3">
+        <div className="w-72 text-[#007eef] text-[13px] font-normal leading-none ml-3">
           <p
-            className="py-1 cursor-pointer"
+            className="py-1 cursor-pointer truncate"
             data-tooltip-id={`task-tooltip-${task.id}`}
             data-tooltip-content={task.task_name}
-            onClick={()=>onTaskClick(task)}
+            onClick={() => onTaskClick(task)}
           >
             {task.task_name}
           </p>
+          <Tooltip
+            id={`task-tooltip-${task.id}`}
+            place="top"
+            effect="solid"
+            className="z-[9999] !opacity-100 drop-shadow-md"
+            style={{
+              backgroundColor: "white",
+              color: "#667084",
+              padding: "4px 8px",
+              borderRadius: "4px",
+              fontSize: "14px",
+              maxWidth: "300px",
+              wordBreak: "break-word",
+            }}
+            offset={-50}
+            delayShow={200}
+            float={true}
+          />
         </div>
       </div>
 
@@ -160,6 +178,7 @@ const TaskRow = ({ task, onTaskClick }) => {
     </div>
   );
 };
+
 // Export everything
 export {
   TaskHeader,
