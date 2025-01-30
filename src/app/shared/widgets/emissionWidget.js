@@ -1306,10 +1306,12 @@ const EmissionWidget = React.memo(
               <td className="py-3 w-[5vw]">
                 <div className=" flex justify-left">
                   <div className="pt-1">
-                    <label className="cursor-pointer">
+                    <label className="">
                       <LuTrash2
-                        className="text-gray-500 hover:text-red-500"
-                        onClick={handleClickonRemove}
+                        className={`text-gray-500 ${
+                          rowType !=='Approved'? 'cursor-not-allowed' : 'hover:text-red-500 cursor-pointer'
+                        }`}
+                        onClick={rowType !=='Approved' && handleClickonRemove}
                       />
                     </label>
                   </div>
@@ -1320,7 +1322,7 @@ const EmissionWidget = React.memo(
                       onChange={handleChange}
                       style={{ display: "none" }}
                       disabled={
-                        rowType === "assigned" || rowType === "approved"
+                        rowType === "assigned" || rowType === "approved" || rowType === "calculated"
                       }
                     />
 
