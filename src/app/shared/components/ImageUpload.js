@@ -83,13 +83,13 @@ const ImageUpload = ({ onFileSelect }) => {
   return (
     <div className="container mx-auto">
       {files.length === 0 && (
-        <div {...getRootProps()} className="border-dashed border-2 border-blue-200 py-[30px] px-[40px] text-center cursor-pointer bg-[#007eef0d] gap-8 rounded-md">
+        <div {...getRootProps()} className="border-dashed border-2 border-blue-200 py-[20px] px-[40px] text-center cursor-pointer bg-[#007eef0d] gap-8 rounded-md">
           <input {...getInputProps()} />
           <div className='flex justify-center tracking-wide font-bold mb-4'>
             <FiUpload size={24} />
-            <p className='ml-5'>Drag & drop files or <span className='text-[#0057A5] font-bold'>Browse</span></p>
+            <p className='ml-5 text-md'>Drag & drop files or <span className='text-[#0057A5] font-bold'>Browse</span></p>
           </div>
-          <div className='flex-col justify-center tracking-wide text-gray-400 text-[13px]'>
+          <div className='flex-col justify-center tracking-wide text-gray-400 text-sm'>
             <p> Supported formats: JPEG, PNG, PDF, Word</p>
             <p> Max file size : 2MB</p>
           </div>

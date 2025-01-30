@@ -1,19 +1,20 @@
-'use client'
+"use client";
 import MyGoals from "./MyGoals";
-import MyTasks from "./MyTasks";
+import MyTasks from "./TasksNew/MyTask";
 import Preferences from "./Preferences/page";
-import GoogleTranslateWidget  from '../gt';
-const HomeDashboard = () =>  {
+import { ToastContainer } from "react-toastify";
+
+const HomeDashboard = () => {
   return (
     <>
-{/* <GoogleTranslateWidget/> */}
+    <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
       <div className="flex space-x-3 pe-4 ">
-        <div className="w-2/5 space-y-4 mb-8">
+        <div className="w-1/2 space-y-4 mb-8">
           <div>
-           <MyGoals/>
-          </div>
-          <div className="col-start-1 row-start-2 rounded-lg  min-h-[46vh]">
             <MyTasks />
+          </div>
+          <div className="col-start-1 row-start-2 rounded-lg">
+            <MyGoals />
           </div>
         </div>
         <div className="row-span-2 col-start-2 row-start-1 rounded-lg shadow border border-gray-200 p-4 h-[660px] w-3/5 overflow-auto table-scrollbar">
@@ -22,6 +23,6 @@ const HomeDashboard = () =>  {
       </div>
     </>
   );
-}
+};
 
 export default HomeDashboard;
