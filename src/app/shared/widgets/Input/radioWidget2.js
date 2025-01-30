@@ -56,11 +56,11 @@ const RadioWidget2 = ({
           />
         </p>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-4">
         {options.enumOptions.map((option, index) => (
           <label
             key={index}
-            className="flex items-center gap-2 text-[14px] mb-2"
+            className="flex items-center gap-2 text-[14px] mb-2 cursor-pointer"
           >
             <input
               type="radio"
