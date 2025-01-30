@@ -71,7 +71,7 @@ const EmptyState = ({ onAddTask }) => (
     </div>
     <div className="flex justify-center items-center">
       <button
-        className="bg-[#007EEF] text-white w-[150px] p-1 rounded-md shadow-md"
+        className="bg-[#007EEF] text-white w-[150px] p-1 rounded-md shadow-md text-sm"
         onClick={onAddTask}
       >
         Add a task
