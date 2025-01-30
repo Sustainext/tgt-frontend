@@ -1,8 +1,6 @@
 "use client";
 import MyGoals from "./MyGoals";
-// import MyTasks from "./MyTasks";
 import MyTasks from "./TasksNew/MyTask";
-// import MyGoals from "./MyGoals/MyGoals";
 import Preferences from "./Preferences/page";
 import { ToastContainer } from "react-toastify";
 
@@ -19,9 +17,9 @@ const HomeDashboard = () => {
             <MyGoals />
           </div>
         </div>
-        {/* <div className="row-span-2 col-start-2 row-start-1 rounded-lg shadow border border-gray-200 p-4 h-[660px] w-3/5 overflow-auto table-scrollbar">
+        <div className="row-span-2 col-start-2 row-start-1 rounded-lg shadow border border-gray-200 p-4 h-[660px] w-3/5 overflow-auto table-scrollbar">
           <Preferences />
-        </div> */}
+        </div>
       </div>
     </>
   );
