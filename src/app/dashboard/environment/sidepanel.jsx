@@ -199,6 +199,18 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                       GHG Emissions
                     </p>
                   </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Base Year"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Base Year")}
+                    >
+                      Base Year
+                    </p>
+                  </div>
                 </div>
               </>
             )}

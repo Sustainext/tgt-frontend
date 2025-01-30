@@ -62,8 +62,48 @@ const AddMultiInputNew = (props) => {
       <div className="flex flex-col w-full">
   {/* Headings */}
   <div className="flex items-center justify-between mb-2">
-    <p className="text-[13px] text-[#344054] w-[95%]">{uiSchema["ui:topHeading1"]}</p>
-    <p className="text-[13px] text-[#344054] w-full">{uiSchema["ui:topHeading2"]}</p>
+    <p className="text-[13px] text-[#344054] w-[95%] flex mb-2">{uiSchema["ui:topHeading1"]}
+    <MdInfoOutline
+          data-tooltip-id={`tooltip-${uiSchema["ui:title"]?.replace(/\s+/g, "-")}`}
+          data-tooltip-content={uiSchema["ui:tooltip1"]}
+          className="mt-1 ml-2 w-[30px] text-[14px]"
+          style={{ display: uiSchema["ui:tooltipdisplay1"] }}
+        />
+        <ReactTooltip
+          id={`tooltip-${uiSchema["ui:title"]?.replace(/\s+/g, "-")}`}
+          place="top"
+          effect="solid"
+          style={{
+            width: "300px",
+            backgroundColor: "#000",
+            color: "white",
+            fontSize: "12px",
+            boxShadow: 3,
+            borderRadius: "8px",
+          }}
+        />
+    </p>
+    <p className="text-[13px] text-[#344054] w-full flex mb-2">{uiSchema["ui:topHeading2"]}
+    <MdInfoOutline
+          data-tooltip-id={`tooltip-${uiSchema["ui:title"]?.replace(/\s+/g, "-")}`}
+          data-tooltip-content={uiSchema["ui:tooltip2"]}
+          className="mt-1 ml-2 w-[30px] text-[14px]"
+          style={{ display: uiSchema["ui:tooltipdisplay2"] }}
+        />
+        <ReactTooltip
+          id={`tooltip-${uiSchema["ui:title"]?.replace(/\s+/g, "-")}`}
+          place="top"
+          effect="solid"
+          style={{
+            width: "300px",
+            backgroundColor: "#000",
+            color: "white",
+            fontSize: "12px",
+            boxShadow: 3,
+            borderRadius: "8px",
+          }}
+        />
+    </p>
   </div>
 
   {/* Input Fields and Add Button */}

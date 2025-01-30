@@ -5897,4 +5897,40 @@ export const Energydata = [
     ],
     link: "https://sdgs.un.org/goals/goal12",
   },
+  {
+    category: ["sd38"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-15.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-600 text-[17px] font-bold ml-2">SDG 15</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 15: Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss
+          </p>
+          <div className="h-[544px]">
+            <p className="text-[13px] text-[#222222] mb-2">Target 15.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2020, promote the implementation of sustainable management of all types of forests, halt deforestation, restore degraded forests and substantially increase afforestation and reforestation globally
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">15.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Progress towards sustainable forest management
+            </p>
+            
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal15",
+  },
 ];

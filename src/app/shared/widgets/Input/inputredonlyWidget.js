@@ -6,7 +6,7 @@ const InputredonlyWidget = (props) => {
   const { onChange, value = "", label, formContext, id, name, uiSchema = {} } = props;
 
 
-console.log(value,"see")
+
   return (
     <div className="mb-3 relative">
       <p className="flex text-[14px] text-gray-700 font-[500] mb-3">

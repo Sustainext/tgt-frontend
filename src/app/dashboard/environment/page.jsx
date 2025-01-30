@@ -49,6 +49,7 @@ import {
   setStartDate,
   setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
+import BaseYear from './Emissions/baseYear/page'
 
 const environment = () => {
   const { open } = GlobalState();
@@ -95,7 +96,7 @@ const environment = () => {
       "Management of Material topic energy",
       // "Management of Material topic effluent",
     ];
-    const emissionTabs = ["GHG Emissions"];
+    const emissionTabs = ["GHG Emissions","Base Year"];
     const energyTabs = [
       "Energy consumed inside the organization",
       "Energy consumption outside of the organization",
@@ -186,6 +187,7 @@ const environment = () => {
               <Materialtopic apiData={data} />
             )}
             {activeTab === "GHG Emissions" && <Emission apiData={data} />}
+            {activeTab === "Base Year" && <BaseYear apiData={data} />}
             {/* Energy start */}
             {activeTab === "Management of Material topic energy" && (
               <EnergyMaterialtopic apiData={data} />
