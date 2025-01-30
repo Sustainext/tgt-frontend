@@ -1,15 +1,21 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Energydata } from "../../../../shared/data/Energydata";
-import { MdOutlineClear,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdChevronRight } from "react-icons/md";
 import EnvironmentHeade2 from "../../environmentheader2";
 import Screen1 from "./Screen1";
-const WaterMaterialtopic = () => {
-  const [year, setYear] = useState();
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
+import { useSelector } from "react-redux";
+
+const WaterMaterialtopic = ({apiData}) => {
+  const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
+    (state) => state.materialitySlice
+  );
+  const materialityEnvData=apiData&&apiData.environment?apiData.environment:{}
+  const [year, setYear] = useState(materiality_year?materiality_year:'');
+  const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
+  const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState();
@@ -59,14 +65,18 @@ const WaterMaterialtopic = () => {
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Water and effluents
+                    Water and effluents
                   </p>
                 </div>
-                <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
-                  <p className="text-gray-500 text-[12px] pt-0.5 px-2">
-                    Material Topic
-                  </p>
-                </div>
+                {materialityEnvData&&materialityEnvData.EnvWaterEffluent?.is_material_topic?(
+                    <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
+                    <p className="text-gray-500 text-[12px] pt-0.5 px-2">
+                      Material Topic
+                    </p>
+                  </div>
+                ):(
+                    <div></div>
+                )}
               </div>
             </div>
           </div>
@@ -90,7 +100,7 @@ const WaterMaterialtopic = () => {
         </div>
         <div
           ref={drawerRef}
-           className={`${
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"

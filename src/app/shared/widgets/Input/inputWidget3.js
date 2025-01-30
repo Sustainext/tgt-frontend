@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { MdInfoOutline } from "react-icons/md";
 const inputWidget3 = (props) => {
-  const { onChange, value = "", label, uiSchema = {} } = props;
+  const { onChange, value = "", label, formContext, id, name, uiSchema = {} } = props;
+
+  const { validationErrors } = formContext || {};
+  const rowErrors = validationErrors || {};
+  const hasError = !value && rowErrors && rowErrors[name]
+
   const handleChange = (e) => {
     const val = e.target.value;
     const validValue = val.match(/^\d*\.?\d{0,2}$/) ? val : value;
@@ -45,7 +50,11 @@ const inputWidget3 = (props) => {
         ></ReactTooltip>
       </p>
       <input
-        className={`backdrop:before:w-[48rem] border appearance-none text-[12px] border-gray-400 text-neutral-900 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+        className={`backdrop:before:w-[48rem] ${
+            hasError
+              ? "border-red-500"
+              : "border-gray-400"
+          }  border appearance-none text-[12px] border-gray-400 text-neutral-900 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
         placeholder={`Enter Value`}
         type="number"
         value={value}
@@ -53,6 +62,11 @@ const inputWidget3 = (props) => {
         onKeyDown={handleKeyDown}
 
       />
+      {hasError && (
+          <div className="text-red-500 text-[12px] mt-1">
+           {hasError}
+          </div>
+        )}
     </div>
   );
 };

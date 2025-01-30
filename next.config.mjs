@@ -11,7 +11,7 @@ const nextConfig = {
     CLIMATIQ_KEY: "98YJN6V0VC4M5KPQNSVHWCVEM8NT",
     NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: "16",
   },
-
+ 
   images: {
     domains: [
       "udm-be-dev.sustainext.ai",
@@ -30,7 +30,7 @@ const nextConfig = {
         "process.env.IGNORE_BUILD_ERRORS": JSON.stringify("true"),
       })
     );
-
+ 
     return config;
   },
   distDir: "custom_build",
@@ -38,5 +38,5 @@ const nextConfig = {
     missingSuspenseWithCSRBailout: false,
   },
 };
-
+ 
 export default nextConfig;

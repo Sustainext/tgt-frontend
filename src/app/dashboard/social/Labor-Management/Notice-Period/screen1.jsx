@@ -55,10 +55,20 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data) => {
 
+  const errors = {};
+  data.forEach((row) => {
+    if (!row.Q1) {
+      errors.Q1 = "This field is required";
+    }
+  });
+  return errors;
+};
 const Screen1 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -164,9 +174,16 @@ const Screen1 = ({ location, year, month }) => {
   }, [location, year]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    updateFormData();
+    e.preventDefault();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+  
+    const hasErrors = Object.keys(errors).length > 0;
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("validation error");
+    }
   };
 
   return (
@@ -227,6 +244,7 @@ significant positive or negative impacts on workers performing the organizationâ
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

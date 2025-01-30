@@ -10,15 +10,22 @@ import Screen2 from "./Screen2";
 import Screen3 from "./Screen3";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Suppliersscreened = () => {
+import { useSelector } from "react-redux";
+import SocialTopBar from '../../socialTopBar'
+
+const Suppliersscreened = ({apiData}) => {
+   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
+      (state) => state.materialitySlice
+    );
+    const [year, setYear] = useState(materiality_year?materiality_year:'');
+    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
+    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
+ 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -39,52 +46,42 @@ const Suppliersscreened = () => {
     setData(newData);
   }, [category]);
 
+  const sdgData=[
+    {
+        tagName:'GRI 414 - 2',
+        toggle:'49',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+    {
+        tagName:'SDG 5',
+        toggle:'7',
+        textColor:"#fff",
+        bgColor:"bg-orange-600"
+    },
+    {
+      tagName:'SDG 8',
+      toggle:'22',
+      textColor:"#fff",
+      bgColor:"bg-red-900"
+  },
+  {
+    tagName:'SDG 16',
+    toggle:'15',
+    textColor:"#fff",
+    bgColor:"bg-blue-900"
+},
+   
+   
+   
+]
+
   return (
     <>
         <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                         <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Supply Chain Labor Standards
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end ">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("49")}
-              >
-                GRI 414 - 2
-              </button>
-              <button
-                className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("7")}
-              >
-                SDG 5
-              </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("22")}
-              >
-                SDG 8
-              </button>
-              <button
-                className="text-[#fff] bg-blue-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("15")}
-              >
-                SDG 16
-              </button>
-            </div>
-          </div>
-        </div>
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Supply Chain Labor Standards'} topic={'SocSupplyChainLabour'} />
+       
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

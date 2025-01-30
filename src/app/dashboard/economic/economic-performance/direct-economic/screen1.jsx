@@ -13,10 +13,12 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import CurrencyselectWidget from "../../../../shared/widgets/Select/currencyselectWidget";
+import InputredonlyWidget from "../../../../shared/widgets/Input/inputredonlyWidget";
 const widgets = {
   inputWidget: inputWidget3,
   selectWidget:CurrencyselectWidget,
   AddmultiInput:AddmultiInput,
+  InputredonlyWidget:InputredonlyWidget,
 };
 
 const view_path = "gri-economic-direct_economic_value-report-201-1a-1b";
@@ -68,24 +70,21 @@ const schema = {
       },
       Q10: {
         type: "string",
-        title: "Direct economic value generated",
+        title: "Economic value retained",
       },
-      Q11: {
-        type: "string",
-        title: "Economic value distributed",
-      },
+   
     },
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10","Q11"],
+    "ui:order": ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10"],
     Q1: {
       "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
       "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
       "ui:haddingdisplay":"none",
-      "ui:haddingtooltipdisplay":"block",
+      "ui:haddingtooltipdisplay":"none",
         "ui:title":
         "Select Currency",
       "ui:tooltip": "Specify the frequency of sustainability reporting..",
@@ -115,7 +114,7 @@ const uiSchema = {
         "ui:tooltip":
           "An organization can calculate revenues as net sales plus revenues from financial investments and sales of assets. Net sales can be calculated as gross sales from products and services minus returns,discounts, and allowances. ",
         "ui:tooltipdisplay": "none",
-        "ui:widget": "inputWidget",
+        "ui:widget": "InputredonlyWidget",
         "ui:horizontal": true,
         "ui:options": {
           label: false,
@@ -202,28 +201,17 @@ const uiSchema = {
       },
       Q10: {
         "ui:title":
-          "3.Direct economic value generated",
+          "3.Economic value retained",
         "ui:tooltip":
           "Specify direct economic value generated.Direct economic value generated: Refers to the revenue of an organization.",
         "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
+        "ui:widget": "InputredonlyWidget",
         "ui:horizontal": true,
         "ui:options": {
           label: false,
         },
       },
-      Q11: {
-        "ui:title":
-          "4.Economic value distributed",
-        "ui:tooltip":
-          "Specify economic value distributed. Economic value distributed (EVD): Refers to the way a company distributes the wealth it has generated through its operations. It represents the various outflows of cash or economic benefits from the organization.",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
+     
     "ui:options": {
       orderable: false,
       addable: false,
@@ -250,7 +238,27 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   const handleChange = (e) => {
-    setFormData(e.formData);
+    const updatedFormData = e.formData;
+  
+    // Calculate Q3 dynamically as the sum of Q4, Q5, Q6, Q7, Q9
+    const totalDistributed = 
+      Number(updatedFormData[0]?.Q4 || 0) +
+      Number(updatedFormData[0]?.Q5 || 0) +
+      Number(updatedFormData[0]?.Q6 || 0) +
+      Number(updatedFormData[0]?.Q7 || 0) +
+      Number(updatedFormData[0]?.Q9 || 0);
+  
+    // Update Q3 with the calculated value
+    updatedFormData[0].Q3 = totalDistributed.toString();
+  
+    // Calculate Q10 as the difference between Q2 and Q3
+    const economicValueRetained = 
+      Number(updatedFormData[0]?.Q2 || 0) - Number(updatedFormData[0]?.Q3 || 0);
+  
+    // Update Q10 with the calculated value
+    updatedFormData[0].Q10 = economicValueRetained.toString();
+  
+    setFormData(updatedFormData);
   };
 
   const updateFormData = async () => {

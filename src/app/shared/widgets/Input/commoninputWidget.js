@@ -34,8 +34,10 @@ const CommoninputWidget = (props) => {
   const { validationErrors } = formContext || {};
   const rowIndex = parseInt(id.split("_")[1], 10);
   const rowErrors = (validationErrors && validationErrors[rowIndex]) || {};
-  const hasError = rowErrors && rowErrors[name];
+  const hasError = !value&&rowErrors && rowErrors[name];
   const isOptional = uiSchema["ui:title"].toLowerCase().includes("(if any)");
+
+  
 
   return (
     <>
@@ -80,22 +82,25 @@ const CommoninputWidget = (props) => {
         {uiSchema["ui:widgetType"] === "textarea" ? (
           <textarea
             placeholder="Enter data"
-            className="backdrop:before:w-[48rem] border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+            className={`backdrop:before:w-[48rem] border ${hasError ? "border-red-500" : "border-gray-400"} appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
             value={value}
             onChange={handleChange}
             rows={4}
           />
+          
         ) : uiSchema["ui:widgetType"] === "positiveNumber" ? (
+          
           <input
             type={uiSchema["ui:inputfildtype"]}
             placeholder="Enter data"
-            className="backdrop:before:w-[48rem] py-4 border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+            className={`backdrop:before:w-[48rem] py-4   ${hasError ? "border-red-500" : "border-gray-400"}  border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
             value={value}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             min="0"
             step="0.01"
           />
+        
         ) : uiSchema["ui:widgetType"] === "radio" &&
           options &&
           options.enumOptions ? (
@@ -118,6 +123,14 @@ const CommoninputWidget = (props) => {
               </label>
             ))}
           </div>
+        ) :  uiSchema["ui:widgetType"] === "inputtext" ? ( 
+          <input
+          type={uiSchema["ui:inputfildtype"]}
+          placeholder="Enter data"
+          className="backdrop:before:w-[48rem] py-4 border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+          value={value}
+          onChange={handleChange}
+        />
         ) : (
           <input
             type="number"

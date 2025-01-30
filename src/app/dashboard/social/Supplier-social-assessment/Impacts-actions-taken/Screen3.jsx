@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget3 from "../../../../shared/widgets/Input/inputWidget3";
+import inputWidget6 from "../../../../shared/widgets/Input/inputWidget6";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -13,7 +13,7 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
-  inputWidget: inputWidget3,
+  inputWidget: inputWidget6,
 };
 
 const view_path = "gri-social-impacts_and_actions-414-2c-significant_actual";
@@ -60,9 +60,20 @@ const uiSchema = {
   },
 };
 
+const validateRows = (data) => {
+  const errors = {};
+  data.forEach((row) => {
+    if (!row.Q1) {
+      errors.Q1 = "This field is required";
+    }
+  });
+  return errors;
+};
+
 const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -174,9 +185,16 @@ const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   }, [selectedOrg, year,selectedCorp]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    updateFormData();
+    e.preventDefault();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+ 
+    const hasErrors = Object.keys(errors).length > 0;
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("validation error");
+    }
   };
 
   return (
@@ -235,6 +253,7 @@ social impacts identified in the supply chain."
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

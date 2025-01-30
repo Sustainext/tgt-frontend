@@ -1,19 +1,25 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Energydata } from "../../../../shared/data/Energydata";
-import { MdOutlineClear,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdChevronRight } from "react-icons/md";
 import EnvironmentHeade2 from "../../environmentheader2";
 import Screen1 from "./Screen1";
-const EnergyMaterialtopic = () => {
-  const [year, setYear] = useState();
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
+import { useSelector } from "react-redux";
+
+const EnergyMaterialtopic = ({apiData}) => {
+  const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
+    (state) => state.materialitySlice
+  );
+  const materialityEnvData=apiData&&apiData.environment?apiData.environment:{}
+  const [year, setYear] = useState(materiality_year?materiality_year:'');
+  const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
+  const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState();
-  const drawerRef = useRef(null); 
+  const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -33,7 +39,7 @@ const EnergyMaterialtopic = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-  
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (drawerRef.current && !drawerRef.current.contains(event.target)) {
@@ -58,14 +64,20 @@ const EnergyMaterialtopic = () => {
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-[11px]">Environment</p>
               <div className="flex h-[28px]">
-              <div className='h-[28px]'>
+                <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
                     Energy
                   </p>
                 </div>
-                <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md" >
-                  <p className="text-gray-500 text-[12px] pt-0.5 px-2">Material Topic</p>
-                </div>
+                {materialityEnvData&&materialityEnvData.EnvEnergy?.is_material_topic?(
+                    <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
+                    <p className="text-gray-500 text-[12px] pt-0.5 px-2">
+                      Material Topic
+                    </p>
+                  </div>
+                ):(
+                    <div></div>
+                )}
               </div>
             </div>
           </div>
@@ -88,8 +100,8 @@ const EnergyMaterialtopic = () => {
           </h6>
         </div>
         <div
-          ref={drawerRef} 
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -119,7 +131,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
 
                 {/* Footer (Learn more link) */}
-                <div className="pt-2 pb-4 ml-4"  onClick={toggleDrawerclose}>
+                <div className="pt-2 pb-4 ml-4" onClick={toggleDrawerclose}>
                   <a
                     className="text-[14px] text-[#2196F3] pt-1 inline-flex"
                     href={program.link}

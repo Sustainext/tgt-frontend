@@ -61,7 +61,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = ({ location, year, month }) => {
+const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -85,7 +85,8 @@ const Screen3 = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location: location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -139,7 +140,7 @@ const Screen3 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -152,17 +153,18 @@ const Screen3 = ({ location, year, month }) => {
       LoaderClose();
     }
   };
-
-  useEffect(() => {
-    if (location && year) {
+ useEffect(() => {
+    if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false;
+      toastShown.current = false; // Reset the flag when valid data is present
     } else {
+      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true;
+        toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year]);
+  }, [selectedOrg, year, selectedCorp]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -219,13 +221,13 @@ const Screen3 = ({ location, year, month }) => {
             widgets={widgets}
           />
         </div>
-    <div className='mt-4'>
+        <div className='mt-4'>
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
               }`}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

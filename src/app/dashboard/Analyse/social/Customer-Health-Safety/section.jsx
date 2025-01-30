@@ -7,7 +7,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from "react-loader-spinner";
-const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
+const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
   const [customerhealth, setCustomerhealth] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -28,7 +28,7 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
     setCustomerhealth([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_customer_health_safety_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`,
+        `/sustainapp/get_customer_health_safety_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`,
       
       );
 
@@ -38,10 +38,8 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
 
       const formatcustomerhealth = (data) => {
         return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage).toFixed(2);
-          const formattedPercentage = percentage.endsWith(".00")
-            ? percentage.slice(0, -3)
-            : percentage;
+          const percentage = parseFloat(data.percentage);
+          const formattedPercentage = percentage
           return {
             "Organisation/Corporation": data.org_or_corp,
             "Percentage of significant product and service categories for which health and safety impacts are assessed for improvement":
@@ -59,7 +57,7 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
+    if (selectedOrg && dateRange.start<dateRange.end) {
         fetchData();
         toastShown.current = false;
     } else {
@@ -67,7 +65,7 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
             toastShown.current = true;
         }
     }
-}, [selectedOrg, year, selectedCorp]);
+}, [selectedOrg, dateRange, selectedCorp]);
   return (
     <div>
       <div>

@@ -8,8 +8,9 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EnergyTopBar from '../energyTopBar'
 
-const Energyconsumed = ({ open }) => {
+const Energyconsumed = ({ open,apiData }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -52,63 +53,44 @@ const Energyconsumed = ({ open }) => {
     };
   }, []);
 
+  const sdgData=[
+    {
+        tagName:'GRI 302-1',
+        toggle:'1',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+    {
+        tagName:'SDG 7',
+        toggle:'2',
+        textColor:"#fff",
+        bgColor:"bg-amber-400"
+    },
+    {
+        tagName:'SDG 8',
+        toggle:'3',
+        textColor:"#fff",
+        bgColor:"bg-red-900"
+    },
+    {
+        tagName:'SDG 12',
+        toggle:'4',
+        textColor:"#fff",
+        bgColor:"bg-yellow-600"
+    },
+    {
+        tagName:'SDG 13',
+        toggle:'5',
+        textColor:"#fff",
+        bgColor:"bg-lime-900"
+    },
+]
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Environment</p>
-              <div className="flex h-[28px]">
-                <div className="h-[28px]">
-                  <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                    Energy
-                  </p>
-                </div>
-                <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
-                  <p className="text-gray-500 text-[12px] pt-0.5 px-2">
-                    Material Topic
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end pt-5 me-1">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("1")}
-              >
-                GRI 302-1
-              </button>
-              <button
-                className="text-[#fff] bg-amber-400 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                onClick={() => toggleDrawer("2")}
-              >
-                SDG 7
-              </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("3")}
-              >
-                SDG 8
-              </button>
-              <button
-                className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                onClick={() => toggleDrawer("4")}
-              >
-                SDG 12
-              </button>
-              <button
-                className="text-[#fff] bg-lime-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("5")}
-              >
-                SDG 13
-              </button>
-            </div>
-          </div>
-        </div>
+        <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -166,7 +148,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
 
                 {/* Footer (Learn more link) */}
-                <div className="pt-2 pb-4 ml-4"   onClick={toggleDrawerclose}>
+                <div className="pt-2 pb-4 ml-4" onClick={toggleDrawerclose}>
                   <a
                     className="text-[14px] text-[#2196F3] pt-1 inline-flex"
                     href={program.link}

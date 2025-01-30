@@ -60,7 +60,7 @@ const Table1 = ({ data }) => {
                 {row.map((cell, cellIndex) => (
                   <td
                     key={cellIndex}
-                    className={`p-2 block md:table-cell text-center font-normal text-slate-500 text-[12px] border-b ${
+                    className={`p-2 block md:table-cell text-center font-normal text-slate-500 text-[12px] border-b border-t ${
                       cellIndex === 0 ? "" : "border-l"
                     }`}
                   >

@@ -58,9 +58,20 @@ const uiSchema = {
   },
 };
 
+const validateRows = (data) => {
+  const errors = {};
+  data.forEach((row) => {
+    if (!row.Q1) {
+      errors.Q1 = "This field is required";
+    }
+  });
+  return errors;
+};
+
 const Screen3 = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -169,8 +180,15 @@ const Screen3 = ({ selectedOrg, selectedCorp, year }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+ 
+    const hasErrors = Object.keys(errors).length > 0;
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("validation error");
+    }
   };
 
   return (
@@ -229,6 +247,7 @@ and collective bargaining."
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

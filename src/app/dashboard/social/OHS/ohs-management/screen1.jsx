@@ -13,9 +13,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import CheckboxWidget3 from "../../../../shared/widgets/Input/checkboxWidget3"
+import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 const widgets = {
   inputWidget: inputWidget2,
   RadioWidget: CheckboxWidget3,
+  RadioWidget2: RadioWidget2,
 };
 
 const view_path = "gri-social-ohs-403-1a-ohs_management_system";
@@ -53,14 +55,30 @@ const schema = {
       Q4: {
         type: "string",
         title: "Standards/Guidelines",
-        format: "textarea",
+        enum: ["Yes", "No"],
       },
-      Q5: {
-        type: "string",
-        title: "List of Standards/Guidelines (if applicable)",
-        format: "textarea",
+    
+    },
+    dependencies: {
+      Q4: {
+        oneOf: [
+          {
+            properties: {
+              Q4: {
+                enum: ["Yes"],
+              },
+              Q5: {
+                type: "string",
+                title: "List of Standards/Guidelines (if applicable)",
+                format: "textarea",
+              },
+              
+            },
+          },
+        ],
       },
     },
+
   },
 };
 
@@ -106,7 +124,7 @@ const uiSchema = {
       "ui:tooltip":
         "Indicate whether any recognized risk management or management system standards/guidelines were adopted in developing the system. Example: ISO 45001 (Occupational Health and Safety Management Systems)OHSAS 18001 (Occupational Health and Safety Assessment Series) National or industry-specific standards",
       "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
+      "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -131,38 +149,61 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data) => {
+
+  const errors = {};
+  data.forEach((row) => {
+    if (!row.Q1) {
+      errors.Q1 = "This field is required";
+    }
+    if (!row.Q2 || row.Q2.length === 0) {
+      errors.Q2 = "This field is required";
+    }
+   
+    if (row.Q2?.selected.includes("Compliance with legal requirements") && !row.Q3) {
+      errors.Q3 = "This field is required";
+    }
+
+    if (row.Q2?.selected.includes("Risk management and accident prevention")) {
+      if (!row.Q4) {
+        errors.Q4 = "This field is required";
+      }
+      if (!row.Q5) {
+        errors.Q5 = "This field is required";
+      }
+    }
+
+  });
+  return errors;
+};
 
 const Screen1 = ({ location, year}) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
-
+ 
+console.log(formData,"test error fromdata");
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
   const handleChange = (e) => {
-    setFormData(e.formData);
+    let newFormData = { ...e.formData[0] };
+    if (newFormData.Q4 === "No") {
+      newFormData.Q5 = "";
+    }
+    setFormData([newFormData]);
   };
+  // const handleChange = (e) => {
+  //   setFormData(e.formData);
+  // };
 
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
+
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -177,7 +218,7 @@ const Screen1 = ({ location, year}) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axios.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -228,7 +269,7 @@ const Screen1 = ({ location, year}) => {
     setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
-      const response = await axios.get(url, axiosConfig);
+      const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -239,15 +280,7 @@ const Screen1 = ({ location, year}) => {
       LoaderClose();
     }
   };
-  //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
 
-  // console log the form data change
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
 
   // fetch backend and replace initialized forms
   useEffect(() => {
@@ -263,9 +296,16 @@ const Screen1 = ({ location, year}) => {
   }, [location, year]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    updateFormData();
+    e.preventDefault();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+  
+    const hasErrors = Object.keys(errors).length > 0;
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("validation error");
+    }
   };
 
   return (
@@ -320,6 +360,7 @@ const Screen1 = ({ location, year}) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
      <div className='mt-4'>

@@ -8,7 +8,9 @@ import axiosInstance from "../../utils/axiosMiddleware";
 
 import { GiWoodPile } from "react-icons/gi";
 
-const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
+const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
+
+  const materialityEnvData=apiData&&apiData.social?apiData.social:{}
   const [isEmission, setEmisssion] = useState(false);
   const [isBillS211, setBillS211] = useState(false);
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
@@ -371,6 +373,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                 activeTab === "Promotion of Health" ||
                 activeTab === "Prevention of OHS Impact" ||
                 activeTab === "OHS Management System Coverage" ||
+                activeTab === " Health Risk Addressed" ||  
                 activeTab === "Injuries" ||
                 activeTab === "Ill-health" ||
                 activeTab === "Hazard Reporting" ||
@@ -385,13 +388,23 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                 <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                   Occupational health and safety
                 </span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocHealthSafety?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -406,7 +419,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {isWasteVisible && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocHealthSafety?.is_material_topic?(
                   <div>
+                      <div>
                    <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -425,6 +440,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                  
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                      Topic Management Disclosure
@@ -531,6 +551,18 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Health Risk Addressed"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Health Risk Addressed")}
+                    >
+                      Health Risk Addressed
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Prevention of OHS Impact"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
@@ -540,6 +572,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Prevention of OHS Impact
                     </p>
                   </div>
+           
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                      Topic disclosure
@@ -630,13 +663,23 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                   Human Rights and Community Impact
                 </span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocCommunityRelation?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -651,7 +694,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {isLegal && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocCommunityRelation?.is_material_topic?(
                   <div>
+                    <div>
                    <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -673,6 +718,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                  
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -757,11 +807,21 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
           <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Labor Management</span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocLabourManagement?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span> */}
 
                 <MdKeyboardArrowDown
@@ -776,7 +836,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {isEnergySectionVisible && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocLabourManagement?.is_material_topic?(
                   <div>
+                    <div>
                    <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -798,6 +860,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                  
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -846,13 +913,23 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
               <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                 Child and Forced Labour
                 </span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocChildLabour?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -867,7 +944,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {isTax && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocChildLabour?.is_material_topic?(
                   <div>
+                    <div>
                    <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -886,6 +965,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                  
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -940,11 +1024,21 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
               <div className="w-[20%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Employment</span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocEmployment?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span> */}
 
                 <MdKeyboardArrowDown
@@ -959,7 +1053,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {isEmission && (
               <>
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  <div>
+                  {materialityEnvData&&materialityEnvData.SocEmployment?.is_material_topic?(
+                    <div>
+                      <div>
                   <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -980,6 +1076,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                    </div>
+                  ):(
+                    <div></div>
+                  )}
+                  
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -1075,13 +1176,23 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                   Training and Development
                 </span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocHumanCapitalDevelopment?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -1096,7 +1207,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {isMaterialsVisible && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocHumanCapitalDevelopment?.is_material_topic?(
                   <div>
+                     <div>
                    <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -1118,6 +1231,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                 
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -1181,13 +1299,24 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                 Customer Privacy & Data Security
                 </span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocPrivacyDataSecurity?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -1202,7 +1331,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {Privacy && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocPrivacyDataSecurity?.is_material_topic?(
                   <div>
+                     <div>
                   <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -1221,6 +1352,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                 
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -1271,13 +1407,23 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                 <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                 Product Safety & Quality
                 </span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocProductSafetyQuality?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -1292,7 +1438,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {Safety && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocProductSafetyQuality?.is_material_topic?(
                   <div>
+                    <div>
                   <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -1311,6 +1459,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                  
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -1381,13 +1534,23 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                 <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                 Marketing and Labeling
                 </span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocMarketingLabeling?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -1402,7 +1565,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {Marketing && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocMarketingLabeling?.is_material_topic?(
                   <div>
+                    <div>
                   <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -1421,6 +1586,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                  
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -1527,13 +1697,23 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                 Supply Chain Labor Standards
                 </span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocSupplyChainLabour?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -1548,7 +1728,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {SupplyChain && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocSupplyChainLabour?.is_material_topic?(
                   <div>
+                    <div>
                   <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -1567,6 +1749,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                  
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -1635,13 +1822,23 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                  <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                   Diversity & Equal Oppportunity
                 </span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocDiversityEqualOpp?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -1656,7 +1853,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {isWaterVisible && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocDiversityEqualOpp?.is_material_topic?(
                   <div>
+                    <div>
                    <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -1678,6 +1877,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                  
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -1739,13 +1943,23 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
               <div className="w-[20%]">
                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
-              <div className="w-[67%] text-left ">
+              <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                   Non - Discrimination
                 </span>
               </div>
+              {materialityEnvData&&materialityEnvData.SocNonDiscrimination?.is_material_topic?(
+                <div className="w-[20%] ml-5">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -1760,7 +1974,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
             {isSupplierVisible && (
               <>
                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {materialityEnvData&&materialityEnvData.SocNonDiscrimination?.is_material_topic?(
                   <div>
+                    <div>
                    <p className="text-[12px]  ml-4  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -1782,6 +1998,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab }) => {
                       Management of Material topic
                     </p>
                   </div>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                  
                   <div>
                      <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure

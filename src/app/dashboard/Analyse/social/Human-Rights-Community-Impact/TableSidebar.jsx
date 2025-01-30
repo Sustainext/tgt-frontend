@@ -20,7 +20,6 @@ const TableSidebar = () => {
       const links = [
         "ep1",
         "ep2",
-
       ];
 
       const threshold = 150;
@@ -52,7 +51,11 @@ const TableSidebar = () => {
       {[
         {
           id: "ep1",
-          name: "Percentage of individuals within the organization’s governance bodies",
+          name: "Percentage of operations implemented by engaging local communities",
+        },
+        {
+          id: "ep2",
+          name: "Security personnel trained in human rights policies or procedures",
         },
       ].map((link) => (
         <div key={link.id} className="self-stretch justify-end items-center gap-2 inline-flex">

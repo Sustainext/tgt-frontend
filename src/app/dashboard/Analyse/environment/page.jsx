@@ -8,6 +8,7 @@ import AnalyseWaste from "./Waste/page";
 import AnalyseMaterials from "./Materials/page";
 import AnalyseWaterEffluents from "./Water-Effluents/page";
 import SupplierEnvironmentalImpact from  "./supplier-enironmental-assessment/page";
+// import AnalyseEffluents from "./Effluents/page"
 import {
   setHeadertext1,
   setHeadertext2,
@@ -39,6 +40,9 @@ const environment = () => {
       case "Waste":
         dispatch(setHeadertext2("Waste"));
         break;
+        // case "Effluents":
+        //   dispatch(setHeadertext2("Effluents"));
+        //   break;
       case "Materials":
         dispatch(setHeadertext2("Materials"));
         break;
@@ -65,6 +69,7 @@ const environment = () => {
         {activeTab === "Emissions" && <AnalyseEmission />}
         {activeTab === "Energy" && <AnalyseEnergy isBoxOpen={isBoxOpen} />}
         {activeTab === "Waste" && <AnalyseWaste isBoxOpen={isBoxOpen} />}
+        {/* {activeTab === "Effluents" && <AnalyseEffluents isBoxOpen={isBoxOpen} />} */}
         {activeTab === "Materials" && <AnalyseMaterials isBoxOpen={isBoxOpen} />}
         {activeTab === "Water and effluents" && <AnalyseWaterEffluents isBoxOpen={isBoxOpen} />}
         {activeTab === "Supplier Environmental Assessment" && <SupplierEnvironmentalImpact isBoxOpen={isBoxOpen} />}

@@ -15,7 +15,7 @@ import CurrencyselectWidget from "../../../../shared/widgets/Select/currencysele
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: CustomTableWidget8,
-  CurrencyselectWidget:CurrencyselectWidget,
+  CurrencyselectWidget: CurrencyselectWidget,
 };
 
 const view_path = "gri-social-salary_ratio-405-2a-number_of_individuals";
@@ -30,7 +30,6 @@ const schema = {
       Q1: {
         type: "string",
         title: "Select a currency to fill the  below table",
-       
       },
       Q2: {
         type: "array",
@@ -48,8 +47,6 @@ const schema = {
           },
         },
       },
-  
- 
     },
   },
 };
@@ -81,18 +78,19 @@ const uiSchema = {
       "ui:options": {
         titles: [
           {
-            title: "Basic Salary per Employee Category",
+            title: "Employee Category",
             tooltip: "What is the ratio of the basic salary of women to men for each employee category. Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties.",
             colSpan: 1,
           },
           {
-            title: "Gender",
-            tooltip: "Please specify the gender of individuals.",
+            title: "Average Basic Salary of Employees by Gender",
+            tooltip: "What is the average basic salary of employees by gender for each employee category?",
             colSpan: 3,
           },
           {
             title: "Significant Location of Operation",
-            tooltip: "This section allows you to enter the organization's significant locations of operation.",
+            tooltip:
+              "This section allows you to enter the organization's significant locations of operation.",
             colSpan: 1,
           },
         ],
@@ -143,11 +141,9 @@ const uiSchema = {
       layout: "horizontal",
     },
   },
-
-
 };
 
-const Screen1 = ({ location, year, month }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const initialFormData = [
     {
       Q1: "",
@@ -157,24 +153,18 @@ const Screen1 = ({ location, year, month }) => {
       male: 0,
       female: 0,
       nonBinary: 0,
-      locationandoperation: "",
+      locationandoperation:[],
         },
       ],
     },
-    
   ];
+  const [locationdata, setLocationdata] = useState();
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -193,7 +183,8 @@ const Screen1 = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location: location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -243,11 +234,23 @@ const Screen1 = ({ location, year, month }) => {
     // console.error('Error:', error);
     // }
   };
-
+  const facthloctiondata = async () => {
+    setLocationdata();
+    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("Location data:", response.data);
+      setLocationdata(response.data);
+    } catch (error) {
+      setLocationdata();
+    } finally {
+      LoaderClose();
+    }
+  };
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -260,17 +263,18 @@ const Screen1 = ({ location, year, month }) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (location && year) {
+    if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false;
+      facthloctiondata();
+      toastShown.current = false; // Reset the flag when valid data is present
     } else {
+      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true;
+        toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -285,19 +289,20 @@ const Screen1 = ({ location, year, month }) => {
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-           Ratio of basic salary of women to men
+           Average Basic salary of Employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data 
-corresponding to the 
-ratio of the basic salary  of women 
-to men for each 
-employee category, by significant 
-locations of operation. "
+                data-tooltip-content="This section documents data corresponding to the average basic salary of employees by gender for each employee category across significant locations of operation. Basic Salary: Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties. Basic salary excludes any additional remuneration, such as payments for overtime working or bonuses. "
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -327,31 +332,44 @@ locations of operation. "
             </div>
           </div>
         </div>
-        <div className="mx-2">
-          <Form
+        {Array.isArray(locationdata) && locationdata.length > 0 ? (
+          <div className="mx-2">
+         <Form
             schema={r_schema}
             uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            widgets={widgets}
+           
             formContext={{
               onRemove: handleRemoveCommittee,
             }}
+            widgets={{
+              ...widgets,
+              TableWidget: (props) => (
+                <CustomTableWidget8
+                  {...props}
+                  locationdata={locationdata}
+                />
+              ),
+            }}
           />
-        </div>
+          </div>
+        ) : (
+          <div className="mx-2"></div>
+        )}
+      
 
     <div className='mt-4'>
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
               }`}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>
-
         </div>
       </div>
       {loopen && (

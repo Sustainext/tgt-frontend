@@ -13,6 +13,7 @@ function DynamicTable({ columns, data }) {
               <th
                 key={index}
                 colSpan={column.colSpan ? column.colSpan : 1}
+                
                 className="p-2 text-[#727272] border-x border-b block md:table-cell text-[12px]"
               >
                 {column.header}
@@ -22,6 +23,7 @@ function DynamicTable({ columns, data }) {
           <tr className="gradient-background block md:table-row">
             {/* Simplified headers for age groups */}
             <th className="p-2 text-slate-500 font-bold border-x block md:table-cell"></th>
+            <th className="p-2 text-slate-500 font-bold block md:table-cell border-x"></th>
             <th className="p-2 text-slate-500 font-bold block md:table-cell"></th>
             <th className="p-2 text-slate-500 font-bold block md:table-cell"></th>
             <th className="p-2 text-slate-500 font-bold block md:table-cell"></th>
@@ -38,12 +40,13 @@ function DynamicTable({ columns, data }) {
                 className={`bg-white border-l border-b block md:table-row ${index % 2 === 0 ? 'bg-gray-100' : ''}`}
               >
                 <td className="p-2 text-left block md:table-cell text-[12px] font-bold border-x ">{row.type}</td>
-                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal">{row.male} %</td>
-                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal">{row.female} %</td>
-                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r ">{row.nonBinary} %</td>
-                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r">{row.ageBelow30} %</td>
-                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r">{row.age30To50} %</td>
-                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r">{row.ageAbove50} %</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r ">{row.Totalnoofemployees}</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal"> {row.male !== undefined && row.male !== null && row.male !== '' ? `${row.male} %` : ''}</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal">  {row.female !== undefined && row.female !== null && row.female !== '' ? `${row.female} %` : ''}</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r ">  {row.nonBinary !== undefined && row.nonBinary !== null && row.nonBinary !== '' ? `${row.nonBinary} %` : ''}</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r">  {row.ageBelow30 !== undefined && row.ageBelow30 !== null && row.ageBelow30 !== '' ? `${row.ageBelow30} %` : ''}</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r">  {row.age30To50 !== undefined && row.age30To50 !== null && row.age30To50 !== '' ? `${row.age30To50} %` : ''}</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r">  {row.ageAbove50 !== undefined && row.ageAbove50 !== null && row.ageAbove50 !== '' ? `${row.ageAbove50} %` : ''}</td>
               </tr>
             ))
           ) : (

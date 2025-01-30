@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   MdOutlineFileUpload,
   MdFilePresent,
@@ -7,7 +8,7 @@ import {
   MdDelete,
 } from "react-icons/md";
 import { BlobServiceClient } from "@azure/storage-blob";
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const CustomFileUploadWidget = ({
   id,
   onChange,
@@ -16,11 +17,20 @@ const CustomFileUploadWidget = ({
   setFormData,
   label
 }) => {
+    const text1 = useSelector((state) => state.header.headertext1);
+    const text2 = useSelector((state) => state.header.headertext2);
+    const middlename = useSelector((state) => state.header.middlename);
   const [fileName, setFileName] = useState(value?.name || null);
   const [showModal, setShowModal] = useState(false);
   const [previewData, setPreviewData] = useState(value?.url || null);
   const [fileType, setFileType] = useState(value?.type || "");
   const [fileSize, setFileSize] = useState(value?.size || "");
+  const [loginstatus, setLoginstatus] = useState("");
+  const [eventdetils, setEvantdetis] = useState("");
+  const useremail = typeof window !== 'undefined' ? localStorage.getItem("userEmail") : '';
+  const roles = typeof window !== 'undefined' 
+  ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
+  : '';
   const [uploadDateTime, setUploadDateTime] = useState(
     value?.uploadDateTime || ""
   );
@@ -51,16 +61,60 @@ const CustomFileUploadWidget = ({
           blobContentType: file.type,
         },
       };
-
+    
       await blobClient.uploadData(blob, uploadOptions);
+
       const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+    
       return url;
     } catch (error) {
+      LoginlogDetails("Failed", "Uploaded");
       console.error("Error uploading file:", error.message);
+      return null;
+    }
+ 
+  };
+  const getIPAddress = async () => {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.error("Error fetching IP address:", error);
       return null;
     }
   };
 
+
+  const LoginlogDetails = async (status, actionType) => {
+    const backendUrl = process.env.BACKEND_API_URL;
+    const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
+  
+    try {
+      const ipAddress = await getIPAddress();
+  
+      
+      const data = {
+        event_type: text1,
+        event_details: "File",
+        action_type: actionType,
+        status: status,
+        user_email:useremail,
+        user_role:roles,
+        ip_address: ipAddress,
+        logs: `${text1} > ${middlename} > ${text2}`,
+      };
+  
+      const response = await axiosInstance.post(userDetailsUrl, data);
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error logging login details:", error);
+  
+      return null;
+    }
+  };
+  
   useEffect(() => {
     console.log(value, " is the new value");
 
@@ -104,9 +158,14 @@ const CustomFileUploadWidget = ({
           setFileType(selectedFile.type);
           setFileSize(selectedFile.size);
           setUploadDateTime(new Date().toLocaleString());
+
         };
 
         uploadAndSetState();
+        setTimeout(() => {
+          LoginlogDetails("Success", "Uploaded");
+        }, 500);
+        
       };
     }
   };
@@ -120,18 +179,31 @@ const CustomFileUploadWidget = ({
   };
 
   const handleDelete = () => {
-    const resetValue = {
-      name: "",
-      url: "",
-      type: "",
-      size: "",
-      uploadDateTime: "",
-    };
-
-    setFileName(null);
-    setPreviewData(null);
-    onChange(resetValue);
-    setShowModal(false);
+    try {
+      const resetValue = {
+        name: "",
+        url: "",
+        type: "",
+        size: "",
+        uploadDateTime: "",
+      };
+  
+      setFileName(null);
+      setPreviewData(null);
+      onChange(resetValue);
+      setShowModal(false);
+  
+      // Call LoginlogDetails with a "Success" status for deletion
+      setTimeout(() => {
+        LoginlogDetails("Success", "Deleted");
+      }, 500);
+    } catch (error) {
+      console.error("Error deleting file:", error.message);
+      // Call LoginlogDetails with a "Failed" status for deletion
+      setTimeout(() => {
+        LoginlogDetails("Failed", "Deleted");
+      }, 500);
+    }
   };
 
   return (

@@ -29,6 +29,7 @@ import WasteMaterialtopic from "./Waste/Management-Material-topic/page";
 import MaterialsMaterialtopic from "./Materials/Management-Material-topic/page";
 import WaterMaterialtopic from "./Water-effluents/Management-Material-topic/page";
 import SupplierMaterialtopic from "./supplier-environmental-assessment/Management-Material-topic/page";
+// import SignificantSpills from './Waste/significant-spills/page'
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -36,21 +37,52 @@ import {
   setHeaderdisplay,
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
-import { useDispatch } from "react-redux";
 import Standardsmethodology from "./energy/standards-methodology/standards-methodology"
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMaterialityData,
+  setCorpID,
+  setOrgID,
+  setOrgName,
+  setCorpName,
+  setYear,
+  setStartDate,
+  setEndDate,
+} from "../../../lib/redux/features/materialitySlice";
 
 const environment = () => {
   const { open } = GlobalState();
   const [activeTab, setActiveTab] = useState(
-    "Management of Material topic emission"
+    "GHG Emissions"
   );
-
+ 
   const dispatch = useDispatch();
+  const { corporate_id, organization_id, start_date, end_date, data,materiality_year, loading, error } = useSelector(
+    (state) => state.materialitySlice
+  );
+  
+
+  const loadMaterialityDashboard=()=>{
+   dispatch(
+      fetchMaterialityData({
+        corporate: corporate_id,
+        organization: organization_id,
+        start_date:materiality_year?`${materiality_year}-01-01`:'',
+        end_date:materiality_year?`${materiality_year}-12-31`:'',
+      })
+    );
+  }
+
+ 
 
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    loadMaterialityDashboard()
+  }, [dispatch]);
 
   useEffect(() => {
     // List of tabs related to Energy\
@@ -61,6 +93,7 @@ const environment = () => {
       "Management of Material topic Materials",
       "Management of Material topic waste",
       "Management of Material topic energy",
+      // "Management of Material topic effluent",
     ];
     const emissionTabs = ["GHG Emissions"];
     const energyTabs = [
@@ -103,6 +136,9 @@ const environment = () => {
       "New suppliers that were screened using environmental criteria",
       "Negative environmental impacts in the supply chain and actions taken",
     ];
+    // const effluentTab = [
+    //   "Significant Spills",
+    // ];
 
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
@@ -117,7 +153,11 @@ const environment = () => {
       dispatch(setHeadertext2("Water and effluents"));
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Supplier Environmental Assessment"));
-    } else if (materialnewTabs.includes(activeTab)) {
+    } 
+    // else if (effluentTab.includes(activeTab)) {
+    //   dispatch(setHeadertext2("Effluents"));
+    // } 
+    else if (materialnewTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Management of Material Topic"));
     } else {
       dispatch(setHeadertext2(`${activeTab}`));
@@ -132,7 +172,7 @@ const environment = () => {
       <div className="w-full">
         <div className="flex">
           <div className="">
-            <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
+            <Aside activeTab={activeTab} handleTabClick={handleTabClick} apiData={data} />
           </div>
           <div
             className={`${
@@ -143,87 +183,89 @@ const environment = () => {
           >
             {/* Emissions start */}
             {activeTab === "Management of Material topic emission" && (
-              <Materialtopic />
+              <Materialtopic apiData={data} />
             )}
-            {activeTab === "GHG Emissions" && <Emission />}
+            {activeTab === "GHG Emissions" && <Emission apiData={data} />}
             {/* Energy start */}
             {activeTab === "Management of Material topic energy" && (
-              <EnergyMaterialtopic />
+              <EnergyMaterialtopic apiData={data} />
             )}
             {activeTab === "Energy consumed inside the organization" && (
-              <Energyconsumed />
+              <Energyconsumed apiData={data} />
             )}
             {activeTab === "Energy consumption outside of the organization" && (
-              <Energyconsumption />
+              <Energyconsumption apiData={data} />
             )}
-            {activeTab === "Energy Intensity" && <Energyintensity />}
+            {activeTab === "Energy Intensity" && <Energyintensity apiData={data} />}
             {activeTab === "Reduction of energy consumption" && (
-              <Reductionenergyconsumption />
+              <Reductionenergyconsumption apiData={data} />
             )}
             {activeTab ===
               "Reductions in energy requirements of products and services" && (
-              <Energyproductsservices />
+              <Energyproductsservices apiData={data} />
             )}
                {activeTab ===
               "Standards, methodologies, assumptions and calculation tools used" && (
-              <Standardsmethodology />
+              <Standardsmethodology apiData={data} />
             )}
             
             {/* waste start */}
             {activeTab === "Management of Material topic waste" && (
-              <WasteMaterialtopic />
+              <WasteMaterialtopic apiData={data} />
             )}
             {activeTab === "Significant waste related impact" && (
-              <Significantwaste />
+              <Significantwaste apiData={data} />
             )}
             {activeTab ===
               "Management of significant waste related impacts" && (
-              <Managementwaste />
+              <Managementwaste apiData={data} />
             )}
-            {activeTab === "Waste generated" && <Wastegenerated />}
-            {activeTab === "Waste Diverted from disposal" && <Wastediverted />}
-            {activeTab === "Waste diverted to disposal" && <Wastedirected />}
-            {activeTab === "Data Collection Methodology" && <Datacollectionmethodology />}    
+            {activeTab === "Waste generated" && <Wastegenerated apiData={data} />}
+            {activeTab === "Waste Diverted from disposal" && <Wastediverted apiData={data} />}
+            {activeTab === "Waste diverted to disposal" && <Wastedirected apiData={data} />}
+            {activeTab === "Data Collection Methodology" && <Datacollectionmethodology apiData={data} />}    
+            {/* {activeTab === "Significant Spills" && <SignificantSpills apiData={data} isSidepanelOpen={open} />} */}
+            
             {/* Materials  start */}
             {activeTab === "Management of Material topic Materials" && (
-              <MaterialsMaterialtopic />
+              <MaterialsMaterialtopic apiData={data} />
             )}
             {activeTab === "Materials used by weight or volume" && (
-              <Weightvolume />
+              <Weightvolume apiData={data} />
             )}
-            {activeTab === "Recycled input materials used" && <Recycled />}
+            {activeTab === "Recycled input materials used" && <Recycled apiData={data} />}
             {activeTab ===
               "Reclaimed products and their packaging materials" && (
-              <Reclaimedproducts />
+              <Reclaimedproducts apiData={data} />
             )}
             {/* Water start */}
             {activeTab === "Management of Material topic Water" && (
-              <WaterMaterialtopic />
+              <WaterMaterialtopic apiData={data} />
             )}
             {activeTab === "Interaction with water as shared resource" && (
-              <Watersharedresource />
+              <Watersharedresource apiData={data} />
             )}
             {activeTab ===
               "Water Withdrawal and Water Discharge from All Areas" && (
-              <Dischargefromareas />
+              <Dischargefromareas apiData={data} />
             )}
             {activeTab ===
               "Water withdrawal/Discharge from areas with water stress" && (
-              <Waterstres />
+              <Waterstres apiData={data} />
             )}
-            {activeTab === "Substances of concern" && <Substancesconcern />}
-            {activeTab === "Change in water storage" && <Waterstorage />}
+            {activeTab === "Substances of concern" && <Substancesconcern apiData={data} />}
+            {activeTab === "Change in water storage" && <Waterstorage apiData={data} />}
             {/* Supplier start */}
             {activeTab === "Management of Material topic Supplier" && (
-              <SupplierMaterialtopic />
+              <SupplierMaterialtopic apiData={data} />
             )}
             {activeTab ===
               "New suppliers that were screened using environmental criteria" && (
-              <NewSupplier />
+              <NewSupplier apiData={data} />
             )}
             {activeTab ===
               "Negative environmental impacts in the supply chain and actions taken" && (
-              <NegativeEnvironmentImpact />
+              <NegativeEnvironmentImpact apiData={data} />
             )}
           </div>
         </div>

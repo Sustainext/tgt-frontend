@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MdPerson, MdChevronRight } from "react-icons/md";
 import PermissionToggle from "../../common/PermissionToggle";
 import { useSelector, useDispatch } from "react-redux";
-import { useSearchParams } from "next/navigation"; // Correct import for Next.js 13 App Router
+import { useSearchParams,useRouter } from "next/navigation"; // Correct import for Next.js 13 App Router
 import {
   setCollect,
   setAnalyse,
@@ -29,6 +29,7 @@ import { Oval } from "react-loader-spinner";
 const PermissionsForm = ({ onPrev, onNext, reset }) => {
   const [loopen, setLoOpen] = useState(false);
   const dispatch = useDispatch();
+    const router = useRouter();
   const searchParams = useSearchParams(); // Access search params using Next.js's useSearchParams
   const first_name = useSelector((state) => state.roleprmission.first_name);
   const last_name = useSelector((state) => state.roleprmission.last_name);
@@ -130,6 +131,22 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
             autoClose: 3000,
           }
         );
+        dispatch(setCollect(true));
+        dispatch(setAnalyse(true));
+        dispatch(setReport(false));
+        dispatch(setOptimise(false));
+        dispatch(setTrack(false));
+        dispatch(setPermissionscheckbox(false));
+        dispatch(setOrgList([]));
+        dispatch(setCorpList([]));
+        dispatch(setLocList([]));
+        dispatch(setfirstname(""));
+        dispatch(setlastname(""));
+        dispatch(setjobtitle(""));
+        dispatch(setdepartment(""));
+        dispatch(setworkemail(""));
+        dispatch(setroletype(""));
+        dispatch(setphonenumber(""));
         setIsSubmitted(true);
         onNext();
         LoaderClose();
@@ -169,6 +186,7 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
   };
 
   const addNewUser = () => {
+
     dispatch(setCollect(true));
     dispatch(setAnalyse(true));
     dispatch(setReport(false));
@@ -185,6 +203,7 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
     dispatch(setworkemail(""));
     dispatch(setroletype(""));
     dispatch(setphonenumber(""));
+    router.push(`/dashboard/Users/create-new-users`);
     reset();
   };
 

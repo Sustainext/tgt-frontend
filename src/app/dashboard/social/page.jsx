@@ -4,7 +4,7 @@ import Aside from "./sidepanel";
 import Parentalleave from "./Employment/Parental-Leave/page";
 import Benefits from "./Employment/Benefits/page";
 import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page";
-import Definedbenefit from "./Employment/defined-benefit/page"
+import Definedbenefit from "./Employment/defined-benefit/page";
 import EmploymentMaterialtopic from "./Employment/Management-Material-topic/page";
 import LaborManagementMaterialtopic from "./Labor-Management/Management-Material-topic/page";
 import Noticeperiod from "./Labor-Management/Notice-Period/page";
@@ -12,18 +12,19 @@ import CollectiveBargaining from "./Labor-Management/Collective-Bargaining/page"
 import OHSMaterialtopic from "./OHS/Management-Material-topic/page";
 import Ohsmanagment from "./OHS/ohs-management/page";
 import Riskassessment from "./OHS/risk-assessment/page";
-import WorkersRight from "./OHS/Workers-Right/page"
-import HazardReporting from "./OHS/Hazard-Reporting/page"
+import WorkersRight from "./OHS/Workers-Right/page";
+import HazardReporting from "./OHS/Hazard-Reporting/page";
 import Ohsservices from "./OHS/ohs-services/page";
 import Workinvolvement from "./OHS/work-involvement/page";
 import Ohstraining from "./OHS/ohs-training/page";
 import Promotionhealth from "./OHS/promotion-health/page";
+import HealthRiskAddressed from "./OHS/Health-Risk-Addressed/page";
 import Preventionohsimpact from "./OHS/prevention-ohs-Impact/page";
 import Ohsmanagementsystemcoverage from "./OHS/ohs-management-system-coverage/page";
 import Injuries from "./OHS/Injuries/page";
 import Illhealth from "./OHS/ill-health/page";
 import InjuriesHazards from "./OHS/Injuries-Hazards/page";
-import IllhealthHazard from "./OHS/Illhealth-Hazard/page"
+import IllhealthHazard from "./OHS/Illhealth-Hazard/page";
 import TrainingMaterialtopic from "./Training/Management-Material-topic/page";
 import Traininghours from "./Training/Training-hours/page";
 import Skillupgrade from "./Training/skill-upgrade/page";
@@ -36,34 +37,34 @@ import NonDiscriminationMaterialtopic from "./Non-Discrimination/Management-Mate
 import IncidentsofDiscrimination from "./Non-Discrimination/Incidents-of-Discrimination/page";
 import HumanRightsMaterialtopic from "./Human-Rights/Management-Material-topic/page";
 import CommunityEngagement from "./Human-Rights/Community-Engagement/page";
-import ImpactonCommunity from "./Human-Rights/Impact-on-Community/page"
-import IndigenousPeople from "./Human-Rights/Indigenous-People/page"
-import Securitypersonnel from "./Human-Rights/security-personnel/Section1/page"
-import Securitypersonnel2 from "./Human-Rights/security-personnel/Section2/page"
-import ChildForcedLabourMaterialtopic from "./Child-Forced-Labour/Management-Material-topic/page"
-import Childlabour from "./Child-Forced-Labour/child-labour/page"
-import Forcedorcompulsorylabour from "./Child-Forced-Labour/forced-or-compulsory-labour/page"
-import SupplierMaterialtopic from "./Supplier-social-assessment/Management-Material-topic/page"
-import Suppliersscreened from "./Supplier-social-assessment/Impacts-actions-taken/page"
-import Impactsactionstaken from "./Supplier-social-assessment/Suppliers-screened/page"
-import SoicalProcurementPractices from "./Supplier-social-assessment/procurement-practices/page"
-import HealthSafetyMaterialtopic from "./Customer-Health-Safety/Management-Material-topic/page"
-import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page"
-import Compliance from "./Customer-Health-Safety/Compliance/Section1/page"
-import ProductsService from "./Customer-Health-Safety/Products-Service/Section2/page"
-import MarketingLabelingMaterialtopic from "./Marketing-Labeling/Management-Material-topic/page"
-import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/Section1/page"
-import ProductServicelabelling2 from "./Marketing-Labeling/Product-Service-labelling/Section2/page"
-import NoncomplianceincidentsLabelling from "./Marketing-Labeling/Non-compliance-incidents-Labelling/page"
-import StatementnoncomplianceLabeling  from "./Marketing-Labeling/Statement-non-compliance-Labeling/page"
-import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance-incidents-Marketing/page"
-import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page"
-import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material-topic/page"
-import CustomerPrivacy from "./Customer-Privacy/Section1/page"
-import CustomerPrivacy2 from "./Customer-Privacy/Section2/page"
-import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page"
-import IdentifingInformation from './BillS-211/Identifying-information/page'
-import AnnualReport from './BillS-211/annual-report/page'
+import ImpactonCommunity from "./Human-Rights/Impact-on-Community/page";
+import IndigenousPeople from "./Human-Rights/Indigenous-People/page";
+import Securitypersonnel from "./Human-Rights/security-personnel/Section1/page";
+import Securitypersonnel2 from "./Human-Rights/security-personnel/Section2/page";
+import ChildForcedLabourMaterialtopic from "./Child-Forced-Labour/Management-Material-topic/page";
+import Childlabour from "./Child-Forced-Labour/child-labour/page";
+import Forcedorcompulsorylabour from "./Child-Forced-Labour/forced-or-compulsory-labour/page";
+import SupplierMaterialtopic from "./Supplier-social-assessment/Management-Material-topic/page";
+import Suppliersscreened from "./Supplier-social-assessment/Impacts-actions-taken/page";
+import Impactsactionstaken from "./Supplier-social-assessment/Suppliers-screened/page";
+import SoicalProcurementPractices from "./Supplier-social-assessment/procurement-practices/page";
+import HealthSafetyMaterialtopic from "./Customer-Health-Safety/Management-Material-topic/page";
+import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page";
+import Compliance from "./Customer-Health-Safety/Compliance/Section1/page";
+import ProductsService from "./Customer-Health-Safety/Products-Service/Section2/page";
+import MarketingLabelingMaterialtopic from "./Marketing-Labeling/Management-Material-topic/page";
+import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/Section1/page";
+import ProductServicelabelling2 from "./Marketing-Labeling/Product-Service-labelling/Section2/page";
+import NoncomplianceincidentsLabelling from "./Marketing-Labeling/Non-compliance-incidents-Labelling/page";
+import StatementnoncomplianceLabeling from "./Marketing-Labeling/Statement-non-compliance-Labeling/page";
+import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance-incidents-Marketing/page";
+import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page";
+import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material-topic/page";
+import CustomerPrivacy from "./Customer-Privacy/Section1/page";
+import CustomerPrivacy2 from "./Customer-Privacy/Section2/page";
+import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page";
+import IdentifingInformation from "./BillS-211/Identifying-information/page";
+import AnnualReport from "./BillS-211/annual-report/page";
 
 import {
   setHeadertext1,
@@ -71,19 +72,49 @@ import {
   setHeaderdisplay,
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
-import { useDispatch } from "react-redux";
 import { GlobalState } from "@/Context/page";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMaterialityData,
+  setCorpID,
+  setOrgID,
+  setOrgName,
+  setCorpName,
+  setYear,
+  setStartDate,
+  setEndDate,
+} from "../../../lib/redux/features/materialitySlice";
+
 const Social = () => {
   const { open } = GlobalState();
   const [activeTab, setActiveTab] = useState(
     "Management of Material topic OHS"
   );
-  const dispatch = useDispatch();
-
+  
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  const dispatch = useDispatch();
+  const { corporate_id, organization_id, start_date, end_date, data,materiality_year, loading, error } = useSelector(
+    (state) => state.materialitySlice
+  );
+
+  const loadMaterialityDashboard=()=>{
+     dispatch(
+        fetchMaterialityData({
+          corporate: corporate_id,
+          organization: organization_id,
+          start_date:materiality_year?`${materiality_year}-01-01`:'',
+          end_date:materiality_year?`${materiality_year}-12-31`:'',
+        })
+      );
+    }
+
+    useEffect(() => {
+      loadMaterialityDashboard()
+    }, [dispatch]);
 
   useEffect(() => {
     // List of tabs related to Energy\
@@ -106,12 +137,10 @@ const Social = () => {
       "Benefits",
       "Parental Leave",
       "Retirement Benefits",
-      ,"Diversity of Employees",
+      ,
+      "Diversity of Employees",
     ];
-    const BillS211Tabs = [
-      "Identifying Information",
-      "Annual report"
-    ];
+    const BillS211Tabs = ["Identifying Information", "Annual report"];
     const energyTabs = ["Notice Period", "Collective Bargaining"];
 
     // List of tabs related to Waste
@@ -123,6 +152,7 @@ const Social = () => {
       "OHS Training",
       "Promotion of Health",
       "Prevention of OHS Impact",
+      "Health Risk Addressed",
       "OHS Management System Coverage",
       "Injuries",
       "Ill-health",
@@ -140,7 +170,11 @@ const Social = () => {
     ];
 
     // List of tabs related to Water
-    const waterTabs = ["Diversity of the Board", "Salary Ratio","Entry Level Wage"];
+    const waterTabs = [
+      "Diversity of the Board",
+      "Salary Ratio",
+      "Entry Level Wage",
+    ];
 
     // List of tabs related to Supplier
     const supplierTabs = ["Incidents of Discrimination"];
@@ -151,16 +185,11 @@ const Social = () => {
       "Security Personnel",
       "Security Personnel2",
     ];
-    const TaxTabs = [
-      "Child Labour",
-      "Forced or Compulsory Labour",
-  
-    ];
+    const TaxTabs = ["Child Labour", "Forced or Compulsory Labour"];
     const SupplyTabs = [
       "Suppliers Screened",
       "Impacts & Actions Taken",
       "Procurement Practices",
-  
     ];
     const SafetyTabs = [
       "Product/Service Safety",
@@ -174,14 +203,8 @@ const Social = () => {
       "Statement of non compliance - Labeling",
       "Non compliance incidents - Marketing",
       "Statement of non compliance - Marketing",
-
     ];
-    const PrivacyTabs = [
-      "Customer Privacy",
-      "Statement of Fact"
-   
-
-    ];
+    const PrivacyTabs = ["Customer Privacy", "Statement of Fact"];
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Employment"));
@@ -203,19 +226,15 @@ const Social = () => {
       dispatch(setHeadertext2("Child and Forced Labour"));
     } else if (SupplyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Supply Chain Labor Standards"));
-    } 
-    else if (SafetyTabs.includes(activeTab)) {
+    } else if (SafetyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Product Safety & Quality"));
-    }
-    else if (MarketingTabs.includes(activeTab)) {
+    } else if (MarketingTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Marketing and Labeling"));
-    } 
-    else if (PrivacyTabs.includes(activeTab)) {
+    } else if (PrivacyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Customer Privacy & Data Security"));
-    }else if (BillS211Tabs.includes(activeTab)) {
+    } else if (BillS211Tabs.includes(activeTab)) {
       dispatch(setHeadertext2("Bill S-211"));
-    }
-     else {
+    } else {
       dispatch(setHeadertext2(`${activeTab}`));
     }
     dispatch(setHeadertext1("Collect"));
@@ -228,7 +247,7 @@ const Social = () => {
       <div className="w-full">
         <div className="flex">
           <div className="">
-            <Aside activeTab={activeTab} handleTabClick={handleTabClick} setActiveTab={setActiveTab} />
+            <Aside activeTab={activeTab} handleTabClick={handleTabClick} setActiveTab={setActiveTab} apiData={data} />
           </div>
           <div
             className={`${
@@ -239,117 +258,118 @@ const Social = () => {
           >
             {/* Emissions start */}
             {activeTab === "Management of Material topic Employment" && (
-              <EmploymentMaterialtopic />
+              <EmploymentMaterialtopic apiData={data} />
             )}
              {activeTab === "Identifying Information" && (
-              <IdentifingInformation />
+              <IdentifingInformation apiData={data} />
             )}
             {activeTab === "Annual report" && (
-              <AnnualReport />
+              <AnnualReport apiData={data} />
             )}
             {activeTab === "Employee Hires & Turnover" && (
-              <EmployeeHiresTurnover />
+              <EmployeeHiresTurnover apiData={data} />
             )}
-            {activeTab === "Benefits" && <Benefits />}
-            {activeTab === "Parental Leave" && <Parentalleave />}
-            {activeTab === "Retirement Benefits" && <Definedbenefit />}
-            {activeTab === "Diversity of Employees" && <Diversityemploy />}
+            {activeTab === "Benefits" && <Benefits apiData={data} />}
+            {activeTab === "Parental Leave" && <Parentalleave apiData={data} />}
+            {activeTab === "Retirement Benefits" && <Definedbenefit apiData={data} />}
+            {activeTab === "Diversity of Employees" && <Diversityemploy apiData={data} />}
             {activeTab === "Management of Material topic Labor Management" && (
-              <LaborManagementMaterialtopic />
+              <LaborManagementMaterialtopic apiData={data} />
             )}
-            {activeTab === "Notice Period" && <Noticeperiod />}
-            {activeTab === "Collective Bargaining" && <CollectiveBargaining />}
+            {activeTab === "Notice Period" && <Noticeperiod apiData={data} />}
+            {activeTab === "Collective Bargaining" && <CollectiveBargaining apiData={data} />}
 
             {activeTab === "Management of Material topic OHS" && (
-              <OHSMaterialtopic />
+              <OHSMaterialtopic apiData={data} />
             )}
-            {activeTab === "OHS Management" && <Ohsmanagment />}
-            {activeTab === "Risk Assessment" && <Riskassessment />}
-            {activeTab === "Hazard Reporting" && <HazardReporting />} 
-            {activeTab === "Workers Right" && <WorkersRight />}
-            {activeTab === "OHS Sevices" && <Ohsservices />}
-            {activeTab === "Worker Involvement in OHS" && <Workinvolvement />}
-            {activeTab === "OHS Training" && <Ohstraining />}
-            {activeTab === "Promotion of Health" && <Promotionhealth />}
+            {activeTab === "OHS Management" && <Ohsmanagment apiData={data} />}
+            {activeTab === "Risk Assessment" && <Riskassessment apiData={data} />}
+            {activeTab === "Hazard Reporting" && <HazardReporting apiData={data} />} 
+            {activeTab === "Workers Right" && <WorkersRight apiData={data} />}
+            {activeTab === "OHS Sevices" && <Ohsservices apiData={data} />}
+            {activeTab === "Worker Involvement in OHS" && <Workinvolvement apiData={data} />}
+            {activeTab === "OHS Training" && <Ohstraining apiData={data} />}
+            {activeTab === "Promotion of Health" && <Promotionhealth apiData={data} />}
+            {activeTab === "Health Risk Addressed" && <HealthRiskAddressed apiData={data} />}
             {activeTab === "Prevention of OHS Impact" && (
-              <Preventionohsimpact />
+              <Preventionohsimpact apiData={data} />
             )}
             {activeTab === "OHS Management System Coverage" && (
-              <Ohsmanagementsystemcoverage />
+              <Ohsmanagementsystemcoverage apiData={data} />
             )}
-            {activeTab === "Injuries" && <Injuries />}
-            {activeTab === "Hazard Injuries" && <InjuriesHazards />}
-            {activeTab === "Ill-health" && <Illhealth />}
-            {activeTab === "Hazards - Ill-health" && <IllhealthHazard />}
+            {activeTab === "Injuries" && <Injuries apiData={data} />}
+            {activeTab === "Hazard Injuries" && <InjuriesHazards apiData={data} />}
+            {activeTab === "Ill-health" && <Illhealth apiData={data} />}
+            {activeTab === "Hazards - Ill-health" && <IllhealthHazard apiData={data} />}
 
             {activeTab ===
               "Management of Material topic Training and Development" && (
-              <TrainingMaterialtopic />
+              <TrainingMaterialtopic apiData={data} />
             )}
-            {activeTab === "Training hours" && <Traininghours />}
-            {activeTab === "Skill Upgrade" && <Skillupgrade />}
+            {activeTab === "Training hours" && <Traininghours apiData={data} />}
+            {activeTab === "Skill Upgrade" && <Skillupgrade apiData={data} />}
             {activeTab === "Performance & Career Development" && (
-              <Performancedevelopment />
+              <Performancedevelopment apiData={data} />
             )}
 
             {activeTab ===
               "Management of Material topic Diversity & Equal Oppportunity" && (
-              <DiversityInclusionMaterialtopic />
+              <DiversityInclusionMaterialtopic apiData={data} />
             )}
-            {activeTab === "Diversity of the Board" && <DiversityBoard />}
+            {activeTab === "Diversity of the Board" && <DiversityBoard apiData={data} />}
            
-            {activeTab === "Salary Ratio" && <Salaryratio />}
-            {activeTab === "Entry Level Wage" && <Ratiosstandard />}
+            {activeTab === "Salary Ratio" && <Salaryratio apiData={data} />}
+            {activeTab === "Entry Level Wage" && <Ratiosstandard apiData={data} />}
 
             {activeTab ===
               "Management of Material topic Non Discrimination" && (
-              <NonDiscriminationMaterialtopic />
+              <NonDiscriminationMaterialtopic apiData={data} />
             )}
             {activeTab === "Incidents of Discrimination" && (
-              <IncidentsofDiscrimination />
+              <IncidentsofDiscrimination apiData={data} />
             )}
             {activeTab === "Management of Material topic Human Rights" && (
-              <HumanRightsMaterialtopic />
+              <HumanRightsMaterialtopic apiData={data} />
             )}
-            {activeTab === "Community Engagement" && <CommunityEngagement />}
-            {activeTab === "Impact on Community" && <ImpactonCommunity />}
-            {activeTab === "Indigenous People" && <IndigenousPeople />}
-            {activeTab === "Security Personnel" && <Securitypersonnel />}
-            {activeTab === "Security Personnel2" && <Securitypersonnel2 />} 
+            {activeTab === "Community Engagement" && <CommunityEngagement apiData={data} />}
+            {activeTab === "Impact on Community" && <ImpactonCommunity apiData={data} />}
+            {activeTab === "Indigenous People" && <IndigenousPeople apiData={data} />}
+            {activeTab === "Security Personnel" && <Securitypersonnel apiData={data} />}
+            {activeTab === "Security Personnel2" && <Securitypersonnel2 apiData={data} />} 
 
             {activeTab === "Management of Material topic Labour" && (
-              <ChildForcedLabourMaterialtopic />
+              <ChildForcedLabourMaterialtopic apiData={data} />
             )}
-            {activeTab === "Child Labour" && <Childlabour />}
-            {activeTab === "Forced or Compulsory Labour" && <Forcedorcompulsorylabour />}
+            {activeTab === "Child Labour" && <Childlabour apiData={data} />}
+            {activeTab === "Forced or Compulsory Labour" && <Forcedorcompulsorylabour apiData={data} />}
 
             {activeTab === "Management of Material topic Supply" && (
-              <SupplierMaterialtopic />
+              <SupplierMaterialtopic apiData={data} />
             )}
-            {activeTab === "Suppliers Screened" && <Impactsactionstaken />}
-            {activeTab === "Impacts & Actions Taken" && <Suppliersscreened />}
-            {activeTab === "Procurement Practices" && <SoicalProcurementPractices />}
+            {activeTab === "Suppliers Screened" && <Impactsactionstaken apiData={data} />}
+            {activeTab === "Impacts & Actions Taken" && <Suppliersscreened apiData={data} />}
+            {activeTab === "Procurement Practices" && <SoicalProcurementPractices apiData={data} />}
             {activeTab === "Management of Material topic Safety" && (
-              <HealthSafetyMaterialtopic />
+              <HealthSafetyMaterialtopic apiData={data} />
             )}
-            {activeTab === "Product/Service Safety" && <ProductServiceSafety />}
-            {activeTab === "Compliance" && <Compliance />}
-            {activeTab === "Products & Service" && <ProductsService />}   
+            {activeTab === "Product/Service Safety" && <ProductServiceSafety apiData={data} />}
+            {activeTab === "Compliance" && <Compliance apiData={data} />}
+            {activeTab === "Products & Service" && <ProductsService apiData={data} />}   
             {activeTab === "Management of Material topic Marketing" && (
-              <MarketingLabelingMaterialtopic />
+              <MarketingLabelingMaterialtopic apiData={data} />
             )}
-            {activeTab === "Product/Service labelling" && <ProductServicelabelling />}
-            {activeTab === "Product/Service Categories Assessed for Compliance" && <ProductServicelabelling2 />}
-            {activeTab === "Non compliance incidents- Labelling" && <NoncomplianceincidentsLabelling />}
-            {activeTab === "Statement of non compliance - Labeling" && <StatementnoncomplianceLabeling />}
-            {activeTab === "Non compliance incidents - Marketing" && <NoncomplianceincidentsMarketing />}
-            {activeTab === "Statement of non compliance - Marketing" && <StatementnoncomplianceMarketing />}
+            {activeTab === "Product/Service labelling" && <ProductServicelabelling apiData={data} />}
+            {activeTab === "Product/Service Categories Assessed for Compliance" && <ProductServicelabelling2 apiData={data} />}
+            {activeTab === "Non compliance incidents- Labelling" && <NoncomplianceincidentsLabelling apiData={data} />}
+            {activeTab === "Statement of non compliance - Labeling" && <StatementnoncomplianceLabeling apiData={data} />}
+            {activeTab === "Non compliance incidents - Marketing" && <NoncomplianceincidentsMarketing apiData={data} />}
+            {activeTab === "Statement of non compliance - Marketing" && <StatementnoncomplianceMarketing apiData={data} />}
             {activeTab === "Management of Material topic Privacy" && (
-              <CustomerPrivacyMaterialtopic />
+              <CustomerPrivacyMaterialtopic apiData={data} />
             )}
-            {activeTab === "Customer Privacy" && <CustomerPrivacy />}  
+            {activeTab === "Customer Privacy" && <CustomerPrivacy apiData={data} />}  
         
-            {activeTab === "Statement of Fact" && <CustomerPrivacy2 />} 
+            {activeTab === "Statement of Fact" && <CustomerPrivacy2 apiData={data} />} 
    
           </div>
         </div>

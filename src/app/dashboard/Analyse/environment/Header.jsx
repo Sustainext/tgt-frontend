@@ -57,6 +57,14 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
         { tagid: "5", infoid: "10" },
       ],
     },
+    // {
+    //   category: "Effluents",
+    //   tag: "GRI 306",
+    //   data: [
+    //     { tagid: "3", infoid: "54" },
+   
+    //   ],
+    // },
     {
       category: "Materials",
       tag: "GRI 301",
@@ -117,6 +125,16 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
         { id: "sd8", label: "SDG 15", bgColor: "bg-[#56C02B]" },
       ],
     },
+    // {
+    //   category: "Effluents",
+    //   data: [
+       
+    //     { id: "sd5", label: "SDG 3", bgColor: "bg-[#4c9f38]" },
+    //     { id: "sd34", label: "SDG 6", bgColor: "bg-cyan-500" },
+    //     { id: "sd35", label: "SDG 12", bgColor: "bg-yellow-600" },
+    //     { id: "sd8", label: "SDG 15", bgColor: "bg-[#4c9f38]" },
+    //   ],
+    // },
     {
       category: "Materials",
       data: [

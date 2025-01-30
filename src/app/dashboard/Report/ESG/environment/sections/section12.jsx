@@ -76,7 +76,7 @@ const Section12=({section12_2_2Ref,data})=>{
         />
         
 <p className="text-[15px]  mb-2 font-semibold">
-            Non-Renewable materials used
+Percentage of recycled materials used (Production)
         </p>
 <div className="shadow-md rounded-md mb-4">
 <LeaveTable columns={col} data={Tabledata}/>

@@ -8,6 +8,8 @@ import Socialheader from "../../../socialheader";
 import Screen1 from "./Screen1";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+
 const Diversityemploy = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");

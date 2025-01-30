@@ -55,4 +55,35 @@ export const columns4 = [
     accessor: "geographicareas3",
   },
 ];
+export const columns5 = [
+  {
+    Header: "Operations considered to have significant risk for incidents of forced or compulsory labor",
+    accessor: "op1",
+  },
+  {
+    Header: "Type of Operation",
+    accessor: "TypeofOperation3",
+  },
+  {
+    Header: "Countries or Geographic Areas",
+    accessor: "geographicareas3",
+  },
+];
+
+export const columns6 = [
+  {
+    Header: "Suppliers considered to have significant risk for incidents of forced or compulsory labor",
+    accessor: "sp1",
+  },
+  {
+    Header: "Type of Operation",
+    accessor: "TypeofOperation3",
+  },
+  {
+    Header: "Countries or Geographic Areas",
+    accessor: "geographicareas3",
+  },
+];
+
+
 

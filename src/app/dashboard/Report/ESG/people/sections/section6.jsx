@@ -27,9 +27,9 @@ const Section6=({section13_1_5Ref,data})=>{
     
      
 
-      const table1Data=data["202_1a_analyse"]?data["202_1a_analyse"]["marketing_presence"]?data["202_1a_analyse"]["marketing_presence"].length>0?
+      const table1Data=data["405_1a_analyse"]?data["405_1a_analyse"]["marketing_presence"]?data["405_1a_analyse"]["marketing_presence"].length>0?
 
-      data["202_1a_analyse"]["marketing_presence"].map((val,index)=>{
+      data["405_1a_analyse"]["marketing_presence"].map((val,index)=>{
           return (
               
             {

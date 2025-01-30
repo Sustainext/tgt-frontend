@@ -8,17 +8,23 @@ import Socialheader2 from "../../socialheader2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./screen1";
+import { useSelector } from "react-redux";
 // import Screen2 from "./Screen2";
 // import Screen3 from "./Screen3";
-const CustomerPrivacy2 = () => {
+import SocialTopBar from '../../socialTopBar'
+
+const CustomerPrivacy2 = ({apiData}) => {
+   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
+      (state) => state.materialitySlice
+    );
+    const [year, setYear] = useState(materiality_year?materiality_year:'');
+    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
+    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -39,32 +45,30 @@ const CustomerPrivacy2 = () => {
     setData(newData);
   }, [category]);
 
+  const sdgData=[
+    {
+        tagName:'GRI 418 - 1',
+        toggle:'70',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+    {
+        tagName:'SDG 16',
+        toggle:'71',
+        textColor:"#fff",
+        bgColor:"bg-[#00558A]"
+    },
+    
+   
+]
+
   return (
     <>
      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                  Customer Privacy & Data Security
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end ">
-            <div className="flex float-end border-l">
-            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('70')}>GRI 418 - 1</button>
-            <button className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('71')}>SDG 16</button>
-
-
-            </div>
-          </div>
-        </div>
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Customer Privacy & Data Security'} topic={'SocPrivacyDataSecurity'} />
+            
+       
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
