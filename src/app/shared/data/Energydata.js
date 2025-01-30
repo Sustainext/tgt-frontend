@@ -5837,4 +5837,100 @@ export const Energydata = [
     ],
     link: "https://sdgs.un.org/goals/goal15",
   },
+  {
+    category: ["sd37"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-12.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-yellow-600 text-[17px] font-bold ml-2">SDG 12</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 12: Ensure sustainable consumption and
+            production patterns
+          </p>
+          <div className="h-[617px]  custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, achieve the sustainable management and efficient use of
+              natural resources
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">12.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Material footprint, material footprint per capita, and material
+              footprint per GDP
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">12.2.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Domestic material consumption, domestic material consumption per
+              capita, and domestic material consumption per GDP
+            </p>
+            {/* added 12.4 */}
+            <p className="text-[13px] text-[#222222] mb-2">Target 12.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2020, achieve the environmentally sound management of chemicals and all wastes throughout their life cycle, in accordance with agreed international frameworks, and significantly reduce their release to air, water and soil in order to minimize their adverse impacts on human health and the environment.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">12.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Number of parties to international multilateral environmental agreements on hazardous waste, and other chemicals that meet their commitments and obligations in transmitting information as required by each relevant agreement.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">12.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+           (a) Hardous waste generated per capita; and
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            (b) Proportion of hazardous waste treated, by type of treatment
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal12",
+  },
+  {
+    category: ["sd38"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-15.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-600 text-[17px] font-bold ml-2">SDG 15</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 15: Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss
+          </p>
+          <div className="h-[544px]">
+            <p className="text-[13px] text-[#222222] mb-2">Target 15.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2020, promote the implementation of sustainable management of all types of forests, halt deforestation, restore degraded forests and substantially increase afforestation and reforestation globally
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">15.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Progress towards sustainable forest management
+            </p>
+            
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal15",
+  },
 ];
