@@ -114,10 +114,10 @@ const EmissionWidget = React.memo(
           logs: `${text1} > ${middlename} > ${text2} > ${locationname} > ${year} > ${monthName} > ${scope} > ${category || "Category not selected"} > ${subcategory || "Subcategory not selected"} > ${activity || "Activity not selected"} > ${fileName} > ${fileType}`,
         };
     
-        // const response = await axiosInstance.post(userDetailsUrl, data);
-        console.log('log data',data)
+        const response = await axiosInstance.post(userDetailsUrl, data);
+        // console.log('log data',data)
     
-        // return response.data;
+        return response.data;
       } catch (error) {
         console.error("Error logging login details:", error);
  
