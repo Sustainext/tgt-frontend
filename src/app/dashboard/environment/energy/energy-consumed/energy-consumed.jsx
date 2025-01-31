@@ -19,7 +19,8 @@ const Energyconsumed = ({ open,apiData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
-
+  const [locationname,setLocationname] =useState("");
+  const [monthname,setMonthname] =useState("Jan");
   const drawerRef = useRef(null); // Ref for the drawer
 
   const toggleDrawerclose = () => {
@@ -173,6 +174,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setLocationMessage={setLocationMessage}
         yearMessage={yearMessage}
         setYearMessage={setYearMessage}
+        // setLocationname={setLocationname}
+        // setMonthname={setMonthname}
       />
       <EnergyConsumedBody
         location={location}
@@ -180,6 +183,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         setLocationMessage={setLocationMessage}
         setYearMessage={setYearMessage}
+        locationname={locationname}
+        monthname={monthname}
       />
     </>
   );
