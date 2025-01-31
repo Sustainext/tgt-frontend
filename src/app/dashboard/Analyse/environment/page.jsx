@@ -37,8 +37,8 @@ const environment = () => {
       case "Energy":
         dispatch(setHeadertext2("Energy"));
         break;
-      case "Waste":
-        dispatch(setHeadertext2("Waste"));
+      case "Waste Management":
+        dispatch(setHeadertext2("Waste Management"));
         break;
         // case "Effluents":
         //   dispatch(setHeadertext2("Effluents"));
@@ -68,7 +68,7 @@ const environment = () => {
         </div>
         {activeTab === "Emissions" && <AnalyseEmission />}
         {activeTab === "Energy" && <AnalyseEnergy isBoxOpen={isBoxOpen} />}
-        {activeTab === "Waste" && <AnalyseWaste isBoxOpen={isBoxOpen} />}
+        {activeTab === "Waste Management" && <AnalyseWaste isBoxOpen={isBoxOpen} />}
         {/* {activeTab === "Effluents" && <AnalyseEffluents isBoxOpen={isBoxOpen} />} */}
         {activeTab === "Materials" && <AnalyseMaterials isBoxOpen={isBoxOpen} />}
         {activeTab === "Water and effluents" && <AnalyseWaterEffluents isBoxOpen={isBoxOpen} />}

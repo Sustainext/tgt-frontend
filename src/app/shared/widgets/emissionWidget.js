@@ -1100,11 +1100,15 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Quantity Input */}
-              <td className="w-[2vw]">
+              <td className="w-[24vw]">
+                {" "}
+                {/* Set a fixed width for the parent container */}
                 <div className="grid grid-flow-col-dense">
                   {unit_type.includes("Over") ? (
                     <>
-                      <div className="flex justify-end relative">
+                      <div className="flex justify-end relative w-full">
+                        {" "}
+                        {/* Ensure the flex container takes full width */}
                         <input
                           ref={quantity1Ref}
                           type="number"
@@ -1116,12 +1120,12 @@ const EmissionWidget = React.memo(
                           min="0"
                           placeholder={
                             scopeErrors["Quantity"]
-                              ? "Enter Data *"
-                              : "Enter Data"
+                              ? "Enter Value *"
+                              : "Enter Value"
                           }
                           className={getFieldClass(
                             "Quantity",
-                            "text-[12px] focus:outline-none w-[7vw] text-right pe-1 focus:border-b focus:border-blue-300"
+                            "text-[12px] focus:outline-none w-[5vw] text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
                           )}
                           disabled={["assigned", "approved"].includes(
                             value.rowType
@@ -1142,7 +1146,7 @@ const EmissionWidget = React.memo(
                         <select
                           value={unit}
                           onChange={(e) => handleUnitChange(e.target.value)}
-                          className={`text-[12px] w-[100px]   text-center rounded-md py-1 shadow ${
+                          className={`text-[12px] w-[100px] text-center rounded-md py-1 shadow ${
                             unit
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
@@ -1162,7 +1166,9 @@ const EmissionWidget = React.memo(
                           </div>
                         )}
                       </div>
-                      <div className="flex justify-end relative">
+                      <div className="flex justify-end relative w-full">
+                        {" "}
+                        {/* Ensure the flex container takes full width */}
                         <input
                           ref={quantity2Ref}
                           type="number"
@@ -1173,7 +1179,7 @@ const EmissionWidget = React.memo(
                           placeholder="Enter Value"
                           className={getFieldClass(
                             "Quantity2",
-                            "text-[12px] focus:outline-none w-[7vw] text-right pe-1 focus:border-b focus:border-blue-300"
+                            "text-[12px] focus:outline-none w-[5vw] text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
                           )}
                           step="1"
                           min="0"
@@ -1194,7 +1200,7 @@ const EmissionWidget = React.memo(
                         <select
                           value={unit2}
                           onChange={(e) => handleUnit2Change(e.target.value)}
-                          className={` text-[12px] w-[100px]   text-center rounded-md py-1 shadow ${
+                          className={` text-[12px] w-[100px] text-center rounded-md py-1 shadow ${
                             unit2
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
@@ -1216,7 +1222,9 @@ const EmissionWidget = React.memo(
                       </div>
                     </>
                   ) : (
-                    <div className="flex justify-end relative">
+                    <div className="flex justify-end relative w-full">
+                      {" "}
+                      {/* Ensure the flex container takes full width */}
                       <input
                         ref={quantity1Ref}
                         type="number"
@@ -1226,9 +1234,10 @@ const EmissionWidget = React.memo(
                         onBlur={handleBlur}
                         step="1"
                         min="0"
+                        placeholder="Enter Value"
                         className={getFieldClass(
                           "Quantity",
-                          "text-[12px] focus:outline-none w-[7vw] text-right pe-1 focus:border-b focus:border-blue-300"
+                          "text-[12px] focus:outline-none w-[10vw] text-right pe-1 focus:border-b focus:border-blue-300"
                         )}
                         disabled={["assigned", "approved"].includes(
                           value.rowType
@@ -1249,7 +1258,7 @@ const EmissionWidget = React.memo(
                       <select
                         value={unit}
                         onChange={(e) => handleUnitChange(e.target.value)}
-                        className={` text-[12px] w-[100px]   text-center rounded-md py-1 shadow ${
+                        className={` text-[12px] w-[100px] text-center rounded-md py-1 shadow ${
                           unit
                             ? "bg-white text-blue-500 "
                             : "bg-blue-500 text-white hover:bg-blue-600"
@@ -1278,6 +1287,7 @@ const EmissionWidget = React.memo(
                 </div>
               </td>
 
+
               {/* Assignee Button */}
               <td className="py-2 text-center w-[5vw]">
                 <button
@@ -1302,10 +1312,12 @@ const EmissionWidget = React.memo(
               <td className="py-3 w-[5vw]">
                 <div className=" flex justify-left">
                   <div className="pt-1">
-                    <label className="cursor-pointer">
+                    <label className="">
                       <LuTrash2
-                        className="text-gray-500 hover:text-red-500"
-                        onClick={handleClickonRemove}
+                        className={`text-gray-500 ${
+                          rowType !=='Approved'? 'cursor-not-allowed' : 'hover:text-red-500 cursor-pointer'
+                        }`}
+                        onClick={rowType !=='Approved' && handleClickonRemove}
                       />
                     </label>
                   </div>
@@ -1316,7 +1328,7 @@ const EmissionWidget = React.memo(
                       onChange={handleChange}
                       style={{ display: "none" }}
                       disabled={
-                        rowType === "assigned" || rowType === "approved"
+                        rowType === "assigned" || rowType === "approved" || rowType === "calculated"
                       }
                     />
 

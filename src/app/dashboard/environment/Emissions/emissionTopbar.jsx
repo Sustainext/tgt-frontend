@@ -61,7 +61,7 @@ const EmissionTopBar=({toggleDrawer,apiData})=>{
                
                   <button
                     className="text-[#fff] bg-[#BF8B2E] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                    onClick={() => toggleDrawer("sd3")}
+                    onClick={() => toggleDrawer("sd35")}
                   >
                     SDG 12
                   </button>
@@ -79,7 +79,7 @@ const EmissionTopBar=({toggleDrawer,apiData})=>{
                   </button>
                   <button
                     className="text-[#fff] bg-[#40AE49] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("sd8")}
+                    onClick={() => toggleDrawer("sd38")}
                   >
                     SDG 15
                   </button>
