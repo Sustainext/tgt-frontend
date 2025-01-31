@@ -399,6 +399,7 @@ const Energysold = ({ location, year, month }) => {
                   {...props}
                   scopes="ec146"
                   setFormData={updateFormDatanew}
+                  tabname="Energy sold"
                 />
               ),
              
