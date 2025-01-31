@@ -54,6 +54,7 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
             value ? 'bg-white text-blue-500 shadow' : 'bg-blue-500 text-white'
           }`}
           value={value || ''}
+          disabled={uiSchema['ui:widgetDisable']?`${uiSchema['ui:widgetDisable']}`:false}
           onChange={handleChange}
         >
           <option value="" disabled={!!value}>{`Unit` || "Select..."}</option>

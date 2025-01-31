@@ -162,6 +162,7 @@ const uiSchema = {
 
         Unit1: {
             'ui:widget': 'selectWidget3',
+            'ui:widgetDisable':true,
             'ui:horizontal': true,
             'ui:options': {
                 label: false
@@ -176,6 +177,7 @@ const uiSchema = {
         },
         Unit2: {
             'ui:widget': 'selectWidget3',
+            'ui:widgetDisable':true,
             'ui:horizontal': true,
             'ui:options': {
                 label: false
@@ -345,9 +347,9 @@ const Recycledinput = ({location, year, month}) => {
    const handleChange = (e) => {
     const updatedFormData = e.formData.map((item, index) => {
         const updatedItem = { ...item };
-
         // Check if Unit is updated and update Unit2
         if (updatedItem.Unit && updatedItem.Unit !== formData[index]?.Unit) {
+          updatedItem.Unit1 = updatedItem.Unit; // Mirror the value of Unit to Unit1
             updatedItem.Unit2 = updatedItem.Unit; // Mirror the value of Unit to Unit2
         }
 
@@ -404,8 +406,8 @@ const Recycledinput = ({location, year, month}) => {
         <div>
         <Form
             className='flex'
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
