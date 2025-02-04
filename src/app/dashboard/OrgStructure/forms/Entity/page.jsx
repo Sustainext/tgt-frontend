@@ -74,6 +74,7 @@ const Entity = () => {
     // Add organization property if the method is 'post'
     if (method === "post") {
       payload.organization = data.generalDetails.organisation || null;
+      payload.framework= "GRI: With reference to";
     }
 
     try {

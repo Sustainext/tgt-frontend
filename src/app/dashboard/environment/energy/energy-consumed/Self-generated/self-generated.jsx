@@ -365,6 +365,7 @@ const Selfgenerated = ({location, year, month}) => {
                   {...props}
                   scopes="ec168"
                   setFormData={updateFormDatanew}
+                  tabname="Self generated - not consumed or sold"
                 />
               ),
              

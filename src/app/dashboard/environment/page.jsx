@@ -51,6 +51,7 @@ import {
   setStartDate,
   setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
+import {f_setSectionName} from '../../../lib/redux/features/FileInfoSlice'
 import BaseYear from './Emissions/baseYear/page'
 
 const environment = () => {
@@ -81,6 +82,7 @@ const environment = () => {
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    dispatch(f_setSectionName(tab));
   };
 
   useEffect(() => {
