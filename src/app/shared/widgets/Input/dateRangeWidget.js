@@ -50,7 +50,7 @@ const DateRangeWidget = (props) => {
               {uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
-                data-tooltip-html={uiSchema["ui:title"].replace(/\s+/g, "-")}
+                data-tooltip-html={uiSchema["ui:tooltipstitle"].replace(/\s+/g, "-")}
                 className="mt-1 ml-3 text-[14px]"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />

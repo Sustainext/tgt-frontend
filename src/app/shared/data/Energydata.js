@@ -3173,7 +3173,7 @@ export const Energydata = [
         </div>
       </>,
     ],
-    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
   },
   {
     category: ["44"],
@@ -3268,7 +3268,7 @@ export const Energydata = [
         </div>
       </>,
     ],
-    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
   },
   {
     category: ["45"],
@@ -3361,7 +3361,7 @@ export const Energydata = [
         </div>
       </>,
     ],
-    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
   },
   {
     category: ["46"],

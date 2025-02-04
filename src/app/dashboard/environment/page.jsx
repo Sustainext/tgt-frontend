@@ -30,6 +30,8 @@ import MaterialsMaterialtopic from "./Materials/Management-Material-topic/page";
 import WaterMaterialtopic from "./Water-effluents/Management-Material-topic/page";
 import SupplierMaterialtopic from "./supplier-environmental-assessment/Management-Material-topic/page";
 import SignificantSpills from './Waste/significant-spills/page'
+import ConsolidationApproach from './Emissions/consolidationApproach/page'
+import Standards from './Emissions/standards/page'
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -96,7 +98,7 @@ const environment = () => {
       "Management of Material topic energy",
       // "Management of Material topic effluent",
     ];
-    const emissionTabs = ["GHG Emissions","Base Year"];
+    const emissionTabs = ["GHG Emissions","Base Year","Consolidation Approach","Standards"];
     const energyTabs = [
       "Energy consumed inside the organization",
       "Energy consumption outside of the organization",
@@ -188,6 +190,8 @@ const environment = () => {
             )}
             {activeTab === "GHG Emissions" && <Emission apiData={data} />}
             {activeTab === "Base Year" && <BaseYear apiData={data} />}
+            {activeTab === "Consolidation Approach"  && <ConsolidationApproach apiData={data} /> }
+            {activeTab ==="Standards" && <Standards apiData={data} /> }
             {/* Energy start */}
             {activeTab === "Management of Material topic energy" && (
               <EnergyMaterialtopic apiData={data} />
