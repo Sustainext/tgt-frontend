@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { IoArrowBack } from 'react-icons/io5';
 import { MdKey } from "react-icons/md";
-import tokenImg from '../../../public/token.png'
 import Image from "next/image";
 import { FcExpired } from "react-icons/fc";
 import { PiWarningOctagonFill } from "react-icons/pi";
