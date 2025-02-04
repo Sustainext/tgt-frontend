@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { FiX, FiUser, FiFile } from "react-icons/fi";
+import { FiX, FiUser, FiFile, FiXCircle } from "react-icons/fi";
 import Moment from "react-moment";
 import ImageUpload from "../../../shared/components/ImageUpload";
 import {getLocationName} from "../../../utils/locationName";
@@ -17,6 +17,7 @@ const FillModal = ({
   onActivityChange,
   onTaskDataChange,
   onFileUpload,
+  onFileDelete,
   onSubmit,
   isBeforeToday,
   validateDecimalPlaces,
@@ -39,6 +40,10 @@ const FillModal = ({
   
       fetchLocationName();
     }, [taskassigndata.location]);
+
+    const removeFile = () =>{
+      onTaskDataChange((prev)=>prev.file_data = {})
+    }
   if (!isOpen) return null;
 
   return (
@@ -290,21 +295,23 @@ const FillModal = ({
             <div className="relative text-black rounded-md flex items-center">
               {taskassigndata.file_data?.url ? (
                 <div className="flex items-center space-x-2 px-8 py-4 border border-gray-300 rounded-md w-full">
-                  <FiFile
-                    className="text-green-600"
-                    style={{ fontSize: "28px" }}
-                  />
-                  <div>
-                    <p className="text-sm text-blue-500 truncate w-64">
-                      {taskassigndata.file_data.name}
-                    </p>
-                    <p className="text-sm text-gray-400">
-                      {(taskassigndata.file_data.size / (1024 * 1024)).toFixed(
-                        2
-                      )}{" "}
-                      MB
-                    </p>
-                  </div>
+                <div className="flex items-center justify-between">
+                              <div className="text-2xl">
+                                <FiFile color="#28C1A2" size={24} />
+                              </div>
+                              <div className="ml-2">
+                                <p className="text-[14px] truncate w-48">{taskassigndata.file_data.name}</p>
+                                <p className="text-[12px] text-gray-400">
+                                  {(taskassigndata.file_data.size / 1024 / 1024).toFixed(2)} MB
+                                </p>
+                              </div>
+                              <button
+                              onClick={onFileDelete}
+                              className="ml-auto p-2 rounded-full"
+                            >
+                              <FiXCircle size={24} color="#D64564" />
+                            </button>
+                            </div>
                 </div>
               ) : (
                 <ImageUpload onFileSelect={onFileUpload} />
