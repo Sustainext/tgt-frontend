@@ -784,8 +784,8 @@ else{
                 
                 )}
               </th>
-              <th className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]" onClick={() => handleSort("last_report_date")}>
-                <div className="flex justify-center">Last Edited on{" "} {sort.column === "last_report_date" ? (
+              <th className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]" onClick={() => handleSort("updated_at")}>
+                <div className="flex justify-center">Last Edited on{" "} {sort.column === "updated_at" ? (
                     sort.direction === "asc" ? (
                       <MdKeyboardArrowUp />
                     ) : (
@@ -831,10 +831,10 @@ else{
                   </td>
 
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
-                    {item.last_report_date}
+                    {item.updated_at}
                   </td>
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
-                    {item.created_by}
+                    {item.last_updated_by }
                   </td>
                   <td className="py-3 px-6 relative text-center flex justify-center">
                     <MdMoreVert
