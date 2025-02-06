@@ -318,7 +318,7 @@ const FileUploadWithAddRowAndCol = (props) => {
                       </div>
                     </div>
                     <div className="flex justify-between">
-                      <div className="relative w-[760px] h-[580px]">
+                      <div className="relative w-[58vw] h-[90vh]">
                     
                         {fileInfo.fileType.startsWith("image") ? (
                           <img
