@@ -13,7 +13,7 @@ const HomeDashboard = () => {
           <div>
             <MyTasks />
           </div>
-          <div className="col-start-1 row-start-2 rounded-lg">
+          <div>
             <MyGoals />
           </div>
         </div>

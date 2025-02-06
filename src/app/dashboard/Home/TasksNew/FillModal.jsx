@@ -1,7 +1,8 @@
-import React from "react";
-import { FiX, FiUser, FiFile, FiChevronDown } from "react-icons/fi";
+import React, {useState, useEffect} from "react";
+import { FiX, FiUser, FiFile, FiXCircle } from "react-icons/fi";
 import Moment from "react-moment";
 import ImageUpload from "../../../shared/components/ImageUpload";
+import {getLocationName} from "../../../utils/locationName";
 
 const FillModal = ({
   isOpen,
@@ -16,11 +17,31 @@ const FillModal = ({
   onActivityChange,
   onTaskDataChange,
   onFileUpload,
+  onFileDelete,
   onSubmit,
   isBeforeToday,
   validateDecimalPlaces,
 }) => {
-  if (!isOpen) return null;
+  const [locationName,setLocationName] = useState('')
+  useEffect(() => {
+      const fetchLocationName = async () => {
+        if (taskassigndata?.location) {
+          try {
+            const name = await getLocationName(taskassigndata.location);
+            console.log('name of location', name);
+            
+            setLocationName(name);
+          } catch (error) {
+            console.error("Error fetching location name:", error);
+            setLocationName(taskassigndata.location);
+          }
+        }
+      };
+  
+      fetchLocationName();
+    }, [taskassigndata.location]);
+
+    if (!isOpen || !taskassigndata) return null;
 
   return (
     <div className="fixed inset-0 top-10 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -68,7 +89,7 @@ const FillModal = ({
           <div className="grid grid-cols-4 gap-3">
             <div className="col-span-3">
               <h5 className="text-sm mb-0.5">Location</h5>
-              <p className="text-sm text-gray-500">{taskassigndata.location}</p>
+              <p className="text-sm text-gray-500">{locationName || "Loading..."}</p>
             </div>
             <div>
               <h5 className="text-sm mb-0.5">Year</h5>
@@ -79,7 +100,7 @@ const FillModal = ({
           {["month", "scope", "category", "subcategory"].map((field) => (
             <div key={field}>
               <h5 className="text-sm mb-0.5 capitalize">{field}</h5>
-              <p className="text-sm text-gray-500">{taskassigndata[field]}</p>
+              <p className="text-sm text-gray-500">{field ==='scope' ? "Scope " + taskassigndata[field] : taskassigndata[field]}</p>
             </div>
           ))}
 
@@ -117,7 +138,10 @@ const FillModal = ({
                       key={activity.id}
                       value={`${activity.name} - (${activity.source}) - ${activity.unit_type}`}
                     >
-                      {`${activity.name} - (${activity.source}) - ${activity.unit_type}`}
+                      {activity.name} - ({activity.source}) - {activity.unit_type} -{" "}
+                            {activity.region} - {activity.year}
+                            {activity.source_lca_activity !== "unknown" &&
+                              ` - ${activity.source_lca_activity}`}
                     </option>
                   ))}
                 </select>
@@ -143,13 +167,13 @@ const FillModal = ({
                     />
                     <div className="absolute right-1 top-0.5">
                       <select
-                        className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[10px] bg-[#007EEF] text-white w-[50px]"
+                        className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[12px] bg-[#007EEF] text-white w-[50px]"
                         value={taskassigndata.unit1}
                         onChange={(e) =>
                           onTaskDataChange({ unit1: e.target.value })
                         }
                       >
-                        <option className="text-[10px]">Unit</option>
+                        <option className="text-[12px]">Unit</option>
                         {unitTypes
                           .filter(
                             (unit) =>
@@ -165,7 +189,7 @@ const FillModal = ({
                           .flat()
                           .flat()
                           .map((unitName) => (
-                            <option key={unitName} className="text-[10px]">
+                            <option key={unitName} className="text-[12px]">
                               {unitName}
                             </option>
                           ))}
@@ -189,13 +213,13 @@ const FillModal = ({
                     />
                     <div className="absolute right-1 top-0.5">
                       <select
-                        className="cursor-pointer appearance-none px-2 py-0.5 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[10px] bg-[#007EEF] text-white w-[50px]"
+                        className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[12px] bg-[#007EEF] text-white w-[50px]"
                         value={taskassigndata.unit2}
                         onChange={(e) =>
                           onTaskDataChange({ unit2: e.target.value })
                         }
                       >
-                        <option className="text-[10px]">Unit</option>
+                        <option className="text-[12px]">Unit</option>
                         {unitTypes
                           .filter(
                             (unit) =>
@@ -211,7 +235,7 @@ const FillModal = ({
                           .flat()
                           .flat()
                           .map((unitName) => (
-                            <option key={unitName} className="text-[10px]">
+                            <option key={unitName} className="text-[12px]">
                               {unitName}
                             </option>
                           ))}
@@ -236,13 +260,13 @@ const FillModal = ({
                   />
                   <div className="absolute right-1 top-0.5">
                     <select
-                      className="cursor-pointer appearance-none px-2 py-0.5 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[10px] bg-[#007EEF] text-white w-[50px]"
+                      className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none ms-1 mt-1 font-medium text-[12px] bg-[#007EEF] text-white w-[50px]"
                       value={taskassigndata.unit1}
                       onChange={(e) =>
                         onTaskDataChange({ unit1: e.target.value })
                       }
                     >
-                      <option className="text-[10px]">Unit</option>
+                      <option className="text-[12px]">Unit</option>
                       {unitTypes
                         .filter(
                           (unit) =>
@@ -268,21 +292,23 @@ const FillModal = ({
             <div className="relative text-black rounded-md flex items-center">
               {taskassigndata.file_data?.url ? (
                 <div className="flex items-center space-x-2 px-8 py-4 border border-gray-300 rounded-md w-full">
-                  <FiFile
-                    className="text-green-600"
-                    style={{ fontSize: "28px" }}
-                  />
-                  <div>
-                    <p className="text-sm text-blue-500 truncate w-64">
-                      {taskassigndata.file_data.name}
-                    </p>
-                    <p className="text-sm text-gray-400">
-                      {(taskassigndata.file_data.size / (1024 * 1024)).toFixed(
-                        2
-                      )}{" "}
-                      MB
-                    </p>
-                  </div>
+                <div className="flex items-center justify-between">
+                              <div className="text-2xl">
+                                <FiFile color="#28C1A2" size={24} />
+                              </div>
+                              <div className="ml-2">
+                                <p className="text-[14px] truncate w-48">{taskassigndata.file_data.name}</p>
+                                <p className="text-[12px] text-gray-400">
+                                  {(taskassigndata.file_data.size / 1024 / 1024).toFixed(2)} MB
+                                </p>
+                              </div>
+                              <button
+                              onClick={onFileDelete}
+                              className="ml-auto p-2 rounded-full"
+                            >
+                              <FiXCircle size={24} color="#D64564" />
+                            </button>
+                            </div>
                 </div>
               ) : (
                 <ImageUpload onFileSelect={onFileUpload} />

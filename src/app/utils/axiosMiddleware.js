@@ -99,17 +99,36 @@ const put = async (url, data, config) => {
   return axiosInstance.put(url, data, config);
 };
 
-const patch = async (url, data, config) => {
-  return axiosInstance.patch(url, data, config);
+ const post = async (url, data) => {
+  try {
+    const response = await axiosInstance.post(url, data);
+    return response; // Ensure this returns the full response
+  } catch (error) {
+    console.error("POST Error:", error);
+    throw error;
+  }
 };
 
-const post = async (url, data, config) => {
-  return axiosInstance.post(url, data, config);
+ const patch = async (url, data) => {
+  try {
+    const response = await axiosInstance.patch(url, data);
+    return response; // Return the response
+  } catch (error) {
+    console.error("PATCH Error:", error);
+    throw error;
+  }
 };
 
-const del = async (url, config) => {
-  return axiosInstance.delete(url, config);
+ const del = async (url) => {
+  try {
+    const response = await axiosInstance.delete(url);
+    return response; // Return the response
+  } catch (error) {
+    console.error("DELETE Error:", error);
+    throw error;
+  }
 };
+
 
 const get = async (url, config) => {
   return axiosInstance.get(url, config);

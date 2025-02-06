@@ -1,6 +1,7 @@
 import {
   categoriesToAppend,
   categoryMappings,
+  shouldFetchFromCustomMapping,
 } from "../shared/data/customActivities";
 
 // Cache for storing API responses
@@ -46,6 +47,9 @@ export async function fetchClimatiqActivities({
     // Ensure year is adjusted in the helper function as well
     if (params.year === "2025" || params.year === 2025) {
       params.year = "2024";
+    }
+    if (params.year === "2024" && params.subcategory === "Electricity") {
+      params.year = "2023";
     }
 
     if (
@@ -126,6 +130,11 @@ export async function fetchClimatiqActivities({
         wildcardInitialData
       );
 
+      // Filter out private factors from wildcard search results
+      wildcardActivitiesData = wildcardActivitiesData.filter(
+        (activity) => activity.access_type !== "private"
+      );
+
       if (wildcardInitialData.last_page === 0) {
         // Historical data search
         for (let i = parseInt(adjustedYear) - 1; i >= 2019; i--) {
@@ -147,29 +156,43 @@ export async function fetchClimatiqActivities({
       }
     }
 
-    // Custom activities fetch if needed
     if (
       categoriesToAppend.includes(subcategory) &&
       categoryMappings[subcategory] &&
       !customFetchExecuted
     ) {
-      const customFetchPromises = categoryMappings[subcategory].map(async (entry) => {
-        const initialCustomData = await fetchData({
-          subcategory,
-          page,
-          year: entry.year === "2025" || entry.year === 2025 ? "2024" : entry.year,
-          source: entry.source,
-        });
+      const customFetchPromises = categoryMappings[subcategory]
+        .filter((entry) => {
+          // Always include entries with checkConditions: false
+          if (!entry.checkConditions) return true;
 
-        return fetchAllPages(
-          {
+          // For conditional entries, check if parameters match the conditions
+          return shouldFetchFromCustomMapping(entry, {
+            year: adjustedYear,
+            region,
+          });
+        })
+        .map(async (entry) => {
+          const initialCustomData = await fetchData({
             subcategory,
-            year: entry.year === "2025" || entry.year === 2025 ? "2024" : entry.year,
+            page,
+            year: entry.year,
             source: entry.source,
-          },
-          initialCustomData
-        );
-      });
+            ...(entry.category && { category: entry.category }),
+            ...(entry.region && { region: entry.region }),
+          });
+
+          return fetchAllPages(
+            {
+              subcategory,
+              year: entry.year,
+              source: entry.source,
+              ...(entry.category && { category: entry.category }),
+              ...(entry.region && { region: entry.region }),
+            },
+            initialCustomData
+          );
+        });
 
       const customResults = await Promise.all(customFetchPromises);
       customFetchData = customResults.flat();
@@ -184,15 +207,37 @@ export async function fetchClimatiqActivities({
     ];
 
     // Sort results
+    // Helper function to check region matches
+    const isRegionMatch = (activityRegion, selectedRegion) => {
+      // Handle cases where regions might be undefined
+      if (!activityRegion || !selectedRegion) return false;
+
+      // Remove any trailing asterisks for comparison
+      const cleanSelectedRegion = selectedRegion.replace(/\*+$/, "");
+
+      // Check if activityRegion starts with the cleaned selected region
+      return activityRegion.startsWith(cleanSelectedRegion);
+    };
+
+    // Updated sorting function
     combinedResults.sort((a, b) => {
+      // 1. Sort by access_type (private first)
       if (a.access_type === "private" && b.access_type !== "private") return -1;
       if (a.access_type !== "private" && b.access_type === "private") return 1;
+
+      // 2. Sort by region match (matching regions first)
+      const aMatchesRegion = isRegionMatch(a.region, region);
+      const bMatchesRegion = isRegionMatch(b.region, region);
+      if (aMatchesRegion && !bMatchesRegion) return -1;
+      if (!aMatchesRegion && bMatchesRegion) return 1;
+
+      // 3. Sort alphabetically by name (within the same region group)
       return a.name.localeCompare(b.name);
     });
 
     const result = {
       results: combinedResults,
-      totalPages: 1, // Since we're returning all results, we set totalPages to 1
+      totalPages: 1,
       hasCustomData: customFetchData.length > 0,
     };
 

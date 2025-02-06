@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-const EmissionTopBar=({toggleDrawer,apiData})=>{
+const EmissionTopBar=({toggleDrawer,apiData,sdgData,griData})=>{
     const materialityEnvData=apiData&&apiData.environment?apiData.environment:{}
     return (
         <>
@@ -28,64 +28,36 @@ const EmissionTopBar=({toggleDrawer,apiData})=>{
                   
                 </div>
               </div>
-              <div className="w-full float-end me-2">
-                <div className="float-end border-l">
-                  <div className="flex mb-2">
-                  <button
-                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("43")}
-                  >
-                    GRI 305 - 1
-                  </button>
-                  <button
-                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("44")}
-                  >
-                    GRI 305 - 2
-                  </button>
-                  <button
-                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("45")}
-                  >
-                    GRI 305 - 3
-                  </button>
-                </div>
+             
 
-                <div className="flex">
-                  <button
-                    className="text-[#fff] bg-[#4C9F38] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                    onClick={() => toggleDrawer("sd5")}
+
+              <div className="w-full float-end pt-5 me-1">
+            <div className="float-end border-l">
+              <div className="flex mb-2">
+              {griData&&griData.map((val)=>(
+                    <button
+                    className={`text-[${val.textColor}] ${val.bgColor} rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5`}
+                    onClick={() => toggleDrawer(val.toggle)}
                   >
-                    SDG 3
+                    {val.tagName}
                   </button>
-               
-                  <button
-                    className="text-[#fff] bg-[#BF8B2E] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                    onClick={() => toggleDrawer("sd35")}
-                  >
-                    SDG 12
-                  </button>
-                  <button
-                    className="text-[#fff] bg-lime-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("sd4")}
-                  >
-                    SDG 13
-                  </button>
-                  <button
-                    className="text-[#fff] bg-[#007DBC] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("sd24")}
-                  >
-                    SDG 14
-                  </button>
-                  <button
-                    className="text-[#fff] bg-[#40AE49] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("sd38")}
-                  >
-                    SDG 15
-                  </button>
-                  </div>
-                </div>
+                ))}
               </div>
+              <div className="flex">
+              {sdgData&&sdgData.map((val)=>(
+                    <button
+                    className={`text-[${val.textColor}] ${val.bgColor} rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5`}
+                    onClick={() => toggleDrawer(val.toggle)}
+                  >
+                    {val.tagName}
+                  </button>
+                ))}
+              </div>
+                
+              
+              
+            </div>
+          </div>
             </div>
         </>
     )

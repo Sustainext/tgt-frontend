@@ -430,6 +430,42 @@ const MyTask = () => {
       toast.error("Failed to upload file");
     }
   };
+  
+  const handleFileDelete = async () => {
+    if (!taskassigndata.file_data || !taskassigndata.file_data.url) {
+      toast.error("No file found to delete.");
+      return;
+    }
+  
+    try {
+      const fileUrl = taskassigndata.file_data.url;
+      const blobName = fileUrl.split("/").pop();
+  
+      const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
+      const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
+      const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
+  
+      const blobServiceClient = new BlobServiceClient(
+        `https://${accountName}.blob.core.windows.net?${sasToken}`
+      );
+  
+      const containerClient = blobServiceClient.getContainerClient(containerName);
+      const blobClient = containerClient.getBlockBlobClient(blobName);
+  
+      await blobClient.delete(); 
+  
+      setTaskAssigndata((prev) => ({
+        ...prev,
+        file_data: {}, 
+      }));
+  
+      toast.success("File deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting file:", error);
+      toast.error("Failed to delete file.");
+    }
+  };
+  
 
   const handleTaskClick = (task) => {
     console.log("Task clicked:", task, activeTab);
@@ -590,6 +626,7 @@ const MyTask = () => {
           }));
         }}
         onFileUpload={handleFileUpload}
+        onFileDelete={handleFileDelete}
         onSubmit={SubmitFilledData}
         isBeforeToday={isBeforeToday}
         validateDecimalPlaces={validateDecimalPlaces}

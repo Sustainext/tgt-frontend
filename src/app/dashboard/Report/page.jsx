@@ -606,6 +606,7 @@ const Report = () => {
           <div className="mt-3">
             <TableWithPagination
               data={data}
+              setData={setData}
               defaultItemsPerPage={10}
               fetchReoprts={fetchReoprts}
               setIsMenuOpen={setIsMenuOpen}
