@@ -57,7 +57,7 @@ const Dashboard = () => {
                 ESG Performance
               </button> */}
               <button
-                className={`px-4 py-1 rounded-b-none text-sm font-bold leading-[15px] ${
+                className={`px-4 rounded-b-none text-sm font-bold leading-[15px] ${
                   activeTab === "tab3"
                     ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
                     : "border-transparent text-neutral-500"
