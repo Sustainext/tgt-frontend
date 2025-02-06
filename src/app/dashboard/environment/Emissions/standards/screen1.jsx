@@ -11,19 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import TextareaWidgetnew from '../../../../shared/widgets/Textarea/TextAreaWidget5';
-import RadioWidget2 from '../../../../shared/widgets/Input/radioWidget2'
-import MonthPicker from '../../../../shared/widgets/Input/monthPicker'
-import DateRangeWidget from '../../../../shared/widgets/Input/dateRangeWidget'
+import AutoFillTextArea from '../../../../shared/widgets/Textarea/autoFillTextArea'
 const widgets = {
-  inputWidget: inputWidget3,
-  TextareaWidgetnew:TextareaWidgetnew,
-  RadioWidget2:RadioWidget2,
-  DateWidget:MonthPicker,
-  DateRangeWidget:DateRangeWidget
+    AutoFillTextArea:AutoFillTextArea
 };
 
-const view_path = "gri-environment-emissions-base_year";
+const view_path = "gri-environment-emissions-standards_methodologies";
 const client_id = 1;
 const user_id = 1;
 
@@ -34,163 +27,76 @@ const schema = {
       properties: {
         Q1: {
           type: "string",
-          title: "What is the selected Base Year for the calculation?",
-          startDate: { type: "string", format: "date" },
-          endDate: { type: "string", format: "date" },
+          title:
+            "Standards used",
         },
-      },
-      dependencies: {
-        Q1: {
-          oneOf: [
-            {
-              properties: {
-                Q1: {
-                    startDate: { type: "string", format: "date" },
-                    endDate: { type: "string", format: "date" },
-                  minLength: 1, // Ensures Q1 is not empty
-                },
-                Q2: {
-                  type: "string",
-                  title: "Describe the rationale for choosing the base year.",
-                },
-                Q3: {
-                  type: "string",
-                  title: "Specify the emissions in the Base year (tCO2e)",
-                },
-                Q4: {
-                  type: "string",
-                  title: "Have the base year emissions been recalculated?",
-                  enum: ["Yes", "No"],
-                },
-              },
-              required: ["Q1"], // Ensures Q1 is required for Q2, Q3, and Q4 to show
-            },
-          ],
-        },
-        Q4: {
-          oneOf: [
-            {
-              properties: {
-                Q4: {
-                  enum: ["Yes"],
-                },
-                Q5: {
-                  type: "string",
-                  title: "In which year have the base year emissions been recalculated?",
-                },
-                Q6: {
-                  type: "string",
-                  title: "What are the significant changes in emissions that triggered the recalculation of the base year emissions?",
-                },
-                Q7: {
-                  type: "string",
-                  title: "Provide the context for base year recalculations. (if applicable)",
-                },
-              },
-            },
-          ],
-        },
+        Q2: {
+            type: "string",
+            title:
+              "Methodologies used",
+          },
+        Q3: {
+            type: "string",
+            title:
+              "Calculation tools used",
+          },
       },
     },
   };
-
-const uiSchema = {
-  items: {
-    "ui:order": ["Q1","Q2","Q3","Q4","Q5","Q6","Q7"],
-    Q1: {
+  
+  const uiSchema = {
+    items: {
+      "ui:order": ["Q1","Q2","Q3"],
+  
+      Q1: {
         "ui:title":
-          "What is the selected Base Year for the calculation?",
+          "Standards used",
         "ui:tooltipstitle":
-          "Please specify base year. Base year definition: historical datum (such as year) against which a measurement is tracked over time.",
-        "ui:titlediplay": "block",
-        "ui:titletooltipdisplay": "block",
-        "ui:widget": "DateRangeWidget",
+          "Please select the consolidation approach considered by the organisation to calculate the greenhouse gas emissions according to the GHG Protocol",
+        "ui:tooltipdisplay": "none",
+        "ui:widget": "AutoFillTextArea",
+        "ui:autoFillContent":"This report outlines the Greenhouse Gas (GHG) emissions accounting for the organization [Organization Name], following industry-leading standards. The methodologies and calculations adhere to the guidelines provided by the Greenhouse Gas Protocol, including both 'A Corporate Accounting and Reporting Standard (Revised Edition)' and the 'Corporate Value Chain (Scope 3) Standard,' developed by the World Business Council for Sustainable Development (WBCSD) and the World Resources Institute (WRI). These standards ensure a comprehensive and accurate assessment of the organization's GHG emissions across all relevant scopes and categories.",
+        "ui:horizontal": true,
         "ui:options": {
           label: false,
         },
       },
-    Q2: {
+      Q2: {
         "ui:title":
-          "Describe the rationale for choosing the base year.",
+          "Methodologies used",
         "ui:tooltipstitle":
-          "Specify the rationale for choosing base year.",
-        "ui:titlediplay": "block",
-        "ui:titletooltipdisplay": "block",
-        "ui:widget": "TextareaWidgetnew",
+          "Please select the consolidation approach considered by the organisation to calculate the greenhouse gas emissions according to the GHG Protocol",
+        "ui:tooltipdisplay": "none",
+        "ui:widget": "AutoFillTextArea",
+        "ui:autoFillContent":`Data Collection and Monitoring Methodology\nEmission activity data is systematically collected from multiple data owners through the Sustainext platform. This platform centralizes the data, which is then meticulously reviewed to ensure completeness, accuracy, and the elimination of any duplication or human errors.\n\nQuantification Methodology\nThe quantification of GHG emissions begins with the identification of all relevant GHG emission sources within the organization. These sources are classified according to the GHG Protocol – Corporate Standard. Accurate activity data is then gathered, followed by the selection of emission factors from nationally or internationally recognized sources such as DEFRA, IPCC, GHG Protocol and National GHG Inventories. These emission factors are integral to the precise calculation of GHG emissions.\n\nCalculation Methodology\nUnderstanding the methodology for calculating greenhouse gas (GHG) emissions is essential for effectively tracking and mitigating our environmental impact. The calculation process involves the following key components:\n\nActivity Data: This refers to the measurable data associated with activities that lead to GHG emissions, such as the amount of fuel consumed, the kilowatt-hours (kWh) of electricity used, or the miles traveled by air.\n\nEmissions Factor: A coefficient used to convert activity data into the corresponding amount of GHG emissions. Emission factors are specific to each type of activity or emission source and are typically measured per unit of activity.\n\nCalculation Formula:\n\nEmissions = Activity Data × Emission Factor\nWhere:\n\nActivity Data is measured in units relevant to the activity (e.g., liters of fuel).\nEmission Factor is expressed in terms such as kilograms of CO₂ equivalent per unit of activity (e.g., kg CO₂e/Liter).\n\nExample Calculation:\n\nFuel Consumed: 100 Liters\nEmission Factor: 0.001557 kg CO₂e/Liter\nEmissions from Fuel Combustion: \n100×0.001557=0.1557 tCO₂e`,
+        "ui:horizontal": true,
         "ui:options": {
           label: false,
         },
       },
       Q3: {
         "ui:title":
-          "Specify the emissions in the Base year (tCO2e)",
-        "ui:tooltip":
-          "Please specify the emissions in the base year, whether CO2 , CH4 , N2O, HFCs, PFCs, SF6 , NF3 , or all.",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
-      Q4: {
-        "ui:title":
-          "Have the base year emissions been recalculated?",
-        "ui:tooltip":
-          "Please indicate, whether the base year has been recalculated.",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "RadioWidget2",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
-      Q5: {
-        "ui:title":
-          "In which year have the base year emission been recalculated.",
-        "ui:tooltip":
-          "Please specify any significant changes in the emissions that triggered the base year recalculation. ",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "DateWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
-      Q6: {
-        "ui:title":
-          "What are the significant changes in emissions that triggered the recalculation of the base year emissions?",
+          "Calculation tools used",
         "ui:tooltipstitle":
-          "Please specify any significant changes in the emissions that triggered the base year recalculation.",
-          "ui:titlediplay": "block",
-          "ui:titletooltipdisplay": "block",
-          "ui:widget": "TextareaWidgetnew",
-          "ui:options": {
-            label: false,
-          },
-      },
-      Q7: {
-        "ui:title":
-          "Provide the context for base year recalculations. (if applicable)",
-        "ui:tooltipstitle":
-          "Please explain the context for any significant changes in emissions that triggered recalculations of base year emissions.",
-        "ui:titlediplay": "block",
-        "ui:titletooltipdisplay": "block",
-        "ui:widget": "TextareaWidgetnew",
+          "Please select the consolidation approach considered by the organisation to calculate the greenhouse gas emissions according to the GHG Protocol",
+        "ui:tooltipdisplay": "none",
+        "ui:widget": "AutoFillTextArea",
+        "ui:autoFillContent":"The calculation of GHG emissions in this report was performed using Sustainext’s SaaS-based platform. This tool is specifically designed to minimize errors and ensure the accuracy and reliability of sustainability metrics. The platform streamlines the GHG accounting process by allowing for the effortless creation of GHG inventories, accurate emission calculations, and ongoing performance tracking, all within a single, integrated system. Sustainext’s platform adheres to industry standards, including the GHG Protocol and ISO 14064, ensuring that the calculations are consistent with best practices and globally recognized methodologies.",
+        "ui:horizontal": true,
         "ui:options": {
           label: false,
         },
       },
-      
-     
-   "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
-    },  
-  },
-};
+  
+      "ui:options": {
+        orderable: false,
+        addable: false,
+        removable: false,
+        layout: "horizontal",
+      },
+    },
+  };
+  
 
 const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
@@ -216,55 +122,20 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const validateRows = (data) => {
     const errors = {};
     data.forEach((row) => {
-      if (!row.Q2 || row.Q2.trim() === "") {
+      if (!row.Q1) {
+        errors.Q1 = "This field is required";
+      }
+      if (!row.Q2) {
         errors.Q2 = "This field is required";
       }
       if (!row.Q3) {
         errors.Q3 = "This field is required";
       }
-      if (!row.Q4) {
-        errors.Q4 = "This field is required";
-      }
-      if (!row.Q5) {
-        errors.Q5 = "This field is required";
-      }
-      if (!row.Q6 || row.Q6.trim() === "") {
-        errors.Q6 = "This field is required";
-      }
-      if (!row.Q7 || row.Q7.trim() === "") {
-        errors.Q7 = "This field is required";
-      }
     });
     return errors;
   };
 
-//   const validateRows=(data)=>{
-//     return data.map((row) => {
-//         const rowErrors = {};
-  
-//         if (!row.Q2 || row.Q2.trim() === "") {
-//           rowErrors.Q2 =
-//             "This field is required";
-//         }
-//         if (!row.Q3) {
-//             rowErrors.Q3 = "This field is required";
-//           }
-//           if (!row.Q4) {
-//             rowErrors.Q4 = "This field is required";
-//           }
-//           if (!row.Q5) {
-//             rowErrors.Q5 = "This field is required";
-//           }
-//           if (!row.Q6 || row.Q6.trim() === "") {
-//             rowErrors.Q6 = "This field is required";
-//           }
-//           if (!row.Q7 || row.Q7.trim() === "") {
-//             rowErrors.Q7 = "This field is required";
-//           }
-  
-//         return rowErrors;
-//   })
-// }
+
   
   const updateFormData = async () => {
     const data = {
@@ -366,10 +237,10 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 gap-6 text-[15px] text-neutral-950 font-[500]">
-           Base year for the calculation (If applicable)
+           Standards, methodologies and/or calculation tools used
               <MdInfoOutline
                 data-tooltip-id={`es25`}
-                data-tooltip-html="This section documents the data corresponding to the base year considered for the GHG emission calculation."
+                data-tooltip-html="This section documents the data corresponding to the standards, methodologies, assumptions, and/or calculation tools used."
                 className="text-[14px] mt-1"
               />
               <ReactTooltip
@@ -393,19 +264,20 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             <div className="flex float-end gap-2">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 305-1d
+                GRI 305-1g
                 </div>
               </div>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 305-2d
+                GRI 305-2g
                 </div>
               </div>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 305-3e
+                GRI 305-3g
                 </div>
               </div>
+             
             </div>
           </div>
         </div>
@@ -416,16 +288,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            widgets={{
-                ...widgets,
-                DateRangeWidget: (props) => (
-                    <DateRangeWidget
-                      {...props}
-                      dateRangeValidation={true} // Pass the prop here
-                    />
-                  ),
-
-            }}
+            widgets={widgets}
             formContext={{ validationErrors }}
           />
         </div>
@@ -433,10 +296,10 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-                (selectedOrg && year) && formData[0].Q1?false:true ? "cursor-not-allowed" : ""
+                (selectedOrg && year)  ? "" : "cursor-not-allowed"
             }`}
             onClick={handleSubmit}
-            disabled={(selectedOrg && year) && formData[0].Q1?false:true }
+            disabled={!(selectedOrg && year)  }
           >
             Submit
           </button>

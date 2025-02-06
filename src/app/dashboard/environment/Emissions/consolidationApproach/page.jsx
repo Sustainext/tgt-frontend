@@ -10,8 +10,9 @@ import EnvHeader2 from "../../environmentheader2";
 import { useSelector } from "react-redux";
 import EmissionTopBar from '../emissionTopbar'
 import Screen1 from "./screen1";
+import Screen2 from "./screen2";
 
-const BaseYear = ({apiData}) => {
+const ConsolidationApproach = ({apiData}) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
     (state) => state.materialitySlice
   );
@@ -48,59 +49,25 @@ const BaseYear = ({apiData}) => {
 
   const griData=[
     {
-      tagName:'GRI 305 - 1',
-      toggle:'43',
-      textColor:"#007EEF",
-      bgColor:"bg-slate-200"
-  },
- 
-  {
-      tagName:'GRI 305 - 2',
-      toggle:'44',
-      textColor:"#007EEF",
-      bgColor:"bg-slate-200"
-  },
-  {
-      tagName:'GRI 305 - 3',
-      toggle:'45',
-      textColor:"#007EEF",
-      bgColor:"bg-slate-200"
-  },
-  ]
-
-  const sdgData=[
+        tagName:'GRI 305 - 1',
+        toggle:'43',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
    
+    {
+        tagName:'GRI 305 - 2',
+        toggle:'44',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+    {
+        tagName:'GRI 305 - 3',
+        toggle:'45',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
 
-  {
-    tagName:'SDG 3',
-    toggle:'sd5',
-    textColor:"#fff",
-    bgColor:"bg-[#4C9F38]"
-},
-{
-  tagName:'SDG 12',
-  toggle:'sd35',
-  textColor:"#fff",
-  bgColor:"bg-[#BF8B2E]"
-},
-{
-  tagName:'SDG 13',
-  toggle:'sd4',
-  textColor:"#fff",
-  bgColor:"bg-lime-900"
-},
-{
-  tagName:'SDG 14',
-  toggle:'sd24',
-  textColor:"#fff",
-  bgColor:"bg-[#007DBC]"
-},
-{
-  tagName:'SDG 15',
-  toggle:'sd38',
-  textColor:"#fff",
-  bgColor:"bg-[#40AE49]"
-},
    
 ]
 
@@ -108,12 +75,12 @@ const BaseYear = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} sdgData={sdgData} griData={griData} />
+      <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} griData={griData} />
         
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-         Base Year
+          Consolidation Approach and Assumptions
             {/* <MdInfoOutline
               data-tooltip-id={`tooltip-$es10`}
               data-tooltip-content="This section documents the data corresponding to the direct economic value generated and distributed."
@@ -193,9 +160,14 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
       selectedOrg={selectedOrg}
       selectedCorp={selectedCorp}
       year={year} />
+
+<Screen2
+      selectedOrg={selectedOrg}
+      selectedCorp={selectedCorp}
+      year={year} />
           
 
     </>
   );
 };
-export default BaseYear;
+export default ConsolidationApproach;

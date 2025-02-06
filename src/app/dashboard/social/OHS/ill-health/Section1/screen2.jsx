@@ -27,8 +27,9 @@ const schema = {
     properties: {
       employeeCategory: { type: "string", title: "employeeCategory" },
       fatalities: { type: "string", title: "fatalities" },
-      highconsequence: { type: "string", title: "highconsequence" },
       recordable: { type: "string", title: "recordable" },
+      highconsequence: { type: "string", title: "highconsequence" },
+     
     },
   },
 };
