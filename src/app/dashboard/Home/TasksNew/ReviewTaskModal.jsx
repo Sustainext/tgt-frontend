@@ -180,7 +180,7 @@ const ReviewTaskModal = ({
           {/* Data Review Section */}
           <div className="mb-4 bg-[#007eef0d] p-4 rounded-md">
             <h5 className="text-left text-black text-sm mb-3">
-              Data to be added:
+              Data to be reviewed:
             </h5>
 
             {/* Activity */}
@@ -196,7 +196,7 @@ const ReviewTaskModal = ({
 
             {/* Quantities */}
             <div className="mb-3">
-              {taskassigndata.unit_type?.includes("Over") ? (
+              {taskassigndata.activity?.split('-')[2].includes("Over") ? (
                 <>
                   <div className="flex gap-4 mb-4">
                     <div className="flex-1">
@@ -437,7 +437,7 @@ const ReviewTaskModal = ({
 
         {/* File Preview */}
         {isPdfViewerOpen && (
-          <div className="bg-white rounded-lg w-[800px] min-h-[89vh] relative flex flex-col shadow-lg ms-3">
+          <div className="bg-white rounded-lg w-[800px] min-h-[89vh] h-[650px] relative flex flex-col shadow-lg ms-3">
             {/* Header Section */}
             <div className="p-4 border-b border-gray-200 flex justify-between items-center">
               <h3 className="text-lg font-medium text-gray-900 truncate">
