@@ -81,14 +81,16 @@ const TasksPage = () => {
   };
 
   useEffect(() => {
+    if(searchQuery==="")
     fetchTasks(searchQuery,activeTab,currentPage);
-  }, [activeTab]);
+  }, [activeTab, selectedAssignees, searchQuery]);
 
-  const fetchTasks = async (searchQuery="",tab="upcoming",page = 1) => {
+  const fetchTasks = async (searchQuery="", tab="upcoming", page=1) => {
     setIsLoading(true);
     try {
+      const assigneeFilter = selectedAssignees.length > 0 ? selectedAssignees.join(",") : "";
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/sustainapp/user_all_task/?search=${searchQuery}&activetab=${tab}&page=${page}&page_size=${itemsPerPage}`
+        `${process.env.BACKEND_API_URL}/sustainapp/user_all_task/?search=${searchQuery}&activetab=${tab}&page=${page}&page_size=${itemsPerPage}&assigned_to=${assigneeFilter}`
       );
       setCount(response.data.count);
       setTasks(response.data.results || []);
@@ -98,6 +100,7 @@ const TasksPage = () => {
       setIsLoading(false);
     }
   };
+  
 
   const handleSearch = (e) => {
     const value = e.target.value;
@@ -118,15 +121,17 @@ const TasksPage = () => {
       } finally {
         setIsLoading(false);
       }
-    }, 500);
+    }, 400);
 
     // Only for search, use debounce
     if (searchQuery) {
       debouncedFetch();
-    } else {
+    }
+     else {
       // For non-search triggers (tab change, pagination), fetch immediately
       debouncedFetch.flush();
     }
+    // debouncedFetch();
 
     return () => debouncedFetch.cancel();
   }, [searchQuery, activeTab, currentPage, itemsPerPage]);
@@ -237,21 +242,21 @@ const TasksPage = () => {
           </button>
           
           {dateRange && (
-            <div className="inline-flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
+            <div className="inline-flex items-center gap-2 bg-blue-100 rounded-lg px-3 py-2">
               <span>{dateRange}</span>
               <button className="text-gray-400 hover:text-gray-600">×</button>
             </div>
           )}
           
           {selectedAssignees && (
-            <div className="inline-flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
-              <span>Assignee: {selectedAssignees}</span>
+            <div className="inline-flex items-center gap-2 bg-blue-100 rounded-lg px-3 py-2">
+              <span>Assignee:</span><span className="text-blue-500 font-semibold">{selectedAssignees.length} Selected</span>
               <button className="text-gray-400 hover:text-gray-600">×</button>
             </div>
           )}
           
           {selectedStatus && (
-            <div className="inline-flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
+            <div className="inline-flex items-center gap-2 bg-blue-100 rounded-lg px-3 py-2">
               <span>Status: {selectedStatus}</span>
               <button className="text-gray-400 hover:text-gray-600">×</button>
             </div>

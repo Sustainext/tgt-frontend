@@ -41,10 +41,7 @@ const FillModal = ({
       fetchLocationName();
     }, [taskassigndata.location]);
 
-    const removeFile = () =>{
-      onTaskDataChange((prev)=>prev.file_data = {})
-    }
-  if (!isOpen) return null;
+    if (!isOpen || !taskassigndata) return null;
 
   return (
     <div className="fixed inset-0 top-10 z-50 flex items-center justify-center bg-black bg-opacity-50">

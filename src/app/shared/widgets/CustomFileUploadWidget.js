@@ -15,12 +15,18 @@ const CustomFileUploadWidget = ({
   value = {},
   scopes,
   setFormData,
-  label
+  label,
+  locationname,
+  year,
+  monthname,
+  sectionname,
+  tabname,
 }) => {
     const text1 = useSelector((state) => state.header.headertext1);
     const text2 = useSelector((state) => state.header.headertext2);
     const middlename = useSelector((state) => state.header.middlename);
   const [fileName, setFileName] = useState(value?.name || null);
+  const [logfileName, setLogFileName] = useState(value?.name || null);
   const [showModal, setShowModal] = useState(false);
   const [previewData, setPreviewData] = useState(value?.url || null);
   const [fileType, setFileType] = useState(value?.type || "");
@@ -86,23 +92,25 @@ const CustomFileUploadWidget = ({
   };
 
 
-  const LoginlogDetails = async (status, actionType) => {
+  const LoginlogDetails = async (status, actionType,newFileName) => {
     const backendUrl = process.env.BACKEND_API_URL;
     const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
   
     try {
       const ipAddress = await getIPAddress();
   
-      
+     
+  
+  
       const data = {
         event_type: text1,
         event_details: "File",
         action_type: actionType,
         status: status,
-        user_email:useremail,
-        user_role:roles,
+        user_email: useremail,
+        user_role: roles,
         ip_address: ipAddress,
-        logs: `${text1} > ${middlename} > ${text2}`,
+        logs: `${text1} > ${middlename} > ${text2} > ${locationname} > ${year} > ${monthname} > ${tabname} > ${sectionname} > ${newFileName}`,
       };
   
       const response = await axiosInstance.post(userDetailsUrl, data);
@@ -110,10 +118,10 @@ const CustomFileUploadWidget = ({
       return response.data;
     } catch (error) {
       console.error("Error logging login details:", error);
-  
       return null;
     }
   };
+  
   
   useEffect(() => {
     console.log(value, " is the new value");
@@ -134,6 +142,7 @@ const CustomFileUploadWidget = ({
     const newFileName = selectedFile ? selectedFile.name : null;
     console.log(selectedFile, " is the selectedFile");
     setFileName(newFileName);
+    setLogFileName(newFileName);
 
     if (selectedFile) {
       const reader = new FileReader();
@@ -163,8 +172,8 @@ const CustomFileUploadWidget = ({
 
         uploadAndSetState();
         setTimeout(() => {
-          LoginlogDetails("Success", "Uploaded");
-        }, 500);
+          LoginlogDetails("Success", "Uploaded",newFileName);
+        }, 1000);
         
       };
     }
@@ -195,7 +204,7 @@ const CustomFileUploadWidget = ({
   
       // Call LoginlogDetails with a "Success" status for deletion
       setTimeout(() => {
-        LoginlogDetails("Success", "Deleted");
+        LoginlogDetails("Success", "Deleted",logfileName);
       }, 500);
     } catch (error) {
       console.error("Error deleting file:", error.message);
@@ -278,7 +287,7 @@ const CustomFileUploadWidget = ({
               </div>
             </div>
             <div className="flex justify-between">
-              <div className="relative w-[540px] h-[450px]">
+              <div className="relative w-[55vw] h-[45vw]">
                 {fileType.startsWith("image") ? (
                   <img
                     src={previewData}
@@ -289,7 +298,7 @@ const CustomFileUploadWidget = ({
                   <iframe
                     src={previewData}
                     title="PDF Preview"
-                    className="w-full h-full"
+                    className="w-full h-full object-contain"
                   />
                 ) : (
                   <p>File preview not available.Please download and verify</p>
@@ -305,7 +314,7 @@ const CustomFileUploadWidget = ({
                   <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                     FILE NAME
                   </h2>
-                  <h2 className="text-[14px] leading-relaxed tracking-wide">
+                  <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
                     {fileName}
                   </h2>
                 </div>
@@ -321,7 +330,7 @@ const CustomFileUploadWidget = ({
                   <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                     FILE TYPE
                   </h2>
-                  <h2 className="text-[14px] leading-relaxed tracking-wide">
+                  <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
                     {fileType}
                   </h2>
                 </div>

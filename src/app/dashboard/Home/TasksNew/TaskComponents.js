@@ -41,7 +41,7 @@ const TaskTabs = ({ activeTab, onTabChange, tabs }) => (
 
 const TaskTable = ({ children, headers }) => (
   <div className="bg-white rounded-lg flex flex-col h-[calc(78vh-280px)]">
-    <div className="grid grid-cols-12 gap-4 py-3 text-sm text-gray-500 px-4 border-y border-gray-200">
+    <div className="grid grid-cols-12 gap-3 py-3 text-sm text-gray-500 px-4 border-y border-gray-200">
       {headers.map((header, index) => (
         <div key={index} className={header.className}>
           {header.label}
@@ -129,8 +129,8 @@ const TaskStatusBadge = ({ status }) => {
 const TaskRow = ({ task, onTaskClick }) => {
   return (
     <div className="flex justify-between border-b border-[#ebeced] py-2">
-      <div className="flex w-[26rem] cursor-pointer">
-        <div className="w-72 text-[#007eef] text-[13px] font-normal leading-none ml-3">
+      <div className="flex w-[22rem] cursor-pointer">
+        <div className="w-[17rem] text-[#007eef] text-[13px] font-normal leading-none ml-3">
           <p
             className="py-1 cursor-pointer truncate"
             data-tooltip-id={`task-tooltip-${task.id}`}

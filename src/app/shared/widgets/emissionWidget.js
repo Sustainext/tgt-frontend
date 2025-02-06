@@ -1309,9 +1309,9 @@ const EmissionWidget = React.memo(
                     <label className="">
                       <LuTrash2
                         className={`text-gray-500 ${
-                          rowType !=='Approved'? 'cursor-not-allowed' : 'hover:text-red-500 cursor-pointer'
+                          rowType ==='approved'? 'cursor-not-allowed' : 'hover:text-red-500 cursor-pointer'
                         }`}
-                        onClick={rowType !=='Approved' && handleClickonRemove}
+                        onClick={handleClickonRemove}
                       />
                     </label>
                   </div>
