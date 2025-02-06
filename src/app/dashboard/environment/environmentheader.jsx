@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import { useDispatch } from "react-redux";
+import {f_setLocationName,f_setYear,f_setMonthName} from "@/lib/redux/features/FileInfoSlice";
 
 const monthMapping = {
   Jan: 1,
@@ -36,6 +38,8 @@ const EnvironmentHeader = ({
   setLocationMessage,
   yearMessage,
   setYearMessage,
+  // setLocationname,
+  // setMonthname,
 }) => {
   const [formState, setFormState] = useState({
     location: location,
@@ -44,6 +48,7 @@ const EnvironmentHeader = ({
   });
 
   const [locations, setLocations] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -68,11 +73,20 @@ const EnvironmentHeader = ({
     }));
 
     if (name === "month") {
-      setActiveMonth(monthMapping[value]);
+      const monthNumber = monthMapping[value];
+      setActiveMonth(monthNumber);
+      // setMonthname(value); // Update month name
+      dispatch(f_setMonthName(value)); // Update month name in Redux
+      console.log(value ,"month name");
     } else if (name === "location") {
       setLocation(Number(value));
+      const selectedLocation = locations.find((loc) => loc.id === Number(value));
+      // setLocationname(selectedLocation?.name || ""); // Update location name
+      dispatch(f_setLocationName(selectedLocation?.name || "")); // Update location name in Redux
+      console.log(selectedLocation?.name ,"loaction name");
     } else if (name === "year") {
       setYear(value);
+      dispatch(f_setYear(value)); // Update year in Redux
     }
   };
 
@@ -98,7 +112,7 @@ const EnvironmentHeader = ({
               >
                 <option value="">Select location</option>
                 {locations.map((location, index) => (
-                  <option key={index} value={location.id}>
+                  <option key={index} value={location.id} name={location.name}>
                     {location.name}
                   </option>
                 ))}

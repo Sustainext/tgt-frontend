@@ -479,6 +479,26 @@ export const columns1 = [
     },
   ];
 
+  // significant spills tables
+  export const columns10 = [
+    "Material of the spill",
+    "Volume of the spill",
+    "Unit",
+  ];
+
+  export const columns11 = [
+    "Location of the spill",
+    "Volume of the spill",
+    "Unit",
+  ];
+
+  export const columns12 = [
+    "Total number of Significant spill",
+    "Total volume of Significant spill",
+    "Unit",
+  ];
+  
+
 
 
 

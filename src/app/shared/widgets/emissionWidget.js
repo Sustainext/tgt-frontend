@@ -30,6 +30,8 @@ import { getMonthName } from "@/app/utils/dateUtils";
 import { fetchClimatiqActivities } from "../../utils/climatiqApi.js";
 import CalculationInfoModal from "@/app/shared/components/CalculationInfoModal";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import {getLocationName} from '../../utils/locationName'
+
 const EmissionWidget = React.memo(
   ({
     value = {},
@@ -77,6 +79,9 @@ const EmissionWidget = React.memo(
     ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
     : '';
 
+    const locationname = useSelector(state=>state.emissions.locationName);
+    const monthName = useSelector(state=>state.emissions.monthName)
+
 //file log code//
     const getIPAddress = async () => {
       try {
@@ -90,7 +95,7 @@ const EmissionWidget = React.memo(
     };
   
   
-    const LoginlogDetails = async (status, actionType) => {
+    const LoginlogDetails = async (status, actionType,category, subcategory, activity, fileName, fileType) => {
       const backendUrl = process.env.BACKEND_API_URL;
       const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
     
@@ -106,12 +111,13 @@ const EmissionWidget = React.memo(
           user_email:useremail,
           user_role:roles,
           ip_address: ipAddress,
-          logs: `${text1} > ${middlename} > ${text2}`,
+          logs: `${text1} > ${middlename} > ${text2} > ${locationname} > ${year} > ${monthName} > ${scope} > ${category || "Category not selected"} > ${subcategory || "Subcategory not selected"} > ${activity || "Activity not selected"} > ${fileName} > ${fileType}`,
         };
     
-        const response = await axiosInstance.post(userDetailsUrl, data);
+        // const response = await axiosInstance.post(userDetailsUrl, data);
+        console.log('log data',data)
     
-        return response.data;
+        // return response.data;
       } catch (error) {
         console.error("Error logging login details:", error);
  
@@ -731,7 +737,7 @@ const EmissionWidget = React.memo(
           setFileType(fileType);
 
      setTimeout(() => {
-          LoginlogDetails("Success", "Uploaded");
+          LoginlogDetails("Success", "Uploaded",value.Category, value.Subcategory, value.Activity, newFileName, fileType);
         }, 500);
 
           console.log("File uploaded successfully:", uploadUrl);

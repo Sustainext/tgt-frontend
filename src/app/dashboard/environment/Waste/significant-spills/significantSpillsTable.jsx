@@ -6,6 +6,7 @@ import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import dateWidget from "../../../../shared/widgets/Input/dateWidget";
 import selectWidget from "../../../../shared/widgets/Select/selectWidget";
+import CustomUnitWidget from '../../../../shared/widgets/Select/CustomUnitWidget'
 import inputWidget from "../../../../shared/widgets/Input/inputWidget";
 import CustomFileUploadWidget from "../../../../shared/widgets/CustomFileUploadWidget";
 import AssignToWidget from "../../../../shared/widgets/assignToWidget";
@@ -20,6 +21,7 @@ import { Oval } from "react-loader-spinner";
 import selectWidget3 from "../../../../shared/widgets/Select/selectWidget3";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import TextareasectionWidgets from "../../../../shared/widgets/Textarea/TextareasectionWidgets";
+import DisabledTextAreaWidget from '../../../../shared/widgets/Textarea/DisabledTextArea'
 import LocationSelectWidget from "../../../../shared/widgets/Select/locationSelectWidget";
 const widgets = {
   inputWidget: inputWidget,
@@ -30,8 +32,9 @@ const widgets = {
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
   selectWidget3: selectWidget3,
-  TextareasectionWidgets: TextareasectionWidgets,
+  DisabledTextAreaWidget: DisabledTextAreaWidget,
   LocationSelectWidget: LocationSelectWidget,
+  CustomUnitWidget:CustomUnitWidget
 };
 
 const view_path = "gri_environment_waste_significant_spills_306_3b_3c_q1";
@@ -81,6 +84,7 @@ const schema = {
           "Gallon (US)",
           "Barrel (bb)",
           "Thousands of barrel",
+          "Other (please specify)"
         ],
         tooltiptext: "Select the correct unit from the given dropdown",
         display: "block",
@@ -150,7 +154,7 @@ const uiSchema = {
       },
     },
     Unit: {
-      "ui:widget": "selectWidget3",
+      "ui:widget": "CustomUnitWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -164,7 +168,7 @@ const uiSchema = {
     },
 
     Impact: {
-      "ui:widget": "TextareasectionWidgets",
+      "ui:widget": "DisabledTextAreaWidget",
       "ui:inputtype": "text",
       "ui:horizontal": true,
       "ui:options": {
@@ -219,7 +223,7 @@ const validateRows = (data) => {
     if (!row.SpillSignificant) {
       rowErrors.SpillSignificant = "Significant of Spill is required";
     }
-    if (!row.Impact) {
+    if (row.SpillSignificant=="Yes" && !row.Impact) {
       rowErrors.Impact = "Impact is required";
     }
 
@@ -235,6 +239,7 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
   const [loopen, setLoOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
   const [locationData, setLocationdata] = useState([]);
+  const [enabledRows, setEnabledRows] = useState([]);
 
   const toastShown = useRef(false);
   const LoaderOpen = () => {
@@ -326,6 +331,10 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       const form_parent = response.data.form_data;
       setFormData(form_parent[0].data);
+      const initialEnabledRows = form_parent[0].data.map(
+        (item) => item.SpillSignificant === "Yes"
+      );
+      setEnabledRows(initialEnabledRows);
     } catch (error) {
       console.error("API call failed:", error);
     } finally {
@@ -346,11 +355,28 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
   }, [selectedOrg, year, selectedCorp]);
 
   const handleChange = (e) => {
-    const newData = e.formData.map((item, index) => ({
-      ...item, // Ensure each item retains its structure
-    }));
-    setFormData(newData); // Update the formData with new values
+    const newData = e.formData.map((item, index) => {
+      const updatedItem = { ...item }; 
+
+      if (updatedItem.SpillSignificant === "Yes") {
+        setEnabledRows((prev) => {
+          const newEnabledRows = [...prev];
+          newEnabledRows[index] = true; 
+          return newEnabledRows;
+        });
+      } else if (updatedItem.SpillSignificant === "No") {
+        setEnabledRows((prev) => {
+          const newEnabledRows = [...prev];
+          newEnabledRows[index] = false; 
+          return newEnabledRows;
+        });
+      
+      }
+      return updatedItem;
+    });
+    setFormData(newData); 
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submit button clicked"); // Debugging log
@@ -372,6 +398,7 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
+    setEnabledRows((prev) => [...prev, false]); 
   };
 
   const updateFormDatanew = (updatedData) => {
@@ -382,6 +409,7 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
+    setEnabledRows((prev) => prev.filter((_, i) => i !== index)); 
   };
 
   return (
@@ -392,14 +420,27 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
             <div>
               <Form
                 className="flex"
-                schema={schema}
-                uiSchema={uiSchema}
+                schema={r_schema}
+                uiSchema={r_ui_schema}
                 formData={formData}
                 onChange={handleChange}
                 validator={validator}
-                formContext={{ validationErrors }}
+                formContext={{enabledRows, validationErrors }}
                 widgets={{
                   ...widgets,
+
+                  DisabledTextAreaWidget:(props)=>{
+                    const match = props.id.match(/^root_(\d+)/);
+                const index = match ? parseInt(match[1], 10) : null;
+                    const isEnabled = index !== null ? enabledRows[index] : false
+              
+                    return(
+                      <DisabledTextAreaWidget
+                      {...props}
+                      isEnabled={isEnabled} // Pass it as a prop if needed
+                    />
+                    )
+                  },
 
                   LocationSelectWidget: (props) => (
                     <LocationSelectWidget

@@ -257,7 +257,8 @@ const Sidenav = () => {
       spacing: true,
     },
  
-    {
+    isNewRole && {
+    
       id: 9,
       title: "Audit logs",
       icon: <TbNotes/>,
@@ -265,7 +266,8 @@ const Sidenav = () => {
       role: true,
       lockicon: <MdLockOutline />,
       lockiconshow: false,
-    },
+    
+  },
     {
       id: 10,
       title: "Settings",

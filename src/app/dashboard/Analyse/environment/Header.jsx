@@ -47,7 +47,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
-      category: "Waste",
+      category: "Waste Management",
       tag: "GRI 306",
       data: [
         { tagid: "1", infoid: "6" },
@@ -55,6 +55,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
         { tagid: "3", infoid: "8" },
         { tagid: "4", infoid: "9" },
         { tagid: "5", infoid: "10" },
+        { tagid: "3, 2016", infoid: "54" },
       ],
     },
     // {
@@ -115,13 +116,13 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
-      category: "Waste",
+      category: "Waste Management",
       data: [
         { id: "sd5", label: "SDG 3", bgColor: "bg-[#4C9F38]" },
         { id: "sd6", label: "SDG 6", bgColor: "bg-cyan-500" },
         { id: "sd2", label: "SDG 8", bgColor: "bg-red-900" },
         { id: "sd7", label: "SDG 11", bgColor: "bg-amber-400" },
-        { id: "sd3", label: "SDG 12", bgColor: "bg-yellow-600" },
+        { id: "sd37",label: "SDG 12", bgColor: "bg-yellow-600" },
         { id: "sd8", label: "SDG 15", bgColor: "bg-[#56C02B]" },
       ],
     },
@@ -175,7 +176,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                 g.data.map((item) => (
                   <button
                     key={item.tagid}
-                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                    className={`text-[#007EEF] bg-slate-200 rounded-full text-[11px] ${item.tagid=="3, 2016"?'w-[100px]': 'w-[72px]'} h-[22px] ml-2 text-center pt-0.5`}
                     onClick={() => toggleDrawer(item.infoid)}
                   >
                     {g.tag} - {item.tagid}

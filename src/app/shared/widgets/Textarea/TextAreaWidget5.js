@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
+import { GlobalState } from "../../../../Context/page";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-const DateWidget = (props) => {
+const TextAreaWidget5 = (props) => {
+  const { open } = GlobalState();
   const { onChange, value = "", uiSchema = {},formContext,name } = props;
   const { validationErrors } = formContext || {};
   const rowErrors = validationErrors || {};
@@ -13,15 +15,11 @@ const DateWidget = (props) => {
     onChange(event.target.value);
   };
 
-  const handleClick = (event) => {
-    event.target.showPicker();
-  };
-
   return (
     <>
-      <div className="mb-6">
-        <div className="flex mb-2">
-          <div className="relative">
+      <div className="px-1">
+      <div className="flex mb-2">
+          <div className=" relative">
             <p className="text-[14px] text-gray-700 font-[500] flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
@@ -29,11 +27,11 @@ const DateWidget = (props) => {
                   /\s+/g,
                   "-"
                 )}`}
-                data-tooltip-html={uiSchema["ui:title"].replace(/\s+/g, "-")}
-                className="mt-1 ml-3 text-[14px]"
-                style={{ display: uiSchema["ui:tooltipdisplay"] }}
+                data-tooltip-html={uiSchema["ui:tooltipstitle"]}
+                className="mt-1 ml-2 w-[30px] text-[14px]"
+                style={{ display: uiSchema["ui:titletooltipdisplay"] }}
               />
-
+              {/* Tooltip */}
               <ReactTooltip
                 id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
                 place="top"
@@ -46,18 +44,22 @@ const DateWidget = (props) => {
                   boxShadow: 3,
                   borderRadius: "8px",
                 }}
-              />
+              ></ReactTooltip>
             </p>
           </div>
         </div>
-        <input
-          placeholder="Enter date"
-          className={`border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
-          value={value}
-          onChange={handleChange}
-          onClick={handleClick}
-          type="date"
-        />
+        <div className="">
+          <textarea
+           placeholder="Enter a description..."
+           className={`w-full border appearance-none text-[12px] 
+           ${hasError ? "border-red-500" : "border-gray-400"} 
+           text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none 
+           focus:bg-white focus:border-gray-400 cursor-pointer`}
+            value={value}
+            onChange={handleChange}
+            rows={7}
+          />
+        </div>
         {hasError && (
           <div className="text-red-500 text-[12px] mt-1">
            {hasError}
@@ -68,4 +70,4 @@ const DateWidget = (props) => {
   );
 };
 
-export default DateWidget;
+export default TextAreaWidget5;

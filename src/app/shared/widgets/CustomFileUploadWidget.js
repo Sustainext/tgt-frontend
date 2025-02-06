@@ -16,10 +16,10 @@ const CustomFileUploadWidget = ({
   scopes,
   setFormData,
   label,
-  locationname,
-  year,
-  monthname,
-  sectionname,
+  // locationname,
+  // year,
+  // monthname,
+  // sectionname,
   tabname,
 }) => {
     const text1 = useSelector((state) => state.header.headertext1);
@@ -40,6 +40,10 @@ const CustomFileUploadWidget = ({
   const [uploadDateTime, setUploadDateTime] = useState(
     value?.uploadDateTime || ""
   );
+  const locationname = useSelector((state) => state.FileInfoSlice.locationname);
+  const year = useSelector((state) => state.FileInfoSlice.year);
+  const monthname = useSelector((state) => state.FileInfoSlice.monthname);
+  const sectionname = useSelector((state) => state.FileInfoSlice.sectionname);
 
   const uploadFileToAzure = async (file, newFileName) => {
     // Read file content as ArrayBuffer
@@ -92,7 +96,7 @@ const CustomFileUploadWidget = ({
   };
 
 
-  const LoginlogDetails = async (status, actionType,newFileName) => {
+  const LoginlogDetails = async (status, actionType,newFileName, fileType) => {
     const backendUrl = process.env.BACKEND_API_URL;
     const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
   
@@ -110,7 +114,7 @@ const CustomFileUploadWidget = ({
         user_email: useremail,
         user_role: roles,
         ip_address: ipAddress,
-        logs: `${text1} > ${middlename} > ${text2} > ${locationname} > ${year} > ${monthname} > ${tabname} > ${sectionname} > ${newFileName}`,
+        logs: `${text1} > ${middlename} > ${text2} > ${locationname} > ${year} > ${monthname} > ${sectionname} > ${tabname} > ${newFileName} > ${fileType}`,
       };
   
       const response = await axiosInstance.post(userDetailsUrl, data);
@@ -172,7 +176,7 @@ const CustomFileUploadWidget = ({
 
         uploadAndSetState();
         setTimeout(() => {
-          LoginlogDetails("Success", "Uploaded",newFileName);
+          LoginlogDetails("Success", "Uploaded",newFileName, selectedFile.type);
         }, 1000);
         
       };

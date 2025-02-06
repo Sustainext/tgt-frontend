@@ -3,7 +3,7 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-const DateWidget = (props) => {
+const MonthPicker = (props) => {
   const { onChange, value = "", uiSchema = {},formContext,name } = props;
   const { validationErrors } = formContext || {};
   const rowErrors = validationErrors || {};
@@ -51,12 +51,12 @@ const DateWidget = (props) => {
           </div>
         </div>
         <input
-          placeholder="Enter date"
+          placeholder="Enter Month and Year"
           className={`border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
           value={value}
           onChange={handleChange}
           onClick={handleClick}
-          type="date"
+          type="month"
         />
         {hasError && (
           <div className="text-red-500 text-[12px] mt-1">
@@ -68,4 +68,4 @@ const DateWidget = (props) => {
   );
 };
 
-export default DateWidget;
+export default MonthPicker;
