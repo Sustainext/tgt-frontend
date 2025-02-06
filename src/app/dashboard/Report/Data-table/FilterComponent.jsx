@@ -76,11 +76,12 @@ const FilterComponent = ({ data,setData,originalData,setIsFilterOpen,search,setS
       >
         <input
           type="checkbox"
-          className="h-4 w-4 accent-green-600"
+          id={`checkbox-${creator}`}
+          className="h-4 w-4 accent-green-600 cursor-pointer"
           checked={selectedCreators.includes(creator)}
                             onChange={() => handleCheckboxChange(creator)} 
         />
-        <label className="text-sm text-[#344054]">{creator}</label>
+        <label className="text-sm text-[#344054] cursor-pointer"  htmlFor={`checkbox-${creator}`} >{creator}</label>
       </div>
     ))}
   </div>
