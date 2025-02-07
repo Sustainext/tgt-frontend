@@ -4,6 +4,7 @@ import axiosInstance from "../utils/axiosMiddleware";
 let locationCache = [];
 
 export const getLocationName = async (locationId) => {
+  console.log('id received for location name',locationId)
   // Return empty if no locationId provided
   if (!locationId) return '';
   

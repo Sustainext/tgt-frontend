@@ -302,7 +302,7 @@ const CustomFileUploadWidget = ({
                   <iframe
                     src={previewData}
                     title="PDF Preview"
-                    className="w-full h-full"
+                    className="w-full h-full object-contain"
                   />
                 ) : (
                   <p>File preview not available.Please download and verify</p>
@@ -318,7 +318,7 @@ const CustomFileUploadWidget = ({
                   <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                     FILE NAME
                   </h2>
-                  <h2 className="text-[14px] leading-relaxed tracking-wide">
+                  <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
                     {fileName}
                   </h2>
                 </div>
@@ -334,7 +334,7 @@ const CustomFileUploadWidget = ({
                   <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                     FILE TYPE
                   </h2>
-                  <h2 className="text-[14px] leading-relaxed tracking-wide">
+                  <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
                     {fileType}
                   </h2>
                 </div>
