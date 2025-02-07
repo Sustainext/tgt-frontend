@@ -6,43 +6,43 @@ const FilterComponent = ({ data,setData,originalData,setIsFilterOpen,search,setS
 
     // const [originalData]=useState(data)
 
-    const uniqueCreators = [...new Set(originalData.map(item => item.created_by))];
+    // const uniqueCreators = [...new Set(originalData.map(item => item.created_by))];
  
-    // Filter creators based on search term
-    const filteredCreators = uniqueCreators.filter(creator =>
-        creator.toLowerCase().includes(search.toLowerCase())
-    );
+    // // Filter creators based on search term
+    // const filteredCreators = uniqueCreators.filter(creator =>
+    //     creator.toLowerCase().includes(search.toLowerCase())
+    // );
 
 
-    useEffect(() => {
-        if (selectedCreators.length > 0) {
-            // Filter data based on selected creators
-            const filteredData = data.filter(item => selectedCreators.includes(item.created_by));
-            setData(filteredData);
-        } else {
-            // If no creators are selected, show all data
-            setData(data);
-        }
-    }, [selectedCreators]);
+    // useEffect(() => {
+    //     if (selectedCreators.length > 0) {
+    //         // Filter data based on selected creators
+    //         const filteredData = data.filter(item => selectedCreators.includes(item.created_by));
+    //         setData(filteredData);
+    //     } else {
+    //         // If no creators are selected, show all data
+    //         setData(data);
+    //     }
+    // }, [selectedCreators]);
 
-     useEffect(() => {
-        const handleClickOutside = (event) => {
-          if (!event.target.closest(".filter-dropdown")) {
-            setIsFilterOpen(false);
-          }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-      }, []);
+    //  useEffect(() => {
+    //     const handleClickOutside = (event) => {
+    //       if (!event.target.closest(".filter-dropdown")) {
+    //         setIsFilterOpen(false);
+    //       }
+    //     };
+    //     document.addEventListener("mousedown", handleClickOutside);
+    //     return () => document.removeEventListener("mousedown", handleClickOutside);
+    //   }, []);
 
-    // Handle checkbox change
-    const handleCheckboxChange = (creator) => {
-        setSelectedCreators(prev => 
-            prev.includes(creator) 
-                ? prev.filter(item => item !== creator) 
-                : [...prev, creator]
-        );
-    };
+    // // Handle checkbox change
+    // const handleCheckboxChange = (creator) => {
+    //     setSelectedCreators(prev => 
+    //         prev.includes(creator) 
+    //             ? prev.filter(item => item !== creator) 
+    //             : [...prev, creator]
+    //     );
+    // };
 
     return (
      
@@ -69,7 +69,7 @@ const FilterComponent = ({ data,setData,originalData,setIsFilterOpen,search,setS
 
   {/* Checkbox List */}
   <div className="flex flex-col gap-1 max-h-40 overflow-y-auto table-scrollbar">
-    {filteredCreators.map((creator,i) => (
+    {/* {filteredCreators.map((creator,i) => (
       <div
         key={creator}
         className="flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded-md"
@@ -83,7 +83,7 @@ const FilterComponent = ({ data,setData,originalData,setIsFilterOpen,search,setS
         />
         <label className="text-sm text-[#344054] cursor-pointer"  htmlFor={`checkbox-${creator}`} >{creator}</label>
       </div>
-    ))}
+    ))} */}
   </div>
 </div>
 </div>
