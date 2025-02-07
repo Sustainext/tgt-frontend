@@ -98,9 +98,7 @@ const CustomFileUploadWidget = ({
   
     try {
       const ipAddress = await getIPAddress();
-  
-     
-  
+
   
       const data = {
         event_type: text1,
