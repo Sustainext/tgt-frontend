@@ -199,6 +199,42 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                       GHG Emissions
                     </p>
                   </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Base Year"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Base Year")}
+                    >
+                      Base Year
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Consolidation Approach"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Consolidation Approach")}
+                    >
+                      Consolidation Approach and Assumptions
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Standards"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Standards")}
+                    >
+                      Standards, methodologies and/or calculation tools used
+                    </p>
+                  </div>
                 </div>
               </>
             )}
@@ -555,7 +591,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                       Data Collection Methodology
                     </p>
                   </div>
-                  {/* <div>
+                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Significant Spills"
@@ -568,7 +604,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                     >
                       Significant Spills
                     </p>
-                  </div> */}
+                  </div>
                 </div>
               </>
             )}

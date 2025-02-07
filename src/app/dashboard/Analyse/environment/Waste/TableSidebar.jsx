@@ -28,6 +28,9 @@ const TableSidebar = () => {
         "waste8",
         "waste9",
         "waste10",
+        "eff1",
+        "eff2",
+        "eff3",
 
       ];
 
@@ -93,6 +96,18 @@ const TableSidebar = () => {
         {
           id: "waste9",
           name: "Non-hazardous waste directed to disposal",
+        },
+        {
+          id: "eff1",
+          name: "Total number & volume of spills by material",
+        },
+        {
+          id: "eff2",
+          name: "Total number & volume of by location",
+        },
+        {
+          id: "eff3",
+          name: "Total number & volume of significant spills",
         },
 
 

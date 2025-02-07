@@ -207,6 +207,7 @@ const uiSchema = {
 
         Unit2: {
             'ui:widget': 'selectWidget3',
+            'ui:widgetDisable':true,
             'ui:horizontal': true,
             'ui:options': {
                 label: false

@@ -174,8 +174,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setLocationMessage={setLocationMessage}
         yearMessage={yearMessage}
         setYearMessage={setYearMessage}
-        setLocationname={setLocationname}
-        setMonthname={setMonthname}
+        // setLocationname={setLocationname}
+        // setMonthname={setMonthname}
       />
       <EnergyConsumedBody
         location={location}

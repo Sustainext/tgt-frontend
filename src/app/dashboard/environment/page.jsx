@@ -29,7 +29,9 @@ import WasteMaterialtopic from "./Waste/Management-Material-topic/page";
 import MaterialsMaterialtopic from "./Materials/Management-Material-topic/page";
 import WaterMaterialtopic from "./Water-effluents/Management-Material-topic/page";
 import SupplierMaterialtopic from "./supplier-environmental-assessment/Management-Material-topic/page";
-// import SignificantSpills from './Waste/significant-spills/page'
+import SignificantSpills from './Waste/significant-spills/page'
+import ConsolidationApproach from './Emissions/consolidationApproach/page'
+import Standards from './Emissions/standards/page'
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -49,6 +51,8 @@ import {
   setStartDate,
   setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
+import {f_setSectionName} from '../../../lib/redux/features/FileInfoSlice'
+import BaseYear from './Emissions/baseYear/page'
 
 const environment = () => {
   const { open } = GlobalState();
@@ -78,6 +82,7 @@ const environment = () => {
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    dispatch(f_setSectionName(tab));
   };
 
   useEffect(() => {
@@ -95,7 +100,7 @@ const environment = () => {
       "Management of Material topic energy",
       // "Management of Material topic effluent",
     ];
-    const emissionTabs = ["GHG Emissions"];
+    const emissionTabs = ["GHG Emissions","Base Year","Consolidation Approach","Standards"];
     const energyTabs = [
       "Energy consumed inside the organization",
       "Energy consumption outside of the organization",
@@ -186,6 +191,9 @@ const environment = () => {
               <Materialtopic apiData={data} />
             )}
             {activeTab === "GHG Emissions" && <Emission apiData={data} />}
+            {activeTab === "Base Year" && <BaseYear apiData={data} />}
+            {activeTab === "Consolidation Approach"  && <ConsolidationApproach apiData={data} /> }
+            {activeTab ==="Standards" && <Standards apiData={data} /> }
             {/* Energy start */}
             {activeTab === "Management of Material topic energy" && (
               <EnergyMaterialtopic apiData={data} />
@@ -224,7 +232,7 @@ const environment = () => {
             {activeTab === "Waste Diverted from disposal" && <Wastediverted apiData={data} />}
             {activeTab === "Waste diverted to disposal" && <Wastedirected apiData={data} />}
             {activeTab === "Data Collection Methodology" && <Datacollectionmethodology apiData={data} />}    
-            {/* {activeTab === "Significant Spills" && <SignificantSpills apiData={data} isSidepanelOpen={open} />} */}
+           {activeTab === "Significant Spills" && <SignificantSpills apiData={data} isSidepanelOpen={open} />}
             
             {/* Materials  start */}
             {activeTab === "Management of Material topic Materials" && (

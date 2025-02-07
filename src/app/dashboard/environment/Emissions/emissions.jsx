@@ -47,13 +47,71 @@ const Emissions = ({ open,apiData}) => {
     setData(newData);
   }, [category]);
 
+  const griData=[
+    {
+      tagName:'GRI 305 - 1',
+      toggle:'43',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+ 
+  {
+      tagName:'GRI 305 - 2',
+      toggle:'44',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  {
+      tagName:'GRI 305 - 3',
+      toggle:'45',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ]
+
+  const sdgData=[
+   
+
+  {
+    tagName:'SDG 3',
+    toggle:'sd5',
+    textColor:"#fff",
+    bgColor:"bg-[#4C9F38]"
+},
+{
+  tagName:'SDG 12',
+  toggle:'sd35',
+  textColor:"#fff",
+  bgColor:"bg-[#BF8B2E]"
+},
+{
+  tagName:'SDG 13',
+  toggle:'sd4',
+  textColor:"#fff",
+  bgColor:"bg-lime-900"
+},
+{
+  tagName:'SDG 14',
+  toggle:'sd24',
+  textColor:"#fff",
+  bgColor:"bg-[#007DBC]"
+},
+{
+  tagName:'SDG 15',
+  toggle:'sd38',
+  textColor:"#fff",
+  bgColor:"bg-[#40AE49]"
+},
+   
+]
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <EmissionsProvider>
         <>
           <div className="flex flex-col justify-start overflow-x-hidden ">
-           <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} />
+           <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} sdgData={sdgData} griData={griData} />
             <div
            className={`${
             isOpen
