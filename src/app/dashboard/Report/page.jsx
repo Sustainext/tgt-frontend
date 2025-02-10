@@ -748,7 +748,7 @@ const Report = () => {
                         >
                           <option>Select Report Type</option>
                           <option>GHG Accounting Report</option>
-                          {/* <option>GHG Report - Investments</option> */}
+                          <option>GHG Report - Investments</option>
                           <option>GRI Report: In accordance With</option>
                           {/* <option>GRI Report: With Reference to</option> */}
                         </select>
