@@ -4,12 +4,15 @@ import { FiSearch, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Table from "../tables/stakeholderTable";
 import { useState } from "react";
 import NoDataAvailable from "../components/noDataAvailable";
+import CreateStakeholderGroup from "./modals/createStakeholderGroup";
+import { MdAdd } from "react-icons/md";
 
-const StakeholderGroup = () => {
+const StakeholderGroup = ({setStakeholderList,showStakeholderList}) => {
     const totalItems = 50; 
-    const rowsPerPageOptions = [5, 10, 15]; // Rows-per-page options
+    const rowsPerPageOptions = [7, 10, 15]; // Rows-per-page options
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
   
     const data = Array(totalItems)
       .fill(null)
@@ -59,8 +62,10 @@ const StakeholderGroup = () => {
             // value={searchQuery}
             // onChange={handleSearch}
           />
-          <button className="bg-[#007EEF] text-white px-4 py-2 text-[13px] rounded-md hover:bg-blue-600">
-            + Create New Stakeholder Group
+          <button onClick={()=>{setIsModalOpen(true)}} className="bg-[#007EEF] text-white px-4 py-2 text-[13px] rounded-md hover:bg-blue-600">
+            <div className="flex gap-1">
+                                 <MdAdd  className="w-4 h-4 mt-0.5" /> Create New Stakeholder Group
+                                 </div>
           </button>
         </div>
       </div>
@@ -76,9 +81,12 @@ const StakeholderGroup = () => {
         onPageChange={handlePageChange} />
 </div>
 ):(
-    <NoDataAvailable title="No Stakeholders Present" para="This stakeholder group is empty. Add new stakeholders by clicking on Add new stakeholders or Bulk import from CSV or Excel file." buttonText="Add Stakeholder" image="stakeholder" />
+    <NoDataAvailable title="No Stakeholders Group Present" para="This stakeholder group is empty. Add new stakeholders by clicking on Add new stakeholders or Bulk import from CSV or Excel file." buttonText="Add Stakeholder Group" image="stakeholder"
+    isStakeholderGroupOpen={isModalOpen} setIsStakeholderGroupOpen={setIsModalOpen}
+    />
+    // <div></div>
 )}
-     
+     <CreateStakeholderGroup isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} />
     </div>
   );
 };

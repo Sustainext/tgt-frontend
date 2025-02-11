@@ -9,13 +9,15 @@ import {
 import { useDispatch } from "react-redux";
 import Assessments from "./assessment/page";
 import Forms from "./forms/page";
-import StakeholderGroup from "./stakeholdersGroup/page";
+import StakeholderGroup from "./stakeholderGroup/page";
 import WelcomeModal from './modals/welcomeModal'
+import StakeholderPage from "./stakeholders/page";
 
 const SupplierAssessment = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const [isModalOpen,setIsModalOpen]=useState(false)
   const dispatch = useDispatch();
+  const [showStakeholderList,setStakeholderList]=useState(false)
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -42,6 +44,11 @@ const SupplierAssessment = () => {
 
   return (
     <>
+    {showStakeholderList?(
+      <div>
+        <StakeholderPage setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} setActiveTab={setActiveTab} />
+      </div>
+    ):(
       <div>
         <div className="">
         <div className="flex flex-col justify-start overflow-x-hidden ">
@@ -84,14 +91,17 @@ const SupplierAssessment = () => {
                 {activeTab === "tab1" && <Assessments />}
 
                 {activeTab === "tab2" && <Forms />}
-                {activeTab === "tab3" && <StakeholderGroup />}
+                {activeTab === "tab3" && <StakeholderGroup setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} />}
               </div>
             </div>
           </div>
         </div>
+        <WelcomeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setActiveTab={setActiveTab} />
       </div>
+    )}
+      
 
-      <WelcomeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      
     </>
   );
 };

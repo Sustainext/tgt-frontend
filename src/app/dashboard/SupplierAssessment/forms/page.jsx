@@ -5,10 +5,11 @@ import Table from "../tables/formTable";
 import { useState } from "react";
 import NoDataAvailable from "../components/noDataAvailable";
 import CreateFormModal from './modals/createFormModal'
+import { MdAdd } from "react-icons/md";
 
 const Forms = () => {
     const totalItems = 50; 
-    const rowsPerPageOptions = [5, 10, 15]; // Rows-per-page options
+    const rowsPerPageOptions = [7, 10, 15]; // Rows-per-page options
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
      const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,7 +57,10 @@ const Forms = () => {
             // onChange={handleSearch}
           />
           <button onClick={()=>{setIsModalOpen(true)}} className="bg-[#007EEF] text-white px-4 py-2 text-[13px] rounded-md hover:bg-blue-600">
-            + Create New Form
+            <div className="flex gap-1">
+            <MdAdd  className="w-4 h-4 mt-0.5" /> Create New Form
+            </div>
+            
           </button>
         </div>
       </div>
@@ -72,7 +76,9 @@ const Forms = () => {
         onPageChange={handlePageChange} />
     </div>
 ):(
-    <NoDataAvailable title="No Forms Present" para="There are currently no forms available. Click on Create a New Form button to create forms." buttonText="Create a New Form" image="forms" />
+    <NoDataAvailable title="No Forms Present" para="There are currently no forms available. Click on Create a New Form button to create forms." buttonText="Create a New Form" image="forms"
+    isFormOpen={isModalOpen} setIsFormOpen={setIsModalOpen}
+    />
 )}
 
 <CreateFormModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}  />

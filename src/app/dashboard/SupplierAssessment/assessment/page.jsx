@@ -5,6 +5,7 @@ import Table from "../tables/table";
 import { useState } from "react";
 import CreateAssessmentModal from "./modals/createAssessmentModal";
 import NoDataAvailable from '../components/noDataAvailable'
+import { MdAdd } from "react-icons/md";
 
 const Assessment = () => {
     const totalItems = 50; 
@@ -61,8 +62,10 @@ const Assessment = () => {
             // value={searchQuery}
             // onChange={handleSearch}
           />
-          <button onClick={()=>{setIsModalOpen(true)}} className="bg-[#007EEF] text-white px-4 py-2 text-[13px] rounded-md hover:bg-blue-600">
-            + Create New Assessment
+          <button onClick={()=>{setIsModalOpen(true)}} className="bg-[#007EEF] text-white px-4 py-2 text-[14px] rounded-md hover:bg-blue-600">
+          <div className="flex gap-1">
+                      <MdAdd  className="w-4 h-4 mt-0.5" /> Create New Assessment
+                      </div>
           </button>
         </div>
       </div>
@@ -116,7 +119,9 @@ const Assessment = () => {
         onPageChange={handlePageChange} />
         </div>
       ):(
-        <NoDataAvailable title="No Assessments" para="No Supplier assessments made." buttonText="Create the first Assessment" image="assessment" />
+        <NoDataAvailable title="No Assessments" para="No Supplier assessments made." buttonText="Create the first Assessment" image="assessment"
+        isAssessmentOpen={isModalOpen} setIsAssessmentOpen={setIsModalOpen}
+        />
       )}
       
     </div>

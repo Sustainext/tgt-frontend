@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from "react";
+import CreateStakeholderGroup from "../stakeholderGroup/modals/createStakeholderGroup";
 
-const WelcomeModal = ({ isModalOpen, setIsModalOpen }) => {
+const WelcomeModal = ({ isModalOpen, setIsModalOpen,setActiveTab }) => {
   
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [isStakeholderOpen,setIsStakeholderOpen]=useState(false)
 
   const slides = [
     {
@@ -116,7 +118,10 @@ const WelcomeModal = ({ isModalOpen, setIsModalOpen }) => {
                 <button
                   className="w-fit h-full mr-2 py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
                   onClick={() => {
-                    setIsModalOpen(false);
+                    
+                    setActiveTab("tab3")
+                    setIsStakeholderOpen(true)
+                    setIsModalOpen(false)
                   }}
                 >
                   Create
@@ -133,6 +138,7 @@ const WelcomeModal = ({ isModalOpen, setIsModalOpen }) => {
         </div>
       </div>
     )}
+    <CreateStakeholderGroup isModalOpen={isStakeholderOpen} setIsModalOpen={setIsStakeholderOpen} />
     </>
     
    

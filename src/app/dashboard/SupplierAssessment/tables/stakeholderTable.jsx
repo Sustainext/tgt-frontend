@@ -1,15 +1,19 @@
 "use client";
-import React from "react";
+import {React,useState} from "react";
 import Pagination from "./pagination";
 import { MdOutlineEdit, MdOutlineDeleteOutline } from "react-icons/md";
+import DeleteModal from "../stakeholderGroup/modals/deleteStakeholderGroup";
+import EditStakeholderGroup from '../stakeholderGroup/modals/editStakeholderGroup'
 
-const FormTable = ({
+const StakeholderTable = ({
   columns,
   currentData,
   totalItems,
   rowsPerPageOptions,
   onPageChange,
 }) => {
+    const [isModalOpen,setIsModalOpen]=useState(false)
+    const [isEditModalOpen,setIsEditModalOpen]=useState(false)
   return (
     <>
       <div className="overflow-x-auto">
@@ -55,8 +59,8 @@ const FormTable = ({
                     {row.noOfStakeholder}
                   </td>
                   <td className="px-6 py-3 text-sm text-gray-600 border-b border-gray-200 cursor-pointer flex justify-center items-center">
-                    <MdOutlineEdit className="text-[20px] text-gray-500 mr-2"/>
-                    <MdOutlineDeleteOutline className="text-[20px] text-gray-500" />
+                    <MdOutlineEdit onClick={()=>{setIsEditModalOpen(true)}} className="text-[20px] text-gray-500 mr-2 hover:bg-gray-100 hover:rounded-sm"/>
+                    <MdOutlineDeleteOutline onClick={()=>{setIsModalOpen(true)}} className="text-[20px] text-gray-500 hover:text-red-500" />
                   </td>
                 </tr>
               ))}
@@ -69,8 +73,11 @@ const FormTable = ({
         rowsPerPageOptions={rowsPerPageOptions}
         onPageChange={onPageChange}
       />
+
+<DeleteModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+<EditStakeholderGroup isModalOpen={isEditModalOpen} setIsModalOpen={setIsEditModalOpen} />
     </>
   );
 };
 
-export default FormTable;
+export default StakeholderTable;
