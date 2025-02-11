@@ -188,17 +188,26 @@ const Tab4 = ({ fullName, year, month, selectedOrg, selectedCorp }) => {
       console.log("Form data is changed -", formData);
     }, [formData]);
   
-    useEffect(() => {
-      if (selectedOrg && year && month) {
-        loadFormData();
-        toastShown.current = false; // Reset the flag when valid data is present
+   useEffect(() => {
+    if (selectedOrg && year && month && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData(); 
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+         setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
       } else {
-        // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-          toastShown.current = true; // Set the flag to true after showing the toast
-        }
+        loadFormData(); 
       }
-    }, [selectedOrg, year, selectedCorp, month]);
+  
+      toastShown.current = false; 
+    } else {
+    
+      if (!toastShown.current) {
+        toastShown.current = true; 
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus,month]);
   
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -217,18 +226,25 @@ const Tab4 = ({ fullName, year, month, selectedOrg, selectedCorp }) => {
             formContext={{ newMonth: fullName }}
             widgets={widgets}
           />
-          <div className="mt-4 me-1">
-            <button
-              type="button"
-              className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-                !selectedOrg || !year || !month ? "cursor-not-allowed" : ""
-              }`}
-              onClick={handleSubmit}
-              disabled={!selectedOrg || !year || !month}
-            >
-              Submit
-            </button>
-          </div>
+        <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year ||!month
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year ||!month))
+            }
+          >
+            Submit
+          </button>
+        </div>
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

@@ -23,7 +23,7 @@ const uiSchema = {
 const view_path = "gri-social-benefits-401-2a-benefits_provided_tab_2";
 const client_id = 1;
 const user_id = 1;
-const Tab2 = ({ selectedOrg, selectedCorp, year }) => {
+const Tab2 = ({ selectedOrg, selectedCorp, year,togglestatus }) => {
     const [formData, setFormData] = useState([{ benefits: [] }]); // Initialize with empty benefits array
     const [loopen, setLoOpen] = useState(false);
     const [locationdata, setLocationdata] = useState([]);
@@ -93,16 +93,27 @@ const Tab2 = ({ selectedOrg, selectedCorp, year }) => {
         }
       };
     
-    useEffect(() => {
-      if (selectedOrg && year) {
-        loadFormData();
-        fetchLocationData();
-      
-        toastShown.current = false;
-      } else if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }, [selectedOrg, year, selectedCorp]);
+      useEffect(() => {
+           if (selectedOrg && year && togglestatus) {
+             if (togglestatus === "Corporate" && selectedCorp) {
+               loadFormData();
+               fetchLocationData();
+             } else if (togglestatus === "Corporate" && !selectedCorp) {
+               setFormData([{ benefits: [] }]);
+               setRemoteSchema({});
+               setRemoteUiSchema({});
+             } else {
+               loadFormData();
+               fetchLocationData();
+             }
+       
+             toastShown.current = false;
+           } else {
+             if (!toastShown.current) {
+               toastShown.current = true;
+             }
+           }
+         }, [selectedOrg, year, selectedCorp, togglestatus]);
   
     const handleFormDataChange = (updatedBenefits) => {
       setFormData([{ benefits: updatedBenefits }]);
@@ -142,18 +153,25 @@ const Tab2 = ({ selectedOrg, selectedCorp, year }) => {
           ) : (
             <div className="mx-2"></div>
           )}
-          <div className="mt-4 me-1">
-            <button
-              type="button"
-              className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-                !selectedOrg || !year ? "cursor-not-allowed" : ""
-              }`}
-              onClick={handleSubmit}
-              disabled={!selectedOrg || !year}
-            >
-              Submit
-            </button>
-          </div>
+           <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
+          >
+            Submit
+          </button>
+        </div>
         </div>
         {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

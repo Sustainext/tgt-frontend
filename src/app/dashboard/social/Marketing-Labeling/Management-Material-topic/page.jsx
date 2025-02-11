@@ -9,20 +9,29 @@ import Screen1 from "./Screen1";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
 
+const MarketingLabelingMaterialtopic = ({ apiData }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const materialityEnvData = apiData && apiData.social ? apiData.social : {};
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
 
-const MarketingLabelingMaterialtopic = ({apiData}) => {
-   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
-      (state) => state.materialitySlice
-    );
-    const materialityEnvData=apiData&&apiData.social?apiData.social:{}
-    const [year, setYear] = useState(materiality_year?materiality_year:'');
-    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
-    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
- 
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState();
-
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -51,21 +60,22 @@ const MarketingLabelingMaterialtopic = ({apiData}) => {
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
-            <p className="text-[11px]">Social</p>
+              <p className="text-[11px]">Social</p>
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Marketing and labeling
+                    Marketing and labeling
                   </p>
                 </div>
-                {materialityEnvData&&materialityEnvData.SocMarketingLabeling?.is_material_topic?(
-                    <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
+                {materialityEnvData &&
+                materialityEnvData.SocMarketingLabeling?.is_material_topic ? (
+                  <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
                     <p className="text-gray-500 text-[12px] pt-0.5 px-2">
                       Material Topic
                     </p>
                   </div>
-                ):(
-                    <div></div>
+                ) : (
+                  <div></div>
                 )}
               </div>
             </div>
@@ -89,7 +99,7 @@ const MarketingLabelingMaterialtopic = ({apiData}) => {
           </h6>
         </div>
         <div
-           className={`${
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -132,7 +142,6 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-
       <Socialheader2
         selectedOrg={selectedOrg}
         setSelectedOrg={setSelectedOrg}
@@ -140,11 +149,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
     </>
   );
