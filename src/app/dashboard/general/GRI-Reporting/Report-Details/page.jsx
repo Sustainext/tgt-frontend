@@ -98,12 +98,111 @@ const ReportDetails = () => {
           </div>
           <div className="w-full float-end ">
             <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("94")}
-              >
-                GRI 2 - 3
-              </button>
+              <div>
+                <button
+                  className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                  onClick={() => toggleDrawer("94")}
+                >
+                  GRI 2 - 3
+                </button>
+              </div>
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr1`}
+                  data-tooltip-content="BRSR-Section A-I-9"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR A-I-9
+                </button>
+                <ReactTooltip
+                  id={`tooltip-$brsr1`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                  width: "170px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr2`}
+                  data-tooltip-content="BRSR-Section A-I-6"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR A-I-6
+                </button>
+
+                <ReactTooltip
+                  id={`tooltip-$brsr2`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                  width: "170px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr3`}
+                  data-tooltip-content="BRSR-Section A-I-7"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR A-I-7
+                </button>
+                <ReactTooltip
+                  id={`tooltip-$brsr3`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                  width: "170px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr4`}
+                  data-tooltip-content="BRSR-Section A-I-12"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR A-I-12
+                </button>
+                <ReactTooltip
+                  id={`tooltip-$brsr4`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                  width: "170px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
             </div>
           </div>
         </div>

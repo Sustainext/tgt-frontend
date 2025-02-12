@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import WaterTopBar from "../waterTopBar";
 
-const Waterstorage = ({apiData}) => {
+const Waterstorage = ({ apiData }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -53,30 +53,43 @@ const Waterstorage = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 303 - 5',
-        toggle:'50',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "GRI 303 - 5",
+      toggle: "50",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
     },
-    
-  {
-    tagName:'SDG 6',
-    toggle:'29',
-    textColor:"#fff",
-    bgColor:"bg-cyan-500"
-},
+  ];
 
-]
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-L1",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Leadership  Indicators-1",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 6",
+      toggle: "29",
+      textColor: "#fff",
+      bgColor: "bg-cyan-500",
+    },
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <WaterTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
-       
+        <WaterTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          brsr={brsr}
+          griData={griData}
+        />
+
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Change in Water Storage

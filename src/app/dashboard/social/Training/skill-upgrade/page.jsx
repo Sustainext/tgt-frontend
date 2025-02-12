@@ -34,7 +34,7 @@ const Skillupgrade = ({ apiData }) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [togglestatus,setToggleStatus] = useState("Organization");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -54,14 +54,28 @@ const Skillupgrade = ({ apiData }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData = [
+  const griData = [
     {
       tagName: "GRI 404 - 2",
       toggle: "46",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P3-E8",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-8",
+    },
+    {
+      tagName: "BRSR C-P3-L4",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Leadership  Indicators-4",
+    },
+  ];
+  const sdgData = [
     {
       tagName: "SDG 8",
       toggle: "47",
@@ -80,6 +94,8 @@ const Skillupgrade = ({ apiData }) => {
           apiData={apiData}
           title={"Training and Development"}
           topic={"SocHumanCapitalDevelopment"}
+          brsr={brsr}
+          griData={griData}
         />
 
         <div className="ml-3 flex relative">

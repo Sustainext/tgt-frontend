@@ -47,7 +47,7 @@ const Directeconomic = ({apiData}) => {
     setData(newData);
   }, [category]);
 
-  const sdgData=[
+  const griData=[
     {
         tagName:'GRI 201-1',
         toggle:'115',
@@ -55,27 +55,40 @@ const Directeconomic = ({apiData}) => {
         bgColor:"bg-slate-200"
     },
    
-    {
-      tagName:'SDG 8',
-      toggle:'116',
-      textColor:"#fff",
-      bgColor:"bg-[#A21942]"
-  },
-
-  {
-    tagName:'SDG 9',
-    toggle:'117',
-    textColor:"#fff",
-    bgColor:"bg-[#F36E24]"
-},
+   
    
 ]
+const sdgData=[
 
+  {
+    tagName:'SDG 8',
+    toggle:'116',
+    textColor:"#fff",
+    bgColor:"bg-[#A21942]"
+},
+
+{
+  tagName:'SDG 9',
+  toggle:'117',
+  textColor:"#fff",
+  bgColor:"bg-[#F36E24]"
+},
+ 
+]
+const brsr=[
+  {
+    tagName:'BRSR A-VI-24ii',
+    id:'tooltip-$brsr1',
+    content:'BRSR-Section A-VI-24ii',
+
+},
+
+]
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Economic Performance'} topic={'GovEconomicPerformance'} />
+        <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Economic Performance'} topic={'GovEconomicPerformance'} brsr={brsr} griData={griData} />
         
 
         <div className="ml-3 flex relative">

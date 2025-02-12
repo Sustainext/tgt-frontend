@@ -35,7 +35,7 @@ const Suppliersscreened = ({ apiData }) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [togglestatus,setToggleStatus] = useState("Organization");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -55,14 +55,28 @@ const Suppliersscreened = ({ apiData }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData = [
+  const griData = [
     {
       tagName: "GRI 414 - 2",
       toggle: "49",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P3-L6",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Leadership  Indicators-6",
+    },
+    {
+      tagName: "BRSR C-P3-L5",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Leadership  Indicators-5",
+    },
+  ];
+  const sdgData = [
     {
       tagName: "SDG 5",
       toggle: "7",
@@ -93,6 +107,8 @@ const Suppliersscreened = ({ apiData }) => {
           apiData={apiData}
           title={"Supply Chain Labor Standards"}
           topic={"SocSupplyChainLabour"}
+          griData={griData}
+          brsr={brsr}
         />
 
         <div className="ml-3 flex relative">

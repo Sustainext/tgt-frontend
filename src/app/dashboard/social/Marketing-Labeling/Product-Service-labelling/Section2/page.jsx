@@ -53,14 +53,23 @@ const ProductServicelabelling2 = ({ apiData }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData = [
+  const griData = [
     {
       tagName: "GRI 417 - 1",
       toggle: "72",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P9-E2",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 9-Essential Indicators-2",
+    },
+  ];
+  const sdgData = [
     {
       tagName: "SDG 12",
       toggle: "73",
@@ -79,6 +88,8 @@ const ProductServicelabelling2 = ({ apiData }) => {
           apiData={apiData}
           title={"Marketing and labeling"}
           topic={"SocMarketingLabeling"}
+          brsr={brsr}
+          griData={griData}
         />
 
         <div className="ml-3 flex relative">

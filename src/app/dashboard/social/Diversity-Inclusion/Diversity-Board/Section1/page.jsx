@@ -33,7 +33,7 @@ const DiversityBoard = ({ apiData }) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [togglestatus,setToggleStatus] = useState("Organization");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -53,14 +53,23 @@ const DiversityBoard = ({ apiData }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData = [
+  const griData = [
     {
       tagName: "GRI 405 - 1",
       toggle: "50",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR A-IV-21",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section A-IV-21",
+    },
+  ];
+  const sdgData = [
     {
       tagName: "SDG 5",
       toggle: "51",
@@ -84,6 +93,8 @@ const DiversityBoard = ({ apiData }) => {
           apiData={apiData}
           title={"Diversity and Equal Opportunity"}
           topic={"SocDiversityEqualOpp"}
+          griData={griData}
+          brsr={brsr}
         />
 
         <div className="ml-3 flex relative">

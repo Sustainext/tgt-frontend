@@ -12,21 +12,31 @@ import Significantlocations from "./Significant-locations";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
-import SocialTopBar from '../../socialTopBar'
+import SocialTopBar from "../../socialTopBar";
 
-const Benefits = ({apiData}) => {
-   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
-      (state) => state.materialitySlice
-    );
-    const [year, setYear] = useState(materiality_year?materiality_year:'');
-    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
-    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
+const Benefits = ({ apiData }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [togglestatus,setToggleStatus] = useState("Organization");
+  const [togglestatus, setToggleStatus] = useState("Organization");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -47,42 +57,56 @@ const Benefits = ({apiData}) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 401 - 2",
+      toggle: "5",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
-  const sdgData=[
+  const brsr = [
     {
-        tagName:'GRI 401 - 2',
-        toggle:'5',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "BRSR C-P3-E2",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-2",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 3",
+      toggle: "6",
+      textColor: "#fff",
+      bgColor: "bg-green-500",
     },
     {
-        tagName:'SDG 3',
-        toggle:'6',
-        textColor:"#fff",
-        bgColor:"bg-green-500"
+      tagName: "SDG 5",
+      toggle: "7",
+      textColor: "#fff",
+      bgColor: "bg-orange-600",
     },
     {
-      tagName:'SDG 5',
-      toggle:'7',
-      textColor:"#fff",
-      bgColor:"bg-orange-600"
-  },
-  {
-    tagName:'SDG 8',
-    toggle:'8',
-    textColor:"#fff",
-    bgColor:"bg-red-900"
-},
-  
-   
-]
+      tagName: "SDG 8",
+      toggle: "8",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
+    },
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Employment'} topic={'SocEmployment'} />
-       
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Employment"}
+          topic={"SocEmployment"}
+          brsr={brsr}
+          griData={griData}
+        />
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">

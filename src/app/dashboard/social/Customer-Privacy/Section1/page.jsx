@@ -54,14 +54,33 @@ const CustomerPrivacy = ({ apiData }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData = [
+  const griData = [
     {
       tagName: "GRI 418 - 1",
       toggle: "70",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P9-E3",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 9-Essential Indicators-3",
+    },
+    {
+      tagName: "BRSR C-P9-E7a",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 9-Essential Indicators-7a",
+    },
+    {
+      tagName: "BRSR C-P9-E7b",
+      id: "tooltip-$brsr3",
+      content: "BRSR-Section C-Principle 9-Essential Indicators-7b",
+    },
+  ];
+  const sdgData = [
     {
       tagName: "SDG 16",
       toggle: "71",
@@ -80,6 +99,8 @@ const CustomerPrivacy = ({ apiData }) => {
           apiData={apiData}
           title={"Customer Privacy & Data Security"}
           topic={"SocPrivacyDataSecurity"}
+          griData={griData}
+          brsr={brsr}
         />
 
         <div className="ml-3 flex">
