@@ -54,7 +54,7 @@ import ViewMyTaskDetailsModal from "./ViewMyTaskDetailsModal";
 import MyTaskReviewModal from "./MyTaskReviewModal";
 import EditTaskModal from "./EditTaskModal";
 
-const MyTask = () => {
+const MyTask = ({HomeActiveTab}) => {
   // Redux
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.emissions);
@@ -559,13 +559,9 @@ const MyTask = () => {
     }
   };
 
-  const handleViewAll = () => {
-    router.push("/dashboard/tasks");
-  };
-
   return (
     <>
-      <div className="rounded-lg shadow border border-gray-200 p-4 px-6 h-[470px] overflow-x-auto">
+      <div className="rounded-lg shadow border border-gray-200 p-4 px-6 h-[470px] overflow-x-auto relative">
         <TaskHeader onAddTask={() => toggleModal("isModalOpen", true)} />
         <TaskTabs
           activeTab={activeTab}
@@ -590,9 +586,9 @@ const MyTask = () => {
           )}
         </TaskTable>
 
-        <div className="mt-3 flex justify-end px-4">
+        <div className="mt-3 flex justify-end px-4 absolute bottom-4 right-4">
           <button
-            onClick={handleViewAll}
+            onClick={()=>HomeActiveTab('tab3')}
             className="flex items-center text-blue-500 hover:text-blue-600 transition-colors"
           >
             <span className="text-sm font-medium">View All</span>

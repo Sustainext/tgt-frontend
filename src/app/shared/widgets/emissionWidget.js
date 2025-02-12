@@ -29,8 +29,6 @@ import MultipleAssignEmissionModal from "./MultipleAssignEmissionModal";
 import { getMonthName } from "@/app/utils/dateUtils";
 import { fetchClimatiqActivities } from "../../utils/climatiqApi.js";
 import CalculationInfoModal from "@/app/shared/components/CalculationInfoModal";
-import axiosInstance from "@/app/utils/axiosMiddleware";
-import {getLocationName} from '../../utils/locationName'
 
 const EmissionWidget = React.memo(
   ({
