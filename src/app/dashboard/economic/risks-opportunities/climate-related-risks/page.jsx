@@ -21,6 +21,7 @@ const Climaterelatedrisks = ({ apiData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -155,24 +156,28 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setYear={setYear}
         setSelectedLocation={setSelectedLocation}
         selectedLocation={selectedLocation}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         selectedLocation={selectedLocation}
+        togglestatus={togglestatus}
       />
       <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         selectedLocation={selectedLocation}
+        togglestatus={togglestatus}
       />
       <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         selectedLocation={selectedLocation}
+        togglestatus={togglestatus}
       />
     </>
   );

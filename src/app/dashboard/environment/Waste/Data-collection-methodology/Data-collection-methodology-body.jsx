@@ -107,6 +107,7 @@ const Datacollectionmethodologyimpactbody = ({
   selectedOrg,
   selectedCorp,
   year,
+  togglestatus,
 }) => {
   return (
     <>
@@ -120,11 +121,13 @@ has been compiled. e.g. any standards, methodologies etc. used for data compilat
           selectedOrg={selectedOrg}
           selectedCorp={selectedCorp}
           year={year}
+          togglestatus={togglestatus}
         >
           <Datacollectionmethodologyimpact
             selectedOrg={selectedOrg}
             selectedCorp={selectedCorp}
             year={year}
+            togglestatus={togglestatus}
           />
         </AccordionItem>
 

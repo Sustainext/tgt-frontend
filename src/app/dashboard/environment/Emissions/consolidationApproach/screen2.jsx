@@ -61,7 +61,7 @@ const schema = {
   };
   
 
-const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -164,16 +164,25 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+ useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -245,6 +254,25 @@ operational control."
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
+          >
+            Submit
+          </button>
+        </div>
+        {/* <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
                 (selectedOrg && year) && formData[0].Q1?false:true ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
@@ -252,7 +280,7 @@ operational control."
           >
             Submit
           </button>
-        </div>
+        </div> */}
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

@@ -49,7 +49,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
               <select
                 value={localValues[key]}
                 onChange={(e) => handleChange(key, e.target.value)}
-                className="text-sm pl-2 py-2 w-full"
+                className="text-[12px] pl-2 py-2 w-full"
               >
                 <option value="">Select location</option>
                 {locationdata?.length > 0 &&
@@ -68,7 +68,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
                 onKeyDown={handleKeyDown} 
                 style={{ width: "100%" }} 
                 placeholder="Enter data" 
-                className="text-sm pl-2 py-2" 
+                className="text-[12px] pl-2 py-2" 
                 min="0" 
               />
             )}
@@ -217,7 +217,7 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
           <button
             type="button"
             onClick={addRow}
-            className="text-blue-500 flex items-center text-[15px]"
+            className="text-blue-500 flex items-center text-[12px] ml-2"
           >
             Add Location <div className="ml-2 mt-1"><MdAdd /></div>
           </button>

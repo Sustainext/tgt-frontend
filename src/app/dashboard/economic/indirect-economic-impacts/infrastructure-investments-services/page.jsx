@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,23 +11,32 @@ import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import { useSelector } from "react-redux";
-import EconomicTopBar from '../../economicTopBar'
+import EconomicTopBar from "../../economicTopBar";
 
-
-const Infrastructureinvestmentsservices = ({apiData}) => {
-  const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
-      (state) => state.materialitySlice
-    );
-    const [year, setYear] = useState(materiality_year?materiality_year:'');
-    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
-    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
+const Infrastructureinvestmentsservices = ({ apiData }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
   const [activeMonth, setActiveMonth] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
- 
+
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
- 
+  const [togglestatus, setToggleStatus] = useState("Organization");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -49,41 +58,45 @@ const Infrastructureinvestmentsservices = ({apiData}) => {
     setData(newData);
   }, [category]);
 
-  const sdgData=[
+  const sdgData = [
     {
-        tagName:'GRI 203-1',
-        toggle:'106',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "GRI 203-1",
+      toggle: "106",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
     },
-   
+
     {
-      tagName:'SDG 5',
-      toggle:'7',
-      textColor:"#fff",
-      bgColor:"bg-[#EF402B]"
-  },
-  {
-    tagName:'SDG 9',
-    toggle:'107',
-    textColor:"#fff",
-    bgColor:"bg-[#F36E24]"
-},
-{
-  tagName:'SDG 11',
-  toggle:'108',
-  textColor:"#fff",
-  bgColor:"bg-[#EF412A]"
-},
-   
-]
+      tagName: "SDG 5",
+      toggle: "7",
+      textColor: "#fff",
+      bgColor: "bg-[#EF402B]",
+    },
+    {
+      tagName: "SDG 9",
+      toggle: "107",
+      textColor: "#fff",
+      bgColor: "bg-[#F36E24]",
+    },
+    {
+      tagName: "SDG 11",
+      toggle: "108",
+      textColor: "#fff",
+      bgColor: "bg-[#EF412A]",
+    },
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Economic Impacts'} topic={'GovEconomicImpact'} />
-       
+        <EconomicTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Economic Impacts"}
+          topic={"GovEconomicImpact"}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -109,8 +122,8 @@ const Infrastructureinvestmentsservices = ({apiData}) => {
             ></ReactTooltip>
           </h6>
         </div>
-          <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -160,21 +173,25 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
       <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
       <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
     </>
   );

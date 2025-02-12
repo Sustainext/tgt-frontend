@@ -24,6 +24,7 @@ const Entities = () => {
   const screen2Ref = useRef(null);
   const screen3Ref = useRef(null);
   const [loopen, setLoOpen] = useState(false);
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -233,6 +234,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
@@ -241,6 +243,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         ref={screen1Ref}
+        togglestatus={togglestatus}
       />
       <Screen2
         selectedOrg={selectedOrg}
@@ -249,6 +252,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         ref={screen2Ref}
+        togglestatus={togglestatus}
       />
       <Screen3
         selectedOrg={selectedOrg}
@@ -257,16 +261,24 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         ref={screen3Ref}
+        togglestatus={togglestatus}
       />
 
-      <div className="mt-4">
+      <div className="mt-4 mr-1.5">
         <button
           type="button"
-          className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end mr-1 ${
-            !selectedOrg || !year ? "cursor-not-allowed" : ""
+          className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+            (!selectedCorp && togglestatus === "Corporate") ||
+            !selectedOrg ||
+            !year
+              ? "cursor-not-allowed opacity-90"
+              : ""
           }`}
           onClick={handleSubmit}
-          disabled={!selectedOrg || !year}
+          disabled={
+            (togglestatus === "Corporate" && !selectedCorp) ||
+            (togglestatus !== "Corporate" && (!selectedOrg || !year))
+          }
         >
           Submit
         </button>

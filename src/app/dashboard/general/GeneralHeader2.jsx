@@ -13,6 +13,7 @@ const GeneralHeader2 = ({
   setSelectedCorp,
   year,
   setYear,
+  setToggleStatus,
 }) => {
   const [formState, setFormState] = useState({
     selectedCorp: selectedCorp,
@@ -23,6 +24,12 @@ const GeneralHeader2 = ({
   const [reportType, setReportType] = useState("Organization");
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    setToggleStatus(type);
+  
+    if (type === "Organization") {
+      setSelectedCorp(""); // Clear selectedCorp when Organization is chosen
+    
+    }
   };
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
@@ -128,7 +135,12 @@ const GeneralHeader2 = ({
       corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
-
+  useEffect(() => {
+    if (selectedCorp) {
+      setReportType("Corporate");
+  // console.log(selectedCorp,"test crop id");
+    }
+  }, [selectedCorp]);
   return (
     <>
       <div>

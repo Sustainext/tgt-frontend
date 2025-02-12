@@ -56,7 +56,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
+const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, ref) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -148,15 +148,24 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -189,7 +198,32 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
             </div>
           </div>
         </div>
-        {selectedOrg && year && (
+        {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
+          <p className="flex mx-2 text-sm text-gray-700 relative">
+          List all entities included in the sustainability report
+          <MdInfoOutline
+            data-tooltip-id={`tooltip-$e1`}
+            data-tooltip-content="Provide a list of all entities included in the sustainability report. "
+            className="mt-1.5 ml-2 text-[15px]"
+          />
+          <ReactTooltip
+            id={`tooltip-$e1`}
+            place="top"
+            effect="solid"
+            style={{
+              width: "290px",
+              backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              textAlign: "left",
+            }}
+          ></ReactTooltip>
+        </p>
+        ) : null}
+        {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report
             <MdInfoOutline
@@ -212,7 +246,7 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
               }}
             ></ReactTooltip>
           </p>
-        )}
+        )} */}
         <div className="mx-2 mb-2">
           <Form
             schema={r_schema}
@@ -223,19 +257,19 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
             widgets={widgets}
           />
         </div>
-        {selectedOrg && year && (
-        <div className="flex justify-between right-1  mx-2">
-        
-            <button
+        {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
+          <div className="flex right-1 mx-2">
+              <button
               type="button"
               className="text-[#007EEF] text-[13px] flex cursor-pointer my-auto"
               onClick={handleAddNew}
             >
               Add text box <MdAdd className="text-lg" />
             </button>
-         
-        </div>
-         )}
+          </div>
+        ) : null}
+   
 
       </div>
       {loopen && (

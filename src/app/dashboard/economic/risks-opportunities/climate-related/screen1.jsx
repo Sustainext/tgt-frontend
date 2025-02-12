@@ -38,7 +38,7 @@ const schema = {
 const uiSchema = {
     "ui:widget": "TableWidget",
   };
-const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year, month }) => {
+const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year, month,togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -133,16 +133,43 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year, month }) =
     }
   };
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp,selectedLocation]);
+ useEffect(() => {
+     console.log("useEffect triggered with:", { selectedOrg, year, togglestatus, selectedLocation, selectedCorp });
+   
+     if (selectedOrg && year && togglestatus) {
+       if (togglestatus === "Corporate") {
+         if (selectedCorp) {
+           console.log("Calling loadFormData for Corporate");
+           loadFormData();
+         } else {
+           console.log("Clearing form data for Corporate");
+           setFormData([{}]);
+           setRemoteSchema({});
+           setRemoteUiSchema({});
+         }
+       } else if (togglestatus === "Location") {
+         if (selectedLocation) {
+           console.log("Calling loadFormData for Location");
+           loadFormData();
+         } else {
+           console.log("Clearing form data for Location");
+           setFormData([{}]);
+           setRemoteSchema({});
+           setRemoteUiSchema({});
+         }
+       } else {
+         console.log("Calling loadFormData for Other");
+         loadFormData();
+       }
+   
+       toastShown.current = false;
+     } else {
+       if (!toastShown.current) {
+         console.log("Toast should be shown");
+         toastShown.current = true;
+       }
+     }
+   }, [selectedOrg, year, selectedCorp, togglestatus, selectedLocation]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -206,10 +233,20 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              (!selectedLocation && togglestatus === "Location") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus === "Location" && !selectedLocation) ||
+              !selectedOrg ||
+              !year
+            }
           >
             Submit
           </button>
