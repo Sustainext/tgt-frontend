@@ -217,7 +217,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                         id="name"
                         value={supplierName}
                         onChange={(e) => setSupplierName(e.target.value)}
-                        placeholder="Enter Supplier name"
+                        placeholder="Enter Stakeholder name"
                         className="mt-1 block px-3 py-2 w-full rounded-md border border-gray-300 text-sm"
                         required
                       />
@@ -235,7 +235,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter Supplier email"
+                        placeholder="Enter Stakeholder email"
                         className="mt-1 block px-3 py-2 w-full rounded-md border border-gray-300 text-sm"
                         required
                       />
@@ -397,7 +397,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                       id="spoc"
                       value={spoc}
                       onChange={(e) => setSpoc(e.target.value)}
-                      placeholder="Enter Spoc"
+                      placeholder="Enter name"
                       className="mt-1 block px-3 py-2 w-full rounded-md border border-gray-300 text-sm"
                       required
                     />

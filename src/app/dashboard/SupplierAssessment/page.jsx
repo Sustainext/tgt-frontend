@@ -12,6 +12,8 @@ import Forms from "./forms/page";
 import StakeholderGroup from "./stakeholderGroup/page";
 import WelcomeModal from './modals/welcomeModal'
 import StakeholderPage from "./stakeholders/page";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SupplierAssessment = () => {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -24,7 +26,7 @@ const SupplierAssessment = () => {
   };
   const Tabs=[
    {
-    title:"Assessment",
+    title:"Assessments",
     id:"tab1"
    },
    {
@@ -96,12 +98,12 @@ const SupplierAssessment = () => {
             </div>
           </div>
         </div>
-        <WelcomeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setActiveTab={setActiveTab} />
+        <WelcomeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setActiveTab={setActiveTab} setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} />
       </div>
     )}
       
 
-      
+      <ToastContainer style={{marginRight:'50px'}}  />
     </>
   );
 };

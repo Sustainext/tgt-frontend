@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import CreateStakeholderGroup from "../stakeholderGroup/modals/createStakeholderGroup";
 
-const WelcomeModal = ({ isModalOpen, setIsModalOpen,setActiveTab }) => {
+const WelcomeModal = ({ isModalOpen, setIsModalOpen,setActiveTab,setStakeholderList }) => {
   
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isStakeholderOpen,setIsStakeholderOpen]=useState(false)
@@ -138,7 +138,7 @@ const WelcomeModal = ({ isModalOpen, setIsModalOpen,setActiveTab }) => {
         </div>
       </div>
     )}
-    <CreateStakeholderGroup isModalOpen={isStakeholderOpen} setIsModalOpen={setIsStakeholderOpen} />
+    <CreateStakeholderGroup isModalOpen={isStakeholderOpen} setIsModalOpen={setIsStakeholderOpen} setStakeholderList={setStakeholderList} />
     </>
     
    

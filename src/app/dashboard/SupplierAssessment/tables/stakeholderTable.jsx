@@ -11,9 +11,13 @@ const StakeholderTable = ({
   totalItems,
   rowsPerPageOptions,
   onPageChange,
+  refresh,
+  setRefresh
 }) => {
     const [isModalOpen,setIsModalOpen]=useState(false)
     const [isEditModalOpen,setIsEditModalOpen]=useState(false)
+    const [deleteData,setDeleteData]=useState({})
+    const [editData,setEditData]=useState({})
   return (
     <>
       <div className="overflow-x-auto">
@@ -53,16 +57,44 @@ const StakeholderTable = ({
                     {row.organization}
                   </td>
                   <td className="px-6 py-3 text-sm text-gray-600 border-b border-gray-200">
-                    {row.corporate}
+                    {row.corporate.length>0?row.corporate.join(", "):''}
                   </td>
                   <td className="px-6 py-3 text-sm text-gray-600 border-b border-gray-200 text-center">
                     {row.noOfStakeholder}
                   </td>
-                  <td className="px-6 py-3 text-sm text-gray-600 border-b border-gray-200 cursor-pointer flex justify-center items-center">
-                    <MdOutlineEdit onClick={()=>{setIsEditModalOpen(true)}} className="text-[20px] text-gray-500 mr-2 hover:bg-gray-100 hover:rounded-sm"/>
-                    <MdOutlineDeleteOutline onClick={()=>{setIsModalOpen(true)}} className="text-[20px] text-gray-500 hover:text-red-500" />
+                  <td className="px-6 py-3 text-sm text-gray-600 border-b border-gray-200 cursor-pointer">
+                    <div className="flex justify-center items-center">
+                    <MdOutlineEdit onClick={()=>{
+                       setEditData({
+                        id:row.groupId,
+                        groupName:row.groupName,
+                        type:row.type,
+                        selectBy:row.corporate.length>0?"Corporate":"Organization",
+                        organization: row.organization,
+                        organization_id:row.organization_id,
+                        corporate_ids:row.corporate_ids,
+                        corporate:row.corporate,
+                        noOfStakeholder:row.noOfStakeholder
+                      })
+                      setIsEditModalOpen(true)
+                      }} className="text-[20px] text-gray-500 mr-2 hover:bg-gray-100 hover:rounded-sm"/>
+                    <MdOutlineDeleteOutline onClick={()=>{
+                      setDeleteData({
+                        id:row.groupId,
+                        groupName:row.groupName,
+                        createdBy:row.createdBy,
+                        createdOn:row.createdOn,
+                        type:row.type,
+                        noOfStakeholder:row.noOfStakeholder
+                      })
+                      setIsModalOpen(true)
+
+                    }} className="text-[20px] text-gray-500 hover:text-red-500" />
+                    </div>
+                    
                   </td>
                 </tr>
+ 
               ))}
           </tbody>
         </table>
@@ -74,9 +106,10 @@ const StakeholderTable = ({
         onPageChange={onPageChange}
       />
 
-<DeleteModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-<EditStakeholderGroup isModalOpen={isEditModalOpen} setIsModalOpen={setIsEditModalOpen} />
-    </>
+<DeleteModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} deleteData={deleteData} refresh={refresh} setRefresh={setRefresh} />
+<EditStakeholderGroup isModalOpen={isEditModalOpen} setIsModalOpen={setIsEditModalOpen} refresh={refresh} setRefresh={setRefresh} editData={editData} />
+
+   </>
   );
 };
 
