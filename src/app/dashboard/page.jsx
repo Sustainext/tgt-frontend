@@ -62,7 +62,7 @@ const Dashboard = () => {
               <div className="flex-grow">
                 {activeTab === "tab1" && <HomeDashboard setActiveTab={setActiveTab} />}
 
-                {/* {activeTab === "tab3" && <TasksPage />} */}
+                {activeTab === "tab3" && <TasksPage />}
               </div>
             </div>
           </div>
