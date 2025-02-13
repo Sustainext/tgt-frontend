@@ -1,28 +1,26 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
-import CustomTableWidget8 from "../../../../shared/widgets/Table/tableWidget8"
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
+import CustomTableWidget8 from "../../../../shared/widgets/Table/tableWidget8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import CurrencyselectWidget from "../../../../shared/widgets/Select/currencyselectWidget";
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: CustomTableWidget8,
-  CurrencyselectWidget:CurrencyselectWidget,
-
+  CurrencyselectWidget: CurrencyselectWidget,
 };
 
-const view_path = 'gri-social-salary_ratio-405-2a-ratio_of_remuneration'
-const client_id = 1
-const user_id = 1
-
+const view_path = "gri-social-salary_ratio-405-2a-ratio_of_remuneration";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
   type: "array",
@@ -32,7 +30,6 @@ const schema = {
       Q1: {
         type: "string",
         title: "Select a currency to fill the  below table",
-       
       },
       Q2: {
         type: "array",
@@ -50,8 +47,6 @@ const schema = {
           },
         },
       },
-  
- 
     },
   },
 };
@@ -84,17 +79,20 @@ const uiSchema = {
         titles: [
           {
             title: "Employee Category",
-            tooltip: "What is the ratio of the basic salary of women to men for each employee category. Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties.",
+            tooltip:
+              "What is the ratio of the basic salary of women to men for each employee category. Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties.",
             colSpan: 1,
           },
           {
             title: "Average remuneration of employees by Gender",
-            tooltip: "What is the average remuneration of employees by gender for each employee category.",
+            tooltip:
+              "What is the average remuneration of employees by gender for each employee category.",
             colSpan: 3,
           },
           {
             title: "Significant Location of Operation",
-            tooltip: "This section allows you to enter the organization's significant locations of operation.",
+            tooltip:
+              "This section allows you to enter the organization's significant locations of operation.",
             colSpan: 1,
           },
         ],
@@ -145,25 +143,22 @@ const uiSchema = {
       layout: "horizontal",
     },
   },
-
-
 };
 
-const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const initialFormData = [
     {
       Q1: "",
       Q2: [
         {
-      category: "",
-      male: 0,
-      female: 0,
-      nonBinary: 0,
-      locationandoperation:[],
+          category: "",
+          male: 0,
+          female: 0,
+          nonBinary: 0,
+          locationandoperation: [],
         },
       ],
     },
-    
   ];
   const [locationdata, setLocationdata] = useState();
   const [formData, setFormData] = useState(initialFormData);
@@ -171,7 +166,6 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -271,17 +265,26 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      facthloctiondata();
-      toastShown.current = false; // Reset the flag when valid data is present
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+        facthloctiondata();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+        facthloctiondata();
+      }
+
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -296,11 +299,17 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-           Average Remuneration of Employees					
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Average Remuneration of Employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e14`}
                 data-tooltip-content="This section documents the data corresponding to the average remuneration of employees by gender for each employee category across significant locations of operation. Remuneration: basic salary plus additional amounts paid to a worker. Examples of additional amounts paid to a worker can include those based on years of service, bonuses including cash and equity such as stocks and shares, benefit payments, overtime, time owed, and any additional allowances, such as transportation, living and childcare allowances."
@@ -335,43 +344,45 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
-         <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-           
-            formContext={{
-              onRemove: handleRemoveCommittee,
-            }}
-            widgets={{
-              ...widgets,
-              TableWidget: (props) => (
-                <CustomTableWidget8
-                  {...props}
-                  locationdata={locationdata}
-                />
-              ),
-            }}
-          />
+            <Form
+              schema={r_schema}
+              uiSchema={r_ui_schema}
+              formData={formData}
+              onChange={handleChange}
+              validator={validator}
+              formContext={{
+                onRemove: handleRemoveCommittee,
+              }}
+              widgets={{
+                ...widgets,
+                TableWidget: (props) => (
+                  <CustomTableWidget8 {...props} locationdata={locationdata} />
+                ),
+              }}
+            />
           </div>
         ) : (
           <div className="mx-2"></div>
         )}
-      
 
-    <div className='mt-4'>
+        <div className="mt-4">
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
-              }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>
-
         </div>
       </div>
       {loopen && (

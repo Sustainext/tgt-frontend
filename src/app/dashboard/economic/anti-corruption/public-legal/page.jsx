@@ -23,7 +23,7 @@ const Publiclegal = ({apiData}) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [togglestatus, setToggleStatus] = useState("Organization");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -144,12 +144,14 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
 
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
 
     </>

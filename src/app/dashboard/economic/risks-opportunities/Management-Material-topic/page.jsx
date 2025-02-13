@@ -3,24 +3,36 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Energydata } from "../../../../shared/data/Energydata";
-import { MdOutlineClear,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdChevronRight } from "react-icons/md";
 import EconomicHeader2 from "../../EconomicHeader2";
 import Screen1 from "./Screen1";
 import { useSelector } from "react-redux";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+const RiskMaterialtopic = ({ apiData }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const materialityEnvData =
+    apiData && apiData.governance ? apiData.governance : {};
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
 
-const RiskMaterialtopic = ({apiData}) => {
-  const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
-      (state) => state.materialitySlice
-    );
-    const materialityEnvData=apiData&&apiData.governance?apiData.governance:{}
-    const [year, setYear] = useState(materiality_year?materiality_year:'');
-    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
-    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
-  
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState();
-
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -53,17 +65,19 @@ const RiskMaterialtopic = ({apiData}) => {
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Climate Risks and Opportunities
+                    Climate Risks and Opportunities
                   </p>
                 </div>
-                {materialityEnvData&&materialityEnvData.ClimateRisksAndOpportunities?.is_material_topic?(
-                    <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
+                {materialityEnvData &&
+                materialityEnvData.ClimateRisksAndOpportunities
+                  ?.is_material_topic ? (
+                  <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
                     <p className="text-gray-500 text-[12px] pt-0.5 px-2">
                       Material Topic
                     </p>
                   </div>
-                ):(
-                    <div></div>
+                ) : (
+                  <div></div>
                 )}
               </div>
             </div>
@@ -71,12 +85,86 @@ const RiskMaterialtopic = ({apiData}) => {
           <div className="w-full float-end me-2">
             <div className="float-end border-l">
               <div className="flex mb-2">
-                <button
-                  className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                  onClick={() => toggleDrawer("51")}
-                >
-                  GRI 3-3
-                </button>
+                <div>
+                  <button
+                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                    onClick={() => toggleDrawer("51")}
+                  >
+                    GRI 3-3
+                  </button>
+                </div>
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={`tooltip-$brsr1`}
+                    data-tooltip-content="BRSR-Section C-Principle 1-Essential Indicators-4"
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                    // onClick={() => toggleDrawer("92")}
+                  >
+                    BRSR C-P1-E4
+                  </button>
+                  <ReactTooltip
+                    id={`tooltip-$brsr1`}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={`tooltip-$brsr2`}
+                    data-tooltip-content="BRSR-Section C-Principle 6-Essential Indicators-10"
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                    // onClick={() => toggleDrawer("92")}
+                  >
+                    BRSR C-P6-E10
+                  </button>
+                  <ReactTooltip
+                    id={`tooltip-$brsr2`}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={`tooltip-$brsr3`}
+                    data-tooltip-content="BRSR-Section A-VII-26"
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                    // onClick={() => toggleDrawer("92")}
+                  >
+                    BRSR A-VII-26
+                  </button>
+                  <ReactTooltip
+                    id={`tooltip-$brsr3`}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
               </div>
             </div>
           </div>
@@ -87,7 +175,7 @@ const RiskMaterialtopic = ({apiData}) => {
           </h6>
         </div>
         <div
-           className={`${
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -138,11 +226,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
     </>
   );

@@ -54,7 +54,7 @@ const uiSchema = {
     ],
   },
 };
-const Screen1 = ({ selectedCorp, year, selectedOrg }) => {
+const Screen1 = ({ selectedCorp, year, selectedOrg, togglestatus }) => {
   const initialFormData = [
     {
       childlabor: "",
@@ -181,16 +181,24 @@ const Screen1 = ({ selectedCorp, year, selectedOrg }) => {
   }, [formData]);
 
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -223,7 +231,7 @@ const Screen1 = ({ selectedCorp, year, selectedOrg }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Operations considered to have significant risk for incidents of
               forced or compulsory labor
               <MdInfoOutline
@@ -276,7 +284,8 @@ const Screen1 = ({ selectedCorp, year, selectedOrg }) => {
             }}
           />
         </div>
-        {selectedOrg && year && (
+        {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <div className="flex right-1 mx-2">
             <button
               type="button"
@@ -286,16 +295,23 @@ const Screen1 = ({ selectedCorp, year, selectedOrg }) => {
               Add category <MdAdd className="text-lg" />
             </button>
           </div>
-        )}
+        ) : null}
 
         <div className="mt-4">
-        <button
+          <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -8,7 +8,6 @@ import Socialheader from "../../../socialheader";
 import Screen1 from "./Screen1";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const Diversityemploy = () => {
   const [activeMonth, setActiveMonth] = useState(1);
@@ -40,16 +39,16 @@ const Diversityemploy = () => {
 
   return (
     <>
-       <ToastContainer style={{ fontSize: "12px" }} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
+            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-[11px]">Social</p>
               <div className="flex">
-                         <div className="h-[29px]">
+                <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Employment 
+                    Employment
                   </p>
                 </div>
               </div>
@@ -57,31 +56,63 @@ const Diversityemploy = () => {
           </div>
           <div className="w-full float-end ">
             <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("50")}
-              >
-                GRI 405 - 1
-              </button>
-              <button
-                className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("51")}
-              >
-                SDG 5
-              </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("26")}
-              >
-                SDG 8
-              </button>
+              <div>
+                <button
+                  className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                  onClick={() => toggleDrawer("50")}
+                >
+                  GRI 405 - 1
+                </button>
+              </div>
+
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr1`}
+                  data-tooltip-content="BRSR-Section A-IV-21"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR A-IV-21
+                </button>
+                <ReactTooltip
+                  id={`tooltip-$brsr1`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                    width: "170px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
+
+              <div>
+                <button
+                  className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                  onClick={() => toggleDrawer("51")}
+                >
+                  SDG 5
+                </button>
+              </div>
+              <div>
+                <button
+                  className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                  onClick={() => toggleDrawer("26")}
+                >
+                  SDG 8
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Diversity of Employees
+            Diversity of Employees
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -97,8 +128,8 @@ const Diversityemploy = () => {
                         </ReactTooltip> */}
           </h6>
         </div>
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -142,13 +173,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         </div>
       </div>
       <Socialheader
-                activeMonth={activeMonth}
-                setActiveMonth={setActiveMonth}
-                location={location}
-                setLocation={setLocation}
-                year={year}
-                setYear={setYear}
-            />
+        activeMonth={activeMonth}
+        setActiveMonth={setActiveMonth}
+        location={location}
+        setLocation={setLocation}
+        year={year}
+        setYear={setYear}
+      />
       <Screen1 location={location} year={year} month={activeMonth} />
     </>
   );

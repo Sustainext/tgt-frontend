@@ -14,7 +14,6 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import LoctiondropdwonTable from "../../../../shared/widgets/Economic/loctiondropdwonTable";
 
 const widgets = {
-
   LoctiondropdwonTable: LoctiondropdwonTable,
 };
 
@@ -43,8 +42,6 @@ const schema = {
   },
 };
 
-
-
 const uiSchema = {
   "ui:order": ["Q1"],
   items: {
@@ -54,13 +51,16 @@ const uiSchema = {
         titles: [
           {
             title: "Location Name",
-            tooltip: "Specify name of the region from which governance body members have received training on anti-corruption,",
+            tooltip:
+              "Specify name of the region from which governance body members have received training on anti-corruption,",
             widgettype: "select",
             tooltipdisplay: "block",
           },
           {
-            title: "Total number of governance body members that have received training on anti-corruption",
-            tooltip: "Mention the total number of governance body members that have received training on anti-corruption.",
+            title:
+              "Total number of governance body members that have received training on anti-corruption",
+            tooltip:
+              "Mention the total number of governance body members that have received training on anti-corruption.",
             widgettype: "input",
             tooltipdisplay: "block",
           },
@@ -81,11 +81,15 @@ const uiSchema = {
   },
 };
 
-
-const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
+const Screen4 = ({
+  selectedOrg,
+  year,
+  selectedCorp,
+  setDatarefreshtwo,
+  togglestatus,
+}) => {
   const [formData, setFormData] = useState([
     {
- 
       Q1: [
         {
           RegionName: "",
@@ -199,16 +203,46 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      facthloctiondata();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+        facthloctiondata();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([
+          {
+            Q1: [
+              {
+                RegionName: "",
+                Totalnumberanticorruption: "",
+                Totalnumberbodymembers: "",
+              },
+            ],
+          },
+        ]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+        facthloctiondata();
+      }
+
       toastShown.current = false;
-    } else if (!toastShown.current) {
-      toastShown.current = true;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
+  // useEffect(() => {
+  //   if (selectedOrg && year) {
+  //     loadFormData();
+  //     facthloctiondata();
+  //     toastShown.current = false;
+  //   } else if (!toastShown.current) {
+  //     toastShown.current = true;
+  //   }
+  // }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -218,11 +252,18 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
   console.log("Location data: locationdata", locationdata);
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Total number of governance body members that have received training on anti-corruption, broken down by region.
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Total number of governance body members that have received
+              training on anti-corruption, broken down by region.
               <MdInfoOutline
                 data-tooltip-id={`es26`}
                 data-tooltip-html="Specify the total number of governance body members that have received training on anti-corruption, broken down by region."
@@ -254,12 +295,11 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
             </div>
           </div>
         </div>
-
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
@@ -277,19 +317,26 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
         ) : (
           <div className="mx-2"></div>
         )}
-
         <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>
         </div>
+
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

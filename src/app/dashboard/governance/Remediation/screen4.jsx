@@ -16,7 +16,6 @@ const widgets = {
   CommoninputWidget: CommoninputWidget,
 };
 
-
 const view_path = "gri-governance-process-2-25-d-stakeholders";
 const client_id = 1;
 const user_id = 1;
@@ -35,38 +34,35 @@ const schema = {
   },
 };
 
-
-    const uiSchema = {
-      items: {
-        "ui:order": ["Q1"],
-        Q1: {
-          "ui:title":
+const uiSchema = {
+  items: {
+    "ui:order": ["Q1"],
+    Q1: {
+      "ui:title":
         "Describe how the stakeholders who are the intended users of the grievance mechanisms are involved in the design, review, operation, and improvement of these mechanisms",
       "ui:tooltip":
         "The organization can describe, for example, how it engages with stakeholders who are the intended users of the grievance mechanisms, to understand how they want to access the mechanisms to raise concerns, and their expectations about how the mechanisms will operate.",
-          "ui:titledisplay": "none",
-          "ui:tooltipdisplay": "none",
-          "ui:widgetType": "textarea",
-          "ui:inputfildtype": "text",
-          "ui:widget": "CommoninputWidget",
-          "ui:horizontal": true,
-          "ui:options": {
-            label: false,
-          },
-        },
-    
-        "ui:options": {
-          orderable: false,
-          addable: false,
-          removable: false,
-          layout: "horizontal",
-        },
+      "ui:titledisplay": "none",
+      "ui:tooltipdisplay": "none",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "CommoninputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-    };
+    },
 
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
+  },
+};
 
-
-const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen4 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -157,15 +153,24 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -175,23 +180,39 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className=" flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Describe how the stakeholders who are the intended users of the grievance mechanisms are involved in the design, review, operation, and improvement of these mechanisms
-                            <MdInfoOutline data-tooltip-id={`tooltip-$e189`}
-                                data-tooltip-content="The organization can describe, for example, how it engages with stakeholders who are the intended users of the grievance mechanisms, to understand how they want to access the mechanisms to raise concerns, and their expectations about how the mechanisms will operate." className="mt-1.5 ml-2 text-[15px]" />
-                            <ReactTooltip id={`tooltip-$e189`} place="top" effect="solid" style={{
-                                width: "290px", backgroundColor: "#000",
-                                color: "white",
-                                fontSize: "12px",
-                                boxShadow: 3,
-                                borderRadius: "8px",
-                                textAlign: 'left',
-                            }}>
-                            </ReactTooltip>
-                        </h2>
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Describe how the stakeholders who are the intended users of the
+              grievance mechanisms are involved in the design, review,
+              operation, and improvement of these mechanisms
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e189`}
+                data-tooltip-content="The organization can describe, for example, how it engages with stakeholders who are the intended users of the grievance mechanisms, to understand how they want to access the mechanisms to raise concerns, and their expectations about how the mechanisms will operate."
+                className="mt-1.5 ml-2 text-[15px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e189`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
+            </h2>
           </div>
 
           <div className="w-[20%]">
@@ -219,10 +240,17 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

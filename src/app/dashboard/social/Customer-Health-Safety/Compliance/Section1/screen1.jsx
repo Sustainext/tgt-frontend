@@ -33,11 +33,13 @@ const schema = {
       },
       Q2: {
         type: "string",
-        title: "Total number of Incidents of non-compliance with regulations resulting in a warning",
+        title:
+          "Total number of Incidents of non-compliance with regulations resulting in a warning",
       },
       Q3: {
         type: "string",
-        title: "Total number of Incidents of non-compliance with voluntary codes",
+        title:
+          "Total number of Incidents of non-compliance with voluntary codes",
       },
     },
   },
@@ -45,7 +47,7 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2","Q3"],
+    "ui:order": ["Q1", "Q2", "Q3"],
 
     Q1: {
       "ui:title":
@@ -60,8 +62,10 @@ const uiSchema = {
       },
     },
     Q2: {
-      "ui:title": "Total number of Incidents of non-compliance with regulations resulting in a warning",
-      "ui:tooltip": "Please specify the total number of Incidents of non-compliance with regulations resulting in a warning",
+      "ui:title":
+        "Total number of Incidents of non-compliance with regulations resulting in a warning",
+      "ui:tooltip":
+        "Please specify the total number of Incidents of non-compliance with regulations resulting in a warning",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -70,15 +74,17 @@ const uiSchema = {
       },
     },
     Q3: {
-        "ui:title": "Total number of Incidents of non-compliance with voluntary codes",
-        "ui:tooltip": "Please specify the total number of Incidents of non-compliance with voluntary codes. ",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
+      "ui:title":
+        "Total number of Incidents of non-compliance with voluntary codes",
+      "ui:tooltip":
+        "Please specify the total number of Incidents of non-compliance with voluntary codes. ",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
+    },
     "ui:options": {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
@@ -88,7 +94,14 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const Screen1 = ({
+  selectedOrg,
+  selectedCorp,
+  location,
+  year,
+  month,
+  togglestatus,
+}) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -185,16 +198,24 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (selectedOrg && year && month) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+    if (selectedOrg && year && month && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year,selectedCorp,month]);
+  }, [selectedOrg, year, selectedCorp, togglestatus, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -204,11 +225,18 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 
   return (
     <>
-    <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Total number of incidents of non-compliance with regulations and/or voluntary codes
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Total number of incidents of non-compliance with regulations
+              and/or voluntary codes
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the
@@ -234,19 +262,20 @@ period"
               ></ReactTooltip>
             </h2>
             <p className="text-[14px] mx-2 text-gray-700 font-[500]">
-            Total number of incidents of non-compliance with regulations and/or voluntary codes concerning the health and safety impacts of products and services within the reporting period, by:
+              Total number of incidents of non-compliance with regulations
+              and/or voluntary codes concerning the health and safety impacts of
+              products and services within the reporting period, by:
             </p>
           </div>
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 416-2a
+                  GRI 416-2a
                 </div>
               </div>
             </div>
           </div>
-         
         </div>
         <div className="mx-2">
           <Form
@@ -262,10 +291,19 @@ period"
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ||!month? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year ||
+              !month
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year ||!month}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" &&
+                (!selectedOrg || !year || !month))
+            }
           >
             Submit
           </button>

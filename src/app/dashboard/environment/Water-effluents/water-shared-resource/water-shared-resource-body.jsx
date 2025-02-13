@@ -110,7 +110,7 @@ const AccordionItem = ({
   );
 };
 
-const Watersharedresourcebody = ({ year, selectedOrg, selectedCorp }) => {
+const Watersharedresourcebody = ({ year, selectedOrg, selectedCorp,togglestatus }) => {
   return (
     <>
       <div className="mx-3">
@@ -127,6 +127,7 @@ const Watersharedresourcebody = ({ year, selectedOrg, selectedCorp }) => {
             selectedOrg={selectedOrg}
             year={year}
             selectedCorp={selectedCorp}
+            togglestatus={togglestatus}
           />
         </AccordionItem>
 
@@ -144,6 +145,7 @@ const Watersharedresourcebody = ({ year, selectedOrg, selectedCorp }) => {
             selectedOrg={selectedOrg}
             year={year}
             selectedCorp={selectedCorp}
+            togglestatus={togglestatus}
           />
         </AccordionItem>
         <AccordionItem
@@ -160,6 +162,7 @@ of effluent discharge.`}
             selectedOrg={selectedOrg}
             year={year}
             selectedCorp={selectedCorp}
+            togglestatus={togglestatus}
           />
         </AccordionItem>
         {/* Add more accordion items here */}

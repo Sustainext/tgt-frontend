@@ -12,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: InputWidget4,
@@ -30,7 +30,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Are there any financial and in-kind political contributions made directly or  indirectly by the organization?",
+        title:
+          "Are there any financial and in-kind political contributions made directly or  indirectly by the organization?",
         enum: ["Yes", "No"],
       },
     },
@@ -44,7 +45,8 @@ const schema = {
               },
               Q2: {
                 type: "string",
-                title: "Specify the total number of incident violations involving the rights of indigenous peoples",
+                title:
+                  "Specify the total number of incident violations involving the rights of indigenous peoples",
               },
             },
           },
@@ -58,7 +60,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2"],
     Q1: {
-      "ui:title": "Are there any financial and in-kind political contributions made directly or  indirectly by the organization?",
+      "ui:title":
+        "Are there any financial and in-kind political contributions made directly or  indirectly by the organization?",
       "ui:tooltip":
         "This section documents the data corresponding to the total monetary value of financial and in-kind political contributions made directly and indirectly by the organization by country and recipient/beneficiary.Political contribution: Financial or in-kind support given directly or indirectly to political parties, their electedrepresentatives, or persons seeking political office. Indirect political contribution: Financial or in-kind support to political parties, their representatives, or candidates for office made through an intermediary organization such as a lobbyist or charity, or support given to  an organization such as a think tank or trade association linked to or supporting particular political parties or causes.",
       "ui:tooltipdisplay": "block",
@@ -71,16 +74,18 @@ const uiSchema = {
     Q2: {
       "ui:hadding": "Estimation of monetary value of in-kind contributions",
       "ui:title": "Specify the monetary value ",
-      "ui:tooltipshadding": "This section documents the data corresponding to the total monetary value of financial and in-kind political contributions made directly and indirectly by the organization by country and recipient/beneficiary and how the monetary value of in-kind contributions was estimated.",
-      "ui:tooltipstitle": "Please specify the monetary value by the organization by country and recipient/beneficiary and describe how the monetary value of in-kind contributions was estimated?",
+      "ui:tooltipshadding":
+        "This section documents the data corresponding to the total monetary value of financial and in-kind political contributions made directly and indirectly by the organization by country and recipient/beneficiary and how the monetary value of in-kind contributions was estimated.",
+      "ui:tooltipstitle":
+        "Please specify the monetary value by the organization by country and recipient/beneficiary and describe how the monetary value of in-kind contributions was estimated?",
       "ui:haddingdisplay": "block",
       "ui:titlediplay": "block",
       "ui:haddingtooltipdisplay": "block",
       "ui:titletooltipdisplay": "block",
       "ui:Gri": "GRI 415-1b",
-      'ui:widget': 'inputWidget',
-      'ui:options': {
-        label: false
+      "ui:widget": "inputWidget",
+      "ui:options": {
+        label: false,
       },
     },
 
@@ -93,7 +98,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
+const Screen1 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -189,16 +194,24 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -208,11 +221,18 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Financial and in-kind political contributions made directly or indirectly by the organization
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Financial and in-kind political contributions made directly or
+              indirectly by the organization
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e15`}
                 data-tooltip-content="This section documents the data corresponding to the total monetary value of financial and in-kind political contributions made directly and indirectly by the organization by country and recipient/beneficiary."
@@ -238,12 +258,11 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 415-1a
+                  GRI 415-1a
                 </div>
               </div>
             </div>
           </div>
-       
         </div>
         <div className="mx-2">
           <Form
@@ -256,10 +275,21 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
           />
         </div>
         <div className="mt-4">
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}>
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
+          >
             Submit
           </button>
         </div>

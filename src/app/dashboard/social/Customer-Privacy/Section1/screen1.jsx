@@ -63,7 +63,14 @@ const uiSchema = {
     ],
   },
 };
-const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const Screen1 = ({
+  selectedOrg,
+  selectedCorp,
+  location,
+  year,
+  month,
+  togglestatus,
+}) => {
   const initialFormData = [
     {
       customerprivacy: "",
@@ -166,15 +173,24 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year && month) {
-      loadFormData();
+    if (selectedOrg && year && month && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp, month]);
+  }, [selectedOrg, year, selectedCorp, togglestatus, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -257,7 +273,19 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
             }}
           />
         </div>
-        <div className="flex right-1 mx-2">
+        {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
+          <div className="flex right-1 mx-2">
+            <button
+              type="button"
+              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+              onClick={handleAddCommittee}
+            >
+              Add category <MdAdd className="text-lg" />
+            </button>
+          </div>
+        ) : null}
+        {/* <div className="flex right-1 mx-2">
           {selectedOrg && year && (
             <button
               type="button"
@@ -267,16 +295,25 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
               Add category <MdAdd className="text-lg" />
             </button>
           )}
-        </div>
+        </div> */}
 
         <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year ||
+              !month
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" &&
+                (!selectedOrg || !year || !month))
+            }
           >
             Submit
           </button>

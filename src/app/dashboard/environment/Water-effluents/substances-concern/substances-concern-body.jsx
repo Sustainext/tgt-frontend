@@ -95,7 +95,7 @@ const AccordionItem = ({
   );
 };
 
-const Substancesconcernbody = ({ year, selectedOrg, selectedCorp }) => {
+const Substancesconcernbody = ({ year, selectedOrg, selectedCorp,togglestatus }) => {
   return (
     <>
       <div className="mx-3">
@@ -112,6 +112,7 @@ const Substancesconcernbody = ({ year, selectedOrg, selectedCorp }) => {
             selectedOrg={selectedOrg}
             year={year}
             selectedCorp={selectedCorp}
+            togglestatus={togglestatus}
           />
         </AccordionItem>
 
@@ -129,6 +130,7 @@ const Substancesconcernbody = ({ year, selectedOrg, selectedCorp }) => {
             selectedOrg={selectedOrg}
             year={year}
             selectedCorp={selectedCorp}
+            togglestatus={togglestatus}
           />
         </AccordionItem>
         {/* Add more accordion items here */}

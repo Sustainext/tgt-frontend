@@ -109,7 +109,7 @@ const validateRows = (data) => {
   return errors;
 };
 
-const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const Screen1 = ({ selectedOrg, selectedCorp, location, year, month,togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [validationErrors, setValidationErrors] = useState([]);
@@ -204,18 +204,25 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
     }
   };
 
-  // fetch backend and replace initialized forms
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year,selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -302,10 +309,17 @@ to the negative social impacts in the supply chain
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

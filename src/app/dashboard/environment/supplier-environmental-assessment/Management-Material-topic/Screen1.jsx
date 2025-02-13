@@ -82,9 +82,22 @@ const uiSchema = {
     },
   },
 };
-
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.GRI33cd) {
+      rowErrors.GRI33cd = "This field is required";
+    }
+    if (!row.GRI33e) {
+      rowErrors.GRI33e = "This field is required";
+    }
+  
+    return rowErrors;
+  });
+};
+const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
+  const [validationErrors, setValidationErrors] = useState([]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -101,8 +114,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleChange = (e) => {
     setFormData(e.formData);
-    setValidationErrors([]); // Reset validation errors
   };
+
 
   const updateFormData = async () => {
     const data = {
@@ -175,35 +188,24 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
-
-  const [validationErrors, setValidationErrors] = useState([]);
-
-  const validateRows = (data) => {
-    return data.map((row) => {
-      const rowErrors = {};
-
-      if (!row.GRI33cd || row.GRI33cd.trim() === "") {
-        rowErrors.GRI33cd =
-          "Organization's policies and actions description is required";
-      }
-
-      if (!row.GRI33e || row.GRI33e.trim() === "") {
-        rowErrors.GRI33e =
-          "Process tracking and effectiveness description is required";
-      }
-
-      return rowErrors;
-    });
-  };
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -215,25 +217,22 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     );
     if (!hasErrors) {
       updateFormData();
+    } else {
+      // toast.error("Please fill in all required fields", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      // });
+      console.log("errror");
     }
   };
 
   return (
     <>
-      <div
-        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
-        <div className="flex">
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div className="flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 px-1 text-[15px] text-gray-700 font-[400]">
-              Describe organisation's policies or commitments for the material
-              topic, along with actions taken to address, prevent or mitigate
-              potential negative impacts and mention the actions taken by the
-              organisation to manage actual and potential positive impacts.
+           <h2 className="flex mx-2 px-1 text-[15px] text-gray-700 font-[400]">
+           Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e14556`}
                 data-tooltip-html="<p>1) Mention the policies or commitments the organization has developed specifically for the selected material topics.</p> <br> <p> 2)Examples of actions taken to prevent or mitigate potential negative impacts (e.g., adaptation/modification measures, facility upgrading, training, red-flag systems).</p> <br> <p>Mitigation: Action(s) taken to reduce the extent of a negative impact.</p><br><p>3)Mention actions to address actual negative impacts, including actions to provide for or cooperate in their remediation. Remediation: Means to counteract or make good a negative impact or provision of remedy.</p>"
@@ -264,7 +263,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
               </div>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 3-3-d
+                GRI 3-3-d
                 </div>
               </div>
             </div>
@@ -285,10 +284,17 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

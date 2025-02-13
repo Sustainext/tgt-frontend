@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect,useCallback  } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
-import _ from "lodash";
+import { debounce } from 'lodash';
 const InputdiableWidget = ({
   onChange,
   value = "",
@@ -15,6 +15,7 @@ const InputdiableWidget = ({
   formContext,
   name,
   isEnabled = false,
+  setInputnewValue,
 }) => {
   const { validationErrors } = formContext || {};
   const rowIndex = parseInt(id.split("_")[1], 10);
@@ -26,14 +27,24 @@ const InputdiableWidget = ({
   const [inputValue, setInputValue] = useState(value);
   const inputRef = useRef(null);
 
-  const debounceOnChange = useCallback(_.debounce(onChange, 500), [onChange]);
+  const debouncedOnChange = useCallback(
+    debounce((newValue) => {
+      onChange(newValue);
+    }, 800),
+    [onChange]
+  );
 
+
+  useEffect(() => {
+    setInputValue(value || "");
+  }, [value]);
   const handleInputChange = (event) => {
     const newValue = event.target.value;
     setInputValue(newValue);
-    debounceOnChange(newValue);
-  };
 
+ 
+    debouncedOnChange(newValue);
+  };
   const handleKeyDown = (event) => {
     const allowedControlKeys = [
       "Backspace",
@@ -57,9 +68,7 @@ const InputdiableWidget = ({
       }
     }
   };
-  const handleBlur = () => {
-    debounceOnChange.flush(); // Ensure the final value is sent immediately
-  };
+ 
   const tooltipId = schema.title
     ? `tooltip-${schema.title.replace(/\s+/g, "-")}`
     : `tooltip-${id}`;
@@ -109,7 +118,7 @@ const InputdiableWidget = ({
           onChange={handleInputChange} // Update local state and notify parent
           onKeyDown={handleKeyDown}
           disabled={!isEnabled}
-          onBlur={handleBlur}
+      
         />
       </div>
       {hasError && (

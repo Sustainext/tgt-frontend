@@ -69,6 +69,18 @@ const Emissions = ({ open,apiData}) => {
   },
   ]
 
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-E7",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-7",
+    },
+    {
+      tagName: "BRSR C-P6-L2",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 6-Leadership  Indicators-2",
+    },
+  ];
   const sdgData=[
    
 
@@ -111,7 +123,7 @@ const Emissions = ({ open,apiData}) => {
       <EmissionsProvider>
         <>
           <div className="flex flex-col justify-start overflow-x-hidden ">
-           <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} sdgData={sdgData} griData={griData} />
+           <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} sdgData={sdgData} griData={griData} brsr={brsr} />
             <div
            className={`${
             isOpen

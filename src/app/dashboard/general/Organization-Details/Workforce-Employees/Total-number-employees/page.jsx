@@ -60,6 +60,7 @@ const Totalnumberemployees = ({
   year,
   selectedCorp,
   activeMonth,
+  togglestatus,
 }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   // const fullName = convertShortNameToFullName(activeMonth);
@@ -159,6 +160,7 @@ by gender and geographic area, categorized by employment type."
                   selectedOrg={selectedOrg}
                   year={year}
                   selectedCorp={selectedCorp}
+                  togglestatus={togglestatus}
                 />
               </div>
             )}
@@ -169,6 +171,7 @@ by gender and geographic area, categorized by employment type."
                   selectedOrg={selectedOrg}
                   year={year}
                   selectedCorp={selectedCorp}
+                  togglestatus={togglestatus}
                 />{" "}
               </div>
             )}
@@ -180,6 +183,7 @@ by gender and geographic area, categorized by employment type."
                   selectedOrg={selectedOrg}
                   year={year}
                   selectedCorp={selectedCorp}
+                  togglestatus={togglestatus}
                 />{" "}
               </div>
             )}
@@ -191,6 +195,7 @@ by gender and geographic area, categorized by employment type."
                   selectedOrg={selectedOrg}
                   year={year}
                   selectedCorp={selectedCorp}
+                  togglestatus={togglestatus}
                 />{" "}
               </div>
             )}
@@ -202,6 +207,7 @@ by gender and geographic area, categorized by employment type."
                   selectedOrg={selectedOrg}
                   year={year}
                   selectedCorp={selectedCorp}
+                  togglestatus={togglestatus}
                 />{" "}
               </div>
             )}
