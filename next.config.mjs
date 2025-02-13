@@ -14,11 +14,10 @@ const nextConfig = {
     // SSO
     AUTH0_SECRET: "LONG RANDOM VALsUE",
     // AUTH0_BASE_URL: "https://sustainext-udm.sustainext.ai",
-    AUTH0_BASE_URL:'http://localhost:3000',
     AUTH0_ISSUER_BASE_URL: "https://dev-0biozzwskqs6o65f.us.auth0.com",
-    AUTH0_CLIENT_ID: "HM0PdW9MjGEtDTUAOMJo8QsCUT5PThdz",
+    AUTH0_CLIENT_ID: "Jr9m3MSh0oJr6h2a876tPN5h44OU4Bo8",
     AUTH0_CLIENT_SECRET:
-      "xgnUcPBtoVvt6NoLlh8zeSmwRqRQZX1aCUkr1zklEoil93fiXlzhfQ9fgutypts9",
+      "VcLShjMepGqKoT5t9MwsuyGPHbWwwEN6zBl62XsXPSlkdHlVXeZFeRjpi6qX7t-q",
     // AUTH0_REDIRECT_URL: "https://sustainext-udm.sustainext.ai/callback",
     AUTH0_REDIRECT_URL: "http://localhost:3000/callback",
   },
