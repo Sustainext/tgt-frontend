@@ -27,6 +27,7 @@ import { CiSettings } from "react-icons/ci";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { useDispatch, useSelector } from "react-redux";
+import { MdOutlineAssignment } from "react-icons/md";
 import {
   fetchMaterialityData,
   setCorpID,
@@ -101,13 +102,24 @@ const Sidenav = () => {
       id: 1,
       title: "Materiality Dashboard",
       icon: <MdOutlinePieChartOutline />,
-      spacing: true,
+      spacing: false,
       link: "/dashboard/Materiality",
       lockicon: <MdLockOutline />,
       lockiconshow: false,
     },
     {
       id: 2,
+      title: "Supplier Assessment",
+      icon: <MdOutlineAssignment />,
+      link: "/dashboard/SupplierAssessment",
+      spacing: true,
+      // permission: "supplier",
+      // role: false,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+    },
+    {
+      id: 3,
       title: "Collect",
       icon: <MdOutlineAddBox />,
       submenu: true,
@@ -150,7 +162,7 @@ const Sidenav = () => {
       ],
     },
     {
-      id: 3,
+      id: 4,
       title: "Analyse",
       icon: <MdOutlineBarChart />,
       submenu: true,
@@ -193,7 +205,7 @@ const Sidenav = () => {
       ],
     },
     {
-      id: 4,
+      id: 5,
       title: "Report",
       icon: <MdEditNote />,
       link: "/dashboard/Report",
@@ -203,7 +215,7 @@ const Sidenav = () => {
       lockiconshow: false,
     },
     {
-      id: 5,
+      id: 6,
       title: "Optimise",
       icon: <MdOutlineSettingsSuggest />,
       link: "/dashboard/Optimise",
@@ -213,7 +225,7 @@ const Sidenav = () => {
       lockiconshow: false,
     },
     {
-      id: 6,
+      id: 7,
       title: "Track",
       icon: <MdOutlineSearch />,
       spacing: true,
@@ -225,7 +237,7 @@ const Sidenav = () => {
     },
 
     isNewRole && {
-      id: 7,
+      id: 8,
       title: "Users",
       icon: <MdOutlineGroup />,
       submenu: true,
@@ -247,7 +259,7 @@ const Sidenav = () => {
     },
 
     {
-      id: 8,
+      id: 9,
       title: "Organizational Structure",
       icon: <MdOutlineAccountTree />,
       link: "/dashboard/OrgStructure",
@@ -259,7 +271,7 @@ const Sidenav = () => {
  
     isNewRole && {
     
-      id: 9,
+      id: 10,
       title: "Audit logs",
       icon: <TbNotes/>,
       link: "/dashboard/Auditlogs",
@@ -269,7 +281,7 @@ const Sidenav = () => {
     
   },
     {
-      id: 10,
+      id: 11,
       title: "Settings",
       icon: <CiSettings />,
       link: "/dashboard/Settings",

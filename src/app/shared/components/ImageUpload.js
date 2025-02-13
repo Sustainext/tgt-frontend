@@ -2,8 +2,10 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUpload, FiFile, FiXCircle } from "react-icons/fi";
+import { MdFilePresent } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
-const ImageUpload = ({ onFileSelect }) => {
+const ImageUpload = ({ onFileSelect,format }) => {
   const [files, setFiles] = useState([]);
   const [uploadProgress, setUploadProgress] = useState({});
   const [isUploading, setIsUploading] = useState(false);
@@ -103,7 +105,7 @@ const ImageUpload = ({ onFileSelect }) => {
             </p>
           </div>
           <div className="flex-col justify-center tracking-wide text-gray-400 text-sm">
-            <p> Supported formats: JPEG, PNG, PDF, Word, PPT</p>
+            <p> Supported formats: {`${format?format:'JPEG, PNG, PDF, Word, PPT'}`}</p>
             {/* <p> Max file size : 2MB</p> */}
           </div>
         </div>
@@ -120,7 +122,7 @@ const ImageUpload = ({ onFileSelect }) => {
             <div className="flex items-center">
               <div className="text-2xl">
                 {" "}
-                <FiFile color="#28C1A2" size={24} />{" "}
+                <MdFilePresent color="#28C1A2" size={24} />{" "}
               </div>
               <div className="ml-2">
                 <p className="text-[14px] truncate w-48">{file.name}</p>
@@ -134,7 +136,7 @@ const ImageUpload = ({ onFileSelect }) => {
               onClick={() => removeFile(file.name)}
               className="ml-auto p-2 rounded-full"
             >
-              <FiXCircle size={24} color="#D64564" />
+              <RiDeleteBin6Line size={22} color="#D64564" />
             </button>
             {isUploading && (
               <div className="absolute bottom-0 left-0 right-0 bg-gray-700 rounded-b-md h-1">
