@@ -127,36 +127,57 @@ const TaskStatusBadge = ({ status }) => {
 };
 
 const TaskRow = ({ task, onTaskClick }) => {
+  const textRef = React.useRef(null);
+  const [isTextTruncated, setIsTextTruncated] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkTruncation = () => {
+      if (textRef.current) {
+        const isOverflowing = textRef.current.scrollWidth > textRef.current.clientWidth;
+        setIsTextTruncated(isOverflowing);
+      }
+    };
+
+    checkTruncation();
+    // Add resize listener to handle window size changes
+    window.addEventListener('resize', checkTruncation);
+    return () => window.removeEventListener('resize', checkTruncation);
+  }, [task.task_name]); // Re-run when task name changes
+
   return (
     <div className="flex justify-between border-b border-[#ebeced] py-2">
       <div className="flex w-[22rem] cursor-pointer">
-        <div className="w-[17rem] text-[#007eef] text-[13px] font-normal leading-none ml-3">
+        <div className="w-[17rem] text-[#007eef] text-[13px] font-normal leading-none ml-3 relative">
           <p
+            ref={textRef}
             className="py-1 cursor-pointer truncate"
-            data-tooltip-id={`task-tooltip-${task.id}`}
-            data-tooltip-content={task.task_name}
+            data-tooltip-id={isTextTruncated ? `task-tooltip-${task.id}` : undefined}
+            data-tooltip-content={isTextTruncated ? task.task_name : undefined}
             onClick={() => onTaskClick(task)}
           >
             {task.task_name}
           </p>
-          <Tooltip
-            id={`task-tooltip-${task.id}`}
-            place="top"
-            effect="solid"
-            className="z-[9999] !opacity-100 drop-shadow-md"
-            style={{
-              backgroundColor: "white",
-              color: "#667084",
-              padding: "4px 8px",
-              borderRadius: "4px",
-              fontSize: "14px",
-              maxWidth: "300px",
-              wordBreak: "break-word",
-            }}
-            offset={-50}
-            delayShow={200}
-            float={true}
-          />
+          {isTextTruncated && (
+            <Tooltip
+              id={`task-tooltip-${task.id}`}
+              place="top"
+              effect="solid"
+              className="z-[9999] !opacity-100 drop-shadow-lg border border-gray-300"
+              style={{
+                backgroundColor: "white",
+                color: "#667084",
+                padding: "4px 8px",
+                borderRadius: "4px",
+                fontSize: "14px",
+                maxWidth: "300px",
+                wordBreak: "break-word",
+                position: "absolute"
+              }}
+              offset={0}
+              delayShow={200}
+              float={false}
+            />
+          )}
         </div>
       </div>
 

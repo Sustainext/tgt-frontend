@@ -45,6 +45,9 @@ const Report = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(null);
   const [materialityAssessmentLen,setMaterialityAssessmentLen]=useState([])
   const [assessment_id,setAssessmentId]=useState(null)
+  const [reportExist,setReportExist]=useState(false)
+  const [selectedOrgName,setSelectedOrgName]=useState("")
+  const [selectedCorpName,setSelectedCorpName]=useState("")
 
 
   const getAuthToken = () => {
@@ -85,9 +88,38 @@ const Report = () => {
     }
   }
 
+  const getReportExist= async()=>{
+    if(firstSelection&&startdate&&enddate&&selectedOrg&&reporttype&&firstSelection){
+      try{
+        const response = await axiosInstance.get(
+          `${
+            process.env.BACKEND_API_URL
+          }/sustainapp/report_exists/?start_date=${startdate}&end_date=${enddate}&report_type=${reporttype}&report_by=${firstSelection}&organization=${selectedOrg}&corporate=${selectedCorp?selectedCorp:""}`,
+          axiosConfig
+        );
+        if(response.status==200){
+          if(response.data.message=="Report Found"){
+            setReportExist(true)
+            setSelectedCorpName(response.data.corporate)
+            setSelectedOrgName(response.data.organization)
+          }
+          else{
+            setReportExist(false)
+          }
+        }
+        
+      }
+      catch(err){
+        console.error(err)
+      }
+    }
+  }
+
   useEffect(()=>{
     getMaterialityAssessment()
-  },[firstSelection,startdate,enddate,selectedOrg,selectedCorp])
+    getReportExist()
+    setMassgeshow(false)
+  },[firstSelection,startdate,enddate,selectedOrg,selectedCorp,reporttype])
 
   useEffect(() => {
     dispatch(setHeadertext1(""));
@@ -184,6 +216,9 @@ const Report = () => {
 
   const handleFirstSelectChange = (event) => {
     setFirstSelection(event.target.value);
+    setSelectedCorp()
+    setSelectedOrg()
+    setReportExist(false)
     setShowSecondSelect(true); // Show the second select box when an option is selected
   };
   // const handleOrgselect = (event) => {
@@ -704,6 +739,20 @@ const Report = () => {
                   </div>
                 </div>
               )}
+              {reportExist && (
+                <div className="mt-5 px-7 ">
+                  <div className="flex items-start p-4  border-t-2 border-[#F98845] rounded shadow-md">
+                    <div className="flex-shrink-0">
+                      <FaExclamationTriangle className="text-[#F98845] w-5 h-5 mt-1" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-left text-[#0D024D] text-[15px]">
+                      A report already exists for {selectedOrgName} {selectedCorpName?`and ${selectedCorpName}`:''} for the selected period. Do you want to create another report?
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
               {/* validation code end */}
               <div className="mt-2 px-7 py-3">
                 <form className="w-full text-left">
@@ -748,7 +797,7 @@ const Report = () => {
                         >
                           <option>Select Report Type</option>
                           <option>GHG Accounting Report</option>
-                          {/* <option>GHG Report - Investments</option> */}
+                          <option>GHG Report - Investments</option>
                           <option>GRI Report: In accordance With</option>
                           {/* <option>GRI Report: With Reference to</option> */}
                         </select>
