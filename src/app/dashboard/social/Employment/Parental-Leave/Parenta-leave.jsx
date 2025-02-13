@@ -62,7 +62,12 @@ const uiSchema = {
   },
 };
 
-const Parentaleavescreen = ({ selectedOrg, selectedCorp, year }) => {
+const Parentaleavescreen = ({
+  selectedOrg,
+  selectedCorp,
+  year,
+  togglestatus,
+}) => {
   const { open } = GlobalState();
   const initialFormData = [
     { male: "", female: "", total: 0 },
@@ -176,16 +181,24 @@ const Parentaleavescreen = ({ selectedOrg, selectedCorp, year }) => {
   }, [formData]);
 
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -204,7 +217,7 @@ const Parentaleavescreen = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex ">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Parental leave
               <MdInfoOutline
                 data-tooltip-id={`tooltip-employees`}
@@ -261,11 +274,22 @@ const Parentaleavescreen = ({ selectedOrg, selectedCorp, year }) => {
           validator={validator}
           widgets={widgets}
         />
-        <div className="mt-4 me-1">
-        <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
+        <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}>
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
+          >
             Submit
           </button>
         </div>

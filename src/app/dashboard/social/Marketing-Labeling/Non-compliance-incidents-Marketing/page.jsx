@@ -1,75 +1,76 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
-import { Socialdata } from "../../data/socialgriinfo"
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css'
+"use client";
+import React, { useState, useEffect } from "react";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
+import { Socialdata } from "../../data/socialgriinfo";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Socialheader from '../../socialheader';
-import Screen1 from "./screen1"
-import SocialTopBar from '../../socialTopBar'
+import Socialheader from "../../socialheader";
+import Screen1 from "./screen1";
+import SocialTopBar from "../../socialTopBar";
 
-const NoncomplianceincidentsMarketing = ({apiData}) => {
-    const [activeMonth, setActiveMonth] = useState(1);
-    const [location, setLocation] = useState("");
-    const [year, setYear] = useState();
-    const [data, setData] = useState();
-    const [category, setCategory] = useState("");
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedOrg, setSelectedOrg] = useState("");
-    const [selectedCorp, setSelectedCorp] = useState("");
-    const toggleDrawerclose = () => {
-        setIsOpen(!isOpen);
-    }
-    const toggleDrawer = (selected) => {
-        setIsOpen(!isOpen);
-        setCategory(selected);
-    };
-    useEffect(() => {
-        var newData = [];
-        Socialdata.map((program) => {
-            program.category.map((tag) => {
-                if (tag === category) {
-                    newData.push(program);
-                }
-            })
-        })
-        // //console.log(newData);
-        setData(newData);
-    }, [category])
+const NoncomplianceincidentsMarketing = ({ apiData }) => {
+  const [activeMonth, setActiveMonth] = useState(1);
+  const [location, setLocation] = useState("");
+  const [year, setYear] = useState();
+  const [data, setData] = useState();
+  const [category, setCategory] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
 
-    const sdgData=[
-      {
-          tagName:'GRI 417 - 3',
-          toggle:'75',
-          textColor:"#007EEF",
-          bgColor:"bg-slate-200"
-      },
-      {
-          tagName:'SDG 16',
-          toggle:'69',
-          textColor:"#fff",
-          bgColor:"bg-[#00558A]"
-      },
-     
-     
-     
-  ]
+  const toggleDrawerclose = () => {
+    setIsOpen(!isOpen);
+  };
+  const toggleDrawer = (selected) => {
+    setIsOpen(!isOpen);
+    setCategory(selected);
+  };
+  useEffect(() => {
+    var newData = [];
+    Socialdata.map((program) => {
+      program.category.map((tag) => {
+        if (tag === category) {
+          newData.push(program);
+        }
+      });
+    });
+    // //console.log(newData);
+    setData(newData);
+  }, [category]);
 
-    return (
-        <>
-            <ToastContainer style={{ fontSize: "12px" }} />
-            <div className="flex flex-col justify-start overflow-x-hidden ">
-            <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Marketing and labeling'} topic={'SocMarketingLabeling'} />
-              
+  const sdgData = [
+    {
+      tagName: "GRI 417 - 3",
+      toggle: "75",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+    {
+      tagName: "SDG 16",
+      toggle: "69",
+      textColor: "#fff",
+      bgColor: "bg-[#00558A]",
+    },
+  ];
 
+  return (
+    <>
+      <ToastContainer style={{ fontSize: "12px" }} />
+      <div className="flex flex-col justify-start overflow-x-hidden ">
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Marketing and labeling"}
+          topic={"SocMarketingLabeling"}
+        />
 
-                <div className="ml-3 flex">
-                    <h6 className="text-[17px] mb-4 font-semibold flex">
-
-                    Incidents of non-compliance concerning marketing communications
-                        {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+        <div className="ml-3 flex">
+          <h6 className="text-[17px] mb-4 font-semibold flex">
+            Incidents of non-compliance concerning marketing communications
+            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
@@ -82,10 +83,10 @@ const NoncomplianceincidentsMarketing = ({apiData}) => {
                         }}>
 
                         </ReactTooltip> */}
-                    </h6>
-                </div>
-                    <div
-           className={`${
+          </h6>
+        </div>
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -127,17 +128,23 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
               </div>
             ))}
         </div>
-            </div>
-            <Socialheader
-                activeMonth={activeMonth}
-                setActiveMonth={setActiveMonth}
-                location={location}
-                setLocation={setLocation}
-                year={year}
-                setYear={setYear} />
-            <Screen1 location={location} year={year} month={activeMonth}  />
-
-        </>
-    );
+      </div>
+      <Socialheader
+        activeMonth={activeMonth}
+        setActiveMonth={setActiveMonth}
+        location={location}
+        setLocation={setLocation}
+        year={year}
+        setYear={setYear}
+    
+      />
+      <Screen1
+        location={location}
+        year={year}
+        month={activeMonth}
+       
+      />
+    </>
+  );
 };
 export default NoncomplianceincidentsMarketing;

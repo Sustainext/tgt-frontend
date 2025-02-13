@@ -4,14 +4,14 @@ import MyTasks from "./TasksNew/MyTask";
 import Preferences from "./Preferences/page";
 import { ToastContainer } from "react-toastify";
 
-const HomeDashboard = () => {
+const HomeDashboard = ({setActiveTab}) => {
   return (
     <>
     <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
       <div className="flex space-x-3 pe-4 ">
         <div className="w-1/2 space-y-4 mb-8">
           <div>
-            <MyTasks />
+            <MyTasks HomeActiveTab={setActiveTab} />
           </div>
           <div>
             <MyGoals />

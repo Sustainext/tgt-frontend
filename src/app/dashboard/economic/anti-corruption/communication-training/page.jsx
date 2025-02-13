@@ -29,6 +29,7 @@ const Communicationtraining = ({apiData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [datarefresh, setDatarefresh] = useState(0);
   const [datarefreshtwo, setDatarefreshtwo] = useState(0);
+    const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -151,6 +152,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
@@ -158,6 +160,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         setDatarefresh={setDatarefresh}
+        togglestatus={togglestatus}
       />
       <Screen2
         selectedOrg={selectedOrg}
@@ -166,6 +169,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         datarefresh={datarefresh}
         setDatarefresh={setDatarefresh}
+        togglestatus={togglestatus}
       />
       <Screen3
         selectedOrg={selectedOrg}
@@ -174,6 +178,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         datarefresh={datarefresh}
         setDatarefresh={setDatarefresh}
+        togglestatus={togglestatus}
       />
           <Screen4
         selectedOrg={selectedOrg}
@@ -181,6 +186,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         setDatarefreshtwo={setDatarefreshtwo}
+        togglestatus={togglestatus}
       />
              <Screen5
         selectedOrg={selectedOrg}
@@ -189,6 +195,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         datarefreshtwo={datarefreshtwo}
         setDatarefreshtwo={setDatarefreshtwo}
+        togglestatus={togglestatus}
       />
     </>
   );

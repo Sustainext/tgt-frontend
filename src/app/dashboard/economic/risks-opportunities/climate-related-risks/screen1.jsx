@@ -198,7 +198,13 @@ const uiSchema = {
     ],
   },
 };
-const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year }) => {
+const Screen1 = ({
+  selectedOrg,
+  selectedCorp,
+  selectedLocation,
+  year,
+  togglestatus,
+}) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -294,15 +300,43 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    console.log("useEffect triggered with:", { selectedOrg, year, togglestatus, selectedLocation, selectedCorp });
+  
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate") {
+        if (selectedCorp) {
+          console.log("Calling loadFormData for Corporate");
+          loadFormData();
+        } else {
+          console.log("Clearing form data for Corporate");
+          setFormData([{}]);
+          setRemoteSchema({});
+          setRemoteUiSchema({});
+        }
+      } else if (togglestatus === "Location") {
+        if (selectedLocation) {
+          console.log("Calling loadFormData for Location");
+          loadFormData();
+        } else {
+          console.log("Clearing form data for Location");
+          setFormData([{}]);
+          setRemoteSchema({});
+          setRemoteUiSchema({});
+        }
+      } else {
+        console.log("Calling loadFormData for Other");
+        loadFormData();
+      }
+  
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
+        console.log("Toast should be shown");
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp,selectedLocation]);
+  }, [selectedOrg, year, selectedCorp, togglestatus, selectedLocation]);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -312,17 +346,23 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year }) => {
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Report the risks posed by climate change that have the potential
               to generate substantive changes in operations, revenue, or
               expenditure of the organisation including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="Mention risks posed by climate change that have the potential to generate substantive changes in operations, revenue, or expenditure of the organisation."
-               className="mt-1.5 text-[15px] ml-[2px]"
+                className="mt-1.5 text-[15px] ml-[2px]"
               />
               <ReactTooltip
                 id={`tooltip-$e86`}
@@ -339,7 +379,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year }) => {
                 }}
               ></ReactTooltip>
             </h2>
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Physical Risks
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e866`}
@@ -400,8 +440,30 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year }) => {
             }}
           />
         </div>
-
         <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              (!selectedLocation && togglestatus === "Location") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus === "Location" && !selectedLocation) ||
+              !selectedOrg ||
+              !year
+            }
+          >
+            Submit
+          </button>
+        </div>
+
+        {/* <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
@@ -412,7 +474,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year }) => {
           >
             Submit
           </button>
-        </div>
+        </div> */}
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

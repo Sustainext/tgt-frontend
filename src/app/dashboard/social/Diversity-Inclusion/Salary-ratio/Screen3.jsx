@@ -61,7 +61,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen3 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -153,18 +153,25 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
- useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
-
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -174,10 +181,16 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Define "Significant Locations of Operation"
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -221,17 +234,24 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
             widgets={widgets}
           />
         </div>
-        <div className='mt-4'>
+        <div className="mt-4">
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
-              }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>
-
         </div>
       </div>
       {loopen && (

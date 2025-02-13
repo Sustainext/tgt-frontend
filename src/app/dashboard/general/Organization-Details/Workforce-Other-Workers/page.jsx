@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,7 +19,7 @@ const WorkforceOtherWorkers = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -46,12 +46,12 @@ const WorkforceOtherWorkers = () => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
+            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">General</p>
               <div className="flex">
-                         <div className="h-[29px]">
+                <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Workforce-Other Workers
+                    Workforce-Other Workers
                   </p>
                 </div>
               </div>
@@ -71,14 +71,13 @@ const WorkforceOtherWorkers = () => {
               >
                 SDG 8
               </button>
-
             </div>
           </div>
         </div>
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Workers who are not employees
+            Workers who are not employees
             {/* <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
               data-tooltip-content="This section documents the data corresponding
@@ -102,8 +101,8 @@ employee by gender, type and region."
             ></ReactTooltip> */}
           </h6>
         </div>
-          <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -155,6 +154,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
@@ -162,6 +162,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
       <Screen2
         selectedOrg={selectedOrg}
@@ -169,13 +170,15 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
-            <Screen3
+      <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
     </>
   );

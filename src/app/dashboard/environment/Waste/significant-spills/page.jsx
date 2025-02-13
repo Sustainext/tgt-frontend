@@ -27,6 +27,7 @@ const SignificantSpills = ({apiData,isSidepanelOpen}) => {
   const [organisationMessage, setOrganisationMessage] = useState("");
   const [corporateMessage, setCorporateMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -178,6 +179,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
              setCorporateMessage={setCorporateMessage}
              setYearMessage={setYearMessage}
              yearMessage={yearMessage}
+             setToggleStatus={setToggleStatus}
            />
       <Screen1
         selectedOrg={selectedOrg}
@@ -190,6 +192,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setCorporateMessage={setCorporateMessage}
         setYearMessage={setYearMessage}
         isSidepanelOpen={isSidepanelOpen}
+        togglestatus={togglestatus}
       />
     </>
   );

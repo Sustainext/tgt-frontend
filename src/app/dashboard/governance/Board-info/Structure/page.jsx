@@ -18,7 +18,7 @@ const BoardInfo = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-
+  const [togglestatus,setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(false);
   };
@@ -158,24 +158,28 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <GovernanceStructure
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
       <CommitteeOfHighestGovernanceBody
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
       <CompositionOfHighestGovernanceBody
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
     </>
   );

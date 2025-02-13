@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: inputWidget3,
@@ -27,11 +27,13 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "What is the total number of employees covered by collective bargaining agreements?",
+        title:
+          "What is the total number of employees covered by collective bargaining agreements?",
       },
       Q2: {
         type: "string",
-        title: "What is the total number of employees in the organisation (as reported under disclosure 2-7) ?",
+        title:
+          "What is the total number of employees in the organisation (as reported under disclosure 2-7) ?",
       },
     },
   },
@@ -41,7 +43,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2"],
     Q1: {
-      "ui:title": "What is the total number of employees covered by collective bargaining agreements?",
+      "ui:title":
+        "What is the total number of employees covered by collective bargaining agreements?",
       "ui:tooltip":
         "Specify the Number of employees covered by collective bargaining agreements. The employees covered by collective bargaining agreements are those employees to whom the organization is obligated to apply the agreement.",
       "ui:tooltipdisplay": "block",
@@ -72,7 +75,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -92,7 +95,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     let newFormData = { ...e.formData[0] };
     if (newFormData.Q1 === "No") {
       newFormData.Q2 = "";
-
     }
     setFormData([newFormData]);
   };
@@ -171,15 +173,24 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, selectedCorp, year]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -189,23 +200,38 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Percentage of total employees covered by collective bargaining agreements
-              <MdInfoOutline data-tooltip-id={`tooltip-employees`}
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Percentage of total employees covered by collective bargaining
+              agreements
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents the data corresponding to the percentage
-of employees covered by collective bargaining agreements." className="mt-1.5 ml-2 text-[15px]" />
-              <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
-                width: "290px", backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: 'left',
-              }}>
-              </ReactTooltip>
+of employees covered by collective bargaining agreements."
+                className="mt-1.5 ml-2 text-[15px]"
+              />
+              <ReactTooltip
+                id={`tooltip-employees`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
 
@@ -230,12 +256,22 @@ of employees covered by collective bargaining agreements." className="mt-1.5 ml-
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
+        <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year }
-            >
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
+          >
             Submit
           </button>
         </div>

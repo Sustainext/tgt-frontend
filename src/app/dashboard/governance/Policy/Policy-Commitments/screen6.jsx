@@ -61,7 +61,7 @@ const uiSchema = {
   },
 };
 
-const Screen6 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen6 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -152,15 +152,24 @@ const Screen6 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -179,7 +188,7 @@ const Screen6 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Describe how the policy commitments are communicated to workers,
               business partners, and other relevant parties.
               <MdInfoOutline
@@ -229,10 +238,17 @@ const Screen6 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

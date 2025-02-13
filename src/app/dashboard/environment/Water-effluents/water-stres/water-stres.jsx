@@ -53,20 +53,30 @@ const Waterstres = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 303 - 3',
-        toggle:'33',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
-    },
-    {
-      tagName:'GRI 303 - 4',
-      toggle:'34',
+      tagName:'GRI 303 - 3',
+      toggle:'33',
       textColor:"#007EEF",
       bgColor:"bg-slate-200"
   },
+  {
+    tagName:'GRI 303 - 4',
+    toggle:'34',
+    textColor:"#007EEF",
+    bgColor:"bg-slate-200"
+},
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-L1",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Leadership  Indicators-1",
+    },
+  ];
+  const sdgData=[
+
     
   {
     tagName:'SDG 6',
@@ -81,7 +91,7 @@ const Waterstres = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <WaterTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+      <WaterTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} brsr={brsr} griData={griData}  />
        
 
         <div className="ml-3 flex relative">
