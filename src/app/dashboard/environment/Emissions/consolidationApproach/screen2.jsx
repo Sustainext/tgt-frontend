@@ -245,10 +245,10 @@ operational control."
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-                (selectedOrg && year) && formData[0].Q1?false:true ? "cursor-not-allowed" : ""
+                (selectedOrg && year)?false:true ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={(selectedOrg && year) && formData[0].Q1?false:true }
+            disabled={(selectedOrg && year)?false:true }
           >
             Submit
           </button>
