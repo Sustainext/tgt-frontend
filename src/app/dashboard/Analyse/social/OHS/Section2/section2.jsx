@@ -21,6 +21,7 @@ const Screen2 = ({
   dateRange,
   selectedOrg,
   selectedCorp,
+  togglestatus
 }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const toastShown = useRef(false);
@@ -228,25 +229,69 @@ const Screen2 = ({
     }
   };
   
-
   useEffect(() => {
-    // Only fetch data if both start and end dates are present
-    if (selectedOrg && dateRange.start && dateRange.end) {
-      fetchData();
-      ratefetchData();
+
+    if (selectedOrg && dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate") {
+        if (selectedCorp) {
+          fetchData();
+          ratefetchData();
+        } else {
+          setOHSData1([]);
+          setOHSData2([]);
+          setOHSData3([]);
+          setOHSData4([]);
+          setOHSData5([]);
+          setOHSData6([]);
+          setOHSData7([]);
+          setOHSData8([]);
+        }
+      } else if (togglestatus === "Location") {
+        if (selectedLocation) {
+          fetchData();
+          ratefetchData();
+        } else {
+          setOHSData1([]);
+          setOHSData2([]);
+          setOHSData3([]);
+          setOHSData4([]);
+          setOHSData5([]);
+          setOHSData6([]);
+          setOHSData7([]);
+          setOHSData8([]);
+        }
+      } else {
+        console.log("Calling loadFormData for Other");
+        fetchData();
+        ratefetchData();
+      }
+  
       toastShown.current = false;
-    } else if (!toastShown.current) {
-      toastShown.current = true;
-      setOHSData1([]);
-      setOHSData2([]);
-      setOHSData3([]);
-      setOHSData4([]);
-      setOHSData5([]);
-      setOHSData6([]);
+    } else {
+      if (!toastShown.current) {
+        console.log("Toast should be shown");
+        toastShown.current = true;
+      }
     }
-  }, [selectedOrg, selectedLocation, selectedCorp, dateRange]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus, selectedLocation]);
 
 
+  // useEffect(() => {
+  //   // Only fetch data if both start and end dates are present
+  //   if (selectedOrg && dateRange.start && dateRange.end) {
+  //     fetchData();
+  //     ratefetchData();
+  //     toastShown.current = false;
+  //   } else if (!toastShown.current) {
+  //     toastShown.current = true;
+  //     setOHSData1([]);
+  //     setOHSData2([]);
+  //     setOHSData3([]);
+  //     setOHSData4([]);
+  //     setOHSData5([]);
+  //     setOHSData6([]);
+  //   }
+  // }, [selectedOrg, selectedLocation, selectedCorp, dateRange]);
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
