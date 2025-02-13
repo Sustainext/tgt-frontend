@@ -5,6 +5,7 @@ import { useAuth } from "../Context/auth";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 import CryptoJS from "crypto-js";
+import Auth0LoginButton from './utils/Auth0LoginButton'
 
 const PasswordInput = ({
   value,
@@ -237,6 +238,7 @@ export default function Home() {
                   </button>
                 </div>
               </form>
+              <Auth0LoginButton/>
             </div>
           </div>
         </div>
