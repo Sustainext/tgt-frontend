@@ -29,7 +29,7 @@ const MonthPicker = (props) => {
                   /\s+/g,
                   "-"
                 )}`}
-                data-tooltip-html={uiSchema["ui:title"].replace(/\s+/g, "-")}
+                data-tooltip-html={uiSchema["ui:tooltip"].replace(/\s+/g, " ")}
                 className="mt-1 ml-3 text-[14px]"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />
