@@ -7,7 +7,8 @@ import { MdOutlineClear,MdChevronRight } from "react-icons/md";
 import EnvironmentHeade2 from "../../environmentheader2";
 import Screen1 from "./Screen1";
 import { useSelector } from "react-redux";
-
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 const WasteMaterialtopic = ({apiData}) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
     (state) => state.materialitySlice
