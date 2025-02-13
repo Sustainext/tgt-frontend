@@ -216,6 +216,7 @@ const SubstancesconcernQ1 = ({
   const [enabledRows, setEnabledRows] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+   const [inputValue, setInputValue] = useState("");
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -320,26 +321,29 @@ const SubstancesconcernQ1 = ({
     }
   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
-  const handleChange = (e) => {
-    const newData = e.formData.map((item, index) => {
-      const updatedItem = { ...item };
 
-      if (updatedItem.Discharge === "Yes") {
-        setEnabledRows((prev) => {
-          const newEnabledRows = [...prev];
-          newEnabledRows[index] = true;
-          return newEnabledRows;
-        });
-      } else if (updatedItem.Discharge === "No") {
-        setEnabledRows((prev) => {
-          const newEnabledRows = [...prev];
-          newEnabledRows[index] = false;
-          return newEnabledRows;
-        });
-      }
-      return updatedItem;
+  const handleChange = (e) => {
+    if (!e.formData) return; // Prevent errors in case formData is undefined
+    
+    const newData = e.formData.map((item, index) => {
+      return {
+        ...item, // Spread the current object to retain existing data
+      };
     });
+  
     setFormData(newData);
+  
+    // Check for "Discharge" field and update enabledRows state accordingly
+    setEnabledRows((prevEnabledRows) => {
+      return newData.map((item, index) => {
+        if (item.Discharge === "Yes") {
+          return true; // Enable row if "Yes"
+        } else if (item.Discharge === "No") {
+          return false; // Disable row if "No"
+        }
+        return prevEnabledRows[index] || false; // Retain previous state if no change
+      });
+    });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -399,7 +403,7 @@ const SubstancesconcernQ1 = ({
                 return (
                   <InputdiableWidget
                     {...props}
-                    isEnabled={isEnabled} // Pass it as a prop if needed
+                    isEnabled={isEnabled}
                   />
                 );
               },
