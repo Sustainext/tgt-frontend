@@ -7,7 +7,7 @@ const AnalyseSupplierEnvironment = () => {
     const [year, setYear] = useState();
     const [selectedOrg, setSelectedOrg] = useState("");
     const [selectedCorp, setSelectedCorp] = useState("");
-  
+    const [togglestatus,setToggleStatus] = useState("Organization");
   
     return (
       <>
@@ -21,12 +21,14 @@ const AnalyseSupplierEnvironment = () => {
           setSelectedCorp={setSelectedCorp}
           year={year}
           setYear={setYear}
+          setToggleStatus={setToggleStatus}
         />
         <Supplierassessment
           selectedOrg={selectedOrg}
           selectedCorp={selectedCorp}
           year={year}
           month={activeMonth}
+          togglestatus={togglestatus}
         />
       </>
     );

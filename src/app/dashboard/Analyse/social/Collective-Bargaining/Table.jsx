@@ -39,7 +39,7 @@ const Table1 = ({ data, columns }) => {
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className={`p-2 block md:table-cell h-20 text-center text-[12px] font-normal text-slate-500 ${
+                    className={`p-2 block md:table-cell  text-center text-[12px] font-normal text-slate-500 ${
                       colIndex !== 2 ? 'border-r' : ''
                     }  border-b border-gray-300`}
                     style={{ width: columnWidth }}

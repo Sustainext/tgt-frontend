@@ -10,7 +10,7 @@ const AnalyseChildlabour = () => {
        });
        const [selectedOrg, setSelectedOrg] = useState("");
        const [selectedCorp, setSelectedCorp] = useState("");
-  
+       const [togglestatus, setToggleStatus] = useState("Organization");
   
     return (
       <>
@@ -22,11 +22,13 @@ const AnalyseChildlabour = () => {
            setSelectedCorp={setSelectedCorp}
            dateRange={dateRange}
            setDateRange={setDateRange}
+           setToggleStatus={setToggleStatus}
         />
         <Section
          selectedOrg={selectedOrg}
          selectedCorp={selectedCorp}
          dateRange={dateRange}
+         togglestatus={togglestatus}
         />
       </>
     );

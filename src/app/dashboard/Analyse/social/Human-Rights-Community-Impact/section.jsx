@@ -7,7 +7,7 @@ import Table2 from "./Table2";
 import { columns,columns2 } from "./data"; // assuming columns are predefined
 import { Oval } from "react-loader-spinner";
 
-const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpen }) => {
+const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpen,togglestatus }) => {
   const [OperationsWithLocalCommunity, setOperationsWithLocalCommunity] = useState([]);
   const [Securitypersonnel, setSecuritypersonnel] = useState([]);
   const [loopen, setLoOpen] = useState(false);
@@ -32,16 +32,41 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    // Only fetch data if both start and end dates are present
-    if (selectedOrg && dateRange.start && dateRange.end)  {
-      fetchData();
+
+    if (selectedOrg && dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate") {
+        if (selectedCorp) {
+          fetchData();
+        
+        } else {
+          setOperationsWithLocalCommunity([]);
+          setSecuritypersonnel([]);
+      
+        }
+      } else if (togglestatus === "Location") {
+        if (selectedLocation) {
+          fetchData();
+        
+        } else {
+          setOperationsWithLocalCommunity([]);
+          setSecuritypersonnel([]);
+        }
+      } else {
+        console.log("Calling loadFormData for Other");
+        fetchData();
+       
+      }
+  
       toastShown.current = false;
-    } else if (!toastShown.current) {
-      toastShown.current = true;
+    } else {
+      if (!toastShown.current) {
+        console.log("Toast should be shown");
+        toastShown.current = true;
+      }
     }
-  }, [selectedOrg,selectedLocation, selectedCorp,dateRange]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus, selectedLocation]);
+ 
 
   return (
     <div>

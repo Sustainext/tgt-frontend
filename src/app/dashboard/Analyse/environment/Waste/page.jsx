@@ -435,6 +435,49 @@ const AnalyseWaste = ({ isBoxOpen }) => {
 
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+    if(type === "Corporate"){
+      setWastedata1([]);
+      setWastedata2([]);
+      setWastedata3([]);
+      setWastedata4([]);
+      setWastedata5([]);
+      setWastedata6([]);
+      setWastedata7([]);
+      setWastedata8([]);
+      setWastedata9([]);
+      setEffdata1([]);
+      setEffdata2([]);
+      setEffdata3([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+    if(type === "Location"){
+      setWastedata1([]);
+    setWastedata2([]);
+    setWastedata3([]);
+    setWastedata4([]);
+    setWastedata5([]);
+    setWastedata6([]);
+    setWastedata7([]);
+    setWastedata8([]);
+    setWastedata9([]);
+    setEffdata1([]);
+    setEffdata2([]);
+    setEffdata3([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
   };
   const handleOrganizationChange = (e) => {
     const newOrg = e.target.value;

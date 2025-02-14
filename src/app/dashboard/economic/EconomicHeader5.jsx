@@ -33,6 +33,10 @@ const EconomicHeader5 = ({
       setSelectedCorp(""); 
       setSelectedLocation(""); 
     }
+    if (type === "Corporate") {
+    
+      setSelectedLocation(""); 
+    }
   };
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
@@ -147,18 +151,22 @@ const EconomicHeader5 = ({
   const handleCorpChange = (e) => {
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
+    setYear("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      corporate: newCorp ? "" : "Please select Corporate", // Proper error handling for corporate
+      corporate: newCorp ? "" : "Please select Corporate",
+      year:  "Please select year", 
     }));
   };
 
   const handlelocationChange = (e) => {
     const newlocation = e.target.value;
     setSelectedLocation(newlocation);
+    setYear("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      location: newlocation ? "" : "Please select location", // Proper error handling for corporate
+      location: newlocation ? "" : "Please select location", 
+      year:  "Please select year", 
     }));
   };
   useEffect(() => {
@@ -181,14 +189,14 @@ const EconomicHeader5 = ({
 
     fetchLocation();
   }, [selectedCorp]);
-  useEffect(() => {
-    if (selectedCorp) {
-      setReportType("Corporate");
+  // useEffect(() => {
+  //   if (selectedCorp) {
+  //     setReportType("Corporate");
 
-    }else if (selectedLocation){
-      setReportType("Location");
-    }
-  }, [selectedCorp,selectedLocation]);
+  //   }else if (selectedLocation){
+  //     setReportType("Location");
+  //   }
+  // }, [selectedCorp,selectedLocation]);
   return (
     <>
       <div>

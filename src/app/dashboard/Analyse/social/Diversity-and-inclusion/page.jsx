@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useState, useEffect } from "react";
 import AnalyseHeader7 from "../../AnalyseHeader7";
@@ -12,7 +11,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-
+  const [togglestatus, setToggleStatus] = useState("Organization");
   return (
     <>
       <AnalyseHeader7
@@ -24,6 +23,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
         setDateRange={setDateRange}
         selectedLocation={selectedLocation}
         setSelectedLocation={setSelectedLocation}
+        setToggleStatus={setToggleStatus}
       />
       <Section
         selectedOrg={selectedOrg}
@@ -31,6 +31,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
         dateRange={dateRange}
         selectedLocation={selectedLocation}
         isBoxOpen={isBoxOpen}
+        togglestatus={togglestatus}
       />
     </>
   );
