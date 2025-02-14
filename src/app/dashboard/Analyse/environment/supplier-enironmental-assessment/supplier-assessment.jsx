@@ -6,7 +6,7 @@ import { columns1, columns2, columns3 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from "react-loader-spinner";
 
-const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
+const Supplierassessment = ({ selectedOrg, selectedCorp, year,togglestatus }) => {
   const [newSuppliers, setNewSuppliers] = useState([]);
   const [negativeEnvImpact, setNegativeEnvImpact] = useState([]);
   const [terminatedRelationship, setTerminatedRelationship] = useState([]);
@@ -79,18 +79,28 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
     }
   };
 
-
-
   useEffect(() => {
-    if (selectedOrg && year) {
-      fetchData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        fetchData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setNewSuppliers([]);
+        setTerminatedRelationship([]);
+        setNegativeEnvImpact([]);
+    
+      } else {
+        fetchData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
+
+ 
 
   return (
     <div>

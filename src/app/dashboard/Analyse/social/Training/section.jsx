@@ -8,7 +8,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2, columns3, columns4 } from "./data";
 import { Oval } from "react-loader-spinner";
 
-const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
+const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen,togglestatus}) => {
  
   const [loopen, setLoOpen] = useState(false);
   const [table1, setTable1] = useState([]);
@@ -99,16 +99,26 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
   };
 
 
-  useEffect(() => {
-    if (selectedOrg && dateRange.start<dateRange.end) {
+useEffect(() => {
+    if (selectedOrg &&  dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
         fetchData();
-        toastShown.current = false;
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setTable1([]);
+        setTable2([]);
+        setTable3([]);
+      
+      } else {
+        fetchData();
+      }
+
+      toastShown.current = false;
     } else {
-        if (!toastShown.current) {
-            toastShown.current = true;
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-}, [selectedOrg, dateRange, selectedCorp]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus]);
 
   return (
     <div>

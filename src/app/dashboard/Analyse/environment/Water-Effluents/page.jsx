@@ -90,6 +90,63 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
     thirdPartyWaterDischargeForOtherOrganizations,
     setThirdPartyWaterDischargeForOtherOrganizations,
   ] = useState([]);
+
+  const handleReportTypeChange = (type) => {
+    setReportType(type);
+    
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+    if(type === "Corporate"){
+      setWaterConsumption([]);
+      setWaterConsumptionInWaterStress([]);
+      setWaterConsumptionByBusinessOperation([]);
+      setWaterConsumptionByLocation([]);
+      setWaterConsumptionBySource([]);
+      setFreshWaterWithdrawalByBusinessOperation([]);
+      setFreshWaterWithdrawalBySourceInWaterStress([]);
+      setFreshWaterWithdrawalByLocation([]);
+      setWaterWithdrawalByWaterType([]);
+      setWaterWithdrawalFromThirdParties([]);
+      setWaterDischargeByLocation([]);
+      setWaterDischargeBySourceAndType([]);
+      setWaterDischargeFromWaterStressByBusinessOperation([]);
+      setWaterDischargeByBusinessOperation([]);
+      setWaterDischargeByWaterTypeFromWaterStress([]);
+      setThirdPartyWaterDischargeForOtherOrganizations([]);
+      setChangeInWaterStorage([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+    if(type === "Location"){
+      setWaterConsumption([]);
+      setWaterConsumptionInWaterStress([]);
+      setWaterConsumptionByBusinessOperation([]);
+      setWaterConsumptionByLocation([]);
+      setWaterConsumptionBySource([]);
+      setFreshWaterWithdrawalByBusinessOperation([]);
+      setFreshWaterWithdrawalBySourceInWaterStress([]);
+      setFreshWaterWithdrawalByLocation([]);
+      setWaterWithdrawalByWaterType([]);
+      setWaterWithdrawalFromThirdParties([]);
+      setWaterDischargeByLocation([]);
+      setWaterDischargeBySourceAndType([]);
+      setWaterDischargeFromWaterStressByBusinessOperation([]);
+      setWaterDischargeByBusinessOperation([]);
+      setWaterDischargeByWaterTypeFromWaterStress([]);
+      setThirdPartyWaterDischargeForOtherOrganizations([]);
+      setChangeInWaterStorage([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+  };
   const [changeInWaterStorage, setChangeInWaterStorage] = useState([]);
   const [errors, setErrors] = useState({
     organization: 'Please select Organisation',
@@ -269,9 +326,7 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
     fetchLocation();
   }, [selectedCorp]);
 
-  const handleReportTypeChange = (type) => {
-    setReportType(type);
-  };
+
 
   const handleOrganizationChange = (e) => {
     const newOrg = e.target.value;
