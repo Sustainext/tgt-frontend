@@ -10,7 +10,7 @@ const Anticorruptions = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOrg, setSelectedOrg] = useState("");
     const [selectedCorp, setSelectedCorp] = useState("");
-  
+    const [togglestatus,setToggleStatus] = useState("Organization");
   
     return (
       <>
@@ -24,12 +24,14 @@ const Anticorruptions = () => {
           setSelectedCorp={setSelectedCorp}
           year={year}
           setYear={setYear}
+          setToggleStatus={setToggleStatus}
         />
         <Section
           selectedOrg={selectedOrg}
           selectedCorp={selectedCorp}
           year={year}
           month={activeMonth}
+          togglestatus={togglestatus}
         />
       </>
     );

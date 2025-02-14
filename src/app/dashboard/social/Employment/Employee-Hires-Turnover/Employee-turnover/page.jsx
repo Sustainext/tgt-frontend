@@ -56,7 +56,7 @@ const tabs = [
   },
 ];
 
-const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
+const Employeeturnover = ({ selectedOrg, selectedCorp, year, month,togglestatus }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const fullName = convertShortNameToFullName(month);
   return (
@@ -141,6 +141,7 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
                 month={month}
                 selectedCorp={selectedCorp}
                 selectedOrg={selectedOrg}
+                togglestatus={togglestatus}
               />
             </div>
           )}
@@ -152,6 +153,7 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
                 month={month}
                 selectedCorp={selectedCorp}
                 selectedOrg={selectedOrg}
+                togglestatus={togglestatus}
               />{" "}
             </div>
           )}
@@ -164,6 +166,7 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
                 month={month}
                 selectedCorp={selectedCorp}
                 selectedOrg={selectedOrg}
+                togglestatus={togglestatus}
               />{" "}
             </div>
           )}
@@ -176,6 +179,7 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
                 month={month}
                 selectedCorp={selectedCorp}
                 selectedOrg={selectedOrg}
+                togglestatus={togglestatus}
               />{" "}
             </div>
           )}
@@ -188,6 +192,7 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
                 month={month}
                 selectedCorp={selectedCorp}
                 selectedOrg={selectedOrg}
+                togglestatus={togglestatus}
               />{" "}
             </div>
           )}

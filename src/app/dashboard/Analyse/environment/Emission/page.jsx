@@ -151,6 +151,8 @@ const AnalyseEmission = () => {
     }
   };
 
+
+
   useEffect(() => {
     fetchData(datasetparams);
   }, [datasetparams]);
@@ -215,9 +217,37 @@ const AnalyseEmission = () => {
     fetchLocation();
   }, [selectedCorp]);
 
+
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+    if(type === "Corporate"){
+      setScopeData([]);
+      setSourceData([]);
+      setLocationData([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+    if(type === "Location"){
+      setScopeData([]);
+      setSourceData([]);
+      setLocationData([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
   };
+
+
   const handleOrganizationChange = (e) => {
     const newOrg = e.target.value;
     if (!newOrg) {

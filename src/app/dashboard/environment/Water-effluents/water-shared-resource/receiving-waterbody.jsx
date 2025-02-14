@@ -58,14 +58,19 @@ const validateRows = (data) => {
     if (!row.Q1) {
       rowErrors.Q1 = "This field is required";
     }
-   
+
     if (row.Q1 === "Yes" && (!row.details || row.details.trim() === "")) {
       rowErrors.details = "Details are required when 'Yes' is selected.";
     }
     return rowErrors;
   });
 };
-const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
+const Receivingwaterbody = ({
+  selectedOrg,
+  year,
+  selectedCorp,
+  togglestatus,
+}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{ Q1: "", details: "" }]); // Initial form data
   const [r_schema, setRemoteSchema] = useState({});
@@ -101,7 +106,6 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
   // };
   const handleChange = (e) => {
     setFormData(e.formData);
-    
   };
   // The below code on updateFormData
   let axiosConfig = {
@@ -198,15 +202,24 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -215,8 +228,10 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
     const errors = validateRows(formData);
     setValidationErrors(errors);
     console.log("Validation Errors:", errors); // Debugging log
-  
-    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
     if (!hasErrors) {
       console.log("No validation errors, proceeding to update data"); // Debugging log
       updateFormData();
@@ -273,7 +288,7 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
           uiSchema={r_ui_schema}
           validator={validator}
           widgets={widgets}
-          formContext={{validationErrors }}
+          formContext={{ validationErrors }}
         >
           {formData[0].Q1 === "Yes" && (
             <>
@@ -281,7 +296,9 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
               <textarea
                 placeholder="Enter a description..."
                 className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full ${
-                  validationErrors[0]?.details ? "border-red-500" : "border-gray-300"
+                  validationErrors[0]?.details
+                    ? "border-red-500"
+                    : "border-gray-300"
                 } `}
                 id="details"
                 value={formData[0].details}
@@ -296,17 +313,29 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
                 }}
                 rows={7}
               />
-        {validationErrors[0]?.details && (
-      <p className="text-red-500 text-xs mt-1">{validationErrors[0].details}</p>
-    )}
+              {validationErrors[0]?.details && (
+                <p className="text-red-500 text-xs mt-1">
+                  {validationErrors[0].details}
+                </p>
+              )}
             </>
           )}
         </Form>
         <div className="mb-4">
           <button
             type="button"
-            className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
             onClick={handleSubmit}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

@@ -143,7 +143,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const initialFormData = [
     {
       Q1: "",
@@ -263,18 +263,27 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      facthloctiondata();
-      toastShown.current = false; // Reset the flag when valid data is present
-    } else {
-      // Only show the toast if it has not been shown already
-      if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
-      }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+   useEffect(() => {
+     if (selectedOrg && year && togglestatus) {
+       if (togglestatus === "Corporate" && selectedCorp) {
+         loadFormData();
+         facthloctiondata();
+       } else if (togglestatus === "Corporate" && !selectedCorp) {
+         setFormData(initialFormData);
+         setRemoteSchema({});
+         setRemoteUiSchema({});
+       } else {
+         loadFormData();
+         facthloctiondata();
+       }
+ 
+       toastShown.current = false;
+     } else {
+       if (!toastShown.current) {
+         toastShown.current = true;
+       }
+     }
+   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -360,13 +369,21 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         )}
       
 
-    <div className='mt-4'>
+      <div className="mt-4">
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
-              }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

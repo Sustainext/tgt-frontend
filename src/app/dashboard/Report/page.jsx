@@ -601,6 +601,7 @@ const Report = () => {
     setMassgeshow(false);
     setMaterialityAssessmentLen([])
     setError({});
+    setReportExist(false)
   };
 
   const formatDate = (dateString) => {

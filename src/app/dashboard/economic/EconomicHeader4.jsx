@@ -47,6 +47,7 @@ const EconomicHeader4 = ({
   setSelectedCorp,
   year,
   setYear,
+  setToggleStatus,
 }) => {
 
   const dispatch = useDispatch();
@@ -63,6 +64,13 @@ const EconomicHeader4 = ({
   const [reportType, setReportType] = useState("Organization");
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    setToggleStatus(type);
+  
+    if (type === "Organization") {
+      setSelectedCorp(""); // Clear selectedCorp when Organization is chosen
+      dispatch(setCorpID("")); // Reset corporate ID in Redux store
+      dispatch(setCorpName("")); // Reset corporate name in Redux store
+    }
   };
   console.log(activeMonth, "test month value chnages");
   const [errors, setErrors] = useState({
@@ -229,7 +237,12 @@ const EconomicHeader4 = ({
       corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
-
+  useEffect(() => {
+    if (selectedCorp) {
+      setReportType("Corporate");
+  // console.log(selectedCorp,"test crop id");
+    }
+  }, [selectedCorp]);
   return (
     <>
       <div>

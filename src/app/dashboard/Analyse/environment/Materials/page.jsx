@@ -223,6 +223,33 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
 
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+    if(type === "Corporate"){
+      setMaterialdata1([]);
+      setMaterialdata2([]);
+      setMaterialdata3([]);
+      setMaterialdata4([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+    if(type === "Location"){
+      setMaterialdata1([]);
+      setMaterialdata2([]);
+      setMaterialdata3([]);
+      setMaterialdata4([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
   };
 
   const handleOrganizationChange = (e) => {

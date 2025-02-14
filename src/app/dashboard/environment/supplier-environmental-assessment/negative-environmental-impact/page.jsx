@@ -29,7 +29,7 @@ const NegativeEnvironmentalImpact = ({apiData}) => {
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
- 
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(false);
@@ -65,23 +65,35 @@ const NegativeEnvironmentalImpact = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 308-2',
-        toggle:'138',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName:'GRI 308-2',
+      toggle:'138',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-L6",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Leadership Indicators-6",
     },
-   
-    
-]
+    {
+      tagName: "BRSR C-P6-L7",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 6-Leadership Indicators-7",
+    },
+
+  ];
+
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden">
-         <SupplierTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+         <SupplierTopBar toggleDrawer={toggleDrawer} griData={griData} apiData={apiData} brsr={brsr}  />
        
 
       <div className="ml-3 flex relative">
@@ -162,32 +174,38 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
      
      <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
        <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
       <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
       <Screen4
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
       <Screen5
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
       
     </>

@@ -32,7 +32,7 @@ const tabs = [
   // Additional empty tabs as needed
 ];
 
-const Benefitstab = ({ selectedOrg, selectedCorp, year }) => {
+const Benefitstab = ({ selectedOrg, selectedCorp, year,togglestatus }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   return (
@@ -84,6 +84,7 @@ const Benefitstab = ({ selectedOrg, selectedCorp, year }) => {
                 selectedOrg={selectedOrg}
                 selectedCorp={selectedCorp}
                 year={year}
+                togglestatus={togglestatus}
               />
             </div>
           )}
@@ -93,6 +94,7 @@ const Benefitstab = ({ selectedOrg, selectedCorp, year }) => {
                 selectedOrg={selectedOrg}
                 selectedCorp={selectedCorp}
                 year={year}
+                togglestatus={togglestatus}
               />
             </div>
           )}
@@ -102,6 +104,7 @@ const Benefitstab = ({ selectedOrg, selectedCorp, year }) => {
                 selectedOrg={selectedOrg}
                 selectedCorp={selectedCorp}
                 year={year}
+                togglestatus={togglestatus}
               />
             </div>
           )}

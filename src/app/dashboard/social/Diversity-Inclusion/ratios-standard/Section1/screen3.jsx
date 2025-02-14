@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import GRI2021combinWidhet from "../../../../../shared/widgets/Economic/gri2021combinWidhet"
+import GRI2021combinWidhet from "../../../../../shared/widgets/Economic/gri2021combinWidhet";
 import CurrencyWidget from "../../../../../shared/widgets/Economic/currencyWidget";
 const widgets = {
   GRI2021combinWidhet: GRI2021combinWidhet,
@@ -26,15 +26,14 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Locationofoperation:{
+      Locationofoperation: {
         type: "string",
-        title:
-          "Select your significant Location of operation",
-
+        title: "Select your significant Location of operation",
       },
       Currency: {
         type: "string",
-        title: "If minimum wages vary across locations,  specify which minimum wage is being used as a reference.",
+        title:
+          "If minimum wages vary across locations,  specify which minimum wage is being used as a reference.",
       },
     },
   },
@@ -42,9 +41,8 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Locationofoperation","Currency"],
+    "ui:order": ["Locationofoperation", "Currency"],
     Locationofoperation: {
-  
       "ui:widget": "GRI2021combinWidhet",
       "ui:horizontal": true,
       "ui:options": {
@@ -52,7 +50,8 @@ const uiSchema = {
       },
     },
     Currency: {
-      "ui:title": "If minimum wages vary across locations,  specify which minimum wage is being used as a reference.)",
+      "ui:title":
+        "If minimum wages vary across locations,  specify which minimum wage is being used as a reference.)",
       "ui:tooltip":
         "Mention the estimated value of the liabilities, if the plan liabilities are met by the organisation's general resources.",
       "ui:tooltipdisplay": "none",
@@ -73,8 +72,8 @@ const uiSchema = {
     },
   },
 };
-const Screen3 = ({ selectedOrg, selectedCorp, year }) => {
-  const [locationdata, setLocationdata] = useState(); 
+const Screen3 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
+  const [locationdata, setLocationdata] = useState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -150,16 +149,13 @@ const Screen3 = ({ selectedOrg, selectedCorp, year }) => {
     // }
   };
   const facthloctiondata = async () => {
- 
     const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("Location data:", response.data);
       setLocationdata(response.data);
-  
     } catch (error) {
       setLocationdata();
-    
     } finally {
       LoaderClose();
     }
@@ -181,18 +177,27 @@ const Screen3 = ({ selectedOrg, selectedCorp, year }) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      facthloctiondata();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+        facthloctiondata();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+        facthloctiondata();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -202,11 +207,17 @@ const Screen3 = ({ selectedOrg, selectedCorp, year }) => {
 
   return (
     <>
- <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Select your significant Location of operation
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Select your significant Location of operation
               {/* <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="Mention risks posed by climate change that have the potential to generate
@@ -251,10 +262,7 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
               widgets={{
                 ...widgets,
                 GRI2021combinWidhet: (props) => (
-                  <GRI2021combinWidhet
-                    {...props}
-                    locationdata={locationdata}
-                  />
+                  <GRI2021combinWidhet {...props} locationdata={locationdata} />
                 ),
               }}
             />
@@ -262,15 +270,22 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
         ) : (
           <div className="mx-2"></div>
         )}
-      
+
         <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

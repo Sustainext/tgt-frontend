@@ -11,9 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import AutoFillTextArea from '../../../../shared/widgets/Textarea/autoFillTextArea'
+import AutoFillTextArea from "../../../../shared/widgets/Textarea/autoFillTextArea";
 const widgets = {
-    AutoFillTextArea:AutoFillTextArea
+  AutoFillTextArea: AutoFillTextArea,
 };
 
 const view_path = "gri-environment-emissions-standards_methodologies";
@@ -21,84 +21,79 @@ const client_id = 1;
 const user_id = 1;
 
 const schema = {
-    type: "array",
-    items: {
-      type: "object",
-      properties: {
-        Q1: {
-          type: "string",
-          title:
-            "Standards used",
-        },
-        Q2: {
-            type: "string",
-            title:
-              "Methodologies used",
-          },
-        Q3: {
-            type: "string",
-            title:
-              "Calculation tools used",
-          },
-      },
-    },
-  };
-  
-  const uiSchema = {
-    items: {
-      "ui:order": ["Q1","Q2","Q3"],
-  
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
       Q1: {
-        "ui:title":
-          "Standards used",
-        "ui:tooltipstitle":
-          "Please select the consolidation approach considered by the organisation to calculate the greenhouse gas emissions according to the GHG Protocol",
-        "ui:tooltipdisplay": "none",
-        "ui:widget": "AutoFillTextArea",
-        "ui:autoFillContent":"This report outlines the Greenhouse Gas (GHG) emissions accounting for the organization [Organization Name], following industry-leading standards. The methodologies and calculations adhere to the guidelines provided by the Greenhouse Gas Protocol, including both 'A Corporate Accounting and Reporting Standard (Revised Edition)' and the 'Corporate Value Chain (Scope 3) Standard,' developed by the World Business Council for Sustainable Development (WBCSD) and the World Resources Institute (WRI). These standards ensure a comprehensive and accurate assessment of the organization's GHG emissions across all relevant scopes and categories.",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
+        type: "string",
+        title: "Standards used",
       },
       Q2: {
-        "ui:title":
-          "Methodologies used",
-        "ui:tooltipstitle":
-          "Please select the consolidation approach considered by the organisation to calculate the greenhouse gas emissions according to the GHG Protocol",
-        "ui:tooltipdisplay": "none",
-        "ui:widget": "AutoFillTextArea",
-        "ui:autoFillContent":`Data Collection and Monitoring Methodology\nEmission activity data is systematically collected from multiple data owners through the Sustainext platform. This platform centralizes the data, which is then meticulously reviewed to ensure completeness, accuracy, and the elimination of any duplication or human errors.\n\nQuantification Methodology\nThe quantification of GHG emissions begins with the identification of all relevant GHG emission sources within the organization. These sources are classified according to the GHG Protocol – Corporate Standard. Accurate activity data is then gathered, followed by the selection of emission factors from nationally or internationally recognized sources such as DEFRA, IPCC, GHG Protocol and National GHG Inventories. These emission factors are integral to the precise calculation of GHG emissions.\n\nCalculation Methodology\nUnderstanding the methodology for calculating greenhouse gas (GHG) emissions is essential for effectively tracking and mitigating our environmental impact. The calculation process involves the following key components:\n\nActivity Data: This refers to the measurable data associated with activities that lead to GHG emissions, such as the amount of fuel consumed, the kilowatt-hours (kWh) of electricity used, or the miles traveled by air.\n\nEmissions Factor: A coefficient used to convert activity data into the corresponding amount of GHG emissions. Emission factors are specific to each type of activity or emission source and are typically measured per unit of activity.\n\nCalculation Formula:\n\nEmissions = Activity Data × Emission Factor\nWhere:\n\nActivity Data is measured in units relevant to the activity (e.g., liters of fuel).\nEmission Factor is expressed in terms such as kilograms of CO₂ equivalent per unit of activity (e.g., kg CO₂e/Liter).\n\nExample Calculation:\n\nFuel Consumed: 100 Liters\nEmission Factor: 0.001557 kg CO₂e/Liter\nEmissions from Fuel Combustion: \n100×0.001557=0.1557 tCO₂e`,
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
+        type: "string",
+        title: "Methodologies used",
       },
       Q3: {
-        "ui:title":
-          "Calculation tools used",
-        "ui:tooltipstitle":
-          "Please select the consolidation approach considered by the organisation to calculate the greenhouse gas emissions according to the GHG Protocol",
-        "ui:tooltipdisplay": "none",
-        "ui:widget": "AutoFillTextArea",
-        "ui:autoFillContent":"The calculation of GHG emissions in this report was performed using Sustainext’s SaaS-based platform. This tool is specifically designed to minimize errors and ensure the accuracy and reliability of sustainability metrics. The platform streamlines the GHG accounting process by allowing for the effortless creation of GHG inventories, accurate emission calculations, and ongoing performance tracking, all within a single, integrated system. Sustainext’s platform adheres to industry standards, including the GHG Protocol and ISO 14064, ensuring that the calculations are consistent with best practices and globally recognized methodologies.",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
-  
-      "ui:options": {
-        orderable: false,
-        addable: false,
-        removable: false,
-        layout: "horizontal",
+        type: "string",
+        title: "Calculation tools used",
       },
     },
-  };
-  
+  },
+};
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const uiSchema = {
+  items: {
+    "ui:order": ["Q1", "Q2", "Q3"],
+
+    Q1: {
+      "ui:title": "Standards used",
+      "ui:tooltipstitle":
+        "Please select the consolidation approach considered by the organisation to calculate the greenhouse gas emissions according to the GHG Protocol",
+      "ui:tooltipdisplay": "none",
+      "ui:widget": "AutoFillTextArea",
+      "ui:autoFillContent":
+        "This report outlines the Greenhouse Gas (GHG) emissions accounting for the organization [Organization Name], following industry-leading standards. The methodologies and calculations adhere to the guidelines provided by the Greenhouse Gas Protocol, including both 'A Corporate Accounting and Reporting Standard (Revised Edition)' and the 'Corporate Value Chain (Scope 3) Standard,' developed by the World Business Council for Sustainable Development (WBCSD) and the World Resources Institute (WRI). These standards ensure a comprehensive and accurate assessment of the organization's GHG emissions across all relevant scopes and categories.",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q2: {
+      "ui:title": "Methodologies used",
+      "ui:tooltipstitle":
+        "Please select the consolidation approach considered by the organisation to calculate the greenhouse gas emissions according to the GHG Protocol",
+      "ui:tooltipdisplay": "none",
+      "ui:widget": "AutoFillTextArea",
+      "ui:autoFillContent": `Data Collection and Monitoring Methodology\nEmission activity data is systematically collected from multiple data owners through the Sustainext platform. This platform centralizes the data, which is then meticulously reviewed to ensure completeness, accuracy, and the elimination of any duplication or human errors.\n\nQuantification Methodology\nThe quantification of GHG emissions begins with the identification of all relevant GHG emission sources within the organization. These sources are classified according to the GHG Protocol – Corporate Standard. Accurate activity data is then gathered, followed by the selection of emission factors from nationally or internationally recognized sources such as DEFRA, IPCC, GHG Protocol and National GHG Inventories. These emission factors are integral to the precise calculation of GHG emissions.\n\nCalculation Methodology\nUnderstanding the methodology for calculating greenhouse gas (GHG) emissions is essential for effectively tracking and mitigating our environmental impact. The calculation process involves the following key components:\n\nActivity Data: This refers to the measurable data associated with activities that lead to GHG emissions, such as the amount of fuel consumed, the kilowatt-hours (kWh) of electricity used, or the miles traveled by air.\n\nEmissions Factor: A coefficient used to convert activity data into the corresponding amount of GHG emissions. Emission factors are specific to each type of activity or emission source and are typically measured per unit of activity.\n\nCalculation Formula:\n\nEmissions = Activity Data × Emission Factor\nWhere:\n\nActivity Data is measured in units relevant to the activity (e.g., liters of fuel).\nEmission Factor is expressed in terms such as kilograms of CO₂ equivalent per unit of activity (e.g., kg CO₂e/Liter).\n\nExample Calculation:\n\nFuel Consumed: 100 Liters\nEmission Factor: 0.001557 kg CO₂e/Liter\nEmissions from Fuel Combustion: \n100×0.001557=0.1557 tCO₂e`,
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q3: {
+      "ui:title": "Calculation tools used",
+      "ui:tooltipstitle":
+        "Please select the consolidation approach considered by the organisation to calculate the greenhouse gas emissions according to the GHG Protocol",
+      "ui:tooltipdisplay": "none",
+      "ui:widget": "AutoFillTextArea",
+      "ui:autoFillContent":
+        "The calculation of GHG emissions in this report was performed using Sustainext’s SaaS-based platform. This tool is specifically designed to minimize errors and ensure the accuracy and reliability of sustainability metrics. The platform streamlines the GHG accounting process by allowing for the effortless creation of GHG inventories, accurate emission calculations, and ongoing performance tracking, all within a single, integrated system. Sustainext’s platform adheres to industry standards, including the GHG Protocol and ISO 14064, ensuring that the calculations are consistent with best practices and globally recognized methodologies.",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
+  },
+};
+
+const Screen1 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -118,7 +113,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const handleChange = (e) => {
     setFormData(e.formData);
   };
- 
+
   const validateRows = (data) => {
     const errors = {};
     data.forEach((row) => {
@@ -135,8 +130,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     return errors;
   };
 
-
-  
   const updateFormData = async () => {
     const data = {
       client_id: client_id,
@@ -208,21 +201,30 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validateRows(formData);
     setValidationErrors(errors);
-  
+
     const hasErrors = Object.keys(errors).length > 0;
     if (!hasErrors) {
       updateFormData();
@@ -233,11 +235,17 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 gap-6 text-[15px] text-neutral-950 font-[500]">
-           Standards, methodologies and/or calculation tools used
+            <h2 className="flex mx-2 gap-6 text-[15px] text-neutral-950 font-[500]">
+              Standards, methodologies and/or calculation tools used
               <MdInfoOutline
                 data-tooltip-id={`es25`}
                 data-tooltip-html="This section documents the data corresponding to the standards, methodologies, assumptions, and/or calculation tools used."
@@ -264,20 +272,19 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             <div className="flex float-end gap-2">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 305-1g
+                  GRI 305-1g
                 </div>
               </div>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 305-2g
+                  GRI 305-2g
                 </div>
               </div>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 305-3g
+                  GRI 305-3g
                 </div>
               </div>
-             
             </div>
           </div>
         </div>
@@ -296,10 +303,17 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-                (selectedOrg && year)  ? "" : "cursor-not-allowed"
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!(selectedOrg && year)  }
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

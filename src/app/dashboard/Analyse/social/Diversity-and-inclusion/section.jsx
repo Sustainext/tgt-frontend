@@ -14,6 +14,7 @@ const Section = ({
   dateRange,
   selectedLocation,
   isBoxOpen,
+  togglestatus,
 }) => {
   const [analyseData, setAnalyseData] = useState([]);
 
@@ -93,18 +94,47 @@ const Section = ({
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && dateRange.start < dateRange.end) {
-      fetchData();
-      fetchLocationData();
+
+    if (selectedOrg && dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate") {
+        if (selectedCorp) {
+          fetchData();
+          fetchLocationData();
+        } else {
+          setChilddata1([]);
+          setChilddata2([]);
+          setChilddata3([]);
+          setChilddata4([]);
+          setLocationdata([]);
+        
+        }
+      } else if (togglestatus === "Location") {
+        if (selectedLocation) {
+          fetchData();
+          fetchLocationData();
+        } else {
+          setChilddata1([]);
+          setChilddata2([]);
+          setChilddata3([]);
+          setChilddata4([]);
+          setLocationdata([]);
+        }
+      } else {
+        console.log("Calling loadFormData for Other");
+        fetchData();
+        fetchLocationData();
+      }
+  
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
+        console.log("Toast should be shown");
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, dateRange, selectedCorp, selectedLocation]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus, selectedLocation]);
+
 
 
   return (

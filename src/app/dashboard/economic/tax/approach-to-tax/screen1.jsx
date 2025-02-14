@@ -15,8 +15,8 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import RichtextWidget from "../../../../shared/widgets/Economic/RichtextWidget";
 const widgets = {
   inputWidget: CommoninputWidget,
-  inputWidget2:inputWidget2,
-  RichtextWidget:RichtextWidget,
+  inputWidget2: inputWidget2,
+  RichtextWidget: RichtextWidget,
 };
 
 const view_path = "gri-economic-approach_to_tax-207-1a";
@@ -33,7 +33,6 @@ const schema = {
         title: "Does your organisation have a tax strategy?",
         enum: ["Yes", "No"],
       },
- 
     },
     dependencies: {
       Q1: {
@@ -45,47 +44,42 @@ const schema = {
               },
               Q2: {
                 type: "string",
-                title: "Explain the outcome of public legal cases regarding corruption brought against the organization or its employees during the reporting period.",
-        
+                title:
+                  "Explain the outcome of public legal cases regarding corruption brought against the organization or its employees during the reporting period.",
               },
               Q3: {
                 type: "string",
-                title: "Mention the governance body or executive-level position within the organization that formally reviews and approves the tax strategy.",
-        
+                title:
+                  "Mention the governance body or executive-level position within the organization that formally reviews and approves the tax strategy.",
               },
               Q4: {
                 type: "string",
                 title: "Mention the frequency the tax strategy review.",
-        
               },
               Q5: {
                 type: "string",
-                title: "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
-        
+                title:
+                  "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
               },
               Q6: {
                 type: "string",
-                title: "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
-        
+                title:
+                  "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
               },
-
             },
           },
         ],
       },
     },
-
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4","Q5","Q6"],
+    "ui:order": ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"],
     Q1: {
-      "ui:title":
-        "Does your organisation have a tax strategy?",
-      "ui:tooltip":
-        "Indicate whether your organisation has a tax strategy. ",
+      "ui:title": "Does your organisation have a tax strategy?",
+      "ui:tooltip": "Indicate whether your organisation has a tax strategy. ",
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
       "ui:widgetType": "radio",
@@ -98,74 +92,73 @@ const uiSchema = {
     },
     Q2: {
       "ui:title":
-      "Provide a link to the tax strategy if it is publicly available. ",
-    "ui:tooltip":
-      "Provide a link to the tax strategy if it is publicly available and if the organization has a tax strategy but the strategy is not publicly available, the organization can provide an abstract or summary of the strategy.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "inputtext",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
+        "Provide a link to the tax strategy if it is publicly available. ",
+      "ui:tooltip":
+        "Provide a link to the tax strategy if it is publicly available and if the organization has a tax strategy but the strategy is not publicly available, the organization can provide an abstract or summary of the strategy.",
+      "ui:tooltipdisplay": "block",
+      "ui:titledisplay": "block",
+      "ui:widgetType": "inputtext",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
     Q3: {
       "ui:title":
-      "Mention the governance body or executive-level position within the organization that formally reviews and approves the tax strategy.",
-    "ui:tooltip":
-      "Provide a link to the tax strategy if it is publicly available and if the organization has a tax strategy but the strategy is not publicly available, the organization can provide an abstract or summary of the strategy.",
-    "ui:tooltipdisplay": "none",
-    "ui:titledisplay": "block",
-    "ui:widget": "RichtextWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
+        "Mention the governance body or executive-level position within the organization that formally reviews and approves the tax strategy.",
+      "ui:tooltip":
+        "Provide a link to the tax strategy if it is publicly available and if the organization has a tax strategy but the strategy is not publicly available, the organization can provide an abstract or summary of the strategy.",
+      "ui:tooltipdisplay": "none",
+      "ui:titledisplay": "block",
+      "ui:widget": "RichtextWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
     Q4: {
-      "ui:title":
-      "Mention the frequency the tax strategy review.",
-    "ui:tooltip":
-      "Provide a link to the tax strategy if it is publicly available and if the organization has a tax strategy but the strategy is not publicly available, the organization can provide an abstract or summary of the strategy.",
-    "ui:tooltipdisplay": "none",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "input",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
+      "ui:title": "Mention the frequency the tax strategy review.",
+      "ui:tooltip":
+        "Provide a link to the tax strategy if it is publicly available and if the organization has a tax strategy but the strategy is not publicly available, the organization can provide an abstract or summary of the strategy.",
+      "ui:tooltipdisplay": "none",
+      "ui:titledisplay": "block",
+      "ui:widgetType": "input",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
     Q5: {
       "ui:title":
-      "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
-    "ui:tooltip":
-      "Describe organisation's approach to regulatory compliance.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "textarea",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
+        "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
+      "ui:tooltip":
+        "Describe organisation's approach to regulatory compliance.",
+      "ui:tooltipdisplay": "block",
+      "ui:titledisplay": "block",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
     Q6: {
       "ui:title":
-      "How is the tax approach linked to the business and sustainable development strategies of the organization?",
-    "ui:tooltip":
-      "<p>When describing how its approach to tax is linked to its business strategy, the organization can explain how its tax planning is aligned with its commercial activities. When describing how its approach to tax is linked to its sustainable development strategy, the organization can explain the following:</p><ul><li>•Whether it considered the economic and social impacts of its approach to tax when developing its tax strategy.</li><li> • Any organizational commitments to sustainable development in the jurisdictions in which it operates and whether its approach to tax is aligned with these commitments.</li></ul>",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widget": "RichtextWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
+        "How is the tax approach linked to the business and sustainable development strategies of the organization?",
+      "ui:tooltip":
+        "<p>When describing how its approach to tax is linked to its business strategy, the organization can explain how its tax planning is aligned with its commercial activities. When describing how its approach to tax is linked to its sustainable development strategy, the organization can explain the following:</p><ul><li>•Whether it considered the economic and social impacts of its approach to tax when developing its tax strategy.</li><li> • Any organizational commitments to sustainable development in the jurisdictions in which it operates and whether its approach to tax is aligned with these commitments.</li></ul>",
+      "ui:tooltipdisplay": "block",
+      "ui:titledisplay": "block",
+      "ui:widget": "RichtextWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
     "ui:options": {
       orderable: false,
@@ -176,7 +169,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -200,7 +193,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       newFormData.Q4 = "";
       newFormData.Q5 = "";
       newFormData.Q6 = "";
-
     }
     setFormData([newFormData]);
   };
@@ -276,15 +268,24 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -294,11 +295,17 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Does your organisation have a tax strategy?
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Does your organisation have a tax strategy?
               <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html="Indicate whether your organisation has a tax strategy. "
@@ -344,10 +351,17 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

@@ -89,7 +89,7 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const { open } = GlobalState();
   const initialFormData = [
     { Disclosed: "" },
@@ -189,15 +189,24 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -206,7 +215,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   };
   return (
     <>
-     <div
+      <div
         className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{
           boxShadow:
@@ -215,7 +224,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Report whether conflicts of interest are disclosed to
               stakeholders, including, at a minimum, conflicts of interest
               relating to:-
@@ -225,12 +234,11 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 2-15-b
+                  GRI 2-15-b
                 </div>
               </div>
             </div>
           </div>
-    
         </div>
         <Form
           schema={r_schema}
@@ -244,10 +252,17 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

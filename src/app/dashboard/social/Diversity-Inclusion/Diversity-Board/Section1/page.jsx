@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -9,21 +9,31 @@ import Screen1 from "./Screen1";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
-import SocialTopBar from '../../../socialTopBar'
+import SocialTopBar from "../../../socialTopBar";
 
-const DiversityBoard = ({apiData}) => {
-   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
-      (state) => state.materialitySlice
-    );
-    const [year, setYear] = useState(materiality_year?materiality_year:'');
-    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
-    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
+const DiversityBoard = ({ apiData }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -43,39 +53,53 @@ const DiversityBoard = ({apiData}) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 405 - 1",
+      toggle: "50",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
-  const sdgData=[
+  const brsr = [
     {
-        tagName:'GRI 405 - 1',
-        toggle:'50',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "BRSR A-IV-21",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section A-IV-21",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 5",
+      toggle: "51",
+      textColor: "#fff",
+      bgColor: "bg-orange-600",
     },
     {
-        tagName:'SDG 5',
-        toggle:'51',
-        textColor:"#fff",
-        bgColor:"bg-orange-600"
+      tagName: "SDG 8",
+      toggle: "26",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
     },
-    {
-      tagName:'SDG 8',
-      toggle:'26',
-      textColor:"#fff",
-      bgColor:"bg-red-900"
-  },
-  
-   
-]
+  ];
   return (
     <>
-    <ToastContainer style={{ fontSize: "12px" }} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Diversity and Equal Opportunity'} topic={'SocDiversityEqualOpp'} />
-            
-       
-      <div className="ml-3 flex relative">
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Diversity and Equal Opportunity"}
+          topic={"SocDiversityEqualOpp"}
+          griData={griData}
+          brsr={brsr}
+        />
+
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Diversity of governance bodies 
+            Diversity of governance bodies
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -91,8 +115,8 @@ const DiversityBoard = ({apiData}) => {
                         </ReactTooltip> */}
           </h6>
         </div>
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -144,8 +168,15 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
-      <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
+      <Screen1
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
     </>
   );
 };

@@ -8,7 +8,8 @@ import Socialheader2 from "../../socialheader2";
 import Screen1 from "./Screen1";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
-
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 const ChildForcedLabourMaterialtopic = ({apiData}) => {
    const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
       (state) => state.materialitySlice
@@ -20,7 +21,7 @@ const ChildForcedLabourMaterialtopic = ({apiData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState();
-
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -69,14 +70,88 @@ const ChildForcedLabourMaterialtopic = ({apiData}) => {
             </div>
           </div>
           <div className="w-full float-end me-2">
-            <div className="float-end border-l">
+           <div className="float-end border-l">
               <div className="flex mb-2">
-                <button
-                  className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                  onClick={() => toggleDrawer("51")}
-                >
-                  GRI 3-3
-                </button>
+                <div>
+                  <button
+                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                    onClick={() => toggleDrawer("51")}
+                  >
+                    GRI 3-3
+                  </button>
+                </div>
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={`tooltip-$brsr1`}
+                    data-tooltip-content="BRSR-Section C-Principle 1-Essential Indicators-4"
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                    // onClick={() => toggleDrawer("92")}
+                  >
+                    BRSR C-P1-E4
+                  </button>
+                  <ReactTooltip
+                    id={`tooltip-$brsr1`}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={`tooltip-$brsr2`}
+                    data-tooltip-content="BRSR-Section C-Principle 6-Essential Indicators-10"
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                    // onClick={() => toggleDrawer("92")}
+                  >
+                    BRSR C-P6-E10
+                  </button>
+                  <ReactTooltip
+                    id={`tooltip-$brsr2`}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={`tooltip-$brsr3`}
+                    data-tooltip-content="BRSR-Section A-VII-26"
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                    // onClick={() => toggleDrawer("92")}
+                  >
+                    BRSR A-VII-26
+                  </button>
+                  <ReactTooltip
+                    id={`tooltip-$brsr3`}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
               </div>
             </div>
           </div>
@@ -138,11 +213,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
     </>
   );

@@ -67,7 +67,7 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ selectedOrg, year, selectedCorp,month }) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp,month,togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -158,17 +158,25 @@ const Screen2 = ({ selectedOrg, year, selectedCorp,month }) => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (selectedOrg && year && month) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp,month]);
-
+   useEffect(() => {
+     if (selectedOrg && year && togglestatus && month) {
+       if (togglestatus === "Corporate" && selectedCorp) {
+         loadFormData();
+       } else if (togglestatus === "Corporate" && !selectedCorp) {
+         setFormData([{}]);
+         setRemoteSchema({});
+         setRemoteUiSchema({});
+       } else {
+         loadFormData();
+       }
+ 
+       toastShown.current = false;
+     } else {
+       if (!toastShown.current) {
+         toastShown.current = true;
+       }
+     }
+   }, [selectedOrg, year, selectedCorp, togglestatus,month]);
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
@@ -228,10 +236,17 @@ const Screen2 = ({ selectedOrg, year, selectedCorp,month }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year || !month ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year ||!month
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year || !month}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year ||!month))
+            }
           >
             Submit
           </button>

@@ -16,7 +16,6 @@ const widgets = {
   CommoninputWidget: CommoninputWidget,
 };
 
-
 const view_path = "gri-governance-process-2-25-e-effectiveness";
 const client_id = 1;
 const user_id = 1;
@@ -62,9 +61,7 @@ const uiSchema = {
   },
 };
 
-
-
-const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen5 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -155,15 +152,24 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -173,23 +179,39 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Describe how the organization tracks the effectiveness of the grievance mechanisms and other remediation processes, and report examples of their effectiveness, including stakeholder feedback
-                            <MdInfoOutline data-tooltip-id={`tooltip-$e178`}
-                                data-tooltip-html="The organization can report:<ul><li>whether and how the intended users are informed about the grievance mechanisms and remediation processes;</li><li>whether and how the intended users are trained to use the grievance mechanisms and remediation processes;</li><li>the accessibility of the grievance mechanisms and remediation processes, such as the number of hours per day or days per week they are accessible, and their availability in different languages;</li><li>how the organization seeks to ensure it respects users’ human rights and protects them against reprisals;</li><li>how satisfied users are with the grievance mechanisms and remediation processes, and with the resulting outcomes, as well as how the organization assesses user satisfaction;</li><li>the number and types of grievances filed during the reporting period, and the percentage of grievances that were addressed and resolved, including the percentage that were resolved through remediation;</li><li>the number of grievances filed during the reporting period that are repeated or recurring;</li><li>changes made to the grievance mechanisms and remediation processes in response to lessons learned about their effectiveness.</li></ul>" className="mt-1.5 ml-1 text-[16px]" />
-                            <ReactTooltip id={`tooltip-$e178`} place="top" effect="solid" style={{
-                                width: "290px", backgroundColor: "#000",
-                                color: "white",
-                                fontSize: "12px",
-                                boxShadow: 3,
-                                borderRadius: "8px",
-                                textAlign: 'left',
-                            }}>
-                            </ReactTooltip>
-                        </h2>
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Describe how the organization tracks the effectiveness of the
+              grievance mechanisms and other remediation processes, and report
+              examples of their effectiveness, including stakeholder feedback
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e178`}
+                data-tooltip-html="The organization can report:<ul><li>whether and how the intended users are informed about the grievance mechanisms and remediation processes;</li><li>whether and how the intended users are trained to use the grievance mechanisms and remediation processes;</li><li>the accessibility of the grievance mechanisms and remediation processes, such as the number of hours per day or days per week they are accessible, and their availability in different languages;</li><li>how the organization seeks to ensure it respects users’ human rights and protects them against reprisals;</li><li>how satisfied users are with the grievance mechanisms and remediation processes, and with the resulting outcomes, as well as how the organization assesses user satisfaction;</li><li>the number and types of grievances filed during the reporting period, and the percentage of grievances that were addressed and resolved, including the percentage that were resolved through remediation;</li><li>the number of grievances filed during the reporting period that are repeated or recurring;</li><li>changes made to the grievance mechanisms and remediation processes in response to lessons learned about their effectiveness.</li></ul>"
+                className="mt-1.5 ml-1 text-[16px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e178`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
+            </h2>
           </div>
 
           <div className="w-[20%]">
@@ -217,10 +239,17 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>
