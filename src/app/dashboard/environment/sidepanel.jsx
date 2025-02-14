@@ -235,6 +235,30 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                       Standards, methodologies and/or calculation tools used
                     </p>
                   </div>
+                  {/* <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "EmissionIntensity"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("EmissionIntensity")}
+                    >
+                      GHG Emission Intensity 
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "EmissionReductionInitiatives"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("EmissionReductionInitiatives")}
+                    >
+                     GHG Emission Reduction Initiatives 
+                    </p>
+                  </div> */}
                 </div>
               </>
             )}

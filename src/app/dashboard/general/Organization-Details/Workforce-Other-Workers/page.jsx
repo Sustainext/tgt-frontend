@@ -59,18 +59,50 @@ const WorkforceOtherWorkers = () => {
           </div>
           <div className="w-full float-end ">
             <div className="flex float-end border-l">
+              <div>
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("100")}
               >
                 GRI 2 - 8
               </button>
-              <button
+              </div>
+          
+               <div className=" relative">
+               
+                              <button
+                                data-tooltip-id={`tooltip-$brsr2`}
+                                data-tooltip-content="BRSR-Section A-IV-20a"
+                                className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                                // onClick={() => toggleDrawer("92")}
+                              >
+                                BRSR A-IV-20a
+                              </button>
+              
+                              <ReactTooltip
+                                id={`tooltip-$brsr2`}
+                                place="bottom"
+                                effect="solid"
+                                style={{
+                                  width: "290px",
+                                  backgroundColor: "#000",
+                                  color: "white",
+                                  fontSize: "12px",
+                                  boxShadow: 3,
+                                  borderRadius: "8px",
+                                  textAlign: "center",
+                                }}
+                              ></ReactTooltip>
+                            </div>
+                            <div>
+                            <button
                 className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("99")}
               >
                 SDG 8
               </button>
+                            </div>
+            
             </div>
           </div>
         </div>
