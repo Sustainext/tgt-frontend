@@ -26,6 +26,7 @@ const Datacollectionmethodology = ({apiData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -158,11 +159,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Datacollectionmethodologyimpactbody
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
     </>
   );

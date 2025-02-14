@@ -15,7 +15,8 @@ import {
   setStartDate,
   setEndDate,
   setMaterialityYear,
-  setIsYearChanged
+  setIsYearChanged,
+  
 } from "../../../lib/redux/features/materialitySlice";
 
 const Socialheader2 = ({
@@ -27,6 +28,7 @@ const Socialheader2 = ({
   setSelectedCorp,
   year,
   setYear,
+  setToggleStatus
 }) => {
 
   const dispatch = useDispatch();
@@ -44,6 +46,13 @@ const Socialheader2 = ({
   // const[isYearChanged,setIsyearChanged]=useState(false)
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    setToggleStatus(type);
+  
+    if (type === "Organization") {
+      setSelectedCorp(""); // Clear selectedCorp when Organization is chosen
+      dispatch(setCorpID("")); // Reset corporate ID in Redux store
+      dispatch(setCorpName("")); // Reset corporate name in Redux store
+    }
   };
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
@@ -214,7 +223,12 @@ const Socialheader2 = ({
       corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
-
+  useEffect(() => {
+    if (selectedCorp) {
+      setReportType("Corporate");
+  // console.log(selectedCorp,"test crop id");
+    }
+  }, [selectedCorp]);
   return (
     <>
       <div>

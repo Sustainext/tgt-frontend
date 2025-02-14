@@ -1,16 +1,16 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Reclaimedproductsbody from "./reclaimed-products-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MaterialTopBar from '../materialTopBar'
+import MaterialTopBar from "../materialTopBar";
 
-const Reclaimedproducts = ({apiData}) => {
+const Reclaimedproducts = ({ apiData }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -53,33 +53,47 @@ const Reclaimedproducts = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const griData = [
+    {
+      tagName: " GRI 301-3",
+      toggle: "41",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
-  const sdgData=[
+  const brsr = [
     {
-        tagName:' GRI 301-3',
-        toggle:'41',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "BRSR C-P2-L5",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 2-Leadership  Indicators-5",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 8",
+      toggle: "42",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
     },
     {
-        tagName:'SDG 8',
-        toggle:'42',
-        textColor:"#fff",
-        bgColor:"bg-red-900"
+      tagName: "SDG 12",
+      toggle: "43",
+      textColor: "#fff",
+      bgColor: "bg-yellow-600",
     },
-    {
-        tagName:'SDG 12',
-        toggle:'43',
-        textColor:"#fff",
-        bgColor:"bg-yellow-600"
-    },
-    
-]
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <MaterialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+        <MaterialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          brsr={brsr}
+          griData={griData}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -115,8 +129,8 @@ const Reclaimedproducts = ({apiData}) => {
           </h6>
         </div>
         <div
-         ref={drawerRef}
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"

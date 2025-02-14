@@ -232,11 +232,11 @@ const Scope3 = forwardRef(
             console.log("Updated data after removal:", updatedData);
     
             dispatch(
-              updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
+              updateScopeDataLocal({ scope: 3, data: { data: updatedData } })
             );
     
             // Debug validation errors
-            const currentValidationErrors = validationErrors?.scope1?.fields || {};
+            const currentValidationErrors = validationErrors?.scope3?.fields || {};
             console.log("Current validation errors:", currentValidationErrors);
             console.log("Full validation state:", validationErrors);
     
@@ -282,8 +282,8 @@ const Scope3 = forwardRef(
                 console.log("Dispatching updated validation errors");
                 dispatch(
                   setValidationErrors({
-                    scope1: {
-                      ...validationErrors.scope1,
+                    scope3: {
+                      ...validationErrors.scope3,
                       fields: newValidationFields,
                     },
                   })

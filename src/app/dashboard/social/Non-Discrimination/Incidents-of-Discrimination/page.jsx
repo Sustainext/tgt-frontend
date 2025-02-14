@@ -1,81 +1,93 @@
-
-'use client'
-import React, { useState, useEffect } from 'react';
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css'
-import Socialheader from "../../socialheader"
-import Screen1 from "./screen1"
-import Screen2 from "./screen2"
-import { Socialdata } from "../../data/socialgriinfo"
+"use client";
+import React, { useState, useEffect } from "react";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import Socialheader from "../../socialheader";
+import Screen1 from "./screen1";
+import Screen2 from "./screen2";
+import { Socialdata } from "../../data/socialgriinfo";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SocialTopBar from '../../socialTopBar'
+import SocialTopBar from "../../socialTopBar";
 
-const IncidentsofDiscrimination = ({apiData}) => {
-    const [activeMonth, setActiveMonth] = useState(1);
-    const [location, setLocation] = useState("");
-    const [year, setYear] = useState();
-    const [data, setData] = useState();
-    const [category, setCategory] = useState("");
-    const [isOpen, setIsOpen] = useState(false);
+const IncidentsofDiscrimination = ({ apiData }) => {
+  const [activeMonth, setActiveMonth] = useState(1);
+  const [location, setLocation] = useState("");
+  const [year, setYear] = useState();
+  const [data, setData] = useState();
+  const [category, setCategory] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
-    const toggleDrawerclose = () => {
-        setIsOpen(!isOpen);
-    }
-    const toggleDrawer = (selected) => {
-        setIsOpen(!isOpen);
-        setCategory(selected);
-    };
-    useEffect(() => {
-        var newData = [];
-        Socialdata.map((program) => {
-            program.category.map((tag) => {
-                if (tag === category) {
-                    newData.push(program);
-                }
-            })
-        })
-        // //console.log(newData);
-        setData(newData);
-    }, [category])
+  const toggleDrawerclose = () => {
+    setIsOpen(!isOpen);
+  };
+  const toggleDrawer = (selected) => {
+    setIsOpen(!isOpen);
+    setCategory(selected);
+  };
+  useEffect(() => {
+    var newData = [];
+    Socialdata.map((program) => {
+      program.category.map((tag) => {
+        if (tag === category) {
+          newData.push(program);
+        }
+      });
+    });
+    // //console.log(newData);
+    setData(newData);
+  }, [category]);
 
+  const griData = [
+    {
+      tagName: "GRI 406-1",
+      toggle: "57",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
-    const sdgData=[
-      {
-          tagName:'GRI 406-1',
-          toggle:'57',
-          textColor:"#007EEF",
-          bgColor:"bg-slate-200"
-      },
-      {
-          tagName:'SDG 5',
-          toggle:'2',
-          textColor:"#fff",
-          bgColor:"bg-orange-600"
-      },
-      {
-          tagName:'SDG 8',
-          toggle:'22',
-          textColor:"#fff",
-          bgColor:"bg-red-900"
-      },
-     
-  ]
+  const brsr = [
+    {
+      tagName: "BRSR C-P5-E6",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 5-Essential Indicators-6",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 5",
+      toggle: "2",
+      textColor: "#fff",
+      bgColor: "bg-orange-600",
+    },
+    {
+      tagName: "SDG 8",
+      toggle: "22",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
+    },
+  ];
 
-    return (
-        <>
-               <ToastContainer style={{ fontSize: "12px" }} />
-            <div className="flex flex-col justify-start overflow-x-hidden ">
-            <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Non-discrimination'} topic={'SocNonDiscrimination'} />
-                
+  return (
+    <>
+      <ToastContainer style={{ fontSize: "12px" }} />
+      <div className="flex flex-col justify-start overflow-x-hidden ">
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Non-discrimination"}
+          topic={"SocNonDiscrimination"}
+          griData={griData}
+          brsr={brsr}
+        />
 
-
-                <div className="ml-3 flex">
-                    <h6 className="text-[17px] mb-4 font-semibold flex">
-
-                        Incidents of discrimination and corrective actions taken
-                        {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+        <div className="ml-3 flex">
+          <h6 className="text-[17px] mb-4 font-semibold flex">
+            Incidents of discrimination and corrective actions taken
+            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
@@ -88,10 +100,10 @@ const IncidentsofDiscrimination = ({apiData}) => {
                         }}>
 
                         </ReactTooltip> */}
-                    </h6>
-                </div>
-                 <div
-           className={`${
+          </h6>
+        </div>
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -133,19 +145,29 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
               </div>
             ))}
         </div>
-            </div>
-            <Socialheader
-                activeMonth={activeMonth}
-                setActiveMonth={setActiveMonth}
-                location={location}
-                setLocation={setLocation}
-                year={year}
-                setYear={setYear}
-            />
+      </div>
+      <Socialheader
+        activeMonth={activeMonth}
+        setActiveMonth={setActiveMonth}
+        location={location}
+        setLocation={setLocation}
+        year={year}
+        setYear={setYear}
+      />
 
-            <Screen1 location={location} year={year} month={activeMonth} activeMonth={activeMonth} />
-           <Screen2 location={location} year={year} month={activeMonth} activeMonth={activeMonth} />
-        </>
-    );
+      <Screen1
+        location={location}
+        year={year}
+        month={activeMonth}
+        activeMonth={activeMonth}
+      />
+      <Screen2
+        location={location}
+        year={year}
+        month={activeMonth}
+        activeMonth={activeMonth}
+      />
+    </>
+  );
 };
 export default IncidentsofDiscrimination;

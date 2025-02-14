@@ -22,7 +22,7 @@ const ProductServiceSafety = ({apiData}) => {
     const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
- 
+  const [togglestatus,setToggleStatus] = useState("Organization");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -123,8 +123,9 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
-    <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
+    <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}   togglestatus={togglestatus}  />
 
 
     </>

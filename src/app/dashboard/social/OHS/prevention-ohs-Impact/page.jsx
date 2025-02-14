@@ -35,14 +35,25 @@ const Preventionohsimpact = ({apiData}) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 403 - 7',
-        toggle:'34',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName:'GRI 403 - 7',
+      toggle:'34',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P3-E12",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-12",
     },
+  
+  ];
+  const sdgData=[
+
     {
       tagName:'SDG 8',
       toggle:'35',
@@ -54,7 +65,7 @@ const Preventionohsimpact = ({apiData}) => {
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} brsr={brsr} griData={griData} />
        
 
         <div className="ml-3 flex">

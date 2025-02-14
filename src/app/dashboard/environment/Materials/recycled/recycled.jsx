@@ -53,14 +53,25 @@ const Recycled = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:' GRI 301-2',
-        toggle:'38',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName:' GRI 301-2',
+      toggle:'38',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P2-L3",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 2-Leadership  Indicators-3",
     },
+ 
+  ];
+  const sdgData=[
+ 
     {
         tagName:'SDG 8',
         toggle:'39',
@@ -80,7 +91,7 @@ const Recycled = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <MaterialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+         <MaterialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} griData={griData} brsr={brsr}  />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

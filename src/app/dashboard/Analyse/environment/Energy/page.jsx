@@ -65,7 +65,54 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
+  const handleReportTypeChange = (type) => {
+    setReportType(type);
+    
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+    if(type === "Corporate"){
+      setFuelConsumptionRenewable([]);
+      setFuelConsumptionNonRenewable([]);
+      setEnergyWithinOrganization([]);
+      setDirectFromRenewable([]);
+      setDirectFromNonRenewable([]);
+      setSelfGenFromRenewable([]);
+      setSelfGenFromNonRenewable([]);
+      setEnergySoldRenewable([]);
+      setEnergySoldNonRenewable([]);
+      setEnergyOutsideOrganization([]);
+      setEnergyIntensity([]);
+      setReductionOfEnergy([]);
+      setReductionInEnergyOfPS([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+    if(type === "Location"){
+      setFuelConsumptionRenewable([]);
+      setFuelConsumptionNonRenewable([]);
+      setEnergyWithinOrganization([]);
+      setDirectFromRenewable([]);
+      setDirectFromNonRenewable([]);
+      setSelfGenFromRenewable([]);
+      setSelfGenFromNonRenewable([]);
+      setEnergySoldRenewable([]);
+      setEnergySoldNonRenewable([]);
+      setEnergyOutsideOrganization([]);
+      setEnergyIntensity([]);
+      setReductionOfEnergy([]);
+      setReductionInEnergyOfPS([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+  };
   const fetchData = async (params) => {
     if (!params.start || !params.end) {
       setIsDateRangeValid(false);
@@ -371,9 +418,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
     fetchLocation();
   }, [selectedCorp]);
 
-  const handleReportTypeChange = (type) => {
-    setReportType(type);
-  };
+
 
   const handleOrganizationChange = (e) => {
     const newOrg = e.target.value;

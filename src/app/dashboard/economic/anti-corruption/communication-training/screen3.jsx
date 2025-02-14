@@ -74,8 +74,7 @@ const uiSchema = {
           },
           {
             title: "Total number of business partners in this region",
-            tooltip:
-              "Mention the total number of business partners.",
+            tooltip: "Mention the total number of business partners.",
             widgettype: "number",
             tooltipdisplay: "block",
             tittlekey: "Totalemployeeinthisregion",
@@ -106,7 +105,14 @@ const uiSchema = {
   },
 };
 
-const Screen3 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }) => {
+const Screen3 = ({
+  selectedOrg,
+  year,
+  selectedCorp,
+  datarefresh,
+  setDatarefresh,
+  togglestatus,
+}) => {
   const [formData, setFormData] = useState([{}]);
   const [locationdata, setLocationdata] = useState(); // Initialize as empty array
   const [r_schema, setRemoteSchema] = useState({});
@@ -188,7 +194,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
       const response = await axiosInstance.get(url);
       console.log(response.data.form_data[0].data);
       setLocationdata(response.data.form_data[0].data);
-      console.log(response.data.form_data[0].data,"test data scren 3");
+      console.log(response.data.form_data[0].data, "test data scren 3");
     } catch (error) {
       setLocationdata();
     } finally {
@@ -212,29 +218,54 @@ const Screen3 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      loadFormData2();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+        loadFormData2();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+        loadFormData2();
+      }
+
       toastShown.current = false;
-    } else if (!toastShown.current) {
-      toastShown.current = true;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-  }, [selectedOrg, year, selectedCorp, datarefresh]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
+  // useEffect(() => {
+  //   if (selectedOrg && year) {
+  //     loadFormData();
+  //     loadFormData2();
+  //     toastShown.current = false;
+  //   } else if (!toastShown.current) {
+  //     toastShown.current = true;
+  //   }
+  // }, [selectedOrg, year, selectedCorp, datarefresh]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
-
   };
-  
+
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Total number of business partners that the organization’s
               anti-corruption policies and procedures have been communicated to,
               broken down by type of business partner and region.
@@ -280,7 +311,8 @@ and procedures have been communicated to, broken down by type of business partne
               onChange={handleChange}
               validator={validator}
               formContext={{
-                locationtooltip: "Specify the name of the locations where the organization’s anti-corruption policies and procedures have been communicated to the business partners.",
+                locationtooltip:
+                  "Specify the name of the locations where the organization’s anti-corruption policies and procedures have been communicated to the business partners.",
               }}
               widgets={{
                 ...widgets,
@@ -297,11 +329,14 @@ and procedures have been communicated to, broken down by type of business partne
           <>
             {selectedOrg && year && (
               <div className="mx-2 pb-6">
-               <table  className="table-fixed border-collapse w-full rounded-md border border-gray-300" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+                <table
+                  className="table-fixed border-collapse w-full rounded-md border border-gray-300"
+                  style={{ borderCollapse: "separate", borderSpacing: 0 }}
+                >
                   <thead className="gradient-background">
                     <tr className="h-[102px]">
                       <th
-                    className="text-[12px] border-b border-gray-300 px-2 py-2 text-left"
+                        className="text-[12px] border-b border-gray-300 px-2 py-2 text-left"
                         style={{ width: "17vw" }}
                       >
                         <div className="flex items-center justify-center">
@@ -439,10 +474,17 @@ and procedures have been communicated to, broken down by type of business partne
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

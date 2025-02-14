@@ -63,7 +63,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen3 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -154,15 +154,24 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -182,7 +191,9 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Describe the role of the highest governance body in reviewing the effectiveness of the organization's processes as described in 2-12-b, and report the frequency of this review:
+              Describe the role of the highest governance body in reviewing the
+              effectiveness of the organization's processes as described in
+              2-12-b, and report the frequency of this review:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-employees123`}
                 data-tooltip-content="What is the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities, such as national and international standards, protocols, and policy agendas?"
@@ -229,10 +240,17 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

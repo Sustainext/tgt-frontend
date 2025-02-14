@@ -19,7 +19,8 @@ const widgets = {
   RichtextWidget: RichtextWidget,
 };
 
-const view_path = "gri-economic_confirmed_incidents_of_corruption_and_actions_taken-205-3c-s3";
+const view_path =
+  "gri-economic_confirmed_incidents_of_corruption_and_actions_taken-205-3c-s3";
 const client_id = 1;
 const user_id = 1;
 
@@ -33,7 +34,6 @@ const schema = {
         title:
           " Total number of confirmed incidents when contracts with business partners were terminated or not renewed due to violations related to corruption",
       },
-
     },
   },
 };
@@ -57,7 +57,6 @@ const uiSchema = {
       },
     },
 
-
     "ui:options": {
       orderable: false,
       addable: false,
@@ -67,7 +66,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = ({ selectedOrg, year, selectedCorp,month }) => {
+const Screen3 = ({ selectedOrg, year, selectedCorp, month, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -159,15 +158,24 @@ const Screen3 = ({ selectedOrg, year, selectedCorp,month }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year && month) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus && month) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp,month]);
+  }, [selectedOrg, year, selectedCorp, togglestatus, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -177,15 +185,22 @@ const Screen3 = ({ selectedOrg, year, selectedCorp,month }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="flex mb-4">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Total number of confirmed incidents when contracts with business partners were terminated or not renewed due to violations related to corruption
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Total number of confirmed incidents when contracts with business
+              partners were terminated or not renewed due to violations related
+              to corruption
               <MdInfoOutline
                 data-tooltip-id={`es33`}
-                data-tooltip-html=
-                "<p>Specify the total number of confirmed incidents when contracts with business partners were terminated or not renewed due to violations related to corruption. Note: In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.</p>"
+                data-tooltip-html="<p>Specify the total number of confirmed incidents when contracts with business partners were terminated or not renewed due to violations related to corruption. Note: In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.</p>"
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -228,10 +243,19 @@ const Screen3 = ({ selectedOrg, year, selectedCorp,month }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year || !month ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year ||
+              !month
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year || !month}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" &&
+                (!selectedOrg || !year || !month))
+            }
           >
             Submit
           </button>

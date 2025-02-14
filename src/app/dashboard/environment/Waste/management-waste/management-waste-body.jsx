@@ -114,7 +114,7 @@ const AccordionItem = ({
     </div>
   );
 };
-const Managementwastebody = ({ selectedOrg, selectedCorp, year }) => {
+const Managementwastebody = ({ selectedOrg, selectedCorp, year,togglestatus }) => {
   return (
     <>
       <div className="mx-3">
@@ -126,11 +126,13 @@ const Managementwastebody = ({ selectedOrg, selectedCorp, year }) => {
           selectedOrg={selectedOrg}
           selectedCorp={selectedCorp}
           year={year}
+          togglestatus={togglestatus}
         >
           <Managementwasteimpact
             selectedOrg={selectedOrg}
             selectedCorp={selectedCorp}
             year={year}
+            togglestatus={togglestatus}
           />
         </AccordionItem>
 

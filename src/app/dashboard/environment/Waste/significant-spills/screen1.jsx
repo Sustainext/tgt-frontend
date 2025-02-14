@@ -81,7 +81,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,selectedOrg,
   );
 };
 
-const Screen1 = ({selectedOrg, year, selectedCorp,setSelectedOrg, setSelectedCorp,setYear,setOrganisationMessage,setCorporateMessage,setYearMessage,isSidepanelOpen}) => {
+const Screen1 = ({selectedOrg, year, selectedCorp,setSelectedOrg, setSelectedCorp,setYear,setOrganisationMessage,setCorporateMessage,setYearMessage,isSidepanelOpen,togglestatus}) => {
   return (
     <>
       <div className="mx-3">
@@ -104,7 +104,7 @@ waterbodies, and groundwater.`}
           isSidepanelOpen={isSidepanelOpen}
         >
 
-          <SignificantSpillsTable selectedOrg={selectedOrg} year={year} selectedCorp={selectedCorp}/>
+          <SignificantSpillsTable selectedOrg={selectedOrg} year={year} selectedCorp={selectedCorp} togglestatus={togglestatus}/>
 
         </AccordionItem>
 

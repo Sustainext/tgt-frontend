@@ -9,7 +9,8 @@ const AnalyseHeader5 = ({
   selectedCorp,
   setSelectedCorp,
   dateRange,
-  setDateRange
+  setDateRange,
+  setToggleStatus,
 }) => {
   const [formState, setFormState] = useState({
     selectedCorp: selectedCorp,
@@ -18,6 +19,14 @@ const AnalyseHeader5 = ({
     end: dateRange.end,
   });
   const [reportType, setReportType] = useState("Organization");
+  const handleReportTypeChange = (type) => {
+    setReportType(type);
+    setToggleStatus(type);
+
+    if (type === "Organization") {
+      setSelectedCorp(""); // Clear selectedCorp when Organization is chosen
+    }
+  };
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
     organization: "Please select Organisation",
@@ -133,7 +142,7 @@ const AnalyseHeader5 = ({
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
-                    onClick={() => setReportType("Organization")}
+                    onClick={() => handleReportTypeChange("Organization")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Organization
@@ -143,7 +152,7 @@ const AnalyseHeader5 = ({
                     className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
-                    onClick={() => setReportType("Corporate")}
+                    onClick={() => handleReportTypeChange("Corporate")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Corporate

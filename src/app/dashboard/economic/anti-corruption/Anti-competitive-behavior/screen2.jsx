@@ -56,7 +56,7 @@ const uiSchema = {
     ],
   },
 };
-const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
+const Screen2 = ({ selectedOrg, selectedCorp, year,togglestatus }) => {
   const initialFormData = [
     {
       CompletedLegalAction: "",
@@ -158,16 +158,25 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
     }
   };
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -243,24 +252,34 @@ including any decisions or judgements in detail."
             }}
           />
         </div>
-    
-        {selectedOrg && year && (
-          <button
+        {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
+          <div className="flex right-1 mx-2">
+            <button
             type="button"
-            className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+            className="text-[#007EEF] text-[13px] flex cursor-pointer mt-2 mb-5"
             onClick={handleAddCommittee}
           >
             Add Row <MdAdd className="text-lg" />
           </button>
-        )}
-        <div className="mt-4">
+          </div>
+        ) : null}
+   
+       <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

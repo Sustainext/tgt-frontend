@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
-
-const EmissionTopBar=({toggleDrawer,apiData,sdgData,griData})=>{
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+const EmissionTopBar=({toggleDrawer,apiData,sdgData,griData,brsr})=>{
     const materialityEnvData=apiData&&apiData.environment?apiData.environment:{}
     return (
         <>
@@ -35,22 +36,55 @@ const EmissionTopBar=({toggleDrawer,apiData,sdgData,griData})=>{
             <div className="float-end border-l">
               <div className="flex mb-2">
               {griData&&griData.map((val)=>(
+                <div>
+
                     <button
                     className={`text-[${val.textColor}] ${val.bgColor} rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5`}
                     onClick={() => toggleDrawer(val.toggle)}
                   >
                     {val.tagName}
                   </button>
+                  </div>
                 ))}
+                   {brsr &&
+              brsr.map((val) => (
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={val.id}
+                    data-tooltip-content={val.content}
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[95px] h-[22px] ml-2 text-center pt-0.5"
+                  >
+                    {val.tagName}
+                  </button>
+                  <ReactTooltip
+                    id={val.id}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+              ))}
               </div>
+           
               <div className="flex">
               {sdgData&&sdgData.map((val)=>(
-                    <button
+                <div>
+      <button
                     className={`text-[${val.textColor}] ${val.bgColor} rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5`}
                     onClick={() => toggleDrawer(val.toggle)}
                   >
                     {val.tagName}
                   </button>
+                </div>
+              
                 ))}
               </div>
                 

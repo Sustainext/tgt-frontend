@@ -4,7 +4,7 @@ import DynamicTable2 from "./customTable2";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
 import { Oval } from "react-loader-spinner";
-const StrategyPolicysection = ({selectedOrg,selectedCorp,year}) => {
+const StrategyPolicysection = ({selectedOrg,selectedCorp,year,togglestatus}) => {
   const [strategypolicy, setStrategypolicy] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -53,17 +53,24 @@ const StrategyPolicysection = ({selectedOrg,selectedCorp,year}) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && year) {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
         fetchData();
-        toastShown.current = false;
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setStrategypolicy([]);
+      } else {
+        fetchData();
+      }
+
+      toastShown.current = false;
     } else {
-        if (!toastShown.current) {
-            toastShown.current = true;
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-}, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
+
 
   return (
     <div>

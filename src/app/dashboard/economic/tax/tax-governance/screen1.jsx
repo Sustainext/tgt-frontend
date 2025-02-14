@@ -15,11 +15,12 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import RichtextWidget from "../../../../shared/widgets/Economic/RichtextWidget";
 const widgets = {
   inputWidget: CommoninputWidget,
-  inputWidget2:inputWidget2,
-  RichtextWidget:RichtextWidget,
+  inputWidget2: inputWidget2,
+  RichtextWidget: RichtextWidget,
 };
 
-const view_path = "gri-economic-tax_governance_control_and_risk_management-207-2a-provide";
+const view_path =
+  "gri-economic-tax_governance_control_and_risk_management-207-2a-provide";
 const client_id = 1;
 const user_id = 1;
 
@@ -30,33 +31,31 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Mention the governance body or executive-level position within the organization accountable for compliance with the tax strategy.",
+        title:
+          "Mention the governance body or executive-level position within the organization accountable for compliance with the tax strategy.",
       },
       Q2: {
         type: "string",
-        title: "Please provide an explaination of how the approach to tax is embedded within the organization.",
-
+        title:
+          "Please provide an explaination of how the approach to tax is embedded within the organization.",
       },
       Q3: {
         type: "string",
-        title: "Describe the approach to tax risks, including how risks are identified, managed, and monitored.",
-
+        title:
+          "Describe the approach to tax risks, including how risks are identified, managed, and monitored.",
       },
       Q4: {
         type: "string",
-        title: "Please explanation how the framework for compliance with the tax governance and control is evaluated.",
-
+        title:
+          "Please explanation how the framework for compliance with the tax governance and control is evaluated.",
       },
-
-
     },
-
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4"],
+    "ui:order": ["Q1", "Q2", "Q3", "Q4"],
     Q1: {
       "ui:title":
         "Mention the governance body or executive-level position within the organization accountable for compliance with the tax strategy.",
@@ -74,46 +73,46 @@ const uiSchema = {
     },
     Q2: {
       "ui:title":
-      "Please provide an explanation of how the approach to tax is embedded within the organization.",
-    "ui:tooltip":
-      "The organization can describe processes, projects, programs, and initiatives that support adherence to the approach to tax and tax strategy. For examples, please refer to the guidance by clicking the GRI 207-2 tag on the top right of the screen.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "textarea",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
+        "Please provide an explanation of how the approach to tax is embedded within the organization.",
+      "ui:tooltip":
+        "The organization can describe processes, projects, programs, and initiatives that support adherence to the approach to tax and tax strategy. For examples, please refer to the guidance by clicking the GRI 207-2 tag on the top right of the screen.",
+      "ui:tooltipdisplay": "block",
+      "ui:titledisplay": "block",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
     Q3: {
       "ui:title":
-      "Describe the approach to tax risks, including how risks are identified, managed, and monitored.",
-    "ui:tooltip":
-      "Tax risks are risks associated with the organization’s tax practices that might lead to a negative effect on the goals of the organization, or to financial or reputational damage. These include compliance risks or risks such as those related to uncertain tax positions, changes in legislation, or a perception of aggressive tax practices.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widget": "RichtextWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
+        "Describe the approach to tax risks, including how risks are identified, managed, and monitored.",
+      "ui:tooltip":
+        "Tax risks are risks associated with the organization’s tax practices that might lead to a negative effect on the goals of the organization, or to financial or reputational damage. These include compliance risks or risks such as those related to uncertain tax positions, changes in legislation, or a perception of aggressive tax practices.",
+      "ui:tooltipdisplay": "block",
+      "ui:titledisplay": "block",
+      "ui:widget": "RichtextWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
     Q4: {
       "ui:title":
-      "Please explain how the framework for compliance with the tax governance and control is evaluated.",
-    "ui:tooltip":
-      "The organization can describe the process through which the tax governance and control framework is monitored, tested, and maintained. An example of this is giving an internal auditor accountability for undertaking annual reviews of the tax department’s compliance with the tax governance and control framework.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "textarea",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
+        "Please explain how the framework for compliance with the tax governance and control is evaluated.",
+      "ui:tooltip":
+        "The organization can describe the process through which the tax governance and control framework is monitored, tested, and maintained. An example of this is giving an internal auditor accountability for undertaking annual reviews of the tax department’s compliance with the tax governance and control framework.",
+      "ui:tooltipdisplay": "block",
+      "ui:titledisplay": "block",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
 
     "ui:options": {
@@ -125,7 +124,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -216,15 +215,24 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -234,12 +242,18 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Provide a description of the tax governance and control framework:
-            <MdInfoOutline
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Provide a description of the tax governance and control framework:
+              <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html="When describing the tax governance and control framework, the reporting organization can provide examples of effective implementation of its tax governance, control, and risk management systems."
                 className="mt-1.5 ml-2 text-[15px]"
@@ -257,7 +271,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> 
+              ></ReactTooltip>
             </h2>
           </div>
           <div className="w-[20%]">
@@ -284,10 +298,17 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>
