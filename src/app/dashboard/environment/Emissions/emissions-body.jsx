@@ -113,21 +113,6 @@ const Emissionsnbody = ({
   const [scope3DataError, setScope3DataError] = useState("");
   const [showError, setShowError] = useState(false);
 
-  // When dataError changes
-  // useEffect(() => {
-  //   if (scope1DataError || scope2DataError || scope3DataError) {
-  //     setShowError(true);
-  //     const timer = setTimeout(() => {
-  //       setShowError(false);
-  //       setScope1DataError("");
-  //       setScope2DataError("");
-  //       setScope3DataError("");
-  //     }, 6000);
-
-  //     return () => clearTimeout(timer); // Cleanup timeout
-  //   }
-  // }, [scope1DataError, scope2DataError, scope3DataError]);
-
   const handleAccordionClick = () => {
     if (!location) {
       setLocationError("Please select a location");
