@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { saveToLocalStorage } from "../utils/storage";
 import axios from "axios";
 import { BsArrowLeft } from "react-icons/bs";
+import Cookies from "js-cookie";
+
 
 export default function Callback() {
   const [loading, setLoading] = useState(true);
@@ -50,12 +52,28 @@ export default function Callback() {
         const userData = response.data;
         const accessToken = userData.key.access;
 
+        console.log("User Data:", response);
+
         // Store authentication data
         saveToLocalStorage("token", accessToken);
         saveToLocalStorage("refresh", userData.key.refresh);
         saveToLocalStorage("client_key", userData.client_key);
         saveToLocalStorage("permissions", userData.permissions);
         saveToLocalStorage("custom_role", userData.admin);
+
+        // Set Cookies
+        Cookies.set("token", JSON.stringify(accessToken), {
+          secure: true,
+          sameSite: "strict",
+        });
+        Cookies.set("permissions", JSON.stringify(userData.permissions), {
+          secure: true,
+          sameSite: "strict",
+        });
+        Cookies.set("isAdmin", JSON.stringify(userData.admin), {
+          secure: true,
+          sameSite: "strict",
+        });
 
         // Always fetch user_org data with the new token
         try {
