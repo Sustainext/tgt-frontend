@@ -27,7 +27,7 @@ const DeleteStakeholderGroup = ({ isModalOpen, setIsModalOpen,deleteData,refresh
       if(response.status===204){
         toast.success(
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-            <RiDeleteBin6Line style={{ marginRight: '6px', color: '#EB9042',fontSize:'37px' }} />
+            <RiDeleteBin6Line style={{ marginRight: '6px', color: '#EB9042',fontSize:'25px' }} />
             <div>
             <strong style={{ display: 'block', marginBottom: '4px', fontSize: '16px' }}> {/* Main heading */}
             Stakeholder group Deleted

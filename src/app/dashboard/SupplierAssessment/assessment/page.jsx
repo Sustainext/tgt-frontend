@@ -7,7 +7,7 @@ import CreateAssessmentModal from "./modals/createAssessmentModal";
 import NoDataAvailable from '../components/noDataAvailable'
 import { MdAdd } from "react-icons/md";
 
-const Assessment = () => {
+const Assessment = ({setActiveTab}) => {
     const totalItems = 50; 
     const rowsPerPageOptions = [5, 10, 20]; // Rows-per-page options
     const [currentPage, setCurrentPage] = useState(1);
@@ -79,36 +79,36 @@ const Assessment = () => {
         <div>
             <div className="grid grid-cols-4 gap-6 mb-6">
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-          <h2 className="text-[14px] font-semibold text-[#71717A]">
-            Total Assessments
+          <h2 className="text-[14px] font-neutral text-[#71717A] uppercase">
+          Total Assessments Completed
           </h2>
           <p className="text-[21px] font-bold text-[#18181B] mt-2">24</p>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-          <h2 className="text-[14px] font-semibold text-[#71717A]">
-            Assessments Completed
+          <h2 className="text-[14px] font-neutral text-[#71717A] uppercase">
+          Open assessments
           </h2>
           <div className="flex justify-between">
             <p className="text-[21px] font-bold text-[#18181B] mt-2">1</p>
-            <p className="text-sm text-green-600 mt-4">36%</p>
+            {/* <p className="text-sm text-green-600 mt-4">36%</p> */}
           </div>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-          <h2 className="text-[14px] font-semibold text-[#71717A]">
-            Total Responses Received
+          <h2 className="text-[14px] font-neutral text-[#71717A] uppercase">
+          Responses pending
           </h2>
           <div className="flex justify-between">
             <p className="text-[21px] font-bold text-[#18181B] mt-2">10</p>
-            <p className="text-sm text-green-600 mt-4">36%</p>
+            {/* <p className="text-sm text-green-600 mt-4">36%</p> */}
           </div>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-          <h2 className="text-[14px] font-semibold text-[#71717A]">
-            Responses Missed Due Date
+          <h2 className="text-[14px] font-neutral text-[#71717A] uppercase">
+          Responses overdue
           </h2>
           <div className="flex justify-between">
             <p className="text-[21px] font-bold text-[#18181B] mt-2">14</p>
-            <p className="text-sm text-red-600 mt-4">23%</p>
+            {/* <p className="text-sm text-red-600 mt-4">23%</p> */}
           </div>
         </div>
       </div>
@@ -125,8 +125,8 @@ const Assessment = () => {
       )}
       
     </div>
-    <CreateAssessmentModal  isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}/>
+    <CreateAssessmentModal  isModalOpen={isModalOpen} setActiveTab={setActiveTab}
+        setIsModalOpen={setIsModalOpen}/> 
     </>
     
   );

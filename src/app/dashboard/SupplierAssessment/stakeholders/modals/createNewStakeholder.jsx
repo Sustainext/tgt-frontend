@@ -4,8 +4,11 @@ import { Oval } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import { MdAdd } from "react-icons/md";
 import { Country, State, City } from "country-state-city";
+import axiosInstance from "../../../../utils/axiosMiddleware";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
+const CreateStakeholder = ({ isModalOpen, setIsModalOpen,groupId,setRefresh }) => {
   const router = useRouter();
   const [supplierName, setSupplierName] = useState("");
   const [email, setEmail] = useState("");
@@ -22,6 +25,27 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
   const [latError, setLatError] = useState("");
   const [lonError, setLonError] = useState("");
   const [stakeholderCreated, setStakeholderCreated] = useState(false);
+  const [loopen, setLoOpen] = useState(false);
+
+  const refreshForm=()=>{
+    setSupplierName('')
+    setEmail('')
+    setAddress([])
+    setSpoc('')
+    setLatitude('')
+    setLongitude('')
+    setSelectedCountry('')
+    setSelectedState('')
+    setSelectedCity('')
+}
+
+const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
 
   useEffect(() => {
     const allCountries = Country.getAllCountries();
@@ -93,6 +117,74 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
     }
   };
 
+  const handleSubmit= async(e)=>{
+    e.preventDefault();
+    LoaderOpen()
+    try{
+        const data = {
+           name:supplierName,
+           email:email,
+           group:groupId.id,
+           address:address,
+           country:selectedCountry,
+           state:selectedState,
+           city:selectedCity,
+           latitude:latitude,
+           longitude:longitude,
+           poc:spoc
+          };
+          const url = `${process.env.BACKEND_API_URL}/supplier_assessment/stakeholder/`;
+        if(supplierName&&email){
+            const response = await axiosInstance.post(url,data);
+             if (response.status === 201) {
+                    LoaderClose();
+                    setStakeholderCreated(true)
+                    refreshForm()
+                  } else {
+                    toast.error("Oops, something went wrong", {
+                      position: "top-right",
+                      autoClose: 1000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                    });
+                    LoaderClose();
+                  }
+        }
+        else{
+            toast.error("Please fill all the required fields", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+        }
+    }
+    catch(e){
+        LoaderClose()
+        console.error(e)
+        toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+    }
+   
+  }
+
+
   return (
     <>
       {isModalOpen && (
@@ -153,6 +245,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                     type="button"
                     onClick={() => {
                       setIsModalOpen(false);
+                      setRefresh((prevRefresh) => !prevRefresh)
                       setStakeholderCreated(false);
                     }}
                     className="bg-transparent text-[15px] text-[#344054] px-5 py-2 rounded-md border border-gray-300"
@@ -162,6 +255,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                   <button
                     type="button"
                     onClick={() => {
+                        refreshForm()
                       setStakeholderCreated(false);
                     }}
                     className="bg-blue-500 flex gap-1 text-[15px] text-white px-5 py-2 rounded-md hover:bg-blue-600"
@@ -203,7 +297,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                 <p className="text-[#667085] text-[14px] mb-4">
                   Enter details for the new stakeholder
                 </p>
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="flex gap-4 w-full">
                     <div className="mb-4 w-full">
                       <label
@@ -405,11 +499,10 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
 
                   <div className="flex justify-end mt-6">
                     <button
-                      type="button"
-                      onClick={() => {
-                        setStakeholderCreated(true);
-                      }}
-                      className="bg-blue-500 text-white px-10 py-2 rounded-md hover:bg-blue-600"
+                    disabled={!(supplierName && email) }
+                      type="submit"
+                   
+                      className={`bg-blue-500 ${!(supplierName&&email)?'opacity-30 cursor-not-allowed':"cursor-pointer"} text-white px-10 py-2 rounded-md hover:bg-blue-600`}
                     >
                       Create
                     </button>
@@ -420,6 +513,18 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
           </div>
         </div>
       )}
+      {loopen && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                <Oval
+                  height={50}
+                  width={50}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              </div>
+            )}
     </>
   );
 };

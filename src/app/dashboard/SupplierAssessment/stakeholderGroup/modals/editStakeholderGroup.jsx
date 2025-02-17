@@ -15,6 +15,7 @@ const EditStakeholderGroup = ({
   editData,
   refresh,
   setRefresh,
+  setStakeholderList
 }) => {
   const router = useRouter();
   const [groupName, setgroupName] = useState("");
@@ -450,7 +451,7 @@ const EditStakeholderGroup = ({
                     type="button"
                     disabled={stakeholderCount == 0}
                     onClick={() => {
-                      router.push("/dashboard/SupplierAssessment/stakeholders");
+                        setStakeholderList(true)
                     }}
                     className={`bg-transparent flex gap-2 ${
                       stakeholderCount == 0
