@@ -47,6 +47,7 @@ const Socialheader4 = ({
   setSelectedCorp,
   year,
   setYear,
+  setToggleStatus,
 }) => {
 
   const dispatch = useDispatch();
@@ -66,6 +67,13 @@ const Socialheader4 = ({
   // const[isYearChanged,setIsyearChanged]=useState(false)
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    setToggleStatus(type);
+  
+    if (type === "Organization") {
+      setSelectedCorp(""); // Clear selectedCorp when Organization is chosen
+      dispatch(setCorpID("")); // Reset corporate ID in Redux store
+      dispatch(setCorpName("")); // Reset corporate name in Redux store
+    }
   };
   console.log(activeMonth, "test month value chnages");
   const [errors, setErrors] = useState({
@@ -235,7 +243,12 @@ const Socialheader4 = ({
       corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
-
+  useEffect(() => {
+    if (selectedCorp) {
+      setReportType("Corporate");
+  
+    }
+  }, [selectedCorp]);
   return (
     <>
       <div>

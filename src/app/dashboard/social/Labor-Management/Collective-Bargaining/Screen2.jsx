@@ -72,7 +72,7 @@ const validateRows = (data) => {
   });
 };
 
-const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
+const Screen2 = ({ selectedOrg, selectedCorp, year,togglestatus }) => {
   const initialFormData = [
     {
       significantrisk: "",
@@ -177,16 +177,25 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData(); 
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData(); 
+      }
+  
+      toastShown.current = false; 
     } else {
-      // Only show the toast if it has not been shown already
+    
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true; 
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -279,31 +288,35 @@ or collective bargaining may be violated or at significant risk."
             // }}
           />
         </div>
-        {selectedOrg && year && (
-        <div className="flex right-1 mx-2">
-      
-            <button
-              type="button"
-              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
-              onClick={handleAddCommittee}
-            >
-              Add category <MdAdd className="text-lg" />
-            </button>
-     
-        </div>
-     )}
-        <div className="mt-4">
-          <button
-            type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
-            }`}
-            onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
-          >
-            Submit
-          </button>
-        </div>
+        {(togglestatus === "Corporate" && selectedCorp) || 
+ (togglestatus !== "Corporate" && selectedOrg && year) ? (
+  <div className="flex right-1 mx-2">
+    <button
+      type="button"
+      className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+      onClick={handleAddCommittee}
+    >
+      Add category <MdAdd className="text-lg" />
+    </button>
+  </div>
+) : null}
+     <div className="mt-4">
+    <button
+      type="button"
+      className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+        (!selectedCorp && togglestatus === "Corporate") || (!selectedOrg || !year) 
+          ? "cursor-not-allowed opacity-90" 
+          : ""
+      }`}
+      onClick={handleSubmit}
+      disabled={
+        (togglestatus === "Corporate" && !selectedCorp) || 
+        (togglestatus !== "Corporate" && (!selectedOrg || !year))
+      }
+    >
+      Submit
+    </button>
+  </div>
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

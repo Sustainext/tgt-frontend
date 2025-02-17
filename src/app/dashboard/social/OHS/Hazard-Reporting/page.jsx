@@ -30,31 +30,39 @@ const HazardReporting = ({apiData}) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName:'GRI 403 - 2',
+      toggle:'23',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+
+    {
+      tagName: "BRSR C-P3-E10c",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-10c",
+    },
+  ];
 
   const sdgData=[
-    {
-        tagName:'GRI 403 - 2',
-        toggle:'23',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
-    },
+
     {
       tagName:'SDG 8',
       toggle:'24',
       textColor:"#fff",
       bgColor:"bg-red-900"
   },
- 
-   
-   
-   
-   
+
 ]
 
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} brsr={brsr} griData={griData} />
         
 
      

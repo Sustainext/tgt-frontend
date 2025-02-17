@@ -55,7 +55,7 @@ const tabs = [
   },
 ];
 
-const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month }) => {
+const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month,togglestatus }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const fullName = convertShortNameToFullName(month);
   console.log("Full month name:", fullName);
@@ -139,6 +139,7 @@ const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month }) => {
                   month={month}
                   selectedCorp={selectedCorp}
                   selectedOrg={selectedOrg}
+                  togglestatus={togglestatus}
                 />
               </div>
             )}
@@ -150,6 +151,7 @@ const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month }) => {
                   month={month}
                   selectedCorp={selectedCorp}
                   selectedOrg={selectedOrg}
+                  togglestatus={togglestatus}
                 />{" "}
               </div>
             )}
@@ -162,6 +164,7 @@ const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month }) => {
                   month={month}
                   selectedCorp={selectedCorp}
                   selectedOrg={selectedOrg}
+                  togglestatus={togglestatus}
                 />{" "}
               </div>
             )}
@@ -174,6 +177,7 @@ const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month }) => {
                   month={month}
                   selectedCorp={selectedCorp}
                   selectedOrg={selectedOrg}
+                  togglestatus={togglestatus}
                 />{" "}
               </div>
             )}
@@ -186,6 +190,7 @@ const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month }) => {
                   month={month}
                   selectedCorp={selectedCorp}
                   selectedOrg={selectedOrg}
+                  togglestatus={togglestatus}
                 />{" "}
               </div>
             )}

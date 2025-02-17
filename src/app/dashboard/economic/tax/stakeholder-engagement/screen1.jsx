@@ -15,8 +15,8 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import RichtextWidget from "../../../../shared/widgets/Economic/RichtextWidget";
 const widgets = {
   inputWidget: CommoninputWidget,
-  inputWidget2:inputWidget2,
-  RichtextWidget:RichtextWidget,
+  inputWidget2: inputWidget2,
+  RichtextWidget: RichtextWidget,
 };
 
 const view_path = "gri-economic-stakeholder_engagement-207-3a";
@@ -35,27 +35,21 @@ const schema = {
       Q2: {
         type: "string",
         title: "Describe the approach to public policy advocacy on tax.",
-
       },
       Q3: {
         type: "string",
-        title: "Explain the processes for collecting and considering the views and concerns of stakeholders, including external stakeholders.",
-
+        title:
+          "Explain the processes for collecting and considering the views and concerns of stakeholders, including external stakeholders.",
       },
-
-
-
     },
-
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3"],
+    "ui:order": ["Q1", "Q2", "Q3"],
     Q1: {
-      "ui:title":
-        "Describe the approach to engagement with tax authorities.",
+      "ui:title": "Describe the approach to engagement with tax authorities.",
       "ui:tooltip":
         "Explain the approach to interact with tax authorities. For example, frequency of engagement, method of engagement, outcomes of the engagement etc.",
       "ui:tooltipdisplay": "block",
@@ -69,35 +63,34 @@ const uiSchema = {
       },
     },
     Q2: {
-      "ui:title":
-      "Describe the approach to public policy advocacy on tax.",
-    "ui:tooltip":
-      "<p>Describe your organization’s approach to public policy advocacy on tax. For example the organisation can describe its lobbying activities, details of advocacy efforts etc</p><p>Note: Disclosure 207-3-a-ii is related to the requirements in GRI 415: Public Policy 2016. If the organization has determined public policy to be a material topic and has reported information in GRI 415 that covers the organization’s public policy advocacy on tax, the organization can provide a reference to this information.</p>",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "textarea",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
+      "ui:title": "Describe the approach to public policy advocacy on tax.",
+      "ui:tooltip":
+        "<p>Describe your organization’s approach to public policy advocacy on tax. For example the organisation can describe its lobbying activities, details of advocacy efforts etc</p><p>Note: Disclosure 207-3-a-ii is related to the requirements in GRI 415: Public Policy 2016. If the organization has determined public policy to be a material topic and has reported information in GRI 415 that covers the organization’s public policy advocacy on tax, the organization can provide a reference to this information.</p>",
+      "ui:tooltipdisplay": "block",
+      "ui:titledisplay": "block",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
 
     Q3: {
       "ui:title":
-      "Explain the processes for collecting and considering the views and concerns of stakeholders, including external stakeholders.",
-    "ui:tooltip":
-      "What are the processes for collecting and considering stakeholder views and concerns? For example, the organisation can describe the process of stakeholder identification, method of collecting views and concerns, details of engagement and consideration of stakeholder concerns.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "textarea",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
+        "Explain the processes for collecting and considering the views and concerns of stakeholders, including external stakeholders.",
+      "ui:tooltip":
+        "What are the processes for collecting and considering stakeholder views and concerns? For example, the organisation can describe the process of stakeholder identification, method of collecting views and concerns, details of engagement and consideration of stakeholder concerns.",
+      "ui:tooltipdisplay": "block",
+      "ui:titledisplay": "block",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
 
     "ui:options": {
@@ -109,7 +102,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -200,15 +193,24 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -218,11 +220,18 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Please provide a description of the approach to stakeholder engagement and management of stakeholder concerns related to tax:
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Please provide a description of the approach to stakeholder
+              engagement and management of stakeholder concerns related to tax:
               {/* <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html="Indicate whether your organisation has a tax strategy. "
@@ -268,10 +277,17 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

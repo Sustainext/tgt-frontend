@@ -5,7 +5,7 @@ import Screen4 from "./screen4";
 import Screen5 from "./screen5";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Childlabourscreen = ({ selectedOrg, year, selectedCorp }) => {
+const Childlabourscreen = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
@@ -13,26 +13,31 @@ const Childlabourscreen = ({ selectedOrg, year, selectedCorp }) => {
         selectedOrg={selectedOrg}
         year={year}
         selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
       />
       <Screen2
         selectedOrg={selectedOrg}
         year={year}
         selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
       />
       <Screen3
         selectedOrg={selectedOrg}
         year={year}
         selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
       />
       <Screen4
         selectedOrg={selectedOrg}
         year={year}
         selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
       />
       <Screen5
         selectedOrg={selectedOrg}
         year={year}
         selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
       />
     </>
   );

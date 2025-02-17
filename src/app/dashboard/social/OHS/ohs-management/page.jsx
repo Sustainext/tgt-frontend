@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -8,9 +8,9 @@ import Socialheader3 from "../../socialheader3";
 import Ohsscreeen1 from "./ohs-screeen";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SocialTopBar from '../../socialTopBar'
+import SocialTopBar from "../../socialTopBar";
 
-const Ohsmanagment = ({apiData}) => {
+const Ohsmanagment = ({ apiData }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -38,37 +38,48 @@ const Ohsmanagment = ({apiData}) => {
     setData(newData);
   }, [category]);
 
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 403 - 1',
-        toggle:'21',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "GRI 403 - 1",
+      toggle: "21",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
     },
+  ];
+
+  const brsr = [
     {
-      tagName:'SDG 8',
-      toggle:'22',
-      textColor:"#fff",
-      bgColor:"bg-red-900"
-  },
- 
- 
-   
-   
-   
-   
-]
+      tagName: "BRSR C-P3-E10a",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-10a",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 8",
+      toggle: "22",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
+    },
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
-        
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Occupational Health and Safety"}
+          topic={"SocHealthSafety"}
+          brsr={brsr}
+          griData={griData}
+        />
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Occupational health and safety management system
+            Occupational health and safety management system
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -84,8 +95,8 @@ const Ohsmanagment = ({apiData}) => {
                         </ReactTooltip> */}
           </h6>
         </div>
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -9,21 +9,31 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./screen1";
 import { useSelector } from "react-redux";
-import SocialTopBar from '../../../socialTopBar'
+import SocialTopBar from "../../../socialTopBar";
 
-const ProductServicelabelling2 = ({apiData}) => {
-   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
-      (state) => state.materialitySlice
-    );
-    const [year, setYear] = useState(materiality_year?materiality_year:'');
-    const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
-    const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
+const ProductServicelabelling2 = ({ apiData }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -43,39 +53,52 @@ const ProductServicelabelling2 = ({apiData}) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 417 - 1",
+      toggle: "72",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
-  const sdgData=[
+  const brsr = [
     {
-        tagName:'GRI 417 - 1',
-        toggle:'72',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "BRSR C-P9-E2",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 9-Essential Indicators-2",
     },
+  ];
+  const sdgData = [
     {
-        tagName:'SDG 12',
-        toggle:'73',
-        textColor:"#fff",
-        bgColor:"bg-[#CD8B2A]"
+      tagName: "SDG 12",
+      toggle: "73",
+      textColor: "#fff",
+      bgColor: "bg-[#CD8B2A]",
     },
-   
-   
-   
-]
+  ];
 
   return (
     <>
-     <ToastContainer style={{ fontSize: "12px" }} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Marketing and labeling'} topic={'SocMarketingLabeling'} />
-        
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Marketing and labeling"}
+          topic={"SocMarketingLabeling"}
+          brsr={brsr}
+          griData={griData}
+        />
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Requirements for product and service information and labeling
+            Requirements for product and service information and labeling
           </h6>
         </div>
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -127,10 +150,14 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
-    <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
-
-
+      <Screen1
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        togglestatus={togglestatus}
+      />
     </>
   );
 };

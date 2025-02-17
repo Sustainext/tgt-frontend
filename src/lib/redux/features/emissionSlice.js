@@ -331,10 +331,9 @@ export const fetchLocations = createAsyncThunk(
 const emissionsSlice = createSlice({
   name: "emissions",
   initialState: {
-    userData: [],
     locations: {
       data: [],
-      status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+      status: "idle", 
       error: null,
     },
     location: "",
@@ -426,6 +425,7 @@ const emissionsSlice = createSlice({
       field: null,
     },
     validationErrors: {},
+    activitiesCache: {},
   },
   reducers: {
     setUserData: (state, action) => {
@@ -620,6 +620,10 @@ const emissionsSlice = createSlice({
     clearValidationErrors: (state) => {
       state.validationErrors = {};
     },
+    setActivitiesForRow: (state, action) => {
+      const { rowId, activities } = action.payload;
+      state.activitiesCache[rowId] = activities;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -796,6 +800,7 @@ export const {
   clearFocusedField,
   setValidationErrors,
   clearValidationErrors,
+  setActivitiesForRow,
 } = emissionsSlice.actions;
 
 export default emissionsSlice.reducer;

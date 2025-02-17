@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,21 +10,31 @@ import EconomicHeader2 from "../../EconomicHeader2";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import { useSelector } from "react-redux";
-import EconomicTopBar from '../../economicTopBar'
+import EconomicTopBar from "../../economicTopBar";
 
-const Financialassistance = ({apiData}) => {
-  const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
-    (state) => state.materialitySlice
+const Financialassistance = ({ apiData }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
   );
-  const [year, setYear] = useState(materiality_year?materiality_year:'');
-  const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
-  const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
   const [activeMonth, setActiveMonth] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
- 
+  const [togglestatus, setToggleStatus] = useState("Organization");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -46,27 +56,30 @@ const Financialassistance = ({apiData}) => {
     setData(newData);
   }, [category]);
 
-  const sdgData=[
+  const sdgData = [
     {
-        tagName:'GRI 201-4',
-        toggle:'121',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "GRI 201-4",
+      toggle: "121",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
     },
-   
-   
-]
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Economic Performance'} topic={'GovEconomicPerformance'} />
-        
+        <EconomicTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Economic Performance"}
+          topic={"GovEconomicPerformance"}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Financial assistance received from government
+            Financial assistance received from government
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es10`}
               data-tooltip-content="This section documents the data corresponding to the financial assistance received from government. Financial assistance: direct or indirect financial benefits that do not represent a transaction of goods and services, but which are an incentive or compensation for actions taken, the cost of an asset, or expenses incurred."
@@ -88,8 +101,8 @@ const Financialassistance = ({apiData}) => {
             ></ReactTooltip>
           </h6>
         </div>
-          <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -133,24 +146,27 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         </div>
       </div>
       <EconomicHeader2
-           selectedOrg={selectedOrg}
-           setSelectedOrg={setSelectedOrg}
-           selectedCorp={selectedCorp}
-           setSelectedCorp={setSelectedCorp}
-           year={year}
-           setYear={setYear}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
+        year={year}
+        setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
 
-
       <Screen1
-      selectedOrg={selectedOrg}
-      selectedCorp={selectedCorp}
-      year={year} />
-          <Screen2
-      selectedOrg={selectedOrg}
-      selectedCorp={selectedCorp}
-      year={year} />
-
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        togglestatus={togglestatus}
+      />
+      <Screen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        togglestatus={togglestatus}
+      />
     </>
   );
 };

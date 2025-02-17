@@ -19,12 +19,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import SelectdisableWidget from "../../../../shared/widgets/Select/selectdisableWidget";
-import InputdiableWidget from "../../../../shared/widgets/Input/inputdisableWidget"
+import InputdiableWidget from "../../../../shared/widgets/Input/inputdisableWidget";
 const widgets = {
   InputdiableWidget: InputdiableWidget,
   dateWidget: dateWidget,
   SelectdisableWidget: SelectdisableWidget,
-  selectWidget:selectWidget,
+  selectWidget: selectWidget,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
@@ -36,41 +36,51 @@ const client_id = 1;
 const user_id = 1;
 
 const schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
-        Discharge: {
+      Discharge: {
         type: "string",
         title: "Do you discharge any substances of concern",
-        enum: ['Yes', 'No'],
-        tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
-        display:"none",
+        enum: ["Yes", "No"],
+        tooltiptext:
+          "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
+        display: "none",
       },
       Substanceconcern: {
         type: "string",
         title: "Substance of concern",
-        tooltiptext: "Mention the substances of concern for which discharges are treated.In the context of GRI Standard, substances of concern are those that cause irreversible damage to the waterbody,ecosystem, or human health. For example: chemicals, pollutants, heavy metals, contaminants or any toxic substances.",
-        display:"block",
+        tooltiptext:
+          "Mention the substances of concern for which discharges are treated.In the context of GRI Standard, substances of concern are those that cause irreversible damage to the waterbody,ecosystem, or human health. For example: chemicals, pollutants, heavy metals, contaminants or any toxic substances.",
+        display: "block",
       },
       Priority: {
         type: "string",
         title: "Method used to define priority",
-        enum: ['international standard', 'authoritative list','Other (please specify)'],
-        tooltiptext: "Indicate how does the company define the priority substances of concern",
-        display:"block",
+        enum: [
+          "international standard",
+          "authoritative list",
+          "Other (please specify)",
+        ],
+        tooltiptext:
+          "Indicate how does the company define the priority substances of concern",
+        display: "block",
       },
       Noncompliance: {
         type: "string",
         title: "No. of non-compliance incidents",
-        tooltiptext: "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
-        display:"block",
+        tooltiptext:
+          "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
+        display: "block",
       },
       Approach: {
         type: "string",
-        title: "Approach for setting discharge limits for priority substances of concern",
-        tooltiptext: "Provide a description of the approach used for setting discharge limits for priority substances of concern.",
-        display:"block",
+        title:
+          "Approach for setting discharge limits for priority substances of concern",
+        tooltiptext:
+          "Provide a description of the approach used for setting discharge limits for priority substances of concern.",
+        display: "block",
       },
 
       AssignTo: {
@@ -87,8 +97,8 @@ const schema = {
         title: "Remove",
       },
       // Define other properties as needed
-    }
-  }
+    },
+  },
 };
 
 const uiSchema = {
@@ -175,26 +185,29 @@ const validateRows = (data) => {
       rowErrors.Discharge = "substances of concern is required";
     }
     if (row.Discharge === "Yes") {
-   
-  
-    if (!row.Substanceconcern) {
-      rowErrors.Substanceconcern = "Substance of concern  is required";
+      if (!row.Substanceconcern) {
+        rowErrors.Substanceconcern = "Substance of concern  is required";
+      }
+
+      if (!row.Priority) {
+        rowErrors.Priority = "Method used to define priority is required";
+      }
+      if (!row.Noncompliance) {
+        rowErrors.Noncompliance = "No. of non-compliance incidents is required";
+      }
+      if (!row.Approach) {
+        rowErrors.Approach = "Approach for setting discharge is required";
+      }
     }
-  
-    if (!row.Priority) {
-      rowErrors.Priority = "Method used to define priority is required";
-    }
-    if (!row.Noncompliance) {
-      rowErrors.Noncompliance = "No. of non-compliance incidents is required";
-    }
-    if (!row.Approach) {
-      rowErrors.Approach = "Approach for setting discharge is required";
-    }
-  }
     return rowErrors;
   });
 };
-const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
+const SubstancesconcernQ1 = ({
+  selectedOrg,
+  year,
+  selectedCorp,
+  togglestatus,
+}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -203,6 +216,7 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
   const [enabledRows, setEnabledRows] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+   const [inputValue, setInputValue] = useState("");
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -288,38 +302,48 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
 
   const handleChange = (e) => {
+    if (!e.formData) return; // Prevent errors in case formData is undefined
+    
     const newData = e.formData.map((item, index) => {
-      const updatedItem = { ...item }; 
-
-      if (updatedItem.Discharge === "Yes") {
-        setEnabledRows((prev) => {
-          const newEnabledRows = [...prev];
-          newEnabledRows[index] = true; 
-          return newEnabledRows;
-        });
-      } else if (updatedItem.Discharge === "No") {
-        setEnabledRows((prev) => {
-          const newEnabledRows = [...prev];
-          newEnabledRows[index] = false; 
-          return newEnabledRows;
-        });
-      
-      }
-      return updatedItem;
+      return {
+        ...item, // Spread the current object to retain existing data
+      };
     });
-    setFormData(newData); 
+  
+    setFormData(newData);
+  
+    // Check for "Discharge" field and update enabledRows state accordingly
+    setEnabledRows((prevEnabledRows) => {
+      return newData.map((item, index) => {
+        if (item.Discharge === "Yes") {
+          return true; // Enable row if "Yes"
+        } else if (item.Discharge === "No") {
+          return false; // Disable row if "No"
+        }
+        return prevEnabledRows[index] || false; // Retain previous state if no change
+      });
+    });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -327,8 +351,10 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
     const errors = validateRows(formData);
     setValidationErrors(errors);
     console.log("Validation Errors:", errors); // Debugging log
-  
-    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
     if (!hasErrors) {
       console.log("No validation errors, proceeding to update data"); // Debugging log
       updateFormData();
@@ -340,7 +366,7 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-    setEnabledRows((prev) => [...prev, false]); 
+    setEnabledRows((prev) => [...prev, false]);
   };
 
   const updateFormDatanew = (updatedData) => {
@@ -351,7 +377,7 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
-    setEnabledRows((prev) => prev.filter((_, i) => i !== index)); 
+    setEnabledRows((prev) => prev.filter((_, i) => i !== index));
   };
   useEffect(() => {
     console.log("Enabled rows updated test", enabledRows);
@@ -367,7 +393,7 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            formContext={{enabledRows, validationErrors }}
+            formContext={{ enabledRows, validationErrors }}
             widgets={{
               ...widgets,
               InputdiableWidget: (props) => {
@@ -377,11 +403,11 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
                 return (
                   <InputdiableWidget
                     {...props}
-                    isEnabled={isEnabled} // Pass it as a prop if needed
+                    isEnabled={isEnabled}
                   />
                 );
               },
-  SelectdisableWidget: (props) => {
+              SelectdisableWidget: (props) => {
                 const match = props.id.match(/^root_(\d+)/);
                 const index = match ? parseInt(match[1], 10) : null;
                 const isEnabled = index !== null ? enabledRows[index] : false; // Get the enable state for the row
@@ -429,21 +455,34 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
         )}
       </div>
       <div></div>
+      {(togglestatus === "Corporate" && selectedCorp) ||
+      (togglestatus !== "Corporate" && selectedOrg && year) ? (
+        <div className="flex justify-start mt-4 right-1">
+          <button
+            type="button"
+            className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5"
+            onClick={handleAddNew}
+          >
+            <MdAdd className="text-lg" /> Add Row
+          </button>
+        </div>
+      ) : null}
 
-      <div className="flex justify-start mt-4 right-1">
-        <button
-          type="button"
-          className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5"
-          onClick={handleAddNew}
-        >
-          <MdAdd className="text-lg" /> Add Row
-        </button>
-      </div>
       <div className="mb-4">
         <button
           type="button"
-          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
+          className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+            (!selectedCorp && togglestatus === "Corporate") ||
+            !selectedOrg ||
+            !year
+              ? "cursor-not-allowed opacity-90"
+              : ""
+          }`}
           onClick={handleSubmit}
+          disabled={
+            (togglestatus === "Corporate" && !selectedCorp) ||
+            (togglestatus !== "Corporate" && (!selectedOrg || !year))
+          }
         >
           Submit
         </button>

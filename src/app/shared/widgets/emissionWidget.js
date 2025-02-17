@@ -22,6 +22,7 @@ import {
   toggleSelectAll,
   setFocusedField,
   clearFocusedField,
+  setActivitiesForRow,
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AssignEmissionModal from "./assignEmissionModal";
@@ -29,8 +30,6 @@ import MultipleAssignEmissionModal from "./MultipleAssignEmissionModal";
 import { getMonthName } from "@/app/utils/dateUtils";
 import { fetchClimatiqActivities } from "../../utils/climatiqApi.js";
 import CalculationInfoModal from "@/app/shared/components/CalculationInfoModal";
-import axiosInstance from "@/app/utils/axiosMiddleware";
-import {getLocationName} from '../../utils/locationName'
 
 const EmissionWidget = React.memo(
   ({
@@ -39,7 +38,7 @@ const EmissionWidget = React.memo(
     scope,
     year,
     countryCode,
-    activityCache,
+    // activityCache,
     updateCache,
     onRemove,
     index,
@@ -71,18 +70,22 @@ const EmissionWidget = React.memo(
     const quantity1Ref = useRef(null);
     const quantity2Ref = useRef(null);
     const focusedField = useSelector((state) => state.emissions.focusedField);
-   const text1 = useSelector((state) => state.header.headertext1);
+    const text1 = useSelector((state) => state.header.headertext1);
     const text2 = useSelector((state) => state.header.headertext2);
     const middlename = useSelector((state) => state.header.middlename);
-    const useremail = typeof window !== 'undefined' ? localStorage.getItem("userEmail") : '';
-    const roles = typeof window !== 'undefined' 
-    ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
-    : '';
+    const useremail =
+      typeof window !== "undefined" ? localStorage.getItem("userEmail") : "";
+    const roles =
+      typeof window !== "undefined"
+        ? JSON.parse(localStorage.getItem("textcustomrole")) || ""
+        : "";
 
-    const locationname = useSelector(state=>state.emissions.locationName);
-    const monthName = useSelector(state=>state.emissions.monthName)
+    const locationname = useSelector((state) => state.emissions.locationName);
+    const monthName = useSelector((state) => state.emissions.monthName);
 
-//file log code//
+    const activityCache = useSelector((state) => state.emissions.activitiesCache);
+
+    //file log code//
     const getIPAddress = async () => {
       try {
         const response = await fetch("https://api.ipify.org?format=json");
@@ -93,38 +96,48 @@ const EmissionWidget = React.memo(
         return null;
       }
     };
-  
-  
-    const LoginlogDetails = async (status, actionType,category, subcategory, activity, fileName, fileType) => {
+
+    const LoginlogDetails = async (
+      status,
+      actionType,
+      category,
+      subcategory,
+      activity,
+      fileName,
+      fileType
+    ) => {
       const backendUrl = process.env.BACKEND_API_URL;
       const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
-    
+
       try {
         const ipAddress = await getIPAddress();
-    
-        
+
         const data = {
           event_type: text1,
           event_details: "File",
           action_type: actionType,
           status: status,
-          user_email:useremail,
-          user_role:roles,
+          user_email: useremail,
+          user_role: roles,
           ip_address: ipAddress,
-          logs: `${text1} > ${middlename} > ${text2} > ${locationname} > ${year} > ${monthName} > ${scope} > ${category || "Category not selected"} > ${subcategory || "Subcategory not selected"} > ${activity || "Activity not selected"} > ${fileName} > ${fileType}`,
+          logs: `${text1} > ${middlename} > ${text2} > ${locationname} > ${year} > ${monthName} > ${scope} > ${
+            category || "Category not selected"
+          } > ${subcategory || "Subcategory not selected"} > ${
+            activity || "Activity not selected"
+          } > ${fileName} > ${fileType}`,
         };
-    
+
         // const response = await axiosInstance.post(userDetailsUrl, data);
-        console.log('log data',data)
-    
+        console.log("log data", data);
+
         // return response.data;
       } catch (error) {
         console.error("Error logging login details:", error);
- 
+
         return null;
       }
     };
-//file log code end//
+    //file log code end//
 
     // Get validation errors from Redux
     const validationErrors = useSelector(
@@ -328,6 +341,11 @@ const EmissionWidget = React.memo(
             customFetchExecuted,
           });
 
+          const fetchedActivities = response.results;
+
+      // Save activities to Redux
+      dispatch(setActivitiesForRow({ rowId, activities: fetchedActivities }));
+
           setActivities((prevActivities) => {
             const updatedActivities = [...prevActivities, ...response.results];
             updateCache(subcategory, updatedActivities);
@@ -344,40 +362,51 @@ const EmissionWidget = React.memo(
       [subcategory, countryCode, year, updateCache]
     );
 
+    // const fetchSubcategories = useCallback(async () => {
+    //   const selectedCategory = scopeMappings[scope].find((info) =>
+    //     info.Category.some((c) => c.name === category)
+    //   );
+    //   const newSubcategories = selectedCategory
+    //     ? selectedCategory.Category.find((c) => c.name === category).SubCategory
+    //     : [];
+    //   setSubcategories(newSubcategories);
+
+    //   if (subcategory && !activity) {
+    //     fetchActivities();
+    //   }
+    // }, [category]);
+
     const fetchSubcategories = useCallback(async () => {
       const selectedCategory = scopeMappings[scope].find((info) =>
         info.Category.some((c) => c.name === category)
       );
+    
       const newSubcategories = selectedCategory
         ? selectedCategory.Category.find((c) => c.name === category).SubCategory
         : [];
+    
       setSubcategories(newSubcategories);
-
-      if (subcategory) {
+    
+      // Check if subcategory and activity are already selected
+      if (subcategory && activity) {
+        // Check the Redux cache for activities
+        if (activityCache[rowId]) {
+          setActivities(activityCache[rowId]);
+        } else {
+          // If not cached, fetch them
+          fetchActivities();
+        }
+      } else if (subcategory && !activity) {
         fetchActivities();
       }
-    }, [category]);
+    }, [category, subcategory, activity, activityCache, rowId]);
+    
 
     useEffect(() => {
       if (category) {
         fetchSubcategories();
       }
     }, [category]);
-
-    // useEffect(() => {
-    //   if (activities.length > 0 && value.Activity) {
-    //     const initialActivity = activities.find(
-    //       (act) =>
-    //         `${act.name} - ( ${act.source} ) - ${act.unit_type}` ===
-    //         value.Activity
-    //     );
-    //     if (initialActivity) {
-    //       const activityId = initialActivity.activity_id;
-    //       setActivityId(activityId);
-    //       setUnitType(initialActivity.unit_type);
-    //     }
-    //   }
-    // }, [activities, value.Activity]);
 
     useEffect(() => {
       const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
@@ -400,7 +429,7 @@ const EmissionWidget = React.memo(
     const handleCategoryChange = useCallback(
       (newCategory) => {
         const updatedValue = {
-          ...value, // Need to keep other existing fields
+          ...value,
           Category: newCategory,
           Subcategory: "",
           Activity: "",
@@ -451,6 +480,9 @@ const EmissionWidget = React.memo(
           activity_id: foundActivity ? foundActivity.activity_id : "",
           unit_type: foundActivity ? foundActivity.unit_type : "",
           factor: foundActivity ? foundActivity.factor : "",
+          data_version: foundActivity
+            ? foundActivity.data_version
+            : "{{DATA_VERSION}}",
           Quantity: "",
           Quantity2: "",
           Unit: "",
@@ -471,15 +503,22 @@ const EmissionWidget = React.memo(
 
     // bug causing
     useEffect(() => {
-      if (activities.length > 0 && value.Activity && !value.factor && rowType !== "assigned") {
+      if (
+        activities.length > 0 &&
+        value.Activity &&
+        !value.factor &&
+        rowType !== "assigned"
+      ) {
         const foundActivity = activities.find(
-          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value.Activity
+          (act) =>
+            `${act.name} - (${act.source}) - ${act.unit_type}` ===
+            value.Activity
         );
-        
+
         if (foundActivity) {
           const updatedValue = {
             ...value,
-            factor: foundActivity.factor || foundActivity.co2_factor || "0"
+            factor: foundActivity.factor || foundActivity.co2_factor || "0",
           };
           onChange(updatedValue);
         }
@@ -680,10 +719,10 @@ const EmissionWidget = React.memo(
     };
 
     // useEffect(() => {
-    //   console.log(value, " is the new value passed to the component"); 
+    //   console.log(value, " is the new value passed to the component");
 
     //   if (value?.url && value?.name) {
-    //     setFileName(value.file?.name); 
+    //     setFileName(value.file?.name);
     //     setPreviewData(value.file?.url);
     //     setFileType(value.file?.type ?? "");
     //     setFileSize(value.file?.size ?? "");
@@ -736,9 +775,17 @@ const EmissionWidget = React.memo(
           });
           setFileType(fileType);
 
-     setTimeout(() => {
-          LoginlogDetails("Success", "Uploaded",value.Category, value.Subcategory, value.Activity, newFileName, fileType);
-        }, 500);
+          setTimeout(() => {
+            LoginlogDetails(
+              "Success",
+              "Uploaded",
+              value.Category,
+              value.Subcategory,
+              value.Activity,
+              newFileName,
+              fileType
+            );
+          }, 500);
 
           console.log("File uploaded successfully:", uploadUrl);
         } else {
@@ -766,7 +813,7 @@ const EmissionWidget = React.memo(
           size: "",
           uploadDateTime: "",
         };
-  
+
         setFileName("");
         setPreviewData(null);
         onChange(resetValue);
@@ -782,7 +829,7 @@ const EmissionWidget = React.memo(
           LoginlogDetails("Failed", "Deleted");
         }, 500);
       }
-    }
+    };
 
     const handleClickonRemove = () => {
       onRemove(index);
@@ -813,21 +860,12 @@ const EmissionWidget = React.memo(
       dispatch(toggleSelectAll({ scope, isChecked }));
     };
 
-    // useEffect(() => {
-    //   if (
-    //     value.assigned_to &&
-    //     value.assigned_to !== "" &&
-    //     rowType === "default"
-    //   ) {
-    //     setRowType("assigned");
-    //   }
-    // }, [value.assigned_to]);
     useEffect(() => {
       if (
         value.assigned_to &&
         value.assigned_to !== "" &&
         rowType === "default" &&
-        !["calculated", "approved"].includes(rowType)  // Add this check
+        !["calculated", "approved"].includes(rowType) // Add this check
       ) {
         setRowType("assigned");
       }
@@ -844,6 +882,22 @@ const EmissionWidget = React.memo(
     const handleInfoClick = () => {
       openInfoModal();
     };
+
+    const getActivityPlaceholder = (rowType, isFetching, activities, activity) => {
+      if (rowType === "calculated") {
+        return activity;
+      } else if (rowType !== "calculated" && activity) {
+        return activity;
+      } else if (isFetching.current) {
+        return "Fetching activities...";
+      } else if (activities.length === 0) {
+        return "No relevant activities found";
+      } else {
+        return "Select Activity";
+      }
+    };
+    
+    
 
     const renderFirstColumn = () => {
       switch (rowType) {
@@ -1023,15 +1077,7 @@ const EmissionWidget = React.memo(
                   <input
                     ref={inputRef}
                     type="text"
-                    placeholder={
-                      isFetching.current
-                        ? "Fetching activities..."
-                        : activities.length === 0
-                        ? "No relevant activities found"
-                        : activity
-                        ? activity
-                        : "Select Activity"
-                    }
+                    placeholder={getActivityPlaceholder(rowType, isFetching, activities, activity)}
                     value={activitySearch}
                     onChange={(e) => setActivitySearch(e.target.value)}
                     onFocus={toggleDropdown}
@@ -1070,10 +1116,8 @@ const EmissionWidget = React.memo(
                       )}
                     >
                       <option value="" className="px-1">
-                        {isFetching.current
-                          ? "Fetching activities..."
-                          : activities.length === 0
-                          ? "No relevant activities found"
+                        {rowType === "calculated"
+                          ? activity
                           : "Select Activity"}
                       </option>
                       {activities
@@ -1287,7 +1331,6 @@ const EmissionWidget = React.memo(
                 </div>
               </td>
 
-
               {/* Assignee Button */}
               <td className="py-2 text-center w-[5vw]">
                 <button
@@ -1315,7 +1358,9 @@ const EmissionWidget = React.memo(
                     <label className="">
                       <LuTrash2
                         className={`text-gray-500 ${
-                          rowType ==='approved'? 'cursor-not-allowed' : 'hover:text-red-500 cursor-pointer'
+                          rowType === "approved"
+                            ? "cursor-not-allowed"
+                            : "hover:text-red-500 cursor-pointer"
                         }`}
                         onClick={handleClickonRemove}
                       />
@@ -1328,7 +1373,9 @@ const EmissionWidget = React.memo(
                       onChange={handleChange}
                       style={{ display: "none" }}
                       disabled={
-                        rowType === "assigned" || rowType === "approved" || rowType === "calculated"
+                        rowType === "assigned" ||
+                        rowType === "approved" ||
+                        rowType === "calculated"
                       }
                     />
 

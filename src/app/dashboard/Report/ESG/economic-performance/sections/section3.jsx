@@ -32,6 +32,8 @@ const Section3 = ({ section11_1_2Ref, orgName }) => {
     { label: "   iii) Payments to providers of capital", value: economicData.payments_to_providers_of_capital },
     { label: "   iv) Payments to governments by country", value: "" }, // Placeholder for nested payments
     ...(economicData.payments_to_governments_by_country?.map(country => ({
+    { label: "   iv) Payments to governments by country", value: "" }, // Placeholder for nested payments
+    ...(economicData.payments_to_governments_by_country?.map(country => ({
       label: `      ${country.country}`,
       value: country.paymentCode
     })) || []),  // Handling nested country payments properly

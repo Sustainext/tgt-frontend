@@ -85,7 +85,14 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }) => {
+const Screen2 = ({
+  selectedOrg,
+  year,
+  selectedCorp,
+  datarefresh,
+  setDatarefresh,
+  togglestatus,
+}) => {
   const [formData, setFormData] = useState([{}]);
   const [locationdata, setLocationdata] = useState(); // Initialize as empty array
   const [r_schema, setRemoteSchema] = useState({});
@@ -167,7 +174,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
       const response = await axiosInstance.get(url);
       console.log(response.data.form_data[0].data);
       setLocationdata(response.data.form_data[0].data);
-      console.log(response.data.form_data[0].data,"test data scren 2");
+      console.log(response.data.form_data[0].data, "test data scren 2");
       setDatarefresh(0);
     } catch (error) {
       setLocationdata();
@@ -193,16 +200,27 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      loadFormData2();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+        loadFormData2();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+        loadFormData2();
+      }
+
       toastShown.current = false;
-    } else if (!toastShown.current) {
-      toastShown.current = true;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-  }, [selectedOrg, year, selectedCorp, datarefresh]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -211,17 +229,23 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Total number of employees that the organization’s anti-corruption
               policies and procedures have been communicated to, broken down by
               employee category and region.
               <MdInfoOutline
                 data-tooltip-id={`es278`}
                 data-tooltip-html="Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region."
-               className="mt-1.5 ml-2 text-[18px]"
+                className="mt-1.5 ml-2 text-[18px]"
               />
               <ReactTooltip
                 id={`es278`}
@@ -259,7 +283,8 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
               onChange={handleChange}
               validator={validator}
               formContext={{
-                locationtooltip: "Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region.",
+                locationtooltip:
+                  "Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region.",
               }}
               widgets={{
                 ...widgets,
@@ -276,7 +301,10 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
           <>
             {selectedOrg && year && (
               <div className="mx-2 pb-6">
-            <table  className="table-fixed border-collapse w-full rounded-md border border-gray-300" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+                <table
+                  className="table-fixed border-collapse w-full rounded-md border border-gray-300"
+                  style={{ borderCollapse: "separate", borderSpacing: 0 }}
+                >
                   <thead className="gradient-background">
                     <tr className="h-[102px]">
                       <th
@@ -418,10 +446,17 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

@@ -54,14 +54,24 @@ const Energyintensity = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 302-3',
-        toggle:'16',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName:'GRI 302-3',
+      toggle:'16',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-E1",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-1",
     },
+  ];
+  const sdgData=[
+
     {
         tagName:'SDG 7',
         toggle:'2',
@@ -92,7 +102,7 @@ const Energyintensity = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} />
+         <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} brsr={brsr} griData={griData} />
         
 
         <div className="ml-3 flex mt-2 relative">

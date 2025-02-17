@@ -104,7 +104,7 @@ const uiSchema = {
     ],
   },
 };
-const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const Screen2 = ({ selectedOrg, selectedCorp, location, year, month,togglestatus }) => {
   const initialFormData = [
     {
       Stakeholder: "",
@@ -208,16 +208,25 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
     }
   };
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+   useEffect(() => {
+     if (selectedOrg && year && togglestatus) {
+       if (togglestatus === "Corporate" && selectedCorp) {
+         loadFormData();
+       } else if (togglestatus === "Corporate" && !selectedCorp) {
+         setFormData(initialFormData);
+         setRemoteSchema({});
+         setRemoteUiSchema({});
+       } else {
+         loadFormData();
+       }
+ 
+       toastShown.current = false;
+     } else {
+       if (!toastShown.current) {
+         toastShown.current = true;
+       }
+     }
+   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -284,14 +293,22 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
           />
         </div>
 
+     
         <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

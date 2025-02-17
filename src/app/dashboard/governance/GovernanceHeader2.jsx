@@ -13,6 +13,7 @@ const GovernanceHeader2 = ({
   setSelectedCorp,
   year,
   setYear,
+  setToggleStatus,
 }) => {
   const [formState, setFormState] = useState({
     selectedCorp: selectedCorp,
@@ -21,9 +22,17 @@ const GovernanceHeader2 = ({
     month: activeMonth,
   });
   const [reportType, setReportType] = useState("Organization");
+
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    setToggleStatus(type);
+  
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+
+    }
   };
+
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
     organization: "Please select Organisation",
@@ -128,7 +137,12 @@ const GovernanceHeader2 = ({
       corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
-
+  useEffect(() => {
+    if (selectedCorp) {
+      setReportType("Corporate");
+  // console.log(selectedCorp,"test crop id");
+    }
+  }, [selectedCorp]);
   return (
     <>
       <div>

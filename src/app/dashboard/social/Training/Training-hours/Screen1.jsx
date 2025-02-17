@@ -149,7 +149,14 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const Screen1 = ({
+  selectedOrg,
+  selectedCorp,
+  location,
+  year,
+  month,
+  togglestatus,
+}) => {
   const initialFormData = [
     {
       category: "",
@@ -179,12 +186,14 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [newfile, setNewfile] = useState(null);
   const [fleg, setfleg] = useState(null);
   const text1 = useSelector((state) => state.header.headertext1);
-    const text2 = useSelector((state) => state.header.headertext2);
-    const middlename = useSelector((state) => state.header.middlename);
-    const useremail = typeof window !== 'undefined' ? localStorage.getItem("userEmail") : '';
-    const roles = typeof window !== 'undefined' 
-    ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
-    : '';
+  const text2 = useSelector((state) => state.header.headertext2);
+  const middlename = useSelector((state) => state.header.middlename);
+  const useremail =
+    typeof window !== "undefined" ? localStorage.getItem("userEmail") : "";
+  const roles =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("textcustomrole")) || ""
+      : "";
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -303,16 +312,24 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (selectedOrg && year && month) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+    if (selectedOrg && year && month && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, month, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus, month]);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault(); // Prevent the default form submission
@@ -363,36 +380,34 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
     }
   };
 
-
   const LoginlogDetails = async (status, actionType) => {
     const backendUrl = process.env.BACKEND_API_URL;
     const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
-  
+
     try {
       const ipAddress = await getIPAddress();
-  
-      
+
       const data = {
         event_type: text1,
         event_details: "File",
         action_type: actionType,
         status: status,
-        user_email:useremail,
-        user_role:roles,
+        user_email: useremail,
+        user_role: roles,
         ip_address: ipAddress,
         logs: `${text1} > ${middlename} > ${text2}`,
       };
-  
+
       const response = await axiosInstance.post(userDetailsUrl, data);
-  
+
       return response.data;
     } catch (error) {
       console.error("Error logging login details:", error);
- 
+
       return null;
     }
   };
-  
+
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
     const newFileName = selectedFile ? selectedFile.name : null;
@@ -531,7 +546,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       setFile(null);
       setfleg(null);
       setNewfile("");
-  
+
       // Call LoginlogDetails with a "Success" status for deletion
       setTimeout(() => {
         LoginlogDetails("Success", "Deleted");
@@ -545,7 +560,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
     }
   };
   // const handleDelete = () => {
-    
+
   // };
 
   return (
@@ -559,7 +574,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Number of  hours of training provided to employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -607,43 +622,69 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
             }}
           />
         </div>
-
-        <div className="-mt-12 float-end">
-          {selectedOrg && year && (
-            <div className="flex right-1 mx-2 ">
-              <input
-                type="file"
-                id="fileInput"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-              {fileName ? (
-                <label className="flex cursor-pointer float-end">
-                  <div
-                    className="flex items-center text-center mt-2"
-                    onClick={handlePreview}
+        {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
+          <div className="-mt-12 float-end">
+            {selectedOrg && year && (
+              <div className="flex right-1 mx-2 ">
+                <input
+                  type="file"
+                  id="fileInput"
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+                {fileName ? (
+                  <label className="flex cursor-pointer float-end">
+                    <div
+                      className="flex items-center text-center mt-2"
+                      onClick={handlePreview}
+                    >
+                      <MdFilePresent className="w-6 h-6 mr-1 text-green-500 " />
+                      <div className="w-[150px] truncate  text-sky-600 text-sm">
+                        {fileName}
+                      </div>
+                    </div>
+                  </label>
+                ) : (
+                  <label
+                    htmlFor="fileInput"
+                    className="flex cursor-pointer ml-1"
                   >
-                    <MdFilePresent className="w-6 h-6 mr-1 text-green-500 " />
-                    <div className="w-[150px] truncate  text-sky-600 text-sm">
-                      {fileName}
+                    <div className="flex items-center mt-2">
+                      <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
+                      <div className="w-[150px] truncate text-[#007EEF] text-[13px] ml-1">
+                        Upload Documentation
+                      </div>
                     </div>
-                  </div>
-                </label>
-              ) : (
-                <label htmlFor="fileInput" className="flex cursor-pointer ml-1">
-                  <div className="flex items-center mt-2">
-                    <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
-                    <div className="w-[150px] truncate text-[#007EEF] text-[13px] ml-1">
-                      Upload Documentation
-                    </div>
-                  </div>
-                </label>
-              )}
-            </div>
-          )}
-        </div>
+                  </label>
+                )}
+              </div>
+            )}
+          </div>
+        ) : null}
 
         <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year ||
+              !month
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
+            onClick={buttonClickHandler}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" &&
+                (!selectedOrg || !year || !month))
+            }
+          >
+            Submit
+          </button>
+        </div>
+        {/* <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
@@ -654,7 +695,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
           >
             Submit
           </button>
-        </div>
+        </div> */}
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

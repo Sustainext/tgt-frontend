@@ -7,7 +7,7 @@ const Ratioentrylevels = () => {
   const [year, setYear] = useState();
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-
+  const [togglestatus,setToggleStatus] = useState("Organization");
   return (
     <>
       <AnalyseHeader2
@@ -19,12 +19,14 @@ const Ratioentrylevels = () => {
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Ratioentrysection
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
     </>
   );

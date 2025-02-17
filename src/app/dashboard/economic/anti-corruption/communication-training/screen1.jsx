@@ -14,7 +14,6 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import LoctiondropdwonTable from "../../../../shared/widgets/Economic/loctiondropdwonTable";
 
 const widgets = {
-
   LoctiondropdwonTable: LoctiondropdwonTable,
 };
 
@@ -43,8 +42,6 @@ const schema = {
   },
 };
 
-
-
 const uiSchema = {
   "ui:order": ["Q1"],
   items: {
@@ -54,19 +51,23 @@ const uiSchema = {
         titles: [
           {
             title: "Location Name",
-            tooltip: "Specify the name of the location where the organization’s anti-corruption policies and procedures have been communicated to governance body members.",
+            tooltip:
+              "Specify the name of the location where the organization’s anti-corruption policies and procedures have been communicated to governance body members.",
             widgettype: "select",
             tooltipdisplay: "block",
           },
           {
-            title: "Total number of governance body members that the organization's anti-corruption policies and procedures have been communicated to",
-            tooltip: "SMention the total number of employees that the organization's anti-corruption policies and procedures have been communicated to.",
+            title:
+              "Total number of governance body members that the organization's anti-corruption policies and procedures have been communicated to",
+            tooltip:
+              "SMention the total number of employees that the organization's anti-corruption policies and procedures have been communicated to.",
             widgettype: "input",
             tooltipdisplay: "block",
           },
           {
             title: "Total number of governance body members in that region.",
-            tooltip: "Mention the total number of governance body members in that region.",
+            tooltip:
+              "Mention the total number of governance body members in that region.",
             widgettype: "input",
             tooltipdisplay: "block",
           },
@@ -81,11 +82,15 @@ const uiSchema = {
   },
 };
 
-
-const Screen1 = ({ selectedOrg, year, selectedCorp,setDatarefresh }) => {
+const Screen1 = ({
+  selectedOrg,
+  year,
+  selectedCorp,
+  setDatarefresh,
+  togglestatus,
+}) => {
   const [formData, setFormData] = useState([
     {
- 
       Q1: [
         {
           RegionName: "",
@@ -199,16 +204,37 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,setDatarefresh }) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      facthloctiondata();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+        facthloctiondata();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([
+          {
+            Q1: [
+              {
+                RegionName: "",
+                Totalnumberanticorruption: "",
+                Totalnumberbodymembers: "",
+              },
+            ],
+          },
+        ]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+        facthloctiondata();
+      }
+
       toastShown.current = false;
-    } else if (!toastShown.current) {
-      toastShown.current = true;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -218,11 +244,19 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,setDatarefresh }) => {
   console.log("Location data: locationdata", locationdata);
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Total number of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, broken down by region.
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Total number of governance body members that the organization’s
+              anti-corruption policies and procedures have been communicated to,
+              broken down by region.
               <MdInfoOutline
                 data-tooltip-id={`es26`}
                 data-tooltip-html="Specify the total number of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, broken down by region."
@@ -282,10 +316,17 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,setDatarefresh }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>
