@@ -416,9 +416,11 @@ const EmissionWidget = React.memo(
 
       // Check if subcategory and activity are already selected
       if (subcategory && activity) {
+        if(rowType === "calculated")
+          return;
         // Check the Redux cache for activities
         if (activityCache[rowId]) {
-          setActivities(activityCache[rowId]);
+          setActivities(activityCache[rowId])
         } else {
           // If not cached, fetch them
           fetchActivities();
