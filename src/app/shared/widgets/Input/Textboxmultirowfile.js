@@ -315,7 +315,7 @@ const Textboxmultirowfile = (props) => {
                   <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                     FILE NAME
                   </h2>
-                  <h2 className="text-[14px] truncate leading-relaxed tracking-wide">
+                  <h2 className="text-[14px] leading-relaxed tracking-wide  break-words">
                     {file.fileName}
                   </h2>
                 </div>
@@ -331,7 +331,7 @@ const Textboxmultirowfile = (props) => {
                   <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                     FILE TYPE
                   </h2>
-                  <h2 className="text-[14px] leading-relaxed tracking-wide">
+                  <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
                     {file.fileType}
                   </h2>
                 </div>
