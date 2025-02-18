@@ -4,8 +4,12 @@ import { Oval } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import Select from "react-select";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import axiosInstance from "../../../../utils/axiosMiddleware";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList,showStakeholderList }) => {
+const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList,showStakeholderList,refresh,
+    setRefresh }) => {
  
     const router=useRouter();
     const [groupName,setgroupName]=useState('')
@@ -14,17 +18,142 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
     const [showOrgCorp,setShowOrgCorp]=useState(false)
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [groupCreated, setGroupCreated] = useState(false);
+    const [organisations,setOrganisations]=useState([])
+    const [corporates,setCorporates]=useState([])
+    const [selectedOrg,setSelelectedOrg]=useState('')
+    const [loopen, setLoOpen] = useState(false);
 
-  const corporates = [
-    { value: "group1", label: "Group 1" },
-    { value: "corporate223", label: "Corporate name 223" },
-    { value: "group2", label: "Group 2" },
-  ];
+    const refreshForm=()=>{
+        setgroupName('')
+        setstakeholderType('')
+        setSelectedOptions([])
+        setSelelectedOrg('')
+        setselectBy('')
+    }
+
+    useEffect(() => {
+        const fetchOrg = async () => {
+          try {
+            const response = await axiosInstance.get(`/orggetonly`);
+            setOrganisations(response.data);
+          } catch (e) {
+            console.error("Failed fetching organization:", e);
+          }
+        };
+    
+        fetchOrg();
+      }, []);
+    
+      useEffect(() => {
+         const fetchCorporates = async () => {
+          if (selectedOrg) {
+            try {
+              const response = await axiosInstance.get(`/corporate/`, {
+                params: { organization_id: selectedOrg },
+              });
+              if(response.data){
+                const obj=response.data.map((corp)=>(
+                    {
+                        value: corp.id,  
+                        label: corp.name
+                    }
+                  ))
+                  setCorporates(obj);
+              }
+              
+            } catch (e) {
+              if(e.status === 404) {
+                setCorporates([]);
+              }
+              else{
+                console.error("Failed fetching corporates:", e);
+              }
+              
+            }
+          }
+        };
+    
+        fetchCorporates();
+      }, [selectedOrg]);
+
+      const handleOrgChange=(e)=>{
+        setSelelectedOrg(e.target.value)
+        setSelectedOptions([])
+      }
+
 
   const handleChange = (selected) => {
     setSelectedOptions(selected);
   };
 
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
+
+  const handleSubmit= async(e)=>{
+    e.preventDefault();
+    LoaderOpen()
+    try{
+        const data = {
+           name:groupName,
+           group_type:stakeholderType,
+           organization:selectedOrg,
+           corporate_entity:selectedOptions?selectedOptions.map((val)=> val.value ):[]
+          };
+          const url = `${process.env.BACKEND_API_URL}/supplier_assessment/stakeholder-group/`;
+        if(groupName&&stakeholderType&&selectedOrg){
+            const response = await axiosInstance.post(url,data);
+             if (response.status === 201) {
+                    LoaderClose();
+                    setGroupCreated(true)
+                    refreshForm()
+                  } else {
+                    toast.error("Oops, something went wrong", {
+                      position: "top-right",
+                      autoClose: 1000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                    });
+                    LoaderClose();
+                  }
+        }
+        else{
+            toast.error("Please fill all the required fields", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+        }
+    }
+    catch(e){
+        LoaderClose()
+        console.error(e)
+        toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+    }
+   
+  }
     const renderSecondSelect = () => {
         if (selectBy === "Organization") {
           return (
@@ -35,17 +164,17 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
                       Organization
                     </label>
               <select
+              required
                 className="mt-1 block px-3 py-3 w-full rounded-md  text-sm border border-gray-300"
-                // value={selectedOrg}
-                // onChange={handleChangeallcrop}
-                // onChange={(e) => setSelectedOrg(e.target.value)}
+                value={selectedOrg}
+                onChange={handleOrgChange}
               >
-                <option value="">--Select Organization--- </option>
-                {/* {organisations?.map((org) => (
+                <option value="" disabled>-Select Organization-</option>
+                {organisations?.map((org) => (
                   <option key={org.id} value={org.id}>
                     {org.name}
                   </option>
-                ))}{" "} */}
+                ))}{" "}
               </select>
               {/* {error.selectedOrgrs && (
                 <p className="text-red-500 ml-1">{error.selectedOrgrs}</p>
@@ -64,17 +193,17 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
                     </label>
                   <div className="mt-2">
                     <select
+                    required
                       className="mt-1 block px-3 py-3 w-full rounded-md  text-sm border border-gray-300"
-                    //   value={selectedOrg}
-                      // onChange={(e) => setSelectedOrg(e.target.value)}
-                    //   onChange={handleChangecrop}
+                      value={selectedOrg}
+                      onChange={handleOrgChange}
                     >
-                      <option value="">--Select Organization--- </option>
-                      {/* {organisations?.map((org) => (
+                      <option value="" disabled>-Select Organization-</option>
+                      {organisations?.map((org) => (
                         <option key={org.id} value={org.id}>
                           {org.name}
                         </option>
-                      ))}{" "} */}
+                      ))}{" "}
                     </select>
     
                     {/* {error.selectedOrgs && (
@@ -89,6 +218,7 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
       <div className="mt-2">
         <Select
           isMulti
+          required={true}
           options={corporates}
           value={selectedOptions}
           onChange={handleChange}
@@ -110,6 +240,20 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
                 ...base,
                 maxHeight: '150px', // Set max height for the dropdown menu
                 overflowY: 'auto', // Enable vertical scrolling
+              }),
+              multiValue: (base) => ({
+                ...base,
+                backgroundColor: '#dbeafe', // Light blue background (Tailwind's blue-100)
+                borderRadius: '0.375rem', // Rounded corners
+              }),
+              multiValueLabel: (base) => ({
+                ...base,
+                color: '#1e40af', // Blue text (Tailwind's blue-800)
+                fontWeight: '600',
+              }),
+              multiValueRemove: (base) => ({
+                ...base,
+                color: '#454545'
               }),
           }}
         />
@@ -155,7 +299,7 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
     
                   <button
                     className="absolute top-6 right-4 text-gray-500 hover:text-gray-700"
-                    onClick={()=>{setIsModalOpen(false);setGroupCreated(false)}}
+                    onClick={()=>{setIsModalOpen(false);setGroupCreated(false); setRefresh((prevRefresh) => !prevRefresh);}}
                   >
                     <svg
                       className="w-6 h-6"
@@ -173,7 +317,7 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
                     </svg>
                   </button>
                 </div>
-                <p className="text-[#667085] text-[14px] mb-4">New Stakeholder group “Stakeholderszzz” has been created.</p>
+                <p className="text-[#667085] text-[14px] mb-4">{`New Stakeholder group ${groupName?groupName:''} has been created.`}</p>
                  <div className="p-3 bg bg-[#F1F7FF] flex gap-2 rounded-md">
                                   <IoIosInformationCircleOutline className="w-8 h-8 text-[#197AFF] my-2 -mt-0.5" />
                                   <p className="text-[13px] text-[#051833]">
@@ -186,6 +330,7 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
                           onClick={()=>{ 
                             setIsModalOpen(false)
                             setGroupCreated(false)
+                            setRefresh((prevRefresh) => !prevRefresh);
     
                           }}
                           className="bg-transparent text-[#344054] px-10 py-2 rounded-md border border-gray-300"
@@ -216,7 +361,7 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
     
                   <button
                     className="absolute top-6 right-4 text-gray-500 hover:text-gray-700"
-                    onClick={()=>{setIsModalOpen(false)}}
+                    onClick={()=>{setIsModalOpen(false);refreshForm()}}
                   >
                     <svg
                       className="w-6 h-6"
@@ -236,7 +381,7 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
                 </div>
     
                 <p className="text-[#667085] text-[14px] mb-4">Assessments are send to stakeholder groups. Create stakeholder group and add stakeholders in it to send assessments.</p>
-                <form>
+                <form onSubmit={handleSubmit}>
                       <div className="mb-4">
                         <label
                           htmlFor="groupName"
@@ -267,7 +412,7 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
                           id="stakeholderType"
                           value={stakeholderType}
                           onChange={(e) => setstakeholderType(e.target.value)}
-                          placeholder="Enter Stakeolder Type"
+                          placeholder="Enter Stakeholder Type"
                           className="mt-1 block px-3 py-3 w-full rounded-md border border-gray-300 text-sm"
                           required
                         />
@@ -308,12 +453,12 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
     
                       <div className="flex justify-end mt-6">
                         <button
-                          type="button"
-                          onClick={()=>{ 
-                            setGroupCreated(true)
-    
-                          }}
-                          className="bg-blue-500 text-white px-10 py-2 rounded-md hover:bg-blue-600"
+                        disabled={!(groupName && stakeholderType && selectedOrg && (selectBy !== "Corporate" || selectedOptions.length > 0))
+}
+                          type="submit"
+                        //   onClick={handleSubmit}
+                          className={`bg-blue-500 ${!(groupName && stakeholderType && selectedOrg && (selectBy !== "Corporate" || selectedOptions.length > 0))?'opacity-30 cursor-not-allowed':'cursor-pointer'}
+ text-white px-10 py-2 rounded-md hover:bg-blue-600`}
                         >
                         Create Group
                         </button>
@@ -325,6 +470,18 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
           </div>
         </div>
       )}
+      {loopen && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                <Oval
+                  height={50}
+                  width={50}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              </div>
+            )}
     </>
   );
 };
