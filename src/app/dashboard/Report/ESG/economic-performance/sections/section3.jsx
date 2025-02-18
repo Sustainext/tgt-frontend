@@ -32,8 +32,6 @@ const Section3 = ({ section11_1_2Ref, orgName }) => {
     { label: "   iii) Payments to providers of capital", value: economicData.payments_to_providers_of_capital },
     { label: "   iv) Payments to governments by country", value: "" }, // Placeholder for nested payments
     ...(economicData.payments_to_governments_by_country?.map(country => ({
-    { label: "   iv) Payments to governments by country", value: "" }, // Placeholder for nested payments
-    ...(economicData.payments_to_governments_by_country?.map(country => ({
       label: `      ${country.country}`,
       value: country.paymentCode
     })) || []),  // Handling nested country payments properly
@@ -42,7 +40,6 @@ const Section3 = ({ section11_1_2Ref, orgName }) => {
     // { label: "3) Direct economic value generated", value: economicData.direct_economic_value_generated || "N/A" }, // Handle null values
     { label: "3) Economic value retained", value: economicData.community_investments || "N/A" } // Handle null values
 ] : []; // Fallback to an empty array if economicData is undefined
-
 
   return (
     <>
