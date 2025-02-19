@@ -2,6 +2,7 @@
 import { React, useEffect, useState } from "react";
 import Pagination from "./pagination";
 import { Oval } from "react-loader-spinner";
+import * as XLSX from "xlsx";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -146,11 +147,12 @@ const StakeholderListTable = ({
   // Select/Deselect all checkboxes
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedRows(sortedData.map((row) => row.sno));
+      setSelectedRows(sortedData.map((row) => row.id));
     } else {
       setSelectedRows([]);
     }
   };
+ 
 
   // Select/Deselect individual checkbox
   const handleSelectRow = (sno) => {
@@ -180,6 +182,20 @@ const StakeholderListTable = ({
   const handleCancel = () => {
     setEditRow(null);
   };
+
+  const getAuthToken = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('token')?.replace(/"/g, "");
+    }
+    return '';
+};
+
+const token = getAuthToken();
+let axiosConfig = {
+  headers: {
+    Authorization: 'Bearer ' + token,
+  },
+};
 
   const handleSubmit = async () => {
     LoaderOpen();
@@ -292,6 +308,48 @@ const StakeholderListTable = ({
       });
     }
   };
+
+  const handleDownload = async (id, name) => {
+    LoaderOpen();
+
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/supplier_assessment/export-stakeholder/?group=${id}&download=true`,
+        axiosConfig
+      );
+
+      if (!response.ok) {
+        LoaderClose();
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${name}_Stakeholder_List.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      LoaderClose();
+    } catch (error) {
+        LoaderClose();
+      console.error("Error downloading the file:", error);
+      toast.error("Error downloading the file", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
 
   return (
     <>
@@ -588,6 +646,8 @@ const StakeholderListTable = ({
         isModalOpen={isModalOpen}
         setRefresh={setRefresh}
         setIsModalOpen={setIsModalOpen}
+        setDeleteDisabled={setDeleteDisabled}
+
         selectedRows={
           selectedRows.length > 0 ? selectedRows.length : deleteData
         }
@@ -599,7 +659,7 @@ const StakeholderListTable = ({
         rowsPerPageOptions={rowsPerPageOptions}
         onPageChange={onPageChange}
       />
-      <button className="text-[15px] text-[#007EEF] font-semibold flex justify-end w-full">
+      <button onClick={()=>{handleDownload(groupId.id,groupId.name)}} className="text-[15px] text-[#007EEF] font-semibold flex justify-end w-full">
         Export List <IoMdDownload className=" mt-0.5 ml-1 w-5 h-5" />
       </button>
 

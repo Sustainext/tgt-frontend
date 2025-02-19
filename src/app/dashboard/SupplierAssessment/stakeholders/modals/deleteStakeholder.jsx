@@ -9,14 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 
-const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-
-const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,deleteData,selectedRows,bulkDelete}) => {
+const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen,setDeleteDisabled, setIsModalOpen,deleteData,selectedRows,bulkDelete}) => {
 
     const [loopen, setLoOpen] = useState(false);
 
@@ -65,6 +58,7 @@ const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,dele
         });
 
         setRefresh((prevRefresh) => !prevRefresh);
+        setDeleteDisabled(true)
         setIsModalOpen(false);
         
       }
@@ -114,17 +108,17 @@ const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,dele
   
     LoaderOpen();
   
-    const url = `${process.env.BACKEND_API_URL}/supplier_assessment/stakeholder/bulk_delete/`;
+    const url = `${process.env.BACKEND_API_URL}/supplier_assessment/stakeholder/delete-many/`;
   
     try {
         // const token = getAuthToken();
   
       const response = await axiosInstance.delete(url, {
-        data: { processedIds },
+        data: { ids:processedIds },
       },
       );
   
-      if (response.status === 204) {
+      if (response.status === 200) {
         LoaderClose();
         toast.success(
           <div style={{ display: "flex", alignItems: "flex-start" }}>
@@ -153,8 +147,9 @@ const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,dele
             icon: false,
           }
         );
-  
+        
         setRefresh((prevRefresh) => !prevRefresh);
+        setDeleteDisabled(true)
         setIsModalOpen(false);
       } else {
         LoaderClose();
@@ -218,7 +213,7 @@ const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,dele
                 <button
                   className="w-full h-full mr-2 py-2 px-3 bg-[#EF5350] text-white rounded-[8px] shadow cursor-pointer"
                   onClick={()=>{
-                    if(bulkDelete.length>0){
+                    if(bulkDelete?.length>0){
                         handleBulkDelete(bulkDelete)
                     }
                     else{

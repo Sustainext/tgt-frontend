@@ -55,11 +55,14 @@ const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setG
                     createdOn: formatDate(val.created_at),
                     type: val.group_type,
                     createdBy_name:val.created_by_name,
+                    updateByName:val.updated_by_name,
+                    updateByEmail:val.updated_by_email,
                     organization: val.organization_name,
                     organization_id: val.organization,
                     corporate_ids: val.corporate_entity,
                     corporate: val.corporate_names,
-                    noOfStakeholder: val.stakeholder_count
+                    noOfStakeholder: val.stakeholder_count,
+                    updatedAt:formatDate(val.updated_at)
                 }));
                 setStakeholderGroupData(data);
             }

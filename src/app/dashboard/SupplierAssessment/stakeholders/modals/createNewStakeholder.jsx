@@ -7,6 +7,7 @@ import { Country, State, City } from "country-state-city";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { every } from "lodash";
 
 const CreateStakeholder = ({ isModalOpen, setIsModalOpen,groupId,setRefresh }) => {
   const router = useRouter();
@@ -19,25 +20,38 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen,groupId,setRefresh }) =
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCountryName, setSelectedCountryName] = useState("");
+  const [selectedStateName, setSelectedStateName] = useState("");
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [latError, setLatError] = useState("");
   const [lonError, setLonError] = useState("");
+  const [emailError,setEmailError]=useState("")
   const [stakeholderCreated, setStakeholderCreated] = useState(false);
   const [loopen, setLoOpen] = useState(false);
 
   const refreshForm=()=>{
     setSupplierName('')
     setEmail('')
-    setAddress([])
+    setAddress("")
     setSpoc('')
     setLatitude('')
     setLongitude('')
     setSelectedCountry('')
     setSelectedState('')
     setSelectedCity('')
+    setStates([])
+    setCities([])
+    setLatError("")
+setLonError("")
+setEmailError("")
 }
+
+const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
 
 const LoaderOpen = () => {
     setLoOpen(true);
@@ -55,6 +69,9 @@ const LoaderOpen = () => {
   const handleCountryChange = (event) => {
     const countryId = event.target.value;
     setSelectedCountry(countryId);
+    const selectedCountryName =
+    event.target.options[event.target.selectedIndex].getAttribute("data-name");
+      setSelectedCountryName(selectedCountryName)
 
     const statesOfSelectedCountry = State.getStatesOfCountry(countryId);
     setStates(statesOfSelectedCountry);
@@ -63,14 +80,26 @@ const LoaderOpen = () => {
   const handleStateChange = (event) => {
     const stateId = event.target.value;
     setSelectedState(stateId);
+    const selectedStateName =
+    event.target.options[event.target.selectedIndex].getAttribute("data-name");
+      setSelectedStateName(selectedStateName)
 
     const citiesOfSelectedState = City.getCitiesOfState(
       selectedCountry,
       stateId
     );
     setCities(citiesOfSelectedState);
-    console.log(selectedCountry, event.target.value, citiesOfSelectedState);
   };
+  const handleChangeEmail=(event)=>{
+    const email = event.target.value;
+    setEmail(email)
+    if(validateEmail(email)){
+        setEmailError("")
+    }
+    else{
+        setEmailError("Email address entered does not match the format (eg.john@email.com)")
+    }
+  }
 
   const handleCityChange = (event) => {
     const cityId = event.target.value;
@@ -117,6 +146,7 @@ const LoaderOpen = () => {
     }
   };
 
+
   const handleSubmit= async(e)=>{
     e.preventDefault();
     LoaderOpen()
@@ -126,8 +156,8 @@ const LoaderOpen = () => {
            email:email,
            group:groupId.id,
            address:address,
-           country:selectedCountry,
-           state:selectedState,
+           country:selectedCountryName,
+           state:selectedStateName,
            city:selectedCity,
            latitude:latitude,
            longitude:longitude,
@@ -217,7 +247,9 @@ const LoaderOpen = () => {
                     className="absolute top-6 right-4 text-gray-500 hover:text-gray-700"
                     onClick={() => {
                       setIsModalOpen(false);
+                      setRefresh((prevRefresh) => !prevRefresh)
                       setStakeholderCreated(false);
+                      refreshForm()
                     }}
                   >
                     <svg
@@ -237,7 +269,7 @@ const LoaderOpen = () => {
                   </button>
                 </div>
                 <p className="text-[#667085] text-[14px] mb-4">
-                  New Stakeholder “Stakeholderszzz” has been created.
+                  New Stakeholder {supplierName} has been created.
                 </p>
 
                 <div className="flex gap-3 mt-6 justify-end">
@@ -274,6 +306,7 @@ const LoaderOpen = () => {
                   <button
                     className="absolute top-6 right-4 text-gray-500 hover:text-gray-700"
                     onClick={() => {
+                        refreshForm()
                       setIsModalOpen(false);
                     }}
                   >
@@ -328,11 +361,16 @@ const LoaderOpen = () => {
                         type="email"
                         id="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleChangeEmail}
                         placeholder="Enter Stakeholder email"
-                        className="mt-1 block px-3 py-2 w-full rounded-md border border-gray-300 text-sm"
+                        className={`mt-1 block px-3 py-2 w-full rounded-md border ${
+                            emailError ? "border-red-500" : "border-gray-300"
+                          } text-sm`}
                         required
                       />
+                      {emailError && (
+                        <p className="text-red-500 text-xs mt-1">{emailError}</p>
+                      )}
                     </div>
                   </div>
 
@@ -371,7 +409,7 @@ const LoaderOpen = () => {
                       >
                         <option value="">Select Country</option>
                         {countries.map((country) => (
-                          <option key={country.isoCode} value={country.isoCode}>
+                          <option key={country.isoCode} value={country.isoCode}  data-name={country.name}>
                             {country.name}
                           </option>
                         ))}
@@ -393,7 +431,7 @@ const LoaderOpen = () => {
                       >
                         <option value="">Select State</option>
                         {states.map((state) => (
-                          <option key={state.isoCode} value={state.isoCode}>
+                          <option key={state.isoCode} value={state.isoCode} data-name={state.name}>
                             {state.name}
                           </option>
                         ))}
@@ -439,7 +477,6 @@ const LoaderOpen = () => {
                           className={`mt-1 block px-3 py-2 w-full rounded-md border ${
                             latError ? "border-red-500" : "border-gray-300"
                           } text-sm`}
-                          required
                         />
                         {/* Direction (N/S) beside input */}
                         <span className="absolute right-3 top-2 text-gray-500 text-[13px]">
@@ -466,7 +503,6 @@ const LoaderOpen = () => {
                           className={`mt-1 block px-3 py-2 w-full rounded-md border ${
                             lonError ? "border-red-500" : "border-gray-300"
                           } text-sm`}
-                          required
                         />
                         {/* Direction (E/W) beside input */}
                         <span className="absolute right-3 top-2 text-gray-500 text-[13px]">
@@ -493,16 +529,15 @@ const LoaderOpen = () => {
                       onChange={(e) => setSpoc(e.target.value)}
                       placeholder="Enter name"
                       className="mt-1 block px-3 py-2 w-full rounded-md border border-gray-300 text-sm"
-                      required
                     />
                   </div>
 
                   <div className="flex justify-end mt-6">
                     <button
-                    disabled={!(supplierName && email) }
+                   disabled={!supplierName || !email || latError || lonError || emailError}
                       type="submit"
                    
-                      className={`bg-blue-500 ${!(supplierName&&email)?'opacity-30 cursor-not-allowed':"cursor-pointer"} text-white px-10 py-2 rounded-md hover:bg-blue-600`}
+                      className={`bg-blue-500 ${!supplierName || !email || latError || lonError || emailError?'opacity-30 cursor-not-allowed':"cursor-pointer"} text-white px-10 py-2 rounded-md hover:bg-blue-600`}
                     >
                       Create
                     </button>
