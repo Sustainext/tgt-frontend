@@ -22,114 +22,114 @@ const widgets = {
   RemoveWidget,
 };
 
-const view_path = "gri-environment-waste-306-3a-3b-waste_generated";
+const view_path = "gri-environment-air-quality-standard_methodologies";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      StandardsUsed: {
-        type: "string",
-        title: "Standards Used",
-        enum: [
-          "GRI 305:2016",
-          "WHO (World Health Organisation)",
-          "Regional Standards (Please specify)",
-          "Others (please specify)",
-        ],
-        tooltiptext: "Please select the standard used to calculate the air emissions.",
-      },
-      MethodologiesUsed: {
-        type: "string",
-        title: "Methodologies Used",
-        enum: [
-          "Direct measurement of emissions (such as online analyzers)",
-          "Calculation based on site-specific data",
-          "Calculation based on published emission factors",
-          "Estimation",
-          "Others (please specify)",
-        ],
-        tooltiptext: "Please specify the methodologies used to calculate other significant air emissions.",
-      },
-      AssumptionsConsidered: {
-        type: "string",
-        title: "Assumptions Considered",
-        tooltiptext: "Include the description of assumptions considered to compile data.",
-      },
-      CalculationToolsUsed: {
-        type: "string",
-        title: "Calculation tools used",
-        tooltiptext: "Include the description of calculation tools used to calculate other significant air emissions.",
-      },
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-    },
-    required: ["StandardsUsed", "MethodologiesUsed", "AssumptionsConsidered", "CalculationToolsUsed"],
-  },
-};
+// const schema = {
+//   type: "array",
+//   items: {
+//     type: "object",
+//     properties: {
+//       StandardsUsed: {
+//         type: "string",
+//         title: "Standards Used",
+//         enum: [
+//           "GRI 305:2016",
+//           "WHO (World Health Organisation)",
+//           "Regional Standards (Please specify)",
+//           "Others (please specify)",
+//         ],
+//         tooltiptext: "Please select the standard used to calculate the air emissions.",
+//       },
+//       MethodologiesUsed: {
+//         type: "string",
+//         title: "Methodologies Used",
+//         enum: [
+//           "Direct measurement of emissions (such as online analyzers)",
+//           "Calculation based on site-specific data",
+//           "Calculation based on published emission factors",
+//           "Estimation",
+//           "Others (please specify)",
+//         ],
+//         tooltiptext: "Please specify the methodologies used to calculate other significant air emissions.",
+//       },
+//       AssumptionsConsidered: {
+//         type: "string",
+//         title: "Assumptions Considered",
+//         tooltiptext: "Include the description of assumptions considered to compile data.",
+//       },
+//       CalculationToolsUsed: {
+//         type: "string",
+//         title: "Calculation tools used",
+//         tooltiptext: "Include the description of calculation tools used to calculate other significant air emissions.",
+//       },
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//     },
+//     required: ["StandardsUsed", "MethodologiesUsed", "AssumptionsConsidered", "CalculationToolsUsed"],
+//   },
+// };
 
-const uiSchema = {
-  items: {
-    classNames: "fieldset",
-    "ui:order": [
-      "StandardsUsed",
-      "MethodologiesUsed",
-      "AssumptionsConsidered",
-      "CalculationToolsUsed",
-      "AssignTo",
-      "FileUpload",
-      "Remove",
-    ],
-    StandardsUsed: {
-      "ui:widget": "selectWidget",
-      "ui:options": { label: false },
-    },
-    MethodologiesUsed: {
-      "ui:widget": "selectWidget",
-      "ui:options": { label: false },
-    },
-    AssumptionsConsidered: {
-      "ui:widget": "inputWidget",
-      "ui:options": { label: false },
-    },
-    CalculationToolsUsed: {
-      "ui:widget": "inputWidget",
-      "ui:options": { label: false },
-    },
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      "ui:options": { label: false },
-    },
-    FileUpload: {
-      "ui:widget": "FileUploadWidget",
-      "ui:options": { label: false },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      "ui:options": { label: false },
-    },
-    "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
-      layout: "horizontal",
-    },
-  },
-};
+// const uiSchema = {
+//   items: {
+//     classNames: "fieldset",
+//     "ui:order": [
+//       "StandardsUsed",
+//       "MethodologiesUsed",
+//       "AssumptionsConsidered",
+//       "CalculationToolsUsed",
+//       "AssignTo",
+//       "FileUpload",
+//       "Remove",
+//     ],
+//     StandardsUsed: {
+//       "ui:widget": "selectWidget",
+//       "ui:options": { label: false },
+//     },
+//     MethodologiesUsed: {
+//       "ui:widget": "selectWidget",
+//       "ui:options": { label: false },
+//     },
+//     AssumptionsConsidered: {
+//       "ui:widget": "inputWidget",
+//       "ui:options": { label: false },
+//     },
+//     CalculationToolsUsed: {
+//       "ui:widget": "inputWidget",
+//       "ui:options": { label: false },
+//     },
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       "ui:options": { label: false },
+//     },
+//     FileUpload: {
+//       "ui:widget": "FileUploadWidget",
+//       "ui:options": { label: false },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       "ui:options": { label: false },
+//     },
+//     "ui:options": {
+//       orderable: false,
+//       addable: false,
+//       removable: false,
+//       layout: "horizontal",
+//     },
+//   },
+// };
 
 const StandardMethodologyTable = ({ location, year, month }) => {
   const { open } = GlobalState();
@@ -137,6 +137,8 @@ const StandardMethodologyTable = ({ location, year, month }) => {
   const [loopen, setLoOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
   const toastShown = useRef(false);
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
 
   const LoaderOpen = () => setLoOpen(true);
   const LoaderClose = () => setLoOpen(false);
@@ -155,8 +157,8 @@ const StandardMethodologyTable = ({ location, year, month }) => {
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
-      client_id,
-      user_id,
+      client_id: client_id,
+      user_id: user_id,
       path: view_path,
       form_data: formData,
       location,
@@ -168,14 +170,42 @@ const StandardMethodologyTable = ({ location, year, month }) => {
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
-        toast.success("Data added successfully");
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
         loadFormData();
       } else {
-        toast.error("Oops, something went wrong");
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
       }
     } catch (error) {
-      toast.error("Oops, something went wrong");
-    } finally {
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       LoaderClose();
     }
   };
@@ -186,7 +216,10 @@ const StandardMethodologyTable = ({ location, year, month }) => {
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
-      setFormData(response.data.form_data?.[0]?.data || [{}]);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      const form_parent = response.data.form_data;
+      setFormData(form_parent[0].data);
     } catch (error) {
       console.error("API call failed:", error);
     } finally {
@@ -218,8 +251,8 @@ const StandardMethodologyTable = ({ location, year, month }) => {
       <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <Form
           className="flex"
-          schema={schema}
-          uiSchema={uiSchema}
+          schema={r_schema}
+          uiSchema={r_ui_schema}
           formData={formData}
           onChange={handleChange}
           validator={validator}
