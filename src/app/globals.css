@@ -475,5 +475,10 @@ color:"#ACACAC";
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 30%;
 }
-
+.panel-danger{
+  display: none;
+}
+.error-detail{
+  display: none;
+}
 

@@ -8,15 +8,19 @@ import Screen1 from "./screen1";
 import { useDispatch } from "react-redux";
 import {f_setTabName} from '../../../../../lib/redux/features/FileInfoSlice'
 
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage  }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage,selectedOrg}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const dispatch = useDispatch();
   const handleClick = () => {
-
+    if (!selectedOrg || !year) {
+      return; // Prevent opening if selectedOrg or year is not selected
+    }
+  
     setIsOpen(!isOpen);
-    dispatch(f_setTabName(title))
+    dispatch(f_setTabName(title));
   };
+  
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 `}>
       <button

@@ -235,7 +235,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                       Standards, methodologies and/or calculation tools used
                     </p>
                   </div>
-                  {/* <div>
+                  <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "EmissionIntensity"
@@ -258,7 +258,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                     >
                      GHG Emission Reduction Initiatives 
                     </p>
-                  </div> */}
+                  </div>
                 </div>
               </>
             )}

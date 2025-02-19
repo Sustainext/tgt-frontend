@@ -16,7 +16,7 @@ const widgets = {
 
 };
 
-const view_path = "gri-environment-energy-302-1a-1b-direct_purchased";
+const view_path = "gri-environment-emissions-GHG emission-intensity";
 const client_id = 1;
 const user_id = 1;
 
@@ -106,37 +106,14 @@ const uiSchema = {
   },
 };
 
-const validateRows = (data) => {
-  return data.map((row) => {
-    const rowErrors = {};
-    if (!row.EnergyType) {
-      rowErrors.EnergyType = "Energy Type is required";
-    }
-    if (!row.Source) {
-      rowErrors.Source = "Source is required";
-    }
-    if (!row.Purpose) {
-      rowErrors.Purpose = "Purpose is required";
-    }
-    if (!row.Renewable) {
-      rowErrors.Renewable = "Renewable/Non-renewable is required";
-    }
-    if (!row.Quantity) {
-      rowErrors.Quantity = "Quantity is required";
-    }
-    if (!row.Unit) {
-      rowErrors.Unit = "Unit is required";
-    }
-    return rowErrors;
-  });
-};
+
 const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const [validationErrors, setValidationErrors] = useState([]);
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -217,70 +194,67 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
       LoaderClose();
     }
   };
-  // useEffect(() => {
-  //   if (selectedOrg && year && togglestatus) {
-  //     if (togglestatus === "Corporate" && selectedCorp) {
-  //       loadFormData();
-  //     } else if (togglestatus === "Corporate" && !selectedCorp) {
-  //       setFormData([{}]);
-  //       setRemoteSchema({});
-  //       setRemoteUiSchema({});
-  //     } else {
-  //       loadFormData();
-  //     }
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
 
-  //     toastShown.current = false;
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Submit button clicked"); // Debugging log
+  //   const errors = validateRows(formData);
+  //   setValidationErrors(errors);
+  //   console.log("Validation Errors:", errors); // Debugging log
+  
+  //   const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+  //   if (!hasErrors) {
+  //     console.log("No validation errors, proceeding to update data"); // Debugging log
+  //     updateFormData();
   //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true;
-  //     }
+  //     console.log("Validation errors found, submission aborted"); // Debugging log
   //   }
-  // }, [selectedOrg, year, selectedCorp, togglestatus]);
-
+  // };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submit button clicked"); // Debugging log
-    const errors = validateRows(formData);
-    setValidationErrors(errors);
-    console.log("Validation Errors:", errors); // Debugging log
-  
-    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
-    if (!hasErrors) {
-      console.log("No validation errors, proceeding to update data"); // Debugging log
-      updateFormData();
-    } else {
-      console.log("Validation errors found, submission aborted"); // Debugging log
-    }
+    console.log("from data",formData)
+    updateFormData();
   };
-  
 
-  const renderError = (rowIndex, fieldName) => {
-    const rowErrors = validationErrors[rowIndex] || {};
-    return rowErrors[fieldName] ? <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div> : null;
-  };
 
   const handleChange = (e) => {
     console.log(e.formData,"test data");
-    // setFormData(e.formData);
+    setFormData(e.formData);
   };
 
   return (
     <>
   <div className={`overflow-auto custom-scrollbar flex pt-4 pb-2`}>
         <Form
-      
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            formContext={{ validationErrors }}
             widgets={widgets}
           >
           </Form>
           </div>
-     
-
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
             <Oval
@@ -295,7 +269,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
         )}
       
  
-      <div className="mb-4">
+      <div className="mb-6 mt-2">
         <button
           type="button"
           className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
