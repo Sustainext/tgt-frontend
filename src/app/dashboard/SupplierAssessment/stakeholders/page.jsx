@@ -107,7 +107,8 @@ const StakeholderPage = ({
             params: {
                 page: currentPage,
                 page_size: rowsPerPage,
-                search:searchQuery
+                search:searchQuery,
+                group_id:groupId.id,
             }
         })
         if (response.status === 200) {

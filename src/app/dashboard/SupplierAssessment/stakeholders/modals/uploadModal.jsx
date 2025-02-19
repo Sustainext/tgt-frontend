@@ -266,7 +266,7 @@ const UploadFileModal = ({
                   onFileSelect={handleFileUpload}
                   setIsFileUploaded={setIsFileUploaded}
                 />
-                <a href="https://sustainextstorage1.blob.core.windows.net/media/supplier_assessment/Stakeholder list.csv">
+                <a href="https://sustainextstorage1.blob.core.windows.net/media/supplier_assessment/Stakeholder_List_Template.csv">
                 <button className="text-[14px] text-[#007EEF] font-meduim flex justify-start w-full mt-2">
                   <IoMdDownload className=" mt-0.5 mr-1 w-4 h-4" /> Download
                   Template

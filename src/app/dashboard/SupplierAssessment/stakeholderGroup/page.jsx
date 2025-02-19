@@ -9,7 +9,7 @@ import { MdAdd } from "react-icons/md";
 import axiosInstance from "../../../utils/axiosMiddleware";
 import { debounce } from "lodash";
 
-const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setGroupId }) => {
+const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setGroupId,refresh,setRefresh }) => {
     const [totalItems, setTotalItems] = useState(0);
     const rowsPerPageOptions = [7, 10, 15]; // Rows-per-page options
     const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +17,6 @@ const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setG
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [stakeholderGroupData, setStakeholderGroupData] = useState([]);
     const [loopen, setLoOpen] = useState(false);
-    const [refresh, setRefresh] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedUsers, setselectedUsers] = useState([]);
 
@@ -223,6 +222,8 @@ const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setG
                 showStakeholderList={showStakeholderList}
                 refresh={refresh}
                 setRefresh={setRefresh}
+                groupId={groupId}
+                setGroupId={setGroupId}
             />
 
             {loopen && (
