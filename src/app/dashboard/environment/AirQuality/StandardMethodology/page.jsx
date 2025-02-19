@@ -188,7 +188,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         </div>
       </div>
       <EnvironmentHeader2
-        activeMonth={activeMonth}
+        month={activeMonth}
         setActiveMonth={setActiveMonth}
         year={year}
         setYear={setYear}
@@ -201,11 +201,11 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setToggleStatus={setToggleStatus}
       />
       <Screen1
-        location={location}
         year={year}
         month={activeMonth}
-        setLocationMessage={setLocationMessage}
         setYearMessage={setYearMessage}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
       />
     </>
   );

@@ -202,18 +202,18 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setToggleStatus={setToggleStatus}
       />
       <Screen1
-        location={location}
         year={year}
         month={activeMonth}
-        setLocationMessage={setLocationMessage}
         setYearMessage={setYearMessage}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
       />
       <Screen2
-        location={location}
         year={year}
         month={activeMonth}
-        setLocationMessage={setLocationMessage}
         setYearMessage={setYearMessage}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
       />
     </>
   );

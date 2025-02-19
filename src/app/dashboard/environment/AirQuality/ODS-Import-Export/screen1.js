@@ -3,38 +3,37 @@ import React, { useState, useEffect, useRef, useImperativeHandle, forwardRef } f
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
-import { MdInfoOutline } from "react-icons/md";
+import { MdInfoOutline, MdKeyboardArrowDown } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware';
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
-const widgets = {
-  RadioWidget2,
-};
+// 🟢 Custom Radio Widget
+const widgets = { RadioWidget2 };
 
 const view_path = "gri-environment-ods-production-import-export";
 const client_id = 1;
 const user_id = 1;
 
-// 🟢 Ensure schema is well-defined
+// 🟢 Form Schema & UI Schema
 const schema = {
   type: "object",
   properties: {
     produceODS: {
       type: "string",
-      title: "Does your organisation produce ODS in its processes, products and services?",
+      title: "Does your organisation produce ODS?",
       enum: ["Yes", "No"],
     },
     importODS: {
       type: "string",
-      title: "Does your organisation import ODS in its processes, products and services?",
+      title: "Does your organisation import ODS?",
       enum: ["Yes", "No"],
     },
     exportODS: {
       type: "string",
-      title: "Does your organisation export ODS in its processes, products and services?",
+      title: "Does your organisation export ODS?",
       enum: ["Yes", "No"],
     },
     useODSFeedstock: {
@@ -48,86 +47,118 @@ const schema = {
       enum: ["Yes", "No"],
     },
   },
-  required: ["produceODS", "importODS", "exportODS", "useODSFeedstock", "destroyODS"], // Ensures validation works
+  required: ["produceODS", "importODS", "exportODS", "useODSFeedstock", "destroyODS"],
 };
 
 const uiSchema = {
-    "ui:order": ["produceODS", "importODS", "exportODS", "useODSFeedstock", "destroyODS"],
-    
-    produceODS: {
-      "ui:widget": "RadioWidget2",
-      "ui:title": "Does your organisation produce ODS in its processes, products and services?",
-      "ui:tooltip": "Select 'Yes' if your organisation produces ODS in its processes, products, or services.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": { label: false },
-    },
-  
-    importODS: {
-      "ui:widget": "RadioWidget2",
-      "ui:title": "Does your organisation import ODS in its processes, products and services?",
-      "ui:tooltip": "Select 'Yes' if your organisation imports ODS in its processes, products, or services.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": { label: false },
-    },
-  
-    exportODS: {
-      "ui:widget": "RadioWidget2",
-      "ui:title": "Does your organisation export ODS in its processes, products and services?",
-      "ui:tooltip": "Select 'Yes' if your organisation exports ODS in its processes, products, or services.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": { label: false },
-    },
-  
-    useODSFeedstock: {
-      "ui:widget": "RadioWidget2",
-      "ui:title": "Does your organisation use ODS as feedstock?",
-      "ui:tooltip": "Select 'Yes' if your organisation uses ODS as feedstock in any capacity.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": { label: false },
-    },
-  
-    destroyODS: {
-      "ui:widget": "RadioWidget2",
-      "ui:title": "Does your organisation destroy ODS using approved technologies?",
-      "ui:tooltip": "Select 'Yes' if your organisation follows approved technologies for ODS destruction.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": { label: false },
-    },
-  
-    "ui:options": {
-      orderable: false, // Prevents reordering
-      addable: false, // Prevents adding more rows
-      removable: false, // Prevents removing fields
-      layout: "horizontal", // Maintains layout consistency
-    },
-  };
-  
+  produceODS: {
+    "ui:title": "Does your organisation produce ODS?",
+    "ui:widget": "RadioWidget2",
+    "ui:options": { label: true },
+  },
+  importODS: {
+    "ui:title": "Does your organisation import ODS?",
+    "ui:widget": "RadioWidget2",
+    "ui:options": { label: true },
+  },
+  exportODS: {
+    "ui:title": "Does your organisation export ODS?",
+    "ui:widget": "RadioWidget2",
+    "ui:options": { label: true },
+  },
+  useODSFeedstock: {
+    "ui:title": "Does your organisation use ODS as feedstock?",
+    "ui:widget": "RadioWidget2",
+    "ui:options": { label: true },
+  },
+  destroyODS: {
+    "ui:title": "Does your organisation destroy ODS using approved technologies?",
+    "ui:widget": "RadioWidget2",
+    "ui:options": { label: true },
+  },
+};
 
-const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp, togglestatus }, ref) => {
+
+// 🟢 Accordion Item Component
+const AccordionItem = ({ title, children, tooltiptext, selectedOrg, setOrgMessage }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { open } = GlobalState();
+
+  const handleClick = () => {
+    if (!selectedOrg) {
+      setOrgMessage("Please select an organization.");
+      return;
+    }
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div className="shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-neutral-200 mx-3">
+      <button className="py-3 text-left flex w-full" onClick={handleClick}>
+        <div className="flex w-full">
+          <div className={`flex ${open ? "w-[75%]" : "w-[75%]"}`}>
+            <div className="flex items-center">
+              <h5 className="text-[15px] text-[#344054] px-3 font-[500]">{title}</h5>
+            </div>
+
+            {tooltiptext && (
+              <div className="flex items-center relative">
+                <MdInfoOutline
+                  data-tooltip-id={`tooltip-${title.replace(/\s+/g, "-")}`}
+                  data-tooltip-content={tooltiptext}
+                  className="text-[14px] ml-2"
+                />
+                <ReactTooltip
+                  id={`tooltip-${title.replace(/\s+/g, "-")}`}
+                  place="top"
+                  effect="solid"
+                  style={{
+                    width: "300px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="w-[25%] flex justify-end">
+            <MdKeyboardArrowDown className={`text-2xl transition-transform ${isOpen ? "rotate-180" : ""}`} />
+          </div>
+        </div>
+      </button>
+
+      {isOpen && <div className="py-4 px-3">{children}</div>}
+    </div>
+  );
+};
+
+// 🟢 Main Screen1 Component (Inside AccordionItem)
+const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp, togglestatus, setOrgMessage }, ref) => {
   const [formData, setFormData] = useState({});
   const [loopen, setLoOpen] = useState(false);
-  const toastShown = useRef(false);
   const { open } = GlobalState();
 
   const LoaderOpen = () => setLoOpen(true);
   const LoaderClose = () => setLoOpen(false);
 
   const updateFormData = async () => {
-    if (!selectedOrg || !year) return; // Prevent unnecessary API calls
+    if (!selectedOrg || !year) return;
 
     LoaderOpen();
-    const data = {
-      client_id,
-      user_id,
-      path: view_path,
-      form_data: formData,
-      corporate: selectedCorp,
-      organisation: selectedOrg,
-      year,
-    };
-
     try {
-      await axiosInstance.post(`${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`, data);
+      await axiosInstance.post(`${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`, {
+        client_id,
+        user_id,
+        path: view_path,
+        form_data: formData,
+        corporate: selectedCorp,
+        organisation: selectedOrg,
+        year,
+      });
     } catch (error) {
       console.error("Error updating form data", error);
     } finally {
@@ -140,8 +171,9 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp, togglestatus }, r
 
     LoaderOpen();
     try {
-      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
-      const response = await axiosInstance.get(url);
+      const response = await axiosInstance.get(
+        `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`
+      );
       setFormData(response.data.form_data?.[0]?.data || {});
     } catch (error) {
       setFormData({});
@@ -154,9 +186,7 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp, togglestatus }, r
     if (selectedOrg && year && togglestatus) {
       if (togglestatus === "Corporate" && selectedCorp) {
         loadFormData();
-      } else if (togglestatus === "Corporate" && !selectedCorp) {
-        setFormData({});
-      } else {
+      } else if (togglestatus !== "Corporate") {
         loadFormData();
       }
     }
@@ -174,60 +204,20 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp, togglestatus }, r
   useImperativeHandle(ref, () => updateFormData);
 
   return (
-    <>
-      <div
-        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md"
-        style={{
-          boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              ODS Production, Import & Export
-              <MdInfoOutline
-                data-tooltip-id={`tooltip-ods`}
-                data-tooltip-content="This section documents data corresponding to the production, import, export, and destruction of ODS."
-                className="mt-1.5 ml-2 text-[15px]"
-              />
-              <ReactTooltip
-                id={`tooltip-ods`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                }}
-              />
-            </h2>
-          </div>
+    <AccordionItem
+      title="ODS Production, Import & Export"
+      tooltiptext="This section documents data corresponding to the production, import, export, and destruction of ODS."
+      selectedOrg={selectedOrg}
+      setOrgMessage={setOrgMessage}
+    >
+      <div className="mx-2">
+        <Form schema={schema} uiSchema={uiSchema} formData={formData} onChange={handleChange} validator={validator} widgets={widgets} />
+      </div>
 
-          <div className="w-[20%]">
-            <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg inline-flex items-center justify-center">
-                <div className="text-sky-700 text-[10px] font-semibold tracking-tight">GRI 305-6a</div>
-              </div>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg inline-flex items-center justify-center ml-2">
-                <div className="text-sky-700 text-[10px] font-semibold tracking-tight">GRI 305-6d</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mx-2">
-          <Form schema={schema} uiSchema={uiSchema} formData={formData} onChange={handleChange} validator={validator} widgets={widgets} />
-        </div>
-
-        <div className="mb-4">
+      <div className="mb-4">
         <button className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 float-end" onClick={handleSubmit}>
           Submit
         </button>
-      </div>
       </div>
 
       {loopen && (
@@ -235,7 +225,7 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp, togglestatus }, r
           <Oval height={50} width={50} color="#00BFFF" />
         </div>
       )}
-    </>
+    </AccordionItem>
   );
 });
 
