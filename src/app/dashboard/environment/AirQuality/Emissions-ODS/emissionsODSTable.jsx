@@ -258,6 +258,7 @@ const EmissionsODSTable = ({ location, year, month }) => {
   ]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [activeFields, setActiveFields] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const LoaderOpen = () => {
@@ -332,8 +333,12 @@ const EmissionsODSTable = ({ location, year, month }) => {
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       const form_parent = response.data.form_data;
+      if(form_parent[0]?.data)
       setFormData(form_parent[0]?.data);
+      if(response.data.pre_form_data)
       setFormDataPrev(response.data.pre_form_data)
+      setRemoteUiSchema(generateUiSchema(response.data.pre_form_data));
+
     } catch (error) {
       console.error("API call failed:", error);
     } finally {
@@ -362,6 +367,17 @@ const EmissionsODSTable = ({ location, year, month }) => {
       isODSExportedActive ||
       isODSUsedAsFeedstockActive ||
       isODSDestroyedActive;
+
+      setActiveFields({
+        EmissionSource: areMainFieldsEnabled,
+        ODS: areMainFieldsEnabled,
+        Unit: areMainFieldsEnabled,
+        ODSProduced: isODSProducedActive,
+        ODSImported: isODSImportedActive,
+        ODSExported: isODSExportedActive,
+        ODSUsedasfeedstock: isODSUsedAsFeedstockActive,
+        ODSDestroyedbyapprovedtechnologies: isODSDestroyedActive,
+      })
   
     return {
       EmissionSource: areMainFieldsEnabled,
@@ -476,11 +492,7 @@ const EmissionsODSTable = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-    // Update uiSchema dynamically based on previous form data
-    if (formDataPrev) {
-      setRemoteUiSchema(generateUiSchema(formDataPrev));
-    }
-  }, [location, year, month, formDataPrev]);
+  }, [location, year, month]);
 
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => ({
@@ -508,10 +520,10 @@ const EmissionsODSTable = ({ location, year, month }) => {
   const [validationErrors, setValidationErrors] = useState([]);
 
   // Add validation function
-  const validateRows = (data) => {
+  const validateRows = (data, activeFields) => {
     return data.map((row) => {
       const rowErrors = {};
-
+  
       // Define required fields and their respective error messages
       const requiredFields = {
         EmissionSource: "Emission Source is required",
@@ -524,17 +536,18 @@ const EmissionsODSTable = ({ location, year, month }) => {
         ODSImported: "ODS Imported is required",
         ODSExported: "ODS Exported is required",
       };
-
-      // Iterate through required fields and check for missing values
+  
+      // ✅ Check if the field is active before validating
       Object.keys(requiredFields).forEach((field) => {
-        if (!row[field] || row[field].trim() === "") {
+        if (activeFields[field] && (!row[field] || row[field].trim() === "")) {
           rowErrors[field] = requiredFields[field];
         }
       });
-
+  
       return rowErrors;
     });
   };
+  
 
   // Add renderError helper function
   const renderError = (rowIndex, fieldName) => {
@@ -546,7 +559,7 @@ const EmissionsODSTable = ({ location, year, month }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const errors = validateRows(formData);
+    const errors = validateRows(formData, activeFields);
     setValidationErrors(errors);
 
     const hasErrors = errors.some(
