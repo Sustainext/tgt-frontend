@@ -65,7 +65,7 @@ const uiSchema = {
       "ui:tooltip": "<p>Describe the reason of termination. (if any).</p>",
       "ui:tooltipdisplay": "block",
       "ui:titledisplay": "block",
-      "ui:widgetType": "input",
+      "ui:widgetType": "inputtext",
       "ui:inputfildtype": "text",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,

@@ -30,6 +30,7 @@ const Communicationtraining = ({apiData}) => {
   const [datarefresh, setDatarefresh] = useState(0);
   const [datarefreshtwo, setDatarefreshtwo] = useState(0);
     const [togglestatus, setToggleStatus] = useState("Organization");
+   
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -67,7 +68,7 @@ const Communicationtraining = ({apiData}) => {
    
 ]
 
-
+console.log(datarefreshtwo,"set datarefreshtwo");
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />

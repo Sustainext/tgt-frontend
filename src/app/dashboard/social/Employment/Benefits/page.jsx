@@ -66,13 +66,7 @@ const Benefits = ({ apiData }) => {
     },
   ];
 
-  const brsr = [
-    {
-      tagName: "BRSR C-P3-E2",
-      id: "tooltip-$brsr1",
-      content: "BRSR-Section C-Principle 3-Essential Indicators-2",
-    },
-  ];
+
   const sdgData = [
     {
       tagName: "SDG 3",
@@ -104,7 +98,7 @@ const Benefits = ({ apiData }) => {
           apiData={apiData}
           title={"Employment"}
           topic={"SocEmployment"}
-          brsr={brsr}
+          
           griData={griData}
         />
 

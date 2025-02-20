@@ -103,6 +103,30 @@ const ManagementApproach = () => {
                           }}
                         ></ReactTooltip>
                       </div>
+                      <div className=" relative">
+                        <button
+                          data-tooltip-id={`tooltip-$brsr3`}
+                          data-tooltip-content="BRSR-Section C-Principle 4-Leadership  Indicators-2"
+                          className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                          // onClick={() => toggleDrawer("92")}
+                        >
+                          BRSR C-P4-L2
+                        </button>
+                        <ReactTooltip
+                          id={`tooltip-$brsr3`}
+                          place="bottom"
+                          effect="solid"
+                          style={{
+                            width: "290px",
+                            backgroundColor: "#000",
+                            color: "white",
+                            fontSize: "12px",
+                            boxShadow: 3,
+                            borderRadius: "8px",
+                            textAlign: "center",
+                          }}
+                        ></ReactTooltip>
+                      </div>
                     </div>
                   </div>
                 </div>
