@@ -13,8 +13,8 @@ const inputWidget = ({
   schema = {},
   id,
   formContext,
-  props,
   name,
+  options
 }) => {
   const { validationErrors } = formContext || {};
   const rowIndex = parseInt(id.split('_')[1], 10);
@@ -91,6 +91,7 @@ const inputWidget = ({
           value={value}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          disabled={options.disabled}
         />
       </div>
       {hasError && (

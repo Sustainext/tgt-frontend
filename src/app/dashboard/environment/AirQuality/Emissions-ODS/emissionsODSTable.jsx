@@ -19,7 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import selectWidget3 from "../../../../shared/widgets/Select/selectWidget3";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-import CustomUnitWidget from '../../../../shared/widgets/Select/CustomUnitWidget'
+import CustomUnitWidget from "../../../../shared/widgets/Select/CustomUnitWidget";
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -29,221 +29,239 @@ const widgets = {
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
   selectWidget3: selectWidget3,
-  CustomUnitWidget:CustomUnitWidget
+  CustomUnitWidget: CustomUnitWidget,
 };
 
-const view_path = "gri-environment-waste-306-3a-3b-waste_generated";
+const view_path = "gri-environment-air-quality-emission-ods";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-        EmissionSource: {
-        type: "string",
-        title: "Emission Source",
-        tooltiptext: "Emission sources are where ozone-depleting substances (ODS) are released or emitted. Examples include refrigerators, freezers, dehumidifiers, water coolers, ice machines, air conditioning and heat pump units, aerosol products (propellants), insulation boards, panels, and pipe covers (foam-blowing agents), and pre-polymers (manufacturing processes).",
-        display: "block",
-      },
-      ODS: {
-        type: "string",
-        title: "ODS",
-        enum:["halon-1211","(CFC-12)","(CFC-114)","(CFC-214)","(CFC-215)","(HCFC-141b)**"],
-        tooltiptext:
-          "Please select the appropriate Ozone Depleting Substance used from the given dropdown. ",
-        display: "block",
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ["Tons","Kilogram(Kg)","Gram(g)","Pound (lb)","ton(US Short ton)"],
-        tooltiptext: "Select correct unit from the given dropdown.",
-        display: "none",
-      },
-      ODSProduced: {
-        type: "string",
-        title: "ODS Produced",
-        tooltiptext:
-          "Mention the quantity of Ozone Depleting Substance (ODS) produced.",
-        display: "block",
-      },
-      ODSDestroyedbyapprovedtechnologies: {
-        type: "string",
-        title: "ODS destroyed by approved technologies",
-        tooltiptext:
-          "Mention the quantity of Ozone Depleting Substance destroyed by approved technologies",
-        display: "block",
-      },
-      ODSUsedasfeedstock: {
-        type: "string",
-        title: "ODS used as feedstock",
-        tooltiptext:
-          "Mention the quantity of Ozone Depleting Substance entirely used as feedstock in the manufacture of other chemicals. ",
-        display: "block",
-      },
-      ODSImported: {
-        type: "string",
-        title: "ODS Imported ",
-        tooltiptext:
-          "Mention the quantity of Ozone Depleting Substance imported.",
-        display: "block",
-      },
-      ODSExported: {
-        type: "string",
-        title: "ODS Exported",
-        tooltiptext:
-          "Mention the quantity of Ozone Depleting Substance exported ",
-        display: "block",
-      },
-      
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-    },
-  },
-};
+const view_path_prev =
+  "gri-environment-air-quality-ods_production-import-export";
 
-const uiSchema = {
-  items: {
-    classNames: "fieldset",
-    "ui:order": [
-      "EmissionSource",
-      "ODS",
-      "Unit",
-      "ODSProduced",
-      "ODSDestroyedbyapprovedtechnologies",
-      "ODSUsedasfeedstock",
-      "ODSImported",
-      "ODSExported",
-      "AssignTo",
-      "FileUpload",
-      "Remove",
-    ],
+// const schema = {
+//   type: "array",
+//   items: {
+//     type: "object",
+//     properties: {
+//         EmissionSource: {
+//         type: "string",
+//         title: "Emission Source",
+//         tooltiptext: "Emission sources are where ozone-depleting substances (ODS) are released or emitted. Examples include refrigerators, freezers, dehumidifiers, water coolers, ice machines, air conditioning and heat pump units, aerosol products (propellants), insulation boards, panels, and pipe covers (foam-blowing agents), and pre-polymers (manufacturing processes).",
+//         display: "block",
+//       },
+//       ODS: {
+//         type: "string",
+//         title: "ODS",
+//         enum:["halon-1211","(CFC-12)","(CFC-114)","(CFC-214)","(CFC-215)","(HCFC-141b)**"],
+//         tooltiptext:
+//           "Please select the appropriate Ozone Depleting Substance used from the given dropdown. ",
+//         display: "block",
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ["Tons","Kilogram(Kg)","Gram(g)","Pound (lb)","ton(US Short ton)"],
+//         tooltiptext: "Select correct unit from the given dropdown.",
+//         display: "none",
+//       },
+//       ODSProduced: {
+//         type: "string",
+//         title: "ODS Produced",
+//         tooltiptext:
+//           "Mention the quantity of Ozone Depleting Substance (ODS) produced.",
+//         display: "block",
+//       },
+//       ODSDestroyedbyapprovedtechnologies: {
+//         type: "string",
+//         title: "ODS destroyed by approved technologies",
+//         tooltiptext:
+//           "Mention the quantity of Ozone Depleting Substance destroyed by approved technologies",
+//         display: "block",
+//       },
+//       ODSUsedasfeedstock: {
+//         type: "string",
+//         title: "ODS used as feedstock",
+//         tooltiptext:
+//           "Mention the quantity of Ozone Depleting Substance entirely used as feedstock in the manufacture of other chemicals. ",
+//         display: "block",
+//       },
+//       ODSImported: {
+//         type: "string",
+//         title: "ODS Imported ",
+//         tooltiptext:
+//           "Mention the quantity of Ozone Depleting Substance imported.",
+//         display: "block",
+//       },
+//       ODSExported: {
+//         type: "string",
+//         title: "ODS Exported",
+//         tooltiptext:
+//           "Mention the quantity of Ozone Depleting Substance exported ",
+//         display: "block",
+//       },
 
-    EmissionSource: {
-      "ui:widget": "inputWidget",  // Text Entry
-      "ui:tooltip": "Emission sources are where ozone-depleting substances (ODS) are released or emitted. Examples include refrigerators, freezers, dehumidifiers, water coolers, ice machines, air conditioning and heat pump units, aerosol products (propellants), insulation boards, panels, and pipe covers (foam-blowing agents), and pre-polymers (manufacturing processes).",
-      "ui:tooltipdisplay": "block",
-      "ui:options": {
-        label: false,
-      },
-    },
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//     },
+//   },
+// };
 
-    ODS: {
-      "ui:widget": "selectWidget",  // Dropdown (Select Entry)
-      "ui:tooltip": "Please select the appropriate Ozone Depleting Substance used from the given dropdown.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": {
-        label: false,
-      },
-    },
+// const uiSchema = {
+//   items: {
+//     classNames: "fieldset",
+//     "ui:order": [
+//       "EmissionSource",
+//       "ODS",
+//       "Unit",
+//       "ODSProduced",
+//       "ODSDestroyedbyapprovedtechnologies",
+//       "ODSUsedasfeedstock",
+//       "ODSImported",
+//       "ODSExported",
+//       "AssignTo",
+//       "FileUpload",
+//       "Remove",
+//     ],
 
-    Unit: {
-      "ui:widget": "selectWidget",  // Dropdown (Select Entry)
-      "ui:tooltip": "Select correct unit from the given dropdown.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": {
-        label: false,
-      },
-    },
+//     EmissionSource: {
+//       "ui:widget": "inputWidget",  // Text Entry
+//       "ui:tooltip": "Emission sources are where ozone-depleting substances (ODS) are released or emitted. Examples include refrigerators, freezers, dehumidifiers, water coolers, ice machines, air conditioning and heat pump units, aerosol products (propellants), insulation boards, panels, and pipe covers (foam-blowing agents), and pre-polymers (manufacturing processes).",
+//       "ui:tooltipdisplay": "block",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
 
-    ODSProduced: {
-      "ui:widget": "inputWidget",  // Numeric Entry
-      "ui:inputtype": "number",
-      "ui:tooltip": "Mention the quantity of Ozone Depleting Substance produced.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": {
-        label: false,
-      },
-    },
+//     ODS: {
+//       "ui:widget": "selectWidget",  // Dropdown (Select Entry)
+//       "ui:tooltip": "Please select the appropriate Ozone Depleting Substance used from the given dropdown.",
+//       "ui:tooltipdisplay": "block",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
 
-    ODSDestroyedbyapprovedtechnologies: {
-      "ui:widget": "inputWidget",  // Numeric Entry
-      "ui:inputtype": "number",
-      "ui:tooltip": "Mention the quantity of Ozone Depleting Substance destroyed by approved technologies.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": {
-        label: false,
-      },
-    },
+//     Unit: {
+//       "ui:widget": "selectWidget",  // Dropdown (Select Entry)
+//       "ui:tooltip": "Select correct unit from the given dropdown.",
+//       "ui:tooltipdisplay": "block",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
 
-    ODSUsedasfeedstock: {
-      "ui:widget": "inputWidget",  // Numeric Entry
-      "ui:inputtype": "number",
-      "ui:tooltip": "Mention the quantity of Ozone Depleting Substance entirely used as feedstock in the manufacture of other chemicals.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": {
-        label: false,
-      },
-    },
+//     ODSProduced: {
+//       "ui:widget": "inputWidget",  // Numeric Entry
+//       "ui:inputtype": "number",
+//       "ui:tooltip": "Mention the quantity of Ozone Depleting Substance produced.",
+//       "ui:tooltipdisplay": "block",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
 
-    ODSImported: {
-      "ui:widget": "inputWidget",  // Numeric Entry
-      "ui:inputtype": "number",
-      "ui:tooltip": "Mention the quantity of Ozone Depleting Substance imported.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": {
-        label: false,
-      },
-    },
+//     ODSDestroyedbyapprovedtechnologies: {
+//       "ui:widget": "inputWidget",  // Numeric Entry
+//       "ui:inputtype": "number",
+//       "ui:tooltip": "Mention the quantity of Ozone Depleting Substance destroyed by approved technologies.",
+//       "ui:tooltipdisplay": "block",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
 
-    ODSExported: {
-      "ui:widget": "inputWidget",  // Numeric Entry
-      "ui:inputtype": "number",
-      "ui:tooltip": "Mention the quantity of Ozone Depleting Substance exported.",
-      "ui:tooltipdisplay": "block",
-      "ui:options": {
-        label: false,
-      },
-    },
+//     ODSUsedasfeedstock: {
+//       "ui:widget": "inputWidget",  // Numeric Entry
+//       "ui:inputtype": "number",
+//       "ui:tooltip": "Mention the quantity of Ozone Depleting Substance entirely used as feedstock in the manufacture of other chemicals.",
+//       "ui:tooltipdisplay": "block",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
 
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
+//     ODSImported: {
+//       "ui:widget": "inputWidget",  // Numeric Entry
+//       "ui:inputtype": "number",
+//       "ui:tooltip": "Mention the quantity of Ozone Depleting Substance imported.",
+//       "ui:tooltipdisplay": "block",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
 
-    FileUpload: {
-      "ui:widget": "FileUploadWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
+//     ODSExported: {
+//       "ui:widget": "inputWidget",  // Numeric Entry
+//       "ui:inputtype": "number",
+//       "ui:tooltip": "Mention the quantity of Ozone Depleting Substance exported.",
+//       "ui:tooltipdisplay": "block",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
 
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      "ui:options": {
-        label: false,
-      },
-    },
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       "ui:horizontal": true,
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
 
-    "ui:options": {
-      orderable: false, // Prevents reordering
-      addable: false, // Prevents adding more rows
-      removable: false, // Prevents removing fields
-      layout: "horizontal", // Maintains layout consistency
-    },
-  },
-};
+//     FileUpload: {
+//       "ui:widget": "FileUploadWidget",
+//       "ui:horizontal": true,
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
+
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
+
+//     "ui:options": {
+//       orderable: false, // Prevents reordering
+//       addable: false, // Prevents adding more rows
+//       removable: false, // Prevents removing fields
+//       layout: "horizontal", // Maintains layout consistency
+//     },
+//   },
+// };
 
 const EmissionsODSTable = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
+  const [formDataPrev, setFormDataPrev] = useState([
+    {
+      id: 1087,
+      data: [
+        {
+          produceODS: "Yes",
+          importODS: "No",
+          exportODS: "Yes",
+          useODSFeedstock: "No",
+          destroyODS: "No",
+        },
+      ],
+      updated_at: "2025-02-20T04:51:20.920329Z",
+    },
+  ]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -319,7 +337,7 @@ const EmissionsODSTable = ({ location, year, month }) => {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
-      setRemoteUiSchema(response.data.form[0].ui_schema);
+      // setRemoteUiSchema(response.data.form[0].ui_schema);
       const form_parent = response.data.form_data;
       setFormData(form_parent[0].data);
     } catch (error) {
@@ -328,6 +346,129 @@ const EmissionsODSTable = ({ location, year, month }) => {
       LoaderClose();
     }
   };
+
+  const loadFormDataPrev = async () => {
+    LoaderOpen();
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path_prev}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
+      const form_parent = response.data.form_data;
+      setFormDataPrev(form_parent[0].data);
+    } catch (error) {
+      console.error("API call failed:", error);
+    } finally {
+      LoaderClose();
+    }
+  };
+
+  // Disable fields based on previous screen data
+  const getActiveFields = (formDataPrev) => {
+    if (!formDataPrev || formDataPrev.length === 0) return {};
+
+    // const latestData = formDataPrev[0].data;
+    const latestData = formDataPrev[0].data[0];
+    console.log("Latest Data:", latestData);
+    return {
+      ODSProduced: latestData.produceODS == "Yes",
+      ODSImported: latestData.importODS == "Yes",
+      ODSExported: latestData.exportODS == "Yes",
+      ODSUsedasfeedstock: latestData.useODSFeedstock == "Yes",
+      ODSDestroyedbyapprovedtechnologies: latestData.destroyODS == "Yes",
+    };
+  };
+
+  const generateUiSchema = (formDataPrev) => {
+    const activeFields = getActiveFields(formDataPrev);
+
+    console.log('Generating UI Schema for formDataPrev:', formDataPrev);
+    console.log("Active Fields:", activeFields);
+    
+    return {
+      items: {
+        classNames: "fieldset",
+        "ui:order": [
+          "EmissionSource",
+          "ODS",
+          "Unit",
+          "ODSProduced",
+          "ODSDestroyedbyapprovedtechnologies",
+          "ODSUsedasfeedstock",
+          "ODSImported",
+          "ODSExported",
+          "AssignTo",
+          "FileUpload",
+          "Remove",
+        ],
+        EmissionSource: {
+          "ui:widget": "inputWidget",
+          "ui:options": { label: false },
+        },
+        ODS: {
+          "ui:widget": "selectWidget",
+          "ui:options": { label: false },
+        },
+        Unit: {
+          "ui:widget": "selectWidget",
+          "ui:options": { label: false },
+        },
+        ODSProduced: {
+          "ui:widget": "inputWidget",
+          "ui:inputtype": "number",
+          "ui:options": {
+            label: false,
+            disabled: !activeFields.ODSProduced,
+          },
+        },
+        ODSDestroyedbyapprovedtechnologies: {
+          "ui:widget": "inputWidget",
+          "ui:inputtype": "number",
+          "ui:options": {
+            label: false,
+            disabled: !activeFields.ODSDestroyedbyapprovedtechnologies,
+          },
+        },
+        ODSUsedasfeedstock: {
+          "ui:widget": "inputWidget",
+          "ui:inputtype": "number",
+          "ui:options": {
+            label: false,
+            disabled: !activeFields.ODSUsedasfeedstock,
+          },
+        },
+        ODSImported: {
+          "ui:widget": "inputWidget",
+          "ui:inputtype": "number",
+          "ui:options": {
+            label: false,
+            disabled: !activeFields.ODSImported,
+          },
+        },
+        ODSExported: {
+          "ui:widget": "inputWidget",
+          "ui:inputtype": "number",
+          "ui:options": {
+            label: false,
+            disabled: !activeFields.ODSExported,
+          },
+        },
+        AssignTo: {
+          "ui:widget": "AssignTobutton",
+          "ui:options": { label: false },
+        },
+        FileUpload: {
+          "ui:widget": "FileUploadWidget",
+          "ui:options": { label: false },
+        },
+        Remove: {
+          "ui:widget": "RemoveWidget",
+          "ui:options": { label: false },
+        },
+      },
+    };
+  };
+
   useEffect(() => {
     if (location && year && month) {
       loadFormData();
@@ -338,17 +479,18 @@ const EmissionsODSTable = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+    // Update uiSchema dynamically based on previous form data
+    if (formDataPrev) {
+      setRemoteUiSchema(generateUiSchema(formDataPrev));
+    }
+  }, [location, year, month, formDataPrev]);
+
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => ({
       ...item, // Ensure each item retains its structure
     }));
     setFormData(newData); // Update the formData with new values
   };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   updateFormData();
-  // };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
@@ -372,23 +514,27 @@ const EmissionsODSTable = ({ location, year, month }) => {
   const validateRows = (data) => {
     return data.map((row) => {
       const rowErrors = {};
-      if (!row.EmissionSource) {
-        rowErrors.EmissionSource = "Emission Source is required";
-      }
-      if (!row.AirPollutant) {
-        rowErrors.AirPollutant = "Air Pollutant is required";
-      }
-  
-      if (!row.Unit) {
-        rowErrors.Unit = "Unit is required";
-      }
-      if (!row.Totalemissions) {
-        rowErrors.Totalemissions = "Total Emissions is required";
-      }
-      if(!row.SourceofEmissionFactorused){
-        rowErrors.SourceofEmissionFactorused = "Source of Emission Factor used is required";
-      }
-  
+
+      // Define required fields and their respective error messages
+      const requiredFields = {
+        EmissionSource: "Emission Source is required",
+        ODS: "ODS is required",
+        Unit: "Unit is required",
+        ODSProduced: "ODS Produced is required",
+        ODSDestroyedbyapprovedtechnologies:
+          "ODS Destroyed by approved technologies is required",
+        ODSUsedasfeedstock: "ODS Used as feedstock is required",
+        ODSImported: "ODS Imported is required",
+        ODSExported: "ODS Exported is required",
+      };
+
+      // Iterate through required fields and check for missing values
+      Object.keys(requiredFields).forEach((field) => {
+        if (!row[field] || row[field].trim() === "") {
+          rowErrors[field] = requiredFields[field];
+        }
+      });
+
       return rowErrors;
     });
   };
@@ -409,6 +555,7 @@ const EmissionsODSTable = ({ location, year, month }) => {
     const hasErrors = errors.some(
       (rowErrors) => Object.keys(rowErrors).length > 0
     );
+    console.log("has errors", hasErrors, errors);
     if (!hasErrors) {
       updateFormData();
     }
@@ -420,9 +567,10 @@ const EmissionsODSTable = ({ location, year, month }) => {
         <div>
           <Form
             className="flex"
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
+            formDataPrev={formDataPrev}
             onChange={handleChange}
             validator={validator}
             formContext={{ validationErrors }}

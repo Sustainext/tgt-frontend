@@ -26,110 +26,110 @@ const view_path = "gri-environment-waste-306-3a-3b-waste_generated";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      StandardsUsed: {
-        type: "string",
-        title: "Standards Used",
-        enum: [
-          "GRI 305-6 (2016)",
-          "Montreal Protocol",
-          "Intergovernmental Panel on Climate Change (IPCC)",
-          "Others (please specify)",
-        ],
-        tooltiptext: "Please select the standard used to calculate the ODS emissions.",
-      },
-      MethodologiesUsed: {
-        type: "string",
-        title: "Methodologies Used",
-        enum: [
-          "Calculation based on site-specific data",
-          "Calculations based on published criteria",
-          "Direct measurements of ODS",
-          "Estimation",
-          "Others (please specify)",
-        ],
-        tooltiptext: "Specify methodologies used to calculate ODS emissions.",
-      },
-      AssumptionsConsidered: {
-        type: "string",
-        title: "Assumptions Considered",
-        tooltiptext: "Include the description of assumptions  considered to compile data. ",
-      },
-      CalculationToolsUsed: {
-        type: "string",
-        title: "Calculation tools used",
-        tooltiptext: "Include the description of calculation tools used to calculate ODS emissions.",
-      },
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-    },
-    required: ["StandardsUsed", "MethodologiesUsed", "AssumptionsConsidered", "CalculationToolsUsed"],
-  },
-};
+// const schema = {
+//   type: "array",
+//   items: {
+//     type: "object",
+//     properties: {
+//       StandardsUsed: {
+//         type: "string",
+//         title: "Standards Used",
+//         enum: [
+//           "GRI 305-6 (2016)",
+//           "Montreal Protocol",
+//           "Intergovernmental Panel on Climate Change (IPCC)",
+//           "Others (please specify)",
+//         ],
+//         tooltiptext: "Please select the standard used to calculate the ODS emissions.",
+//       },
+//       MethodologiesUsed: {
+//         type: "string",
+//         title: "Methodologies Used",
+//         enum: [
+//           "Calculation based on site-specific data",
+//           "Calculations based on published criteria",
+//           "Direct measurements of ODS",
+//           "Estimation",
+//           "Others (please specify)",
+//         ],
+//         tooltiptext: "Specify methodologies used to calculate ODS emissions.",
+//       },
+//       AssumptionsConsidered: {
+//         type: "string",
+//         title: "Assumptions Considered",
+//         tooltiptext: "Include the description of assumptions  considered to compile data. ",
+//       },
+//       CalculationToolsUsed: {
+//         type: "string",
+//         title: "Calculation tools used",
+//         tooltiptext: "Include the description of calculation tools used to calculate ODS emissions.",
+//       },
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//     },
+//     required: ["StandardsUsed", "MethodologiesUsed", "AssumptionsConsidered", "CalculationToolsUsed"],
+//   },
+// };
 
-const uiSchema = {
-  items: {
-    classNames: "fieldset",
-    "ui:order": [
-      "StandardsUsed",
-      "MethodologiesUsed",
-      "AssumptionsConsidered",
-      "CalculationToolsUsed",
-      "AssignTo",
-      "FileUpload",
-      "Remove",
-    ],
-    StandardsUsed: {
-      "ui:widget": "selectWidget",
-      "ui:options": { label: false },
-    },
-    MethodologiesUsed: {
-      "ui:widget": "selectWidget",
-      "ui:options": { label: false },
-    },
-    AssumptionsConsidered: {
-      "ui:widget": "inputWidget",
-      "ui:options": { label: false },
-    },
-    CalculationToolsUsed: {
-      "ui:widget": "inputWidget",
-      "ui:options": { label: false },
-    },
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      "ui:options": { label: false },
-    },
-    FileUpload: {
-      "ui:widget": "FileUploadWidget",
-      "ui:options": { label: false },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      "ui:options": { label: false },
-    },
-    "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
-      layout: "horizontal",
-    },
-  },
-};
+// const uiSchema = {
+//   items: {
+//     classNames: "fieldset",
+//     "ui:order": [
+//       "StandardsUsed",
+//       "MethodologiesUsed",
+//       "AssumptionsConsidered",
+//       "CalculationToolsUsed",
+//       "AssignTo",
+//       "FileUpload",
+//       "Remove",
+//     ],
+//     StandardsUsed: {
+//       "ui:widget": "selectWidget",
+//       "ui:options": { label: false },
+//     },
+//     MethodologiesUsed: {
+//       "ui:widget": "selectWidget",
+//       "ui:options": { label: false },
+//     },
+//     AssumptionsConsidered: {
+//       "ui:widget": "inputWidget",
+//       "ui:options": { label: false },
+//     },
+//     CalculationToolsUsed: {
+//       "ui:widget": "inputWidget",
+//       "ui:options": { label: false },
+//     },
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       "ui:options": { label: false },
+//     },
+//     FileUpload: {
+//       "ui:widget": "FileUploadWidget",
+//       "ui:options": { label: false },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       "ui:options": { label: false },
+//     },
+//     "ui:options": {
+//       orderable: false,
+//       addable: false,
+//       removable: false,
+//       layout: "horizontal",
+//     },
+//   },
+// };
 
 const StandardMethodologyTable = ({ location, year, month }) => {
   const { open } = GlobalState();

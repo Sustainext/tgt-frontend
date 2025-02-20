@@ -88,7 +88,7 @@ const AccordionItem = ({
   );
 };
 
-const Screen1 = ({ year, selectedOrg, setOrgMessage, month }) => {
+const Screen1 = ({ year, selectedOrg, selectedCorp, setOrgMessage, month, togglestatus }) => {
   return (
     <div className="mx-3">
       <AccordionItem
@@ -99,7 +99,7 @@ const Screen1 = ({ year, selectedOrg, setOrgMessage, month }) => {
         selectedOrg={selectedOrg}
         setOrgMessage={setOrgMessage}
       >
-        <StandardMethodologyTable selectedOrg={selectedOrg} year={year} month={month} />
+        <StandardMethodologyTable selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={month} togglestatus={togglestatus} />
       </AccordionItem>
     </div>
   );

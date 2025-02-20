@@ -131,7 +131,7 @@ const user_id = 1;
 //   },
 // };
 
-const StandardMethodologyTable = ({ location, year, month }) => {
+const StandardMethodologyTable = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [loopen, setLoOpen] = useState(false);
@@ -155,17 +155,15 @@ const StandardMethodologyTable = ({ location, year, month }) => {
   };
 
   const updateFormData = async () => {
-    LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
-
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
@@ -213,25 +211,38 @@ const StandardMethodologyTable = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      const form_parent = response.data.form_data;
-      setFormData(form_parent[0].data);
+      setFormData(response.data.form_data[0].data);
     } catch (error) {
-      console.error("API call failed:", error);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (location && year && month) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-  }, [location, year, month]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleChange = (e) => {
     setFormData(e.formData);

@@ -202,10 +202,10 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
       />
       <Screen1
         year={year}
-        month={activeMonth}
         setYearMessage={setYearMessage}
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
       />
     </>
   );

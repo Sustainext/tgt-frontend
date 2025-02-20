@@ -36,8 +36,8 @@ const ODSImportExport = ({ apiData, isSidepanelOpen }) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
+  const [orgMessage, setOrgMessage] = useState("");  
   const [togglestatus, setToggleStatus] = useState("Organization");
   const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
@@ -207,6 +207,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setYearMessage={setYearMessage}
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
+        setOrgMessage={setOrgMessage}
+        togglestatus={togglestatus}
       />
       <Screen2
         year={year}
@@ -214,6 +216,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setYearMessage={setYearMessage}
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
+        setOrgMessage={setOrgMessage}
+        togglestatus={togglestatus}
       />
     </>
   );
