@@ -169,13 +169,13 @@ const StakeholderPage = ({
                 <div className="flex">
                   <div>
                     <p className="gradient-text text-[22px] font-bold pt-4  ml-2">
-                      {groupId.name}
+                      {groupId?.name}
                     </p>
                     <p className="mt-2 text-[#667085] text-[13px] ml-2">
-                      Organization {groupId.corporate ? "/ Corporate" : ""}:{" "}
-                      {groupId.organization}{" "}
-                      {groupId.corporate?.length > 0
-                        ? "/ " + groupId.corporate.join(", ")
+                      Organization {groupId?.corporate ? "/ Corporate" : ""}:{" "}
+                      {groupId?.organization}{" "}
+                      {groupId?.corporate?.length > 0
+                        ? "/ " + groupId?.corporate.join(", ")
                         : ""}
                     </p>
                   </div>
