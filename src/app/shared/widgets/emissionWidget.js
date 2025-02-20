@@ -29,6 +29,7 @@ import AssignEmissionModal from "./assignEmissionModal";
 import MultipleAssignEmissionModal from "./MultipleAssignEmissionModal";
 import { getMonthName } from "@/app/utils/dateUtils";
 import { fetchClimatiqActivities } from "../../utils/climatiqApi.js";
+import { fetchAutopilotSuggestions } from "@/app/utils/climatiqAutopilotApi";
 import CalculationInfoModal from "@/app/shared/components/CalculationInfoModal";
 
 const EmissionWidget = React.memo(
@@ -83,7 +84,9 @@ const EmissionWidget = React.memo(
     const locationname = useSelector((state) => state.emissions.locationName);
     const monthName = useSelector((state) => state.emissions.monthName);
 
-    const activityCache = useSelector((state) => state.emissions.activitiesCache);
+    const activityCache = useSelector(
+      (state) => state.emissions.activitiesCache
+    );
 
     //file log code//
     const getIPAddress = async () => {
@@ -332,34 +335,58 @@ const EmissionWidget = React.memo(
         if (isFetching.current) return;
         isFetching.current = true;
 
+        // Check cache first
+        if (activityCache[rowId]) {
+          setActivities(activityCache[rowId]);
+          isFetching.current = false;
+          return;
+        }
+
         try {
-          const response = await fetchClimatiqActivities({
-            subcategory,
-            page,
-            region: countryCode,
-            year,
-            customFetchExecuted,
-          });
+          let response;
 
-          const fetchedActivities = response.results;
+          if (subcategory) {
+            // Call the existing Climatiq activities API
+            response = await fetchClimatiqActivities({
+              subcategory,
+              page,
+              region: countryCode,
+              year,
+              customFetchExecuted,
+            });
+          } else if (activitySearch) {
+            // Use Autopilot for activity suggestions
+            response = await fetchAutopilotSuggestions(
+              activitySearch,
+              countryCode,
+              year,
+              unit_type
+            );
+          }
 
-      // Save activities to Redux
-      dispatch(setActivitiesForRow({ rowId, activities: fetchedActivities }));
+          const fetchedActivities = response?.results || response;
 
-          setActivities((prevActivities) => {
-            const updatedActivities = [...prevActivities, ...response.results];
-            updateCache(subcategory, updatedActivities);
-            return updatedActivities;
-          });
-
-          return response;
+          // Cache and set the activities
+          dispatch(
+            setActivitiesForRow({ rowId, activities: fetchedActivities })
+          );
+          setActivities(fetchedActivities);
         } catch (error) {
           console.error("Error fetching activities:", error);
         } finally {
           isFetching.current = false;
         }
       },
-      [subcategory, countryCode, year, updateCache]
+      [
+        subcategory,
+        countryCode,
+        year,
+        unit_type,
+        activitySearch,
+        activityCache,
+        rowId,
+        dispatch,
+      ]
     );
 
     // const fetchSubcategories = useCallback(async () => {
@@ -380,18 +407,20 @@ const EmissionWidget = React.memo(
       const selectedCategory = scopeMappings[scope].find((info) =>
         info.Category.some((c) => c.name === category)
       );
-    
+
       const newSubcategories = selectedCategory
         ? selectedCategory.Category.find((c) => c.name === category).SubCategory
         : [];
-    
+
       setSubcategories(newSubcategories);
-    
+
       // Check if subcategory and activity are already selected
       if (subcategory && activity) {
+        if(rowType === "calculated")
+          return;
         // Check the Redux cache for activities
         if (activityCache[rowId]) {
-          setActivities(activityCache[rowId]);
+          setActivities(activityCache[rowId])
         } else {
           // If not cached, fetch them
           fetchActivities();
@@ -400,7 +429,6 @@ const EmissionWidget = React.memo(
         fetchActivities();
       }
     }, [category, subcategory, activity, activityCache, rowId]);
-    
 
     useEffect(() => {
       if (category) {
@@ -883,7 +911,12 @@ const EmissionWidget = React.memo(
       openInfoModal();
     };
 
-    const getActivityPlaceholder = (rowType, isFetching, activities, activity) => {
+    const getActivityPlaceholder = (
+      rowType,
+      isFetching,
+      activities,
+      activity
+    ) => {
       if (rowType === "calculated") {
         return activity;
       } else if (rowType !== "calculated" && activity) {
@@ -896,8 +929,6 @@ const EmissionWidget = React.memo(
         return "Select Activity";
       }
     };
-    
-    
 
     const renderFirstColumn = () => {
       switch (rowType) {
@@ -1077,9 +1108,23 @@ const EmissionWidget = React.memo(
                   <input
                     ref={inputRef}
                     type="text"
-                    placeholder={getActivityPlaceholder(rowType, isFetching, activities, activity)}
+                    placeholder={
+                      activitySearch.length >= 3
+                        ? "Fetching suggestions..."
+                        : getActivityPlaceholder(
+                            rowType,
+                            isFetching,
+                            activities,
+                            activity
+                          )
+                    }
                     value={activitySearch}
-                    onChange={(e) => setActivitySearch(e.target.value)}
+                    onChange={(e) => {
+                      setActivitySearch(e.target.value);
+                      if (e.target.value.length >= 3) {
+                        fetchActivities();
+                      }
+                    }}
                     onFocus={toggleDropdown}
                     className={getFieldClass(
                       "Activity",
@@ -1088,12 +1133,8 @@ const EmissionWidget = React.memo(
                     disabled={["assigned", "calculated", "approved"].includes(
                       value.rowType
                     )}
-                    style={{
-                      "::placeholder": {
-                        color: scopeErrors["Activity"] ? "#EF4444" : "inherit",
-                      },
-                    }}
                   />
+
                   {scopeErrors["Activity"] && (
                     <div className="text-[12px] text-red-500 absolute left-0 -bottom-[28px]">
                       {getErrorMessage("Activity")}
