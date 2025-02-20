@@ -220,7 +220,7 @@ const Screen2 = ({
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp, togglestatus]);
+  }, [selectedOrg, year, selectedCorp, togglestatus,datarefresh]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

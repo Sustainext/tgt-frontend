@@ -56,14 +56,24 @@ const EmployeeHiresTurnover = ({ apiData }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData = [
+  const griData = [
     {
       tagName: "GRI 401-1",
       toggle: "1",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P3-E2",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-2",
+    },
+  ];
+  const sdgData = [
+  
     {
       tagName: "SDG 5",
       toggle: "2",
@@ -94,6 +104,8 @@ const EmployeeHiresTurnover = ({ apiData }) => {
           apiData={apiData}
           title={"Employment"}
           topic={"SocEmployment"}
+          griData={griData}
+          brsr={brsr}
         />
 
         <div className="ml-3 flex relative">

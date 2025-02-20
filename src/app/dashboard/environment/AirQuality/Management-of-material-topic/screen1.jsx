@@ -18,70 +18,70 @@ const widgets = {
 };
 
 const view_path =
-  "gri_collect_supplier_environmental_assessment_management_material_topic";
+  "gri-environment-air-quality-management_of_material_topic";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      GRI33cd: {
-        type: "string",
-        title:
-          "Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.",
-      },
-      GRI33e: {
-        type: "string",
-        title:
-          "Mention the process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process. Also, specify lessons learned and how these have been incoporated to organisation's operational policies and procedures.",
-      },
-    },
-  },
-};
-const uiSchema = {
-  items: {
-    "ui:order": ["GRI33cd", "GRI33e"],
-    GRI33cd: {
-      "ui:title":
-        "Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.",
-      "ui:tooltip":
-        "<p>1) Mention the policies or commitments the organization has developed specifically for the selected material topics.</p> <br> <p> 2)Examples of actions taken to prevent or mitigate potential negative impacts (e.g., adaptation/modification measures, facility upgrading, training, red-flag systems).</p> <br> <p>Mitigation: Action(s) taken to reduce the extent of a negative impact.</p><br><p>3)Mention actions to address actual negative impacts, including actions to provide for or cooperate in their remediation. Remediation: Means to counteract or make good a negative impact or provision of remedy.</p>",
-      "ui:widget": "MaterialtopicWidgets",
-      "ui:titiledisplay": "none",
-      "ui:toltipdisplay": "none",
-      "ui:gridisplay": "none",
-      "ui:gri": ["GRI 3-3-c", "GRI 3-3-d"],
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    GRI33e: {
-      "ui:title":
-        "Mention the process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process. Also, specify lessons learned and how these have been incoporated to organisation's operational policies and procedures.",
-      "ui:tooltip":
-        "<p>1) Process used to track the effectiveness of the actions can include internal or external auditing or verification, impact assessments, measurement systems, stakeholder feedback, grievance mechanisms, external performance ratings, and benchmarking.</p> <br> <p>  2)Specify the goals, targets and indicators used to evaluate the progress. Also, describe the effectiveness of the actions taken, including progress toward the goals and targets.</p> <br> <p> 3)The organization can briefly describe lessons learned that have led to changes in its policies or practices (e.g., training for workers, giving additional attention to the performance of suppliers), or that have led to plans for changes that will manage impacts more successfully in the future.</p>",
-      "ui:widget": "MaterialtopicWidgets",
-      "ui:titiledisplay": "block",
-      "ui:toltipdisplay": "block",
-      "ui:gridisplay": "block",
-      "ui:gri": ["GRI 3-3-e"],
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
+// const schema = {
+//   type: "array",
+//   items: {
+//     type: "object",
+//     properties: {
+//       GRI33cd: {
+//         type: "string",
+//         title:
+//           "Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.",
+//       },
+//       GRI33e: {
+//         type: "string",
+//         title:
+//           "Mention the process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process. Also, specify lessons learned and how these have been incoporated to organisation's operational policies and procedures.",
+//       },
+//     },
+//   },
+// };
+// const uiSchema = {
+//   items: {
+//     "ui:order": ["GRI33cd", "GRI33e"],
+//     GRI33cd: {
+//       "ui:title":
+//         "Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.",
+//       "ui:tooltip":
+//         "<p>1) Mention the policies or commitments the organization has developed specifically for the selected material topics.</p> <br> <p> 2)Examples of actions taken to prevent or mitigate potential negative impacts (e.g., adaptation/modification measures, facility upgrading, training, red-flag systems).</p> <br> <p>Mitigation: Action(s) taken to reduce the extent of a negative impact.</p><br><p>3)Mention actions to address actual negative impacts, including actions to provide for or cooperate in their remediation. Remediation: Means to counteract or make good a negative impact or provision of remedy.</p>",
+//       "ui:widget": "MaterialtopicWidgets",
+//       "ui:titiledisplay": "none",
+//       "ui:toltipdisplay": "none",
+//       "ui:gridisplay": "none",
+//       "ui:gri": ["GRI 3-3-c", "GRI 3-3-d"],
+//       "ui:horizontal": true,
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
+//     GRI33e: {
+//       "ui:title":
+//         "Mention the process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process. Also, specify lessons learned and how these have been incoporated to organisation's operational policies and procedures.",
+//       "ui:tooltip":
+//         "<p>1) Process used to track the effectiveness of the actions can include internal or external auditing or verification, impact assessments, measurement systems, stakeholder feedback, grievance mechanisms, external performance ratings, and benchmarking.</p> <br> <p>  2)Specify the goals, targets and indicators used to evaluate the progress. Also, describe the effectiveness of the actions taken, including progress toward the goals and targets.</p> <br> <p> 3)The organization can briefly describe lessons learned that have led to changes in its policies or practices (e.g., training for workers, giving additional attention to the performance of suppliers), or that have led to plans for changes that will manage impacts more successfully in the future.</p>",
+//       "ui:widget": "MaterialtopicWidgets",
+//       "ui:titiledisplay": "block",
+//       "ui:toltipdisplay": "block",
+//       "ui:gridisplay": "block",
+//       "ui:gri": ["GRI 3-3-e"],
+//       "ui:horizontal": true,
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
 
-    "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
-      layout: "horizontal",
-    },
-  },
-};
+//     "ui:options": {
+//       orderable: false,
+//       addable: false,
+//       removable: false,
+//       layout: "horizontal",
+//     },
+//   },
+// };
 const validateRows = (data) => {
   return data.map((row) => {
     const rowErrors = {};
@@ -271,8 +271,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

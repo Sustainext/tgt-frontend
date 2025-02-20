@@ -167,6 +167,7 @@ const Screen1 = ({
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
+      
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
@@ -180,13 +181,21 @@ const Screen1 = ({
   useEffect(() => {
     if (selectedOrg && year && togglestatus) {
       if (togglestatus === "Corporate" && selectedCorp) {
-        loadFormData();
+        setTimeout(() => {
+          loadFormData();
+        }, 1000); // 1000ms = 1 second delay
+       
       } else if (togglestatus === "Corporate" && !selectedCorp) {
         setFormData(initialFormData);
         setRemoteSchema({});
         setRemoteUiSchema({});
       } else {
-        loadFormData();
+        setTimeout(() => {
+          setFormData(initialFormData);
+          setRemoteSchema({});
+          setRemoteUiSchema({});
+          loadFormData();
+        }, 1000); // 1000ms = 1 second delay
       }
 
       toastShown.current = false;
@@ -196,6 +205,7 @@ const Screen1 = ({
       }
     }
   }, [selectedOrg, year, selectedCorp, togglestatus]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission

@@ -12,7 +12,13 @@ import TasksPage from "./Home/Tasks";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("tab1");
+  const [isAdmin, setIsAdmin] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const userRole = localStorage.getItem("isAdmin");
+    setIsAdmin(Boolean(userRole));
+  }, []);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -46,7 +52,9 @@ const Dashboard = () => {
               >
                 Dashboard
               </button>
-              <button
+              {
+                isAdmin && (
+                  <button
                 className={`px-4 rounded-b-none text-sm font-bold leading-[15px] ${
                   activeTab === "tab3"
                     ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
@@ -56,13 +64,15 @@ const Dashboard = () => {
               >
                 All Tasks
               </button>
+                )
+              }
             </div>
 
             <div className="flex-grow">
               <div className="flex-grow">
                 {activeTab === "tab1" && <HomeDashboard setActiveTab={setActiveTab} />}
 
-                {activeTab === "tab3" && <TasksPage />}
+                {isAdmin && activeTab === "tab3" && <TasksPage />}
               </div>
             </div>
           </div>

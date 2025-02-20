@@ -115,7 +115,7 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload,fileData 
               </label>
               <input
                 type="text"
-                value={task?.assigned_date || "24/10/2025"}
+                value={task?.created_at.split("T")[0] || "Invalid Date"}
                 disabled
                 className="flex-1 p-2 rounded-md text-gray-600 bg-gray-50"
               />
@@ -127,7 +127,7 @@ const TaskFillModal = ({ isOpen, onClose, task, onSubmit, onFileUpload,fileData 
               </label>
               <input
                 type="text"
-                value={task?.deadline || "24/10/2025"}
+                value={task?.deadline || "Invalid Date"}
                 disabled
                 className="flex-1 p-2 rounded-md text-gray-600 bg-gray-50"
               />

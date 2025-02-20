@@ -32,6 +32,8 @@ import SupplierMaterialtopic from "./supplier-environmental-assessment/Managemen
 import SignificantSpills from './Waste/significant-spills/page'
 import ConsolidationApproach from './Emissions/consolidationApproach/page'
 import Standards from './Emissions/standards/page'
+import EmissionIntensity from "./Emissions/emission-Intensity/page"
+import Emissionreductioninitiativesnew from "./Emissions/emission-reduction-initiatives/page"
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -55,6 +57,9 @@ import {
 import {f_setSectionName} from '../../../lib/redux/features/FileInfoSlice'
 import BaseYear from './Emissions/baseYear/page'
 import NitrogenOxide from './AirQuality/NitrogenOxide/page'
+import StandardMethodology from "./AirQuality/StandardMethodology/page";
+import ODSImportExport from "./AirQuality/ODS-Import-Export/page";
+import EmissionsODS from "./AirQuality/Emissions-ODS/page";
 
 const environment = () => {
   const { open } = GlobalState();
@@ -103,7 +108,7 @@ const environment = () => {
       // "Management of Material topic effluent",
       "Management of Material topic air quality"
     ];
-    const emissionTabs = ["GHG Emissions","Base Year","Consolidation Approach","Standards"];
+    const emissionTabs = ["GHG Emissions","Base Year","Consolidation Approach","Standards","EmissionIntensity","EmissionReductionInitiatives"];
     const energyTabs = [
       "Energy consumed inside the organization",
       "Energy consumption outside of the organization",
@@ -149,7 +154,10 @@ const environment = () => {
     // ];
 
     const airQualityTab=[
-      "Nitrogen Oxides"
+      "Nitrogen Oxides",
+      "Standard Methodology",
+      "ODS Import Export",
+      "Emissions ODS"
     ]
 
     // Set the header based on the active tab category
@@ -204,6 +212,8 @@ const environment = () => {
             {activeTab === "Base Year" && <BaseYear apiData={data} />}
             {activeTab === "Consolidation Approach"  && <ConsolidationApproach apiData={data} /> }
             {activeTab ==="Standards" && <Standards apiData={data} /> }
+            {activeTab ==="EmissionIntensity" && <EmissionIntensity apiData={data} /> }
+            {activeTab ==="EmissionReductionInitiatives" && <Emissionreductioninitiativesnew apiData={data} /> }
             {/* Energy start */}
             {activeTab === "Management of Material topic energy" && (
               <EnergyMaterialtopic apiData={data} />
@@ -292,6 +302,18 @@ const environment = () => {
             {activeTab ===
               "Nitrogen Oxides" && (
               <NitrogenOxide apiData={data} />
+            )}
+            {activeTab ===
+              "Standard Methodology" && (
+              <StandardMethodology apiData={data} />
+            )}
+            {activeTab ===
+              "ODS Import Export" && (
+              <ODSImportExport apiData={data} />
+            )}
+            {activeTab ===
+              "Emissions ODS" && (
+              <EmissionsODS apiData={data} />
             )}
           </div>
         </div>

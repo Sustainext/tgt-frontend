@@ -32,146 +32,146 @@ const widgets = {
   CustomUnitWidget:CustomUnitWidget
 };
 
-const view_path = "gri-environment-waste-306-3a-3b-waste_generated";
+const view_path = "gri-environment-air-quality-nitrogen-oxide";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-        EmissionSource: {
-        type: "string",
-        title: "Emission Source",
-        tooltiptext: "Emission sources in this context are where these air emissions, such as NOx, SOx, PM, etc. are released. Examples: Combustion processes in power plants and industrial boilers. Emissions from vehicle tailpipes, including cars, trucks, and buses. Energy production from fossil fuel-based power generation. Agricultural activities, such as methane emissions from livestock.",
-        display: "block",
-      },
-      AirPollutant: {
-        type: "string",
-        title: "Air Pollutant",
-        enum:["NOx","SOx","Persistent organic pollutants (POP)","Volatile organic compounds (VOC)","Hazardous air pollutants (HAP)","Particulate matter (PM 10)","Particulate matter (PM 2.5)","Carbon Monoxide(CO)","Other (please specify)"],
-        tooltiptext:
-          "Select the air pollutant from the given dropdown.",
-        display: "block",
-      },
-      Totalemissions: {
-        type: "string",
-        title: "Total emissions",
-        tooltiptext:
-          "Specify the total emissions of the selected air pollutant.",
-        display: "block",
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ["ppm", "µµg/m³", "ton (US Short ton)", "Gram (g)", "Kilograms (kg)","tonnes (t)","Pound (lb)","Other (please specify)"],
-        // tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-        display: "none",
-      },
-      SourceofEmissionFactorused: {
-        type: "string",
-        title: "Source of Emission Factor used",
-        tooltiptext: "Specify the source of emission factors used for air emissions calculation.",
-        display: "block",
-      },
+// const schema = {
+//   type: "array",
+//   items: {
+//     type: "object",
+//     properties: {
+//         EmissionSource: {
+//         type: "string",
+//         title: "Emission Source",
+//         tooltiptext: "Emission sources in this context are where these air emissions, such as NOx, SOx, PM, etc. are released. Examples: Combustion processes in power plants and industrial boilers. Emissions from vehicle tailpipes, including cars, trucks, and buses. Energy production from fossil fuel-based power generation. Agricultural activities, such as methane emissions from livestock.",
+//         display: "block",
+//       },
+//       AirPollutant: {
+//         type: "string",
+//         title: "Air Pollutant",
+//         enum:["NOx","SOx","Persistent organic pollutants (POP)","Volatile organic compounds (VOC)","Hazardous air pollutants (HAP)","Particulate matter (PM 10)","Particulate matter (PM 2.5)","Carbon Monoxide(CO)","Other (please specify)"],
+//         tooltiptext:
+//           "Select the air pollutant from the given dropdown.",
+//         display: "block",
+//       },
+//       Totalemissions: {
+//         type: "string",
+//         title: "Total emissions",
+//         tooltiptext:
+//           "Specify the total emissions of the selected air pollutant.",
+//         display: "block",
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ["ppm", "µµg/m³", "ton (US Short ton)", "Gram (g)", "Kilograms (kg)","tonnes (t)","Pound (lb)","Other (please specify)"],
+//         // tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+//         display: "none",
+//       },
+//       SourceofEmissionFactorused: {
+//         type: "string",
+//         title: "Source of Emission Factor used",
+//         tooltiptext: "Specify the source of emission factors used for air emissions calculation.",
+//         display: "block",
+//       },
      
 
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-    },
-  },
-};
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//     },
+//   },
+// };
 
-const uiSchema = {
-  items: {
-    classNames: "fieldset",
-    "ui:order": [
-      "EmissionSource",
-      "AirPollutant",
-      "Totalemissions",
-      "Unit",
-      "SourceofEmissionFactorused",
-      "AssignTo",
-      "FileUpload",
-      "Remove",
-    ],
-    EmissionSource: {
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    AirPollutant: {
-      "ui:widget": "selectWidget",
-      "ui:options": {
-        label: false,
-      },
-    },
-    Totalemissions: {
-     "ui:widget": "inputWidget",
-      "ui:inputtype": "number",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    Unit: {
-      "ui:widget": "CustomUnitWidget",
-      "ui:inputtype": "number",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    SourceofEmissionFactorused: {
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
+// const uiSchema = {
+//   items: {
+//     classNames: "fieldset",
+//     "ui:order": [
+//       "EmissionSource",
+//       "AirPollutant",
+//       "Totalemissions",
+//       "Unit",
+//       "SourceofEmissionFactorused",
+//       "AssignTo",
+//       "FileUpload",
+//       "Remove",
+//     ],
+//     EmissionSource: {
+//       "ui:widget": "inputWidget",
+//       "ui:horizontal": true,
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
+//     AirPollutant: {
+//       "ui:widget": "selectWidget",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
+//     Totalemissions: {
+//      "ui:widget": "inputWidget",
+//       "ui:inputtype": "number",
+//       "ui:horizontal": true,
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
+//     Unit: {
+//       "ui:widget": "CustomUnitWidget",
+//       "ui:inputtype": "number",
+//       "ui:horizontal": true,
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
+//     SourceofEmissionFactorused: {
+//         "ui:widget": "inputWidget",
+//         "ui:horizontal": true,
+//         "ui:options": {
+//           label: false,
+//         },
+//       },
 
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    FileUpload: {
-      "ui:widget": "FileUploadWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      "ui:options": {
-        label: false,
-      },
-    },
-    "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
-      layout: "horizontal",
-    },
-  },
-};
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       "ui:horizontal": true,
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
+//     FileUpload: {
+//       "ui:widget": "FileUploadWidget",
+//       "ui:horizontal": true,
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       "ui:options": {
+//         label: false,
+//       },
+//     },
+//     "ui:options": {
+//       orderable: false,
+//       addable: false,
+//       removable: false,
+//       layout: "horizontal",
+//     },
+//   },
+// };
 const NitrogenOxideTable = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
@@ -351,8 +351,8 @@ const NitrogenOxideTable = ({ location, year, month }) => {
         <div>
           <Form
             className="flex"
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
