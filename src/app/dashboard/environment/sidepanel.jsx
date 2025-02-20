@@ -9,6 +9,7 @@ import {
   MdKeyboardArrowDown,
   MdOutlineWater,
   MdOutlineEmojiNature,
+  MdOutlineAir
 } from "react-icons/md";
 
 import { GiWoodPile,GiWaterfall } from "react-icons/gi";
@@ -21,6 +22,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
   const [isMaterialsVisible, setMaterialsVisible] = useState(false);
   const [isSupplierVisible, setIsSupplierVisible] = useState(false);
   // const [isEffluentVisible, setIsEffluentVisible] = useState(false);
+  const [isAirQualityVisible,setIsAirQualityVisible]=useState(false)
 
   const materialityEnvData=apiData&&apiData.environment?apiData.environment:{}
 
@@ -74,6 +76,16 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
   //   setIsSupplierVisible(false);
   //   setEmisssion(false);
   // };
+
+  const toggleAirQualityVisible = () => {
+    setIsAirQualityVisible(!isAirQualityVisible)
+    setWaterVisible(false);
+    setEnergySectionVisible(false);
+    setWasteVisible(false);
+    setMaterialsVisible(false);
+    setIsSupplierVisible(false);
+    setEmisssion(false);
+  };
 
   const toggleMaterialsVisible = () => {
     setMaterialsVisible(!isMaterialsVisible);
@@ -1141,6 +1153,104 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                       actions taken
                     </p>
                   </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Air quality Start */}
+          <div>
+            <button
+              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
+              ${
+                activeTab === "Nitrogen Oxides" ||
+                activeTab === "Management of Material topic air quality"
+                  ? "text-[#007EEF]"
+                  : "bg-transparent text-[#727272] "
+              }`}
+              onClick={toggleAirQualityVisible}
+            >
+              <div className="w-[15%]">
+                <MdOutlineAir className="w-5 h-5 mr-2" />
+              </div>
+              <div className="w-[50%] text-left ml-2">
+                <span className="indent-0">Air Quality</span>
+              </div>
+              {materialityEnvData&&materialityEnvData.EnvAirQuality?.is_material_topic?(
+                <div className="w-[20%] flex justify-end">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span  className="w-[20%]"></span>
+              )}
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
+               
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isAirQualityVisible && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+    
+            {isAirQualityVisible && (
+              <>
+                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData&&materialityEnvData.EnvAirQuality?.is_material_topic?(
+                    <div>
+                      <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Mandatory Management Disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Management of Material topic air quality"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Management of Material topic air quality")
+                      }
+                    >
+                      Management of Material topic
+                    </p>
+                  </div>
+                    </div>
+                  ):(
+                    <div></div>
+                  )}
+                
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                    Topic Disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Nitrogen Oxides"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Nitrogen Oxides")
+                      }
+                    >
+                      {" "}
+                      Nitrogen oxides (NOx), 
+                      sulfur oxides (SOx), 
+                      and other significant 
+                      air emissions
+                    </p>
+                  </div>
+                 
                 </div>
               </>
             )}

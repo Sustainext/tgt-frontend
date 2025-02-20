@@ -2,6 +2,7 @@ import {React,useCallback,useState} from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
+import { debounce } from "lodash";
 
 const DisabledTextAreaWidget = ({
   onChange,
@@ -26,7 +27,7 @@ const DisabledTextAreaWidget = ({
   // Handle input restrictions
   const restrictedKeysNumber = ["e", "E", "+", "-"];
   const restrictedKeysText = uiSchema.restrictedKeysText || [];
-  const debounceOnChange = useCallback(_.debounce(onChange, 1000), [onChange]);
+  const debounceOnChange = useCallback(debounce(onChange, 1000), [onChange]);
 
   const [inputValue, setInputValue] = useState(value);
   const handleChange = (event) => {

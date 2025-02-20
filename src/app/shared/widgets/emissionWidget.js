@@ -22,6 +22,7 @@ import {
   toggleSelectAll,
   setFocusedField,
   clearFocusedField,
+  setActivitiesForRow,
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AssignEmissionModal from "./assignEmissionModal";
@@ -29,8 +30,6 @@ import MultipleAssignEmissionModal from "./MultipleAssignEmissionModal";
 import { getMonthName } from "@/app/utils/dateUtils";
 import { fetchClimatiqActivities } from "../../utils/climatiqApi.js";
 import CalculationInfoModal from "@/app/shared/components/CalculationInfoModal";
-import axiosInstance from "@/app/utils/axiosMiddleware";
-import { getLocationName } from "../../utils/locationName";
 
 const EmissionWidget = React.memo(
   ({
@@ -39,7 +38,7 @@ const EmissionWidget = React.memo(
     scope,
     year,
     countryCode,
-    activityCache,
+    // activityCache,
     updateCache,
     onRemove,
     index,
@@ -83,6 +82,8 @@ const EmissionWidget = React.memo(
 
     const locationname = useSelector((state) => state.emissions.locationName);
     const monthName = useSelector((state) => state.emissions.monthName);
+
+    const activityCache = useSelector((state) => state.emissions.activitiesCache);
 
     //file log code//
     const getIPAddress = async () => {
@@ -340,6 +341,11 @@ const EmissionWidget = React.memo(
             customFetchExecuted,
           });
 
+          const fetchedActivities = response.results;
+
+      // Save activities to Redux
+      dispatch(setActivitiesForRow({ rowId, activities: fetchedActivities }));
+
           setActivities((prevActivities) => {
             const updatedActivities = [...prevActivities, ...response.results];
             updateCache(subcategory, updatedActivities);
@@ -356,19 +362,45 @@ const EmissionWidget = React.memo(
       [subcategory, countryCode, year, updateCache]
     );
 
+    // const fetchSubcategories = useCallback(async () => {
+    //   const selectedCategory = scopeMappings[scope].find((info) =>
+    //     info.Category.some((c) => c.name === category)
+    //   );
+    //   const newSubcategories = selectedCategory
+    //     ? selectedCategory.Category.find((c) => c.name === category).SubCategory
+    //     : [];
+    //   setSubcategories(newSubcategories);
+
+    //   if (subcategory && !activity) {
+    //     fetchActivities();
+    //   }
+    // }, [category]);
+
     const fetchSubcategories = useCallback(async () => {
       const selectedCategory = scopeMappings[scope].find((info) =>
         info.Category.some((c) => c.name === category)
       );
+    
       const newSubcategories = selectedCategory
         ? selectedCategory.Category.find((c) => c.name === category).SubCategory
         : [];
+    
       setSubcategories(newSubcategories);
-
-      if (subcategory && !activity) {
+    
+      // Check if subcategory and activity are already selected
+      if (subcategory && activity) {
+        // Check the Redux cache for activities
+        if (activityCache[rowId]) {
+          setActivities(activityCache[rowId]);
+        } else {
+          // If not cached, fetch them
+          fetchActivities();
+        }
+      } else if (subcategory && !activity) {
         fetchActivities();
       }
-    }, [category]);
+    }, [category, subcategory, activity, activityCache, rowId]);
+    
 
     useEffect(() => {
       if (category) {
@@ -828,15 +860,6 @@ const EmissionWidget = React.memo(
       dispatch(toggleSelectAll({ scope, isChecked }));
     };
 
-    // useEffect(() => {
-    //   if (
-    //     value.assigned_to &&
-    //     value.assigned_to !== "" &&
-    //     rowType === "default"
-    //   ) {
-    //     setRowType("assigned");
-    //   }
-    // }, [value.assigned_to]);
     useEffect(() => {
       if (
         value.assigned_to &&
@@ -859,6 +882,22 @@ const EmissionWidget = React.memo(
     const handleInfoClick = () => {
       openInfoModal();
     };
+
+    const getActivityPlaceholder = (rowType, isFetching, activities, activity) => {
+      if (rowType === "calculated") {
+        return activity;
+      } else if (rowType !== "calculated" && activity) {
+        return activity;
+      } else if (isFetching.current) {
+        return "Fetching activities...";
+      } else if (activities.length === 0) {
+        return "No relevant activities found";
+      } else {
+        return "Select Activity";
+      }
+    };
+    
+    
 
     const renderFirstColumn = () => {
       switch (rowType) {
@@ -1038,15 +1077,7 @@ const EmissionWidget = React.memo(
                   <input
                     ref={inputRef}
                     type="text"
-                    placeholder={
-                      rowType === "calculated"
-                        ? activity
-                        : isFetching.current
-                        ? "Fetching activities..."
-                        : activities.length === 0
-                        ? "No relevant activities found"
-                        : "Select Activity"
-                    }
+                    placeholder={getActivityPlaceholder(rowType, isFetching, activities, activity)}
                     value={activitySearch}
                     onChange={(e) => setActivitySearch(e.target.value)}
                     onFocus={toggleDropdown}
@@ -1085,13 +1116,6 @@ const EmissionWidget = React.memo(
                       )}
                     >
                       <option value="" className="px-1">
-                        {/* {rowType === "calculated"
-                          ? activity
-                          : isFetching.current
-                          ? "Fetching activities..."
-                          : activities.length === 0
-                          ? "No relevant activities found"
-                          : "Select Activity"} */}
                         {rowType === "calculated"
                           ? activity
                           : "Select Activity"}

@@ -42,6 +42,7 @@ import {
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
 import Standardsmethodology from "./energy/standards-methodology/standards-methodology"
+import MaterialTopicAirQuality from './AirQuality/Management-of-material-topic/page'
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMaterialityData,
@@ -55,6 +56,7 @@ import {
 } from "../../../lib/redux/features/materialitySlice";
 import {f_setSectionName} from '../../../lib/redux/features/FileInfoSlice'
 import BaseYear from './Emissions/baseYear/page'
+import NitrogenOxide from './AirQuality/NitrogenOxide/page'
 
 const environment = () => {
   const { open } = GlobalState();
@@ -101,6 +103,7 @@ const environment = () => {
       "Management of Material topic waste",
       "Management of Material topic energy",
       // "Management of Material topic effluent",
+      "Management of Material topic air quality"
     ];
     const emissionTabs = ["GHG Emissions","Base Year","Consolidation Approach","Standards","EmissionIntensity","EmissionReductionInitiatives"];
     const energyTabs = [
@@ -147,6 +150,10 @@ const environment = () => {
     //   "Significant Spills",
     // ];
 
+    const airQualityTab=[
+      "Nitrogen Oxides"
+    ]
+
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Emission"));
@@ -164,6 +171,9 @@ const environment = () => {
     // else if (effluentTab.includes(activeTab)) {
     //   dispatch(setHeadertext2("Effluents"));
     // } 
+    else if (airQualityTab.includes(activeTab)) {
+      dispatch(setHeadertext2("Air Quality"));
+    } 
     else if (materialnewTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Management of Material Topic"));
     } else {
@@ -278,6 +288,14 @@ const environment = () => {
             {activeTab ===
               "Negative environmental impacts in the supply chain and actions taken" && (
               <NegativeEnvironmentImpact apiData={data} />
+            )}
+            {activeTab ===
+              "Management of Material topic air quality" && (
+              <MaterialTopicAirQuality apiData={data} />
+            )}
+            {activeTab ===
+              "Nitrogen Oxides" && (
+              <NitrogenOxide apiData={data} />
             )}
           </div>
         </div>

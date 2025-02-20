@@ -1,79 +1,177 @@
 "use client";
 import React, { useState } from "react";
 import { MdOutlineEdit, MdOutlineDeleteOutline } from "react-icons/md";
-// import axiosInstance from "../../../utils/axiosMiddleware";
+import { Oval } from "react-loader-spinner";
+import axiosInstance from "../../../../utils/axiosMiddleware";
 import {  toast } from "react-toastify";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
-const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,deleteData,selectedRows }) => {
 
-//   const handleDelete= async(id)=>{
-   
-//     const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/${id}/`;
-//     try {
-//       const response = await axiosInstance.delete(url);
-//       if(response.status===204){
-//         toast.success(
-//           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-//             <RiDeleteBin6Line style={{ marginRight: '10px', color: '#EB9042',fontSize:'37px' }} />
-//             <div>
-//             <strong style={{ display: 'block', marginBottom: '4px', fontSize: '16px' }}> {/* Main heading */}
-//           Materiality Assessment Deleted
-//          </strong>
-//          <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.4' }}> {/* Paragraph aligned below heading */}
-//            Materiality Assessment has been successfully deleted. Changes are made in the platform.
-//          </p>
-//           </div>
-//           </div>, {
-//             position: "top-right",
-//             autoClose: 3000, 
-//             hideProgressBar: false,
-//             closeOnClick: true,
-//             pauseOnHover: true,
-//             draggable: true,
-//             progress: undefined,
-//             theme: "light", 
-//             style: {
-//               borderRadius: '8px', 
-//               border: '1px solid #E5E5E5', 
-//               boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-//               width:'371px',
-//             },
-//             icon: false, 
-//         });
+const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen,setDeleteDisabled, setIsModalOpen,deleteData,selectedRows,bulkDelete}) => {
 
-//         setRefresh((prevRefresh) => !prevRefresh);
-//         setIsModalOpen(false);
+    const [loopen, setLoOpen] = useState(false);
+
+    const LoaderOpen = () => {
+      setLoOpen(true);
+    };
+  
+    const LoaderClose = () => {
+      setLoOpen(false);
+    };
+
+  const handleDelete= async(id,name)=>{
+    LoaderOpen()
+    const url = `${process.env.BACKEND_API_URL}/supplier_assessment/stakeholder/${id}/`;
+    try {
+      const response = await axiosInstance.delete(url);
+      if(response.status===204){
+        LoaderClose()
+        toast.success(
+          <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+            <RiDeleteBin6Line style={{ marginRight: '6px', color: '#EB9042',fontSize:'25px' }} />
+            <div>
+            <strong style={{ display: 'block', marginBottom: '4px', fontSize: '16px' }}> {/* Main heading */}
+            Stakeholder Deleted
+         </strong>
+         <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.4' }}> {/* Paragraph aligned below heading */}
+         {`Stakeholder ${name?name:''}  has been successfully deleted.`}
+         </p>
+          </div>
+          </div>, {
+            position: "top-right",
+            autoClose: 3000, 
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light", 
+            style: {
+              borderRadius: '8px', 
+              border: '1px solid #E5E5E5', 
+              boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+              width:'371px',
+            },
+            icon: false, 
+        });
+
+        setRefresh((prevRefresh) => !prevRefresh);
+        setDeleteDisabled(true)
+        setIsModalOpen(false);
         
-//       }
-//       else{
-//         toast.error("Oops, something went wrong", {
-//           position: "top-right",
-//           autoClose: 1000,
-//           hideProgressBar: false,
-//           closeOnClick: true,
-//           pauseOnHover: true,
-//           draggable: true,
-//           progress: undefined,
-//           theme: "colored",
-//         });
-//       }
+      }
+      else{
+        LoaderClose()
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
       
-//     }
-//     catch (error) {
-//       toast.error("Oops, something went wrong", {
-//         position: "top-right",
-//         autoClose: 1000,
-//         hideProgressBar: false,
-//         closeOnClick: true,
-//         pauseOnHover: true,
-//         draggable: true,
-//         progress: undefined,
-//         theme: "colored",
-//       });
-//     }
-//   }
+    }
+    catch (error) {
+        LoaderClose()
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  }
+
+  const handleBulkDelete = async (ids) => {
+    
+    if (!Array.isArray(ids) || ids.length === 0) {
+      toast.error("No valid IDs provided for deletion", {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "colored",
+      });
+      return;
+    }
+  
+    // Convert BigInt IDs to strings if needed
+    const processedIds = ids.map((id) => (typeof id === "bigint" ? id.toString() : id));
+  
+    LoaderOpen();
+  
+    const url = `${process.env.BACKEND_API_URL}/supplier_assessment/stakeholder/delete-many/`;
+  
+    try {
+        // const token = getAuthToken();
+  
+      const response = await axiosInstance.delete(url, {
+        data: { ids:processedIds },
+      },
+      );
+  
+      if (response.status === 200) {
+        LoaderClose();
+        toast.success(
+          <div style={{ display: "flex", alignItems: "flex-start" }}>
+            <RiDeleteBin6Line
+              style={{ marginRight: "6px", color: "#EB9042", fontSize: "25px" }}
+            />
+            <div>
+              <strong style={{ display: "block", marginBottom: "4px", fontSize: "16px" }}>
+                Stakeholders Deleted
+              </strong>
+              <p style={{ margin: 0, fontSize: "14px", lineHeight: "1.4" }}>
+                Multiple stakeholders have been successfully deleted.
+              </p>
+            </div>
+          </div>,
+          {
+            position: "top-right",
+            autoClose: 3000,
+            theme: "light",
+            style: {
+              borderRadius: "8px",
+              border: "1px solid #E5E5E5",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+              width: "371px",
+            },
+            icon: false,
+          }
+        );
+        
+        setRefresh((prevRefresh) => !prevRefresh);
+        setDeleteDisabled(true)
+        setIsModalOpen(false);
+      } else {
+        LoaderClose();
+        toast.error("Oops, something went wrong while deleting stakeholders", {
+          position: "top-right",
+          autoClose: 1000,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      LoaderClose();
+      console.error("Bulk delete failed:", error);
+      toast.error("Oops, something went wrong while deleting stakeholders", {
+        position: "top-right",
+        autoClose: 1000,
+        theme: "colored",
+      });
+    }
+  };
+  
+  
+  
    
   return (
     <>
@@ -94,14 +192,14 @@ const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,dele
               <div className="p-4 pb-0">
                 <p className="text-[14px] text-[#667085] font-[400]">
                   <span className="text-[14px] text-[#C62828] mr-1">Warning!</span>
-                  {`This process will delete the stakeholder ${selectedRows?selectedRows:''}`}
+                  {`This process will delete the stakeholder ${selectedRows.name?selectedRows.name:selectedRows}`}
                 </p>
                
               </div>
 
               <div className="p-4">
                   <p className="text-[14px] text-[#667085] font-[400]">
-                 { `Are you sure you want to delete ${selectedRows > 1 ? 'these' : 'this'} entry${selectedRows > 1 ? 'ies' : ''}?`}
+                 { `Are you sure you want to delete ${selectedRows > 1 ? 'these' : 'this'} entr${selectedRows > 1 ? 'ies' : 'y'}?`}
                   </p>
                   <div className="flex justify-between mt-5">
                   <button
@@ -114,7 +212,14 @@ const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,dele
                 </button>
                 <button
                   className="w-full h-full mr-2 py-2 px-3 bg-[#EF5350] text-white rounded-[8px] shadow cursor-pointer"
-                //   onClick={()=>{handleDelete(deleteData.id)}}
+                  onClick={()=>{
+                    if(bulkDelete?.length>0){
+                        handleBulkDelete(bulkDelete)
+                    }
+                    else{
+                        handleDelete(deleteData.id,deleteData.name)
+                    }
+                    }}
                 >
                   Yes, Delete
                 </button>
@@ -124,6 +229,18 @@ const DeleteStakeholder = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,dele
           </div>
         </div>
       )}
+       {loopen && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                <Oval
+                  height={50}
+                  width={50}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              </div>
+            )}
     </>
   );
 };
