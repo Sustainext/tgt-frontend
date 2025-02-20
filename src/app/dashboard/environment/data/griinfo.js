@@ -3413,4 +3413,127 @@ organization).</p>
     ],
     link: "https://www.globalreporting.org/pdf.ashx?id=15010",
   },
+  {
+    category: ["53"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+     GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 305-7 Nitrogen oxides (NOx), sulfur oxides (SOx), and other significant air emissions
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+            Compilation Requirements
+            </p>
+
+
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13 When compiling the information specified in Disclosure 305-7, the reporting organization shall select one of the following approaches for calculating significant air emissions:
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13.1 Direct measurement of emissions (such as online analyzers);
+
+</p>
+            <p className="text-[11px] text-[#727272] mb-2">2.13.2 Calculation based on site-specific data;
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13.3 Calculation based on published emission factors;
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">2.13.4 Estimation. If estimations are used due to a lack of default figures, the
+            organization shall indicate the basis on which figures were estimated.</p>
+           
+           
+          </div>
+        
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=15010",
+  },
+
+  {
+    category: ["54"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-15.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-400 text-[17px] font-bold ml-2">SDG 15</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 15: Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 15.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2020, promote the implementation of sustainable management of all types of forests, halt deforestation, restore degraded forests and substantially increase afforestation and reforestation globally
+
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">15.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Progress towards sustainable forest management
+
+            </p>
+          </div>
+         
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal15",
+  },
+  {
+    category: ["55"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-14.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#007DBC] text-[17px] font-bold ml-2">SDG 14</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Conserve and sustainably use the oceans, seas and marine resources for sustainable development
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 14.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Minimize and address the impacts of ocean acidification, including through enhanced scientific cooperation at all levels
+
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">14.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Average marine acidity (pH) measured at agreed suite of representative sampling stations
+
+            </p>
+          </div>
+         
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal14",
+  },
 ];

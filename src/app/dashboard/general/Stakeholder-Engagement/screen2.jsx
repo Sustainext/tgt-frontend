@@ -208,25 +208,33 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month,togglestatus
     }
   };
 
-   useEffect(() => {
-     if (selectedOrg && year && togglestatus) {
-       if (togglestatus === "Corporate" && selectedCorp) {
-         loadFormData();
-       } else if (togglestatus === "Corporate" && !selectedCorp) {
-         setFormData(initialFormData);
-         setRemoteSchema({});
-         setRemoteUiSchema({});
-       } else {
-         loadFormData();
-       }
- 
-       toastShown.current = false;
-     } else {
-       if (!toastShown.current) {
-         toastShown.current = true;
-       }
-     }
-   }, [selectedOrg, year, selectedCorp, togglestatus]);
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        setTimeout(() => {
+          loadFormData();
+        }, 1000); // 1000ms = 1 second delay
+       
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        setTimeout(() => {
+          setFormData(initialFormData);
+          setRemoteSchema({});
+          setRemoteUiSchema({});
+          loadFormData();
+        }, 1000); // 1000ms = 1 second delay
+      }
+
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission

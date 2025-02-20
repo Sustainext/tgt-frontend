@@ -59,14 +59,24 @@ const Managementwaste = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 306 - 2',
-        toggle:'25',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName:'GRI 306 - 2',
+      toggle:'25',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-E10",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-10",
     },
+  ];
+  const sdgData=[
+
     {
         tagName:'SDG 3',
         toggle:'46',
@@ -102,7 +112,7 @@ const Managementwaste = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+         <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} brsr={brsr} griData={griData} />
        
 
         <div className="ml-3 flex relative">
