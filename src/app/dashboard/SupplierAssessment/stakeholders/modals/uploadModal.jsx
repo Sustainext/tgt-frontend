@@ -174,18 +174,18 @@ const UploadFileModal = ({
                     <div className="flex gap-2 items-center mb-2">
                     <IoIosWarning className="w-5 h-5 text-[#F98845]" />
                     <h2 className="text-black text-[18px] font-bold">
-                    Stakeholders Import not Complete
+                    Stakeholders Import Incomplete
                     </h2>
                   </div>
     
                   <p className="text-[#667085] text-[14px] mb-4">
-                  All the rows from the file has not been uploaded.
+                  Some rows could not be processed.
                   </p>
 
                   <div className="border-t-2 border-b-2">
                   <p className="flex gap-2 mb-2 mt-2">
                     <span className="text-[#344054] text-[14px] font-semibold">
-                    Rows successfully uploaded:
+                    Successful Entries:
                     </span>{" "}
                     <p className="text-[#667085] text-[14px]">
                       {fileData.total_valid_rows}
@@ -193,7 +193,7 @@ const UploadFileModal = ({
                   </p>
                   <p className="flex gap-2 mb-2">
                     <span className="text-[#344054] text-[14px] font-semibold">
-                    Failed:
+                    Failed Entries:
                     </span>{" "}
                     <p className="text-[#667085] text-[14px]">
                     {fileData.total_incomplete_rows}

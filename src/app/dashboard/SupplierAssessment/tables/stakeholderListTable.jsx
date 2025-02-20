@@ -660,7 +660,7 @@ let axiosConfig = {
         onPageChange={onPageChange}
       />
       <button onClick={()=>{handleDownload(groupId.id,groupId.name)}} className="text-[15px] text-[#007EEF] font-semibold flex justify-end w-full">
-        Export List <IoMdDownload className=" mt-0.5 ml-1 w-5 h-5" />
+        Export Full List <IoMdDownload className=" mt-0.5 ml-1 w-5 h-5" />
       </button>
 
 
