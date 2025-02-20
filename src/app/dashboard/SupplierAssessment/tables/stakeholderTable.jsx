@@ -278,7 +278,7 @@ useEffect(()=>{
                           <p className="text-sm text-[#344054] font-semibold flex gap-2">
                             Last Edited By:{" "}
                             <span className="font-normal">
-                            {capitalizeName(row.createdBy_name)}
+                            {capitalizeName(row.updateByName)}
                             </span>
                           </p>
                         </div>
@@ -305,7 +305,7 @@ useEffect(()=>{
                           <p className="text-sm text-[#344054] font-semibold flex gap-2">
                             Last Edited:{" "}
                             <span className="font-normal">
-                            {row.createdOn}
+                            {row.updatedAt}
                             </span>
                           </p>
                         </div>

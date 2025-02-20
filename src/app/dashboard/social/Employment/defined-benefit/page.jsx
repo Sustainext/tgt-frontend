@@ -57,15 +57,23 @@ const Definedbenefit = ({ apiData }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData = [
+  const griData = [
     {
-      tagName: "GRI 201-3",
-      toggle: "120",
+      tagName: "GRI 401 - 2",
+      toggle: "5",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
   ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P3-E2",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-2",
+    },
+  ];
+
 
   return (
     <>
@@ -73,7 +81,8 @@ const Definedbenefit = ({ apiData }) => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <SocialTopBar
           toggleDrawer={toggleDrawer}
-          sdgData={sdgData}
+          brsr={brsr}
+          griData={griData}
           apiData={apiData}
           title={"Employment"}
           topic={"SocEmployment"}

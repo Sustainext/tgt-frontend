@@ -107,7 +107,8 @@ const StakeholderPage = ({
             params: {
                 page: currentPage,
                 page_size: rowsPerPage,
-                search:searchQuery
+                search:searchQuery,
+                group_id:groupId.id,
             }
         })
         if (response.status === 200) {
@@ -284,8 +285,10 @@ const StakeholderPage = ({
                 setIsStakeholderOpen={setIsModalOpen}
               />
               <div className="flex justify-center align-center">
-                <button className="text-[16px] text-[#007EEF] font-semibold flex">
-                  Import Frome a List <MdAdd className=" mt-0.5 ml-1 w-5 h-5" />
+                <button onClick={() => {
+                  setIsUploadModalOpen(true);
+                }} className="text-[16px] text-[#007EEF] font-semibold flex">
+                  Import From a List <MdAdd className=" mt-0.5 ml-1 w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -301,12 +304,14 @@ const StakeholderPage = ({
         setIsModalOpen={setIsDeleteModalOpen}
         selectedRows={selectedRows.length}
         setRefresh={setRefresh}
+        setDeleteDisabled={setDeleteDisabled}
         bulkDelete={selectedRows}
       />
       <UploadFileModal
         isModalOpen={isUploadModalOpen}
         setIsModalOpen={setIsUploadModalOpen}
         setRefresh={setRefresh}
+        groupId={groupId}
       />
       <CreateStakeholder
         isModalOpen={isModalOpen}

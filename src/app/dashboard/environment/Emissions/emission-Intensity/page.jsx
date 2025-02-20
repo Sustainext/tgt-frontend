@@ -3,17 +3,15 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Socialheader4 from "../../socialheader4";
-import NewEmployeeHire from "./New-Employee-Hire/page";
-import Employeeturnover from "./Employee-turnover/page";
-// import {Socialdata} from "../../data/socialgriinfo"
-import { Socialdata } from "../../data/socialgriinfo";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Energydata } from "../../../../shared/data/Energydata";
+import EnvHeader2 from "../../environmentheader2";
 import { useSelector } from "react-redux";
-import SocialTopBar from "../../socialTopBar";
+import EmissionTopBar from "../emissionTopbar";
+import EmissionIntensitybody from "./emission-Intensity-body";
 
-const EmployeeHiresTurnover = ({ apiData }) => {
+const EmissionIntensity = ({ apiData }) => {
   const {
     corporate_id,
     organization_id,
@@ -30,12 +28,13 @@ const EmployeeHiresTurnover = ({ apiData }) => {
   const [selectedCorp, setSelectedCorp] = useState(
     corporate_id ? corporate_id : ""
   );
-  const [activeMonth, setActiveMonth] = useState(1);
-  const [location, setLocation] = useState("");
+  const [activeMonth, setActiveMonth] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [togglestatus,setToggleStatus] = useState("Organization");
+  const [togglestatus, setToggleStatus] = useState("Organization");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -46,7 +45,7 @@ const EmployeeHiresTurnover = ({ apiData }) => {
   };
   useEffect(() => {
     var newData = [];
-    Socialdata.map((program) => {
+    Energydata.map((program) => {
       program.category.map((tag) => {
         if (tag === category) {
           newData.push(program);
@@ -56,41 +55,37 @@ const EmployeeHiresTurnover = ({ apiData }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+
   const griData = [
     {
-      tagName: "GRI 401-1",
-      toggle: "1",
+      tagName: "GRI 305-4",
+      toggle: "43",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
+
+    
   ];
 
-  const brsr = [
-    {
-      tagName: "BRSR C-P3-E2",
-      id: "tooltip-$brsr1",
-      content: "BRSR-Section C-Principle 3-Essential Indicators-2",
-    },
-  ];
   const sdgData = [
-  
+
     {
-      tagName: "SDG 5",
-      toggle: "2",
+      tagName: "SDG 13",
+      toggle: "sd4",
       textColor: "#fff",
-      bgColor: "bg-orange-600",
+      bgColor: "bg-lime-900",
     },
     {
-      tagName: "SDG 8",
-      toggle: "3",
+      tagName: "SDG 14",
+      toggle: "sd24",
       textColor: "#fff",
-      bgColor: "bg-red-900",
+      bgColor: "bg-[#007DBC]",
     },
     {
-      tagName: "SDG 10",
-      toggle: "4",
+      tagName: "SDG 15",
+      toggle: "sd38",
       textColor: "#fff",
-      bgColor: "bg-pink-500",
+      bgColor: "bg-[#40AE49]",
     },
   ];
 
@@ -98,32 +93,35 @@ const EmployeeHiresTurnover = ({ apiData }) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <SocialTopBar
+        <EmissionTopBar
           toggleDrawer={toggleDrawer}
-          sdgData={sdgData}
           apiData={apiData}
-          title={"Employment"}
-          topic={"SocEmployment"}
+          sdgData={sdgData}
           griData={griData}
-          brsr={brsr}
         />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            New employee hires and employee turnover
-            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data corresponding to total water
-                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                            width: "290px", backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: 'left',
-                        }}>
-
-                        </ReactTooltip> */}
+          GHG Emission Intensity 
+            {/* <MdInfoOutline
+              data-tooltip-id={`tooltip-$es10`}
+              data-tooltip-content="This section documents the data corresponding to the direct economic value generated and distributed."
+              className="mt-1.5 ml-2 text-[15px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$es10`}
+              place="top"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+              }}
+            ></ReactTooltip> */}
           </h6>
         </div>
         <div
@@ -170,9 +168,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <Socialheader4
-        activeMonth={activeMonth}
-        setActiveMonth={setActiveMonth}
+      <EnvHeader2
         selectedOrg={selectedOrg}
         setSelectedOrg={setSelectedOrg}
         selectedCorp={selectedCorp}
@@ -181,26 +177,14 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setYear={setYear}
         setToggleStatus={setToggleStatus}
       />
-      <p className="mt-6 mx-4 text-[12px] mb-3">
-        {" "}
-        Please ensure that data added in this section corresponds to the
-        location selected above
-      </p>
-      <NewEmployeeHire
+
+      <EmissionIntensitybody
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
-        month={activeMonth}
-        togglestatus={togglestatus}
-      />
-      <Employeeturnover
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        year={year}
-        month={activeMonth}
         togglestatus={togglestatus}
       />
     </>
   );
 };
-export default EmployeeHiresTurnover;
+export default EmissionIntensity;

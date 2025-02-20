@@ -22,6 +22,7 @@ const SupplierAssessment = () => {
   const dispatch = useDispatch();
   const [showStakeholderList,setStakeholderList]=useState(false)
   const [groupId,setGroupId]=useState({})
+  const [refresh, setRefresh] = useState(false);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -116,12 +117,12 @@ const SupplierAssessment = () => {
                 {activeTab === "tab1" && <Assessments setActiveTab={setActiveTab} />}
 
                 {activeTab === "tab2" && <Forms />}
-                {activeTab === "tab3" && <StakeholderGroup setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} groupId={groupId} setGroupId={setGroupId} />}
+                {activeTab === "tab3" && <StakeholderGroup setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} groupId={groupId} setGroupId={setGroupId} refresh={refresh} setRefresh={setRefresh} />}
               </div>
             </div>
           </div>
         </div>
-        <WelcomeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setActiveTab={setActiveTab} setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} />
+        <WelcomeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setActiveTab={setActiveTab} setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} groupId={groupId} setGroupId={setGroupId} refresh={refresh} setRefresh={setRefresh} />
       </div>
     )}
       

@@ -8,7 +8,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList,showStakeholderList,refresh,
+const CreateStakeholderGroup = ({ isModalOpen,groupId,setGroupId, setIsModalOpen,setStakeholderList,showStakeholderList,refresh,
     setRefresh }) => {
  
     const router=useRouter();
@@ -22,6 +22,7 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
     const [corporates,setCorporates]=useState([])
     const [selectedOrg,setSelelectedOrg]=useState('')
     const [loopen, setLoOpen] = useState(false);
+    const [groupDetails,setGroupDetails]=useState({})
 
     const refreshForm=()=>{
         setgroupName('')
@@ -109,6 +110,7 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
             const response = await axiosInstance.post(url,data);
              if (response.status === 201) {
                     LoaderClose();
+                    setGroupDetails(response.data)
                     setGroupCreated(true)
                     refreshForm()
                   } else {
@@ -340,8 +342,14 @@ const CreateStakeholderGroup = ({ isModalOpen, setIsModalOpen,setStakeholderList
                         <button
                           type="button"
                           onClick={()=>{ 
+                            setGroupId({
+                                id:groupDetails.id,
+                                name:groupDetails.name,
+                                organization:groupDetails.organization_name,
+                                corporate:groupDetails.corporate_names
+                              })
                             setStakeholderList(true)
-                        //    router.push('/dashboard/SupplierAssessment/stakeholders')
+                       
     
                           }}
                           className="bg-blue-500 text-white px-10 py-2 rounded-md hover:bg-blue-600"

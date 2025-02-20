@@ -9,7 +9,7 @@ import { MdAdd } from "react-icons/md";
 import axiosInstance from "../../../utils/axiosMiddleware";
 import { debounce } from "lodash";
 
-const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setGroupId }) => {
+const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setGroupId,refresh,setRefresh }) => {
     const [totalItems, setTotalItems] = useState(0);
     const rowsPerPageOptions = [7, 10, 15]; // Rows-per-page options
     const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +17,6 @@ const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setG
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [stakeholderGroupData, setStakeholderGroupData] = useState([]);
     const [loopen, setLoOpen] = useState(false);
-    const [refresh, setRefresh] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedUsers, setselectedUsers] = useState([]);
 
@@ -55,11 +54,14 @@ const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setG
                     createdOn: formatDate(val.created_at),
                     type: val.group_type,
                     createdBy_name:val.created_by_name,
+                    updateByName:val.updated_by_name,
+                    updateByEmail:val.updated_by_email,
                     organization: val.organization_name,
                     organization_id: val.organization,
                     corporate_ids: val.corporate_entity,
                     corporate: val.corporate_names,
-                    noOfStakeholder: val.stakeholder_count
+                    noOfStakeholder: val.stakeholder_count,
+                    updatedAt:formatDate(val.updated_at)
                 }));
                 setStakeholderGroupData(data);
             }
@@ -220,6 +222,8 @@ const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setG
                 showStakeholderList={showStakeholderList}
                 refresh={refresh}
                 setRefresh={setRefresh}
+                groupId={groupId}
+                setGroupId={setGroupId}
             />
 
             {loopen && (
