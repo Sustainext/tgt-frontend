@@ -248,8 +248,6 @@ const EmissionsODSTable = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [formDataPrev, setFormDataPrev] = useState([
-    {
-      data: [
         {
           produceODS: "No",
           importODS: "No",
@@ -257,8 +255,6 @@ const EmissionsODSTable = ({ location, year, month }) => {
           useODSFeedstock: "No",
           destroyODS: "No",
         },
-      ],
-    },
   ]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -349,7 +345,7 @@ const EmissionsODSTable = ({ location, year, month }) => {
   const getActiveFields = (formDataPrev) => {
     if (!formDataPrev || formDataPrev.length === 0) return {};
   
-    const latestData = formDataPrev[0].data[0]; 
+    const latestData = formDataPrev[0]; 
     console.log("Latest Data:", latestData);
   
     // Individual field activations
