@@ -22,128 +22,26 @@ const widgets = {
   RemoveWidget,
 };
 
-const view_path = "gri-environment-waste-306-3a-3b-waste_generated";
+const view_path = "gri-environment-air-quality-ods_production-standard-methodologies";
 const client_id = 1;
 const user_id = 1;
 
-// const schema = {
-//   type: "array",
-//   items: {
-//     type: "object",
-//     properties: {
-//       StandardsUsed: {
-//         type: "string",
-//         title: "Standards Used",
-//         enum: [
-//           "GRI 305-6 (2016)",
-//           "Montreal Protocol",
-//           "Intergovernmental Panel on Climate Change (IPCC)",
-//           "Others (please specify)",
-//         ],
-//         tooltiptext: "Please select the standard used to calculate the ODS emissions.",
-//       },
-//       MethodologiesUsed: {
-//         type: "string",
-//         title: "Methodologies Used",
-//         enum: [
-//           "Calculation based on site-specific data",
-//           "Calculations based on published criteria",
-//           "Direct measurements of ODS",
-//           "Estimation",
-//           "Others (please specify)",
-//         ],
-//         tooltiptext: "Specify methodologies used to calculate ODS emissions.",
-//       },
-//       AssumptionsConsidered: {
-//         type: "string",
-//         title: "Assumptions Considered",
-//         tooltiptext: "Include the description of assumptions  considered to compile data. ",
-//       },
-//       CalculationToolsUsed: {
-//         type: "string",
-//         title: "Calculation tools used",
-//         tooltiptext: "Include the description of calculation tools used to calculate ODS emissions.",
-//       },
-//       AssignTo: {
-//         type: "string",
-//         title: "Assign To",
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//         title: "File Upload",
-//       },
-//       Remove: {
-//         type: "string",
-//         title: "Remove",
-//       },
-//     },
-//     required: ["StandardsUsed", "MethodologiesUsed", "AssumptionsConsidered", "CalculationToolsUsed"],
-//   },
-// };
-
-// const uiSchema = {
-//   items: {
-//     classNames: "fieldset",
-//     "ui:order": [
-//       "StandardsUsed",
-//       "MethodologiesUsed",
-//       "AssumptionsConsidered",
-//       "CalculationToolsUsed",
-//       "AssignTo",
-//       "FileUpload",
-//       "Remove",
-//     ],
-//     StandardsUsed: {
-//       "ui:widget": "selectWidget",
-//       "ui:options": { label: false },
-//     },
-//     MethodologiesUsed: {
-//       "ui:widget": "selectWidget",
-//       "ui:options": { label: false },
-//     },
-//     AssumptionsConsidered: {
-//       "ui:widget": "inputWidget",
-//       "ui:options": { label: false },
-//     },
-//     CalculationToolsUsed: {
-//       "ui:widget": "inputWidget",
-//       "ui:options": { label: false },
-//     },
-//     AssignTo: {
-//       "ui:widget": "AssignTobutton",
-//       "ui:options": { label: false },
-//     },
-//     FileUpload: {
-//       "ui:widget": "FileUploadWidget",
-//       "ui:options": { label: false },
-//     },
-//     Remove: {
-//       "ui:widget": "RemoveWidget",
-//       "ui:options": { label: false },
-//     },
-//     "ui:options": {
-//       orderable: false,
-//       addable: false,
-//       removable: false,
-//       layout: "horizontal",
-//     },
-//   },
-// };
-
-const StandardMethodologyTable = ({ location, year, month }) => {
+const StandardMethodologyTable = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [loopen, setLoOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
+  const [r_schema, setRSchema] = useState({});
+  const [r_uiSchema, setRUiSchema] = useState({});
   const toastShown = useRef(false);
 
   const LoaderOpen = () => setLoOpen(true);
   const LoaderClose = () => setLoOpen(false);
 
+  /** ✅ Fix: Correct Validation Function */
   const validateRows = (data) => {
     return data.map((row) => {
-      const errors = {};
+      let errors = {};
       if (!row.StandardsUsed) errors.StandardsUsed = "Standards Used is required.";
       if (!row.MethodologiesUsed) errors.MethodologiesUsed = "Methodologies Used is required.";
       if (!row.AssumptionsConsidered) errors.AssumptionsConsidered = "Assumptions Considered is required.";
@@ -159,67 +57,123 @@ const StandardMethodologyTable = ({ location, year, month }) => {
       user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
-        toast.success("Data added successfully");
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         loadFormData();
       } else {
-        toast.error("Oops, something went wrong");
+        throw new Error();
       }
     } catch (error) {
-      toast.error("Oops, something went wrong");
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } finally {
       LoaderClose();
     }
   };
 
+  /** ✅ Fix: Removed extra useEffect and structured dependencies correctly */
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    
     try {
       const response = await axiosInstance.get(url);
-      setFormData(response.data.form_data?.[0]?.data || [{}]);
+      console.log("API Response:", response.data);
+      setRSchema(response.data.form[0]?.schema || {});
+      setRUiSchema(response.data.form[0]?.ui_schema || {});
+      setFormData(response.data.form_data[0]?.data || [{}]);
     } catch (error) {
-      console.error("API call failed:", error);
+      console.error("Error loading data:", error);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
   };
 
+  /** ✅ Fix: Restructured useEffect for fetching data */
   useEffect(() => {
-    if (location && year && month) {
-      loadFormData();
-    }
-  }, [location, year, month]);
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRSchema({});
+        setRUiSchema({});
+      } else {
+        loadFormData();
+      }
 
+      toastShown.current = false;
+    } else if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
+
+  /** ✅ Fix: Correctly handles form changes */
   const handleChange = (e) => {
     setFormData(e.formData);
   };
 
+  /** ✅ Fix: Prevent API call if errors exist */
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validateRows(formData);
     setValidationErrors(errors);
 
-    if (errors.some((rowErrors) => Object.keys(rowErrors).length > 0)) return;
+    // Check if any row has an error
+    const hasErrors = errors.some((rowErrors) => Object.keys(rowErrors).length > 0);
+    if (hasErrors) {
+      toast.error("Please fill all required fields before submitting", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
+
     updateFormData();
   };
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex py-4`}>
+      <div className="overflow-auto custom-scrollbar flex py-4">
         <Form
           className="flex"
-          schema={schema}
-          uiSchema={uiSchema}
+          schema={r_schema}
+          uiSchema={r_uiSchema}
           formData={formData}
           onChange={handleChange}
           validator={validator}

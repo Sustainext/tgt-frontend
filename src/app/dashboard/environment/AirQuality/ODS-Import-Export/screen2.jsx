@@ -12,22 +12,14 @@ const AccordionItem = ({
   tooltiptext,
   sdg,
   display,
-  location,
-  setLocationMessage,
-  year,
-  setYearMessage,
+  selectedOrg,
+  setOrgMessage
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
-    if (!location) {
-      setLocationMessage("Please select location");
-
-      return;
-    }
-    if (!year) {
-      setYearMessage("Please select year");
-
+    if (!selectedOrg) {
+      setOrgMessage("Please select an organization.");
       return;
     }
     setIsOpen(!isOpen);
@@ -116,11 +108,7 @@ const AccordionItem = ({
 };
 
 const Screen2 = ({
-  location,
-  year,
-  month,
-  setLocationMessage,
-  setYearMessage,
+  selectedOrg, year, selectedCorp, togglestatus, setOrgMessage
 }) => {
   return (
     <>
@@ -130,12 +118,11 @@ const Screen2 = ({
           tooltiptext={`This section documents the data corresponding to the standards, methodologies, assumptions, and/or calculation tools used.`}
           sdg={["GRI 305-6d"]}
           display="block"
-          location={location}
-          setLocationMessage={setLocationMessage}
+          selectedOrg={selectedOrg}
+          setOrgMessage={setOrgMessage}
           year={year}
-          setYearMessage={setYearMessage}
         >
-          <StandardMethodologyTable location={location} year={year} month={month} />
+          <StandardMethodologyTable selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} togglestatus={togglestatus} />
         </AccordionItem>
       </div>
     </>

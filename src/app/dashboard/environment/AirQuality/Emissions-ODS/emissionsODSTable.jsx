@@ -249,17 +249,15 @@ const EmissionsODSTable = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [formDataPrev, setFormDataPrev] = useState([
     {
-      id: 1087,
       data: [
         {
-          produceODS: "Yes",
+          produceODS: "No",
           importODS: "No",
-          exportODS: "Yes",
+          exportODS: "No",
           useODSFeedstock: "No",
           destroyODS: "No",
         },
       ],
-      updated_at: "2025-02-20T04:51:20.920329Z",
     },
   ]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -337,25 +335,9 @@ const EmissionsODSTable = ({ location, year, month }) => {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
-      // setRemoteUiSchema(response.data.form[0].ui_schema);
       const form_parent = response.data.form_data;
-      setFormData(form_parent[0].data);
-    } catch (error) {
-      console.error("API call failed:", error);
-    } finally {
-      LoaderClose();
-    }
-  };
-
-  const loadFormDataPrev = async () => {
-    LoaderOpen();
-    setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path_prev}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-    try {
-      const response = await axiosInstance.get(url);
-      console.log("API called successfully:", response.data);
-      const form_parent = response.data.form_data;
-      setFormDataPrev(form_parent[0].data);
+      setFormData(form_parent[0]?.data);
+      setFormDataPrev(response.data.pre_form_data)
     } catch (error) {
       console.error("API call failed:", error);
     } finally {
@@ -366,18 +348,37 @@ const EmissionsODSTable = ({ location, year, month }) => {
   // Disable fields based on previous screen data
   const getActiveFields = (formDataPrev) => {
     if (!formDataPrev || formDataPrev.length === 0) return {};
-
-    // const latestData = formDataPrev[0].data;
-    const latestData = formDataPrev[0].data[0];
+  
+    const latestData = formDataPrev[0].data[0]; 
     console.log("Latest Data:", latestData);
+  
+    // Individual field activations
+    const isODSProducedActive = latestData.produceODS === "Yes";
+    const isODSImportedActive = latestData.importODS === "Yes";
+    const isODSExportedActive = latestData.exportODS === "Yes";
+    const isODSUsedAsFeedstockActive = latestData.useODSFeedstock === "Yes";
+    const isODSDestroyedActive = latestData.destroyODS === "Yes";
+  
+    // "EmissionSource", "ODS", and "Unit" should only be enabled if ALL are "Yes"
+    const areMainFieldsEnabled =
+      isODSProducedActive ||
+      isODSImportedActive ||
+      isODSExportedActive ||
+      isODSUsedAsFeedstockActive ||
+      isODSDestroyedActive;
+  
     return {
-      ODSProduced: latestData.produceODS == "Yes",
-      ODSImported: latestData.importODS == "Yes",
-      ODSExported: latestData.exportODS == "Yes",
-      ODSUsedasfeedstock: latestData.useODSFeedstock == "Yes",
-      ODSDestroyedbyapprovedtechnologies: latestData.destroyODS == "Yes",
+      EmissionSource: areMainFieldsEnabled,
+      ODS: areMainFieldsEnabled,
+      Unit: areMainFieldsEnabled,
+      ODSProduced: isODSProducedActive,
+      ODSImported: isODSImportedActive,
+      ODSExported: isODSExportedActive,
+      ODSUsedasfeedstock: isODSUsedAsFeedstockActive,
+      ODSDestroyedbyapprovedtechnologies: isODSDestroyedActive,
     };
   };
+  
 
   const generateUiSchema = (formDataPrev) => {
     const activeFields = getActiveFields(formDataPrev);
@@ -403,15 +404,15 @@ const EmissionsODSTable = ({ location, year, month }) => {
         ],
         EmissionSource: {
           "ui:widget": "inputWidget",
-          "ui:options": { label: false },
+          "ui:options": { label: false, disabled: !activeFields.EmissionSource },
         },
         ODS: {
           "ui:widget": "selectWidget",
-          "ui:options": { label: false },
+          "ui:options": { label: false, disabled: !activeFields.ODS },
         },
         Unit: {
           "ui:widget": "selectWidget",
-          "ui:options": { label: false },
+          "ui:options": { label: false, disabled: !activeFields.Unit },
         },
         ODSProduced: {
           "ui:widget": "inputWidget",
