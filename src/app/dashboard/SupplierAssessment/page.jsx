@@ -12,19 +12,24 @@ import Forms from "./forms/page";
 import StakeholderGroup from "./stakeholderGroup/page";
 import WelcomeModal from './modals/welcomeModal'
 import StakeholderPage from "./stakeholders/page";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const SupplierAssessment = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const [isModalOpen,setIsModalOpen]=useState(false)
   const dispatch = useDispatch();
   const [showStakeholderList,setStakeholderList]=useState(false)
+  const [groupId,setGroupId]=useState({})
+  const [refresh, setRefresh] = useState(false);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
   const Tabs=[
    {
-    title:"Assessment",
+    title:"Assessments",
     id:"tab1"
    },
    {
@@ -42,11 +47,32 @@ const SupplierAssessment = () => {
     dispatch(setHeadertext2('Supplier Assessment'));
   }, [activeTab, dispatch]);
 
+  const getStakeholderGroup= async()=>{
+    try{
+        const response = await axiosInstance.get(`/supplier_assessment/stakeholder-group/`);
+        if(response.status==200){
+           if(response.data.results.length>0){
+            setIsModalOpen(false)
+           }
+           else{
+            setIsModalOpen(true)
+           }
+        }
+    }
+    catch(e){
+        console.error(e)
+    }
+  }
+
+  useEffect(()=>{
+    getStakeholderGroup()
+  },[])
+
   return (
     <>
     {showStakeholderList?(
       <div>
-        <StakeholderPage setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} setActiveTab={setActiveTab} />
+        <StakeholderPage setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} setActiveTab={setActiveTab} groupId={groupId} setGroupId={setGroupId} />
       </div>
     ):(
       <div>
@@ -88,20 +114,20 @@ const SupplierAssessment = () => {
 
             <div className="flex-grow">
               <div className="flex-grow">
-                {activeTab === "tab1" && <Assessments />}
+                {activeTab === "tab1" && <Assessments setActiveTab={setActiveTab} />}
 
                 {activeTab === "tab2" && <Forms />}
-                {activeTab === "tab3" && <StakeholderGroup setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} />}
+                {activeTab === "tab3" && <StakeholderGroup setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} groupId={groupId} setGroupId={setGroupId} refresh={refresh} setRefresh={setRefresh} />}
               </div>
             </div>
           </div>
         </div>
-        <WelcomeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setActiveTab={setActiveTab} />
+        <WelcomeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setActiveTab={setActiveTab} setStakeholderList={setStakeholderList} showStakeholderList={showStakeholderList} groupId={groupId} setGroupId={setGroupId} refresh={refresh} setRefresh={setRefresh} />
       </div>
     )}
       
 
-      
+      <ToastContainer style={{marginRight:'50px'}}  />
     </>
   );
 };

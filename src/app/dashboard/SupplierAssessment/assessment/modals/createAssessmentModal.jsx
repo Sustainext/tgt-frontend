@@ -6,7 +6,7 @@ import { MdAdd,MdOutlineAssignment } from "react-icons/md";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { LuMoveLeft } from "react-icons/lu";
 
-const CreateAssessmentModal = ({ isModalOpen, setIsModalOpen }) => {
+const CreateAssessmentModal = ({ isModalOpen, setIsModalOpen,setActiveTab }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [assessmentName, setAssessmentName] = useState("");
   const [selectedForm, setSelectedForm] = useState("");
@@ -14,14 +14,17 @@ const CreateAssessmentModal = ({ isModalOpen, setIsModalOpen }) => {
   const [dueDate, setDueDate] = useState("");
   const [validationError, setValidationError] = useState(false);
 
-  const forms = ["Form A","Form B"];
+  const forms = [
+    // "Form A",
+    // "Form B"
+  ];
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const options = [
-    "Stakeholder Groups",
-    "Stakeholder Groups 2",
-    "Stakeholder Groups 3",
-    "Stakeholder Groups 4",
+    // "Stakeholder Groups",
+    // "Stakeholder Groups 2",
+    // "Stakeholder Groups 3",
+    // "Stakeholder Groups 4",
   ];
 
   const toggleDropdown = () => {
@@ -225,7 +228,7 @@ const CreateAssessmentModal = ({ isModalOpen, setIsModalOpen }) => {
                     {forms.length > 0 ? (
                       <div></div>
                     ) : (
-                      <div className="mt-2 flex gap-1 cursor-pointer ml-1">
+                      <div className="mt-2 flex gap-1 cursor-pointer ml-1" onClick={()=>{setIsModalOpen(false);setActiveTab('tab2')}}>
                         <MdAdd className="text-[#007EEF]" />
                         <p className="text-[12px] text-[#007EEF]">
                           {" "}
@@ -295,7 +298,7 @@ const CreateAssessmentModal = ({ isModalOpen, setIsModalOpen }) => {
                     {options.length > 0 ? (
                       <div></div>
                     ) : (
-                      <div className="mt-2 flex gap-1 cursor-pointer ml-1">
+                      <div className="mt-2 flex gap-1 cursor-pointer ml-1" onClick={()=>{setIsModalOpen(false);setActiveTab('tab3')}}>
                         <MdAdd className="text-[#007EEF]" />
                         <p className="text-[12px] text-[#007EEF]">
                           {" "}
