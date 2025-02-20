@@ -82,7 +82,7 @@ const ReviewTasksModal = ({
           <h2 className="text-xl font-semibold">Review Task</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-red-500"
+            className="text-gray-500 hover:text-red-500 text-xl"
           >
             ×
           </button>

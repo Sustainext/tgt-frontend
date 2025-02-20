@@ -1448,7 +1448,8 @@ const EmissionWidget = React.memo(
                               >
                                 <button
                                   type="button"
-                                  className="px-2 py-1 mr-2 w-[120px] mt-1 flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white"
+                                  className="px-2 py-1 mr-2 w-[120px] mt-1 flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white disabled:opacity-70 disabled:cursor-not-allowed"
+                                  disabled={rowType === "approved"}
                                 >
                                   <LuTrash2 className="me-2" /> Delete File
                                 </button>
