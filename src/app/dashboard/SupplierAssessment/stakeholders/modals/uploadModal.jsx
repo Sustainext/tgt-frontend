@@ -97,7 +97,7 @@ const UploadFileModal = ({
                             <p style={{ margin: 0, fontSize: "14px", lineHeight: "1.4" }}>
                               {" "}
                               {/* Paragraph aligned below heading */}
-                              {`Stakeholders has been imported into the ${groupId.name?groupId.name:''} stakeholder group`}
+                              {`Stakeholders has been imported into the ${groupId?groupId?.name:''} stakeholder group`}
                             </p>
                           </div>
                         </div>,

@@ -542,7 +542,7 @@ let axiosConfig = {
                     >
                       <p className="font-semibold">
                         {row.created_last_editedBy.length > 0
-                          ? capitalizeName(row.created_last_editedBy[0].name)
+                          ? capitalizeName(row.created_last_editedBy[0]?.name)
                           : ""}
                       </p>
                       {row.created_last_editedBy.length > 0
@@ -554,13 +554,13 @@ let axiosConfig = {
                           <p className="text-sm text-[#344054] font-semibold flex gap-2">
                             Created By:{" "}
                             <span className="font-normal">
-                              {capitalizeName(row.created_last_editedBy[0].name)}
+                              {capitalizeName(row.created_last_editedBy[0]?.name)}
                             </span>
                           </p>
                           <p className="text-sm text-[#344054] font-semibold flex gap-2">
                             Last Edited By:{" "}
                             <span className="font-normal">
-                              {capitalizeName(row.created_last_editedBy[1].name)}
+                              {capitalizeName(row.created_last_editedBy[1]?.name)}
                             </span>
                           </p>
                         </div>
