@@ -19,8 +19,10 @@ const AccordionItem = ({
   year,
   setYearMessage,
   selectedOrg,
+  isOpen,
+  setIsOpen
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+
   const { open } = GlobalState();
   const dispatch = useDispatch();
   const handleClick = () => {
@@ -122,6 +124,7 @@ const Emissionreductioninitiativesbody = ({
   year,
   togglestatus,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <div className="mx-3">
@@ -138,12 +141,15 @@ outsourcing.`}
           selectedCorp={selectedCorp}
           year={year}
           togglestatus={togglestatus}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
         >
           <Screen1
             selectedOrg={selectedOrg}
             selectedCorp={selectedCorp}
             year={year}
             togglestatus={togglestatus}
+            setIsOpen={setIsOpen}
           />
         </AccordionItem>
       </div>

@@ -16,7 +16,7 @@ const widgets = {
 
 };
 
-const view_path = "gri-environment-emissions-GHG emission-intensity";
+const view_path = "gri-environment-emissions-GHG-emission-reduction-initiatives";
 const client_id = 1;
 const user_id = 1;
 const schema = {
@@ -191,8 +191,8 @@ const uiSchema = {
 };
 
 
-const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
-  const [formData, setFormData] = useState([{}]);
+const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus,setIsOpen }) => {
+  const [formData, setFormData] = useState();
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -263,17 +263,20 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData(); 
+    
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
-      console.log("API called successfully:", response.data);
+      // console.log("API called successfully:", response.data);
+
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       const form_parent = response.data.form_data;
-      setFormData(form_parent[0].data);
+      setFormData(form_parent[0].data[0]);
     } catch (error) {
       console.error("API call failed:", error);
+      setFormData({});
     } finally {
       LoaderClose();
     }
@@ -282,8 +285,9 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
     if (selectedOrg && year && togglestatus) {
       if (togglestatus === "Corporate" && selectedCorp) {
         loadFormData();
+        
       } else if (togglestatus === "Corporate" && !selectedCorp) {
-        setFormData([{}]);
+        setFormData();
         setRemoteSchema({});
         setRemoteUiSchema({});
       } else {
@@ -316,22 +320,23 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("from data",formData)
-    // updateFormData();
+    // console.log("from data",formData)
+    updateFormData();
   };
-
 
   const handleChange = (e) => {
     console.log(e.formData,"test data");
     setFormData(e.formData);
   };
 
+  
+
   return (
     <>
-  <div className={` pb-2`}>
+  <div className={`pb-2`}>
         <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
