@@ -108,7 +108,7 @@ const TaskDetailsModal = ({ isOpen, onClose, task, setShowFilePreview }) => {
                   <div className="grid grid-cols-3 gap-y-6">
                     <div className="text-gray-600 text-sm">Comments</div>
                     <div className="col-span-2 text-sm whitespace-pre-wrap">
-                      {task?.comments || "-"}
+                      {task?.comments_assignee || "-"}
                     </div>
 
                     {/* Attachment */}
@@ -125,13 +125,19 @@ const TaskDetailsModal = ({ isOpen, onClose, task, setShowFilePreview }) => {
                               {task.file_data?.name}
                             </button>
                             <p className="text-xs text-gray-500">
-                              {new Date(
-                                task.file_data?.uploadDateTime
-                              ).toLocaleDateString("en-GB", {
-                                day: "2-digit",
-                                month: "2-digit",
-                                year: "2-digit",
-                              })}{" "}
+                              {isNaN(
+                                new Date(
+                                  task.file_data?.uploadDateTime
+                                ).getTime()
+                              )
+                                ? task.file_data?.uploadDateTime
+                                : new Date(
+                                    task.file_data?.uploadDateTime
+                                  ).toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "2-digit",
+                                  })}{" "}
                               • {task.file_data?.size / 1000} kB
                             </p>
                           </div>
@@ -244,7 +250,7 @@ const TaskDetailsModal = ({ isOpen, onClose, task, setShowFilePreview }) => {
                     </span>
                   </div>
 
-                  {task.activity.split('-')[2]?.includes("Over") ? (
+                  {task.activity.split("-")[2]?.includes("Over") ? (
                     <>
                       <div className="flex">
                         <span className="w-32 text-gray-600">Quantity 1</span>

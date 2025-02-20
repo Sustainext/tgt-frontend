@@ -238,7 +238,7 @@ const Screen3 = ({
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp, togglestatus]);
+  }, [selectedOrg, year, selectedCorp, togglestatus,datarefresh]);
   // useEffect(() => {
   //   if (selectedOrg && year) {
   //     loadFormData();

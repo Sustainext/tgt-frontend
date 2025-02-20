@@ -295,7 +295,7 @@ const GovernancetableWidget4 = ({
 
       {showModal && selectedFileDetails && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-12">
+          <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-6">
             <div className="flex justify-between mt-4 mb-4">
               <div>
                 <h5 className="mb-4 ml-2 font-semibold">
@@ -322,7 +322,7 @@ const GovernancetableWidget4 = ({
               </div>
             </div>
             <div className="flex justify-between">
-              <div className="relative w-[760px] h-[580px]">
+              <div className="relative w-[55vw] h-[45vw]">
                 {selectedFileDetails.fileType?.startsWith("image") ? (
                   <img
                     src={selectedFileDetails.fileUrl}
@@ -333,7 +333,7 @@ const GovernancetableWidget4 = ({
                   <iframe
                     src={selectedFileDetails.fileUrl}
                     title="PDF Preview"
-                    className="w-full h-96"
+                    className="w-full h-full"
                   />
                 ) : (
                   <p>Preview not available. Please download the file.</p>

@@ -4,8 +4,12 @@ import { Oval } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import { MdAdd } from "react-icons/md";
 import { Country, State, City } from "country-state-city";
+import axiosInstance from "../../../../utils/axiosMiddleware";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { every } from "lodash";
 
-const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
+const CreateStakeholder = ({ isModalOpen, setIsModalOpen,groupId,setRefresh }) => {
   const router = useRouter();
   const [supplierName, setSupplierName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,12 +20,46 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCountryName, setSelectedCountryName] = useState("");
+  const [selectedStateName, setSelectedStateName] = useState("");
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [latError, setLatError] = useState("");
   const [lonError, setLonError] = useState("");
+  const [emailError,setEmailError]=useState("")
   const [stakeholderCreated, setStakeholderCreated] = useState(false);
+  const [loopen, setLoOpen] = useState(false);
+
+  const refreshForm=()=>{
+    setSupplierName('')
+    setEmail('')
+    setAddress("")
+    setSpoc('')
+    setLatitude('')
+    setLongitude('')
+    setSelectedCountry('')
+    setSelectedState('')
+    setSelectedCity('')
+    setStates([])
+    setCities([])
+    setLatError("")
+setLonError("")
+setEmailError("")
+}
+
+const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
 
   useEffect(() => {
     const allCountries = Country.getAllCountries();
@@ -31,6 +69,9 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
   const handleCountryChange = (event) => {
     const countryId = event.target.value;
     setSelectedCountry(countryId);
+    const selectedCountryName =
+    event.target.options[event.target.selectedIndex].getAttribute("data-name");
+      setSelectedCountryName(selectedCountryName)
 
     const statesOfSelectedCountry = State.getStatesOfCountry(countryId);
     setStates(statesOfSelectedCountry);
@@ -39,14 +80,26 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
   const handleStateChange = (event) => {
     const stateId = event.target.value;
     setSelectedState(stateId);
+    const selectedStateName =
+    event.target.options[event.target.selectedIndex].getAttribute("data-name");
+      setSelectedStateName(selectedStateName)
 
     const citiesOfSelectedState = City.getCitiesOfState(
       selectedCountry,
       stateId
     );
     setCities(citiesOfSelectedState);
-    console.log(selectedCountry, event.target.value, citiesOfSelectedState);
   };
+  const handleChangeEmail=(event)=>{
+    const email = event.target.value;
+    setEmail(email)
+    if(validateEmail(email)){
+        setEmailError("")
+    }
+    else{
+        setEmailError("Email address entered does not match the format (eg.john@email.com)")
+    }
+  }
 
   const handleCityChange = (event) => {
     const cityId = event.target.value;
@@ -93,6 +146,75 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
     }
   };
 
+
+  const handleSubmit= async(e)=>{
+    e.preventDefault();
+    LoaderOpen()
+    try{
+        const data = {
+           name:supplierName,
+           email:email,
+           group:groupId.id,
+           address:address,
+           country:selectedCountryName,
+           state:selectedStateName,
+           city:selectedCity,
+           latitude:latitude,
+           longitude:longitude,
+           poc:spoc
+          };
+          const url = `${process.env.BACKEND_API_URL}/supplier_assessment/stakeholder/`;
+        if(supplierName&&email){
+            const response = await axiosInstance.post(url,data);
+             if (response.status === 201) {
+                    LoaderClose();
+                    setStakeholderCreated(true)
+                    refreshForm()
+                  } else {
+                    toast.error("Oops, something went wrong", {
+                      position: "top-right",
+                      autoClose: 1000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                    });
+                    LoaderClose();
+                  }
+        }
+        else{
+            toast.error("Please fill all the required fields", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+        }
+    }
+    catch(e){
+        LoaderClose()
+        console.error(e)
+        toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+    }
+   
+  }
+
+
   return (
     <>
       {isModalOpen && (
@@ -125,7 +247,9 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                     className="absolute top-6 right-4 text-gray-500 hover:text-gray-700"
                     onClick={() => {
                       setIsModalOpen(false);
+                      setRefresh((prevRefresh) => !prevRefresh)
                       setStakeholderCreated(false);
+                      refreshForm()
                     }}
                   >
                     <svg
@@ -145,7 +269,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                   </button>
                 </div>
                 <p className="text-[#667085] text-[14px] mb-4">
-                  New Stakeholder “Stakeholderszzz” has been created.
+                  New Stakeholder {supplierName} has been created.
                 </p>
 
                 <div className="flex gap-3 mt-6 justify-end">
@@ -153,6 +277,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                     type="button"
                     onClick={() => {
                       setIsModalOpen(false);
+                      setRefresh((prevRefresh) => !prevRefresh)
                       setStakeholderCreated(false);
                     }}
                     className="bg-transparent text-[15px] text-[#344054] px-5 py-2 rounded-md border border-gray-300"
@@ -162,6 +287,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                   <button
                     type="button"
                     onClick={() => {
+                        refreshForm()
                       setStakeholderCreated(false);
                     }}
                     className="bg-blue-500 flex gap-1 text-[15px] text-white px-5 py-2 rounded-md hover:bg-blue-600"
@@ -180,6 +306,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                   <button
                     className="absolute top-6 right-4 text-gray-500 hover:text-gray-700"
                     onClick={() => {
+                        refreshForm()
                       setIsModalOpen(false);
                     }}
                   >
@@ -203,7 +330,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                 <p className="text-[#667085] text-[14px] mb-4">
                   Enter details for the new stakeholder
                 </p>
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="flex gap-4 w-full">
                     <div className="mb-4 w-full">
                       <label
@@ -217,7 +344,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                         id="name"
                         value={supplierName}
                         onChange={(e) => setSupplierName(e.target.value)}
-                        placeholder="Enter Supplier name"
+                        placeholder="Enter Stakeholder name"
                         className="mt-1 block px-3 py-2 w-full rounded-md border border-gray-300 text-sm"
                         required
                       />
@@ -234,11 +361,16 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                         type="email"
                         id="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter Supplier email"
-                        className="mt-1 block px-3 py-2 w-full rounded-md border border-gray-300 text-sm"
+                        onChange={handleChangeEmail}
+                        placeholder="Enter Stakeholder email"
+                        className={`mt-1 block px-3 py-2 w-full rounded-md border ${
+                            emailError ? "border-red-500" : "border-gray-300"
+                          } text-sm`}
                         required
                       />
+                      {emailError && (
+                        <p className="text-red-500 text-xs mt-1">{emailError}</p>
+                      )}
                     </div>
                   </div>
 
@@ -277,7 +409,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                       >
                         <option value="">Select Country</option>
                         {countries.map((country) => (
-                          <option key={country.isoCode} value={country.isoCode}>
+                          <option key={country.isoCode} value={country.isoCode}  data-name={country.name}>
                             {country.name}
                           </option>
                         ))}
@@ -299,7 +431,7 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                       >
                         <option value="">Select State</option>
                         {states.map((state) => (
-                          <option key={state.isoCode} value={state.isoCode}>
+                          <option key={state.isoCode} value={state.isoCode} data-name={state.name}>
                             {state.name}
                           </option>
                         ))}
@@ -345,7 +477,6 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                           className={`mt-1 block px-3 py-2 w-full rounded-md border ${
                             latError ? "border-red-500" : "border-gray-300"
                           } text-sm`}
-                          required
                         />
                         {/* Direction (N/S) beside input */}
                         <span className="absolute right-3 top-2 text-gray-500 text-[13px]">
@@ -372,7 +503,6 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                           className={`mt-1 block px-3 py-2 w-full rounded-md border ${
                             lonError ? "border-red-500" : "border-gray-300"
                           } text-sm`}
-                          required
                         />
                         {/* Direction (E/W) beside input */}
                         <span className="absolute right-3 top-2 text-gray-500 text-[13px]">
@@ -397,19 +527,17 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
                       id="spoc"
                       value={spoc}
                       onChange={(e) => setSpoc(e.target.value)}
-                      placeholder="Enter Spoc"
+                      placeholder="Enter name"
                       className="mt-1 block px-3 py-2 w-full rounded-md border border-gray-300 text-sm"
-                      required
                     />
                   </div>
 
                   <div className="flex justify-end mt-6">
                     <button
-                      type="button"
-                      onClick={() => {
-                        setStakeholderCreated(true);
-                      }}
-                      className="bg-blue-500 text-white px-10 py-2 rounded-md hover:bg-blue-600"
+                   disabled={!supplierName || !email || latError || lonError || emailError}
+                      type="submit"
+                   
+                      className={`bg-blue-500 ${!supplierName || !email || latError || lonError || emailError?'opacity-30 cursor-not-allowed':"cursor-pointer"} text-white px-10 py-2 rounded-md hover:bg-blue-600`}
                     >
                       Create
                     </button>
@@ -420,6 +548,18 @@ const CreateStakeholder = ({ isModalOpen, setIsModalOpen }) => {
           </div>
         </div>
       )}
+      {loopen && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                <Oval
+                  height={50}
+                  width={50}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              </div>
+            )}
     </>
   );
 };

@@ -32,6 +32,8 @@ import SupplierMaterialtopic from "./supplier-environmental-assessment/Managemen
 import SignificantSpills from './Waste/significant-spills/page'
 import ConsolidationApproach from './Emissions/consolidationApproach/page'
 import Standards from './Emissions/standards/page'
+import EmissionIntensity from "./Emissions/emission-Intensity/page"
+import Emissionreductioninitiativesnew from "./Emissions/emission-reduction-initiatives/page"
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -40,6 +42,7 @@ import {
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
 import Standardsmethodology from "./energy/standards-methodology/standards-methodology"
+import MaterialTopicAirQuality from './AirQuality/Management-of-material-topic/page'
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMaterialityData,
@@ -53,6 +56,10 @@ import {
 } from "../../../lib/redux/features/materialitySlice";
 import {f_setSectionName} from '../../../lib/redux/features/FileInfoSlice'
 import BaseYear from './Emissions/baseYear/page'
+import NitrogenOxide from './AirQuality/NitrogenOxide/page'
+import StandardMethodology from "./AirQuality/StandardMethodology/page";
+import ODSImportExport from "./AirQuality/ODS-Import-Export/page";
+import EmissionsODS from "./AirQuality/Emissions-ODS/page";
 
 const environment = () => {
   const { open } = GlobalState();
@@ -99,8 +106,9 @@ const environment = () => {
       "Management of Material topic waste",
       "Management of Material topic energy",
       // "Management of Material topic effluent",
+      "Management of Material topic air quality"
     ];
-    const emissionTabs = ["GHG Emissions","Base Year","Consolidation Approach","Standards"];
+    const emissionTabs = ["GHG Emissions","Base Year","Consolidation Approach","Standards","EmissionIntensity","EmissionReductionInitiatives"];
     const energyTabs = [
       "Energy consumed inside the organization",
       "Energy consumption outside of the organization",
@@ -145,6 +153,13 @@ const environment = () => {
     //   "Significant Spills",
     // ];
 
+    const airQualityTab=[
+      "Nitrogen Oxides",
+      "Standard Methodology",
+      "ODS Import Export",
+      "Emissions ODS"
+    ]
+
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Emission"));
@@ -162,6 +177,9 @@ const environment = () => {
     // else if (effluentTab.includes(activeTab)) {
     //   dispatch(setHeadertext2("Effluents"));
     // } 
+    else if (airQualityTab.includes(activeTab)) {
+      dispatch(setHeadertext2("Air Quality"));
+    } 
     else if (materialnewTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Management of Material Topic"));
     } else {
@@ -194,6 +212,8 @@ const environment = () => {
             {activeTab === "Base Year" && <BaseYear apiData={data} />}
             {activeTab === "Consolidation Approach"  && <ConsolidationApproach apiData={data} /> }
             {activeTab ==="Standards" && <Standards apiData={data} /> }
+            {activeTab ==="EmissionIntensity" && <EmissionIntensity apiData={data} /> }
+            {activeTab ==="EmissionReductionInitiatives" && <Emissionreductioninitiativesnew apiData={data} /> }
             {/* Energy start */}
             {activeTab === "Management of Material topic energy" && (
               <EnergyMaterialtopic apiData={data} />
@@ -274,6 +294,26 @@ const environment = () => {
             {activeTab ===
               "Negative environmental impacts in the supply chain and actions taken" && (
               <NegativeEnvironmentImpact apiData={data} />
+            )}
+            {activeTab ===
+              "Management of Material topic air quality" && (
+              <MaterialTopicAirQuality apiData={data} />
+            )}
+            {activeTab ===
+              "Nitrogen Oxides" && (
+              <NitrogenOxide apiData={data} />
+            )}
+            {activeTab ===
+              "Standard Methodology" && (
+              <StandardMethodology apiData={data} />
+            )}
+            {activeTab ===
+              "ODS Import Export" && (
+              <ODSImportExport apiData={data} />
+            )}
+            {activeTab ===
+              "Emissions ODS" && (
+              <EmissionsODS apiData={data} />
             )}
           </div>
         </div>

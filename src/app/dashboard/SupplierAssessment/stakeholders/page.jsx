@@ -5,55 +5,160 @@ import { FiSearch, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import NoDataAvailable from "../components/noDataAvailable";
 import { MdAdd } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import StakeHolderListTable from '../tables/stakeholderListTable'
-import DeleteModal from './modals/deleteStakeholder'
+import StakeHolderListTable from "../tables/stakeholderListTable";
+import DeleteModal from "./modals/deleteStakeholder";
 import { AiOutlineUpload } from "react-icons/ai";
-import UploadFileModal from './modals/uploadModal'
-import CreateStakeholder from './modals/createNewStakeholder'
+import UploadFileModal from "./modals/uploadModal";
+import CreateStakeholder from "./modals/createNewStakeholder";
+import { Oval } from "react-loader-spinner";
+import axiosInstance from "../../../utils/axiosMiddleware";
+import { debounce } from "lodash";
 
-const StakeholderPage = ({setStakeholderList,showStakeholderList,setActiveTab}) => {
-  const router =useRouter()
-  const totalItems = 50; 
-      const rowsPerPageOptions = [7, 10, 15]; // Rows-per-page options
-      const [currentPage, setCurrentPage] = useState(1);
-      const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
-      const [isModalOpen, setIsModalOpen] = useState(false);
-      const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-      const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-      const [deleteDisabled,setDeleteDisabled] = useState(true)
-      const [selectedRows, setSelectedRows] = useState([]);
-    
-      const data = Array(totalItems)
-        .fill(null)
-        .map((_, idx) => ({
-          sno: idx + 1,
-          stakeholderName: "Himanshu",
-          email: "CB@unitedfeaturesyndicate.com",
-          location: "Delhi",
-          spoc: "Bruce Wayne",
-          created_last_editedBy:"Homer Simpson",
-          created_last_editedOn:"27/01/2023",
-        }));
-    
-      const currentData = data.slice(
-        (currentPage - 1) * rowsPerPage,
-        currentPage * rowsPerPage
+const StakeholderPage = ({
+  setStakeholderList,
+  showStakeholderList,
+  setActiveTab,
+  groupId,
+}) => {
+  const router = useRouter();
+  const [totalItems, setTotalItems] = useState(0);
+  const rowsPerPageOptions = [7, 10, 15]; // Rows-per-page options
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [deleteDisabled, setDeleteDisabled] = useState(true);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [loopen, setLoOpen] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedUsers, setselectedUsers] = useState([]);
+  const [stakeholderListData, setStakeholderListData] = useState([]);
+
+  const LoaderOpen = () => setLoOpen(true);
+  const LoaderClose = () => setLoOpen(false);
+
+
+  // Format date from ISO to DD/MM/YYYY
+  function formatDate(isoString) {
+    const date = new Date(isoString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
+  // Fetch data from the backend with pagination parameters
+  const getStakeholderList = async () => {
+    LoaderOpen();
+    try {
+      const userFilter = selectedUsers.length > 0 ? selectedUsers.join(",") : "";
+      const response = await axiosInstance.get(
+        `/supplier_assessment/stakeholder/`,
+        {
+          params: {
+            page_size: rowsPerPage,
+            group_id:groupId.id,
+            ...(userFilter ? { oldest_email: userFilter } : { page: currentPage })
+          },
+        }
       );
-    
-      const handlePageChange = (page, rows) => {
-        setCurrentPage(page);
-        setRowsPerPage(rows);
-      };
-      const columns = [
-          { key: "sno", label: "Sno" },
-          { key: "stakeholderName", label: "Stakeholder Name" },
-          { key: "email", label: "Email Address" },
-          { key: "location", label: "Location" },
-          { key: "spoc", label: "SPOC" },
-          { key: "created_last_editedBy", label: "Created / Last Edited By" },
-          { key: "created_last_editedOn", label: "Created / Last Edited on" },
-          { key: "actions", label: "Actions" },
-        ];
+      if (response.status === 200) {
+        LoaderClose();
+        setTotalItems(response.data.count);
+        const data = response.data.results.map((val, idx) => ({
+            sno: (currentPage - 1) * rowsPerPage + idx + 1,
+            stakeholderName: val.name,
+            email: val.email,
+            id:BigInt(val.id),
+            location: val.city,
+            spoc: val.poc,
+            created_last_editedBy:[{email:val.oldest_email,name:val.oldest_name},{email:val.latest_email,name:val.latest_name}],
+            created_last_editedOn:[formatDate(val.created_at),formatDate(val.updated_at)],
+        }));
+        setStakeholderListData(data);
+      }
+    } catch (error) {
+      LoaderClose();
+      console.error("Error fetching stakeholder groups:", error);
+    } finally {
+      LoaderClose();
+    }
+  };
+
+  // Trigger data fetch when page/rows/refresh changes
+  useEffect(() => {
+    if (searchQuery == "") {
+      getStakeholderList();
+    }
+  }, [currentPage, rowsPerPage, refresh, searchQuery, selectedUsers]);
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+  };
+
+  
+    useEffect(() => {
+    const debouncedFetch = debounce(async () => {
+      try {
+        const response = await axiosInstance.get(`/supplier_assessment/stakeholder/`, {
+            params: {
+                page: currentPage,
+                page_size: rowsPerPage,
+                search:searchQuery,
+                group_id:groupId.id,
+            }
+        })
+        if (response.status === 200) {
+          setTotalItems(response.data.count);
+          const data = response.data.results.map((val, idx) => ({
+              sno: (currentPage - 1) * rowsPerPage + idx + 1,
+              stakeholderName: val.name,
+              email: val.email,
+              id:BigInt(val.id),
+              location: val.city,
+              spoc: val.poc,
+              created_last_editedBy:[{email:val.oldest_email,name:val.oldest_name},{email:val.latest_email,name:val.latest_name}],
+              created_last_editedOn:[formatDate(val.created_at),formatDate(val.updated_at)],
+          }));
+          setStakeholderListData(data);
+        }
+       
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    }, 400);
+
+    // Only for search, use debounce
+    if (searchQuery) {
+      debouncedFetch();
+    }
+     else {
+      // For non-search triggers (tab change, pagination), fetch immediately
+      debouncedFetch.flush();
+    }
+    // debouncedFetch();
+
+    return () => debouncedFetch.cancel();
+  }, [searchQuery, currentPage, rowsPerPage]);
+
+  
+  const handlePageChange = (page, rows) => {
+    setCurrentPage(page);
+    setRowsPerPage(rows);
+  };
+  const columns = [
+    { key: "sno", label: "Sno" },
+    { key: "stakeholderName", label: "Stakeholder Name" },
+    { key: "email", label: "Email Address" },
+    { key: "location", label: "Stakeholder Location" },
+    { key: "spoc", label: "SPOC" },
+    { key: "created_last_editedBy", label: "Created / Last Edited By" },
+    { key: "created_last_editedOn", label: "Created / Last Edited on" },
+    { key: "actions", label: "Actions" },
+  ];
   return (
     <>
       <div>
@@ -64,18 +169,22 @@ const StakeholderPage = ({setStakeholderList,showStakeholderList,setActiveTab}) 
                 <div className="flex">
                   <div>
                     <p className="gradient-text text-[22px] font-bold pt-4  ml-2">
-                     Engine Group
+                      {groupId?.name}
                     </p>
                     <p className="mt-2 text-[#667085] text-[13px] ml-2">
-                      Organization / Corporate: Org A / Corp A
+                      Organization {groupId?.corporate ? "/ Corporate" : ""}:{" "}
+                      {groupId?.organization}{" "}
+                      {groupId?.corporate?.length > 0
+                        ? "/ " + groupId?.corporate.join(", ")
+                        : ""}
                     </p>
                   </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => {
-                    setStakeholderList(false)
-                    setActiveTab("tab3")
+                    setStakeholderList(false);
+                    setActiveTab("tab3");
                     // router.push('/dashboard/SupplierAssessment');
                   }}
                   className="bg-transparent text-[#344054] text-[13px] font-medium px-3 h-12 mt-2.5  rounded-md border border-gray-400"
@@ -94,11 +203,13 @@ const StakeholderPage = ({setStakeholderList,showStakeholderList,setActiveTab}) 
             </h1>
             <div className="relative flex gap-4">
               <button
-              onClick={()=>{setIsUploadModalOpen(true)}}
+                onClick={() => {
+                  setIsUploadModalOpen(true);
+                }}
                 type="button"
                 className="bg-transparent flex gap-2 font-medium text-[#344054] text-[14px] px-4 py-2 rounded-md border border-gray-300"
               >
-                Import <AiOutlineUpload className="mt-0.5 w-4 h-4"/>
+                Import <AiOutlineUpload className="mt-0.5 w-4 h-4" />
               </button>
 
               <button
@@ -107,7 +218,7 @@ const StakeholderPage = ({setStakeholderList,showStakeholderList,setActiveTab}) 
                 }}
                 className="bg-[#007EEF] flex gap-1 text-white px-4 py-2 text-[14px] rounded-md hover:bg-blue-600"
               >
-                <MdAdd className="mt-0.5 w-4 h-4"/> Add New Stakeholder
+                <MdAdd className="mt-0.5 w-4 h-4" /> Add New Stakeholder
               </button>
             </div>
           </div>
@@ -118,9 +229,13 @@ const StakeholderPage = ({setStakeholderList,showStakeholderList,setActiveTab}) 
           <div className="flex justify-between">
             <button
               type="button"
-              onClick={()=>{setIsDeleteModalOpen(true)}}
+              onClick={() => {
+                setIsDeleteModalOpen(true);
+              }}
               disabled={deleteDisabled}
-              className={`bg-transparent ${deleteDisabled?'opacity-30':'cursor-pointer'} font-medium text-[#344054] text-[14px] px-4 py-2 rounded-md border border-gray-500`}
+              className={`bg-transparent ${
+                deleteDisabled ? "opacity-30" : "cursor-pointer"
+              } font-medium text-[#344054] text-[14px] px-4 py-2 rounded-md border border-gray-500`}
             >
               Delete Selected items
             </button>
@@ -130,38 +245,93 @@ const StakeholderPage = ({setStakeholderList,showStakeholderList,setActiveTab}) 
                 type="text"
                 placeholder="Search"
                 className="pl-10 pr-4 py-2 min-w-[25vw] border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                // value={searchQuery}
-                // onChange={handleSearch}
+                value={searchQuery}
+                onChange={handleSearch}
               />
             </div>
           </div>
 
-          {currentData.length>0?(
-    <div className="mt-5">
-     <StakeHolderListTable columns={columns} currentData={currentData}  totalItems={totalItems} selectedRows={selectedRows} setSelectedRows={setSelectedRows}
-        rowsPerPageOptions={rowsPerPageOptions} setDeleteDisabled={setDeleteDisabled} deleteDisabled={deleteDisabled}
-        onPageChange={handlePageChange} />
-    </div>
-):(
-  <div className="mt-3">
-    <NoDataAvailable title="No Stakeholders Present" para="This stakeholder group is empty. Add new stakeholders by clicking on Add new stakeholders or Bulk import from CSV or Excel file." buttonText="Add New Stakeholder" image="stakeholder" 
-    
-    isStakeholderOpen={isModalOpen} setIsStakeholderOpen={setIsModalOpen}
-    />
-    <div className="flex justify-center align-center">
-      <button className="text-[16px] text-[#007EEF] font-semibold flex">
-        Import Frome a List <MdAdd className=" mt-0.5 ml-1 w-5 h-5"/>
-      </button>
-    </div>
-  </div>
-    
-)}
+          {stakeholderListData.length > 0 ? (
+            <div className="mt-5">
+              <StakeHolderListTable
+                columns={columns}
+                currentData={stakeholderListData}
+                totalItems={totalItems}
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+                rowsPerPageOptions={rowsPerPageOptions}
+                setDeleteDisabled={setDeleteDisabled}
+                deleteDisabled={deleteDisabled}
+                setRefresh={setRefresh}
+                refresh={refresh}
+                onPageChange={handlePageChange}
+                selectedUsers={selectedUsers}
+                setselectedUsers={setselectedUsers}
+                groupId={groupId}
+              />
+            </div>
+          ) : (
+            <div>
+              {loopen?(
+                <div></div>
+              ):(
+                <div className="mt-3">
+              <NoDataAvailable
+                title="No Stakeholders Present"
+                para="This stakeholder group is empty. Add new stakeholders by clicking on Add new stakeholders or Bulk import from CSV or Excel file."
+                buttonText="Add New Stakeholder"
+                image="stakeholder"
+                isStakeholderOpen={isModalOpen}
+                setIsStakeholderOpen={setIsModalOpen}
+              />
+              <div className="flex justify-center align-center">
+                <button onClick={() => {
+                  setIsUploadModalOpen(true);
+                }} className="text-[16px] text-[#007EEF] font-semibold flex">
+                  Import From a List <MdAdd className=" mt-0.5 ml-1 w-5 h-5" />
+                </button>
+              </div>
+            </div>
+              )}
+            </div>
+            
+          )}
         </div>
       </div>
 
-      <DeleteModal isModalOpen={isDeleteModalOpen} setIsModalOpen={setIsDeleteModalOpen} selectedRows={selectedRows.length} />
-      <UploadFileModal isModalOpen={isUploadModalOpen} setIsModalOpen={setIsUploadModalOpen} />
-      <CreateStakeholder isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <DeleteModal
+        isModalOpen={isDeleteModalOpen}
+        setIsModalOpen={setIsDeleteModalOpen}
+        selectedRows={selectedRows.length}
+        setRefresh={setRefresh}
+        setDeleteDisabled={setDeleteDisabled}
+        bulkDelete={selectedRows}
+      />
+      <UploadFileModal
+        isModalOpen={isUploadModalOpen}
+        setIsModalOpen={setIsUploadModalOpen}
+        setRefresh={setRefresh}
+        groupId={groupId}
+      />
+      <CreateStakeholder
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        groupId={groupId}
+        setRefresh={setRefresh}
+      />
+
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };

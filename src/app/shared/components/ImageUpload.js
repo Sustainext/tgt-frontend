@@ -5,7 +5,7 @@ import { FiUpload, FiFile, FiXCircle } from "react-icons/fi";
 import { MdFilePresent } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-const ImageUpload = ({ onFileSelect,format }) => {
+const ImageUpload = ({ onFileSelect,format,setIsFileUploaded,accept}) => {
   const [files, setFiles] = useState([]);
   const [uploadProgress, setUploadProgress] = useState({});
   const [isUploading, setIsUploading] = useState(false);
@@ -85,9 +85,16 @@ const ImageUpload = ({ onFileSelect,format }) => {
     setFiles([]); // Clear the file list
     setUploadProgress({}); // Reset upload progress
     setIsUploading(false); // Reset uploading state
+    if(setIsFileUploaded){
+      setIsFileUploaded(false)
+    }
+   
   };
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: accept ? { "text/csv": [".csv"] } : undefined, // Allow only CSV if accept prop is passed
+  });
 
   return (
     <div className="container mx-auto">
@@ -117,7 +124,7 @@ const ImageUpload = ({ onFileSelect,format }) => {
         {files.map((file, index) => (
           <div
             key={index}
-            className="relative px-8 py-2 text-black rounded-md border flex items-center"
+            className="relative px-3 py-2 text-black rounded-md border flex items-center"
           >
             <div className="flex items-center">
               <div className="text-2xl">
