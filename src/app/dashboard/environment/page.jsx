@@ -57,6 +57,7 @@ import {
 import {f_setSectionName} from '../../../lib/redux/features/FileInfoSlice'
 import BaseYear from './Emissions/baseYear/page'
 import NitrogenOxide from './AirQuality/NitrogenOxide/page'
+import { fetchLocations, fetchUsers } from "@/lib/redux/features/emissionSlice";
 
 const environment = () => {
   const { open } = GlobalState();
@@ -91,6 +92,8 @@ const environment = () => {
 
   useEffect(() => {
     loadMaterialityDashboard()
+    dispatch(fetchLocations())
+    dispatch(fetchUsers());
   }, [dispatch]);
 
   useEffect(() => {

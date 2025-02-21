@@ -58,11 +58,11 @@ const EmissionsHeader = ({
     error: locationsError,
   } = useSelector((state) => state.emissions.locations);
 
-  useEffect(() => {
-    if (locationsStatus === "idle") {
-      dispatch(fetchLocations());
-    }
-  }, [locationsStatus, dispatch]);
+  // useEffect(() => {
+  //   if (locationsStatus === "idle") {
+  //     dispatch(fetchLocations());
+  //   }
+  // }, [locationsStatus, dispatch]);
 
   useEffect(() => {
     if (location && year) {
