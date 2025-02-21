@@ -17,7 +17,7 @@ const EmissionIntensityWidget = ({
   value = [],
   onChange,
 }) => {
-  // Ensure value is always an array
+
   const rows = Array.isArray(value) ? value : [];
 
   const handleAddRow = () => {

@@ -59,7 +59,7 @@ const EmissionIntensity = ({ apiData }) => {
   const griData = [
     {
       tagName: "GRI 305-4",
-      toggle: "43",
+      toggle: "55",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
