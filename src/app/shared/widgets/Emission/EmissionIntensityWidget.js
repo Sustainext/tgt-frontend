@@ -183,7 +183,7 @@ const EmissionIntensityWidget = ({
           <div className="relative">
           {rowIndex === 0 && (
             <label className="block text-[13px] font-medium text-gray-700 mb-2">
-              Metric Type
+              Organization-specific metric type
               <MdInfoOutline
                 className="inline ml-1 text-gray-600"
                 data-tooltip-id={`tooltip-MetricType-${id}`}
