@@ -7,9 +7,9 @@ import DynamicTable from "./customTable";
 import DateRangePicker from "@/app/utils/DatePickerComponent";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-import { columns1, columns2, columns3 } from "./data";
+import { columns1, columns2, columns3,columns4, columns5, columns6 } from "./data";
 
-const AnalyseMaterials = ({ isBoxOpen }) => {
+const AnalyseAirQuality = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
@@ -151,9 +151,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
     }
   };
 
-  useEffect(() => {
-    fetchData(datasetparams);
-  }, [datasetparams]);
+//   useEffect(() => {
+//     fetchData(datasetparams);
+//   }, [datasetparams]);
 
   useEffect(() => {
     const fetchOrg = async () => {
@@ -334,7 +334,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       <div>
         <div className="mb-2 flex-col items-center pt-4  gap-6">
           <div className="mt-4 pb-3 mx-5 text-left">
-            <div className="mb-2 flex-col items-center pt-2  gap-6">
+            <div className="mb-2 flex-col items-center gap-6">
             <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
                   View By:
@@ -491,51 +491,125 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
           <div className={`ps-4 w-[100%] me-4`}>
             <div className="mb-6">
               <p className="text-black text-[15px] font-bold ">
-                Materials used by weight or volume
+              Air Emissions by Pollutants (in Kg)
               </p>
               <div
                 id="materials1"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
               >
-                <p>Non-Renewable materials used</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 301-1a
+                    GRI 305-7a
+                  </div>
+                </div>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 305-7b
                   </div>
                 </div>
               </div>
-              <DynamicTable columns={columns1} data={materialdata1} />
-            </div>
-            <div className="mb-6">
-              <div
-                id="materials2"
-                className="text-neutral-700 text-[15px] font-bold  font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Renewable materials used</p>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 301-1a
-                  </div>
-                </div>
-              </div>
-              <DynamicTable columns={columns2} data={materialdata2} />
+              <DynamicTable columns={columns1} data={[]} />
             </div>
             <div className="mb-6">
               <p className="text-black text-[15px] font-bold ">
-                Recycled input materials used
+              Air Emissions by Pollutants (in ppm or µg/m³)
+              </p>
+              <div
+                id="materials2"
+                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+              >
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 305-7
+                  </div>
+                </div>
+                
+              </div>
+              <DynamicTable columns={columns2} data={[]} />
+            </div>
+            <div className="mb-6">
+              <p className="text-black text-[15px] font-bold ">
+              Percentage Contribution of Air Pollutants by Location
               </p>
               <div
                 id="materials3"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
               >
-                <p>Percentage of recycled materials used (Production)</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 301-2a
+                    GRI 305-7
                   </div>
                 </div>
               </div>
-              <DynamicTable columns={columns3} data={materialdata3} />
+              <DynamicTable columns={columns3} data={[]} />
+            </div>
+            <div className="mb-6">
+              <p className="text-black text-[15px] font-bold ">
+              Total  Air Emissions by Location (in Kg)		
+              </p>
+              <div
+                id="materials4"
+                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+              >
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 305-7a
+                  </div>
+                </div>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 305-7b
+                  </div>
+                </div>
+              </div>
+              <DynamicTable columns={columns4} data={[]} />
+            </div>
+            <div className="mb-6">
+              <p className="text-black text-[15px] font-bold ">
+              Total Air Emissions by Location (in ppm or µg/m³)
+              </p>
+              <div
+                id="materials5"
+                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+              >
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 305-7
+                  </div>
+                </div>
+                
+              </div>
+              <DynamicTable columns={columns5} data={[]} />
+            </div>
+            <div className="mb-6">
+              <p className="text-black text-[15px] font-bold ">
+              Ozone Depleting Substances
+              </p>
+              <div
+                id="materials6"
+                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              >
+                <p>Total ODS Emissions by Source</p>
+                <div className="flex justify-end gap-2">
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 305-6a
+                  </div>
+                </div>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 305-6b
+                  </div>
+                </div>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 305-6c
+                  </div>
+                </div>
+                </div>
+               
+              </div>
+              <DynamicTable columns={columns6} data={[]} />
             </div>
           
           </div>
@@ -570,4 +644,4 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
   );
 };
 
-export default AnalyseMaterials;
+export default AnalyseAirQuality;

@@ -9,11 +9,13 @@ import AnalyseMaterials from "./Materials/page";
 import AnalyseWaterEffluents from "./Water-Effluents/page";
 import SupplierEnvironmentalImpact from  "./supplier-enironmental-assessment/page";
 // import AnalyseEffluents from "./Effluents/page"
+import AnalysePackagingMaterials from './PackagingMaterials/page'
 import {
   setHeadertext1,
   setHeadertext2,
   setHeaderdisplay,setMiddlename
 } from "../../../../lib/redux/features/topheaderSlice";
+import AirQuality from './AirQuality/page'
 import { useDispatch } from "react-redux";
 
 const environment = () => {
@@ -43,15 +45,21 @@ const environment = () => {
         // case "Effluents":
         //   dispatch(setHeadertext2("Effluents"));
         //   break;
-      case "Materials":
-        dispatch(setHeadertext2("Materials"));
+      case "Material Use and Efficiency":
+        dispatch(setHeadertext2("Material Use and Efficiency"));
         break;
+      case "Packaging Materials": 
+        dispatch(setHeadertext2("Packaging Materials"));
+        break; 
       case "Water and effluents":
         dispatch(setHeadertext2("Water & Effluents"));
         break;
       case "Supplier Environmental Assessment":
         dispatch(setHeadertext2("Supplier Environmental Assessment"));
         break;
+      case "Air Quality & other emissions":
+        dispatch(setHeadertext2("Air Quality & other emissions"));
+        break;  
       default:
         dispatch(setHeadertext2(""));
     }
@@ -70,9 +78,11 @@ const environment = () => {
         {activeTab === "Energy" && <AnalyseEnergy isBoxOpen={isBoxOpen} />}
         {activeTab === "Waste Management" && <AnalyseWaste isBoxOpen={isBoxOpen} />}
         {/* {activeTab === "Effluents" && <AnalyseEffluents isBoxOpen={isBoxOpen} />} */}
-        {activeTab === "Materials" && <AnalyseMaterials isBoxOpen={isBoxOpen} />}
+        {activeTab === "Material Use and Efficiency" && <AnalyseMaterials isBoxOpen={isBoxOpen} />}
+        {activeTab === "Packaging Materials" && <AnalysePackagingMaterials isBoxOpen={isBoxOpen} />}
         {activeTab === "Water and effluents" && <AnalyseWaterEffluents isBoxOpen={isBoxOpen} />}
         {activeTab === "Supplier Environmental Assessment" && <SupplierEnvironmentalImpact isBoxOpen={isBoxOpen} />}
+        {activeTab === "Air Quality & other emissions" && <AirQuality isBoxOpen={isBoxOpen} />}
       </div>
     </div>
   );

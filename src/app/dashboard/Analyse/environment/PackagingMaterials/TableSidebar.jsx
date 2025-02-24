@@ -18,9 +18,7 @@ const TableSidebar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const links = [
-        "materials1",
-        "materials2",
-        "materials3",
+        "materials4",
 
       ];
 
@@ -52,16 +50,8 @@ const TableSidebar = () => {
       </div>
       {[
         {
-          id: "materials1",
-          name: "Non-Renewable materials used",
-        },
-        {
-          id: "materials2",
-          name: "Renewable materials used",
-        },
-        {
-          id: "materials3",
-          name: "Percentage of recycled materials used (Production)",
+          id: "materials4",
+          name: "Reclaimed products and their packaging materials",
         },
 
       ].map((link) => (
