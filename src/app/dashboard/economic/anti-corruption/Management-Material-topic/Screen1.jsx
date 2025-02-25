@@ -198,6 +198,23 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
     }
   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
+  const validateRows = (data) => {
+    return data.map((row) => {
+      const rowErrors = {};
+  
+      if (!row.GRI33cd || row.GRI33cd.trim() === "") {
+        rowErrors.GRI33cd = "This field is required.";
+      }
+  
+      if (!row.GRI33e || row.GRI33e.trim() === "") {
+        rowErrors.GRI33e = "This field is required.";
+      }
+  
+      return rowErrors;
+    });
+  };
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validateRows(formData);
