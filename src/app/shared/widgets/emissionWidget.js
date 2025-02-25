@@ -362,20 +362,6 @@ const EmissionWidget = React.memo(
       [subcategory, countryCode, year, updateCache]
     );
 
-    // const fetchSubcategories = useCallback(async () => {
-    //   const selectedCategory = scopeMappings[scope].find((info) =>
-    //     info.Category.some((c) => c.name === category)
-    //   );
-    //   const newSubcategories = selectedCategory
-    //     ? selectedCategory.Category.find((c) => c.name === category).SubCategory
-    //     : [];
-    //   setSubcategories(newSubcategories);
-
-    //   if (subcategory && !activity) {
-    //     fetchActivities();
-    //   }
-    // }, [category]);
-
     const fetchSubcategories = useCallback(async () => {
       const selectedCategory = scopeMappings[scope].find((info) =>
         info.Category.some((c) => c.name === category)
