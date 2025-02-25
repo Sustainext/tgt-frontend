@@ -145,7 +145,7 @@ const EmissionIntensityWidget = ({
   };
   const unitsByMetricType = {
     "Units of product sold": "number",
-    "Number of employees": "number",
+   
     "Unit of energy consumed": [
       "Joule (J)",
       "Megajoule (MJ)",
@@ -161,10 +161,17 @@ const EmissionIntensityWidget = ({
       "Cubic Centimeter (cm³)",
       "Liter (L)",
       "Milliliter (mL)",
+      "Microliter (µL)",
+      "Cubic Millimeter (mm³)",
+      "Cubic Inch (in³)",
       "Cubic Foot (ft³)",
+      "Gallon (gal)",
+      "Fluid Ounce (fl oz)",
       "Kilogram (kg)",
+      "Gram (g)",
       "Pound (lb)",
       "Metric Ton (t)",
+      "US short ton (tn)",
     ],
     "Area (such as m2 floor space)": [
       "Square Meter (m²)",
@@ -173,6 +180,7 @@ const EmissionIntensityWidget = ({
       "Square Foot (ft²)",
     ],
     "Monetary units (such as revenue or sales)": [],
+    "Number of employees": "number",
     "Other (please specify)": [],
   };
 
@@ -227,6 +235,7 @@ const EmissionIntensityWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
+                zIndex:"100"
               }}
             />
           </div>
@@ -262,6 +271,7 @@ const EmissionIntensityWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
+                zIndex:"100"
               }}
             />
           </div>
@@ -298,6 +308,7 @@ const EmissionIntensityWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
+                zIndex:"100"
               }}
             />
           </div>
@@ -317,13 +328,14 @@ const EmissionIntensityWidget = ({
               item.MetricType
             ) ? (
               <input
-                type="number"
+                type="text"
                 className="block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 focus:outline-none"
                 placeholder="Enter number"
-                value={item.Units}
-                onChange={(e) =>
-                  handleRowChange(rowIndex, "Units", e.target.value)
-                }
+                value={item.MetricType === "Units of product sold" ? "Unit of product sold" : "No. of employees"}
+                readOnly
+                // onChange={(e) =>
+                //   handleRowChange(rowIndex, "Units", e.target.value)
+                // }
               />
             ) : item.MetricType === "Other (please specify)" ? (
               <input
@@ -386,6 +398,7 @@ const EmissionIntensityWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
+                zIndex:"100"
               }}
               />
           </div>
@@ -393,7 +406,8 @@ const EmissionIntensityWidget = ({
           <div className="relative">
           {rowIndex === 0 && (
             <label className="block text-[13px] font-medium text-gray-700 mb-2">
-              Intensity Ratio    <MdInfoOutline
+          Types of GHG emissions included
+          in intensity ratio<MdInfoOutline
                 className="inline ml-1 text-gray-600"
                 data-tooltip-id={`tooltip-intensityratio-${id}`}
                 data-tooltip-content="Please select the types of GHG emissions included in the intensity ratio, whether direct (Scope 1), energy indirect (Scope 2), and/or other indirect (Scope 3)."
@@ -437,6 +451,7 @@ const EmissionIntensityWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
+                zIndex:"100"
               }}
               />
           </div>

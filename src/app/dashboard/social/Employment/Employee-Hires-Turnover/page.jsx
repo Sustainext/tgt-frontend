@@ -67,9 +67,9 @@ const EmployeeHiresTurnover = ({ apiData }) => {
 
   const brsr = [
     {
-      tagName: "BRSR C-P3-E2",
+      tagName: "BRSR A-IV-22",
       id: "tooltip-$brsr1",
-      content: "BRSR-Section C-Principle 3-Essential Indicators-2",
+      content: "BRSR-Section A-IV-22",
     },
   ];
   const sdgData = [

@@ -12,7 +12,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
     setLocalValues(item); 
   }, [item]);
 
-  const updateFieldDebounced = useRef(debounce(updateField, 600)).current;
+  const updateFieldDebounced = useRef(debounce(updateField, 6000)).current;
 
   const handleChange = (key, value) => {
     // Prevent duplicate location selection

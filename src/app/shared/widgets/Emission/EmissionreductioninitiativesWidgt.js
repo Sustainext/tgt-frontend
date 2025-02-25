@@ -159,13 +159,13 @@ const EmissionReductionInitiativesWidget = ({
       <div className="mb-4 relative">
         <label className=" font-medium text-gray-700 flex text-[13px] mb-2">
           {schema.items.properties.Q1.title}
-          <MdInfoOutline
+          {/* <MdInfoOutline
             data-tooltip-id="tooltip-Q1"
             data-tooltip-content={schema.items.properties.Q1.tooltiptext}
             className="ml-2 mt-1 text-gray-600"
-          />
+          /> */}
         </label>
-        <ReactTooltip
+        {/* <ReactTooltip
           id="tooltip-Q1"
           place="top"
           effect="solid"
@@ -179,7 +179,7 @@ const EmissionReductionInitiativesWidget = ({
             textAlign: "left",
             zIndex: "100",
           }}
-        />
+        /> */}
         <div className="flex gap-4">
           {schema.items.properties.Q1.enum.map((option) => (
             <label key={option} className="flex items-center gap-2 text-sm">
@@ -442,7 +442,7 @@ const EmissionReductionInitiativesWidget = ({
                   </label>
                 )}
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Enter Data"
                   className={`block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
                   value={entry.Q7 || ""}
