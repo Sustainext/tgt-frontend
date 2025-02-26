@@ -105,8 +105,8 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       category: "Air Quality & other emissions",
       tag: "GRI 305",
       data: [
-        { tagid: "7", infoid: "56" },
-        { tagid: "6", infoid: "55" },
+        { tagid: "7", infoid: "58" },
+        { tagid: "6", infoid: "57" },
       ],
     },
   ];

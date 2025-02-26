@@ -9,6 +9,8 @@ import DateRangePicker from "@/app/utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { Oval } from 'react-loader-spinner';
 import { set } from "date-fns";
+import { TiTick } from "react-icons/ti";
+import { RxCross2 } from "react-icons/rx";
 
 const AnalyseEmission = () => {
   const [analyseData, setAnalyseData] = useState([]);
@@ -153,13 +155,13 @@ const AnalyseEmission = () => {
           "Type of GHGs":s.type_of_ghg?.length>0?s.type_of_ghg.join(", "):'',
           "GHG Emission Intensity":s.ghg_emission_intensity,
           "Unit":s.ghg_intensity_unit,
-         "CO2":s.ch4?"True":"False",
-         "N2O":s.n2o?"True":"False",
-         "CH4":s.co2?"True":"False",
-         "HFCs":s.HFCs?"True":"False",
-         "PFCs":s.PFCs?"True":"False",
-         "SF6":s.SF6?"True":"False",
-         "NF3":s.NF3?"True":"False"
+         "CO2":s.ch4?<TiTick className="text-green-400 w-5 h-5" />:"",
+         "N2O":s.n2o?<TiTick className="text-green-400 w-5 h-5" />:"",
+         "CH4":s.co2?<TiTick className="text-green-400 w-5 h-5" />:"",
+         "HFCs":s.HFCs?<TiTick className="text-green-400 w-5 h-5" />:"",
+         "PFCs":s.PFCs?<TiTick className="text-green-400 w-5 h-5" />:"",
+         "SF6":s.SF6?<TiTick className="text-green-400 w-5 h-5" />:"",
+         "NF3":s.NF3?<TiTick className="text-green-400 w-5 h-5" />:""
         }
       ))
 

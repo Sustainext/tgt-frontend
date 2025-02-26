@@ -4117,7 +4117,7 @@ export const Energydata = [
     link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
   },
   {
-    category: ["55"],
+    category: ["57"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
        GRI 305: Emissions 2016
@@ -4163,7 +4163,7 @@ used as feedstock in the manufacture of other chemicals;
     link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
   },
   {
-    category: ["56"],
+    category: ["58"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
        GRI 305: Emissions 2016
