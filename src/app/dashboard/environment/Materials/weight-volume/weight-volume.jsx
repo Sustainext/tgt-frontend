@@ -79,7 +79,7 @@ const Weightvolume = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <MaterialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+        <MaterialTopBar title={'Material Use and Efficiency'} toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
         
 
         <div className="ml-3 flex relative">

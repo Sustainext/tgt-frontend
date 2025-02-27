@@ -254,7 +254,7 @@ const CustomFileUploadWidget = ({
             <MdOutlineFileUpload
               className="w-5 h-5 mr-1 text-[#007EEF]"
             />
-            <div className="w-[60px] truncate text-[#007EEF] text-[12px] ml-1">
+            <div className="w-[60px] truncate text-[#007EEF] text-[12px] 4k:text-[14px] ml-1">
               Upload
             </div>
           </div>

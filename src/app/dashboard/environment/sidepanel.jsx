@@ -11,6 +11,7 @@ import {
   MdOutlineEmojiNature,
   MdOutlineAir,
 } from "react-icons/md";
+import { LuPackage } from "react-icons/lu";
 
 import { GiWoodPile, GiWaterfall } from "react-icons/gi";
 
@@ -23,6 +24,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
   const [isSupplierVisible, setIsSupplierVisible] = useState(false);
   // const [isEffluentVisible, setIsEffluentVisible] = useState(false);
   const [isAirQualityVisible, setIsAirQualityVisible] = useState(false);
+  const [isPackagingMaterialVisible, setIsPackagingMaterialVisible] = useState(false);
 
   const materialityEnvData =
     apiData && apiData.environment ? apiData.environment : {};
@@ -34,6 +36,8 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setIsSupplierVisible(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
   };
   const toggleSupplierSectionVisibility = () => {
     setIsSupplierVisible(!isSupplierVisible);
@@ -42,6 +46,8 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
   };
   const toggleEnergySectionVisibility = () => {
     setEnergySectionVisible(!isEnergySectionVisible);
@@ -50,6 +56,8 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
   };
   const toggleWasteVisible = () => {
     setWasteVisible(!isWasteVisible);
@@ -58,6 +66,8 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
   };
   const toggleWaterVisible = () => {
     setWaterVisible(!isWaterVisible);
@@ -66,6 +76,8 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
     setMaterialsVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
   };
 
   // const toggleEffluentVisible = () => {
@@ -86,6 +98,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
     setMaterialsVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsPackagingMaterialVisible(false)
   };
 
   const toggleMaterialsVisible = () => {
@@ -95,6 +108,18 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
+  };
+  const togglePackagingMaterialsVisible = () => {
+    setIsPackagingMaterialVisible(!isPackagingMaterialVisible);
+    setEnergySectionVisible(false);
+    setWasteVisible(false);
+    setMaterialsVisible(false)
+    setWaterVisible(false);
+    setIsSupplierVisible(false);
+    setEmisssion(false);
+    setIsAirQualityVisible(false)
   };
   // const handleemssionClick = (option) => {
   //   handleTabClick(`${option}`);
@@ -121,7 +146,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
   }, [activeTab]);
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md  h-full">
-      <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
+      <div className="flex items-start py-4 h-screen 4k:h-auto rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] 4k:w-[200px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
           <button className="flex items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
             <span className="text-[16px] font-extrabold">Environment</span>
@@ -749,7 +774,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
             )}
           </div> */}
 
-          {/* Materials start  */}
+          {/* Materials use and Efficiency start  */}
 
           <div>
             <button
@@ -757,8 +782,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
               ${
                 activeTab === "Materials used by weight or volume" ||
                 activeTab === "Recycled input materials used" ||
-                activeTab === "Management of Material topic Materials" ||
-                activeTab === "Reclaimed products and their packaging materials"
+                activeTab === "Management of Material topic Materials"
                   ? "text-[#007EEF]"
                   : "bg-transparent text-[#727272] "
               }`}
@@ -768,10 +792,11 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                 <GiWoodPile className="w-5 h-5 mr-2" />
               </div>
               <div className="w-[50%] text-left ml-2">
-                <span className="indent-0">Materials</span>
+                <span className="indent-0">Material Use and Efficiency</span>
               </div>
               {materialityEnvData &&
-              materialityEnvData.EnvPackagingMaterial?.is_material_topic ? (
+              materialityEnvData.
+              EnvRawMaterialSourcing?.is_material_topic ? (
                 <div className="w-[20%] flex justify-end">
                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                     M
@@ -797,7 +822,8 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
               <>
                 <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData &&
-                  materialityEnvData.EnvPackagingMaterial?.is_material_topic ? (
+                  materialityEnvData.
+                  EnvRawMaterialSourcing?.is_material_topic ? (
                     <div>
                       <div>
                         <p className="text-[12px]  ml-3  text-gray-400">
@@ -858,6 +884,90 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                       }
                     >
                       Recycled input materials used
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Packaging Material */}
+          <div>
+            <button
+              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
+              ${
+                activeTab === "Management of Material topic Packaging Materials" ||
+                activeTab === "Reclaimed products and their packaging materials"
+                  ? "text-[#007EEF]"
+                  : "bg-transparent text-[#727272] "
+              }`}
+              onClick={togglePackagingMaterialsVisible}
+            >
+              <div className="w-[15%]">
+                <LuPackage className="w-5 h-5 mr-2" />
+              </div>
+              <div className="w-[50%] text-left ml-2">
+                <span className="indent-0">Packaging Material</span>
+              </div>
+              {materialityEnvData &&
+              materialityEnvData.EnvPackagingMaterial?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
+                {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+                </span> */}
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isPackagingMaterialVisible && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {isPackagingMaterialVisible && (
+              <>
+                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.EnvPackagingMaterial?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Packaging Materials"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Packaging Materials"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Topic Disclosure
                     </p>
                   </div>
                   <div>
@@ -1196,7 +1306,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
                 <MdOutlineAir className="w-5 h-5 mr-2" />
               </div>
               <div className="w-[50%] text-left ml-2">
-                <span className="indent-0">Air Quality</span>
+                <span className="indent-0">Air Quality & other emissions</span>
               </div>
               {materialityEnvData &&
               materialityEnvData.EnvAirQuality?.is_material_topic ? (

@@ -15,7 +15,7 @@ import Wastedirected from "./Waste/waste-directed/waste-directed";
 import Datacollectionmethodology from "./Waste/Data-collection-methodology/Data-collection-methodology"
 import Weightvolume from "./Materials/weight-volume/weight-volume";
 import Recycled from "./Materials/recycled/recycled";
-import Reclaimedproducts from "./Materials/reclaimed-products/reclaimed-products";
+import Reclaimedproducts from "./PackageingMaterial/reclaimed-products/reclaimed-products";
 import Watersharedresource from "./Water-effluents/water-shared-resource/water-shared-resource";
 import Dischargefromareas from "./Water-effluents/discharge-from-all-areas/discharge-from-all-areas";
 import Waterstres from "./Water-effluents/water-stres/water-stres";
@@ -60,6 +60,7 @@ import NitrogenOxide from './AirQuality/NitrogenOxide/page'
 import StandardMethodology from "./AirQuality/StandardMethodology/page";
 import ODSImportExport from "./AirQuality/ODS-Import-Export/page";
 import EmissionsODS from "./AirQuality/Emissions-ODS/page";
+import MaterialTopicPackagingMaterial from './PackageingMaterial/Management-Material-topic/page'
 
 const environment = () => {
   const { open } = GlobalState();
@@ -106,7 +107,8 @@ const environment = () => {
       "Management of Material topic waste",
       "Management of Material topic energy",
       // "Management of Material topic effluent",
-      "Management of Material topic air quality"
+      "Management of Material topic air quality",
+      "Management of Material topic Packaging Materials"
     ];
     const emissionTabs = ["GHG Emissions","Base Year","Consolidation Approach","Standards","EmissionIntensity","EmissionReductionInitiatives"];
     const energyTabs = [
@@ -132,7 +134,6 @@ const environment = () => {
     const materialTabs = [
       "Materials used by weight or volume",
       "Recycled input materials used",
-      "Reclaimed products and their packaging materials",
     ];
 
     // List of tabs related to Water
@@ -149,9 +150,9 @@ const environment = () => {
       "New suppliers that were screened using environmental criteria",
       "Negative environmental impacts in the supply chain and actions taken",
     ];
-    // const effluentTab = [
-    //   "Significant Spills",
-    // ];
+    const packagingMaterialTabs = [
+     "Reclaimed products and their packaging materials",
+    ];
 
     const airQualityTab=[
       "Nitrogen Oxides",
@@ -168,8 +169,11 @@ const environment = () => {
     } else if (wasteTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Waste"));
     } else if (materialTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Materials"));
-    } else if (waterTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Material Use and Efficiency"));
+    }else if (packagingMaterialTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Packaging Material"));
+    }
+     else if (waterTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Water and effluents"));
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Supplier Environmental Assessment"));
@@ -200,8 +204,8 @@ const environment = () => {
           <div
             className={`${
               open
-                ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw]"
-                : " sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw]"
+                ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
+                : " sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
             }`}
           >
             {/* Emissions start */}
@@ -262,6 +266,9 @@ const environment = () => {
               <Weightvolume apiData={data} />
             )}
             {activeTab === "Recycled input materials used" && <Recycled apiData={data} />}
+            {activeTab === "Management of Material topic Packaging Materials" && (
+              <MaterialTopicPackagingMaterial apiData={data} />
+            )}
             {activeTab ===
               "Reclaimed products and their packaging materials" && (
               <Reclaimedproducts apiData={data} />

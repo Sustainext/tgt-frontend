@@ -8,7 +8,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import Reclaimedproductsbody from "./reclaimed-products-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MaterialTopBar from "../materialTopBar";
+import MaterialTopBar from "../../Materials/materialTopBar";
 
 const Reclaimedproducts = ({ apiData }) => {
   const [activeMonth, setActiveMonth] = useState(1);
@@ -93,6 +93,7 @@ const Reclaimedproducts = ({ apiData }) => {
           apiData={apiData}
           brsr={brsr}
           griData={griData}
+          title={'Packaging Material'}
         />
 
         <div className="ml-3 flex relative">

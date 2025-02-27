@@ -4116,6 +4116,93 @@ export const Energydata = [
     ],
     link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
   },
+  {
+    category: ["57"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+       GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 305-6 Emissions of ozone-depleting substances (ODS)
+          </p>
+          <div className="">
+            <p className="text-[11px] text-black mb-2">
+              Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.11 When compiling the information specified in Disclosure 305-6, the reporting
+            organization shall:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            2.11.1 calculate the production of ODS as the amount of ODS produced, minus the
+amount destroyed by approved technologies, and minus the amount entirely
+used as feedstock in the manufacture of other chemicals;
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Production of ODS = ODS produced - ODS destroyed by approved technologies - ODS entirely used as feedstock in the manufacture of other chemicals.
+            2.11.2 exclude ODS recycled and reused.
+            </p>
+           
+            <p className="text-[11px] text-black mb-2">Guidance for Disclosure 305-6</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            The reporting organization can report separate or combined data for the substances included in the calculation.
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Measuring ODS production, imports, and exports helps to indicate how an organization complies with legislation. This is particularly relevant if the organization produces or uses ODS in its processes, products and services and is subject to phase-out commitments. Results on ODS phase-out help to indicate the organization’s position in any markets affected by regulation on ODS. This disclosure covers the substances included in Annexes A, B, C, and E of the ‘Montreal Protocol’ as well as any other ODS produced, imported, or exported by an organization.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
+  },
+  {
+    category: ["58"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+       GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 305-7 Nitrogen oxides (NOx), sulfur oxides (SOx), and other significant air emissions
+          </p>
+          <div className="">
+            <p className="text-[11px] text-black mb-2">
+              Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13 When compiling the information specified in Disclosure 305-7, the reporting organization shall select one of the following approaches for calculating significant air emissions:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13.1 Direct measurement of emissions (such as online analyzers);
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13.2 Calculation based on site-specific data;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13.3 Calculation based on published emission factors;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13.4 Estimation. If estimations are used due to a lack of default figures, the
+            organization shall indicate the basis on which figures were estimated.
+            </p>
+           
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
+  },
   //  sdg contet start//
   {
     category: ["sd1"],
