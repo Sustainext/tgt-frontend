@@ -69,7 +69,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
                 style={{ width: "100%" }} 
                 placeholder="Enter data" 
                 className="text-[12px] pl-2 py-2" 
-                min="0" 
+              
               />
             )}
           </td>

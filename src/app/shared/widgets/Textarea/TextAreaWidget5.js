@@ -20,7 +20,7 @@ const TextAreaWidget5 = (props) => {
       <div className="px-1">
       <div className="flex mb-2">
           <div className=" relative">
-            <p className="text-[14px] text-gray-700 font-[500] flex">
+            <p className="text-[14px] 4k:text-[16px] text-gray-700 font-[500] flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
@@ -28,7 +28,7 @@ const TextAreaWidget5 = (props) => {
                   "-"
                 )}`}
                 data-tooltip-html={uiSchema["ui:tooltipstitle"]}
-                className="mt-1 ml-2 w-[30px] text-[14px]"
+                className="mt-1 ml-2 w-[30px] text-[14px] 4k:text-[16px]"
                 style={{ display: uiSchema["ui:titletooltipdisplay"] }}
               />
               {/* Tooltip */}
@@ -51,7 +51,7 @@ const TextAreaWidget5 = (props) => {
         <div className="">
           <textarea
            placeholder="Enter a description..."
-           className={`w-full border appearance-none text-[12px] 
+           className={`w-full border appearance-none text-[12px] 4k:text-[14px]
            ${hasError ? "border-red-500" : "border-gray-400"} 
            text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none 
            focus:bg-white focus:border-gray-400 cursor-pointer`}

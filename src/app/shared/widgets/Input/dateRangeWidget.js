@@ -46,12 +46,12 @@ const DateRangeWidget = (props) => {
       <div className="mb-6">
         <div className="flex mb-2">
           <div className="relative">
-            <p className="text-[14px] text-gray-700 font-[500] flex">
+            <p className="text-[14px] 4k:text-[16px] text-gray-700 font-[500] flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
                 data-tooltip-html={uiSchema["ui:tooltipstitle"].replace(/\s+/g, "-")}
-                className="mt-1 ml-3 text-[14px]"
+                className="mt-1 ml-3 text-[14px] 4k:text-[16px]"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />
 
