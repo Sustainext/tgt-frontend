@@ -2,7 +2,7 @@
 import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-const MaterialTopBar = ({ toggleDrawer, sdgData, apiData, griData, brsr }) => {
+const MaterialTopBar = ({ toggleDrawer, sdgData, apiData, griData, brsr,title }) => {
   const materialityEnvData =
     apiData && apiData.environment ? apiData.environment : {};
   return (
@@ -14,7 +14,7 @@ const MaterialTopBar = ({ toggleDrawer, sdgData, apiData, griData, brsr }) => {
             <div className="flex h-[28px]">
               <div className="h-[28px]">
                 <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Materials
+                  {title}
                 </p>
               </div>
               {materialityEnvData &&

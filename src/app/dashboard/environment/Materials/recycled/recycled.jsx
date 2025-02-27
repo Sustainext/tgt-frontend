@@ -91,7 +91,7 @@ const Recycled = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <MaterialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} griData={griData} brsr={brsr}  />
+         <MaterialTopBar title={'Material Use and Efficiency'} toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} griData={griData} brsr={brsr}  />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

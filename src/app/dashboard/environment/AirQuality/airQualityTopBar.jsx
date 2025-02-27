@@ -13,7 +13,7 @@ const AirQualityTopBar=({toggleDrawer,sdgData,apiData,SignificantSpills, griData
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Air Quality
+                  Air Quality & other emissions
                   </p>
                 </div>
                 {materialityEnvData&&materialityEnvData.EnvAirQuality?.is_material_topic?(
