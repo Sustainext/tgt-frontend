@@ -74,30 +74,7 @@ const StandardMethodology = ({ apiData, isSidepanelOpen }) => {
   }, []);
 
   const sdgData = [
-    {
-      tagName: "SDG 3",
-      toggle: "19",
-      textColor: "#fff",
-      bgColor: "bg-[#4C9F38]",
-    },
-    {
-      tagName: "SDG 12",
-      toggle: "30",
-      textColor: "#fff",
-      bgColor: "bg-[#BF8B2E]",
-    },
-    {
-      tagName: "SDG 14",
-      toggle: "55",
-      textColor: "#fff",
-      bgColor: "bg-[#007DBC]",
-    },
-    {
-      tagName: "SDG 15",
-      toggle: "54",
-      textColor: "#fff",
-      bgColor: "bg-[#40AE49]",
-    },
+
   ];
   const griData = [
     {

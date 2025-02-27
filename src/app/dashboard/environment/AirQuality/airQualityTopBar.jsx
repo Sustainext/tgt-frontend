@@ -2,6 +2,7 @@
 import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+
 const AirQualityTopBar=({toggleDrawer,sdgData,apiData,SignificantSpills, griData})=>{
   const materialityEnvData=apiData&&apiData.environment?apiData.environment:{}
     return (
