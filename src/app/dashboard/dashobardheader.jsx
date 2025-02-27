@@ -180,7 +180,7 @@ const DashboardHeader = () => {
       <div className="flex bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-4 w-full mx-2 z-[1000]">
         <div
           className={`flex justify-start items-center my-2 gap-1 px-2 ${
-            open ? "w-[84%]" : "w-[84%]"
+            open ? "w-[84%] 4k:w-[84%]" : "w-[84%] 4k:w-[84%]"
           }`}
         >
           <Link href="/dashboard">
