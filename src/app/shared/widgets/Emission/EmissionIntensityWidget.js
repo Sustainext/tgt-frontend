@@ -17,7 +17,6 @@ const EmissionIntensityWidget = ({
   value = [],
   onChange,
 }) => {
-
   const rows = Array.isArray(value) ? value : [];
 
   const handleAddRow = () => {
@@ -145,7 +144,7 @@ const EmissionIntensityWidget = ({
   };
   const unitsByMetricType = {
     "Units of product sold": "number",
-   
+
     "Unit of energy consumed": [
       "Joule (J)",
       "Megajoule (MJ)",
@@ -157,6 +156,7 @@ const EmissionIntensityWidget = ({
       "Watt (W)",
     ],
     "Production volume": [
+      "Custom Unit (Please specify)",
       "Cubic Meter (m³)",
       "Cubic Centimeter (cm³)",
       "Liter (L)",
@@ -189,18 +189,18 @@ const EmissionIntensityWidget = ({
       {rows.map((item, rowIndex) => (
         <div className="mb-4 px-2 flex gap-4" key={rowIndex}>
           <div className="relative">
-          {rowIndex === 0 && (
-            <label className="block text-[13px] font-medium text-gray-700 mb-2">
-              Organization-specific metric type
-              <MdInfoOutline
-                className="inline ml-1 text-gray-600"
-                data-tooltip-id={`tooltip-MetricType-${id}`}
-                data-tooltip-content="Please select organisation specific metric type for calculating GHG emission intensity."
-              />
-            </label>
-              )}
+            {rowIndex === 0 && (
+              <label className="block text-[13px] 4k:text-[15px] font-medium text-gray-700 mb-2">
+                Organization-specific metric type
+                <MdInfoOutline
+                  className="inline ml-1 text-gray-600"
+                  data-tooltip-id={`tooltip-MetricType-${id}`}
+                  data-tooltip-content="Please select organisation specific metric type for calculating GHG emission intensity."
+                />
+              </label>
+            )}
             <select
-              className="block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 focus:outline-none"
+              className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
               value={item.MetricType}
               onChange={(e) =>
                 handleRowChange(rowIndex, "MetricType", e.target.value)
@@ -216,7 +216,7 @@ const EmissionIntensityWidget = ({
             {item.MetricType === "Other (please specify)" && (
               <input
                 type="text"
-                className="block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 focus:outline-none mt-2"
+                className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none mt-2"
                 placeholder="Specify metric type"
                 value={item.customMetricType}
                 onChange={(e) =>
@@ -235,25 +235,25 @@ const EmissionIntensityWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
-                zIndex:"100"
+                zIndex: "100",
               }}
             />
           </div>
 
           <div className="relative">
-          {rowIndex === 0 && (
-            <label className="block text-[13px] font-medium text-gray-700 mb-2">
-              Metric Name{" "}
-              <MdInfoOutline
-                className="inline ml-1 text-gray-600"
-                data-tooltip-id={`tooltip-Metricname-${id}`}
-                data-tooltip-content="Please mention the name of the metric."
-              />
-            </label>
-                 )}
+            {rowIndex === 0 && (
+              <label className="block text-[13px] 4k:text-[15px] font-medium text-gray-700 mb-2">
+                Metric Name{" "}
+                <MdInfoOutline
+                  className="inline ml-1 text-gray-600"
+                  data-tooltip-id={`tooltip-Metricname-${id}`}
+                  data-tooltip-content="Please mention the name of the metric."
+                />
+              </label>
+            )}
             <input
               type="text"
-              className="block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 focus:outline-none"
+              className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
               placeholder="Enter metric name"
               value={item.Metricname}
               onChange={(e) =>
@@ -271,76 +271,81 @@ const EmissionIntensityWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
-                zIndex:"100"
+                zIndex: "100",
               }}
             />
           </div>
 
           <div className="relative">
-          {rowIndex === 0 && (
-            <label className="block text-[13px] font-medium text-gray-700 mb-2">
-              Quantity 
-              <MdInfoOutline
-                className="inline ml-1 text-gray-600"
-                data-tooltip-id={`tooltip-Quantity-${id}`}
-                data-tooltip-content="Please specify the quantity for the selected organization-specific metric."
-              />
-            </label>
-                )}
+            {rowIndex === 0 && (
+              <label className="block text-[13px] 4k:text-[15px] font-medium text-gray-700 mb-2">
+                Quantity
+                <MdInfoOutline
+                  className="inline ml-1 text-gray-600"
+                  data-tooltip-id={`tooltip-Quantity-${id}`}
+                  data-tooltip-html="<p>Please specify the quantity for the selected organization-specific metric.</p><p> Note: For the Number of full-time employees organization-specific metric type, please specify the number of employees in this column. Similarly, for the Unit of product sold organization-specific metric type, please specify the number of products sold in this column.</p>"
+                />
+              </label>
+            )}
             <input
               type="number"
               min="0"
-              className="block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 focus:outline-none"
+              className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
               placeholder="Enter quantity"
               value={item.Quantity}
               onChange={(e) =>
                 handleRowChange(rowIndex, "Quantity", e.target.value)
               }
             />
-                 <ReactTooltip
+            <ReactTooltip
               id={`tooltip-Quantity-${id}`}
               place="top"
               effect="solid"
               style={{
-                width: "300px",
+                width: "450px",
                 backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
-                zIndex:"100"
+                zIndex: "100",
               }}
             />
           </div>
 
           <div className="relative">
-          {rowIndex === 0 && (
-            <label className="block text-[13px] font-medium text-gray-700 mb-2">
-              Units 
-              <MdInfoOutline
-                className="inline ml-1 text-gray-600"
-                data-tooltip-id={`tooltip-Units-${id}`}
-                data-tooltip-content="Please select the correct unit."
-              />
-            </label>
-              )}
+            {rowIndex === 0 && (
+              <label className="block text-[13px] 4k:text-[15px] font-medium text-gray-700 mb-2">
+                Units
+                <MdInfoOutline
+                  className="inline ml-1 text-gray-600"
+                  data-tooltip-id={`tooltip-Units-${id}`}
+                  data-tooltip-content="Please select the correct unit."
+                />
+              </label>
+            )}
             {["Units of product sold", "Number of employees"].includes(
               item.MetricType
             ) ? (
               <input
                 type="text"
-                className="block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 focus:outline-none"
+                className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
                 placeholder="Enter number"
-                value={item.MetricType === "Units of product sold" ? "Unit of product sold" : "No. of employees"}
+                value={
+                  item.MetricType === "Units of product sold"
+                    ? "Unit of product sold"
+                    : "No. of employees"
+                }
                 readOnly
                 // onChange={(e) =>
                 //   handleRowChange(rowIndex, "Units", e.target.value)
                 // }
               />
-            ) : item.MetricType === "Other (please specify)" ? (
+            ) : item.MetricType === "Other (please specify)" ||
+              item.Units === "Custom Unit (Please specify)" ? (
               <input
                 type="text"
-                className="block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 focus:outline-none mt-2"
+                className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none "
                 placeholder="Specify unit"
                 value={item.customUnit}
                 onChange={(e) =>
@@ -369,11 +374,11 @@ const EmissionIntensityWidget = ({
                 styles={newcustomStyles}
                 closeMenuOnSelect={false}
                 hideSelectedOptions={false}
-               className="block w-[20vw] text-[12px] border-b-2 border-gray-300 focus:outline-none"
+                className="block w-[20vw] 4k:w-[10vw] text-[12px] border-b-2 border-gray-300 focus:outline-none"
               />
             ) : (
               <select
-                className="block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 focus:outline-none"
+                className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
                 value={item.Units}
                 onChange={(e) =>
                   handleRowChange(rowIndex, "Units", e.target.value)
@@ -387,7 +392,7 @@ const EmissionIntensityWidget = ({
                 ))}
               </select>
             )}
-                <ReactTooltip
+            <ReactTooltip
               id={`tooltip-Units-${id}`}
               place="top"
               effect="solid"
@@ -398,22 +403,22 @@ const EmissionIntensityWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
-                zIndex:"100"
+                zIndex: "100",
               }}
-              />
+            />
           </div>
 
           <div className="relative">
-          {rowIndex === 0 && (
-            <label className="block text-[13px] font-medium text-gray-700 mb-2">
-          Types of GHG emissions included
-          in intensity ratio<MdInfoOutline
-                className="inline ml-1 text-gray-600"
-                data-tooltip-id={`tooltip-intensityratio-${id}`}
-                data-tooltip-content="Please select the types of GHG emissions included in the intensity ratio, whether direct (Scope 1), energy indirect (Scope 2), and/or other indirect (Scope 3)."
-              />
-            </label>
-    )}
+            {rowIndex === 0 && (
+              <label className="block text-[13px] 4k:text-[15px] font-medium text-gray-700 mb-2">
+                Types of GHG emissions included in intensity ratio
+                <MdInfoOutline
+                  className="inline ml-1 text-gray-600"
+                  data-tooltip-id={`tooltip-intensityratio-${id}`}
+                  data-tooltip-content="Please select the types of GHG emissions included in the intensity ratio, whether direct (Scope 1), energy indirect (Scope 2), and/or other indirect (Scope 3)."
+                />
+              </label>
+            )}
             <Select
               isMulti
               options={schema?.items?.properties?.intensityratio?.enum?.map(
@@ -438,9 +443,9 @@ const EmissionIntensityWidget = ({
               closeMenuOnSelect={false}
               hideSelectedOptions={false}
               components={{ Option: CustomOption }}
-              className="block w-[25vw] text-[12px] border-b-2 border-gray-300 focus:outline-none"
+              className="block w-[25vw] 4k:w-[10vw] text-[12px] border-b-2 border-gray-300 focus:outline-none"
             />
-              <ReactTooltip
+            <ReactTooltip
               id={`tooltip-intensityratio-${id}`}
               place="top"
               effect="solid"
@@ -451,9 +456,9 @@ const EmissionIntensityWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
-                zIndex:"100"
+                zIndex: "100",
               }}
-              />
+            />
           </div>
 
           <button onClick={() => handleRemoveRow(rowIndex)}>
@@ -465,10 +470,10 @@ const EmissionIntensityWidget = ({
       <div className="flex right-1 mx-2">
         <button
           type="button"
-          className="text-[#007EEF] text-[13px] flex cursor-pointer mt-2 mb-2"
+          className="text-[#007EEF] text-[13px] 4k:text-[15px] flex cursor-pointer mt-2 mb-2"
           onClick={handleAddRow}
         >
-          <MdAdd className="text-lg" /> Add new
+          <MdAdd className="text-lg mt-0 4k:mt-0.5" /> Add new
         </button>
       </div>
     </>

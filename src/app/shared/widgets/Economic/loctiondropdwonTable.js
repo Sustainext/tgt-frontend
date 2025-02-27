@@ -12,7 +12,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
     setLocalValues(item); 
   }, [item]);
 
-  const updateFieldDebounced = useRef(debounce(updateField, 6000)).current;
+  const updateFieldDebounced = useRef(debounce(updateField, 600)).current;
 
   const handleChange = (key, value) => {
     // Prevent duplicate location selection
@@ -69,7 +69,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
                 style={{ width: "100%" }} 
                 placeholder="Enter data" 
                 className="text-[12px] pl-2 py-2" 
-                min="0" 
+              
               />
             )}
           </td>

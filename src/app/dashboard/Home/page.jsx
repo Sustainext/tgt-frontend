@@ -17,7 +17,7 @@ const HomeDashboard = ({setActiveTab}) => {
             <MyGoals />
           </div>
         </div>
-        <div className="row-span-2 col-start-2 row-start-1 rounded-lg shadow border border-gray-200 p-4 h-[660px] w-3/5 overflow-auto table-scrollbar">
+        <div className="row-span-2 col-start-2 row-start-1 rounded-lg shadow border border-gray-200 p-4 h-[127vh] 4k:h-[41vh] w-3/5 overflow-auto table-scrollbar">
           <Preferences />
         </div>
       </div>

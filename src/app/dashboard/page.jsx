@@ -40,7 +40,7 @@ const Dashboard = () => {
             Sustainext HQ
           </div>
 
-          <div className="flex flex-col h-screen">
+          <div className="flex flex-col">
             <div className={`flex my-6 border-b`}>
               <button
                 className={`pr-4 py-1 rounded-b-none text-sm font-bold leading-[15px] sustainext-hq ${

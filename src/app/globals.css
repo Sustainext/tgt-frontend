@@ -5,7 +5,8 @@
 /* 4K screens (3840px width and above) */
 @media (min-width: 3840px) {
   body {
-    zoom: 1.5;
+    zoom: 2;
+    overflow-x: hidden;
   }
 }
 
@@ -20,6 +21,7 @@
 @media (min-width: 2560px) and (max-width: 3199px) {
   body {
     zoom: 1.2;
+    overflow-x: hidden;
   }
 }
 
@@ -27,6 +29,7 @@
 @media (min-width: 1920px) and (max-width: 2559px) {
   body {
     zoom: 1.0;
+    overflow-x: hidden;
   }
 }
 
@@ -34,14 +37,12 @@
 @media (max-width: 1919px) {
   body {
     zoom: 0.8;
+    overflow-x: hidden;
   }
 }
 
 body{
-  height: 100vh;
-
-  overflow-x: hidden;
- 
+  box-sizing: border-box;
 }
 button,
 input,
