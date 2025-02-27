@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
@@ -70,11 +70,16 @@ const EmissionsHeader = ({
       dispatch(fetchPreviousMonthData({ location, year, month }));
       dispatch(fetchAssignedTasks({ location, year, month }));
       dispatch(fetchApprovedTasks({ location, year, month }));
-      dispatch(fetchLocations());
       dispatch(clearSelectedRows());
     }
     dispatch(setValidationErrors({}));
   }, [location, year, month, dispatch]);
+
+  useEffect(() => {
+    if (locationsStatus === "idle" && locations.length === 0) {
+      dispatch(fetchLocations());
+    }
+  }, [locationsStatus, dispatch, locations.data]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -85,7 +90,7 @@ const EmissionsHeader = ({
     if (name === "month") {
       const monthNumber = monthMapping[value];
       dispatch(setMonth(monthNumber));
-      dispatch(f_setMonthName(value))
+      dispatch(f_setMonthName(value));
     } else if (name === "location") {
       const selectedLocation = locations.find(
         (loc) => loc.id === Number(value)
@@ -93,7 +98,7 @@ const EmissionsHeader = ({
       if (selectedLocation) {
         dispatch(setCountryCode(selectedLocation.country));
         setLocationname(selectedLocation.name);
-        dispatch(f_setLocationName(selectedLocation.name))
+        dispatch(f_setLocationName(selectedLocation.name));
       }
       dispatch(setLocation(Number(value)));
     } else if (name === "year") {

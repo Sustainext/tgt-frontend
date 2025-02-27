@@ -3939,6 +3939,270 @@ export const Energydata = [
     ],
     link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
+  {
+    category: ["55"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="">
+            <p className="text-[#0056a4] text-[15px] mb-2">
+              Disclosure 305-4 GHG emissions intensity
+            </p>
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Compilation requirements:
+            </div>
+            <div>
+              <p className="text-[13px] text-[#222222] mb-2">
+                {" "}
+                2.7 When compiling the information specified in Disclosure
+                305-4, the reporting organization shall
+              </p>
+
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px] mb-2">
+                2.7.1 calculate the ratio by dividing the absolute GHG emissions
+                (the numerator) by the organization-specific metric (the
+                denominator) ;
+              </p>
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px] mb-2">
+                2.7.2 if reporting an intensity ratio for other indirect (Scope
+                3) GHG emissions, report this intensity ratio separately from
+                the intensity ratios for direct (Scope 1) and energy indirect
+                (Scope 2) emissions.
+              </p>
+            </div>
+
+            <div className="text-[#0056a4] text-[15px] font-normal font-['Manrope'] leading-none my-4">
+              Guidance for Disclosure 305-4
+            </div>
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              Intensity ratios can be provided for, among others:
+              <ul className="list-disc ml-4  text-[11px] text-[#727272] mb-2">
+                <li className="mb-2">
+                  products (such as metric tons of CO2 emissions per unit
+                  produced)
+                </li>
+                <li className="mb-2">
+                  services (such as metric tons of CO2 emissions per function or
+                  per service)
+                </li>
+                <li className="mb-2">
+                  sales (such as metric tons of CO2 emissions per sales)
+                </li>
+              </ul>
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+                Organization-specific metrics (denominators) can include:
+              </p>
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+                units of product
+              </p>
+              <ul className="list-disc ml-4  text-[11px] text-[#727272] mb-2">
+                <li className="mb-2">
+                  {" "}
+                  production volume (such as metric tons, liters, or MWh)
+                </li>
+                <li className="mb-2">size (such as m floor space) 2</li>
+                <li className="mb-2">number of full-time employees</li>
+                <li className="mb-2">
+                  monetary units (such as revenue or sales)
+                </li>
+              </ul>
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px] mb-2">
+                The reporting organization can report an intensity ratio for
+                direct (Scope 1) and energy indirect (Scope 2) GHG emissions
+                combined, using the figures reported in Disclosures 305-1 and
+                305-2.
+              </p>
+              <p className="text-[13px] text-[#222222] mb-2">Background:</p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Intensity ratios define GHG emissions in the context of an
+                organization-specific metric. Manyorganizations track
+                environmental performance with intensity ratios, which are often
+                callednormalized environmental impact data. GHG emissions
+                intensity expresses the amount of GHG emissions per unit of
+                activity, output, or any other organization-specific metric. In
+                combination with an organization’s absolute GHG emissions,
+                reported in Disclosures 305-1, 305-2, and 305-3, GHG emissions
+                intensity helps to contextualize the organization’s efficiency,
+                including in relation to other organizations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
+  },
+  {
+    category: ["56"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="">
+            <p className="text-[#0056a4] text-[15px] mb-2">
+              Disclosure 305-5 Reduction of GHG emissions
+            </p>
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Compilation requirements:
+            </div>
+            <div>
+              <p className="text-[13px] text-[#222222] mb-2">
+                2.9 When compiling the information specified in Disclosure
+                305-5, the reporting organization shall:
+              </p>
+
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px] mb-2">
+                2.9.1 exclude reductions resulting from reduced production
+                capacity or outsourcing
+              </p>
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px] mb-2">
+                2.9.2 use the inventory or project method to account for
+                reductions;
+              </p>
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px] mb-2">
+                2.9.3 calculate an initiative’s total reductions of GHG
+                emissions as the sum of its associated primary effects and any
+                significant secondary effects
+              </p>
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px] mb-2">
+                2.9.4 if reporting two or more Scope types, report the
+                reductions for each separately;
+              </p>
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px] mb-2">
+                2.9.5 report reductions from offsets separately
+              </p>
+            </div>
+
+            <div className="text-[#0056a4] text-[15px] font-normal font-['Manrope'] leading-none my-4">
+              Guidance for Disclosure 305-5
+            </div>
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              The reporting organization can prioritize disclosing reduction
+              initiatives that were implemented in the reporting period, and
+              that have the potential to contribute significantly to reductions.
+              The organization can describe reduction initiatives and their
+              targets when reporting how it manages this topic. Reduction
+              initiatives can include:
+              <ul className="list-disc ml-4  text-[11px] text-[#727272] mb-2">
+                <li className="mb-2">process redesign;</li>
+                <li className="mb-2">
+                  conversion and retrofitting of equipment
+                </li>
+                <li className="mb-2">fuel switching</li>
+                <li className="mb-2">changes in behavior</li>
+                <li className="mb-2">offsets</li>
+              </ul>
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+                The organization can report reductions disaggregated by
+                initiatives or groups of initiatives. This disclosure can be
+                used in combination with Disclosures 305-1, 305-2, and 305-3 of
+                this Standard to monitor the reduction of GHG emissions with
+                reference to the organization’s targets, or to regulations and
+                trading systems at international or national level.
+              </p>
+            </div>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
+  },
+  {
+    category: ["57"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+       GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 305-6 Emissions of ozone-depleting substances (ODS)
+          </p>
+          <div className="">
+            <p className="text-[11px] text-black mb-2">
+              Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.11 When compiling the information specified in Disclosure 305-6, the reporting
+            organization shall:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            2.11.1 calculate the production of ODS as the amount of ODS produced, minus the
+amount destroyed by approved technologies, and minus the amount entirely
+used as feedstock in the manufacture of other chemicals;
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Production of ODS = ODS produced - ODS destroyed by approved technologies - ODS entirely used as feedstock in the manufacture of other chemicals.
+            2.11.2 exclude ODS recycled and reused.
+            </p>
+           
+            <p className="text-[11px] text-black mb-2">Guidance for Disclosure 305-6</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            The reporting organization can report separate or combined data for the substances included in the calculation.
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Measuring ODS production, imports, and exports helps to indicate how an organization complies with legislation. This is particularly relevant if the organization produces or uses ODS in its processes, products and services and is subject to phase-out commitments. Results on ODS phase-out help to indicate the organization’s position in any markets affected by regulation on ODS. This disclosure covers the substances included in Annexes A, B, C, and E of the ‘Montreal Protocol’ as well as any other ODS produced, imported, or exported by an organization.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
+  },
+  {
+    category: ["58"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+       GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 305-7 Nitrogen oxides (NOx), sulfur oxides (SOx), and other significant air emissions
+          </p>
+          <div className="">
+            <p className="text-[11px] text-black mb-2">
+              Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13 When compiling the information specified in Disclosure 305-7, the reporting organization shall select one of the following approaches for calculating significant air emissions:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13.1 Direct measurement of emissions (such as online analyzers);
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13.2 Calculation based on site-specific data;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13.3 Calculation based on published emission factors;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            2.13.4 Estimation. If estimations are used due to a lack of default figures, the
+            organization shall indicate the basis on which figures were estimated.
+            </p>
+           
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
+  },
   //  sdg contet start//
   {
     category: ["sd1"],
@@ -5720,37 +5984,46 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 6: Ensure availability and sustainable management of water and sanitation for all
+            Sustainable Development Goal 6: Ensure availability and sustainable
+            management of water and sanitation for all
           </p>
           <div className="">
             <p className="text-[13px] text-[#222222] mb-2">Target 6.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, protect and restore water-related ecosystems, including mountains, forests, wetlands, rivers, aquifers and lakes.
+              By 2020, protect and restore water-related ecosystems, including
+              mountains, forests, wetlands, rivers, aquifers and lakes.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.6.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Change in the extent of water-related ecosystems over time.
+              Change in the extent of water-related ecosystems over time.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Target 6.a</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, expand international cooperation and capacity-building support to developing countries in water- and sanitation-related activities and programmes, including water harvesting, desalination, water efficiency, wastewater treatment, recycling and reuse technologies.
+              By 2030, expand international cooperation and capacity-building
+              support to developing countries in water- and sanitation-related
+              activities and programmes, including water harvesting,
+              desalination, water efficiency, wastewater treatment, recycling
+              and reuse technologies.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.a.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Amount of water- and sanitation-related official development assistance that is part of a government-coordinated spending plan.
+              Amount of water- and sanitation-related official development
+              assistance that is part of a government-coordinated spending plan.
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Support and strengthen the participation of local communities in improving water and sanitation management.
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of local administrative units with established and operational policies and procedures for participation of local communities in water and sanitation management.
+              Proportion of local administrative units with established and
+              operational policies and procedures for participation of local
+              communities in water and sanitation management.
             </p>
-           
           </div>
         </div>
       </>,
@@ -5774,24 +6047,32 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 12: Ensure sustainable consumption and production pattern
+            Sustainable Development Goal 12: Ensure sustainable consumption and
+            production pattern
           </p>
           <div className="">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, achieve the environmentally sound management of chemicals and all wastes throughout their life cycle, in accordance with agreed international frameworks, and significantly reduce their release to air, water and soil in order to minimize their adverse impacts on human health and the environment
+              By 2020, achieve the environmentally sound management of chemicals
+              and all wastes throughout their life cycle, in accordance with
+              agreed international frameworks, and significantly reduce their
+              release to air, water and soil in order to minimize their adverse
+              impacts on human health and the environment
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">12.4.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Number of parties to international multilateral environmental agreements on hazardous waste, and other chemicals that meet their commitments and obligations in transmitting information as required by each relevant agreement
+              Number of parties to international multilateral environmental
+              agreements on hazardous waste, and other chemicals that meet their
+              commitments and obligations in transmitting information as
+              required by each relevant agreement
             </p>
-          
+
             <p className="text-[11px] text-[#222222] mb-2">12.4.2</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            (a) Hazardous waste generated per capita; and (b) proportion of hazardous waste treated, by type of treatment
+              (a) Hazardous waste generated per capita; and (b) proportion of
+              hazardous waste treated, by type of treatment
             </p>
-          
           </div>
         </div>
       </>,
@@ -5815,12 +6096,18 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 15: Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss
+            Sustainable Development Goal 15: Protect, restore and promote
+            sustainable use of terrestrial ecosystems, sustainably manage
+            forests, combat desertification, and halt and reverse land
+            degradation and halt biodiversity loss
           </p>
           <div className="h-[544px]">
             <p className="text-[13px] text-[#222222] mb-2">Target 15.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, ensure the conservation, restoration and sustainable use of terrestrial and inland freshwater ecosystems and their services, in particular forests, wetlands, mountains and drylands, in line with obligations under international agreements
+              By 2020, ensure the conservation, restoration and sustainable use
+              of terrestrial and inland freshwater ecosystems and their
+              services, in particular forests, wetlands, mountains and drylands,
+              in line with obligations under international agreements
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">15.1.1</p>
@@ -5829,7 +6116,9 @@ export const Energydata = [
             </p>
             <p className="text-[11px] text-[#222222] mb-2">15.1.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of important sites for terrestrial and freshwater biodiversity that are covered by protected areas, by ecosystem type
+              Proportion of important sites for terrestrial and freshwater
+              biodiversity that are covered by protected areas, by ecosystem
+              type
             </p>
           </div>
         </div>
@@ -5877,19 +6166,26 @@ export const Energydata = [
             {/* added 12.4 */}
             <p className="text-[13px] text-[#222222] mb-2">Target 12.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, achieve the environmentally sound management of chemicals and all wastes throughout their life cycle, in accordance with agreed international frameworks, and significantly reduce their release to air, water and soil in order to minimize their adverse impacts on human health and the environment.
+              By 2020, achieve the environmentally sound management of chemicals
+              and all wastes throughout their life cycle, in accordance with
+              agreed international frameworks, and significantly reduce their
+              release to air, water and soil in order to minimize their adverse
+              impacts on human health and the environment.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">12.4.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Number of parties to international multilateral environmental agreements on hazardous waste, and other chemicals that meet their commitments and obligations in transmitting information as required by each relevant agreement.
+              Number of parties to international multilateral environmental
+              agreements on hazardous waste, and other chemicals that meet their
+              commitments and obligations in transmitting information as
+              required by each relevant agreement.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">12.4.2</p>
             <p className="text-[11px] text-[#727272] mb-2">
-           (a) Hardous waste generated per capita; and
+              (a) Hardous waste generated per capita; and
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            (b) Proportion of hazardous waste treated, by type of treatment
+              (b) Proportion of hazardous waste treated, by type of treatment
             </p>
           </div>
         </div>
@@ -5914,19 +6210,24 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 15: Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss
+            Sustainable Development Goal 15: Protect, restore and promote
+            sustainable use of terrestrial ecosystems, sustainably manage
+            forests, combat desertification, and halt and reverse land
+            degradation and halt biodiversity loss
           </p>
           <div className="h-[544px]">
             <p className="text-[13px] text-[#222222] mb-2">Target 15.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, promote the implementation of sustainable management of all types of forests, halt deforestation, restore degraded forests and substantially increase afforestation and reforestation globally
+              By 2020, promote the implementation of sustainable management of
+              all types of forests, halt deforestation, restore degraded forests
+              and substantially increase afforestation and reforestation
+              globally
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">15.2.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Progress towards sustainable forest management
+              Progress towards sustainable forest management
             </p>
-            
           </div>
         </div>
       </>,

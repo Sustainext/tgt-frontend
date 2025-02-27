@@ -67,11 +67,18 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     //   ],
     // },
     {
-      category: "Materials",
+      category: "Material Use and Efficiency",
       tag: "GRI 301",
       data: [
         { tagid: "1", infoid: "11" },
         { tagid: "2", infoid: "12" },
+        // { tagid: "3", infoid: "13" },
+      ],
+    },
+    {
+      category: "Packaging Materials",
+      tag: "GRI 301",
+      data: [
         { tagid: "3", infoid: "13" },
       ],
     },
@@ -92,6 +99,14 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       data: [
         { tagid: "1", infoid: "49" },
         { tagid: "2", infoid: "50" },
+      ],
+    },
+    {
+      category: "Air Quality & other emissions",
+      tag: "GRI 305",
+      data: [
+        { tagid: "7", infoid: "58" },
+        { tagid: "6", infoid: "57" },
       ],
     },
   ];
@@ -137,7 +152,14 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     //   ],
     // },
     {
-      category: "Materials",
+      category: "Material Use and Efficiency",
+      data: [
+        { id: "sd2", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd9", label: "SDG 12", bgColor: "bg-yellow-600" },
+      ],
+    },
+    {
+      category: "Packaging Materials",
       data: [
         { id: "sd2", label: "SDG 8", bgColor: "bg-red-900" },
         { id: "sd9", label: "SDG 12", bgColor: "bg-yellow-600" },
@@ -147,6 +169,16 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       category: "Water and effluents",
       data: [{ id: "sd6", label: "SDG 6", bgColor: "bg-cyan-500" }],
     },
+    {
+      category:"Air Quality & other emissions",
+      data: [
+        { id: "sd5", label: "SDG 3", bgColor: "bg-[#4c9f38]" },
+        { id: "sd9", label: "SDG 12", bgColor: "bg-yellow-600" },
+        { id: "sd24", label: "SDG 14", bgColor: "bg-[#007dbc]" },
+        { id: "sd38", label: "SDG 15", bgColor: "bg-[#4c9f38]" },
+      ],
+
+    }
   ];
   return (
     <>

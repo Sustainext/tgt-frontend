@@ -2,6 +2,7 @@
 import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+
 const AirQualityTopBar=({toggleDrawer,sdgData,apiData,SignificantSpills, griData})=>{
   const materialityEnvData=apiData&&apiData.environment?apiData.environment:{}
     return (
@@ -13,7 +14,7 @@ const AirQualityTopBar=({toggleDrawer,sdgData,apiData,SignificantSpills, griData
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Air Quality
+                  Air Quality & other emissions
                   </p>
                 </div>
                 {materialityEnvData&&materialityEnvData.EnvAirQuality?.is_material_topic?(

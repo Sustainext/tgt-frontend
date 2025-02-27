@@ -196,6 +196,9 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   };
   useEffect(() => {
     if (selectedOrg && year && togglestatus) {
+      setFormData([{}]); 
+      setRemoteSchema({});
+      setRemoteUiSchema({});
       if (togglestatus === "Corporate" && selectedCorp) {
         loadFormData();
       } else if (togglestatus === "Corporate" && !selectedCorp) {

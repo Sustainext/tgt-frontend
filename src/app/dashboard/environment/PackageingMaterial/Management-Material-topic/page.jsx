@@ -9,7 +9,7 @@ import Screen1 from "./Screen1";
 import { useSelector } from "react-redux";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-const MaterialsMaterialtopic = ({ apiData }) => {
+const PackagingMaterialTopic = ({ apiData }) => {
   const {
     corporate_id,
     organization_id,
@@ -78,11 +78,11 @@ const MaterialsMaterialtopic = ({ apiData }) => {
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Material Use and Efficiency
+                  Packaging Material
                   </p>
                 </div>
                 {materialityEnvData &&
-                materialityEnvData.EnvRawMaterialSourcing?.is_material_topic ? (
+                materialityEnvData.EnvPackagingMaterial?.is_material_topic ? (
                   <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
                     <p className="text-gray-500 text-[12px] pt-0.5 px-2">
                       Material Topic
@@ -251,4 +251,4 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
   );
 };
 
-export default MaterialsMaterialtopic;
+export default PackagingMaterialTopic;

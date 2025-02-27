@@ -21,7 +21,9 @@ const TableSidebar = () => {
         "materials1",
         "materials2",
         "materials3",
-
+        "materials4",
+        "materials5",
+        "materials6",
       ];
 
       const threshold = 150;
@@ -53,16 +55,28 @@ const TableSidebar = () => {
       {[
         {
           id: "materials1",
-          name: "Non-Renewable materials used",
+          name: "Air Emissions by Pollutants (in Kg)",
         },
         {
           id: "materials2",
-          name: "Renewable materials used",
+          name: "Air Emissions by Pollutants (in ppm or µg/m³)",
         },
         {
           id: "materials3",
-          name: "Percentage of recycled materials used (Production)",
+          name: "Percentage Contribution of Air Pollutants by Location",
         },
+        {
+            id: "materials4",
+            name: "Total  Air Emissions by Location (in Kg)",
+          },
+          {
+            id: "materials5",
+            name: "Total  Air Emissions by Location (in ppm or µg/m³)",
+          },
+          {
+            id: "materials6",
+            name: "Ozone Depleting Substances",
+          },
 
       ].map((link) => (
         <div key={link.id} className="self-stretch justify-end items-center gap-2 inline-flex">

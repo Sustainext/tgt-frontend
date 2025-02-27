@@ -1,24 +1,43 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
-import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import React, { useState, useEffect, useRef } from "react";
+import EnvironmentHeader2 from "../../environmentheader2";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Recycledbody from "./recycled-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MaterialTopBar from '../materialTopBar'
+import AirQualityTopBar from "../airQualityTopBar";
+import { useSelector } from "react-redux";
+import Screen1 from "./screen1";
 
-const Recycled = ({apiData}) => {
+const StandardMethodology = ({ apiData, isSidepanelOpen }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const materialityEnvData =
+    apiData && apiData.environment ? apiData.environment : {};
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -53,54 +72,35 @@ const Recycled = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const sdgData = [
+
+  ];
   const griData = [
     {
-      tagName:' GRI 301-2',
-      toggle:'38',
-      textColor:"#007EEF",
-      bgColor:"bg-slate-200"
-  },
+      tagName: "GRI 305 - 7",
+      toggle: "53",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
   ];
-
-  const brsr = [
-    {
-      tagName: "BRSR C-P2-L3",
-      id: "tooltip-$brsr1",
-      content: "BRSR-Section C-Principle 2-Leadership  Indicators-3",
-    },
- 
-  ];
-  const sdgData=[
- 
-    {
-        tagName:'SDG 8',
-        toggle:'39',
-        textColor:"#fff",
-        bgColor:"bg-red-900"
-    },
-    {
-        tagName:'SDG 12',
-        toggle:'40',
-        textColor:"#fff",
-        bgColor:"bg-yellow-600"
-    },
-    
-]
-
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <MaterialTopBar title={'Material Use and Efficiency'} toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} griData={griData} brsr={brsr}  />
+        <AirQualityTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          griData={griData}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Disclosure 301-2-a Recycled input materials used
-            <MdInfoOutline
+            Standards, methodologies, and assumptions used
+            {/* <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
-              data-tooltip-content="This section documents data corresponding to the
-                            amount of recycled material used for production
-                            of goods/services during the reporting period."
+              data-tooltip-content="This section documents the data corresponding to the significant spills."
               className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
@@ -116,12 +116,12 @@ const Recycled = ({apiData}) => {
                 borderRadius: "8px",
                 textAlign: "left",
               }}
-            ></ReactTooltip>
+            ></ReactTooltip> */}
           </h6>
         </div>
         <div
-           ref={drawerRef}
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -164,26 +164,27 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <EnvironmentHeader
-        activeMonth={activeMonth}
+      <EnvironmentHeader2
+        month={activeMonth}
         setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
         year={year}
         setYear={setYear}
-        locationMessage={locationMessage}
-        setLocationMessage={setLocationMessage}
         yearMessage={yearMessage}
         setYearMessage={setYearMessage}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
+        setToggleStatus={setToggleStatus}
       />
-      <Recycledbody
-        location={location}
+      <Screen1
         year={year}
-        month={activeMonth}
-        setLocationMessage={setLocationMessage}
         setYearMessage={setYearMessage}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
       />
     </>
   );
 };
-export default Recycled;
+export default StandardMethodology;

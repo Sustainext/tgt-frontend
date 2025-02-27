@@ -15,7 +15,7 @@ import Wastedirected from "./Waste/waste-directed/waste-directed";
 import Datacollectionmethodology from "./Waste/Data-collection-methodology/Data-collection-methodology"
 import Weightvolume from "./Materials/weight-volume/weight-volume";
 import Recycled from "./Materials/recycled/recycled";
-import Reclaimedproducts from "./Materials/reclaimed-products/reclaimed-products";
+import Reclaimedproducts from "./PackageingMaterial/reclaimed-products/reclaimed-products";
 import Watersharedresource from "./Water-effluents/water-shared-resource/water-shared-resource";
 import Dischargefromareas from "./Water-effluents/discharge-from-all-areas/discharge-from-all-areas";
 import Waterstres from "./Water-effluents/water-stres/water-stres";
@@ -46,18 +46,15 @@ import MaterialTopicAirQuality from './AirQuality/Management-of-material-topic/p
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMaterialityData,
-  setCorpID,
-  setOrgID,
-  setOrgName,
-  setCorpName,
-  setYear,
-  setStartDate,
-  setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
 import {f_setSectionName} from '../../../lib/redux/features/FileInfoSlice'
 import BaseYear from './Emissions/baseYear/page'
 import NitrogenOxide from './AirQuality/NitrogenOxide/page'
-import { fetchLocations, fetchUsers } from "@/lib/redux/features/emissionSlice";
+import StandardMethodology from "./AirQuality/StandardMethodology/page";
+import ODSImportExport from "./AirQuality/ODS-Import-Export/page";
+import EmissionsODS from "./AirQuality/Emissions-ODS/page";
+import MaterialTopicPackagingMaterial from './PackageingMaterial/Management-Material-topic/page'
+import {fetchLocations, fetchUsers} from '../../../lib/redux/features/emissionSlice'
 
 const environment = () => {
   const { open } = GlobalState();
@@ -66,6 +63,7 @@ const environment = () => {
   );
  
   const dispatch = useDispatch();
+
   const { corporate_id, organization_id, start_date, end_date, data,materiality_year, loading, error } = useSelector(
     (state) => state.materialitySlice
   );
@@ -106,7 +104,8 @@ const environment = () => {
       "Management of Material topic waste",
       "Management of Material topic energy",
       // "Management of Material topic effluent",
-      "Management of Material topic air quality"
+      "Management of Material topic air quality",
+      "Management of Material topic Packaging Materials"
     ];
     const emissionTabs = ["GHG Emissions","Base Year","Consolidation Approach","Standards","EmissionIntensity","EmissionReductionInitiatives"];
     const energyTabs = [
@@ -132,7 +131,6 @@ const environment = () => {
     const materialTabs = [
       "Materials used by weight or volume",
       "Recycled input materials used",
-      "Reclaimed products and their packaging materials",
     ];
 
     // List of tabs related to Water
@@ -149,12 +147,15 @@ const environment = () => {
       "New suppliers that were screened using environmental criteria",
       "Negative environmental impacts in the supply chain and actions taken",
     ];
-    // const effluentTab = [
-    //   "Significant Spills",
-    // ];
+    const packagingMaterialTabs = [
+     "Reclaimed products and their packaging materials",
+    ];
 
     const airQualityTab=[
-      "Nitrogen Oxides"
+      "Nitrogen Oxides",
+      "Standard Methodology",
+      "ODS Import Export",
+      "Emissions ODS"
     ]
 
     // Set the header based on the active tab category
@@ -165,8 +166,11 @@ const environment = () => {
     } else if (wasteTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Waste"));
     } else if (materialTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Materials"));
-    } else if (waterTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Material Use and Efficiency"));
+    }else if (packagingMaterialTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Packaging Material"));
+    }
+     else if (waterTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Water and effluents"));
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Supplier Environmental Assessment"));
@@ -259,6 +263,9 @@ const environment = () => {
               <Weightvolume apiData={data} />
             )}
             {activeTab === "Recycled input materials used" && <Recycled apiData={data} />}
+            {activeTab === "Management of Material topic Packaging Materials" && (
+              <MaterialTopicPackagingMaterial apiData={data} />
+            )}
             {activeTab ===
               "Reclaimed products and their packaging materials" && (
               <Reclaimedproducts apiData={data} />
@@ -299,6 +306,18 @@ const environment = () => {
             {activeTab ===
               "Nitrogen Oxides" && (
               <NitrogenOxide apiData={data} />
+            )}
+            {activeTab ===
+              "Standard Methodology" && (
+              <StandardMethodology apiData={data} />
+            )}
+            {activeTab ===
+              "ODS Import Export" && (
+              <ODSImportExport apiData={data} />
+            )}
+            {activeTab ===
+              "Emissions ODS" && (
+              <EmissionsODS apiData={data} />
             )}
           </div>
         </div>

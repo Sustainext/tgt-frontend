@@ -89,6 +89,7 @@ const SelectWidget = ({
             className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize table-scrollbar ${hasError ? 'border-red-500' : 'border-gray-300'}`}
             value={value}
             onChange={handleChange}
+            disabled={options.disabled}
           >
             <option value="" disabled={!value} className="text-gray-500">
               {`Select ${label}` || "Select..."}

@@ -59,7 +59,7 @@ const Emissionreductioninitiativesnew = ({ apiData }) => {
   const griData = [
     {
       tagName: "GRI 305-5",
-      toggle: "43",
+      toggle: "56",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },

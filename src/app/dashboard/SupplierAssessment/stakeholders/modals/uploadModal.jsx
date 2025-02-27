@@ -97,7 +97,7 @@ const UploadFileModal = ({
                             <p style={{ margin: 0, fontSize: "14px", lineHeight: "1.4" }}>
                               {" "}
                               {/* Paragraph aligned below heading */}
-                              {`Stakeholders has been imported into the ${groupId.name?groupId.name:''} stakeholder group`}
+                              {`Stakeholders has been imported into the ${groupId?groupId?.name:''} stakeholder group`}
                             </p>
                           </div>
                         </div>,
@@ -210,6 +210,7 @@ const UploadFileModal = ({
                     onClick={()=>{
                         setRefresh((prevRefresh) => !prevRefresh);
                       setIsModalOpen(false)
+                      setIsPreviewOpen(false)
                     }}
                       type="button"
                       className={`bg-transparent flex gap-2 cursor-pointer border border-gray-300 text-[#727272] px-6 py-2 rounded-md`}
