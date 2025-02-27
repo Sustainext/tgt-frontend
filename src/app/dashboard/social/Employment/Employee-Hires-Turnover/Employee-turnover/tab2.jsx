@@ -52,7 +52,7 @@ const uiSchema = {
     },
 };
 
-const Tab2 = ({ fullName, year, month, selectedOrg, selectedCorp }) => {
+const Tab2 = ({ fullName, year, month, selectedOrg, selectedCorp,togglestatus }) => {
     const initialFormData = [
       {
         yearsold30: "",

@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
  
       </head>
 
-      <body className="min-h-[100vh]">
+      <body>
         <GlobalStateProvider>
           <FluentCProvider>
             <AuthProvider>{children}</AuthProvider>

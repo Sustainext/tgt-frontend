@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const userRole = localStorage.getItem("isAdmin");
-    setIsAdmin(Boolean(userRole));
+    setIsAdmin(userRole);
   }, []);
 
   const handleTabChange = (tab) => {
@@ -40,7 +40,7 @@ const Dashboard = () => {
             Sustainext HQ
           </div>
 
-          <div className="flex flex-col h-screen">
+          <div className="flex flex-col">
             <div className={`flex my-6 border-b`}>
               <button
                 className={`pr-4 py-1 rounded-b-none text-sm font-bold leading-[15px] sustainext-hq ${
@@ -53,7 +53,7 @@ const Dashboard = () => {
                 Dashboard
               </button>
               {
-                isAdmin && (
+                isAdmin == 'true' && (
                   <button
                 className={`px-4 rounded-b-none text-sm font-bold leading-[15px] ${
                   activeTab === "tab3"
@@ -72,7 +72,7 @@ const Dashboard = () => {
               <div className="flex-grow">
                 {activeTab === "tab1" && <HomeDashboard setActiveTab={setActiveTab} />}
 
-                {isAdmin && activeTab === "tab3" && <TasksPage />}
+                {isAdmin == 'true' && activeTab === "tab3" && <TasksPage />}
               </div>
             </div>
           </div>

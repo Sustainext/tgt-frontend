@@ -292,7 +292,7 @@ const DateRangePickerEmission = ({ startDate, endDate, onDateChange }) => {
               : ""
           }
           onClick={toggleDatePicker}
-          className=" border-b-2 py-2 border-gray-300 w-[20vw] text-[12px] pl-2 text-neutral-500"
+          className=" border-b-2 py-2 border-gray-300 w-[20vw] 4k:w-[8vw] text-[12px] pl-2 text-neutral-500"
         />
         <AiOutlineCalendar
           className="absolute right-2 cursor-pointer"

@@ -46,13 +46,6 @@ import MaterialTopicAirQuality from './AirQuality/Management-of-material-topic/p
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMaterialityData,
-  setCorpID,
-  setOrgID,
-  setOrgName,
-  setCorpName,
-  setYear,
-  setStartDate,
-  setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
 import {f_setSectionName} from '../../../lib/redux/features/FileInfoSlice'
 import BaseYear from './Emissions/baseYear/page'
@@ -61,6 +54,7 @@ import StandardMethodology from "./AirQuality/StandardMethodology/page";
 import ODSImportExport from "./AirQuality/ODS-Import-Export/page";
 import EmissionsODS from "./AirQuality/Emissions-ODS/page";
 import MaterialTopicPackagingMaterial from './PackageingMaterial/Management-Material-topic/page'
+import {fetchLocations, fetchUsers} from '../../../lib/redux/features/emissionSlice'
 
 const environment = () => {
   const { open } = GlobalState();
@@ -69,6 +63,7 @@ const environment = () => {
   );
  
   const dispatch = useDispatch();
+
   const { corporate_id, organization_id, start_date, end_date, data,materiality_year, loading, error } = useSelector(
     (state) => state.materialitySlice
   );
@@ -95,6 +90,8 @@ const environment = () => {
 
   useEffect(() => {
     loadMaterialityDashboard()
+    dispatch(fetchLocations())
+    dispatch(fetchUsers());
   }, [dispatch]);
 
   useEffect(() => {
@@ -204,8 +201,8 @@ const environment = () => {
           <div
             className={`${
               open
-                ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw]"
-                : " sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw]"
+                ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
+                : " sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
             }`}
           >
             {/* Emissions start */}

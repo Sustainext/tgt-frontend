@@ -30,7 +30,7 @@ const InputdiableWidget = ({
   const debouncedOnChange = useCallback(
     debounce((newValue) => {
       onChange(newValue);
-    }, 800),
+    }, 2000),
     [onChange]
   );
 
@@ -38,6 +38,8 @@ const InputdiableWidget = ({
   useEffect(() => {
     setInputValue(value || "");
   }, [value]);
+
+
   const handleInputChange = (event) => {
     const newValue = event.target.value;
     setInputValue(newValue);
