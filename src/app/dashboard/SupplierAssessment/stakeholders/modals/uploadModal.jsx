@@ -210,6 +210,7 @@ const UploadFileModal = ({
                     onClick={()=>{
                         setRefresh((prevRefresh) => !prevRefresh);
                       setIsModalOpen(false)
+                      setIsPreviewOpen(false)
                     }}
                       type="button"
                       className={`bg-transparent flex gap-2 cursor-pointer border border-gray-300 text-[#727272] px-6 py-2 rounded-md`}

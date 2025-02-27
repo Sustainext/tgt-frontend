@@ -3,22 +3,20 @@ import { useState, useEffect } from "react";
 import { yearInfo } from "../../../../shared/data/yearInfo";
 import { AiOutlineCalendar } from "react-icons/ai";
 import TableSidebar from "./TableSidebar";
-import DynamicTable from "./customTable";
+import DynamicTable from "../Materials/customTable";
 import DateRangePicker from "@/app/utils/DatePickerComponent";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-import { columns1, columns2, columns3 } from "./data";
+import { columns4 } from "../Materials/data";
 
-const AnalyseMaterials = ({ isBoxOpen }) => {
+const AnalysePackagingMaterial = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedsetLocation, setSelectedSetLocation] = useState("");
-  const [materialdata1, setMaterialdata1] = useState([]);
-  const [materialdata2, setMaterialdata2] = useState([]);
-  const [materialdata3, setMaterialdata3] = useState([]);
+  const [materialdata4, setMaterialdata4] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
@@ -69,9 +67,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       }
     }
     LoaderOpen();
-    setMaterialdata1([]);
-    setMaterialdata2([]);
-    setMaterialdata3([]);
+    setMaterialdata4([]);
     try {
       const response = await axiosInstance.get(
         `/sustainapp/get_material_analysis`,
@@ -81,50 +77,11 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       );
 
       const data = response.data;
-      console.log(data, "testing");
 
       const {
-        non_renewable_materials,
         reclaimed_materials,
-        recycled_materials,
-        renewable_materials,
       } = data;
-      const Nonrenewablematerials = non_renewable_materials
-        .filter((item) => item.material_type)
-        .map((Noremat, index) => ({
-          type: Noremat.material_type,
-          materialcategory: Noremat.material_category,
-          source: Noremat.source,
-          total: Noremat.total_quantity,
-          units: Noremat.units,
-          datasource: Noremat.data_source,
-        }));
-      // Nonrenewablematerials.push({
-      //   type: "",
-      //   total: non_renewable_materials.find((item) => item.total_weight)
-      //     ?.total_weight,
-      // });
-
-      const renewablematerials = renewable_materials
-        .filter((item) => item.material_type)
-        .map((renemat, index) => ({
-          type: renemat.material_type,
-          materialcategory: renemat.material_category,
-          source: renemat.source,
-          total: renemat.total_quantity,
-          units: renemat.units,
-          datasource: renemat.data_source,
-        }));
-      // renewablematerials.push({
-      //   type: "",
-      //   total: renewable_materials.find((item) => item.total_weight)
-      //     ?.total_weight,
-      // });
-
-      const recycledmaterials = recycled_materials.map((recyled, index) => ({
-        type: recyled.type_of_recycled_material_used,
-        consumption: recyled.percentage_of_recycled_input_materials_used,
-      }));
+     
 
       const reclaimedmaterials = reclaimed_materials.map(
         (reclaimed, index) => ({
@@ -134,9 +91,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
           total: reclaimed.total_quantity,
         })
       );
-      setMaterialdata1(Nonrenewablematerials);
-      setMaterialdata2(renewablematerials);
-      setMaterialdata3(recycledmaterials);
+      setMaterialdata4(reclaimedmaterials);
 
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
@@ -226,9 +181,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       setSelectedLocation(""); 
     }
     if(type === "Corporate"){
-      setMaterialdata1([]);
-      setMaterialdata2([]);
-      setMaterialdata3([]);
+      setMaterialdata4([]);
       setDateRange({
         start: null,
         end: null
@@ -236,9 +189,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       setIsDateRangeValid(false);
     }
     if(type === "Location"){
-      setMaterialdata1([]);
-      setMaterialdata2([]);
-      setMaterialdata3([]);
+      setMaterialdata4([]);
       setDateRange({
         start: null,
         end: null
@@ -252,9 +203,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
     setSelectedOrg(newOrg);
     setSelectedCorp("");
     setSelectedSetLocation("");
-    setMaterialdata1([]);
-    setMaterialdata2([]);
-    setMaterialdata3([]);
+    setMaterialdata4([]);
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
@@ -490,54 +439,26 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
         <div className="flex">
           <div className={`ps-4 w-[100%] me-4`}>
             <div className="mb-6">
-              <p className="text-black text-[15px] font-bold ">
-                Materials used by weight or volume
-              </p>
               <div
-                id="materials1"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+                id="materials4"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
               >
-                <p>Non-Renewable materials used</p>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 301-1a
+                <p>Reclaimed products and their packaging materials</p>
+                <div className="flex gap-2">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 301-3a
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 301-3b
+                    </div>
                   </div>
                 </div>
               </div>
-              <DynamicTable columns={columns1} data={materialdata1} />
+              <DynamicTable columns={columns4} data={materialdata4} />
             </div>
-            <div className="mb-6">
-              <div
-                id="materials2"
-                className="text-neutral-700 text-[15px] font-bold  font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Renewable materials used</p>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 301-1a
-                  </div>
-                </div>
-              </div>
-              <DynamicTable columns={columns2} data={materialdata2} />
-            </div>
-            <div className="mb-6">
-              <p className="text-black text-[15px] font-bold ">
-                Recycled input materials used
-              </p>
-              <div
-                id="materials3"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Percentage of recycled materials used (Production)</p>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 301-2a
-                  </div>
-                </div>
-              </div>
-              <DynamicTable columns={columns3} data={materialdata3} />
-            </div>
-          
           </div>
           <div
             style={{
@@ -570,4 +491,4 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
   );
 };
 
-export default AnalyseMaterials;
+export default AnalysePackagingMaterial;
