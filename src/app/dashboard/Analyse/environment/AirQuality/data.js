@@ -5,19 +5,19 @@ export const columns1 = [
         headerClass:
           "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
         cellClass:
-          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
       },
     {
       label: "Air Pollutants",
-      dataIndex: "airPollutant",
+      dataIndex: "pollutant",
       headerClass:
         "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
     },
     {
       label: "Total Emissions",
-      dataIndex: "totalEmission",
+      dataIndex: "total_emission_kg",
       headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
@@ -31,7 +31,7 @@ export const columns1 = [
     },
     {
       label: "Source of emission factor",
-      dataIndex: "emisionFactor",
+      dataIndex: "source_of_emission",
       headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
@@ -46,31 +46,33 @@ export const columns1 = [
         headerClass:
           "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
         cellClass:
-          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
       },
     {
         label: "Air Pollutants",
-        dataIndex: "airPollutant",
+        dataIndex: "pollutant",
         headerClass:
           "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
         cellClass:
-          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
       },
       {
         label: "Total Emissions",
-        dataIndex: "totalEmission",
+        dataIndex: "total_emission",
         headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
         cellClass:
           "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
       },
       {
         label: "Source of emission factor",
-        dataIndex: "emisionFactor",
+        dataIndex: "source_of_emission",
         headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
         cellClass:
           "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
       },
   ];
+
+  columns2.totalLabelKey="Average emission"
 
 
   export const columns3 = [
@@ -80,7 +82,7 @@ export const columns1 = [
         headerClass:
           "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
         cellClass:
-          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
       },
     {
       label: "Location",
@@ -88,7 +90,7 @@ export const columns1 = [
       headerClass:
         "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
     },
     {
       label: "NOx",
@@ -152,7 +154,7 @@ export const columns1 = [
         headerClass:
           "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
         cellClass:
-          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
       },
     {
       label: "Location",
@@ -160,7 +162,7 @@ export const columns1 = [
       headerClass:
         "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
     },
     {
       label: "NOx",
@@ -223,7 +225,7 @@ export const columns1 = [
         headerClass:
           "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
         cellClass:
-          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
       },
     {
       label: "Location",
@@ -231,7 +233,7 @@ export const columns1 = [
       headerClass:
         "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
     },
     {
       label: "NOx",
@@ -294,7 +296,7 @@ export const columns1 = [
         headerClass:
           "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
         cellClass:
-          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
       },
     {
       label: "Source",
@@ -302,7 +304,7 @@ export const columns1 = [
       headerClass:
         "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
     },
     {
       label: "ODS",

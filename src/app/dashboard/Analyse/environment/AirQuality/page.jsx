@@ -16,9 +16,9 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedsetLocation, setSelectedSetLocation] = useState("");
-  const [materialdata1, setMaterialdata1] = useState([]);
-  const [materialdata2, setMaterialdata2] = useState([]);
-  const [materialdata3, setMaterialdata3] = useState([]);
+  const [airPollutantinKg, setairPollutantinKg] = useState([]);
+  const [airPollutantinPpm, setairPollutantinPpm] = useState([]);
+  const [airPollutantByLOcation, setairPollutantByLOcation] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
@@ -47,6 +47,17 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  function addSerialNumbersToArray(dataArray) {
+    let sno = 1;
+    return dataArray.map(entry => {
+        if (!entry.hasOwnProperty("Total")) {
+            return { ...entry, sno: sno++ };
+        }
+        return entry;
+    });
+}
+
   const fetchData = async (params) => {
     if (!params.start || !params.end) {
       setIsDateRangeValid(false);
@@ -69,74 +80,25 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
       }
     }
     LoaderOpen();
-    setMaterialdata1([]);
-    setMaterialdata2([]);
-    setMaterialdata3([]);
+    setairPollutantinKg([])
+    setairPollutantinPpm([])
+    setairPollutantByLOcation([])
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_material_analysis`,
+        `sustainapp/get_air_quality_analyze/`,
         {
           params: params,
         }
       );
 
       const data = response.data;
-      console.log(data, "testing");
 
       const {
-        non_renewable_materials,
-        reclaimed_materials,
-        recycled_materials,
-        renewable_materials,
+        air_emission_by_pollution, air_emission_by_pollution_ppm_or_ugm2
       } = data;
-      const Nonrenewablematerials = non_renewable_materials
-        .filter((item) => item.material_type)
-        .map((Noremat, index) => ({
-          type: Noremat.material_type,
-          materialcategory: Noremat.material_category,
-          source: Noremat.source,
-          total: Noremat.total_quantity,
-          units: Noremat.units,
-          datasource: Noremat.data_source,
-        }));
-      // Nonrenewablematerials.push({
-      //   type: "",
-      //   total: non_renewable_materials.find((item) => item.total_weight)
-      //     ?.total_weight,
-      // });
-
-      const renewablematerials = renewable_materials
-        .filter((item) => item.material_type)
-        .map((renemat, index) => ({
-          type: renemat.material_type,
-          materialcategory: renemat.material_category,
-          source: renemat.source,
-          total: renemat.total_quantity,
-          units: renemat.units,
-          datasource: renemat.data_source,
-        }));
-      // renewablematerials.push({
-      //   type: "",
-      //   total: renewable_materials.find((item) => item.total_weight)
-      //     ?.total_weight,
-      // });
-
-      const recycledmaterials = recycled_materials.map((recyled, index) => ({
-        type: recyled.type_of_recycled_material_used,
-        consumption: recyled.percentage_of_recycled_input_materials_used,
-      }));
-
-      const reclaimedmaterials = reclaimed_materials.map(
-        (reclaimed, index) => ({
-          type: reclaimed.type_of_product,
-          code: reclaimed.product_code,
-          productname: reclaimed.product_name,
-          total: reclaimed.total_quantity,
-        })
-      );
-      setMaterialdata1(Nonrenewablematerials);
-      setMaterialdata2(renewablematerials);
-      setMaterialdata3(recycledmaterials);
+    
+      setairPollutantinKg(addSerialNumbersToArray(air_emission_by_pollution))
+      setairPollutantinPpm(addSerialNumbersToArray(air_emission_by_pollution_ppm_or_ugm2))
 
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
@@ -151,9 +113,9 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
     }
   };
 
-//   useEffect(() => {
-//     fetchData(datasetparams);
-//   }, [datasetparams]);
+  useEffect(() => {
+    fetchData(datasetparams);
+  }, [datasetparams]);
 
   useEffect(() => {
     const fetchOrg = async () => {
@@ -226,9 +188,9 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
       setSelectedLocation(""); 
     }
     if(type === "Corporate"){
-      setMaterialdata1([]);
-      setMaterialdata2([]);
-      setMaterialdata3([]);
+        setairPollutantinKg([])
+        setairPollutantinPpm([])
+        setairPollutantByLOcation([])
       setDateRange({
         start: null,
         end: null
@@ -236,9 +198,9 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
       setIsDateRangeValid(false);
     }
     if(type === "Location"){
-      setMaterialdata1([]);
-      setMaterialdata2([]);
-      setMaterialdata3([]);
+        setairPollutantinKg([])
+        setairPollutantinPpm([])
+        setairPollutantByLOcation([])
       setDateRange({
         start: null,
         end: null
@@ -252,9 +214,9 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
     setSelectedOrg(newOrg);
     setSelectedCorp("");
     setSelectedSetLocation("");
-    setMaterialdata1([]);
-    setMaterialdata2([]);
-    setMaterialdata3([]);
+    setairPollutantinKg([])
+    setairPollutantinPpm([])
+    setairPollutantByLOcation([])
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
@@ -508,7 +470,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                   </div>
                 </div>
               </div>
-              <DynamicTable columns={columns1} data={[]} />
+              <DynamicTable columns={columns1} data={airPollutantinKg} />
             </div>
             <div className="mb-6">
               <p className="text-black text-[15px] font-bold ">
@@ -525,7 +487,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                 </div>
                 
               </div>
-              <DynamicTable columns={columns2} data={[]} />
+              <DynamicTable columns={columns2} data={airPollutantinPpm} />
             </div>
             <div className="mb-6">
               <p className="text-black text-[15px] font-bold ">
