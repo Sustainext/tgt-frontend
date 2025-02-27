@@ -84,7 +84,7 @@ export function AuthProvider({ children }) {
       saveToLocalStorage("client_key", client_key);
       saveToLocalStorage("permissions", permissions);
       saveToLocalStorage("custom_role", newrole);
-      saveToLocalStorage("isAdmin", newrole);
+      saveToLocalStorage("isAdmin", Boolean(newrole));
       saveToLocalStorage("textcustomrole", customrole);
       Cookies.set("permissions", JSON.stringify(permissions), {
         secure: true,
