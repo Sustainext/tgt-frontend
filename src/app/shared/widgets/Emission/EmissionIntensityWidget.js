@@ -154,6 +154,10 @@ const EmissionIntensityWidget = ({
       "Gigawatt-hour (GWh)",
       "British Thermal Unit (BTU)",
       "Watt (W)",
+      "Kilowatt (kW)",
+      "Megawatt (MW)",
+      "Gigawatt (GW)",
+
     ],
     "Production volume": [
       "Custom Unit (Please specify)",
@@ -175,9 +179,14 @@ const EmissionIntensityWidget = ({
     ],
     "Area (such as m2 floor space)": [
       "Square Meter (m²)",
+      "Square Centimeter (cm²)",
+      "Square Millimeter (mm²)",
       "Square Kilometer (km²)",
       "Hectare (ha)",
+      "quare Inch (in²)",
       "Square Foot (ft²)",
+      "Square Mile (mi²)",
+      "Acre",
     ],
     "Monetary units (such as revenue or sales)": [],
     "Number of employees": "number",
