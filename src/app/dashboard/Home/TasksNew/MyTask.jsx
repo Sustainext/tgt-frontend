@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  FiArrowRight,
-} from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { BlobServiceClient } from "@azure/storage-blob";
 import { unitTypes } from "@/app/shared/data/units";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-
 
 // Import custom hooks
 import {
@@ -54,7 +51,7 @@ import ViewMyTaskDetailsModal from "./ViewMyTaskDetailsModal";
 import MyTaskReviewModal from "./MyTaskReviewModal";
 import EditTaskModal from "./EditTaskModal";
 
-const MyTask = ({HomeActiveTab}) => {
+const MyTask = ({ HomeActiveTab }) => {
   // Redux
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.emissions);
@@ -115,6 +112,13 @@ const MyTask = ({HomeActiveTab}) => {
 
   // Add this state near other modal states
   const [isSelfTaskFillModalOpen, setSelfTaskFillModalOpen] = useState(false);
+
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const userRole = localStorage.getItem("isAdmin");
+    setIsAdmin(userRole);
+  }, []);
 
   // Add this useEffect to fetch client list if needed
   useEffect(() => {
@@ -220,7 +224,6 @@ const MyTask = ({HomeActiveTab}) => {
       setIsSearching(false);
     }
   };
-
 
   const handleOpenModalAddData = async (task) => {
     try {
@@ -430,42 +433,42 @@ const MyTask = ({HomeActiveTab}) => {
       toast.error("Failed to upload file");
     }
   };
-  
+
   const handleFileDelete = async () => {
     if (!taskassigndata.file_data || !taskassigndata.file_data.url) {
       toast.error("No file found to delete.");
       return;
     }
-  
+
     try {
       const fileUrl = taskassigndata.file_data.url;
       const blobName = fileUrl.split("/").pop();
-  
+
       const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
       const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
       const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
-  
+
       const blobServiceClient = new BlobServiceClient(
         `https://${accountName}.blob.core.windows.net?${sasToken}`
       );
-  
-      const containerClient = blobServiceClient.getContainerClient(containerName);
+
+      const containerClient =
+        blobServiceClient.getContainerClient(containerName);
       const blobClient = containerClient.getBlockBlobClient(blobName);
-  
-      await blobClient.delete(); 
-  
+
+      await blobClient.delete();
+
       setTaskAssigndata((prev) => ({
         ...prev,
-        file_data: {}, 
+        file_data: {},
       }));
-  
+
       toast.success("File deleted successfully.");
     } catch (error) {
       console.error("Error deleting file:", error);
       toast.error("Failed to delete file.");
     }
   };
-  
 
   const handleTaskClick = (task) => {
     console.log("Task clicked:", task, activeTab);
@@ -580,20 +583,20 @@ const MyTask = ({HomeActiveTab}) => {
               />
             ))
           ) : (
-            <EmptyState
-              onAddTask={() => toggleModal("isModalOpen", true)}
-            />
+            <EmptyState onAddTask={() => toggleModal("isModalOpen", true)} />
           )}
         </TaskTable>
 
         <div className="mt-3 flex justify-end px-4 absolute bottom-4 right-4">
-          <button
-            onClick={()=>HomeActiveTab('tab3')}
-            className="flex items-center text-blue-500 hover:text-blue-600 transition-colors"
-          >
-            <span className="text-sm font-medium">View All</span>
-            <FiArrowRight className="ml-2 w-4 h-4" />
-          </button>
+          {isAdmin == "true" && (
+            <button
+              onClick={() => HomeActiveTab("tab3")}
+              className="flex items-center text-blue-500 hover:text-blue-600 transition-colors"
+            >
+              <span className="text-sm font-medium">View All</span>
+              <FiArrowRight className="ml-2 w-4 h-4" />
+            </button>
+          )}
         </div>
       </div>
 
