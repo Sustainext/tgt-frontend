@@ -86,23 +86,11 @@ const EmissionsODS = ({ apiData, isSidepanelOpen }) => {
       textColor: "#fff",
       bgColor: "bg-[#BF8B2E]",
     },
-    {
-      tagName: "SDG 14",
-      toggle: "55",
-      textColor: "#fff",
-      bgColor: "bg-[#007DBC]",
-    },
-    {
-      tagName: "SDG 15",
-      toggle: "54",
-      textColor: "#fff",
-      bgColor: "bg-[#40AE49]",
-    },
   ];
   const griData = [
     {
-      tagName: "GRI 305 - 7",
-      toggle: "53",
+      tagName: "GRI 305 - 6",
+      toggle: "56",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
