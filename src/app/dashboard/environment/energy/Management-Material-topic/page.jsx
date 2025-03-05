@@ -3,13 +3,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Energydata } from "../../../../shared/data/Energydata";
-import { MdOutlineClear, MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdChevronRight,MdKeyboardArrowDown } from "react-icons/md";
 import EnvironmentHeade2 from "../../environmentheader2";
 import Screen1 from "./Screen1";
 import { useSelector } from "react-redux";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-const EnergyMaterialtopic = ({apiData}) => {
+const EnergyMaterialtopic = ({apiData, setMobileopen}) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
     (state) => state.materialitySlice
   );
@@ -28,6 +28,9 @@ const EnergyMaterialtopic = ({apiData}) => {
   const toggleDrawer = (selected) => {
     setIsOpen(!isOpen);
     setCategory(selected);
+  };
+  const toggleSidebar = () => {
+    setMobileopen(true);
   };
   useEffect(() => {
     var newData = [];
@@ -60,18 +63,20 @@ const EnergyMaterialtopic = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
 
-      <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <div className="flex flex-col justify-start overflow-x-hidden  ">
+      <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+      <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-[11px]">Environment</p>
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                    Energy
+                  Energy
                   </p>
                 </div>
-                {materialityEnvData&&materialityEnvData.EnvEnergy?.is_material_topic?(
+                {materialityEnvData &&
+                materialityEnvData.EnvEnergy?.is_material_topic ? (
                     <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
                     <p className="text-gray-500 text-[12px] pt-0.5 px-2">
                       Material Topic
@@ -170,14 +175,134 @@ const EnergyMaterialtopic = ({apiData}) => {
             </div>
           </div>
         </div>
+</div>
+        
+
+         {/* mobile version */}
+         <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+        <div className="w-full  py-4  rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]" onClick={toggleSidebar}>
+          <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
+            <div className="">
+              <p className="text-[11px]">Environment</p>
+              <div className="flex h-[28px]">
+                <div className="h-[28px]">
+                  <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
+                  Energy
+                  </p>
+                </div>
+                {materialityEnvData &&
+                materialityEnvData.EnvEnergy?.is_material_topic ? (
+                  <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
+                    <p className="text-gray-500 text-[12px] pt-0.5 px-2">
+                      Material Topic
+                    </p>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center me-5">
+              <MdKeyboardArrowDown className={`text-2xl float-end `} />
+            </div>
+          </div>
+        </div>
+        <div className="w-full me-2 my-4">
+           <div className="">
+              <div className="flex mb-2">
+                <div>
+                  <button
+                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                    onClick={() => toggleDrawer("51")}
+                  >
+                    GRI 3-3
+                  </button>
+                </div>
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={`tooltip-$brsr1`}
+                    data-tooltip-content="BRSR-Section C-Principle 1-Essential Indicators-4"
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                    // onClick={() => toggleDrawer("92")}
+                  >
+                    BRSR C-P1-E4
+                  </button>
+                  <ReactTooltip
+                    id={`tooltip-$brsr1`}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={`tooltip-$brsr2`}
+                    data-tooltip-content="BRSR-Section C-Principle 6-Essential Indicators-10"
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                    // onClick={() => toggleDrawer("92")}
+                  >
+                    BRSR C-P6-E10
+                  </button>
+                  <ReactTooltip
+                    id={`tooltip-$brsr2`}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={`tooltip-$brsr3`}
+                    data-tooltip-content="BRSR-Section A-VII-26"
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                    // onClick={() => toggleDrawer("92")}
+                  >
+                    BRSR A-VII-26
+                  </button>
+                  <ReactTooltip
+                    id={`tooltip-$brsr3`}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+      </div>
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Management of Material Topic
           </h6>
         </div>
         <div
-          ref={drawerRef}
-          className={`${
+           className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -207,7 +332,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
 
                 {/* Footer (Learn more link) */}
-                <div className="pt-2 pb-4 ml-4" onClick={toggleDrawerclose}>
+                <div className="pt-2 pb-4 ml-4">
                   <a
                     className="text-[14px] text-[#2196F3] pt-1 inline-flex"
                     href={program.link}

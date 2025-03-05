@@ -561,7 +561,7 @@ const MyTask = ({HomeActiveTab}) => {
 
   return (
     <>
-      <div className="rounded-lg shadow border border-gray-200 p-4 px-6 h-[470px] overflow-x-auto relative">
+      <div className="rounded-lg shadow border border-gray-200 p-4 px-6 h-[450px] xl:h-[470px] lg:h-[470px] md:h-[470px] 4k:h-[470px] overflow-x-auto relative table-scrollbar">
         <TaskHeader onAddTask={() => toggleModal("isModalOpen", true)} />
         <TaskTabs
           activeTab={activeTab}

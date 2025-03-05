@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import WasteTopBar from '../wasteTopBar'
 import { useSelector } from "react-redux";
 
-const SignificantSpills = ({apiData,isSidepanelOpen}) => {
+const SignificantSpills = ({apiData,isSidepanelOpen,setMobileopen}) => {
     const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
         (state) => state.materialitySlice
       );
@@ -93,7 +93,7 @@ const SignificantSpills = ({apiData,isSidepanelOpen}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} SignificantSpills={true}  />
+        <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} SignificantSpills={true} setMobileopen={setMobileopen}  />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

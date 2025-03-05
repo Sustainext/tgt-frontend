@@ -111,7 +111,7 @@ const InputdiableWidget = ({
       <div className="relative">
         <input
           ref={inputRef}
-          className={`block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 ${
+          className={`block w-[76vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2xl:w-[20vw] 4k:w-[8vw] py-1.5 xl:py-2 md:py-2 lg:py-2 2xl:py-2 4k:py-2 2k:py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 ${
             hasError ? "border-red-500" : "border-gray-300"
           }`}
           placeholder={placeholder || `Enter ${label || title}`}

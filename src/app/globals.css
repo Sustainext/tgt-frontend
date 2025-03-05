@@ -40,7 +40,12 @@
     overflow-x: hidden;
   }
 }
-
+@media (max-width: 768px) {
+  body {
+   
+    overflow-x: hidden;
+  }
+}
 body{
   box-sizing: border-box;
 }

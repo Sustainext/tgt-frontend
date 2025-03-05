@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import WasteTopBar from "../wasteTopBar";
 
-const Wastegenerated = ({ apiData }) => {
+const Wastegenerated = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -112,6 +112,7 @@ const Wastegenerated = ({ apiData }) => {
           apiData={apiData}
           griData={griData}
           brsr={brsr}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

@@ -1,16 +1,16 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Weightvolumebody from "./weight-volume-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MaterialTopBar from '../materialTopBar'
+import MaterialTopBar from "../materialTopBar";
 
-const Weightvolume = ({apiData}) => {
+const Weightvolume = ({ apiData, setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -54,33 +54,37 @@ const Weightvolume = ({apiData}) => {
     };
   }, []);
 
-  const sdgData=[
+  const sdgData = [
     {
-        tagName:' GRI 301-1',
-        toggle:'51',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: " GRI 301-1",
+      toggle: "51",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
     },
     {
-        tagName:'SDG 8',
-        toggle:'35',
-        textColor:"#fff",
-        bgColor:"bg-red-900"
+      tagName: "SDG 8",
+      toggle: "35",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
     },
     {
-        tagName:'SDG 12',
-        toggle:'36',
-        textColor:"#fff",
-        bgColor:"bg-yellow-600"
+      tagName: "SDG 12",
+      toggle: "36",
+      textColor: "#fff",
+      bgColor: "bg-yellow-600",
     },
-    
-]
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <MaterialTopBar title={'Material Use and Efficiency'} toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
-        
+        <MaterialTopBar
+          title={"Material Use and Efficiency"}
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          setMobileopen={setMobileopen}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -109,8 +113,8 @@ const Weightvolume = ({apiData}) => {
           </h6>
         </div>
         <div
-        ref={drawerRef}
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"

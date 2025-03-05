@@ -12,7 +12,7 @@ import EnvironmentHeade2 from "../../environmentheader2";
 import WasteTopBar from '../wasteTopBar'
 import { useSelector } from "react-redux";
 
-const Datacollectionmethodology = ({apiData}) => {
+const Datacollectionmethodology = ({apiData,setMobileopen}) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
       (state) => state.materialitySlice
     );
@@ -87,7 +87,7 @@ const Datacollectionmethodology = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+        <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} setMobileopen={setMobileopen}  />
        
 
         <div className="ml-3 flex relative">
