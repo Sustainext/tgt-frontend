@@ -44,16 +44,7 @@ import {
 import Standardsmethodology from "./energy/standards-methodology/standards-methodology";
 import MaterialTopicAirQuality from "./AirQuality/Management-of-material-topic/page";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchMaterialityData,
-  setCorpID,
-  setOrgID,
-  setOrgName,
-  setCorpName,
-  setYear,
-  setStartDate,
-  setEndDate,
-} from "../../../lib/redux/features/materialitySlice";
+import { fetchMaterialityData } from "../../../lib/redux/features/materialitySlice";
 import { f_setSectionName } from "../../../lib/redux/features/FileInfoSlice";
 import BaseYear from "./Emissions/baseYear/page";
 import NitrogenOxide from "./AirQuality/NitrogenOxide/page";
@@ -61,6 +52,10 @@ import StandardMethodology from "./AirQuality/StandardMethodology/page";
 import ODSImportExport from "./AirQuality/ODS-Import-Export/page";
 import EmissionsODS from "./AirQuality/Emissions-ODS/page";
 import MaterialTopicPackagingMaterial from "./PackageingMaterial/Management-Material-topic/page";
+import {
+  fetchLocations,
+  fetchUsers,
+} from "../../../lib/redux/features/emissionSlice";
 
 const environment = () => {
   const { open } = GlobalState();
@@ -68,6 +63,7 @@ const environment = () => {
   const [activeTab, setActiveTab] = useState("GHG Emissions");
 
   const dispatch = useDispatch();
+
   const {
     corporate_id,
     organization_id,
@@ -99,6 +95,8 @@ const environment = () => {
 
   useEffect(() => {
     loadMaterialityDashboard();
+    dispatch(fetchLocations());
+    dispatch(fetchUsers());
   }, [dispatch]);
 
   useEffect(() => {

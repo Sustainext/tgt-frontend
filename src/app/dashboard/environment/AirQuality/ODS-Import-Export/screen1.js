@@ -32,17 +32,17 @@ const schema = {
     properties: {
       produceODS: {
         type: "string",
-        title: "Does your organisation produce ODS?",
+        title: "Does your organisation produce ODS in its processes, products and services?",
         enum: ["Yes", "No"],
       },
       importODS: {
         type: "string",
-        title: "Does your organisation import ODS?",
+        title: "Does your organisation import ODS in its processes, products and services?",
         enum: ["Yes", "No"],
       },
       exportODS: {
         type: "string",
-        title: "Does your organisation export ODS?",
+        title: "Does your organisation export ODS in its processes, products and services?",
         enum: ["Yes", "No"],
       },
       useODSFeedstock: {
@@ -75,29 +75,34 @@ const uiSchema = {
   },
   items: {
     produceODS: {
-      "ui:title": "Does your organisation produce ODS?",
+      "ui:title": "Does your organisation produce ODS in its processes, products and services?",
       "ui:widget": "RadioWidget2",
       "ui:options": { label: true },
+      "ui:tooltip": "Indicate whether your organisation produce ODS in its processes, products and services."
     },
     importODS: {
-      "ui:title": "Does your organisation import ODS?",
+      "ui:title": "Does your organisation import ODS in its processes, products and services?",
       "ui:widget": "RadioWidget2",
       "ui:options": { label: true },
+      "ui:tooltip": "Indicate whether your organisation import ODS in its processes, products and services."
     },
     exportODS: {
-      "ui:title": "Does your organisation export ODS?",
+      "ui:title": "Does your organisation export ODS in its processes, products and services?",
       "ui:widget": "RadioWidget2",
       "ui:options": { label: true },
+      "ui:tooltip": "Indicate whether your organisation export ODS in its processes, products and services."
     },
     useODSFeedstock: {
       "ui:title": "Does your organisation use ODS as feedstock?",
       "ui:widget": "RadioWidget2",
       "ui:options": { label: true },
+      "ui:tooltip": "Indicate whether your organisation use ODS as feedstock."
     },
     destroyODS: {
       "ui:title": "Does your organisation destroy ODS using approved technologies?",
       "ui:widget": "RadioWidget2",
       "ui:options": { label: true },
+      "ui:tooltip": "Indicate whether your organisation destroy ODS using approved technologies?"
     },
   },
 };
@@ -108,12 +113,13 @@ const AccordionItem = ({
   title,
   children,
   tooltiptext,
+  sdg,
+  display,
   selectedOrg,
-  setOrgMessage,
+  setOrgMessage
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
-
   const handleClick = () => {
     if (!selectedOrg) {
       setOrgMessage("Please select an organization.");
@@ -121,10 +127,14 @@ const AccordionItem = ({
     }
     setIsOpen(!isOpen);
   };
-
   return (
-    <div className="shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-neutral-200 mx-3">
-      <button className="py-3 text-left flex w-full" onClick={handleClick}>
+    <div
+      className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 mx-3`}
+    >
+      <button
+        className="py-3 text-left flex w-[100%]"
+        onClick={handleClick} // Unique ID for the tooltip, spaces replaced by dashes
+      >
         <div className="flex w-full">
           <div className={`flex ${open ? "w-[75%]" : "w-[75%]"}`}>
             <div className="flex items-center">
@@ -133,40 +143,46 @@ const AccordionItem = ({
               </h5>
             </div>
 
-            {tooltiptext && (
-              <div className="flex items-center relative">
-                <MdInfoOutline
-                  data-tooltip-id={`tooltip-${title.replace(/\s+/g, "-")}`}
-                  data-tooltip-content={tooltiptext}
-                  className="text-[14px] ml-2"
-                />
-                <ReactTooltip
-                  id={`tooltip-${title.replace(/\s+/g, "-")}`}
-                  place="top"
-                  effect="solid"
-                  style={{
-                    width: "300px",
-                    backgroundColor: "#000",
-                    color: "white",
-                    fontSize: "12px",
-                    boxShadow: 3,
-                    borderRadius: "8px",
-                  }}
-                />
-              </div>
-            )}
           </div>
-
-          <div className="w-[25%] flex justify-end">
-            <MdKeyboardArrowDown
-              className={`text-2xl transition-transform ${
-                isOpen ? "rotate-180" : ""
-              }`}
-            />
+          <div className=" w-[25%] ">
+            <div className={`flex float-end`}>
+              {isOpen ? (
+                <>
+                  {sdg &&
+                    sdg.map((sdgItem, index) => (
+                      <div
+                        key={index}
+                        className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2"
+                        style={{ display: display }}
+                      >
+                        <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">
+                          {sdgItem}
+                        </p>
+                      </div>
+                    ))}
+                </>
+              ) : (
+                <>
+                  {sdg &&
+                    sdg.map((sdgItem, index) => (
+                      <div
+                        key={index}
+                        className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2"
+                      >
+                        <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">
+                          {sdgItem}
+                        </p>
+                      </div>
+                    ))}
+                </>
+              )}
+              <MdKeyboardArrowDown
+                className={`text-2xl ${isOpen ? "rotate-180" : ""}`}
+              />
+            </div>
           </div>
         </div>
       </button>
-
       {isOpen && <div className="py-4 px-3">{children}</div>}
     </div>
   );
@@ -307,6 +323,7 @@ const Screen1 = forwardRef(
         tooltiptext="This section documents data corresponding to the production, import, export, and destruction of ODS."
         selectedOrg={selectedOrg}
         setOrgMessage={setOrgMessage}
+        sdg={["GRI 305-6a","GRI 305-6d"]}
       >
         <div className="mx-2">
           <Form

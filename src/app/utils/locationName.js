@@ -1,52 +1,32 @@
 import axiosInstance from "../utils/axiosMiddleware";
 
-let locationCacheMap = new Map();
-let fetchingLocationsPromise = null;
+let locationCache = null; // Store location data globally
+let fetchPromise = null;  // Store fetch promise to prevent duplicate requests
 
-export const getLocationName = async (locationId) => {
-  console.log('Received location ID:', locationId);
-
-  if (!locationId) return '';
-
-  // Check cache first
-  if (locationCacheMap.has(locationId)) {
-    return locationCacheMap.get(locationId);
-  }
-
-  // Check localStorage cache
-  const cachedLocations = JSON.parse(localStorage.getItem('locationsCache')) || {};
-  if (cachedLocations[locationId]) {
-    locationCacheMap.set(locationId, cachedLocations[locationId]);
-    return cachedLocations[locationId];
-  }
-
-  // Fetch locations if not cached
-  if (!fetchingLocationsPromise) {
-    fetchingLocationsPromise = axiosInstance.get("/sustainapp/get_location")
+// Function to fetch locations only once
+const fetchLocations = async () => {
+  if (!fetchPromise) {
+    fetchPromise = axiosInstance.get("/sustainapp/get_location")
       .then(response => {
-        // Populate cache
-        response.data.forEach(loc => {
-          locationCacheMap.set(loc.id, loc.name);
-        });
-
-        // Update localStorage
-        const updatedCache = {};
-        locationCacheMap.forEach((name, id) => {
-          updatedCache[id] = name;
-        });
-        localStorage.setItem('locationsCache', JSON.stringify(updatedCache));
-
-        fetchingLocationsPromise = null;
+        locationCache = response.data;
+        return locationCache;
       })
       .catch(error => {
-        console.error("Error fetching location names:", error);
-        fetchingLocationsPromise = null;
+        console.error("Error fetching locations:", error);
+        return [];
       });
   }
+  return fetchPromise; // Return the same promise if called multiple times
+};
 
-  // Wait for the fetch promise to resolve
-  await fetchingLocationsPromise;
+// Function to get location name
+export const getLocationName = async (locationId) => {
+  if (!locationId) return ''; // Return early if no locationId is provided
 
-  // Return the location name if available after the fetch
-  return locationCacheMap.get(locationId) || '';
+  if (!locationCache) {
+    await fetchLocations(); // Ensure cache is loaded
+  }
+
+  const location = locationCache?.find(loc => loc.id === parseInt(locationId));
+  return location ? location.name : '';
 };
