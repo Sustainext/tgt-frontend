@@ -10,12 +10,12 @@ import {
   MdOutlineWater,
   MdOutlineEmojiNature,
   MdOutlineAir,
+  MdClose,
 } from "react-icons/md";
 import { LuPackage } from "react-icons/lu";
-
 import { GiWoodPile, GiWaterfall } from "react-icons/gi";
 
-const Aside = ({ activeTab, handleTabClick, apiData }) => {
+const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
   const [isEmission, setEmisssion] = useState(false);
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
   const [isWasteVisible, setWasteVisible] = useState(false);
@@ -144,12 +144,22 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
       setIsSupplierVisible(false);
     }
   }, [activeTab]);
+  const toggleSidebar = () => {
+    setMobileopen(false);
+  };
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md  h-full">
-      <div className="flex items-start py-4 h-screen 4k:h-auto rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] 4k:w-[200px] scrollable-content">
+      <div className="flex items-start py-4 h-screen 4k:h-auto rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] 4k:w-[200px] 2k:w-[240px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
-          <button className="flex items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
+          <button className="flex justify-between items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
+            <div>
             <span className="text-[16px] font-extrabold">Environment</span>
+            
+            </div>
+            <div className=" float-end block xl:hidden md:hidden lg:hidden 2xl:hidden 4k:hidden">
+            <MdClose onClick={toggleSidebar} className="text-3xl"/>
+            </div>
+          
           </button>
           {/* emission start */}
           <div>
@@ -170,7 +180,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
               </div>
               {materialityEnvData &&
               materialityEnvData.EnvGhgEmission?.is_material_topic ? (
-                <div className="w-[20%] ml-5">
+                <div className="w-[20%] flex justify-end">
                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                     M
                   </span>
@@ -193,7 +203,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
             {/* Energy section content */}
             {isEmission && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData &&
                   materialityEnvData.EnvGhgEmission?.is_material_topic ? (
                     <div>
@@ -356,7 +366,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
             {/* Energy section content */}
             {isEnergySectionVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData &&
                   materialityEnvData.EnvEnergy?.is_material_topic ? (
                     <div>
@@ -538,7 +548,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
 
             {isWasteVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData &&
                   materialityEnvData.EnvWasteManagement?.is_material_topic ? (
                     <div>
@@ -721,7 +731,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
     
             {isEffluentVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData&&materialityEnvData.EnvWasteManagement?.is_material_topic?(
                     <div>
                       <div>
@@ -820,7 +830,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
 
             {isMaterialsVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData &&
                   materialityEnvData.
                   EnvRawMaterialSourcing?.is_material_topic ? (
@@ -934,7 +944,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
 
             {isPackagingMaterialVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData &&
                   materialityEnvData.EnvPackagingMaterial?.is_material_topic ? (
                     <div>
@@ -1042,7 +1052,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
             {/* Water and effluents section content */}
             {isWaterVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData &&
                   materialityEnvData.EnvWaterEffluent?.is_material_topic ? (
                     <div>
@@ -1188,7 +1198,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
               {materialityEnvData &&
               materialityEnvData.EnvSupplyChainSustainability
                 ?.is_material_topic ? (
-                <div className="w-[20%] flex justify-end">
+                <div className="w-[20%] flex justify-end items-center">
                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                     M
                   </span>
@@ -1212,7 +1222,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
             {/* Energy section content */}
             {isSupplierVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData &&
                   materialityEnvData.EnvSupplyChainSustainability
                     ?.is_material_topic ? (
@@ -1330,7 +1340,7 @@ const Aside = ({ activeTab, handleTabClick, apiData }) => {
 
             {isAirQualityVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData &&
                   materialityEnvData.EnvAirQuality?.is_material_topic ? (
                     <div>

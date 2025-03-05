@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MaterialTopBar from "../../Materials/materialTopBar";
 
-const Reclaimedproducts = ({ apiData }) => {
+const Reclaimedproducts = ({ apiData, setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -93,7 +93,8 @@ const Reclaimedproducts = ({ apiData }) => {
           apiData={apiData}
           brsr={brsr}
           griData={griData}
-          title={'Packaging Material'}
+          title={"Packaging Material"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

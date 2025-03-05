@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import WaterTopBar from "../waterTopBar";
 import { useSelector } from "react-redux";
 
-const Watersharedresource = ({ apiData }) => {
+const Watersharedresource = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -104,6 +104,7 @@ const Watersharedresource = ({ apiData }) => {
           toggleDrawer={toggleDrawer}
           sdgData={sdgData}
           apiData={apiData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

@@ -12,7 +12,7 @@ import EmissionTopBar from "../emissionTopbar";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 
-const ConsolidationApproach = ({ apiData }) => {
+const ConsolidationApproach = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -87,6 +87,7 @@ const ConsolidationApproach = ({ apiData }) => {
           toggleDrawer={toggleDrawer}
           apiData={apiData}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

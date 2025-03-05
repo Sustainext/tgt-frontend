@@ -20,7 +20,7 @@ const MonthPicker = (props) => {
   return (
     <>
       <div className="mb-6">
-        <div className="flex mb-2">
+        <div className="flex mb-2 w-full">
           <div className="relative">
             <p className="text-[14px] 4k:text-[16px] text-gray-700 font-[500] flex">
               {uiSchema["ui:title"]}
@@ -52,7 +52,7 @@ const MonthPicker = (props) => {
         </div>
         <input
           placeholder="Enter Month and Year"
-          className={`border appearance-none text-12px] 4k:text-[14px] border-gray-400 text-neutral-600 pl-2 rounded-md py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+          className={`border appearance-none text-[12px] 4k:text-[14px] border-gray-400 text-neutral-600 pl-2 rounded-md py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
           value={value}
           onChange={handleChange}
           onClick={handleClick}

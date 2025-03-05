@@ -8,9 +8,9 @@ import "react-tooltip/dist/react-tooltip.css";
 import Reductionenergyconsumptionbody from "./energy-products-services-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import EnergyTopBar from '../energyTopBar'
+import EnergyTopBar from "../energyTopBar";
 
-const Energyproductsservices = ({apiData}) => {
+const Energyproductsservices = ({ apiData, setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -54,45 +54,49 @@ const Energyproductsservices = ({apiData}) => {
     };
   }, []);
 
-  const sdgData=[
+  const sdgData = [
     {
-        tagName:'GRI 302-5',
-        toggle:'18',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "GRI 302-5",
+      toggle: "18",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
     },
     {
-        tagName:'SDG 7',
-        toggle:'2',
-        textColor:"#fff",
-        bgColor:"bg-amber-400"
+      tagName: "SDG 7",
+      toggle: "2",
+      textColor: "#fff",
+      bgColor: "bg-amber-400",
     },
     {
-        tagName:'SDG 8',
-        toggle:'3',
-        textColor:"#fff",
-        bgColor:"bg-red-900"
+      tagName: "SDG 8",
+      toggle: "3",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
     },
     {
-        tagName:'SDG 12',
-        toggle:'4',
-        textColor:"#fff",
-        bgColor:"bg-yellow-600"
+      tagName: "SDG 12",
+      toggle: "4",
+      textColor: "#fff",
+      bgColor: "bg-yellow-600",
     },
     {
-        tagName:'SDG 13',
-        toggle:'5',
-        textColor:"#fff",
-        bgColor:"bg-lime-900"
+      tagName: "SDG 13",
+      toggle: "5",
+      textColor: "#fff",
+      bgColor: "bg-lime-900",
     },
-]
-  
+  ];
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} />
-       
+        <EnergyTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          setMobileopen={setMobileopen}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import EmissionTopBar from "../emissionTopbar";
 import EmissionIntensitybody from "./emission-Intensity-body";
 
-const EmissionIntensity = ({ apiData }) => {
+const EmissionIntensity = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -98,6 +98,7 @@ const EmissionIntensity = ({ apiData }) => {
           apiData={apiData}
           sdgData={sdgData}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

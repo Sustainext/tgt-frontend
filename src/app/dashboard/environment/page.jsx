@@ -12,7 +12,7 @@ import Managementwaste from "./Waste/management-waste/management-waste";
 import Wastegenerated from "./Waste/waste-generated/waste-generated";
 import Wastediverted from "./Waste/waste-diverted/waste-diverted";
 import Wastedirected from "./Waste/waste-directed/waste-directed";
-import Datacollectionmethodology from "./Waste/Data-collection-methodology/Data-collection-methodology"
+import Datacollectionmethodology from "./Waste/Data-collection-methodology/Data-collection-methodology";
 import Weightvolume from "./Materials/weight-volume/weight-volume";
 import Recycled from "./Materials/recycled/recycled";
 import Reclaimedproducts from "./PackageingMaterial/reclaimed-products/reclaimed-products";
@@ -29,11 +29,11 @@ import WasteMaterialtopic from "./Waste/Management-Material-topic/page";
 import MaterialsMaterialtopic from "./Materials/Management-Material-topic/page";
 import WaterMaterialtopic from "./Water-effluents/Management-Material-topic/page";
 import SupplierMaterialtopic from "./supplier-environmental-assessment/Management-Material-topic/page";
-import SignificantSpills from './Waste/significant-spills/page'
-import ConsolidationApproach from './Emissions/consolidationApproach/page'
-import Standards from './Emissions/standards/page'
-import EmissionIntensity from "./Emissions/emission-Intensity/page"
-import Emissionreductioninitiativesnew from "./Emissions/emission-reduction-initiatives/page"
+import SignificantSpills from "./Waste/significant-spills/page";
+import ConsolidationApproach from "./Emissions/consolidationApproach/page";
+import Standards from "./Emissions/standards/page";
+import EmissionIntensity from "./Emissions/emission-Intensity/page";
+import Emissionreductioninitiativesnew from "./Emissions/emission-reduction-initiatives/page";
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -41,8 +41,8 @@ import {
   setHeaderdisplay,
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
-import Standardsmethodology from "./energy/standards-methodology/standards-methodology"
-import MaterialTopicAirQuality from './AirQuality/Management-of-material-topic/page'
+import Standardsmethodology from "./energy/standards-methodology/standards-methodology";
+import MaterialTopicAirQuality from "./AirQuality/Management-of-material-topic/page";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMaterialityData,
@@ -54,47 +54,51 @@ import {
   setStartDate,
   setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
-import {f_setSectionName} from '../../../lib/redux/features/FileInfoSlice'
-import BaseYear from './Emissions/baseYear/page'
-import NitrogenOxide from './AirQuality/NitrogenOxide/page'
+import { f_setSectionName } from "../../../lib/redux/features/FileInfoSlice";
+import BaseYear from "./Emissions/baseYear/page";
+import NitrogenOxide from "./AirQuality/NitrogenOxide/page";
 import StandardMethodology from "./AirQuality/StandardMethodology/page";
 import ODSImportExport from "./AirQuality/ODS-Import-Export/page";
 import EmissionsODS from "./AirQuality/Emissions-ODS/page";
-import MaterialTopicPackagingMaterial from './PackageingMaterial/Management-Material-topic/page'
+import MaterialTopicPackagingMaterial from "./PackageingMaterial/Management-Material-topic/page";
 
 const environment = () => {
   const { open } = GlobalState();
-  const [activeTab, setActiveTab] = useState(
-    "GHG Emissions"
-  );
- 
-  const dispatch = useDispatch();
-  const { corporate_id, organization_id, start_date, end_date, data,materiality_year, loading, error } = useSelector(
-    (state) => state.materialitySlice
-  );
-  
+  const [mobileopen, setMobileopen] = useState(false);
+  const [activeTab, setActiveTab] = useState("GHG Emissions");
 
-  const loadMaterialityDashboard=()=>{
-   dispatch(
+  const dispatch = useDispatch();
+  const {
+    corporate_id,
+    organization_id,
+    start_date,
+    end_date,
+    data,
+    materiality_year,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+
+  const loadMaterialityDashboard = () => {
+    dispatch(
       fetchMaterialityData({
         corporate: corporate_id,
         organization: organization_id,
-        start_date:materiality_year?`${materiality_year}-01-01`:'',
-        end_date:materiality_year?`${materiality_year}-12-31`:'',
+        start_date: materiality_year ? `${materiality_year}-01-01` : "",
+        end_date: materiality_year ? `${materiality_year}-12-31` : "",
       })
     );
-  }
-
- 
+  };
 
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     dispatch(f_setSectionName(tab));
+    setMobileopen(false);
   };
 
   useEffect(() => {
-    loadMaterialityDashboard()
+    loadMaterialityDashboard();
   }, [dispatch]);
 
   useEffect(() => {
@@ -108,9 +112,16 @@ const environment = () => {
       "Management of Material topic energy",
       // "Management of Material topic effluent",
       "Management of Material topic air quality",
-      "Management of Material topic Packaging Materials"
+      "Management of Material topic Packaging Materials",
     ];
-    const emissionTabs = ["GHG Emissions","Base Year","Consolidation Approach","Standards","EmissionIntensity","EmissionReductionInitiatives"];
+    const emissionTabs = [
+      "GHG Emissions",
+      "Base Year",
+      "Consolidation Approach",
+      "Standards",
+      "EmissionIntensity",
+      "EmissionReductionInitiatives",
+    ];
     const energyTabs = [
       "Energy consumed inside the organization",
       "Energy consumption outside of the organization",
@@ -151,15 +162,15 @@ const environment = () => {
       "Negative environmental impacts in the supply chain and actions taken",
     ];
     const packagingMaterialTabs = [
-     "Reclaimed products and their packaging materials",
+      "Reclaimed products and their packaging materials",
     ];
 
-    const airQualityTab=[
+    const airQualityTab = [
       "Nitrogen Oxides",
       "Standard Methodology",
       "ODS Import Export",
-      "Emissions ODS"
-    ]
+      "Emissions ODS",
+    ];
 
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
@@ -170,21 +181,19 @@ const environment = () => {
       dispatch(setHeadertext2("Waste"));
     } else if (materialTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Material Use and Efficiency"));
-    }else if (packagingMaterialTabs.includes(activeTab)) {
+    } else if (packagingMaterialTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Packaging Material"));
-    }
-     else if (waterTabs.includes(activeTab)) {
+    } else if (waterTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Water and effluents"));
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Supplier Environmental Assessment"));
-    } 
+    }
     // else if (effluentTab.includes(activeTab)) {
     //   dispatch(setHeadertext2("Effluents"));
-    // } 
+    // }
     else if (airQualityTab.includes(activeTab)) {
       dispatch(setHeadertext2("Air Quality"));
-    } 
-    else if (materialnewTabs.includes(activeTab)) {
+    } else if (materialnewTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Management of Material Topic"));
     } else {
       dispatch(setHeadertext2(`${activeTab}`));
@@ -197,132 +206,247 @@ const environment = () => {
   return (
     <>
       <div className="w-full">
-        <div className="flex">
-          <div className="">
-            <Aside activeTab={activeTab} handleTabClick={handleTabClick} apiData={data} />
+        <div className="block xl:flex lg:flex md:flex 2xl:flex 4k:flex">
+          <div className=" hidden xl:block lg:block md:block 2xl:block 4k:block">
+            <Aside
+              activeTab={activeTab}
+              handleTabClick={handleTabClick}
+              apiData={data}
+              setMobileopen={setMobileopen}
+            />
           </div>
-          <div
-            className={`${
-              open
-                ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
-                : " sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
-            }`}
-          >
-            {/* Emissions start */}
-            {activeTab === "Management of Material topic emission" && (
-              <Materialtopic apiData={data} />
-            )}
-            {activeTab === "GHG Emissions" && <Emission apiData={data} />}
-            {activeTab === "Base Year" && <BaseYear apiData={data} />}
-            {activeTab === "Consolidation Approach"  && <ConsolidationApproach apiData={data} /> }
-            {activeTab ==="Standards" && <Standards apiData={data} /> }
-            {activeTab ==="EmissionIntensity" && <EmissionIntensity apiData={data} /> }
-            {activeTab ==="EmissionReductionInitiatives" && <Emissionreductioninitiativesnew apiData={data} /> }
-            {/* Energy start */}
-            {activeTab === "Management of Material topic energy" && (
-              <EnergyMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Energy consumed inside the organization" && (
-              <Energyconsumed apiData={data} />
-            )}
-            {activeTab === "Energy consumption outside of the organization" && (
-              <Energyconsumption apiData={data} />
-            )}
-            {activeTab === "Energy Intensity" && <Energyintensity apiData={data} />}
-            {activeTab === "Reduction of energy consumption" && (
-              <Reductionenergyconsumption apiData={data} />
-            )}
-            {activeTab ===
-              "Reductions in energy requirements of products and services" && (
-              <Energyproductsservices apiData={data} />
-            )}
-               {activeTab ===
-              "Standards, methodologies, assumptions and calculation tools used" && (
-              <Standardsmethodology apiData={data} />
-            )}
-            
-            {/* waste start */}
-            {activeTab === "Management of Material topic waste" && (
-              <WasteMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Significant waste related impact" && (
-              <Significantwaste apiData={data} />
-            )}
-            {activeTab ===
-              "Management of significant waste related impacts" && (
-              <Managementwaste apiData={data} />
-            )}
-            {activeTab === "Waste generated" && <Wastegenerated apiData={data} />}
-            {activeTab === "Waste Diverted from disposal" && <Wastediverted apiData={data} />}
-            {activeTab === "Waste diverted to disposal" && <Wastedirected apiData={data} />}
-            {activeTab === "Data Collection Methodology" && <Datacollectionmethodology apiData={data} />}    
-           {activeTab === "Significant Spills" && <SignificantSpills apiData={data} isSidepanelOpen={open} />}
-            
-            {/* Materials  start */}
-            {activeTab === "Management of Material topic Materials" && (
-              <MaterialsMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Materials used by weight or volume" && (
-              <Weightvolume apiData={data} />
-            )}
-            {activeTab === "Recycled input materials used" && <Recycled apiData={data} />}
-            {activeTab === "Management of Material topic Packaging Materials" && (
-              <MaterialTopicPackagingMaterial apiData={data} />
-            )}
-            {activeTab ===
-              "Reclaimed products and their packaging materials" && (
-              <Reclaimedproducts apiData={data} />
-            )}
-            {/* Water start */}
-            {activeTab === "Management of Material topic Water" && (
-              <WaterMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Interaction with water as shared resource" && (
-              <Watersharedresource apiData={data} />
-            )}
-            {activeTab ===
-              "Water Withdrawal and Water Discharge from All Areas" && (
-              <Dischargefromareas apiData={data} />
-            )}
-            {activeTab ===
-              "Water withdrawal/Discharge from areas with water stress" && (
-              <Waterstres apiData={data} />
-            )}
-            {activeTab === "Substances of concern" && <Substancesconcern apiData={data} />}
-            {activeTab === "Change in water storage" && <Waterstorage apiData={data} />}
-            {/* Supplier start */}
-            {activeTab === "Management of Material topic Supplier" && (
-              <SupplierMaterialtopic apiData={data} />
-            )}
-            {activeTab ===
-              "New suppliers that were screened using environmental criteria" && (
-              <NewSupplier apiData={data} />
-            )}
-            {activeTab ===
-              "Negative environmental impacts in the supply chain and actions taken" && (
-              <NegativeEnvironmentImpact apiData={data} />
-            )}
-            {activeTab ===
-              "Management of Material topic air quality" && (
-              <MaterialTopicAirQuality apiData={data} />
-            )}
-            {activeTab ===
-              "Nitrogen Oxides" && (
-              <NitrogenOxide apiData={data} />
-            )}
-            {activeTab ===
-              "Standard Methodology" && (
-              <StandardMethodology apiData={data} />
-            )}
-            {activeTab ===
-              "ODS Import Export" && (
-              <ODSImportExport apiData={data} />
-            )}
-            {activeTab ===
-              "Emissions ODS" && (
-              <EmissionsODS apiData={data} />
-            )}
-          </div>
+          {mobileopen ? (
+            <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+              <div>
+                <Aside
+                  activeTab={activeTab}
+                  handleTabClick={handleTabClick}
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              </div>
+            </div>
+          ) : (
+            <div
+              className={`${
+                open
+                  ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
+                  : " sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
+              }`}
+            >
+              {/* Emissions start */}
+              {activeTab === "Management of Material topic emission" && (
+                <Materialtopic apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "GHG Emissions" && (
+                <Emission apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Base Year" && (
+                <BaseYear apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Consolidation Approach" && (
+                <ConsolidationApproach
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Standards" && (
+                <Standards apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "EmissionIntensity" && (
+                <EmissionIntensity
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "EmissionReductionInitiatives" && (
+                <Emissionreductioninitiativesnew
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {/* Energy start */}
+              {activeTab === "Management of Material topic energy" && (
+                <EnergyMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Energy consumed inside the organization" && (
+                <Energyconsumed apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab ===
+                "Energy consumption outside of the organization" && (
+                <Energyconsumption
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Energy Intensity" && (
+                <Energyintensity apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Reduction of energy consumption" && (
+                <Reductionenergyconsumption
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Reductions in energy requirements of products and services" && (
+                <Energyproductsservices
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Standards, methodologies, assumptions and calculation tools used" && (
+                <Standardsmethodology
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+
+              {/* waste start */}
+              {activeTab === "Management of Material topic waste" && (
+                <WasteMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Significant waste related impact" && (
+                <Significantwaste
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Management of significant waste related impacts" && (
+                <Managementwaste apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Waste generated" && (
+                <Wastegenerated apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Waste Diverted from disposal" && (
+                <Wastediverted apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Waste diverted to disposal" && (
+                <Wastedirected apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Data Collection Methodology" && (
+                <Datacollectionmethodology
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Significant Spills" && (
+                <SignificantSpills
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  isSidepanelOpen={open}
+                />
+              )}
+
+              {/* Materials  start */}
+              {activeTab === "Management of Material topic Materials" && (
+                <MaterialsMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Materials used by weight or volume" && (
+                <Weightvolume apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Recycled input materials used" && (
+                <Recycled apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab ===
+                "Management of Material topic Packaging Materials" && (
+                <MaterialTopicPackagingMaterial
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Reclaimed products and their packaging materials" && (
+                <Reclaimedproducts
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {/* Water start */}
+              {activeTab === "Management of Material topic Water" && (
+                <WaterMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Interaction with water as shared resource" && (
+                <Watersharedresource
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Water Withdrawal and Water Discharge from All Areas" && (
+                <Dischargefromareas
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Water withdrawal/Discharge from areas with water stress" && (
+                <Waterstres apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Substances of concern" && (
+                <Substancesconcern
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Change in water storage" && (
+                <Waterstorage apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {/* Supplier start */}
+              {activeTab === "Management of Material topic Supplier" && (
+                <SupplierMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "New suppliers that were screened using environmental criteria" && (
+                <NewSupplier apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab ===
+                "Negative environmental impacts in the supply chain and actions taken" && (
+                <NegativeEnvironmentImpact
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Management of Material topic air quality" && (
+                <MaterialTopicAirQuality
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Nitrogen Oxides" && (
+                <NitrogenOxide apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Standard Methodology" && (
+                <StandardMethodology
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "ODS Import Export" && (
+                <ODSImportExport apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Emissions ODS" && (
+                <EmissionsODS apiData={data} setMobileopen={setMobileopen} />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
