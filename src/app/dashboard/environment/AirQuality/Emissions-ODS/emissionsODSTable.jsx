@@ -44,16 +44,80 @@ const view_path_prev =
 //   items: {
 //     type: "object",
 //     properties: {
-//         EmissionSource: {
+//       EmissionSource: {
 //         type: "string",
 //         title: "Emission Source",
-//         tooltiptext: "Emission sources are where ozone-depleting substances (ODS) are released or emitted. Examples include refrigerators, freezers, dehumidifiers, water coolers, ice machines, air conditioning and heat pump units, aerosol products (propellants), insulation boards, panels, and pipe covers (foam-blowing agents), and pre-polymers (manufacturing processes).",
+//         tooltiptext:
+//           "Emission sources are where ozone-depleting substances (ODS) are released or emitted. Examples include refrigerators, freezers, dehumidifiers, water coolers, ice machines, air conditioning and heat pump units, aerosol products (propellants), insulation boards, panels, and pipe covers (foam-blowing agents), and pre-polymers (manufacturing processes).",
 //         display: "block",
 //       },
 //       ODS: {
 //         type: "string",
 //         title: "ODS",
-//         enum:["halon-1211","(CFC-12)","(CFC-114)","(CFC-214)","(CFC-215)","(HCFC-141b)**"],
+//         enum: [
+//           "CFC-11",
+//           "CFC-12",
+//           "CFC-113",
+//           "CFC-114",
+//           "CFC-115",
+//           "halon-1211",
+//           "halon-1301",
+//           "halon-2402",
+//           "CFC-13",
+//           "CFC-111",
+//           "CFC-112",
+//           "CFC-211",
+//           "CFC-212",
+//           "CFC-213",
+//           "CFC-214",
+//           "CFC-215",
+//           "CFC-216",
+//           "CFC-217",
+//           "carbon tetrachloride",
+//           "1,1,1-trichloroethane (methyl chloroform)",
+//           "HCFC-21",
+//           "HCFC-22",
+//           "HCFC-31",
+//           "HCFC-121",
+//           "HCFC-122",
+//           "HCFC-123",
+//           "HCFC-124 (C2HF4Cl)",
+//           "HCFC-124 (CHFCICF3)",
+//           "HCFC-131",
+//           "HCFC-132",
+//           "HCFC-133",
+//           "HCFC-141",
+//           "HCFC-141b",
+//           "HCFC-142",
+//           "HCFC-142b",
+//           "HCFC-151",
+//           "HCFC-221",
+//           "HCFC-222",
+//           "HCFC-223",
+//           "HCFC-224",
+//           "HCFC-225",
+//           "HCFC-225ca",
+//           "HCFC-225cb",
+//           "HCFC-226",
+//           "HCFC-231",
+//           "HCFC-232",
+//           "HCFC-233",
+//           "HCFC-234",
+//           "HCFC-235",
+//           "HCFC-241",
+//           "HCFC-242",
+//           "HCFC-243",
+//           "HCFC-244",
+//           "HCFC-251",
+//           "HCFC-252",
+//           "HCFC-253",
+//           "HCFC-261",
+//           "HCFC-262",
+//           "HCFC-271",
+//           "HBFC-22B1",
+//           "bromochloromethane",
+//           "methyl bromide",
+//         ],
 //         tooltiptext:
 //           "Please select the appropriate Ozone Depleting Substance used from the given dropdown. ",
 //         display: "block",
@@ -61,7 +125,13 @@ const view_path_prev =
 //       Unit: {
 //         type: "string",
 //         title: "Unit",
-//         enum: ["Tons","Kilogram(Kg)","Gram(g)","Pound (lb)","ton(US Short ton)"],
+//         enum: [
+//           "Tons",
+//           "Kilogram(Kg)",
+//           "Gram(g)",
+//           "Pound (lb)",
+//           "ton(US Short ton)",
+//         ],
 //         tooltiptext: "Select correct unit from the given dropdown.",
 //         display: "none",
 //       },
@@ -248,13 +318,13 @@ const EmissionsODSTable = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [formDataPrev, setFormDataPrev] = useState([
-        {
-          produceODS: "No",
-          importODS: "No",
-          exportODS: "No",
-          useODSFeedstock: "No",
-          destroyODS: "No",
-        },
+    {
+      produceODS: "No",
+      importODS: "No",
+      exportODS: "No",
+      useODSFeedstock: "No",
+      destroyODS: "No",
+    },
   ]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -333,12 +403,10 @@ const EmissionsODSTable = ({ location, year, month }) => {
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       const form_parent = response.data.form_data;
-      if(form_parent[0]?.data)
-      setFormData(form_parent[0]?.data);
-      if(response.data.pre_form_data)
-      setFormDataPrev(response.data.pre_form_data)
+      if (form_parent[0]?.data) setFormData(form_parent[0]?.data);
+      if (response.data.pre_form_data)
+        setFormDataPrev(response.data.pre_form_data);
       setRemoteUiSchema(generateUiSchema(response.data.pre_form_data));
-
     } catch (error) {
       console.error("API call failed:", error);
     } finally {
@@ -349,17 +417,17 @@ const EmissionsODSTable = ({ location, year, month }) => {
   // Disable fields based on previous screen data
   const getActiveFields = (formDataPrev) => {
     if (!formDataPrev || formDataPrev.length === 0) return {};
-  
-    const latestData = formDataPrev[0]; 
+
+    const latestData = formDataPrev[0];
     console.log("Latest Data:", latestData);
-  
+
     // Individual field activations
     const isODSProducedActive = latestData.produceODS === "Yes";
     const isODSImportedActive = latestData.importODS === "Yes";
     const isODSExportedActive = latestData.exportODS === "Yes";
     const isODSUsedAsFeedstockActive = latestData.useODSFeedstock === "Yes";
     const isODSDestroyedActive = latestData.destroyODS === "Yes";
-  
+
     // "EmissionSource", "ODS", and "Unit" should only be enabled if ALL are "Yes"
     const areMainFieldsEnabled =
       isODSProducedActive ||
@@ -368,17 +436,17 @@ const EmissionsODSTable = ({ location, year, month }) => {
       isODSUsedAsFeedstockActive ||
       isODSDestroyedActive;
 
-      setActiveFields({
-        EmissionSource: areMainFieldsEnabled,
-        ODS: areMainFieldsEnabled,
-        Unit: areMainFieldsEnabled,
-        ODSProduced: isODSProducedActive,
-        ODSImported: isODSImportedActive,
-        ODSExported: isODSExportedActive,
-        ODSUsedasfeedstock: isODSUsedAsFeedstockActive,
-        ODSDestroyedbyapprovedtechnologies: isODSDestroyedActive,
-      })
-  
+    setActiveFields({
+      EmissionSource: areMainFieldsEnabled,
+      ODS: areMainFieldsEnabled,
+      Unit: areMainFieldsEnabled,
+      ODSProduced: isODSProducedActive,
+      ODSImported: isODSImportedActive,
+      ODSExported: isODSExportedActive,
+      ODSUsedasfeedstock: isODSUsedAsFeedstockActive,
+      ODSDestroyedbyapprovedtechnologies: isODSDestroyedActive,
+    });
+
     return {
       EmissionSource: areMainFieldsEnabled,
       ODS: areMainFieldsEnabled,
@@ -390,14 +458,13 @@ const EmissionsODSTable = ({ location, year, month }) => {
       ODSDestroyedbyapprovedtechnologies: isODSDestroyedActive,
     };
   };
-  
 
   const generateUiSchema = (formDataPrev) => {
     const activeFields = getActiveFields(formDataPrev);
 
-    console.log('Generating UI Schema for formDataPrev:', formDataPrev);
+    console.log("Generating UI Schema for formDataPrev:", formDataPrev);
     console.log("Active Fields:", activeFields);
-    
+
     return {
       items: {
         classNames: "fieldset",
@@ -416,7 +483,10 @@ const EmissionsODSTable = ({ location, year, month }) => {
         ],
         EmissionSource: {
           "ui:widget": "inputWidget",
-          "ui:options": { label: false, disabled: !activeFields.EmissionSource },
+          "ui:options": {
+            label: false,
+            disabled: !activeFields.EmissionSource,
+          },
         },
         ODS: {
           "ui:widget": "selectWidget",
@@ -523,7 +593,7 @@ const EmissionsODSTable = ({ location, year, month }) => {
   const validateRows = (data, activeFields) => {
     return data.map((row) => {
       const rowErrors = {};
-  
+
       // Define required fields and their respective error messages
       const requiredFields = {
         EmissionSource: "Emission Source is required",
@@ -536,18 +606,17 @@ const EmissionsODSTable = ({ location, year, month }) => {
         ODSImported: "ODS Imported is required",
         ODSExported: "ODS Exported is required",
       };
-  
+
       // ✅ Check if the field is active before validating
       Object.keys(requiredFields).forEach((field) => {
         if (activeFields[field] && (!row[field] || row[field].trim() === "")) {
           rowErrors[field] = requiredFields[field];
         }
       });
-  
+
       return rowErrors;
     });
   };
-  
 
   // Add renderError helper function
   const renderError = (rowIndex, fieldName) => {

@@ -94,7 +94,7 @@ const schema = {
           "Cubic decimeter dm3",
           "Cubic meter m3",
           "Gram",
-          "Kilogram Kg",
+          "Kilogram (Kg)",
           "Liter",
           "Milligram",
           "Milliliter",

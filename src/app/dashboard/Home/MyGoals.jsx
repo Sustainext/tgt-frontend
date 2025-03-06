@@ -14,6 +14,7 @@ const MyGoals = () => {
   const [goals, setGoals] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { userDetails, token } = useAuth();
   const [userId, setUserId] = useState(null);
@@ -27,12 +28,29 @@ const MyGoals = () => {
     deadline: "",
   });
 
-  //fetch isAdmin from localStorage when component mounts
   useEffect(() => {
-    const admin = localStorage.getItem("isAdmin");
-    if (admin === "true") {
-      setIsAdmin(true);
-    }
+    const fetchUserRole = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const response = await axiosInstance.get("/api/auth/get_user_roles/");
+        
+        if (response.status === 200) {
+          const data = await response.data;
+          console.log("Fetched user role:", data);
+          setIsAdmin(data.admin);
+        } else {
+          console.error("Failed to fetch user role");
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+    fetchUserRole();
   }, []);
 
   useEffect(() => {
