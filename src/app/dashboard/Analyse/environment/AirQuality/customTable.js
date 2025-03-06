@@ -26,7 +26,7 @@ function DynamicTable({ columns, data }) {
     return dataRows.map((row, rowIndex) => (
       <tr key={rowIndex}>
         {columns.map((column, columnIndex) => (
-          <td key={columnIndex} className={column.cellClass}>
+          <td key={columnIndex} className={row[column.dataIndex]=='Total'?'gradient-text py-2 border-y px-4 font-bold text-left text-[12px]':column.cellClass}>
            {row[column.dataIndex]}
           </td>
         ))}
@@ -35,7 +35,17 @@ function DynamicTable({ columns, data }) {
   };
 
   return (
-    <table className="w-full rounded-lg overflow-hidden">
+    <div
+        style={{
+          display: "block",
+          overflowX: "auto",
+          maxWidth: "100%",
+          minWidth: "100%",
+          width: "40vw",
+        }}
+        className="mb-2 rounded-lg table-scrollbar"
+      >
+    <table className="w-full rounded-lg">
       <thead className="border rounded-lg">
         <tr className="border-t border-b gradient-background">
           {renderHeaders()}
@@ -60,6 +70,7 @@ function DynamicTable({ columns, data }) {
        
       </tbody>
     </table>
+    </div>
   );
 }
 

@@ -18,8 +18,8 @@ const Section29=({section12_5_6Ref,orgName})=>{
         `${orgName ? orgName : "[Company Name]"} organization is committed to preventing and managing significant spills that can negatively impact the environment, biodiversity, and local communities.As part of our sustainability strategy, we have implemented a`))
     }
   
-    const handleEditorChange=(value)=>{
-      dispatch(setSignificantSpills(value))
+    const handleEditorChange=(e)=>{
+      dispatch(setSignificantSpills(e.target.value))
     }
     const config = {
       enter: "BR", // Or customize behavior on Enter key
@@ -61,6 +61,7 @@ const Section29=({section12_5_6Ref,orgName})=>{
         "Material of the spill",
         "Volume of the spill",
         "Unit",
+        "Impacts of Significant Spill"
         
     ]
     const data1=[
@@ -68,6 +69,7 @@ const Section29=({section12_5_6Ref,orgName})=>{
             "Material of the spill":"No data available",
             "Volume of the spill":"No data available",
             "Unit":"No data available",
+             "Impacts of Significant Spill":"No data available"
         }
     ]
 
@@ -119,13 +121,13 @@ const Section29=({section12_5_6Ref,orgName})=>{
             Auto Fill
           </button>
         </div>
-            {/* <textarea
+            <textarea
             onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
-        /> */}
-         <div className="mb-4">
+        />
+         {/* <div className="mb-4">
               <JoditEditor
               // ref={editor}
               value={content}
@@ -133,8 +135,8 @@ const Section29=({section12_5_6Ref,orgName})=>{
               tabIndex={1}
               onBlur={handleEditorChange}
               />
-            </div>
-{/* <p className="text-[15px]  mb-2 font-semibold">
+            </div> */}
+<p className="text-[15px]  mb-2 font-semibold">
 Total number & volume of spills by material 
         </p>
 <div className="shadow-md rounded-md mb-4">
@@ -153,7 +155,7 @@ Total number & volume of significant spills
         </p>
 <div className="shadow-md rounded-md mb-4">
 <LeaveTable columns={col3} data={data3}/>
-</div> */}
+</div>
 </div>
         </>
     )

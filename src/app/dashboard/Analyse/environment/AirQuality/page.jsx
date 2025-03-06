@@ -9,6 +9,28 @@ import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2, columns3,columns4, columns5, columns6 } from "./data";
 
+function capitalizeFirstLetter(val) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
+
+function generateColumns(apiResponse) {
+
+    const dataKeys = Object.keys(apiResponse[0] || {});
+  
+    const columns = dataKeys.map((key, index) => {
+      return {
+        label: capitalizeFirstLetter(key.replace(/_/g, " ")),
+        dataIndex: key,
+        headerClass:
+          "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
+        cellClass:
+          "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
+      };
+    });
+  
+    return columns;
+  }
+
 const AnalyseAirQuality = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
@@ -19,10 +41,16 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
   const [airPollutantinKg, setairPollutantinKg] = useState([]);
   const [airPollutantinPpm, setairPollutantinPpm] = useState([]);
   const [airPollutantByLOcation, setairPollutantByLOcation] = useState([]);
+  const [airEmissionByLocationKg, setairEmissionByLocationKg] = useState([]);
+  const [airEmissionByLocationPpm, setairEmissionByLocationPpm] = useState([]);
+  const [odsSubstance, setOdsSubstance] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
   const [loopen, setLoOpen] = useState(false);
+  const [dynamicColumn3,setdynamicColumn3]=useState(columns3)
+  const [dynamicColumn4,setdynamicColumn4]=useState(columns4)
+  const [dynamicColumn5,setdynamicColumn5]=useState(columns5)
   const [dateRange, setDateRange] = useState({
     start: null,
     end: null,
@@ -48,15 +76,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
     setLoOpen(false);
   };
 
-  function addSerialNumbersToArray(dataArray) {
-    let sno = 1;
-    return dataArray.map(entry => {
-        if (!entry.hasOwnProperty("Total")) {
-            return { ...entry, sno: sno++ };
-        }
-        return entry;
-    });
-}
+ 
 
   const fetchData = async (params) => {
     if (!params.start || !params.end) {
@@ -94,11 +114,20 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
       const data = response.data;
 
       const {
-        air_emission_by_pollution, air_emission_by_pollution_ppm_or_ugm2
+        air_emission_by_pollution, air_emission_by_pollution_ppm_or_ugm2,percentage_contribution_of_pollutant_by_location,total_air_pollution_by_location,total_air_pollution_by_location_ppm_or_ugm2,
+        ozone_depleting_substances
       } = data;
-    
-      setairPollutantinKg(addSerialNumbersToArray(air_emission_by_pollution))
-      setairPollutantinPpm(addSerialNumbersToArray(air_emission_by_pollution_ppm_or_ugm2))
+
+      setdynamicColumn3(percentage_contribution_of_pollutant_by_location.length>0?generateColumns(percentage_contribution_of_pollutant_by_location):columns3)
+      setdynamicColumn4(total_air_pollution_by_location.length>0?generateColumns(total_air_pollution_by_location):columns4)
+      setdynamicColumn5(total_air_pollution_by_location_ppm_or_ugm2.length>0?generateColumns(total_air_pollution_by_location_ppm_or_ugm2):columns5)
+      
+      setairPollutantinKg(air_emission_by_pollution)
+      setairPollutantinPpm(air_emission_by_pollution_ppm_or_ugm2)
+      setairPollutantByLOcation(percentage_contribution_of_pollutant_by_location)
+      setairEmissionByLocationKg(total_air_pollution_by_location)
+      setairEmissionByLocationPpm(total_air_pollution_by_location_ppm_or_ugm2)
+      setOdsSubstance(ozone_depleting_substances)
 
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
@@ -503,7 +532,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                   </div>
                 </div>
               </div>
-              <DynamicTable columns={columns3} data={[]} />
+              <DynamicTable columns={dynamicColumn3} data={airPollutantByLOcation} />
             </div>
             <div className="mb-6">
               <p className="text-black text-[15px] font-bold ">
@@ -524,7 +553,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                   </div>
                 </div>
               </div>
-              <DynamicTable columns={columns4} data={[]} />
+              <DynamicTable columns={dynamicColumn4} data={airEmissionByLocationKg} />
             </div>
             <div className="mb-6">
               <p className="text-black text-[15px] font-bold ">
@@ -541,7 +570,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                 </div>
                 
               </div>
-              <DynamicTable columns={columns5} data={[]} />
+              <DynamicTable columns={dynamicColumn5} data={airEmissionByLocationPpm} />
             </div>
             <div className="mb-6">
               <p className="text-black text-[15px] font-bold ">
@@ -571,7 +600,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                 </div>
                
               </div>
-              <DynamicTable columns={columns6} data={[]} />
+              <DynamicTable columns={columns6} data={odsSubstance} />
             </div>
           
           </div>

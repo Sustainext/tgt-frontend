@@ -377,7 +377,7 @@ else{
             </div>,
             {
               position: "top-right",
-              autoClose: false,
+              autoClose: 4000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,

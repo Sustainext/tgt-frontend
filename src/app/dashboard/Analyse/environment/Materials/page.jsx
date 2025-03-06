@@ -497,7 +497,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
                 id="materials1"
                 className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
               >
-                <p>Non-Renewable materials used</p>
+                <p className="font-bold">Non-Renewable materials used</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 301-1a
@@ -528,7 +528,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
                 id="materials3"
                 className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
               >
-                <p>Percentage of recycled materials used (Production)</p>
+                <p className="font-bold">Percentage of recycled materials used (Production)</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 301-2a

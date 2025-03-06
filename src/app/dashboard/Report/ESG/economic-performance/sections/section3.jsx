@@ -23,23 +23,52 @@ const Section3 = ({ section11_1_2Ref, orgName }) => {
   // Safely accessing the nested data from "201_1ab"
   const economicData = data?.['201_1ab'];  // Optional chaining to prevent errors
 
-  // Ensure economicData exists before proceeding
-  const tableData = economicData ? [
-    { label: "1) Direct Economic value generated (Revenues)", value: economicData.revenues },
-    { label: "2) Economic Value distributed", value: economicData.economic_value_distributed_1 },
-    { label: "   i) Operating costs", value: economicData.operating_costs },
-    { label: "   ii) Employee wages & benefits", value: economicData.employee_wages_benefits },
-    { label: "   iii) Payments to providers of capital", value: economicData.payments_to_providers_of_capital },
-    { label: "   iv) Payments to governments by country", value: "" }, // Placeholder for nested payments
-    ...(economicData.payments_to_governments_by_country?.map(country => ({
-      label: `      ${country.country}`,
-      value: country.paymentCode
-    })) || []),  // Handling nested country payments properly
-    { label: "   v) Community investments", value: economicData.countries_and_payments },
-    // { label: "   vi) Countries and payments", value: economicData.countries_and_payments }, // New field handling
-    // { label: "3) Direct economic value generated", value: economicData.direct_economic_value_generated || "N/A" }, // Handle null values
-    { label: "3) Economic value retained", value: economicData.community_investments || "N/A" } // Handle null values
-] : []; // Fallback to an empty array if economicData is undefined
+const tableData = economicData ? [
+  {
+    label: "1) Direct Economic value generated (Revenues)",
+    value: economicData.revenues ? economicData.revenues : ''
+  },
+  {
+    label: "2) Economic Value distributed",
+    value: economicData.economic_value_distributed_1 ? economicData.economic_value_distributed_1 : ''
+  },
+  {
+    label: "i) Operating costs",
+    value: economicData.operating_costs ? economicData.operating_costs : ''
+  },
+  {
+    label: "ii) Employee wages & benefits",
+    value: economicData.employee_wages_benefits ? economicData.employee_wages_benefits : ''
+  },
+  {
+    label: "iii) Payments to providers of capital",
+    value: economicData.payments_to_providers_of_capital ? economicData.payments_to_providers_of_capital : ''
+  },
+  {
+    label: "iv) Payments to governments by country",
+    value: Array.isArray(economicData.payments_to_governments_by_country) ? '' : economicData.payments_to_governments_by_country || ''
+  },
+  ...(
+    Array.isArray(economicData.payments_to_governments_by_country) 
+      ? [
+          { label: 'Country Name', value: 'Payments to governments by country' },
+          ...economicData.payments_to_governments_by_country.map(country => ({
+            label: `      ${country.country}`,
+            value: country.paymentCode
+          }))
+        ] 
+      : []
+  ),
+  {
+    label:"v) Community investments",
+    value:economicData.countries_and_payments?Array.isArray(economicData.countries_and_payments)?'':economicData.countries_and_payments:''
+  },
+  {
+    label:"3) Economic value retained",
+    value:economicData.community_investments?economicData.community_investments:''
+  }
+] : [];
+
 
   return (
     <>
