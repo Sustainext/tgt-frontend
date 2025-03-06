@@ -11,10 +11,7 @@ export function middleware(request) {
     const allCookies = cookies();
     allCookies.getAll().forEach((cookie) => {
       response.cookies.delete(cookie.name);
-    });
-
-    // Optional: Add a notice for the user (if needed)
-    
+    });    
 
     return response; // No redirect, continue serving the `/reset-password` page
   }
