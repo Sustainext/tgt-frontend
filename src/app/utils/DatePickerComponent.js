@@ -301,7 +301,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
       </div>
       {showDatePicker && (
         <div
-          className={`absolute z-10 mt-2 p-4 bg-white border border-gray-300 rounded-md w-[38vw] ${
+          className={`absolute z-10 mt-2 p-4 bg-white border border-gray-300 rounded-md w-full xl:w-[38vw] lg:w-[38vw] md:w-[38vw] 2xl:w-[38vw] 4k:w-[38vw] 2k:w-[38vw] ${
             position === "top"
               ? "bottom-full mb-2"
               : position === "left"

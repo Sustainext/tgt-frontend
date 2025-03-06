@@ -15,7 +15,7 @@ import { Energydata } from "../../../shared/data/Energydata";
 import { MdOutlineClear,MdChevronRight  } from "react-icons/md";
 import EmissionTopBar from './emissionTopbar'
 
-const Emissions = ({ open,apiData}) => {
+const Emissions = ({ open,apiData,setMobileopen}) => {
   const dispatch = useDispatch();
   const { location, year, month } = useSelector((state) => state.emissions);
   const countryCode = useSelector((state) => state.emissions.countryCode);
@@ -123,7 +123,7 @@ const Emissions = ({ open,apiData}) => {
       <EmissionsProvider>
         <>
           <div className="flex flex-col justify-start overflow-x-hidden ">
-           <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} sdgData={sdgData} griData={griData} brsr={brsr} />
+           <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} sdgData={sdgData} griData={griData} brsr={brsr} setMobileopen={setMobileopen} />
             <div
            className={`${
             isOpen

@@ -74,7 +74,7 @@ const WaterinputWidget = ({
       <div>
         <input
           ref={inputRef} // Attach ref to input
-          className={`block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholders pr-2 ${hasError ? 'border-red-500' : 'border-gray-300'}`}
+          className={`block w-[56vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2xl:w-[20vw]  4k:w-[8vw] xl:py-2 lg:py-2 md:py-2 2xl:py-2 4k:py-2 2k:py-2 py-1.5 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholders pr-2 ${hasError ? 'border-red-500' : 'border-gray-300'}`}
           placeholder={placeholder || `Enter ${label}`}
           type="number"
           value={value}

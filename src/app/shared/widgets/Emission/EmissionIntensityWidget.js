@@ -154,6 +154,10 @@ const EmissionIntensityWidget = ({
       "Gigawatt-hour (GWh)",
       "British Thermal Unit (BTU)",
       "Watt (W)",
+      "Kilowatt (kW)",
+      "Megawatt (MW)",
+      "Gigawatt (GW)",
+
     ],
     "Production volume": [
       "Custom Unit (Please specify)",
@@ -175,9 +179,14 @@ const EmissionIntensityWidget = ({
     ],
     "Area (such as m2 floor space)": [
       "Square Meter (m²)",
+      "Square Centimeter (cm²)",
+      "Square Millimeter (mm²)",
       "Square Kilometer (km²)",
       "Hectare (ha)",
+      "quare Inch (in²)",
       "Square Foot (ft²)",
+      "Square Mile (mi²)",
+      "Acre",
     ],
     "Monetary units (such as revenue or sales)": [],
     "Number of employees": "number",
@@ -200,7 +209,7 @@ const EmissionIntensityWidget = ({
               </label>
             )}
             <select
-              className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
+              className="block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
               value={item.MetricType}
               onChange={(e) =>
                 handleRowChange(rowIndex, "MetricType", e.target.value)
@@ -216,7 +225,7 @@ const EmissionIntensityWidget = ({
             {item.MetricType === "Other (please specify)" && (
               <input
                 type="text"
-                className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none mt-2"
+                className="block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none mt-2"
                 placeholder="Specify metric type"
                 value={item.customMetricType}
                 onChange={(e) =>
@@ -253,7 +262,7 @@ const EmissionIntensityWidget = ({
             )}
             <input
               type="text"
-              className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
+              className="block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
               placeholder="Enter metric name"
               value={item.Metricname}
               onChange={(e) =>
@@ -290,7 +299,7 @@ const EmissionIntensityWidget = ({
             <input
               type="number"
               min="0"
-              className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
+              className="block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
               placeholder="Enter quantity"
               value={item.Quantity}
               onChange={(e) =>
@@ -329,7 +338,7 @@ const EmissionIntensityWidget = ({
             ) ? (
               <input
                 type="text"
-                className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
+                className="block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
                 placeholder="Enter number"
                 value={
                   item.MetricType === "Units of product sold"
@@ -345,7 +354,7 @@ const EmissionIntensityWidget = ({
               item.Units === "Custom Unit (Please specify)" ? (
               <input
                 type="text"
-                className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none "
+                className="block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none "
                 placeholder="Specify unit"
                 value={item.customUnit}
                 onChange={(e) =>
@@ -374,11 +383,11 @@ const EmissionIntensityWidget = ({
                 styles={newcustomStyles}
                 closeMenuOnSelect={false}
                 hideSelectedOptions={false}
-                className="block w-[20vw] 4k:w-[10vw] text-[12px] border-b-2 border-gray-300 focus:outline-none"
+                className="block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[10vw] text-[12px] border-b-2 border-gray-300 focus:outline-none"
               />
             ) : (
               <select
-                className="block w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
+                className="block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none"
                 value={item.Units}
                 onChange={(e) =>
                   handleRowChange(rowIndex, "Units", e.target.value)
@@ -443,7 +452,7 @@ const EmissionIntensityWidget = ({
               closeMenuOnSelect={false}
               hideSelectedOptions={false}
               components={{ Option: CustomOption }}
-              className="block w-[25vw] 4k:w-[10vw] text-[12px] border-b-2 border-gray-300 focus:outline-none"
+              className="block  w-[73vw] xl:w-[25vw] md:w-[25vw] lg:w-[25vw] 2xl:w-[25vw] 2k:w-[25vw]  4k:w-[10vw] text-[12px] border-b-2 border-gray-300 focus:outline-none"
             />
             <ReactTooltip
               id={`tooltip-intensityratio-${id}`}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EnvironmentHeade3 from "../../environmentheader3";
 import Standardsmethodologybody from "./standards-methodology-body";
 import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
@@ -8,9 +8,9 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import EnergyTopBar from '../energyTopBar'
+import EnergyTopBar from "../energyTopBar";
 
-const Standardsmethodology = ({ open,apiData }) => {
+const Standardsmethodology = ({ open, apiData, setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -54,41 +54,43 @@ const Standardsmethodology = ({ open,apiData }) => {
     };
   }, []);
 
-  const sdgData=[
+  const sdgData = [
     {
-        tagName:'GRI 302-1',
-        toggle:'1',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "GRI 302-1",
+      toggle: "1",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
     },
     {
-      tagName:'GRI 302-2',
-      toggle:'15',
-      textColor:"#007EEF",
-      bgColor:"bg-slate-200"
-  },
-  {
-    tagName:'GRI 302-4',
-    toggle:'17',
-    textColor:"#007EEF",
-    bgColor:"bg-slate-200"
-},
-{
-  tagName:'GRI 302-5',
-  toggle:'18',
-  textColor:"#007EEF",
-  bgColor:"bg-slate-200"
-}
-]
-
-
+      tagName: "GRI 302-2",
+      toggle: "15",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+    {
+      tagName: "GRI 302-4",
+      toggle: "17",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+    {
+      tagName: "GRI 302-5",
+      toggle: "18",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} />
-        
+        <EnergyTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          setMobileopen={setMobileopen}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -96,7 +98,7 @@ const Standardsmethodology = ({ open,apiData }) => {
           </h6>
         </div>
         <div
-         ref={drawerRef}
+          ref={drawerRef}
           className={`${
             isOpen
               ? "translate-x-[15%] block top-16"

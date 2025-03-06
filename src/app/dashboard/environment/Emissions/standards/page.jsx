@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import EmissionTopBar from "../emissionTopbar";
 import Screen1 from "./screen1";
 
-const Standard = ({ apiData }) => {
+const Standard = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -120,6 +120,7 @@ const Standard = ({ apiData }) => {
           apiData={apiData}
           sdgData={sdgData}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">
