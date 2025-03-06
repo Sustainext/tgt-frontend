@@ -127,16 +127,18 @@ const SelectWidget = ({
             place="top"
             effect="solid"
             style={{
-              backgroundColor: "#000",
-              color: "white",
-              fontSize: "12px",
-              boxShadow: 3,
-              borderRadius: "8px",
-              padding: "8px",
-            }}
+                  minWidth: "200px",
+                  maxWidth: "500px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  padding: "10px",
+                  zIndex: "1000",
+                }}
           >
-            This field is disabled because you have opted out or not filled data
-            in the ODS Production, Import, and Export screen.
+            No data available/opted out in ODS Production Import and Export.
           </ReactTooltip>
         )}
       </div>

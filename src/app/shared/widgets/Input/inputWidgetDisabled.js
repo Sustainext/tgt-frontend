@@ -112,8 +112,7 @@ const inputWidget = ({
                   zIndex: "1000",
                 }}
           >
-            This field is disabled because you have opted out or not filled data
-            in the ODS Production, Import, and Export screen.
+           No data available/opted out in ODS Production Import and Export.
           </ReactTooltip>
         )}
       </div>
