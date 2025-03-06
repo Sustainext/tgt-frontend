@@ -80,6 +80,8 @@ const Environment=forwardRef(({ onSubmitSuccess }, ref) => {
   const section12_1_5Ref = useRef(null);
   const section12_1_6Ref = useRef(null);
   const section12_1_7Ref = useRef(null);
+  const section12_1_8Ref = useRef(null);
+  const section12_1_9Ref = useRef(null);
   const section12_2_1Ref = useRef(null);
   const section12_2_2Ref = useRef(null);
   const section12_2_3Ref = useRef(null);
@@ -323,9 +325,9 @@ dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c?.content 
             <Section4 section12_1_2Ref={section12_1_2Ref} data={data}/>
             <Section5 section12_1_3Ref={section12_1_3Ref} data={data}/>
             <Section6 section12_1_4Ref={section12_1_4Ref} data={data}/>
-            <Section7 section12_1_5Ref={section12_1_5Ref} data={data}/>
-            <Section8 section12_1_6Ref={section12_1_6Ref} data={data}/>
-            <Section9 section12_1_7Ref={section12_1_7Ref} data={data}/>
+            <Section7 section12_1_5Ref={section12_1_5Ref} section12_1_6Ref={section12_1_6Ref} section12_1_7Ref={section12_1_7Ref} data={data}/>
+            <Section8 section12_1_8Ref={section12_1_8Ref} data={data}/>
+            <Section9 section12_1_9Ref={section12_1_9Ref} data={data}/>
             <Section10 section12_2Ref={section12_2Ref} data={data}/>
             <Section11 section12_2_1Ref={section12_2_1Ref} data={data}/>
             <Section12 section12_2_2Ref={section12_2_2Ref} data={data}/>
@@ -375,13 +377,19 @@ dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c?.content 
   12.1.4. Scope 3 GHG Emissions
   </p>
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section12_1_5' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_1_5Ref, 'section12_1_5')} >
-  12.1.5. GHG emission intensity
+  12.1.5. Base Year
   </p>
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section12_1_6' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_1_6Ref, 'section12_1_6')} >
-  12.1.6. Reduction in GHG emissions 
+  12.1.6. Consolidation Approach
   </p>
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section12_1_7' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_1_7Ref, 'section12_1_7')} >
-  12.1.7. Ozone depleting substances
+  12.1.7. GHG emission intensity
+  </p>
+  <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section12_1_8' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_1_8Ref, 'section12_1_8')} >
+  12.1.8. Reduction in GHG emissions 
+  </p>
+  <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section12_1_9' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_1_9Ref, 'section12_1_9')} >
+  12.1.9. Ozone depleting substances
   </p>
   
   <p className={`text-[12px] mb-2 cursor-pointer ${activeSection === 'section12_2' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_2Ref, 'section12_2')} >

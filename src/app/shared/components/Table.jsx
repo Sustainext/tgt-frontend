@@ -17,7 +17,7 @@ const Table = ({ type, columns, data,fullData, organisation, corporate, location
             {columns.map((column, index) => (
               <th
                 key={column.accessor} 
-                className={`px-2 py-3  text-[#727272] block md:table-cell border-b border-gray-300   text-[12px] w-1/5 ${
+                className={`px-2 py-3  text-[#727272] block md:table-cell border-b border-gray-300   text-[12px] ${type=="Reduction"?'':'w-1/5'} ${
                   index === 0 || type=="Reduction" ? "text-left pl-4" : "text-center"
                 }`}
               >
