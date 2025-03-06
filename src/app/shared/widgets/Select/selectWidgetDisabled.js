@@ -113,7 +113,7 @@ const SelectWidget = ({
             type="text"
             className={`block w-[56vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2xl:w-[20vw] 4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 ${
               id.startsWith("root_0") ? "mt-[0.38rem]" : "mt-0.5"
-            }`}
+            } disabled:cursor-not-allowed`}
             placeholder={`Specify other ${label}`}
             value={otherValue}
             onChange={handleOtherInputChange}
