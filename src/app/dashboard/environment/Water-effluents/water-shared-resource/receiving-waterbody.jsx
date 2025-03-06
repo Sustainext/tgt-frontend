@@ -244,11 +244,11 @@ const Receivingwaterbody = ({
     <>
       <div>
         <div className="flex mb-2">
-          <div className="w-[95%] relative">
+          <div className="w-[80%] xl:w-[95%]  lg:w-[95%]  md:w-[95%] 2xl:w-[95%] 4k:w-[95%] 2k:w-[95%]  relative">
             <h2 className="text-[14px] font-medium text-[#344054]">
               Profile of Receiving Waterbody
             </h2>
-            <p className="text-[14px] text-[#727272] w-[560px] flex">
+            <p className="text-[14px] text-[#727272] w-[360px] xl:w-[560px] lg:w-[560px] 2xl:w-[560px] md:w-[560px] 4k:w-[560px] 2k:w-[560px] flex">
               Have you considered the profile of the receiving waterbody?
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}

@@ -4,7 +4,11 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { useDispatch } from "react-redux";
-import {f_setLocationName,f_setYear,f_setMonthName} from "@/lib/redux/features/FileInfoSlice";
+import {
+  f_setLocationName,
+  f_setYear,
+  f_setMonthName,
+} from "@/lib/redux/features/FileInfoSlice";
 
 const monthMapping = {
   Jan: 1,
@@ -77,13 +81,15 @@ const EnvironmentHeader = ({
       setActiveMonth(monthNumber);
       // setMonthname(value); // Update month name
       dispatch(f_setMonthName(value)); // Update month name in Redux
-      console.log(value ,"month name");
+      console.log(value, "month name");
     } else if (name === "location") {
       setLocation(Number(value));
-      const selectedLocation = locations.find((loc) => loc.id === Number(value));
+      const selectedLocation = locations.find(
+        (loc) => loc.id === Number(value)
+      );
       // setLocationname(selectedLocation?.name || ""); // Update location name
       dispatch(f_setLocationName(selectedLocation?.name || "")); // Update location name in Redux
-      console.log(selectedLocation?.name ,"loaction name");
+      console.log(selectedLocation?.name, "loaction name");
     } else if (name === "year") {
       setYear(value);
       dispatch(f_setYear(value)); // Update year in Redux
@@ -101,12 +107,12 @@ const EnvironmentHeader = ({
   return (
     <>
       <div className="ml-2 mb-5">
-        <div className="flex mb-5 ">
+        <div className="block mb-5 xl:flex md:flex lg:flex 2xl:flex 4k:flex">
           <div>
-            <div className="relative">
+            <div className="relative mb-2 md:mb-0 xl:mb-0 lg:mb-0 2xl:mb-0 4k:mb-0">
               <select
                 name="location"
-                className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="border m-0.5 text-[12px] text-neutral-500 appearance-none xl:w-[240px] lg:w-[240px] md:w-[240px] 2xl:w-[240px] 4k:w-[240px] w-[98%] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 value={formState.location}
                 onChange={handleChange}
               >
@@ -133,10 +139,10 @@ const EnvironmentHeader = ({
             </div>
           </div>
           <div>
-            <div className="ml-3 relative">
+            <div className="xl:ml-3 md:ml-3 lg:ml-3 2xl:ml-3 4k:ml-3 ml-0 relative mb-2 md:mb-0 xl:mb-0 lg:mb-0 2xl:mb-0 4k:mb-0">
               <select
                 name="year"
-                className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="border m-0.5 text-[12px] text-neutral-500 appearance-none xl:w-[240px] lg:w-[240px] md:w-[240px] 2xl:w-[240px] 4k:w-[240px] w-[98%] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 value={formState.year}
                 onChange={handleChange}
               >
@@ -162,35 +168,63 @@ const EnvironmentHeader = ({
               )}
             </div>
           </div>
-        </div>
 
-        <div className="flex justify-between mb-4">
-          <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
-            {months.map((month, index) => (
-              <button
-                key={index}
-                className={`text-[12px] border-r mx-1 ${
-                  formState.month === monthMapping[month]
-                    ? "bg-white shadow-md rounded-lg"
-                    : ""
-                }`}
-                onClick={() =>
-                  handleChange({ target: { name: "month", value: month } })
-                }
+          <div>
+            <div className="xl:ml-3 md:ml-3 lg:ml-3 2xl:ml-3 4k:ml-3 ml-0 relative mb-2 block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+              <select
+                name="month"
+                className="border m-0.5 text-[12px] text-neutral-500 appearance-none xl:w-[240px] lg:w-[240px] md:w-[240px] 2xl:w-[240px] 4k:w-[240px] w-[98%] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                value={Object.keys(monthMapping).find(
+                  (key) => monthMapping[key] === formState.month
+                )}
+                onChange={handleChange}
               >
-                <p
-                  className={`text-center ${
+                <option value="">Select month</option>
+                {months.map((month, index) => (
+                  <option key={index} value={month}>
+                    {month}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute inset-y-0 right-2 flex items-center pl-3 pointer-events-none">
+                <MdKeyboardArrowDown
+                  className="text-neutral-500"
+                  style={{ fontSize: "16px" }}
+                />
+              </div>
+            </div>
+            <div></div>
+          </div>
+        </div>
+        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+          <div className="flex justify-between mb-4 ">
+            <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
+              {months.map((month, index) => (
+                <button
+                  key={index}
+                  className={`text-[12px] border-r mx-1 ${
                     formState.month === monthMapping[month]
-                      ? "custom-gradient-text"
-                      : "text-[#A1A1A1]"
-                  } hover:bg-[#f7f7f7] py-1 w-[55px] ${
-                    index === 0 ? "rounded-l" : ""
-                  } ${index === months.length - 1 ? "rounded-r" : ""}`}
+                      ? "bg-white shadow-md rounded-lg"
+                      : ""
+                  }`}
+                  onClick={() =>
+                    handleChange({ target: { name: "month", value: month } })
+                  }
                 >
-                  {month}
-                </p>
-              </button>
-            ))}
+                  <p
+                    className={`text-center ${
+                      formState.month === monthMapping[month]
+                        ? "custom-gradient-text"
+                        : "text-[#A1A1A1]"
+                    } hover:bg-[#f7f7f7] py-1 w-[55px] ${
+                      index === 0 ? "rounded-l" : ""
+                    } ${index === months.length - 1 ? "rounded-r" : ""}`}
+                  >
+                    {month}
+                  </p>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

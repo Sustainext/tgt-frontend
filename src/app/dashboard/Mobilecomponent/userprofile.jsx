@@ -1,18 +1,15 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import { useAuth } from "../../Context/auth";
+import { useAuth } from "../../../Context/auth";
 import { useRouter } from "next/navigation";
-import { loadFromLocalStorage } from "../utils/storage";
-import Link from "next/link";
-import Profile from "./Profile";
+import { loadFromLocalStorage } from "../../utils/storage";
+import Profile from "../Profile";
 import { Oval } from "react-loader-spinner";
-import { GlobalState } from "../../Context/page";
 import { FaUser } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
-import { useSelector } from "react-redux";
 
-const DashboardHeader = () => {
-  const { open } = GlobalState();
+
+const Userprofile = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
   const [userData, setUserData] = useState({
@@ -24,11 +21,7 @@ const DashboardHeader = () => {
   const router = useRouter();
   const profileRef = useRef(null);
   const drawerRef = useRef(null);
-  // Redux selectors
-  const text1 = useSelector((state) => state.header.headertext1);
-  const text2 = useSelector((state) => state.header.headertext2);
-  const headerdisplay = useSelector((state) => state.header.headerdisplay);
-  const middlename = useSelector((state) => state.header.middlename);
+
 
   const getInitials = (email) => {
     if (!email) return "";
@@ -177,41 +170,9 @@ const DashboardHeader = () => {
   }, []);
   return (
     <>
-      <div className="flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0  right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:mx-2 lg:mx-2 md:mx-2 2xl:mx-2 xl:z-[1000] lg:z-[1000] md:z-[1000] 2xl:z-[1000]">
-        <div
-          className={`flex justify-start items-center my-2 gap-1 px-2 xl:ml-0 lg:ml-0 2xl:ml-0 md:ml-0  ${
-            open ? "w-[84%]" : "w-[84%]"
-          }`}
-        >
-          <Link href="/dashboard">
-            <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold">
-              Home
-            </span>
-          </Link>
-          <span className="text-[#222222] mx-1">&gt;</span>
-
-          {text1 !== "" && (
-            <>
-              <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold">
-                {text1}
-              </span>
-              <span className="text-[#222222] mx-1">&gt;</span>
-            </>
-          )}
-
-          {headerdisplay === "block" && (
-            <>
-              <span className="text-[#222222] hover:text-[#222222]">
-                {middlename}
-              </span>
-              <span className="text-[#222222] mx-1">&gt;</span>
-            </>
-          )}
-
-          <span className="text-[#222222] hover:text-[#222222]">{text2}</span>
-        </div>
-        <div className="lg:block xl:block 2xl:block md:block hidden w-[15%]">
-        <div className="flex justify-end items-center  ">
+   
+        <div className="lg:hidden xl:hidden 2xl:hidden md:hidden 4k:hidden block items-center h-full ">
+        <div className="flex justify-end items-center h-full  ">
           <div className="flex">
           
             <div className="text-[#007EEF] flex items-center">
@@ -301,7 +262,7 @@ const DashboardHeader = () => {
           </div>
           </div>
         </div>
-      </div>
+     
       {profileVisible && (
         <div
           ref={profileRef}
@@ -326,4 +287,4 @@ const DashboardHeader = () => {
   );
 };
 
-export default DashboardHeader;
+export default Userprofile;

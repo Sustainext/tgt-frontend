@@ -87,18 +87,18 @@ const EnvironmentHeader3 = ({
   return (
     <>
       <div className="ml-2 mb-5">
-        <div className="flex mb-5 gap-4">
+      <div className="block mb-5 xl:flex md:flex lg:flex 2xl:flex 4k:flex">
           <div>
-            <div className="relative">
+            <div className="relative mb-2 md:mb-0 xl:mb-0 lg:mb-0 2xl:mb-0 4k:mb-0">
               <select
                 name="location"
-                className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="border m-0.5 text-[12px] text-neutral-500 appearance-none xl:w-[240px] lg:w-[240px] md:w-[240px] 2xl:w-[240px] 4k:w-[240px] w-[98%] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 value={formState.location}
                 onChange={handleChange}
               >
                 <option value="">Select location</option>
                 {locations.map((location, index) => (
-                  <option key={index} value={location.id}>
+                  <option key={index} value={location.id} name={location.name}>
                     {location.name}
                   </option>
                 ))}
@@ -119,10 +119,10 @@ const EnvironmentHeader3 = ({
             </div>
           </div>
           <div>
-            <div className="ml-3 relative">
+            <div className="xl:ml-3 md:ml-3 lg:ml-3 2xl:ml-3 4k:ml-3 ml-0 relative mb-2 md:mb-0 xl:mb-0 lg:mb-0 2xl:mb-0 4k:mb-0">
               <select
                 name="year"
-                className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="border m-0.5 text-[12px] text-neutral-500 appearance-none xl:w-[240px] lg:w-[240px] md:w-[240px] 2xl:w-[240px] 4k:w-[240px] w-[98%] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 value={formState.year}
                 onChange={handleChange}
               >
@@ -148,6 +148,7 @@ const EnvironmentHeader3 = ({
               )}
             </div>
           </div>
+
         </div>
       </div>
     </>

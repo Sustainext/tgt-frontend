@@ -13,7 +13,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
             Economic
             </div>
           </div>
-          <button
+          {/* <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
               activeTab === "Tab1"
                 ? "text-[#007EEF] "
@@ -21,9 +21,9 @@ const Aside = ({ activeTab, handleTabClick }) => {
             }`}
             onClick={() => handleTabClick("Tab1")}
           >
-            {/* <IoBusinessOutline className="w-5 h-5 mr-5" /> */}
+            
             <span className="mr-7 text-left">Ratio of the entry-level wage to the minimum wage by gender at significant locations of operation  </span>
-          </button>
+          </button> */}
       
             <button
               className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${

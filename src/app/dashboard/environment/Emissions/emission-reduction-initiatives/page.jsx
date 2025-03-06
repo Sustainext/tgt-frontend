@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import EmissionTopBar from "../emissionTopbar";
 import Emissionreductioninitiativesbody from "./emission-reduction-initiatives-body";
 
-const Emissionreductioninitiativesnew = ({ apiData }) => {
+const Emissionreductioninitiativesnew = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -98,6 +98,7 @@ const Emissionreductioninitiativesnew = ({ apiData }) => {
           apiData={apiData}
           sdgData={sdgData}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

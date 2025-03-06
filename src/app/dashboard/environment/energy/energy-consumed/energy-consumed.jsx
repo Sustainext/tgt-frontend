@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EnergyTopBar from '../energyTopBar'
 
-const Energyconsumed = ({ open,apiData }) => {
+const Energyconsumed = ({ open,apiData,setMobileopen,mobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -89,6 +89,7 @@ const Energyconsumed = ({ open,apiData }) => {
         textColor:"#fff",
         bgColor:"bg-yellow-600"
     },
+    
     {
         tagName:'SDG 13',
         toggle:'5',
@@ -101,7 +102,7 @@ const Energyconsumed = ({ open,apiData }) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} brsr={brsr} griData={griData} />
+        <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} brsr={brsr} griData={griData} setMobileopen={setMobileopen} />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

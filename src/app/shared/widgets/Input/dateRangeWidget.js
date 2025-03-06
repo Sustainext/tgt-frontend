@@ -44,7 +44,7 @@ const DateRangeWidget = (props) => {
   return (
     <>
       <div className="mb-6">
-        <div className="flex mb-2">
+        <div className="flex mb-2 w-full">
           <div className="relative">
             <p className="text-[14px] 4k:text-[16px] text-gray-700 font-[500] flex">
               {uiSchema["ui:title"]}

@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import EmissionTopBar from "../emissionTopbar";
 import Screen1 from "./screen1";
 
-const BaseYear = ({ apiData }) => {
+const BaseYear = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -120,6 +120,7 @@ const BaseYear = ({ apiData }) => {
           apiData={apiData}
           sdgData={sdgData}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">
@@ -198,6 +199,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         setYear={setYear}
         setToggleStatus={setToggleStatus}
+       
       />
 
       <Screen1

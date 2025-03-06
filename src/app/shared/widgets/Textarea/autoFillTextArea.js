@@ -24,7 +24,7 @@ const AutoFillTextArea = (props) => {
   return (
     <>
       <div className="px-1">
-      <div className="flex justify-between mb-2">
+      <div className="flex justify-between mb-2 w-full">
           <div className=" relative">
             <p className="text-[14px] text-gray-700 font-[500] flex mt-4">
               {uiSchema["ui:title"]}

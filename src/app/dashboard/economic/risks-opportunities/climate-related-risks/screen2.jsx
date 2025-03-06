@@ -243,7 +243,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, selectedLocation, year, month,togg
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
-      selectedLocation,
+      location:selectedLocation,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
