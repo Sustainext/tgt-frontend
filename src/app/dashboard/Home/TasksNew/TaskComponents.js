@@ -40,7 +40,8 @@ const TaskTabs = ({ activeTab, onTabChange, tabs }) => (
 );
 
 const TaskTable = ({ children, headers }) => (
-  <div className="bg-white rounded-lg flex flex-col h-[calc(78vh-280px)]">
+  // h-[calc(78vh-280px)]
+  <div className="bg-white rounded-lg flex flex-col ">
     <div className="grid grid-cols-12 gap-3 py-3 text-sm text-gray-500 px-4 border-y border-gray-200">
       {headers.map((header, index) => (
         <div key={index} className={header.className}>
@@ -48,7 +49,8 @@ const TaskTable = ({ children, headers }) => (
         </div>
       ))}
     </div>
-    <div className="p-1 h-[288px] table-scrollbar overflow-y-auto">
+    {/* h-[288px] */}
+    <div className="p-1  table-scrollbar overflow-y-auto">
       {children}
     </div>
   </div>

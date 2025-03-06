@@ -177,10 +177,10 @@ const DashboardHeader = () => {
   }, []);
   return (
     <>
-      <div className="flex bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-4 w-full mx-2 z-[1000]">
+      <div className="flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0  right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:mx-2 lg:mx-2 md:mx-2 2xl:mx-2 xl:z-[1000] lg:z-[1000] md:z-[1000] 2xl:z-[1000]">
         <div
-          className={`flex justify-start items-center my-2 gap-1 px-2 ${
-            open ? "w-[84%] 4k:w-[84%]" : "w-[84%] 4k:w-[84%]"
+          className={`flex justify-start items-center my-2 gap-1 px-2 xl:ml-0 lg:ml-0 2xl:ml-0 md:ml-0  ${
+            open ? "w-[84%]" : "w-[84%]"
           }`}
         >
           <Link href="/dashboard">
@@ -210,12 +210,16 @@ const DashboardHeader = () => {
 
           <span className="text-[#222222] hover:text-[#222222]">{text2}</span>
         </div>
-        <div className="flex justify-end items-center w-[15%]">
+        <div className="lg:block xl:block 2xl:block md:block hidden w-[15%]">
+        <div className="flex justify-end items-center  ">
           <div className="flex">
+          
             <div className="text-[#007EEF] flex items-center">
               <span className="text-[#007EEF]">Hi,</span>
               <span className="me-4 text-[#007EEF]">{userData.username}</span>
             </div>
+          
+         
             <div className="relative cursor-pointer" onClick={toggleDropdown}>
               <div className="flex justify-center items-center">
                 <div
@@ -294,6 +298,7 @@ const DashboardHeader = () => {
                 </div>
               )}
             </div>
+          </div>
           </div>
         </div>
       </div>

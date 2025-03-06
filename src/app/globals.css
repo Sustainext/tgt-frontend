@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* @keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+} */
+
+
 /* 4K screens (3840px width and above) */
 @media (min-width: 3840px) {
   body {
@@ -40,7 +54,12 @@
     overflow-x: hidden;
   }
 }
-
+@media (max-width: 768px) {
+  body {
+   
+    overflow-x: hidden;
+  }
+}
 body{
   box-sizing: border-box;
 }

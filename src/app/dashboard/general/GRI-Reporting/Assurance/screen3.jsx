@@ -154,7 +154,7 @@ const uiSchema = {
         },
       },
       Q6: {
-        "ui:hading": "Limitation of the assurance process",
+        "ui:hading": "Please describe any limitations of the assurance process",
         "ui:hadingtooltip": "This section documents data corresponding to the limitation of the assurance process. ",
         "ui:hadingtooltipdisplay": "block",
         "ui:title":
@@ -348,7 +348,7 @@ external assurance of the sustainability report. " className="mt-1.5 ml-2 text-[
         <div className="mx-2">
           <Form
             schema={r_schema}
-            uiSchema={r_ui_schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

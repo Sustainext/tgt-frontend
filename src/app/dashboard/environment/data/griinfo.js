@@ -3429,7 +3429,7 @@ export const Energydata = [
         </div>
       </>,
     ],
-    link: "https://www.globalreporting.org/pdf.ashx?id=15010",
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
   },
 
   {
@@ -3560,6 +3560,6 @@ export const Energydata = [
         </div>
       </>,
     ],
-    link: "https://www.globalreporting.org/pdf.ashx?id=15010",
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
   },
 ];

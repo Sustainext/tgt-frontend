@@ -85,7 +85,7 @@ const Table1 = ({ values, currency }) => {
                                     {row.label}
                                 </td>
                                 <td className="border-t border-r border-gray-200 p-4 text-center">
-                                    {row.value} {currencySymbol} 
+                                    {row.value?row.value=='Payments to governments by country'?row.value:row.value + currencySymbol:'' }
                                 </td>
                             </tr>
                         ))}

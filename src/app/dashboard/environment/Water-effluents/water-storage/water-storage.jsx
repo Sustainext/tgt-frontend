@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import WaterTopBar from "../waterTopBar";
 
-const Waterstorage = ({ apiData }) => {
+const Waterstorage = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -88,6 +88,7 @@ const Waterstorage = ({ apiData }) => {
           apiData={apiData}
           brsr={brsr}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

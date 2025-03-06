@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const getAuthToken = () => {
   if (typeof window !== "undefined") {
-    return localStorage.getItem("token")?.replace(/"/g, "");
+    return Cookies.get("token")?.replace(/"/g, "");
   }
   return "";
 };
@@ -38,7 +38,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken = localStorage.getItem("refresh")?.replace(/"/g, "");
+        const refreshToken = Cookies.get("refresh")?.replace(/"/g, "");
 
         if (refreshToken) {
           const refreshTokenResponse = await axios.post(
@@ -50,7 +50,7 @@ axiosInstance.interceptors.response.use(
 
           const { access } = refreshTokenResponse?.data;
 
-          localStorage.setItem("token", access);
+          Cookies.set("token", access);
           Cookies.set("token", access, { secure: true, sameSite: "strict" });
           originalRequest.headers["Authorization"] = `Bearer ${access}`;
           return axiosInstance(originalRequest);
