@@ -94,6 +94,7 @@ const Social = () => {
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    setMobileopen(false);
   };
 
   const dispatch = useDispatch();

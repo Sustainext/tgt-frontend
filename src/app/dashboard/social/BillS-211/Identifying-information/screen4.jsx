@@ -267,7 +267,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
 
   return (
     <>
-      <div className="mx-4 mt-2">
+      <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-0 mt-2">
       <form className="w-full text-left">
                 <div className="mb-5">
                   <label
@@ -360,7 +360,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                             type="text"
                             placeholder="Enter a description..."
                             className={`${
-                              open ? "w-[78%]" : "w-[78%]"
+                              open ? "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[98%]" : "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[98%]"
                             } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                             value={reportingentity}
                             onChange={handleReportingentity}
@@ -376,7 +376,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                   </div>
                 )}
 
-                <div className="w-[78%] mb-5">
+                <div className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%]  w-full mb-5">
                   <div className="float-right">
                     <button
                       className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"

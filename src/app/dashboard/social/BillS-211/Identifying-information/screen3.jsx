@@ -278,7 +278,7 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTy
   return (
     <>
      
-      <div className="mx-4 mt-2">
+      <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-0 mt-2">
       <form className="w-full text-left">
                 <div className="mb-5">
                   <label
@@ -292,7 +292,7 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTy
                       type="number"
                       placeholder="Enter number"
                       className={`${
-                        open ? "w-[78%]" : "w-[78%]"
+                        open ? "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%]" : "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%]"
                       } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                       value={reportingbusinessnumber}
                       onChange={handleReportnbusinessnumber}
@@ -366,7 +366,7 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTy
                     </div>
                     {entities.map((entity, index) => (
                       <div key={index} className="flex">
-                        <div className="w-[37%]">
+                        <div className="xl:w-[37%]  lg:w-[37%]  2xl:w-[37%]  md:w-[37%]  2k:w-[37%]  4k:w-[37%] w-[45%]">
                           <input
                             type="text"
                             placeholder="Enter entity name"
@@ -389,7 +389,7 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTy
                             </p>
                           )}
                         </div>
-                        <div className="ml-2 w-[37%]">
+                        <div className="ml-2 xl:w-[37%]  lg:w-[37%]  2xl:w-[37%]  md:w-[37%]  2k:w-[37%]  4k:w-[37%] w-[45%]">
                           <input
                             type="number"
                             placeholder="Enter Business numbers"
@@ -412,7 +412,7 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTy
                           )} */}
                         </div>
                         {index !== 0 && (
-                          <div className="ml-2 mt-1">
+                          <div className="ml-2 mt-1 xl:w-0  lg:w-0  2xl:w-0  md:w-0  2k:w-0  4k:w-0 w-[5%]">
                             <MdDelete
                               onClick={() => handleRemoveEntity(index)}
                               className="text-red-500 text-[23px] mt-1 cursor-pointer"
@@ -440,7 +440,7 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTy
                   </div>
                 )}
 
-                <div className="w-[78%] mb-5">
+                <div className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%]  w-full mb-5">
                   <div className="float-right">
                     <button
                       className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"

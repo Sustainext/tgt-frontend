@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SocialTopBar from "../../socialTopBar";
 
-const Ohsmanagment = ({ apiData }) => {
+const Ohsmanagment = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -75,6 +75,7 @@ const Ohsmanagment = ({ apiData }) => {
           topic={"SocHealthSafety"}
           brsr={brsr}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

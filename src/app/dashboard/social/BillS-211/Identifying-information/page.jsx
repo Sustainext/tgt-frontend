@@ -174,7 +174,7 @@ const Identifyinginformation = ({ setMobileopen }) => {
           />
         )}
       </div>
-      <div className="w-full">
+      <div className="w-full mb-5">
         <div className="flex justify-center  space-x-4 mt-[15px] w-full">
           {/* Previous Button */}
           <button

@@ -964,7 +964,7 @@ const EmissionWidget = React.memo(
             </button>
           </div>
         )}
-      
+
         <table
           className={`min-w-full w-full ${
             scopeErrors["Category"] ||
@@ -1581,7 +1581,7 @@ const EmissionWidget = React.memo(
             </tr>
           </tbody>
         </table>
-       
+    
         <AssignEmissionModal
           isOpen={isAssignModalOpen}
           onClose={handleCloseAssignModal}
