@@ -616,7 +616,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           minWidth: "100%",
           width: "80vw",
         }}
-        className="mb-2 pb-2"
+        className="mb-2 pb-2 table-scrollbar"
       >
         <table id={id} className="table-fixed border border-gray-300  w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
           <thead className="gradient-background">

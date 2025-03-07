@@ -9,20 +9,43 @@ import {
 } from "../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 import TasksPage from "./Home/Tasks";
+import axiosInstance from "../utils/axiosMiddleware";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true); 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const userRole = localStorage.getItem("isAdmin");
-    setIsAdmin(userRole);
+    const fetchUserRole = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const response = await axiosInstance.get("/api/auth/get_user_roles/");
+        
+        if (response.status === 200) {
+          const data = await response.data;
+          console.log("Fetched user role:", data);
+          setIsAdmin(data.admin);
+        } else {
+          console.error("Failed to fetch user role");
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+    fetchUserRole();
   }, []);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
+
   useEffect(() => {
     dispatch(setHeadertext1("Sustainext HQ"));
     dispatch(setHeaderdisplay("none"));
@@ -34,7 +57,7 @@ const Dashboard = () => {
       <div>
         <div className="ms-6">
           <div
-            className="my-4 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed "
+            className="my-4 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed"
             translate="no"
           >
             Sustainext HQ
@@ -52,28 +75,25 @@ const Dashboard = () => {
               >
                 Dashboard
               </button>
-              {
-                isAdmin == 'true' && (
-                  <button
-                className={`px-4 rounded-b-none text-sm font-bold leading-[15px] ${
-                  activeTab === "tab3"
-                    ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
-                    : "border-transparent text-neutral-500"
-                }`}
-                onClick={() => handleTabChange("tab3")}
-              >
-                All Tasks
-              </button>
-                )
-              }
+
+              {/* Show "All Tasks" tab only if user is admin */}
+              {!loading && isAdmin && (
+                <button
+                  className={`px-4 rounded-b-none text-sm font-bold leading-[15px] ${
+                    activeTab === "tab3"
+                      ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
+                      : "border-transparent text-neutral-500"
+                  }`}
+                  onClick={() => handleTabChange("tab3")}
+                >
+                  All Tasks
+                </button>
+              )}
             </div>
 
             <div className="flex-grow">
-              <div className="flex-grow">
-                {activeTab === "tab1" && <HomeDashboard setActiveTab={setActiveTab} />}
-
-                {isAdmin == 'true' && activeTab === "tab3" && <TasksPage />}
-              </div>
+              {activeTab === "tab1" && <HomeDashboard setActiveTab={setActiveTab} />}
+              {!loading && isAdmin && activeTab === "tab3" && <TasksPage />}
             </div>
           </div>
         </div>

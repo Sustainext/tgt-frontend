@@ -42,8 +42,8 @@ const DynamicTable = ({ data, columns }) => {
                         {/* Only render the location cell for the first row under each location */}
                         {employeeIndex === 0 && (
                           <td
-                            rowSpan={employees.length} // Span across all rows for this location
-                            className="p-2 block md:table-cell text-center text-[12px] border-r border-t  border-gray-300"
+                            rowSpan={employees.length+1} // Span across all rows for this location
+                            className="p-2 block md:table-cell text-center align-middle  text-[12px] border-r border-t  border-gray-300"
                           >
                             {location}
                           </td>
@@ -78,7 +78,6 @@ const DynamicTable = ({ data, columns }) => {
                   {/* Total row for this location */}
                   {employees.length > 0 && (
                     <tr className="md:table-row border-r border-l border-gray-300">
-                      <td className='border-r border-gray-300'></td>
                       <td className="p-2 block total md:table-cell text-center text-[12px] font-bold border-r border-t border-gray-300">
                         Total
                       </td>

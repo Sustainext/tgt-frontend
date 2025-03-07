@@ -30,7 +30,7 @@ const local_schema = {
     type: "object",
     properties: {
       Emission: {
-        type: "string",
+        type: ["string","object", "null"],
         title: "Emissionsscop2",
       },
     },

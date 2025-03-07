@@ -11,7 +11,7 @@ const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 
 
-const Section9=({section12_1_7Ref})=>{
+const Section9=({section12_1_9Ref})=>{
     
 
     const content = useSelector(state => state.screen12Slice.ozone_depleting_substance_elimination);
@@ -71,10 +71,10 @@ const Section9=({section12_1_7Ref})=>{
     return (
         <>
        
-        <div id="section12_1_7" ref={section12_1_7Ref}>
+        <div id="section12_1_9" ref={section12_1_9Ref}>
 
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-12.1.7 Ozone Depleting Substances
+12.1.9 Ozone Depleting Substances
 </h3>
 
 <div className="flex justify-between">
