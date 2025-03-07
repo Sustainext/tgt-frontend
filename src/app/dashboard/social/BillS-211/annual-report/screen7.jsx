@@ -216,8 +216,8 @@ const Screenseven = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
   return (
     <>
       
-      <div className="mx-4 mt-2">
-      <form className="w-[80%] text-left">
+      <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
+      <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
                 <div className="mb-5">
                   <label
                     className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
@@ -407,7 +407,7 @@ const Screenseven = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
 
 
               </form>
-              <div className="w-[80%] mb-5">
+              <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full mb-5">
                   <div className="float-right">
                     <button
                       className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"

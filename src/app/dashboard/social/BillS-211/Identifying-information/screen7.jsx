@@ -234,7 +234,7 @@ const Screenseven = ({ prevStep, activeSteps,selectedCorp,selectedOrg,year,repor
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="mx-4 mt-2">
+      <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-0 mt-2">
       <form className="w-full text-left" onSubmit={handleSubmit}>
               <div>
                 <div className="mb-5">
@@ -248,7 +248,7 @@ const Screenseven = ({ prevStep, activeSteps,selectedCorp,selectedOrg,year,repor
                   <div className="relative mb-1">
                     <select
                       className={`${
-                        open ? "w-[78%]" : "w-[78%]"
+                        open ? "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[98%]" : "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[98%]"
                       } rounded-md border-0 py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                       value={entitylocated}
                       onChange={handleEntitylocated}
@@ -275,7 +275,7 @@ const Screenseven = ({ prevStep, activeSteps,selectedCorp,selectedOrg,year,repor
                     <div className="relative mb-1">
                       <select
                         className={`${
-                          open ? "w-[78%]" : "w-[78%]"
+                          open ? "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[98%]" : "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[98%]"
                         } rounded-md border-0 py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                         value={territorylocated}
                         onChange={handleTerritorylocated}
@@ -293,7 +293,7 @@ const Screenseven = ({ prevStep, activeSteps,selectedCorp,selectedOrg,year,repor
                   </div>
                 )}
 
-                <div className="w-[79%] mb-5">
+                <div className="xl:w-[79%] lg:w-[79%] 2xl:w-[79%] md:w-[79%] 2k:w-[79%] 4k:w-[79%]  w-full mb-5">
                   <div className="float-right mr-3">
                     <button
                       className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
