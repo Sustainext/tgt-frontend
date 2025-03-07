@@ -545,7 +545,7 @@ const Scope1 = forwardRef(
 
     return (
       <>
-        <div>
+        <div className="overflow-auto custom-scrollbar">
           <Form
             schema={local_schema}
             uiSchema={local_ui_schema}

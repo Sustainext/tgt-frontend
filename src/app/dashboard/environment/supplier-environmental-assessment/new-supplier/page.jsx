@@ -11,7 +11,7 @@ import Screen1 from "./screen1";
 import SupplierTopBar from '../supplierTopBar'
 import { useSelector } from "react-redux";
 
-const NewSupplier = ({apiData}) => {
+const NewSupplier = ({apiData,setMobileopen}) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
     (state) => state.materialitySlice
   );
@@ -84,7 +84,7 @@ const [togglestatus, setToggleStatus] = useState("Organization");
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden">
-        <SupplierTopBar toggleDrawer={toggleDrawer} griData={griData} apiData={apiData} brsr={brsr}  />
+        <SupplierTopBar toggleDrawer={toggleDrawer} griData={griData} apiData={apiData} brsr={brsr} setMobileopen={setMobileopen}  />
       
 
       <div className="ml-3 flex relative">
