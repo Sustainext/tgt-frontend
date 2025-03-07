@@ -15,7 +15,7 @@ import Screen5 from "./screen5";
 import SupplierTopBar from '../supplierTopBar'
 import { useSelector } from "react-redux";
 
-const NegativeEnvironmentalImpact = ({apiData}) => {
+const NegativeEnvironmentalImpact = ({apiData,setMobileopen}) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
       (state) => state.materialitySlice
     );
@@ -93,7 +93,7 @@ const NegativeEnvironmentalImpact = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden">
-         <SupplierTopBar toggleDrawer={toggleDrawer} griData={griData} apiData={apiData} brsr={brsr}  />
+         <SupplierTopBar toggleDrawer={toggleDrawer} griData={griData} apiData={apiData} brsr={brsr} setMobileopen={setMobileopen}  />
        
 
       <div className="ml-3 flex relative">

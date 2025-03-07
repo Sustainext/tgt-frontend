@@ -11,7 +11,7 @@ import AirQualityTopBar from "../airQualityTopBar";
 import { useSelector } from "react-redux";
 import Screen1 from "./screen1";
 
-const EmissionsODS = ({ apiData, isSidepanelOpen }) => {
+const EmissionsODS = ({ apiData, isSidepanelOpen,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -104,6 +104,7 @@ const EmissionsODS = ({ apiData, isSidepanelOpen }) => {
           sdgData={sdgData}
           apiData={apiData}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

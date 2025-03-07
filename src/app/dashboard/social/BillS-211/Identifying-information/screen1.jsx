@@ -278,7 +278,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
 
   return (
     <>
-      <div className="mx-4 mt-2">
+      <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-0 mt-2">
         <form className="w-full text-left">
           <div className="mb-5">
             <label
@@ -289,7 +289,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
             </label>
             <div className="relative mb-1">
               <select
-                className={`w-[78%] rounded-md border-0 text-[12px] py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                className={`xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-full rounded-md border-0 text-[12px] py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 value={reportname}
                 onChange={handleReportname}
               >
@@ -322,7 +322,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
               <input
                 type="text"
                 placeholder="Entity Name"
-                className={`w-[78%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
+                className={`xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                 value={reportingentity}
                 onChange={handleReportingentity}
               ></input>
@@ -341,7 +341,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
               3. Financial reporting year*
             </label>
             <div className="flex">
-              <div className="w-[37%]">
+              <div className="xl:w-[37%]  lg:w-[37%]  2xl:w-[37%]  md:w-[37%]  2k:w-[37%]  4k:w-[37%] w-[50%] ">
                 <div className="relative mb-1">
                   <input
                     type="date"
@@ -356,7 +356,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
                   </p>
                 )}
               </div>
-              <div className="w-[40%] ml-2">
+              <div className="xl:w-[40%]  lg:w-[40%]  2xl:w-[40%]  md:w-[40%]  2k:w-[40%]  4k:w-[40%] w-[47%]  ml-2">
                 <div className="relative mb-1">
                   <input
                     type="date"
@@ -373,7 +373,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
               </div>
             </div>
           </div>
-          <div className="w-[78%] mb-5">
+          <div className="xl:w-[78%]  lg:w-[78%]   2xl:w-[78%]   md:w-[78%]   2k:w-[78%]   4k:w-[78%]  w-full mb-5">
             <div className="float-right">
               <button
                 type="button"
