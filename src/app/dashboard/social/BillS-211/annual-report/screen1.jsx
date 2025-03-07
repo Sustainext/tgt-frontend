@@ -348,8 +348,8 @@ const Screenone = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
  
   return (
     <>
-     <div className="mx-4 mt-2">
-     <form className="w-[78%] container text-left">
+     <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
+     <form className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%] container text-left">
                 <div className="mb-5">
                   <label
                     className="block text-gray-700 text-[14px] font-[500] mb-2"
@@ -434,7 +434,7 @@ const Screenone = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                   </div> */}
                 </div>
               </form>
-              <div className="w-[79%] mb-5">
+              <div className="xl:w-[78%]  lg:w-[78%]   2xl:w-[78%]   md:w-[78%]   2k:w-[78%]   4k:w-[78%]  w-full mb-5">
                 <div className="float-right mr-3">
                   <button
                     type="button"
