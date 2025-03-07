@@ -234,7 +234,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
               <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html="<p>Provide a detailed description of the significant actual and potential negative environmental impacts that were identified in the supply chain during the reporting period. This could include details on the type of impacts, the suppliers involved, and the steps taken to address these impacts.</p><p>Supply chain: </p><p>range of activities carried out by entities upstream from the organization, which provide products or services that are used in the development of the organization’s own products or services.</p>"
-                className="mt-1.5 ml-2 text-[15px]"
+                className="mt-1.5 ml-2 text-[15px] w-[20%] xl:w-0 lg:w-0 2xl:w-0 md:w-0 4k:w-0 2k:w-0"
               />
               <ReactTooltip
                 id={`es30`}

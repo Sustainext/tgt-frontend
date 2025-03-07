@@ -102,7 +102,7 @@ const DiversityInclusionMaterialtopic = ({ apiData }) => {
                     BRSR C-P1-E4
                   </button>
                   <ReactTooltip
-                    id={`tooltip-$brsr1`}
+                  id={`tooltip-$brsr1`}
                     place="bottom"
                     effect="solid"
                     style={{
@@ -113,6 +113,7 @@ const DiversityInclusionMaterialtopic = ({ apiData }) => {
                       boxShadow: 3,
                       borderRadius: "8px",
                       textAlign: "center",
+                      zIndex:"100"
                     }}
                   ></ReactTooltip>
                 </div>

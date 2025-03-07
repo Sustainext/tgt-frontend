@@ -11,7 +11,7 @@ import AirQualityTopBar from '../airQualityTopBar'
 import { useSelector } from "react-redux";
 import Screen1 from "./screen1";
 
-const NitrogenOxide = ({apiData,isSidepanelOpen}) => {
+const NitrogenOxide = ({apiData,isSidepanelOpen,setMobileopen}) => {
     const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
         (state) => state.materialitySlice
       );
@@ -101,7 +101,7 @@ const griData=[
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <AirQualityTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} griData={griData} />
+        <AirQualityTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} griData={griData} setMobileopen={setMobileopen} />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

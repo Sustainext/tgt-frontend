@@ -136,7 +136,7 @@ const CommoninputWidget = (props) => {
             type="number"
             className={`w-full border appearance-none text-[12px] 
           ${hasError ? "border-red-500" : "border-gray-400"} 
-          text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none 
+          text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none 
           focus:bg-white focus:border-gray-400`}
             value={value}
             onChange={(e) => onChange(e.target.value)}

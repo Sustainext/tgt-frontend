@@ -32,17 +32,20 @@ const schema = {
     properties: {
       produceODS: {
         type: "string",
-        title: "Does your organisation produce ODS in its processes, products and services?",
+        title:
+          "Does your organisation produce ODS in its processes, products and services?",
         enum: ["Yes", "No"],
       },
       importODS: {
         type: "string",
-        title: "Does your organisation import ODS in its processes, products and services?",
+        title:
+          "Does your organisation import ODS in its processes, products and services?",
         enum: ["Yes", "No"],
       },
       exportODS: {
         type: "string",
-        title: "Does your organisation export ODS in its processes, products and services?",
+        title:
+          "Does your organisation export ODS in its processes, products and services?",
         enum: ["Yes", "No"],
       },
       useODSFeedstock: {
@@ -75,38 +78,45 @@ const uiSchema = {
   },
   items: {
     produceODS: {
-      "ui:title": "Does your organisation produce ODS in its processes, products and services?",
+      "ui:title":
+        "Does your organisation produce ODS in its processes, products and services?",
       "ui:widget": "RadioWidget2",
       "ui:options": { label: true },
-      "ui:tooltip": "Indicate whether your organisation produce ODS in its processes, products and services."
+      "ui:tooltip":
+        "Indicate whether your organisation produce ODS in its processes, products and services.",
     },
     importODS: {
-      "ui:title": "Does your organisation import ODS in its processes, products and services?",
+      "ui:title":
+        "Does your organisation import ODS in its processes, products and services?",
       "ui:widget": "RadioWidget2",
       "ui:options": { label: true },
-      "ui:tooltip": "Indicate whether your organisation import ODS in its processes, products and services."
+      "ui:tooltip":
+        "Indicate whether your organisation import ODS in its processes, products and services.",
     },
     exportODS: {
-      "ui:title": "Does your organisation export ODS in its processes, products and services?",
+      "ui:title":
+        "Does your organisation export ODS in its processes, products and services?",
       "ui:widget": "RadioWidget2",
       "ui:options": { label: true },
-      "ui:tooltip": "Indicate whether your organisation export ODS in its processes, products and services."
+      "ui:tooltip":
+        "Indicate whether your organisation export ODS in its processes, products and services.",
     },
     useODSFeedstock: {
       "ui:title": "Does your organisation use ODS as feedstock?",
       "ui:widget": "RadioWidget2",
       "ui:options": { label: true },
-      "ui:tooltip": "Indicate whether your organisation use ODS as feedstock."
+      "ui:tooltip": "Indicate whether your organisation use ODS as feedstock.",
     },
     destroyODS: {
-      "ui:title": "Does your organisation destroy ODS using approved technologies?",
+      "ui:title":
+        "Does your organisation destroy ODS using approved technologies?",
       "ui:widget": "RadioWidget2",
       "ui:options": { label: true },
-      "ui:tooltip": "Indicate whether your organisation destroy ODS using approved technologies?"
+      "ui:tooltip":
+        "Indicate whether your organisation destroy ODS using approved technologies?",
     },
   },
 };
-
 
 // 🟢 Accordion Item Component
 const AccordionItem = ({
@@ -116,7 +126,7 @@ const AccordionItem = ({
   sdg,
   display,
   selectedOrg,
-  setOrgMessage
+  setOrgMessage,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
@@ -129,23 +139,33 @@ const AccordionItem = ({
   };
   return (
     <div
-      className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 mx-3`}
+      className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 xl:mx-3 lg:mx-3 md:mx-3 2xl:mx-3 4k:mx-3 2k:mx-3 mx-1`}
     >
       <button
         className="py-3 text-left flex w-[100%]"
         onClick={handleClick} // Unique ID for the tooltip, spaces replaced by dashes
       >
-        <div className="flex w-full">
-          <div className={`flex ${open ? "w-[75%]" : "w-[75%]"}`}>
-            <div className="flex items-center">
-              <h5 className="text-[15px] text-[#344054] px-3 font-[500]">
-                {title}
-              </h5>
+        <div className="block w-full xl:flex lg:flex md:flex 2xl:flex 4k:flex">
+          <div className="flex w-full xl:w-[75%] lg:w-[75%] md:w-[75%] 4k:w-[75%] 2xl:w-[75%]">
+            <div className="flex w-[95%] xl:w-[75%] lg:w-[75%] md:w-[75%] 4k:w-[75%] 2xl:w-[75%] mb-2">
+              <div className="flex items-center">
+                <h5 className="text-[15px] text-[#344054] px-3 font-[500]">
+                  {title}
+                </h5>
+              </div>
             </div>
-
+            <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden  w-[5%]">
+              <MdKeyboardArrowDown
+                className={`text-2xl float-end me-1 ${
+                  isOpen ? "rotate-180" : ""
+                }`}
+              />
+            </div>
           </div>
-          <div className=" w-[25%] ">
-            <div className={`flex float-end`}>
+          <div className="w-full xl:w-[25%] lg:w-[25%] 2xl:w-[25%] 4k:w-[25%] md:w-[25%]">
+            <div
+              className={`flex float-start xl:float-end lg:float-end 2xl:float-end md:float-end`}
+            >
               {isOpen ? (
                 <>
                   {sdg &&
@@ -177,7 +197,9 @@ const AccordionItem = ({
                 </>
               )}
               <MdKeyboardArrowDown
-                className={`text-2xl ${isOpen ? "rotate-180" : ""}`}
+                className={`text-2xl hidden xl:block lg:block md:block 2xl:block 4k:block ${
+                  isOpen ? "rotate-180" : ""
+                }`}
               />
             </div>
           </div>
@@ -323,7 +345,7 @@ const Screen1 = forwardRef(
         tooltiptext="This section documents data corresponding to the production, import, export, and destruction of ODS."
         selectedOrg={selectedOrg}
         setOrgMessage={setOrgMessage}
-        sdg={["GRI 305-6a","GRI 305-6d"]}
+        sdg={["GRI 305-6a", "GRI 305-6d"]}
       >
         <div className="mx-2">
           <Form
@@ -336,7 +358,7 @@ const Screen1 = forwardRef(
           />
         </div>
 
-        <div className={`${open ? "mb-10":"mb-4"}`}>
+        <div className={`${open ? "mb-10" : "mb-4"}`}>
           <button
             className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 float-end"
             onClick={handleSubmit}
