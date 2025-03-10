@@ -50,7 +50,7 @@ const uiSchema = {
       "ui:title":
         "Are there any workers have been excluded from this disclosure?",
       "ui:tooltip":
-        "Please specify whether the rates have been calculated based on 200,000 or 1,000,000 hours worked.",
+        "Please select 'Yes' if any workers have been excluded from this disclosure and select 'No' if not.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "RadioWidget2",
       "ui:horizontal": true,

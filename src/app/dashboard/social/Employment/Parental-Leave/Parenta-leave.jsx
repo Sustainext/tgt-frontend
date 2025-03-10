@@ -56,7 +56,7 @@ const uiSchema = {
       {
         title: "Retained 12 Months After Leave",
         tooltip:
-          "This section refers to the total number of employees who used their parental leave entitlement during the reporting period.",
+          "This section refers to the total number of employees who remained employed 12 months after returning from their parental leave within the reporting period.",
       },
     ],
   },

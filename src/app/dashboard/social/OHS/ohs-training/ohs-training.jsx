@@ -52,7 +52,7 @@ const uiSchema = {
       },
       {
         title: "Specific work-related hazards",
-        tooltip: "Please specify the meeting frequency",
+        tooltip: "Provide a description of any specific work-related hazards training is provided to workers.",
       },
       {
         title: "Hazardous Activities",
@@ -62,7 +62,7 @@ const uiSchema = {
       {
         title: "Hazardous Situations",
         tooltip:
-          "Provide a description of whether and, if so, why any workers are not represented by these committees.Exclude:  Information on which workers are or are not members of such committees",
+          "Provide a description of any  training related to hazardous situation is provided to workers.",
       },
     ],
   },

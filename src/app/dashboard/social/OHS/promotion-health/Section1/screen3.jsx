@@ -30,7 +30,7 @@ const schema = {
       Q1: {
         type: "string",
         title:
-          "Do workers’ have access to non-occupational medical and healthcare services?",
+          "Are there any voluntary health promotion services and programs offered to workers to address major non-work-related health risks?",
         enum: ["Yes", "No"],
       },
     },
@@ -42,7 +42,7 @@ const uiSchema = {
     "ui:order": ["Q1"],
     Q1: {
       "ui:title":
-        "Do workers’ have access to non-occupational medical and healthcare services?s",
+        "Are there any voluntary health promotion services and programs offered to workers to address major non-work-related health risks?",
       "ui:tooltip":
         "Indicate whether any voluntary health promotion services and programs offered to workers to address major non-work-related health risks by the organization (including the specific health risks addressed). ",
       "ui:tooltipdisplay": "block",

@@ -69,7 +69,7 @@ const CustomTableWidget = ({
                     <MdInfoOutline
                       data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                       data-tooltip-content={item.tooltip}
-                      className="cursor-pointer w-[10%] mt-1 ml-0.5"
+                      className= {`cursor-pointer w-[10%] mt-1 ml-0.5 ${item.display=="none"?'hidden':''}`}
                     />
                     <ReactTooltip
                       id={`tooltip-${item.title.replace(/\s+/g, "-")}`}

@@ -40,9 +40,9 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        title: "",
-        tooltip:
-          "Please specify the name and type of operations considered to have significant risk for incidents of forced or compulsory labor.",
+        title: "Category",
+        // tooltip:
+        //   "Please specify the name and type of operations considered to have significant risk for incidents of forced or compulsory labor.",
         display: "none",
         type:"text",
       },
@@ -243,9 +243,7 @@ const Screen1 = ({ location, year, month }) => {
               Security personnel who have received formal training
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding to the operations
-                                considered to have significant risk for incidents of forced or
-                                compulsory labor."
+                data-tooltip-content="This section documents the data that corresponds to whether training requirements also apply to third-party security providers personnel."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip

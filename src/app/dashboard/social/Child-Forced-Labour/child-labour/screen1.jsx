@@ -45,7 +45,7 @@ const uiSchema = {
       {
         title: "Type of Operation",
         tooltip:
-          "Please specify the number of fatalities as a result of work-related ill health. Work-related ill health: negative impacts on health arising from exposure to hazards at work.",
+          "This section allows you to enter the type of operation considered to have significant risk for incidents of forced or compulsory labor.",
       },
       {
         title: "Countries or Geographic Areas",

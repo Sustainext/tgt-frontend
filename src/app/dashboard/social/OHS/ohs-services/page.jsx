@@ -57,8 +57,8 @@ const Ohsservices = ({apiData}) => {
       <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
        
 
-        <div className="ml-3 flex">
-          <h6 className="text-[17px] mb-4 font-semibold flex">
+        <div className="ml-3 mb-2">
+          <h6 className="text-[17px] mb-1 font-semibold flex">
             Occupational Health Services
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
@@ -74,6 +74,7 @@ const Ohsservices = ({apiData}) => {
 
                         </ReactTooltip> */}
           </h6>
+          <p className="text-[12px] text-[#71717a] mb-4">For employees and for workers who are not employees but whose work and/or workplace is controlled by the organization:</p>
         </div>
        <div
            className={`${

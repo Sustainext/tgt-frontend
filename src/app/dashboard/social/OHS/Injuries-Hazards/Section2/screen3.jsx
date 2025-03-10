@@ -39,6 +39,10 @@ const schema = {
       },
       Q3: {
         type: "string",
+        title: "Which of these hazards have caused high-consequence injuries?",
+      },
+      Q4: {
+        type: "string",
         title:
           "Actions taken or underway to eliminate these hazards and minimize risk",
       },
@@ -48,12 +52,12 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2", "Q3"],
+    "ui:order": ["Q1", "Q2", "Q3","Q4"],
     Q1: {
       "ui:title":
         "Are there work-related hazards that pose a risk of high-consequence injury?",
       "ui:tooltip":
-        "Indicate whether any workers have been excluded by the occupational health and safety management system",
+        "Please select 'Yes' if there are any work related hazards that pose a risk of high-consequence injury and select 'No' if not.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
@@ -64,7 +68,7 @@ const uiSchema = {
     Q2: {
       "ui:title": "How these hazards have been determined?",
       "ui:tooltip":
-        "Please specify the hazards that have caused high-consequence injuries. ",
+        "Please describe how the hazards have been determined.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -73,6 +77,17 @@ const uiSchema = {
       },
     },
     Q3: {
+      "ui:title": "Which of these hazards have caused high-consequence injuries?",
+      "ui:tooltip":
+        "Please specify the hazards that have caused high-consequence injuries.",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q4: {
       "ui:title":
         "Actions taken or underway to eliminate these hazards and minimize risk",
       "ui:tooltip":
@@ -108,6 +123,9 @@ const validateRows = (data) => {
       }
       if (!row.Q3) {
         errors.Q3 = "This field is required";
+      }
+      if (!row.Q4) {
+        errors.Q4 = "This field is required";
       }
     }
    

@@ -38,7 +38,7 @@ const uiSchema = {
     Q1: {
       "ui:title": "Standard notice period for all employees (in weeks)",
       "ui:tooltip":
-        "Please indicate whether you have a formal Occupational Health & Safety Management System implemented.",
+        "What is the minimum notice period employees typically get before significant operational changes? Significant operational change: alteration to the organization’s pattern of operations that can potentially have significant positive or negative impacts on workers performing the organization’s activities. Examples: closures, expansions, mergers, new openings, outsourcing of operations, restructuring, sale of all or part of the organization, takeovers",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,

@@ -26,7 +26,7 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Provide the extent to which the scheme’s liabilities are estimated to be covered by the assets that have been set aside to meet them.",
+        title: "Provide the extent to which the scheme's liabilities are estimated to be covered by the assets that have been set aside to meet them.",
       },
       Q2: {
         type: "string",
@@ -44,7 +44,7 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1","Q2","Q3"],
     Q1: {
-      "ui:title": "Provide the extent to which the scheme’s liabilities are estimated to be covered by the assets that have been set aside to meet them.",
+      "ui:title": "Provide the extent to which the scheme's liabilities are estimated to be covered by the assets that have been set aside to meet them.",
       "ui:tooltip":
         "Briefly describe the methodology used (e.g., headcount, FTE, or another methodology?).",
       "ui:tooltipdisplay": "none",

@@ -101,7 +101,7 @@ const uiSchema = {
         key: "Descriptionincident",
         title: "Description of Incident",
         tooltip:
-          "<p>Please describe the processes used to investigate work-related incidents.</p> <br> <p>Example: Incidents might be due to, for example, electrical problems, explosion, fire; overflow, overturning, leakage, flow; breakage, bursting, splitting; loss of control, slipping, stumbling and falling; body movement without stress; body movement under/with stress; shock, fright; workplace violence or harassment.</p>",
+          "Please describe the processes used to investigate work-related incidents. Example: Incidents might be due to, for example, electrical problems, explosion, fire; overflow, overturning, leakage, flow; breakage, bursting, splitting; loss of control, slipping, stumbling and falling; body movement without stress; body movement under/with stress; shock, fright; workplace violence or harassment.",
           layouttype:"input",
       },
       {
