@@ -330,91 +330,73 @@ const EmissionWidget = React.memo(
       fetchBaseCategories();
     }, []);
 
-    const fetchActivities = useCallback(
-      async (page = 1, customFetchExecuted = false) => {
-        if (isFetching.current) return;
-        isFetching.current = true;
+    const activeRequests = new Set(); // Track active API calls
 
-        // Check cache first
-        if (activityCache[rowId]) {
-          setActivities(activityCache[rowId]);
-          isFetching.current = false;
+    const fetchActivities = useCallback(
+      debounce(async (page = 1, customFetchExecuted = false) => {
+        const cacheKey = JSON.stringify({ category, subcategory, countryCode, year });
+    
+        if (isFetching.current || activeRequests.has(cacheKey)) {
+          console.log(`Skipping duplicate request for: ${cacheKey}`);
           return;
         }
-
+    
+        isFetching.current = true;
+        activeRequests.add(cacheKey);
+    
         try {
-          let response;
-
-          if (subcategory) {
-            // Call the existing Climatiq activities API
-            response = await fetchClimatiqActivities({
-              subcategory,
-              page,
-              region: countryCode,
-              year,
-              customFetchExecuted,
-            });
-          } else if (activitySearch) {
-            // Use Autopilot for activity suggestions
-            response = await fetchAutopilotSuggestions(
-              activitySearch,
-              countryCode,
-              year,
-              unit_type
-            );
+          if (activityCache[cacheKey]) {
+            console.log(`Using cached activities for key: ${cacheKey}`);
+            setActivities(activityCache[cacheKey]);
+            return;
           }
-
+    
+          console.log(`Fetching activities for: ${cacheKey}`);
+          const response = await fetchClimatiqActivities({
+            subcategory,
+            page,
+            region: countryCode,
+            year,
+            customFetchExecuted,
+          });
+    
           const fetchedActivities = response?.results || response;
-
-          // Cache and set the activities
-          dispatch(
-            setActivitiesForRow({ rowId, activities: fetchedActivities })
-          );
+          dispatch(setActivitiesForRow({ key: cacheKey, activities: fetchedActivities }));
           setActivities(fetchedActivities);
         } catch (error) {
           console.error("Error fetching activities:", error);
         } finally {
           isFetching.current = false;
+          activeRequests.delete(cacheKey);
         }
-      },
-      [
-        subcategory,
-        countryCode,
-        year,
-        unit_type,
-        activitySearch,
-        activityCache,
-        rowId,
-        dispatch,
-      ]
+      }, 500), // 500ms debounce to prevent rapid duplicate calls
+      [category, subcategory]
     );
 
     const fetchSubcategories = useCallback(async () => {
-      const selectedCategory = scopeMappings[scope].find((info) =>
+      const selectedCategory = scopeMappings[scope]?.find((info) =>
         info.Category.some((c) => c.name === category)
       );
-
+    
       const newSubcategories = selectedCategory
-        ? selectedCategory.Category.find((c) => c.name === category).SubCategory
+        ? selectedCategory.Category.find((c) => c.name === category)?.SubCategory || []
         : [];
-
+    
       setSubcategories(newSubcategories);
-
-      // Check if subcategory and activity are already selected
-      if (subcategory && activity) {
-        if(rowType === "calculated")
-          return;
-        // Check the Redux cache for activities
-        if (activityCache[rowId]) {
-          setActivities(activityCache[rowId])
+    
+      // Ensure activities fetch only when needed
+      if (subcategory && rowType !== "calculated") {
+        const cacheKey = JSON.stringify({ category, subcategory, countryCode, year });
+    
+        if (activityCache[cacheKey]) {
+          console.log(`Using cached activities for key: ${cacheKey}`);
+          setActivities(activityCache[cacheKey]);
         } else {
-          // If not cached, fetch them
           fetchActivities();
         }
-      } else if (subcategory && !activity) {
-        fetchActivities();
       }
-    }, [category, subcategory, activity, activityCache, rowId]);
+    }, [category]);
+    
 
     useEffect(() => {
       if (category) {
