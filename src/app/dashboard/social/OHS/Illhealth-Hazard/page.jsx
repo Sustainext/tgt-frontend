@@ -7,7 +7,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import Section2 from "./Section2/page";
 import SocialTopBar from "../../socialTopBar";
 
-const IllhealthHazard = ({ apiData }) => {
+const IllhealthHazard = ({ apiData,setMobileopen }) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -84,6 +84,7 @@ const IllhealthHazard = ({ apiData }) => {
           topic={"SocHealthSafety"}
           griData={griData}
           brsr={brsr}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

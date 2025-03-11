@@ -12,7 +12,7 @@ import Screen1 from "./screen1"
 import Screen2 from "./screen2"
 import SocialTopBar from '../../socialTopBar'
 
-const IndigenousPeople = ({apiData}) => {
+const IndigenousPeople = ({apiData,setMobileopen}) => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState();
@@ -62,7 +62,7 @@ const IndigenousPeople = ({apiData}) => {
         <>
            <ToastContainer style={{ fontSize: "12px" }} />
             <div className="flex flex-col justify-start overflow-x-hidden ">
-            <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Human Rights and Community Impact'} topic={'SocCommunityRelation'} />
+            <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Human Rights and Community Impact'} topic={'SocCommunityRelation'} setMobileopen={setMobileopen} />
                 
 
 

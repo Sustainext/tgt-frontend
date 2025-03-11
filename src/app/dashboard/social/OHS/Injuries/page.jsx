@@ -7,7 +7,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import Section1 from "./Section1/page";
 import SocialTopBar from '../../socialTopBar'
 
-const Injuries = ({apiData}) => {
+const Injuries = ({apiData,setMobileopen}) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +73,7 @@ const Injuries = ({apiData}) => {
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} griData={griData} brsr={brsr} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} griData={griData} brsr={brsr} setMobileopen={setMobileopen} />
        
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">

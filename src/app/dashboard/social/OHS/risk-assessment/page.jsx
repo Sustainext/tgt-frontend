@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
-import Section1 from "./Section1/page"
-import SocialTopBar from '../../socialTopBar'
+import Section1 from "./Section1/page";
+import SocialTopBar from "../../socialTopBar";
 
-const Riskassessment = ({apiData}) => {
-
+const Riskassessment = ({ apiData, setMobileopen }) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -32,11 +31,11 @@ const Riskassessment = ({apiData}) => {
   }, [category]);
   const griData = [
     {
-      tagName:'GRI 403 - 2',
-      toggle:'23',
-      textColor:"#007EEF",
-      bgColor:"bg-slate-200"
-  },
+      tagName: "GRI 403 - 2",
+      toggle: "23",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
   ];
 
   const brsr = [
@@ -51,26 +50,31 @@ const Riskassessment = ({apiData}) => {
       content: "BRSR-Section C-Principle 3-Essential Indicators-10c",
     },
   ];
-  const sdgData=[
-
+  const sdgData = [
     {
-      tagName:'SDG 8',
-      toggle:'24',
-      textColor:"#fff",
-      bgColor:"bg-red-900"
-  },  
-]
-
+      tagName: "SDG 8",
+      toggle: "24",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
+    },
+  ];
 
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} brsr={brsr} griData={griData}  />
-       
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Occupational Health and Safety"}
+          topic={"SocHealthSafety"}
+          brsr={brsr}
+          griData={griData}
+          setMobileopen={setMobileopen}
+        />
 
-     
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -113,8 +117,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-   
-      <Section1/>
+
+      <Section1 />
     </>
   );
 };

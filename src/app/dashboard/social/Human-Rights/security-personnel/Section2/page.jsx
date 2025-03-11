@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SocialTopBar from '../../../socialTopBar'
 
-const Securitypersonnel2 = ({apiData}) => {
+const Securitypersonnel2 = ({apiData,setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -59,7 +59,7 @@ const Securitypersonnel2 = ({apiData}) => {
     <>
      <ToastContainer style={{ fontSize: "12px" }} />
         <div className="flex flex-col justify-start overflow-x-hidden ">
-           <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Human Rights and Community Impact'} topic={'SocCommunityRelation'} />
+           <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Human Rights and Community Impact'} topic={'SocCommunityRelation'} setMobileopen={setMobileopen} />
                
 
 

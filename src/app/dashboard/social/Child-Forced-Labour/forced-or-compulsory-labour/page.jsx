@@ -9,7 +9,7 @@ import Forcedorcompulsorylabourscreen from "./forcedor";
 import { useSelector } from "react-redux";
 import SocialTopBar from '../../socialTopBar'
 
-const Forcedorcompulsorylabour = ({apiData}) => {
+const Forcedorcompulsorylabour = ({apiData,setMobileopen}) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
     (state) => state.materialitySlice
   );
@@ -67,7 +67,7 @@ const Forcedorcompulsorylabour = ({apiData}) => {
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Child and Forced Labour'} topic={'SocChildLabour'} />
+        <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Child and Forced Labour'} topic={'SocChildLabour'} setMobileopen={setMobileopen} />
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Operations and suppliers at significant risk for incidents of forced or compulsory labor
