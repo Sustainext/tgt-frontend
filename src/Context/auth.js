@@ -90,6 +90,10 @@ export function AuthProvider({ children }) {
         secure: true,
         sameSite: "strict",
       });
+      Cookies.set("refresh", JSON.stringify(refreshToken), {
+        secure: true,
+        sameSite: "strict",
+      });
       Cookies.set("isAdmin", JSON.stringify(newrole), {
         secure: true,
         sameSite: "strict",
