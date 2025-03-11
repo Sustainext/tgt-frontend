@@ -18,21 +18,19 @@ export async function fetchClimatiqActivities({
   customFetchExecuted = false, 
 }) {
   console.log(`\n=== fetchClimatiqActivities called ===`);
-  console.log(`Params:`, { subcategory, page, region, year, customFetchExecuted });
+  console.log(`Params:`, { subcategory, page, region, year });
 
   // Adjust year if it's 2025
   const adjustedYear = year === "2025" || year === 2025 ? "2024" : year;
-  console.log(`Adjusted Year: ${adjustedYear}`);
-
+  
   const cacheKey = createCacheKey({ 
     subcategory, 
     page, 
     region, 
-    year: adjustedYear, 
-    customFetchExecuted, 
+    year: adjustedYear
   });
 
-  // Check cache
+  // Check cache with single return point
   const now = Date.now();
   if (requestCache.has(cacheKey)) {
     const cachedResponse = requestCache.get(cacheKey);

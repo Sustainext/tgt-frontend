@@ -426,8 +426,23 @@ const emissionsSlice = createSlice({
     },
     validationErrors: {},
     activitiesCache: {},
+    activeRequests: [],
   },
   reducers: {
+    addActiveRequest: (state, action) => {
+      if (!state.activeRequests.includes(action.payload)) {
+        state.activeRequests.push(action.payload);
+      }
+    },
+    removeActiveRequest: (state, action) => {
+      state.activeRequests = state.activeRequests.filter(
+        (request) => request !== action.payload
+      );
+    },
+    setActivitiesForRow: (state, action) => {
+      const { requestKey, data } = action.payload;
+      state.activitiesCache[requestKey] = data;
+    },
     setUserData: (state, action) => {
       state.userData = action.payload;
     },
@@ -801,6 +816,7 @@ export const {
   setValidationErrors,
   clearValidationErrors,
   setActivitiesForRow,
+  addActiveRequest, removeActiveRequest
 } = emissionsSlice.actions;
 
 export default emissionsSlice.reducer;

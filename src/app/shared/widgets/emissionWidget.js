@@ -23,6 +23,8 @@ import {
   setFocusedField,
   clearFocusedField,
   setActivitiesForRow,
+  addActiveRequest, 
+  removeActiveRequest
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AssignEmissionModal from "./assignEmissionModal";
@@ -65,6 +67,7 @@ const EmissionWidget = React.memo(
     const [baseCategories, setBaseCategories] = useState([]);
     const [activitySearch, setActivitySearch] = useState("");
     const [isDropdownActive, setIsDropdownActive] = useState(false);
+    const [isFetchingActivities, setIsFetchingActivities] = useState(false);
     const isFetching = useRef(false);
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
@@ -330,35 +333,121 @@ const EmissionWidget = React.memo(
       fetchBaseCategories();
     }, []);
 
-    const activeRequests = new Set(); // Track active API calls
+    // const activeRequests = new Set(); // Track active API calls
+
+    // const fetchActivities = useCallback(
+    //   debounce(async (page = 1) => {
+    //     isFetching.current = true;
+    //     const cacheKey = JSON.stringify({ category, subcategory, countryCode, year });
+
+    //     // Return early if already fetching this exact data or if a request is in-flight
+    //     if (isFetching.current || activeRequests.has(cacheKey)) {
+    //       console.log(`Skipping duplicate request for: ${cacheKey}`);
+    //       return;
+    //     }
+
+    //     // Return cached data if available - with early return
+    //     if (activityCache[cacheKey]) {
+    //       console.log(`Using cached activities for key: ${cacheKey}`);
+    //       setActivities(activityCache[cacheKey]);
+    //       return;
+    //     }
+
+    //     console.log(`Fetching activities for: ${cacheKey}`);
+    //     isFetching.current = true;
+    //     activeRequests.add(cacheKey);
+
+    //     try {
+    //       const response = await fetchClimatiqActivities({
+    //         subcategory,
+    //         page,
+    //         region: countryCode,
+    //         year,
+    //         // Don't pass customFetchExecuted as a dependency that affects useCallback
+    //       });
+
+    //       const fetchedActivities = response?.results || response;
+    //       dispatch(setActivitiesForRow({ key: cacheKey, activities: fetchedActivities }));
+    //       setActivities(fetchedActivities);
+    //     } catch (error) {
+    //       console.error("Error fetching activities:", error);
+    //     } finally {
+    //       isFetching.current = false;
+    //       activeRequests.delete(cacheKey);
+    //     }
+    //   }, 300), // Reduced debounce time for better responsiveness
+    //   [category, subcategory, countryCode, year] // Ensure all dependencies are captured
+    // );
+
+    // const fetchActivities = useCallback(
+    //   debounce(async (page = 1) => {
+    //     const cacheKey = JSON.stringify({
+    //       category,
+    //       subcategory,
+    //       countryCode,
+    //       year,
+    //     });
+
+    //     // Skip fetch if already cached
+    //     if (activityCache[cacheKey]) {
+    //       console.log(`Using cached activities for key: ${cacheKey}`);
+    //       setActivities(activityCache[cacheKey]);
+    //       return;
+    //     }
+
+    //     // Set loading state for this row
+    //     setIsFetchingActivities(true);
+
+    //     try {
+    //       const response = await fetchClimatiqActivities({
+    //         subcategory,
+    //         page,
+    //         region: countryCode,
+    //         year,
+    //       });
+
+    //       const fetchedActivities = response?.results || response;
+    //       dispatch(
+    //         setActivitiesForRow({
+    //           key: cacheKey,
+    //           activities: fetchedActivities,
+    //         })
+    //       );
+    //       setActivities(fetchedActivities);
+    //     } catch (error) {
+    //       console.error("Error fetching activities:", error);
+    //     } finally {
+    //       // Reset loading state
+    //       setIsFetchingActivities(false);
+    //     }
+    //   }, 300),
+    //   [category, subcategory, countryCode, year]
+    // );
+
+    // Track ongoing API calls
+    const activeRequests = useSelector((state) => state.emissions.activeRequests);
 
     const fetchActivities = useCallback(
-      debounce(async (page = 1, customFetchExecuted = false) => {
+      debounce(async (page = 1) => {
         const cacheKey = JSON.stringify({ category, subcategory, countryCode, year });
     
-        if (isFetching.current || activeRequests.has(cacheKey)) {
+        // Prevent duplicate API calls
+        if (activeRequests.includes(cacheKey)) {
           console.log(`Skipping duplicate request for: ${cacheKey}`);
           return;
         }
     
-        isFetching.current = true;
-        activeRequests.add(cacheKey);
+        dispatch(addActiveRequest(cacheKey)); // Track active request
+        setIsFetchingActivities(true);
     
         try {
-          if (activityCache[cacheKey]) {
-            console.log(`Using cached activities for key: ${cacheKey}`);
-            setActivities(activityCache[cacheKey]);
-            return;
-          }
-    
-          console.log(`Fetching activities for: ${cacheKey}`);
+          // Dispatch Redux thunk instead of calling the function directly
           const response = await fetchClimatiqActivities({
-            subcategory,
-            page,
-            region: countryCode,
-            year,
-            customFetchExecuted,
-          });
+                    subcategory,
+                    page,
+                    region: countryCode,
+                    year,
+                  });
     
           const fetchedActivities = response?.results || response;
           dispatch(setActivitiesForRow({ key: cacheKey, activities: fetchedActivities }));
@@ -366,36 +455,66 @@ const EmissionWidget = React.memo(
         } catch (error) {
           console.error("Error fetching activities:", error);
         } finally {
-          isFetching.current = false;
-          activeRequests.delete(cacheKey);
+          setIsFetchingActivities(false);
+          dispatch(removeActiveRequest(cacheKey)); // Remove request from activeRequests
         }
-      }, 500), // 500ms debounce to prevent rapid duplicate calls
-      [category, subcategory]
+      }, 300),
+      [category, subcategory, countryCode, year, activeRequests, dispatch] // Ensure `dispatch` is included
     );
+
 
     const fetchSubcategories = useCallback(async () => {
       const selectedCategory = scopeMappings[scope]?.find((info) =>
         info.Category.some((c) => c.name === category)
       );
-    
+
       const newSubcategories = selectedCategory
-        ? selectedCategory.Category.find((c) => c.name === category)?.SubCategory || []
+        ? selectedCategory.Category.find((c) => c.name === category)
+            ?.SubCategory || []
         : [];
-    
+
       setSubcategories(newSubcategories);
-    
-      // Ensure activities fetch only when needed
+
+      // Don't trigger fetchActivities here - we'll use a separate effect
+    }, [category, scope]);
+
+    // // Consolidated useEffect for controlling API calls
+    // useEffect(() => {
+    //   // Only fetch when we have enough info to make a meaningful request
+    //   if (subcategory && rowType !== "calculated") {
+    //     const cacheKey = JSON.stringify({
+    //       category,
+    //       subcategory,
+    //       countryCode,
+    //       year,
+    //     });
+
+    //     if (activityCache[cacheKey]) {
+    //       console.log(`Using cached activities for key: ${cacheKey}`);
+    //       setActivities(activityCache[cacheKey]);
+    //     } else {
+    //       // Set a small timeout to allow other state updates to settle
+    //       const timeoutId = setTimeout(() => {
+    //         fetchActivities();
+    //       }, 50);
+    //       return () => clearTimeout(timeoutId);
+    //     }
+    //   }
+    // }, [category, subcategory, countryCode, year, rowType, fetchActivities]);
+
+    useEffect(() => {
       if (subcategory && rowType !== "calculated") {
         const cacheKey = JSON.stringify({ category, subcategory, countryCode, year });
     
+        // Use cached data if available
         if (activityCache[cacheKey]) {
           console.log(`Using cached activities for key: ${cacheKey}`);
           setActivities(activityCache[cacheKey]);
         } else {
-          fetchActivities();
+          fetchActivities(); // Trigger API call
         }
       }
-    }, [category]);
+    }, [category, subcategory, countryCode, year, rowType]);
     
 
     useEffect(() => {
@@ -879,17 +998,31 @@ const EmissionWidget = React.memo(
       openInfoModal();
     };
 
-    const getActivityPlaceholder = (
-      rowType,
-      isFetching,
-      activities,
-      activity
-    ) => {
+    // const getActivityPlaceholder = (
+    //   rowType,
+    //   isFetching,
+    //   activities,
+    //   activity
+    // ) => {
+    //   if (rowType === "calculated") {
+    //     return activity;
+    //   } else if (rowType !== "calculated" && activity) {
+    //     return activity;
+    //   } else if (isFetching.current) {
+    //     return "Fetching activities...";
+    //   } else if (activities.length === 0) {
+    //     return "No relevant activities found";
+    //   } else {
+    //     return "Select Activity";
+    //   }
+    // };
+
+    const getActivityPlaceholder = () => {
       if (rowType === "calculated") {
         return activity;
       } else if (rowType !== "calculated" && activity) {
         return activity;
-      } else if (isFetching.current) {
+      } else if (isFetchingActivities) {
         return "Fetching activities...";
       } else if (activities.length === 0) {
         return "No relevant activities found";
@@ -1073,7 +1206,7 @@ const EmissionWidget = React.memo(
                       : ""
                   }`}
                 >
-                  <input
+                  {/* <input
                     ref={inputRef}
                     type="text"
                     placeholder={
@@ -1086,6 +1219,27 @@ const EmissionWidget = React.memo(
                             activity
                           )
                     }
+                    value={activitySearch}
+                    onChange={(e) => {
+                      setActivitySearch(e.target.value);
+                      if (e.target.value.length >= 3) {
+                        fetchActivities();
+                      }
+                    }}
+                    onFocus={toggleDropdown}
+                    className={getFieldClass(
+                      "Activity",
+                      "text-[12px] focus:outline-none w-full py-1"
+                    )}
+                    disabled={["assigned", "calculated", "approved"].includes(
+                      value.rowType
+                    )}
+                  /> */}
+
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    placeholder={getActivityPlaceholder()}
                     value={activitySearch}
                     onChange={(e) => {
                       setActivitySearch(e.target.value);

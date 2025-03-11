@@ -55,7 +55,16 @@ const GoalsModal = ({
       const response = await axiosInstance.get(`/orggetonly`);
       setOrganizations(response.data);
     } catch (error) {
-      toast.error("Error fetching goals");
+      toast.error("Error fetching goals", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
