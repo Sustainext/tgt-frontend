@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./screen1"
 import SocialTopBar from '../../socialTopBar'
 
-const CommunityEngagement = ({apiData}) => {
+const CommunityEngagement = ({apiData,setMobileopen}) => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState();
@@ -57,7 +57,7 @@ const CommunityEngagement = ({apiData}) => {
         <>
           <ToastContainer style={{ fontSize: "12px" }} />
             <div className="flex flex-col justify-start overflow-x-hidden ">
-            <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Human Rights and Community Impact'} topic={'SocCommunityRelation'} />
+            <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Human Rights and Community Impact'} topic={'SocCommunityRelation'} setMobileopen={setMobileopen} />
               
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">

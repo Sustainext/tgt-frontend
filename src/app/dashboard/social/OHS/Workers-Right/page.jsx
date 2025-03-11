@@ -5,7 +5,7 @@ import { Socialdata } from "../../data/socialgriinfo";
 import Section3 from "./Section3/page"
 import SocialTopBar from '../../socialTopBar'
 
-const WorkersRight = ({apiData}) => {
+const WorkersRight = ({apiData,setMobileopen}) => {
 
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
@@ -50,7 +50,7 @@ const WorkersRight = ({apiData}) => {
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} setMobileopen={setMobileopen} />
        
 
      

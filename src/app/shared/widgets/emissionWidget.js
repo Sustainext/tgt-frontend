@@ -1123,7 +1123,7 @@ const EmissionWidget = React.memo(
                   />
 
                   {scopeErrors["Activity"] && (
-                    <div className="text-[12px] text-red-500 absolute left-0 -bottom-[28px]">
+                    <div className="text-[12px] text-red-500  xl:absolute md:absolute lg:absolute 2xl:absolute 4k:absolute 2k:absolute left-0 -bottom-[28px]">
                       {getErrorMessage("Activity")}
                     </div>
                   )}
