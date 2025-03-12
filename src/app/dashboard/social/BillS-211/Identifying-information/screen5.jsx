@@ -523,7 +523,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                   </div>
                 </div>
               </div>
-              <div className="w-[77%] mb-5">
+              <div className="xl:w-[77%] lg:w-[77%] 2xl:w-[77%] md:w-[77%] 2k:w-[77%] 4k:w-[77%]  w-full mb-5">
                 <div className="float-right">
                   <button
                     className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"

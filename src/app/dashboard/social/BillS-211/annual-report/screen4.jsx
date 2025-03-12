@@ -371,8 +371,8 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportT
   return (
     <>
      
-     <div className="mx-4 mt-2">
-     <form className="w-[80%] text-left">
+     <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
+     <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
                   <div className="mb-5">
                     <label
                       className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
@@ -460,7 +460,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportT
                       of its activities and supply chains? Select all that
                       apply. *
                     </label>
-                    <div className="grid grid-cols-2">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-2 4k:grid-cols-2 2k:grid-cols-2  md:grid-cols-2">
                       {options.map((option, index) => (
                         <div key={index} className="mb-1 ml-2">
                           <label className="text-[14px] text-gray-600">
@@ -512,7 +512,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportT
                       of the following sectors and industries? Select all that
                       apply. *
                     </label>
-                    <div className="grid grid-cols-2 gap-1">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-2 4k:grid-cols-2 2k:grid-cols-2  md:grid-cols-2 gap-1">
                       {optionsone.map((optionsone, index) => (
                         <div key={index} className="ml-2">
                           <label className="text-[14px] text-gray-600">
@@ -590,7 +590,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportT
                     </div> */}
                   </div>
                 </form>
-                <div className="w-[80%] mb-5">
+                <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full mb-5">
                   <div className="float-right">
                     <button
                       className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"

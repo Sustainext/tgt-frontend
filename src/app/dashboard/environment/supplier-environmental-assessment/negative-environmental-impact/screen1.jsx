@@ -238,7 +238,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
                 data-tooltip-id={`es30`}
                 data-tooltip-html="Specify the total number of suppliers that were assessed 
 for their environmental impacts during the reporting period."
-                className="mt-1.5 ml-2 text-[15px]"
+                className="mt-1.5 ml-2 text-[15px] w-[20%] xl:w-0 lg:w-0 2xl:w-0 md:w-0 4k:w-0 2k:w-0"
               />
               <ReactTooltip
                 id={`es30`}

@@ -229,7 +229,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
               <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html="<p>Specify the total number of suppliers that were identified as having significant actual and potential negative environmental impacts during the reporting period.</p>"
-                className="mt-1.5 ml-2 text-[15px]"
+                className="mt-1.5 ml-2 text-[15px] w-[20%] xl:w-0 lg:w-0 2xl:w-0 md:w-0 4k:w-0 2k:w-0"
               />
               <ReactTooltip
                 id={`es30`}

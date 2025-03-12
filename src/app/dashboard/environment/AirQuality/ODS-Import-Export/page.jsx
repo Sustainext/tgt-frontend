@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 
-const ODSImportExport = ({ apiData, isSidepanelOpen }) => {
+const ODSImportExport = ({ apiData, isSidepanelOpen,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -105,6 +105,7 @@ const ODSImportExport = ({ apiData, isSidepanelOpen }) => {
           sdgData={sdgData}
           apiData={apiData}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

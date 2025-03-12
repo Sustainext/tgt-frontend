@@ -8,7 +8,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import Section1 from "./Section1/page";
 import SocialTopBar from '../../socialTopBar'
 
-const Promotionhealth = ({apiData}) => {
+const Promotionhealth = ({apiData,setMobileopen}) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -63,7 +63,7 @@ const Promotionhealth = ({apiData}) => {
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} brsr={brsr} griData={griData} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} brsr={brsr} griData={griData} setMobileopen={setMobileopen} />
         
 
         <div className="ml-3 flex relative">

@@ -95,7 +95,7 @@ const AccordionItem = ({
                       <div
                         key={index}
                         className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2"
-                        style={{ display: display }}
+                        // style={{ display: display }}
                       >
                         <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">
                           {sdgItem}

@@ -8,7 +8,7 @@ import Socialheader3 from "../../socialheader3";
 import Preventionohsimpactscreen from "./prevention-ohs-Impact";
 import SocialTopBar from '../../socialTopBar'
 
-const Preventionohsimpact = ({apiData}) => {
+const Preventionohsimpact = ({apiData,setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -65,7 +65,7 @@ const Preventionohsimpact = ({apiData}) => {
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} brsr={brsr} griData={griData} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} brsr={brsr} griData={griData} setMobileopen={setMobileopen} />
        
 
         <div className="ml-3 flex">

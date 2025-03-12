@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import GeneralWorkersEmployees from "../../../shared/widgets/Table/generalWorkersEmployees.js";
+import GeneralWorkersEmployees from "../../../shared/widgets/Table/generalWorkersEmployeesMultiline.js";
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: GeneralWorkersEmployees,
