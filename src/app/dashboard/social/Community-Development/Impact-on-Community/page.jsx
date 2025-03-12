@@ -126,8 +126,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
                 </div>
                 <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
-                <div className="h-[calc(68vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                 <div className="h-[calc(68vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(95vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
                 </div>
 
