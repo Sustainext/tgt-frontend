@@ -1,0 +1,84 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import Header from "./Header";
+import Aside from "./Aside";
+import AnalyseEmployment from "./Employment/page";
+import AnalyseOHS from "./OHS/page";
+import AnalyseChildlabour from "./Child-Labour/page";
+import AnalyseCompulsorylabour from "./Compulsory-Labour/page";
+import AnalyseDiversityInclusion from "./Diversity-and-inclusion/page";
+import AnalyseSuppliersocialassessment from "./Supplier-social-assessment/page";
+import AnalyseTraining from "./Training/page";
+import AnalyseNonDiscrimination from "./NonDiscrimination/page";
+import AnalyseCollectiveBargaining from "./Collective-Bargaining/page";
+import AnalyseCustomerHealthSafety from "./Customer-Health-Safety/page";
+import AnalyseMarketingLabeling from "./Marketing-Labeling/page";
+import AnalyseCommunityDevelopment from "./Community-Development/page";
+import AnalyseCustomerprivacy from "./Customer-Privacy/page";
+import AnalyseSecurityPersonnelt from "./Security-Personnel/page";
+import AnalyseHumanRightsCommunityImpact from "./Human-Rights-Community-Impact/page"
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay,
+  setMiddlename,
+} from "../../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
+const social = () => {
+  const [activeTab, setActiveTab] = useState("Tab1");
+  const [isBoxOpen, setIsBoxOpen] = useState(false);
+  const dispatch = useDispatch();
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+  useEffect(() => {
+    const headerTextMapping = {
+      Tab1: "Occupational health and safety",
+      Tab2: "Human Rights and Community Impact",
+      Tab3: "Labor Management",
+      Tab4: "Child and Forced Labour",
+      Tab5: "Employee hire and turnover",
+      Tab6: "Training and Development",
+      Tab7: "Customer Privacy & Data Security",
+      Tab8: "Product Safety & Quality",
+      Tab9: "Marketing and Labeling",
+      Tab10: "Supply Chain Labor Standards",
+      Tab11: "Diversity & Equal Oppportunity",
+      Tab12: "Non-discrimination",
+      Tab13: "Marketing and Labeling",
+      Tab14: "Customer Privacy",
+      Tab15: "Security Personnel",
+    };
+    dispatch(setHeadertext1("Analyse"));
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setHeadertext2(headerTextMapping[activeTab] || "Social"));
+    dispatch(setMiddlename("Social"));
+  }, [activeTab, dispatch]);
+  return (
+    <div className="relative flex justify-start">
+      <div className="relative left-10 w-[199px] min-h-[90vh] py-[11px] flex-col items-end inline-flex">
+        <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
+      </div>
+      <div className="w-full ms-8">
+        <div className="sticky top-14 bg-white z-[100]">
+          <Header activeTab={activeTab} setIsBoxOpen={setIsBoxOpen} />
+        </div>
+        {activeTab === "Tab1" && <AnalyseOHS />}
+        {activeTab === "Tab2" && <AnalyseHumanRightsCommunityImpact />}
+        {activeTab === "Tab3" && <AnalyseCollectiveBargaining />}
+        {activeTab === "Tab4" && <AnalyseChildlabour />}
+        {activeTab === "Tab5" && <AnalyseEmployment />}
+        {activeTab === "Tab6" && <AnalyseTraining />}
+        {activeTab === "Tab7" && <AnalyseCustomerprivacy />}
+        {activeTab === "Tab8" && <AnalyseCustomerHealthSafety />}
+        {activeTab === "Tab9" && <AnalyseMarketingLabeling />}
+        {activeTab === "Tab10" && <AnalyseSuppliersocialassessment />}
+        {activeTab === "Tab11" && <AnalyseDiversityInclusion />}
+        {activeTab === "Tab12" && <AnalyseNonDiscrimination />}
+    
+      </div>
+    </div>
+  );
+};
+
+export default social;

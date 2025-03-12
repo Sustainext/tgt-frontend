@@ -26,7 +26,7 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      category: { type: "string", title: "Employee Category" },
+      category: { type: "string", title: "Category" },
       male: { type: "string", title: "Male" },
       female: { type: "string", title: "Female" },
       nonBinary: { type: "string", title: "Non-Binary" },
@@ -57,7 +57,7 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        title: "Employee Category",
+        title: "Category",
         tooltip:
           "Please specify the category of the organisation's governance body.",
         colSpan: 1,

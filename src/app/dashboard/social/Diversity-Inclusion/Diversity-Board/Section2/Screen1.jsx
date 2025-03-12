@@ -209,8 +209,7 @@ const Screen1 = ({ location, year,month }) => {
           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Number of employee per employee category
               <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding to the number of individuals
-within the organization’s governance bodies by gender, age group and diversity group." className="mt-1.5 ml-2 text-[15px]" />
+                data-tooltip-content="This section documents the data corresponding to the number of employees per employee category by gender, age group and diversity group." className="mt-1.5 ml-2 text-[15px]" />
               <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",

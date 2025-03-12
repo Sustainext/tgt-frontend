@@ -71,7 +71,7 @@ const uiSchema = {
     Q2: {
       "ui:title": "Specify the total number of incident violations involving the rights of indigenous peoples",
       "ui:tooltip":
-        "Include: Number of  workers performing the organization’s activities and number of communities likely to be affected by existing or planned activities of the organization.",
+        "Please mention the  total number of incident violations involving the rights of indigenous people. Include: Number of  workers performing the organization’s activities and number of communities likely to be affected by existing or planned activities of the organization.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,

@@ -37,6 +37,10 @@ const schema = {
       },
       Q3: {
         type: "string",
+        title: "Which of these hazards have caused ill health?",
+      },
+      Q4: {
+        type: "string",
         title: "Which of these hazards have caused high-consequence injuries?",
       },
     },
@@ -45,7 +49,7 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2", "Q3"],
+    "ui:order": ["Q1", "Q2", "Q3","Q4"],
     Q1: {
       "ui:title":
         "Are there work-related hazards that pose a risk of ill health?",
@@ -69,6 +73,16 @@ const uiSchema = {
       },
     },
     Q3: {
+      "ui:title": "Which of these hazards have caused ill health?",
+      "ui:tooltip": "Please specify the hazards that have caused ill health.",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q4: {
       "ui:title":
         "Which of these hazards have caused high-consequence injuries?",
       "ui:tooltip":
@@ -102,6 +116,9 @@ const validateRows = (data) => {
       }
       if (!row.Q3) {
         errors.Q3 = "This field is required";
+      }
+      if (!row.Q4) {
+        errors.Q4 = "This field is required";
       }
     }
    

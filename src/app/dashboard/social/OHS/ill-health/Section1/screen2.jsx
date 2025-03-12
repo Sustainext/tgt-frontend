@@ -40,8 +40,8 @@ const uiSchema = {
       {
         title:
           "Workers who are not employees but whose work and/or workplace is controlled by the organization",
-        tooltip: "Please specify the employee category here.",
-        type: "text",
+        tooltip: "Please specify the category of workers who are not employees but whose work and/or workplace is controlled by the organization.",
+        type:"text",
       },
       {
         title: "Number of fatalities as a result of work-Ill health",
