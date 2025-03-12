@@ -54,7 +54,7 @@ const uiSchema = {
       },
       {
         title: "Actual Negative Impacts of the Operation",
-        tooltip: "Please specify the actual negative impacts of the oeration.",
+        tooltip: "Please specify the actual negative impacts of the operation.",
       },
     ],
   },

@@ -28,12 +28,12 @@ const schema = {
       Q1: {
         type: "string",
         title:
-          "Explain the strategy (if any) adopted by the employer to work towards full coverage if a fund set up to pay the plan’s pension liabilities is not fully covered.",
+          "Explain the strategy (if any) adopted by the employer to work towards full coverage if a fund set up to pay the plan's pension liabilities is not fully covered.",
       },
       Q2: {
         type: "string",
         title:
-          "Explain the timescale (if any) by which the employer hopes to achieve full coverage, if a fund set up to pay the plan’s pension liabilities is not fully covered.",
+          "Explain the timescale (if any) by which the employer hopes to achieve full coverage, if a fund set up to pay the plan's pension liabilities is not fully covered.",
       },
     },
   },
@@ -44,9 +44,9 @@ const uiSchema = {
     "ui:order": ["Q1", "Q2"],
     Q1: {
       "ui:title":
-        "Explain the strategy (if any) adopted by the employer to work towards full coverage if a fund set up to pay the plan’s pension liabilities is not fully covered.",
+        "Explain the strategy (if any) adopted by the employer to work towards full coverage if a fund set up to pay the plan's pension liabilities is not fully covered.",
       "ui:tooltip":
-        "What is the strategy adopted by the employer to work towards full coverage, if a fund set up to pay the plan’s pension liabilities is not fully covered?",
+        "What is the strategy adopted by the employer to work towards full coverage, if a fund set up to pay the plan's pension liabilities is not fully covered?",
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
       "ui:widgetType": "textarea",
@@ -59,9 +59,9 @@ const uiSchema = {
     },
     Q2: {
       "ui:title":
-        "Explain the timescale (if any) by which the employer hopes to achieve full coverage, if a fund set up to pay the plan’s pension liabilities is not fully covered.",
+        "Explain the timescale (if any) by which the employer hopes to achieve full coverage, if a fund set up to pay the plan's pension liabilities is not fully covered.",
       "ui:tooltip":
-        "What is the timescale by which the employer hopes to work achieve full coverage, if a fund set up to pay the plan’s pension liabilities is not fully covered?",
+        "What is the timescale by which the employer hopes to work achieve full coverage, if a fund set up to pay the plan's pension liabilities is not fully covered?",
       "ui:tooltipdisplay": "block",
       "ui:titledisplay": "block",
       "ui:widgetType": "input",

@@ -209,8 +209,7 @@ const Screen1 = ({ location, year, month }) => {
               Occupational health services’ functions
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="For employees and for workers who are not employees
-                            but whose work and/or workplace is controlled by the organization"
+                data-tooltip-content="This section documents data corresponding to the occupational health services’ functions that contribute to the identification and elimination of hazards and minimization of risks."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
