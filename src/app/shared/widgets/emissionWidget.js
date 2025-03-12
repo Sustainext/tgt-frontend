@@ -1123,7 +1123,7 @@ const EmissionWidget = React.memo(
                   />
 
                   {scopeErrors["Activity"] && (
-                    <div className="text-[12px] text-red-500  xl:absolute md:absolute lg:absolute 2xl:absolute 4k:absolute 2k:absolute left-0 -bottom-[28px]">
+                    <div className="text-[12px] text-red-500  xl:absolute md:absolute lg:absolute 2xl:absolute 4k:absolute 2k:absolute relative left-0 -bottom-[28px]">
                       {getErrorMessage("Activity")}
                     </div>
                   )}
@@ -1138,7 +1138,7 @@ const EmissionWidget = React.memo(
                         toggleDropdown();
                         setActivitySearch("");
                       }}
-                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full absolute left-0 top-8 z-[100] min-w-[810px]`}
+                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full xl:absolute md:absolute lg:absolute 2xl:absolute 4k:absolute 2k:absolute relative left-0  z-[100] min-w-[810px] xl:top-8 lg:top-8 md:top-8 2xl:top-8 4k:top-8 2k:top-8 top-[40px] -mt-[300px] xl:-mt-[0px] lg:mt-[0px] md:mt-[0px] 2xl:mt-[0px] 4k:mt-[0px] 2k:mt-[0px]`}
                       disabled={["assigned", "calculated", "approved"].includes(
                         rowType
                       )}

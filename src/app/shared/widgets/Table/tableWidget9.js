@@ -86,7 +86,7 @@ const CustomTableWidget9 = ({
 
   return (
     <>
-      <div style={{ overflowY: "auto", maxHeight: "400px" }}>
+      <div style={{ overflowY: "auto", maxHeight: "400px" }} className="custom-scrollbar mb-5">
         <table
           id={id}
           className="rounded-md border border-gray-300 w-full"
@@ -103,6 +103,7 @@ const CustomTableWidget9 = ({
                       key={`header-${idx}`}
                       className={`text-[12px] px-2 py-2 text-left  border-r  border-gray-300`}
                       rowSpan={2} // Spanning two rows
+                      style={{ minWidth: "150px" }}
                     >
                       <div className="flex items-center relative">
                         <p>{item.title}</p>
@@ -293,7 +294,11 @@ const InputField = ({ type, required, value, onChange,readOnly }) => {
       value={inputValue}
       readOnly={readOnly}
       onChange={handleInputChange}
-      style={{ width: "100%" }}
+      style={{
+        width: "100%",
+        minWidth: "120px", // Increased minimum width for better mobile experience
+       
+      }}
       placeholder="Enter data"
       className="text-[12px] pl-2 py-2 text-center"
     />

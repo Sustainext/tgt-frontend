@@ -84,7 +84,7 @@ const CustomTableWidget14 = ({
   }, [value]);
 
   return (
-    <div style={{ overflowY: "auto", maxHeight: "400px" }}>
+    <div style={{ overflowY: "auto", maxHeight: "400px" }} className="custom-scrollbar mb-5">
       <table
         id={id}
         className="rounded-md border border-gray-300 w-full"
@@ -101,6 +101,7 @@ const CustomTableWidget14 = ({
                     : "text-center border-r border-gray-300"
                 }`}
                 colSpan={item.colSpan}
+                style={{ minWidth: "150px" }}
               >
                 <div className="relative">
                   <p
@@ -261,7 +262,11 @@ const InputField = ({ type, required, value, onChange, readOnly, fieldName, isNe
       readOnly={readOnly || isReadOnly}
       value={inputValue}
       onChange={handleInputChange}
-      style={{ width: "100%" }}
+      style={{
+        width: "100%",
+        minWidth: "120px", // Increased minimum width for better mobile experience
+       
+      }}
       placeholder="Enter data"
       className="text-sm pl-2 py-2 text-center"
     />
