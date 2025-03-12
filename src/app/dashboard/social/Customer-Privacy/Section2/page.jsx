@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 // import Screen3 from "./Screen3";
 import SocialTopBar from "../../socialTopBar";
 
-const CustomerPrivacy2 = ({ apiData }) => {
+const CustomerPrivacy2 = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -81,6 +81,7 @@ const CustomerPrivacy2 = ({ apiData }) => {
           apiData={apiData}
           title={"Customer Privacy & Data Security"}
           topic={"SocPrivacyDataSecurity"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">
@@ -113,9 +114,15 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(68vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

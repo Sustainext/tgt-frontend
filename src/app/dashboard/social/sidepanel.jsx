@@ -1232,7 +1232,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Parental Leave")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Parental Leave")
+                      }}
+                     
                     >
                       Parental Leave
                     </p>
@@ -1244,7 +1248,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Retirement Benefits")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Retirement Benefits")
+                      }}
+                     
                     >
                       Retirement Benefits
                     </p>
@@ -1256,7 +1264,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Diversity of Employees")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Diversity of Employees")
+                      }}
+                      
                     >
                       Diversity of Employees
                     </p>
@@ -1338,11 +1350,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Training and Development"
                             )
-                          }
+                          }}
+                      
                         >
                           Management of Material topic
                         </p>
@@ -1365,7 +1379,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Training hours")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Training hours")
+                      }}
+                    
                     >
                       Training hours
                     </p>
@@ -1377,7 +1395,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Skill Upgrade")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Skill Upgrade")
+                      }}
+                    
                     >
                       Employee Skill Development
                     </p>
@@ -1389,9 +1411,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Performance & Career Development")
-                      }
+                      }}
+                  
                     >
                       Employee Performance and Career Development
                     </p>
@@ -1462,11 +1486,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Privacy"
                             )
-                          }
+                          }}
+                       
                         >
                           Management of Material topic
                         </p>
@@ -1489,7 +1515,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Customer Privacy")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Customer Privacy")
+                      }}
+               
                     >
                       Customer Privacy
                     </p>
@@ -1501,7 +1531,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Statement of Fact")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Statement of Fact")
+                      }}
+                    
                     >
                       Statement of Fact
                     </p>

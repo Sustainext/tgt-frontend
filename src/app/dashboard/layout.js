@@ -24,6 +24,45 @@ export default function DashboardLayout({ children }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  useEffect(() => {
+    // Function to load the Elfsight script
+    const loadElfsightScript = () => {
+      const existingScript = document.querySelector(
+        'script[src="https://static.elfsight.com/platform/platform.js"]'
+      );
+
+      if (!existingScript) {
+        const script = document.createElement("script");
+        script.src = "https://static.elfsight.com/platform/platform.js";
+        script.async = true;
+        document.body.appendChild(script);
+      } else if (window.ElfsightPlatform) {
+        // Reinitialize Elfsight if it's already loaded
+        window.ElfsightPlatform.init();
+      }
+    };
+
+    loadElfsightScript();
+
+    // Observe URL changes for re-initializing the Elfsight script
+    const handleRouteChange = () => {
+      if (window.ElfsightPlatform) {
+        window.ElfsightPlatform.init();
+      }
+    };
+
+    // Listen for URL changes using the `useRouter`'s `push` method
+    const unsubscribe = () => {
+      const observer = new MutationObserver(handleRouteChange);
+      observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true,
+      });
+      return () => observer.disconnect();
+    };
+
+    return unsubscribe();
+  }, []);
 
   return (
     <section>
