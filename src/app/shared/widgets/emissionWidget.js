@@ -1138,7 +1138,7 @@ const EmissionWidget = React.memo(
                         toggleDropdown();
                         setActivitySearch("");
                       }}
-                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full xl:absolute md:absolute lg:absolute 2xl:absolute 4k:absolute 2k:absolute relative left-0  z-[100] min-w-[810px] xl:top-8 lg:top-8 md:top-8 2xl:top-8 4k:top-8 2k:top-8 top-1`}
+                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full xl:absolute md:absolute lg:absolute 2xl:absolute 4k:absolute 2k:absolute relative left-0  z-[100] min-w-[810px] xl:top-8 lg:top-8 md:top-8 2xl:top-8 4k:top-8 2k:top-8 top-1 -mt-[300px]`}
                       disabled={["assigned", "calculated", "approved"].includes(
                         rowType
                       )}
