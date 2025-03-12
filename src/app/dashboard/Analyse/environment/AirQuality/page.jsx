@@ -31,6 +31,11 @@ function generateColumns(apiResponse) {
     return columns;
   }
 
+  function removeContributionColumn(columns) {
+    return columns.filter(column => column.dataIndex !== "contribution");
+  }
+  
+
 const AnalyseAirQuality = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
@@ -48,9 +53,11 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
   const [loopen, setLoOpen] = useState(false);
+  const [dynamicColumn1,setdynamicColumn1]=useState(columns1)
   const [dynamicColumn3,setdynamicColumn3]=useState(columns3)
   const [dynamicColumn4,setdynamicColumn4]=useState(columns4)
   const [dynamicColumn5,setdynamicColumn5]=useState(columns5)
+  const [show,setShow]=useState(false)
   const [dateRange, setDateRange] = useState({
     start: null,
     end: null,
@@ -118,6 +125,15 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
         ozone_depleting_substances
       } = data;
 
+      if(air_emission_by_pollution && air_emission_by_pollution.length>0 && air_emission_by_pollution[0].contribution==""){
+        setdynamicColumn1(air_emission_by_pollution?.length>0?removeContributionColumn(columns1):columns1)
+        setShow(true)
+      }
+      else{
+        setdynamicColumn1(columns1)
+        setShow(false)
+      }
+      
       setdynamicColumn3(percentage_contribution_of_pollutant_by_location.length>0?generateColumns(percentage_contribution_of_pollutant_by_location):columns3)
       setdynamicColumn4(total_air_pollution_by_location.length>0?generateColumns(total_air_pollution_by_location):columns4)
       setdynamicColumn5(total_air_pollution_by_location_ppm_or_ugm2.length>0?generateColumns(total_air_pollution_by_location_ppm_or_ugm2):columns5)
@@ -128,6 +144,8 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
       setairEmissionByLocationKg(total_air_pollution_by_location)
       setairEmissionByLocationPpm(total_air_pollution_by_location_ppm_or_ugm2)
       setOdsSubstance(ozone_depleting_substances)
+
+     
 
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
@@ -480,98 +498,123 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
         </div>
         <div className="flex">
           <div className={`ps-4 w-[100%] me-4`}>
-            <div className="mb-6">
-              <p className="text-black text-[15px] font-bold ">
-              Air Emissions by Pollutants (in Kg)
-              </p>
-              <div
-                id="materials1"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
-              >
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 305-7a
-                  </div>
-                </div>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 305-7b
-                  </div>
-                </div>
-              </div>
-              <DynamicTable columns={columns1} data={airPollutantinKg} />
-            </div>
-            <div className="mb-6">
-              <p className="text-black text-[15px] font-bold ">
-              Air Emissions by Pollutants (in ppm or µg/m³)
-              </p>
-              <div
-                id="materials2"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
-              >
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 305-7
-                  </div>
-                </div>
+            {airPollutantinKg && airPollutantinKg.length>0 && (
+               <div className="mb-6">
+               <p className="text-black text-[15px] font-bold ">
+               Air Emissions by Pollutants (in Kg)
+               </p>
+               <div
+                 id="materials1"
+                 className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between"
+               >
+                {show? <p className="text-neutral-500 text-[13px] font-semibold mt-1">
+               Contribution % calculation cannot be performed due to differing units of the air pollutants.
+               </p>:(<div></div>)}
                 
-              </div>
-              <DynamicTable columns={columns2} data={airPollutantinPpm} />
-            </div>
-            <div className="mb-6">
-              <p className="text-black text-[15px] font-bold ">
-              Percentage Contribution of Air Pollutants by Location
-              </p>
-              <div
-                id="materials3"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
-              >
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 305-7
+               <div className="flex gap-2">
+               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                     GRI 305-7a
+                   </div>
+                 </div>
+                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                     GRI 305-7b
+                   </div>
+                 </div>
+               </div>
+                 
+               </div>
+               <DynamicTable columns={dynamicColumn1} data={airPollutantinKg} />
+             </div>
+            )}
+           
+            {airPollutantinPpm && airPollutantinPpm.length>0 && (
+               <div className="mb-6">
+               <p className="text-black text-[15px] font-bold ">
+               Air Emissions by Pollutants (in ppm or µg/m³)
+               </p>
+               <div
+                 id="materials2"
+                 className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+               >
+                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                     GRI 305-7
+                   </div>
+                 </div>
+                 
+               </div>
+               <DynamicTable columns={columns2} data={airPollutantinPpm} />
+             </div>
+            )}
+
+            {airPollutantByLOcation && airPollutantByLOcation.length>0 && (
+              (
+                <div className="mb-6">
+                <p className="text-black text-[15px] font-bold ">
+                Percentage Contribution of Air Pollutants by Location
+                </p>
+                <div
+                  id="materials3"
+                  className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+                >
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 305-7
+                    </div>
                   </div>
                 </div>
+                <DynamicTable columns={dynamicColumn3} data={airPollutantByLOcation} />
               </div>
-              <DynamicTable columns={dynamicColumn3} data={airPollutantByLOcation} />
-            </div>
-            <div className="mb-6">
-              <p className="text-black text-[15px] font-bold ">
-              Total  Air Emissions by Location (in Kg)		
-              </p>
-              <div
-                id="materials4"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
-              >
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 305-7a
-                  </div>
-                </div>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 305-7b
-                  </div>
-                </div>
-              </div>
-              <DynamicTable columns={dynamicColumn4} data={airEmissionByLocationKg} />
-            </div>
-            <div className="mb-6">
-              <p className="text-black text-[15px] font-bold ">
-              Total Air Emissions by Location (in ppm or µg/m³)
-              </p>
-              <div
-                id="materials5"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
-              >
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 305-7
-                  </div>
-                </div>
-                
-              </div>
-              <DynamicTable columns={dynamicColumn5} data={airEmissionByLocationPpm} />
-            </div>
+              )
+            )}
+           
+           
+            {airEmissionByLocationKg && airEmissionByLocationKg.length>0 && (
+               <div className="mb-6">
+               <p className="text-black text-[15px] font-bold ">
+               Total  Air Emissions by Location (in Kg)		
+               </p>
+               <div
+                 id="materials4"
+                 className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+               >
+                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                     GRI 305-7a
+                   </div>
+                 </div>
+                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                     GRI 305-7b
+                   </div>
+                 </div>
+               </div>
+               <DynamicTable columns={dynamicColumn4} data={airEmissionByLocationKg} />
+             </div>
+            )}
+           
+            {airEmissionByLocationPpm && airEmissionByLocationPpm.length>0 && (
+               <div className="mb-6">
+               <p className="text-black text-[15px] font-bold ">
+               Total Air Emissions by Location (in ppm or µg/m³)
+               </p>
+               <div
+                 id="materials5"
+                 className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+               >
+                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                     GRI 305-7
+                   </div>
+                 </div>
+                 
+               </div>
+               <DynamicTable columns={dynamicColumn5} data={airEmissionByLocationPpm} />
+             </div>
+            )}
+           
             <div className="mb-6">
               <p className="text-black text-[15px] font-bold ">
               Ozone Depleting Substances
