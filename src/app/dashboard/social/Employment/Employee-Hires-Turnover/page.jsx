@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import SocialTopBar from "../../socialTopBar";
 
-const EmployeeHiresTurnover = ({ apiData }) => {
+const EmployeeHiresTurnover = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -106,6 +106,7 @@ const EmployeeHiresTurnover = ({ apiData }) => {
           topic={"SocEmployment"}
           griData={griData}
           brsr={brsr}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">
@@ -151,9 +152,15 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(68vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -181,7 +188,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setYear={setYear}
         setToggleStatus={setToggleStatus}
       />
-      <p className="mt-6 mx-4 text-[12px] mb-3">
+      <p className="xl:mt-6 lg:mt-6 md:mt-6 2xl:mt-6 4k:mt-6 2k:mt-6 mx-4 text-[12px] mb-3">
         {" "}
         Please ensure that data added in this section corresponds to the
         location selected above
