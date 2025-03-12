@@ -25,16 +25,31 @@ const OrgTree = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeNode, setActiveNode] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedRole = localStorage.getItem("isAdmin");
-      const isRoleTrue = storedRole === "true";
-      if (storedRole) {
-        setIsAdmin(isRoleTrue);
-        console.log("Stored role:", isRoleTrue);
+    const fetchUserRole = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const response = await axiosInstance.get("/api/auth/get_user_roles/");
+        
+        if (response.status === 200) {
+          const data = await response.data;
+          console.log("Fetched user role:", data);
+          setIsAdmin(data.admin);
+        } else {
+          console.error("Failed to fetch user role");
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      } finally {
+        setLoading(false); 
       }
-    }
+    };
+
+    fetchUserRole();
   }, []);
 
   // Add handleNodeClick function

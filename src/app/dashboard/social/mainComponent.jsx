@@ -90,31 +90,39 @@ const Social = () => {
   const [activeTab, setActiveTab] = useState(
     "Management of Material topic OHS"
   );
-  
+  const [mobileopen, setMobileopen] = useState(false);
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    
   };
 
   const dispatch = useDispatch();
-  const { corporate_id, organization_id, start_date, end_date, data,materiality_year, loading, error } = useSelector(
-    (state) => state.materialitySlice
-  );
+  const {
+    corporate_id,
+    organization_id,
+    start_date,
+    end_date,
+    data,
+    materiality_year,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
 
-  const loadMaterialityDashboard=()=>{
-     dispatch(
-        fetchMaterialityData({
-          corporate: corporate_id,
-          organization: organization_id,
-          start_date:materiality_year?`${materiality_year}-01-01`:'',
-          end_date:materiality_year?`${materiality_year}-12-31`:'',
-        })
-      );
-    }
+  const loadMaterialityDashboard = () => {
+    dispatch(
+      fetchMaterialityData({
+        corporate: corporate_id,
+        organization: organization_id,
+        start_date: materiality_year ? `${materiality_year}-01-01` : "",
+        end_date: materiality_year ? `${materiality_year}-12-31` : "",
+      })
+    );
+  };
 
-    useEffect(() => {
-      loadMaterialityDashboard()
-    }, [dispatch]);
+  useEffect(() => {
+    loadMaterialityDashboard();
+  }, [dispatch]);
 
   useEffect(() => {
     // List of tabs related to Energy\
@@ -245,133 +253,353 @@ const Social = () => {
   return (
     <>
       <div className="w-full">
-        <div className="flex">
-          <div className="">
-            <Aside activeTab={activeTab} handleTabClick={handleTabClick} setActiveTab={setActiveTab} apiData={data} />
+        <div className="block xl:flex lg:flex md:flex 2xl:flex 4k:flex">
+          <div className=" hidden xl:block lg:block md:block 2xl:block 4k:block">
+            <Aside
+              activeTab={activeTab}
+              handleTabClick={handleTabClick}
+              apiData={data}
+              setMobileopen={setMobileopen}
+            />
           </div>
-          <div
-            className={`${
-              open
-                ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw]"
-                : " sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw]"
-            }`}
-          >
-            {/* Emissions start */}
-            {activeTab === "Management of Material topic Employment" && (
-              <EmploymentMaterialtopic apiData={data} />
-            )}
-             {activeTab === "Identifying Information" && (
-              <IdentifingInformation apiData={data} />
-            )}
-            {activeTab === "Annual report" && (
-              <AnnualReport apiData={data} />
-            )}
-            {activeTab === "Employee Hires & Turnover" && (
-              <EmployeeHiresTurnover apiData={data} />
-            )}
-            {activeTab === "Benefits" && <Benefits apiData={data} />}
-            {activeTab === "Parental Leave" && <Parentalleave apiData={data} />}
-            {activeTab === "Retirement Benefits" && <Definedbenefit apiData={data} />}
-            {activeTab === "Diversity of Employees" && <Diversityemploy apiData={data} />}
-            {activeTab === "Management of Material topic Labor Management" && (
-              <LaborManagementMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Notice Period" && <Noticeperiod apiData={data} />}
-            {activeTab === "Collective Bargaining" && <CollectiveBargaining apiData={data} />}
+          {mobileopen ? (
+            <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+              <div>
+                <Aside
+                  activeTab={activeTab}
+                  handleTabClick={handleTabClick}
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              </div>
+            </div>
+          ) : (
+            <div
+              className={`${
+                open
+                  ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw]"
+                  : " sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw]"
+              }`}
+            >
+              {/* Emissions start */}
+              {activeTab === "Management of Material topic Employment" && (
+                <EmploymentMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Identifying Information" && (
+                <IdentifingInformation
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Annual report" && (
+                <AnnualReport apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Employee Hires & Turnover" && (
+                <EmployeeHiresTurnover
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Benefits" && (
+                <Benefits apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Parental Leave" && (
+                <Parentalleave apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Retirement Benefits" && (
+                <Definedbenefit apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Diversity of Employees" && (
+                <Diversityemploy apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab ===
+                "Management of Material topic Labor Management" && (
+                <LaborManagementMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Notice Period" && (
+                <Noticeperiod apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Collective Bargaining" && (
+                <CollectiveBargaining
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
 
-            {activeTab === "Management of Material topic OHS" && (
-              <OHSMaterialtopic apiData={data} />
-            )}
-            {activeTab === "OHS Management" && <Ohsmanagment apiData={data} />}
-            {activeTab === "Risk Assessment" && <Riskassessment apiData={data} />}
-            {activeTab === "Hazard Reporting" && <HazardReporting apiData={data} />} 
-            {activeTab === "Workers Right" && <WorkersRight apiData={data} />}
-            {activeTab === "OHS Sevices" && <Ohsservices apiData={data} />}
-            {activeTab === "Worker Involvement in OHS" && <Workinvolvement apiData={data} />}
-            {activeTab === "OHS Training" && <Ohstraining apiData={data} />}
-            {activeTab === "Promotion of Health" && <Promotionhealth apiData={data} />}
-            {activeTab === "Health Risk Addressed" && <HealthRiskAddressed apiData={data} />}
-            {activeTab === "Prevention of OHS Impact" && (
-              <Preventionohsimpact apiData={data} />
-            )}
-            {activeTab === "OHS Management System Coverage" && (
-              <Ohsmanagementsystemcoverage apiData={data} />
-            )}
-            {activeTab === "Injuries" && <Injuries apiData={data} />}
-            {activeTab === "Hazard Injuries" && <InjuriesHazards apiData={data} />}
-            {activeTab === "Ill-health" && <Illhealth apiData={data} />}
-            {activeTab === "Hazards - Ill-health" && <IllhealthHazard apiData={data} />}
+              {activeTab === "Management of Material topic OHS" && (
+                <OHSMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "OHS Management" && (
+                <Ohsmanagment apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Risk Assessment" && (
+                <Riskassessment apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Hazard Reporting" && (
+                <HazardReporting apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Workers Right" && (
+                <WorkersRight apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "OHS Sevices" && (
+                <Ohsservices apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Worker Involvement in OHS" && (
+                <Workinvolvement apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "OHS Training" && (
+                <Ohstraining apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Promotion of Health" && (
+                <Promotionhealth apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Health Risk Addressed" && (
+                <HealthRiskAddressed
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Prevention of OHS Impact" && (
+                <Preventionohsimpact
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "OHS Management System Coverage" && (
+                <Ohsmanagementsystemcoverage
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Injuries" && (
+                <Injuries apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Hazard Injuries" && (
+                <InjuriesHazards apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Ill-health" && (
+                <Illhealth apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Hazards - Ill-health" && (
+                <IllhealthHazard apiData={data} setMobileopen={setMobileopen} />
+              )}
 
-            {activeTab ===
-              "Management of Material topic Training and Development" && (
-              <TrainingMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Training hours" && <Traininghours apiData={data} />}
-            {activeTab === "Skill Upgrade" && <Skillupgrade apiData={data} />}
-            {activeTab === "Performance & Career Development" && (
-              <Performancedevelopment apiData={data} />
-            )}
+              {activeTab ===
+                "Management of Material topic Training and Development" && (
+                <TrainingMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Training hours" && (
+                <Traininghours apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Skill Upgrade" && (
+                <Skillupgrade apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Performance & Career Development" && (
+                <Performancedevelopment
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
 
-            {activeTab ===
-              "Management of Material topic Diversity & Equal Oppportunity" && (
-              <DiversityInclusionMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Diversity of the Board" && <DiversityBoard apiData={data} />}
-           
-            {activeTab === "Salary Ratio" && <Salaryratio apiData={data} />}
-            {activeTab === "Entry Level Wage" && <Ratiosstandard apiData={data} />}
+              {activeTab ===
+                "Management of Material topic Diversity & Equal Oppportunity" && (
+                <DiversityInclusionMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Diversity of the Board" && (
+                <DiversityBoard apiData={data} setMobileopen={setMobileopen} />
+              )}
 
-            {activeTab ===
-              "Management of Material topic Non Discrimination" && (
-              <NonDiscriminationMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Incidents of Discrimination" && (
-              <IncidentsofDiscrimination apiData={data} />
-            )}
-            {activeTab === "Management of Material topic Human Rights" && (
-              <HumanRightsMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Community Engagement" && <CommunityEngagement apiData={data} />}
-            {activeTab === "Impact on Community" && <ImpactonCommunity apiData={data} />}
-            {activeTab === "Indigenous People" && <IndigenousPeople apiData={data} />}
-            {activeTab === "Security Personnel" && <Securitypersonnel apiData={data} />}
-            {activeTab === "Security Personnel2" && <Securitypersonnel2 apiData={data} />} 
+              {activeTab === "Salary Ratio" && (
+                <Salaryratio apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Entry Level Wage" && (
+                <Ratiosstandard apiData={data} setMobileopen={setMobileopen} />
+              )}
 
-            {activeTab === "Management of Material topic Labour" && (
-              <ChildForcedLabourMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Child Labour" && <Childlabour apiData={data} />}
-            {activeTab === "Forced or Compulsory Labour" && <Forcedorcompulsorylabour apiData={data} />}
+              {activeTab ===
+                "Management of Material topic Non Discrimination" && (
+                <NonDiscriminationMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Incidents of Discrimination" && (
+                <IncidentsofDiscrimination
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Management of Material topic Human Rights" && (
+                <HumanRightsMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Community Engagement" && (
+                <CommunityEngagement
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Impact on Community" && (
+                <ImpactonCommunity
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Indigenous People" && (
+                <IndigenousPeople
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Security Personnel" && (
+                <Securitypersonnel
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Security Personnel2" && (
+                <Securitypersonnel2
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
 
-            {activeTab === "Management of Material topic Supply" && (
-              <SupplierMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Suppliers Screened" && <Impactsactionstaken apiData={data} />}
-            {activeTab === "Impacts & Actions Taken" && <Suppliersscreened apiData={data} />}
-            {activeTab === "Procurement Practices" && <SoicalProcurementPractices apiData={data} />}
-            {activeTab === "Management of Material topic Safety" && (
-              <HealthSafetyMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Product/Service Safety" && <ProductServiceSafety apiData={data} />}
-            {activeTab === "Compliance" && <Compliance apiData={data} />}
-            {activeTab === "Products & Service" && <ProductsService apiData={data} />}   
-            {activeTab === "Management of Material topic Marketing" && (
-              <MarketingLabelingMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Product/Service labelling" && <ProductServicelabelling apiData={data} />}
-            {activeTab === "Product/Service Categories Assessed for Compliance" && <ProductServicelabelling2 apiData={data} />}
-            {activeTab === "Non compliance incidents- Labelling" && <NoncomplianceincidentsLabelling apiData={data} />}
-            {activeTab === "Statement of non compliance - Labeling" && <StatementnoncomplianceLabeling apiData={data} />}
-            {activeTab === "Non compliance incidents - Marketing" && <NoncomplianceincidentsMarketing apiData={data} />}
-            {activeTab === "Statement of non compliance - Marketing" && <StatementnoncomplianceMarketing apiData={data} />}
-            {activeTab === "Management of Material topic Privacy" && (
-              <CustomerPrivacyMaterialtopic apiData={data} />
-            )}
-            {activeTab === "Customer Privacy" && <CustomerPrivacy apiData={data} />}  
-        
-            {activeTab === "Statement of Fact" && <CustomerPrivacy2 apiData={data} />} 
-   
-          </div>
+              {activeTab === "Management of Material topic Labour" && (
+                <ChildForcedLabourMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Child Labour" && (
+                <Childlabour apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Forced or Compulsory Labour" && (
+                <Forcedorcompulsorylabour
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+
+              {activeTab === "Management of Material topic Supply" && (
+                <SupplierMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Suppliers Screened" && (
+                <Impactsactionstaken
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Impacts & Actions Taken" && (
+                <Suppliersscreened
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Procurement Practices" && (
+                <SoicalProcurementPractices
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Management of Material topic Safety" && (
+                <HealthSafetyMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Product/Service Safety" && (
+                <ProductServiceSafety
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Compliance" && (
+                <Compliance apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Products & Service" && (
+                <ProductsService apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Management of Material topic Marketing" && (
+                <MarketingLabelingMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Product/Service labelling" && (
+                <ProductServicelabelling
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Product/Service Categories Assessed for Compliance" && (
+                <ProductServicelabelling2
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Non compliance incidents- Labelling" && (
+                <NoncomplianceincidentsLabelling
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Statement of non compliance - Labeling" && (
+                <StatementnoncomplianceLabeling
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Non compliance incidents - Marketing" && (
+                <NoncomplianceincidentsMarketing
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Statement of non compliance - Marketing" && (
+                <StatementnoncomplianceMarketing
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Management of Material topic Privacy" && (
+                <CustomerPrivacyMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Customer Privacy" && (
+                <CustomerPrivacy apiData={data} setMobileopen={setMobileopen} />
+              )}
+
+              {activeTab === "Statement of Fact" && (
+                <CustomerPrivacy2
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
