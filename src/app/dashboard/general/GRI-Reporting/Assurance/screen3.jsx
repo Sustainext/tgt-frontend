@@ -154,11 +154,11 @@ const uiSchema = {
         },
       },
       Q6: {
-        "ui:hading": "Please describe any limitations of the assurance process",
+        "ui:hading": "Limitation of the assurance process",
         "ui:hadingtooltip": "This section documents data corresponding to the limitation of the assurance process. ",
         "ui:hadingtooltipdisplay": "block",
         "ui:title":
-          "What is the level of Assurance obtained?",
+          "Please describe any limitations of the assurance process",
         "ui:tooltip":
           "Please provide a description of any limitations of the assurance process.  ",
         "ui:tooltipdisplay": "block",

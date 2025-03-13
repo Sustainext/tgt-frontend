@@ -256,7 +256,7 @@ const CustomFileUploadWidget = ({
         {/* Preview Modal */}
         {showModal && previewData && (
           <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-1 rounded-lg w-[86%] h-[90%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
+            <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-6">
               <div className="flex justify-between mt-4 mb-4">
                 <div>
                   <h5 className="mb-4 ml-2 font-semibold">{fileName}</h5>
@@ -280,8 +280,8 @@ const CustomFileUploadWidget = ({
                   </div>
                 </div>
               </div>
-              <div className="block justify-between xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
-                <div className="relative w-[105vw] xl:w-[55vw] lg:w-[55vw] 2xl:w-[55vw] 4k:w-[55vw] 2k:w-[55vw] h-[115vw] xl:h-[45vw] lg:h-[45vw] 2xl:h-[45vw] 4k:h-[45vw] 2k:h-[45vw]">
+              <div className="flex justify-between">
+                <div className="relative w-[55vw] h-[45vw]">
                   {fileType.startsWith("image") ? (
                     <img
                       src={previewData}
@@ -295,10 +295,21 @@ const CustomFileUploadWidget = ({
                       className="w-full h-full object-contain"
                     />
                   ) : (
-                    <p>File preview not available.Please download and verify</p>
+                    <div className="flex flex-col items-center justify-center h-full">
+                      <p>
+                        File preview not available.Please download and verify
+                      </p>
+                      <a
+                        href={previewData}
+                        download={fileName}
+                        className="mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                      >
+                        Download File
+                      </a>
+                    </div>
                   )}
                 </div>
-                <div className="w-[211px] mx-2 xl:mx-0 lg:mx-0 md:mx-0 2xl:mx-0 4k:mx-0 2k:mx-0">
+                <div className="w-[211px]">
                   <div className="mb-4 mt-2">
                     <h2 className="text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide">
                       File information

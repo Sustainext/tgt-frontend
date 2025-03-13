@@ -2,12 +2,12 @@
 import MyGoals from "./MyGoals";
 import MyTasks from "./TasksNew/MyTask";
 import Preferences from "./Preferences/page";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 
 const HomeDashboard = ({setActiveTab}) => {
   return (
     <>
-    <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
+    {/* <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} /> */}
       <div className="xl:flex 2xl:flex lg:flex md:flex xl:space-x-3 lg:space-x-3 2xl:space-x-3 md:space-x-3 pe-4 ">
         <div className="xl:w-1/2 2xl:w-1/2 lg:w-1/2 md:w-1/2 space-y-4 mb-8">
           <div>
