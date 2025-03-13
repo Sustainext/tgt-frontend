@@ -171,7 +171,7 @@ const MyGoals = () => {
       }, 1000); // Delay to allow toast to show
   
     } catch (error) {
-      toast.error("Error saving goal");
+      toast.error("Error saving goal: "+ error.message);
     } finally {
       LoaderClose();
     }
@@ -249,7 +249,7 @@ const MyGoals = () => {
 
       return (
         <>
-        <ToastContainer style={{ fontSize: "12px" }} />
+        {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
           <div
             key={goal.id}
             className="flex justify-between border-b border-[#ebeced] py-2"

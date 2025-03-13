@@ -696,7 +696,7 @@ const MyTask = ({HomeActiveTab}) => {
 
   return (
     <>
-    <ToastContainer style={{ fontSize: "12px" }} />
+    {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
       <div className="rounded-lg shadow border border-gray-200 p-4 px-6 h-[450px] xl:h-[470px] lg:h-[470px] md:h-[470px] 4k:h-[470px] overflow-x-auto relative table-scrollbar">
         <TaskHeader onAddTask={() => toggleModal("isModalOpen", true)} />
         <TaskTabs
@@ -722,7 +722,7 @@ const MyTask = ({HomeActiveTab}) => {
           )}
         </TaskTable>
 
-        <div className="mt-3 flex justify-end px-4 absolute bottom-4 right-4">
+        <div className="mt-3 flex justify-end px-4 sticky -bottom-4 right-4 bg-white rounded-sm h-8">
           <button
             onClick={()=>HomeActiveTab('tab3')}
             className="flex items-center text-blue-500 hover:text-blue-600 transition-colors"
@@ -892,6 +892,16 @@ const MyTask = ({HomeActiveTab}) => {
               const success = await deleteTask(selectedTask?.id);
               if (success) {
                 toggleModal("isMyTaskEditModalOpen", false);
+                // toast.success("Task deleted successfully", {
+                //           position: "top-right",
+                //           autoClose: 3000,
+                //           hideProgressBar: false,
+                //           closeOnClick: true,
+                //           pauseOnHover: true,
+                //           draggable: true,
+                //           progress: undefined,
+                //           theme: "light",
+                //         });
                 setSelectedTask(null);
                 await fetchTasks();
               }
@@ -914,6 +924,16 @@ const MyTask = ({HomeActiveTab}) => {
               console.log("Edit Task Modal Response:", success);
               if (success) {
                 toggleModal("isMyTaskEditModalOpen", false);
+                toast.success("Task updated successfully", {
+                          position: "top-right",
+                          autoClose: 3000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "light",
+                        });
                 setSelectedTask(null);
                 await fetchTasks();
               }
