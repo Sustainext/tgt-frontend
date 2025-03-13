@@ -23,11 +23,7 @@ const tabs = [
     tooltip:
       "Individuals whose working hours vary and are not guaranteed, often with part-time or contract-based arrangements.",
   },
-  { title: "", tooltip: "Tooltip for an empty tab." },
-  { title: "", tooltip: "Tooltip for another empty tab." },
-  { title: "", tooltip: "Tooltip for an empty tab." },
-  { title: "", tooltip: "Tooltip for another empty tab." },
-  { title: "", tooltip: "Tooltip for an empty tab." },
+
 
   // Additional empty tabs as needed
 ];
@@ -60,14 +56,14 @@ const Benefitstab = ({ selectedOrg, selectedCorp, year,togglestatus }) => {
           </div>
         </div>
         {/* Tabs */}
-        <ul className="flex cursor-pointer">
+        <ul className="flex flex-wrap justify-center md:justify-start cursor-pointer w-full border-b-2 border-gray-30">
           {tabs.map((tab, index) => (
             <li
               key={index}
-              className={`flex justify-center items-center w-[172px] py-2 text-[12px] border-b-2 ${
+              className={`flex justify-center items-center w-full sm:w-1/2 md:w-[172px] py-2 text-[12px]  ${
                 activeTabIndex === index && tab.title
-                  ? "border-blue-500 text-blue-600"
-                  : " text-gray-400 cursor-pointer border-gray-300"
+                  ? "border-blue-500 text-blue-600 border-b-2"
+                  : " text-gray-400 cursor-pointer "
               } ${tab.title ? " hover:text-blue-600 " : ""}`}
               onClick={() => tab.title && setActiveTabIndex(index)}
               style={{ pointerEvents: tab.title ? "auto" : "none" }}

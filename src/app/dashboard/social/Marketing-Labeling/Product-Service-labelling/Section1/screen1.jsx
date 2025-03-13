@@ -111,7 +111,7 @@ const uiSchema = {
     },
     Q4: {
       "ui:title": "Safe use of the product or service",
-      "ui:tooltip": "PDescribe about the safe use of the product or service.",
+      "ui:tooltip": "Describe about the safe use of the product or service.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,

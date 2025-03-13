@@ -21,7 +21,7 @@ const TextareaWidget2 = (props) => {
   return (
     <>
       <div className="mb-6 px-1">
-        <div className="flex justify-between items-center mb-2 w-full">
+        <div className="flex justify-between items-center mb-2 w-full xl:w-[95%] lg:w-[95%] 2xl:w-[95%] 4k:w-[95%] 2k:w-[95%] md:w-[95%]">
           <div className="flex relative">
             <div>
               <h6

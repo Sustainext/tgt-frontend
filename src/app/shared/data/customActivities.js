@@ -39,13 +39,6 @@ export const categoryMappings = {
       checkConditions: false,
     },
   ],
-  Vehicles: [
-    {
-      source: "EXIOBASE",
-      year: "2019",
-      checkConditions: false,
-    },
-  ],
   "Clothing and Footwear": [
     {
       source: "EXIOBASE",
@@ -905,6 +898,11 @@ export const categoryMappings = {
         years: ["2021", "2022", "2023", "2024"],
         regions: ["*"],
       },
+    },
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
     },
   ],
   "Air Travel": [

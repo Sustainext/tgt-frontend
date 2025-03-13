@@ -275,6 +275,7 @@ const Aside = ({
       setIsSupplierVisible(false);
     }
   }, [activeTab]);
+
   const toggleSidebar = () => {
     setMobileopen(false);
   };
@@ -331,9 +332,11 @@ const Aside = ({
                             ? "text-blue-400"
                             : "bg-transparent text-[#727272]"
                         }`}
-                        onClick={() =>
-                          handleTabClick("Identifying Information")
-                        }
+                        onClick={() => {
+                          handleTabClick("Identifying Information");
+                          toggleSidebar(); // Call the sidebar close function
+                        }}
+                    
                       >
                         Identifying Information
                       </p>
@@ -346,7 +349,11 @@ const Aside = ({
                             ? "text-blue-400"
                             : "bg-transparent text-[#727272]"
                         }`}
-                        onClick={() => handleTabClick("Annual report")}
+                        onClick={() => {
+                          handleTabClick("Annual report");
+                          toggleSidebar(); // Call the sidebar close function
+                        }}
+                    
                       >
                         Annual report
                       </p>
@@ -432,9 +439,11 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
-                            handleTabClick("Management of Material topic OHS")
-                          }
+                          onClick={() => {
+                            handleTabClick("Management of Material topic OHS");
+                            toggleSidebar(); // Call the sidebar close function
+                          }}
+                     
                         >
                           Management of Material topic
                         </p>
@@ -456,7 +465,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("OHS Management")}
+                      onClick={() => {
+                        handleTabClick("OHS Management");
+                        toggleSidebar(); // Call the sidebar close function
+                      }}
+                   
                     >
                       OHS Management
                     </p>
@@ -468,7 +481,10 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Risk Assessment")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Risk Assessment")
+                      }}
                     >
                       Risk Assessment
                     </p>
@@ -480,7 +496,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Hazard Reporting")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Hazard Reporting")
+                      }}
+                    
                     >
                       Hazard Reporting
                     </p>
@@ -492,7 +512,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Workers Right")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Workers Right")
+                      }}
+                     
                     >
                       Workers Right
                     </p>
@@ -504,7 +528,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("OHS Sevices")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("OHS Sevices")
+                      }}
+                      
                     >
                       OHS Sevices
                     </p>
@@ -516,9 +544,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Worker Involvement in OHS")
-                      }
+                      }}
+                  
                     >
                       Worker Involvement in OHS
                     </p>
@@ -530,7 +560,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("OHS Training")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("OHS Training")
+                      }}
+                 
                     >
                       OHS Training
                     </p>
@@ -542,7 +576,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Promotion of Health")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Promotion of Health")
+                      }}
+                  
                     >
                       Promotion of Health
                     </p>
@@ -554,7 +592,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Health Risk Addressed")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Health Risk Addressed")
+                      }}
+              
                     >
                       Health Risk Addressed
                     </p>
@@ -566,7 +608,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Prevention of OHS Impact")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Prevention of OHS Impact")
+                      }}
+                
                     >
                       Prevention of OHS Impact
                     </p>
@@ -584,9 +630,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("OHS Management System Coverage")
-                      }
+                      }}
+                   
                     >
                       OHS Management System Coverage
                     </p>
@@ -598,7 +646,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Injuries")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Injuries")
+                      }}
+                    
                     >
                       Injuries
                     </p>
@@ -610,7 +662,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Hazard Injuries")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Hazard Injuries")
+                      }}
+                    
                     >
                       Injuries-Hazards
                     </p>
@@ -623,7 +679,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Ill-health")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Ill-health")
+                      }}
+                   
                     >
                       Ill-health
                     </p>
@@ -635,7 +695,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Hazards - Ill-health")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Hazards - Ill-health")
+                      }}
+                    
                     >
                       Ill-health-Hazards
                     </p>
@@ -736,7 +800,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Community Engagement")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Community Engagement")
+                      }}
+                   
                     >
                       Local Community Engagement
                     </p>
@@ -748,7 +816,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Impact on Community")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Impact on Community")
+                      }}
+                    
                     >
                       Impact on Community
                     </p>
@@ -760,7 +832,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Indigenous People")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Indigenous People")
+                      }}
+                  
                     >
                       Indigenous People
                     </p>
@@ -772,7 +848,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Security Personnel")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Security Personnel")
+                      }}
+                    
                     >
                       Security Personnel
                     </p>
@@ -784,7 +864,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Security Personnel2")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Security Personnel2")
+                      }}
+                 
                     >
                       Training requirements apply to third party organisations
                     </p>
@@ -852,11 +936,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Labor Management"
                             )
-                          }
+                          }}
+                     
                         >
                           Management of Material topic
                         </p>
@@ -878,7 +964,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Notice Period")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Notice Period")
+                      }}
+                
                     >
                       Notice Period
                     </p>
@@ -890,7 +980,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Collective Bargaining")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Collective Bargaining")
+                      }}
+                   
                     >
                       Collective Bargaining
                     </p>
@@ -960,11 +1054,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Labour"
                             )
-                          }
+                          }}
+                          
                         >
                           Management of Material topic
                         </p>
@@ -987,7 +1083,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Child Labour")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Child Labour")
+                      }}
+                     
                     >
                       Child Labour
                     </p>
@@ -999,9 +1099,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Forced or Compulsory Labour")
-                      }
+                      }}
+                  
                     >
                       Forced or Compulsory Labour
                     </p>
@@ -1098,9 +1200,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Employee Hires & Turnover")
-                      }
+                      }}
+                 
                     >
                       Employee Hires & Turnover
                     </p>
@@ -1112,7 +1216,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Benefits")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Benefits")
+                      }}
+               
                     >
                       Benefits
                     </p>
@@ -1124,7 +1232,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Parental Leave")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Parental Leave")
+                      }}
+                     
                     >
                       Parental Leave
                     </p>
@@ -1136,7 +1248,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Retirement Benefits")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Retirement Benefits")
+                      }}
+                     
                     >
                       Retirement Benefits
                     </p>
@@ -1148,7 +1264,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Diversity of Employees")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Diversity of Employees")
+                      }}
+                      
                     >
                       Diversity of Employees
                     </p>
@@ -1230,11 +1350,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Training and Development"
                             )
-                          }
+                          }}
+                      
                         >
                           Management of Material topic
                         </p>
@@ -1257,7 +1379,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Training hours")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Training hours")
+                      }}
+                    
                     >
                       Training hours
                     </p>
@@ -1269,7 +1395,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Skill Upgrade")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Skill Upgrade")
+                      }}
+                    
                     >
                       Employee Skill Development
                     </p>
@@ -1281,9 +1411,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Performance & Career Development")
-                      }
+                      }}
+                  
                     >
                       Employee Performance and Career Development
                     </p>
@@ -1354,11 +1486,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Privacy"
                             )
-                          }
+                          }}
+                       
                         >
                           Management of Material topic
                         </p>
@@ -1381,7 +1515,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Customer Privacy")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Customer Privacy")
+                      }}
+               
                     >
                       Customer Privacy
                     </p>
@@ -1393,7 +1531,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Statement of Fact")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Statement of Fact")
+                      }}
+                    
                     >
                       Statement of Fact
                     </p>

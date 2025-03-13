@@ -79,7 +79,7 @@ const uiSchema = {
         titles: [
           {
             title: "Employee Category",
-            tooltip: "What is the ratio of the basic salary of women to men for each employee category. Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties.",
+            tooltip: "Please specify the employee categories.",
             colSpan: 1,
           },
           {

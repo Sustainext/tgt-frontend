@@ -61,7 +61,16 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, task = {} }) => {
       }));
     } catch (error) {
       console.error("Error uploading file:", error);
-      toast.error("Failed to upload file");
+      toast.error("Failed to upload file", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FiPlus, FiCheckCircle } from "react-icons/fi";
-import { toast } from "react-toastify";
+import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Moment from "react-moment";
 import { useAuth } from "../../../Context/auth";
@@ -171,7 +171,7 @@ const MyGoals = () => {
       }, 1000); // Delay to allow toast to show
   
     } catch (error) {
-      toast.error("Error saving goal");
+      toast.error("Error saving goal: "+ error.message);
     } finally {
       LoaderClose();
     }
@@ -249,6 +249,7 @@ const MyGoals = () => {
 
       return (
         <>
+        {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
           <div
             key={goal.id}
             className="flex justify-between border-b border-[#ebeced] py-2"

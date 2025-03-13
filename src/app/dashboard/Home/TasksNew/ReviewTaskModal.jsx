@@ -53,7 +53,16 @@ const ReviewTaskModal = ({
       await onApprove(taskassigndata.id);
     } else if (isModalOpenReassign) {
       if (!date || !usernameasssin) {
-        toast.error("Please fill in all fields");
+        toast.error("Please fill in all fields", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         return;
       }
       await onReassign(taskassigndata.id, {
@@ -62,7 +71,16 @@ const ReviewTaskModal = ({
       });
     } else if (isModalOpenReject) {
       if (!date || !comments) {
-        toast.error("Please fill in all fields");
+        toast.error("Please fill in all fields", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         return;
       }
       await onReject(taskassigndata.id, {
