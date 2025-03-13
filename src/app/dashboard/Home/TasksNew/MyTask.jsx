@@ -3,7 +3,7 @@ import {
   FiArrowRight,
 } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { BlobServiceClient } from "@azure/storage-blob";
@@ -319,20 +319,47 @@ const MyTask = ({HomeActiveTab}) => {
       });
 
       if (response) {
-        toast.success("Task has been approved");
+        toast.success("Task has been approved", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         toggleModal("isReviewtask", false);
         fetchTasks();
       }
     } catch (error) {
       console.error("Error approving task:", error);
-      toast.error("Failed to approve task");
+      toast.error("Failed to approve task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
   const submitReAssign = async (taskId, data) => {
     try {
       if (!data.assigned_to || !data.deadline) {
-        toast.error("Please fill in all fields");
+        toast.error("Please fill in all fields", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         return;
       }
 
@@ -349,20 +376,47 @@ const MyTask = ({HomeActiveTab}) => {
       });
 
       if (response) {
-        toast.success("Task has been reassigned successfully");
+        toast.success("Task has been reassigned successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         toggleModal("isReviewtask", false);
         fetchTasks();
       }
     } catch (error) {
       console.error("Error reassigning task:", error);
-      toast.error("Failed to reassign task");
+      toast.error("Failed to reassign task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
   const submitReject = async (taskId, data) => {
     try {
       if (!data.deadline || !data.comments) {
-        toast.error("Please fill in all fields");
+        toast.error("Please fill in all fields", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         return;
       }
 
@@ -378,13 +432,31 @@ const MyTask = ({HomeActiveTab}) => {
       });
 
       if (response) {
-        toast.success("Task has been rejected");
+        toast.success("Task has been rejected", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         toggleModal("isReviewtask", false);
         fetchTasks();
       }
     } catch (error) {
       console.error("Error rejecting task:", error);
-      toast.error("Failed to reject task");
+      toast.error("Failed to reject task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -427,13 +499,31 @@ const MyTask = ({HomeActiveTab}) => {
       }));
     } catch (error) {
       console.error("Error uploading file:", error);
-      toast.error("Failed to upload file");
+      toast.error("Failed to upload file", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
   
   const handleFileDelete = async () => {
     if (!taskassigndata.file_data || !taskassigndata.file_data.url) {
-      toast.error("No file found to delete.");
+      toast.error("No file found to delete.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
   
@@ -459,10 +549,28 @@ const MyTask = ({HomeActiveTab}) => {
         file_data: {}, 
       }));
   
-      toast.success("File deleted successfully.");
+      toast.success("File deleted successfully.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (error) {
       console.error("Error deleting file:", error);
-      toast.error("Failed to delete file.");
+      toast.error("Failed to delete file.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
   
@@ -535,7 +643,16 @@ const MyTask = ({HomeActiveTab}) => {
     const { value1, unit1 } = taskassigndata;
 
     if (!value1 || !unit1) {
-      toast.error("Data cannot be empty");
+      toast.error("Data cannot be empty", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
 
@@ -551,16 +668,35 @@ const MyTask = ({HomeActiveTab}) => {
           task_status: "under_review",
         });
         handleModalClose();
-        toast.success("Data has been added successfully");
+        toast.success("Data has been added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (error) {
       console.error("Error in SubmitFilledData:", error);
-      toast.error("Failed to submit data. Please try again.");
+      toast.error("Failed to submit data. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
   return (
     <>
+    {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
       <div className="rounded-lg shadow border border-gray-200 p-4 px-6 h-[450px] xl:h-[470px] lg:h-[470px] md:h-[470px] 4k:h-[470px] overflow-x-auto relative table-scrollbar">
         <TaskHeader onAddTask={() => toggleModal("isModalOpen", true)} />
         <TaskTabs
@@ -586,7 +722,7 @@ const MyTask = ({HomeActiveTab}) => {
           )}
         </TaskTable>
 
-        <div className="mt-3 flex justify-end px-4 absolute bottom-4 right-4">
+        <div className="mt-3 flex justify-end px-4 sticky -bottom-4 right-4 bg-white rounded-sm h-8">
           <button
             onClick={()=>HomeActiveTab('tab3')}
             className="flex items-center text-blue-500 hover:text-blue-600 transition-colors"
@@ -687,14 +823,32 @@ const MyTask = ({HomeActiveTab}) => {
             });
 
             if (response) {
-              toast.success("Task has been submitted for review");
+              toast.success("Task has been submitted for review", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
               setSelfTaskFillModalOpen(false);
               setSelectedTask(null);
               await fetchTasks();
             }
           } catch (error) {
             console.error("Error submitting task:", error);
-            toast.error("Failed to submit task");
+            toast.error("Failed to submit task", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
           }
         }}
         onFileUpload={handleFileUpload}
@@ -738,6 +892,16 @@ const MyTask = ({HomeActiveTab}) => {
               const success = await deleteTask(selectedTask?.id);
               if (success) {
                 toggleModal("isMyTaskEditModalOpen", false);
+                // toast.success("Task deleted successfully", {
+                //           position: "top-right",
+                //           autoClose: 3000,
+                //           hideProgressBar: false,
+                //           closeOnClick: true,
+                //           pauseOnHover: true,
+                //           draggable: true,
+                //           progress: undefined,
+                //           theme: "light",
+                //         });
                 setSelectedTask(null);
                 await fetchTasks();
               }
@@ -760,6 +924,16 @@ const MyTask = ({HomeActiveTab}) => {
               console.log("Edit Task Modal Response:", success);
               if (success) {
                 toggleModal("isMyTaskEditModalOpen", false);
+                toast.success("Task updated successfully", {
+                          position: "top-right",
+                          autoClose: 3000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "light",
+                        });
                 setSelectedTask(null);
                 await fetchTasks();
               }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getTodayDate } from "./TaskUtils";
-import { toast } from "react-toastify";
+import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
@@ -55,7 +55,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: "light",
       });
       return;
     }
@@ -91,7 +91,16 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error(error.message || "Failed to add task");
+      toast.error(error.message || "Failed to add task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -107,6 +116,8 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
   };
 
   return (
+    <>
+    {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
     <div className="modal-overlay z-50">
       <div className="modal-center">
         <div className="modal-content bg-white rounded-lg shadow-xl p-6 min-w-[450px] max-w-[450px] relative">
@@ -326,6 +337,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

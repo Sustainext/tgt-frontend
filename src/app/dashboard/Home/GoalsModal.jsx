@@ -55,7 +55,16 @@ const GoalsModal = ({
       const response = await axiosInstance.get(`/orggetonly`);
       setOrganizations(response.data);
     } catch (error) {
-      toast.error("Error fetching goals");
+      toast.error("Error fetching goals", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -65,7 +74,7 @@ const GoalsModal = ({
 
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
+      {/* <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} /> */}
       <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
         <div className="bg-white rounded-lg w-full max-w-md relative">
           {/* Close Button */}

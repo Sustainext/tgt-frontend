@@ -56,7 +56,16 @@ const TasksPage = () => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const openReviewModal = () => {
     if (selectedTasks.length === 0) {
-      toast.error("Please select tasks to review");
+      toast.error("Please select tasks to review", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       return;
     }
     setIsReviewModalOpen(true);

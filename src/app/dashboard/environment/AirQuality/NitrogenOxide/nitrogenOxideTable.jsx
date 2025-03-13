@@ -65,7 +65,7 @@ const user_id = 1;
 //       Unit: {
 //         type: "string",
 //         title: "Unit",
-//         enum: ["ppm", "µµg/m³", "ton (US Short ton)", "Gram (g)", "Kilograms (kg)","tonnes (t)","Pound (lb)","Other (please specify)"],
+//         enum: ["ppm", "µg/m³", "ton (US Short ton)", "Gram (g)", "Kilograms (kg)","tonnes (t)","Pound (lb)","Other (please specify)"],
 //         // tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
 //         display: "none",
 //       },

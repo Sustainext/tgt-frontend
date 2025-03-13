@@ -767,9 +767,18 @@ const Screen1 = ({
                     title="PDF Preview"
                     className="w-full h-full"
                   />
-                ) : (
-                  <p>File preview not available. Please download and verify</p>
-                )}
+                ) : <div className="flex flex-col items-center justify-center h-full">
+                      <p>
+                        File preview not available.Please download and verify
+                      </p>
+                      <a
+                        href={previewData}
+                        download={fileName}
+                        className="mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                      >
+                        Download File
+                      </a>
+                    </div>}
               </div>
 
               <div className="w-[211px] mx-2 xl:mx-0 lg:mx-0 md:mx-0 2xl:mx-0 4k:mx-0 2k:mx-0">
