@@ -51,7 +51,7 @@ export const useTaskManagement = () => {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: "colored",
+            theme: "light",
           });
           await fetchTasks();
           return true;
@@ -105,7 +105,7 @@ export const useTaskManagement = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
         });
         await fetchTasks();
         return true;

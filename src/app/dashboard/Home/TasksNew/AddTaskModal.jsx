@@ -55,7 +55,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: "light",
       });
       return;
     }
@@ -117,7 +117,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
 
   return (
     <>
-    <ToastContainer style={{ fontSize: "12px" }} />
+    {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
     <div className="modal-overlay z-50">
       <div className="modal-center">
         <div className="modal-content bg-white rounded-lg shadow-xl p-6 min-w-[450px] max-w-[450px] relative">
