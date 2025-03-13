@@ -1243,7 +1243,7 @@ const EmissionWidget = React.memo(
                     )}
                   /> */}
 
-                  <input
+                  {/* <input
                     ref={inputRef}
                     type="text"
                     placeholder={getActivityPlaceholder()}
@@ -1262,7 +1262,7 @@ const EmissionWidget = React.memo(
                     disabled={["assigned", "calculated", "approved"].includes(
                       value.rowType
                     )}
-                  /> */}
+                  />  */}
 
                   <input
                     ref={inputRef}
