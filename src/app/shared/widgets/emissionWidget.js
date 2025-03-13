@@ -1,11 +1,15 @@
 //emission widget
 
 "use client";
-import React, { useState, useEffect, useRef, useCallback,useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import { scope1Info, scope2Info, scope3Info } from "../data/scopeInfo";
 import { unitTypes } from "../data/units";
-import { categoriesToAppend, categoryMappings } from "../data/customActivities";
-import axios from "axios"; // Import icons from React Icons
 import { LuTrash2 } from "react-icons/lu";
 import { TbUpload } from "react-icons/tb";
 import debounce from "lodash/debounce";
@@ -30,7 +34,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AssignEmissionModal from "./assignEmissionModal";
 import MultipleAssignEmissionModal from "./MultipleAssignEmissionModal";
 import { getMonthName } from "@/app/utils/dateUtils";
-import { fetchClimatiqActivities } from "../../utils/climatiqApi.js";
+// import { fetchClimatiqActivities } from "../../utils/climatiqApi.js";
+import { getActivities } from "../../utils/activitiesService";
 import { fetchAutopilotSuggestions } from "@/app/utils/climatiqAutopilotApi";
 import CalculationInfoModal from "@/app/shared/components/CalculationInfoModal";
 
@@ -67,6 +72,8 @@ const EmissionWidget = React.memo(
     const [baseCategories, setBaseCategories] = useState([]);
     const [activitySearch, setActivitySearch] = useState("");
     const [isDropdownActive, setIsDropdownActive] = useState(false);
+    const [quantityError, setQuantityError] = useState("");
+    const [quantity2Error, setQuantity2Error] = useState("");
     const [isFetchingActivities, setIsFetchingActivities] = useState(false);
     const isFetching = useRef(false);
     const dropdownRef = useRef(null);
@@ -86,10 +93,6 @@ const EmissionWidget = React.memo(
 
     const locationname = useSelector((state) => state.emissions.locationName);
     const monthName = useSelector((state) => state.emissions.monthName);
-
-    const activityCache = useSelector(
-      (state) => state.emissions.activitiesCache
-    );
 
     //file log code//
     const getIPAddress = async () => {
@@ -329,146 +332,6 @@ const EmissionWidget = React.memo(
       fetchBaseCategories();
     }, []);
 
-    // const activeRequests = new Set(); // Track active API calls
-
-    // const fetchActivities = useCallback(
-    //   debounce(async (page = 1) => {
-    //     isFetching.current = true;
-    //     const cacheKey = JSON.stringify({ category, subcategory, countryCode, year });
-
-    //     // Return early if already fetching this exact data or if a request is in-flight
-    //     if (isFetching.current || activeRequests.has(cacheKey)) {
-    //       console.log(`Skipping duplicate request for: ${cacheKey}`);
-    //       return;
-    //     }
-
-    //     // Return cached data if available - with early return
-    //     if (activityCache[cacheKey]) {
-    //       console.log(`Using cached activities for key: ${cacheKey}`);
-    //       setActivities(activityCache[cacheKey]);
-    //       return;
-    //     }
-
-    //     console.log(`Fetching activities for: ${cacheKey}`);
-    //     isFetching.current = true;
-    //     activeRequests.add(cacheKey);
-
-    //     try {
-    //       const response = await fetchClimatiqActivities({
-    //         subcategory,
-    //         page,
-    //         region: countryCode,
-    //         year,
-    //         // Don't pass customFetchExecuted as a dependency that affects useCallback
-    //       });
-
-    //       const fetchedActivities = response?.results || response;
-    //       dispatch(setActivitiesForRow({ key: cacheKey, activities: fetchedActivities }));
-    //       setActivities(fetchedActivities);
-    //     } catch (error) {
-    //       console.error("Error fetching activities:", error);
-    //     } finally {
-    //       isFetching.current = false;
-    //       activeRequests.delete(cacheKey);
-    //     }
-    //   }, 300), // Reduced debounce time for better responsiveness
-    //   [category, subcategory, countryCode, year] // Ensure all dependencies are captured
-    // );
-
-    // const fetchActivities = useCallback(
-    //   debounce(async (page = 1) => {
-    //     const cacheKey = JSON.stringify({
-    //       category,
-    //       subcategory,
-    //       countryCode,
-    //       year,
-    //     });
-
-    //     // Skip fetch if already cached
-    //     if (activityCache[cacheKey]) {
-    //       console.log(`Using cached activities for key: ${cacheKey}`);
-    //       setActivities(activityCache[cacheKey]);
-    //       return;
-    //     }
-
-    //     // Set loading state for this row
-    //     setIsFetchingActivities(true);
-
-    //     try {
-    // const response = await fetchClimatiqActivities({
-    //   subcategory,
-    //   page,
-    //   region: countryCode,
-    //   year,
-    // });
-
-    //       const fetchedActivities = response?.results || response;
-    //       dispatch(
-    //         setActivitiesForRow({
-    //           key: cacheKey,
-    //           activities: fetchedActivities,
-    //         })
-    //       );
-    //       setActivities(fetchedActivities);
-    //     } catch (error) {
-    //       console.error("Error fetching activities:", error);
-    //     } finally {
-    //       // Reset loading state
-    //       setIsFetchingActivities(false);
-    //     }
-    //   }, 300),
-    //   [category, subcategory, countryCode, year]
-    // );
-
-    // Track ongoing API calls
-    const localActiveRequests = useRef(new Set());
-
-    const fetchActivities = useCallback(
-      debounce(async (page = 1) => {
-        const cacheKey = JSON.stringify({
-          category,
-          subcategory,
-          countryCode,
-          year,
-        });
-
-        // Prevent duplicate API calls (both locally and globally)
-        if (localActiveRequests.current.has(cacheKey)) {
-          console.log(`Skipping duplicate request for: ${cacheKey}`);
-          return;
-        }
-
-        // Track request locally and globally
-        localActiveRequests.current.add(cacheKey);
-        setIsFetchingActivities(true);
-
-        try {
-          // Dispatch Redux thunk instead of calling function directly
-          const response = await fetchClimatiqActivities({
-            subcategory,
-            page,
-            region: countryCode,
-            year,
-          });
-
-          const fetchedActivities = response?.results || response;
-          dispatch(
-            setActivitiesForRow({
-              key: cacheKey,
-              activities: fetchedActivities,
-            })
-          );
-          setActivities(fetchedActivities);
-        } catch (error) {
-          console.error("Error fetching activities:", error);
-        } finally {
-          setIsFetchingActivities(false);
-          localActiveRequests.current.delete(cacheKey); // Remove from local tracking
-        }
-      }, 300),
-      [subcategory]
-    );
-
     const fetchSubcategories = useCallback(async () => {
       const selectedCategory = scopeMappings[scope]?.find((info) =>
         info.Category.some((c) => c.name === category)
@@ -482,34 +345,100 @@ const EmissionWidget = React.memo(
       setSubcategories(newSubcategories);
     }, [category, scope]);
 
-    // // Consolidated useEffect for controlling API call
+    const activityCache = useSelector(
+      (state) => state.emissions.activitiesCache
+    );
+    const activeRequests = useSelector(
+      (state) => state.emissions.activeRequests
+    );
 
-    useEffect(() => {
-      if (subcategory && rowType !== "calculated") {
-        const cacheKey = JSON.stringify({
+    const [isLoadingActivities, setIsLoadingActivities] = useState(false);
+    const activitiesRef = useRef([]);
+    // Track if activities have been loaded for this subcategory
+    const [activitiesLoaded, setActivitiesLoaded] = useState(false);
+
+    // Use a ref to track if we're already fetching activities
+    const isFetchingRef = useRef(false);
+
+    const fetchActivities = useCallback(async () => {
+      // Return early if no subcategory or we're already fetching
+      if (!subcategory || isFetchingRef.current || rowType === "calculated") {
+        return;
+      }
+
+      try {
+        // Set loading state and fetching flag
+        setIsLoadingActivities(true);
+        isFetchingRef.current = true;
+
+        // Use the centralized activities service
+        const result = await getActivities({
           category,
           subcategory,
           countryCode,
           year,
         });
 
-        // Prevent redundant requests
-        if (localActiveRequests.current.has(cacheKey)) {
-          console.log(
-            `Skipping fetchActivities for key: ${cacheKey}, already in progress.`
-          );
-          return;
-        }
-
-        // Use cached data if available
-        if (activityCache[cacheKey]) {
-          console.log(`Using cached activities for key: ${cacheKey}`);
-          setActivities(activityCache[cacheKey]);
-        } else {
-          fetchActivities(); // Fetch only if cache is empty
-        }
+        // Update state and refs with the result
+        setActivities(result);
+        activitiesRef.current = result;
+        setActivitiesLoaded(true);
+      } catch (error) {
+        console.error("Error fetching activities:", error);
+      } finally {
+        setIsLoadingActivities(false);
+        isFetchingRef.current = false;
       }
-    }, [subcategory]);
+    }, [subcategory, category, countryCode, year, rowType]);
+
+    // useEffect(() => {
+    //   // Only fetch activities when subcategory changes and we don't have them yet
+    //   if (subcategory && !activitiesLoaded && !isLoadingActivities && !isFetchingRef.current) {
+    //     // Using the ref to track fetch status instead of state to prevent re-renders
+    //     isFetchingRef.current = true;
+        
+    //     // Fetch activities
+    //     fetchActivities().finally(() => {
+    //       isFetchingRef.current = false;
+    //     });
+    //   }
+      
+    //   // Only reset loaded status when subcategory actually changes
+    //   return () => {
+    //     if (subcategory) {
+    //       setActivitiesLoaded(false);
+    //     }
+    //   };
+    // }, [subcategory, fetchActivities]); 
+    useEffect(() => {
+      // Only fetch activities when subcategory changes and we don't have them yet
+      if (subcategory && !activitiesLoaded && !isLoadingActivities) {
+        fetchActivities();
+      }
+
+      // Reset loaded status when subcategory changes
+      return () => {
+        if (subcategory) {
+          setActivitiesLoaded(false);
+        }
+      };
+    }, [subcategory, fetchActivities]);
+
+    const handleSearchChange = useCallback(
+      (e) => {
+        const searchValue = e.target.value;
+        setActivitySearch(searchValue);
+
+        if (
+          searchValue.length >= 3 &&
+          !isLoadingActivities &&
+          !isFetchingRef.current
+        ) {
+          fetchActivities();
+        }
+      },
+      [fetchActivities, isLoadingActivities]
+    );
 
     useEffect(() => {
       if (category) {
@@ -519,11 +448,9 @@ const EmissionWidget = React.memo(
 
     useEffect(() => {
       const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
-      console.log("Unit config found:", unitConfig);
 
       if (unitConfig && unitConfig.units) {
         const unitKeys = Object.keys(unitConfig.units);
-        console.log("Unit keys:", unitKeys);
         const units1 = unitKeys.length > 0 ? unitConfig.units[unitKeys[0]] : [];
         const units2 = unitKeys.length > 1 ? unitConfig.units[unitKeys[1]] : [];
 
@@ -579,10 +506,19 @@ const EmissionWidget = React.memo(
 
     const handleActivityChange = useCallback(
       (newActivity) => {
+        console.log("handleActivityChange called with:", newActivity);
+        
+        // Find the selected activity object from our activities array
         const foundActivity = activities.find(
-          (act) =>
-            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
         );
+        
+        console.log("Found activity:", foundActivity);
+        
+        // First update local state to immediately show the selected activity
+        setActivity(newActivity);
+        
+        // Then update the form data with all the relevant details
         const updatedValue = {
           ...value,
           Activity: newActivity,
@@ -597,9 +533,14 @@ const EmissionWidget = React.memo(
           Unit: "",
           Unit2: "",
         };
+        
+        // Update form state
         onChange(updatedValue);
+        
+        // Update selected row if needed
         updateSelectedRowIfNeeded(updatedValue);
-
+        
+        // Reset quantity and unit states
         setQuantity("");
         setQuantity2("");
         setUnit("");
@@ -607,8 +548,6 @@ const EmissionWidget = React.memo(
       },
       [activities, onChange, value, updateSelectedRowIfNeeded]
     );
-
-    const [hasUpdatedFactor, setHasUpdatedFactor] = useState(false);
 
     // bug causing
     useEffect(() => {
@@ -827,21 +766,6 @@ const EmissionWidget = React.memo(
       }
     };
 
-    // useEffect(() => {
-    //   console.log(value, " is the new value passed to the component");
-
-    //   if (value?.url && value?.name) {
-    //     setFileName(value.file?.name);
-    //     setPreviewData(value.file?.url);
-    //     setFileType(value.file?.type ?? "");
-    //     setFileSize(value.file?.size ?? "");
-    //     setUploadDateTime(value.file?.uploadDateTime ?? "");
-    //     setUploadedBy(value.file?.uploadedBy ?? "");
-    //   } else {
-    //     console.log("value prop is missing some data, not updating state");
-    //   }
-    // }, [value]);
-
     const handleChange = async (event) => {
       const selectedFile = event.target.files[0];
 
@@ -988,42 +912,31 @@ const EmissionWidget = React.memo(
     const closeInfoModal = () => {
       setIsInfoModalOpen(false);
     };
-    const handleInfoClick = () => {
-      openInfoModal();
-    };
 
-    // const getActivityPlaceholder = (
-    //   rowType,
-    //   isFetching,
-    //   activities,
-    //   activity
-    // ) => {
-    //   if (rowType === "calculated") {
-    //     return activity;
-    //   } else if (rowType !== "calculated" && activity) {
-    //     return activity;
-    //   } else if (isFetching.current) {
-    //     return "Fetching activities...";
-    //   } else if (activities.length === 0) {
-    //     return "No relevant activities found";
-    //   } else {
-    //     return "Select Activity";
-    //   }
-    // };
-
-    const getActivityPlaceholder = () => {
+    // Updated getActivityPlaceholder function to work with existing fetchActivities
+    const getActivityPlaceholder = useCallback(() => {
       if (rowType === "calculated") {
         return activity;
       } else if (rowType !== "calculated" && activity) {
         return activity;
-      } else if (isFetchingActivities) {
+      } else if (isLoadingActivities || isFetchingRef.current) {
         return "Fetching activities...";
-      } else if (activities.length === 0) {
+      } else if (
+        activitiesRef.current.length === 0 &&
+        subcategory &&
+        activitiesLoaded
+      ) {
+        // Only show "No relevant activities found" when:
+        // 1. We have no activities
+        // 2. A subcategory is selected
+        // 3. We've already attempted to load activities (activitiesLoaded is true)
         return "No relevant activities found";
+      } else if (activitiesRef.current.length > 0 && !activity) {
+        return "Select Activity";
       } else {
         return "Select Activity";
       }
-    };
+    }, [isLoadingActivities]);
 
     const filteredActivities = useMemo(() => {
       if (!activitySearch) return activities; // Return full list if no search input
@@ -1072,7 +985,7 @@ const EmissionWidget = React.memo(
     };
 
     return (
-      <div className={`w-full ${!id.startsWith("root_0") && "ml-1"}`} >
+      <div className={`w-full ${!id.startsWith("root_0") && "ml-1"}`}>
         {id.startsWith("root_0") && (
           <div className="mb-2">
             <button
@@ -1213,68 +1126,12 @@ const EmissionWidget = React.memo(
                       : ""
                   }`}
                 >
-                  {/* <input
-                    ref={inputRef}
-                    type="text"
-                    placeholder={
-                      activitySearch.length >= 3
-                        ? "Fetching suggestions..."
-                        : getActivityPlaceholder(
-                            rowType,
-                            isFetching,
-                            activities,
-                            activity
-                          )
-                    }
-                    value={activitySearch}
-                    onChange={(e) => {
-                      setActivitySearch(e.target.value);
-                      if (e.target.value.length >= 3) {
-                        fetchActivities();
-                      }
-                    }}
-                    onFocus={toggleDropdown}
-                    className={getFieldClass(
-                      "Activity",
-                      "text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full py-1"
-                    )}
-                    disabled={["assigned", "calculated", "approved"].includes(
-                      value.rowType
-                    )}
-                  /> */}
-
-                  {/* <input
-                    ref={inputRef}
-                    type="text"
-                    placeholder={getActivityPlaceholder()}
-                    value={activitySearch}
-                    onChange={(e) => {
-                      setActivitySearch(e.target.value);
-                      if (e.target.value.length >= 3) {
-                        fetchActivities();
-                      }
-                    }}
-                    onFocus={toggleDropdown}
-                    className={getFieldClass(
-                      "Activity",
-                      "text-[12px] focus:outline-none w-full py-1"
-                    )}
-                    disabled={["assigned", "calculated", "approved"].includes(
-                      value.rowType
-                    )}
-                  />  */}
-
                   <input
                     ref={inputRef}
                     type="text"
                     placeholder={getActivityPlaceholder()}
                     value={activitySearch}
-                    onChange={(e) => {
-                      setActivitySearch(e.target.value);
-                      if (e.target.value.length >= 3) {
-                        fetchActivities();
-                      }
-                    }}
+                    onChange={handleSearchChange}
                     onFocus={toggleDropdown}
                     className={getFieldClass(
                       "Activity",
@@ -1311,18 +1168,30 @@ const EmissionWidget = React.memo(
                           ? activity
                           : "Select Activity"}
                       </option>
-                      {filteredActivities.map((item) => (
+                      {filteredActivities.length > 0 ? (
+                        filteredActivities.map((item) => (
+                          <option
+                            key={item.id || item.activity_id}
+                            value={`${item.name} - (${item.source}) - ${item.unit_type}`}
+                            className="px-2"
+                          >
+                            {item.name} - ({item.source}) - {item.unit_type} -{" "}
+                            {item.region} - {item.year}
+                            {item.source_lca_activity !== "unknown" &&
+                              ` - ${item.source_lca_activity}`}
+                          </option>
+                        ))
+                      ) : (
                         <option
-                          key={item.id}
-                          value={`${item.name} - (${item.source}) - ${item.unit_type}`}
-                          className="px-2"
+                          value=""
+                          disabled
+                          className="px-2 text-gray-500"
                         >
-                          {item.name} - ({item.source}) - {item.unit_type} -{" "}
-                          {item.region} - {item.year}
-                          {item.source_lca_activity !== "unknown" &&
-                            ` - ${item.source_lca_activity}`}
+                          {isLoadingActivities
+                            ? "Loading activities..."
+                            : "No matching activities found"}
                         </option>
-                      ))}
+                      )}
                     </select>
                   )}
                 </div>
@@ -1747,7 +1616,7 @@ const EmissionWidget = React.memo(
             </tr>
           </tbody>
         </table>
-    
+
         <AssignEmissionModal
           isOpen={isAssignModalOpen}
           onClose={handleCloseAssignModal}
