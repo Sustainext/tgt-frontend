@@ -67,7 +67,7 @@ const EmissionsHeader = ({
   useEffect(() => {
     if (location && year) {
       dispatch(fetchEmissionsData({ location, year, month }));
-      dispatch(fetchPreviousMonthData({ location, year, month }));
+      // dispatch(fetchPreviousMonthData({ location, year, month }));
       dispatch(fetchAssignedTasks({ location, year, month }));
       dispatch(fetchApprovedTasks({ location, year, month }));
       dispatch(clearSelectedRows());
