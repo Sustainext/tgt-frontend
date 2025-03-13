@@ -1072,7 +1072,7 @@ const EmissionWidget = React.memo(
     };
 
     return (
-      <div className={`w-full ${!id.startsWith("root_0") && "ml-1"}`}>
+      <div className={`w-full ${!id.startsWith("root_0") && "ml-1"}`} >
         {id.startsWith("root_0") && (
           <div className="mb-2">
             <button
@@ -1085,6 +1085,7 @@ const EmissionWidget = React.memo(
             </button>
           </div>
         )}
+
         <table
           className={`min-w-full w-full ${
             scopeErrors["Category"] ||
@@ -1135,7 +1136,7 @@ const EmissionWidget = React.memo(
 
               {/* Category Dropdown */}
               <td
-                className={`py-2 px-1 pl-2 w-[15vw] relative ${
+                className={`py-2 px-1 pl-2 w-[25vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw] relative ${
                   scopeErrors["Category"] ? "" : ""
                 }`}
               >
@@ -1144,7 +1145,7 @@ const EmissionWidget = React.memo(
                   onChange={(e) => handleCategoryChange(e.target.value)}
                   className={getFieldClass(
                     "Category",
-                    `text-[12px] focus:outline-none w-full py-1 ${
+                    `text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full  py-1 ${
                       category && rowType === "default"
                         ? "border-b border-zinc-800"
                         : ""
@@ -1171,13 +1172,13 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Sub-Category Dropdown */}
-              <td className="py-2 px-1 w-[15vw] relative">
+              <td className="py-2 px-1 w-[25vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw] relative">
                 <select
                   value={subcategory}
                   onChange={(e) => handleSubcategoryChange(e.target.value)}
                   className={getFieldClass(
                     "Subcategory",
-                    `text-[12px] focus:outline-none w-full py-1 ${
+                    `text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full py-1 ${
                       subcategory && rowType === "default"
                         ? "border-b border-zinc-800"
                         : ""
@@ -1202,7 +1203,7 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Activity Dropdown */}
-              <td className="py-2  w-[15vw]">
+              <td className="py-2  w-[25vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw]">
                 <div
                   className={`relative ${
                     activity &&
@@ -1225,6 +1226,27 @@ const EmissionWidget = React.memo(
                             activity
                           )
                     }
+                    value={activitySearch}
+                    onChange={(e) => {
+                      setActivitySearch(e.target.value);
+                      if (e.target.value.length >= 3) {
+                        fetchActivities();
+                      }
+                    }}
+                    onFocus={toggleDropdown}
+                    className={getFieldClass(
+                      "Activity",
+                      "text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full py-1"
+                    )}
+                    disabled={["assigned", "calculated", "approved"].includes(
+                      value.rowType
+                    )}
+                  /> */}
+
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    placeholder={getActivityPlaceholder()}
                     value={activitySearch}
                     onChange={(e) => {
                       setActivitySearch(e.target.value);
@@ -1264,7 +1286,7 @@ const EmissionWidget = React.memo(
                   />
 
                   {scopeErrors["Activity"] && (
-                    <div className="text-[12px] text-red-500 absolute left-0 -bottom-[28px]">
+                    <div className="text-[12px] text-red-500  xl:absolute md:absolute lg:absolute 2xl:absolute 4k:absolute 2k:absolute relative left-0 -bottom-[28px]">
                       {getErrorMessage("Activity")}
                     </div>
                   )}
@@ -1307,7 +1329,7 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Quantity Input */}
-              <td className="w-[24vw]">
+              <td className="w-[35vw] xl:w-[24vw] lg:w-[24vw] 2xl:w-[24vw] 4k:w-[24vw] 2k:w-[24vw] md:w-[24vw]">
                 {" "}
                 {/* Set a fixed width for the parent container */}
                 <div className="grid grid-flow-col-dense">
@@ -1332,7 +1354,7 @@ const EmissionWidget = React.memo(
                           }
                           className={getFieldClass(
                             "Quantity",
-                            "text-[12px] focus:outline-none w-[5vw] text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
+                            "text-[12px] focus:outline-none w-[57vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
                           )}
                           disabled={["assigned", "approved"].includes(
                             value.rowType
@@ -1386,7 +1408,7 @@ const EmissionWidget = React.memo(
                           placeholder="Enter Value"
                           className={getFieldClass(
                             "Quantity2",
-                            "text-[12px] focus:outline-none w-[5vw] text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
+                            "text-[12px] focus:outline-none  w-[57vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
                           )}
                           step="1"
                           min="0"
@@ -1444,7 +1466,7 @@ const EmissionWidget = React.memo(
                         placeholder="Enter Value"
                         className={getFieldClass(
                           "Quantity",
-                          "text-[12px] focus:outline-none w-[10vw] text-right pe-1 focus:border-b focus:border-blue-300"
+                          "text-[12px] focus:outline-none  w-[57vw] xl:w-[10vw] lg:w-[10vw] 2xl:w-[10vw] 4k:w-[10vw] 2k:w-[10vw] md:w-[10vw]  text-right pe-1 focus:border-b focus:border-blue-300"
                         )}
                         disabled={["assigned", "approved"].includes(
                           value.rowType
@@ -1725,6 +1747,7 @@ const EmissionWidget = React.memo(
             </tr>
           </tbody>
         </table>
+    
         <AssignEmissionModal
           isOpen={isAssignModalOpen}
           onClose={handleCloseAssignModal}

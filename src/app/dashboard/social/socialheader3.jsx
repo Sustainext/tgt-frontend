@@ -67,11 +67,11 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
   return (
     <>
       <div className="ml-2 mb-5">
-        <div className="flex mb-5 gap-4">
-          <div className="relative mb-2">
+        <div className=" mb-5 gap-4 xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex block">
+          <div className="relative mb-5 md:mb-2 xl:mb-2 lg:mb-2 2xl:mb-2 4k:mb-2">
             <select
               name="location"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] text-neutral-500 appearance-none xl:w-[240px] lg:w-[240px] md:w-[240px] 2xl:w-[240px] 4k:w-[240px] w-[98%] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.location}
               onChange={handleChange}
             >
@@ -97,10 +97,10 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
               </p>
             )}
           </div>
-          <div className="ml-3 relative mb-2">
+          <div className="xl:ml-3 lg:ml-3 md:ml-3 2xl:ml-3 4k:ml-3 2k:ml-3 ml-0 relative mb-5 md:mb-2 xl:mb-2 lg:mb-2 2xl:mb-2 4k:mb-2">
             <select
               name="year"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] text-neutral-500 appearance-none xl:w-[240px] lg:w-[240px] md:w-[240px] 2xl:w-[240px] 4k:w-[240px] w-[98%] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.year}
               onChange={handleChange}
             >

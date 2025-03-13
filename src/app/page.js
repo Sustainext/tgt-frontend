@@ -163,6 +163,8 @@ export default function Home() {
               <img
                 src="https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/Home/sustainext-new-white-logo.webp"
                 alt="Logo"
+                width="112" 
+                height="112"
                 className="h-28 w-auto"
               />
             </div>

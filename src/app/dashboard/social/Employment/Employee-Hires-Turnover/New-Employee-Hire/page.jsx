@@ -55,10 +55,19 @@ const tabs = [
   },
 ];
 
-const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month,togglestatus }) => {
+const NewEmployeeHire = ({
+  selectedOrg,
+  selectedCorp,
+  year,
+  month,
+  togglestatus,
+}) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const fullName = convertShortNameToFullName(month);
   console.log("Full month name:", fullName);
+  const [tooltipIds] = useState(
+    tabs.map(() => `tooltip-${Math.random().toString(36).substr(2, 9)}`)
+  );
   return (
     <>
       <div className="mb-10">
@@ -90,7 +99,7 @@ const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month,togglestatus }
         </div>
         <div className="shadow-md rounded-md mx-2">
           {/* Tabs */}
-          <ul className="flex justify-evenly cursor-pointer">
+          <ul className="hidden md:flex xl:flex lg:flex 2xl:flex 4k:flex 2k:flex 3xl:flex justify-evenly cursor-pointer">
             {tabs.map((tab, index) => (
               <li
                 key={index}
@@ -101,7 +110,7 @@ const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month,togglestatus }
                 } `}
                 onClick={() => setActiveTabIndex(index)}
               >
-                <div className="flex justify-center items-center space-x-1">
+                <div className="flex justify-center items-center space-x-1 ">
                   <span className="text-[14px]">{tab.title}</span>
                   <MdInfoOutline
                     data-tooltip-id={`tooltip-${tab.title.replace(
@@ -129,6 +138,44 @@ const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month,togglestatus }
               </li>
             ))}
           </ul>
+          <div className="grid grid-cols-2 gap-2 md:hidden xl:hidden lg:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden p-2">
+            {tabs.map((tab, index) => (
+              <div
+                key={index}
+                className={`p-3 text-center border rounded-lg cursor-pointer relative ${
+                  activeTabIndex === index
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+                onClick={() => setActiveTabIndex(index)}
+              >
+                <div className="flex flex-col items-center">
+                  <span className="text-sm">{tab.title}</span>
+                  <MdInfoOutline
+                    data-tooltip-id={tooltipIds[index]}
+                    data-tooltip-content={tab.tooltip}
+                    className="text-[14px]"
+                  />
+                </div>
+                <ReactTooltip
+                  id={tooltipIds[index]}
+                  place="top"
+                  effect="solid"
+                  style={{
+                    width: "290px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "left",
+                    zIndex: "1000",
+                  }}
+                ></ReactTooltip>
+              </div>
+            ))}
+          </div>
+
           {/* Content */}
           <div className="mt-2">
             {activeTabIndex === 0 && (

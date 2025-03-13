@@ -63,7 +63,7 @@ const CustomTableWidget3 = ({ id, options, value, required, onChange }) => {
         <tbody>
           {options.rowLabels.map((rowLabel, rowIndex) => (
             <tr key={rowIndex}>
-              <td className=" border-r border-b border-gray-300 py-2 px-2 text-[12px] relative ">
+              <td className=" border-r border-b border-gray-300 py-2 px-2 text-[12px] relative w-[229px] xl:w-[300px] lg:w-[300px] md:w-[300px] 2xl:w-[300px] 4k:w-[300px] 2k:w-[300px]  ">
                 <div className="flex">
                 <p>{rowLabel.title}</p>{" "}
                 <MdInfoOutline

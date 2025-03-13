@@ -36,8 +36,8 @@ const CustomTableWidget2 = ({ id, options, value, required, onChange }) => {
                     <tr>
                         <th className="border border-gray-300" style={{ textAlign: "left" }}> </th>
                         {options.titles.map((item, idx) => (
-                            <th key={idx} className="text-[12px] border border-gray-300 px-2 w-auto">
-                                <div className="flex items-center">
+                            <th key={idx} className="text-[12px] border border-gray-300 px-2 ">
+                                <div className="flex items-center w-[187px] xl:w-[330px] lg:w-[330px] md:w-[330px] 2xl:w-[330px] 4k:w-[330px] 2k:w-[330px]">
                                     <p>{item.title}</p>
                                     <MdInfoOutline
                                         data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}

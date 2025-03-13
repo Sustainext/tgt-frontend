@@ -1,16 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {MdOutlineGroups2,MdKeyboardArrowDown} from "react-icons/md";
+import { MdOutlineGroups2, MdKeyboardArrowDown, MdClose } from "react-icons/md";
 import { LiaCanadianMapleLeaf } from "react-icons/lia";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
 import axiosInstance from "../../utils/axiosMiddleware";
 
 import { GiWoodPile } from "react-icons/gi";
 
-const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
-
-  const materialityEnvData=apiData&&apiData.social?apiData.social:{}
+const Aside = ({
+  activeTab,
+  handleTabClick,
+  setActiveTab,
+  apiData,
+  setMobileopen,
+}) => {
+  const materialityEnvData = apiData && apiData.social ? apiData.social : {};
   const [isEmission, setEmisssion] = useState(false);
   const [isBillS211, setBillS211] = useState(false);
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
@@ -24,7 +29,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
   const [Safety, setSafety] = useState(false);
   const [Marketing, setMarketing] = useState(false);
   const [Privacy, setPrivacy] = useState(false);
-  const [showBillS211,setShowBillS211]=useState(false)
+  const [showBillS211, setShowBillS211] = useState(false);
   const toggleEmission = () => {
     setEmisssion(!isEmission);
     setWasteVisible(false);
@@ -34,13 +39,13 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
     setIsSupplierVisible(false);
     setIsLegal(false);
     setTax(false);
-    setBillS211(false)
+    setBillS211(false);
     setSafety(false);
     setPrivacy(false);
     setMarketing(false);
     setSupplyChain(false);
   };
-  
+
   const toggleSupplierSectionVisibility = () => {
     setIsSupplierVisible(!isSupplierVisible);
     setWasteVisible(false);
@@ -177,7 +182,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
     setMarketing(false);
   };
   const toggleMarketing = () => {
-    setMarketing(!Marketing)
+    setMarketing(!Marketing);
     setSafety(false);
     setPrivacy(false);
     setSupplyChain(false);
@@ -189,7 +194,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
-    setBillS211(false)
+    setBillS211(false);
   };
   const togglePrivacy = () => {
     setPrivacy(!Privacy);
@@ -204,11 +209,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
-    setBillS211(false)
+    setBillS211(false);
   };
 
   const toggleBillS211 = () => {
-    setBillS211(!isBillS211)
+    setBillS211(!isBillS211);
     setPrivacy(false);
     setMarketing(false);
     setSafety(false);
@@ -221,7 +226,6 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
-    
   };
 
   const getAuthToken = () => {
@@ -241,30 +245,25 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
   const fetchBillS211 = async () => {
     try {
       const response = await axiosInstance.get(
-        `${
-          process.env.BACKEND_API_URL
-        }/canadabills211/canada_section/`,
+        `${process.env.BACKEND_API_URL}/canadabills211/canada_section/`,
         axiosConfig
       );
 
       if (response.status === 200) {
-       if(response.data.enable_section){
-        setShowBillS211(response.data.enable_section)
-        handleTabClick(
-          "Identifying Information"
-        )
-        toggleBillS211()
-       }
+        if (response.data.enable_section) {
+          setShowBillS211(response.data.enable_section);
+          handleTabClick("Identifying Information");
+          toggleBillS211();
+        }
       }
-      
-    }  catch (error) {
-      console.error(error)
-    } 
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  useEffect(()=>{
-    fetchBillS211()
-  },[])
+  useEffect(() => {
+    fetchBillS211();
+  }, []);
 
   useEffect(() => {
     if (activeTab === "Management of Material topic OHS") {
@@ -275,93 +274,99 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
       setEnergySectionVisible(false);
       setIsSupplierVisible(false);
     }
-    
   }, [activeTab]);
+
+  const toggleSidebar = () => {
+    setMobileopen(false);
+  };
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md h-full">
       <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
-          <button className="flex items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
-            <span className="text-[16px] font-extrabold">Social</span>
+          <button className="flex justify-between items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
+            <div>
+              {" "}
+              <span className="text-[16px] font-extrabold">Social</span>
+            </div>
+
+            <div className=" float-end block xl:hidden md:hidden lg:hidden 2xl:hidden 4k:hidden">
+              <MdClose onClick={toggleSidebar} className="text-3xl" />
+            </div>
           </button>
 
           {/* Bill S-211 starts */}
-          {showBillS211?(
-             <div>
-             <button
-               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
-                 activeTab === "Identifying Information" ||
-                 activeTab === "Annual report"
-                   ? "text-[#007EEF]"
-                   : "bg-white text-[#727272] "
-               }`}
-               onClick={toggleBillS211}
-             >
-               <div className="w-[20%]">
-                 <FaCanadianMapleLeaf className="w-5 h-5 mr-2" />
-               </div>
-               <div className="w-[67%] text-left ">
-                 <span className="indent-0 text-[13px]">Bill S-211</span>
-               </div>
- 
-               <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
-                 
- 
-                 <MdKeyboardArrowDown
-                   className={`text-lg text-neutral-500 ${
-                     isBillS211 && "rotate-180"
-                   }`}
-                 />
-               </div>
-             </button>
- 
-            
-             {isBillS211 && (
-               <>
-                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                   <div>
-                     <p
-                       className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                         activeTab === "Identifying Information"
-                           ? "text-blue-400"
-                           : "bg-transparent text-[#727272]"
-                       }`}
-                       onClick={() =>
-                         handleTabClick(
-                           "Identifying Information"
-                         )
-                       }
-                     >
-                       Identifying Information
-                     </p>
-                   </div>
- 
-                   <div>
-                     <p
-                       className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                         activeTab === "Annual report"
-                           ? "text-blue-400"
-                           : "bg-transparent text-[#727272]"
-                       }`}
-                       onClick={() =>
-                         handleTabClick(
-                           "Annual report"
-                         )
-                       }
-                     >
-                       Annual report
-                     </p>
-                   </div>
-                   
-                 </div>
-               </>
-             )}
-           </div>
-          ):(
+          {showBillS211 ? (
+            <div>
+              <button
+                className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
+                  activeTab === "Identifying Information" ||
+                  activeTab === "Annual report"
+                    ? "text-[#007EEF]"
+                    : "bg-white text-[#727272] "
+                }`}
+                onClick={toggleBillS211}
+              >
+                <div className="w-[20%]">
+                  <FaCanadianMapleLeaf className="w-5 h-5 mr-2" />
+                </div>
+                <div className="w-[67%] text-left ">
+                  <span className="indent-0 text-[13px]">Bill S-211</span>
+                </div>
+
+                <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+                  <MdKeyboardArrowDown
+                    className={`text-lg text-neutral-500 ${
+                      isBillS211 && "rotate-180"
+                    }`}
+                  />
+                </div>
+              </button>
+
+              {isBillS211 && (
+                <>
+                  <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                    <div>
+                      <p
+                        className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                          activeTab === "Identifying Information"
+                            ? "text-blue-400"
+                            : "bg-transparent text-[#727272]"
+                        }`}
+                        onClick={() => {
+                          handleTabClick("Identifying Information");
+                          toggleSidebar(); // Call the sidebar close function
+                        }}
+                    
+                      >
+                        Identifying Information
+                      </p>
+                    </div>
+
+                    <div>
+                      <p
+                        className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                          activeTab === "Annual report"
+                            ? "text-blue-400"
+                            : "bg-transparent text-[#727272]"
+                        }`}
+                        onClick={() => {
+                          handleTabClick("Annual report");
+                          toggleSidebar(); // Call the sidebar close function
+                        }}
+                    
+                      >
+                        Annual report
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
             <div></div>
           )}
-         
-  <div>
+
+          <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
                 activeTab === "Management of Material topic OHS" ||
@@ -373,34 +378,34 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                 activeTab === "Promotion of Health" ||
                 activeTab === "Prevention of OHS Impact" ||
                 activeTab === "OHS Management System Coverage" ||
-                activeTab === " Health Risk Addressed" ||  
+                activeTab === " Health Risk Addressed" ||
                 activeTab === "Injuries" ||
                 activeTab === "Ill-health" ||
                 activeTab === "Hazard Reporting" ||
                 activeTab === "Workers Right" ||
                 activeTab === "Hazard Injuries" ||
-                activeTab === "Hazards - Ill-health" 
+                activeTab === "Hazards - Ill-health"
                   ? "text-blue-400"
                   : "bg-transparent text-[#727272]"
               }`}
               onClick={toggleWasteVisible}
             >
-                <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+              <div className="w-[20%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                   Occupational health and safety
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocHealthSafety?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocHealthSafety?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -418,36 +423,39 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
 
             {isWasteVisible && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocHealthSafety?.is_material_topic?(
-                  <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocHealthSafety?.is_material_topic ? (
+                    <div>
                       <div>
-                   <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic OHS"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() => {
+                            handleTabClick("Management of Material topic OHS");
+                            toggleSidebar(); // Call the sidebar close function
+                          }}
+                     
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic OHS"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic OHS")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                  
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
-                     Topic Management Disclosure
+                    <p className="text-[12px]  ml-4  text-gray-400">
+                      Topic Management Disclosure
                     </p>
                   </div>
                   <div>
@@ -457,7 +465,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("OHS Management")}
+                      onClick={() => {
+                        handleTabClick("OHS Management");
+                        toggleSidebar(); // Call the sidebar close function
+                      }}
+                   
                     >
                       OHS Management
                     </p>
@@ -469,7 +481,10 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Risk Assessment")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Risk Assessment")
+                      }}
                     >
                       Risk Assessment
                     </p>
@@ -481,7 +496,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Hazard Reporting")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Hazard Reporting")
+                      }}
+                    
                     >
                       Hazard Reporting
                     </p>
@@ -493,7 +512,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Workers Right")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Workers Right")
+                      }}
+                     
                     >
                       Workers Right
                     </p>
@@ -505,7 +528,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("OHS Sevices")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("OHS Sevices")
+                      }}
+                      
                     >
                       OHS Sevices
                     </p>
@@ -517,9 +544,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Worker Involvement in OHS")
-                      }
+                      }}
+                  
                     >
                       Worker Involvement in OHS
                     </p>
@@ -531,7 +560,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("OHS Training")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("OHS Training")
+                      }}
+                 
                     >
                       OHS Training
                     </p>
@@ -543,7 +576,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Promotion of Health")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Promotion of Health")
+                      }}
+                  
                     >
                       Promotion of Health
                     </p>
@@ -555,7 +592,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Health Risk Addressed")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Health Risk Addressed")
+                      }}
+              
                     >
                       Health Risk Addressed
                     </p>
@@ -567,15 +608,19 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Prevention of OHS Impact")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Prevention of OHS Impact")
+                      }}
+                
                     >
                       Prevention of OHS Impact
                     </p>
                   </div>
-           
+
                   <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
-                     Topic disclosure
+                    <p className="text-[12px]  ml-4  text-gray-400">
+                      Topic disclosure
                     </p>
                   </div>
                   <div>
@@ -585,9 +630,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("OHS Management System Coverage")
-                      }
+                      }}
+                   
                     >
                       OHS Management System Coverage
                     </p>
@@ -599,7 +646,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Injuries")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Injuries")
+                      }}
+                    
                     >
                       Injuries
                     </p>
@@ -611,12 +662,16 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Hazard Injuries")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Hazard Injuries")
+                      }}
+                    
                     >
-                       Injuries-Hazards
+                      Injuries-Hazards
                     </p>
                   </div>
-         
+
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
@@ -624,7 +679,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Ill-health")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Ill-health")
+                      }}
+                   
                     >
                       Ill-health
                     </p>
@@ -636,7 +695,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Hazards - Ill-health")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Hazards - Ill-health")
+                      }}
+                    
                     >
                       Ill-health-Hazards
                     </p>
@@ -660,22 +723,22 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               }`}
               onClick={toggleLegal}
             >
-               <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+              <div className="w-[20%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                   Human Rights and Community Impact
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocCommunityRelation?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocCommunityRelation?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -693,38 +756,39 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
 
             {isLegal && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocCommunityRelation?.is_material_topic?(
-                  <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocCommunityRelation?.is_material_topic ? (
                     <div>
-                   <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Human Rights"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Human Rights"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Management of Material topic Human Rights"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Management of Material topic Human Rights"
-                        )
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                  
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -736,7 +800,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Community Engagement")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Community Engagement")
+                      }}
+                   
                     >
                       Local Community Engagement
                     </p>
@@ -748,7 +816,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Impact on Community")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Impact on Community")
+                      }}
+                    
                     >
                       Impact on Community
                     </p>
@@ -760,7 +832,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Indigenous People")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Indigenous People")
+                      }}
+                  
                     >
                       Indigenous People
                     </p>
@@ -772,7 +848,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Security Personnel")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Security Personnel")
+                      }}
+                    
                     >
                       Security Personnel
                     </p>
@@ -784,7 +864,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Security Personnel2")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Security Personnel2")
+                      }}
+                 
                     >
                       Training requirements apply to third party organisations
                     </p>
@@ -804,20 +888,20 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               }`}
               onClick={toggleEnergySectionVisibility}
             >
-          <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+              <div className="w-[20%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Labor Management</span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocLabourManagement?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocLabourManagement?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -835,38 +919,41 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
             {/* Energy section content */}
             {isEnergySectionVisible && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocLabourManagement?.is_material_topic?(
-                  <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocLabourManagement?.is_material_topic ? (
                     <div>
-                   <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Labor Management"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() => {
+                            toggleSidebar();
+                            handleTabClick(
+                              "Management of Material topic Labor Management"
+                            )
+                          }}
+                     
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Management of Material topic Labor Management"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Management of Material topic Labor Management"
-                        )
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                  
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -877,7 +964,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Notice Period")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Notice Period")
+                      }}
+                
                     >
                       Notice Period
                     </p>
@@ -889,7 +980,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Collective Bargaining")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Collective Bargaining")
+                      }}
+                   
                     >
                       Collective Bargaining
                     </p>
@@ -911,21 +1006,21 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               onClick={toggleTax}
             >
               <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                Child and Forced Labour
+                  Child and Forced Labour
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocChildLabour?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocChildLabour?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -943,35 +1038,40 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
 
             {isTax && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocChildLabour?.is_material_topic?(
-                  <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocChildLabour?.is_material_topic ? (
                     <div>
-                   <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic Labour"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() => {
+                            toggleSidebar();
+                            handleTabClick(
+                              "Management of Material topic Labour"
+                            )
+                          }}
+                          
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Labour"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Labour")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                  
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -983,7 +1083,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Child Labour")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Child Labour")
+                      }}
+                     
                     >
                       Child Labour
                     </p>
@@ -995,9 +1099,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Forced or Compulsory Labour")
-                      }
+                      }}
+                  
                     >
                       Forced or Compulsory Labour
                     </p>
@@ -1007,7 +1113,6 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
             )}
           </div>
           <div>
-            
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
                 activeTab === "Employee Hires & Turnover" ||
@@ -1027,14 +1132,14 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Employment</span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocEmployment?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocEmployment?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -1053,36 +1158,38 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
             {isEmission && (
               <>
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  {materialityEnvData&&materialityEnvData.SocEmployment?.is_material_topic?(
+                  {materialityEnvData &&
+                  materialityEnvData.SocEmployment?.is_material_topic ? (
                     <div>
                       <div>
-                  <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Employment"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Management of Material topic Employment"
-                        )
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Employment"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Employment"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
                     </div>
-                  ):(
+                  ) : (
                     <div></div>
                   )}
-                  
+
                   <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -1093,9 +1200,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Employee Hires & Turnover")
-                      }
+                      }}
+                 
                     >
                       Employee Hires & Turnover
                     </p>
@@ -1107,7 +1216,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Benefits")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Benefits")
+                      }}
+               
                     >
                       Benefits
                     </p>
@@ -1119,7 +1232,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Parental Leave")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Parental Leave")
+                      }}
+                     
                     >
                       Parental Leave
                     </p>
@@ -1131,9 +1248,13 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Retirement Benefits")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Retirement Benefits")
+                      }}
+                     
                     >
-                     Retirement Benefits
+                      Retirement Benefits
                     </p>
                   </div>
                   <div>
@@ -1143,9 +1264,13 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Diversity of Employees")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Diversity of Employees")
+                      }}
+                      
                     >
-                     Diversity of Employees
+                      Diversity of Employees
                     </p>
                   </div>
                 </div>
@@ -1154,9 +1279,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
           </div>
 
           {/* Energy start  */}
-       
+
           {/* waste start  */}
-        
+
           {/* Materials start  */}
 
           <div>
@@ -1173,22 +1298,23 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               }`}
               onClick={toggleMaterialsVisible}
             >
-               <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+              <div className="w-[20%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                   Training and Development
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocHumanCapitalDevelopment?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocHumanCapitalDevelopment
+                ?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -1206,38 +1332,42 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
 
             {isMaterialsVisible && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocHumanCapitalDevelopment?.is_material_topic?(
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocHumanCapitalDevelopment
+                    ?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Training and Development"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() => {
+                            toggleSidebar();
+                            handleTabClick(
+                              "Management of Material topic Training and Development"
+                            )
+                          }}
+                      
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                     <div>
-                   <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Management of Material topic Training and Development"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Management of Material topic Training and Development"
-                        )
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                 
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -1249,7 +1379,11 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Training hours")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Training hours")
+                      }}
+                    
                     >
                       Training hours
                     </p>
@@ -1261,9 +1395,13 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Skill Upgrade")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Skill Upgrade")
+                      }}
+                    
                     >
-                     Employee Skill Development
+                      Employee Skill Development
                     </p>
                   </div>
                   <div>
@@ -1273,11 +1411,13 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Performance & Career Development")
-                      }
+                      }}
+                  
                     >
-                    Employee Performance and Career Development 
+                      Employee Performance and Career Development
                     </p>
                   </div>
                 </div>
@@ -1288,33 +1428,32 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full
               ${
-                activeTab === "Customer Privacy" || 
-                activeTab === "Statement of Fact" || 
+                activeTab === "Customer Privacy" ||
+                activeTab === "Statement of Fact" ||
                 activeTab === "Management of Material topic Privacy"
                   ? "text-[#007EEF]"
                   : "bg-transparent text-[#727272] "
               }`}
               onClick={togglePrivacy}
             >
-               <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+              <div className="w-[20%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                Customer Privacy & Data Security
+                  Customer Privacy & Data Security
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocPrivacyDataSecurity?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocPrivacyDataSecurity?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
-
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
@@ -1330,35 +1469,41 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
 
             {Privacy && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocPrivacyDataSecurity?.is_material_topic?(
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocPrivacyDataSecurity
+                    ?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic Privacy"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() => {
+                            toggleSidebar();
+                            handleTabClick(
+                              "Management of Material topic Privacy"
+                            )
+                          }}
+                       
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                     <div>
-                  <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Privacy"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Privacy")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                 
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -1370,9 +1515,13 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Customer Privacy")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Customer Privacy")
+                      }}
+               
                     >
-                  Customer Privacy
+                      Customer Privacy
                     </p>
                   </div>
                   <div>
@@ -1382,12 +1531,15 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Statement of Fact")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Statement of Fact")
+                      }}
+                    
                     >
-                Statement of Fact
+                      Statement of Fact
                     </p>
                   </div>
-           
                 </div>
               </>
             )}
@@ -1404,22 +1556,22 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               }`}
               onClick={toggleSafety}
             >
-                <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+              <div className="w-[20%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                Product Safety & Quality
+                  Product Safety & Quality
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocProductSafetyQuality?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocProductSafetyQuality?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -1437,35 +1589,39 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
 
             {Safety && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocProductSafetyQuality?.is_material_topic?(
-                  <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocProductSafetyQuality
+                    ?.is_material_topic ? (
                     <div>
-                  <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic Safety"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Safety"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Safety"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Safety")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                  
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -1479,10 +1635,10 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                       }`}
                       onClick={() => handleTabClick("Product/Service Safety")}
                     >
-                   Product and  Service Safety
+                      Product and Service Safety
                     </p>
                   </div>
-                
+
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
@@ -1490,11 +1646,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
-                        handleTabClick("Compliance")
-                      }
+                      onClick={() => handleTabClick("Compliance")}
                     >
-                     Compliance
+                      Compliance
                     </p>
                   </div>
                   <div>
@@ -1504,11 +1658,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
-                        handleTabClick("Products & Service")
-                      }
+                      onClick={() => handleTabClick("Products & Service")}
                     >
-                     Products & Services- Statement of Non Compliance
+                      Products & Services- Statement of Non Compliance
                     </p>
                   </div>
                 </div>
@@ -1520,7 +1672,8 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full
               ${
                 activeTab === "Product/Service labelling" ||
-                activeTab === "Product/Service Categories Assessed for Compliance" || 
+                activeTab ===
+                  "Product/Service Categories Assessed for Compliance" ||
                 activeTab === "Non compliance incidents- Labelling" ||
                 activeTab === "Statement of non compliance - Labeling" ||
                 activeTab === "Non compliance incidents - Marketing" ||
@@ -1531,22 +1684,22 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               }`}
               onClick={toggleMarketing}
             >
-                <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+              <div className="w-[20%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                Marketing and Labeling
+                  Marketing and Labeling
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocMarketingLabeling?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocMarketingLabeling?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -1564,35 +1717,39 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
 
             {Marketing && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocMarketingLabeling?.is_material_topic?(
-                  <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocMarketingLabeling?.is_material_topic ? (
                     <div>
-                  <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Marketing"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Marketing"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Marketing"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Marketing")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                  
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -1604,21 +1761,28 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Product/Service labelling")}
+                      onClick={() =>
+                        handleTabClick("Product/Service labelling")
+                      }
                     >
-                  Product/Service labelling
+                      Product/Service labelling
                     </p>
                   </div>
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Product/Service Categories Assessed for Compliance"
+                        activeTab ===
+                        "Product/Service Categories Assessed for Compliance"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Product/Service Categories Assessed for Compliance")}
+                      onClick={() =>
+                        handleTabClick(
+                          "Product/Service Categories Assessed for Compliance"
+                        )
+                      }
                     >
-                  Product/Service Categories Assessed for Compliance
+                      Product/Service Categories Assessed for Compliance
                     </p>
                   </div>
                   <div>
@@ -1632,7 +1796,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                         handleTabClick("Non compliance incidents- Labelling")
                       }
                     >
-                  Labelling - Non Compliance Incidents
+                      Labelling - Non Compliance Incidents
                     </p>
                   </div>
                   <div>
@@ -1646,7 +1810,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                         handleTabClick("Statement of non compliance - Labeling")
                       }
                     >
-                 Labeling - Statement  of Non Compliance
+                      Labeling - Statement of Non Compliance
                     </p>
                   </div>
                   <div>
@@ -1660,7 +1824,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                         handleTabClick("Non compliance incidents - Marketing")
                       }
                     >
-                Marketing - Non Compliance Incidents
+                      Marketing - Non Compliance Incidents
                     </p>
                   </div>
                   <div>
@@ -1671,10 +1835,12 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           : "bg-transparent text-[#727272] "
                       }`}
                       onClick={() =>
-                        handleTabClick("Statement of non compliance - Marketing")
+                        handleTabClick(
+                          "Statement of non compliance - Marketing"
+                        )
                       }
                     >
-                Marketing - Statement  of Non Compliance
+                      Marketing - Statement of Non Compliance
                     </p>
                   </div>
                 </div>
@@ -1694,22 +1860,22 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               }`}
               onClick={toggleSupplyChain}
             >
-               <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+              <div className="w-[20%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                Supply Chain Labor Standards
+                  Supply Chain Labor Standards
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocSupplyChainLabour?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocSupplyChainLabour?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -1727,35 +1893,38 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
 
             {SupplyChain && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocSupplyChainLabour?.is_material_topic?(
-                  <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocSupplyChainLabour?.is_material_topic ? (
                     <div>
-                  <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic Supply"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Supply"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Supply"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Supply")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                  
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -1769,7 +1938,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                       }`}
                       onClick={() => handleTabClick("Suppliers Screened")}
                     >
-                     Suppliers Screened
+                      Suppliers Screened
                     </p>
                   </div>
                   <div>
@@ -1779,11 +1948,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
-                        handleTabClick("Impacts & Actions Taken")
-                      }
+                      onClick={() => handleTabClick("Impacts & Actions Taken")}
                     >
-                     Negative Social Impacts and Action Taken
+                      Negative Social Impacts and Action Taken
                     </p>
                   </div>
                   <div>
@@ -1793,11 +1960,9 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
-                        handleTabClick("Procurement Practices")
-                      }
+                      onClick={() => handleTabClick("Procurement Practices")}
                     >
-                     Local Suppliers
+                      Local Suppliers
                     </p>
                   </div>
                 </div>
@@ -1809,7 +1974,6 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full
               ${
                 activeTab === "Diversity of the Board" ||
-               
                 activeTab === "Salary Ratio" ||
                 activeTab === "Entry Level Wage" ||
                 activeTab ===
@@ -1819,22 +1983,22 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               }`}
               onClick={toggleWaterVisible}
             >
-                 <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+              <div className="w-[20%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                   Diversity & Equal Oppportunity
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocDiversityEqualOpp?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocDiversityEqualOpp?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -1852,38 +2016,39 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
 
             {isWaterVisible && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocDiversityEqualOpp?.is_material_topic?(
-                  <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocDiversityEqualOpp?.is_material_topic ? (
                     <div>
-                   <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Diversity & Equal Oppportunity"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Diversity & Equal Oppportunity"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Management of Material topic Diversity & Equal Oppportunity"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Management of Material topic Diversity & Equal Oppportunity"
-                        )
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                  
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -1900,7 +2065,7 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
                       Diversity of the Board
                     </p>
                   </div>
-              
+
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
@@ -1941,21 +2106,21 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               onClick={toggleSupplierSectionVisibility}
             >
               <div className="w-[20%]">
-               <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
                   Non - Discrimination
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.SocNonDiscrimination?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.SocNonDiscrimination?.is_material_topic ? (
                 <div className="w-[20%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[20%]"></span>
               )}
 
@@ -1973,38 +2138,39 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
 
             {isSupplierVisible && (
               <>
-               <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                {materialityEnvData&&materialityEnvData.SocNonDiscrimination?.is_material_topic?(
-                  <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.SocNonDiscrimination?.is_material_topic ? (
                     <div>
-                   <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Non Discrimination"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Non Discrimination"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Management of Material topic Non Discrimination"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Management of Material topic Non Discrimination"
-                        )
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  </div>
-                ):(
-                  <div></div>
-                )}
-                  
-                  <div>
-                     <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
@@ -2027,12 +2193,6 @@ const Aside = ({ activeTab, handleTabClick ,setActiveTab,apiData }) => {
               </>
             )}
           </div>
-       
-      
-       
-      
-        
-        
         </div>
       </div>
     </div>

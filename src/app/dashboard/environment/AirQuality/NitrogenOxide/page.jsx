@@ -11,7 +11,7 @@ import AirQualityTopBar from '../airQualityTopBar'
 import { useSelector } from "react-redux";
 import Screen1 from "./screen1";
 
-const NitrogenOxide = ({apiData,isSidepanelOpen}) => {
+const NitrogenOxide = ({apiData,isSidepanelOpen,setMobileopen}) => {
     const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
         (state) => state.materialitySlice
       );
@@ -101,7 +101,7 @@ const griData=[
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <AirQualityTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} griData={griData} />
+        <AirQualityTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} griData={griData} setMobileopen={setMobileopen} />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -153,9 +153,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

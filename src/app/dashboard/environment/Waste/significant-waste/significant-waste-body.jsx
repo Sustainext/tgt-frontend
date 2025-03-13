@@ -67,23 +67,36 @@ const AccordionItem = ({
       </div>
      <div className="w-full xl:w-[25%] lg:w-[25%] 2xl:w-[25%] 4k:w-[25%] md:w-[25%]">
      <div className={`flex float-start xl:float-end lg:float-end 2xl:float-end md:float-end`}>
-      {isOpen ? (
-          <>
-            {sdg && sdg.map((sdgItem, index) => (
-              <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2"    style={{ display: "none" }}>
-                <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
-              </div>
-            ))}
-          </>
-        ) : (
-          <>
-            {sdg && sdg.map((sdgItem, index) => (
-              <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
-                <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
-              </div>
-            ))}
-          </>
-        )}
+     {isOpen ? (
+                <>
+                  {sdg &&
+                    sdg.map((sdgItem, index) => (
+                      <div
+                        key={index}
+                        className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2"
+                        style={{ display: "none" }}
+                      >
+                        <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">
+                          {sdgItem}
+                        </p>
+                      </div>
+                    ))}
+                </>
+              ) : (
+                <>
+                  {sdg &&
+                    sdg.map((sdgItem, index) => (
+                      <div
+                        key={index}
+                        className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2"
+                      >
+                        <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">
+                          {sdgItem}
+                        </p>
+                      </div>
+                    ))}
+                </>
+              )}
         <MdKeyboardArrowDown className={`text-2xl hidden xl:block lg:block md:block 2xl:block 4k:block ${isOpen ? "rotate-180" : ""}`} />
       </div>
      </div>

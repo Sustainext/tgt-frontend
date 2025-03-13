@@ -8,7 +8,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import axios from "axios";
 import { toast } from "react-toastify";
-// import "react-toastify/dist/react-toastify.css";
+import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
@@ -194,6 +194,7 @@ const GovernanceStructure = ({
 
   return (
     <>
+    
       <div
         className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{

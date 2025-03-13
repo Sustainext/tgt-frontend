@@ -177,7 +177,7 @@ const MultiselectTableWidget = ({
                 style={{ textAlign: "left" }}
                 className={`${
                   idx === 0 ? "" : " border-l"
-                } text-[12px] p-3 text-center border-gray-300 px-2 py-2 relative w-[25vw]`}
+                } text-[12px] p-3 text-center border-gray-300 px-2 py-2 relative w-[45vw] xl:w-[25vw] lg:w-[25vw] md:w-[25vw] 2xl:w-[25vw] 4k:w-[25vw] 2k:w-[25vw]`}
               >
                 <div className="flex items-center relative">
                   <p className="w-[80%]">{item.title}</p>
@@ -206,7 +206,7 @@ const MultiselectTableWidget = ({
                 </div>
               </th>
             ))}
-            <th className="text-[12px] p-3 text-center border-gray-300 px-2 py-2 w-[3vw]"></th>
+            <th className="text-[12px] p-3 text-center border-gray-300 px-2 py-2 w-[25vw] xl:w-[3vw] lg:w-[3vw] md:w-[3vw] 2xl:w-[3vw] 4k:w-[3vw] 2k:w-[3vw]"></th>
           </tr>
         </thead>
         <tbody>

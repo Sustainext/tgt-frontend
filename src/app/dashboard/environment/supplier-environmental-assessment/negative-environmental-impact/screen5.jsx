@@ -269,7 +269,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
               <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html="<p>Specify the number of  suppliers identified as having significant actual and potential negative environmental impacts with which relationships were terminated as a result of the assessment during the reporting period.</p><p>Reasons for termination: Provide details on the reasons why relationships with these suppliers were terminated. This could include details on the specific environmental impacts involved, the steps taken to address these impacts, and any efforts made to resolve the issues before terminating the relationship.</p>"
-                className="mt-1.5 ml-2 text-[15px] flex-shrink-0"
+                className="mt-1.5 ml-2 text-[15px] w-[20%] xl:w-0 lg:w-0 2xl:w-0 md:w-0 4k:w-0 2k:w-0 flex-shrink-0"
               />
               <ReactTooltip
                 id={`es30`}

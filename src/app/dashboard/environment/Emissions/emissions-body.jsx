@@ -296,7 +296,7 @@ const Emissionsnbody = ({
 
   return (
     <>
-      <div className="mx-3">
+      <div className="xl:mx-3 lg:mx-3 md:mx-3 2xl:mx-3 4k:mx-3 2k:mx-3 mx-1">
         <AccordionItem
           title="Direct emission from operations"
           scops="Scope 1"
