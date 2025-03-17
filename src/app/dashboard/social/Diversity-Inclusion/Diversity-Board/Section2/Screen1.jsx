@@ -322,8 +322,7 @@ const Screen1 = ({ location, year, month }) => {
               Number of employee per employee category
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding to the number of individuals
-within the organization’s governance bodies by gender, age group and diversity group."
+                data-tooltip-content="This section documents the data corresponding to the number of employees per employee category by gender, age group and diversity group."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip

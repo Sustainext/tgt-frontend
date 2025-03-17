@@ -22,14 +22,32 @@ const ReviewTasksModal = ({
 
     if (selectedAction === "reassign") {
       if (!bulkData.assigned_to || !bulkData.deadline) {
-        toast.error("Please fill in all fields for reassignment");
+        toast.error("Please fill in all fields for reassignment", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         return;
       }
     }
 
     if (selectedAction === "reject") {
       if (!bulkData.deadline || !bulkData.comments) {
-        toast.error("Please fill in all fields for rejection");
+        toast.error("Please fill in all fields for rejection", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         return;
       }
     }
@@ -58,12 +76,30 @@ const ReviewTasksModal = ({
       console.log("Payload:", payload);
 
       await handleTaskAction(null, "bulk_update", payload);
-      toast.success(`Tasks have been ${selectedAction}ed successfully`);
+      toast.success(`Tasks have been ${selectedAction}ed successfully`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       onClose();
       fetchTasks();
     } catch (error) {
       console.error(`Error performing bulk ${selectedAction}:`, error);
-      toast.error(`Failed to ${selectedAction} tasks`);
+      toast.error(`Failed to ${selectedAction} tasks`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
