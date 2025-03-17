@@ -110,7 +110,7 @@ const GeneralWorkersEmployees = ({
   }, [localValue, debouncedUpdate]);
 
   return (
-    <div style={{ maxHeight: "400px" }} className="mb-2 overflow-y-scroll">
+    <div style={{ overflow: "auto", maxHeight: "400px" }} className="custom-scrollbar">
       {isValueEmpty && (
         <div className="text-red-500 text-[12px] mb-2">
           Please add at least one row with valid data.
@@ -118,7 +118,7 @@ const GeneralWorkersEmployees = ({
       )}
       <table
         id={id}
-        className="rounded-md border border-gray-300 w-full"
+        className="rounded-md border border-gray-300  w-full min-w-[600px]"
         style={{ borderCollapse: "separate", borderSpacing: 0 }}
       >
         <thead className="gradient-background">
