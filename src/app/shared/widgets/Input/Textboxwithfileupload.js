@@ -344,9 +344,18 @@ const Textboxwithfileupload = (props) => {
                         className="w-full h-full"
                       />
                     ) : (
+                      <div className="flex flex-col items-center justify-center h-full">
                       <p>
-                        File preview not available. Please download and verify
+                        File preview not available.Please download and verify
                       </p>
+                      <a
+                        href={fileURL}
+                        download={fileName}
+                        className="mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                      >
+                        Download File
+                      </a>
+                    </div>
                     )
                   ) : fileType.startsWith("image") ? (
                     <img
