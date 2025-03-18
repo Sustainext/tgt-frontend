@@ -12,7 +12,7 @@ import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import SocialTopBar from '../../socialTopBar'
 
-const SoicalProcurementPractices = ({apiData}) => {
+const SoicalProcurementPractices = ({apiData,setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -64,7 +64,7 @@ const SoicalProcurementPractices = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Supply Chain Labor Standards'} topic={'SocSupplyChainLabour'} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Supply Chain Labor Standards'} topic={'SocSupplyChainLabour'} setMobileopen={setMobileopen} />
        
 
         <div className="ml-3 flex relative">

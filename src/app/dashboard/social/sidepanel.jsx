@@ -773,11 +773,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
                             handleTabClick(
                               "Management of Material topic Human Rights"
                             )
-                          }
+                            toggleSidebar(); // Call the sidebar close function
+                          }}
+                       
                         >
                           Management of Material topic
                         </p>
@@ -1174,11 +1176,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Employment"
                             )
-                          }
+                          }}
+                   
                         >
                           Management of Material topic
                         </p>
@@ -1606,11 +1610,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Safety"
                             )
-                          }
+                          }}
+                      
                         >
                           Management of Material topic
                         </p>
@@ -1633,7 +1639,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Product/Service Safety")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Product/Service Safety")
+                      }}
+                   
                     >
                       Product and Service Safety
                     </p>
@@ -1646,7 +1656,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Compliance")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Compliance")
+                      }}
+                   
                     >
                       Compliance
                     </p>
@@ -1658,7 +1672,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Products & Service")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Products & Service")
+                      }}
+               
                     >
                       Products & Services- Statement of Non Compliance
                     </p>
@@ -1734,11 +1752,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Marketing"
                             )
-                          }
+                          }}
+                     
                         >
                           Management of Material topic
                         </p>
@@ -1761,9 +1781,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Product/Service labelling")
-                      }
+                      }}
+                
                     >
                       Product/Service labelling
                     </p>
@@ -1776,11 +1798,13 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick(
                           "Product/Service Categories Assessed for Compliance"
                         )
-                      }
+                      }}
+                  
                     >
                       Product/Service Categories Assessed for Compliance
                     </p>
@@ -1792,9 +1816,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Non compliance incidents- Labelling")
-                      }
+                      }}
+                 
                     >
                       Labelling - Non Compliance Incidents
                     </p>
@@ -1806,9 +1832,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Statement of non compliance - Labeling")
-                      }
+                      }}
+                 
                     >
                       Labeling - Statement of Non Compliance
                     </p>
@@ -1820,9 +1848,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Non compliance incidents - Marketing")
-                      }
+                      }}
+                  
                     >
                       Marketing - Non Compliance Incidents
                     </p>
@@ -1834,11 +1864,13 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick(
                           "Statement of non compliance - Marketing"
                         )
-                      }
+                      }}
+                   
                     >
                       Marketing - Statement of Non Compliance
                     </p>
@@ -1909,11 +1941,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Supply"
                             )
-                          }
+                          }}
+                       
                         >
                           Management of Material topic
                         </p>
@@ -1936,7 +1970,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Suppliers Screened")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Suppliers Screened")
+                      }}
+                     
                     >
                       Suppliers Screened
                     </p>
@@ -1948,7 +1986,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Impacts & Actions Taken")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Impacts & Actions Taken")
+                      }}
+                
                     >
                       Negative Social Impacts and Action Taken
                     </p>
@@ -1960,7 +2002,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Procurement Practices")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Procurement Practices")
+                      }}
+                 
                     >
                       Local Suppliers
                     </p>
@@ -2033,11 +2079,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Diversity & Equal Oppportunity"
                             )
-                          }
+                          }}
+                    
                         >
                           Management of Material topic
                         </p>
@@ -2060,7 +2108,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Diversity of the Board")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Diversity of the Board")
+                      }}
+            
                     >
                       Diversity of the Board
                     </p>
@@ -2073,7 +2125,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Salary Ratio")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Salary Ratio")
+                      }}
+                     
                     >
                       Salary Ratio
                     </p>
@@ -2085,7 +2141,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Entry Level Wage")}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("Entry Level Wage")
+                      }}
+                    
                     >
                       Entry Level Wage
                     </p>
@@ -2155,11 +2215,13 @@ const Aside = ({
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
-                          onClick={() =>
+                          onClick={() => {
+                            toggleSidebar();
                             handleTabClick(
                               "Management of Material topic Non Discrimination"
                             )
-                          }
+                          }}
+                    
                         >
                           Management of Material topic
                         </p>
@@ -2182,9 +2244,11 @@ const Aside = ({
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() =>
+                      onClick={() => {
+                        toggleSidebar();
                         handleTabClick("Incidents of Discrimination")
-                      }
+                      }}
+                 
                     >
                       Incidents of Discrimination
                     </p>

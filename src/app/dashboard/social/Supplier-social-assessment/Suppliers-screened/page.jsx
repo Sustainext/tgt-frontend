@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import SocialTopBar from "../../socialTopBar";
 
-const Impactsactionstaken = ({ apiData }) => {
+const Impactsactionstaken = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -91,6 +91,7 @@ const Impactsactionstaken = ({ apiData }) => {
           apiData={apiData}
           title={"Supply Chain Labor Standards"}
           topic={"SocSupplyChainLabour"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

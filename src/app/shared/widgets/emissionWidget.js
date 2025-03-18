@@ -1269,7 +1269,7 @@ const EmissionWidget = React.memo(
                           }
                           className={getFieldClass(
                             "Quantity",
-                            "text-[12px] focus:outline-none w-[57vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
+                            "text-[12px] focus:outline-none w-[15.5vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
                           )}
                           disabled={["assigned", "approved"].includes(
                             value.rowType
@@ -1323,7 +1323,7 @@ const EmissionWidget = React.memo(
                           placeholder="Enter Value"
                           className={getFieldClass(
                             "Quantity2",
-                            "text-[12px] focus:outline-none  w-[57vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
+                            "text-[12px] focus:outline-none  w-[15.5vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
                           )}
                           step="1"
                           min="0"
@@ -1534,10 +1534,10 @@ const EmissionWidget = React.memo(
                     {/* Preview Modal */}
                     {showModal && previewData && (
                     <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-1 rounded-lg w-[86%] h-[90%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
+          <div className="bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
                           <div className="flex justify-between mt-4 mb-4">
                             <div>
-                              <h5 className="mb-4 ml-2 font-semibold">
+                              <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap">
                                 {fileName}
                               </h5>
                             </div>
@@ -1565,7 +1565,7 @@ const EmissionWidget = React.memo(
                             </div>
                           </div>
                           <div className="block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
-                          <div className="relative w-[105vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[155vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
+                          <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
                       
                               {fileType.startsWith("image") ? (
                                 <img

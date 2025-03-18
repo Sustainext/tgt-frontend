@@ -30,7 +30,7 @@ const InputtextWidget = (props) => {
           effect="solid"
           style={{
             minWidth: "200px", // Minimum width
-            maxWidth: "500px", // Maximum width
+            maxWidth: "300px", // Maximum width
             backgroundColor: "#000",
             color: "white",
             fontSize: "12px",
