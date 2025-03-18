@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 // import Screen2 from "./screen2";
 import EconomicTopBar from "../../economicTopBar.jsx";
 
-const Financialimplications = ({ apiData }) => {
+const Financialimplications = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -82,6 +82,7 @@ const Financialimplications = ({ apiData }) => {
           apiData={apiData}
           title={"Climate Risks and Opportunities"}
           topic={"ClimateRisksAndOpportunities"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

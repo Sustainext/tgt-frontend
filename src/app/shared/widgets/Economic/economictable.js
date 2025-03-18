@@ -493,9 +493,9 @@ const Economictable = ({
         "PotentialImpact",
       ].includes(key)
     ) {
-      return "25vw";
+      return "desktop-wide";
     }
-    return "17vw";
+    return "desktop-narrow";
   };
 
   return (
@@ -515,8 +515,8 @@ const Economictable = ({
             <tr className="h-[102px]">
               {formContext.view === 1 && (
                 <th
-                  className="text-[12px] border-b border-gray-300 px-4 py-3 relative"
-                  style={{ width: "17vw" }}
+                  className="text-[12px] border-b border-gray-300 px-4 py-3 relative w-[30vw] xl:w-[17vw] lg:w-[17vw] md:w-[17vw] 2xl:w-[17vw] 4k:w-[17vw] 2k:w-[17vw]"
+                
                 >
                   {formContext.colhadding}
                 </th>
@@ -524,8 +524,8 @@ const Economictable = ({
               {options.titles.map((item, idx) => (
                 <th
                   key={idx}
-                  style={{ width: getColumnWidth(item.key), textAlign: "left" }}
-                  className="text-[12px] border-l border-gray-300 px-2 py-3 relative"
+                  style={{  textAlign: "left" }}
+                  className={`text-[12px] border-l border-gray-300 px-2 py-3 relative ${getColumnWidth(item.key)}`}
                 >
                   <div
                     className={`flex items-center ${

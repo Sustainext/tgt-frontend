@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SocialTopBar from "../../socialTopBar";
 import { useSelector } from "react-redux";
 
-const Salaryratio = ({ apiData }) => {
+const Salaryratio = ({ apiData,setMobileopen }) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
     (state) => state.materialitySlice
   );
@@ -81,6 +81,7 @@ const Salaryratio = ({ apiData }) => {
           apiData={apiData}
           title={"Diversity and Equal Opportunity"}
           topic={"SocDiversityEqualOpp"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

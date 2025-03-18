@@ -534,4 +534,19 @@ color:"#ACACAC";
 .error-detail{
   display: none;
 }
+.desktop-wide {
+  width: 25vw;
+}
 
+.desktop-narrow {
+  width: 17vw;
+}
+@media (max-width: 768px) {
+  .desktop-wide {
+    width: 45vw;
+  }
+  
+  .desktop-narrow {
+    width: 37vw;
+  }
+}
