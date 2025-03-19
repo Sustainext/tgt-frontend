@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 // import Screen3 from "./Screen3";
 import EconomicTopBar from "../../economicTopBar";
 
-const PoliticalInvolvement = ({ apiData }) => {
+const PoliticalInvolvement = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -83,6 +83,7 @@ const PoliticalInvolvement = ({ apiData }) => {
           apiData={apiData}
           title={"Lobbying and Political Influence"}
           topic={"GovPolicy"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

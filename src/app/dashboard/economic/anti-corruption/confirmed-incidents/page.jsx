@@ -13,7 +13,7 @@ import Screen3 from "./screen3";
 import { useSelector } from "react-redux";
 import EconomicTopBar from "../../economicTopBar";
 
-const Confirmedincidents = ({ apiData }) => {
+const Confirmedincidents = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -82,6 +82,7 @@ const Confirmedincidents = ({ apiData }) => {
           apiData={apiData}
           title={"Anti Corruption"}
           topic={"GovCorruption"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

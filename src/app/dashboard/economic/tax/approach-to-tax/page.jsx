@@ -11,7 +11,7 @@ import Screen1 from "./screen1";
 import { useSelector } from "react-redux";
 import EconomicTopBar from "../../economicTopBar";
 
-const Approachtotax = ({ apiData }) => {
+const Approachtotax = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -93,6 +93,7 @@ const Approachtotax = ({ apiData }) => {
           apiData={apiData}
           title={"Tax Transparency"}
           topic={"GovTaxTransparency"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">
