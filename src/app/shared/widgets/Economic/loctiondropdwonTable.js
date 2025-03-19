@@ -75,7 +75,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
           </td>
         ))}
         {locationdata.length > 1 && (
-          <td className="border border-gray-300 p-3 flex justify-center">
+          <td className="border-l border-t border-gray-300 p-3 flex justify-center">
             <button onClick={() => onRemove(rowIndex)}>
               <MdOutlineDeleteOutline className="text-[20px] text-red-600" />
             </button>
@@ -152,7 +152,7 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
         minWidth: "100%",
         width: "80vw",
       }}
-      className="mb-2 pb-2"
+      className="mb-2 pb-2 custom-scrollbar"
     >
       <table id={id} className="table-fixed border-collapse w-full rounded-md border border-gray-300" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="gradient-background">
@@ -160,11 +160,11 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
-                style={{ width: "17vw", textAlign: "left" }}
-                className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-2 py-2 text-center border-gray-300 `}
+                style={{textAlign: "left" }}
+                className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-2 py-2 text-center border-gray-300 xl:w-[17vw] lg:w-[17vw] 2xl:w-[17vw] 4k:w-[17vw] 2k:w-[17vw] 3xl:w-[17vw] md:w-[17vw] w-[77vw] `}
               
               >
-                <div className="flex items-center relative justify-center">
+                <div className="flex items-center relative justify-center xl:w-auto lg:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto  3xl:w-auto  md:w-auto  w-[57vw]">
                   <p>{item.title}</p>
                   {item.tooltipdisplay === "block" && (
                     <p>
@@ -193,7 +193,7 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
               </th>
             ))}
             {locationdata.length > 1 && (
-              <th className="w-[5vw] border border-gray-300 "></th>
+              <th className="w-[7vw] xl:w-[5vw] lg:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] 2xl:w-[5vw] 3xl:w-[5vw] md:w-[5vw] border-l  "></th>
             )}
           </tr>
         </thead>

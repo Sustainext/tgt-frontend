@@ -59,7 +59,7 @@ const InputWidget4 = (props) => {
             </div>
             <div className="flex">
               <div className=" relative">
-                <h6 className="text-[13px] w-[860px] flex text-gray-700 font-[500]">
+                <h6 className="text-[13px] xl:w-[860px] md:w-[860px] lg:w-[860px] 4k:w-[860px] 2k:w-[860px] 2xl:w-[860px] flex text-gray-700 font-[500]">
                   {uiSchema["ui:title"]} <MdInfoOutline
                   data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
                   data-tooltip-content={uiSchema["ui:tooltipstitle"]}
