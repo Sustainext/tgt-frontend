@@ -308,7 +308,7 @@ const Screenend = ({
       );
       if (!response.ok) {
         const errorResponse = await response.json(); 
-        throw new Error(errorResponse.error || "Unknown error occurred");
+        throw new Error(errorResponse.message || 'Unknown error occurred');
       }
       LoaderClose();
       const blob = await response.blob();
