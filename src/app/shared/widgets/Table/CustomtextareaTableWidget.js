@@ -28,14 +28,14 @@ const CustomtextareaTableWidget = ({
   }, [value]);
 
   return (
-    <div style={{ overflowY: "auto", maxHeight: "400px" }} className="mb-2">
+    <div style={{ overflowY: "auto", maxHeight: "400px" }} className="mb-2 custom-scrollbar">
       <table id={id} className="rounded-md border border-gray-300 w-full"  style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="gradient-background h-[54px]">
           <tr>
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
-                style={{ minWidth: "120px" }}
+               
                 className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-2 py-2  border-gray-300`}
               >
                 <div className="flex items-center justify-center relative">

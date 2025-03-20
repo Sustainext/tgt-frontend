@@ -12,7 +12,7 @@ import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import EconomicTopBar from "../../economicTopBar.jsx";
 
-const Climaterelatedrisks = ({ apiData }) => {
+const Climaterelatedrisks = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [year, setYear] = useState();
@@ -77,6 +77,7 @@ const Climaterelatedrisks = ({ apiData }) => {
           topic={"ClimateRisksAndOpportunities"}
           brsr={brsr}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

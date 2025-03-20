@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import SocialTopBar from "../../socialTopBar";
 
-const Suppliersscreened = ({ apiData }) => {
+const Suppliersscreened = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -109,6 +109,7 @@ const Suppliersscreened = ({ apiData }) => {
           topic={"SocSupplyChainLabour"}
           griData={griData}
           brsr={brsr}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

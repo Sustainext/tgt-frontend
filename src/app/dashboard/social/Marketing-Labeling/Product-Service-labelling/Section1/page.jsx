@@ -10,7 +10,7 @@ import Socialheader3 from "../../../socialheader3";
 import Screen1 from "./screen1";
 import SocialTopBar from "../../../socialTopBar";
 
-const ProductServicelabelling = ({ apiData }) => {
+const ProductServicelabelling = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -75,6 +75,7 @@ const ProductServicelabelling = ({ apiData }) => {
           topic={"SocMarketingLabeling"}
           brsr={brsr}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

@@ -56,7 +56,7 @@
 }
 @media (max-width: 768px) {
   body {
-   
+    zoom: 0.8;
     overflow-x: hidden;
   }
 }
@@ -534,4 +534,19 @@ color:"#ACACAC";
 .error-detail{
   display: none;
 }
+.desktop-wide {
+  width: 25vw;
+}
 
+.desktop-narrow {
+  width: 17vw;
+}
+@media (max-width: 768px) {
+  .desktop-wide {
+    width: 45vw;
+  }
+  
+  .desktop-narrow {
+    width: 37vw;
+  }
+}

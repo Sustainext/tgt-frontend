@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 // import Screen3 from "./Screen3";
 import SocialTopBar from "../../../socialTopBar";
 
-const ProductsService = ({ apiData }) => {
+const ProductsService = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -81,6 +81,7 @@ const ProductsService = ({ apiData }) => {
           apiData={apiData}
           title={"Product Safety & Quality"}
           topic={"SocProductSafetyQuality"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

@@ -12,7 +12,7 @@ import Screen2 from "./screen2";
 import { useSelector } from "react-redux";
 import EconomicTopBar from '../../economicTopBar'
 
-const Operationsassessed = ({apiData}) => {
+const Operationsassessed = ({apiData,setMobileopen}) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
     (state) => state.materialitySlice
   );
@@ -66,7 +66,7 @@ const Operationsassessed = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Anti Corruption'} topic={'GovCorruption'} />
+         <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Anti Corruption'} topic={'GovCorruption'} setMobileopen={setMobileopen} />
         
 
         <div className="ml-3 flex relative">

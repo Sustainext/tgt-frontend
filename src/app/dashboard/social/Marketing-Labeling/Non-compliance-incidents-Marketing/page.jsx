@@ -10,7 +10,7 @@ import Socialheader from "../../socialheader";
 import Screen1 from "./screen1";
 import SocialTopBar from "../../socialTopBar";
 
-const NoncomplianceincidentsMarketing = ({ apiData }) => {
+const NoncomplianceincidentsMarketing = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -65,6 +65,7 @@ const NoncomplianceincidentsMarketing = ({ apiData }) => {
           apiData={apiData}
           title={"Marketing and labeling"}
           topic={"SocMarketingLabeling"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

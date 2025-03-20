@@ -14,7 +14,7 @@ import Screen4 from "./screen4";
 import { useSelector } from "react-redux";
 import SocialTopBar from "../../../socialTopBar.jsx";
 
-const Section1 = ({ apiData }) => {
+const Section1 = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -92,6 +92,7 @@ const Section1 = ({ apiData }) => {
           apiData={apiData}
           title={"Diversity and Equal Opportunity"}
           topic={"SocDiversityEqualOpp"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

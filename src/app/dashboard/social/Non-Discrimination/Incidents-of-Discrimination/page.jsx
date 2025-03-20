@@ -11,7 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SocialTopBar from "../../socialTopBar";
 
-const IncidentsofDiscrimination = ({ apiData }) => {
+const IncidentsofDiscrimination = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -82,6 +82,7 @@ const IncidentsofDiscrimination = ({ apiData }) => {
           topic={"SocNonDiscrimination"}
           griData={griData}
           brsr={brsr}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

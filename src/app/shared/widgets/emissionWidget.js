@@ -955,7 +955,7 @@ const EmissionWidget = React.memo(
         case "calculated":
           return (
             <td className="py-2 text-center w-[1vw]">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 mx-auto"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500 xl:mx-auto md:mx-auto 2xl:mx-auto lg:mx-auto 3xl:mx-auto 4k:mx-auto 2k:mx-auto mx-2"></div>
             </td>
           );
         case "assigned":
@@ -985,7 +985,7 @@ const EmissionWidget = React.memo(
     };
 
     return (
-      <div className={`w-full ${!id.startsWith("root_0") && "ml-1"}`}>
+      <div className={`w-full ${!id.startsWith("root_0") && "xl:ml-1 md:ml-1 lg:ml-1 3xl:ml-1 4k:ml-1 2k:ml-1 ml-0"}`}>
         {id.startsWith("root_0") && (
           <div className="mb-2">
             <button
@@ -1135,7 +1135,7 @@ const EmissionWidget = React.memo(
                     onFocus={toggleDropdown}
                     className={getFieldClass(
                       "Activity",
-                      "text-[12px] focus:outline-none w-full py-1"
+                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[25vw] py-1"
                     )}
                     disabled={["assigned", "calculated", "approved"].includes(
                       value.rowType
@@ -1149,6 +1149,7 @@ const EmissionWidget = React.memo(
                   )}
 
                   {isDropdownActive && (
+                    <>
                     <select
                       ref={dropdownRef}
                       size="9"
@@ -1158,7 +1159,7 @@ const EmissionWidget = React.memo(
                         toggleDropdown();
                         setActivitySearch("");
                       }}
-                      className="text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[810px]"
+                     className="text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100]  min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6 hidden xl:block md:block lg:block 4k:block 2k:block 2xl:block"
                       disabled={["assigned", "calculated", "approved"].includes(
                         rowType
                       )}
@@ -1193,6 +1194,51 @@ const EmissionWidget = React.memo(
                         </option>
                       )}
                     </select>
+                      <select
+                      ref={dropdownRef}
+                  
+                      value={activity}
+                      onChange={(e) => {
+                        handleActivityChange(e.target.value);
+                        toggleDropdown();
+                        setActivitySearch("");
+                      }}
+                     className="text-[12px] focus:border-blue-500 focus:outline-none w-full   z-[100]   mb-6 block xl:hidden md:hidden lg:hidden 4k:hidden 2k:hidden 2xl:hidden"
+                      disabled={["assigned", "calculated", "approved"].includes(
+                        rowType
+                      )}
+                    >
+                      <option value="" className="px-1">
+                        {rowType === "calculated"
+                          ? activity
+                          : "Select Activity"}
+                      </option>
+                      {filteredActivities.length > 0 ? (
+                        filteredActivities.map((item) => (
+                          <option
+                            key={item.id || item.activity_id}
+                            value={`${item.name} - (${item.source}) - ${item.unit_type}`}
+                            className="px-2"
+                          >
+                            {item.name} - ({item.source}) - {item.unit_type} -{" "}
+                            {item.region} - {item.year}
+                            {item.source_lca_activity !== "unknown" &&
+                              ` - ${item.source_lca_activity}`}
+                          </option>
+                        ))
+                      ) : (
+                        <option
+                          value=""
+                          disabled
+                          className="px-2 text-gray-500"
+                        >
+                          {isLoadingActivities
+                            ? "Loading activities..."
+                            : "No matching activities found"}
+                        </option>
+                      )}
+                    </select>
+                    </>
                   )}
                 </div>
               </td>
@@ -1223,7 +1269,7 @@ const EmissionWidget = React.memo(
                           }
                           className={getFieldClass(
                             "Quantity",
-                            "text-[12px] focus:outline-none w-[57vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
+                            "text-[12px] focus:outline-none w-[15.5vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
                           )}
                           disabled={["assigned", "approved"].includes(
                             value.rowType
@@ -1277,7 +1323,7 @@ const EmissionWidget = React.memo(
                           placeholder="Enter Value"
                           className={getFieldClass(
                             "Quantity2",
-                            "text-[12px] focus:outline-none  w-[57vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
+                            "text-[12px] focus:outline-none  w-[15.5vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
                           )}
                           step="1"
                           min="0"
@@ -1487,11 +1533,11 @@ const EmissionWidget = React.memo(
 
                     {/* Preview Modal */}
                     {showModal && previewData && (
-                      <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-6">
+                    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
                           <div className="flex justify-between mt-4 mb-4">
                             <div>
-                              <h5 className="mb-4 ml-2 font-semibold">
+                              <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap">
                                 {fileName}
                               </h5>
                             </div>
@@ -1518,8 +1564,9 @@ const EmissionWidget = React.memo(
                               </div>
                             </div>
                           </div>
-                          <div className="flex">
-                            <div className="relative w-[744px] h-[545px]">
+                          <div className="block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
+                          <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
+                      
                               {fileType.startsWith("image") ? (
                                 <img
                                   src={previewData}
