@@ -23,6 +23,7 @@ const Screenend = ({
   const [reportingentity, setReportingentit] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [isSubmitted,setIsSubmitted]= useState(false)
 
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
@@ -53,8 +54,10 @@ const Screenend = ({
         setReportingdescription(response.data.additional_info_assessment_18);
         setReportingentit(response.data.assessment_method_description_17_1);
         if (response.data.assessment_method_17_1 == null) {
+          setIsSubmitted(false)
           setSelectedOptions([]);
         } else {
+          setIsSubmitted(true)
           setSelectedOptions(response.data.assessment_method_17_1);
         }
         LoaderClose();
@@ -88,6 +91,8 @@ const Screenend = ({
       LoaderClose();
     }
   };
+
+  
   useEffect(() => {
     // if (isMounted.current) {
 
@@ -206,7 +211,7 @@ const Screenend = ({
         axiosConfig
       );
       if (response.status == "200") {
-        console.log(response.status);
+        setIsSubmitted(true)
         toast.success("Data added successfully", {
           position: "top-right",
           autoClose: 3000,
@@ -293,32 +298,29 @@ const Screenend = ({
   //   // Gets the last part after the last dot, which should be the extension
   // };
   const handleDownload = async () => {
-    setLoading(true);
-
+    LoaderOpen();
     try {
       const response = await fetch(
         `${
-          process.env.REACT_APP_BACKEND_URL
-        }/canadabills211/generate-csv/${localStorage.getItem("user_id")}`
+          process.env.BACKEND_API_URL
+        }/canadabills211/generate_cbill_excel/?organization=${selectedOrg}&corporate=${selectedCorp}&year=${year}`,
+        axiosConfig
       );
-
       if (!response.ok) {
-        // Parse the error message from the JSON response
-        const errorResponse = await response.json(); // Assuming the server responds with a JSON object on error
-        // Throw a new error with the message from the server's response
-        throw new Error(errorResponse.error || "Unknown error occurred"); // Fallback to a generic error message if none provided
+        const errorResponse = await response.json(); 
+        throw new Error(errorResponse.message || 'Unknown error occurred');
       }
-
+      LoaderClose();
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", `Bill-S211.csv`); // Choose the file name
+      link.setAttribute("download", `Canada_Bill_S211.xlsx`); // Choose the file name
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
     } catch (error) {
-      // Handle any errors that occurred during the fetch or download process
+      LoaderClose();
       toast.error(`${error.message}`, {
         position: "top-right",
         autoClose: 7000,
@@ -330,7 +332,7 @@ const Screenend = ({
         theme: "colored",
       });
     } finally {
-      setLoading(false);
+      LoaderClose();
     }
   };
 
@@ -472,34 +474,54 @@ const Screenend = ({
                   </div> */}
           </div>
         </form>
-        <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full] mb-5">
-          <div className="float-right">
-            <button
-              className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-              onClick={prevStep}
-            >
-              &lt; Previous
-            </button>
-
-            <button
-              type="button"
-              onClick={continueToNextStep}
-              disabled={!(selectedOrg && year)}
-              className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-                reportType == "Organization"
-                  ? !(selectedOrg && year)
+        {
+          isSubmitted?(
+            <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full] mb-5">
+                <div className="float-right">
+               <button
+            type="button"
+            onClick={handleDownload}
+            className={`px-3 py-2 font-semibold rounded ml-2 w-[130px] text-[12px] bg-blue-500 text-white`}
+          >
+            {" "}
+            Download Report
+          </button>
+            </div>
+            </div>
+            
+           
+          ):(
+            <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full] mb-5">
+            <div className="float-right">
+              <button
+                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
+                onClick={prevStep}
+              >
+                &lt; Previous
+              </button>
+  
+              <button
+                type="button"
+                onClick={continueToNextStep}
+                disabled={!(selectedOrg && year)}
+                className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                  reportType == "Organization"
+                    ? !(selectedOrg && year)
+                      ? "opacity-30 cursor-not-allowed"
+                      : ""
+                    : !(selectedOrg && year && selectedCorp)
                     ? "opacity-30 cursor-not-allowed"
                     : ""
-                  : !(selectedOrg && year && selectedCorp)
-                  ? "opacity-30 cursor-not-allowed"
-                  : ""
-              }`}
-            >
-              {" "}
-              Submit
-            </button>
+                }`}
+              >
+                {" "}
+                Submit
+              </button>
+            </div>
           </div>
-        </div>
+          )
+        }
+       
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

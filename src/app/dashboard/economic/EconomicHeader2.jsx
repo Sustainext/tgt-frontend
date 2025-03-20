@@ -226,9 +226,9 @@ const EconomicHeader2 = ({
   }, [selectedCorp]);
   return (
     <>
-      <div>
+    <div>
         <div className="flex-col items-center ">
-          <div className="mt-4 pb-3 mx-5 text-left">
+          <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2 text-left">
             <div className="mb-2 flex-col items-center">
               <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
@@ -237,7 +237,7 @@ const EconomicHeader2 = ({
                 <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-[#D2DFEB]" : "bg-white"
+                      reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
@@ -246,8 +246,8 @@ const EconomicHeader2 = ({
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300  rounded-r-lg  justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Corporate" ? "bg-[#D2DFEB]" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
@@ -258,7 +258,7 @@ const EconomicHeader2 = ({
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${
                   reportType !== "" ? "visible" : "hidden"
                 }`}
               >

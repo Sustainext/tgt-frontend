@@ -13,7 +13,7 @@ import Screen3 from "./screen3";
 import Screen4 from "./screen4";
 import EconomicTopBar from '../../economicTopBar'
 
-const PortionForSeniorManagement = ({apiData}) => {
+const PortionForSeniorManagement = ({apiData,setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [year, setYear] = useState();
@@ -64,7 +64,7 @@ const PortionForSeniorManagement = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Economic Governance'} topic={'GovGovernance'} />
+        <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Economic Governance'} topic={'GovGovernance'} setMobileopen={setMobileopen} />
       
 
         <div className="ml-3 flex relative">

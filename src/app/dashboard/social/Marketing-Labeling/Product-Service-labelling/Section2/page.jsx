@@ -11,7 +11,7 @@ import Screen1 from "./screen1";
 import { useSelector } from "react-redux";
 import SocialTopBar from "../../../socialTopBar";
 
-const ProductServicelabelling2 = ({ apiData }) => {
+const ProductServicelabelling2 = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -90,6 +90,7 @@ const ProductServicelabelling2 = ({ apiData }) => {
           topic={"SocMarketingLabeling"}
           brsr={brsr}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

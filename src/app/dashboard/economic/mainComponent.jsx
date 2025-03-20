@@ -56,7 +56,7 @@ const Economic = () => {
   const [activeTab, setActiveTab] = useState(
     "Management of Material topic Economic Performance"
   );
- 
+  const [mobileopen, setMobileopen] = useState(false);
 
   const dispatch = useDispatch();
   const { corporate_id, organization_id, start_date, end_date, data,materiality_year, loading, error } = useSelector(
@@ -78,6 +78,7 @@ const Economic = () => {
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    setMobileopen(false);
   };
 
   useEffect(() => {
@@ -163,11 +164,28 @@ const Economic = () => {
 
   return (
     <>
-      <div className="w-full">
-        <div className="flex">
-          <div className="">
-            <Aside activeTab={activeTab} handleTabClick={handleTabClick} apiData={data} />
-          </div>
+           <div className="w-full">
+             <div className="block xl:flex lg:flex md:flex 2xl:flex 4k:flex">
+               <div className=" hidden xl:block lg:block md:block 2xl:block 4k:block">
+                 <Aside
+                   activeTab={activeTab}
+                   handleTabClick={handleTabClick}
+                   apiData={data} 
+                   setMobileopen={setMobileopen}
+                 />
+               </div>
+               {mobileopen ? (
+                 <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+                   <div>
+                     <Aside
+                       activeTab={activeTab}
+                       handleTabClick={handleTabClick}
+                       apiData={data} 
+                       setMobileopen={setMobileopen}
+                     />
+                   </div>
+                 </div>
+               ) : (
           <div
             className={`${
               open
@@ -178,33 +196,33 @@ const Economic = () => {
             {/* Emissions start */}
             {activeTab ===
               "Management of Material topic Economic Performance" && (
-              <EconomicperformanceMaterialtopic apiData={data} />
+              <EconomicperformanceMaterialtopic apiData={data} setMobileopen={setMobileopen} />
             )}
             {activeTab === "Direct economic value generated & distributed" && (
-              <Directeconomic apiData={data} />
+              <Directeconomic apiData={data} setMobileopen={setMobileopen} />
             )}
             {/* {activeTab ===
               "Defined benefit plan obligations and other retirement plans" && (
               <Definedbenefit />
             )} */}
             {activeTab === "Financial assistance received from government" && (
-              <Financialassistance apiData={data} />
+              <Financialassistance apiData={data} setMobileopen={setMobileopen} />
             )}
             {/* Energy start */}
             {activeTab === "Management of Material topic risks" && (
-              <RiskMaterialtopic apiData={data} />
+              <RiskMaterialtopic apiData={data} setMobileopen={setMobileopen} />
             )}
             {activeTab === "Financial Implications due to climate change" && (
-              <Financialimplications apiData={data} />
+              <Financialimplications apiData={data} setMobileopen={setMobileopen} />
             )}
-            {activeTab === "Climate related Risks" && <Climaterelatedrisks apiData={data} />}
+            {activeTab === "Climate related Risks" && <Climaterelatedrisks apiData={data} setMobileopen={setMobileopen} />}
             {activeTab === "Climate Related Opportunities" && (
-              <Climaterelated apiData={data} />
+              <Climaterelated apiData={data} setMobileopen={setMobileopen} />
             )}
 
             {/* waste start */}
             {activeTab === "Management of Material topic Market" && (
-              <MarketpresenceMaterialtopic apiData={data} />
+              <MarketpresenceMaterialtopic apiData={data} setMobileopen={setMobileopen} />
             )}
             {/* {activeTab ===
               "Ratios of Standard Entry level wage by gender compared to local minimum wage" && (
@@ -212,19 +230,19 @@ const Economic = () => {
             )} */}
             {activeTab ===
               "Proportion of senior management hired from the local community" && (
-              <PortionOfSeniorManagement apiData={data} />
+              <PortionOfSeniorManagement apiData={data} setMobileopen={setMobileopen} />
             )}
 
             {/* Materials  start */}
             {activeTab === "Management of Material topic Indirect Economic" && (
-              <IndirecteconomicimpactsMaterialtopic apiData={data} />
+              <IndirecteconomicimpactsMaterialtopic apiData={data} setMobileopen={setMobileopen} />
             )}
             {activeTab ===
               "Infrastructure investments and services supported" && (
-              <Infrastructureinvestmentsservices apiData={data} />
+              <Infrastructureinvestmentsservices apiData={data} setMobileopen={setMobileopen} />
             )}
             {activeTab === "Significant indirect economic impacts" && (
-              <Significantindirecteconomic apiData={data} />
+              <Significantindirecteconomic apiData={data} setMobileopen={setMobileopen} />
             )}
 
             {/* Water start */}
@@ -235,49 +253,50 @@ const Economic = () => {
 
             {/* Supplier start */}
             {activeTab === "Management of Material topic Anti" && (
-              <AnticorruptionMaterialtopic apiData={data} />
+              <AnticorruptionMaterialtopic apiData={data} setMobileopen={setMobileopen} />
             )}
             {activeTab ===
               "Operations assessed for risks related to corruption" && (
-              <Operationsassessed apiData={data} />
+              <Operationsassessed apiData={data} setMobileopen={setMobileopen} />
             )}
             {activeTab ===
               "Communication and training about anti-corruption policies and procedures" && (
-              <Communicationtraining apiData={data} />
+              <Communicationtraining apiData={data} setMobileopen={setMobileopen} />
             )}
             {activeTab ===
               "Confirmed incidents of corruption and actions taken" && (
-              <Confirmedincidents apiData={data} />
+              <Confirmedincidents apiData={data} setMobileopen={setMobileopen} />
             )}
 
             {activeTab === "Public legal cases regarding corruption" && (
-              <Publiclegal apiData={data} />
+              <Publiclegal apiData={data} setMobileopen={setMobileopen} />
             )}
             {activeTab === "Anti Competitive Behavior" && (
-              <Anticompetitivebehavior apiData={data} />
+              <Anticompetitivebehavior apiData={data} setMobileopen={setMobileopen} />
             )}
 
             {activeTab === "Management of Material topic Tax" && (
-              <TaxMaterialtopic apiData={data} />
+              <TaxMaterialtopic apiData={data} setMobileopen={setMobileopen} />
             )}
-            {activeTab === "Approach to tax" && <Approachtotax apiData={data} />}
+            {activeTab === "Approach to tax" && <Approachtotax apiData={data} setMobileopen={setMobileopen} />}
             {activeTab === "Tax governance, control, and risk management" && (
-              <Taxgovernance apiData={data} />
+              <Taxgovernance apiData={data} setMobileopen={setMobileopen} />
             )}
             {activeTab ===
               "Stakeholder engagement and management of concerns related to tax" && (
-              <Stakeholderengagement apiData={data} />
+              <Stakeholderengagement apiData={data} setMobileopen={setMobileopen} />
             )}
             {activeTab === "Country-by-country reporting" && (
-              <Countrybycountryreporting apiData={data} />
+              <Countrybycountryreporting apiData={data} setMobileopen={setMobileopen} />
             )}
 
             {activeTab ===
               "Management of Material topic Political Influence" && (
-              <PoliticalInfluenceMaterialtopic apiData={data} />
+              <PoliticalInfluenceMaterialtopic apiData={data} setMobileopen={setMobileopen} />
             )}
-            {activeTab === "Political Contribution" && <PoliticalInvolvement apiData={data} />}
+            {activeTab === "Political Contribution" && <PoliticalInvolvement apiData={data} setMobileopen={setMobileopen} />}
           </div>
+                )}
         </div>
       </div>
     </>

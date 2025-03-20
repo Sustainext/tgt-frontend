@@ -105,7 +105,7 @@ const CustomTableWidget8 = ({
   };
 
   return (
-    <div style={{ overflowY: 'auto', maxHeight: '400px' }}>
+    <div style={{ overflowY: 'auto', maxHeight: '400px' }} className='custom-scrollbar'>
       <table
         id={id}
         className="rounded-md w-full border border-gray-300"
@@ -127,7 +127,7 @@ const CustomTableWidget8 = ({
                   }`}
                   colSpan={item.colSpan}
                 >
-                  <div className="relative">
+                  <div className="relative  w-[250px] xl:w-auto lg:w-auto  md:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto">
                     <p className={`flex justify-center`}>
                       {item.title}
                       {(idx === 0 || idx === 2 || idx === 1) && (

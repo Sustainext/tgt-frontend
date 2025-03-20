@@ -46,7 +46,7 @@ const uiSchema = {
       {
         title: "Type of Operation",
         tooltip:
-          "This section allows you to enter the type of operation in which workers’ rights to exercise freedom of association or collective bargaining may be violated or at significant risk. ",
+          "This section allows you to enter the type of operation considered to have significant risk for incidents of young workers exposed to hazardous work.",
       },
       {
         title: "Countries or Geographic Areas",

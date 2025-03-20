@@ -34,7 +34,7 @@ const EconmiccutomTable = ({
         minWidth: "100%",
         width: "80vw",
       }}
-      className="mb-2 pb-2"
+      className="mb-2 pb-2 custom-scrollbar"
     >
       <table id={id} className="table-fixed border border-gray-300  w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="gradient-background">
@@ -42,8 +42,8 @@ const EconmiccutomTable = ({
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
-                style={{ width: "17vw", textAlign: "left" }}
-                className={` ${idx === 0 ? "" :"border-l" } text-[12px]  px-2 py-2 border-gray-300`}
+                style={{textAlign: "left" }}
+                className={` ${idx === 0 ? "" :"border-l" } text-[12px]  px-2 py-2 border-gray-300 xl:w-[17vw] lg:w-[17vw] 2xl:w-[17vw] 4k:w-[17vw] 2k:w-[17vw] 3xl:w-[17vw] md:w-[17vw] w-[77vw]`}
              
               >
                 <div className="flex items-center relative">
@@ -77,7 +77,7 @@ const EconmiccutomTable = ({
                 </div>
               </th>
             ))}
-            <th className="w-[5vw] "></th>
+            <th className="w-[7vw] xl:w-[5vw] lg:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] 2xl:w-[5vw] 3xl:w-[5vw] md:w-[5vw]"></th>
           </tr>
         </thead>
         <tbody>

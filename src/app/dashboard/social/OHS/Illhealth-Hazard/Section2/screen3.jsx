@@ -41,7 +41,7 @@ const schema = {
       },
       Q4: {
         type: "string",
-        title: "Which of these hazards have caused high-consequence injuries?",
+        title: "Actions taken or underway to eliminate these hazards and minimize risk",
       },
     },
   },
@@ -84,9 +84,9 @@ const uiSchema = {
     },
     Q4: {
       "ui:title":
-        "Which of these hazards have caused high-consequence injuries?",
+        "Actions taken or underway to eliminate these hazards and minimize risk",
       "ui:tooltip":
-        "Please specify the hazards that have caused high-consequence injuries.",
+        "Please provide description of actions taken or underway to eliminate these hazards and minimize risks using the hierarchy of controls.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,

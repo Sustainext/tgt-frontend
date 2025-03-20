@@ -3,6 +3,7 @@ import { Country, State, City } from "country-state-city";
 import industryList from "@/app/shared/data/sectors";
 import { post } from "@/app/utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
+import { showToast } from "@/app/utils/toastUtils";
 
 const INITIAL_FORM_STATE = {
   name: "",
@@ -119,10 +120,12 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
 
     let endpoint = "";
     let payload = {};
+    let entityType = "";
 
     switch (type) {
       case "organization":
         endpoint = "/organization";
+        entityType = "Organization";
         payload = {
           name: formData.name,
           countryoperation: formData.country,
@@ -167,6 +170,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
 
       case "corporate":
         endpoint = "/corporate";
+        entityType = "Corporate entity";
         payload = {
           name: formData.name,
           Country: formData.country,
@@ -192,6 +196,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
 
       case "location":
         endpoint = "/locationonlyview";
+        entityType = "Location";
         payload = {
           name: formData.name,
           typelocation: formData.locationType,
@@ -216,9 +221,13 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
 
     try {
       await post(endpoint, payload);
+      showToast(`${entityType} added successfully`);
       onClose();
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000)
     } catch (error) {
+      showToast(`Failed to add ${entityType.toLowerCase()}`, 'error');
       console.error("Error adding:", error);
     }
   };

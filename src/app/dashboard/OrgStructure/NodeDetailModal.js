@@ -4,6 +4,8 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
+import { showToast } from "@/app/utils/toastUtils";
+
 
 const NodeDetailModal = ({
   isOpen,
@@ -163,26 +165,34 @@ const NodeDetailModal = ({
   const handleEntityDelete = async () => {
     try {
       let endpoint = "";
+      let entityTypeDisplay = "";
       console.log("node type delete triggered!", nodeType);
       switch (nodeType) {
         case "organization":
           endpoint = `/organization_activity/${details.id}/`;
+          entityTypeDisplay = "Organization";
           break;
         case "corporate":
           endpoint = `/corporate/${details.id}/`;
+          entityTypeDisplay = "Corporate entity";
           break;
         case "location":
           endpoint = `/location/${details.id}/`;
+          entityTypeDisplay = "Location";
           break;
         default:
           throw new Error(`Invalid entity type: ${nodeType}`);
       }
 
       await axiosInstance.delete(endpoint);
+      showToast(`${entityTypeDisplay} deleted successfully`);
       setIsDeleteModalOpen(false);
       onClose();
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000)
     } catch (error) {
+      showToast("Failed to delete entity", "error");
       console.error(
         "Error deleting entity:",
         error.response?.data || error.message

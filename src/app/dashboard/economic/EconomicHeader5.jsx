@@ -236,7 +236,7 @@ const EconomicHeader5 = ({
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"}`}
+                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"}`}
               >
                 <div className="mr-2">
                   <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal ml-1">

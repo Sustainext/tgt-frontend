@@ -12,7 +12,7 @@ import Screen2 from "./screen2";
 import { useSelector } from "react-redux";
 import EconomicTopBar from "../../economicTopBar";
 
-const Directeconomic = ({ apiData }) => {
+const Directeconomic = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -98,6 +98,7 @@ const Directeconomic = ({ apiData }) => {
           topic={"GovEconomicPerformance"}
           brsr={brsr}
           griData={griData}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

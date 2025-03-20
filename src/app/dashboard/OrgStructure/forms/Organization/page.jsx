@@ -3,7 +3,11 @@
 import { useState, useEffect } from 'react';
 import GeneralInfo from './GeneralInfo';
 import { useRouter } from 'next/navigation';
-import axiosInstance, { post, put } from '../../../../utils/axiosMiddleware';
+import { post, put } from '../../../../utils/axiosMiddleware';
+import { showToast } from '@/app/utils/toastUtils';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Organization() {
   const [currentOrganization, setCurrentOrganization] = useState(null);
@@ -70,13 +74,14 @@ function Organization() {
 
     try {
       const response = await post(url, payload);
-      router.push('/dashboard/OrgStructure');
-      console.log('POST request successful:', response.data);
+      toast.success('Organization added successfully');
+      setTimeout(() => {
+        router.push('/dashboard/OrgStructure');
+      }, 1000);
     } catch (error) {
+      toast.error('Failed to add organization', 'error');
       console.error('Error:', error);
     }
-
-    console.log(payload, 'payload');
   };
 
   const handleGeneralDetailsEdit = async (event, data, id) => {
@@ -127,9 +132,16 @@ function Organization() {
 
     try {
       const response = await put(url, payload);
-      router.push('/dashboard/OrgStructure');
-      alert('Organisation updated successfully');
+      // showToast('Organization updated successfully');
+      toast.success(`Changes made to Organization '${data.generalDetails.name}' has been saved`);
+      
+      // Delay navigation to allow toast to be visible
+      setTimeout(() => {
+        router.push('/dashboard/OrgStructure');
+      }, 2500);
+      console.log(response,"Organization updated successfully");
     } catch (error) {
+      showToast('Failed to update organization', 'error');
       console.error('Error:', error);
     }
 
@@ -142,6 +154,8 @@ function Organization() {
   };
 
   return (
+    <>
+    <ToastContainer position="top-right" autoClose={3000} />
     <form onSubmit={handleSubmit} className='p-4 rounded-md m-0'>
       <GeneralInfo
         handleGeneralDetailsSubmit={
@@ -153,6 +167,7 @@ function Organization() {
         editData={data}
       />
     </form>
+    </>
   );
 }
 
