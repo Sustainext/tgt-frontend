@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import SocialTopBar from "../../../socialTopBar";
 
-const DiversityBoard = ({ apiData }) => {
+const DiversityBoard = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -95,6 +95,7 @@ const DiversityBoard = ({ apiData }) => {
           topic={"SocDiversityEqualOpp"}
           griData={griData}
           brsr={brsr}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex relative">

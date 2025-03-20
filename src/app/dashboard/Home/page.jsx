@@ -3,6 +3,7 @@ import MyGoals from "./MyGoals";
 import MyTasks from "./TasksNew/MyTask";
 import Preferences from "./Preferences/page";
 import { ToastContainer } from "react-toastify";
+import NivoYearlyGrowth from "@/app/shared/components/NivoYearlyGrowth";
 
 const HomeDashboard = ({setActiveTab}) => {
   return (
@@ -21,6 +22,7 @@ const HomeDashboard = ({setActiveTab}) => {
           <Preferences />
         </div>
       </div>
+      <NivoYearlyGrowth />
     </>
   );
 };

@@ -11,7 +11,7 @@ import Screen1 from "./screen1";
 import { useSelector } from "react-redux";
 import SocialTopBar from "../../../socialTopBar";
 
-const Compliance = ({ apiData }) => {
+const Compliance = ({ apiData,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -79,6 +79,7 @@ const Compliance = ({ apiData }) => {
           apiData={apiData}
           title={"Product Safety & Quality"}
           topic={"SocProductSafetyQuality"}
+          setMobileopen={setMobileopen}
         />
 
         <div className="ml-3 flex">

@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 // import Screen3 from "./Screen3";
 import SocialTopBar from '../../socialTopBar'
 
-const ProductServiceSafety = ({apiData}) => {
+const ProductServiceSafety = ({apiData,setMobileopen}) => {
    const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
       (state) => state.materialitySlice
     );
@@ -62,7 +62,7 @@ const ProductServiceSafety = ({apiData}) => {
     <>
      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Product Safety & Quality'} topic={'SocProductSafetyQuality'} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Product Safety & Quality'} topic={'SocProductSafetyQuality'} setMobileopen={setMobileopen} />
        
 
       <div className="ml-3 flex relative">
