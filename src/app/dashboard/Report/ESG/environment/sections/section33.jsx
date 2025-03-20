@@ -326,7 +326,7 @@ const col5 = [
 const col6 = [
   {
     label: "Standards used",
-    dataIndex: "standard",
+    dataIndex: "StandardsUsed",
     headerClass:
       "px-4 py-2 text-[12px] border-r text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -334,7 +334,7 @@ const col6 = [
   },
   {
     label: "Methodologies used",
-    dataIndex: "methodologies",
+    dataIndex: "MethodologiesUsed",
     headerClass:
       "px-2 py-2 text-[12px] border-r text-[#727272] w-[10%] text-center",
     cellClass:
@@ -342,7 +342,7 @@ const col6 = [
   },
   {
     label: "Assumptions considered",
-    dataIndex: "assumptions",
+    dataIndex: "AssumptionsConsidered",
     headerClass:
       "px-2 py-2 text-[12px] border-r text-[#727272] w-[10%] text-center",
     cellClass:
@@ -351,7 +351,7 @@ const col6 = [
 
   {
     label: "Calculation tools used",
-    dataIndex: "calculation",
+    dataIndex: "CalculationToolsUsed",
     headerClass:
       "px-2 py-2 text-[12px] border-r text-[#727272] w-[10%] text-center",
     cellClass:
@@ -406,7 +406,7 @@ const Section33 = ({ section12_7Ref, data }) => {
   const TableData3 = data && data['air_quality_analyze']? data['air_quality_analyze']['percentage_contribution_of_pollutant_by_location']?data['air_quality_analyze']['percentage_contribution_of_pollutant_by_location']:[] :[]
   const TableData4 = data && data['air_quality_analyze']? data['air_quality_analyze']['total_air_pollution_by_location']?data['air_quality_analyze']['total_air_pollution_by_location']:[] :[]
   const TableData5 = data && data['air_quality_analyze']? data['air_quality_analyze']['total_air_pollution_by_location_ppm_or_ugm2']?data['air_quality_analyze']['total_air_pollution_by_location_ppm_or_ugm2']:[] :[]
-    
+  const TableData6= data && data['air_quality_collect']? data['air_quality_collect']['air_quality_standard_methodology']?data['air_quality_collect']['air_quality_standard_methodology']:[] :[]
 
   useEffect(() => {
     if (
@@ -591,7 +591,7 @@ const Section33 = ({ section12_7Ref, data }) => {
           Standards, methodologies, assumptions, and/or calculation tools used
         </p>
         <div className="shadow-md rounded-md mb-4">
-          <AirQualityTable columns={col6} data={[]} />
+          <AirQualityTable columns={col6} data={TableData6} />
         </div>
       </div>
     </>

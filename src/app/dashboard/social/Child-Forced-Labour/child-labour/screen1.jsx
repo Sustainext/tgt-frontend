@@ -45,7 +45,7 @@ const uiSchema = {
       {
         title: "Type of Operation",
         tooltip:
-          "This section allows you to enter the type of operation considered to have significant risk for incidents of forced or compulsory labor.",
+          "This section allows you to enter the type of operation considered to have significant risk for incidents of child labor.",
       },
       {
         title: "Countries or Geographic Areas",

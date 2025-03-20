@@ -117,7 +117,7 @@ const uiSchema = {
         tooltipdispaly: "none",
       },
       {
-        title: "Total number of employee",
+        title: "Total number of individuals within the organisation's governance bodies",
         title2: "totalGender",
         tooltip: "Please specify the total number of individuals.",
         colSpan: 1,
@@ -150,7 +150,7 @@ const uiSchema = {
         tooltipdispaly: "none",
       },
       {
-        title: "Total number of employee",
+        title: "Total number of individuals within the organisation's governance bodies",
         title2: "totalAge",
         tooltip: "Please specify the total number of individuals.",
         colSpan: 1,
