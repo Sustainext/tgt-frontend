@@ -7,14 +7,14 @@ import industryList from "../../../../shared/data/sectors";
 import { timeZones } from "../../../../shared/data/timezones";
 import axiosInstance, { post, put } from "../../../../utils/axiosMiddleware";
 import { Currency } from "../../../../shared/data/currency";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const dateFormatOptions = [
   { label: "MM/DD/YYYY", value: "MM/DD/YYYY" },
   { label: "DD/MM/YYYY", value: "DD/MM/YYYY" },
   { label: "YYYY/MM/DD", value: "YYYY/MM/DD" },
 ];
-
-//
 
 const reportFramework = ["GRI"];
 
@@ -207,17 +207,6 @@ const Location = ({ heading }) => {
     }));
   };
 
-  const handleTimezoneChange = (event) => {
-    const value = event.target.value;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      generalDetails: {
-        ...prevFormData.generalDetails,
-        timeZone: value,
-      },
-    }));
-  };
-
   const handleFrameworkChange = (event) => {
     const { value, checked } = event.target;
     setSelectedFrameworks((prevFrameworks) =>
@@ -292,9 +281,13 @@ const Location = ({ heading }) => {
 
     try {
       const response = await post(url, payload);
-      router.push("/dashboard/OrgStructure");
+      toast.success('Location added successfully');
+      setTimeout(() => {
+        router.push('/dashboard/OrgStructure');
+      }, 1000);
       console.log("POST request successful:", response.data);
     } catch (error) {
+      toast.error('Failed to add location', 'error');
       console.error("Error:", error);
     }
 
@@ -341,9 +334,12 @@ const Location = ({ heading }) => {
 
     try {
       const response = await put(url, payload);
-      router.push("/dashboard/OrgStructure");
-      alert("Location updated successfully");
+      toast.success(`Changes made to Location '${data.generalDetails.name}' has been saved`);
+      setTimeout(() => {
+        router.push('/dashboard/OrgStructure');
+      }, 2500);
     } catch (error) {
+      toast.error('Failed to update location', 'error');
       console.error("Error:", error);
     }
 
@@ -510,6 +506,8 @@ const Location = ({ heading }) => {
   }, [editData]);
 
   return (
+    <>
+    <ToastContainer position="top-right" autoClose={3000} />
     <div className="px-4 mt-4">
       <div className="flex justify-between items-center drop-shadow-lg border-b-2 py-6 w-full">
         <h2 className="self-stretch text-black text-opacity-90 text-[22px] font-normal leading-relaxed flex space-x-8 items-center">
@@ -1069,6 +1067,7 @@ const Location = ({ heading }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

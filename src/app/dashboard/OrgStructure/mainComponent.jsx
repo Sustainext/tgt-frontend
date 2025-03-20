@@ -13,6 +13,8 @@ import {
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const OrgTree = ({ data }) => {
   const nodeWidth = 180;
@@ -874,6 +876,8 @@ const OrganizationTreePage = () => {
   }
 
   return (
+    <>
+    <ToastContainer position="top-right" autoClose={3000} />
     <div className="w-full p-8 rounded-lg">
       <div className="text-[22px] font-medium font-['Manrope'] leading-relaxed gradient-text pb-6">
         Organization Structure
@@ -890,6 +894,7 @@ const OrganizationTreePage = () => {
       </div>
       <OrgTree data={orgData} />
     </div>
+    </>
   );
 };
 
