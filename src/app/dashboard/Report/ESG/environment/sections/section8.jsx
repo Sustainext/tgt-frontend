@@ -11,7 +11,7 @@ const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 
 
-const Section8=({section12_1_8Ref})=>{
+const Section8=({section12_1_8Ref,data})=>{
     
     const content = useSelector(state => state.screen12Slice.ghg_emission_reduction_efforts);
     const dispatch = useDispatch();
@@ -22,9 +22,10 @@ const Section8=({section12_1_8Ref})=>{
     }
 
     const col1=[
-        "Initiatve taken to reduce GHG emissions ",
-       "Method to account for reductions ",
-        "Base Year or Baseline ",
+      "S.No",
+        "Initiatve taken to reduce GHG emissions",
+       "Method to account for reductions",
+        "Base Year or Baseline",
         "Year",
         "Rationale for choosing base year or baseline",
         "GHG Emission reduced (tCO2e)",
@@ -32,19 +33,64 @@ const Section8=({section12_1_8Ref})=>{
         "Gases included in the calculations",
         "Standard, Methodology, Assumptions and/or Calculation tools used"
     ]
-    const data1=[
+
+    const formattedReduction = data && data['305_123_analyse']?data['305_123_analyse']['disclosure_analyze_305_5']?data['305_123_analyse']['disclosure_analyze_305_5'].length>0?data['305_123_analyse']['disclosure_analyze_305_5'].map((s, index) =>{
+      return(
         {
-            "Initiatve taken to reduce GHG emissions ":"No data available",
-        "Method to account for reductions ":"No data available",
-        "Base Year or Baseline ":"No data available",
-        "Year":"No data available",
-        "Rationale for choosing base year or baseline":"No data available",
-        "GHG Emission reduced (tCO2e)":"No data available",
-        "Scopes in which reduction took place":"No data available",
-        "Gases included in the calculations":"No data available",
-        "Standard, Methodology, Assumptions and/or Calculation tools used":"No data available"
+          "S.No": String(index + 1),
+          "Initiatve taken to reduce GHG emissions": s.initiative_taken,
+          "Method to account for reductions":s.method,
+          "Base Year or Baseline":s.base_year_or_base_inline,
+          "Year":s.year,
+          "Rationale for choosing base year or baseline":s.rationale,
+          "GHG Emission reduced (tCO2e)":s.ghg_emission_reduced,
+          "Scopes in which reduction took place":s.scopes?.length>0?s.scopes.join(", "):'',
+          "Gases included in the calculations":s.gases_included?.length>0?s.gases_included.join(", "):'',
+          "Standard, Methodology, Assumptions and/or Calculation tools used":s.assumption_or_calculation
         }
+      )
+    }):[
+      {
+        "S.No": "No data available",
+      "Initiatve taken to reduce GHG emissions": "No data available",
+      "Method to account for reductions":"No data available",
+      "Base Year or Baseline":"No data available",
+      "Year":"No data available",
+      "Rationale for choosing base year or baseline":"No data available",
+      "GHG Emission reduced (tCO2e)":"No data available",
+      "Scopes in which reduction took place":"No data available",
+      "Gases included in the calculations":"No data available",
+      "Standard, Methodology, Assumptions and/or Calculation tools used":"No data available",
+      }
+    ]:[
+      {
+        "S.No": "No data available",
+      "Initiatve taken to reduce GHG emissions": "No data available",
+      "Method to account for reductions":"No data available",
+      "Base Year or Baseline":"No data available",
+      "Year":"No data available",
+      "Rationale for choosing base year or baseline":"No data available",
+      "GHG Emission reduced (tCO2e)":"No data available",
+      "Scopes in which reduction took place":"No data available",
+      "Gases included in the calculations":"No data available",
+      "Standard, Methodology, Assumptions and/or Calculation tools used":"No data available",
+      }
+    ]:[
+      {
+        "S.No": "No data available",
+      "Initiatve taken to reduce GHG emissions": "No data available",
+      "Method to account for reductions":"No data available",
+      "Base Year or Baseline":"No data available",
+      "Year":"No data available",
+      "Rationale for choosing base year or baseline":"No data available",
+      "GHG Emission reduced (tCO2e)":"No data available",
+      "Scopes in which reduction took place":"No data available",
+      "Gases included in the calculations":"No data available",
+      "Standard, Methodology, Assumptions and/or Calculation tools used":"No data available",
+      }
     ]
+   
+   
     
     const config = {
       enter: "BR", // Or customize behavior on Enter key
@@ -124,36 +170,65 @@ const Section8=({section12_1_8Ref})=>{
           rows={4}
         />
 <div className="shadow-md rounded-md mb-4">
-<LeaveTable columns={col1} data={data1}/>
+<LeaveTable columns={col1} data={formattedReduction}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Standards 
         </p>
-        <p className="text-sm mb-4">
-        This report outlines the Greenhouse Gas (GHG) emissions accounting for the organization [Organization Name], following industry-leading standards. The methodologies and calculations adhere to the guidelines provided by the Greenhouse Gas Protocol, including both "A Corporate Accounting and Reporting Standard (Revised Edition)" and the "Corporate Value Chain (Scope 3) Standard," developed by the World Business Council for Sustainable Development (WBCSD) and the World Resources Institute (WRI). These standards ensure a comprehensive and accurate assessment of the organization's GHG emissions across all relevant scopes and categories. 
-        </p>
+        {data["emission_collect"] && data["emission_collect"]["standard_methodology_used"] && data["emission_collect"]["standard_methodology_used"].length > 0 ? (
+    data["emission_collect"]["standard_methodology_used"].map((val, index) => (
+        <div key={index}>
+            <p className="text-sm mb-4">{val.Q1 ? val.Q1 : 'No data available'}</p>
+        </div>
+    ))
+) : (
+    <p className="text-sm mb-4">No data available</p>
+)}
 
         <p className="text-[15px]  mb-2 font-semibold">
         Methodology  
         </p>
-        <p className="text-sm mb-4">
-        Data Collection and Monitoring Methodology<br/>Emission activity data is systematically collected from multiple data owners through the Sustainext platform. This platform centralizes the data, which is then meticulously reviewed to ensure completeness, accuracy, and the elimination of any duplication or human errors.<br/><br/>Quantification Methodology<br/>The quantification of GHG emissions begins with the identification of all relevant GHG emission sources within the organization. These sources are classified according to the GHG Protocol – Corporate Standard. Accurate activity data is then gathered, followed by the selection of emission factors from nationally or internationally recognized sources such as DEFRA, IPCC, GHG Protocol and National GHG Inventories. These emission factors are integral to the precise calculation of GHG emissions.<br/><br/>Calculation Methodology<br/>Understanding the methodology for calculating greenhouse gas (GHG) emissions is essential for effectively tracking and mitigating our environmental impact. The calculation process involves the following key components:<br/><br/>Activity Data: This refers to the measurable data associated with activities that lead to GHG emissions, such as the amount of fuel consumed, the kilowatt-hours (kWh) of electricity used, or the miles traveled by air.<br/><br/>Emissions Factor: A coefficient used to convert activity data into the corresponding amount of GHG emissions. Emission factors are specific to each type of activity or emission source and are typically measured per unit of activity.<br/><br/>Calculation Formula:<br/><br/>Emissions = Activity Data × Emission Factor<br/>Where:<br/><br/>Activity Data is measured in units relevant to the activity (e.g., liters of fuel).<br/>Emission Factor is expressed in terms such as kilograms of CO₂ equivalent per unit of activity (e.g., kg CO₂e/Liter).<br/><br/>Example Calculation:<br/><br/>Fuel Consumed: 100 Liters<br/>Emission Factor: 0.001557 kg CO₂e/Liter<br/>Emissions from Fuel Combustion: <br/>100×0.001557=0.1557 tCO₂e
-        </p>
+        {data["emission_collect"] && data["emission_collect"]["standard_methodology_used"] && data["emission_collect"]["standard_methodology_used"].length > 0 ? (
+    data["emission_collect"]["standard_methodology_used"].map((val, index) => (
+        <div key={index}>
+            <p className="text-sm mb-4">{val.Q2 ? val.Q2.split("\n").map((line, index) => (
+            <>
+                {line}
+                <br />
+            </>
+          ))  : 'No data available'}</p>
+        </div>
+    ))
+) : (
+    <p className="text-sm mb-4">No data available</p>
+)}
 
         <p className="text-[15px]  mb-2 font-semibold">
         Calculation Tool 
         </p>
-        <p className="text-sm mb-4">
-        The calculation of GHG emissions in this report was performed using Sustainext’s SaaS-based platform. This tool is specifically designed to minimize errors and ensure the accuracy and reliability of sustainability metrics. The platform streamlines the GHG accounting process by allowing for the effortless creation of GHG inventories, accurate emission calculations, and ongoing performance tracking, all within a single, integrated system. Sustainext’s platform adheres to industry standards, including the GHG Protocol and ISO 14064, ensuring that the calculations are consistent with best practices and globally recognized methodologies.  
-        </p>
+        {data["emission_collect"] && data["emission_collect"]["standard_methodology_used"] && data["emission_collect"]["standard_methodology_used"].length > 0 ? (
+    data["emission_collect"]["standard_methodology_used"].map((val, index) => (
+        <div key={index}>
+            <p className="text-sm mb-4">{val.Q3 ? val.Q3 : 'No data available'}</p>
+        </div>
+    ))
+) : (
+    <p className="text-sm mb-4">No data available</p>
+)}
 
         <p className="text-[15px]  mb-2 font-semibold">
         Assumptions Considered
         </p>
-        <p className="text-sm mb-4">
-        The assumptions underpinning the GHG emissions calculations are based on established international protocols and standards, including the GHG Protocol. Notable considerations include:  
-        </p>
+        {data["emission_collect"] && data["emission_collect"]["consolidation_assumption_considered"] && data["emission_collect"]["consolidation_assumption_considered"].length > 0 ? (
+    data["emission_collect"]["consolidation_assumption_considered"].map((val, index) => (
+        <div key={index}>
+            <p className="text-sm mb-4">{val.Q1 ? val.Q1 : 'No data available'}</p>
+        </div>
+    ))
+) : (
+    <p className="text-sm mb-4">No data available</p>
+)}
 
 </div>
         </>
