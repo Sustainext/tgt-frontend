@@ -548,7 +548,51 @@ const EmissionWidget = React.memo(
       },
       [activities, onChange, value, updateSelectedRowIfNeeded]
     );
-
+    // mobile version
+    const handleActivityChangemobile = useCallback(
+      (newActivity) => {
+        console.log("handleActivityChange called with:", newActivity);
+        
+        // Find the selected activity object from our activities array
+        const foundActivity = activities.find(
+          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+        );
+        
+        console.log("Found activity:", foundActivity);
+        
+        // First update local state to immediately show the selected activity
+        setActivity(newActivity);
+        
+        // Then update the form data with all the relevant details
+        const updatedValue = {
+          ...value,
+          Activity: newActivity,
+          activity_id: foundActivity ? foundActivity.activity_id : "",
+          unit_type: foundActivity ? foundActivity.unit_type : "",
+          factor: foundActivity ? foundActivity.factor : "",
+          data_version: foundActivity
+            ? foundActivity.data_version
+            : "{{DATA_VERSION}}",
+          Quantity: "",
+          Quantity2: "",
+          Unit: "",
+          Unit2: "",
+        };
+        
+        // Update form state
+        onChange(updatedValue);
+        
+        // Update selected row if needed
+        updateSelectedRowIfNeeded(updatedValue);
+        
+        // Reset quantity and unit states
+        setQuantity("");
+        setQuantity2("");
+        setUnit("");
+        setUnit2("");
+      },
+      [activities, onChange, value, updateSelectedRowIfNeeded]
+    );
     // bug causing
     useEffect(() => {
       if (
@@ -724,7 +768,23 @@ const EmissionWidget = React.memo(
     );
     const [uploadedBy, setUploadedBy] = useState(value.file?.uploadedBy ?? "");
     const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
+    const [selectSize, setSelectSize] = useState(9); // default to desktop size
 
+    useEffect(() => {
+      const handleResize = () => {
+        // You can adjust the breakpoint as needed
+        if (window.innerWidth < 768) {
+          setSelectSize(0); // for mobile, hide dropdown
+        } else {
+          setSelectSize(9); // for desktop
+        }
+      };
+    
+      handleResize(); // set initial value
+      window.addEventListener("resize", handleResize);
+    
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
     useEffect(() => {
       const storedEmail = localStorage.getItem("userEmail");
       if (storedEmail) {
@@ -1152,14 +1212,14 @@ const EmissionWidget = React.memo(
                     <>
                     <select
                       ref={dropdownRef}
-                      size="9"
+                      size={selectSize || undefined}
                       value={activity}
                       onChange={(e) => {
                         handleActivityChange(e.target.value);
                         toggleDropdown();
                         setActivitySearch("");
                       }}
-                     className="text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100]  min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6 hidden xl:block md:block lg:block 4k:block 2k:block 2xl:block"
+                     className="text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100]  min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6 "
                       disabled={["assigned", "calculated", "approved"].includes(
                         rowType
                       )}
@@ -1194,50 +1254,7 @@ const EmissionWidget = React.memo(
                         </option>
                       )}
                     </select>
-                      <select
-                      ref={dropdownRef}
-                  
-                      value={activity}
-                      onChange={(e) => {
-                        handleActivityChange(e.target.value);
-                        toggleDropdown();
-                        setActivitySearch("");
-                      }}
-                     className="text-[12px] focus:border-blue-500 focus:outline-none w-full   z-[100]   mb-6 block xl:hidden md:hidden lg:hidden 4k:hidden 2k:hidden 2xl:hidden"
-                      disabled={["assigned", "calculated", "approved"].includes(
-                        rowType
-                      )}
-                    >
-                      <option value="" className="px-1">
-                        {rowType === "calculated"
-                          ? activity
-                          : "Select Activity"}
-                      </option>
-                      {filteredActivities.length > 0 ? (
-                        filteredActivities.map((item) => (
-                          <option
-                            key={item.id || item.activity_id}
-                            value={`${item.name} - (${item.source}) - ${item.unit_type}`}
-                            className="px-2"
-                          >
-                            {item.name} - ({item.source}) - {item.unit_type} -{" "}
-                            {item.region} - {item.year}
-                            {item.source_lca_activity !== "unknown" &&
-                              ` - ${item.source_lca_activity}`}
-                          </option>
-                        ))
-                      ) : (
-                        <option
-                          value=""
-                          disabled
-                          className="px-2 text-gray-500"
-                        >
-                          {isLoadingActivities
-                            ? "Loading activities..."
-                            : "No matching activities found"}
-                        </option>
-                      )}
-                    </select>
+                    
                     </>
                   )}
                 </div>
