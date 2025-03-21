@@ -37,7 +37,7 @@ const CustomTableWidgetGov = ({
       <div className="w-full flex justify-right items-center mb-2 relative">
 
       </div>
-      <div style={{ overflowY: "auto", maxHeight: "400px" }}>
+      <div style={{ overflowY: "auto", maxHeight: "400px" }} className="custom-scrollbar">
         <table id={id} className="rounded-md border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
           <thead className="gradient-background">
             <tr>

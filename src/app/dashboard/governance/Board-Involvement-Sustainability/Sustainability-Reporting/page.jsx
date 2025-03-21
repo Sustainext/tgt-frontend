@@ -8,7 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import Screen1 from "./screen1";
-const SustainabilityReporting = () => {
+import GovernancesTopBar from "../../governancesTopBar";
+const SustainabilityReporting = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -37,12 +38,28 @@ const SustainabilityReporting = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 2 - 14",
+      toggle: "77",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+                <GovernancesTopBar
+                  toggleDrawer={toggleDrawer}
+                  // sdgData={sdgData}
+                  griData={griData}
+                  // brsr={brsr}
+                  title={"Sustainability Reporting"}
+                  setMobileopen={setMobileopen}
+                />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Governance</p>
@@ -69,7 +86,7 @@ const SustainabilityReporting = () => {
              
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
