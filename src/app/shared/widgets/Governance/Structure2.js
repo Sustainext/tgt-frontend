@@ -70,7 +70,7 @@ const GovernanceWidget = ({ onChange, value = [], uiSchema = {} }) => {
                   "-"
                 )}`}
                 data-tooltip-content={uiSchema["ui:tooltip"]}
-                className="mt-1 ml-2 w-[30px] text-[14px]"
+                className="mt-1 ml-2 text-[14px] w-[20%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />
               <ReactTooltip
@@ -89,14 +89,14 @@ const GovernanceWidget = ({ onChange, value = [], uiSchema = {} }) => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 overflow-x-auto custom-scrollbar">
           {data.map((row, rowIndex) => (
             <div key={rowIndex} className="flex items-center gap-2">
               {row.map((cell, colIndex) => (
                 <textarea
                   key={colIndex}
                   placeholder="Enter data"
-                  className="border appearance-none text-xs py-4 border-gray-400 text-neutral-600 pl-2 rounded-md  leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                  className="border appearance-none text-xs py-4 border-gray-400 text-neutral-600 pl-2 rounded-md  leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full min-w-[100px] max-w-[648px]"
                   value={cell}
                   onChange={(e) => handleCellChange(rowIndex, colIndex, e)}
                   rows={1}

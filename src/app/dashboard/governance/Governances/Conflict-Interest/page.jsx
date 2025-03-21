@@ -9,7 +9,8 @@ import GovernanceHeader2 from "../../GovernanceHeader2";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
-const ConflictInterest = () => {
+import GovernancesTopBar from "../../governancesTopBar";
+const ConflictInterest = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -38,12 +39,36 @@ const ConflictInterest = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 2 - 15",
+      toggle: "78",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
+  const sdgData = [
+
+    {
+      tagName: "SDG 16",
+      toggle: "79",
+      textColor: "#fff",
+      bgColor: "bg-[#00558A]",
+    },
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <GovernancesTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          griData={griData}
+          title={"Conflict of Interest"}
+          setMobileopen={setMobileopen}
+        />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Governance</p>
@@ -72,7 +97,7 @@ const ConflictInterest = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
