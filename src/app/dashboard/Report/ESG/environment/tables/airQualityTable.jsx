@@ -58,7 +58,7 @@ function DynamicTable({ columns, data }) {
           <tr className='border'>
             <td
               colSpan={columns.totalLabelKey=="Total"?3:2}
-              className="gradient-text px-4 py-2 border-y text-right font-bold text-[12px]"
+              className="gradient-text px-4 py-2 border-y text-right font-bold text-[13px]"
             >
              {totalLabel}
             </td>

@@ -12,7 +12,7 @@ const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 
 
-const Section9=({section12_1_9Ref})=>{
+const Section9=({section12_1_9Ref,data})=>{
     
 
     const content = useSelector(state => state.screen12Slice.ozone_depleting_substance_elimination);
@@ -74,7 +74,7 @@ const Section9=({section12_1_9Ref})=>{
           headerClass:
             "px-4 py-2 text-[12px] border-r text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
           cellClass:
-            "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[10%] text-left",
+            "px-4 py-2 border-y border-r text-slate-500 font-normal text-[12px]  w-[10%] text-left",
         },
       {
         label: "Source",
@@ -82,21 +82,21 @@ const Section9=({section12_1_9Ref})=>{
         headerClass:
           "px-4 py-2 text-[12px] border-r  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
         cellClass:
-          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[10%] text-left",
+          "px-4 py-2 border-y border-r text-slate-500 font-normal text-[12px]  w-[10%] text-left",
       },
       {
         label: "ODS",
         dataIndex: "ods",
         headerClass: "px-2 py-2 border-r text-[12px]  text-[#727272] w-[10%] text-center",
         cellClass:
-          "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
+          "px-4 py-2 border-y border-r text-center text-slate-500 font-normal text-[12px] ",
       },
       {
           label: "Net ODS Emitted (tCFC-11e)",
           dataIndex: "net_ods_emitted",
           headerClass: "px-2 py-2 border-r text-[12px]  text-[#727272] w-[10%] text-center",
           cellClass:
-            "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
+            "px-4 py-2 border-y border-r text-center text-slate-500 font-normal text-[12px] ",
         },
   
         {
@@ -104,7 +104,7 @@ const Section9=({section12_1_9Ref})=>{
           dataIndex: "contribution_percentage",
           headerClass: "px-2 py-2 border-r text-[12px]  text-[#727272] w-[10%] text-center",
           cellClass:
-            "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
+            "px-4 py-2 border-y border-r text-center text-slate-500 font-normal text-[12px] ",
         },
   
         {
@@ -112,7 +112,7 @@ const Section9=({section12_1_9Ref})=>{
           dataIndex: "net_ods_production_ton",
           headerClass: "px-2 py-2 border-r text-[12px]  text-[#727272] w-[10%] text-center",
           cellClass:
-            "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
+            "px-4 py-2 border-y border-r text-center text-slate-500 font-normal text-[12px] ",
         },
   
         {
@@ -120,58 +120,63 @@ const Section9=({section12_1_9Ref})=>{
           dataIndex: "total_ods_imported_ton",
           headerClass: "px-2 py-2 border-r text-[12px]  text-[#727272] w-[10%] text-center",
           cellClass:
-            "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
+            "px-4 py-2 border-y border-r text-center text-slate-500 font-normal text-[12px] ",
         },
         {
           label: "ODS Export (t)",
           dataIndex: "total_ods_exported_ton",
           headerClass: "px-2 py-2 border-r text-[12px]  text-[#727272] w-[10%] text-center",
           cellClass:
-            "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
+            "px-4 py-2 border-y border-r text-center text-slate-500 font-normal text-[12px] ",
         },
          {
           label: "Source of emission factor used",
           dataIndex: "source_of_emission_factor",
           headerClass: "px-2 py-2 border-r text-[12px]  text-[#727272] w-[10%] text-center",
           cellClass:
-            "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
+            "px-4 py-2 border-y border-r text-center text-slate-500 font-normal text-[12px] ",
         },
     ];
 
+    col1.totalLabelKey="Total"
     const col2 = [
       {
         label: "Standards used",
-        dataIndex: "standard",
+        dataIndex: "StandardsUsed",
         headerClass:
           "px-4 py-2 text-[12px] border-r text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
         cellClass:
-          "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left",
+          "px-4 py-2 border-y  border-r font-normal text-[13px]  w-[13%] text-left",
       },
       {
         label: "Methodologies used",
-        dataIndex: "methodologies",
-        headerClass: "px-2 py-2 text-[12px] border-r text-[#727272] w-[10%] text-center",
+        dataIndex: "MethodologiesUsed",
+        headerClass:
+          "px-2 py-2 text-[12px] border-r text-[#727272] w-[10%] text-center",
         cellClass:
-          "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
+          "px-4 py-2 border-y text-center border-r  font-normal text-[13px] ",
       },
       {
-          label: "Assumptions considered",
-          dataIndex: "assumptions",
-          headerClass: "px-2 py-2 text-[12px] border-r text-[#727272] w-[10%] text-center",
-          cellClass:
-            "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
-        },
-  
-        {
-          label: "Calculation tools used",
-          dataIndex: "calculation",
-          headerClass: "px-2 py-2 text-[12px] border-r text-[#727272] w-[10%] text-center",
-          cellClass:
-            "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
-        },
-  
-    ];
+        label: "Assumptions considered",
+        dataIndex: "AssumptionsConsidered",
+        headerClass:
+          "px-2 py-2 text-[12px] border-r text-[#727272] w-[10%] text-center",
+        cellClass:
+          "px-4 py-2 border-y text-center border-r  font-normal text-[13px] ",
+      },
     
+      {
+        label: "Calculation tools used",
+        dataIndex: "CalculationToolsUsed",
+        headerClass:
+          "px-2 py-2 text-[12px] border-r text-[#727272] w-[10%] text-center",
+        cellClass:
+          "px-4 py-2 border-y text-center border-r  font-normal text-[13px] ",
+      },
+    ];
+
+    const TableData1 = data && data['air_quality_analyze']? data['air_quality_analyze']['ozone_depleting_substances']?data['air_quality_analyze']['ozone_depleting_substances']:[] :[]
+    const TableData2= data && data['air_quality_collect']? data['air_quality_collect']['ods_standard_methodology']?data['air_quality_collect']['ods_standard_methodology']:[] :[]
     return (
         <>
        
@@ -214,14 +219,14 @@ const Section9=({section12_1_9Ref})=>{
 Ozone Depleting Substances
 </p>
 <div className="shadow-md rounded-md mb-4">
-<AirQualityTable columns={col1} data={[]}/>
+<AirQualityTable columns={col1} data={TableData1}/>
 </div>
 
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Standards, methodologies, assumptions, and/or calculation tools used 
 </p>
 <div className="shadow-md rounded-md mb-4">
-<AirQualityTable columns={col2} data={[]}/>
+<AirQualityTable columns={col2} data={TableData2}/>
 </div>
            
 
