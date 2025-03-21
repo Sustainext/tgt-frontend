@@ -1014,25 +1014,25 @@ const EmissionWidget = React.memo(
       switch (rowType) {
         case "calculated":
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <div className="w-1.5 h-1.5 rounded-full bg-green-500 xl:mx-auto md:mx-auto 2xl:mx-auto lg:mx-auto 3xl:mx-auto 4k:mx-auto 2k:mx-auto mx-2"></div>
             </td>
           );
         case "assigned":
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <div className="w-1.5 h-1.5 rounded-full bg-gray-500 mx-auto"></div>
             </td>
           );
         case "approved":
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <div className="w-1.5 h-1.5 rounded-full bg-[#FFA701] mx-auto"></div>
             </td>
           );
         default:
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <input
                 type="checkbox"
                 checked={isSelected}
@@ -1118,7 +1118,7 @@ const EmissionWidget = React.memo(
                   onChange={(e) => handleCategoryChange(e.target.value)}
                   className={getFieldClass(
                     "Category",
-                    `text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full  py-1 ${
+                    `text-[12px] focus:outline-none w-full xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full  py-1 ${
                       category && rowType === "default"
                         ? "border-b border-zinc-800"
                         : ""
@@ -1195,7 +1195,7 @@ const EmissionWidget = React.memo(
                     onFocus={toggleDropdown}
                     className={getFieldClass(
                       "Activity",
-                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[25vw] py-1"
+                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[76vw] py-1"
                     )}
                     disabled={["assigned", "calculated", "approved"].includes(
                       value.rowType
@@ -1551,7 +1551,7 @@ const EmissionWidget = React.memo(
                     {/* Preview Modal */}
                     {showModal && previewData && (
                     <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
+          <div className="bg-white p-1 rounded-lg w-[96%] h-[100%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
                           <div className="flex justify-between mt-4 mb-4">
                             <div>
                               <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap">
