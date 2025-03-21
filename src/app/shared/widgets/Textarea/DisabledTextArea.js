@@ -21,7 +21,6 @@ const DisabledTextAreaWidget = ({
   const rowIndex = parseInt(id.split('_')[1], 10);
   const rowErrors = validationErrors && validationErrors[rowIndex] || {};
   const hasError = !value && rowErrors && rowErrors[name];
-  console.log(id, "test"); // Log id for debugging
   const inputType = uiSchema["ui:inputtype"] || "text";
 
   // Handle input restrictions

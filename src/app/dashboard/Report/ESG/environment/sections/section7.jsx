@@ -4,7 +4,7 @@ import EmissionTable from '../tables/emissionTable'
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import {setGHGEmissionIntensityTracking} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
+import {setGHGEmissionIntensityTracking,setBaseYear,setConsolidation} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
 import dynamic from 'next/dynamic';
 import { TiTick } from "react-icons/ti";
 
@@ -15,34 +15,34 @@ const Section7=({section12_1_5Ref,section12_1_6Ref,section12_1_7Ref,data})=>{
   
     const consolidation=data&&data['emission_collect']?data['emission_collect']['consolidation_approach_for_emission'].length>0?data['emission_collect']['consolidation_approach_for_emission'][0].Q1?data['emission_collect']['consolidation_approach_for_emission'][0].Q1:"":"":""
     const content = useSelector(state => state.screen12Slice.ghg_emission_intensity_tracking);
-    const [content2,setContent2] = useState("")
-    const [content3,setContent3] =useState("")
+    const content2 = useSelector(state => state.screen12Slice.consolidation);
+    const content3 = useSelector(state => state.screen12Slice.base_year);
     const dispatch = useDispatch();
     const loadContent = () => {
       dispatch(setGHGEmissionIntensityTracking(
         `We track GHG emission intensity to understand our emissions in relation to our business growth and efficiency improvements`))
     }
     const loadContent2 = () => {
-      setContent2(
+      dispatch(setConsolidation(
         `To ensure consistency and transparency in GHG reporting, the organization adheres to the ${consolidation} method for consolidation. This approach aligns with international best practices and reflects the organization’s direct and indirect emission sources effectively.`
-      )
+      ))
     }
 
     const loadContent3= () => {
-      setContent3(
+      dispatch(setBaseYear(
         `The total emissions for the base year amount to ${emisisonBaseYear} tCO2e, calculated using robust methodologies aligned with international standards. `
-      )
+      ))
     }
   
     const handleEditorChange=(e)=>{
       dispatch(setGHGEmissionIntensityTracking(e.target.value))
     }
     const handleEditorChange2=(e)=>{
-      setContent2(e.target.value)
+      dispatch(setConsolidation(e.target.value))
     }
 
     const handleEditorChange3=(e)=>{
-      setContent3(e.target.value)
+      dispatch(setBaseYear(e.target.value))
     }
 
     const columns = [
@@ -130,7 +130,6 @@ const Section7=({section12_1_5Ref,section12_1_6Ref,section12_1_7Ref,data})=>{
         }
       ]
 
-      console.log(formattedIntensity,"kkkk")
      
       const baseYear=data&&data['emission_collect']?data['emission_collect']['base_year'].length>0?data['emission_collect']['base_year'][0].Q1?data['emission_collect']['base_year'][0].Q1.startDate+" to "+data['emission_collect']['base_year'][0].Q1.endDate:"":"":""
       const rationale=data&&data['emission_collect']?data['emission_collect']['base_year'].length>0?data['emission_collect']['base_year'][0].Q2?data['emission_collect']['base_year'][0].Q2:"":"":""
