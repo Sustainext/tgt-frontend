@@ -65,7 +65,7 @@ const GovernancetableWidget = ({
                         "-"
                       )}`}
                       data-tooltip-content={item.tooltip}
-                      className="ml-2 cursor-pointe mt-1"
+                      className="ml-2 cursor-pointe mt-1  w-[10%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
                       style={{ display: item.display }}
                     />
                     <ReactTooltip
@@ -92,7 +92,7 @@ const GovernancetableWidget = ({
           {options.rowLabels.map((label, rowIndex) => (
             <tr key={rowIndex}>
               <td className="border-t border-gray-300 p-3 text-left">
-                <div className="flex relative">
+                <div className="flex relative w-[357px] xl:w-auto lg:w-auto  md:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto">
                   <span className="text-[12px]">{label.title}</span>
                   <MdInfoOutline
                     data-tooltip-id={`tooltip-${label.title.replace(
@@ -100,7 +100,7 @@ const GovernancetableWidget = ({
                       "-"
                     )}`}
                     data-tooltip-content={label.tooltip}
-                    className="ml-1 cursor-pointer mt-1 text-[12px]"
+                    className="ml-1 cursor-pointer mt-1 text-[12px]  w-[10%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%] "
                     style={{ display: label.display }}
                   />
                   <ReactTooltip
@@ -135,7 +135,7 @@ const GovernancetableWidget = ({
                         onChange={(e) =>
                           handleFieldChange(rowIndex, key, e.target.value)
                         }
-                        className="text-[12px] pl-2 py-2 w-full border-b"
+                        className="text-[12px] pl-2 py-2 w-[197px] xl:w-full lg:w-full  md:w-full 2xl:w-full  4k:w-full 2k:w-full border-b"
                         required={required}
                       >
                         <option value="">Select</option>
@@ -153,7 +153,7 @@ const GovernancetableWidget = ({
                         onChange={(e) =>
                           handleFieldChange(rowIndex, key, e.target.value)
                         }
-                        className="text-[12px] pl-2 py-2 w-full"
+                        className="text-[12px] pl-2 py-2 w-[197px] xl:w-full lg:w-full  md:w-full 2xl:w-full  4k:w-full 2k:w-full"
                         placeholder="Enter"
                       />
                     )}

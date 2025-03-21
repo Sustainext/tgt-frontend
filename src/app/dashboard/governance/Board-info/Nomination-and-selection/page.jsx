@@ -42,7 +42,7 @@ const NominationAndSelection = ({ setMobileopen }) => {
   }, [category]);
   const griData = [
     {
-      tagName: " GRI 2 - 10",
+      tagName: "GRI 2 - 10",
       toggle: "84",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",

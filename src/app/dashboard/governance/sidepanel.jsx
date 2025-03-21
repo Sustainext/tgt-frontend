@@ -171,7 +171,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleEmission}
             >
               <div className="w-[20%]">
-                <MdDiversity2 className="w-5 h-5 mr-2" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left flex items-center ">
                 <span className="indent-0 text-[13px]">Board Info</span>
@@ -267,7 +267,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleEnergySectionVisibility}
             >
               <div className="w-[20%]">
-                <MdDiversity2 className="w-5 h-5 mr-2" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
@@ -349,7 +349,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleWasteVisible}
             >
               <div className="w-[20%]">
-                <MdDiversity2 className="w-5 h-5 mr-2" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Governance</span>
@@ -421,7 +421,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleMaterialsVisible}
             >
               <div className="w-[20%]">
-                <MdDiversity2 className="w-5 h-5 mr-2" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
@@ -526,7 +526,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleSupplierSectionVisibility}
             >
               <div className="w-[20%]">
-                <MdDiversity2 className="w-5 h-5 mr-2" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
@@ -583,7 +583,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleTax}
             >
               <div className="w-[20%]">
-                <MdDiversity2 className="w-5 h-5 mr-2" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Policy</span>
@@ -648,7 +648,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={togglePolitical}
             >
               <div className="w-[20%]">
-                <MdDiversity2 className="w-5 h-5 mr-2" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Remediation</span>
@@ -701,7 +701,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleManagingConcerns}
             >
               <div className="w-[20%]">
-                <MdDiversity2 className="w-5 h-5 mr-2" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Managing Concerns</span>
