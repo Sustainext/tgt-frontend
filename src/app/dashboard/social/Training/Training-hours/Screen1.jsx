@@ -33,15 +33,14 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      category: { type: "string", title: "Category" },
-      male: { type: "string", title: "Male" },
-      female: { type: "string", title: "Female" },
-      others: { type: "string", title: "Others" },
-      male1: { type: "string", title: "Male" },
-      female1: { type: "string", title: "Female" },
-      others2: { type: "string", title: "Others" },
-      totalEmployees: { type: "string", title: "Total number of Employee" },
-      totalTrainingHours: { type: "string", title: "Total number of Employee" },
+      male: { type: "string" },
+      female: { type: "string" },
+      others: { type: "string" },
+      totalTrainingHours: { type: "string" }, 
+      male1: { type: "string" },
+      female1: { type: "string" },
+      others1: { type: "string" },            
+      totalEmployees: { type: "string" },  
     },
   },
 };
@@ -91,49 +90,21 @@ const uiSchema = {
       },
       {
         title: "Male",
-        title2: "Male",
+        title2: "male",
         tooltip: "Please specify the number of male individuals.",
         colSpan: 1,
         type: "number",
       },
       {
         title: "Female",
-        title2: "Female",
+        title2: "female",
         tooltip: "Please specify the number of female individuals.",
         colSpan: 1,
         type: "number",
       },
       {
         title: "Others",
-        title2: "Others",
-        tooltip: "Please specify the number of others individuals.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "Total number of Employee",
-        title2: "totalEmployees",
-        tooltip: "Please specify the total number of employees.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "Male",
-        title2: "Male1",
-        tooltip: "Please specify the number of male individuals.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "Female",
-        title2: "Female1",
-        tooltip: "Please specify the number of female individuals.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "Others",
-        title2: "Others1",
+        title2: "others",
         tooltip: "Please specify the number of others individuals.",
         colSpan: 1,
         type: "number",
@@ -141,6 +112,35 @@ const uiSchema = {
       {
         title: "Total number of Employee",
         title2: "totalTrainingHours",
+        tooltip: "Please specify the total number of employees.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Male",
+        title2: "male1",
+        tooltip: "Please specify the number of male individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Female",
+        title2: "female1",
+        tooltip: "Please specify the number of female individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Others",
+        title2: "others1",
+        tooltip: "Please specify the number of others individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+ 
+      {
+        title: "Total number of Employee",
+        title2: "totalEmployees",
         tooltip: "Please specify the total number of employees.",
         colSpan: 1,
         type: "number",
@@ -311,25 +311,25 @@ const Screen1 = ({
   };
 
   // fetch backend and replace initialized forms
-  useEffect(() => {
-    if (selectedOrg && year && month && togglestatus) {
-      if (togglestatus === "Corporate" && selectedCorp) {
-        loadFormData();
-      } else if (togglestatus === "Corporate" && !selectedCorp) {
-        setFormData(initialFormData);
-        setRemoteSchema({});
-        setRemoteUiSchema({});
-      } else {
-        loadFormData();
-      }
+  // useEffect(() => {
+  //   if (selectedOrg && year && month && togglestatus) {
+  //     if (togglestatus === "Corporate" && selectedCorp) {
+  //       loadFormData();
+  //     } else if (togglestatus === "Corporate" && !selectedCorp) {
+  //       setFormData(initialFormData);
+  //       setRemoteSchema({});
+  //       setRemoteUiSchema({});
+  //     } else {
+  //       loadFormData();
+  //     }
 
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp, togglestatus, month]);
+  //     toastShown.current = false;
+  //   } else {
+  //     if (!toastShown.current) {
+  //       toastShown.current = true;
+  //     }
+  //   }
+  // }, [selectedOrg, year, selectedCorp, togglestatus, month]);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault(); // Prevent the default form submission
@@ -611,8 +611,8 @@ const Screen1 = ({
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
