@@ -22,7 +22,6 @@ const HomeDashboard = ({setActiveTab}) => {
           <Preferences />
         </div>
       </div>
-      <NivoYearlyGrowth />
     </>
   );
 };
