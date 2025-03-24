@@ -12,6 +12,8 @@ const Screen12Slice = createSlice({
     scope_three_emissions:'',
     ghg_emission_intensity_tracking:'',
     ghg_emission_reduction_efforts:'',
+    base_year:'',
+    consolidation:'',
     ozone_depleting_substance_elimination:'',
     material_management_strategy:'',
     recycling_process:'',
@@ -45,6 +47,12 @@ const Screen12Slice = createSlice({
     },
     setScopeThreeEmission: (state, action) => {
         state.scope_three_emissions = action.payload;
+    },
+    setBaseYear: (state, action) => {
+        state.base_year = action.payload;
+    },
+    setConsolidation: (state, action) => {
+        state.consolidation = action.payload;
     },
     setGHGEmissionIntensityTracking: (state, action) => {
         state.ghg_emission_intensity_tracking = action.payload;
@@ -103,6 +111,8 @@ const Screen12Slice = createSlice({
 export const {
     setEnvironmentStatement,
     setEmission,
+    setBaseYear,
+    setConsolidation,
     setScopeOneEmission,
     setScopeTwoEmission,
     setScopeThreeEmission,
