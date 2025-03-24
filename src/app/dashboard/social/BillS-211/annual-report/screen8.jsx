@@ -513,7 +513,7 @@ const Screenend = ({
             type="button"
             disabled={!isSubmitted}
             data-tooltip-id={`tooltip-$e1`}
-            data-tooltip-content="Report needs to be submitted before it can be downloaded."
+            data-tooltip-content="Please provide all the mandatory details to generate the Report."
             onClick={handleDownload}
             className={`px-2 py-2 ${!isSubmitted?'opacity-30':''} font-semibold rounded w-auto text-[13px] bg-transparent text-blue-400`}
           >
