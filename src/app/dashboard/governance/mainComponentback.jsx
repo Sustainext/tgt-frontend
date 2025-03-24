@@ -34,7 +34,7 @@ const Governance = () => {
   const { open } = GlobalState();
   const [activeTab, setActiveTab] = useState("Structure");
   const [mobileopen, setMobileopen] = useState(false);
-  const dispatch = useDispatch();
+
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);

@@ -21,7 +21,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
   };
 
   return (
-    <div className={`flex overflow-x-auto pb-3 mb-4 custom-scrollbar ${open ? 'max-w-[83vw] ' : 'max-w-[92vw] '}`}> 
+    <div className={`flex overflow-x-auto pb-3 mb-4 custom-scrollbar ${open ? 'xl:max-w-[85vw] md:max-w-[85vw] lg:max-w-[85vw] 4k:max-w-[85vw] 2k:max-w-[85vw] 2xl:max-w-[85vw] max-w-[100vw] ' : 'max-w-[92vw] '}`}> 
       {value.map((item, index) => (
         <div key={index} className="flex">
           <InputField

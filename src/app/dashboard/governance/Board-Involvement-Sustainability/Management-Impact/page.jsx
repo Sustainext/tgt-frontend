@@ -10,7 +10,8 @@ import { Socialdata } from "../../../social/data/socialgriinfo"
 import Screen1 from "./screen1"
 import Screen2 from "./screen2"
 import Screen3 from "./screen3"
-const ManagementImpact = () => {
+import GovernancesTopBar from "../../governancesTopBar";
+const ManagementImpact = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -39,12 +40,43 @@ const ManagementImpact = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 2 - 9",
+      toggle: "83",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
+  const brsr = [
+    {
+      tagName: "BRSR C-P4-L1",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 4-Leadership Indicators-1",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 16",
+      toggle: "29",
+      textColor: "#fff",
+      bgColor: "bg-[#00558A]",
+    },
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <GovernancesTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          griData={griData}
+          brsr={brsr}
+          title={"Management of Impact"}
+          setMobileopen={setMobileopen}
+        />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Governance</p>
@@ -104,13 +136,13 @@ const ManagementImpact = () => {
             
             </div>
           </div>
-        </div>
+        </div> */}
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Role of the highest governance body in overseeing the management of impacts
             <MdInfoOutline data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the role of the highest governance body in overseeing the management of impacts." className="mt-1.5 ml-2 text-[15px]" />
+              data-tooltip-content="This section documents the data corresponding to the role of the highest governance body in overseeing the management of impacts." className="mt-1.5 ml-2 text-[15px] w-[10%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]" />
             <ReactTooltip id={`tooltip-$e10`} place="top" effect="solid" style={{
               width: "290px", backgroundColor: "#000",
               color: "white",

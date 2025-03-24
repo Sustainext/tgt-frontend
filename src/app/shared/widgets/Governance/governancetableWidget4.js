@@ -200,6 +200,7 @@ const GovernancetableWidget4 = ({
 
   return (
     <>
+     <div style={{ maxHeight: "400px" }} className='mb-2  overflow-auto custom-scrollbar'>
       <table
         className="rounded-md border border-gray-300 w-full"
         style={{ borderCollapse: "separate", borderSpacing: 0 }}
@@ -208,7 +209,7 @@ const GovernancetableWidget4 = ({
           {uiSchema["ui:options"].rowLabels.map((label, rowIndex) => (
             <tr key={rowIndex}>
               <td className="border-t border-gray-300 p-3 text-left">
-                <div className="flex relative">
+                <div className="flex relative  w-[357px] xl:w-auto lg:w-auto  md:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto">
                   <span className="text-[12px]">{label.title}</span>
                   <MdInfoOutline
                     data-tooltip-id={`tooltip-${label.title.replace(
@@ -232,7 +233,7 @@ const GovernancetableWidget4 = ({
                     type="text"
                     value={internalValue[rowIndex]?.column1 || ""}
                     onChange={(e) => handleInputChange(e, "column1", rowIndex)}
-                    className="text-[12px] pl-2 py-2 w-full border-b"
+                    className="text-[12px] pl-2 py-2  w-[300px] xl:w-full lg:w-full  md:w-full  2xl:w-full  4k:w-full 2k:w-full border-b"
                   />
                 ) : (
                   <>
@@ -292,7 +293,7 @@ const GovernancetableWidget4 = ({
           ))}
         </tbody>
       </table>
-
+      </div>
       {showModal && selectedFileDetails && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-6">
