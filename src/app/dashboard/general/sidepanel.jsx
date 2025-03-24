@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {  MdOutlineDiversity1, MdKeyboardArrowDown, MdClose} from "react-icons/md";
+import { MdDiversity2, MdKeyboardArrowDown, MdClose} from "react-icons/md";
 
 import { GiWoodPile } from "react-icons/gi";
 
@@ -152,7 +152,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
           <button className="flex justify-between items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
             <div>
               {" "}
-              <span className="text-[16px] font-extrabold">Governance</span>
+              <span className="text-[16px] font-extrabold">General</span>
             </div>
 
             <div className=" float-end block xl:hidden md:hidden lg:hidden 2xl:hidden 4k:hidden">
@@ -162,19 +162,21 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
           <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Structure" ||
-                activeTab === "Nomination and Selection" ||
-                activeTab === "Chair of Board"
+                activeTab === "Org Details" ||
+                activeTab === "Entities" ||
+                activeTab === "Report Details" || 
+                activeTab === "Assurance" || 
+                activeTab === "Restatement" 
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
               }`}
               onClick={toggleEmission}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left flex items-center ">
-                <span className="indent-0 text-[13px]">Board Info</span>
+                <span className="indent-0 text-[13px]">GRI Reporting info</span>
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
@@ -198,13 +200,13 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Structure"
+                        activeTab === "Org Details"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Structure")}
+                      onClick={() => handleTabClick("Org Details")}
                     >
-                      Structure
+                      Org Details
                     </p>
                   </div>
                   {/* <div>
@@ -228,25 +230,49 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Nomination and Selection"
+                        activeTab === "Entities"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Nomination and Selection")}
+                      onClick={() => handleTabClick("Entities")}
                     >
-                      Nomination and Selection
+                      Entities
                     </p>
                   </div>
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Chair of Board"
+                        activeTab === "Report Details"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Chair of Board")}
+                      onClick={() => handleTabClick("Report Details")}
                     >
-                      Chair of Board
+                      Report Details
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Restatement"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Restatement")}
+                    >
+                      Restatement
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Assurance"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Assurance")}
+                    >
+                      Assurance
                     </p>
                   </div>
                 </div>
@@ -258,20 +284,21 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
           <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Management of Impact" ||
-                activeTab === "Delegation of Responsibility" ||
-                activeTab === "Sustainability Reporting"
+                activeTab === "Business Details" ||
+                activeTab === "Workforce-Employees" ||
+                activeTab === "Workforce-Other Workers"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
               }`}
               onClick={toggleEnergySectionVisibility}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                  Board Involvement in Sustainability
+                Organization Details
+
                 </span>
               </div>
 
@@ -298,39 +325,39 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Impact"
+                        activeTab === "Business Details"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Management of Impact")}
+                      onClick={() => handleTabClick("Business Details")}
                     >
-                      Management of Impact
+                      Business Details
                     </p>
                   </div>
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Delegation of Responsibility"
+                        activeTab === "Workforce-Employees"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
                       onClick={() =>
-                        handleTabClick("Delegation of Responsibility")
+                        handleTabClick("Workforce-Employees")
                       }
                     >
-                      Delegation of Responsibility
+                      Workforce-Employees
                     </p>
                   </div>
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Sustainability Reporting"
+                        activeTab === "Workforce-Other Workers"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Sustainability Reporting")}
+                      onClick={() => handleTabClick("Workforce-Other Workers")}
                     >
-                      Sustainability Reporting
+                      Workforce-Other Workers
                     </p>
                   </div>
                 </div>
@@ -341,18 +368,18 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
           <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Conflict of Interest" ||
-                activeTab === "Critical Concerns"
+                activeTab === "Laws and Regulation" 
                   ? "text-blue-400"
                   : "bg-transparent text-[#727272]"
               }`}
               onClick={toggleWasteVisible}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
-                <span className="indent-0 text-[13px]">Governance</span>
+                <span className="indent-0 text-[13px]">Compliance
+                </span>
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
@@ -379,27 +406,16 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Conflict of Interest"
+                        activeTab === "Laws and Regulation"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Conflict of Interest")}
+                      onClick={() => handleTabClick("Laws and Regulation")}
                     >
-                      Conflict of Interest
+                    Laws and Regulation
                     </p>
                   </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Critical Concerns"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Critical Concerns")}
-                    >
-                      Critical Concerns
-                    </p>
-                  </div>
+            
                 </div>
               </>
             )}
@@ -410,22 +426,18 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full
               ${
-                activeTab === "Sustainability Knowledge" ||
-                activeTab === "Performance Evaluations" ||
-                activeTab === "Remuneration" ||
-                activeTab === "Determine Remuneration" ||
-                activeTab === "Compensation Ratio"
+                activeTab === "Membership & Association"
                   ? "text-[#007EEF]"
                   : "bg-transparent text-[#727272] "
               }`}
               onClick={toggleMaterialsVisible}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                  Performance and Renumerations
+                Membership & Association
                 </span>
               </div>
 
@@ -453,63 +465,16 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Sustainability Knowledge"
+                        activeTab === "Membership & Association"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Sustainability Knowledge")}
+                      onClick={() => handleTabClick("Membership & Association")}
                     >
-                      Sustainability Knowledge
+                      Membership & Association
                     </p>
                   </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Performance Evaluations"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Performance Evaluations")}
-                    >
-                      Performance Evaluations
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Remuneration"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Remuneration")}
-                    >
-                      Remuneration
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Determine Remuneration"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Determine Remuneration")}
-                    >
-                      Determine Remuneration
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Compensation Ratio"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Compensation Ratio")}
-                    >
-                      Compensation Ratio
-                    </p>
-                  </div>
+           
                 </div>
               </>
             )}
@@ -519,18 +484,18 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
           <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Sustainability Strategy"
+                activeTab === "Stakeholder Engagement"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
               }`}
               onClick={toggleSupplierSectionVisibility}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                  Sustainability Strategy
+                Stakeholder Engagement
                 </span>
               </div>
 
@@ -558,13 +523,13 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Sustainability Strategy"
+                        activeTab === "Stakeholder Engagement"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Sustainability Strategy")}
+                      onClick={() => handleTabClick("Stakeholder Engagement")}
                     >
-                      Sustainability Strategy
+                     Stakeholder Engagement
                     </p>
                   </div>
                 </div>
@@ -575,18 +540,17 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
           <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Policy Commitments" ||
-                activeTab === "Implementing Commitments"
+                activeTab === "Collective Bargaining Agreements"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
               }`}
               onClick={toggleTax}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
-                <span className="indent-0 text-[13px]">Policy</span>
+                <span className="indent-0 text-[13px]">Collective Bargaining Agreements</span>
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
@@ -613,137 +577,21 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Policy Commitments"
+                        activeTab === "Collective Bargaining Agreements"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Policy Commitments")}
+                      onClick={() => handleTabClick("Collective Bargaining Agreements")}
                     >
-                      Approach to tax
+                     Collective Bargaining Agreements
                     </p>
                   </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Implementing Commitments"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Implementing Commitments")}
-                    >
-                      Implementing Commitments
-                    </p>
-                  </div>
+               
                 </div>
               </>
             )}
           </div>
-          <div>
-            <button
-              className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Process"
-                  ? "text-[#007EEF]"
-                  : "bg-white text-[#727272] "
-              }`}
-              onClick={togglePolitical}
-            >
-              <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
-              </div>
-              <div className="w-[50%] text-left ">
-                <span className="indent-0 text-[13px]">Remediation</span>
-              </div>
-
-              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
-                {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-                </span> */}
-                <MdKeyboardArrowDown
-                  className={`text-lg text-neutral-500 ${
-                    Political && "rotate-180"
-                  }`}
-                />
-              </div>
-            </button>
-
-            {/* Energy section content */}
-            {Political && (
-              <>
-                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
-                      Topic disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Process"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() => handleTabClick("Process")}
-                    >
-                      Process
-                    </p>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-          <div>
-            <button
-              className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Advice & Concerns"
-                  ? "text-[#007EEF]"
-                  : "bg-white text-[#727272] "
-              }`}
-              onClick={toggleManagingConcerns}
-            >
-              <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
-              </div>
-              <div className="w-[50%] text-left ">
-                <span className="indent-0 text-[13px]">Managing Concerns</span>
-              </div>
-
-              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
-                {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-                </span> */}
-                <MdKeyboardArrowDown
-                  className={`text-lg text-neutral-500 ${
-                    Political && "rotate-180"
-                  }`}
-                />
-              </div>
-            </button>
-
-            {/* Energy section content */}
-            {ManagingConcerns && (
-              <>
-                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
-                      Topic disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Advice & Concerns"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() => handleTabClick("Advice & Concerns")}
-                    >
-                      Advice & Concerns
-                    </p>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
+     
         </div>
       </div>
     </div>
