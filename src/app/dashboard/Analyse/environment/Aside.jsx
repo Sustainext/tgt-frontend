@@ -6,9 +6,14 @@ import {
   IoWaterOutline,
   IoLeafOutline,
 } from "react-icons/io5";
+import { LuPackage } from "react-icons/lu";
 import { MdOutlineWarehouse } from "react-icons/md";
 import material from "../../../../../public/material.svg";
+import effluents from "../../../../../public/effluents.svg";
+import activeeffluents from "../../../../../public/activeeffluents.svg";
 import Image from "next/image";
+import { GiWoodPile, GiWaterfall } from "react-icons/gi";
+import { MdOutlineAir } from "react-icons/md";
 
 const Aside = ({ activeTab, handleTabClick }) => {
   return (
@@ -53,25 +58,67 @@ const Aside = ({ activeTab, handleTabClick }) => {
 
           <button
             className={`flex items-center justify-start px-2 py-2 mb-2 focus:outline-none w-full ${
-              activeTab === "Waste"
+              activeTab === "Waste Management"
                 ? "text-[#007EEF] border-l-4 border-[#007EEF]"
                 : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
             }`}
-            onClick={() => handleTabClick("Waste")}
+            onClick={() => handleTabClick("Waste Management")}
           >
             <IoTrashOutline className="w-5 h-5 mr-5" />
-            <span className="mr-12">Waste</span>
+            <span className="">Waste Management</span>
           </button>
-          <button
+
+          {/* <button
             className={`flex items-center justify-start px-2 py-2 mb-2 focus:outline-none w-full ${
-              activeTab === "Materials"
+              activeTab === "Effluents"
                 ? "text-[#007EEF] border-l-4 border-[#007EEF]"
                 : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
             }`}
-            onClick={() => handleTabClick("Materials")}
+            onClick={() => handleTabClick("Effluents")}
           >
-            <Image src={material} className="w-5 h-5 mr-5" />
-            <span className="mr-8">Materials</span>
+            {activeTab === "Effluents" ? (
+              <Image
+                src={activeeffluents}
+                alt="Active Effluents Icon"
+                className="w-5 h-5 mr-5"
+              />
+            ) : (
+              <Image
+                src={effluents}
+                alt="Effluents Icon"
+                className="w-5 h-5 mr-5"
+              />
+            )}
+
+            <span className="mr-12">Effluents</span>
+          </button> */}
+
+          <button
+            className={`flex justify-start px-2 py-1 mb-2 focus:outline-none w-full ${
+              activeTab === "Material Use and Efficiency"
+                ? "text-[#007EEF] border-l-4 border-[#007EEF]"
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Material Use and Efficiency")}
+          >
+            <GiWoodPile className="w-5 h-5 mr-5 mt-1" />
+            <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">
+            Material Use and Efficiency
+            </span>
+          </button>
+          {/* packaging material */}
+          <button
+            className={`flex justify-start px-2 py-1 mb-2 focus:outline-none w-full ${
+              activeTab === "Packaging Materials"
+                ? "text-[#007EEF] border-l-4 border-[#007EEF]"
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Packaging Materials")}
+          >
+            <LuPackage className="w-5 h-5 mr-5 mt-1" />
+            <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">
+            Packaging Material
+            </span>
           </button>
           <button
             className={`flex items-center justify-start px-2 py-2 mb-2 focus:outline-none w-full ${
@@ -107,6 +154,23 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <MdOutlineWarehouse className="w-5 h-5 mr-5" />
             <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">
               Supplier Environmental Assessment
+            </span>
+            <div className="inset-y-0 -right-2 flex items-center pointer-events-none">
+              {/* <MdKeyboardArrowDown className={`text-lg text-neutral-500${isSupplierVisible && "rotate-i80"}`}/> */}
+            </div>
+          </button>
+
+          <button
+            className={`flex justify-start px-2 py-1 mb-2 focus:outline-none w-full ${
+              activeTab === "Air Quality & other emissions"
+                ? "text-[#007EEF] border-l-4 border-[#007EEF]"
+                : "bg-white text-[#727272] "
+            }`}
+            onClick={() => handleTabClick("Air Quality & other emissions")}
+          >
+            <MdOutlineAir className="w-5 h-5 mr-5" />
+            <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">
+              Air Quality & other emissions
             </span>
             <div className="inset-y-0 -right-2 flex items-center pointer-events-none">
               {/* <MdKeyboardArrowDown className={`text-lg text-neutral-500${isSupplierVisible && "rotate-i80"}`}/> */}

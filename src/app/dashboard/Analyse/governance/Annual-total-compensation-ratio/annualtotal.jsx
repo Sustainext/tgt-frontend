@@ -7,7 +7,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { MdInfoOutline } from "react-icons/md";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-const AnalyseAnnualtotalsection = ({ selectedOrg, selectedCorp, year }) => {
+const AnalyseAnnualtotalsection = ({ selectedOrg, selectedCorp, year,togglestatus }) => {
   const [customerhealth, setCustomerhealth] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -52,16 +52,23 @@ const AnalyseAnnualtotalsection = ({ selectedOrg, selectedCorp, year }) => {
     }
   };
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      fetchData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+ useEffect(() => {
+     if (selectedOrg && year && togglestatus) {
+       if (togglestatus === "Corporate" && selectedCorp) {
+         fetchData();
+       } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setCustomerhealth([]);
+       } else {
+         fetchData();
+       }
+ 
+       toastShown.current = false;
+     } else {
+       if (!toastShown.current) {
+         toastShown.current = true;
+       }
+     }
+   }, [selectedOrg, year, selectedCorp, togglestatus]);
   return (
     <div>
       <div>

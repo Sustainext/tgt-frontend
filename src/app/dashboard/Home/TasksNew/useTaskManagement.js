@@ -1,7 +1,7 @@
 // useTaskManagement.js
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import axiosInstance, { patch, del } from "../../../utils/axiosMiddleware";
+import axiosInstance, { post,patch, del } from "../../../utils/axiosMiddleware";
 import { fetchClimatiqActivities } from "../../../utils/climatiqApi";
 import { BlobServiceClient } from "@azure/storage-blob";
 
@@ -19,7 +19,16 @@ export const useTaskManagement = () => {
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
-      toast.error("Failed to fetch tasks");
+      toast.error("Failed to fetch tasks", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -34,14 +43,32 @@ export const useTaskManagement = () => {
       if (action === "create") {
         response = await post(`/organization_task_dashboard/`, data);
         if (response.status === 201) {
-          toast.success("Task created successfully");
+          toast.success("Task created successfully", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
           await fetchTasks();
           return true;
         }
       } else {
         response = await patch(`/organization_task_dashboard/${id}/`, data);
         if (response.status === 200) {
-          toast.success(`Task ${action}d successfully`);
+          // toast.success(`Task ${action}d successfully`, {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "colored",
+      // });
           await fetchTasks();
           return true;
         }
@@ -49,7 +76,16 @@ export const useTaskManagement = () => {
 
       throw new Error(`Failed to ${action} task`);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       return false;
     } finally {
       setIsLoading(false);
@@ -61,13 +97,31 @@ export const useTaskManagement = () => {
     try {
       const response = await del(`/organization_task_dashboard/${id}/`);
       if (response.status === 204) {
-        toast.success("Task deleted successfully");
+        toast.success("Task deleted successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         await fetchTasks();
         return true;
       }
       throw new Error("Failed to delete task");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       return false;
     } finally {
       setIsLoading(false);
@@ -181,6 +235,8 @@ export const useModalState = (initialStates = {}) => {
   const [modalStates, setModalStates] = useState(initialStates);
 
   const toggleModal = (modalName, value = null) => {
+    console.log("modalName", modalName);
+    
     setModalStates((prev) => ({
       ...prev,
       [modalName]: value === null ? !prev[modalName] : value,

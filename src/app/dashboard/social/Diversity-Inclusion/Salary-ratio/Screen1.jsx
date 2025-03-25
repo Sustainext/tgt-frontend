@@ -15,7 +15,7 @@ import CurrencyselectWidget from "../../../../shared/widgets/Select/currencysele
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: CustomTableWidget8,
-  CurrencyselectWidget:CurrencyselectWidget,
+  CurrencyselectWidget: CurrencyselectWidget,
 };
 
 const view_path = "gri-social-salary_ratio-405-2a-number_of_individuals";
@@ -30,7 +30,6 @@ const schema = {
       Q1: {
         type: "string",
         title: "Select a currency to fill the  below table",
-       
       },
       Q2: {
         type: "array",
@@ -48,8 +47,6 @@ const schema = {
           },
         },
       },
-  
- 
     },
   },
 };
@@ -70,7 +67,7 @@ const uiSchema = {
       "ui:tooltipdisplay": "none",
       "ui:widget": "CurrencyselectWidget",
       "ui:widgtclass":
-        "block w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+        "block w-[64vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2x:w-[20vw] 4k:w-[20vw] 2k:w-[20vw] 3xl:w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -82,7 +79,7 @@ const uiSchema = {
         titles: [
           {
             title: "Employee Category",
-            tooltip: "What is the ratio of the basic salary of women to men for each employee category. Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties.",
+            tooltip: "Please specify the employee categories.",
             colSpan: 1,
           },
           {
@@ -92,7 +89,8 @@ const uiSchema = {
           },
           {
             title: "Significant Location of Operation",
-            tooltip: "This section allows you to enter the organization's significant locations of operation.",
+            tooltip:
+              "This section allows you to enter the organization's significant locations of operation.",
             colSpan: 1,
           },
         ],
@@ -143,11 +141,9 @@ const uiSchema = {
       layout: "horizontal",
     },
   },
-
-
 };
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const initialFormData = [
     {
       Q1: "",
@@ -161,7 +157,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         },
       ],
     },
-    
   ];
   const [locationdata, setLocationdata] = useState();
   const [formData, setFormData] = useState(initialFormData);
@@ -169,13 +164,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -274,18 +263,27 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      facthloctiondata();
-      toastShown.current = false; // Reset the flag when valid data is present
-    } else {
-      // Only show the toast if it has not been shown already
-      if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
-      }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+   useEffect(() => {
+     if (selectedOrg && year && togglestatus) {
+       if (togglestatus === "Corporate" && selectedCorp) {
+         loadFormData();
+         facthloctiondata();
+       } else if (togglestatus === "Corporate" && !selectedCorp) {
+         setFormData(initialFormData);
+         setRemoteSchema({});
+         setRemoteUiSchema({});
+       } else {
+         loadFormData();
+         facthloctiondata();
+       }
+ 
+       toastShown.current = false;
+     } else {
+       if (!toastShown.current) {
+         toastShown.current = true;
+       }
+     }
+   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -300,9 +298,15 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
+     <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
            Average Basic salary of Employees
               <MdInfoOutline
@@ -327,9 +331,9 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             </h2>
           </div>
 
-          <div className="w-[20%]">
-            <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 405-2a
                 </div>
@@ -365,17 +369,24 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         )}
       
 
-    <div className='mt-4'>
+      <div className="mt-4">
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
-              }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>
-
         </div>
       </div>
       {loopen && (

@@ -55,6 +55,8 @@ import {setEnvironmentStatement,
   setEnergyConsumptionWithinOrganization,
   setEnergyConsumptionOutsideOrganization,
   setEnergyIntensityTracking,
+  setBaseYear,
+  setConsolidation,
   setEnergyConsumptionReductionCommitment,
   setSignificantSpills,
   setHabitatProtectionRestorationCommitment,
@@ -80,6 +82,8 @@ const Environment=forwardRef(({ onSubmitSuccess }, ref) => {
   const section12_1_5Ref = useRef(null);
   const section12_1_6Ref = useRef(null);
   const section12_1_7Ref = useRef(null);
+  const section12_1_8Ref = useRef(null);
+  const section12_1_9Ref = useRef(null);
   const section12_2_1Ref = useRef(null);
   const section12_2_2Ref = useRef(null);
   const section12_2_3Ref = useRef(null);
@@ -143,6 +147,8 @@ const scrollToSection = (sectionRef, sectionId) => {
   const air_quality_protection_commitment = useSelector((state) => state.screen12Slice.air_quality_protection_commitment);
   const biogenic_c02_emissions = useSelector((state) => state.screen12Slice.biogenic_c02_emissions);
   const biogenic_c02_emissions_305_3c = useSelector((state) => state.screen12Slice.biogenic_c02_emissions_305_3c);
+  const consolidation = useSelector((state) => state.screen12Slice.consolidation);
+  const base_year = useSelector((state) => state.screen12Slice.base_year);
   const dispatch = useDispatch()
 
   useImperativeHandle(ref, () => ({
@@ -180,7 +186,9 @@ const scrollToSection = (sectionRef, sectionId) => {
   "habitat_protection_restoration_commitment": {"page":"screen_twelve","label":"12.6.2 Habitat Protected and Restored","subLabel":"Add statement about company’s commitment to protect and restore habitats","type":"richTextarea","content":habitat_protection_restoration_commitment,"field":"habitat_protection_restoration_commitment","isSkipped":false} ,
   "air_quality_protection_commitment": {"page":"screen_twelve","label":"12.7 Air Quality","subLabel":"Add statement about company’s commitment to protect and maintain air quality","type":"richTextarea","content":air_quality_protection_commitment,"field":"air_quality_protection_commitment","isSkipped":false},
   "biogenic_c02_emissions_305_3c":{"page":"screen_twelve","label":"305-3-c. Biogenic CO2 emissions","subLabel":"","type":"richTextarea","content":biogenic_c02_emissions_305_3c,"field":"biogenic_c02_emissions_305_3c","isSkipped":false},
-  "biogenic_c02_emissions":{"page":"screen_twelve","label":"Biogenic CO2 emissions","subLabel":"","type":"richTextarea","content":biogenic_c02_emissions,"field":"biogenic_c02_emissions","isSkipped":false}
+  "biogenic_c02_emissions":{"page":"screen_twelve","label":"Biogenic CO2 emissions","subLabel":"","type":"richTextarea","content":biogenic_c02_emissions,"field":"biogenic_c02_emissions","isSkipped":false},
+  "consolidation":{"page":"screen_twelve","label":"Consolidation Approach","subLabel":"Add statement about tracking of Consolidation Approach","type":"textarea","content":consolidation,"field":"consolidation","isSkipped":false},
+  "base_year":{"page":"screen_twelve","label":"Base Year","subLabel":"Add statement about emissions in the Base Year","type":"textarea","content":base_year,"field":"base_year","isSkipped":false}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_twelve/${reportid}/`;
@@ -250,6 +258,8 @@ const scrollToSection = (sectionRef, sectionId) => {
       dispatch(setOzoneDepletingSubstanceElimination(''));
       dispatch(setMaterialManagementStrategy(''));
       dispatch(setRecyclingProcess(''));
+      dispatch(setBaseYear(''));
+      dispatch(setConsolidation(''));
       dispatch(setReclamationRecyclingProcess(''));
       dispatch(setWaterWithdrawalTracking(''));
       dispatch(setWaterConsumptionGoals(''));
@@ -290,6 +300,8 @@ dispatch(setHabitatProtectionRestorationCommitment(response.data.habitat_protect
 dispatch(setAirQualityProtectionCommitment(response.data.air_quality_protection_commitment?.content || ""));
 dispatch(setBiogenicCO2Emission(response.data.biogenic_c02_emissions?.content || ""));
 dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c?.content || ""));
+dispatch(setBaseYear(response.data.base_year?.content || ""));
+dispatch(setConsolidation(response.data.consolidation?.content || ""));
 
           }
           
@@ -323,9 +335,9 @@ dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c?.content 
             <Section4 section12_1_2Ref={section12_1_2Ref} data={data}/>
             <Section5 section12_1_3Ref={section12_1_3Ref} data={data}/>
             <Section6 section12_1_4Ref={section12_1_4Ref} data={data}/>
-            <Section7 section12_1_5Ref={section12_1_5Ref} data={data}/>
-            <Section8 section12_1_6Ref={section12_1_6Ref} data={data}/>
-            <Section9 section12_1_7Ref={section12_1_7Ref} data={data}/>
+            <Section7 section12_1_5Ref={section12_1_5Ref} section12_1_6Ref={section12_1_6Ref} section12_1_7Ref={section12_1_7Ref} data={data}/>
+            <Section8 section12_1_8Ref={section12_1_8Ref} data={data}/>
+            <Section9 section12_1_9Ref={section12_1_9Ref} data={data}/>
             <Section10 section12_2Ref={section12_2Ref} data={data}/>
             <Section11 section12_2_1Ref={section12_2_1Ref} data={data}/>
             <Section12 section12_2_2Ref={section12_2_2Ref} data={data}/>
@@ -375,13 +387,19 @@ dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c?.content 
   12.1.4. Scope 3 GHG Emissions
   </p>
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section12_1_5' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_1_5Ref, 'section12_1_5')} >
-  12.1.5. GHG emission intensity
+  12.1.5. Base Year
   </p>
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section12_1_6' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_1_6Ref, 'section12_1_6')} >
-  12.1.6. Reduction in GHG emissions 
+  12.1.6. Consolidation Approach
   </p>
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section12_1_7' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_1_7Ref, 'section12_1_7')} >
-  12.1.7. Ozone depleting substances
+  12.1.7. GHG emission intensity
+  </p>
+  <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section12_1_8' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_1_8Ref, 'section12_1_8')} >
+  12.1.8. Reduction in GHG emissions 
+  </p>
+  <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section12_1_9' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_1_9Ref, 'section12_1_9')} >
+  12.1.9. Ozone depleting substances
   </p>
   
   <p className={`text-[12px] mb-2 cursor-pointer ${activeSection === 'section12_2' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section12_2Ref, 'section12_2')} >

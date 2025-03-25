@@ -7,7 +7,7 @@ const AnalyseAnnualtotalcompensationratio = () => {
     const [year, setYear] = useState();
     const [selectedOrg, setSelectedOrg] = useState("");
     const [selectedCorp, setSelectedCorp] = useState("");
-  
+    const [togglestatus,setToggleStatus] = useState("Organization");
   
     return (
       <>
@@ -21,12 +21,14 @@ const AnalyseAnnualtotalcompensationratio = () => {
           setSelectedCorp={setSelectedCorp}
           year={year}
           setYear={setYear}
+          setToggleStatus={setToggleStatus}
         />
         <AnalyseAnnualtotalsection
           selectedOrg={selectedOrg}
           selectedCorp={selectedCorp}
           year={year}
           month={activeMonth}
+          togglestatus={togglestatus}
         />
       </>
     );

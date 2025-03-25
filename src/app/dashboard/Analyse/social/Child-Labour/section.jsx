@@ -6,11 +6,13 @@ import DynamicTable from "./customTable"
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2, columns3, columns4,columns5,columns6 } from "./data";
 import { Oval } from "react-loader-spinner";
-const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen }) => {
+const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen,togglestatus }) => {
   const [childdata1, setChilddata1] = useState([]);
   const [childdata2, setChilddata2] = useState([]);
   const [childdata3, setChilddata3] = useState([]);
   const [childdata4, setChilddata4] = useState([]);
+  const [childdata5, setChilddata5] = useState([]);
+  const [childdata6, setChilddata6] = useState([]);
   const toastShown = useRef(false);
   const [loopen, setLoOpen] = useState(false);
 
@@ -28,7 +30,7 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen }) => {
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_child_labor_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`
+        `/sustainapp/get_child_labor_and_forced_labour_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`
       );
 
       const data = response.data;
@@ -39,6 +41,8 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen }) => {
         operation_significant_risk_of_young_workers,
         suppliers_significant_risk_of_child_labor,
         suppliers_significant_risk_of_young_workers,
+        operations_considered_to_have_significant_risk_for_incidents_of_forced_or_compulsary_labor,
+        suppliers_at_significant_risk_for_incidents_of_forced_or_compulsory_labor,
       } = data;
       const formattedLocation = operation_significant_risk_of_child_labor.map(
         (osrcl) => ({
@@ -67,10 +71,24 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen }) => {
           TypeofOperation3: ssroyw.TypeofOperation,
           geographicareas3: ssroyw.geographicareas,
         }));
+        const formattedop1 =
+        operations_considered_to_have_significant_risk_for_incidents_of_forced_or_compulsary_labor.map((op) => ({
+          op1: op.childlabor,
+          TypeofOperation3: op.TypeofOperation,
+          geographicareas3: op.geographicareas,
+        }));
+        const formattedsp1 =
+        suppliers_at_significant_risk_for_incidents_of_forced_or_compulsory_labor.map((sp) => ({
+          sp1: sp.compulsorylabor,
+          TypeofOperation3: sp.TypeofOperation,
+          geographicareas3: sp.geographicareas,
+        }));
       setChilddata1(formattedLocation);
       setChilddata2(formattedScope);
       setChilddata3(formattedSource);
       setChilddata4(formattedSuppliers);
+      setChilddata5(formattedop1);
+      setChilddata6(formattedsp1);
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
         value: data[key],
@@ -84,16 +102,28 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen }) => {
     }
   };
 
- useEffect(() => {
-    if (selectedOrg && dateRange.start<dateRange.end) {
+  useEffect(() => {
+    if (selectedOrg &&  dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
         fetchData();
-        toastShown.current = false;
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setChilddata1([]);
+        setChilddata2([]);
+        setChilddata3([]);
+        setChilddata4([]);
+        setChilddata5([]);
+        setChilddata6([]);
+      } else {
+        fetchData();
+      }
+
+      toastShown.current = false;
     } else {
-        if (!toastShown.current) {
-            toastShown.current = true;
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-}, [selectedOrg, dateRange, selectedCorp]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus]);
 
   return (
     <div>
@@ -228,7 +258,7 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen }) => {
                 </div>
               </div>
               <div className="mb-4">
-                <DynamicTable columns={columns5} data={[]} />
+                <DynamicTable columns={columns5} data={childdata5} />
               </div>
             </div>
           </div>
@@ -251,7 +281,7 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen }) => {
               </div>
             </div>
             <div className="mb-4">
-              <DynamicTable columns={columns6} data={[]} />
+              <DynamicTable columns={columns6} data={childdata6} />
             </div>
           </div>
         </div>

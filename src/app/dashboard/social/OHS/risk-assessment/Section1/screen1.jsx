@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import GeneralWorkersEmployees from "../../../../../shared/widgets/Table/generalWorkersEmployees";
-import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiselectTableWidget"
+import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiselectTableWidget";
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: MultiselectTableWidget,
@@ -26,7 +26,7 @@ const schema = {
   items: {
     type: "object",
     properties: {
-        RoutineHazard: {
+      RoutineHazard: {
         type: "string",
         title: "Routine Hazard Identification & Risk Assessment",
         enum: [
@@ -37,7 +37,7 @@ const schema = {
           "Others (please specify)",
         ],
       },
-     
+
       NonRoutineHazard: {
         type: "string",
         title: "Non-Routine Hazard Identification & Risk Assessment",
@@ -77,11 +77,7 @@ const schema = {
       Legalguideline: {
         type: "string",
         title: "Legal or guideline basis",
-        enum: [
-          "Yes",
-          "No",
-      
-        ],
+        enum: ["Yes", "No"],
       },
       Listlegal: {
         type: "string",
@@ -106,7 +102,6 @@ const schema = {
           "Others (please specify)",
         ],
       },
-   
     },
   },
 };
@@ -120,61 +115,61 @@ const uiSchema = {
         title: "Routine Hazard Identification & Risk Assessment",
         tooltip:
           "Specify the exact timeframe or schedule for routine hazard identification.",
-          layouttype:"select",
+        layouttype: "select",
       },
       {
         key: "NonRoutineHazard",
         title: "Non-Routine Hazard Identification & Risk Assessment",
         tooltip:
           "What events or circumstances prompt you to conduct hazard identification and risk assessment outside of routine schedules? (Select all that apply)",
-          layouttype:"multiselect",
+        layouttype: "multiselect",
       },
       {
         key: "Processforhazard",
         title: "Process for hazard identification",
         tooltip:
           "Select the methods used to identify work-related hazards on both a routine and non-routine basis. (Select all that apply) ",
-          layouttype:"multiselect",
+        layouttype: "multiselect",
       },
       {
         key: "Hierarchycontrols",
         title: "Hierarchy of controls",
         tooltip:
           "How do you prioritize and implement controls to address identified hazards? (Select all that apply) ",
-          layouttype:"multiselect",
+        layouttype: "multiselect",
       },
       {
         key: "Legalguideline",
         title: "Legal or guideline basis",
         tooltip:
           "Are your hazard identification, risk assessment, and control processes based on any specific laws, regulations, or recognized standards/guidelines?",
-          layouttype:"select",
+        layouttype: "select",
       },
       {
         key: "Listlegal",
         title: "List of legal requirements (if applicable)",
         tooltip:
           "List the specific laws or regulations your processes are based on, if applicable.",
-          layouttype:"input",
+        layouttype: "input",
       },
       {
         key: "ListStandards",
         title: "List of Standards/Guidelines (if applicable)",
         tooltip:
           "List the specific laws or regulations your processes are based on, if applicable.",
-          layouttype:"input",
+        layouttype: "input",
       },
       {
         key: "VulnerableWorkers",
         title: "Vulnerable Workers",
         tooltip:
           "How do you ensure these processes are accessible for workers with language barriers or sensory impairments? (Select all that apply)",
-          layouttype:"multiselect",
+        layouttype: "multiselect",
       },
     ],
   },
 };
-const Screen1 = ({location, year}) => {
+const Screen1 = ({ location, year }) => {
   const initialFormData = [
     {
       RoutineHazard: "",
@@ -282,10 +277,10 @@ const Screen1 = ({location, year}) => {
   useEffect(() => {
     if (location && year) {
       loadFormData();
-      toastShown.current = false; 
+      toastShown.current = false;
     } else {
       if (!toastShown.current) {
-        toastShown.current = true; 
+        toastShown.current = true;
       }
     }
   }, [location, year]);
@@ -298,11 +293,17 @@ const Screen1 = ({location, year}) => {
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-           Processes for Hazard Identification, Risk Assessment, and Control
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Processes for Hazard Identification, Risk Assessment, and Control
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="This section documents data corresponding to your organization's systematic approach to identifying work-related hazards, assessing their associated risks, and implementing effective control measures to minimize those risks, ensuring a safe and healthy work environment."
@@ -325,11 +326,11 @@ const Screen1 = ({location, year}) => {
             </h2>
           </div>
 
-          <div className="w-[20%]">
-            <div className="float-end">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 403-2a
+                  GRI 403-2a
                 </div>
               </div>
             </div>

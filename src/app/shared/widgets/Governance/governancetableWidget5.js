@@ -28,7 +28,7 @@ const GovernancetableWidget5 = ({ id, options, value, required, onChange, schema
     }, [localValue, debouncedUpdate]);
 
     return (
-        <div style={{ maxHeight: "400px" }} className="mb-2">
+        <div style={{ maxHeight: "400px" }} className="custom-scrollbar mb-2 overflow-auto">
             <table id={id} className="rounded-md border border-gray-300  w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
                 <thead className="gradient-background">
                     <tr>
@@ -39,7 +39,7 @@ const GovernancetableWidget5 = ({ id, options, value, required, onChange, schema
                                 className={` ${idx == 0 ? "" :"border-l" } border-gray-300 px-2 py-2 text-[12px]`} 
                                 
                             >
-                                <div className="flex items-center relative">
+                                <div className="flex items-center relative  w-[250px] xl:w-auto lg:w-auto  md:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto">
                                     <p>{item.title}</p>
                                     <p>
                                         <MdInfoOutline

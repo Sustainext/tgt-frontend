@@ -22,7 +22,7 @@ const inputWidget3 = (props) => {
   };
   return (
     <div className="mb-3 relative">
-      <p className="flex text-[14px] text-gray-700 font-[500] mb-3">
+      <p className="flex text-[14px] 4k:text-[16px] text-gray-700 font-[500] mb-3">
         {label}
         <MdInfoOutline
           data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
@@ -30,7 +30,7 @@ const inputWidget3 = (props) => {
             "-"
           )}`}
           data-tooltip-content={uiSchema["ui:tooltip"]}
-          className="mt-1 ml-2 w-[30px] text-[14px]"
+          className="mt-1 ml-2 w-[30px] text-[14px] 4k:text-[16px]"
           style={{ display: uiSchema["ui:tooltipdisplay"] }}
         />
         {/* Tooltip */}
@@ -40,7 +40,7 @@ const inputWidget3 = (props) => {
           effect="solid"
           style={{
             minWidth: "200px", // Minimum width
-            maxWidth: "500px", // Maximum width
+            maxWidth: "300px", // Maximum width
             backgroundColor: "#000",
             color: "white",
             fontSize: "12px",
@@ -54,7 +54,7 @@ const inputWidget3 = (props) => {
             hasError
               ? "border-red-500"
               : "border-gray-400"
-          }  border appearance-none text-[12px] border-gray-400 text-neutral-900 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+          }  border appearance-none text-[12px] 4k:text-[14px] border-gray-400 text-neutral-900 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
         placeholder={`Enter Value`}
         type="number"
         value={value}

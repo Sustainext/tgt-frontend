@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EnergyTopBar from '../energyTopBar'
 
-const Energyintensity = ({apiData}) => {
+const Energyintensity = ({apiData, setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -19,7 +19,7 @@ const Energyintensity = ({apiData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
-  const drawerRef = useRef(null); 
+  const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -54,14 +54,24 @@ const Energyintensity = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 302-3',
-        toggle:'16',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName:'GRI 302-3',
+      toggle:'16',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-E1",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-1",
     },
+  ];
+  const sdgData=[
+
     {
         tagName:'SDG 7',
         toggle:'2',
@@ -92,7 +102,7 @@ const Energyintensity = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} />
+         <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} brsr={brsr} griData={griData}  setMobileopen={setMobileopen} />
         
 
         <div className="ml-3 flex mt-2 relative">
@@ -121,8 +131,8 @@ const Energyintensity = ({apiData}) => {
           </h6>
         </div>
         <div
-           ref={drawerRef} 
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -146,13 +156,20 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
                 </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
+                </div>
 
                 {/* Footer (Learn more link) */}
-                <div className="pt-2 pb-4 ml-4"  onClick={toggleDrawerclose}>
+                <div className="pt-2 pb-4 ml-4" onClick={toggleDrawerclose}>
                   <a
                     className="text-[14px] text-[#2196F3] pt-1 inline-flex"
                     href={program.link}

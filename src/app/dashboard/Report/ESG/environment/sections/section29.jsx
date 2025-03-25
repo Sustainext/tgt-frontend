@@ -9,7 +9,7 @@ import {setSignificantSpills} from "../../../../../../lib/redux/features/ESGSlic
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
-const Section29=({section12_5_6Ref,orgName})=>{
+const Section29=({section12_5_6Ref,orgName,data})=>{
     
     const content = useSelector(state => state.screen12Slice.significant_spills);
     const dispatch = useDispatch();
@@ -18,8 +18,8 @@ const Section29=({section12_5_6Ref,orgName})=>{
         `${orgName ? orgName : "[Company Name]"} organization is committed to preventing and managing significant spills that can negatively impact the environment, biodiversity, and local communities.As part of our sustainability strategy, we have implemented a`))
     }
   
-    const handleEditorChange=(value)=>{
-      dispatch(setSignificantSpills(value))
+    const handleEditorChange=(e)=>{
+      dispatch(setSignificantSpills(e.target.value))
     }
     const config = {
       enter: "BR", // Or customize behavior on Enter key
@@ -61,43 +61,125 @@ const Section29=({section12_5_6Ref,orgName})=>{
         "Material of the spill",
         "Volume of the spill",
         "Unit",
+        "Impacts of Significant Spill"
         
     ]
-    const data1=[
-        {
-            "Material of the spill":"No data available",
-            "Volume of the spill":"No data available",
-            "Unit":"No data available",
-        }
-    ]
 
+   
     const col2=[
         "Location of spill",
         "Volume of the spill",
         "Unit",
         
     ]
-    const data2=[
+
+    const col3=[
+      "Total number of Significant spill",
+      "Total volume of Significant spill",
+      "Unit",
+      
+  ]
+
+    const TableData1=data&&data['waste_analyse']?data['waste_analyse']['total_number_and_volume_by_material']?data['waste_analyse']['total_number_and_volume_by_material'].length>0?
+    data['waste_analyse']['total_number_and_volume_by_material'].map((val)=>{
+      return (
         {
+          "Material of the spill":val.material,
+          "Volume of the spill":val.volume_of_spills,
+          "Unit":val.unit,
+           "Impacts of Significant Spill":val.impact && val.impact.length > 0 ? (() => {
+            const filteredImpact = val.impact.filter(item => item !== 'N/A');
+        
+            if (filteredImpact.length === 0) {
+              return <span>This spill has no significant impact.</span>;
+            } else {
+              return <span>{filteredImpact.join(', ')}</span>;
+            }
+          })() : ''
+      }
+      )
+    }):[
+      {
+        "Material of the spill":"No data available",
+        "Volume of the spill":"No data available",
+        "Unit":"No data available",
+         "Impacts of Significant Spill":"No data available"
+    }
+    ]:[
+      {
+        "Material of the spill":"No data available",
+        "Volume of the spill":"No data available",
+        "Unit":"No data available",
+         "Impacts of Significant Spill":"No data available"
+    }
+    ]:[
+      {
+        "Material of the spill":"No data available",
+        "Volume of the spill":"No data available",
+        "Unit":"No data available",
+         "Impacts of Significant Spill":"No data available"
+    }
+    ]
+    const TableData2=data&&data['waste_analyse']?data['waste_analyse']['total_number_and_volume_by_location']?data['waste_analyse']['total_number_and_volume_by_location'].length>0?
+    data['waste_analyse']['total_number_and_volume_by_location'].map((val)=>{
+      return (
+        {
+          "Location of spill":val.location,
+          "Volume of the spill":val.volume_of_spills,
+          "Unit":val.unit,
+      }
+      )
+    }):[
+       {
+            "Location of spill":"No data available",
+            "Volume of the spill":"No data available",
+            "Unit":"No data available",
+        }
+    ]:[
+       {
+            "Location of spill":"No data available",
+            "Volume of the spill":"No data available",
+            "Unit":"No data available",
+        }
+    ]:[
+       {
             "Location of spill":"No data available",
             "Volume of the spill":"No data available",
             "Unit":"No data available",
         }
     ]
 
-    const col3=[
-        "Total number of Significant spill",
-        "Total volume of Significant spill",
-        "Unit",
-        
-    ]
-    const data3=[
+
+    const TableData3=data&&data['waste_analyse']?data['waste_analyse']['total_number_and_volume_significant_spills']?data['waste_analyse']['total_number_and_volume_significant_spills'].length>0?
+    data['waste_analyse']['total_number_and_volume_significant_spills'].map((val)=>{
+      return (
         {
+          "Total number of Significant spill":val.number_of_significant_spills,
+          "Total volume of Significant spill":val.volume_of_spills,
+          "Unit":val.unit,
+      }
+      )
+    }):[
+      {
+            "Total number of Significant spill":"No data available",
+            "Total volume of Significant spill":"No data available",
+            "Unit":"No data available",
+        }
+    ]:[
+      {
+            "Total number of Significant spill":"No data available",
+            "Total volume of Significant spill":"No data available",
+            "Unit":"No data available",
+        }
+    ]:[
+      {
             "Total number of Significant spill":"No data available",
             "Total volume of Significant spill":"No data available",
             "Unit":"No data available",
         }
     ]
+    
+    
     
     return (
         <>
@@ -119,13 +201,13 @@ const Section29=({section12_5_6Ref,orgName})=>{
             Auto Fill
           </button>
         </div>
-            {/* <textarea
+            <textarea
             onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
-        /> */}
-         <div className="mb-4">
+        />
+         {/* <div className="mb-4">
               <JoditEditor
               // ref={editor}
               value={content}
@@ -133,27 +215,27 @@ const Section29=({section12_5_6Ref,orgName})=>{
               tabIndex={1}
               onBlur={handleEditorChange}
               />
-            </div>
-{/* <p className="text-[15px]  mb-2 font-semibold">
+            </div> */}
+<p className="text-[15px]  mb-2 font-semibold">
 Total number & volume of spills by material 
         </p>
 <div className="shadow-md rounded-md mb-4">
-<LeaveTable columns={col1} data={data1}/>
+<LeaveTable columns={col1} data={TableData1}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Total number & volume of spills by location 
         </p>
 <div className="shadow-md rounded-md mb-4">
-<LeaveTable columns={col2} data={data2}/>
+<LeaveTable columns={col2} data={TableData2}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Total number & volume of significant spills 
         </p>
 <div className="shadow-md rounded-md mb-4">
-<LeaveTable columns={col3} data={data3}/>
-</div> */}
+<LeaveTable columns={col3} data={TableData3}/>
+</div>
 </div>
         </>
     )

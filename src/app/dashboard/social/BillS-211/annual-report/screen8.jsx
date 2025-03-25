@@ -3,13 +3,22 @@ import React, { useState, useEffect, useRef } from "react";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { MdOutlineModeEditOutline,MdClose  } from "react-icons/md";
+import { MdOutlineModeEditOutline, MdClose } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
-import { GlobalState } from '../../../../../Context/page';
+import { GlobalState } from "../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
+import { MdOutlineDownload } from "react-icons/md";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
-const Screenend = ({ prevStep,selectedCorp, selectedOrg, year,reportType }) => {
-    const { open } = GlobalState();
+const Screenend = ({
+  prevStep,
+  selectedCorp,
+  selectedOrg,
+  year,
+  reportType,
+}) => {
+  const { open } = GlobalState();
   const [error, setError] = useState({});
   const [reportradio, setReportnradio] = useState("");
   const [reportingdate, setReportingdate] = useState("");
@@ -17,7 +26,10 @@ const Screenend = ({ prevStep,selectedCorp, selectedOrg, year,reportType }) => {
   const [reportingentity, setReportingentit] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [isSubmitted,setIsSubmitted]= useState(false)
+  const [submitDisabled,setSubmitDisbaled]=useState(false)
 
+  console.log(isSubmitted,"check")
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("token")?.replace(/"/g, "");
@@ -32,14 +44,12 @@ const Screenend = ({ prevStep,selectedCorp, selectedOrg, year,reportType }) => {
     },
   };
 
-const fetchBillSeight = async () => {
+  const fetchBillSeight = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
 
     try {
       const response = await axiosInstance.get(
-        `${
-          process.env.BACKEND_API_URL
-        }/canadabills211/annual-report/?screen=8&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=8&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
         axiosConfig
       );
 
@@ -48,14 +58,17 @@ const fetchBillSeight = async () => {
         setReportnradio(response.data.policies_procedures_assess_17);
         setReportingdescription(response.data.additional_info_assessment_18);
         setReportingentit(response.data.assessment_method_description_17_1);
-        if (response.data.assessment_method_17_1 == null) {
+        if (!response.data.assessment_method_17_1) {
+          setIsSubmitted(false)
+          setSubmitDisbaled(false)
           setSelectedOptions([]);
         } else {
+          setIsSubmitted(true)
+          setSubmitDisbaled(true)
           setSelectedOptions(response.data.assessment_method_17_1);
         }
         LoaderClose();
-      }
-      else{
+      } else {
         LoaderClose();
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -85,29 +98,30 @@ const fetchBillSeight = async () => {
       LoaderClose();
     }
   };
+
+  
   useEffect(() => {
     // if (isMounted.current) {
-    
+
     //   isMounted.current = false;
     // }
     // return () => {
     //   isMounted.current = false;
     // };
-    if(reportType=="Organization"){
-      if(selectedOrg&&year){
+    if (reportType == "Organization") {
+      if (selectedOrg && year) {
         fetchBillSeight();
       }
-    }
-    else{
-      if(selectedOrg&&year&&selectedCorp){
+    } else {
+      if (selectedOrg && year && selectedCorp) {
         fetchBillSeight();
       }
     }
     setReportnradio("");
     setReportingdescription("");
     setReportingentit("");
-    setSelectedOptions([])
-  }, [selectedCorp,selectedOrg,year]);
+    setSelectedOptions([]);
+  }, [selectedCorp, selectedOrg, year]);
 
   const options = [
     {
@@ -143,6 +157,7 @@ const fetchBillSeight = async () => {
       : selectedOptions.filter((option) => option !== value);
 
     setSelectedOptions(newSelectedOptions);
+    setSubmitDisbaled(false)
 
     // Optionally clear the error for checkboxes when at least one option is selected
     if (newSelectedOptions.length > 0 && error.checkboxes) {
@@ -157,14 +172,16 @@ const fetchBillSeight = async () => {
     setReportingentit(event.target.value);
     setError((prev) => ({ ...prev, reportingentity: "" }));
   };
- 
+
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
+    setSubmitDisbaled(false)
     setError((prev) => ({ ...prev, reportradio: "" }));
   };
 
   const handleReportingdescription = (event) => {
     setReportingdescription(event.target.value);
+    setSubmitDisbaled(false)
   };
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -172,7 +189,7 @@ const fetchBillSeight = async () => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
- 
+
   const submitForm = async () => {
     let unewentities;
     let uotherfiles;
@@ -184,26 +201,28 @@ const fetchBillSeight = async () => {
       uotherfiles = reportingentity;
     }
 
-    try{
+    try {
       LoaderOpen();
 
       const sendData = {
         policies_procedures_assess_17: reportradio,
         assessment_method_17_1: unewentities,
-        additional_info_assessment_18: reportingdescription?reportingdescription:null,
+        additional_info_assessment_18: reportingdescription
+          ? reportingdescription
+          : null,
         assessment_method_description_17_1: uotherfiles,
         organization_id: selectedOrg,
-          corporate_id: selectedCorp?selectedCorp:null,
-          year: year
+        corporate_id: selectedCorp ? selectedCorp : null,
+        year: year,
       };
-      const response= await axiosInstance
-      .post(
+      const response = await axiosInstance.post(
         `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=8`,
         sendData,
         axiosConfig
-      )
+      );
       if (response.status == "200") {
-        console.log(response.status);
+        setIsSubmitted(true)
+        setSubmitDisbaled(true)
         toast.success("Data added successfully", {
           position: "top-right",
           autoClose: 3000,
@@ -228,8 +247,7 @@ const fetchBillSeight = async () => {
         });
         LoaderClose();
       }
-    }
-    catch (error) {
+    } catch (error) {
       LoaderClose();
       console.error("API call failed:", error);
       toast.error("Oops, something went wrong", {
@@ -243,7 +261,6 @@ const fetchBillSeight = async () => {
         theme: "colored",
       });
     }
-    
   };
   const continueToNextStep = () => {
     let newErrors = {};
@@ -271,8 +288,7 @@ const fetchBillSeight = async () => {
       setError(newErrors);
     }
   };
-  
- 
+
   // const handleDownload = async () => {
   //   setLoading(true);
   //   const response = await fetch(`${
@@ -293,28 +309,29 @@ const fetchBillSeight = async () => {
   //   // Gets the last part after the last dot, which should be the extension
   // };
   const handleDownload = async () => {
-    setLoading(true);
-
+    LoaderOpen();
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/canadabills211/generate-csv/${localStorage.getItem("user_id")}`);
-
+      const response = await fetch(
+        `${
+          process.env.BACKEND_API_URL
+        }/canadabills211/generate_cbill_excel/?organization=${selectedOrg}&corporate=${selectedCorp}&year=${year}`,
+        axiosConfig
+      );
       if (!response.ok) {
-        // Parse the error message from the JSON response
-        const errorResponse = await response.json(); // Assuming the server responds with a JSON object on error
-        // Throw a new error with the message from the server's response
-        throw new Error(errorResponse.error || 'Unknown error occurred'); // Fallback to a generic error message if none provided
+        const errorResponse = await response.json(); 
+        throw new Error(errorResponse.message || 'Unknown error occurred');
       }
-
+      LoaderClose();
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", `Bill-S211.csv`); // Choose the file name
+      link.setAttribute("download", `Canada_Bill_S211.xlsx`); // Choose the file name
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
     } catch (error) {
-      // Handle any errors that occurred during the fetch or download process
+      LoaderClose();
       toast.error(`${error.message}`, {
         position: "top-right",
         autoClose: 7000,
@@ -325,184 +342,236 @@ const fetchBillSeight = async () => {
         progress: undefined,
         theme: "colored",
       });
-
     } finally {
-      setLoading(false);
+      LoaderClose();
     }
   };
 
-
-
-
-
   return (
     <>
-      
-     <div className="mx-4 mt-2">
+      <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
+        <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
+          <div className="mb-5">
+            <label
+              className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
+              htmlFor="username"
+            >
+              17. Does the entity currently have policies and procedures in
+              place to assess its effectiveness in ensuring that forced labour
+              and child labour are not being used in its activities and supply
+              chains? *
+            </label>
+            <div className="relative mb-1">
+              <div className="mb-3">
+                 {" "}
+                <input
+                  type="radio"
+                  id="Yes"
+                  name="radio"
+                  value="Yes"
+                  checked={reportradio === "Yes"}
+                  onChange={handleReportnradio}
+                />
+                 {" "}
+                <label htmlFor="Yes" className="text-[14px] text-gray-700">
+                  Yes
+                </label>
+                <br />
+              </div>
 
-     <form className="w-[80%] text-left">
-                  <div className="mb-5">
-                    <label
-                      className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
-                      htmlFor="username"
-                    >
-                      17. Does the entity currently have policies and procedures
-                      in place to assess its effectiveness in ensuring that
-                      forced labour and child labour are not being used in its
-                      activities and supply chains? *
+              <div className="mb-3">
+                 {" "}
+                <input
+                  type="radio"
+                  id="No"
+                  name="radio"
+                  value="No"
+                  checked={reportradio === "No"}
+                  onChange={handleReportnradio}
+                />
+                 {" "}
+                <label htmlFor="No" className="text-[14px] text-gray-700 ">
+                  No
+                </label>
+                <br />
+              </div>
+            </div>
+            {error.reportradio && (
+              <p className="text-red-500 ml-1 text-[12px] mt-1">
+                {error.reportradio}
+              </p>
+            )}
+          </div>
+          {reportradio === "Yes" && (
+            <div className="mb-5">
+              <label
+                className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
+                htmlFor="username"
+              >
+                17.1 If yes, what method does the entity use to assess its
+                effectiveness? Select all that apply.*
+              </label>
+              <div>
+                {options.map((option, index) => (
+                  <div key={index} className="mb-2 ml-2">
+                    <label className="text-[14px] text-gray-600">
+                      <input
+                        type="checkbox"
+                        value={option.label}
+                        checked={selectedOptions.includes(option.label)}
+                        onChange={handleCheckboxChange}
+                        className="mr-3"
+                      />
+                      {option.label}
                     </label>
-                    <div className="relative mb-1">
-                      <div className="mb-3">
-                         {" "}
-                        <input
-                          type="radio"
-                          id="Yes"
-                          name="radio"
-                          value="Yes"
-                          checked={reportradio === "Yes"}
-                          onChange={handleReportnradio}
-                        />
-                         {" "}
-                        <label
-                          htmlFor="Yes"
-                          className="text-[14px] text-gray-700"
-                        >
-                          Yes
-                        </label>
-                        <br />
-                      </div>
-
-                      <div className="mb-3">
-                         {" "}
-                        <input
-                          type="radio"
-                          id="No"
-                          name="radio"
-                          value="No"
-                          checked={reportradio === "No"}
-                          onChange={handleReportnradio}
-                        />
-                         {" "}
-                        <label
-                          htmlFor="No"
-                          className="text-[14px] text-gray-700 "
-                        >
-                          No
-                        </label>
-                        <br />
-                      </div>
-                    </div>
-                    {error.reportradio && (
-                      <p className="text-red-500 ml-1 text-[12px] mt-1">{error.reportradio}</p>
-                    )}
                   </div>
-                  {reportradio === "Yes" && (
-                    <div className="mb-5">
-                      <label
-                        className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
-                        htmlFor="username"
-                      >
-                        17.1 If yes, what method does the entity use to assess
-                        its effectiveness? Select all that apply.*
-                      </label>
-                      <div>
-                        {options.map((option, index) => (
-                          <div key={index} className="mb-2 ml-2">
-                            <label className="text-[14px] text-gray-600">
-                              <input
-                                type="checkbox"
-                                value={option.label}
-                                checked={selectedOptions.includes(option.label)}
-                                onChange={handleCheckboxChange}
-                                className="mr-3"
-                              />
-                              {option.label}
-                            </label>
-                          </div>
-                        ))}
-                        {selectedOptions.includes("Other, please specify:") && (
-                          <div className="mb-5">
-                            <input
-                              type="text"
-                              placeholder="Enter a description..."
-                              className={`${
-                                open ? "w-[90%]" : "w-[90%]"
-                              } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                              value={reportingentity}
-                              onChange={handleReportingentity}
-                            ></input>
-                            {error.reportingentity && (
-                              <div className="text-red-500 ml-1 text-[12px] mt-1">
-                                {error.reportingentity}
-                              </div>
-                            )}
-                          </div>
-                        )}
-                        {error.checkboxes && (
-                          <div className="text-red-500 ml-1 text-[12px] mt-1">
-                            {error.checkboxes}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                  <div className="mb-5 mt-3">
-                    <label
-                      className="block text-gray-700 text-[14px] font-[500] mb-2"
-                      html
-                      htmlFor="industryCheckbox"
-                    >
-                      18. Please provide additional information on how the
-                      entity assesses its effectiveness in ensuring that forced
-                      labour and child labour are not being used in its
-                      activities and supply chains (if applicable).
-                    </label>
-                    <textarea
-                      id="countriesOfOperation"
-                      name="countriesOfOperation"
+                ))}
+                {selectedOptions.includes("Other, please specify:") && (
+                  <div className="mb-5">
+                    <input
+                      type="text"
                       placeholder="Enter a description..."
                       className={`${
-                        open ? "w-full" : "w-full"
-                      }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
-                      value={reportingdescription}
-                      // value={formData.countriesOfOperation}
-                      // onChange={handleInputChange}
-                      rows={5}
-                      onChange={handleReportingdescription} // Specify the number of rows to determine the initial height
-                    />
-                    {/* <div className="my-1">
+                        open ? "w-[90%]" : "w-[90%]"
+                      } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
+                      value={reportingentity}
+                      onChange={handleReportingentity}
+                    ></input>
+                    {error.reportingentity && (
+                      <div className="text-red-500 ml-1 text-[12px] mt-1">
+                        {error.reportingentity}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {error.checkboxes && (
+                  <div className="text-red-500 ml-1 text-[12px] mt-1">
+                    {error.checkboxes}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          <div className="mb-5 mt-3">
+            <label
+              className="block text-gray-700 text-[14px] font-[500] mb-2"
+              html
+              htmlFor="industryCheckbox"
+            >
+              18. Please provide additional information on how the entity
+              assesses its effectiveness in ensuring that forced labour and
+              child labour are not being used in its activities and supply
+              chains (if applicable).
+            </label>
+            <textarea
+              id="countriesOfOperation"
+              name="countriesOfOperation"
+              placeholder="Enter a description..."
+              className={`${
+                open ? "w-full" : "w-full"
+              }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
+              value={reportingdescription}
+              // value={formData.countriesOfOperation}
+              // onChange={handleInputChange}
+              rows={5}
+              onChange={handleReportingdescription} // Specify the number of rows to determine the initial height
+            />
+            {/* <div className="my-1">
                     {error.reportingdescription && (
                       <p className="text-red-500">
                         {error.reportingdescription}
                       </p>
                     )}
                   </div> */}
-                  </div>
-                </form>
-                <div className="w-[80%] mb-5">
-                  <div className="float-right">
-                    <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-                      onClick={prevStep}
-                    >
-                      &lt; Previous
-                    </button>
+          </div>
+        </form>
+        {/* {
+          isSubmitted?(
+            <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full] mb-5">
+                <div className="float-right">
+               <button
+            type="button"
+            onClick={handleDownload}
+            className={`px-3 py-2 font-semibold rounded ml-2 w-[130px] text-[12px] bg-blue-500 text-white`}
+          >
+            {" "}
+            Download Report
+          </button>
+            </div>
+            </div>
+            
+           
+          ):(
+            
+          )
+        } */}
 
-                    <button
-                      type="button"
-                      onClick={continueToNextStep}
-                      disabled={!(selectedOrg && year)}
-                      className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-                        reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
-                       }`}
-                    >
-                      {" "}
-                      Submit
-                    </button>
-                  </div>
-                </div>
-     </div>
-     {loopen && (
+<div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full] mb-5">
+            <div className="flex justify-between">
+            <div className="float-left relative flex">
+               <button
+            type="button"
+            disabled={!isSubmitted}
+            data-tooltip-id={`tooltip-$e1`}
+            data-tooltip-content="Please provide all the mandatory details to generate the Report."
+            onClick={handleDownload}
+            className={`px-2 py-2 ${!isSubmitted?'opacity-30':''} font-semibold rounded w-auto text-[13px] bg-transparent text-blue-400`}
+          >
+            {" "}
+            Download Report
+          </button>
+          <MdOutlineDownload className={`w-4 h-4 mt-2.5 ${!isSubmitted?'opacity-30':''} text-blue-400`} />
+                         
+                         {!isSubmitted && (
+                            <ReactTooltip
+                            id={`tooltip-$e1`}
+                            place="top"
+                            effect="solid"
+                            style={{
+                              width: "290px",
+                              backgroundColor: "#000",
+                              color: "white",
+                              fontSize: "12px",
+                              boxShadow: 3,
+                              borderRadius: "8px",
+                              textAlign: "left",
+                            }}
+                          ></ReactTooltip>
+                         )}
+                          
+            </div>
+            <div className="float-right">
+              <button
+                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
+                onClick={prevStep}
+              >
+                &lt; Previous
+              </button>
+  
+              <button
+                type="button"
+                onClick={continueToNextStep}
+                disabled={!(selectedOrg && year) || submitDisabled}
+                className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                  reportType == "Organization"
+                    ? !(selectedOrg && year) || submitDisabled
+                      ? "opacity-30 cursor-not-allowed"
+                      : ""
+                    : !(selectedOrg && year && selectedCorp) || submitDisabled
+                    ? "opacity-30 cursor-not-allowed"
+                    : ""
+                }`}
+              >
+                {" "}
+                Submit
+              </button>
+            </div>
+            </div>
+           
+          </div>
+       
+      </div>
+      {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
             height={50}

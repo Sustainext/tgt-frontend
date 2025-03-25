@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../../social/data/socialgriinfo.js";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -10,9 +10,9 @@ import EconomicHeader5 from "../../EconomicHeader5";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
-import EconomicTopBar from '../../economicTopBar.jsx'
+import EconomicTopBar from "../../economicTopBar.jsx";
 
-const Climaterelatedrisks = ({apiData}) => {
+const Climaterelatedrisks = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [year, setYear] = useState();
@@ -21,6 +21,7 @@ const Climaterelatedrisks = ({apiData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -40,34 +41,48 @@ const Climaterelatedrisks = ({apiData}) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 201 - 2',
-        toggle:'118',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "GRI 201 - 2",
+      toggle: "118",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
     },
-   
+  ];
+  const sdgData = [
     {
-      tagName:'SDG 13',
-      toggle:'119',
-      textColor:"#fff",
-      bgColor:"bg-[#48773C]"
-  },
-   
-]
+      tagName: "SDG 13",
+      toggle: "119",
+      textColor: "#fff",
+      bgColor: "bg-[#48773C]",
+    },
+  ];
+  const brsr = [
+    {
+      tagName: "BRSR A-VII-26",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section A-VII-26",
+    },
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Climate Risks and Opportunities'} topic={'ClimateRisksAndOpportunities'} />
-        
+        <EconomicTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Climate Risks and Opportunities"}
+          topic={"ClimateRisksAndOpportunities"}
+          brsr={brsr}
+          griData={griData}
+          setMobileopen={setMobileopen}
+        />
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Climate related Risks
+            Climate related Risks
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
               data-tooltip-content="This section documents the data corresponding to the climate related risks."
@@ -89,8 +104,8 @@ const Climaterelatedrisks = ({apiData}) => {
             ></ReactTooltip>
           </h6>
         </div>
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -114,9 +129,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -142,24 +164,28 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setYear={setYear}
         setSelectedLocation={setSelectedLocation}
         selectedLocation={selectedLocation}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         selectedLocation={selectedLocation}
+        togglestatus={togglestatus}
       />
       <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         selectedLocation={selectedLocation}
+        togglestatus={togglestatus}
       />
       <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         selectedLocation={selectedLocation}
+        togglestatus={togglestatus}
       />
     </>
   );

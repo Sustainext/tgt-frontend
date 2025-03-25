@@ -56,9 +56,12 @@ const tabs = [
   },
 ];
 
-const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
+const Employeeturnover = ({ selectedOrg, selectedCorp, year, month,togglestatus }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const fullName = convertShortNameToFullName(month);
+  const [tooltipIds] = useState(
+    tabs.map(() => `tooltip-${Math.random().toString(36).substr(2, 9)}`)
+  );
   return (
     <>
       <div className="mb-4 flex mx-2">
@@ -95,42 +98,82 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
 
       <div className="shadow-md rounded-md mx-2">
         {/* Tabs */}
-        <ul className="flex justify-evenly cursor-pointer">
-          {tabs.map((tab, index) => (
-            <li
-              key={index}
-              className={`flex-1 text-center relative border-b-2 py-2 text-[12px] ${
-                activeTabIndex === index
-                  ? "border-blue-500 text-blue-600"
-                  : "border-gray-300 text-gray-600"
-              } `}
-              onClick={() => setActiveTabIndex(index)}
-            >
-              <div className="flex justify-center items-center space-x-1 ">
-                <span className="text-[14px]">{tab.title}</span>
-                <MdInfoOutline
-                  data-tooltip-id={`tooltip-${tab.title.replace(/\s+/g, "-")}`}
-                  data-tooltip-content={tab.tooltip}
-                  className="text-[14px]"
-                />
+        <ul className="hidden md:flex xl:flex lg:flex 2xl:flex 4k:flex 2k:flex 3xl:flex justify-evenly cursor-pointer">
+            {tabs.map((tab, index) => (
+              <li
+                key={index}
+                className={`flex-1 text-center relative border-b-2 py-2 text-[12px] ${
+                  activeTabIndex === index
+                    ? "border-blue-500 text-blue-600"
+                    : "border-gray-300 text-gray-600"
+                } `}
+                onClick={() => setActiveTabIndex(index)}
+              >
+                <div className="flex justify-center items-center space-x-1 ">
+                  <span className="text-[14px]">{tab.title}</span>
+                  <MdInfoOutline
+                    data-tooltip-id={`tooltip-${tab.title.replace(
+                      /\s+/g,
+                      "-"
+                    )}`}
+                    data-tooltip-content={tab.tooltip}
+                    className="text-[14px]"
+                  />
+                </div>
+                <ReactTooltip
+                  id={`tooltip-${tab.title.replace(/\s+/g, "-")}`}
+                  place="top"
+                  effect="solid"
+                  style={{
+                    width: "290px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "left",
+                  }}
+                ></ReactTooltip>
+              </li>
+            ))}
+          </ul>
+          <div className="grid grid-cols-2 gap-2 md:hidden xl:hidden lg:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden p-2">
+            {tabs.map((tab, index) => (
+              <div
+                key={index}
+                className={`p-3 text-center border rounded-lg cursor-pointer relative ${
+                  activeTabIndex === index
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+                onClick={() => setActiveTabIndex(index)}
+              >
+                <div className="flex flex-col items-center">
+                  <span className="text-sm">{tab.title}</span>
+                  <MdInfoOutline
+                    data-tooltip-id={tooltipIds[index]}
+                    data-tooltip-content={tab.tooltip}
+                    className="text-[14px]"
+                  />
+                </div>
+                <ReactTooltip
+                  id={tooltipIds[index]}
+                  place="top"
+                  effect="solid"
+                  style={{
+                    width: "290px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "left",
+                    zIndex: "1000",
+                  }}
+                ></ReactTooltip>
               </div>
-              <ReactTooltip
-                id={`tooltip-${tab.title.replace(/\s+/g, "-")}`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                }}
-              ></ReactTooltip>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
         {/* Content */}
         <div className="mt-2">
           {activeTabIndex === 0 && (
@@ -141,6 +184,7 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
                 month={month}
                 selectedCorp={selectedCorp}
                 selectedOrg={selectedOrg}
+                togglestatus={togglestatus}
               />
             </div>
           )}
@@ -152,6 +196,7 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
                 month={month}
                 selectedCorp={selectedCorp}
                 selectedOrg={selectedOrg}
+                togglestatus={togglestatus}
               />{" "}
             </div>
           )}
@@ -164,6 +209,7 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
                 month={month}
                 selectedCorp={selectedCorp}
                 selectedOrg={selectedOrg}
+                togglestatus={togglestatus}
               />{" "}
             </div>
           )}
@@ -176,6 +222,7 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
                 month={month}
                 selectedCorp={selectedCorp}
                 selectedOrg={selectedOrg}
+                togglestatus={togglestatus}
               />{" "}
             </div>
           )}
@@ -188,6 +235,7 @@ const Employeeturnover = ({ selectedOrg, selectedCorp, year, month }) => {
                 month={month}
                 selectedCorp={selectedCorp}
                 selectedOrg={selectedOrg}
+                togglestatus={togglestatus}
               />{" "}
             </div>
           )}

@@ -6378,7 +6378,7 @@ export const Socialdata = [
         </div>
       </>,
     ],
-    link: "https://sdgs.un.org/goals/goal9",
+    link: "https://sdgs.un.org/goals/goal11",
   },
   {
     category: ["109"],
@@ -7274,7 +7274,7 @@ export const Socialdata = [
         </div>
       </>,
     ],
-    link: "https://sdgs.un.org/goals/goal8",
+    link: "https://sdgs.un.org/goals/goal13",
   },
   {
     category: ["120"],

@@ -2,6 +2,7 @@ import React from "react";
 import { FiPlus, FiCheckCircle } from "react-icons/fi";
 import { Oval } from "react-loader-spinner";
 import Moment from "react-moment";
+import { Tooltip } from "react-tooltip";
 
 const TaskHeader = ({ onAddTask }) => (
   <div className="flex justify-between mb-4">
@@ -9,7 +10,7 @@ const TaskHeader = ({ onAddTask }) => (
       Upcoming Tasks
     </div>
     <div
-      className="text-sky-600 text-[10px] cursor-pointer font-normal leading-[13px] flex items-center me-2 space-x-2"
+      className="text-sky-600 text-sm cursor-pointer font-normal leading-[13px] flex items-center me-2 space-x-2"
       onClick={onAddTask}
     >
       <FiPlus style={{ fontSize: "18px" }} />
@@ -39,21 +40,23 @@ const TaskTabs = ({ activeTab, onTabChange, tabs }) => (
 );
 
 const TaskTable = ({ children, headers }) => (
-  <div className="bg-white rounded-lg flex flex-col h-[calc(100vh-280px)]">
-    <div className="grid grid-cols-12 gap-4 py-3 text-sm text-gray-500 px-4 border-y border-gray-200">
+  // h-[calc(78vh-280px)]
+  <div className="bg-white rounded-lg flex flex-col ">
+    <div className="grid grid-cols-12 gap-3 py-3 text-sm text-gray-500 px-4 border-y border-gray-200">
       {headers.map((header, index) => (
         <div key={index} className={header.className}>
           {header.label}
         </div>
       ))}
     </div>
-    <div className="p-1 h-[288px] table-scrollbar overflow-y-auto">
+    {/* h-[288px] */}
+    <div className="p-1  table-scrollbar overflow-y-auto">
       {children}
     </div>
   </div>
 );
 
-const EmptyState = ({ onAction }) => (
+const EmptyState = ({ onAddTask }) => (
   <div className="justify-center items-center">
     <div className="flex justify-center items-center pb-5 pt-[4rem]">
       <FiCheckCircle style={{ color: "#ACACAC", fontSize: "36px" }} />
@@ -70,8 +73,8 @@ const EmptyState = ({ onAction }) => (
     </div>
     <div className="flex justify-center items-center">
       <button
-        className="bg-[#007EEF] text-white w-[150px] p-1 rounded-md shadow-md"
-        onClick={onAction}
+        className="bg-[#007EEF] text-white w-[150px] p-1 rounded-md shadow-md text-sm"
+        onClick={onAddTask}
       >
         Add a task
       </button>
@@ -107,6 +110,7 @@ const TaskStatusBadge = ({ status }) => {
 
   const getStatusLabel = (status) => {
     const labels = {
+      not_started: "Not Started",
       in_progress: "In Progress",
       under_review: "Under Review",
       completed: "Completed",
@@ -124,48 +128,71 @@ const TaskStatusBadge = ({ status }) => {
   );
 };
 
-const TaskRow = ({ task, onTaskClick, onEditClick, activeTab }) => {
-  const handleClick = () => {
-    if (activeTab === "forreview") {
-      onTaskClick(task);
-      return;
-    }
+const TaskRow = ({ task, onTaskClick }) => {
+  const textRef = React.useRef(null);
+  const [isTextTruncated, setIsTextTruncated] = React.useState(false);
 
-    // For completed tab
-    if (activeTab === "completed" && (task.roles === 1 || task.roles === 2 || task.roles === 4)) {
-      onTaskClick(task);
-      return;
-    }
-
-    // For other tabs, use role-based logic
-    if (activeTab !== "forreview" && activeTab !== "completed") {
-      if (task.roles === 3) {
-        onEditClick(task);
-      } else if (task.roles === 1 || task.roles === 2) {
-        onTaskClick(task);
+  React.useEffect(() => {
+    const checkTruncation = () => {
+      if (textRef.current) {
+        const isOverflowing = textRef.current.scrollWidth > textRef.current.clientWidth;
+        setIsTextTruncated(isOverflowing);
       }
-    }
-  };
+    };
+
+    checkTruncation();
+    // Add resize listener to handle window size changes
+    window.addEventListener('resize', checkTruncation);
+    return () => window.removeEventListener('resize', checkTruncation);
+  }, [task.task_name]); // Re-run when task name changes
 
   return (
     <div className="flex justify-between border-b border-[#ebeced] py-2">
-      <div className="flex cursor-pointer">
-        <div className="w-72 truncate text-[#007eef] text-[13px] font-normal leading-none ml-3">
+      <div className="flex w-[22rem] cursor-pointer">
+        <div className="w-[17rem] text-[#007eef] text-[13px] font-normal leading-none ml-3 relative">
           <p
-            className="py-1 cursor-pointer"
-            data-tooltip-id={`task-tooltip-${task.id}`}
-            data-tooltip-content={task.task_name}
-            onClick={handleClick}
+            ref={textRef}
+            className="py-1 cursor-pointer truncate"
+            data-tooltip-id={isTextTruncated ? `task-tooltip-${task.id}` : undefined}
+            data-tooltip-content={isTextTruncated ? task.task_name : undefined}
+            onClick={() => onTaskClick(task)}
           >
             {task.task_name}
           </p>
+          {isTextTruncated && (
+            <Tooltip
+              id={`task-tooltip-${task.id}`}
+              place="top"
+              effect="solid"
+              className="z-[9999] !opacity-100 drop-shadow-lg border border-gray-300"
+              style={{
+                backgroundColor: "white",
+                color: "#667084",
+                padding: "4px 8px",
+                borderRadius: "4px",
+                fontSize: "14px",
+                maxWidth: "300px",
+                wordBreak: "break-word",
+                position: "absolute"
+              }}
+              offset={0}
+              delayShow={200}
+              float={false}
+            />
+          )}
         </div>
       </div>
-      <div className="col-span-3">
-        {(task.roles === 1 || task.roles === 2 || task.roles === 4) && (
-          <TaskStatusBadge status={task.task_status} />
-        )}
+
+      {/* Status Column */}
+      <div className="flex-grow">
+        <div className="text-left">
+          {(task.roles === 1 ||
+            task.roles === 2 ||
+            task.roles === 3 ||
+            task.roles === 4) && <TaskStatusBadge status={task.task_status} />}
+        </div>
       </div>
+
       <div className="flex mr-4">
         <div className="w-[68px] text-neutral-500 text-xs font-normal leading-[15px]">
           <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
@@ -174,6 +201,7 @@ const TaskRow = ({ task, onTaskClick, onEditClick, activeTab }) => {
     </div>
   );
 };
+
 // Export everything
 export {
   TaskHeader,

@@ -99,7 +99,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
+const Screen3 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, ref) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -164,16 +164,17 @@ const Screen3 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
       //   LoaderClose();
       // }
     } catch (error) {
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      console.log("test data",error);
+      // toast.error("Oops, something went wrong", {
+      //   position: "top-right",
+      //   autoClose: 1000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "colored",
+      // });
       LoaderClose();
     }
   };
@@ -195,15 +196,24 @@ const Screen3 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

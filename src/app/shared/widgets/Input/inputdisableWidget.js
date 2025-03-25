@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect,useCallback  } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
-
+import { debounce } from 'lodash';
 const InputdiableWidget = ({
   onChange,
-  value,
+  value = "",
   placeholder,
   label,
   title,
@@ -15,6 +15,7 @@ const InputdiableWidget = ({
   formContext,
   name,
   isEnabled = false,
+  setInputnewValue,
 }) => {
   const { validationErrors } = formContext || {};
   const rowIndex = parseInt(id.split("_")[1], 10);
@@ -26,15 +27,26 @@ const InputdiableWidget = ({
   const [inputValue, setInputValue] = useState(value);
   const inputRef = useRef(null);
 
+  const debouncedOnChange = useCallback(
+    debounce((newValue) => {
+      onChange(newValue);
+    }, 2000),
+    [onChange]
+  );
+
+
+  useEffect(() => {
+    setInputValue(value || "");
+  }, [value]);
 
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
-    setInputValue(newValue); 
-    onChange(newValue); 
-    console.log(newValue);
-  };
+    setInputValue(newValue);
 
+ 
+    debouncedOnChange(newValue);
+  };
   const handleKeyDown = (event) => {
     const allowedControlKeys = [
       "Backspace",
@@ -58,7 +70,7 @@ const InputdiableWidget = ({
       }
     }
   };
-
+ 
   const tooltipId = schema.title
     ? `tooltip-${schema.title.replace(/\s+/g, "-")}`
     : `tooltip-${id}`;
@@ -99,7 +111,7 @@ const InputdiableWidget = ({
       <div className="relative">
         <input
           ref={inputRef}
-          className={`block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 ${
+          className={`block w-[76vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2xl:w-[20vw] 4k:w-[8vw] py-1.5 xl:py-2 md:py-2 lg:py-2 2xl:py-2 4k:py-2 2k:py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 ${
             hasError ? "border-red-500" : "border-gray-300"
           }`}
           placeholder={placeholder || `Enter ${label || title}`}
@@ -108,6 +120,7 @@ const InputdiableWidget = ({
           onChange={handleInputChange} // Update local state and notify parent
           onKeyDown={handleKeyDown}
           disabled={!isEnabled}
+      
         />
       </div>
       {hasError && (

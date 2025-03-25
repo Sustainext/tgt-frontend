@@ -5,6 +5,7 @@ import { useAuth } from "../Context/auth";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 import CryptoJS from "crypto-js";
+import Auth0LoginButton from './utils/Auth0LoginButton'
 
 const PasswordInput = ({
   value,
@@ -162,6 +163,8 @@ export default function Home() {
               <img
                 src="https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/Home/sustainext-new-white-logo.webp"
                 alt="Logo"
+                width="112" 
+                height="112"
                 className="h-28 w-auto"
               />
             </div>
@@ -221,7 +224,7 @@ export default function Home() {
                   <div className="text-sm">
                     <a
                       href="/forgot-password"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                      className="font-medium text-[#007EEF] hover:text-indigo-500"
                     >
                       Forgot your password?
                     </a>
@@ -237,6 +240,7 @@ export default function Home() {
                   </button>
                 </div>
               </form>
+              <Auth0LoginButton/>
             </div>
           </div>
         </div>

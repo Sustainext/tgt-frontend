@@ -1,16 +1,16 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Dischargefromareasbody from "./discharge-from-all-areas-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import WaterTopBar from '../waterTopBar'
+import WaterTopBar from "../waterTopBar";
 
-const Dischargefromareas = ({apiData}) => {
+const Dischargefromareas = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -53,32 +53,53 @@ const Dischargefromareas = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 303 - 3',
-        toggle:'33',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "GRI 303 - 3",
+      toggle: "33",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
     },
     {
-      tagName:'GRI 303 - 4',
-      toggle:'34',
-      textColor:"#007EEF",
-      bgColor:"bg-slate-200"
-  },
-  {
-    tagName:'SDG 6',
-    toggle:'29',
-    textColor:"#fff",
-    bgColor:"bg-cyan-500"
-},
-]
+      tagName: "GRI 303 - 4",
+      toggle: "34",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-E3",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-3",
+    },
+    {
+      tagName: "BRSR C-P6-E4",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-4",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 6",
+      toggle: "29",
+      textColor: "#fff",
+      bgColor: "bg-cyan-500",
+    },
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <WaterTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+        <WaterTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          brsr={brsr}
+          griData={griData}
+          setMobileopen={setMobileopen}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -106,8 +127,8 @@ const Dischargefromareas = ({apiData}) => {
           </h6>
         </div>
         <div
-         ref={drawerRef}
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -131,9 +152,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

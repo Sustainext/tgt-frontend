@@ -7,6 +7,7 @@ import DynamicTable from "./customTable";
 import DateRangePicker from "@/app/utils/DatePickerComponent";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
+import DynamicTable2 from './customTable2'
 import {
   columns1,
   columns2,
@@ -17,6 +18,9 @@ import {
   columns7,
   columns8,
   columns9,
+  columns10,
+  columns11,
+  columns12
 } from "./data";
 
 const AnalyseWaste = ({ isBoxOpen }) => {
@@ -35,6 +39,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
   const [wastedata7, setWastedata7] = useState([]);
   const [wastedata8, setWastedata8] = useState([]);
   const [wastedata9, setWastedata9] = useState([]);
+  const [Effdata1, setEffdata1] = useState([]);
+  const [Effdata2, setEffdata2] = useState([]);
+  const [Effdata3, setEffdata3] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
@@ -94,6 +101,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
     setWastedata7([]);
     setWastedata8([]);
     setWastedata9([]);
+    setEffdata1([]);
+    setEffdata2([]);
+    setEffdata3([]);
     try {
       const response = await axiosInstance.get(
         `/sustainapp/get_waste_analysis`,
@@ -115,6 +125,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
         non_hazardeous_waste_diverted_from_disposal,
         hazardeous_waste_directed_to_disposal,
         non_hazardeous_waste_directed_to_disposal,
+        total_number_and_volume_by_material,
+        total_number_and_volume_by_location,
+        total_number_and_volume_significant_spills,
       } = data;
       const removeAndStoreLastObject = (array) => {
         if (array.length > 0) {
@@ -313,6 +326,38 @@ const AnalyseWaste = ({ isBoxOpen }) => {
         value: data[key],
       }));
 
+      const formattedMaterialData = formatMaterialData(total_number_and_volume_by_material || []);
+      const formattedLocationData = formatLocationData(total_number_and_volume_by_location || []);
+      const formattedSignificantSpillsData = formatSignificantSpillsData(total_number_and_volume_significant_spills || []);
+      
+      setEffdata1(formattedMaterialData);
+      setEffdata2(formattedLocationData);
+      setEffdata3(formattedSignificantSpillsData);
+  
+      function formatMaterialData(materialData) {
+        return materialData.map((item) => ({
+          "Material of the spill": item.material || "N/A",
+          "Volume of the spill": item.volume_of_spills || "N/A",
+          Unit: item.unit || "N/A",
+        }));
+      }
+      
+      function formatLocationData(locationData) {
+        return locationData.map((item) => ({
+          "Location of the spill": item.location || "N/A",
+          "Volume of the spill": item.volume_of_spills || "N/A",
+          Unit: item.unit || "N/A",
+        }));
+      }
+      
+      function formatSignificantSpillsData(significantSpills) {
+        return significantSpills.map((item) => ({
+          "Total number of Significant spill": item.number_of_significant_spills || "N/A",
+          "Total volume of Significant spill": item.volume_of_spills || "N/A",
+          Unit: item.unit || "N/A",
+        }));
+      }
+
       setAnalyseData(resultArray);
       LoaderClose();
     } catch (error) {
@@ -390,6 +435,49 @@ const AnalyseWaste = ({ isBoxOpen }) => {
 
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+    if(type === "Corporate"){
+      setWastedata1([]);
+      setWastedata2([]);
+      setWastedata3([]);
+      setWastedata4([]);
+      setWastedata5([]);
+      setWastedata6([]);
+      setWastedata7([]);
+      setWastedata8([]);
+      setWastedata9([]);
+      setEffdata1([]);
+      setEffdata2([]);
+      setEffdata3([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+    if(type === "Location"){
+      setWastedata1([]);
+    setWastedata2([]);
+    setWastedata3([]);
+    setWastedata4([]);
+    setWastedata5([]);
+    setWastedata6([]);
+    setWastedata7([]);
+    setWastedata8([]);
+    setWastedata9([]);
+    setEffdata1([]);
+    setEffdata2([]);
+    setEffdata3([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
   };
   const handleOrganizationChange = (e) => {
     const newOrg = e.target.value;
@@ -785,18 +873,76 @@ const AnalyseWaste = ({ isBoxOpen }) => {
               </div>
               <DynamicTable columns={columns9} data={wastedata9} />
             </div>
+            <div className="mb-6">
+              <div
+                id="eff1"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              >
+                 <p>
+                    Total number & volume of spills by material
+                  </p>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 306-3b
+                    </div>
+                  </div>
+                  </div>
+                  <DynamicTable2 columns={columns10} data={Effdata1} />
+             
+            </div>
+
+            <div className="mb-6">
+              <div
+                id="eff2"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              >
+                 <p>
+                    Total number & volume of by location
+                  </p>
+              
+                 
+
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 306-3b
+                    </div>
+                  </div>
+                </div>
+                <DynamicTable2 columns={columns11} data={Effdata2} />
+            </div>
+
+            <div className="mb-6">
+              <div
+                id="eff3"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              >
+                  <p>
+                    Total number & volume of significant spills
+                  </p>
+
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 306-3a
+                    </div>
+                  </div>
+                </div>
+                <DynamicTable2
+                    columns={columns12}
+                    data={Effdata3}
+                  />
+            </div>
           </div>
           <div
-            style={{
-              position: `${isBoxOpen ? "unset" : "sticky"}`,
-              top: "10rem",
-              // zIndex: "0",
-              height: "fit-content",
-              backgroundColor: "white",
-              paddingBottom: "1rem",
-            }}
-            className=" mb-8 me-2"
-          >
+          style={{
+            position: `${isBoxOpen ? "unset" : "sticky"}`,
+            top: "10rem",
+            // zIndex: "0",
+            height: "fit-content",
+            backgroundColor: "white",
+            paddingBottom: "1rem",
+          }}
+          className=" mb-8 me-2"
+        >
             <TableSidebar />
           </div>
         </div>

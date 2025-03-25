@@ -47,7 +47,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
-      category: "Waste",
+      category: "Waste Management",
       tag: "GRI 306",
       data: [
         { tagid: "1", infoid: "6" },
@@ -55,14 +55,30 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
         { tagid: "3", infoid: "8" },
         { tagid: "4", infoid: "9" },
         { tagid: "5", infoid: "10" },
+        { tagid: "3, 2016", infoid: "54" },
       ],
     },
+    // {
+    //   category: "Effluents",
+    //   tag: "GRI 306",
+    //   data: [
+    //     { tagid: "3", infoid: "54" },
+   
+    //   ],
+    // },
     {
-      category: "Materials",
+      category: "Material Use and Efficiency",
       tag: "GRI 301",
       data: [
         { tagid: "1", infoid: "11" },
         { tagid: "2", infoid: "12" },
+        // { tagid: "3", infoid: "13" },
+      ],
+    },
+    {
+      category: "Packaging Materials",
+      tag: "GRI 301",
+      data: [
         { tagid: "3", infoid: "13" },
       ],
     },
@@ -83,6 +99,14 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       data: [
         { tagid: "1", infoid: "49" },
         { tagid: "2", infoid: "50" },
+      ],
+    },
+    {
+      category: "Air Quality & other emissions",
+      tag: "GRI 305",
+      data: [
+        { tagid: "7", infoid: "58" },
+        { tagid: "6", infoid: "57" },
       ],
     },
   ];
@@ -107,18 +131,35 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
-      category: "Waste",
+      category: "Waste Management",
       data: [
         { id: "sd5", label: "SDG 3", bgColor: "bg-[#4C9F38]" },
         { id: "sd6", label: "SDG 6", bgColor: "bg-cyan-500" },
         { id: "sd2", label: "SDG 8", bgColor: "bg-red-900" },
         { id: "sd7", label: "SDG 11", bgColor: "bg-amber-400" },
-        { id: "sd3", label: "SDG 12", bgColor: "bg-yellow-600" },
+        { id: "sd37",label: "SDG 12", bgColor: "bg-yellow-600" },
         { id: "sd8", label: "SDG 15", bgColor: "bg-[#56C02B]" },
       ],
     },
+    // {
+    //   category: "Effluents",
+    //   data: [
+       
+    //     { id: "sd5", label: "SDG 3", bgColor: "bg-[#4c9f38]" },
+    //     { id: "sd34", label: "SDG 6", bgColor: "bg-cyan-500" },
+    //     { id: "sd35", label: "SDG 12", bgColor: "bg-yellow-600" },
+    //     { id: "sd8", label: "SDG 15", bgColor: "bg-[#4c9f38]" },
+    //   ],
+    // },
     {
-      category: "Materials",
+      category: "Material Use and Efficiency",
+      data: [
+        { id: "sd2", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd9", label: "SDG 12", bgColor: "bg-yellow-600" },
+      ],
+    },
+    {
+      category: "Packaging Materials",
       data: [
         { id: "sd2", label: "SDG 8", bgColor: "bg-red-900" },
         { id: "sd9", label: "SDG 12", bgColor: "bg-yellow-600" },
@@ -128,6 +169,16 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       category: "Water and effluents",
       data: [{ id: "sd6", label: "SDG 6", bgColor: "bg-cyan-500" }],
     },
+    {
+      category:"Air Quality & other emissions",
+      data: [
+        { id: "sd5", label: "SDG 3", bgColor: "bg-[#4c9f38]" },
+        { id: "sd9", label: "SDG 12", bgColor: "bg-yellow-600" },
+        { id: "sd24", label: "SDG 14", bgColor: "bg-[#007dbc]" },
+        { id: "sd38", label: "SDG 15", bgColor: "bg-[#4c9f38]" },
+      ],
+
+    }
   ];
   return (
     <>
@@ -157,7 +208,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                 g.data.map((item) => (
                   <button
                     key={item.tagid}
-                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                    className={`text-[#007EEF] bg-slate-200 rounded-full text-[11px] ${item.tagid=="3, 2016"?'w-[100px]': 'w-[72px]'} h-[22px] ml-2 text-center pt-0.5`}
                     onClick={() => toggleDrawer(item.infoid)}
                   >
                     {g.tag} - {item.tagid}
@@ -206,9 +257,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

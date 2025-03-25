@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EnergyTopBar from '../energyTopBar'
 
-const Energyconsumed = ({ open,apiData }) => {
+const Energyconsumed = ({ open,apiData,setMobileopen,mobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -19,7 +19,8 @@ const Energyconsumed = ({ open,apiData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
-
+  const [locationname,setLocationname] =useState("");
+  const [monthname,setMonthname] =useState("Jan");
   const drawerRef = useRef(null); // Ref for the drawer
 
   const toggleDrawerclose = () => {
@@ -52,14 +53,24 @@ const Energyconsumed = ({ open,apiData }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 302-1',
-        toggle:'1',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName:'GRI 302-1',
+      toggle:'1',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-E1",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-1",
     },
+  ];
+  const sdgData=[
+
     {
         tagName:'SDG 7',
         toggle:'2',
@@ -78,6 +89,7 @@ const Energyconsumed = ({ open,apiData }) => {
         textColor:"#fff",
         bgColor:"bg-yellow-600"
     },
+    
     {
         tagName:'SDG 13',
         toggle:'5',
@@ -90,7 +102,7 @@ const Energyconsumed = ({ open,apiData }) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} />
+        <EnergyTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} brsr={brsr} griData={griData} setMobileopen={setMobileopen} />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -142,13 +154,20 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
                 </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
+                </div>
 
                 {/* Footer (Learn more link) */}
-                <div className="pt-2 pb-4 ml-4"   onClick={toggleDrawerclose}>
+                <div className="pt-2 pb-4 ml-4" onClick={toggleDrawerclose}>
                   <a
                     className="text-[14px] text-[#2196F3] pt-1 inline-flex"
                     href={program.link}
@@ -173,6 +192,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setLocationMessage={setLocationMessage}
         yearMessage={yearMessage}
         setYearMessage={setYearMessage}
+        // setLocationname={setLocationname}
+        // setMonthname={setMonthname}
       />
       <EnergyConsumedBody
         location={location}
@@ -180,6 +201,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         setLocationMessage={setLocationMessage}
         setYearMessage={setYearMessage}
+        locationname={locationname}
+        monthname={monthname}
       />
     </>
   );

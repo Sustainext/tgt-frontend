@@ -4,7 +4,10 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 const DateWidget = (props) => {
-  const { onChange, value = "", uiSchema = {} } = props;
+  const { onChange, value = "", uiSchema = {},formContext,name } = props;
+  const { validationErrors } = formContext || {};
+  const rowErrors = validationErrors || {};
+  const hasError = !value && rowErrors && rowErrors[name]
 
   const handleChange = (event) => {
     onChange(event.target.value);
@@ -26,8 +29,8 @@ const DateWidget = (props) => {
                   /\s+/g,
                   "-"
                 )}`}
-                data-tooltip-html={uiSchema["ui:tooltip"]}
-                className="mt-1 ml-1 text-[14px]"
+                data-tooltip-html={uiSchema["ui:title"].replace(/\s+/g, "-")}
+                className="mt-1 ml-3 text-[14px]"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />
 
@@ -49,12 +52,17 @@ const DateWidget = (props) => {
         </div>
         <input
           placeholder="Enter date"
-          className={`border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+          className={`border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
           value={value}
           onChange={handleChange}
           onClick={handleClick}
           type="date"
         />
+        {hasError && (
+          <div className="text-red-500 text-[12px] mt-1">
+           {hasError}
+          </div>
+        )}
       </div>
     </>
   );

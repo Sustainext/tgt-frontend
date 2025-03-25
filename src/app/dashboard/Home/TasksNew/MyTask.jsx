@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-  FiPlus,
-  FiX,
-  FiUser,
-  FiFile,
-  FiChevronDown,
-  FiArrowRight,
-} from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import Moment from "react-moment";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { BlobServiceClient } from "@azure/storage-blob";
 import { unitTypes } from "@/app/shared/data/units";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 // Import custom hooks
 import {
@@ -38,6 +32,7 @@ import AddTaskModal from "./AddTaskModal";
 import TaskDeleteModal from "./TaskDeleteModal";
 import FillModal from "./FillModal";
 import ReviewTaskModal from "./ReviewTaskModal";
+import TaskFillModal from "./TaskFillModal";
 
 // Import utilities
 import {
@@ -52,8 +47,11 @@ import {
 } from "./TaskUtils";
 
 import { fetchUsers } from "../../../../lib/redux/features/emissionSlice";
+import ViewMyTaskDetailsModal from "./ViewMyTaskDetailsModal";
+import MyTaskReviewModal from "./MyTaskReviewModal";
+import EditTaskModal from "./EditTaskModal";
 
-const MyTask = () => {
+const MyTask = ({ HomeActiveTab }) => {
   // Redux
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.emissions);
@@ -111,6 +109,9 @@ const MyTask = () => {
 
   const [clintlist, setClintlist] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
+
+  // Add this state near other modal states
+  const [isSelfTaskFillModalOpen, setSelfTaskFillModalOpen] = useState(false);
 
   // Add this useEffect to fetch client list if needed
   useEffect(() => {
@@ -217,108 +218,19 @@ const MyTask = () => {
     }
   };
 
-  // const handleOpenModalAddData = async (task) => {
-  //   try {
-  //     setIsSearching(true);
-
-  //     if (task.activity === null || task.activity === "") {
-  //       setIsActivityReceived(false);
-  //     } else {
-  //       setIsActivityReceived(true);
-  //     }
-
-  //     setIsFillModalOpen(true);
-  //     setSelectedActivityName(task.activity);
-
-  //     setTaskAssigndata({
-  //       id: task.id,
-  //       task_name: task.task_name,
-  //       assign_to_user_name: task.assign_to_user_name,
-  //       assign_by_user_name: task.assign_by_user_name,
-  //       assign_by_email: task.assign_by_email,
-  //       category: task.category,
-  //       deadline: task.deadline,
-  //       factor_id: task.factor_id,
-  //       location: task.location,
-  //       month: task.month,
-  //       scope: task.scope,
-  //       subcategory: task.subcategory,
-  //       year: task.year,
-  //       activity: task.activity,
-  //       value1: task.value1,
-  //       value2: task.value2,
-  //       unit1: task.unit1,
-  //       unit2: task.unit2,
-  //       file: task.file,
-  //       filename: task.filename,
-  //       status: task.task_status,
-  //       assign_to_email: task.assign_to_email,
-  //       file_data: task.file_data,
-  //     });
-
-  //     if (task.activity) {
-  //       const unitTypeExtractedArray = task.activity.split("-");
-  //       const extractedUnitType =
-  //         unitTypeExtractedArray[unitTypeExtractedArray.length - 1]?.trim();
-  //       setSelectedActivity({
-  //         ...selectedActivity,
-  //         unit_type: extractedUnitType,
-  //       });
-  //     }
-
-  //     if (task.subcategory && task.year) {
-  //       const initialResponse = await fetchActivities(
-  //         task.subcategory,
-  //         1,
-  //         false,
-  //         task.region,
-  //         task.year
-  //       );
-
-  //       setActivitiesList(initialResponse.activitiesData);
-
-  //       if (initialResponse.pages > 1) {
-  //         for (let i = 2; i <= initialResponse.pages; i++) {
-  //           const isCustomFetch =
-  //             initialResponse.pagesCustom > 1 &&
-  //             i <= initialResponse.pagesCustom
-  //               ? false
-  //               : true;
-  //           const additionalResponse = await fetchActivities(
-  //             task.subcategory,
-  //             i,
-  //             isCustomFetch,
-  //             task.region,
-  //             task.year
-  //           );
-  //           setActivitiesList((prev) => [
-  //             ...prev,
-  //             ...additionalResponse.activitiesData,
-  //           ]);
-  //         }
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error in handleOpenModalAddData:", error);
-  //     toast.error("Failed to load activities. Please try again.");
-  //   } finally {
-  //     setIsSearching(false);
-  //   }
-  // };
-
   const handleOpenModalAddData = async (task) => {
     try {
       setIsSearching(true);
-  
+
       if (task.activity === null || task.activity === "") {
         setIsActivityReceived(false);
       } else {
         setIsActivityReceived(true);
       }
-  
+
       setIsFillModalOpen(true);
       setSelectedActivityName(task.activity);
-  
+
       setTaskAssigndata({
         id: task.id,
         task_name: task.task_name,
@@ -344,7 +256,7 @@ const MyTask = () => {
         assign_to_email: task.assign_to_email,
         file_data: task.file_data,
       });
-  
+
       if (task.activity) {
         const unitTypeExtractedArray = task.activity.split("-");
         const extractedUnitType =
@@ -354,7 +266,7 @@ const MyTask = () => {
           unit_type: extractedUnitType,
         });
       }
-  
+
       // Only fetch activities if activity is not received and required parameters are present
       if (!task.activity && task.subcategory && task.year) {
         const initialResponse = await fetchActivities(
@@ -364,13 +276,14 @@ const MyTask = () => {
           task.region,
           task.year
         );
-  
+
         setActivitiesList(initialResponse.activitiesData);
-  
+
         if (initialResponse.pages > 1) {
           for (let i = 2; i <= initialResponse.pages; i++) {
             const isCustomFetch =
-              initialResponse.pagesCustom > 1 && i <= initialResponse.pagesCustom
+              initialResponse.pagesCustom > 1 &&
+              i <= initialResponse.pagesCustom
                 ? false
                 : true;
             const additionalResponse = await fetchActivities(
@@ -389,59 +302,9 @@ const MyTask = () => {
       }
     } catch (error) {
       console.error("Error in handleOpenModalAddData:", error);
-      toast.error("Failed to load activities. Please try again.");
     } finally {
       setIsSearching(false);
     }
-  };
-  
-  const handleReviewtask = (
-    id,
-    task_name,
-    assign_to_user_name,
-    category,
-    deadline,
-    factor_id,
-    location,
-    month,
-    scope,
-    subcategory,
-    year,
-    activity,
-    value1,
-    value2,
-    unit1,
-    unit2,
-    file,
-    filename,
-    assign_to_email,
-    filesize,
-    file_data
-  ) => {
-    toggleModal("isReviewtask", true);
-    setTaskAssigndata({
-      id,
-      task_name,
-      assign_to_user_name,
-      category,
-      deadline,
-      factor_id,
-      location,
-      month,
-      scope,
-      subcategory,
-      year,
-      activity,
-      value1,
-      value2,
-      unit1,
-      unit2,
-      file,
-      filename,
-      assign_to_email,
-      filesize,
-      file_data,
-    });
   };
 
   // Add these functions in your MyTask component
@@ -452,20 +315,47 @@ const MyTask = () => {
       });
 
       if (response) {
-        toast.success("Task has been approved");
+        toast.success("Task has been approved", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         toggleModal("isReviewtask", false);
         fetchTasks();
       }
     } catch (error) {
       console.error("Error approving task:", error);
-      toast.error("Failed to approve task");
+      toast.error("Failed to approve task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
   const submitReAssign = async (taskId, data) => {
     try {
       if (!data.assigned_to || !data.deadline) {
-        toast.error("Please fill in all fields");
+        toast.error("Please fill in all fields", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         return;
       }
 
@@ -482,20 +372,47 @@ const MyTask = () => {
       });
 
       if (response) {
-        toast.success("Task has been reassigned successfully");
+        toast.success("Task has been reassigned successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         toggleModal("isReviewtask", false);
         fetchTasks();
       }
     } catch (error) {
       console.error("Error reassigning task:", error);
-      toast.error("Failed to reassign task");
+      toast.error("Failed to reassign task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
   const submitReject = async (taskId, data) => {
     try {
       if (!data.deadline || !data.comments) {
-        toast.error("Please fill in all fields");
+        toast.error("Please fill in all fields", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         return;
       }
 
@@ -511,13 +428,31 @@ const MyTask = () => {
       });
 
       if (response) {
-        toast.success("Task has been rejected");
+        toast.success("Task has been rejected", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         toggleModal("isReviewtask", false);
         fetchTasks();
       }
     } catch (error) {
       console.error("Error rejecting task:", error);
-      toast.error("Failed to reject task");
+      toast.error("Failed to reject task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -560,13 +495,105 @@ const MyTask = () => {
       }));
     } catch (error) {
       console.error("Error uploading file:", error);
-      toast.error("Failed to upload file");
+      toast.error("Failed to upload file", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const handleFileDelete = async () => {
+    if (!taskassigndata.file_data || !taskassigndata.file_data.url) {
+      toast.error("No file found to delete.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+
+    try {
+      const fileUrl = taskassigndata.file_data.url;
+      const blobName = fileUrl.split("/").pop();
+
+      const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
+      const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
+      const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
+
+      const blobServiceClient = new BlobServiceClient(
+        `https://${accountName}.blob.core.windows.net?${sasToken}`
+      );
+
+      const containerClient =
+        blobServiceClient.getContainerClient(containerName);
+      const blobClient = containerClient.getBlockBlobClient(blobName);
+
+      await blobClient.delete();
+
+      setTaskAssigndata((prev) => ({
+        ...prev,
+        file_data: {},
+      }));
+
+      toast.success("File deleted successfully.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      console.error("Error deleting file:", error);
+      toast.error("Failed to delete file.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
   const handleTaskClick = (task) => {
-    if (activeTab === "completed") {
-      if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
+    console.log("Task clicked:", task, activeTab);
+
+    if (activeTab === "upcoming" || activeTab === "overdue") {
+      if (task.roles === 1 || task.roles === 2) {
+        handleOpenModalAddData(task);
+      } else if (task.roles === 3) {
+        //Open My TaskFillModal when assignee != assigner
+        if (task.assigned_to === null) {
+          setSelectedTask(task);
+          toggleModal("isMyTaskEditModalOpen", true);
+        }
+        //Add condition to open Edit My Task Modal when assignee == assigner
+        else {
+          setSelectedTask(task);
+          setSelfTaskFillModalOpen(true);
+        }
+      }
+    } else if (activeTab === "completed") {
+      if (task.roles === 3) {
+        setSelectedTask(task);
+        toggleModal("isMyTaskDetailModalOpen", true);
+      } else if (task.roles === 1 || task.roles === 2 || task.roles === 4) {
         setSelectedTask(task);
         toggleModal("isDetailsModalOpen", true);
       }
@@ -597,14 +624,12 @@ const MyTask = () => {
           file_data: task.file_data,
         });
         toggleModal("isReviewtask", true);
+      } else {
+        setSelectedTask(task);
+        toggleModal("isMyTaskReviewModalOpen", true);
       }
     } else {
-      if (task.roles === 1 || task.roles === 2) {
-        handleOpenModalAddData(task);
-      } else if (task.roles === 3) {
-        setTaskFormData(task);
-        toggleModal("isModalOpen", true);
-      }
+      console.log("Invalid activeTab:", activeTab);
     }
   };
 
@@ -614,7 +639,16 @@ const MyTask = () => {
     const { value1, unit1 } = taskassigndata;
 
     if (!value1 || !unit1) {
-      toast.error("Data cannot be empty");
+      toast.error("Data cannot be empty", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
 
@@ -630,21 +664,37 @@ const MyTask = () => {
           task_status: "under_review",
         });
         handleModalClose();
-        toast.success("Data has been added successfully");
+        toast.success("Data has been added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (error) {
       console.error("Error in SubmitFilledData:", error);
-      toast.error("Failed to submit data. Please try again.");
+      toast.error("Failed to submit data. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
-  };
-
-  const handleViewAll = () => {
-    router.push("/dashboard/tasks");
   };
 
   return (
     <>
-      <div className="rounded-lg shadow border border-gray-200 p-4 px-6 h-[470px] overflow-x-auto">
+      {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
+
+      <div className="rounded-lg shadow border border-gray-200 p-4 px-6 flex flex-col h-[450px] xl:h-[470px] lg:h-[470px] md:h-[470px] 4k:h-[470px]">
         <TaskHeader onAddTask={() => toggleModal("isModalOpen", true)} />
         <TaskTabs
           activeTab={activeTab}
@@ -652,28 +702,28 @@ const MyTask = () => {
           tabs={TABS}
         />
 
-        <TaskTable headers={TABLE_HEADERS}>
-          {tasks[activeTab]?.length ? (
-            tasks[activeTab].map((task) => (
-              <TaskRow
-                key={task.id}
-                task={task}
-                activeTab={activeTab}
-                onTaskClick={handleTaskClick}
-                onEditClick={() => {
-                  setTaskFormData(task);
-                  toggleModal("isModalOpen", true);
-                }}
-              />
-            ))
-          ) : (
-            <EmptyState onAction={() => toggleModal("isModalOpen", true)} />
-          )}
-        </TaskTable>
+        {/* Scrollable content area */}
+        <div className="flex-1 overflow-auto table-scrollbar">
+          <TaskTable headers={TABLE_HEADERS}>
+            {tasks[activeTab]?.length ? (
+              tasks[activeTab].map((task) => (
+                <TaskRow
+                  key={task.id}
+                  task={task}
+                  activeTab={activeTab}
+                  onTaskClick={handleTaskClick}
+                />
+              ))
+            ) : (
+              <EmptyState onAddTask={() => toggleModal("isModalOpen", true)} />
+            )}
+          </TaskTable>
+        </div>
 
-        <div className="mt-3 flex justify-end px-4">
+        {/* Fixed footer */}
+        <div className="flex justify-end py-2 mt-2">
           <button
-            onClick={handleViewAll}
+            onClick={() => HomeActiveTab("tab3")}
             className="flex items-center text-blue-500 hover:text-blue-600 transition-colors"
           >
             <span className="text-sm font-medium">View All</span>
@@ -681,7 +731,6 @@ const MyTask = () => {
           </button>
         </div>
       </div>
-
       {/* Fill Modal */}
       <FillModal
         isOpen={isFillModalOpen}
@@ -707,11 +756,11 @@ const MyTask = () => {
           }));
         }}
         onFileUpload={handleFileUpload}
+        onFileDelete={handleFileDelete}
         onSubmit={SubmitFilledData}
         isBeforeToday={isBeforeToday}
         validateDecimalPlaces={validateDecimalPlaces}
       />
-
       {/* Other Modals */}
       <TaskDetailsModal
         isOpen={modalStates.isDetailsModalOpen}
@@ -721,15 +770,15 @@ const MyTask = () => {
         }}
         task={selectedTask}
       />
-
       <AddTaskModal
         isOpen={modalStates.isModalOpen}
         onClose={() => toggleModal("isModalOpen", false)}
-        task={taskFormData}
-        onSubmit={handleTaskAction}
+        onSubmit={async (id, action, data) => {
+          console.log("onSubmit called with:", { id, action, data });
+          return await handleTaskAction(id, action, data);
+        }}
         users={users}
       />
-
       {/* Review Task Modal */}
       <ReviewTaskModal
         isOpen={modalStates.isReviewtask}
@@ -744,14 +793,149 @@ const MyTask = () => {
         clintlist={clintlist}
         selectedLocation={selectedLocation}
       />
-
       <TaskDeleteModal
         isOpen={modalStates.isModalOpenDelete}
         onClose={() => toggleModal("isModalOpenDelete", false)}
         onConfirm={() => deleteTask(selectedTask?.id)}
         taskName={selectedTask?.name}
       />
+      {/* Self Task Fill Modal */}
+      <TaskFillModal
+        isOpen={isSelfTaskFillModalOpen}
+        onClose={() => {
+          setSelfTaskFillModalOpen(false);
+          setSelectedTask(null);
+        }}
+        task={selectedTask}
+        fileData={taskassigndata.file_data}
+        onSubmit={async (updatedTask) => {
+          try {
+            const response = await handleTaskAction(updatedTask.id, "update", {
+              ...updatedTask,
+              task_status: "under_review",
+            });
 
+            if (response) {
+              toast.success("Task has been submitted for review", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+              setSelfTaskFillModalOpen(false);
+              setSelectedTask(null);
+              await fetchTasks();
+            }
+          } catch (error) {
+            console.error("Error submitting task:", error);
+            toast.error("Failed to submit task", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        }}
+        onFileUpload={handleFileUpload}
+      />
+      {/* View Detailed My Task Modal */}
+      <ViewMyTaskDetailsModal
+        isOpen={modalStates.isMyTaskDetailModalOpen}
+        onClose={() => {
+          toggleModal("isMyTaskDetailModalOpen", false);
+          setSelectedTask(null);
+        }}
+        task={selectedTask}
+      />
+      <MyTaskReviewModal
+        isOpen={modalStates.isMyTaskReviewModalOpen}
+        onClose={() => {
+          toggleModal("isMyTaskReviewModalOpen", false);
+          setSelectedTask(null);
+        }}
+        task={selectedTask}
+        onApprove={submitApprove}
+        onReassign={submitReAssign}
+        onReject={submitReject}
+        userlist={clintlist}
+      />
+      <EditTaskModal
+        isOpen={modalStates.isMyTaskEditModalOpen}
+        onClose={() => {
+          toggleModal("isMyTaskEditModalOpen", false);
+          setSelectedTask(null);
+        }}
+        task={selectedTask}
+        onSubmit={async (data) => {
+          console.log("Edit Task Modal Submit:", data);
+          try {
+            if (data.action === "delete") {
+              // Handle delete
+              const success = await deleteTask(selectedTask?.id);
+              if (success) {
+                toggleModal("isMyTaskEditModalOpen", false);
+                // toast.success("Task deleted successfully", {
+                //           position: "top-right",
+                //           autoClose: 3000,
+                //           hideProgressBar: false,
+                //           closeOnClick: true,
+                //           pauseOnHover: true,
+                //           draggable: true,
+                //           progress: undefined,
+                //           theme: "light",
+                //         });
+                setSelectedTask(null);
+                await fetchTasks();
+              }
+            } else {
+              // Handle update
+              const updatedData = {
+                task_name: data.taskName.trim(),
+                deadline: data.dueDate,
+                description: data.description?.trim(),
+                task_status: data.status,
+                file_data: data.file,
+                comments_assignee: data.comments,
+              };
+
+              const success = await handleTaskAction(
+                selectedTask?.id,
+                "update",
+                updatedData
+              );
+              console.log("Edit Task Modal Response:", success);
+              if (success) {
+                toggleModal("isMyTaskEditModalOpen", false);
+                toast.success("Task updated successfully", {
+                  position: "top-right",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
+                setSelectedTask(null);
+                await fetchTasks();
+              }
+            }
+          } catch (error) {
+            handleApiError(
+              error,
+              data.action === "delete" ? "deleting" : "updating"
+            );
+          }
+        }}
+      />
       {/* Loading Spinner */}
       {(isLoading || isSearching) && <LoadingSpinner />}
     </>

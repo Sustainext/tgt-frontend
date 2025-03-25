@@ -1,134 +1,185 @@
-import {
-  categoriesToAppend,
-  categoryMappings,
-} from "../shared/data/customActivities";
+import { 
+  categoriesToAppend, 
+  categoryMappings, 
+  shouldFetchFromCustomMapping 
+} from "../shared/data/customActivities";  
 
 // Cache for storing API responses
 const requestCache = new Map();
 const CACHE_TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
-const createCacheKey = (params) => {
-  return JSON.stringify(params);
-};
+const createCacheKey = (params) => JSON.stringify(params);
 
-export async function fetchClimatiqActivities({
-  subcategory,
-  page = 1,
-  region,
-  year,
-  customFetchExecuted = false,
+export async function fetchClimatiqActivities({ 
+  subcategory, 
+  page = 1, 
+  region, 
+  year, 
+  customFetchExecuted = false, 
 }) {
-  const cacheKey = createCacheKey({
-    subcategory,
-    page,
-    region,
-    year,
-    customFetchExecuted,
+  console.log(`\n=== fetchClimatiqActivities called ===`);
+  console.log(`Params:`, { subcategory, page, region, year });
+
+  // Adjust year if it's 2025
+  const adjustedYear = year === "2025" || year === 2025 ? "2024" : year;
+  
+  const cacheKey = createCacheKey({ 
+    subcategory, 
+    page, 
+    region, 
+    year: adjustedYear
   });
 
-  // Check cache
+  // Check cache with single return point
   const now = Date.now();
-  const cachedResponse = requestCache.get(cacheKey);
-  if (cachedResponse && now - cachedResponse.timestamp < CACHE_TIMEOUT) {
-    return cachedResponse.data;
+  if (requestCache.has(cacheKey)) {
+    const cachedResponse = requestCache.get(cacheKey);
+    if (now - cachedResponse.timestamp < CACHE_TIMEOUT) {
+      console.log(`Returning cached data for key: ${cacheKey}`);
+      return cachedResponse.data;
+    }
   }
 
   let activitiesData = [];
-  let totalPages = 1;
   let wildcardActivitiesData = [];
   let yearlyResponseData = [];
   let customFetchData = [];
+  let wildcardFetched = false; // Prevent multiple wildcard fetches
 
   // Helper function to make the API call
   const fetchData = async (params) => {
-    if (
-      params.region &&
-      !params.region.endsWith("*") &&
-      params.region !== "*"
-    ) {
+    console.log(`Fetching data with params:`, params);
+
+    // Adjust year for Electricity
+    if (params.year === "2024" && params.subcategory === "Electricity") {
+      params.year = "2023";
+    }
+
+    // Append '*' to the region if needed
+    if (params.region && !params.region.endsWith("*") && params.region !== "*") {
       params.region = `${params.region}*`;
     }
 
     const queryString = new URLSearchParams(params).toString();
+    console.log(`Final API Request: /api/climatiq?${queryString}`);
+
     const response = await fetch(`/api/climatiq?${queryString}`);
     if (!response.ok) {
+      console.error("API request failed:", response.statusText);
       throw new Error("Failed to fetch activities");
     }
     return response.json();
   };
 
+  // Helper function to fetch all pages
+  const fetchAllPages = async (params, initialResponse) => {
+    console.log(`Fetching all pages for`, params);
+    const allResults = [...initialResponse.results];
+    const totalPages = initialResponse.last_page;
+
+    if (totalPages > 1) {
+      const pagePromises = [];
+      for (let pageNum = 2; pageNum <= totalPages; pageNum++) {
+        console.log(`Fetching additional page: ${pageNum}`);
+        pagePromises.push(
+          fetchData({ ...params, page: pageNum })
+        );
+      }
+
+      const pageResults = await Promise.all(pagePromises);
+      pageResults.forEach((result) => {
+        allResults.push(...result.results);
+      });
+    }
+
+    console.log(`Fetched ${allResults.length} results across all pages.`);
+    return allResults;
+  };
+
   try {
+    console.log(`Starting initial data fetch...`);
+    
     // Initial fetch with region
-    const initialData = await fetchData({
-      subcategory,
-      page,
-      region,
-      year,
+    const initialData = await fetchData({ 
+      subcategory, 
+      region, 
+      year: adjustedYear, 
+      page, 
     });
 
-    activitiesData = initialData.results;
-    totalPages = initialData.last_page;
+    console.log(`Initial fetch returned ${initialData.results.length} results.`);
+    activitiesData = await fetchAllPages(
+      { subcategory, region, year: adjustedYear }, 
+      initialData
+    );
 
     // Check if we need to do a wildcard search
-    const totalResults = initialData.results.length;
+    const totalResults = activitiesData.length;
     const totalPrivateResults = activitiesData.reduce(
       (count, activity) => count + (activity.access_type === "private" ? 1 : 0),
       0
     );
-
     const effectiveCount = totalResults - totalPrivateResults;
 
-    if (effectiveCount <= 5) {
-      // Wildcard search
-      const wildcardData = await fetchData({
+    console.log(`Total Results: ${totalResults}, Private Results: ${totalPrivateResults}, Effective Count: ${effectiveCount}`);
+
+    if (effectiveCount <= 5 && !wildcardFetched) {
+      console.log(`Performing wildcard search...`);
+      wildcardFetched = true; // Prevent second wildcard fetch
+      const wildcardInitialData = await fetchData({
         subcategory,
         page,
         region: "*",
-        year,
+        year: adjustedYear,
       });
 
-      wildcardActivitiesData = wildcardData.results;
-      totalPages = wildcardData.last_page;
+      wildcardActivitiesData = await fetchAllPages(
+        { subcategory, region: "*", year: adjustedYear },
+        wildcardInitialData
+      );
 
-      if (wildcardData.last_page === 0) {
-        // Historical data search
-        for (let i = parseInt(year) - 1; i >= 2019; i--) {
-          const yearlyData = await fetchData({
-            subcategory,
-            page,
-            region,
-            year: i,
-          });
-
-          if (yearlyData.results.length > 0) {
-            yearlyResponseData = yearlyData.results;
-            break;
-          }
-        }
-      }
+      wildcardActivitiesData = wildcardActivitiesData.filter(
+        (activity) => activity.access_type !== "private"
+      );
     }
 
-    // Custom activities fetch if needed
+    // Custom Fetch Logic
     if (
       categoriesToAppend.includes(subcategory) &&
       categoryMappings[subcategory] &&
       !customFetchExecuted
     ) {
-      // Use Promise.all to fetch custom activities in parallel
-      const customFetchPromises = categoryMappings[subcategory].map((entry) =>
-        fetchData({
-          subcategory,
-          page,
-          year: entry.year,
-          source: entry.source,
+      console.log(`Fetching custom category mappings...`);
+      const customFetchPromises = categoryMappings[subcategory]
+        .filter((entry) => {
+          if (!entry.checkConditions) return true;
+          return shouldFetchFromCustomMapping(entry, {
+            year: adjustedYear,
+            region,
+          });
         })
-      );
+        .map(async (entry) => {
+          console.log(`Fetching custom data from source: ${entry.source}`);
+          const initialCustomData = await fetchData({
+            subcategory,
+            page,
+            year: entry.year,
+            source: entry.source,
+            ...(entry.category && { category: entry.category }),
+            ...(entry.region && { region: entry.region }),
+          });
+
+          return fetchAllPages(
+            { subcategory, year: entry.year, source: entry.source },
+            initialCustomData
+          );
+        });
 
       const customResults = await Promise.all(customFetchPromises);
-      customFetchData = customResults.flatMap((result) => result.results);
+      customFetchData = customResults.flat();
     }
 
-    // Combine all results
+    // Combine and sort results
     const combinedResults = [
       ...activitiesData,
       ...wildcardActivitiesData,
@@ -136,33 +187,27 @@ export async function fetchClimatiqActivities({
       ...customFetchData,
     ];
 
-    // Sort results
-    combinedResults.sort((a, b) => {
-      if (a.access_type === "private" && b.access_type !== "private") return -1;
-      if (a.access_type !== "private" && b.access_type === "private") return 1;
-      return a.name.localeCompare(b.name);
-    });
+    console.log(`Total combined results: ${combinedResults.length}`);
 
     const result = {
       results: combinedResults,
-      totalPages,
+      totalPages: 1,
       hasCustomData: customFetchData.length > 0,
     };
 
     // Cache the result
-    requestCache.set(cacheKey, {
-      data: result,
-      timestamp: now,
-    });
+    requestCache.set(cacheKey, { data: result, timestamp: now });
 
-    // Clean up old cache entries
-    for (const [key, value] of requestCache.entries()) {
-      if (now - value.timestamp > CACHE_TIMEOUT) {
+    // Clear cache when subcategory changes
+    requestCache.forEach((value, key) => {
+      if (!key.includes(`"subcategory":"${subcategory}"`)) {
         requestCache.delete(key);
       }
-    }
+    });
 
+    console.log(`Returning final data set with ${result.results.length} results.`);
     return result;
+
   } catch (error) {
     console.error("Error fetching activities:", error);
     throw error;

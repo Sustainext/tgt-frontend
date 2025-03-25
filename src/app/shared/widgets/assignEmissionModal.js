@@ -46,11 +46,11 @@ const AssignEmissionModal = ({
     fetchLocationName();
   }, [taskData.location]);
 
-  useEffect(() => {
-    if (usersStatus === "idle" && users.length === 0) {
-      dispatch(fetchUsers());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (usersStatus === "idle" && users.length === 0) {
+  //     dispatch(fetchUsers());
+  //   }
+  // }, []);
 
   const handleAssign = async () => {
     if (!selectedUser || !dueDate) {

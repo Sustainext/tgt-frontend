@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,8 +12,8 @@ import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen4 from "./screen4";
 import Screen5 from "./screen5";
-
-const Remediation = () => {
+import GovernancesTopBar from "../governancesTopBar";
+const Remediation = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -22,7 +22,7 @@ const Remediation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -42,17 +42,58 @@ const Remediation = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 2 - 25",
+      toggle: "91",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+  const brsr = [
+    {
+      tagName: "BRSR C-P5-E5",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 5-Essential Indicators-5",
+    },
+    {
+      tagName: "BRSR C-P8-E3",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 8-Essential Indicators-3",
+    },
+    {
+      tagName: "BRSR C-P9-E1",
+      id: "tooltip-$brsr3",
+      content: "BRSR-Section C-Principle 8-Essential Indicators-3",
+    },
+  ];
+  const sdgData = [
 
+    {
+      tagName: "SDG 16",
+      toggle: "69",
+      textColor: "#fff",
+      bgColor: "bg-[#00558A]",
+    },
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <GovernancesTopBar
+          toggleDrawer={toggleDrawer}
+          // sdgData={sdgData}
+          griData={griData}
+          brsr={brsr}
+          title={"Remediation"}
+          setMobileopen={setMobileopen}
+        />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
+            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Governance</p>
               <div className="flex">
-                         <div className="h-[29px]">
+                <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
                     Remediation
                   </p>
@@ -62,17 +103,94 @@ const Remediation = () => {
           </div>
           <div className="w-full float-end ">
             <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("91")}
-              >
-                GRI 2 - 25
-              </button>
+              <div>
+                <button
+                  className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                  onClick={() => toggleDrawer("91")}
+                >
+                  GRI 2 - 25
+                </button>
+              </div>
+
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr1`}
+                  data-tooltip-content="BRSR-Section C-Principle 5-Essential Indicators-5"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR C-P5-E5
+                </button>
+                <ReactTooltip
+                  id={`tooltip-$brsr1`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                    width: "290px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr2`}
+                  data-tooltip-content="BRSR-Section C-Principle 8-Essential Indicators-3"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR C-P8-E3
+                </button>
+
+                <ReactTooltip
+                  id={`tooltip-$brsr2`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                    width: "290px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr2`}
+                  data-tooltip-content="BRSR-Section C-Principle 9-Essential Indicators-1"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR C-P9-E1
+                </button>
+
+                <ReactTooltip
+                  id={`tooltip-$brsr2`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                    width: "290px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Processes to remediate negative impacts
             <MdInfoOutline
@@ -96,8 +214,8 @@ const Remediation = () => {
             ></ReactTooltip>
           </h6>
         </div>
-          <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -121,9 +239,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -149,6 +274,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
@@ -156,6 +282,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
 
       <Screen2
@@ -164,27 +291,31 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
-            <Screen3
+      <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
-            <Screen4
+      <Screen4
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
-            <Screen5
+      <Screen5
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
     </>
   );

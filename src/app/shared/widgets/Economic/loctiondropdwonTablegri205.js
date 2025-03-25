@@ -69,7 +69,7 @@ const LocationDropdownTableGrid = ({
   const debouncedOnChange = useCallback(
     debounce((newData) => {
       onChange(newData);
-    }, 500),
+    }, 1000),
     [onChange]
   );
 
@@ -149,16 +149,16 @@ const LocationDropdownTableGrid = ({
         minWidth: "100%",
         width: "80vw",
       }}
-      className="mb-2 pb-2"
+      className="mb-2 pb-2 custom-scrollbar"
     >
       <table id={id} className="table-fixed border-collapse w-full rounded-md border border-gray-300" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="gradient-background">
           <tr className="h-[102px]">
             <th
-              style={{ width: "17vw", textAlign: "left" }}
-              className="text-[12px]  px-2 py-2 text-center"
+              style={{ textAlign: "left" }}
+              className="text-[12px]  px-2 py-2 text-center xl:w-[17vw] lg:w-[17vw] 2xl:w-[17vw] 4k:w-[17vw] 2k:w-[17vw] 3xl:w-[17vw] md:w-[17vw] w-[77vw]"
             >
-              <div className="flex items-center relative justify-center">
+              <div className="flex items-center relative justify-center xl:w-auto lg:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto  3xl:w-auto  md:w-auto  w-[57vw]">
                 <p>Location Name</p>
                 <p>
                   <MdInfoOutline
@@ -186,10 +186,10 @@ const LocationDropdownTableGrid = ({
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
-                style={{ width: "17vw", textAlign: "left" }}
-                className="text-[12px] border-l border-gray-300 px-2 py-2 text-center"
+                style={{textAlign: "left" }}
+                className="text-[12px] border-l border-gray-300 px-2 py-2 text-center xl:w-[17vw] lg:w-[17vw] 2xl:w-[17vw] 4k:w-[17vw] 2k:w-[17vw] 3xl:w-[17vw] md:w-[17vw] w-[77vw]"
               >
-                <div className="flex items-center relative justify-center">
+                <div className="flex items-center relative justify-center xl:w-auto lg:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto  3xl:w-auto  md:w-auto  w-[57vw]">
                   <p>{item.title}</p>
                   {item.tooltipdisplay === "block" && (
                     <p>
@@ -217,7 +217,7 @@ const LocationDropdownTableGrid = ({
                 </div>
               </th>
             ))}
-            <th className="w-[5vw]"></th>
+            <th className="w-[7vw] xl:w-[5vw] lg:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] 2xl:w-[5vw] 3xl:w-[5vw] md:w-[5vw]"></th>
           </tr>
         </thead>
         <tbody className="">
@@ -239,6 +239,7 @@ const LocationDropdownTableGrid = ({
                           className="w-full p-2 rounded text-[12px]"
                           placeholder="Enter Value"
                           value=""
+                    
                           onChange={(e) =>
                             updateField(locationName, 0, title.tittlekey, e.target.value)
                           }
@@ -274,6 +275,7 @@ const LocationDropdownTableGrid = ({
                             className="w-full p-2 rounded text-[12px]"
                             placeholder="Enter Value"
                             value={row[title.tittlekey] || ""}
+                  
                             onChange={(e) =>
                               updateField(locationName, rowIndex, title.tittlekey, e.target.value)
                             }

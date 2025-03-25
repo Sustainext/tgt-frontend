@@ -601,9 +601,9 @@ const Economictablemultipal = ({ id, value, onChange }) => {
         "PotentialImpact",
       ].includes(key)
     ) {
-      return "25vw";
+      return "desktop-wide";
     }
-    return "17vw";
+    return "desktop-narrow";
   };
   return (
     <>
@@ -616,7 +616,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           minWidth: "100%",
           width: "80vw",
         }}
-        className="mb-2 pb-2"
+        className="mb-2 pb-2 table-scrollbar"
       >
         <table id={id} className="table-fixed border border-gray-300  w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
           <thead className="gradient-background">
@@ -624,8 +624,8 @@ const Economictablemultipal = ({ id, value, onChange }) => {
               {titles.map((item, idx) => (
                 <th
                   key={idx}
-                  style={{ width: getColumnWidth(item.key), textAlign: "left" }}
-                  className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-4 py-3 relative border-gray-300`}
+                  style={{ textAlign: "left" }}
+                  className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-4 py-3 relative border-gray-300 ${getColumnWidth(item.key)}`}
 
                 >
                   <div

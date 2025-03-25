@@ -17,10 +17,12 @@ import {
   updateScopeData,
   updateScopeDataLocal,
   setValidationErrors,
+  fetchAssignedTasks
 } from "@/lib/redux/features/emissionSlice";
 import { toast } from "react-toastify";
 import { debounce } from "lodash";
 import { validateEmissionsData } from "./emissionValidation";
+import { del } from "../../../utils/axiosMiddleware";
 
 const local_schema = {
   type: "array",
@@ -28,7 +30,7 @@ const local_schema = {
     type: "object",
     properties: {
       Emission: {
-        type: "string",
+        type: ["string","object", "null"],
         title: "Emissionsscop2",
       },
     },
@@ -213,45 +215,22 @@ const Scope1 = forwardRef(
       );
     }, [formData, dispatch]);
 
-    // const handleRemoveRow = useCallback(
-    //   async (index) => {
-    //     const parsedIndex = parseInt(index, 10);
-    //     const rowToRemove = formData[parsedIndex];
-
-    //     if (!rowToRemove) {
-    //       console.error("Row not found");
-    //       return;
-    //     }
-
-    //     const rowType = rowToRemove.Emission?.rowType;
-
-    //     if (rowType === "assigned" || rowType === "approved") {
-    //       toast.error("Cannot delete assigned or approved rows");
-    //       return;
-    //     }
-
-    //     const updatedData = formData.filter((_, i) => i !== parsedIndex);
-
-    //     dispatch(
-    //       updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
-    //     );
-
-    //     if (rowType === "calculated") {
-    //       try {
-    //         await updateFormData(updatedData);
-    //       } catch (error) {
-    //         console.error("Failed to update form data:", error);
-    //         toast.error("Failed to update data on the server");
-    //         return;
-    //       }
-    //     }
-
-    //     if (parsedIndex === 0 && updatedData.length === 0) {
-    //       setAccordionOpen(false);
-    //     }
-    //   },
-    //   [formData, dispatch, setAccordionOpen]
-    // );
+    const deleteTask = async (taskId) => {
+      try {
+        const response = await del(`organization_task_dashboard/${taskId}`);
+        if (response.status === 204) {
+          toast.success("Task deleted successfully");
+          
+        } else {
+          console.log('response after delete failed', response);
+          
+          toast.error("Failed to delete task");
+        }
+      }
+      catch(error) {
+        console.error("Error deleting task:", error);
+      }}
+        
 
     const handleRemoveRow = useCallback(
       async (index) => {
@@ -269,9 +248,15 @@ const Scope1 = forwardRef(
         const rowType = rowToRemove.Emission?.rowType;
         console.log("Row type:", rowType);
 
-        if (rowType === "assigned" || rowType === "approved") {
-          toast.error("Cannot delete assigned or approved rows");
+        if (rowType === "approved") {
+          toast.error("Cannot delete approved task row");
           return;
+        }
+
+        else if (rowType === "assigned") {
+          const deletedRow = await deleteTask(rowToRemove.id);
+          console.log("Deleted row:", deletedRow);
+          dispatch(fetchAssignedTasks())
         }
 
         const updatedData = formData.filter((_, i) => i !== parsedIndex);
@@ -560,7 +545,8 @@ const Scope1 = forwardRef(
 
     return (
       <>
-        <div>
+      <div  className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block">
+      <div>
           <Form
             schema={local_schema}
             uiSchema={local_ui_schema}
@@ -598,6 +584,50 @@ const Scope1 = forwardRef(
             </div>
           )} */}
         </div>
+        </div>
+        {/* mobile version */}
+        <div  className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden">
+      <div className=" overflow-x-auto custom-scrollbar">
+          <Form
+            schema={local_schema}
+            uiSchema={local_ui_schema}
+            formData={formData}
+            onChange={handleChange}
+            validator={validator}
+            widgets={{
+              EmissionWidget: (props) => (
+                <EmissionWidget
+                  {...props}
+                  scope="scope1"
+                  year={year}
+                  countryCode={countryCode}
+                  onRemove={handleRemoveRow}
+                  index={props.id.split("_")[1]}
+                  activityCache={activityCache}
+                  updateCache={updateCache}
+                  formRef={formRef}
+                />
+              ),
+            }}
+          />
+        </div>
+        <div className="flex justify-between items-center">
+          <button
+            className="mt-4 text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
+            onClick={handleAddNew}
+          >
+            + Add new
+          </button>
+          {/* {showError && (
+            <div className="text-xs text-red-500 mt-4 flex items-center">
+              <MdError />
+              <span>{dataError}</span>
+            </div>
+          )} */}
+        </div>
+        </div>
+
+
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
             <Oval

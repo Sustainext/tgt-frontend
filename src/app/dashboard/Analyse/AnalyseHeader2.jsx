@@ -5,13 +5,13 @@ import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const AnalyseHeader2 = ({
-
   selectedOrg,
   setSelectedOrg,
   selectedCorp,
   setSelectedCorp,
   year,
   setYear,
+  setToggleStatus,
 }) => {
   const [formState, setFormState] = useState({
     selectedCorp: selectedCorp,
@@ -21,11 +21,16 @@ const AnalyseHeader2 = ({
   const [reportType, setReportType] = useState("Organization");
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    setToggleStatus(type);
+
+    if (type === "Organization") {
+      setSelectedCorp(""); // Clear selectedCorp when Organization is chosen
+    }
   };
 
   const [errors, setErrors] = useState({
-    organization: selectedOrg?"":"Please select Organisation",
-    corporate:selectedCorp?"": "Please select Corporate",
+    organization: selectedOrg ? "" : "Please select Organisation",
+    corporate: selectedCorp ? "" : "Please select Corporate",
     year: year ? "" : "Please select year",
   });
 
@@ -34,12 +39,12 @@ const AnalyseHeader2 = ({
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-  
+
     setFormState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  
+
     if (name === "year") {
       setYear(value);
       setErrors((prevErrors) => ({
@@ -47,7 +52,7 @@ const AnalyseHeader2 = ({
         year: value ? "" : "Please select year",
       }));
     }
-  
+
     // Only run these parts if their respective inputs are changing
     if (name === "selectedOrg") {
       setSelectedOrg(value);
@@ -78,7 +83,7 @@ const AnalyseHeader2 = ({
   }, []);
 
   useEffect(() => {
-     const fetchCorporates = async () => {
+    const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -86,13 +91,11 @@ const AnalyseHeader2 = ({
           });
           setCorporates(response.data);
         } catch (e) {
-          if(e.status === 404) {
+          if (e.status === 404) {
             setCorporates([]);
-          }
-          else{
+          } else {
             console.error("Failed fetching corporates:", e);
           }
-          
         }
       }
     };
@@ -105,7 +108,6 @@ const AnalyseHeader2 = ({
       selectedCorp: selectedCorp,
       selectedOrg: selectedOrg,
       year: year,
-
     });
   }, [selectedOrg, selectedCorp, year]);
 
@@ -131,7 +133,12 @@ const AnalyseHeader2 = ({
       year: "Please select year",
     }));
   };
-
+  useEffect(() => {
+    if (selectedCorp) {
+      setReportType("Corporate");
+      // console.log(selectedCorp,"test crop id");
+    }
+  }, [selectedCorp]);
   return (
     <>
       <div>
@@ -140,12 +147,14 @@ const AnalyseHeader2 = ({
             <div className="mb-2 flex-col items-center">
               <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
-                View By:
+                  View By:
                 </div>
                 <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
+                      reportType === "Organization"
+                        ? "bg-[#d2dfeb]"
+                        : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >

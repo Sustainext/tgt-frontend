@@ -1,16 +1,16 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Wastegeneratedbody from "./waste-generated-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import WasteTopBar from '../wasteTopBar'
+import WasteTopBar from "../wasteTopBar";
 
-const Wastegenerated = ({apiData}) => {
+const Wastegenerated = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -53,55 +53,71 @@ const Wastegenerated = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const griData = [
+    {
+      tagName: "GRI 306 - 3",
+      toggle: "26",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
-  const sdgData=[
+  const brsr = [
     {
-        tagName:'GRI 306 - 3',
-        toggle:'26',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "BRSR C-P6-E9",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-9",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 3",
+      toggle: "46",
+      textColor: "#fff",
+      bgColor: "bg-[#4C9F38]",
     },
     {
-        tagName:'SDG 3',
-        toggle:'46',
-        textColor:"#fff",
-        bgColor:"bg-[#4C9F38]"
+      tagName: "SDG 6",
+      toggle: "49",
+      textColor: "#fff",
+      bgColor: "bg-cyan-500",
     },
     {
-        tagName:'SDG 6',
-        toggle:'49',
-        textColor:"#fff",
-        bgColor:"bg-cyan-500"
+      tagName: "SDG 11",
+      toggle: "48",
+      textColor: "#fff",
+      bgColor: "bg-[#FD9D24]",
     },
     {
-        tagName:'SDG 11',
-        toggle:'48',
-        textColor:"#fff",
-        bgColor:"bg-[#FD9D24]"
+      tagName: "SDG 12",
+      toggle: "45",
+      textColor: "#fff",
+      bgColor: "bg-yellow-600",
     },
     {
-      tagName:'SDG 12',
-      toggle:'45',
-      textColor:"#fff",
-      bgColor:"bg-yellow-600"
-  },
-  {
-    tagName:'SDG 15',
-    toggle:'23',
-    textColor:"#fff",
-    bgColor:"bg-[#56C02B]"
-},
-]
+      tagName: "SDG 15",
+      toggle: "23",
+      textColor: "#fff",
+      bgColor: "bg-[#56C02B]",
+    },
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+        <WasteTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          griData={griData}
+          brsr={brsr}
+          setMobileopen={setMobileopen}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Waste generated
+            Waste generated
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section is dedicated to the calculation of Energy Intensity Ratios based on organizational metrics. These ratios quantify the energy demand per unit of activity, output, or any other organization-specific metric" className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
@@ -117,8 +133,8 @@ const Wastegenerated = ({apiData}) => {
           </h6>
         </div>
         <div
-         ref={drawerRef}
-           className={`${
+          ref={drawerRef}
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -142,9 +158,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

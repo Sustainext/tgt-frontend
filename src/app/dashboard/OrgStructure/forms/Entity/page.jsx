@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import GeneralInfo from "../Organization/GeneralInfo";
 import { post, put } from "../../../../utils/axiosMiddleware";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Entity = () => {
   const router = useRouter();
@@ -74,16 +76,25 @@ const Entity = () => {
     // Add organization property if the method is 'post'
     if (method === "post") {
       payload.organization = data.generalDetails.organisation || null;
+      payload.framework = "GRI: With reference to";
     }
 
     try {
       const response =
         method === "post" ? await post(url, payload) : await put(url, payload);
 
+      const messageAction = method === "post" ? "Corporate added successfully" : `Changes made to Corporate '${data.generalDetails.name}' has been saved`;
+      toast.success(`${messageAction}`);
+
       console.log(`${method.toUpperCase()} request successful:`, response.data);
-      router.push("/dashboard/OrgStructure");
+
+      setTimeout(() => {
+        router.push('/dashboard/OrgStructure');
+      }, 2500);
     } catch (error) {
       console.error("Error:", error);
+      const messageAction = method === "post" ? "add" : "update";
+      toast.error(`Failed to ${messageAction} corporate entity`, "error");
     }
   };
 
@@ -93,6 +104,8 @@ const Entity = () => {
   };
 
   return (
+    <>
+    <ToastContainer position="top-right" autoClose={3000} />
     <form onSubmit={handleSubmit} className="p-4 rounded-md m-0">
       <GeneralInfo
         handleGeneralDetailsSubmit={
@@ -102,6 +115,7 @@ const Entity = () => {
         editData={data}
       />
     </form>
+    </>
   );
 };
 

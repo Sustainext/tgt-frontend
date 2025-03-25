@@ -15,7 +15,7 @@ import { Energydata } from "../../../shared/data/Energydata";
 import { MdOutlineClear,MdChevronRight  } from "react-icons/md";
 import EmissionTopBar from './emissionTopbar'
 
-const Emissions = ({ open,apiData}) => {
+const Emissions = ({ open,apiData,setMobileopen}) => {
   const dispatch = useDispatch();
   const { location, year, month } = useSelector((state) => state.emissions);
   const countryCode = useSelector((state) => state.emissions.countryCode);
@@ -47,13 +47,83 @@ const Emissions = ({ open,apiData}) => {
     setData(newData);
   }, [category]);
 
+  const griData=[
+    {
+      tagName:'GRI 305 - 1',
+      toggle:'43',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+ 
+  {
+      tagName:'GRI 305 - 2',
+      toggle:'44',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  {
+      tagName:'GRI 305 - 3',
+      toggle:'45',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ]
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-E7",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-7",
+    },
+    {
+      tagName: "BRSR C-P6-L2",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 6-Leadership  Indicators-2",
+    },
+  ];
+  const sdgData=[
+   
+
+  {
+    tagName:'SDG 3',
+    toggle:'sd5',
+    textColor:"#fff",
+    bgColor:"bg-[#4C9F38]"
+},
+{
+  tagName:'SDG 12',
+  toggle:'sd35',
+  textColor:"#fff",
+  bgColor:"bg-[#BF8B2E]"
+},
+{
+  tagName:'SDG 13',
+  toggle:'sd4',
+  textColor:"#fff",
+  bgColor:"bg-lime-900"
+},
+{
+  tagName:'SDG 14',
+  toggle:'sd24',
+  textColor:"#fff",
+  bgColor:"bg-[#007DBC]"
+},
+{
+  tagName:'SDG 15',
+  toggle:'sd38',
+  textColor:"#fff",
+  bgColor:"bg-[#40AE49]"
+},
+   
+]
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <EmissionsProvider>
         <>
           <div className="flex flex-col justify-start overflow-x-hidden ">
-           <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} />
+           <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} sdgData={sdgData} griData={griData} brsr={brsr} setMobileopen={setMobileopen} />
             <div
            className={`${
             isOpen
@@ -80,8 +150,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
 
                 {/* Data Content */}
+        
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

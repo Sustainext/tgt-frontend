@@ -19,6 +19,7 @@ import {
   MdOutlinePersonAddAlt,
   MdLockOutline,
 } from "react-icons/md";
+import { TbNotes } from "react-icons/tb";
 import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
 import { GlobalState } from "../../Context/page";
@@ -26,6 +27,7 @@ import { CiSettings } from "react-icons/ci";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { useDispatch, useSelector } from "react-redux";
+import { MdOutlineAssignment } from "react-icons/md";
 import {
   fetchMaterialityData,
   setCorpID,
@@ -100,13 +102,24 @@ const Sidenav = () => {
       id: 1,
       title: "Materiality Dashboard",
       icon: <MdOutlinePieChartOutline />,
-      spacing: true,
+      spacing: false,
       link: "/dashboard/Materiality",
       lockicon: <MdLockOutline />,
       lockiconshow: false,
     },
     {
       id: 2,
+      title: "Supplier Assessment",
+      icon: <MdOutlineAssignment />,
+      link: "/dashboard/SupplierAssessment",
+      spacing: true,
+      // permission: "supplier",
+      // role: false,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+    },
+    {
+      id: 3,
       title: "Collect",
       icon: <MdOutlineAddBox />,
       submenu: true,
@@ -149,7 +162,7 @@ const Sidenav = () => {
       ],
     },
     {
-      id: 3,
+      id: 4,
       title: "Analyse",
       icon: <MdOutlineBarChart />,
       submenu: true,
@@ -192,7 +205,7 @@ const Sidenav = () => {
       ],
     },
     {
-      id: 4,
+      id: 5,
       title: "Report",
       icon: <MdEditNote />,
       link: "/dashboard/Report",
@@ -202,17 +215,17 @@ const Sidenav = () => {
       lockiconshow: false,
     },
     {
-      id: 5,
+      id: 6,
       title: "Optimise",
       icon: <MdOutlineSettingsSuggest />,
-      link: "#",
+      link: "/dashboard/Optimise",
       permission: "optimise",
       role: true,
       lockicon: <MdLockOutline />,
-      lockiconshow: true,
+      lockiconshow: false,
     },
     {
-      id: 6,
+      id: 7,
       title: "Track",
       icon: <MdOutlineSearch />,
       spacing: true,
@@ -224,7 +237,7 @@ const Sidenav = () => {
     },
 
     isNewRole && {
-      id: 7,
+      id: 8,
       title: "Users",
       icon: <MdOutlineGroup />,
       submenu: true,
@@ -246,16 +259,29 @@ const Sidenav = () => {
     },
 
     {
-      id: 8,
+      id: 9,
       title: "Organizational Structure",
       icon: <MdOutlineAccountTree />,
       link: "/dashboard/OrgStructure",
       role: true,
       lockicon: <MdLockOutline />,
       lockiconshow: false,
+      spacing: true,
     },
+ 
+    isNewRole && {
+    
+      id: 10,
+      title: "Audit logs",
+      icon: <TbNotes/>,
+      link: "/dashboard/Auditlogs",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+    
+  },
     {
-      id: 9,
+      id: 11,
       title: "Settings",
       icon: <CiSettings />,
       link: "/dashboard/Settings",
@@ -298,9 +324,9 @@ const Sidenav = () => {
 
   return (
     <>
-      <div className="min-h-[120vh] fixed z-[100]">
+      <div className="fixed z-[100]">
         <div
-          className={`bg-[#0a0528] min-h-[130vh] pt-[1.25rem] ${
+          className={`bg-[#0a0528]  pt-[1.25rem] pb-11 ${
             open ? "w-[15rem]" : "w-[4.5rem]"
           } duration-300 relative`}
         >

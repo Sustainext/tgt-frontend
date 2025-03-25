@@ -158,7 +158,7 @@ const uiSchema = {
         "ui:hadingtooltip": "This section documents data corresponding to the limitation of the assurance process. ",
         "ui:hadingtooltipdisplay": "block",
         "ui:title":
-          "What is the level of Assurance obtained?",
+          "Please describe any limitations of the assurance process",
         "ui:tooltip":
           "Please provide a description of any limitations of the assurance process.  ",
         "ui:tooltipdisplay": "block",
@@ -192,7 +192,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
+const Screen3 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, ref) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -287,16 +287,25 @@ const Screen3 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
+ useEffect(() => {
+      if (selectedOrg && year && togglestatus) {
+        if (togglestatus === "Corporate" && selectedCorp) {
+          loadFormData();
+        } else if (togglestatus === "Corporate" && !selectedCorp) {
+          setFormData([{}]);
+          setRemoteSchema({});
+          setRemoteUiSchema({});
+        } else {
+          loadFormData();
+        }
+  
+        toastShown.current = false;
+      } else {
+        if (!toastShown.current) {
+          toastShown.current = true;
+        }
       }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+    }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -339,7 +348,7 @@ external assurance of the sustainability report. " className="mt-1.5 ml-2 text-[
         <div className="mx-2">
           <Form
             schema={r_schema}
-            uiSchema={r_ui_schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

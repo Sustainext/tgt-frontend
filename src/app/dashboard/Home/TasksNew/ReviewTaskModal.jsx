@@ -14,7 +14,7 @@ const ReviewTaskModal = ({
   selectedLocation,
 }) => {
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
-  const [isApprove, setIsApprove] = useState(false);
+  const [isApprove, setIsApprove] = useState(true);
   const [isModalOpenReassign, setIsModalOpenReassign] = useState(false);
   const [isModalOpenReject, setIsModalOpenReject] = useState(false);
   const [comments, setComments] = useState("");
@@ -53,7 +53,16 @@ const ReviewTaskModal = ({
       await onApprove(taskassigndata.id);
     } else if (isModalOpenReassign) {
       if (!date || !usernameasssin) {
-        toast.error("Please fill in all fields");
+        toast.error("Please fill in all fields", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         return;
       }
       await onReassign(taskassigndata.id, {
@@ -62,7 +71,16 @@ const ReviewTaskModal = ({
       });
     } else if (isModalOpenReject) {
       if (!date || !comments) {
-        toast.error("Please fill in all fields");
+        toast.error("Please fill in all fields", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         return;
       }
       await onReject(taskassigndata.id, {
@@ -81,7 +99,7 @@ const ReviewTaskModal = ({
       } bg-black bg-opacity-50`}
     >
       <div className="z-10 flex items-center justify-center bg-opacity-50">
-        <div className="bg-white p-5 rounded-lg shadow-lg w-[395px] h-[650px] overflow-y-auto scrollable-content">
+        <div className="bg-white p-5 rounded-lg shadow-lg w-[395px] h-[650px] overflow-y-auto scrollable-content table-scrollbar">
           {/* Header */}
           <div className="mb-5">
             <div className="flex">
@@ -180,7 +198,7 @@ const ReviewTaskModal = ({
           {/* Data Review Section */}
           <div className="mb-4 bg-[#007eef0d] p-4 rounded-md">
             <h5 className="text-left text-black text-sm mb-3">
-              Data to be added:
+              Data to be reviewed:
             </h5>
 
             {/* Activity */}
@@ -196,7 +214,7 @@ const ReviewTaskModal = ({
 
             {/* Quantities */}
             <div className="mb-3">
-              {taskassigndata.unit_type?.includes("Over") ? (
+              {taskassigndata.activity?.split('-')[2].includes("Over") ? (
                 <>
                   <div className="flex gap-4 mb-4">
                     <div className="flex-1">
@@ -437,7 +455,7 @@ const ReviewTaskModal = ({
 
         {/* File Preview */}
         {isPdfViewerOpen && (
-          <div className="bg-white rounded-lg w-[800px] min-h-[89vh] relative flex flex-col shadow-lg ms-3">
+          <div className="bg-white rounded-lg w-[800px] min-h-[89vh] h-[650px] relative flex flex-col shadow-lg ms-3">
             {/* Header Section */}
             <div className="p-4 border-b border-gray-200 flex justify-between items-center">
               <h3 className="text-lg font-medium text-gray-900 truncate">

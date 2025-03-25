@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import WasteTopBar from '../wasteTopBar'
 
-const Wastediverted = ({apiData}) => {
+const Wastediverted = ({apiData,setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -53,14 +53,34 @@ const Wastediverted = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 306 - 4',
-        toggle:'27',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName:'GRI 306 - 4',
+      toggle:'27',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P2-E3",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 2-Essential Indicators-3",
     },
+    {
+      tagName: "BRSR C-P2-L4",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 2-Leadership Indicators-4",
+    },
+    {
+      tagName: "BRSR C-P6-E9",
+      id: "tooltip-$brsr3",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-9",
+    },
+  ];
+  const sdgData=[
+
     {
         tagName:'SDG 3',
         toggle:'46',
@@ -87,7 +107,7 @@ const Wastediverted = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-         <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+         <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} griData={griData} brsr={brsr} setMobileopen={setMobileopen} />
         
 
         <div className="ml-3 flex">
@@ -133,9 +153,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

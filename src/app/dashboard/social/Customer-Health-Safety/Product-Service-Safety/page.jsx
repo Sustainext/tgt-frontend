@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 // import Screen3 from "./Screen3";
 import SocialTopBar from '../../socialTopBar'
 
-const ProductServiceSafety = ({apiData}) => {
+const ProductServiceSafety = ({apiData,setMobileopen}) => {
    const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
       (state) => state.materialitySlice
     );
@@ -22,7 +22,7 @@ const ProductServiceSafety = ({apiData}) => {
     const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
- 
+  const [togglestatus,setToggleStatus] = useState("Organization");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +62,7 @@ const ProductServiceSafety = ({apiData}) => {
     <>
      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Product Safety & Quality'} topic={'SocProductSafetyQuality'} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Product Safety & Quality'} topic={'SocProductSafetyQuality'} setMobileopen={setMobileopen} />
        
 
       <div className="ml-3 flex relative">
@@ -95,9 +95,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -123,8 +130,9 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
-    <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
+    <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}   togglestatus={togglestatus}  />
 
 
     </>

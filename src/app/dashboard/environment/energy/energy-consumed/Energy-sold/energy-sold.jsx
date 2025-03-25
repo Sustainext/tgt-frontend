@@ -1,24 +1,24 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import dateWidget from '../../../../../shared/widgets/Input/dateWidget';
-import selectWidget from '../../../../../shared/widgets/Select/selectWidget';
-import inputWidget from '../../../../../shared/widgets/Input/inputWidget';
-import { GlobalState } from '../../../../../../Context/page';
-import CustomFileUploadWidget from '../../../../../shared/widgets/CustomFileUploadWidget';
-import AssignToWidget from '../../../../../shared/widgets/assignToWidget';
-import CustomSelectInputWidget from '../../../../../shared/widgets/CustomSelectInputWidget';
-import RemoveWidget from '../../../../../shared/widgets/RemoveWidget';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
+import dateWidget from "../../../../../shared/widgets/Input/dateWidget";
+import selectWidget from "../../../../../shared/widgets/Select/selectWidget";
+import inputWidget from "../../../../../shared/widgets/Input/inputWidget";
+import { GlobalState } from "../../../../../../Context/page";
+import CustomFileUploadWidget from "../../../../../shared/widgets/CustomFileUploadWidget";
+import AssignToWidget from "../../../../../shared/widgets/assignToWidget";
+import CustomSelectInputWidget from "../../../../../shared/widgets/CustomSelectInputWidget";
+import RemoveWidget from "../../../../../shared/widgets/RemoveWidget";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
-import selectWidget3 from '../../../../../shared/widgets/Select/selectWidget3';
-import inputnumberWidget from "../../../../../shared/widgets/Input/inputnumberWidget"
+import { Oval } from "react-loader-spinner";
+import selectWidget3 from "../../../../../shared/widgets/Select/selectWidget3";
+import inputnumberWidget from "../../../../../shared/widgets/Input/inputnumberWidget";
 import axiosInstance from "../../../../../utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget,
@@ -32,9 +32,9 @@ const widgets = {
   inputnumberWidget: inputnumberWidget,
 };
 
-const view_path = 'gri-environment-energy-302-1d-energy_sold'
-const client_id = 1
-const user_id = 1
+const view_path = "gri-environment-energy-302-1d-energy_sold";
+const client_id = 1;
+const user_id = 1;
 
 // const schema = {
 //   type: 'array',
@@ -103,92 +103,95 @@ const user_id = 1
 
 const uiSchema = {
   items: {
-    'ui:order': [
-      'EnergyType', 'Source', 'Typeofentity', 'Nameofentity', 'Renewable','Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
+    "ui:order": [
+      "EnergyType",
+      "Source",
+      "Typeofentity",
+      "Nameofentity",
+      "Renewable",
+      "Quantity",
+      "Unit",
+      "AssignTo",
+      "FileUpload",
+      "Remove",
     ],
     EnergyType: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
         label: false,
         // Include tooltiptext in uiSchema
       },
-
-
     },
     Source: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-
     },
     Typeofentity: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-
     },
     Nameofentity: {
-      'ui:widget': 'inputWidget', 
-      'ui:options': {
-        label: false
+      "ui:widget": "inputWidget",
+      "ui:options": {
+        label: false,
       },
     },
     Renewable: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-
     },
-   Quantity: {
-      'ui:widget': 'inputnumberWidget',
-      'ui:inputtype':'number',
-      'ui:options': {
+    Quantity: {
+      "ui:widget": "inputnumberWidget",
+      "ui:inputtype": "number",
+      "ui:options": {
         label: false,
       },
     },
 
     Unit: {
-      'ui:widget': 'selectWidget3',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "selectWidget3",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
-      'ui:options': {
-        label: false
+      "ui:options": {
+        label: false,
       },
     },
     FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "FileUploadWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false
+      "ui:options": {
+        label: false,
       },
     },
-    classNames: 'fieldset',
-      'ui:options': {
+    classNames: "fieldset",
+    "ui:options": {
       orderable: false,
       addable: false,
       removable: false,
-      layout: 'horizontal',
-    }
-  }
+      layout: "horizontal",
+    },
+  },
 };
 const validateRows = (data) => {
   return data.map((row) => {
@@ -217,7 +220,7 @@ const validateRows = (data) => {
     return rowErrors;
   });
 };
-const Energysold = ({location, year, month}) => {
+const Energysold = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -231,7 +234,6 @@ const Energysold = ({location, year, month}) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
 
   const updateFormData = async () => {
     LoaderOpen();
@@ -317,8 +319,7 @@ const Energysold = ({location, year, month}) => {
       }
     }
   }, [location, year, month]);
- 
-  
+
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => ({
       ...item, // Ensure each item retains its structure
@@ -332,8 +333,10 @@ const Energysold = ({location, year, month}) => {
     const errors = validateRows(formData);
     setValidationErrors(errors);
     console.log("Validation Errors:", errors); // Debugging log
-  
-    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
     if (!hasErrors) {
       console.log("No validation errors, proceeding to update data"); // Debugging log
       updateFormData();
@@ -341,19 +344,18 @@ const Energysold = ({location, year, month}) => {
       console.log("Validation errors found, submission aborted"); // Debugging log
     }
   };
-  
 
   const renderError = (rowIndex, fieldName) => {
     const rowErrors = validationErrors[rowIndex] || {};
-    return rowErrors[fieldName] ? <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div> : null;
+    return rowErrors[fieldName] ? (
+      <div className="text-red-500 text-sm mt-1">{rowErrors[fieldName]}</div>
+    ) : null;
   };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-  
   };
- 
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
@@ -363,16 +365,14 @@ const Energysold = ({location, year, month}) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
- 
   };
-
 
   return (
     <>
       <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
-        <Form
-            className='flex'
+          <Form
+            className="flex"
             schema={r_schema}
             uiSchema={r_ui_schema}
             formData={formData}
@@ -389,7 +389,7 @@ const Energysold = ({location, year, month}) => {
                 return (
                   <RemoveWidget
                     {...props}
-                    index={props.id.split('_')[1]} // Pass the index
+                    index={props.id.split("_")[1]} // Pass the index
                     onRemove={handleRemove}
                   />
                 );
@@ -399,13 +399,12 @@ const Energysold = ({location, year, month}) => {
                   {...props}
                   scopes="ec146"
                   setFormData={updateFormDatanew}
+                  tabname="Energy sold"
                 />
               ),
              
             }}
-
-          >
-          </Form>
+          ></Form>
         </div>
 
         {loopen && (
@@ -445,6 +444,4 @@ const Energysold = ({location, year, month}) => {
   );
 };
 
-
 export default Energysold;
-

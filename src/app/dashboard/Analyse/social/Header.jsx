@@ -152,6 +152,22 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
+      category: "Tab11",
+      tags: [
+        {
+          label: "GRI 405",
+          data: [
+            { tagid: "1", infoid: "28" },
+        { tagid: "2", infoid: "53" },
+          ],
+        },
+        {
+          label: "GRI 202",
+          data: [{ tagid: "1", infoid: "48" }],
+        },
+      ],
+    },
+    {
       category: "Tab12",
       tags: [
         {
@@ -231,6 +247,16 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
+      category: "Tab11",
+      data: [
+        { id: "sd26", label: "SDG 1", bgColor: "bg-[#EA1D2D]"},
+        { id: "sd32", label: "SDG 5", bgColor: "bg-orange-600"},
+        { id: "sd33", label: "SDG 8", bgColor: "bg-red-900"},
+        { id: "sd13", label: "SDG 10", bgColor: "bg-[#E01A83]"},
+        // { id: "sd16", label: "SDG 16", bgColor: "bg-blue-950" },
+      ],
+    },
+    {
       category: "Tab12",
       data: [
         { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
@@ -269,6 +295,8 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                   ? "Marketing and labeling"
                   : activeTab === "Tab10"
                   ? "Supply Chain Labor Standards"
+                  : activeTab === "Tab11"
+                  ? "Diversity & Equal Oppportunity"
                   : activeTab === "Tab12"
                   ? " Non-discrimination"
                   : activeTab === "Tab13"
@@ -348,9 +376,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

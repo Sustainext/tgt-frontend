@@ -377,6 +377,7 @@ const Consumedfuel = ({location, year, month}) => {
                   {...props}
                   scopes="ec165"
                   setFormData={updateFormDatanew}
+                  tabname="Consumed fuel and energy, including self generated"
                 />
               ),
              

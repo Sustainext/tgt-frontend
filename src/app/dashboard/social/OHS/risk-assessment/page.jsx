@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
-import Section1 from "./Section1/page"
-import SocialTopBar from '../../socialTopBar'
+import Section1 from "./Section1/page";
+import SocialTopBar from "../../socialTopBar";
 
-const Riskassessment = ({apiData}) => {
-
+const Riskassessment = ({ apiData, setMobileopen }) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -30,32 +29,52 @@ const Riskassessment = ({apiData}) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 403 - 2',
-        toggle:'23',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "GRI 403 - 2",
+      toggle: "23",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P3-E10b",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-10b",
     },
     {
-      tagName:'SDG 8',
-      toggle:'24',
-      textColor:"#fff",
-      bgColor:"bg-red-900"
-  },  
-]
-
+      tagName: "BRSR C-P3-E10c",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-10c",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 8",
+      toggle: "24",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
+    },
+  ];
 
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
-       
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Occupational Health and Safety"}
+          topic={"SocHealthSafety"}
+          brsr={brsr}
+          griData={griData}
+          setMobileopen={setMobileopen}
+        />
 
-     
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -79,9 +98,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -98,8 +124,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-   
-      <Section1/>
+
+      <Section1 />
     </>
   );
 };

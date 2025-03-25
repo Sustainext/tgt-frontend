@@ -1,12 +1,12 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import SDGCards from './SDGCards';
-import Frameworks from './Frameworks';
-import Certifications from './Certifications';
-import Targets from './Targets';
-import Ratings from './Ratings';
-import Regulation from './Regulation';
+"use client";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import SDGCards from "./SDGCards";
+import Frameworks from "./Frameworks";
+import Certifications from "./Certifications";
+import Targets from "./Targets";
+import Ratings from "./Ratings";
+import Regulation from "./Regulation";
 
 const PreferencePages = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +18,7 @@ const PreferencePages = () => {
       const currentPageParam = searchParams.get("currentPage");
       const initialPage = currentPageParam ? parseInt(currentPageParam) : 1;
       setCurrentPage(initialPage);
-      console.log('page', initialPage);
+      console.log("page", initialPage);
     }
   }, []);
 

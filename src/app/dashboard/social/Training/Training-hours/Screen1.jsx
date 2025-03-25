@@ -19,7 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { BlobServiceClient } from "@azure/storage-blob";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-
+import { useSelector } from "react-redux";
 const widgets = {
   TableWidget: CustomTableWidget9,
 };
@@ -149,7 +149,14 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const Screen1 = ({
+  selectedOrg,
+  selectedCorp,
+  location,
+  year,
+  month,
+  togglestatus,
+}) => {
   const initialFormData = [
     {
       category: "",
@@ -178,7 +185,15 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [file, setFile] = useState(null);
   const [newfile, setNewfile] = useState(null);
   const [fleg, setfleg] = useState(null);
-
+  const text1 = useSelector((state) => state.header.headertext1);
+  const text2 = useSelector((state) => state.header.headertext2);
+  const middlename = useSelector((state) => state.header.middlename);
+  const useremail =
+    typeof window !== "undefined" ? localStorage.getItem("userEmail") : "";
+  const roles =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("textcustomrole")) || ""
+      : "";
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -297,16 +312,24 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (selectedOrg && year && month) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+    if (selectedOrg && year && month && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, month, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus, month]);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault(); // Prevent the default form submission
@@ -341,7 +364,46 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
       return url;
     } catch (error) {
+      LoginlogDetails("Failed", "Uploaded");
       console.error("Error uploading file:", error.message);
+      return null;
+    }
+  };
+  const getIPAddress = async () => {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.error("Error fetching IP address:", error);
+      return null;
+    }
+  };
+
+  const LoginlogDetails = async (status, actionType) => {
+    const backendUrl = process.env.BACKEND_API_URL;
+    const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
+
+    try {
+      const ipAddress = await getIPAddress();
+
+      const data = {
+        event_type: text1,
+        event_details: "File",
+        action_type: actionType,
+        status: status,
+        user_email: useremail,
+        user_role: roles,
+        ip_address: ipAddress,
+        logs: `${text1} > ${middlename} > ${text2}`,
+      };
+
+      const response = await axiosInstance.post(userDetailsUrl, data);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error logging login details:", error);
+
       return null;
     }
   };
@@ -363,6 +425,9 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         setFileSize(selectedFile.size);
         setUploadDateTime(new Date().toLocaleString());
       };
+      setTimeout(() => {
+        LoginlogDetails("Success", "Uploaded");
+      }, 500);
     }
   };
 
@@ -469,32 +534,47 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-
   const handleDelete = () => {
-    setFileName(null);
-    setPreviewData(null);
-    setFileType("");
-    setFileSize("");
-    setUploadDateTime("");
-    setFile(null);
-    setShowModal(false);
-    setFile(null);
-    setfleg(null);
-    setNewfile("");
+    try {
+      setFileName(null);
+      setPreviewData(null);
+      setFileType("");
+      setFileSize("");
+      setUploadDateTime("");
+      setFile(null);
+      setShowModal(false);
+      setFile(null);
+      setfleg(null);
+      setNewfile("");
+
+      // Call LoginlogDetails with a "Success" status for deletion
+      setTimeout(() => {
+        LoginlogDetails("Success", "Deleted");
+      }, 500);
+    } catch (error) {
+      console.error("Error deleting file:", error.message);
+      // Call LoginlogDetails with a "Failed" status for deletion
+      setTimeout(() => {
+        LoginlogDetails("Failed", "Deleted");
+      }, 500);
+    }
   };
+  // const handleDelete = () => {
+
+  // };
 
   return (
     <>
-      <div
-        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+     <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Number of  hours of training provided to employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -519,9 +599,9 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
               ></ReactTooltip>
             </h2>
           </div>
-          <div className="w-[20%]">
-            <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 404-1a
                 </div>
@@ -542,43 +622,69 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
             }}
           />
         </div>
-
-        <div className="-mt-12 float-end">
-          {selectedOrg && year && (
-            <div className="flex right-1 mx-2 ">
-              <input
-                type="file"
-                id="fileInput"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-              {fileName ? (
-                <label className="flex cursor-pointer float-end">
-                  <div
-                    className="flex items-center text-center mt-2"
-                    onClick={handlePreview}
+        {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
+          <div className="-mt-14 float-end">
+            {selectedOrg && year && (
+              <div className="flex right-1 mx-2 ">
+                <input
+                  type="file"
+                  id="fileInput"
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+                {fileName ? (
+                  <label className="flex cursor-pointer float-end">
+                    <div
+                      className="flex items-center text-center mt-2"
+                      onClick={handlePreview}
+                    >
+                      <MdFilePresent className="w-6 h-6 mr-1 text-green-500 " />
+                      <div className="w-[150px] truncate  text-sky-600 text-sm">
+                        {fileName}
+                      </div>
+                    </div>
+                  </label>
+                ) : (
+                  <label
+                    htmlFor="fileInput"
+                    className="flex cursor-pointer ml-1 mb-4"
                   >
-                    <MdFilePresent className="w-6 h-6 mr-1 text-green-500 " />
-                    <div className="w-[150px] truncate  text-sky-600 text-sm">
-                      {fileName}
+                    <div className="flex items-center mt-2 ">
+                      <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
+                      <div className="w-[150px] truncate text-[#007EEF] text-[13px] ml-1 ">
+                        Upload Documentation
+                      </div>
                     </div>
-                  </div>
-                </label>
-              ) : (
-                <label htmlFor="fileInput" className="flex cursor-pointer ml-1">
-                  <div className="flex items-center mt-2">
-                    <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
-                    <div className="w-[150px] truncate text-[#007EEF] text-[13px] ml-1">
-                      Upload Documentation
-                    </div>
-                  </div>
-                </label>
-              )}
-            </div>
-          )}
-        </div>
+                  </label>
+                )}
+              </div>
+            )}
+          </div>
+        ) : null}
 
         <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year ||
+              !month
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
+            onClick={buttonClickHandler}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" &&
+                (!selectedOrg || !year || !month))
+            }
+          >
+            Submit
+          </button>
+        </div>
+        {/* <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
@@ -589,7 +695,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
           >
             Submit
           </button>
-        </div>
+        </div> */}
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -604,8 +710,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         </div>
       )}
       {showModal && (
-        <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-12">
+         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-1 rounded-lg w-[86%] h-[90%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
             <div className="flex justify-between mt-4 mb-4">
               <div>
                 <h5 className="mb-4 ml-2 font-semibold">{fileName}</h5>
@@ -629,8 +735,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
                 </div>
               </div>
             </div>
-            <div className="flex justify-between">
-              <div className="relative w-[760px] h-[580px]">
+            <div className="block justify-between xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
+                <div className="relative w-[105vw] xl:w-[55vw] lg:w-[55vw] 2xl:w-[55vw] 4k:w-[55vw] 2k:w-[55vw] h-[115vw] xl:h-[45vw] lg:h-[45vw] 2xl:h-[45vw] 4k:h-[45vw] 2k:h-[45vw]">
                 {fleg ? (
                   fileType.startsWith("image") ? (
                     <img
@@ -661,12 +767,21 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
                     title="PDF Preview"
                     className="w-full h-full"
                   />
-                ) : (
-                  <p>File preview not available. Please download and verify</p>
-                )}
+                ) : <div className="flex flex-col items-center justify-center h-full">
+                      <p>
+                        File preview not available.Please download and verify
+                      </p>
+                      <a
+                        href={previewData}
+                        download={fileName}
+                        className="mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                      >
+                        Download File
+                      </a>
+                    </div>}
               </div>
 
-              <div className="w-[211px]">
+              <div className="w-[211px] mx-2 xl:mx-0 lg:mx-0 md:mx-0 2xl:mx-0 4k:mx-0 2k:mx-0">
                 <div className="mb-4 mt-2">
                   <h2 className="text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide">
                     File information
@@ -692,7 +807,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
                   <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                     FILE TYPE
                   </h2>
-                  <h2 className="text-[14px] leading-relaxed tracking-wide">
+                  <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
                     {fileType}
                   </h2>
                 </div>

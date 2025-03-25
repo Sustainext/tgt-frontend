@@ -218,7 +218,7 @@ const validateRows = (data) => {
     return rowErrors;
   });
 };
-const Purchased = ({ location, year, month }) => {
+const Purchased = ({ location, year, month,monthname,locationname }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -396,6 +396,11 @@ const Purchased = ({ location, year, month }) => {
                   {...props}
                   scopes="ec1"
                   setFormData={updateFormDatanew}
+                  locationname={locationname}
+                  year={year}
+                  monthname={monthname}
+                  sectionname="Direct Purchased Heating, Cooling, Electricity and Steam"
+                  tabname="Energy consumed inside the organization"
                 />
               ),
              
@@ -424,10 +429,10 @@ const Purchased = ({ location, year, month }) => {
       <div className="flex justify-start mt-4 right-1">
         <button
           type="button"
-          className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5"
+          className="text-[#007EEF] text-[12px] 4k:text-[15px] flex cursor-pointer mt-5 mb-5"
           onClick={handleAddNew}
         >
-          <MdAdd className="text-lg" /> Add Row
+          <MdAdd className="text-lg mt-0 4k:mt-0.5" /> Add Row
         </button>
       </div>
       <div className="mb-4">
