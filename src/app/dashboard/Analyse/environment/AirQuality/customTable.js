@@ -35,17 +35,8 @@ function DynamicTable({ columns, data }) {
   };
 
   return (
-    <div
-        style={{
-          display: "block",
-          overflowX: "auto",
-          maxWidth: "100%",
-          minWidth: "100%",
-          width: "40vw",
-        }}
-        className="mb-2 rounded-lg table-scrollbar"
-      >
-    <table className="w-full rounded-lg">
+    <div className='overflow-auto custom-scrollbar ' >
+    <table className="rounded-md border border-gray-300  w-full min-w-[828px] " style={{ borderCollapse: "separate", borderSpacing: 0 }}>
       <thead className="border rounded-lg">
         <tr className="border-t border-b gradient-background">
           {renderHeaders()}

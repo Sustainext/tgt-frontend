@@ -133,7 +133,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
     setIsSupplierVisible(false);
   };
   useEffect(() => {
-    if (activeTab === "Management of Material topic Economic Performance") {
+    if (activeTab === "Org Details") {
       setEmisssion(true);
       setWasteVisible(false);
       setMaterialsVisible(false);
@@ -193,13 +193,13 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               <>
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Org Details"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
@@ -211,7 +211,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   </div>
                   {/* <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab ===
                         "Defined benefit plan obligations and other retirement plans"
                           ? "text-blue-400"
@@ -229,7 +229,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   </div> */}
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Entities"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
@@ -241,7 +241,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   </div>
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Report Details"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
@@ -253,7 +253,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   </div>
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Restatement"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
@@ -265,7 +265,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   </div>
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Assurance"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
@@ -318,13 +318,13 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               <>
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4  text-gray-400 ">
                       Topic disclosure
                     </p>
                   </div>
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Business Details"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
@@ -336,7 +336,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   </div>
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Workforce-Employees"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
@@ -350,7 +350,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   </div>
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Workforce-Other Workers"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
@@ -398,14 +398,14 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               <>
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4  text-gray-400 ">
                       Topic disclosure
                     </p>
                   </div>
 
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Laws and Regulation"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
@@ -457,14 +457,14 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               <>
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4  text-gray-400 ">
                       Topic disclosure
                     </p>
                   </div>
 
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Membership & Association"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
@@ -516,13 +516,13 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               <>
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4  text-gray-400 ">
                       Topic disclosure
                     </p>
                   </div>
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Stakeholder Engagement"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
@@ -570,13 +570,13 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               <>
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
+                    <p className="text-[12px]  ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4  text-gray-400 ">
                       Topic disclosure
                     </p>
                   </div>
                   <div>
                     <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Collective Bargaining Agreements"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"

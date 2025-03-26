@@ -341,8 +341,8 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
   return (
     <>
       <div>
-        <div className="mb-2 flex-col items-center pt-4  gap-6">
-          <div className="mt-4 pb-3 mx-5 text-left">
+      <div className="mb-2 flex-col items-center xl:pt-4  gap-6">
+      <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2  text-left">
             <div className="mb-2 flex-col items-center gap-6">
             <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
@@ -382,9 +382,8 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
-                  reportType !== "" ? "visible" : "hidden"
-                }`}
+                  className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
+                  }`}
               >
                 <div className="mr-2">
                   <label
@@ -505,9 +504,9 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                </p>
                <div
                  id="materials1"
-                 className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between"
+  className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
                >
-                {show? <p className="text-neutral-500 text-[13px] font-semibold mt-1">
+                {show? <p className="text-neutral-500 text-[13px] font-semibold mt-1 mb-2">
                Contribution % calculation cannot be performed due to differing units of the air pollutants.
                </p>:(<div></div>)}
                 
@@ -531,12 +530,12 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
            
             {airPollutantinPpm && airPollutantinPpm.length>0 && (
                <div className="mb-6">
-               <p className="text-black text-[15px] font-bold ">
+               <p className="text-black text-[15px] font-bold mb-2 ">
                Air Emissions by Pollutants (in ppm or µg/m³)
                </p>
                <div
                  id="materials2"
-                 className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
                >
                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -552,12 +551,12 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
             {airPollutantByLOcation && airPollutantByLOcation.length>0 && (
               (
                 <div className="mb-6">
-                <p className="text-black text-[15px] font-bold ">
+                <p className="text-black text-[15px] font-bold mb-2">
                 Percentage Contribution of Air Pollutants by Location
                 </p>
                 <div
                   id="materials3"
-                  className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
                 >
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -573,12 +572,12 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
            
             {airEmissionByLocationKg && airEmissionByLocationKg.length>0 && (
                <div className="mb-6">
-               <p className="text-black text-[15px] font-bold ">
+               <p className="text-black text-[15px] font-bold mb-2">
                Total  Air Emissions by Location (in Kg)		
                </p>
                <div
                  id="materials4"
-                 className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
                >
                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -597,12 +596,12 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
            
             {airEmissionByLocationPpm && airEmissionByLocationPpm.length>0 && (
                <div className="mb-6">
-               <p className="text-black text-[15px] font-bold ">
+               <p className="text-black text-[15px] font-bold mb-2">
                Total Air Emissions by Location (in ppm or µg/m³)
                </p>
                <div
                  id="materials5"
-                 className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-end gap-2"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
                >
                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -621,10 +620,10 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
               </p>
               <div
                 id="materials6"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Total ODS Emissions by Source</p>
-                <div className="flex justify-end gap-2">
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1"> Total ODS Emissions by Source</p>
+                <div className="flex xl:justify-end lg:justify-end md:justify-end 2xl:justify-end 4k:justify-end 2k:justify-end gap-2">
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 305-6a
@@ -656,7 +655,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+                   className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>
