@@ -18,6 +18,7 @@ import empty from '../../../../public/empty-illustration.svg';
 import Image from "next/image";
 import DeleteScenarioModal from "./DeleteScenarioModal";
 import ScenarioViewModal from "./ScenarioViewModal";
+import CreateScenarioModal from "./CreateScenarioModal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -59,6 +60,8 @@ const ScenarioTable = () => {
    // View modal state
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [scenarioToView, setScenarioToView] = useState(null);
+
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   
   // Refs for filters
   const orgFilterRef = useRef(null);
@@ -464,6 +467,7 @@ const ScenarioTable = () => {
       </p>
       <button 
         className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-medium hover:bg-blue-600 transition-colors"
+        onClick={()=>setIsCreateModalOpen(true)}
       >
         Create a New Scenario
         <span className="text-lg font-bold">+</span>
@@ -483,7 +487,7 @@ const ScenarioTable = () => {
           </p>
         </div>
         
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-1">
+        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-1" onClick={()=>setIsCreateModalOpen(true)}>
           <span>Create New Scenario</span>
           <span className="font-bold">+</span>
         </button>
@@ -904,6 +908,13 @@ const ScenarioTable = () => {
     <ScenarioViewModal
       isOpen={isViewModalOpen}
       onClose={() => setIsViewModalOpen(false)}
+      scenarioData={scenarioToView}
+    />
+
+    {/* Create scenario modal */}
+    <CreateScenarioModal
+      isOpen={isCreateModalOpen}
+      onClose={() => setIsCreateModalOpen(false)}
       scenarioData={scenarioToView}
     />
     </>
