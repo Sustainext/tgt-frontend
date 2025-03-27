@@ -8,8 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import GeneralHeader2 from "../../GeneralHeader2";
 import Screen1 from "./screen1";
-
-const OrgDetails = () => {
+import GeneralTopBar from "../../GeneralTopBar";
+const OrgDetails = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -38,12 +38,45 @@ const OrgDetails = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 2 - 1",
+      toggle: "92",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR A-I-2",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section A-I-2",
+    },
+    {
+      tagName: "BRSR A-I-4",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section A-I-4",
+    },
+    {
+      tagName: "BRSR A-I-5",
+      id: "tooltip-$brsr",
+      content: "BRSR-Section A-I-5",
+    },
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <GeneralTopBar
+          toggleDrawer={toggleDrawer}
+          brsr={brsr}
+          griData={griData}
+          title={"Organization Details"}
+          setMobileopen={setMobileopen}
+        />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">General</p>
@@ -142,7 +175,7 @@ const OrgDetails = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

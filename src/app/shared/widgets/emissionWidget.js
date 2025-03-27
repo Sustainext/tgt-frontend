@@ -396,20 +396,20 @@ const EmissionWidget = React.memo(
     //   if (subcategory && !activitiesLoaded && !isLoadingActivities && !isFetchingRef.current) {
     //     // Using the ref to track fetch status instead of state to prevent re-renders
     //     isFetchingRef.current = true;
-        
+
     //     // Fetch activities
     //     fetchActivities().finally(() => {
     //       isFetchingRef.current = false;
     //     });
     //   }
-      
+
     //   // Only reset loaded status when subcategory actually changes
     //   return () => {
     //     if (subcategory) {
     //       setActivitiesLoaded(false);
     //     }
     //   };
-    // }, [subcategory, fetchActivities]); 
+    // }, [subcategory, fetchActivities]);
     useEffect(() => {
       // Only fetch activities when subcategory changes and we don't have them yet
       if (subcategory && !activitiesLoaded && !isLoadingActivities) {
@@ -507,17 +507,18 @@ const EmissionWidget = React.memo(
     const handleActivityChange = useCallback(
       (newActivity) => {
         console.log("handleActivityChange called with:", newActivity);
-        
+
         // Find the selected activity object from our activities array
         const foundActivity = activities.find(
-          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+          (act) =>
+            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
         );
-        
+
         console.log("Found activity:", foundActivity);
-        
+
         // First update local state to immediately show the selected activity
         setActivity(newActivity);
-        
+
         // Then update the form data with all the relevant details
         const updatedValue = {
           ...value,
@@ -533,13 +534,13 @@ const EmissionWidget = React.memo(
           Unit: "",
           Unit2: "",
         };
-        
+
         // Update form state
         onChange(updatedValue);
-        
+
         // Update selected row if needed
         updateSelectedRowIfNeeded(updatedValue);
-        
+
         // Reset quantity and unit states
         setQuantity("");
         setQuantity2("");
@@ -552,17 +553,18 @@ const EmissionWidget = React.memo(
     const handleActivityChangemobile = useCallback(
       (newActivity) => {
         console.log("handleActivityChange called with:", newActivity);
-        
+
         // Find the selected activity object from our activities array
         const foundActivity = activities.find(
-          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+          (act) =>
+            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
         );
-        
+
         console.log("Found activity:", foundActivity);
-        
+
         // First update local state to immediately show the selected activity
         setActivity(newActivity);
-        
+
         // Then update the form data with all the relevant details
         const updatedValue = {
           ...value,
@@ -578,13 +580,13 @@ const EmissionWidget = React.memo(
           Unit: "",
           Unit2: "",
         };
-        
+
         // Update form state
         onChange(updatedValue);
-        
+
         // Update selected row if needed
         updateSelectedRowIfNeeded(updatedValue);
-        
+
         // Reset quantity and unit states
         setQuantity("");
         setQuantity2("");
@@ -779,10 +781,10 @@ const EmissionWidget = React.memo(
           setSelectSize(9); // for desktop
         }
       };
-    
+
       handleResize(); // set initial value
       window.addEventListener("resize", handleResize);
-    
+
       return () => window.removeEventListener("resize", handleResize);
     }, []);
     useEffect(() => {
@@ -1014,25 +1016,25 @@ const EmissionWidget = React.memo(
       switch (rowType) {
         case "calculated":
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <div className="w-1.5 h-1.5 rounded-full bg-green-500 xl:mx-auto md:mx-auto 2xl:mx-auto lg:mx-auto 3xl:mx-auto 4k:mx-auto 2k:mx-auto mx-2"></div>
             </td>
           );
         case "assigned":
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <div className="w-1.5 h-1.5 rounded-full bg-gray-500 mx-auto"></div>
             </td>
           );
         case "approved":
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <div className="w-1.5 h-1.5 rounded-full bg-[#FFA701] mx-auto"></div>
             </td>
           );
         default:
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <input
                 type="checkbox"
                 checked={isSelected}
@@ -1045,7 +1047,12 @@ const EmissionWidget = React.memo(
     };
 
     return (
-      <div className={`w-full ${!id.startsWith("root_0") && "xl:ml-1 md:ml-1 lg:ml-1 3xl:ml-1 4k:ml-1 2k:ml-1 ml-0"}`}>
+      <div
+        className={`w-full ${
+          !id.startsWith("root_0") &&
+          "xl:ml-1 md:ml-1 lg:ml-1 3xl:ml-1 4k:ml-1 2k:ml-1 ml-0"
+        }`}
+      >
         {id.startsWith("root_0") && (
           <div className="mb-2">
             <button
@@ -1118,7 +1125,7 @@ const EmissionWidget = React.memo(
                   onChange={(e) => handleCategoryChange(e.target.value)}
                   className={getFieldClass(
                     "Category",
-                    `text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full  py-1 ${
+                    `text-[12px] focus:outline-none w-full xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full  py-1 ${
                       category && rowType === "default"
                         ? "border-b border-zinc-800"
                         : ""
@@ -1195,7 +1202,7 @@ const EmissionWidget = React.memo(
                     onFocus={toggleDropdown}
                     className={getFieldClass(
                       "Activity",
-                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[25vw] py-1"
+                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[76vw] py-1"
                     )}
                     disabled={["assigned", "calculated", "approved"].includes(
                       value.rowType
@@ -1210,51 +1217,52 @@ const EmissionWidget = React.memo(
 
                   {isDropdownActive && (
                     <>
-                    <select
-                      ref={dropdownRef}
-                      size={selectSize || undefined}
-                      value={activity}
-                      onChange={(e) => {
-                        handleActivityChange(e.target.value);
-                        toggleDropdown();
-                        setActivitySearch("");
-                      }}
-                     className="text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100]  min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6 "
-                      disabled={["assigned", "calculated", "approved"].includes(
-                        rowType
-                      )}
-                    >
-                      <option value="" className="px-1">
-                        {rowType === "calculated"
-                          ? activity
-                          : "Select Activity"}
-                      </option>
-                      {filteredActivities.length > 0 ? (
-                        filteredActivities.map((item) => (
-                          <option
-                            key={item.id || item.activity_id}
-                            value={`${item.name} - (${item.source}) - ${item.unit_type}`}
-                            className="px-2"
-                          >
-                            {item.name} - ({item.source}) - {item.unit_type} -{" "}
-                            {item.region} - {item.year}
-                            {item.source_lca_activity !== "unknown" &&
-                              ` - ${item.source_lca_activity}`}
-                          </option>
-                        ))
-                      ) : (
-                        <option
-                          value=""
-                          disabled
-                          className="px-2 text-gray-500"
-                        >
-                          {isLoadingActivities
-                            ? "Loading activities..."
-                            : "No matching activities found"}
+                      <select
+                        ref={dropdownRef}
+                        size={selectSize || undefined}
+                        value={activity}
+                        onChange={(e) => {
+                          handleActivityChange(e.target.value);
+                          toggleDropdown();
+                          setActivitySearch("");
+                        }}
+                        className="text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100]  min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6 "
+                        disabled={[
+                          "assigned",
+                          "calculated",
+                          "approved",
+                        ].includes(rowType)}
+                      >
+                        <option value="" className="px-1">
+                          {rowType === "calculated"
+                            ? activity
+                            : "Select Activity"}
                         </option>
-                      )}
-                    </select>
-                    
+                        {filteredActivities.length > 0 ? (
+                          filteredActivities.map((item) => (
+                            <option
+                              key={item.id || item.activity_id}
+                              value={`${item.name} - (${item.source}) - ${item.unit_type}`}
+                              className="px-2"
+                            >
+                              {item.name} - ({item.source}) - {item.unit_type} -{" "}
+                              {item.region} - {item.year}
+                              {item.source_lca_activity !== "unknown" &&
+                                ` - ${item.source_lca_activity}`}
+                            </option>
+                          ))
+                        ) : (
+                          <option
+                            value=""
+                            disabled
+                            className="px-2 text-gray-500"
+                          >
+                            {isLoadingActivities
+                              ? "Loading activities..."
+                              : "No matching activities found"}
+                          </option>
+                        )}
+                      </select>
                     </>
                   )}
                 </div>
@@ -1550,11 +1558,11 @@ const EmissionWidget = React.memo(
 
                     {/* Preview Modal */}
                     {showModal && previewData && (
-                    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
+                      <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="bg-white p-1 rounded-lg w-[96%] h-[100%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
                           <div className="flex justify-between mt-4 mb-4">
                             <div>
-                              <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap">
+                              <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] xl:w-[400px] md:w-[400px] lg:w-[400px] 2xl:w-[400px] 4k:w-[400px] 2k:w-[400px] overflow-hidden whitespace-nowrap">
                                 {fileName}
                               </h5>
                             </div>
@@ -1582,8 +1590,7 @@ const EmissionWidget = React.memo(
                             </div>
                           </div>
                           <div className="block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
-                          <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
-                      
+                            <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
                               {fileType.startsWith("image") ? (
                                 <img
                                   src={previewData}

@@ -280,10 +280,12 @@ const InputWidget5 = (props) => {
         </div>
         {showModal && (
           <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-12">
+           <div className="bg-white p-1 rounded-lg w-[96%] h-[100%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%] xl:h-[90%] xl:mt-12 lg:mt-12 md:mt-12 2xl:mt-12 4k:mt-12 2k:mt-12 ">
               <div className="flex justify-between mt-4 mb-4">
                 <div>
-                  <h5 className="mb-4 ml-2 font-semibold">  {fileName}</h5>
+                <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] xl:w-[400px] md:w-[400px] lg:w-[400px] 2xl:w-[400px] 4k:w-[400px] 2k:w-[400px] overflow-hidden whitespace-nowrap">
+                    {fileName}
+                  </h5>
                 </div>
                 <div className="flex">
                   <div className="mb-4">
@@ -304,8 +306,8 @@ const InputWidget5 = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-between">
-                <div className="relative w-[760px] h-[580px]">
+              <div className="block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
+              <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
                   {fileName ? (
                     fileType.startsWith("image") ? (
                       <img
@@ -359,7 +361,7 @@ const InputWidget5 = (props) => {
                     </div>}
                 </div>
 
-                <div className="w-[211px]">
+                <div className="w-[211px] ml-6">
                   <div className="mb-4 mt-2">
                     <h2 className="text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide">
                       File information

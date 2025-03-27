@@ -332,8 +332,8 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
   return (
     <>
       <div>
-        <div className="mb-2 flex-col items-center pt-4  gap-6">
-          <div className="mt-4 pb-3 mx-5 text-left">
+           <div className="mb-2 flex-col items-center xl:pt-4  gap-6">
+           <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2  text-left">
             <div className="mb-2 flex-col items-center pt-2  gap-6">
             <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
@@ -373,9 +373,8 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
-                  reportType !== "" ? "visible" : "hidden"
-                }`}
+              className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
+              }`}
               >
                 <div className="mr-2">
                   <label
@@ -495,9 +494,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
               </p>
               <div
                 id="materials1"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p className="font-bold">Non-Renewable materials used</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1 font-bold">Non-Renewable materials used</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 301-1a
@@ -509,9 +508,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="materials2"
-                className="text-neutral-700 text-[15px] font-bold  font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Renewable materials used</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1">Renewable materials used</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 301-1a
@@ -526,9 +525,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
               </p>
               <div
                 id="materials3"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p className="font-bold">Percentage of recycled materials used (Production)</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1 font-bold">Percentage of recycled materials used (Production)</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 301-2a
@@ -548,7 +547,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+              className=" mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

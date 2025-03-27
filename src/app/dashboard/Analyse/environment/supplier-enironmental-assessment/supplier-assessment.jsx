@@ -113,8 +113,8 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year,togglestatus }) =>
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-neutral-700 text-[15px] font-bold">
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between items-center mb-2">
+                  <p className="text-neutral-700 text-[15px] font-bold mb-3">
                     Percentage of new suppliers that were screened using
                     environmental criteria.
                   </p>
@@ -136,8 +136,8 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year,togglestatus }) =>
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-neutral-700 text-[15px] font-bold w-[880px]">
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between items-center mb-2">
+                  <p className="text-neutral-700 text-[15px] font-bold mb-3">
                     Percentage of suppliers identified as having significant
                     actual and potential negative environmental impacts with
                     which improvements were agreed upon as a result of
@@ -161,8 +161,8 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year,togglestatus }) =>
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-neutral-700 text-[15px] font-bold">
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between items-center mb-2">
+                  <p className="text-neutral-700 text-[15px] font-bold mb-3">
                     Percentage of Suppliers identified as having significant
                     actual and potential negative environmental impacts with
                     terminated Relationship
