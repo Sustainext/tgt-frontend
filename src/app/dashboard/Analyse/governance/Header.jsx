@@ -115,7 +115,7 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
                        </p>
                      </div>
                      {activeTab === "Tab1" && (
-                <div className="w-[95px] pl-1 pr-0.5 bg-slate-200 rounded justify-center items-center flex">
+                <div className="w-[95px] pl-1 pr-0.5 mt-2 bg-slate-200 rounded justify-center items-center flex">
                   <div className="text-zinc-600 text-xs font-normal font-['Manrope'] leading-[21px]">
                     Material Topic
                   </div>

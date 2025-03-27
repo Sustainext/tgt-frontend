@@ -311,25 +311,25 @@ const Screen1 = ({
   };
 
   // fetch backend and replace initialized forms
-  // useEffect(() => {
-  //   if (selectedOrg && year && month && togglestatus) {
-  //     if (togglestatus === "Corporate" && selectedCorp) {
-  //       loadFormData();
-  //     } else if (togglestatus === "Corporate" && !selectedCorp) {
-  //       setFormData(initialFormData);
-  //       setRemoteSchema({});
-  //       setRemoteUiSchema({});
-  //     } else {
-  //       loadFormData();
-  //     }
+  useEffect(() => {
+    if (selectedOrg && year && month && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
 
-  //     toastShown.current = false;
-  //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true;
-  //     }
-  //   }
-  // }, [selectedOrg, year, selectedCorp, togglestatus, month]);
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus, month]);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault(); // Prevent the default form submission
@@ -611,8 +611,8 @@ const Screen1 = ({
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

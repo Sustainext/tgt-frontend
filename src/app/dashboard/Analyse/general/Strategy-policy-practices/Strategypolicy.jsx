@@ -83,8 +83,8 @@ const StrategyPolicysection = ({selectedOrg,selectedCorp,year,togglestatus}) => 
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+             <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center mb-2">
+                  <p className="mb-2">
                     Percentage of total employees covered by collective
                     bargaining agreements
                   </p>
