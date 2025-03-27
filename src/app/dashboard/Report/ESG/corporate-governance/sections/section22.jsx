@@ -13,7 +13,7 @@ const Section22=({section9_6_3Ref,data})=>{
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
 9.6.2 Anti-trust, Anti-competitive Behavior, Monopoly Practices
 </h3>
-<p className="text-sm mb-4">{data["206_1a"]?data["206_1a"].legal_actions_anti_competitive_behavior:"No data available"}</p>
+<p className="text-sm mb-4">{data["206_1a"]?data["206_1a"].legal_actions_anti_competitive_behavior=="No"?data["206_1a"].legal_actions_anti_competitive_behavior:'':"No data available"}</p>
 
 <div className="shadow-md rounded-md mb-4">
         <LegalActionTable1 tableData={tableData1} />

@@ -29,9 +29,9 @@ stakeholders informed of our progress.`
         ? (
     typeof data["2-4-a"] === 'object' ? (
       <>
-        {data["2-4-a"].Q1? data["2-4-a"].Q1:"No Data available"}
-        <br />
-        {data["2-4-a"].Q2? data["2-4-a"].Q2:""}
+        {data["2-4-a"].Q1? data["2-4-a"].Q1=="No"?data["2-4-a"].Q1:data["2-4-a"]?.Q2:'No data available'}
+        {/* <br />
+        {data["2-4-a"].Q2? data["2-4-a"].Q2:""} */}
       </>
     ) : (
       "No data available"

@@ -288,7 +288,7 @@ const Section25 = ({ section13_6_8Ref, data }) => {
             ? data["403_9c_9d"].data
               ? data["403_9c_9d"].data.length > 0
                 ? data["403_9c_9d"].data[0].Q1
-                  ? data["403_9c_9d"].data[0].Q1
+                  ? data["403_9c_9d"].data[0].Q1=="No"?data["403_9c_9d"].data[0].Q1:''
                   : "No data available"
                 : "No data available"
               : "No data available"
@@ -332,14 +332,14 @@ const Section25 = ({ section13_6_8Ref, data }) => {
             : "No data available"}
         </p>
         <p className="text-[15px]  mb-2 font-semibold">
-          Workers excluded from the disclosure
+        Workers excluded from the ‘Work-related injuries’ disclosure 
         </p>
         <p className="text-sm mb-2">
           {data["403_9f"]
             ? data["403_9f"].data
               ? data["403_9f"].data.length > 0
                 ? data["403_9f"].data[0].Q1
-                  ? data["403_9f"].data[0].Q1
+                  ? data["403_9f"].data[0].Q1=="No"?data["403_9f"].data[0].Q1:''
                   : "No data available"
                 : "No data available"
               : "No data available"
@@ -369,7 +369,7 @@ const Section25 = ({ section13_6_8Ref, data }) => {
         </p>
 
         <p className="text-[15px]  mb-2 font-semibold">
-          Standards, methodologies, and assumptions used
+        Standards, methodologies, and assumptions used to compile data for work-related injuries
         </p>
         <p className="text-sm mb-2">
           {data["403_9g"]
@@ -443,14 +443,14 @@ const Section25 = ({ section13_6_8Ref, data }) => {
         </p>
 
         <p className="text-[15px]  mb-2 font-semibold">
-          Workers excluded from the disclosure
+        Workers excluded from the ‘Work-related ill-health’ disclosure
         </p>
         <p className="text-sm mb-2">
           {data["403-10d"]
             ? data["403-10d"].data
               ? data["403-10d"].data.length > 0
                 ? data["403-10d"].data[0].Q1
-                  ? data["403-10d"].data[0].Q1
+                  ? data["403-10d"].data[0].Q1=="No"?data["403-10d"].data[0].Q1:''
                   : "No data available"
                 : "No data available"
               : "No data available"
@@ -480,7 +480,7 @@ const Section25 = ({ section13_6_8Ref, data }) => {
         </p>
 
         <p className="text-[15px]  mb-2 font-semibold">
-          Standards, methodologies, and assumptions used
+        Standards, methodologies, and assumptions used to compile data for work-related ill-health
         </p>
         <p className="text-sm mb-2">
           {data["403-10e"]

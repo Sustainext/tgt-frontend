@@ -207,7 +207,7 @@ const MyGoals = () => {
   const renderGoalsList = (goalsList) => {
     if (!goalsList || goalsList.length === 0) {
       return (
-        <div className="flex flex-col justify-center items-center h-full mt-8">
+        <div className="flex flex-col justify-center items-center h-full">
           <div className="flex justify-center items-center pb-5">
             <FiCheckCircle style={{ color: "#ACACAC", fontSize: "36px" }} />
           </div>
@@ -228,7 +228,7 @@ const MyGoals = () => {
       // Check if the goal object is valid
       if (!goal || typeof goal !== "object") {
         return (
-          <div className="flex flex-col justify-center items-center h-full mt-8">
+          <div className="flex flex-col justify-center items-center h-full">
             <div className="flex justify-center items-center pb-5">
               <FiCheckCircle style={{ color: "#ACACAC", fontSize: "36px" }} />
             </div>
@@ -302,7 +302,7 @@ const MyGoals = () => {
   return (
     <>
       {/* <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} /> */}
-      <div className="p-6 bg-white rounded-lg shadow-sm border border-gray-200 min-h-[400px]">
+      <div className="p-6 bg-white rounded-lg shadow-sm border border-gray-200 h-[450px] xl:h-[470px] lg:h-[470px] md:h-[470px] 4k:h-[470px] flex flex-col">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-[#0f1728] text-lg font-medium font-['Manrope'] leading-7">
             Organization Goals
@@ -345,7 +345,7 @@ const MyGoals = () => {
           <div className="w-[68px] mr-1">Due Date</div>
         </div>
 
-        <div className="space-y-2">
+        <div className="flex-1 overflow-auto table-scrollbar">
           {goals && goals[activeTab]
             ? renderGoalsList(goals[activeTab])
             : renderGoalsList([])}

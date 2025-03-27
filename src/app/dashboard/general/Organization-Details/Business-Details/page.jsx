@@ -11,7 +11,8 @@ import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen4 from "./screen4";
-const BusinessDetails = () => {
+import GeneralTopBar from "../../generalTopBar";
+const BusinessDetails = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -40,12 +41,54 @@ const BusinessDetails = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 2 - 6",
+      toggle: "97",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
+  const brsr = [
+    {
+      tagName: "BRSR A-II-16",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section A-II-16",
+    },
+    {
+      tagName: "BRSR A-II-17",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section A-II-17",
+    },
+    {
+      tagName: "BRSR A-III-18",
+      id: "tooltip-$brsr3",
+      content: "BRSR-Section A-III-18",
+    },
+    {
+      tagName: "BRSR A-III-19a",
+      id: "tooltip-$brsr4",
+      content: "BRSR-Section A-III-19a",
+    },
+    {
+      tagName: "BRSR A-III-19c",
+      id: "tooltip-$brsr5",
+      content: "BRSR-Section A-III-19c",
+    },
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+            <GeneralTopBar
+                  toggleDrawer={toggleDrawer}
+                  brsr={brsr}
+                  griData={griData}
+                  title={"Business Details"}
+                  setMobileopen={setMobileopen}
+                />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">General</p>
@@ -192,7 +235,7 @@ const BusinessDetails = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

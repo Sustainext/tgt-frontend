@@ -93,7 +93,7 @@ Workers excluded & type of workers excluded
             ? data["403-8b"].data
               ? data["403-8b"].data.length > 0
                 ? data["403-8b"].data[0].Q1
-                  ? data["403-8b"].data[0].Q1
+                  ? data["403-8b"].data[0].Q1=="No"?data["403-8b"].data[0].Q1:''
                   : "No data available"
                 : "No data available"
               : "No data available"

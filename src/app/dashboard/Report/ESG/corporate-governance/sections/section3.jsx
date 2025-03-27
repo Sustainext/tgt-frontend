@@ -33,11 +33,14 @@ const Section3=({section9_2Ref,section9_2_1Ref,data})=>{
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           9.2.1 Nomination, Selection of the Highest Governance Body
         </h3>
-        <p className="text-sm mb-2">
+        <p className="text-sm mb-4">
           {data["2_10_a"] ? data["2_10_a"] : "No data available"}
         </p>
+        <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+        Criteria used for nomination and selection of highest governance body member
+            </p>
         <p className="text-sm mb-4">
-          {data["2_10_b"] ? data["2_10_b"].criteria : "No data available"}
+          {data["2_10_b"] ? data["2_10_b"].criteria?data["2_10_b"].criteria:"No data available" : "No data available"}
         </p>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
           Criteria considered for nomination and selection of the highest

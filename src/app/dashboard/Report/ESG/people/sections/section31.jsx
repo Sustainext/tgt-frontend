@@ -85,9 +85,21 @@ const Section31=({section13_8Ref,data})=>{
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Status of the incidents and actions taken
 </p>
-<p className="text-sm mb-2">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q1?data["406_1b"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
-<p className="text-sm mb-2">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q2?data["406_1b"].data[0].Q2:"No data available":"No data available":"No data available":"No data available"}</p>
-<p className="text-sm mb-2">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q3?data["406_1b"].data[0].Q3:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-[15px] text-[#344054] mb-2 font-semibold">
+Details about the Incident being reviewed by the organization
+</p>
+<p className="text-sm mb-4">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q1?data["406_1b"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-[15px] text-[#344054] mb-2 font-semibold">
+Remediation plans implemented
+</p>
+<p className="text-sm mb-4">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q2?data["406_1b"].data[0].Q2:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-[15px] text-[#344054] mb-2 font-semibold">
+Remediation plans that have been implemented, with results reviewed through routine internal management review process 
+</p>
+<p className="text-sm mb-4">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q3?data["406_1b"].data[0].Q3:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-[15px] text-[#344054] mb-2 font-semibold">
+List which Incidents are no longer subject to action
+</p>
 <p className="text-sm mb-4">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q4?data["406_1b"].data[0].Q4:"No data available":"No data available":"No data available":"No data available"}</p>
 
         <p className="text-[15px]  mb-2 font-semibold">

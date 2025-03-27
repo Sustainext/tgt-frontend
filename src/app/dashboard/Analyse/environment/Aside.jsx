@@ -13,21 +13,30 @@ import effluents from "../../../../../public/effluents.svg";
 import activeeffluents from "../../../../../public/activeeffluents.svg";
 import Image from "next/image";
 import { GiWoodPile, GiWaterfall } from "react-icons/gi";
-import { MdOutlineAir } from "react-icons/md";
+import { MdOutlineAir, MdClose } from "react-icons/md";
 
-const Aside = ({ activeTab, handleTabClick }) => {
+const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
+  const toggleSidebar = () => {
+    setMobileopen(false);
+  };
   return (
     <div
-      className={`m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-lg sticky top-[5rem]`}
+      className={`m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-lg fixed  `}
     >
-      <div className="flex items-start py-4 min-w-[200px] min-h-[100vh] rounded-lg text-[0.875rem]">
+      <div className="flex items-start py-4 xl:min-w-[200px] lg:min-w-[200px] md:min-w-[200px] 4k:min-w-[200px] 2k:min-w-[200px] 2xl:min-w-[200px] min-w-[422px] min-h-[100vh] rounded-lg text-[0.875rem]">
         <div className="flex flex-col w-full font-medium">
-          <div className="flex-col justify-end items-start gap-2 inline-flex mb-8">
+          <div className="flex  items-start gap-2 mb-8 w-full">
+            <div className="w-full">
             <div className="text-neutral-500 text-[10px] font-normal font-['Manrope'] uppercase leading-none tracking-wide">
               Analyse
             </div>
             <div className="text-neutral-500 text-base font-semibold font-['Manrope'] leading-none">
               Environment
+            </div>
+            </div>
+          
+            <div className="float-end block xl:hidden md:hidden lg:hidden 2xl:hidden 4k:hidden">
+              <MdClose onClick={toggleSidebar} className="text-3xl" />
             </div>
           </div>
           <button
@@ -103,7 +112,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
           >
             <GiWoodPile className="w-5 h-5 mr-5 mt-1" />
             <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">
-            Material Use and Efficiency
+              Material Use and Efficiency
             </span>
           </button>
           {/* packaging material */}
@@ -117,7 +126,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
           >
             <LuPackage className="w-5 h-5 mr-5 mt-1" />
             <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">
-            Packaging Material
+              Packaging Material
             </span>
           </button>
           <button

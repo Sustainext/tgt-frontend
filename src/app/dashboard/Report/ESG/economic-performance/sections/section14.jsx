@@ -16,6 +16,11 @@ const Section14 = ({ section11_4_3Ref }) => {
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           11.4.3. Tax Governance and Risk Management
         </h3>
+
+        <p className="text-[15px] mb-2 font-semibold">
+        Governance body or executive-level position within the organization accountable for compliance with the tax strategy
+        </p>
+
         {data["207_2a"]?.length>0?data["207_2a"].map((item, index) => (
           <div key={`207_2a_${index}`} className="mb-4">
             <p className="text-sm mb-2">{item.Q1 || "No data available"}</p>
@@ -40,9 +45,9 @@ const Section14 = ({ section11_4_3Ref }) => {
         )
       }
 
-        {data["207_2c"] && data["207_2c"].Q1 === "Yes" && (
+        {data["207_2c"] && data["207_2c"].Q1 === "Yes" ? (
           <div className="mb-4">
-            <p className="text-sm mb-2">{data["207_2c"].Q1}</p>
+            
             <p className="text-sm mb-2">
               {data["207_2c"].Q2 || "No data available"}
             </p>
@@ -50,7 +55,7 @@ const Section14 = ({ section11_4_3Ref }) => {
               {data["207_2c"].Q3?.text || "No data available"}
             </p>
           </div>
-        )}
+        ):<p className="text-sm mb-2">{data["207_2c"] && data["207_2c"].Q1?data["207_2c"].Q1:'No data available'}</p>}
       </div>
     </>
   );
