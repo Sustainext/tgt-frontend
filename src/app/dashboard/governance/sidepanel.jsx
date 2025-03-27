@@ -619,7 +619,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                       }`}
                       onClick={() => handleTabClick("Policy Commitments")}
                     >
-                      Approach to tax
+                      Policy Commitments
                     </p>
                   </div>
                   <div>
