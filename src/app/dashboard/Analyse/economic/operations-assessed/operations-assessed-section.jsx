@@ -79,8 +79,8 @@ const Operationsassessedsection = ({ selectedOrg, selectedCorp, year,togglestatu
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>Operations assessed for risks related to corruption</p>
+                 <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center mb-2">
+                  <p className="mb-2">Operations assessed for risks related to corruption</p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">

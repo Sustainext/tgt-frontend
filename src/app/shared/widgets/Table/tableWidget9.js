@@ -23,13 +23,12 @@ const CustomTableWidget9 = ({
     "male",
     "female",
     "others",
-    "totalTrainingHours",
+    "totalTrainingHours", // ✅ shows correctly
     "male1",
     "female1",
-    "others1",
-    "totalEmployees",
+    "others1", // ✅ use lowercase
+    "totalEmployees", // ✅
   ];
-
   // Update fields and automatically compute totals
   const updateField = (index, key, newValue) => {
     const newData = [...tableData];
@@ -45,6 +44,7 @@ const CustomTableWidget9 = ({
         .reduce((sum, value) => sum + (Number(value) || 0), 0)
         .toString();
     }
+
     if (["male1", "female1", "others1"].includes(key)) {
       newData[index]["totalEmployees"] = [
         newData[index]["male1"],
@@ -86,7 +86,10 @@ const CustomTableWidget9 = ({
 
   return (
     <>
-      <div style={{ overflowY: "auto", maxHeight: "400px" }} className="custom-scrollbar mb-5">
+      <div
+        style={{ overflowY: "auto", maxHeight: "400px" }}
+        className="custom-scrollbar mb-5"
+      >
         <table
           id={id}
           className="rounded-md border border-gray-300 w-full"
@@ -217,43 +220,46 @@ const CustomTableWidget9 = ({
             </tr>
           </thead>
           <tbody>
-            {tableData.map((item, rowIndex) => (
-              <tr key={`row-${rowIndex}`}>
-                {Object.keys(item)
-                  .filter((key) => visibleKeys.includes(key)) // Only display specified keys
-                  .map((key, cellIndex) => (
-                    <td
-                      key={`cell-${rowIndex}-${cellIndex}`}
-                      className={`${
-                        cellIndex == 8 ? "" : "border-r border-t"
-                      } text-[12px]  border-gray-300 p-3`}
-                    >
-                      <InputField
-                        type={
-                          options.subTitles.find(
-                            (sub) =>
-                              sub.title2.toLowerCase() === key.toLowerCase()
-                          )?.type || "text"
-                        }
-                        required={required}
-                        readOnly={
-                          key === "totalTrainingHours" ||
-                          key === "totalEmployees"
-                        }
-                        value={item[key]}
-                        onChange={(newValue) =>
-                          updateField(rowIndex, key, newValue)
-                        }
-                      />
-                    </td>
-                  ))}
-                <td className=" p-3">
-                  <button onClick={() => handleRemoveRow(rowIndex)}>
-                    <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {tableData.map((item, rowIndex) => {
+              console.log("Rendering row keys:", Object.keys(item)); // helpful log
+
+              return (
+                <tr key={`row-${rowIndex}`}>
+                  {options.subTitles.map((sub, cellIndex) => {
+                    const key = sub.title2;
+
+                    return (
+                      <td
+                        key={`cell-${rowIndex}-${cellIndex}`}
+                        className={`${
+                          cellIndex === options.subTitles.length - 1
+                            ? ""
+                            : "border-r border-t"
+                        } text-[12px] border-gray-300 p-3`}
+                      >
+                        <InputField
+                          type={sub.type}
+                          required={required}
+                          readOnly={
+                            key === "totalTrainingHours" ||
+                            key === "totalEmployees"
+                          }
+                          value={item[key]}
+                          onChange={(newValue) =>
+                            updateField(rowIndex, key, newValue)
+                          }
+                        />
+                      </td>
+                    );
+                  })}
+                  <td className="p-3">
+                    <button onClick={() => handleRemoveRow(rowIndex)}>
+                      <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
 
@@ -271,7 +277,7 @@ const CustomTableWidget9 = ({
   );
 };
 
-const InputField = ({ type, required, value, onChange,readOnly }) => {
+const InputField = ({ type, required, value, onChange, readOnly }) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
@@ -297,7 +303,6 @@ const InputField = ({ type, required, value, onChange,readOnly }) => {
       style={{
         width: "100%",
         minWidth: "120px", // Increased minimum width for better mobile experience
-       
       }}
       placeholder="Enter data"
       className="text-[12px] pl-2 py-2 text-center"

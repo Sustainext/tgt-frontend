@@ -35,6 +35,7 @@ import {
   setCompanyeconomic,
   setFinancialassistanc,
   setIntroductionto,
+  setInfrastructureInvestment,
   setgetdata,
 } from "../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
@@ -53,6 +54,10 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
   ); // Assuming imageceo is a File object
   const introduction_to_economic_value_creation = useSelector(
     (state) => state.screen11Slice.introduction_to_economic_value_creation
+  );
+
+  const infrastructure_investement=useSelector(
+    (state) => state.screen11Slice.infrastructure_investement
   );
 
   const [activeSection, setActiveSection] = useState("section11_1");
@@ -103,7 +108,11 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
       {"page":"screen_eleven","label":"11.1.2 Economic Value Creation","subLabel":"Add introduction for company’s economic value creation","type":"textarea","content":introduction_to_economic_value_creation,"field":"introduction_to_economic_value_creation","isSkipped":false},
       financial_assistance_from_government:
       {"page":"screen_eleven","label":"11.1.3 Financial Assistance Received from Government","subLabel":"Add introduction about financial assistance received from government","type":"textarea","content":financial_assistance_from_government,"field":"financial_assistance_from_government","isSkipped":false},
-         };
+      infrastructure_investement: 
+       {"page":"screen_eleven","label":"11.2 Infrastructure Investment and Services Supported","subLabel":"Add statement for infrastructure investment and services provided","type":"textarea","content":infrastructure_investement,"field":"infrastructure_investement","isSkipped":false},
+    
+    };
+       
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
     try {
@@ -162,6 +171,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
     dispatch(setCompanyeconomic(""));
     dispatch(setFinancialassistanc(""));
     dispatch(setIntroductionto(""));
+    dispatch(setInfrastructureInvestment(""))
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
     try {
@@ -173,7 +183,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
         dispatch(setCompanyeconomic(response.data.company_economic_performance_statement?.content || ""));
         dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation?.content || ""));
         dispatch(setFinancialassistanc(response.data.financial_assistance_from_government?.content || ""));
-        
+        dispatch(setInfrastructureInvestment(response.data.infrastructure_investement?.content || ""));
       }
 
       LoaderClose();

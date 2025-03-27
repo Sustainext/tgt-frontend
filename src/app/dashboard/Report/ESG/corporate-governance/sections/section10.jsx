@@ -18,12 +18,12 @@ const Section10=({section9_3_4Ref,data})=>{
             <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
             Senior executives with responsibility for the management of impacts:
             </p>
-            <p className="text-sm mb-2">{data["2_13_a"]?data["2_13_a"].has_appointed_executive_for_impact_management:"No data available"}</p>
+            <p className="text-sm mb-2">{data["2_13_a"]?data["2_13_a"].has_appointed_executive_for_impact_management=="No"?data["2_13_a"].has_appointed_executive_for_impact_management:'':"No data available"}</p>
             <p className="text-sm mb-4">{data["2_13_a"]?data["2_13_a"].reason_for_has_appointed_executive_for_impact_management:""}</p>
             <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
             Delegated responsibility for the management of impacts to other employees:
             </p>
-            <p className="text-sm mb-2">{data["2_13_a"]?data["2_13_a"].has_delegated_impact_management_to_employees:"No data available"}</p>
+            <p className="text-sm mb-2">{data["2_13_a"]?data["2_13_a"].has_delegated_impact_management_to_employees=="No"?data["2_13_a"].has_delegated_impact_management_to_employees:'':"No data available"}</p>
             <p className="text-sm mb-4">{data["2_13_a"]?data["2_13_a"].reason_for_has_delegated_impact_management_to_employees:""}</p>
             <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
             Description of  the process and frequency for senior executives or other employees to report back 

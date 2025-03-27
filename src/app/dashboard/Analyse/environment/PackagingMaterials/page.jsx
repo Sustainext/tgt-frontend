@@ -35,9 +35,9 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
     end: null,
   });
   const [errors, setErrors] = useState({
-    organization: 'Please select Organisation',
-    corporate: 'Please select Corporate',
-    location: 'Please select Location',
+    organization: "Please select Organisation",
+    corporate: "Please select Corporate",
+    location: "Please select Location",
   });
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -78,10 +78,7 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
 
       const data = response.data;
 
-      const {
-        reclaimed_materials,
-      } = data;
-     
+      const { reclaimed_materials } = data;
 
       const reclaimedmaterials = reclaimed_materials.map(
         (reclaimed, index) => ({
@@ -129,7 +126,7 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
   }, []);
 
   useEffect(() => {
-     const fetchCorporates = async () => {
+    const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -137,13 +134,11 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
           });
           setCorporates(response.data);
         } catch (e) {
-          if(e.status === 404) {
+          if (e.status === 404) {
             setCorporates([]);
-          }
-          else{
+          } else {
             console.error("Failed fetching corporates:", e);
           }
-          
         }
       }
     };
@@ -175,24 +170,24 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
 
   const handleReportTypeChange = (type) => {
     setReportType(type);
-    
+
     if (type === "Organization") {
-      setSelectedCorp(""); 
-      setSelectedLocation(""); 
+      setSelectedCorp("");
+      setSelectedLocation("");
     }
-    if(type === "Corporate"){
+    if (type === "Corporate") {
       setMaterialdata4([]);
       setDateRange({
         start: null,
-        end: null
+        end: null,
       });
       setIsDateRangeValid(false);
     }
-    if(type === "Location"){
+    if (type === "Location") {
       setMaterialdata4([]);
       setDateRange({
         start: null,
-        end: null
+        end: null,
       });
       setIsDateRangeValid(false);
     }
@@ -281,17 +276,19 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
   return (
     <>
       <div>
-        <div className="mb-2 flex-col items-center pt-4  gap-6">
-          <div className="mt-4 pb-3 mx-5 text-left">
+        <div className="mb-2 flex-col items-center xl:pt-4  gap-6">
+          <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2  text-left">
             <div className="mb-2 flex-col items-center pt-2  gap-6">
-            <div className="justify-start items-center gap-4 inline-flex">
+              <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
                   View By:
                 </div>
                 <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
+                      reportType === "Organization"
+                        ? "bg-[#d2dfeb]"
+                        : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
@@ -322,7 +319,7 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${
                   reportType !== "" ? "visible" : "hidden"
                 }`}
               >
@@ -348,10 +345,10 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
                         ))}
                     </select>
                     {errors.organization && (
-                    <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
-                      {errors.organization}
-                    </p>
-                  )}
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                        {errors.organization}
+                      </p>
+                    )}
                   </div>
                 </div>
                 {(reportType === "Corporate" || reportType === "Location") && (
@@ -377,10 +374,10 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
                           ))}
                       </select>
                       {errors.corporate && (
-                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
-                        {errors.corporate}
-                      </p>
-                    )}
+                        <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                          {errors.corporate}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}
@@ -407,8 +404,10 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
                           ))}
                       </select>
                       {errors.location && (
-                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">{errors.location}</p>
-                    )}
+                        <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                          {errors.location}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}
@@ -425,11 +424,11 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
                       endDate={dateRange.end}
                       onDateChange={handleDateChange}
                     />
-                  {!isDateRangeValid && (
-                     <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
-                     Please select a date range
-                    </p>
-                  )}
+                    {!isDateRangeValid && (
+                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                        Please select a date range
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -441,9 +440,11 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="materials4"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
               >
-                <p>Reclaimed products and their packaging materials</p>
+                <p className="mb-2 ml-1">
+                  Reclaimed products and their packaging materials
+                </p>
                 <div className="flex gap-2">
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -469,7 +470,7 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+            className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

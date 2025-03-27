@@ -52,17 +52,17 @@ const Section = ({
       );
 
       const data = response.data;
-      console.log(data, "testing");
+      
 
       const formattedData = data.percentage_of_employees_within_government_bodies.map((item) => [
-        item.male,
-        item.female,
-        item.nonBinary,
-        item.lessThan30,
-        item.between30and50,
-        item.moreThan50,
-        item.minorityGroup,
-        item.vulnerableCommunities,
+        item.male_percentage,
+        item.female_percentage,
+        item.nonBinary_percentage,
+        item.lessThan30_percentage,
+        item.between30and50_percentage,
+        item.moreThan50_percentage,
+        item.minorityGroup_percentage,
+        item.vulnerableCommunities_percentage,
       ]);
       
       

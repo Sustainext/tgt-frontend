@@ -51,14 +51,28 @@ stakeholders informed of our progress.`
                 7.1 Reporting Period, Frequency, and Point of Contact
         </h3>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-        Reporting Period and Frequency: 
+        Reporting Period:
             </p>
             <p className="mb-4 text-sm">
   {data && data["2-3-a"] ? (
     typeof data["2-3-a"] === 'object' ? (
       <>
         {data["2-3-a"].Q1? data["2-3-a"].Q1:"No Data available"}
-        <br />
+      </>
+    ) : (
+      "No data available"
+    )
+  ) : (
+    "No data available"
+  )}
+</p>
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            Reporting frequency:  
+            </p>
+            <p className="mb-4 text-sm">
+  {data && data["2-3-a"] ? (
+    typeof data["2-3-a"] === 'object' ? (
+      <>
         {data["2-3-a"].Q2? data["2-3-a"].Q2:"No Data available"}
       </>
     ) : (
@@ -73,17 +87,18 @@ stakeholders informed of our progress.`
         Point of Contact: 
             </p>
             <p className="mb-4 text-sm">
-  {data && data["2-3d"] ? (
-    typeof data["2-3d"] === 'object' ? (
-      <>
-        {data["2-3d"].Q1? data["2-3d"].Q1:"No Data available"}
-      </>
-    ) : (
-      "No data available"
-    )
+            {data && data["2-3d"] ? (
+  typeof data["2-3d"] === 'object' ? (
+    <pre style={{ fontFamily: 'inherit' }}>
+      {data["2-3d"].Q1 ? data["2-3d"].Q1 : "No Data available"}
+    </pre>
   ) : (
     "No data available"
-  )}
+  )
+) : (
+  "No data available"
+)}
+
 </p>
 
         </div>

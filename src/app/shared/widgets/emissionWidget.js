@@ -398,11 +398,13 @@ const EmissionWidget = React.memo(
     //     // Using the ref to track fetch status instead of state to prevent re-renders
     //     isFetchingRef.current = true;
 
+
     //     // Fetch activities
     //     fetchActivities().finally(() => {
     //       isFetchingRef.current = false;
     //     });
     //   }
+
 
     //   // Only reset loaded status when subcategory actually changes
     //   return () => {
@@ -410,6 +412,7 @@ const EmissionWidget = React.memo(
     //       setActivitiesLoaded(false);
     //     }
     //   };
+    // }, [subcategory, fetchActivities]);
     // }, [subcategory, fetchActivities]);
     useEffect(() => {
       // Only fetch activities when subcategory changes and we don't have them yet
@@ -509,13 +512,18 @@ const EmissionWidget = React.memo(
       (newActivity) => {
         console.log("handleActivityChange called with:", newActivity);
 
+
         // Find the selected activity object from our activities array
         const foundActivity = activities.find(
           (act) =>
             `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+          (act) =>
+            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
         );
 
+
         console.log("Found activity:", foundActivity);
+
 
         // First update local state to immediately show the selected activity
         setActivity(newActivity);
@@ -527,6 +535,55 @@ const EmissionWidget = React.memo(
           Activity: newActivity,
           activity_id: foundActivity ? foundActivity.activity_id : "",
           act_id: foundActivity ? foundActivity.id : "",
+          unit_type: foundActivity ? foundActivity.unit_type : "",
+          factor: foundActivity ? foundActivity.factor : "",
+          data_version: foundActivity
+            ? foundActivity.data_version
+            : "{{DATA_VERSION}}",
+          Quantity: "",
+          Quantity2: "",
+          Unit: "",
+          Unit2: "",
+        };
+
+
+        // Update form state
+        onChange(updatedValue);
+
+
+        // Update selected row if needed
+        updateSelectedRowIfNeeded(updatedValue);
+
+
+        // Reset quantity and unit states
+        setQuantity("");
+        setQuantity2("");
+        setUnit("");
+        setUnit2("");
+      },
+      [activities, onChange, value, updateSelectedRowIfNeeded]
+    );
+    // mobile version
+    const handleActivityChangemobile = useCallback(
+      (newActivity) => {
+        console.log("handleActivityChange called with:", newActivity);
+
+        // Find the selected activity object from our activities array
+        const foundActivity = activities.find(
+          (act) =>
+            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+        );
+
+        console.log("Found activity:", foundActivity);
+
+        // First update local state to immediately show the selected activity
+        setActivity(newActivity);
+
+        // Then update the form data with all the relevant details
+        const updatedValue = {
+          ...value,
+          Activity: newActivity,
+          activity_id: foundActivity ? foundActivity.activity_id : "",
           unit_type: foundActivity ? foundActivity.unit_type : "",
           factor: foundActivity ? foundActivity.factor : "",
           data_version: foundActivity
@@ -773,6 +830,23 @@ const EmissionWidget = React.memo(
     );
     const [uploadedBy, setUploadedBy] = useState(value.file?.uploadedBy ?? "");
     const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
+    const [selectSize, setSelectSize] = useState(9); // default to desktop size
+
+    useEffect(() => {
+      const handleResize = () => {
+        // You can adjust the breakpoint as needed
+        if (window.innerWidth < 768) {
+          setSelectSize(0); // for mobile, hide dropdown
+        } else {
+          setSelectSize(9); // for desktop
+        }
+      };
+
+      handleResize(); // set initial value
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
     const [selectSize, setSelectSize] = useState(9); // default to desktop size
 
     useEffect(() => {
@@ -1104,25 +1178,25 @@ const EmissionWidget = React.memo(
       switch (rowType) {
         case "calculated":
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <div className="w-1.5 h-1.5 rounded-full bg-green-500 xl:mx-auto md:mx-auto 2xl:mx-auto lg:mx-auto 3xl:mx-auto 4k:mx-auto 2k:mx-auto mx-2"></div>
             </td>
           );
         case "assigned":
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <div className="w-1.5 h-1.5 rounded-full bg-gray-500 mx-auto"></div>
             </td>
           );
         case "approved":
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <div className="w-1.5 h-1.5 rounded-full bg-[#FFA701] mx-auto"></div>
             </td>
           );
         default:
           return (
-            <td className="py-2 text-center w-[1vw]">
+            <td className="py-2 text-center xl:w-[1vw] w-[2vw]">
               <input
                 type="checkbox"
                 checked={isSelected}
@@ -1135,6 +1209,12 @@ const EmissionWidget = React.memo(
     };
 
     return (
+      <div
+        className={`w-full ${
+          !id.startsWith("root_0") &&
+          "xl:ml-1 md:ml-1 lg:ml-1 3xl:ml-1 4k:ml-1 2k:ml-1 ml-0"
+        }`}
+      >
       <div
         className={`w-full ${
           !id.startsWith("root_0") &&
@@ -1213,7 +1293,7 @@ const EmissionWidget = React.memo(
                   onChange={(e) => handleCategoryChange(e.target.value)}
                   className={getFieldClass(
                     "Category",
-                    `text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full  py-1 ${
+                    `text-[12px] focus:outline-none w-full xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full  py-1 ${
                       category && rowType === "default"
                         ? "border-b border-zinc-800"
                         : ""
@@ -1290,7 +1370,7 @@ const EmissionWidget = React.memo(
                     onFocus={toggleDropdown}
                     className={getFieldClass(
                       "Activity",
-                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[25vw] py-1"
+                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[76vw] py-1"
                     )}
                     disabled={["assigned", "calculated", "approved"].includes(
                       value.rowType
@@ -1674,7 +1754,7 @@ const EmissionWidget = React.memo(
                         <div className="bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
                           <div className="flex justify-between mt-4 mb-4">
                             <div>
-                              <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap">
+                              <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] xl:w-[400px] md:w-[400px] lg:w-[400px] 2xl:w-[400px] 4k:w-[400px] 2k:w-[400px] overflow-hidden whitespace-nowrap">
                                 {fileName}
                               </h5>
                             </div>
@@ -1702,6 +1782,7 @@ const EmissionWidget = React.memo(
                             </div>
                           </div>
                           <div className="block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
+                            <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
                             <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
                               {fileType.startsWith("image") ? (
                                 <img

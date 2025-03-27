@@ -55,6 +55,8 @@ import {setEnvironmentStatement,
   setEnergyConsumptionWithinOrganization,
   setEnergyConsumptionOutsideOrganization,
   setEnergyIntensityTracking,
+  setBaseYear,
+  setConsolidation,
   setEnergyConsumptionReductionCommitment,
   setSignificantSpills,
   setHabitatProtectionRestorationCommitment,
@@ -145,6 +147,8 @@ const scrollToSection = (sectionRef, sectionId) => {
   const air_quality_protection_commitment = useSelector((state) => state.screen12Slice.air_quality_protection_commitment);
   const biogenic_c02_emissions = useSelector((state) => state.screen12Slice.biogenic_c02_emissions);
   const biogenic_c02_emissions_305_3c = useSelector((state) => state.screen12Slice.biogenic_c02_emissions_305_3c);
+  const consolidation = useSelector((state) => state.screen12Slice.consolidation);
+  const base_year = useSelector((state) => state.screen12Slice.base_year);
   const dispatch = useDispatch()
 
   useImperativeHandle(ref, () => ({
@@ -182,7 +186,9 @@ const scrollToSection = (sectionRef, sectionId) => {
   "habitat_protection_restoration_commitment": {"page":"screen_twelve","label":"12.6.2 Habitat Protected and Restored","subLabel":"Add statement about company’s commitment to protect and restore habitats","type":"richTextarea","content":habitat_protection_restoration_commitment,"field":"habitat_protection_restoration_commitment","isSkipped":false} ,
   "air_quality_protection_commitment": {"page":"screen_twelve","label":"12.7 Air Quality","subLabel":"Add statement about company’s commitment to protect and maintain air quality","type":"richTextarea","content":air_quality_protection_commitment,"field":"air_quality_protection_commitment","isSkipped":false},
   "biogenic_c02_emissions_305_3c":{"page":"screen_twelve","label":"305-3-c. Biogenic CO2 emissions","subLabel":"","type":"richTextarea","content":biogenic_c02_emissions_305_3c,"field":"biogenic_c02_emissions_305_3c","isSkipped":false},
-  "biogenic_c02_emissions":{"page":"screen_twelve","label":"Biogenic CO2 emissions","subLabel":"","type":"richTextarea","content":biogenic_c02_emissions,"field":"biogenic_c02_emissions","isSkipped":false}
+  "biogenic_c02_emissions":{"page":"screen_twelve","label":"Biogenic CO2 emissions","subLabel":"","type":"richTextarea","content":biogenic_c02_emissions,"field":"biogenic_c02_emissions","isSkipped":false},
+  "consolidation":{"page":"screen_twelve","label":"Consolidation Approach","subLabel":"Add statement about tracking of Consolidation Approach","type":"textarea","content":consolidation,"field":"consolidation","isSkipped":false},
+  "base_year":{"page":"screen_twelve","label":"Base Year","subLabel":"Add statement about emissions in the Base Year","type":"textarea","content":base_year,"field":"base_year","isSkipped":false}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_twelve/${reportid}/`;
@@ -252,6 +258,8 @@ const scrollToSection = (sectionRef, sectionId) => {
       dispatch(setOzoneDepletingSubstanceElimination(''));
       dispatch(setMaterialManagementStrategy(''));
       dispatch(setRecyclingProcess(''));
+      dispatch(setBaseYear(''));
+      dispatch(setConsolidation(''));
       dispatch(setReclamationRecyclingProcess(''));
       dispatch(setWaterWithdrawalTracking(''));
       dispatch(setWaterConsumptionGoals(''));
@@ -292,6 +300,8 @@ dispatch(setHabitatProtectionRestorationCommitment(response.data.habitat_protect
 dispatch(setAirQualityProtectionCommitment(response.data.air_quality_protection_commitment?.content || ""));
 dispatch(setBiogenicCO2Emission(response.data.biogenic_c02_emissions?.content || ""));
 dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c?.content || ""));
+dispatch(setBaseYear(response.data.base_year?.content || ""));
+dispatch(setConsolidation(response.data.consolidation?.content || ""));
 
           }
           

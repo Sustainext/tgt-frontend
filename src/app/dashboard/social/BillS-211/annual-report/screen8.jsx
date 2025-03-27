@@ -7,6 +7,9 @@ import { MdOutlineModeEditOutline, MdClose } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from "../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
+import { MdOutlineDownload } from "react-icons/md";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const Screenend = ({
   prevStep,
@@ -23,7 +26,10 @@ const Screenend = ({
   const [reportingentity, setReportingentit] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [isSubmitted,setIsSubmitted]= useState(false)
+  const [submitDisabled,setSubmitDisbaled]=useState(false)
 
+  console.log(isSubmitted,"check")
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("token")?.replace(/"/g, "");
@@ -52,9 +58,13 @@ const Screenend = ({
         setReportnradio(response.data.policies_procedures_assess_17);
         setReportingdescription(response.data.additional_info_assessment_18);
         setReportingentit(response.data.assessment_method_description_17_1);
-        if (response.data.assessment_method_17_1 == null) {
+        if (!response.data.assessment_method_17_1) {
+          setIsSubmitted(false)
+          setSubmitDisbaled(false)
           setSelectedOptions([]);
         } else {
+          setIsSubmitted(true)
+          setSubmitDisbaled(true)
           setSelectedOptions(response.data.assessment_method_17_1);
         }
         LoaderClose();
@@ -88,6 +98,8 @@ const Screenend = ({
       LoaderClose();
     }
   };
+
+  
   useEffect(() => {
     // if (isMounted.current) {
 
@@ -145,6 +157,7 @@ const Screenend = ({
       : selectedOptions.filter((option) => option !== value);
 
     setSelectedOptions(newSelectedOptions);
+    setSubmitDisbaled(false)
 
     // Optionally clear the error for checkboxes when at least one option is selected
     if (newSelectedOptions.length > 0 && error.checkboxes) {
@@ -162,11 +175,13 @@ const Screenend = ({
 
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
+    setSubmitDisbaled(false)
     setError((prev) => ({ ...prev, reportradio: "" }));
   };
 
   const handleReportingdescription = (event) => {
     setReportingdescription(event.target.value);
+    setSubmitDisbaled(false)
   };
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -206,7 +221,8 @@ const Screenend = ({
         axiosConfig
       );
       if (response.status == "200") {
-        console.log(response.status);
+        setIsSubmitted(true)
+        setSubmitDisbaled(true)
         toast.success("Data added successfully", {
           position: "top-right",
           autoClose: 3000,
@@ -293,32 +309,29 @@ const Screenend = ({
   //   // Gets the last part after the last dot, which should be the extension
   // };
   const handleDownload = async () => {
-    setLoading(true);
-
+    LoaderOpen();
     try {
       const response = await fetch(
         `${
-          process.env.REACT_APP_BACKEND_URL
-        }/canadabills211/generate-csv/${localStorage.getItem("user_id")}`
+          process.env.BACKEND_API_URL
+        }/canadabills211/generate_cbill_excel/?organization=${selectedOrg}&corporate=${selectedCorp}&year=${year}`,
+        axiosConfig
       );
-
       if (!response.ok) {
-        // Parse the error message from the JSON response
-        const errorResponse = await response.json(); // Assuming the server responds with a JSON object on error
-        // Throw a new error with the message from the server's response
-        throw new Error(errorResponse.error || "Unknown error occurred"); // Fallback to a generic error message if none provided
+        const errorResponse = await response.json(); 
+        throw new Error(errorResponse.message || 'Unknown error occurred');
       }
-
+      LoaderClose();
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", `Bill-S211.csv`); // Choose the file name
+      link.setAttribute("download", `Canada_Bill_S211.xlsx`); // Choose the file name
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
     } catch (error) {
-      // Handle any errors that occurred during the fetch or download process
+      LoaderClose();
       toast.error(`${error.message}`, {
         position: "top-right",
         autoClose: 7000,
@@ -330,7 +343,7 @@ const Screenend = ({
         theme: "colored",
       });
     } finally {
-      setLoading(false);
+      LoaderClose();
     }
   };
 
@@ -472,34 +485,91 @@ const Screenend = ({
                   </div> */}
           </div>
         </form>
-        <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full] mb-5">
-          <div className="float-right">
-            <button
-              className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-              onClick={prevStep}
-            >
-              &lt; Previous
-            </button>
+        {/* {
+          isSubmitted?(
+            <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full] mb-5">
+                <div className="float-right">
+               <button
+            type="button"
+            onClick={handleDownload}
+            className={`px-3 py-2 font-semibold rounded ml-2 w-[130px] text-[12px] bg-blue-500 text-white`}
+          >
+            {" "}
+            Download Report
+          </button>
+            </div>
+            </div>
+            
+           
+          ):(
+            
+          )
+        } */}
 
-            <button
-              type="button"
-              onClick={continueToNextStep}
-              disabled={!(selectedOrg && year)}
-              className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-                reportType == "Organization"
-                  ? !(selectedOrg && year)
+<div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full] mb-5">
+            <div className="flex justify-between">
+            <div className="float-left relative flex">
+               <button
+            type="button"
+            disabled={!isSubmitted}
+            data-tooltip-id={`tooltip-$e1`}
+            data-tooltip-content="Please provide all the mandatory details to generate the Report."
+            onClick={handleDownload}
+            className={`px-2 py-2 ${!isSubmitted?'opacity-30':''} font-semibold rounded w-auto text-[13px] bg-transparent text-blue-400`}
+          >
+            {" "}
+            Download Report
+          </button>
+          <MdOutlineDownload className={`w-4 h-4 mt-2.5 ${!isSubmitted?'opacity-30':''} text-blue-400`} />
+                         
+                         {!isSubmitted && (
+                            <ReactTooltip
+                            id={`tooltip-$e1`}
+                            place="top"
+                            effect="solid"
+                            style={{
+                              width: "290px",
+                              backgroundColor: "#000",
+                              color: "white",
+                              fontSize: "12px",
+                              boxShadow: 3,
+                              borderRadius: "8px",
+                              textAlign: "left",
+                            }}
+                          ></ReactTooltip>
+                         )}
+                          
+            </div>
+            <div className="float-right">
+              <button
+                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
+                onClick={prevStep}
+              >
+                &lt; Previous
+              </button>
+  
+              <button
+                type="button"
+                onClick={continueToNextStep}
+                disabled={!(selectedOrg && year) || submitDisabled}
+                className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                  reportType == "Organization"
+                    ? !(selectedOrg && year) || submitDisabled
+                      ? "opacity-30 cursor-not-allowed"
+                      : ""
+                    : !(selectedOrg && year && selectedCorp) || submitDisabled
                     ? "opacity-30 cursor-not-allowed"
                     : ""
-                  : !(selectedOrg && year && selectedCorp)
-                  ? "opacity-30 cursor-not-allowed"
-                  : ""
-              }`}
-            >
-              {" "}
-              Submit
-            </button>
+                }`}
+              >
+                {" "}
+                Submit
+              </button>
+            </div>
+            </div>
+           
           </div>
-        </div>
+       
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
