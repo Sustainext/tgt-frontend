@@ -27,1662 +27,1156 @@ export const categoriesToAppend = [
   "Electronics",
   "Paper Products",
 
-  // From the new list (only the ones not already included)
+  //Sample for test
   "Agriculture/Hunting/Forestry/Fishing",
-  "Air Freight",
-  "Air Travel",
-  "Arable Farming",
-  "Building Materials",
-  "Ceramic Goods",
-  "Chemical Products",
-  "Cloud Computing - CPU",
-  "Cloud Computing - Memory",
-  "Cloud Computing - Networking",
-  "Cloud Computing - Storage",
-  "Construction",
-  "Construction Waste",
-  "Consumer Goods Rental",
-  "Cooling",
-  "Electrical Waste",
-  "Electricity",
-  "Energy Services",
-  "Equipment Repair",
-  "Fabricated Metal Products",
-  "Financial Services",
-  "Fishing/Aquaculture/Hunting",
-  "Food and Organic Waste",
-  "Food/Beverages/Tobacco",
-  "Fuel",
-  "General Waste",
-  "Glass and Glass Products",
-  "Glass Waste",
-  "Heat & Steam",
-  "Homeworking",
-  "Housing",
-  "Infrastructure",
-  "Insurance Services",
-  "Livestock Farming",
-  "Machinery",
-  "Manufacturing",
-  "Metal Waste",
-  "Metals",
-  "Mined Materials",
-  "Mining",
-  "Non-profit Activities",
-  "Operational Activities",
-  "Organic Products",
-  "Organizational Activities",
-  "Other Materials",
-  "Paper and Cardboard",
-  "Paper and Cardboard Waste",
-  "Pavement and Surfacing",
-  "Personal Care and Accessories",
-  "Plastic Waste",
-  "Rail Freight",
-  "Rail Travel",
-  "Real Estate",
-  "Refrigerants & Fugitive Gases",
-  "Road Freight",
-  "Sea Freight",
-  "Sea Travel",
-  "Social Care",
-  "Textiles",
-  "Timber and Forestry Products",
-  "Transport Services and Warehousing",
-  "Vehicle Parts",
-  "Water Supply",
-  "Wholesale Trade",
 ];
 
 export const categoryMappings = {
   Accommodation: [
     {
       source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Agriculture/Hunting/Forestry/Fishing": [
-    {
-      source: "BEIS",
       year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Air Freight": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Air Travel": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Arable Farming": [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Building Materials": [
-    {
-      source: "SEFR",
-      year: "2020",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "SEFR",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Ceramic Goods": [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Chemical Products": [
-    {
-      source: "BEIS",
-      year: "2023",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
+      checkConditions: false,
     },
   ],
   "Clothing and Footwear": [
     {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
     },
     {
       source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Cloud Computing - CPU": [
-    {
-      source: "CCF",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Cloud Computing - Memory": [
-    {
-      source: "CCF",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Cloud Computing - Networking": [
-    {
-      source: "CCF",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Cloud Computing - Storage": [
-    {
-      source: "CCF",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Construction: [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Construction Waste": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Consumer Goods Rental": [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Cooling: [
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
+      year: "2018",
+      checkConditions: false,
     },
   ],
   "DIY and Gardening Equipment": [
     {
       source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
+      year: "2019",
+      checkConditions: false,
     },
   ],
   "Domestic Services": [
     {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
     },
   ],
   Education: [
     {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
     },
   ],
   "Electrical Equipment": [
     {
-      source: "SEFR",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
     },
   ],
-  "Electrical Waste": [
+  "Equipment Rental": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Food and Beverage Services": [
+    {
+      source: "EPA",
+      year: "2019",
+      checkConditions: false,
+    },
     {
       source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Furnishings and Household": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+    {
+      source: "BEIS",
+      year: "2020",
+      checkConditions: false,
+    },
+  ],
+  "General Retail": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Government Activities": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Health and Social Care": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Information and Communication Services": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+    {
+      source: "BEIS",
+      year: "2020",
+      checkConditions: false,
+    },
+  ],
+  "Post and Telecommunication": [
+    {
+      source: "EXIPOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Office Equipment": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
     },
     {
       source: "EPA",
+      year: "2018",
+      checkConditions: false,
+    },
+    {
+      source: "EPA",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Paper Products": [
+    {
+      source: "EPA",
+      year: "2018",
+      checkConditions: false,
+    },
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+    {
+      source: "BEIS",
+      year: "2020",
+      checkConditions: false,
+    },
+  ],
+  "Plastics and Rubber Products": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Waste Management": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Water Treatment": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Restaurants and Accommodation": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Recreation and Culture": [
+    {
+      source: "EPA",
+      year: "2018",
+      checkConditions: false,
+    },
+    {
+      source: "EPA",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Consumer Goods and Services": [
+    {
+      source: "EPA",
+      year: "2018",
+      checkConditions: false,
+    },
+  ],
+  "Vehicle Maintenance and Services": [
+    {
+      source: "EPA",
+      year: "2019",
+      checkConditions: false,
+    },
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      region: "AU",
+      category: "Vehicles",
+      checkConditions: false,
+    },
+    {
+      source: "BEIS",
+      year: "2020",
+      region: "GB",
+      category: "Vehicles",
+      checkConditions: false,
+    },
+  ],
+  "Road Travel": [
+    {
+      source: "EPA",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Maintenance and Repair": [
+    {
+      source: "EPA",
+      year: "2018",
+      checkConditions: false,
+    },
+  ],
+  // with condition true
+  Fuel: [
+    {
+      source: "UBA",
+      year: "2022",
+      checkConditions: true,
+      conditions: {
+        years: ["2023", "2024"],
+        regions: ["*"],
+      },
+    },
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+    {
+      source: "Netherlands Enterprise Agency",
       year: "2024",
       checkConditions: true,
       conditions: {
         years: ["2024"],
-        regions: ["SG"],
+        regions: ["*"],
+      },
+    },
+    {
+      source: "ADEME",
+      year: "2024",
+      checkConditions: true,
+      conditions: {
+        years: ["2024"],
+        regions: ["*"],
       },
     },
   ],
   Electricity: [
     {
-      source: "SEFR (custom)",
-      year: "2023",
+      source: "GEMIS",
+      year: "2019",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
-  ],
-  Electronics: [
     {
-      source: "SEFR",
+      source: "ADEME",
       year: "2022",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2023", "2024"],
+        regions: ["*"],
       },
     },
     {
-      source: "BEIS",
-      year: "2021",
+      source: "EXIOBASE",
+      year: "2019",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Energy Services": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Equipment Rental": [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Equipment Repair": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Fabricated Metal Products": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Financial Services": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Fishing/Aquaculture/Hunting": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Food and Beverage Services": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Food and Organic Waste": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Food/Beverages/Tobacco": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Fuel: [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Furnishings and Household": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "General Retail": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "General Waste": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Glass and Glass Products": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Glass Waste": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Government Activities": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Health Care": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Heat & Steam": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Homeworking: [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Housing: [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Information and Communication Services": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Infrastructure: [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Insurance Services": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Livestock Farming": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Machinery: [
-    {
-      source: "SEFR",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Maintenance and Repair": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Manufacturing: [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Metal Waste": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Metals: [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Mined Materials": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Mining: [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Non-profit Activities": [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Office Equipment": [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Operational Activities": [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Organic Products": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Organizational Activities": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Other Materials": [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Paper and Cardboard": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Paper and Cardboard Waste": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Paper Products": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Pavement and Surfacing": [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Personal Care and Accessories": [
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Plastic Waste": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Plastics and Rubber Products": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Professional Services": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],
   "Rail Freight": [
     {
-      source: "BEIS",
-      year: "2024",
+      source: "UBA",
+      year: "2020",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Rail Travel": [
-    {
-      source: "SEFR",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Real Estate": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Recreation and Culture": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Refrigerants & Fugitive Gases": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],
   "Road Freight": [
     {
-      source: "BEIS",
-      year: "2024",
+      source: "UBA",
+      year: "2020",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
     {
-      source: "EPA",
-      year: "2024",
+      source: "ADEME",
+      year: "2021",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Air Freight": [
+    {
+      source: "UBA",
+      year: "2020",
+      checkConditions: true,
+      conditions: {
+        years: ["2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],
   "Road Travel": [
     {
-      source: "SEFR",
-      year: "2022",
+      source: "UBA",
+      year: "2020",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],
   "Sea Freight": [
     {
-      source: "BEIS",
-      year: "2024",
+      source: "UBA",
+      year: "2020",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
     {
-      source: "EPA",
-      year: "2024",
+      source: "ADEME",
+      year: "2020",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],
-  "Sea Travel": [
+  "Heat and Steam": [
     {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
+      source: "UBA",
       year: "2022",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2023", "2024"],
+        regions: ["*"],
+      },
+    },
+    {
+      source: "GEMIS",
+      year: "2015",
+      checkConditions: true,
+      conditions: {
+        years: [
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+        ],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Agriculture/Hunting/Forestry/Fishing": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Arable Farming": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Chemical Products": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Consumer Goods Rental": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Fabricated Metal Products": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Financial Services": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Fishing/Aquaculture/Hunting": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Health Care": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  Housing: [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Insurance Services": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Livestock Farming": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  Manufacturing: [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Mined Materials": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  Mining: [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Non-profit Activities": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Operational Activities": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Organic Products": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Other Materials": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Paper and Cardboard": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Personal Care and Accessories": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Real Estate": [
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: true,
+      conditions: {
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],
   "Social Care": [
     {
-      source: "BEIS",
-      year: "2021",
+      source: "EXIOBASE",
+      year: "2019",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],
-  Textiles: [
+  "Tickets and Passes": [
     {
-      source: "BEIS",
-      year: "2021",
+      source: "EXIOBASE",
+      year: "2019",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Timber and Forestry Products": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],
   "Transport Services and Warehousing": [
     {
-      source: "BEIS",
-      year: "2021",
+      source: "EXIOBASE",
+      year: "2019",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Vehicle Maintenance and Services": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],
   "Vehicle Parts": [
     {
-      source: "EPA",
-      year: "2022",
+      source: "EXIOBASE",
+      year: "2019",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  Vehicles: [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Waste Management": [
-    {
-      source: "BEIS",
-      year: "2021",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Water Supply": [
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-  ],
-  "Water Treatment": [
-    {
-      source: "SEFR",
-      year: "2023",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "BEIS",
-      year: "2024",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
-      },
-    },
-    {
-      source: "EPA",
-      year: "2022",
-      checkConditions: true,
-      conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],
   "Wholesale Trade": [
     {
-      source: "BEIS",
-      year: "2021",
+      source: "EXIOBASE",
+      year: "2019",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
+  ],
+  "Cloud computing - CPU": [
     {
-      source: "EPA",
+      source: "CCF",
       year: "2022",
       checkConditions: true,
       conditions: {
-        years: ["2024"],
-        regions: ["SG"],
+        years: ["2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Cloud computing - Memory": [
+    {
+      source: "CCF",
+      year: "2022",
+      checkConditions: true,
+      conditions: {
+        years: ["2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Cloud computing - Storage": [
+    {
+      source: "CCF",
+      year: "2022",
+      checkConditions: true,
+      conditions: {
+        years: ["2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Cloud computing - Networking": [
+    {
+      source: "CCF",
+      year: "2022",
+      checkConditions: true,
+      conditions: {
+        years: ["2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Building Materials": [
+    {
+      source: "GEMIS",
+      year: "2015",
+      checkConditions: true,
+      conditions: {
+        years: [
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+        ],
+        regions: ["*"],
+      },
+    },
+    {
+      source: "OEKOBAUDAT",
+      year: "2017",
+      checkConditions: true,
+      conditions: {
+        years: ["2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Food/Beverages/Tobacco": [
+    {
+      source: "GEMIS",
+      year: "2015",
+      checkConditions: true,
+      conditions: {
+        years: [
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+        ],
+        regions: ["*"],
+      },
+    },
+  ],
+  Metals: [
+    {
+      source: "GEMIS",
+      year: "2015",
+      checkConditions: true,
+      conditions: {
+        years: [
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+        ],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Plastic and Rubber Products": [
+    {
+      source: "GEMIS",
+      year: "2015",
+      checkConditions: true,
+      conditions: {
+        years: [
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+        ],
+        regions: ["*"],
+      },
+    },
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Rail Travel": [
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  Vehicles: [
+    {
+      source: "ADEME",
+      year: "2020",
+      checkConditions: true,
+      conditions: {
+        years: ["2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+    {
+      source: "EXIOBASE",
+      year: "2019",
+      checkConditions: false,
+    },
+  ],
+  "Air Travel": [
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Electrical Waste": [
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "General Waste": [
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Construction Waste": [
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Plastic Waste": [
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Food and Organic Waste": [
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Metal Waste": [
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Paper and Cardboard Waste": [
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Glass Waste": [
+    {
+      source: "ADEME",
+      year: "2021",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Timber and Forestry Products": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2020",
+      checkConditions: true,
+      conditions: {
+        years: ["2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Furnishings and Household": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Ceramic Goods": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2019", "2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  Construction: [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Electrical Equipment": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Energy Services": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2019", "2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  Facility: [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2019", "2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Glass and Glass Products": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2019", "2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  Machinery: [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2019", "2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Fabricated Metal Materials": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2017",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Mined Minerals": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2019", "2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Paper Products": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2019", "2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Pavement and Surfacing": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  Storage: [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2019", "2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  Textiles: [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2023", "2024"],
+        regions: ["*"],
+      },
+    },
+  ],
+  "Water Supply": [
+    {
+      source: "OEKOBAUDAT",
+      year: "2018",
+      checkConditions: true,
+      conditions: {
+        years: ["2019", "2020", "2021", "2022", "2023", "2024"],
+        regions: ["*"],
       },
     },
   ],

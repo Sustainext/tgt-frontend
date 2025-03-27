@@ -1055,21 +1055,42 @@ const EmissionWidget = React.memo(
     const handleDropdownScroll = useCallback(
       (e) => {
         const { scrollTop, scrollHeight, clientHeight } = e.target;
-
+        
         // If we're near the bottom (within 50px) and there are more items to load
         if (scrollHeight - scrollTop - clientHeight < 50 && hasMore) {
           // Calculate next page
           const nextPage = currentPage + 1;
           const startIndex = currentPage * itemsPerPage;
-          const endIndex = startIndex + itemsPerPage;
-
+          const endIndex = Math.min(startIndex + itemsPerPage, filteredActivities.length);
+          
+          // Check if we've already loaded all items or if there are no more items to load
+          if (startIndex >= filteredActivities.length || startIndex >= endIndex) {
+            setHasMore(false);
+            return;
+          }
+          
           // Get next batch of items
           const newItems = filteredActivities.slice(startIndex, endIndex);
-
+          
           // Update state
-          setVisibleActivities((prevItems) => [...prevItems, ...newItems]);
+          setVisibleActivities(prevItems => {
+            // Create a Set of existing IDs to avoid duplicates
+            const existingIds = new Set(prevItems.map(item => 
+              item.id || item.activity_id || `${item.name}-${item.source}-${item.unit_type}`
+            ));
+            
+            // Only add items that aren't already in the list
+            const uniqueNewItems = newItems.filter(item => {
+              const itemId = item.id || item.activity_id || 
+                            `${item.name}-${item.source}-${item.unit_type}`;
+              return !existingIds.has(itemId);
+            });
+            
+            return [...prevItems, ...uniqueNewItems];
+          });
+          
           setCurrentPage(nextPage);
-
+          
           // Check if we've loaded all items
           if (endIndex >= filteredActivities.length) {
             setHasMore(false);
@@ -1283,7 +1304,7 @@ const EmissionWidget = React.memo(
                   {isDropdownActive && (
                     <div
                       ref={dropdownRef}
-                      className="absolute left-0 top-8 z-[100] w-full bg-white border border-gray-300 shadow-lg max-h-64 overflow-y-auto min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6"
+                      className="absolute left-0 top-8 z-[100] w-full bg-white rounded-lg border border-gray-300 shadow-lg max-h-64 overflow-y-auto min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6"
                       onScroll={handleDropdownScroll}
                     >
                       <div
