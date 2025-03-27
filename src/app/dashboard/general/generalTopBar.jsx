@@ -3,7 +3,7 @@ import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { MdKeyboardArrowDown, MdClose } from "react-icons/md";
-const GovernancesTopBar = ({
+const GeneralTopBar = ({
   toggleDrawer,
   sdgData,
   title,
@@ -21,7 +21,7 @@ const GovernancesTopBar = ({
       <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
         <div className="w-full">
           <div className="text-left mb-2 ml-3 pt-5">
-            <p className="text-[11px]">Governance</p>
+            <p className="text-[11px]">General</p>
             <div className="flex h-[28px]">
               <div className="h-[28px]">
                 <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
@@ -91,7 +91,7 @@ const GovernancesTopBar = ({
               <div className="w-full  py-4 h-[80px]   rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]" onClick={toggleSidebar}>
                 <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
                   <div className="">
-                    <p className="text-[11px]">Governance</p>
+                    <p className="text-[11px]">General</p>
                     <div className="h-[28px]">
                       <div className="h-[28px]">
                         <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
@@ -110,7 +110,7 @@ const GovernancesTopBar = ({
       
               <div className="w-full float-end pt-2 me-1 my-4">
                 <div className="">
-                  <div className="flex mb-2">
+                  <div className="flex flex-wrap max-w-[406px]  mb-2">
                     {griData &&
                       griData.map((val) => (
                         <div>
@@ -171,4 +171,4 @@ const GovernancesTopBar = ({
   );
 };
 
-export default GovernancesTopBar;
+export default GeneralTopBar;

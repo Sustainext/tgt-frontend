@@ -3,21 +3,21 @@ export const columns1 = [
       label: "Material Type",
       dataIndex: "material_type",
       headerClass:
-        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[1%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
         "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Contribution %",
       dataIndex: "contribution",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[1%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Total in Qt",
       dataIndex: "total_waste",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[1%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -25,7 +25,7 @@ export const columns1 = [
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[1%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -40,28 +40,28 @@ export const columns1 = [
       label: "Location",
       dataIndex: "location",
       headerClass:
-        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[120px] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
         "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Material Type",
       dataIndex: "material_type",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[180px] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Contribution %",
       dataIndex: "contribution",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[180px] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Qty of total waste",
       dataIndex: "total_waste",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[180px]  text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -69,7 +69,7 @@ export const columns1 = [
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[30%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -84,21 +84,21 @@ export const columns1 = [
       label: "Total Waste by Category",
       dataIndex: "material_type",
       headerClass:
-        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[30%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
         "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Contribution %",
       dataIndex: "contribution",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[30%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Total in Qty",
       dataIndex: "total_waste",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[30%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -106,7 +106,7 @@ export const columns1 = [
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[30%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -121,28 +121,28 @@ export const columns1 = [
       label: "Disposal Method",
       dataIndex: "disposal_method",
       headerClass:
-        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[30%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
         "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Material Type",
       dataIndex: "material_type",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[30%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Qty of total waste",
       dataIndex: "total_waste",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[30%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "% of total waste ",
       dataIndex: "contribution",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[50%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -150,7 +150,7 @@ export const columns1 = [
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[30%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -165,28 +165,28 @@ export const columns1 = [
       label: "Recovery operation",
       dataIndex: "recovery_operation",
       headerClass:
-        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
         "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Material Type",
       dataIndex: "material_type",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Qty of total waste",
       dataIndex: "total_waste",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "% of total waste ",
       dataIndex: "contribution",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[40%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -194,7 +194,7 @@ export const columns1 = [
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -209,14 +209,14 @@ export const columns1 = [
       label: "Waste Type",
       dataIndex: "material_type",
       headerClass:
-        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[12%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
         "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Quantity",
       dataIndex: "total_waste",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -224,7 +224,7 @@ export const columns1 = [
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[10%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -232,7 +232,7 @@ export const columns1 = [
       label: "Recycled %",
       dataIndex: "recycled_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -240,7 +240,7 @@ export const columns1 = [
       label: "Preparation of reuse %",
       dataIndex: "preparation_of_reuse_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -248,7 +248,7 @@ export const columns1 = [
       label: "Other recovery options  %",
       dataIndex: "other_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -256,7 +256,7 @@ export const columns1 = [
       label: "Site",
       dataIndex: "site",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -271,14 +271,14 @@ export const columns1 = [
       label: "Waste Type",
       dataIndex: "material_type",
       headerClass:
-        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[12%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
         "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Quantity",
       dataIndex: "total_waste",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -286,7 +286,7 @@ export const columns1 = [
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[10%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -294,7 +294,7 @@ export const columns1 = [
       label: "Recycled %",
       dataIndex: "recycled_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -302,7 +302,7 @@ export const columns1 = [
       label: "Preparation of reuse %",
       dataIndex: "preparation_of_reuse_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -310,7 +310,7 @@ export const columns1 = [
       label: "Other recovery options  %",
       dataIndex: "other_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -318,7 +318,7 @@ export const columns1 = [
       label: "Site",
       dataIndex: "site",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -332,14 +332,14 @@ export const columns1 = [
       label: "Waste Type",
       dataIndex: "material_type",
       headerClass:
-        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[15%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
         "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Quantity",
       dataIndex: "total_waste",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -347,7 +347,7 @@ export const columns1 = [
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[10%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -355,7 +355,7 @@ export const columns1 = [
       label: "Incineration (with energy) %",
       dataIndex: "inceneration_with_energy_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -363,7 +363,7 @@ export const columns1 = [
       label: "Incineration (without energy) %",
       dataIndex: "inceneration_without_energy_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -371,7 +371,7 @@ export const columns1 = [
       label: "Landfill %",
       dataIndex: "landfill_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -379,7 +379,7 @@ export const columns1 = [
       label: "Other disposal method  %",
       dataIndex: "other_disposal_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -387,7 +387,7 @@ export const columns1 = [
       label: "External Vendor",
       dataIndex: "external_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -395,7 +395,7 @@ export const columns1 = [
       label: "Site",
       dataIndex: "site",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -410,14 +410,14 @@ export const columns1 = [
       label: "Waste Type",
       dataIndex: "material_type",
       headerClass:
-        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[15%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
         "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Quantity",
       dataIndex: "total_waste",
-      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -425,7 +425,7 @@ export const columns1 = [
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[10%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -433,7 +433,7 @@ export const columns1 = [
       label: "Incineration (with energy) %",
       dataIndex: "inceneration_with_energy_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -441,7 +441,7 @@ export const columns1 = [
       label: "Incineration (without energy) %",
       dataIndex: "inceneration_without_energy_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -449,7 +449,7 @@ export const columns1 = [
       label: "Landfill %",
       dataIndex: "landfill_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -457,7 +457,7 @@ export const columns1 = [
       label: "Other disposal method  %",
       dataIndex: "other_disposal_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -465,7 +465,7 @@ export const columns1 = [
       label: "External Vendor",
       dataIndex: "external_percentage",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
@@ -473,7 +473,7 @@ export const columns1 = [
       label: "Site",
       dataIndex: "site",
       headerClass:
-        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272]  xl:w-[10%] lg:w-[10%] 2xl:w-[10%] 4k:w-[10%] 2k:w-[10%] w-[20%] text-center rounded-tr-lg",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },

@@ -10,7 +10,8 @@ import GeneralHeader2 from "../GeneralHeader2";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 // import Screen3 from "./screen3";
-const StakeholderEngagement = () => {
+import GeneralTopBar from "../generalTopBar";
+const StakeholderEngagement = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -39,12 +40,54 @@ const StakeholderEngagement = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 2 - 29",
+      toggle: "103",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
+  const brsr = [
+    {
+      tagName: "BRSR C-P4-E1",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 4-Essential Indicators-1",
+    },
+    {
+      tagName: "BRSR C-P4-E2",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 4-Essential Indicators-2",
+    },
+    {
+      tagName: "BRSR C-P4-L3",
+      id: "tooltip-$brsr3",
+      content: "BRSR-Section C-Principle 4-Leadership  Indicators-3",
+    },
+    // {
+    //   tagName: "BRSR A-III-19a",
+    //   id: "tooltip-$brsr4",
+    //   content: "BRSR-Section A-III-19a",
+    // },
+    // {
+    //   tagName: "BRSR A-III-19c",
+    //   id: "tooltip-$brsr5",
+    //   content: "BRSR-Section A-III-19c",
+    // },
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <GeneralTopBar
+                  toggleDrawer={toggleDrawer}
+                  brsr={brsr}
+                  griData={griData}
+                  title={"Stakeholder Engagement"}
+                  setMobileopen={setMobileopen}
+                />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">General</p>
@@ -143,7 +186,7 @@ const StakeholderEngagement = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

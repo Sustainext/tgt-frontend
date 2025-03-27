@@ -12,7 +12,8 @@ import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen4 from "./screen4";
-const WorkforceEmployees = () => {
+import GeneralTopBar from "../../generalTopBar";
+const WorkforceEmployees = ({ setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -21,7 +22,7 @@ const WorkforceEmployees = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-  const [togglestatus,setToggleStatus] = useState("Organization");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -41,12 +42,49 @@ const WorkforceEmployees = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 2 - 7",
+      toggle: "98",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
+  const brsr = [
+    {
+      tagName: "BRSR A-IV-20a",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section A-IV-20a",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 8",
+      toggle: "3",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
+    },
+    {
+      tagName: "SDG 10",
+      toggle: "4",
+      textColor: "#fff",
+      bgColor: "bg-pink-500",
+    },
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+        <GeneralTopBar
+          toggleDrawer={toggleDrawer}
+          brsr={brsr}
+          griData={griData}
+          sdgData={sdgData}
+          title={"Workforce-Employees"}
+          setMobileopen={setMobileopen}
+        />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">General</p>
@@ -112,7 +150,7 @@ const WorkforceEmployees = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -165,16 +203,15 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-            
-                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
-                <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
-                  {program.data}
-                </div>
+                <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
+                  <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                    {program.data}
+                  </div>
                 </div>
                 <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
-                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
-                  {program.data}
-                </div>
+                  <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                    {program.data}
+                  </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

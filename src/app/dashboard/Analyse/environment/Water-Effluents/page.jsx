@@ -93,12 +93,12 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
 
   const handleReportTypeChange = (type) => {
     setReportType(type);
-    
+
     if (type === "Organization") {
-      setSelectedCorp(""); 
-      setSelectedLocation(""); 
+      setSelectedCorp("");
+      setSelectedLocation("");
     }
-    if(type === "Corporate"){
+    if (type === "Corporate") {
       setWaterConsumption([]);
       setWaterConsumptionInWaterStress([]);
       setWaterConsumptionByBusinessOperation([]);
@@ -118,11 +118,11 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
       setChangeInWaterStorage([]);
       setDateRange({
         start: null,
-        end: null
+        end: null,
       });
       setIsDateRangeValid(false);
     }
-    if(type === "Location"){
+    if (type === "Location") {
       setWaterConsumption([]);
       setWaterConsumptionInWaterStress([]);
       setWaterConsumptionByBusinessOperation([]);
@@ -142,16 +142,16 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
       setChangeInWaterStorage([]);
       setDateRange({
         start: null,
-        end: null
+        end: null,
       });
       setIsDateRangeValid(false);
     }
   };
   const [changeInWaterStorage, setChangeInWaterStorage] = useState([]);
   const [errors, setErrors] = useState({
-    organization: 'Please select Organisation',
-    corporate: 'Please select Corporate',
-    location: 'Please select Location',
+    organization: "Please select Organisation",
+    corporate: "Please select Corporate",
+    location: "Please select Location",
   });
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -166,22 +166,22 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
       setIsDateRangeValid(false);
       console.error("Invalid date range selected");
       return;
-  } else {
+    } else {
       const startDate = new Date(params.start);
       const endDate = new Date(params.end);
 
       if (endDate < startDate) {
-          setIsDateRangeValid(false);
-          setDateRange({
-            start: null,
-            end: null
-          });
-          console.error("End date cannot be before start date");
-          return;
+        setIsDateRangeValid(false);
+        setDateRange({
+          start: null,
+          end: null,
+        });
+        console.error("End date cannot be before start date");
+        return;
       } else {
-          setIsDateRangeValid(true);
+        setIsDateRangeValid(true);
       }
-  }
+    }
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
@@ -234,10 +234,10 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
       );
       setWaterWithdrawalByWaterType(total_water_withdrawal_by_water_type);
       setWaterWithdrawalFromThirdParties(water_withdrawal_from_third_parties);
-      setWaterDischargeByLocation(get_total_fresh_water_discharge_by_location_country);
-      setWaterDischargeBySourceAndType(
-        total_water_discharge_by_water_type
+      setWaterDischargeByLocation(
+        get_total_fresh_water_discharge_by_location_country
       );
+      setWaterDischargeBySourceAndType(total_water_discharge_by_water_type);
       setWaterDischargeFromWaterStressByBusinessOperation(
         total_water_discharge_from_water_stress_area_by_business_operation
       );
@@ -282,7 +282,7 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
   }, []);
 
   useEffect(() => {
-     const fetchCorporates = async () => {
+    const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -290,13 +290,11 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
           });
           setCorporates(response.data);
         } catch (e) {
-          if(e.status === 404) {
+          if (e.status === 404) {
             setCorporates([]);
-          }
-          else{
+          } else {
             console.error("Failed fetching corporates:", e);
           }
-          
         }
       }
     };
@@ -325,8 +323,6 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
 
     fetchLocation();
   }, [selectedCorp]);
-
-
 
   const handleOrganizationChange = (e) => {
     const newOrg = e.target.value;
@@ -409,9 +405,9 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
 
   return (
     <>
-    <div>
-      <div className="mb-2 flex-col items-center pt-4  gap-6">
-          <div className="mt-4 pb-3 mx-5 text-left">
+      <div>
+        <div className="mb-2 flex-col items-center xl:pt-4  gap-6">
+          <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2  text-left">
             <div className="mb-2 flex-col items-center pt-2  gap-6">
               <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
@@ -420,7 +416,9 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                 <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
+                      reportType === "Organization"
+                        ? "bg-[#d2dfeb]"
+                        : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
@@ -451,7 +449,7 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${
                   reportType !== "" ? "visible" : "hidden"
                 }`}
               >
@@ -477,10 +475,10 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                         ))}
                     </select>
                     {errors.organization && (
-                    <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
-                      {errors.organization}
-                    </p>
-                  )}
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                        {errors.organization}
+                      </p>
+                    )}
                   </div>
                 </div>
                 {(reportType === "Corporate" || reportType === "Location") && (
@@ -506,10 +504,10 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                           ))}
                       </select>
                       {errors.corporate && (
-                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
-                        {errors.corporate}
-                      </p>
-                    )}
+                        <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                          {errors.corporate}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}
@@ -536,8 +534,10 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                           ))}
                       </select>
                       {errors.location && (
-                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">{errors.location}</p>
-                    )}
+                        <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                          {errors.location}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}
@@ -554,11 +554,11 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                       endDate={dateRange.end}
                       onDateChange={handleDateChange}
                     />
-                 {!isDateRangeValid && (
-                     <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
-                     Please select a date range
-                    </p>
-                  )}
+                    {!isDateRangeValid && (
+                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                        Please select a date range
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -566,339 +566,368 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
           </div>
         </div>
         <div className="flex">
-        <div className={`ps-4 w-[100%] me-4`}>
-          <div className="mb-6">
-            <div
-              id="watereffluents1"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Total Water Consumption</p>
-              <div className="flex gap-2">
+          <div className={`ps-4 w-[100%] me-4`}>
+            <div className="mb-6">
+              <div
+                id="watereffluents1"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1"> Total Water Consumption</p>
+                <div className="flex gap-2">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 303-5a
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 303-5b
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <DynamicTable columns={columns1} data={waterConsumption} />
+            </div>
+            <div className="mb-6">
+              <div
+                id="watereffluents2"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  {" "}
+                  Total Water Consumption in water stress areas
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 303-5b
+                  </div>
+                </div>
+              </div>
+              <DynamicTable
+                columns={columns2}
+                data={waterConsumptionInWaterStress}
+              />
+            </div>
+            <div className="mb-6">
+              <div
+                id="watereffluents3"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  {" "}
+                  Total Water Consumption by business operation
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 303-1a
+                  </div>
+                </div>
+              </div>
+              <DynamicTable
+                columns={columns3}
+                data={waterConsumptionByBusinessOperation}
+              />
+            </div>
+            <div className="mb-6">
+              <div
+                id="watereffluents4"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  {" "}
+                  Total Water Consumption by Location
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 303-5
+                  </div>
+                </div>
+              </div>
+              <DynamicTable
+                columns={columns4}
+                data={waterConsumptionByLocation}
+              />
+            </div>
+            <div className="mb-6">
+              <div
+                id="watereffluents5"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">Total Water Consumption by source</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 303-5a
                   </div>
                 </div>
+              </div>
+              <DynamicTable
+                columns={columns5}
+                data={waterConsumptionBySource}
+              />
+            </div>
+            <div className="mb-6">
+              <div
+                id="watereffluents6"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  {" "}
+                  Total Fresh Water withdrawal by business operation
+                </p>
+
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 303-5b
+                    GRI 303-1a
                   </div>
                 </div>
               </div>
+              <DynamicTable
+                columns={columns6}
+                data={freshWaterWithdrawalByBusinessOperation}
+              />
             </div>
-            <DynamicTable columns={columns1} data={waterConsumption} />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents2"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Total Water Consumption in water stress areas</p>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-5b
+            <div className="mb-6">
+              <div
+                id="watereffluents7"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  Total Fresh Water withdrawal by source (from water stress
+                  area)
+                </p>
+                <div className="flex gap-2">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 303-3b
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 303-5b
+                    </div>
+                  </div>
                 </div>
               </div>
+              <DynamicTable
+                columns={columns7}
+                data={freshWaterWithdrawalBySourceInWaterStress}
+              />
             </div>
-            <DynamicTable
-              columns={columns2}
-              data={waterConsumptionInWaterStress}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents3"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p> Total Water Consumption by business operation</p>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-1a
-                </div>
-              </div>
-            </div>
-            <DynamicTable
-              columns={columns3}
-              data={waterConsumptionByBusinessOperation}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents4"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Total Water Consumption by Location</p>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-5
-                </div>
-              </div>
-            </div>
-            <DynamicTable
-              columns={columns4}
-              data={waterConsumptionByLocation}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents5"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Total Water Consumption by source</p>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-5a
-                </div>
-              </div>
-            </div>
-            <DynamicTable
-              columns={columns5}
-              data={waterConsumptionBySource}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents6"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Total Fresh Water withdrawal by business operation</p>
+            <div className="mb-6">
+              <div
+                id="watereffluents8"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  {" "}
+                  Total Fresh Water withdrawal by Location/Country
+                </p>
 
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-1a
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 303-3
+                  </div>
                 </div>
               </div>
+              <DynamicTable
+                columns={columns8}
+                data={freshWaterWithdrawalByLocation}
+              />
             </div>
-            <DynamicTable
-              columns={columns6}
-              data={freshWaterWithdrawalByBusinessOperation}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents7"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>
-                Total Fresh Water withdrawal by source (from water stress area)
-              </p>
-              <div className="flex gap-2">
+            <div className="mb-6">
+              <div
+                id="watereffluents9"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  {" "}
+                  Total Water withdrawal by Water type
+                </p>
+                <div className="flex gap-2">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 303-3a
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 303-3c
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <DynamicTable
+                columns={columns9}
+                data={waterWithdrawalByWaterType}
+              />
+            </div>
+            <div className="mb-6">
+              <div
+                id="watereffluents10"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  {" "}
+                  Water withdrawal from third-parties
+                </p>
+
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 303-3b
                   </div>
                 </div>
+              </div>
+              <DynamicTable
+                columns={columns10}
+                data={waterWithdrawalFromThirdParties}
+              />
+            </div>
+            <div className="mb-6">
+              <div
+                id="watereffluents11"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">Total Water Discharge by Location</p>
+
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 303-5b
+                    GRI 303-4
                   </div>
                 </div>
               </div>
+              <DynamicTable
+                columns={columns11}
+                data={waterDischargeByLocation}
+              />
             </div>
-            <DynamicTable
-              columns={columns7}
-              data={freshWaterWithdrawalBySourceInWaterStress}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents8"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Total Fresh Water withdrawal by Location/Country</p>
+            <div className="mb-6">
+              <div
+                id="watereffluents12"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  {" "}
+                  Total Water Discharge by source and type of water
+                </p>
 
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-3
-                </div>
-              </div>
-            </div>
-            <DynamicTable
-              columns={columns8}
-              data={freshWaterWithdrawalByLocation}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents9"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Total Water withdrawal by Water type</p>
-              <div className="flex gap-2">
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 303-3a
+                <div className="flex gap-2">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 303-4a
+                    </div>
                   </div>
-                </div>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 303-3c
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 303-4b
+                    </div>
                   </div>
                 </div>
               </div>
+              <DynamicTable
+                columns={columns12}
+                data={waterDischargeBySourceAndType}
+              />
             </div>
-            <DynamicTable
-              columns={columns9}
-              data={waterWithdrawalByWaterType}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents10"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Water withdrawal from third-parties</p>
+            <div className="mb-6">
+              <div
+                id="watereffluents13"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  Total Water Discharge (from water stress area) by Business
+                  Operation
+                </p>
 
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-3b
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 303-1a
+                  </div>
                 </div>
               </div>
+              <DynamicTable
+                columns={columns13}
+                data={waterDischargeFromWaterStressByBusinessOperation}
+              />
             </div>
-            <DynamicTable
-              columns={columns10}
-              data={waterWithdrawalFromThirdParties}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents11"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Total Water Discharge by Location</p>
+            <div className="mb-6">
+              <div
+                id="watereffluents14"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  {" "}
+                  Total Water Discharge by Business Operation
+                </p>
 
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-4
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 303-1a
+                  </div>
                 </div>
               </div>
+              <DynamicTable
+                columns={columns14}
+                data={waterDischargeByBusinessOperation}
+              />
             </div>
-            <DynamicTable
-              columns={columns11}
-              data={waterDischargeByLocation}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents12"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Total Water Discharge by source and type of water</p>
+            <div className="mb-6">
+              <div
+                id="watereffluents15"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  Total Water Discharge by Water type (from water stress area)
+                </p>
 
-              <div className="flex gap-2">
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 303-4c
+                  </div>
+                </div>
+              </div>
+              <DynamicTable
+                columns={columns15}
+                data={waterDischargeByWaterTypeFromWaterStress}
+              />
+            </div>
+            <div className="mb-6">
+              <div
+                id="watereffluents16"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
+                  Third-party Water discharge sent to use for other
+                  organizations
+                </p>
+
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 303-4a
                   </div>
                 </div>
+              </div>
+              <DynamicTable
+                columns={columns16}
+                data={thirdPartyWaterDischargeForOtherOrganizations}
+              />
+            </div>
+            <div className="mb-6">
+              <div
+                id="watereffluents17"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1"> Change in water storage</p>
+
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 303-4b
+                    GRI 303-5c
                   </div>
                 </div>
               </div>
+              <DynamicTable columns={columns17} data={changeInWaterStorage} />
             </div>
-            <DynamicTable
-              columns={columns12}
-              data={waterDischargeBySourceAndType}
-            />
           </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents13"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>
-                Total Water Discharge (from water stress area) by Business
-                Operation
-              </p>
-
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-1a
-                </div>
-              </div>
-            </div>
-            <DynamicTable
-              columns={columns13}
-              data={waterDischargeFromWaterStressByBusinessOperation}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents14"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Total Water Discharge by Business Operation</p>
-
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-1a
-                </div>
-              </div>
-            </div>
-            <DynamicTable
-              columns={columns14}
-              data={waterDischargeByBusinessOperation}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents15"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>
-                Total Water Discharge by Water type (from water stress area)
-              </p>
-
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-4c
-                </div>
-              </div>
-            </div>
-            <DynamicTable
-              columns={columns15}
-              data={waterDischargeByWaterTypeFromWaterStress}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents16"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>
-                Third-party Water discharge sent to use for other organizations
-              </p>
-
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-4a
-                </div>
-              </div>
-            </div>
-            <DynamicTable
-              columns={columns16}
-              data={thirdPartyWaterDischargeForOtherOrganizations}
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              id="watereffluents17"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p> Change in water storage</p>
-
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 303-5c
-                </div>
-              </div>
-            </div>
-            <DynamicTable columns={columns17} data={changeInWaterStorage} />
-          </div>
-        </div>
-        <div
+          <div
             style={{
               position: `${isBoxOpen ? "unset" : "sticky"}`,
               top: "10rem",
@@ -907,25 +936,25 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+            className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>
+        </div>
       </div>
-    </div>
-          {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center  bg-black bg-opacity-50 z-[100]">
-              <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-              />
-            </div>
-          )}
-          </>
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center  bg-black bg-opacity-50 z-[100]">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
+    </>
   );
 };
 
