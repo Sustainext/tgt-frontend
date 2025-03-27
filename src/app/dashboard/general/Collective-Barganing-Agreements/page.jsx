@@ -9,7 +9,7 @@ import { Socialdata } from "../../social/data/socialgriinfo";
 import GeneralHeader2 from "../GeneralHeader2";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
-import GeneralTopBar from "../GeneralTopBar";
+import GeneralTopBar from "../generalTopBar";
 const CollectiveBargainingAgreements = ({ setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");

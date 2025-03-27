@@ -12,7 +12,7 @@ import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen4 from "./screen4";
 import { Oval } from "react-loader-spinner";
-import GeneralTopBar from "../../GeneralTopBar";
+import GeneralTopBar from "../../generalTopBar";
 const ReportDetails = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
