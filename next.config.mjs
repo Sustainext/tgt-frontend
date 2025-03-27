@@ -45,8 +45,9 @@ const nextConfig = {
     return config;
   },
   distDir: "custom_build",
-  experimental: {
+   experimental: {
     missingSuspenseWithCSRBailout: false,
+    swcMinify: true,
   },
   reactStrictMode: true,
 };
