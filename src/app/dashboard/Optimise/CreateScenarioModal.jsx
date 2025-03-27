@@ -33,7 +33,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
     };
 
     // Pass to parent component
-    onCreateScenario(newScenario);
+    // onCreateScenario(newScenario);
     
     // Reset form and close modal
     resetForm();
@@ -116,7 +116,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                     <input
                       type="text"
                       placeholder="Name"
-                      className="w-full rounded-md px-2 py-2 border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      className="w-full rounded-md px-2 py-2 border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
                       value={scenarioName}
                       onChange={(e) => setScenarioName(e.target.value)}
                     />
@@ -157,7 +157,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                       Select Organization
                     </label>
                     <select
-                      className="w-full rounded-md p-2 border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      className="w-full rounded-md p-2 border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
                       value={selectedOrg}
                       onChange={(e) => setSelectedOrg(e.target.value)}
                     >
@@ -175,7 +175,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                       Select Corporate
                     </label>
                     <select
-                      className="w-full rounded-md p-2 border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      className="w-full rounded-md p-2 border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
                       value={selectedCorp}
                       onChange={(e) => setSelectedCorp(e.target.value)}
                     >

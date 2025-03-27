@@ -10,16 +10,16 @@ const ScenarioDashboard = () => {
   return (
     <>
       <ToastContainer style={{fontSize: '12px'}} />
-      <div className="p-4">
+      <div className="px-0 py-4">
         {/* Header */}
-        <div className="h-20 py-4 bg-white shadow-sm border-b border-gray-200 flex items-center mb-4">
+        <div className="h-20 px-8 py-4 bg-white shadow-sm border-b border-gray-200 flex items-center mb-4">
           <h1 className="text-2xl font-medium gradient-text">
             Scenario Analysis
           </h1>
         </div>
 
         {/* Tabs */}
-        <div className="border-b border-gray-200 mb-6">
+        <div className="border-b border-gray-200 mb-6 px-8">
           <nav className="-mb-px flex space-x-8">
             <button
               onClick={() => setActiveTab("home")}
