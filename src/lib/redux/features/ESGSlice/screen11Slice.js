@@ -8,6 +8,7 @@ const Screen11Slice = createSlice({
     company_economic_performance_statement:'',
     financial_assistance_from_government:'',
     introduction_to_economic_value_creation:'',
+    infrastructure_investement:'',
     getdata:'',
     error: null
   },
@@ -15,6 +16,9 @@ const Screen11Slice = createSlice({
 
     setCompanyeconomic: (state, action) => {
       state.company_economic_performance_statement = action.payload;
+    },
+    setInfrastructureInvestment: (state, action) => {
+      state.infrastructure_investement = action.payload;
     },
     setFinancialassistanc: (state, action) => {
         state.financial_assistance_from_government = action.payload;
@@ -33,6 +37,7 @@ export const {
     setCompanyeconomic,
     setFinancialassistanc,
     setIntroductionto,
+    setInfrastructureInvestment,
     setgetdata,
 } = Screen11Slice.actions;
 

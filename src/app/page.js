@@ -224,7 +224,7 @@ export default function Home() {
                   <div className="text-sm">
                     <a
                       href="/forgot-password"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                      className="font-medium text-[#007EEF] hover:text-indigo-500"
                     >
                       Forgot your password?
                     </a>
