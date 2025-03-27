@@ -59,7 +59,7 @@ const Section21=({section9_6_2Ref,orgName,data})=>{
             The commitments that stipulate conducting due diligence
         </p>
         <p className="text-sm mb-4">
-        {data["2_23_a"]?data["2_23_a"][2].column1:"No data available"}
+        {data["2_23_a"]?data["2_23_a"][2].column1=="No"?data["2_23_a"][2].column1:'':"No data available"}
         </p>
         {data["2_23_a"]?data["2_23_a"][2].column1_details && (
             <p className="text-sm mb-4">
@@ -71,7 +71,7 @@ const Section21=({section9_6_2Ref,orgName,data})=>{
             The commitments that stipulate applying the precautionary principle
         </p>
         <p className="text-sm mb-4">
-        {data["2_23_a"]?data["2_23_a"][3].column1:"No data available"}
+        {data["2_23_a"]?data["2_23_a"][3].column1=="No"?data["2_23_a"][3].column1:'':"No data available"}
         </p>
         {data["2_23_a"]?data["2_23_a"][3].column1_details && (
             <p className="text-sm mb-4">
@@ -83,7 +83,7 @@ const Section21=({section9_6_2Ref,orgName,data})=>{
             The commitments that stipulate respecting human rights
         </p>
         <p className="text-sm mb-4">
-        {data["2_23_a"]?data["2_23_a"][4].column1:"No data available"}
+        {data["2_23_a"]?data["2_23_a"][4].column1=="No"?data["2_23_a"][4].column1:'':"No data available"}
         </p>
         {data["2_23_a"]?data["2_23_a"][4].column1_details && (
             <p className="text-sm mb-4">

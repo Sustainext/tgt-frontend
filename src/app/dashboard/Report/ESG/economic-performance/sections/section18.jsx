@@ -12,8 +12,14 @@ const Section18=({section11_5_3Ref})=>{
 </h3>
 {data["205_3a_anti_corruption"]?.length>0?data["205_3a_anti_corruption"].map((item, index) => (
           <div key={`205_3a_anti_corruption${index}`} className="mb-4">
-            <p className="text-[12px] mb-2">{item.Q1 || "No data available"}</p>
-            <p className="text-[12px] mb-2">{item.Q2 || "No data available"}</p>
+            <p className="text-[15px] text-[#344054] font-semibold mb-2">
+            Confirmed incidents of corruption
+            </p>
+            <p className="text-[12px] mb-4">{item.Q1 || "No data available"}</p>
+            <p className="text-[15px] text-[#344054] font-semibold mb-2">
+            Nature of confirmed incidents of corruption
+            </p>
+            <p className="text-[12px] mb-4">{item.Q2 || "No data available"}</p>
          
         
           </div>
@@ -24,6 +30,9 @@ const Section18=({section11_5_3Ref})=>{
       }
        {data["205_3b_anti_corruption"]?.length>0?data["205_3b_anti_corruption"].map((item, index) => (
           <div key={`205_3b_anti_corruption${index}`} className="mb-4">
+            <p className="text-[15px] text-[#344054] font-semibold mb-2">
+            Confirmed incidents in which employees were dismissed or disciplined for corruption
+            </p>
             <p className="text-[12px] mb-2">{item.Q1 || "No data available"}</p>
     
         
@@ -38,6 +47,9 @@ const Section18=({section11_5_3Ref})=>{
 
           {data["205_3c_anti_corruption"]?.length>0?data["205_3c_anti_corruption"].map((item, index) => (
           <div key={`205_3c_anti_corruption${index}`} className="mb-4">
+            <p className="text-[15px] text-[#344054] font-semibold mb-2">
+            Confirmed incidents when contracts with business partners were terminated or not renewed due to violations related to corruption
+            </p>
             <p className="text-[12px] mb-2">{item.Q1 || "No data available"}</p>
     
         

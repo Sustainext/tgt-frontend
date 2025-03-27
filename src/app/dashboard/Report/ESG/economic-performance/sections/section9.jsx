@@ -15,7 +15,7 @@ const Section9 = ({ section11_3_2Ref }) => {
         {/* Map through financial_implications-201-2a */}
         {data["financial_implications-201-2a"]?.map((item, index) => (
           <div key={`financial_implications_${index}`} className="mb-4">
-            <p className="text-sm">{item.Q1 || "No data available"}</p>
+            {/* <p className="text-sm">{item.Q1?item.Q1=="No"?item.Q1:'': "No data available"}</p> */}
             
             {/* Only show Q2 if Q1 is not 'Yes' and Q2 has a value */}
             {item.Q1 !== "Yes" && item.Q2 && <p className="text-sm">{item.Q2}</p>}
