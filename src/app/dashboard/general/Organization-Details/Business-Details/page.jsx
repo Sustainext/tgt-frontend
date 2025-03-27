@@ -11,7 +11,7 @@ import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen4 from "./screen4";
-import GeneralTopBar from "../../GeneralTopBar";
+import GeneralTopBar from "../../generalTopBar";
 const BusinessDetails = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");

@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import GeneralHeader2 from "../../GeneralHeader2";
 import Screen1 from "./screen1";
-import GeneralTopBar from "../../GeneralTopBar";
+import GeneralTopBar from "../../generalTopBar";
 const OrgDetails = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
