@@ -92,7 +92,7 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen,togglestatus}) =>
                     Requirements for product and service information and labeling
                   </p>
                 </div>
-                <div className="flex justify-between items-center mb-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
                   <p className="text-gray-500 text-[13px]">
                     Percentage of significant product or service categories covered by and assessed
                   </p>
@@ -122,7 +122,7 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen,togglestatus}) =>
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className=" mb-8 me-2"
+          className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
         >
           <TableSidebar />
         </div>

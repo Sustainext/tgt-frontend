@@ -7,7 +7,7 @@ const BenefitTable = ({ locationdata, data }) => {
     <div
       style={{
         maxHeight: "400px",
-        display: "block",
+        display: "",
         overflowX: "auto",
         maxWidth: "100%",
         minWidth: "100%",
@@ -19,7 +19,7 @@ const BenefitTable = ({ locationdata, data }) => {
         className="w-full rounded-lg border-x border-t border-gray-300 "
         style={{ borderCollapse: "separate", borderSpacing: 0 }}
       >
-        <thead className="block md:table-header-group border sticky top-0 z-100  bg-white ">
+        <thead className=" md:table-header-group border sticky top-0 z-100  bg-white ">
           <tr className="gradient-background ">
             {/* Static header for "Significant location of operation" */}
             <th
@@ -67,7 +67,7 @@ const BenefitTable = ({ locationdata, data }) => {
                   return (
                     <td
                       key={colIndex}
-                      className="px-6 py-4 border-b border-gray-200 text-center"
+                      className="px-6 py-4 border-b border-gray-200 text-center "
                     >
                       {isSelected ? (
                         <FaCheckSquare className="text-green-500 inline-block mx-2" /> // Checked icon

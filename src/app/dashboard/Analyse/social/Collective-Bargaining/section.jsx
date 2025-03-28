@@ -64,8 +64,8 @@ const Section = ({
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                  <p className="mb-2">
                     Operations where workers' freedom of association or
                     collective bargaining is at risk
                   </p>
@@ -85,8 +85,8 @@ const Section = ({
                 id="ep2"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="mb-2">
                     Suppliers in which the right to freedom of association or
                     collective bargaining may be at risk
                   </p>
@@ -111,7 +111,7 @@ const Section = ({
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+              className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

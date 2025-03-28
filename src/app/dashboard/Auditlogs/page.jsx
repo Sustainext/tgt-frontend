@@ -268,7 +268,7 @@ const AuditLogs = () => {
           Audit Logs
         </h1>
         <div className="flex items-center space-x-3 rounded-md">
-          <div className="relative w-[308px] rounded-md">
+          <div className="relative w-[208px] xl:w-[308px] md:w-[308px] lg:w-[308px] 4k:w-[308px] 2k:w-[308px] 2xl:w-[308px] rounded-md">
             <input
               type="text"
               placeholder="Search"
@@ -282,7 +282,7 @@ const AuditLogs = () => {
       </div>
 
       <div className="flex">
-        <div className="flex items-center space-x-4 mb-4 w-[80%]">
+        <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex items-center  mb-4 w-[80%]">
           <div className="items-center space-x-2">
             <label className="block text-sm font-medium text-gray-600 mb-2 ml-1">
               From
@@ -294,7 +294,7 @@ const AuditLogs = () => {
               className="border border-gray-300 rounded px-3 py-1 w-[365px] text-[13px]"
             />
           </div>
-          <div className=" items-center space-x-2">
+          <div className="xl: ml-2 lg:ml-2 md:ml-2 4k:ml-2 2k:ml-2">
             <label className="block text-sm font-medium text-gray-600 mb-2 ml-1">
               To
             </label>
