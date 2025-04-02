@@ -1273,7 +1273,7 @@ const ScenarioTable = () => {
             </div>
 
             {/* Pagination - Centered as per design */}
-            <div className="flex items-center justify-center mt-8 mb-4 gap-4">
+            <div className="flex items-center justify-center mt-4 mb-4 gap-4">
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
