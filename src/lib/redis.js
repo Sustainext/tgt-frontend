@@ -1,18 +1,25 @@
-// import Redis from 'ioredis';
+// lib/redis.js
+import Redis from 'ioredis';
 
-// // const redis = new Redis({
-// //   host: process.env.REDIS_HOST,
-// //   port: Number(process.env.REDIS_PORT),
-// //   password: process.env.REDIS_PASSWORD,
-// //   tls: process.env.REDIS_TLS === 'true' ? {} : undefined,
-// // });
+const redisConfig = {
+  host: '127.0.0.1',
+  port: 6379,
+  retryStrategy: (times) => {
+    const delay = Math.min(times * 50, 2000);
+    return delay;
+  },
+  maxRetriesPerRequest: 3,
+};
 
-// // const redis = new Redis({
-// //   host: '127.0.0.1',
-// //   port: 6379,
-// //   // password: 'YOUR_REDIS_PASSWORD', // Only if you set one
-// //   // Optional: add TLS if you're securing Redis
-// //   // tls: {}
-// // });
+const redis = new Redis(redisConfig);
 
-// export default redis;
+// Handle connection events
+redis.on('connect', () => {
+  console.log('Connected to Redis');
+});
+
+redis.on('error', (err) => {
+  console.error('Redis error:', err);
+});
+
+export default redis;
