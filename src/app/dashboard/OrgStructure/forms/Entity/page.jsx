@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import GeneralInfo from "../Organization/GeneralInfo";
-import { post, put } from "../../../../utils/axiosMiddleware";
+import { post, put,patch } from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -32,56 +32,60 @@ const Entity = () => {
 
   const handleGeneralDetailsEdit = async (event, data, id) => {
     event.preventDefault();
-    await handleGeneralDetails("put", data, id);
+    await handleGeneralDetails("patch", data, id);
   };
 
   const handleGeneralDetails = async (method, data, id = "") => {
-    const url = `/corporate${id ? `/${id}/?partial=true` : ""}`;
+    const url = `/corporate${id ? `/${id}/` : ""}`;
     const payload = {
       name: data.generalDetails.name || "Test Corp",
       corporatetype: data.generalDetails.type || "Default",
-      ownershipnature: data.generalDetails.ownership || "Default",
+      ownershipnature: data.generalDetails.ownership || "",
       location_headquarters: data.generalDetails.location || null,
-      phone: data.generalDetails.phone || null,
-      mobile: data.generalDetails.mobile || null,
-      website: data.generalDetails.website || null,
-      fax: data.generalDetails.fax || null,
-      employeecount: data.generalDetails.Empcount || 100,
-      revenue: data.generalDetails.revenue || "100000",
-      sector: data.generalDetails.sector || "Default",
-      subindustry: data.generalDetails.subIndustry || "Default",
-      address: data.addressInformation.street || "Bengaluru",
-      Country: data.addressInformation.country || "IN",
-      state: data.addressInformation.state || "Karnataka",
-      city: data.addressInformation.city || "Bengaluru",
-      zipcode: data.addressInformation.zipCode || null,
-      date_format: data.generalDetails.dateFormat || null,
+      phone: data.generalDetails.phone || 9999999999,
+      mobile: data.generalDetails.mobile || '',
+      website: data.generalDetails.website || 'https://www.sustainext.ai',
+      fax: data.generalDetails.fax || '',
+      employeecount: data.generalDetails.Empcount || 0,
+      revenue: data.generalDetails.revenue || 0,
+      sector: data.generalDetails.sector || "General",
+      subindustry: data.generalDetails.subIndustry || "General",
+      address: data.addressInformation.street || "Not Provided",
+      country: data.addressInformation.country || "N/A",
+      state: data.addressInformation.state || "N/A",
+      city: data.addressInformation.city || "N/A",
+      // zipcode: data.addressInformation.zipCode || null,
+      date_format: data.generalDetails.dateFormat || "YYYY/MM/DD",
       currency: data.generalDetails.currency || "USD",
-      timezone: data.generalDetails.timeZone || "+00:00",
-      language: data.generalDetails.language || "English",
+      timezone: data.generalDetails.timeZone || "UTC",
       from_date: data.reportingPeriodInformation.fromDate || null,
       to_date: data.reportingPeriodInformation.toDate || null,
-      legalform: "1",
-      ownership: data.generalDetails.ownership || "Default",
-      group: null,
-      location_of_headquarters: null,
-      amount: null,
-      type_of_business_activities: null,
-      type_of_product: null,
-      type_of_services: null,
-      type_of_business_relationship: null,
-      framework: 1,
+      // legalform: "1",
+      // ownership: data.generalDetails.ownership || "",
+      // group: null,
+      // location_of_headquarters: null,
+      // amount: null,
+      // type_of_business_activities: null,
+      // type_of_product: null,
+      // type_of_services: null,
+      // type_of_business_relationship: null,
+
     };
 
     // Add organization property if the method is 'post'
     if (method === "post") {
       payload.organization = data.generalDetails.organisation || null;
-      payload.framework = "GRI: With reference to";
+      payload.framework=[1],
+    payload.sdg= [],
+    payload.rating= [],
+    payload.certification= [],
+    payload.target= []
+      // payload.framework = "GRI: With reference to";
     }
 
     try {
       const response =
-        method === "post" ? await post(url, payload) : await put(url, payload);
+        method === "post" ? await post(url, payload) : await patch(url, payload);
 
       const messageAction = method === "post" ? "Corporate added successfully" : `Changes made to Corporate '${data.generalDetails.name}' has been saved`;
       toast.success(`${messageAction}`);

@@ -26,12 +26,13 @@ const NodeDetailModal = ({
     let filteredDetails = {};
 
     if (details) {
+      console.log(details,"look details")
       if (nodeType === "organization") {
         // Organization format based on your original Structure code
         filteredDetails = {
           id: details.id,
           name: details.name,
-          type_corporate_entity: details.type_of_corporate_entity,
+          type_corporate_entity: details.type_corporate_entity,
           owner: details.owner,
           phone: details.phone,
           mobile: details.mobile,
@@ -41,8 +42,8 @@ const NodeDetailModal = ({
           revenue: details.revenue,
           sector: details.sector,
           subindustry: details.subindustry || details.sub_industry,
-          address: details.address,
-          countryoperation: details.countryoperation,
+          street: details.address,
+          country: details.country,
           state: details.state,
           city: details.city,
           timezone: details.timezone,
@@ -70,8 +71,8 @@ const NodeDetailModal = ({
         filteredDetails = {
           id: details.id,
           name: details.name,
-          corporatetype: details.corporatetype || details.type,
-          ownershipnature: details.ownershipnature || details.ownership,
+          corporatetype: details.corporatetype,
+          owner: details.ownershipnature || details.ownership,
           legalform: details.legalform,
           ownership: details.ownership,
           revenue: details.revenue,
@@ -79,17 +80,17 @@ const NodeDetailModal = ({
           subindustry: details.subindustry,
           website: details.website,
           employeecount: details.employeecount,
-          address: details.address,
-          city: details.city,
+          street: details.address,
+          country: details.country,
           state: details.state,
-          Country: details.Country || details.country,
+          city: details.city,
           from_date: details.from_date,
           to_date: details.to_date,
           currency: details.currency,
           date_format: details.date_format,
           timezone: details.timezone,
           language: details.language,
-          location_headquarters:
+          location_of_headquarters:
             details.location_headquarters || details.location_of_headquarters,
           phone: details.phone,
           mobile: details.mobile,
@@ -116,7 +117,7 @@ const NodeDetailModal = ({
           employeecount: details.employeecount,
           language: details.language,
           revenue: details.revenue,
-          streetaddress: details.streetaddress || details.address,
+          street: details.streetaddress,
           country: details.country,
           state: details.state,
           city: details.city,
@@ -457,12 +458,15 @@ const NodeDetailModal = ({
                         "-"}
                     </p>
                   </div>
-                  <div>
-                    <label className="text-sm text-gray-600">Zip Code</label>
-                    <p className="text-sm text-gray-900">
-                      {details.zipCode || details.zipcode || "-"}
-                    </p>
-                  </div>
+                  {nodeType === "location" && (
+                     <div>
+                     <label className="text-sm text-gray-600">Zip Code</label>
+                     <p className="text-sm text-gray-900">
+                       {details.zipCode || details.zipcode || "-"}
+                     </p>
+                   </div>
+                  )}
+                 
                 </div>
               </div>
             </div>
@@ -486,14 +490,14 @@ const NodeDetailModal = ({
                     {details.to_date || "-"}
                   </p>
                 </div>
-                <div className="col-span-2">
+                {/* <div className="col-span-2">
                   <label className="text-sm text-gray-600">
                     Reporting Frameworks
                   </label>
                   <p className="text-sm text-gray-900">
                     {details.framework || "-"}
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
             <hr />
