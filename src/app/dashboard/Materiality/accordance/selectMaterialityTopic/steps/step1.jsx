@@ -339,9 +339,12 @@ pollution, climate change mitigation,
  and biodiversity conservation. </p>`}
           checked={envChecked}
           onCheck={handleChecked}
+            name="env"
+            id="env"
         >
           <Enviroment
             envChecked={envChecked}
+          
             formData={formData}
             setFormData={setFormData}
           />
@@ -357,6 +360,8 @@ practices, diversity and inclusion, human rights,
 customer relations, and community engagement. </p>`}
           checked={socChecked}
           onCheck={handleChecked}
+            name="soc"
+            id="soc"
         >
           <Social
             socChecked={socChecked}
@@ -375,6 +380,8 @@ board diversity, executive compensation, anti-corruption efforts,
 and transparency in reporting. </p>`}
           checked={govChecked}
           onCheck={handleChecked}
+            name="gov"
+            id="gov"
         >
           <Governance
             govChecked={govChecked}
