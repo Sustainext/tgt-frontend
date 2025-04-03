@@ -332,7 +332,7 @@ const AuditLogs = () => {
                   />
                 </div>
                 {isOpen && (
-                  <div className="filter-dropdown absolute  w-[200px] bg-white shadow-xl border border-gray-200 rounded z-10 overflow-auto h-[450px]">
+                  <div className="filter-dropdown absolute  w-[200px] bg-white shadow-xl border border-gray-200 rounded z-10 ">
                     {Object.keys(statusFilter).map((status) => (
                       <div className="px-3 py-2" key={status}>
                         <label className="flex items-center text-gray-600">
@@ -393,7 +393,7 @@ const AuditLogs = () => {
                   />
                 </div>
                 {isOpen3 && (
-                  <div className="filter-dropdown3 absolute xl:right-[21.5rem] lg:right-[21.5rem] md:right-[21.5rem] 2k:right-[21.5rem] 4k:right-[21.5rem]  right-[13.5rem] mt-2 w-[200px] max-w-[90vw] bg-white shadow-xl border border-gray-200 rounded z-10 overflow-auto h-[450px]">
+                  <div className="filter-dropdown3 absolute xl:right-[21.5rem] lg:right-[21.5rem] md:right-[21.5rem] 2k:right-[21.5rem] 4k:right-[21.5rem]  right-[13.5rem] mt-2 w-[200px] max-w-[90vw] bg-white shadow-xl border border-gray-200 rounded z-10 ">
                     {Object.keys(statusFilter3).map((status) => (
                       <div className="px-3 py-2" key={status}>
                         <label className="flex items-center text-gray-600">

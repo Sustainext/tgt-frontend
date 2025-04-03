@@ -304,7 +304,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
         <>
           <div className="md:hidden fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center">
       <div className="bg-white rounded-md w-[90vw] max-h-[90vh] overflow-y-auto p-4">
-        <div className="w-full">
+        <div className="w-full mb-8">
         <MdClose onClick={toggleDatePicker} className="text-2xl float-end" />
         </div>
 
