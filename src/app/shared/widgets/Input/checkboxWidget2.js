@@ -53,9 +53,9 @@ const CheckboxWidget2 = ({
 
   return (
     <div className="mb-1">
-      <div className="flex mb-2">
-      <div className="relative w-[55%] flex">
-  <p className="text-[15px] text-gray-700 w-auto mx-3 ">
+    <div className="flex  xl:flex-row flex-col mb-2 xl:gap-2 gap-4">
+    <div className="flex items-start  xl:w-[54.2%] w-full px-2">
+  <p className="text-[15px] text-gray-700 w-auto xl:mx-3 ">
     {uiSchema["ui:title"]}
   </p>
   <MdInfoOutline
@@ -85,12 +85,12 @@ const CheckboxWidget2 = ({
 </div>
 
         {uiSchema['ui:tag'] && (
-          <button className="text-[#007EEF] bg-slate-200 rounded-md text-[11px] w-[72px] h-[22px] ml-6 text-center mt-1">
+          <button className="text-[#007EEF] bg-slate-200 rounded-md text-[11px] px-3 h-[22px] ml-2 w-fit self-start ">
             {uiSchema['ui:tag']}
           </button>
         )}
       </div>
-      <div className={`p-2 mx-1 mt-2 ${uiSchema['ui:section']} w-[55%]`}>
+      <div className={`p-2 mx-1 mt-2 ${uiSchema['ui:section']} xl:w-[55%]`}>
         {options.enumOptions.map((option, index) => (
           <label key={index} className="flex items-center gap-2 text-sm mb-4 cursor-pointer">
             <input

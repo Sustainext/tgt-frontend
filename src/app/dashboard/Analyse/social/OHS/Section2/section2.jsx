@@ -134,13 +134,13 @@ const Screen2 = ({
         `/sustainapp/get_illness_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&location=${selectedLocation}&start=${dateRange.start}&end=${dateRange.end}`
       );
   
-      if (response.data?.status === 206 && response.data?.warning) {
-        console.log("Warning from API:", response.data.warning);
-        toast.warning(response.data.warning, { position: "top-right", autoClose: 5000 });
+      if (response.data?.status === 206 && response.data?.message) {
+        console.log("Warning from API:", response.data.message);
+        toast.warning(response.data.message, { position: "top-right", autoClose: 5000 });
       }
   
       const data = response.data.data;
-      console.log(data, "testing");
+      console.log(data, "testing data and test");
   
       const {
         rate_of_injuries_for_all_employees_100_injury_rate,
@@ -302,7 +302,7 @@ const Screen2 = ({
       <ToastContainer style={{ fontSize: "12px" }} />
     <div>
       <div className="mb-2 flex-col items-center pt-4  gap-6"></div>
-      <div className="flex">
+      <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block">
         <div className={`ps-4 w-[100%] me-4`}>
           <div className="mb-6">
             <p className="text-black text-[15px] font-bold  ">
@@ -312,8 +312,8 @@ const Screen2 = ({
               id="ep1"
               className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-black text-[13px] font-[400]">
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="text-black text-[13px] font-[400] mb-2">
                   Formal joint management-worker health and safety committees
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -338,8 +338,8 @@ const Screen2 = ({
               id="ep2"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-black text-[13px] font-[400]">
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                 <p className="text-black text-[13px] font-[400] mb-2">
                   Percentage of employees/workers who are not employees
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -362,7 +362,7 @@ const Screen2 = ({
               id="ep3"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
                 <div>
                   <p className="text-black text-[13px] font-[400] mb-2">
                   Rate of injuries : For all employees (per 100 employees)
@@ -382,9 +382,9 @@ const Screen2 = ({
                 <DynamicTable2 columns={columns3} data={OHSdata3} />
               </div>
 
-              <div className="flex justify-between items-center mb-2">
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
                 <div>
-                  <p className="text-black text-[13px] font-[400]">
+                   <p className="text-black text-[13px] font-[400] mb-2">
                   Rate of injuries : For all workers who are not employees but whose work and/or workplace is 
                   controlled by the organization (per 100 workers)
                   </p>
@@ -400,7 +400,7 @@ const Screen2 = ({
               <div className="mb-4">
                 <DynamicTable2 columns={columns4} data={OHSdata4} />
               </div>
-              <div className="flex justify-between items-center mb-2">
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
                 <div>
                   <p className="text-black text-[13px] font-[400] mb-2">
                   Rate of injuries : For all employees (per 500 employees)
@@ -420,9 +420,9 @@ const Screen2 = ({
                 <DynamicTable2 columns={columns3} data={OHSdata7} />
               </div>
 
-              <div className="flex justify-between items-center mb-2">
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
                 <div>
-                  <p className="text-black text-[13px] font-[400]">
+                   <p className="text-black text-[13px] font-[400] mb-2">
                   Rate of injuries : For all workers who are not employees but whose work and/or workplace is 
                   controlled by the organization (per 500 workers)
                   </p>
@@ -446,12 +446,12 @@ const Screen2 = ({
               id="ep4"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
                 <div>
-                  <p className="text-black text-[13px] font-[400]">
+                   <p className="text-black text-[13px] font-[400] mb-2">
                     Ill health
                   </p>
-                  <p className="text-black text-[13px] font-[400]">
+                   <p className="text-black text-[13px] font-[400] mb-2">
                     For all employees
                   </p>
                 </div>
@@ -467,12 +467,12 @@ const Screen2 = ({
                 <DynamicTable2 columns={columns5} data={OHSdata5} />
               </div>
 
-              <div className="flex justify-between items-center mb-2" id="ep5">
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2" id="ep5">
                 <div>
                   <p className="text-black text-[15px] font-bold  ">
                     Ill health
                   </p>
-                  <p className="text-black text-[13px] font-[400]">
+                   <p className="text-black text-[13px] font-[400] mb-2">
                     for workers who are not employees but whose work and
                     workplace is controlled by the organization
                   </p>
@@ -500,7 +500,7 @@ const Screen2 = ({
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className=" mb-8 me-2"
+      className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
         >
           <TableSidebar2 />
         </div>

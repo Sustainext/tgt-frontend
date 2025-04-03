@@ -255,12 +255,12 @@ catch (error) {
   return (
     <>
       <div className="p-3 mb-6 pb-6 rounded-md shadow-lg mx-4 mt-10">
-        <div className="mb-4 flex">
-          <div className="w-full relative">
-            <h2 className="flex mx-2 text-[15px] mb-2">
+      <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative  xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+            <h2 className="flex mx-2 text-[15px] ">
             Describe actual and potential, negative and positive impacts on the economy, environment and people including impacts on their human rights.
               <MdInfoOutline
-                data-tooltip-id="tooltip-$e86"
+                data-tooltip-id="tooltip-$e86" 
                 data-tooltip-html={`
                   <p>Impact: Effect the organization has or could have on the economy including 
 on their human rights, which in turn can indicate its contribution 
@@ -272,7 +272,7 @@ International Bill of Human Rights and the principles concerning
 fundamental rights set out in the International Labour Organization 
 (ILO) Declaration on Fundamental Principles and Rights at Work.</p>
                 `}
-                className="mt-1.5 ml-2 text-[15px]"
+                className="mt-1.5 ml-2 text-[15px] w-[10%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
               />
               <ReactTooltip
                 id="tooltip-$e86"
@@ -290,7 +290,7 @@ fundamental rights set out in the International Labour Organization
             </h2>
           </div>
 
-          <button className="text-[#007EEF] bg-slate-200 rounded-md text-[11px] w-[72px] h-[22px] ml-6 text-center mt-1">
+          <button className="text-[#007EEF] bg-slate-200 rounded-md text-[11px] w-[72px] h-[22px] xl:ml-6 ml-2 text-center ">
             GRI-3-3-a
           </button>
         </div>

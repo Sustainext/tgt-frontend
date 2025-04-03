@@ -27,9 +27,11 @@ import { useDispatch } from "react-redux";
 const social = () => {
   const [activeTab, setActiveTab] = useState("Tab1");
   const [isBoxOpen, setIsBoxOpen] = useState(false);
+  const [mobileopen, setMobileopen] = useState(false);
   const dispatch = useDispatch();
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    setMobileopen(false);
   };
   useEffect(() => {
     const headerTextMapping = {
@@ -55,29 +57,55 @@ const social = () => {
     dispatch(setMiddlename("Social"));
   }, [activeTab, dispatch]);
   return (
-    <div className="relative flex justify-start">
-      <div className="relative left-10 w-[199px] min-h-[90vh] py-[11px] flex-col items-end inline-flex">
+    <div className="relative xl:flex justify-start">
+    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block">
+      <div className="relative left-10 w-[199px] min-h-[90vh] py-[11px] flex-col items-end inline-flex ">
         <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
       </div>
-      <div className="w-full ms-8">
-        <div className="sticky top-14 bg-white z-[100]">
-          <Header activeTab={activeTab} setIsBoxOpen={setIsBoxOpen} />
-        </div>
-        {activeTab === "Tab1" && <AnalyseOHS />}
-        {activeTab === "Tab2" && <AnalyseHumanRightsCommunityImpact />}
-        {activeTab === "Tab3" && <AnalyseCollectiveBargaining />}
-        {activeTab === "Tab4" && <AnalyseChildlabour />}
-        {activeTab === "Tab5" && <AnalyseEmployment />}
-        {activeTab === "Tab6" && <AnalyseTraining />}
-        {activeTab === "Tab7" && <AnalyseCustomerprivacy />}
-        {activeTab === "Tab8" && <AnalyseCustomerHealthSafety />}
-        {activeTab === "Tab9" && <AnalyseMarketingLabeling />}
-        {activeTab === "Tab10" && <AnalyseSuppliersocialassessment />}
-        {activeTab === "Tab11" && <AnalyseDiversityInclusion />}
-        {activeTab === "Tab12" && <AnalyseNonDiscrimination />}
-    
-      </div>
+      
     </div>
+    {mobileopen ? (
+      <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+        <div>
+          <Aside
+            activeTab={activeTab}
+            handleTabClick={handleTabClick}
+            setMobileopen={setMobileopen}
+          />
+        </div>
+      </div>
+    ) : (
+      <div className="w-full xl:ms-8 md:ms-8 lg:ms-8 2xl:ms-8 4k:ms-8 2k:ms-8">
+        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block sticky xl:top-14 bg-white z-[100]">
+          <Header
+            activeTab={activeTab}
+            setIsBoxOpen={setIsBoxOpen}
+            setMobileopen={setMobileopen}
+          />
+        </div>
+        <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden ">
+          <Header
+            activeTab={activeTab}
+            setIsBoxOpen={setIsBoxOpen}
+            setMobileopen={setMobileopen}
+          />
+        </div>
+        {activeTab === "Tab1" && <AnalyseOHS setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab2" && <AnalyseHumanRightsCommunityImpact setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab3" && <AnalyseCollectiveBargaining setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab4" && <AnalyseChildlabour setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab5" && <AnalyseEmployment setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab6" && <AnalyseTraining setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab7" && <AnalyseCustomerprivacy setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab8" && <AnalyseCustomerHealthSafety setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab9" && <AnalyseMarketingLabeling setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab10" && <AnalyseSuppliersocialassessment setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab11" && <AnalyseDiversityInclusion setMobileopen={setMobileopen}/>}
+        {activeTab === "Tab12" && <AnalyseNonDiscrimination setMobileopen={setMobileopen}/>}
+      </div>
+    )}
+  </div>
+
   );
 };
 

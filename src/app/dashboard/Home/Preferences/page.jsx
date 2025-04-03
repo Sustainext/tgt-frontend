@@ -106,7 +106,7 @@ const Preferences = () => {
         </h3>
         <div className="w-full h-[0px] border border-gray-200 mt-2 mb-4"></div>
 
-        <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-4 2k:grid-cols-4 4k:grid-cols-4 gap-2 mb-3">
           {framework &&
             framework.map((item) => (
               <div
@@ -137,7 +137,7 @@ const Preferences = () => {
           Regulations
         </h3>
         <div className="w-full h-[0px] border border-gray-200 mt-2 mb-4"></div>
-        <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-4 2k:grid-cols-4 4k:grid-cols-4 gap-2 mb-3">
           {regulations &&
             regulations.map((item) => (
               <div
@@ -168,7 +168,7 @@ const Preferences = () => {
           Targets
         </h3>
         <div className="w-full  border border-gray-200 mt-2 mb-4"></div>
-        <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-4 2k:grid-cols-4 4k:grid-cols-4 gap-2 mb-3">
           {targets &&
             targets.map((item) => (
               <div
@@ -221,12 +221,12 @@ const Preferences = () => {
           Certifications
         </h3>
         <div className="w-full h-[0px] border border-gray-200 mt-2 mb-4"></div>
-        <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-4 2k:grid-cols-4 4k:grid-cols-4 gap-2 mb-3">
           {certifications &&
             certifications.map((item) => (
               <div
                 key={item.id}
-                className="relative shadow-sm h-20  border border-gray-200"
+                className="relative shadow-sm h-28  border border-gray-200"
               >
                 <div className="flex justify-center h-10  mb-2">
                   <img
@@ -235,7 +235,7 @@ const Preferences = () => {
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
                 </div>
-                <div className="h-10">
+                <div className="h-20">
                   <p className="text-[12px] text-center">{item.name}</p>
                 </div>
               </div>
@@ -252,7 +252,7 @@ const Preferences = () => {
           Ratings
         </h3>
         <div className="w-full  border border-gray-200 mt-2 mb-4"></div>
-        <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-4 2k:grid-cols-4 4k:grid-cols-4 gap-2 mb-3">
           {ratings &&
             ratings.map((item) => (
               <div
