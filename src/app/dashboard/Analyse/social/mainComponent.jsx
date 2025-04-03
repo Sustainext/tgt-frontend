@@ -43,7 +43,7 @@ const social = () => {
       Tab8: "Product Safety & Quality",
       Tab9: "Marketing and Labeling",
       Tab10: "Supply Chain Labor Standards",
-      Tab11: "Diversity & Equal Oppportunity",
+      Tab11: "Diversity & Equal Opportunity",
       Tab12: "Non-discrimination",
       Tab13: "Marketing and Labeling",
       Tab14: "Customer Privacy",

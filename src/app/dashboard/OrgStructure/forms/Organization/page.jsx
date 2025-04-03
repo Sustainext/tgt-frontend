@@ -75,12 +75,12 @@ function Organization() {
 
     const payload = {
       name: data.generalDetails.name || 'Entity 1',
-      type_corporate_entity: data.generalDetails.type || 'Private Limited',
+      type_corporate_entity: data.generalDetails.type || 'Not Specified',
       owner: data.generalDetails.ownership || '',
       location_of_headquarters: data.generalDetails.location || 'Not Specified',
       phone: data.generalDetails.phone || 9999999999,
       mobile: data.generalDetails.mobile || '',
-      website: data.generalDetails.website || 'https://www.sustainext.ai',
+      website: data.generalDetails.website || 'Not Provided',
       fax: data.generalDetails.fax || "",
       employeecount: data.generalDetails.Empcount || 0,
       revenue: data.generalDetails.revenue || 0,
@@ -121,7 +121,8 @@ function Organization() {
         router.push('/dashboard/OrgStructure');
       }, 1000);
     } catch (error) {
-      toast.error('Failed to add organization', 'error');
+       const message = error?.response?.data?.message[0] || 'Failed to add organization'
+      toast.error(message, 'error');
       console.error('Error:', error);
     }
   };
@@ -133,12 +134,12 @@ function Organization() {
 
     const payload = {
       name: data.generalDetails.name || 'Entity 1',
-      type_corporate_entity: data.generalDetails.type || 'Private Limited',
+      type_corporate_entity: data.generalDetails.type || 'Not Specified',
       owner: data.generalDetails.ownership || '',
       location_of_headquarters: data.generalDetails.location || 'Not Specified',
       phone: data.generalDetails.phone || 9999999999,
       mobile: data.generalDetails.mobile || '',
-      website: data.generalDetails.website || 'https://www.sustainext.ai',
+      website: data.generalDetails.website || 'Not Provided',
       fax: data.generalDetails.fax || "",
       employeecount: data.generalDetails.Empcount || 0,
       revenue: data.generalDetails.revenue || 0,

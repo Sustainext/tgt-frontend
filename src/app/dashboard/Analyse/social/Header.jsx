@@ -296,7 +296,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                   : activeTab === "Tab10"
                   ? "Supply Chain Labor Standards"
                   : activeTab === "Tab11"
-                  ? "Diversity & Equal Oppportunity"
+                  ? "Diversity & Equal Opportunity"
                   : activeTab === "Tab12"
                   ? " Non-discrimination"
                   : activeTab === "Tab13"

@@ -2023,7 +2023,7 @@ const Aside = ({
                 activeTab === "Salary Ratio" ||
                 activeTab === "Entry Level Wage" ||
                 activeTab ===
-                  "Management of Material topic Diversity & Equal Oppportunity"
+                  "Management of Material topic Diversity & Equal Opportunity"
                   ? "text-[#007EEF]"
                   : "bg-transparent text-[#727272] "
               }`}
@@ -2034,7 +2034,7 @@ const Aside = ({
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                  Diversity & Equal Oppportunity
+                  Diversity & Equal Opportunity
                 </span>
               </div>
               {materialityEnvData &&
@@ -2075,14 +2075,14 @@ const Aside = ({
                         <p
                           className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                             activeTab ===
-                            "Management of Material topic Diversity & Equal Oppportunity"
+                            "Management of Material topic Diversity & Equal Opportunity"
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
                           onClick={() => {
                             toggleSidebar();
                             handleTabClick(
-                              "Management of Material topic Diversity & Equal Oppportunity"
+                              "Management of Material topic Diversity & Equal Opportunity"
                             )
                           }}
                     
