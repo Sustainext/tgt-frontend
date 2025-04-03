@@ -848,7 +848,7 @@ const handleDateChange = (newRange) => {
               </div>
               <div className="flex justify-end items-center mt-5">
                 <button
-                  className="w-2/6 h-full mr-2 py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+                  className="xl:w-2/6 h-full mr-2 py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
                   onClick={handleSubmit}
                 >
                   Start Materiality Assessment

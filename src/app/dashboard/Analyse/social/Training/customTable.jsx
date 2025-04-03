@@ -7,11 +7,11 @@ const Table = ({ data }) => {
   const genders = data.filter((item) => item.gender);
 
   return (
-    <div>
-      <table
-        className="min-w-full rounded-md border border-gray-300 w-full"
-        style={{ borderCollapse: "separate", borderSpacing: 0 }}
-      >
+    <div className="overflow-x-auto custom-scrollbar">
+    <table
+      className="min-w-[828px] w-full rounded-lg border border-gray-300 "
+      style={{ borderCollapse: "separate", borderSpacing: 0 }}
+    >
         <thead className="gradient-background">
           <tr>
             <th className="px-4 py-2 h-[54px]"></th>

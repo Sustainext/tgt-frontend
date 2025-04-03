@@ -1,7 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { GRIData } from "../../data/GRIinfo";
-import { MdOutlineClear, MdInfoOutline, MdOutlineDone } from "react-icons/md";
+import {
+  MdOutlineClear,
+  MdInfoOutline,
+  MdOutlineDone,
+  MdKeyboardArrowDown,
+} from "react-icons/md";
 import Step1 from "./steps/step1";
 import Step2 from "./steps/step2";
 import Step3 from "./steps/step3";
@@ -9,7 +14,12 @@ import { useRouter } from "next/navigation";
 import TopicSelectedPopup from "../../modals/topicSelectedPopup";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-const SelectMaterialityTopic = ({ handleTabClick, cardData, esgSeleted }) => {
+const SelectMaterialityTopic = ({
+  handleTabClick,
+  cardData,
+  esgSeleted,
+  setMobileopen,
+}) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
@@ -66,7 +76,9 @@ const SelectMaterialityTopic = ({ handleTabClick, cardData, esgSeleted }) => {
 
     return date.toLocaleString("en-US", { month: "short", year: "numeric" });
   };
-
+  const toggleSidebar = () => {
+    setMobileopen(true);
+  };
   return (
     <>
       {/* side pannel for GRI 3-2 detail */}
@@ -98,50 +110,52 @@ const SelectMaterialityTopic = ({ handleTabClick, cardData, esgSeleted }) => {
       </div>
       {/* select Materiality topic start */}
       <div className="w-full">
-        <div className="flex flex-col justify-start overflow-x-hidden ">
-          <div className="flex justify-between items-center border-b border-gray-200 w-full">
-            <div className="w-full">
-              <div className="text-left mb-2 ml-3 pt-5">
-                <div className="flex justify-between items-center">
-                  <div className="w-[70%]">
-                    <p className="gradient-text text-[22px] font-bold pt-4 pb-4 mx-2">
-                      Select Materiality Topic
-                    </p>
-                  </div>
-                  <div className="w-full float-end px-5 ">
-                    <div className="flex float-end border-l">
-                      <div>
-                        <button
-                          className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                          onClick={() => toggleDrawer("1")}
-                        >
-                          GRI 3-2
-                        </button>
-                      </div>
+        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+          <div className="flex flex-col justify-start overflow-x-hidden ">
+            <div className="flex justify-between items-center border-b border-gray-200 w-full">
+              <div className="w-full">
+                <div className="text-left mb-2 ml-3 pt-5">
+                  <div className="flex justify-between items-center">
+                    <div className="w-[70%]">
+                      <p className="gradient-text text-[22px] font-bold pt-4 pb-4 mx-2">
+                        Select Materiality Topic
+                      </p>
+                    </div>
+                    <div className="w-full float-end px-5 ">
+                      <div className="flex float-end border-l">
+                        <div>
+                          <button
+                            className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                            onClick={() => toggleDrawer("1")}
+                          >
+                            GRI 3-2
+                          </button>
+                        </div>
 
-                      <div className=" relative">
-                        <button
-                          data-tooltip-id={`tooltip-$brsr1`}
-                          data-tooltip-content="BRSR-Section A-VII-26"
-                          className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
-                          // onClick={() => toggleDrawer("92")}
-                        >
-                          BRSR A-VII-26
-                        </button>
-                        <ReactTooltip
-                          id={`tooltip-$brsr1`}
-                          place="bottom"
-                          effect="solid"
-                          style={{
-                            width: "290px",
-                            backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: "center",
-                          }}
-                        ></ReactTooltip>
+                        <div className=" relative">
+                          <button
+                            data-tooltip-id={`tooltip-$brsr1`}
+                            data-tooltip-content="BRSR-Section A-VII-26"
+                            className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                            // onClick={() => toggleDrawer("92")}
+                          >
+                            BRSR A-VII-26
+                          </button>
+                          <ReactTooltip
+                            id={`tooltip-$brsr1`}
+                            place="bottom"
+                            effect="solid"
+                            style={{
+                              width: "290px",
+                              backgroundColor: "#000",
+                              color: "white",
+                              fontSize: "12px",
+                              boxShadow: 3,
+                              borderRadius: "8px",
+                              textAlign: "center",
+                            }}
+                          ></ReactTooltip>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -150,9 +164,69 @@ const SelectMaterialityTopic = ({ handleTabClick, cardData, esgSeleted }) => {
             </div>
           </div>
         </div>
+        <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+          <div
+            className="w-full  py-4  rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+            onClick={toggleSidebar}
+          >
+            <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
+              <div className="">
+                <div className="flex h-[28px]">
+                  <div className="h-[28px]">
+                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
+                      Select Materiality Topic
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center me-5">
+                <MdKeyboardArrowDown className={`text-2xl float-end `} />
+              </div>
+            </div>
+          </div>
+          <div className="w-full me-2 my-4">
+            <div className="">
+              <div className="flex mb-2">
+                <div>
+                  <button
+                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                    onClick={() => toggleDrawer("1")}
+                  >
+                    GRI 3-2
+                  </button>
+                </div>
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={`tooltip-$brsr1`}
+                    data-tooltip-content="BRSR-Section A-VII-26"
+                    className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                    // onClick={() => toggleDrawer("92")}
+                  >
+                    BRSR A-VII-26
+                  </button>
+                  <ReactTooltip
+                    id={`tooltip-$brsr1`}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div>
-          <div className="flex justify-between">
+          <div className="xl:flex justify-between">
             <div>
               <p className="text-[#344054] text-[22px] font-bold pt-4 pb-2 ml-6">
                 {stepHeading[currentStep].title}
@@ -189,7 +263,7 @@ const SelectMaterialityTopic = ({ handleTabClick, cardData, esgSeleted }) => {
                 ))}
               </div>
             </div>
-            <div className="shadow-lg p-3 bg-white w-[50%] mx-5 rounded-lg mt-10">
+            <div className="shadow-lg p-3 bg-white xl:w-[50%] mx-5 rounded-lg mt-10">
               <div className="flex  mb-4">
                 <div className="w-[50%]">
                   <p className="text-[14px] text-black font-[400] px-2 pt-2">

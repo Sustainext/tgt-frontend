@@ -134,17 +134,17 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen,togglestatus })
               id="ep1"
               className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
-                <p>
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="mb-2">
                   Operations considered to have significant risk of child labor
                 </p>
-                <div className="flex justify-between gap-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex block justify-between gap-2">
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 408-1a
                     </div>
                   </div>
-                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex xl:ml-0 lg:ml-0 md:ml-0 2xl:ml-0 2k:ml-0 4k:ml-0 ml-2">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 408-1b
                     </div>
@@ -162,18 +162,18 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen,togglestatus })
               id="ep2"
               className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
-                <p>
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex  justify-between items-center mb-2">
+                <p className="mb-2">
                   Operations at significant risk for incidents of young workers
                   exposed to hazardous work
                 </p>
-                <div className="flex justify-between gap-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between gap-2">
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 408-1a
                     </div>
                   </div>
-                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex xl:ml-0 lg:ml-0 md:ml-0 2xl:ml-0 2k:ml-0 4k:ml-0 ml-2">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 408-1b
                     </div>
@@ -190,17 +190,17 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen,togglestatus })
               id="ep3"
               className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
-                <p>
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="mb-2">
                   Suppliers at significant risk for incidents of child labor{" "}
                 </p>
-                <div className="flex justify-between gap-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between gap-2">
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 408-1a
                     </div>
                   </div>
-                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex xl:ml-0 lg:ml-0 md:ml-0 2xl:ml-0 2k:ml-0 4k:ml-0 ml-2">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 408-1b
                     </div>
@@ -217,18 +217,18 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen,togglestatus })
               id="ep4"
               className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
-                <p>
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="mb-2">
                   Suppliers at significant risk for incidents of young workers
                   exposed to hazardous work{" "}
                 </p>
-                <div className="flex justify-between gap-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between gap-2">
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 408-1a
                     </div>
                   </div>
-                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex xl:ml-0 lg:ml-0 md:ml-0 2xl:ml-0 2k:ml-0 4k:ml-0 ml-2">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 408-1b
                     </div>
@@ -245,8 +245,8 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen,togglestatus })
               id="ep5"
               className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
-                <p>
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="mb-2">
                   Operations considered to have significant risk for incidents
                   of forced or compulsary labor
                 </p>
@@ -267,8 +267,8 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen,togglestatus })
               id="ep6"
               className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
-                <p>
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="mb-2">
                   Suppliers at significant risk for incidents of forced or
                   compulsory labor
                 </p>
@@ -294,7 +294,7 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen,togglestatus })
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className=" mb-8 me-2"
+             className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
         >
           <TableSidebar />
         </div>

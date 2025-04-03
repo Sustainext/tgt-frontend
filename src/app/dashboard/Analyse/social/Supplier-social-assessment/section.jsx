@@ -123,12 +123,12 @@ const Section = ({ selectedOrg, selectedCorp, dateRange, isBoxOpen,togglestatus 
                     New suppliers that were screened using social criteria
                   </p>
                 </div>
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500 text-[13px] ">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                  <p className="text-gray-500 text-[13px] mb-2">
                     Percentage of suppliers screened using social criteria
                   </p>
 
-                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex xl:ml-0 lg:ml-0 md:ml-0 2xl:ml-0 2k:ml-0 4k:ml-0 ml-2">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 414-1a
                     </div>
@@ -153,12 +153,12 @@ const Section = ({ selectedOrg, selectedCorp, dateRange, isBoxOpen,togglestatus 
                     taken
                   </p>
                 </div>
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500 text-[13px]">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                  <p className="text-gray-500 text-[13px] mb-2">
                     Percentage of Suppliers
                   </p>
 
-                  <div className="flex justify-between gap-2">
+                  <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between gap-2">
                     <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                       <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                         GRI 414-2d
@@ -189,7 +189,7 @@ const Section = ({ selectedOrg, selectedCorp, dateRange, isBoxOpen,togglestatus 
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+             className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

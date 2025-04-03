@@ -81,6 +81,26 @@ h1,h2,h3,h4,h5,h6,p,div {
       display: none;
     }
   }
+  @media (max-width: 768px) {
+    .scrollable-content {
+      scrollbar-width: auto; /* Firefox */
+      -ms-overflow-style: auto; /* IE/Edge */
+  
+      &::-webkit-scrollbar {
+        display: block;
+        width: 6px;
+      }
+  
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+      }
+  
+      &::-webkit-scrollbar-track {
+        background-color: transparent;
+      }
+    }
+  }
   .gradient-text {
     background: linear-gradient(90deg, #0065BF 7.92%, #22B6CC 89.75%);
     font-style: normal;
@@ -179,7 +199,12 @@ h1,h2,h3,h4,h5,h6,p,div {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 30%;
   }
-
+  @media (max-width: 768px) {
+    .modal-content-custom {
+   
+      width: 80%;
+    }
+  }
   .modal-content-custom-width {
     background-color: white;
     padding: 20px;
@@ -527,6 +552,12 @@ color:"#ACACAC";
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 30%;
+}
+@media (max-width: 768px) {
+  .modal-contentnew {
+    width: 95%;
+   
+  }
 }
 .panel-danger{
   display: none;

@@ -234,7 +234,7 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
       </div>
 
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-row gap-6">
+        <div className="xl:flex lg:flex md:flex 2k:flex 4k:flex flex-row gap-6">
           <CheckboxTable
             title="Select Organizations"
             options={organizations}
