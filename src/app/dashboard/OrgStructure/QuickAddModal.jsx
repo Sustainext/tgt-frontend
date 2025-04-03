@@ -15,7 +15,7 @@ const INITIAL_FORM_STATE = {
   locationType: "",
 };
 
-const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
+const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
   const router = useRouter();
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
   const [subIndustries, setSubIndustries] = useState([]);
@@ -31,6 +31,8 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
     setCities([]);
     onClose();
   };
+
+  
 
   useEffect(() => {
     // Only handle state/city updates for location type
@@ -126,95 +128,203 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
       case "organization":
         endpoint = "/organization";
         entityType = "Organization";
+        // payload = {
+        //   name: formData.name,
+        //   countryoperation: formData.country,
+        //   sector: formData.sector,
+        //   type_corporate_entity: "Office",
+        //   owner: "Default",
+        //   phone: 9876543210,
+        //   mobile: 9876543210,
+        //   website: "https://www.sustainext.ai",
+        //   fax: 234567,
+        //   employeecount: 100,
+        //   revenue: 100000,
+        //   date_format: "mm/dd/yyyy",
+        //   currency: "USD",
+        //   timezone: "+00:00",
+        //   language: "English",
+        //   active: true,
+        //   framework: "GRI",
+        //   subindustry: formData.subIndustry || "Default",
+        //   address: formData.address || "Bengaluru",
+        //   state: formData.state || "Karnataka",
+        //   city: formData.city || "Bengaluru",
+        //   from_date: formData.from_date || null,
+        //   to_date: formData.to_date || null,
+        //   no_of_employees: 100,
+        //   amount: null,
+        //   ownership_and_legal_form: null,
+        //   group: null,
+        //   type_of_corporate_entity: formData.type || "Default",
+        //   location_of_headquarters: formData.location || "Bengaluru",
+        //   sub_industry: "Default",
+        //   type_of_business_activities: null,
+        //   type_of_product: null,
+        //   type_of_services: null,
+        //   sdg: "SDG1",
+        //   rating: "rating1",
+        //   certification: null,
+        //   target: null,
+        //   username: "mahinder.singh@sustainext.ai",
+        // };
         payload = {
-          name: formData.name,
-          countryoperation: formData.country,
-          sector: formData.sector,
-          type_corporate_entity: "Office",
-          owner: "Default",
-          phone: 9876543210,
-          mobile: 9876543210,
-          website: "https://www.sustainext.ai",
-          fax: 234567,
-          employeecount: 100,
-          revenue: 100000,
-          date_format: "mm/dd/yyyy",
-          currency: "USD",
-          timezone: "+00:00",
-          language: "English",
-          active: true,
-          framework: "GRI",
-          subindustry: formData.subIndustry || "Default",
-          address: formData.address || "Bengaluru",
-          state: formData.state || "Karnataka",
-          city: formData.city || "Bengaluru",
+          name: formData.name || 'Entity 1',
+          type_corporate_entity: 'Private Limited',
+          owner:  '',
+          location_of_headquarters: 'Not Specified',
+          phone: 9999999999,
+          mobile: '',
+          website: 'https://www.sustainext.ai',
+          fax: "",
+          employeecount:  0,
+          revenue: 0,
+          sector: formData.sector || 'General',
+          subindustry: formData.subIndustry || 'General',
+          address: formData.address || 'Not Provided',
+          country: formData.country || 'N/A',
+          state: formData.state || 'N/A',
+          city: formData.city || 'N/A',
+          date_format: "YYYY/MM/DD",
+          currency: 'USD',
+          timezone: 'UTC',
           from_date: formData.from_date || null,
           to_date: formData.to_date || null,
-          no_of_employees: 100,
-          amount: null,
-          ownership_and_legal_form: null,
-          group: null,
-          type_of_corporate_entity: formData.type || "Default",
-          location_of_headquarters: formData.location || "Bengaluru",
-          sub_industry: "Default",
-          type_of_business_activities: null,
-          type_of_product: null,
-          type_of_services: null,
-          sdg: "SDG1",
-          rating: "rating1",
-          certification: null,
-          target: null,
-          username: "mahinder.singh@sustainext.ai",
+          sdg: [],
+          rating: [],
+          certification: [],
+          target: [],
+          framework:  [1],
+          // language: data.generalDetails.language || 'English',
+          // active: true,
+          // no_of_employees: 100,
+           // amount: null,
+          // ownership_and_legal_form: null,
+          // group: null,
+          // type_of_corporate_entity: data.generalDetails.type || 'Default',
+          // sub_industry: 'General',
+          // type_of_business_activities: null,
+          // type_of_product: null,
+          // type_of_services: null,
+          // username: 'mahinder.singh@sustainext.ai',
         };
         break;
 
       case "corporate":
         endpoint = "/corporate";
         entityType = "Corporate entity";
+        // payload = {
+        //   name: formData.name,
+        //   Country: formData.country,
+        //   sector: formData.sector,
+        //   subindustry: formData.subIndustry,
+        //   organization: parentNode.name,
+        //   corporatetype: "Default",
+        //   ownershipnature: "Default",
+        //   location_headquarters: "Default",
+        //   phone: 9876543210,
+        //   mobile: 9876543210,
+        //   website: "https://www.sustainext.ai",
+        //   fax: 234567,
+        //   employeecount: 100,
+        //   revenue: 100000,
+        //   currency: "USD",
+        //   timezone: "+00:00",
+        //   language: "English",
+        //   date_format: "mm/dd/yyyy",
+        //   framework: "GRI: With reference to",
+        // };
+
         payload = {
-          name: formData.name,
-          Country: formData.country,
-          sector: formData.sector,
-          subindustry: formData.subIndustry,
-          organization: parentNode.name,
-          corporatetype: "Default",
-          ownershipnature: "Default",
-          location_headquarters: "Default",
-          phone: 9876543210,
-          mobile: 9876543210,
-          website: "https://www.sustainext.ai",
-          fax: 234567,
-          employeecount: 100,
-          revenue: 100000,
-          currency: "USD",
-          timezone: "+00:00",
-          language: "English",
-          date_format: "mm/dd/yyyy",
-          framework: "GRI: With reference to",
+          name: formData.name || "Test Corp",
+          corporatetype:  "Default",
+          ownershipnature:  "",
+          location_headquarters:  "Not Specified",
+          phone:  9999999999,
+          mobile:  '',
+          website:  'https://www.sustainext.ai',
+          fax:  '',
+          employeecount:  0,
+          revenue:  0,
+          organization: parentName.id,
+          sector: formData.sector || "General",
+          subindustry: formData.subIndustry || "General",
+          address:  "Not Provided",
+          country: formData.country || "N/A",
+          state:  "N/A",
+          city:  "N/A",
+          // zipcode:  null,
+          date_format:  "YYYY/MM/DD",
+          currency:  "USD",
+          timezone:  "UTC",
+          from_date:  null,
+          to_date:  null,
+          // legalform: "1",
+          // ownership:  "",
+          // group: null,
+          // location_of_headquarters: "Not Specified",
+          // amount: null,
+          // type_of_business_activities: null,
+          // type_of_product: null,
+          // type_of_services: null,
+          // type_of_business_relationship: null,
+        framework:[1],
+        sdg: [],
+        rating: [],
+        certification: [],
+        target: []
+    
         };
         break;
 
       case "location":
         endpoint = "/locationonlyview";
         entityType = "Location";
+        // payload = {
+        //   name: formData.name,
+        //   typelocation: formData.locationType,
+        //   country: formData.country,
+        //   state: formData.state,
+        //   city: formData.city,
+        //   corporateentity: parentName.name,
+        //   currency: "USD",
+        //   dateformat: "mm/dd/yyyy",
+        //   phone: 9876543210,
+        //   mobile: 9876543210,
+        //   website: "https://www.sustainext.ai",
+        //   fax: 234567,
+        //   timezone: "+00:00",
+        //   employeecount: 100,
+        //   language: "English",
+        //   revenue: 100000,
+        //   area: 56775,
+        // };
+
         payload = {
-          name: formData.name,
-          typelocation: formData.locationType,
-          country: formData.country,
-          state: formData.state,
-          city: formData.city,
-          corporateentity: parentNode.name,
+          corporateentity: parentName.id,
+          name: formData.name || "Location 1",
+          phone:  999999999,
+          mobile:  '',
+          website:  "https://www.sustainext.ai",
+          fax:  "",
+          employeecount:  0,
+          revenue:  0,
+          sector: "General",
+          sub_industry:  "General",
+          streetaddress:  "Not Provided",
+          zipcode: 'N/A',
+          state: formData.state || 'N/A',
+          city: formData.city || 'N/A',
+          country: formData.country || 'N/A',
+          latitude:  null,
+          longitude:  null,
+          timezone: "UTC",
           currency: "USD",
-          dateformat: "mm/dd/yyyy",
-          phone: 9876543210,
-          mobile: 9876543210,
-          website: "https://www.sustainext.ai",
-          fax: 234567,
-          timezone: "+00:00",
-          employeecount: 100,
+          dateformat:  "YYYY/MM/DD",
+          from_date:  null,
+          to_date:null,
           language: "English",
-          revenue: 100000,
-          area: 56775,
+          location_type: formData.locationType || "Default",
         };
         break;
     }
@@ -345,13 +455,13 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
             <div className="flex flex-col">
               <div className="text-sm text-gray-600 mb-1">Organization</div>
               <div className="inline-block px-3 py-1 rounded-md text-sm bg-blue-100 text-blue-800">
-                {parentNode.organization}
+                {parentName.organization}
               </div>
             </div>
             <div className="flex flex-col">
               <div className="text-sm text-gray-600 mb-1">Corporate Entity</div>
               <div className="inline-block px-3 py-1 rounded-md text-sm bg-green-100 text-green-800">
-                {parentNode.name}
+                {parentName.name}
               </div>
             </div>
           </div>
@@ -359,7 +469,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
           <div>
             <div className="text-sm text-gray-600 mb-2">Organization</div>
             <div className="inline-block px-3 py-1 rounded-md text-sm bg-blue-100 text-blue-800">
-              {parentNode.name}
+              {parentName.name}
             </div>
           </div>
         )}
