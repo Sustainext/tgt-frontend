@@ -134,9 +134,9 @@ const Screen2 = ({
         `/sustainapp/get_illness_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&location=${selectedLocation}&start=${dateRange.start}&end=${dateRange.end}`
       );
   
-      if (response.data?.status === 206 && response.data?.warning) {
-        console.log("Warning from API:", response.data.warning);
-        toast.warning(response.data.warning, { position: "top-right", autoClose: 5000 });
+      if (response.data?.status === 206 && response.data?.message) {
+        console.log("Warning from API:", response.data.message);
+        toast.warning(response.data.message, { position: "top-right", autoClose: 5000 });
       }
   
       const data = response.data.data;

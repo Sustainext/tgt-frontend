@@ -20,6 +20,7 @@ const EmissionReductionInitiativesWidget = ({
     if (value.q1Answer && value.formData) {
       setQ1Answer(value.q1Answer);
       setFormData(value.formData);
+    
     }
     if (!value || Object.keys(value).length === 0) {
       // Reset to initial state
@@ -33,7 +34,7 @@ const EmissionReductionInitiativesWidget = ({
   useEffect(() => {
     if (q1Answer === "Yes" && formData.length === 0) {
       setFormData([{}]);
-      onChange([{ q1Answer, formData: [{}] }]);
+      onChange({ q1Answer, formData: [{}] });
     }
   }, [q1Answer]);
 
@@ -52,7 +53,7 @@ const EmissionReductionInitiativesWidget = ({
       }
 
   
-      onChange([{ q1Answer, formData: updatedData }]); // Update parent
+      onChange({ q1Answer, formData: updatedData }); // Update parent
       return updatedData;
     });
   };
@@ -64,14 +65,14 @@ const EmissionReductionInitiativesWidget = ({
     setQ1Answer(newQ1Answer);
     const newFormData = newQ1Answer === "Yes" ? [{}] : [];
     setFormData(newFormData);
-    onChange([{ q1Answer: newQ1Answer, formData: newFormData }]);
+    onChange({ q1Answer: newQ1Answer, formData: newFormData });
   };
 
   // Add a new row
   const addRow = () => {
     setFormData((prevData) => {
       const newFormData = [...prevData, {}];
-      onChange([{ q1Answer, formData: newFormData }]);
+      onChange({ q1Answer, formData: newFormData });
       return newFormData;
     });
   };
@@ -80,7 +81,7 @@ const EmissionReductionInitiativesWidget = ({
   const removeRow = (index) => {
     setFormData((prevData) => {
       const updatedData = prevData.filter((_, i) => i !== index);
-      onChange([{ q1Answer, formData: updatedData }]);
+      onChange({ q1Answer, formData: updatedData });
       return updatedData;
     });
   };

@@ -120,7 +120,7 @@ const AuditLogs = () => {
 
   useEffect(() => {
     if (currentPage > totalPages) {
-      setCurrentPage(totalPages || 1); 
+      setCurrentPage(totalPages || 1);
     }
   }, [totalPages, currentPage]);
 
@@ -259,7 +259,7 @@ const AuditLogs = () => {
   }, [logs]);
 
   return (
-    <div className="p-6 min-h-screen">
+    <div className="xl:p-6 lg:p-6 2xl:p-6 4k:p-6 2k:p-6 md:p-6 min-h-screen">
       <div className="flex justify-between items-center mb-6 border-b h-[66px]">
         <h1
           className="gradient-text text-[22px] h-[22px]"
@@ -281,9 +281,9 @@ const AuditLogs = () => {
         </div>
       </div>
 
-      <div className="flex">
-        <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex items-center  mb-4 w-[80%]">
-          <div className="items-center space-x-2">
+      <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex">
+        <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex items-center  mb-4 xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] w-full">
+          <div className="items-center space-x-2 mb-2 xl:mb-0 lg:mb-0 4k:mb-0 2k:mb-0 md:mb-0 ">
             <label className="block text-sm font-medium text-gray-600 mb-2 ml-1">
               From
             </label>
@@ -291,10 +291,10 @@ const AuditLogs = () => {
               type="date"
               value={fromDate}
               onChange={(e) => setFromDate(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-1 w-[365px] text-[13px]"
+              className="border border-gray-300 rounded px-3 py-1 xl:w-[365px]  lg:w-[365px] md:w-[365px] 4k:w-[365px] 2k:w-[365px] w-[98%] text-[13px]"
             />
           </div>
-          <div className="xl: ml-2 lg:ml-2 md:ml-2 4k:ml-2 2k:ml-2">
+          <div className="xl:ml-2 lg:ml-2 md:ml-2 4k:ml-2 2k:ml-2">
             <label className="block text-sm font-medium text-gray-600 mb-2 ml-1">
               To
             </label>
@@ -302,11 +302,11 @@ const AuditLogs = () => {
               type="date"
               value={toDate}
               onChange={(e) => setToDate(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-1 w-[365px] text-[13px]"
+              className="border border-gray-300 rounded px-3 py-1 xl:w-[365px]  lg:w-[365px] md:w-[365px] 4k:w-[365px] 2k:w-[365px] w-[98%] text-[13px] ml-2"
             />
           </div>
         </div>
-        <div className="w-[20%]">
+        <div className=" xl:w-[20%] lg:w-[20%] md:w-[20%] 4k:w-[20%] 2k:w-[20%] w-full mb-2">
           <div className="float-right mt-4">
             <button
               className="bg-[#007EEF] text-white px-4 py-2 rounded flex items-center text-[13px] gap-2"
@@ -319,8 +319,8 @@ const AuditLogs = () => {
         </div>
       </div>
 
-      <div className="bg-white shadow-md rounded-lg overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
+      <div className="bg-white shadow-md rounded-lg overflow-x-auto custom-scrollbar mt-[95px] xl:mt-0 lg:mt-0 4k:mt-0 2k:mt-0 md:mt-0">
+        <table className="min-w-[828px] w-full  divide-y divide-gray-200">
           <thead className="bg-[#ECF9FE]">
             <tr>
               <th className="px-6 py-3 text-left text-[14px] text-gray-500 font-[500] normal-case">
@@ -332,7 +332,7 @@ const AuditLogs = () => {
                   />
                 </div>
                 {isOpen && (
-                  <div className="filter-dropdown absolute  w-[200px] bg-white shadow-xl border border-gray-200 rounded z-10 ">
+                  <div className="filter-dropdown absolute  w-[200px] bg-white shadow-xl border border-gray-200 rounded z-10 overflow-auto h-[450px]">
                     {Object.keys(statusFilter).map((status) => (
                       <div className="px-3 py-2" key={status}>
                         <label className="flex items-center text-gray-600">
@@ -358,7 +358,7 @@ const AuditLogs = () => {
                   />
                 </div>
                 {isOpen2 && (
-                  <div className="filter-dropdown2 absolute  w-[200px] bg-white shadow-xl border border-gray-200 rounded z-10">
+                  <div className="filter-dropdown2 absolute w-[290px] bg-white shadow-xl border border-gray-200 rounded z-10  overflow-auto h-[450px] custom-scrollbar">
                     {Object.keys(statusFilter2).map((status) => (
                       <div className="px-3 py-2" key={status}>
                         <label className="flex items-center text-gray-600">
@@ -393,7 +393,7 @@ const AuditLogs = () => {
                   />
                 </div>
                 {isOpen3 && (
-                  <div className="filter-dropdown3 absolute  w-[200px] bg-white shadow-xl border border-gray-200 rounded z-10">
+                  <div className="filter-dropdown3 absolute xl:right-[21.5rem] lg:right-[21.5rem] md:right-[21.5rem] 2k:right-[21.5rem] 4k:right-[21.5rem]  right-[13.5rem] mt-2 w-[200px] max-w-[90vw] bg-white shadow-xl border border-gray-200 rounded z-10 overflow-auto h-[450px]">
                     {Object.keys(statusFilter3).map((status) => (
                       <div className="px-3 py-2" key={status}>
                         <label className="flex items-center text-gray-600">
@@ -472,8 +472,8 @@ const AuditLogs = () => {
         </table>
       </div>
 
-      <div className="flex justify-center items-center mt-6">
-        <div className="flex items-center space-x-2">
+      <div className="flex justify-center items-center mt-6 w-full  ">
+        <div className="w-full max-w-full sm:max-w-[480px] min-w-[280px] flex flex-wrap justify-center items-center gap-2">
           {/* Previous Button */}
           <button
             onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
@@ -598,7 +598,7 @@ const AuditLogs = () => {
                   </p>
                 </div>
                 <div>
-                  <p className="text-[#667085] text-[16px]">
+                  <p className="text-[#667085] text-[16px] truncate overflow-hidden whitespace-nowrap">
                     {selectedLog.UserEmail}
                   </p>
                 </div>

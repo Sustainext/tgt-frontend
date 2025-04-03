@@ -7,8 +7,7 @@ import { Oval } from "react-loader-spinner";
 import Image from "next/image";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-
-
+import AccordionItemstep2 from "./AccordionItem2"
 const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
   const [disclosureTopics, setDisclosureTopics] = useState([]);
   const [selectedDisclosures, setSelectedDisclosures] = useState({});
@@ -189,11 +188,10 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
         for (let topic of topics) {
           const topicId = Object.keys(topic)[0];
           const disclosures = topic[topicId];
-          const isAnyDisclosureSelected = disclosures.some(
-            (disclosure) =>
-              selectedDisclosures[disclosure.selected_material_topic_id]?.includes(
-                disclosure.disclosure_id
-              )
+          const isAnyDisclosureSelected = disclosures.some((disclosure) =>
+            selectedDisclosures[
+              disclosure.selected_material_topic_id
+            ]?.includes(disclosure.disclosure_id)
           );
           if (!isAnyDisclosureSelected) {
             return true; // Disable if any topic lacks a selected disclosure
@@ -207,7 +205,8 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
   // Function to render topics and disclosures
   const renderDisclosureTopics = (sectionData, sectionTitle) => {
     return (
-      <div className="shadow-lg rounded-lg mx-6 mt-4" key={sectionTitle}>
+      <>
+      <div className="shadow-lg rounded-lg mx-6 mt-4 hidden xl:block lg:block md:block 4k:block 2k:block" key={sectionTitle}>
         <div className="gradient-background p-2 rounded-t-lg flex justify-between">
           <p className="text-[#2E0B34] text-[17px] mx-2 pt-2 text-bold">
             {sectionTitle}
@@ -227,16 +226,13 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
                     : ""
                 }`}
               >
-                <div className="flex gap-10 items-start">
+                <div className="xl:flex gap-10 items-start">
                   <p className="text-[#2E0B34] text-[15px] mx-2 pt-2 min-w-[200px]">
                     {topicName}
                   </p>
                   <div className="relative">
                     {disclosures.map((disclosure) => (
-                      <div
-                        key={disclosure.disclosure_id}
-                        className="mx-2 pt-1"
-                      >
+                      <div key={disclosure.disclosure_id} className="mx-2 pt-1">
                         <label className="flex items-center gap-2 text-sm mb-4 cursor-pointer">
                           <input
                             type="checkbox"
@@ -253,7 +249,9 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
                                 disclosure.disclosure_id
                               )
                             }
-                            className={`form-checkbox h-3 w-3 accent-[#008000]  ${disclosure.can_edit?"cursor-pointer":""}`}
+                            className={`form-checkbox h-3 w-3 accent-[#008000]  ${
+                              disclosure.can_edit ? "cursor-pointer" : ""
+                            }`}
                             data-tooltip-html={
                               !disclosure.can_edit
                                 ? "<p>This is a Topic Management Disclosure and cannot be skipped.</p>"
@@ -265,19 +263,19 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
                         </label>
                       </div>
                     ))}
-                   {disclosures.map((disclosure) => (
-    <ReactTooltip
-      key={disclosure.disclosure_id}
-      id={`tooltip-${disclosure.disclosure_id}`} // Unique ID for each tooltip
-      place="top"
-      effect="solid"
-      backgroundColor="#000"
-      textColor="white"
-      fontSize="12px"
-      borderRadius="8px"
-      delayShow={200}
-    />
-  ))}
+                    {disclosures.map((disclosure) => (
+                      <ReactTooltip
+                        key={disclosure.disclosure_id}
+                        id={`tooltip-${disclosure.disclosure_id}`} // Unique ID for each tooltip
+                        place="top"
+                        effect="solid"
+                        backgroundColor="#000"
+                        textColor="white"
+                        fontSize="12px"
+                        borderRadius="8px"
+                        delayShow={200}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -285,6 +283,69 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
           })}
         </div>
       </div>
+      {/* mobile version */}
+      <div className="md:hidden xl:hidden lg:hidden 4k:hidden 2k:hidden 2xl:hidden block px-4 mt-4" key={`${sectionTitle}-mobile`}>
+        <AccordionItemstep2 title={sectionTitle}>
+          {sectionData.map((topic, topicIndex) => {
+            const topicName = Object.keys(topic)[0];
+            const disclosures = topic[topicName];
+
+            return (
+              <div key={topicIndex} className="mb-4">
+                <p className="text-[#2E0B34] text-[15px] font-medium mb-2">
+                  {topicName}
+                </p>
+                <div className="border-b-2"> 
+                {disclosures.map((disclosure) => (
+                  <div key={disclosure.disclosure_id} className="pt-1 ">
+                    <label className="flex items-center gap-2 text-sm mb-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        value={disclosure.disclosure_id}
+                        checked={
+                          selectedDisclosures[
+                            disclosure.selected_material_topic_id
+                          ]?.includes(disclosure.disclosure_id) || false
+                        }
+                        disabled={!disclosure.can_edit}
+                        onChange={() =>
+                          handleCheckboxChange(
+                            disclosure.selected_material_topic_id,
+                            disclosure.disclosure_id
+                          )
+                        }
+                        className={`form-checkbox h-3 w-3 accent-[#008000] ${
+                          disclosure.can_edit ? "cursor-pointer" : ""
+                        }`}
+                        data-tooltip-html={
+                          !disclosure.can_edit
+                            ? "<p>This is a Topic Management Disclosure and cannot be skipped.</p>"
+                            : ""
+                        }
+                        data-tooltip-id={`tooltip-${disclosure.disclosure_id}`}
+                      />
+                      {disclosure.name}
+                    </label>
+                    <ReactTooltip
+                      id={`tooltip-${disclosure.disclosure_id}`}
+                      place="top"
+                      effect="solid"
+                      backgroundColor="#000"
+                      textColor="white"
+                      fontSize="12px"
+                      borderRadius="8px"
+                      delayShow={200}
+                    />
+                  </div>
+                ))}
+                </div>
+              </div>
+            );
+          })}
+        </AccordionItemstep2>
+      </div>
+      </>
+
     );
   };
 
@@ -367,7 +428,7 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
       {disclosureTopics.environment ||
       disclosureTopics.social ||
       disclosureTopics.governance ? (
-        <div className="mt-3 mb-3">
+        <div className="xl:mt-3 lg:mt-3 2xl:mt-3 4k:mt-3 2k:mt-3 md:mt-3 mt-8 mb-3 ">
           {/* Render Environment */}
           {disclosureTopics.environment &&
             renderDisclosureTopics(disclosureTopics.environment, "Environment")}
@@ -430,7 +491,7 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
             handleSubmit(formattedDisclosures);
           }}
           data-tooltip-html={
-           "<p>Please select at least one disclosure from each topic.</p>"
+            "<p>Please select at least one disclosure from each topic.</p>"
           }
           data-tooltip-id={`nextButtonTooltip`}
           disabled={isNextButtonDisabled()}

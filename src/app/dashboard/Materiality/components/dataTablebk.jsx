@@ -21,15 +21,6 @@ const DataTable = ({ data, setRefresh, refresh }) => {
     "Status",
     "Action",
   ];
-  const mobCol = [
-    "Organization",
-    "Corporate",
-    "Type",
-    "Time Period",
-  "ESG Topics",
-    "Status",
-    "Action",
-  ];
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -37,10 +28,10 @@ const DataTable = ({ data, setRefresh, refresh }) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  // const stickyColumns = ["Organization", "Corporate"];
+  const stickyColumns = ["Organization", "Corporate"];
   return (
     <>
-      <div className="mb-2 h-auto overflow-x-auto custom-scrollbar hidden xl:block md:block lg:block 4k:block 2k:block">
+      <div className="mb-2 h-auto overflow-x-auto custom-scrollbar">
         <table className="min-w-[1000px] w-full rounded-md">
           <thead className="gradient-background">
             <tr>
@@ -78,7 +69,16 @@ const DataTable = ({ data, setRefresh, refresh }) => {
                         ))
                       : "Not Selected"}
                   </div>
-          
+                  <div className="md:hidden">
+                    {item.enviromentTopics.length > 0 ? (
+                      <DropdownList
+                        title="Environment Topics"
+                        items={item.enviromentTopics}
+                      />
+                    ) : (
+                      "Not Selected"
+                    )}
+                  </div>
                 </td>
                 <td className="p-3 text-left align-top">
                   <div className="hidden md:block">
@@ -90,7 +90,16 @@ const DataTable = ({ data, setRefresh, refresh }) => {
                         ))
                       : "Not Selected"}
                   </div>
-              
+                  <div className="md:hidden">
+                    {item.socialTopics.length > 0 ? (
+                      <DropdownList
+                        title="Social Topics"
+                        items={item.socialTopics}
+                      />
+                    ) : (
+                      "Not Selected"
+                    )}
+                  </div>
                 </td>
                 <td className="p-3 text-left align-top">
                   <div className="hidden md:block">
@@ -102,109 +111,17 @@ const DataTable = ({ data, setRefresh, refresh }) => {
                         ))
                       : "Not Selected"}
                   </div>
-              
-                </td>
-                <td className="p-3 text-left align-top">
-                  <div className="flex items-start">
-                    <span
-                      className={`inline-block w-3 h-3 mr-2 rounded-full ${
-                        item.status === "In_progress"
-                          ? "bg-yellow-500"
-                          : item.status === "Completed"
-                          ? "bg-green-800"
-                          : "bg-gray-300"
-                      }`}
-                    ></span>
-                    <span className="leading-none self-start">
-                      {item.status}
-                    </span>
-                  </div>
-                </td>
-                <td className="p-3 align-top">
-                  <div className="flex gap-2 cursor-pointer">
-                    {item.status == "Outdated" ? (
-                      <div className="w-[20%]"></div>
-                    ) : (
-                      <div className="w-[20%]">
-                        <MdOutlineEdit
-                          className="text-[18px] text-gray-500"
-                          onClick={() => {
-                            if (item.type == "GRI: In accordance with") {
-                              localStorage.setItem("id", item.id);
-                              router.push("Materiality/accordance");
-                            } else if (item.type == "GRI: With reference to") {
-                              localStorage.setItem("id", item.id);
-                              router.push("Materiality/reference");
-                            }
-                          }}
-                        />
-                      </div>
-                    )}
-
-                    <div className="w-[20%]">
-                      <MdOutlineDeleteOutline
-                        className="text-[18px] text-gray-500"
-                        onClick={() => {
-                          setDeleteData({
-                            id: item.id,
-                            organization: item.organization,
-                            corporate: item.corporate,
-                            type: item.type,
-                            period: item.timePeriod,
-                          });
-                          setDeleteModalOpen(true);
-                        }}
-                      />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-      
-      </div>
-      <div className="mb-2 h-auto overflow-x-auto custom-scrollbar block xl:hidden md:hidden lg:hidden 4k:hidden 2k:hidden">
-        <table className="min-w-[1000px] w-full rounded-md">
-          <thead className="gradient-background">
-            <tr>
-            {mobCol.map((item, idx) => (
-  <th
-    key={idx}
-    className="text-[12px] px-3 py-3 w-auto text-center"
-  >
-    <div
-      className={`flex w-[144px] xl:w-[160px] ${
-        item === "ESG Topics" ? "justify-center mr-1" : ""
-      }`}
-    >
-      <p className="text-gray-500">{item}</p>
-    </div>
-  </th>
-))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className={`${
-                  rowIndex >= data.length - 1 ? "" : "border-b"
-                } text-[13px] align-top`}
-              >
-                <td className="p-3 text-left align-top">{item.organization}</td>
-                <td className="p-3 text-left align-top">{item.corporate}</td>
-                <td className="p-3 text-left align-top">{item.type}</td>
-                <td className="p-3 text-left align-top">{item.timePeriod}</td>
-                <td className="p-3 text-center align-top">
-                <DropdownList
+                  <div className="md:hidden">
+                    {item.governanceTopics.length > 0 ? (
+                      <DropdownList
                         title="Governance Topics"
-                        item={item}
-                        
+                        items={item.governanceTopics}
                       />
-                  </td>
-             
+                    ) : (
+                      "Not Selected"
+                    )}
+                  </div>
+                </td>
                 <td className="p-3 text-left align-top">
                   <div className="flex items-start">
                     <span
