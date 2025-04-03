@@ -3,7 +3,7 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-const AccordionItem = ({ title, tooltipId, tooltipContent, checked, onCheck, children }) => {
+const AccordionItem = ({ title, tooltipId, tooltipContent, checked, onCheck, children,name, id }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -35,9 +35,10 @@ const AccordionItem = ({ title, tooltipId, tooltipContent, checked, onCheck, chi
         </div>
         <div className="flex items-center gap-2">
           <input
+          id={id}
             type="checkbox"
             checked={checked}
-            name={tooltipId}
+            name={name}
             onChange={onCheck}
             className="h-3.5 w-3.5 accent-[#008000]"
           />
