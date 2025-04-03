@@ -225,37 +225,17 @@ const EmissionReductionInitiativesWidget = ({
   const updatedMultiSelectStyle = {
     control: (base) => ({
       ...base,
-      padding: "4px 10px", // Equivalent to py-3
-      minHeight: "48px", // Ensure height matches your other elements
-      borderColor: "#d1d5db", // Matches Tailwind's gray-300 border
-      borderRadius: "0.375rem", // Matches Tailwind's rounded-md
+      border:'none',
+      borderBottom: '2px solid #d1d5db',
+      padding: '4px 10px', // Equivalent to py-3
+      minHeight: '48px', // Ensure height matches your other elements
+      // borderColor: '#d1d5db', // Matches Tailwind's gray-300 border
+      // borderRadius: '0.375rem', // Matches Tailwind's rounded-md
     }),
     valueContainer: (base) => ({
       ...base,
-      padding: "0", // Reset inner padding to fit the custom height
+      padding: '0', // Reset inner padding to fit the custom height
     }),
-    // menu: (base) => ({
-    //   ...base,
-    //   maxHeight: "150px", // Set max height for the dropdown menu
-    //   overflowY: "auto", // Enable vertical scrolling
-    //   overscrollBehavior: "contain", // Prevent scroll chaining
-    //   WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS
-    //   // Optional: customize scrollbar appearance
-    //   "&::-webkit-scrollbar": {
-    //     width: "8px",
-    //   },
-    //   "&::-webkit-scrollbar-track": {
-    //     background: "#f1f1f1",
-    //   },
-    //   "&::-webkit-scrollbar-thumb": {
-    //     background: "#888",
-    //     borderRadius: "4px",
-    //   },
-    //   "&::-webkit-scrollbar-thumb:hover": {
-    //     background: "#555",
-    //   },
-    // }),
-    
     menu: (provided) => ({
       ...provided,
 
@@ -269,21 +249,22 @@ const EmissionReductionInitiativesWidget = ({
     }),
 
     menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
-    multiValue: (base) => ({
-      ...base,
-      backgroundColor: "#dbeafe", // Light blue background (Tailwind's blue-100)
-      borderRadius: "0.375rem", // Rounded corners
-    }),
-    multiValueLabel: (base) => ({
-      ...base,
-      color: "#1e40af", // Blue text (Tailwind's blue-800)
-      fontWeight: "600",
-    }),
-    multiValueRemove: (base) => ({
-      ...base,
-      color: "#6A6E70",
-    }),
+      multiValue: (base) => ({
+        ...base,
+        backgroundColor: '#dbeafe', // Light blue background (Tailwind's blue-100)
+        borderRadius: '0.375rem', // Rounded corners
+      }),
+      multiValueLabel: (base) => ({
+        ...base,
+        color: '#1e40af', // Blue text (Tailwind's blue-800)
+        fontWeight: '600',
+      }),
+      multiValueRemove: (base) => ({
+        ...base,
+        color: '#6A6E70'
+      }),
   };
+  
 
   return (
     <div className="overflow-auto custom-scrollbar">

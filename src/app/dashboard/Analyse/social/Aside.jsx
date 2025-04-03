@@ -6,9 +6,9 @@ const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
   };
   return (
     <div
-    className={`m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-lg fixed  `}
+    className={`m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-lg fixed`}
     >
-       <div className="flex items-start py-4 w-[199px] xl:min-w-[200px] lg:min-w-[200px] md:min-w-[200px] 4k:min-w-[200px] 2k:min-w-[200px] 2xl:min-w-[200px] min-w-[422px] min-h-[100vh] rounded-lg text-[0.875rem]">
+        <div className="flex items-start py-4 min-h-[110vh] max-h-[120px] h-[550px] scrollable-content overflow-y-auto   w-[199px] xl:min-w-[200px] lg:min-w-[200px] md:min-w-[200px] 4k:min-w-[200px] 2k:min-w-[200px] 2xl:min-w-[200px] min-w-[422px]  rounded-lg text-[0.875rem]">
         <div className="flex flex-col w-full font-medium">
           <div className="flex  items-start gap-2 mb-8 w-full">
             <div className="w-full">

@@ -216,10 +216,11 @@ const EmissionIntensityWidget = ({
   const updatedMultiSelectStyle = {
     control: (base) => ({
       ...base,
+      border:'none',
       padding: '4px 10px', // Equivalent to py-3
       minHeight: '48px', // Ensure height matches your other elements
-      borderColor: '#d1d5db', // Matches Tailwind's gray-300 border
-      borderRadius: '0.375rem', // Matches Tailwind's rounded-md
+      // borderColor: '#d1d5db', // Matches Tailwind's gray-300 border
+      // borderRadius: '0.375rem', // Matches Tailwind's rounded-md
     }),
     valueContainer: (base) => ({
       ...base,
