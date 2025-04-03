@@ -74,6 +74,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
   const handleNext = () => {
     if (currentStep === 1) {
       setIsWeightageModalOpen(true);
+      return;
     }
     if (currentStep === 2) {
       setIsConfirmModalOpen(true);
