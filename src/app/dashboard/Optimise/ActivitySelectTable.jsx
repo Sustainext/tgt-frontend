@@ -13,12 +13,12 @@ import { MdFilterList } from "react-icons/md";
 import { LuChevronsUpDown } from "react-icons/lu";
 import { debounce } from "lodash";
 
-const ActivitySelectTable = ({selectedActivities, setSelectedActivities}) => {
+const ActivitySelectTable = ({ selectedActivities, setSelectedActivities }) => {
   // Main states
   const [activities, setActivities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [count, setCount] = useState(0);
-    
+
   // Sorting states
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -136,8 +136,14 @@ const ActivitySelectTable = ({selectedActivities, setSelectedActivities}) => {
 
       // Apply search filter
       if (searchQuery) {
-        filteredActivities = filteredActivities.filter((activity) =>
-          activity.activity.toLowerCase().includes(searchQuery.toLowerCase())
+        const searchTermLower = searchQuery.toLowerCase();
+        filteredActivities = filteredActivities.filter((activity) => 
+          // Search across all relevant fields
+          activity.activity.toLowerCase().includes(searchTermLower) ||
+          activity.scope.toLowerCase().includes(searchTermLower) ||
+          activity.category.toLowerCase().includes(searchTermLower) ||
+          activity.subCategory.toLowerCase().includes(searchTermLower) ||
+          activity.region.toLowerCase().includes(searchTermLower)
         );
       }
 
@@ -168,21 +174,21 @@ const ActivitySelectTable = ({selectedActivities, setSelectedActivities}) => {
           selectedRegions.includes(activity.region)
         );
       }
-      
+
       // Apply sorting if a sort column is specified
       if (sortColumn) {
         filteredActivities.sort((a, b) => {
           let valueA = a[sortColumn];
           let valueB = b[sortColumn];
-          
+
           // Handle string case-insensitive comparison
-          if (typeof valueA === 'string') {
+          if (typeof valueA === "string") {
             valueA = valueA.toLowerCase();
             valueB = valueB.toLowerCase();
           }
-          
-          if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
-          if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
+
+          if (valueA < valueB) return sortOrder === "asc" ? -1 : 1;
+          if (valueA > valueB) return sortOrder === "asc" ? 1 : -1;
           return 0;
         });
       }
@@ -207,13 +213,13 @@ const ActivitySelectTable = ({selectedActivities, setSelectedActivities}) => {
   // COMPLETELY NEW SELECTION LOGIC
   // Toggle selection of an activity
   const toggleActivitySelection = (activity) => {
-    setSelectedActivities(prevSelected => {
+    setSelectedActivities((prevSelected) => {
       // Check if activity is already selected
-      const isSelected = prevSelected.some(item => item.id === activity.id);
-      
+      const isSelected = prevSelected.some((item) => item.id === activity.id);
+
       if (isSelected) {
         // Remove from selected list
-        return prevSelected.filter(item => item.id !== activity.id);
+        return prevSelected.filter((item) => item.id !== activity.id);
       } else {
         // Add to selected list
         return [...prevSelected, activity];
@@ -223,7 +229,7 @@ const ActivitySelectTable = ({selectedActivities, setSelectedActivities}) => {
 
   // Check if an activity is selected
   const isSelected = (activityId) => {
-    return selectedActivities.some(activity => activity.id === activityId);
+    return selectedActivities.some((activity) => activity.id === activityId);
   };
 
   // Initial fetch and refetch on filter/search/pagination changes
@@ -289,16 +295,16 @@ const ActivitySelectTable = ({selectedActivities, setSelectedActivities}) => {
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
-  
+
   // Handle sort action when a column header is clicked
   const handleSort = (column) => {
     // If clicking the same column, toggle sort order
     if (sortColumn === column) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
       // If clicking a new column, set it as sort column with ascending order
       setSortColumn(column);
-      setSortOrder('asc');
+      setSortOrder("asc");
     }
   };
 
@@ -408,55 +414,95 @@ const ActivitySelectTable = ({selectedActivities, setSelectedActivities}) => {
   return (
     <div className="bg-white rounded-lg shadow-sm">
       {/* Header with search and total counts */}
-      <div className="flex justify-between items-center p-4 border-b">
-        <div className="flex space-x-4">
-          <div className="flex gap-2 items-center w-6">
-            <span className="text-gray-500 text-sm">Total activities</span>
-            <div className="text-xl font-semibold">{count}</div>
+      <div className="relative w-full p-4">
+        <FiSearch className="absolute left-8 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        <input
+          type="text"
+          placeholder="Search by Scope, Category, Sub category or Activity"
+          className="pl-10 pr-4 py-2 w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={searchQuery}
+          onChange={handleSearch}
+        />
+      </div>
+      <div className="flex justify-start items-center p-4">
+        <div className="flex space-x-4 w-[18%] gap-6">
+          <div className="flex items-center">
+            <span className="text-gray-500 text-sm"><div>Total</div> activities</span>
+            <div className="text-xl font-semibold ml-3">{count}</div>
           </div>
-          <div className="flex gap-2 items-center w-6">
-            <span className="text-gray-500 text-sm">Selected activities</span>
-            <div className="text-xl font-semibold text-green-500">
+          <div className="flex items-center">
+            <span className="text-gray-500 text-sm"><div>Selected</div> activities</span>
+            <div className="text-xl font-semibold text-green-500 ml-3">
               {selectedActivities.length}
             </div>
           </div>
         </div>
-        <div className="relative">
-          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search by Scope, Category, Sub category or Activity"
-            className="pl-10 pr-4 py-2 w-80 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-        </div>
+        {/* Active filters */}
+      <div className="flex flex-wrap items-center gap-2 text-sky-700 font-semibold w-[82%]">
+        {selectedScopes.map(scope => (
+          <div key={`scope-${scope}`} className="flex items-center bg-sky-100 rounded-md px-3 py-1 text-sm">
+            <span className="mr-2">Scope: {scope}</span>
+            <button
+              onClick={() => handleClearFilter("scope", scope)}
+              className="text-sky-400 hover:text-sky-600"
+            >
+              <FiX className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        
+        {selectedCategories.map(category => (
+          <div key={`category-${category}`} className="flex items-center bg-sky-100 rounded-md px-3 py-1 text-sm">
+            <span className="mr-2">Category: {category}</span>
+            <button
+              onClick={() => handleClearFilter("category", category)}
+              className="text-sky-400 hover:text-sky-600"
+            >
+              <FiX className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        
+        {selectedSubCategories.map(subCategory => (
+          <div key={`subcategory-${subCategory}`} className="flex items-center bg-sky-100 rounded-md px-3 py-1 text-sm">
+            <span className="mr-2">Sub Category: {subCategory}</span>
+            <button
+              onClick={() => handleClearFilter("subCategory", subCategory)}
+              className="text-sky-400 hover:text-sky-600"
+            >
+              <FiX className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        
+        {selectedRegions.map(region => (
+          <div key={`region-${region}`} className="flex items-center bg-sky-100 rounded-md px-3 py-1 text-sm">
+            <span className="mr-2">Region: {region}</span>
+            <button
+              onClick={() => handleClearFilter("region", region)}
+              className="text-sky-400 hover:text-sky-600"
+            >
+              <FiX className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        
+        {/* Show clear all button if there are any filters */}
+        {(selectedScopes.length > 0 || selectedCategories.length > 0 || 
+          selectedSubCategories.length > 0 || selectedRegions.length > 0) && (
+          <button 
+            className="ml-2 px-3 py-1 text-sm bg-white border border-sky-200 rounded-md hover:bg-sky-50"
+            onClick={() => {
+              setSelectedScopes([]);
+              setSelectedCategories([]);
+              setSelectedSubCategories([]);
+              setSelectedRegions([]);
+            }}
+          >
+            Clear all filters
+          </button>
+        )}
       </div>
-
-      {/* Active filters */}
-      <div className="p-4 flex items-center gap-2">
-        {selectedScopes.length > 0 && (
-          <div className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-sm">
-            <span className="mr-2">Scope 1</span>
-            <button
-              onClick={() => handleClearFilter("scope")}
-              className="text-gray-400 hover:text-gray-600"
-            >
-              <FiX className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-        {selectedSubCategories.length > 0 && (
-          <div className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-sm">
-            <span className="mr-2">Fuel</span>
-            <button
-              onClick={() => handleClearFilter("fuel")}
-              className="text-gray-400 hover:text-gray-600"
-            >
-              <FiX className="w-4 h-4" />
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Table headers */}
@@ -555,7 +601,7 @@ const ActivitySelectTable = ({selectedActivities, setSelectedActivities}) => {
 
         {/* Activity column - 4 units - Added Sorting */}
         <div className="col-span-4 flex items-center">
-          <div 
+          <div
             className="flex items-center gap-1 cursor-pointer"
             onClick={() => handleSort("activity")}
           >
@@ -575,7 +621,7 @@ const ActivitySelectTable = ({selectedActivities, setSelectedActivities}) => {
         {/* Region column - 1 unit - Added Sorting */}
         <div className="col-span-1 relative" ref={regionFilterRef}>
           <div className="flex items-center justify-between">
-            <div 
+            <div
               className="flex items-center gap-1 cursor-pointer"
               onClick={() => handleSort("region")}
             >

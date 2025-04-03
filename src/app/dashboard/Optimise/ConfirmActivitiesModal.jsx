@@ -59,7 +59,7 @@ const ConfirmActivitiesModal = ({
                 </div>
 
                 {/* Selected Activities Summary */}
-                <div className="bg-white rounded-lg border border-gray-200 mb-6  h-[500px]">
+                <div className="bg-white rounded-lg border border-gray-200 mb-6 max-h-[500px]">
                   <div className="p-4 border-b border-gray-200">
                     <h3 className="font-medium">Selected Activities: {selectedActivities.length}</h3>
                   </div>

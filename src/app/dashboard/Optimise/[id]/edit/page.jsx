@@ -5,6 +5,7 @@ import MetricsGraph from "../../MetricsGraph";
 import WeightageInputModal from "../../WeightageInputModal";
 import ActivitySelectTable from "../../ActivitySelectTable";
 import ConfirmActivitiesModal from "../../ConfirmActivitiesModal";
+import ActivitySummarySection from "../../ActivitiesSummary";
 
 const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
   // Current step in the wizard (1-4)
@@ -70,11 +71,11 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
     if (currentStep === 1) {
       setIsWeightageModalOpen(true);
     }
-    // If current step is 2, show confirmation modal
     if (currentStep === 2) {
       setIsConfirmModalOpen(true);
       return;
-    } else if (currentStep < 4) {
+    }
+     else if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     } else {
       onSave(scenario);
@@ -258,13 +259,13 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
         {/* Step 1: Select Business Metric */}
         {currentStep === 1 && (
           <>
-            <div className="space-y-4 px-8">
+            <div className="space-y-4 px-8 mr-2 max-w-[108vw]">
               {businessMetrics.map((metric) => (
                 <div
                   key={metric.id}
                   className={`bg-white border rounded-lg shadow-sm overflow-hidden ${
                     selectedMetrics[metric.id]
-                      ? "border-blue-500"
+                      ? "border-green-500"
                       : "border-gray-200"
                   }`}
                 >
@@ -278,7 +279,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
                           checked={selectedMetrics[metric.id]}
                           onChange={() => toggleMetric(metric.id)}
                         />
-                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
                       </label>
                       <span className="ml-3 font-medium">{metric.name}</span>
                       <FiInfo className="ml-2 text-gray-400" />
@@ -290,7 +291,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
                   {/* Expanded content when metric is selected */}
                   {selectedMetrics[metric.id] && (
                     <div className="border-t border-gray-200 p-4">
-                      <div className="h-[530px] overflow-x-scroll">
+                      <div className="h-[530px] mr-4">
                         <MetricsGraph />
                       </div>
                     </div>
@@ -302,6 +303,10 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
         )}
 
         {currentStep === 2 &&<div className="px-6"> <ActivitySelectTable selectedActivities={selectedActivities} setSelectedActivities={setSelectedActivities} /></div>}
+
+        {/* {currentStep === 3 && <div className="px-6">
+          <ActivitySummarySection activities={selectedActivities} />
+        </div>} */}
 
         {/* Footer with navigation buttons */}
         <div className="mt-8 flex justify-end px-8 gap-4">

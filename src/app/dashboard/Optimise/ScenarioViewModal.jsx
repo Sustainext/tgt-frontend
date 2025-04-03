@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { FiX, FiDownload, FiChevronDown } from "react-icons/fi";
-import NivoYearlyGrowth from "@/app/shared/components/NivoYearlyGrowth";
+import NivoYearlyGrowth from "@/app/dashboard/Optimise/NivoYearlyGrowth";
 
 const ScenarioViewModal = ({ isOpen, onClose, scenarioData }) => {
   if (!scenarioData) return null;

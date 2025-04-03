@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { FiCalendar, FiMinus, FiPlus, FiInfo } from "react-icons/fi";
 
+// Add CSS for the scrollable-content class to hide scrollbars if needed
+const scrollableContentStyle = `
+.scrollable-content {
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+.scrollable-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+`;
+
 const MetricsGraph = ({
   baseYear = 2025,
-  targetYear = 2035,
+  targetYear = 2045,
   metricName = "FTE",
 }) => {
   // Initial data structure
@@ -20,6 +31,28 @@ const MetricsGraph = ({
       y: 0,
     });
   }
+
+  // Calculate dynamic width based on number of years
+  const yearCount = years.length;
+  const baseWidth = 1470; // Base width for 10 years
+  const yearSpacing = 140; // Approximate spacing per year point
+  const dynamicWidth = Math.max(baseWidth, yearCount * yearSpacing);
+
+  // Container width calculation - will be the visible container width
+  const [containerWidth, setContainerWidth] = useState(0);
+  useEffect(() => {
+    // Update container width on mount and resize
+    const updateContainerWidth = () => {
+      const container = document.querySelector(".scrollable-content");
+      if (container) {
+        setContainerWidth(container.clientWidth);
+      }
+    };
+
+    updateContainerWidth();
+    window.addEventListener("resize", updateContainerWidth);
+    return () => window.removeEventListener("resize", updateContainerWidth);
+  }, []);
 
   // State for the growth data
   const [data, setData] = useState(initialData);
@@ -115,8 +148,40 @@ const MetricsGraph = ({
     },
   ];
 
+  // Refs for scroll synchronization
+  const chartScrollRef = useRef(null);
+  const percentageScrollRef = useRef(null);
+
+  // Setup scroll synchronization
+  useEffect(() => {
+    const chartContainer = chartScrollRef.current;
+    const percentageContainer = percentageScrollRef.current;
+
+    if (!chartContainer || !percentageContainer) return;
+
+    // Function to sync scrolling
+    const syncScroll = (sourceRef, targetRef) => {
+      const handler = () => {
+        targetRef.scrollLeft = sourceRef.scrollLeft;
+      };
+      sourceRef.addEventListener("scroll", handler);
+      return () => sourceRef.removeEventListener("scroll", handler);
+    };
+
+    // Set up bidirectional scroll syncing
+    const cleanup1 = syncScroll(chartContainer, percentageContainer);
+    const cleanup2 = syncScroll(percentageContainer, chartContainer);
+
+    return () => {
+      cleanup1();
+      cleanup2();
+    };
+  }, []);
+
   return (
-    <div className="bg-white rounded-lg px-2">
+    <div className="bg-white rounded-lg pl-2 overflow-auto">
+      {/* Add the style for scrollable-content */}
+      <style>{scrollableContentStyle}</style>
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center rounded-lg">
           <div className="flex items-center mr-4">
@@ -138,170 +203,178 @@ const MetricsGraph = ({
         Increase or decrease the percentage of the consumption pattern
       </div>
 
-      {/* Chart */}
-      <div className="h-80 pl-12 pr-6">
-        <ResponsiveLine
-          data={chartData}
-          margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
-          xScale={{
-            type: "point",
-            padding: 0.5, // Add padding to give more space around points, especially the first one
-          }}
-          yScale={{
-            type: "linear",
-            min: -maxRange,
-            max: maxRange,
-            stacked: false,
-            reverse: false,
-          }}
-          curve="monotoneX"
-          axisBottom={{
-            enabled: false, // Disable the built-in axis as we'll create our own with inputs
-          }}
-          axisLeft={{
-            tickSize: 5,
-            tickPadding: 20,
-            tickRotation: 0,
-            legend: "Growth (%)",
-            legendOffset: -105,
-            legendPosition: "middle",
-            format: (value) => `${value > 0 ? "+" : ""}${value}%`,
-          }}
-          enableGridX={false}
-          colors={["#3182CE"]}
-          pointSize={10}
-          pointColor="#ffffff"
-          pointBorderWidth={2}
-          pointBorderColor={{ from: "serieColor" }}
-          pointLabelYOffset={-12}
-          useMesh={false}
-          enableArea={true}
-          areaOpacity={0.1}
-          lineWidth={3}
-          tooltip={({ point }) => (
-            <div className="bg-white shadow-lg p-2 rounded border border-gray-200">
-              <div className="font-medium text-gray-700">{point.data.x}</div>
-              <div className="text-blue-600 font-bold">
-                {point.data.y > 0 ? "+" : ""}
-                {point.data.y}%
+      {/* Chart - Contained in the scrollable-content wrapper */}
+      <div ref={chartScrollRef} className="h-80 pl-12 pr-4 scrollable-content">
+        <div style={{ width: `${dynamicWidth}px`, height: "100%" }}>
+          <ResponsiveLine
+            data={chartData}
+            margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
+            xScale={{
+              type: "point",
+              padding: 0.5, // Add padding to give more space around points, especially the first one
+            }}
+            yScale={{
+              type: "linear",
+              min: -maxRange,
+              max: maxRange,
+              stacked: false,
+              reverse: false,
+            }}
+            curve="monotoneX"
+            axisBottom={{
+              enabled: false, // Disable the built-in axis as we'll create our own with inputs
+            }}
+            axisLeft={{
+              tickSize: 5,
+              tickPadding: 20,
+              tickRotation: 0,
+              legend: "Growth (%)",
+              legendOffset: -105,
+              legendPosition: "middle",
+              format: (value) => `${value > 0 ? "+" : ""}${value}%`,
+            }}
+            enableGridX={false}
+            colors={["#3182CE"]}
+            pointSize={10}
+            pointColor="#ffffff"
+            pointBorderWidth={2}
+            pointBorderColor={{ from: "serieColor" }}
+            pointLabelYOffset={-12}
+            useMesh={false}
+            enableArea={true}
+            areaOpacity={0.1}
+            lineWidth={3}
+            tooltip={({ point }) => (
+              <div className="bg-white shadow-lg p-2 rounded border border-gray-200">
+                <div className="font-medium text-gray-700">{point.data.x}</div>
+                <div className="text-blue-600 font-bold">
+                  {point.data.y > 0 ? "+" : ""}
+                  {point.data.y}%
+                </div>
+                <div className="text-gray-500 text-xs">
+                  Value: {Math.round((baseValue * (100 + point.data.y)) / 100)}
+                </div>
+                <div className="text-xs italic text-gray-500">
+                  Click and drag to adjust
+                </div>
               </div>
-              <div className="text-gray-500 text-xs">
-                Value: {Math.round((baseValue * (100 + point.data.y)) / 100)}
-              </div>
-              <div className="text-xs italic text-gray-500">
-                Click and drag to adjust
-              </div>
-            </div>
-          )}
-          markers={[
-            {
-              axis: "y",
-              value: 0,
-              lineStyle: {
-                stroke: "#888",
-                strokeWidth: 1,
-                strokeDasharray: "4 4",
+            )}
+            markers={[
+              {
+                axis: "y",
+                value: 0,
+                lineStyle: {
+                  stroke: "#888",
+                  strokeWidth: 1,
+                  strokeDasharray: "4 4",
+                },
+                legend: "",
+                legendOrientation: "horizontal",
               },
-              legend: "",
-              legendOrientation: "horizontal",
-            },
-          ]}
-          // Custom layers for interactive points
-          layers={[
-            "grid",
-            "markers",
-            "axes",
-            "areas",
-            "lines",
-            "crosshair",
-            // Custom layer for interactive points
-            ({ points, ...rest }) => (
-              <g>
-                <defs>
-                  <filter
-                    id="circleShadow"
-                    x="-50%"
-                    y="-50%"
-                    width="200%"
-                    height="200%"
-                  >
-                    <feDropShadow
-                      dx="0"
-                      dy="2"
-                      stdDeviation="3"
-                      floodColor="rgba(0, 0, 0, 0.3)"
-                    />
-                  </filter>
-                </defs>
-
-                {points.map((point, index) => (
-                  <g
-                    key={point.id}
-                    transform={`translate(${point.x},${point.y})`}
-                    onMouseDown={(e) => handlePointDrag(index, e)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {/* Larger hit area */}
-                    <circle
-                      r={20}
-                      fill="rgba(255,255,255,0.01)"
-                      stroke="transparent"
-                      strokeWidth={0}
-                    />
-
-                    {/* Visual indicator line */}
-                    <line
-                      x1={0}
-                      y1={-20}
-                      x2={0}
-                      y2={20}
-                      stroke={point.data.y >= 0 ? "#3182CE" : "#E53E3E"}
-                      strokeWidth={1}
-                      strokeDasharray="2,2"
-                      strokeOpacity={0.5}
-                      pointerEvents="none"
-                    />
-
-                    {/* Visible point */}
-                    <circle
-                      r={8}
-                      fill="white"
-                      stroke={point.data.y >= 0 ? "#3182CE" : "#E53E3E"}
-                      strokeWidth={0.2}
-                      pointerEvents="none"
-                      filter="url(#circleShadow)"
-                    />
-
-                    {/* Value label */}
-                    <text
-                      y={point.data.y >= 0 ? -15 : 20}
-                      textAnchor="middle"
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                        fill: point.data.y >= 0 ? "#3182CE" : "#E53E3E",
-                        pointerEvents: "none",
-                      }}
+            ]}
+            // Custom layers for interactive points
+            layers={[
+              "grid",
+              "markers",
+              "axes",
+              "areas",
+              "lines",
+              "crosshair",
+              // Custom layer for interactive points
+              ({ points, ...rest }) => (
+                <g>
+                  <defs>
+                    <filter
+                      id="circleShadow"
+                      x="-50%"
+                      y="-50%"
+                      width="200%"
+                      height="200%"
                     >
-                      {point.data.y > 0 ? "+" : ""}
-                      {point.data.y}%
-                    </text>
-                  </g>
-                ))}
-              </g>
-            ),
-          ]}
-        />
+                      <feDropShadow
+                        dx="0"
+                        dy="2"
+                        stdDeviation="3"
+                        floodColor="rgba(0, 0, 0, 0.3)"
+                      />
+                    </filter>
+                  </defs>
+
+                  {points.map((point, index) => (
+                    <g
+                      key={point.id}
+                      transform={`translate(${point.x},${point.y})`}
+                      onMouseDown={(e) => handlePointDrag(index, e)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {/* Larger hit area */}
+                      <circle
+                        r={20}
+                        fill="rgba(255,255,255,0.01)"
+                        stroke="transparent"
+                        strokeWidth={0}
+                      />
+
+                      {/* Visual indicator line */}
+                      <line
+                        x1={0}
+                        y1={-20}
+                        x2={0}
+                        y2={20}
+                        stroke={point.data.y >= 0 ? "#3182CE" : "#E53E3E"}
+                        strokeWidth={1}
+                        strokeDasharray="2,2"
+                        strokeOpacity={0.5}
+                        pointerEvents="none"
+                      />
+
+                      {/* Visible point */}
+                      <circle
+                        r={8}
+                        fill="white"
+                        stroke={point.data.y >= 0 ? "#3182CE" : "#E53E3E"}
+                        strokeWidth={0.2}
+                        pointerEvents="none"
+                        filter="url(#circleShadow)"
+                      />
+
+                      {/* Value label */}
+                      <text
+                        y={point.data.y >= 0 ? -15 : 20}
+                        textAnchor="middle"
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                          fill: point.data.y >= 0 ? "#3182CE" : "#E53E3E",
+                          pointerEvents: "none",
+                        }}
+                      >
+                        {point.data.y > 0 ? "+" : ""}
+                        {point.data.y}%
+                      </text>
+                    </g>
+                  ))}
+                </g>
+              ),
+            ]}
+          />
+        </div>
       </div>
 
-      {/* Percentage change in consumption */}
-      <div className="mb-6 ml-2 -mt-2 pl-6 relative">
+      {/* Percentage change in consumption - Synchronized with chart scrolling */}
+      <div
+        ref={percentageScrollRef}
+        className="mb-6 ml-2 -mt-2 pl-6 relative overflow-x-hidden"
+      >
         <div className="flex justify-between items-center">
           <div className="flex-none w-12 text-[11px] font-medium text-gray-500 relative -left-6">
             Percentage change in consumption
           </div>
-          <div className="flex-1 overflow-x-hidden">
-            <div className="flex justify-between" style={{ minWidth: "800px" }}>
+          <div className="flex-1">
+            <div
+              className="flex justify-between"
+              style={{ width: `${dynamicWidth - 20}px` }}
+            >
               {years.map((year, index) => (
                 <div
                   key={year}
@@ -313,7 +386,7 @@ const MetricsGraph = ({
                     value={`${data[index].y > 0 ? "+" : ""}${data[index].y}%`}
                     className="w-16 text-center border-b border-gray-300 rounded py-1 text-[11px] focus:outline-none focus:border-blue-500"
                     onChange={(e) => {
-                      let value = e.target.value.replace(/[^0-9\-+%]/g, "");
+                      const value = e.target.value.replace(/[^0-9\-+]/g, ""); // Removed '%' to avoid parsing issue
                       const numValue = parseInt(value) || 0;
                       const newData = [...data];
                       newData[index] = { ...newData[index], y: numValue };
