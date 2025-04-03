@@ -2,7 +2,7 @@ import redis from '../../../lib/redis';
 
 export async function GET() {
   try {
-    await redis.set('message', 'Hello from Redis!','EX', 60);
+    await redis.set('message', 'Hello from Redis!');
     const value = await redis.get('message');
 
     return Response.json({ message: value });
