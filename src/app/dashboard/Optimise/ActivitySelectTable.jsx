@@ -440,8 +440,8 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities }) => {
         {/* Active filters */}
       <div className="flex flex-wrap items-center gap-2 text-sky-700 font-semibold w-[82%]">
         {selectedScopes.map(scope => (
-          <div key={`scope-${scope}`} className="flex items-center bg-sky-100 rounded-md px-3 py-1 text-sm">
-            <span className="mr-2">Scope: {scope}</span>
+          <div key={`scope-${scope}`} className="flex items-center bg-sky-50 rounded-md px-3 py-1.5 text-sm">
+            <span className="mr-2">{scope}</span>
             <button
               onClick={() => handleClearFilter("scope", scope)}
               className="text-sky-400 hover:text-sky-600"
@@ -452,8 +452,8 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities }) => {
         ))}
         
         {selectedCategories.map(category => (
-          <div key={`category-${category}`} className="flex items-center bg-sky-100 rounded-md px-3 py-1 text-sm">
-            <span className="mr-2">Category: {category}</span>
+          <div key={`category-${category}`} className="flex items-center bg-sky-50 rounded-md px-3 py-1.5 text-sm">
+            <span className="mr-2">{category}</span>
             <button
               onClick={() => handleClearFilter("category", category)}
               className="text-sky-400 hover:text-sky-600"
@@ -464,8 +464,8 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities }) => {
         ))}
         
         {selectedSubCategories.map(subCategory => (
-          <div key={`subcategory-${subCategory}`} className="flex items-center bg-sky-100 rounded-md px-3 py-1 text-sm">
-            <span className="mr-2">Sub Category: {subCategory}</span>
+          <div key={`subcategory-${subCategory}`} className="flex items-center bg-sky-50 rounded-md px-3 py-1.5 text-sm">
+            <span className="mr-2">{subCategory}</span>
             <button
               onClick={() => handleClearFilter("subCategory", subCategory)}
               className="text-sky-400 hover:text-sky-600"
@@ -476,8 +476,8 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities }) => {
         ))}
         
         {selectedRegions.map(region => (
-          <div key={`region-${region}`} className="flex items-center bg-sky-100 rounded-md px-3 py-1 text-sm">
-            <span className="mr-2">Region: {region}</span>
+          <div key={`region-${region}`} className="flex items-center bg-sky-50 rounded-md px-3 py-1.5 text-sm">
+            <span className="mr-2">{region}</span>
             <button
               onClick={() => handleClearFilter("region", region)}
               className="text-sky-400 hover:text-sky-600"
