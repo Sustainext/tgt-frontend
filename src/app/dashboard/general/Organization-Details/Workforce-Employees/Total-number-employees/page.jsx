@@ -71,7 +71,7 @@ const Totalnumberemployees = ({
       <div className="mb-10">
         <div className="mb-4 flex mx-2 ">
           <div className="w-[85%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Total number of employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -112,7 +112,7 @@ by gender and geographic area, categorized by employment type."
         </div>
         <div className="shadow-md rounded-md mx-2">
           {/* Tabs */}
-          <ul className="flex justify-evenly cursor-pointer">
+          <ul className="hidden md:flex xl:flex lg:flex 2xl:flex 4k:flex 2k:flex 3xl:flex justify-evenly cursor-pointer">
             {tabs.map((tab, index) => (
               <li
                 key={index}
@@ -151,6 +151,46 @@ by gender and geographic area, categorized by employment type."
               </li>
             ))}
           </ul>
+          <div className="grid grid-cols-2 gap-2 md:hidden xl:hidden lg:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden p-2">
+            {tabs.map((tab, index) => (
+              <div
+                key={index}
+                className={`p-3 text-center border rounded-lg cursor-pointer relative ${
+                  activeTabIndex === index
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+                onClick={() => setActiveTabIndex(index)}
+              >
+                <div className="flex flex-col items-center">
+                  <span className="text-sm">{tab.title}</span>
+                  <MdInfoOutline
+                    data-tooltip-id={`tooltip-${tab.title.replace(
+                      /\s+/g,
+                      "-"
+                    )}`}
+                    data-tooltip-content={tab.tooltip}
+                    className="text-[14px]"
+                  />
+                </div>
+                <ReactTooltip
+                  id={`tooltip-${tab.title.replace(/\s+/g, "-")}`}
+                  place="top"
+                  effect="solid"
+                  style={{
+                    width: "290px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "left",
+                    zIndex: "1000",
+                  }}
+                ></ReactTooltip>
+              </div>
+            ))}
+          </div>
           {/* Content */}
           <div className="mt-2">
             {activeTabIndex === 0 && (

@@ -8,8 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Socialdata } from "../../social/data/socialgriinfo";
 import GeneralHeader2 from "../GeneralHeader2";
 import Screen1 from "./screen1";
-
-const MembershipAndAssociation = () => {
+import GeneralTopBar from "../generalTopBar";
+const MembershipAndAssociation = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -38,12 +38,36 @@ const MembershipAndAssociation = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 2 - 28",
+      toggle: "102",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
+  const brsr = [
+    {
+      tagName: "BRSR C-P7-E1a",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 7-Essential Indicators-1a",
+    },
+
+
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <GeneralTopBar
+                  toggleDrawer={toggleDrawer}
+                  brsr={brsr}
+                  griData={griData}
+                  title={"Membership & Association"}
+                  setMobileopen={setMobileopen}
+                />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">General</p>
@@ -93,7 +117,7 @@ const MembershipAndAssociation = () => {
           
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">

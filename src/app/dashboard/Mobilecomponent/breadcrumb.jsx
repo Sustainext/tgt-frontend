@@ -108,7 +108,7 @@ const Breadcrumb = () => {
             </>
           )}
 
-          <span className="text-[#222222] hover:text-[#222222]">{text2}</span>
+          <span className="text-[#222222] hover:text-[#222222] truncate w-[200px] xl:w-[400px] md:w-[400px] lg:w-[400px] 2xl:w-[400px] 4k:w-[400px] 2k:w-[400px] overflow-hidden whitespace-nowrap">{text2}</span>
         </div>
 
     </>

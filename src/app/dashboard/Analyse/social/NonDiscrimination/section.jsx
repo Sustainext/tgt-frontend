@@ -53,18 +53,16 @@ const Section = ({ location, dateRange, isBoxOpen }) => {
   }, [location, dateRange]);
   return (
     <div>
-      <div className="mb-2 flex-col items-center gap-6">
-     
-      </div>
-      <div className="flex">
-        <div className={`ps-4 w-[100%] me-4`}>
+    <div>
+    <div className="flex">
+          <div className={`ps-4 w-[100%] me-4`}>
           <div className="mb-6">
             <div
               id="ep1"
               className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3"
             >
-              <div className="flex justify-between items-center mb-2">
-                <p>Incidents of discrimination and corrective actions taken</p>
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="mb-2">Incidents of discrimination and corrective actions taken</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 406-1a
@@ -86,7 +84,7 @@ const Section = ({ location, dateRange, isBoxOpen }) => {
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className=" mb-8 me-2"
+          className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
         >
           <TableSidebar />
         </div>
@@ -103,6 +101,7 @@ const Section = ({ location, dateRange, isBoxOpen }) => {
           />
         </div>
       )}
+    </div>
     </div>
   );
 };

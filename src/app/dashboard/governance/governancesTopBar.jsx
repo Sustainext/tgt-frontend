@@ -91,7 +91,7 @@ const GovernancesTopBar = ({
               <div className="w-full  py-4 h-[80px]   rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]" onClick={toggleSidebar}>
                 <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
                   <div className="">
-                    <p className="text-[11px]">Economic</p>
+                    <p className="text-[11px]">Governance</p>
                     <div className="h-[28px]">
                       <div className="h-[28px]">
                         <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">

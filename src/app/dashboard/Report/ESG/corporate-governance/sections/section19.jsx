@@ -28,7 +28,10 @@ const Section19=({section9_5_3Ref,data})=>{
             <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
             9.5.3 Compliance
             </h3>
-            <p className="text-sm mb-2">{data["2_27_a"]?data["2_27_a"].significant_non_compliance_occurred:"No data available"}</p>
+            <p className="text-sm mb-4">{data["2_27_a"]?data["2_27_a"].significant_non_compliance_occurred=="No"?data["2_27_a"].significant_non_compliance_occurred:'':"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            Total number of significant instances of non-compliance with laws and regulations during the reporting period
+            </p>
             <p className="text-sm mb-4">{data["2_27_a"]?data["2_27_a"].total_significant_non_compliance_instances:"No data available"}</p>
             <div className="shadow-md rounded-md mb-4">
                 <ComplianceTable rowLabels={rowLabels} tableData={tableData} />

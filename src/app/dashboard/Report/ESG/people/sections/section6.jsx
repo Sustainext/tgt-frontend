@@ -135,6 +135,9 @@ const Section6=({section13_1_5Ref,data})=>{
         />
 
 <p className="text-sm mb-2">{data["202_1b"]?data["202_1b"].length>0?data["202_1b"][0].Q3?data["202_1b"][0].Q3:"No data available":"No data available":"No data available"}</p>
+<p className="text-[15px] text-[#344054] font-semibold mb-2">
+If minimum wages vary across locations, this report references the minimum wage of
+</p>
 <p className="text-sm mb-2">{data["202_1c"]?data["202_1c"].length>0?data["202_1c"][0].Currency?data["202_1c"][0].Currency:"No data available":"No data available":"No data available"}</p>
 <p className="text-sm mb-4">{data["202_1d"]?data["202_1d"].length>0?data["202_1d"][0].Q1?data["202_1d"][0].Q1:"No data available":"No data available":"No data available"}</p>
         <p className="text-[15px]  mb-2 font-semibold">

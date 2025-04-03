@@ -147,8 +147,8 @@ const Section = ({
                   id="ep1"
                   className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <p>
+                  <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                    <p className="mb-2">
                       Percentage of individuals within the organization’s
                       governance bodies{" "}
                     </p>
@@ -172,8 +172,8 @@ const Section = ({
                   id="ep2"
                   className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <p>
+                  <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                    <p className="mb-2">
                     Ratio of basic salary by Gender					
                     </p>
  
@@ -195,8 +195,8 @@ const Section = ({
                   id="ep3"
                   className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <p>
+                  <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                    <p className="mb-2">
                     Ratio of remuneration by Gender										
                     </p>
  
@@ -218,8 +218,8 @@ const Section = ({
                   id="ep4"
                   className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <p>
+                  <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                    <p className="mb-2">
                     Ratio of the entry-level wage to the minimum wage by gender and significant locations of operation 													
                     </p>
  
@@ -247,7 +247,7 @@ const Section = ({
                 backgroundColor: "white",
                 paddingBottom: "1rem",
               }}
-              className=" mb-8 me-2"
+                   className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
             >
               <TableSidebar />
             </div>

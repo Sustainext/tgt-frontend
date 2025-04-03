@@ -56,7 +56,9 @@ const GovernancetableWidget2 = ({ id, options, value, required, onChange, schema
                                       }}
                                 />
                             </td>
-                            {Object.keys(localValue[rowIndex] || {}).map((key, cellIndex) => {
+                            {options.titles
+  .filter((col) => col.display !== "none").map((col, cellIndex) => {
+                                const key=col.key
                                 const propertySchema = schema.items.properties[key];
                                 const isEnum = propertySchema && propertySchema.hasOwnProperty('enum');
 

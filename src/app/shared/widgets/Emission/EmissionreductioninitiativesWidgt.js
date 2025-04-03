@@ -4,6 +4,77 @@ import Select from "react-select";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import DateRangePickerEmission from "@/app/utils/DatePickerComponentemission";
 import _ from "lodash"; // Import Lodash
+import { components } from "react-select";
+
+const CustomOptionnew = ({ children, ...props }) => {
+  const { isSelected, isFocused, innerProps } = props;
+
+  return (
+    <div
+      {...innerProps}
+      style={{
+        backgroundColor: isSelected ? "white" : isFocused ? "#f0f0f0" : "white",
+
+        padding: "8px",
+
+        display: "flex",
+
+        alignItems: "center",
+
+        textAlign: "left",
+      }}
+    >
+      <input
+        type="checkbox"
+        checked={isSelected}
+        readOnly
+        style={{ marginRight: "8px", accentColor: "#16a34a" }}
+      />
+
+      {children}
+    </div>
+  );
+};
+
+const CustomMultiValueContainer = ({ children, ...props }) => {
+  const { data, selectProps } = props;
+  const { value } = selectProps;
+
+  // Find the index of this value in the selected values array
+  const valueIndex = value.findIndex((val) => val.value === data.value);
+  // console.log(valueIndex,"See")
+  // Always show the first two values
+  if (valueIndex < 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        {children}
+      </components.MultiValueContainer>
+    );
+  }
+
+  // For the third position, show "+X more" if there are more than 2 values
+  if (value.length > 2 && valueIndex == 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        <div
+          style={{
+            backgroundColor: "#dbeafe",
+            borderRadius: "0.375rem",
+            padding: "2px 5px",
+            color: "#1e40af",
+            fontWeight: "600",
+            // fontSize: '0.875rem'
+          }}
+        >
+          +{value.length - 2} more
+        </div>
+      </components.MultiValueContainer>
+    );
+  }
+
+  // Hide any additional values
+  return null;
+};
 
 const EmissionReductionInitiativesWidget = ({
   value = {},
@@ -15,11 +86,12 @@ const EmissionReductionInitiativesWidget = ({
   const initialFormData = Array.isArray(value.formData) ? value.formData : [];
   const [q1Answer, setQ1Answer] = useState(initialQ1Answer);
   const [formData, setFormData] = useState([...initialFormData]);
-  
+
   useEffect(() => {
     if (value.q1Answer && value.formData) {
       setQ1Answer(value.q1Answer);
       setFormData(value.formData);
+    
     }
     if (!value || Object.keys(value).length === 0) {
       // Reset to initial state
@@ -27,13 +99,12 @@ const EmissionReductionInitiativesWidget = ({
       setFormData([]);
       return;
     }
-
   }, [value]);
-  
+
   useEffect(() => {
     if (q1Answer === "Yes" && formData.length === 0) {
       setFormData([{}]);
-      onChange([{ q1Answer, formData: [{}] }]);
+      onChange({ q1Answer, formData: [{}] });
     }
   }, [q1Answer]);
 
@@ -42,21 +113,19 @@ const EmissionReductionInitiativesWidget = ({
     setFormData((prevData) => {
       const updatedData = [...prevData]; // Clone existing state
       updatedData[index] = { ...updatedData[index], [field]: val };
-  
+
       // Prevent unnecessary updates
       if (_.isEqual(prevData, updatedData)) return prevData;
-  
-  
+
       if (field === "Q3" && val !== "Other (please specify)") {
         updatedData[index].customUnit = ""; // Clear custom input if needed
       }
 
   
-      onChange([{ q1Answer, formData: updatedData }]); // Update parent
+      onChange({ q1Answer, formData: updatedData }); // Update parent
       return updatedData;
     });
   };
-  
 
   // Handle Q1 change
   const handleQ1Change = (e) => {
@@ -64,14 +133,14 @@ const EmissionReductionInitiativesWidget = ({
     setQ1Answer(newQ1Answer);
     const newFormData = newQ1Answer === "Yes" ? [{}] : [];
     setFormData(newFormData);
-    onChange([{ q1Answer: newQ1Answer, formData: newFormData }]);
+    onChange({ q1Answer: newQ1Answer, formData: newFormData });
   };
 
   // Add a new row
   const addRow = () => {
     setFormData((prevData) => {
       const newFormData = [...prevData, {}];
-      onChange([{ q1Answer, formData: newFormData }]);
+      onChange({ q1Answer, formData: newFormData });
       return newFormData;
     });
   };
@@ -80,7 +149,7 @@ const EmissionReductionInitiativesWidget = ({
   const removeRow = (index) => {
     setFormData((prevData) => {
       const updatedData = prevData.filter((_, i) => i !== index);
-      onChange([{ q1Answer, formData: updatedData }]);
+      onChange({ q1Answer, formData: updatedData });
       return updatedData;
     });
   };
@@ -124,9 +193,9 @@ const EmissionReductionInitiativesWidget = ({
       ...provided,
 
       border: "none",
-      borderBottom:"2px solid #d1d5db",
+      borderBottom: "2px solid #d1d5db",
       boxShadow: "none",
-      borderRadius:"0px",
+      borderRadius: "0px",
       padding: 0,
 
       margin: 0,
@@ -151,6 +220,69 @@ const EmissionReductionInitiativesWidget = ({
     }),
 
     menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
+  };
+
+  const updatedMultiSelectStyle = {
+    control: (base) => ({
+      ...base,
+      padding: "4px 10px", // Equivalent to py-3
+      minHeight: "48px", // Ensure height matches your other elements
+      borderColor: "#d1d5db", // Matches Tailwind's gray-300 border
+      borderRadius: "0.375rem", // Matches Tailwind's rounded-md
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: "0", // Reset inner padding to fit the custom height
+    }),
+    // menu: (base) => ({
+    //   ...base,
+    //   maxHeight: "150px", // Set max height for the dropdown menu
+    //   overflowY: "auto", // Enable vertical scrolling
+    //   overscrollBehavior: "contain", // Prevent scroll chaining
+    //   WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS
+    //   // Optional: customize scrollbar appearance
+    //   "&::-webkit-scrollbar": {
+    //     width: "8px",
+    //   },
+    //   "&::-webkit-scrollbar-track": {
+    //     background: "#f1f1f1",
+    //   },
+    //   "&::-webkit-scrollbar-thumb": {
+    //     background: "#888",
+    //     borderRadius: "4px",
+    //   },
+    //   "&::-webkit-scrollbar-thumb:hover": {
+    //     background: "#555",
+    //   },
+    // }),
+    
+    menu: (provided) => ({
+      ...provided,
+
+      position: "relative",
+
+      bottom: "100%",
+
+      top: 0,
+
+      zIndex: 1000,
+    }),
+
+    menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: "#dbeafe", // Light blue background (Tailwind's blue-100)
+      borderRadius: "0.375rem", // Rounded corners
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      color: "#1e40af", // Blue text (Tailwind's blue-800)
+      fontWeight: "600",
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+      color: "#6A6E70",
+    }),
   };
 
   return (
@@ -232,7 +364,9 @@ const EmissionReductionInitiativesWidget = ({
                 <input
                   type="text"
                   placeholder="Enter Data"
-                  className={`block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw] 4k:w-[8vw] ${index === 0 ? "py-2" : "py-1.5"} text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
+                  className={`block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw] 4k:w-[8vw] ${
+                    index === 0 ? "py-2" : "py-1.5"
+                  } text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
                   value={entry.Q2 || ""}
                   onChange={(e) => handleChange(index, "Q2", e.target.value)}
                 />
@@ -372,7 +506,6 @@ const EmissionReductionInitiativesWidget = ({
                   }
                   className={`block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
                 />
-             
               </div>
 
               <div className="mx-2 relative mb-4">
@@ -410,7 +543,6 @@ const EmissionReductionInitiativesWidget = ({
                   value={entry.Q6 || ""}
                   onChange={(e) => handleChange(index, "Q6", e.target.value)}
                 />
-             
               </div>
 
               <div className="mx-2 relative mb-4">
@@ -479,10 +611,13 @@ const EmissionReductionInitiativesWidget = ({
                 )}
                 <Select
                   isMulti
-                  styles={newcustomStyles}
+                  styles={updatedMultiSelectStyle}
                   closeMenuOnSelect={false}
                   hideSelectedOptions={false}
-                  components={{ Option: CustomOption }}
+                  components={{
+                    Option: CustomOptionnew,
+                    MultiValueContainer: CustomMultiValueContainer,
+                  }}
                   options={schema.items.properties.Q8.enum.map((opt) => ({
                     value: opt,
                     label: opt,
@@ -503,7 +638,7 @@ const EmissionReductionInitiativesWidget = ({
               </div>
 
               <div className="mx-2 relative mb-4">
-              {index === 0 && (
+                {index === 0 && (
                   <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] mb-2">
                     {schema.items.properties.Q9.title}
                     <MdInfoOutline
@@ -529,13 +664,16 @@ const EmissionReductionInitiativesWidget = ({
                       }}
                     />
                   </label>
-              )}
+                )}
                 <Select
                   isMulti
-                  styles={newcustomStyles}
+                  styles={updatedMultiSelectStyle}
                   closeMenuOnSelect={false} // **Prevents closing after selection**
                   hideSelectedOptions={false}
-                  components={{ Option: CustomOption }}
+                  components={{
+                    Option: CustomOptionnew,
+                    MultiValueContainer: CustomMultiValueContainer,
+                  }}
                   options={schema.items.properties.Q9.enum.map((opt) => ({
                     value: opt,
                     label: opt,
@@ -556,7 +694,7 @@ const EmissionReductionInitiativesWidget = ({
               </div>
 
               <div className="mx-2 relative mb-4">
-  {index === 0 && (
+                {index === 0 && (
                   <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[9vw] h-[35px] mb-2">
                     {schema.items.properties.Q10.title}
                     <MdInfoOutline
@@ -582,7 +720,7 @@ const EmissionReductionInitiativesWidget = ({
                       }}
                     />
                   </label>
-  )}
+                )}
                 <input
                   type="text"
                   placeholder="Enter Data"
@@ -612,7 +750,6 @@ const EmissionReductionInitiativesWidget = ({
           </button>
         </>
       )}
-
     </div>
   );
 };

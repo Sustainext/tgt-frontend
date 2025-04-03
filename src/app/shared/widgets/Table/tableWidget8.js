@@ -4,6 +4,77 @@ import Select from 'react-select';
 import { MdOutlineDeleteOutline, MdAdd, MdInfoOutline } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+import { components } from "react-select";
+
+const CustomOptionnew = ({ children, ...props }) => {
+  const { isSelected, isFocused, innerProps } = props;
+
+  return (
+    <div
+      {...innerProps}
+      style={{
+        backgroundColor: isSelected ? "white" : isFocused ? "#f0f0f0" : "white",
+
+        padding: "8px",
+
+        display: "flex",
+
+        alignItems: "center",
+
+        textAlign: "left",
+      }}
+    >
+      <input
+        type="checkbox"
+        checked={isSelected}
+        readOnly
+        style={{ marginRight: "8px", accentColor: "#16a34a" }}
+      />
+
+      {children}
+    </div>
+  );
+};
+
+const CustomMultiValueContainer = ({ children, ...props }) => {
+  const { data, selectProps } = props;
+  const { value } = selectProps;
+
+  // Find the index of this value in the selected values array
+  const valueIndex = value.findIndex((val) => val.value === data.value);
+  // console.log(valueIndex,"See")
+  // Always show the first two values
+  if (valueIndex < 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        {children}
+      </components.MultiValueContainer>
+    );
+  }
+
+  // For the third position, show "+X more" if there are more than 2 values
+  if (value.length > 2 && valueIndex == 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        <div
+          style={{
+            backgroundColor: "#dbeafe",
+            borderRadius: "0.375rem",
+            padding: "2px 5px",
+            color: "#1e40af",
+            fontWeight: "600",
+            // fontSize: '0.875rem'
+          }}
+        >
+          +{value.length - 2} more
+        </div>
+      </components.MultiValueContainer>
+    );
+  }
+
+  // Hide any additional values
+  return null;
+};
 
 const CustomTableWidget8 = ({
   id,
@@ -76,6 +147,47 @@ const CustomTableWidget8 = ({
       ...provided,
       maxHeight: '200px',
     }),
+  };
+
+  const updatedMultiSelectStyle = {
+    control: (base) => ({
+      ...base,
+      padding: '4px 10px', // Equivalent to py-3
+      minHeight: '48px', // Ensure height matches your other elements
+      borderColor: '#d1d5db', // Matches Tailwind's gray-300 border
+      borderRadius: '0.375rem', // Matches Tailwind's rounded-md
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: '0', // Reset inner padding to fit the custom height
+    }),
+    menu: (provided) => ({
+      ...provided,
+
+      position: "relative",
+
+      bottom: "100%",
+
+      top: 0,
+
+      zIndex: 1000,
+    }),
+
+    menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
+      multiValue: (base) => ({
+        ...base,
+        backgroundColor: '#dbeafe', // Light blue background (Tailwind's blue-100)
+        borderRadius: '0.375rem', // Rounded corners
+      }),
+      multiValueLabel: (base) => ({
+        ...base,
+        color: '#1e40af', // Blue text (Tailwind's blue-800)
+        fontWeight: '600',
+      }),
+      multiValueRemove: (base) => ({
+        ...base,
+        color: '#6A6E70'
+      }),
   };
 
   const CustomOption = (props) => {
@@ -203,11 +315,14 @@ const CustomTableWidget8 = ({
                       onBlur={syncWithParent} // Sync with parent on blur
                       options={locationOptions}
                       className="text-[12px] w-full border-b"
-                      styles={customStyles}
+                      styles={updatedMultiSelectStyle}
                       placeholder="Select options"
                       closeMenuOnSelect={false}
                       hideSelectedOptions={false}
-                      components={{ Option: CustomOption }}
+                     components={{
+                          Option: CustomOptionnew,
+                          MultiValueContainer:CustomMultiValueContainer
+                                                                                 }}
                     />
                   ) : (
                     <input

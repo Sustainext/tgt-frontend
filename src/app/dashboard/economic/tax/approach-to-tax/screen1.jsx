@@ -54,7 +54,7 @@ const schema = {
               },
               Q4: {
                 type: "string",
-                title: "Mention the frequency the tax strategy review.",
+                title: "Mention the frequency of tax strategy review",
               },
               Q5: {
                 type: "string",
@@ -119,7 +119,7 @@ const uiSchema = {
       },
     },
     Q4: {
-      "ui:title": "Mention the frequency the tax strategy review.",
+      "ui:title": "Mention the frequency of tax strategy review",
       "ui:tooltip":
         "Provide a link to the tax strategy if it is publicly available and if the organization has a tax strategy but the strategy is not publicly available, the organization can provide an abstract or summary of the strategy.",
       "ui:tooltipdisplay": "none",

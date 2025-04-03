@@ -66,7 +66,7 @@ const FullTable = ({ columns, data, onClose, organisation, corporate, location, 
   };
 
   return (
-    <div className="bg-white rounded-lg relative min-w-[828px] min-h-[600px] max-h-[600px]">
+    <div className="bg-white rounded-lg relative xl:min-w-[828px] min-h-[600px] xl:max-h-[600px] ">
       <div className='absolute top-0 right-2 cursor-pointer text-2xl' onClick={onClose}>&times;</div>
       <div className="flex justify-between items-center mb-4 p-6">
         <div>

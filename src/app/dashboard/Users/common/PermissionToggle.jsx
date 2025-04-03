@@ -16,7 +16,8 @@ const PermissionToggle = ({ label, description, enabled, onChange, disabled }) =
 
   return (
     <div className="flex items-start gap-2 mb-5">
-      <label className="relative inline-block w-12 h-6">
+      <div className='w-[20%] xl:w-[5%] lg:w-[5%] md:w-[5%] 2xl:w-[5%] 4k:w-[5%] 2k:w-[5%]'>
+      <label className="relative inline-block w-12  h-6">
         <input
           type="checkbox"
           checked={isChecked}
@@ -26,7 +27,7 @@ const PermissionToggle = ({ label, description, enabled, onChange, disabled }) =
         />
         {/* Slider */}
         <span
-          className={`block w-full h-full rounded-full transition-colors duration-300 ${
+          className={`block w-full  h-full rounded-full transition-colors duration-300 ${
             isChecked ? 'bg-green-500' : 'bg-gray-300'
           } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
         ></span>
@@ -37,8 +38,8 @@ const PermissionToggle = ({ label, description, enabled, onChange, disabled }) =
           } ${disabled ? 'bg-white' : 'bg-white'}`}
         ></span>
       </label>
-
-      <div>
+      </div>
+      <div className='w-[80%]'>
         <h3 className="font-semibold">{label}</h3>
         <p className="text-sm text-gray-600">{description}</p>
       </div>

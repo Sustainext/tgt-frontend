@@ -64,6 +64,7 @@ const EmissionWidget = React.memo(
     const [quantity2, setQuantity2] = useState(value.Quantity2 || "");
     const [unit2, setUnit2] = useState(value.Unit2 || "");
     const [activity_id, setActivityId] = useState(value.activity_id || "");
+    const [act_id,setActId] = useState(value.act_id || '')
     const [unit_type, setUnitType] = useState(value.unit_type || "");
     const [subcategories, setSubcategories] = useState([]);
     const [activities, setActivities] = useState([]);
@@ -396,20 +397,20 @@ const EmissionWidget = React.memo(
     //   if (subcategory && !activitiesLoaded && !isLoadingActivities && !isFetchingRef.current) {
     //     // Using the ref to track fetch status instead of state to prevent re-renders
     //     isFetchingRef.current = true;
-        
+
     //     // Fetch activities
     //     fetchActivities().finally(() => {
     //       isFetchingRef.current = false;
     //     });
     //   }
-      
+
     //   // Only reset loaded status when subcategory actually changes
     //   return () => {
     //     if (subcategory) {
     //       setActivitiesLoaded(false);
     //     }
     //   };
-    // }, [subcategory, fetchActivities]); 
+    // }, [subcategory, fetchActivities]);
     useEffect(() => {
       // Only fetch activities when subcategory changes and we don't have them yet
       if (subcategory && !activitiesLoaded && !isLoadingActivities) {
@@ -507,22 +508,25 @@ const EmissionWidget = React.memo(
     const handleActivityChange = useCallback(
       (newActivity) => {
         console.log("handleActivityChange called with:", newActivity);
-        
+
         // Find the selected activity object from our activities array
         const foundActivity = activities.find(
-          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+          (act) =>
+            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
         );
-        
+
         console.log("Found activity:", foundActivity);
-        
+
         // First update local state to immediately show the selected activity
         setActivity(newActivity);
-        
+        setActId(foundActivity ? foundActivity.id : "");
+
         // Then update the form data with all the relevant details
         const updatedValue = {
           ...value,
           Activity: newActivity,
           activity_id: foundActivity ? foundActivity.activity_id : "",
+          act_id: foundActivity ? foundActivity.id : "",
           unit_type: foundActivity ? foundActivity.unit_type : "",
           factor: foundActivity ? foundActivity.factor : "",
           data_version: foundActivity
@@ -533,13 +537,13 @@ const EmissionWidget = React.memo(
           Unit: "",
           Unit2: "",
         };
-        
+
         // Update form state
         onChange(updatedValue);
-        
+
         // Update selected row if needed
         updateSelectedRowIfNeeded(updatedValue);
-        
+
         // Reset quantity and unit states
         setQuantity("");
         setQuantity2("");
@@ -552,17 +556,18 @@ const EmissionWidget = React.memo(
     const handleActivityChangemobile = useCallback(
       (newActivity) => {
         console.log("handleActivityChange called with:", newActivity);
-        
+
         // Find the selected activity object from our activities array
         const foundActivity = activities.find(
-          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+          (act) =>
+            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
         );
-        
+
         console.log("Found activity:", foundActivity);
-        
+
         // First update local state to immediately show the selected activity
         setActivity(newActivity);
-        
+
         // Then update the form data with all the relevant details
         const updatedValue = {
           ...value,
@@ -578,13 +583,13 @@ const EmissionWidget = React.memo(
           Unit: "",
           Unit2: "",
         };
-        
+
         // Update form state
         onChange(updatedValue);
-        
+
         // Update selected row if needed
         updateSelectedRowIfNeeded(updatedValue);
-        
+
         // Reset quantity and unit states
         setQuantity("");
         setQuantity2("");
@@ -779,10 +784,10 @@ const EmissionWidget = React.memo(
           setSelectSize(9); // for desktop
         }
       };
-    
+
       handleResize(); // set initial value
       window.addEventListener("resize", handleResize);
-    
+
       return () => window.removeEventListener("resize", handleResize);
     }, []);
     useEffect(() => {
@@ -998,17 +1003,102 @@ const EmissionWidget = React.memo(
       }
     }, [isLoadingActivities]);
 
+    // Update this memo to be more strict in its filtering
     const filteredActivities = useMemo(() => {
-      if (!activitySearch) return activities; // Return full list if no search input
+      if (!activitySearch || activitySearch.length < 3) {
+        return activities;
+      }
 
-      const searchText = activitySearch.toLowerCase();
+      const searchText = activitySearch.toLowerCase().trim();
 
-      return activities.filter(
-        (item) =>
-          item.name.toLowerCase().includes(searchText) ||
-          item.source.toLowerCase().includes(searchText) // Now searches by both name & source
+      // Log to debug
+      console.log(
+        `Filtering ${activities.length} activities with search: "${searchText}"`
       );
-    }, [activities, activitySearch]); // Recomputes only when activities or search text changes
+
+      const filtered = activities.filter((item) => {
+        const nameMatch = item.name?.toLowerCase().includes(searchText);
+        const sourceMatch = item.source?.toLowerCase().includes(searchText);
+        return nameMatch || sourceMatch;
+      });
+
+      console.log(`Found ${filtered.length} matches`);
+      return filtered;
+    }, [activities, activitySearch]);
+
+    //visible activities
+    const [visibleActivities, setVisibleActivities] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [itemsPerPage] = useState(100);
+
+    useEffect(() => {
+      // Reset pagination when search changes or filteredActivities changes
+      setCurrentPage(1);
+
+      // Clear previous visibleActivities completely
+      setVisibleActivities([]);
+
+      // Show initial batch
+      const initialItems = filteredActivities.slice(0, itemsPerPage);
+      setVisibleActivities(initialItems);
+
+      // Update hasMore flag
+      setHasMore(filteredActivities.length > itemsPerPage);
+
+      console.log(
+        `Search: "${activitySearch}" - Filtered items: ${filteredActivities.length}, Visible items: ${initialItems.length}`
+      );
+    }, [filteredActivities, itemsPerPage, activitySearch]);
+
+    // Function to handle scroll and load more items
+    const handleDropdownScroll = useCallback(
+      (e) => {
+        const { scrollTop, scrollHeight, clientHeight } = e.target;
+        
+        // If we're near the bottom (within 50px) and there are more items to load
+        if (scrollHeight - scrollTop - clientHeight < 50 && hasMore) {
+          // Calculate next page
+          const nextPage = currentPage + 1;
+          const startIndex = currentPage * itemsPerPage;
+          const endIndex = Math.min(startIndex + itemsPerPage, filteredActivities.length);
+          
+          // Check if we've already loaded all items or if there are no more items to load
+          if (startIndex >= filteredActivities.length || startIndex >= endIndex) {
+            setHasMore(false);
+            return;
+          }
+          
+          // Get next batch of items
+          const newItems = filteredActivities.slice(startIndex, endIndex);
+          
+          // Update state
+          setVisibleActivities(prevItems => {
+            // Create a Set of existing IDs to avoid duplicates
+            const existingIds = new Set(prevItems.map(item => 
+              item.id || item.activity_id || `${item.name}-${item.source}-${item.unit_type}`
+            ));
+            
+            // Only add items that aren't already in the list
+            const uniqueNewItems = newItems.filter(item => {
+              const itemId = item.id || item.activity_id || 
+                            `${item.name}-${item.source}-${item.unit_type}`;
+              return !existingIds.has(itemId);
+            });
+            
+            return [...prevItems, ...uniqueNewItems];
+          });
+          
+          setCurrentPage(nextPage);
+          
+          // Check if we've loaded all items
+          if (endIndex >= filteredActivities.length) {
+            setHasMore(false);
+          }
+        }
+      },
+      [filteredActivities, currentPage, hasMore, itemsPerPage]
+    );
 
     const renderFirstColumn = () => {
       switch (rowType) {
@@ -1045,7 +1135,12 @@ const EmissionWidget = React.memo(
     };
 
     return (
-      <div className={`w-full ${!id.startsWith("root_0") && "xl:ml-1 md:ml-1 lg:ml-1 3xl:ml-1 4k:ml-1 2k:ml-1 ml-0"}`}>
+      <div
+        className={`w-full ${
+          !id.startsWith("root_0") &&
+          "xl:ml-1 md:ml-1 lg:ml-1 3xl:ml-1 4k:ml-1 2k:ml-1 ml-0"
+        }`}
+      >
         {id.startsWith("root_0") && (
           <div className="mb-2">
             <button
@@ -1201,61 +1296,86 @@ const EmissionWidget = React.memo(
                       value.rowType
                     )}
                   />
-
                   {scopeErrors["Activity"] && (
                     <div className="text-[12px] text-red-500  xl:absolute md:absolute lg:absolute 2xl:absolute 4k:absolute 2k:absolute relative left-0 -bottom-[28px]">
                       {getErrorMessage("Activity")}
                     </div>
                   )}
-
                   {isDropdownActive && (
-                    <>
-                    <select
+                    <div
                       ref={dropdownRef}
-                      size={selectSize || undefined}
-                      value={activity}
-                      onChange={(e) => {
-                        handleActivityChange(e.target.value);
-                        toggleDropdown();
-                        setActivitySearch("");
-                      }}
-                     className="text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100]  min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6 "
-                      disabled={["assigned", "calculated", "approved"].includes(
-                        rowType
-                      )}
+                      className="absolute left-0 top-8 z-[100] w-full bg-white rounded-lg border border-gray-300 shadow-lg max-h-64 overflow-y-auto min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6"
+                      onScroll={handleDropdownScroll}
                     >
-                      <option value="" className="px-1">
-                        {rowType === "calculated"
-                          ? activity
-                          : "Select Activity"}
-                      </option>
-                      {filteredActivities.length > 0 ? (
-                        filteredActivities.map((item) => (
-                          <option
-                            key={item.id || item.activity_id}
-                            value={`${item.name} - (${item.source}) - ${item.unit_type}`}
-                            className="px-2"
-                          >
-                            {item.name} - ({item.source}) - {item.unit_type} -{" "}
-                            {item.region} - {item.year}
-                            {item.source_lca_activity !== "unknown" &&
-                              ` - ${item.source_lca_activity}`}
-                          </option>
-                        ))
+                      <div
+                        className="p-2 border-b cursor-pointer hover:bg-gray-100"
+                        onClick={() => {
+                          setActivity("");
+                          toggleDropdown();
+                          setActivitySearch("");
+                        }}
+                      >
+                        <span className="text-[12px]">
+                          {rowType === "calculated"
+                            ? activity
+                            : "Select Activity"}
+                        </span>
+                      </div>
+
+                      {isLoadingActivities ? (
+                        <div className="p-2 text-center text-[12px] text-gray-500">
+                          Loading activities...
+                        </div>
+                      ) : visibleActivities.length === 0 ? (
+                        <div className="p-2 text-center text-[12px] text-gray-500">
+                          No matching activities found
+                        </div>
                       ) : (
-                        <option
-                          value=""
-                          disabled
-                          className="px-2 text-gray-500"
-                        >
-                          {isLoadingActivities
-                            ? "Loading activities..."
-                            : "No matching activities found"}
-                        </option>
+                        // Map from visibleActivities
+                        visibleActivities.map((item, index) => {
+                          const displayText = `${item.name} - (${
+                            item.source
+                          }) - ${item.unit_type} - ${item.region} - ${
+                            item.year
+                          }${
+                            item.source_lca_activity !== "unknown"
+                              ? ` - ${item.source_lca_activity}`
+                              : ""
+                          }`;
+
+                          // For the dropdown selection value
+                          const value = `${item.name} - (${item.source}) - ${item.unit_type}`;
+
+                          // Check if this item's ID matches the currently selected activity's ID
+                          const isSelected = item.id === act_id;
+                          console.log('isSelected:, item id, act_id', isSelected, item.id,act_id);
+
+                          return (
+                            <div
+                              key={item.id || item.activity_id || index}
+                              className={`p-2 cursor-pointer text-[12px] truncate ${
+                                isSelected
+                                  ? "bg-blue-100 font-medium"
+                                  : "hover:bg-gray-100"
+                              }`}
+                              onClick={() => {
+                                handleActivityChange(value);
+                                toggleDropdown();
+                                setActivitySearch("");
+                              }}
+                            >
+                              {displayText}
+                            </div>
+                          );
+                        })
                       )}
-                    </select>
-                    
-                    </>
+
+                      {hasMore && (
+                        <div className="p-2 text-center text-[12px] text-gray-500 border-t">
+                          Scroll down to load more...
+                        </div>
+                      )}
+                    </div>
                   )}
                 </div>
               </td>
@@ -1550,8 +1670,8 @@ const EmissionWidget = React.memo(
 
                     {/* Preview Modal */}
                     {showModal && previewData && (
-                    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
+                      <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
                           <div className="flex justify-between mt-4 mb-4">
                             <div>
                               <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap">
@@ -1582,8 +1702,7 @@ const EmissionWidget = React.memo(
                             </div>
                           </div>
                           <div className="block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
-                          <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
-                      
+                            <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
                               {fileType.startsWith("image") ? (
                                 <img
                                   src={previewData}
@@ -1738,44 +1857,3 @@ const EmissionWidget = React.memo(
 );
 
 export default EmissionWidget;
-
-{
-  /* <select
-                      ref={dropdownRef}
-                      size="9"
-                      value={activity}
-                      onChange={(e) => {
-                        handleActivityChange(e.target.value);
-                        toggleDropdown();
-                        setActivitySearch("");
-                      }}
-                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[810px]`}
-                      disabled={["assigned", "calculated", "approved"].includes(
-                        rowType
-                      )}
-                    >
-                      <option value="" className="px-1">
-                        {rowType === "calculated"
-                          ? activity
-                          : "Select Activity"}
-                      </option>
-                      {activities
-                        .filter((item) =>
-                          item.name
-                            .toLowerCase()
-                            .includes(activitySearch.toLowerCase())
-                        )
-                        .map((item) => (
-                          <option
-                            key={item.id}
-                            value={`${item.name} - (${item.source}) - ${item.unit_type}`}
-                            className="px-2"
-                          >
-                            {item.name} - ({item.source}) - {item.unit_type} -{" "}
-                            {item.region} - {item.year}
-                            {item.source_lca_activity !== "unknown" &&
-                              ` - ${item.source_lca_activity}`}
-                          </option>
-                        ))}
-                    </select> */
-}
