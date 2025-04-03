@@ -19,11 +19,15 @@ const Section19=({section13_6_2Ref,data})=>{
 <p className="text-sm mb-2">{data["403-1a-ohs_management_system"]?data["403-1a-ohs_management_system"].data?data["403-1a-ohs_management_system"].data.length>0?data["403-1a-ohs_management_system"].data[0].Q1?data["403-1a-ohs_management_system"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">Reasons for implementing Occupational Health & Safety Management System</p>
 <p className="text-sm mb-2">
-  {
-    data["403-1a-ohs_management_system"]?.data?.[0]?.Q2?.selected?.length
-      ? data["403-1a-ohs_management_system"].data[0].Q2.selected.join(', ')
+{
+  Array.isArray(data["403-1a-ohs_management_system"]?.data?.[0]?.Q2?.selected)
+    ? data["403-1a-ohs_management_system"].data[0].Q2.selected.join(', ')
+    : typeof data["403-1a-ohs_management_system"]?.data?.[0]?.Q2?.selected === 'string'
+      ? data["403-1a-ohs_management_system"].data[0].Q2.selected
       : data["403-1a-ohs_management_system"]?.data?.[0]?.Q2?.otherValue || "No data available"
-  }
+}
+
+
 </p>
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">List of legal requirements</p>
 <p className="text-sm mb-2">{data["403-1a-ohs_management_system"]?data["403-1a-ohs_management_system"].data?data["403-1a-ohs_management_system"].data.length>0?data["403-1a-ohs_management_system"].data[0].Q3?data["403-1a-ohs_management_system"].data[0].Q3:"No data available":"No data available":"No data available":"No data available"}</p>
