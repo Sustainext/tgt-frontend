@@ -26,7 +26,6 @@ const NodeDetailModal = ({
     let filteredDetails = {};
 
     if (details) {
-      console.log(details,"look details")
       if (nodeType === "organization") {
         // Organization format based on your original Structure code
         filteredDetails = {
@@ -116,6 +115,7 @@ const NodeDetailModal = ({
           timezone: details.timezone,
           employeecount: details.employeecount,
           language: details.language,
+          corporate_data:details.corporate_data,
           revenue: details.revenue,
           street: details.streetaddress,
           country: details.country,
@@ -410,7 +410,7 @@ const NodeDetailModal = ({
                   <p className="text-sm text-gray-900">
                     {details.employeecount ||
                       details.no_of_employees ||
-                      "Default"}
+                      0}
                   </p>
                 </div>
                 <div>
@@ -418,7 +418,7 @@ const NodeDetailModal = ({
                   <p className="text-sm text-gray-900">
                     {details.revenue
                       ? `${details.currency || ""} ${details.revenue}`
-                      : "Default"}
+                      : 0}
                   </p>
                 </div>
               </div>

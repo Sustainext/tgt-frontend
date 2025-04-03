@@ -37,7 +37,7 @@ const SupplierAssessment = () => {
     id:"tab2"
    },
    {
-    title:"Stakeholders Group",
+    title:"Stakeholders Groups",
     id:"tab3"
    }
   ]

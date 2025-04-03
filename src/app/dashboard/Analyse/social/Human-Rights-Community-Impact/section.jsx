@@ -78,8 +78,8 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
               id="ep1"
               className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3"
             >
-              <div className="flex justify-between items-center mb-2">
-                <p>
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="mb-2">
                 Percentage of operations implemented by engaging local communities
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -101,8 +101,8 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
               id="ep2"
               className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-black text-[13px] font-[400]">
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                 <p className="text-black text-[13px] font-[400] mb-2">
                 Percentage of security personnel who have received formal training
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -126,7 +126,7 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className="mb-8 me-2"
+              className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
         >
           <TableSidebar />
         </div>

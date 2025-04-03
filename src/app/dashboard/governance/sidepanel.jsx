@@ -425,7 +425,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                  Performance and Renumerations
+                  Performance and Remuneration
                 </span>
               </div>
 

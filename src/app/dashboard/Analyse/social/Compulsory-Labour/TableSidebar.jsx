@@ -53,11 +53,11 @@ const TableSidebar = () => {
       {[
         {
           id: "ep1",
-          name: "Operations considered to have significant risk for incidents of forced or compulsary labor",
+          name: "Operations considered to have significant risk for incidents of forced or compulsory labor",
         },
         {
           id: "ep2",
-          name: "Operations considered to have significant risk for incidents of forced or compulsary labor ",
+          name: "Suppliers at significant risk for incidents of forced or compulsory labor",
         },
       ].map((link) => (
         <div

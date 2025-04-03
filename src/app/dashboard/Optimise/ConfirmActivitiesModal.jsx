@@ -1,0 +1,120 @@
+import React from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from "react";
+import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+
+const ConfirmActivitiesModal = ({ 
+  isOpen, 
+  onClose, 
+  selectedActivities = [], 
+  onProceed,
+  onGoBack 
+}) => {
+  if (!selectedActivities.length) return null;
+
+  return (
+    <Transition appear show={isOpen} as={Fragment}>
+      <Dialog as="div" className="relative z-50" onClose={onClose}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black bg-opacity-30" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="w-full max-w-6xl transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all">
+                {/* Header */}
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <Dialog.Title className="text-xl font-semibold text-gray-900">
+                      Confirm Selected Activities
+                    </Dialog.Title>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Click on proceed to confirm the with the selected activities emission reduction initiatives are planned
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="text-gray-400 hover:text-gray-500"
+                    onClick={onClose}
+                  >
+                    <FiX className="h-5 w-5" />
+                  </button>
+                </div>
+
+                {/* Selected Activities Summary */}
+                <div className="bg-white rounded-lg border border-gray-200 mb-6 max-h-[500px]">
+                  <div className="p-4 border-b border-gray-200">
+                    <h3 className="font-medium">Selected Activities: {selectedActivities.length}</h3>
+                  </div>
+                  
+                  {/* Table Headers */}
+                  <div className="grid grid-cols-5 gap-4 px-6 py-3 border-b border-gray-200 bg-gray-50 text-sm font-medium text-gray-500">
+                    <div>Scope</div>
+                    <div>Category</div>
+                    <div>Sub Category</div>
+                    <div>Activity</div>
+                    <div className="text-center">Activity Region</div>
+                  </div>
+
+                  {/* Table Body */}
+                  <div className="max-h-[400px] overflow-y-auto">
+                    <div className="divide-y divide-gray-200 text-gray-600">
+                      {selectedActivities.map((activity, index) => (
+                        <div key={index} className="grid grid-cols-5 gap-4 px-6 py-4 text-sm">
+                          <div>{activity.scope}</div>
+                          <div>{activity.category}</div>
+                          <div>{activity.subCategory}</div>
+                          <div className="truncate">{activity.activity}</div>
+                          <div className="text-center">{activity.region}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex justify-end gap-4 mt-8">
+                  <button
+                    type="button"
+                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                    onClick={onGoBack}
+                  >
+                    <FiChevronLeft className="mr-2 h-4 w-4" />
+                    Go Back
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600"
+                    onClick={onProceed}
+                  >
+                    Proceed
+                    <FiChevronRight className="ml-2 h-4 w-4" />
+                  </button>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition>
+  );
+};
+
+export default ConfirmActivitiesModal;

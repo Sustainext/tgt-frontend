@@ -15,7 +15,7 @@ import {
   subYears,
 } from "date-fns";
 import { AiOutlineCalendar } from "react-icons/ai";
-
+import { MdClose } from "react-icons/md";
 const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
   const [startMonth, setStartMonth] = useState(new Date());
   const [endMonth, setEndMonth] = useState(addMonths(new Date(), 1));
@@ -257,15 +257,16 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     const windowHeight = window.innerHeight;
     const windowWidth = window.innerWidth;
 
-    // Check available space at the bottom
-    if (rect.bottom + 300 > windowHeight && rect.top > 300) {
-      setPosition("top"); // Open above if not enough space at the bottom
+    if (windowWidth < 768) {
+      setPosition("top");
+    } else if (rect.bottom + 300 > windowHeight && rect.top > 300) {
+      setPosition("top");
     } else if (rect.left + 500 > windowWidth && rect.right > 500) {
-      setPosition("left"); // Open to the left if not enough space on the right
+      setPosition("left");
     } else if (rect.right + 500 > windowWidth) {
-      setPosition("right"); // Open to the right
+      setPosition("right");
     } else {
-      setPosition("bottom"); // Default is to open below the input
+      setPosition("bottom");
     }
   };
 
@@ -300,24 +301,54 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
         />
       </div>
       {showDatePicker && (
+        <>
+          <div className="md:hidden fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center">
+      <div className="bg-white rounded-md w-[90vw] max-h-[90vh] overflow-y-auto p-4">
+        <div className="w-full mb-8">
+        <MdClose onClick={toggleDatePicker} className="text-2xl float-end" />
+        </div>
+
+        <div className="grid grid-cols-1 gap-6">
+          <div className="relative w-full">
+            {renderHeader(startMonth, setStartMonth, "start")}
+            {renderDays()}
+            {renderCells(startMonth)}
+          </div>
+          <div className="relative w-full border-t border-gray-300 pt-4">
+            {renderHeader(endMonth, setEndMonth, "end")}
+            {renderDays()}
+            {renderCells(endMonth)}
+          </div>
+        </div>
+        <div className="flex justify-between mt-4">
+          <button
+            className="px-4 py-1 bg-gray-200 rounded-md text-[12px]"
+            onClick={() => setShowDatePicker(false)}
+          >
+            Cancel
+          </button>
+          <button
+            className="px-4 py-1 bg-blue-500 text-white rounded-md text-[12px]"
+            onClick={() => setShowDatePicker(false)}
+          >
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+       
         <div
-          className={`absolute z-10 mt-2 p-4 bg-white border border-gray-300 rounded-md w-full xl:w-[38vw] lg:w-[38vw] md:w-[38vw] 2xl:w-[38vw] 4k:w-[38vw] 2k:w-[38vw] ${
-            position === "top"
-              ? "bottom-full mb-2"
-              : position === "left"
-              ? "right-full mr-2"
-              : position === "right"
-              ? "ml-2"
-              : "top-full mt-2"
-          }`}
+        className={`hidden md:block absolute z-100 mt-2 xl:p-4 p-2 bg-white border border-gray-300 rounded-md 
+          w-[112vw] md:w-[80vw] lg:w-[50vw] xl:w-[38vw] 
+          ${position === "top" ? "bottom-full mb-2" : position === "left" ? "right-full mr-2" : position === "right" ? "ml-2" : "top-full mt-2"}`}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="relative">
+          <div className="grid grid-cols-2 gap-6">
+            <div className="relative xl:w-full w-5/2">
               {renderHeader(startMonth, setStartMonth, "start")}
               {renderDays()}
               {renderCells(startMonth)}
             </div>
-            <div className="relative border-l border-gray-300 pl-4">
+            <div className="relative xl:w-full w-5/2 border-l border-gray-300 xl:pl-4">
               {renderHeader(endMonth, setEndMonth, "end")}
               {renderDays()}
               {renderCells(endMonth)}
@@ -338,6 +369,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
             </button>
           </div>
         </div>
+        </>
       )}
     </div>
   );
