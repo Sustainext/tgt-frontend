@@ -509,60 +509,60 @@ const ScenarioTable = () => {
       let filteredScenarios = [...sampleScenarios];
 
       // Apply search filter
-      // if (searchQuery) {
-      //   filteredScenarios = filteredScenarios.filter((scenario) =>
-      //     scenario.name.toLowerCase().includes(searchQuery.toLowerCase())
-      //   );
-      // }
+      if (searchQuery) {
+        filteredScenarios = filteredScenarios.filter((scenario) =>
+          scenario.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
 
-      // // Apply organization filter
-      // if (selectedOrganizations.length > 0) {
-      //   filteredScenarios = filteredScenarios.filter((scenario) =>
-      //     selectedOrganizations.includes(scenario.organization)
-      //   );
-      // }
+      // Apply organization filter
+      if (selectedOrganizations.length > 0) {
+        filteredScenarios = filteredScenarios.filter((scenario) =>
+          selectedOrganizations.includes(scenario.organization)
+        );
+      }
 
-      // // Apply corporate filter
-      // if (selectedCorporates.length > 0) {
-      //   filteredScenarios = filteredScenarios.filter((scenario) =>
-      //     selectedCorporates.includes(scenario.corporate)
-      //   );
-      // }
+      // Apply corporate filter
+      if (selectedCorporates.length > 0) {
+        filteredScenarios = filteredScenarios.filter((scenario) =>
+          selectedCorporates.includes(scenario.corporate)
+        );
+      }
 
-      // // Apply base year filter
-      // if (selectedBaseYears.length > 0) {
-      //   filteredScenarios = filteredScenarios.filter((scenario) =>
-      //     selectedBaseYears.includes(scenario.baseYear)
-      //   );
-      // }
+      // Apply base year filter
+      if (selectedBaseYears.length > 0) {
+        filteredScenarios = filteredScenarios.filter((scenario) =>
+          selectedBaseYears.includes(scenario.baseYear)
+        );
+      }
 
-      // // Apply target year filter
-      // if (selectedTargetYears.length > 0) {
-      //   filteredScenarios = filteredScenarios.filter((scenario) =>
-      //     selectedTargetYears.includes(scenario.targetYear)
-      //   );
-      // }
+      // Apply target year filter
+      if (selectedTargetYears.length > 0) {
+        filteredScenarios = filteredScenarios.filter((scenario) =>
+          selectedTargetYears.includes(scenario.targetYear)
+        );
+      }
 
-      // // Apply status filter
-      // if (selectedStatuses.length > 0) {
-      //   filteredScenarios = filteredScenarios.filter((scenario) =>
-      //     selectedStatuses.includes(scenario.status)
-      //   );
-      // }
+      // Apply status filter
+      if (selectedStatuses.length > 0) {
+        filteredScenarios = filteredScenarios.filter((scenario) =>
+          selectedStatuses.includes(scenario.status)
+        );
+      }
 
-      // // Apply date range filter if applicable
-      // if (selectedDateRange?.start && selectedDateRange?.end) {
-      //   const startDate = new Date(selectedDateRange.start).getTime();
-      //   const endDate = new Date(selectedDateRange.end).getTime();
+      // Apply date range filter if applicable
+      if (selectedDateRange?.start && selectedDateRange?.end) {
+        const startDate = new Date(selectedDateRange.start).getTime();
+        const endDate = new Date(selectedDateRange.end).getTime();
 
-      //   filteredScenarios = filteredScenarios.filter((scenario) => {
-      //     const dateToCheck =
-      //       dateFilterType === "created"
-      //         ? new Date(scenario.created).getTime()
-      //         : new Date(scenario.edited).getTime();
-      //     return dateToCheck >= startDate && dateToCheck <= endDate;
-      //   });
-      // }
+        filteredScenarios = filteredScenarios.filter((scenario) => {
+          const dateToCheck =
+            dateFilterType === "created"
+              ? new Date(scenario.created).getTime()
+              : new Date(scenario.edited).getTime();
+          return dateToCheck >= startDate && dateToCheck <= endDate;
+        });
+      }
 
       // Apply sorting if needed
       if (sortColumn) {
@@ -609,7 +609,7 @@ const ScenarioTable = () => {
   const handleConfirmDelete = () => {
     // Here you would implement the actual delete functionality
     // For example:
-    // deleteScenario(scenarioToDelete.id);
+    deleteScenario(scenarioToDelete.id);
 
     // For now, we'll just remove it from the local state
     setScenarios(scenarios.filter((s) => s.id !== scenarioToDelete.id));
@@ -852,20 +852,20 @@ const ScenarioTable = () => {
             <h1 className="text-2xl font-semibold text-gray-900">
               Scenario Creation Dashboard
             </h1>
-            <p className="text-gray-500 mt-1">
-              Create new scenarios, view existing ones, and make adjustments to
-              your plans. Track your progress, compare different strategies, and
-              visualize your path to achieving net-zero goals.
+            <p className="text-gray-500 mt-1 w-[80%]">
+            Create new scenarios, view existing ones, and make adjustments to your plans. Track your progress, compare different strategies, and visualize your path to achieving net-zero goals. Start by creating a new scenario or explore your saved plans to refine and optimize your sustainability journey.
             </p>
           </div>
 
+          <div className="w-[20%] flex justify-end">
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-1"
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-1 w-[210px]"
             onClick={() => setIsCreateModalOpen(true)}
           >
             <span>Create New Scenario</span>
-            <span className="font-bold">+</span>
+            <span className="font-bold ml-2">+</span>
           </button>
+          </div>
         </div>
 
         {/* Search and Active Filters */}

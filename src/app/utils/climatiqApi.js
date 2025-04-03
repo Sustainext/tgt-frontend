@@ -185,7 +185,11 @@ export async function fetchClimatiqActivities({
       ...wildcardActivitiesData,
       ...yearlyResponseData,
       ...customFetchData,
-    ];
+    ].sort((a, b) => {
+      const nameA = (a.name || "").toLowerCase();
+      const nameB = (b.name || "").toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
 
     console.log(`Total combined results: ${combinedResults.length}`);
 

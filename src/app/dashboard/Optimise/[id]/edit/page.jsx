@@ -6,6 +6,7 @@ import WeightageInputModal from "../../WeightageInputModal";
 import ActivitySelectTable from "../../ActivitySelectTable";
 import ConfirmActivitiesModal from "../../ConfirmActivitiesModal";
 import ActivitySummarySection from "../../ActivitiesSummary";
+import { GlobalState } from "@/Context/page";
 
 const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
   // Current step in the wizard (1-4)
@@ -14,6 +15,8 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
 
   const [selectedActivities, setSelectedActivities] = useState([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
+  const { open, setOpen } = GlobalState();
 
   // Selected metrics with toggle state
   const [selectedMetrics, setSelectedMetrics] = useState({
@@ -53,6 +56,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
 
   // Handle toggle selection of a metric
   const toggleMetric = (metricId) => {
+    setOpen(false);
     setSelectedMetrics((prev) => ({
       ...prev,
       [metricId]: !prev[metricId],
@@ -101,7 +105,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
   // Go back to dashboard
   const handleBackToDashboard = () => {
     onCancel();
-  };
+  };  
 
   return (
     <>
@@ -259,7 +263,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
         {/* Step 1: Select Business Metric */}
         {currentStep === 1 && (
           <>
-            <div className="space-y-4 px-8 mr-2 max-w-[108vw]">
+            <div className={`space-y-4 px-8 mr-2 ${open ? "max-w-[108vw]": "max-w-[120vw]"}`}>
               {businessMetrics.map((metric) => (
                 <div
                   key={metric.id}
