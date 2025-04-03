@@ -175,9 +175,9 @@ const StakeholderGroup = ({ setStakeholderList, showStakeholderList,groupId,setG
                     </button>
                 </div>
             </div>
-            <p className="text-[14px] text-[#667085] mb-6">
+            {/* <p className="text-[14px] text-[#667085] mb-6">
                 List of stakeholders in this group. Add individual stakeholders from + Add New Stakeholder group or import to add in bulk.
-            </p>
+            </p> */}
 
             {stakeholderGroupData.length > 0 ? (
                 <div>

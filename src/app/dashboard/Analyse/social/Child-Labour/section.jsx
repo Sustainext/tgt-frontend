@@ -248,7 +248,7 @@ const Section = ({ selectedOrg,selectedCorp,dateRange, isBoxOpen,togglestatus })
               <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
                 <p className="mb-2">
                   Operations considered to have significant risk for incidents
-                  of forced or compulsary labor
+                  of forced or compulsory labor
                 </p>
 
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">

@@ -62,7 +62,6 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
   useEffect(() => {
     
     if (editData) {
-      console.log(editData.filteredData[0],"check it")
       const selectedCountryCode = editData.filteredData[0]?.country || "";
       const selectedStateCode = editData.filteredData[0]?.state || "";
 
@@ -97,27 +96,27 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
           generalDetails: {
             name: editData.filteredData[0]?.name || "",
             email: editData.filteredData[0]?.email || "",
-            phone: editData.filteredData[0]?.phone || "",
-            website: editData.filteredData[0]?.website || "",
-            type: editData.filteredData[0]?.type_corporate_entity || editData.filteredData[0]?.corporatetype || "",
+            phone: editData.filteredData[0]?.phone=='9999999999'?'': editData.filteredData[0]?.phone || "",
+            website: editData.filteredData[0]?.website=='Not Provided'?'':editData.filteredData[0]?.website || "",
+            type: editData.filteredData[0]?.type_corporate_entity=='Not Specified'?'':editData.filteredData[0]?.type_corporate_entity || editData.filteredData[0]?.corporatetype=='Not Specified'?'':editData.filteredData[0]?.corporatetype || "",
             ownership: editData.filteredData[0]?.owner || "",
-            location: editData.filteredData[0]?.location_of_headquarters || "",
+            location: editData.filteredData[0]?.location_of_headquarters=='Not Specified'?'':editData.filteredData[0]?.location_of_headquarters || "",
             Empcount: editData.filteredData[0]?.employeecount || "",
             revenue: editData.filteredData[0]?.revenue || "",
             mobile: editData.filteredData[0]?.mobile || "",
             fax: editData.filteredData[0]?.fax || "",
-            sector: editData.filteredData[0]?.sector || "",
-            subIndustry: editData.filteredData[0]?.subindustry || "",
+            sector: editData.filteredData[0]?.sector=='General'?'':editData.filteredData[0]?.sector || "",
+            subIndustry: editData.filteredData[0]?.subindustry=='General'?'':editData.filteredData[0]?.subindustry || "",
             organisation: editData.filteredData[0]?.organisation || "",
             dateFormat: editData.filteredData[0]?.date_format || "",
             currency: editData.filteredData[0]?.currency || "",
             timeZone: editData.filteredData[0]?.timezone || "",
           },
           addressInformation: {
-            country: editData.filteredData[0]?.country || "",
-            state: editData.filteredData[0]?.state || "",
-            city: editData.filteredData[0]?.city || "",
-            street: editData.filteredData[0]?.street || "",
+            country: editData.filteredData[0]?.country=='N/A'?'':editData.filteredData[0]?.country || "",
+            state: editData.filteredData[0]?.state=='N/A'?'':editData.filteredData[0]?.state || "",
+            city: editData.filteredData[0]?.city=='N/A'?'':editData.filteredData[0]?.city || "",
+            street: editData.filteredData[0]?.street=='Not Provided'?'':editData.filteredData[0]?.street || "",
             zipCode: editData.filteredData[0]?.zipCode || "",
           },
           reportingPeriodInformation: {
@@ -443,6 +442,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
       <input
         type="text"
         name="type"
+        placeholder="Enter type of Incorporation"
         value={formData.generalDetails.type}
         onChange={handleGeneralDetailsChange}
         className={`border ${
@@ -476,6 +476,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
       <input
         type="text"
         name="location"
+        placeholder="Enter Location Of HeadQuarters"
         value={formData.generalDetails.location}
         onChange={handleGeneralDetailsChange}
         className={`border ${
@@ -495,6 +496,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
       <input
         type="number"
         name="phone"
+        placeholder="Enter Phone Number"
         value={formData.generalDetails.phone}
         onChange={handleGeneralDetailsChange}
         className={`border ${
@@ -528,6 +530,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
       <input
         type="text"
         name="website"
+        placeholder="Enter Website URL"
         value={formData.generalDetails.website}
         onChange={handleGeneralDetailsChange}
         className={`border ${
@@ -561,6 +564,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
       <input
         type="number"
         name="Empcount"
+        placeholder="Enter Employee Count"
         value={formData.generalDetails.Empcount}
         onChange={handleGeneralDetailsChange}
         className={`border ${
@@ -580,6 +584,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
       <input
         type="number"
         name="revenue"
+        placeholder="Enter Revenue"
         value={formData.generalDetails.revenue}
         onChange={handleGeneralDetailsChange}
         className={`border ${
@@ -657,6 +662,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
       <input
         type="text"
         name="street"
+        placeholder="Enter Street Address"
         value={formData.addressInformation.street}
         onChange={handleAddressInformationChange}
         className={`border ${

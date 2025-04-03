@@ -68,7 +68,7 @@ const DiversityInclusionMaterialtopic = ({ apiData, setMobileopen }) => {
                 <div className="flex h-[28px]">
                   <div className="h-[28px]">
                     <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                      Diversity & Equal Oppportunity
+                      Diversity & Equal Opportunity
                     </p>
                   </div>
                   {materialityEnvData &&
@@ -185,7 +185,7 @@ const DiversityInclusionMaterialtopic = ({ apiData, setMobileopen }) => {
                 <div className="h-[28px]">
                   <div className="h-[28px]">
                     <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                      Diversity & Equal Oppportunity
+                      Diversity & Equal Opportunity
                     </p>
                   </div>
                   {materialityEnvData &&

@@ -199,7 +199,7 @@ const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
             </div>
             <div className="w-[67%] text-left ">
               <span className="indent-0 text-[13px]">
-                Diversity & Equal Oppportunity
+                Diversity & Equal Opportunity
               </span>
             </div>
           </button>

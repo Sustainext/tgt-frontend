@@ -23,7 +23,7 @@ const WelcomeModal = ({ isModalOpen, setIsModalOpen,setActiveTab,setStakeholderL
       content: "To create and send assessment the user first needs to create:",
     },
     {
-        heading:"Create Stakeholder group",
+        heading:"Create Stakeholder groups",
       content: "Get started by setting up your stakeholder groups.",
     },
   ];
