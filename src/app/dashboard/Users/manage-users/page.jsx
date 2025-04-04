@@ -30,6 +30,24 @@ import {
 import axiosInstance from "../../../utils/axiosMiddleware";
 import { Oval } from "react-loader-spinner";
 
+import {
+  setCollect,
+  setAnalyse,
+  setReport,
+  setOptimise,
+  setTrack,
+  setPermissionscheckbox,
+  setOrgList,
+  setCorpList,
+  setLocList,
+  setfirstname,
+  setlastname,
+  setjobtitle,
+  setdepartment,
+  setworkemail,
+  setroletype,
+  setphonenumber,
+} from "../../../../lib/redux/features/roles-permissionsSlice";
 const ManageUsers = () => {
   const [searchFocus, setSearchFocus] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -58,6 +76,22 @@ const ManageUsers = () => {
     dispatch(setHeadertext1("Users"));
     dispatch(setHeaderdisplay("none"));
     dispatch(setHeadertext2("Manage Users"));
+    dispatch(setCollect(true));
+    dispatch(setAnalyse(true));
+    dispatch(setReport(false));
+    dispatch(setOptimise(false));
+    dispatch(setTrack(false));
+    dispatch(setPermissionscheckbox(false));
+    dispatch(setOrgList([]));
+    dispatch(setCorpList([]));
+    dispatch(setLocList([]));
+    dispatch(setfirstname(""));
+    dispatch(setlastname(""));
+    dispatch(setjobtitle(""));
+    dispatch(setdepartment(""));
+    dispatch(setworkemail(""));
+    dispatch(setroletype(""));
+    dispatch(setphonenumber(""));
   }, [dispatch]);
   const allUsers = useSelector((state) => state.roleprmission.userlist);
 
@@ -65,8 +99,12 @@ const ManageUsers = () => {
   const usersArray = Array.isArray(allUsers) ? allUsers : [allUsers];
   const filteredUsers = usersArray.filter(
     (user) =>
-      (user.first_name || "").toLowerCase().includes(searchTerm?.toLowerCase()) ||
-      (user.last_name || "").toLowerCase().includes(searchTerm?.toLowerCase()) ||
+      (user.first_name || "")
+        .toLowerCase()
+        .includes(searchTerm?.toLowerCase()) ||
+      (user.last_name || "")
+        .toLowerCase()
+        .includes(searchTerm?.toLowerCase()) ||
       (user.email || "").toLowerCase().includes(searchTerm?.toLowerCase())
   );
 
@@ -277,9 +315,9 @@ const ManageUsers = () => {
         <h2 className="text-[22px] font-medium font-['Manrope'] py-2">Users</h2>
       </div>
       <div className="flex justify-between items-start mt-8 mb-4">
-        <div className="rounded-lg mx-8 transition-all w-full h-full">
+        <div className="rounded-lg xl:mx-8 transition-all w-full h-full">
           <div className="container p-4">
-            <div className="overflow-x-auto border-x border-y border-[#edeae9] rounded-lg px-20 py-10">
+            <div className="overflow-x-auto border-x border-y border-[#edeae9] rounded-lg xl:px-20 py-10">
               <div className="py-4">
                 <div className="flex justify-between">
                   <div className="flex">
@@ -384,29 +422,27 @@ const ManageUsers = () => {
                                   user.is_active === true ? "me-3" : "me-2"
                                 }`}
                               />
-                              {user.is_active === true
-                                ? "Active"
-                                : "Inactive"}
+                              {user.is_active === true ? "Active" : "Inactive"}
                             </div>
                           </div>
                         </td>
                         <td className="px-5 bg-white text-[14px]">
                           <div className="flex justify-center ">
-                            <div className="flex justify-center w-[60%]">
+                            <div className="flex justify-center xl:w-[60%] w-full gap-2 xl:gap-0">
                               <button
-                                className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                                className="text-gray-600 hover:text-gray-800 xl:w-[25%] flex justify-center"
                                 onClick={() => handleViewProfile(user)}
                               >
                                 <MdOutlineVisibility className="text-[18px]" />
                               </button>
                               <button
-                                className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                                className="text-gray-600 hover:text-gray-800 xl:w-[25%] flex justify-center"
                                 onClick={() => handleEditUser(user)}
                               >
                                 <MdOutlineModeEdit className="text-[18px]" />
                               </button>
                               <button
-                                className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                                className="text-gray-600 hover:text-gray-800 xl:w-[25%] flex justify-center"
                                 onClick={() => handleToggleUserStatus(user)}
                               >
                                 {user.is_active === true ? (
@@ -416,7 +452,7 @@ const ManageUsers = () => {
                                 )}
                               </button>
                               <button
-                                className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                                className="text-gray-600 hover:text-gray-800 xl:w-[25%] flex justify-center"
                                 onClick={() => handleDeleteUser(user)}
                               >
                                 <MdOutlineDeleteOutline className="text-[18px]" />
@@ -429,7 +465,7 @@ const ManageUsers = () => {
                   </tbody>
 
                   {/* Table Footer */}
-                  <tfoot className="bg-white sticky bottom-0 z-50">
+                  <tfoot className="bg-white sticky bottom-0 z-10">
                     {" "}
                     {/* Higher z-index for footer */}
                     <tr>
@@ -488,10 +524,29 @@ const ManageUsers = () => {
           </div>
         </div>
 
-        {selectedUser && (
-          <div className="w-[35%] max-h-[93vh] min-h-[93vh] rounded-lg shadow-lg max-w-md">
-            <UserProfile user={selectedUser} onClose={handleCloseProfile} />
+        {/* {selectedUser && (
+          
+          <div className="w-[35%] max-h-[93vh] min-h-[93vh] rounded-lg shadow-lg max-w-md ">
+           <UserProfile user={selectedUser} onClose={handleCloseProfile} />
           </div>
+        )} */}
+        {selectedUser && (
+          <>
+            <div className="w-[35%] max-h-[93vh] min-h-[93vh] rounded-lg shadow-lg max-w-md hidden xl:block md:block lg:block 2xl:block 4k:block 2k:block ">
+              <UserProfile user={selectedUser} onClose={handleCloseProfile} />
+            </div>
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 xl:hidden md:hidden lg:hidden 2xl:hidden 4k:hidden 2k:hidden">
+              <div className="bg-white w-full h-full rounded-t-lg p-4 overflow-y-auto relative">
+                <button
+                  className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+                  onClick={handleCloseProfile}
+                >
+                  ✕
+                </button>
+                <UserProfile user={selectedUser} onClose={handleCloseProfile} />
+              </div>
+            </div>
+          </>
         )}
       </div>
 

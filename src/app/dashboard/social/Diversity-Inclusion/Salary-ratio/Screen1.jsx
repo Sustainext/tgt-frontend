@@ -67,7 +67,7 @@ const uiSchema = {
       "ui:tooltipdisplay": "none",
       "ui:widget": "CurrencyselectWidget",
       "ui:widgtclass":
-        "block w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+        "block w-[64vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2x:w-[20vw] 4k:w-[20vw] 2k:w-[20vw] 3xl:w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -78,14 +78,13 @@ const uiSchema = {
       "ui:options": {
         titles: [
           {
-            title: "Basic Salary per Employee Category",
-            tooltip:
-              "What is the ratio of the basic salary of women to men for each employee category. Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties.",
+            title: "Employee Category",
+            tooltip: "Please specify the employee categories.",
             colSpan: 1,
           },
           {
-            title: "Gender",
-            tooltip: "Please specify the gender of individuals.",
+            title: "Average Basic Salary of Employees by Gender",
+            tooltip: "What is the average basic salary of employees by gender for each employee category?",
             colSpan: 3,
           },
           {
@@ -144,33 +143,28 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ location, year, month }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const initialFormData = [
     {
       Q1: "",
       Q2: [
         {
-          category: "",
-          male: 0,
-          female: 0,
-          nonBinary: 0,
-          locationandoperation: "",
+      category: "",
+      male: 0,
+      female: 0,
+      nonBinary: 0,
+      locationandoperation:[],
         },
       ],
     },
   ];
+  const [locationdata, setLocationdata] = useState();
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -189,7 +183,8 @@ const Screen1 = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location: location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -239,11 +234,23 @@ const Screen1 = ({ location, year, month }) => {
     // console.error('Error:', error);
     // }
   };
-
+  const facthloctiondata = async () => {
+    setLocationdata();
+    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("Location data:", response.data);
+      setLocationdata(response.data);
+    } catch (error) {
+      setLocationdata();
+    } finally {
+      LoaderClose();
+    }
+  };
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -256,17 +263,27 @@ const Screen1 = ({ location, year, month }) => {
       LoaderClose();
     }
   };
-
-  useEffect(() => {
-    if (location && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [location, year]);
+   useEffect(() => {
+     if (selectedOrg && year && togglestatus) {
+       if (togglestatus === "Corporate" && selectedCorp) {
+         loadFormData();
+         facthloctiondata();
+       } else if (togglestatus === "Corporate" && !selectedCorp) {
+         setFormData(initialFormData);
+         setRemoteSchema({});
+         setRemoteUiSchema({});
+       } else {
+         loadFormData();
+         facthloctiondata();
+       }
+ 
+       toastShown.current = false;
+     } else {
+       if (!toastShown.current) {
+         toastShown.current = true;
+       }
+     }
+   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -281,25 +298,20 @@ const Screen1 = ({ location, year, month }) => {
 
   return (
     <>
-      <div
-        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+     <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Ratio of basic salary of women to men
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+           Average Basic salary of Employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data 
-corresponding to the 
-ratio of the basic salary  of women 
-to men for each 
-employee category, by significant 
-locations of operation. "
+                data-tooltip-content="This section documents data corresponding to the average basic salary of employees by gender for each employee category across significant locations of operation. Basic Salary: Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties. Basic salary excludes any additional remuneration, such as payments for overtime working or bonuses. "
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -319,9 +331,9 @@ locations of operation. "
             </h2>
           </div>
 
-          <div className="w-[20%]">
-            <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 405-2a
                 </div>
@@ -329,28 +341,49 @@ locations of operation. "
             </div>
           </div>
         </div>
-        <div className="mx-2">
-          <Form
+        {Array.isArray(locationdata) && locationdata.length > 0 ? (
+          <div className="mx-2">
+         <Form
             schema={r_schema}
             uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            widgets={widgets}
+           
             formContext={{
               onRemove: handleRemoveCommittee,
             }}
+            widgets={{
+              ...widgets,
+              TableWidget: (props) => (
+                <CustomTableWidget8
+                  {...props}
+                  locationdata={locationdata}
+                />
+              ),
+            }}
           />
-        </div>
+          </div>
+        ) : (
+          <div className="mx-2"></div>
+        )}
+      
 
-        <div className="mt-4">
+      <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !location || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

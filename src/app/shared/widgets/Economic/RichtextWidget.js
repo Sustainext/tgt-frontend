@@ -12,6 +12,7 @@ const RichtextWidget = (props) => {
       fontSize: "12px",
       color: "#667085"
     },
+    askBeforePasteHTML: false,
     allowResizeY: false,
     defaultActionOnPaste: 'insert_clear_html',
     toolbarSticky: false,

@@ -8,7 +8,9 @@ import "react-tooltip/dist/react-tooltip.css";
 import Waterstoragebody from "./water-storage-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Waterstorage = () => {
+import WaterTopBar from "../waterTopBar";
+
+const Waterstorage = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -51,45 +53,43 @@ const Waterstorage = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const griData = [
+    {
+      tagName: "GRI 303 - 5",
+      toggle: "50",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-L1",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Leadership  Indicators-1",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 6",
+      toggle: "29",
+      textColor: "#fff",
+      bgColor: "bg-cyan-500",
+    },
+  ];
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Environment</p>
-              <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold pt-2">
-                    Water and effluents
-                  </p>
-                </div>
-                <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
-                  <p className="text-gray-500 text-[12px] pt-0.5 px-2">
-                    Material Topic
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end pt-5 me-1">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("50")}
-              >
-                GRI 303 - 5
-              </button>
-              <button
-                className="text-[#fff] bg-cyan-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("29")}
-              >
-                SDG 6
-              </button>
-            </div>
-          </div>
-        </div>
+        <WaterTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          brsr={brsr}
+          griData={griData}
+          setMobileopen={setMobileopen}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -142,9 +142,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

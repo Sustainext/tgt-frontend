@@ -9,17 +9,25 @@ import {
   MdKeyboardArrowDown,
   MdOutlineWater,
   MdOutlineEmojiNature,
+  MdOutlineAir,
+  MdClose,
 } from "react-icons/md";
+import { LuPackage } from "react-icons/lu";
+import { GiWoodPile, GiWaterfall } from "react-icons/gi";
 
-import { GiWoodPile } from "react-icons/gi";
-
-const Aside = ({ activeTab, handleTabClick }) => {
+const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
   const [isEmission, setEmisssion] = useState(false);
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
   const [isWasteVisible, setWasteVisible] = useState(false);
   const [isWaterVisible, setWaterVisible] = useState(false);
   const [isMaterialsVisible, setMaterialsVisible] = useState(false);
   const [isSupplierVisible, setIsSupplierVisible] = useState(false);
+  // const [isEffluentVisible, setIsEffluentVisible] = useState(false);
+  const [isAirQualityVisible, setIsAirQualityVisible] = useState(false);
+  const [isPackagingMaterialVisible, setIsPackagingMaterialVisible] = useState(false);
+
+  const materialityEnvData =
+    apiData && apiData.environment ? apiData.environment : {};
 
   const toggleEmission = () => {
     setEmisssion(!isEmission);
@@ -28,6 +36,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setIsSupplierVisible(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
   };
   const toggleSupplierSectionVisibility = () => {
     setIsSupplierVisible(!isSupplierVisible);
@@ -36,6 +46,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
   };
   const toggleEnergySectionVisibility = () => {
     setEnergySectionVisible(!isEnergySectionVisible);
@@ -44,6 +56,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
   };
   const toggleWasteVisible = () => {
     setWasteVisible(!isWasteVisible);
@@ -52,6 +66,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
   };
   const toggleWaterVisible = () => {
     setWaterVisible(!isWaterVisible);
@@ -60,6 +76,29 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setMaterialsVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
+  };
+
+  // const toggleEffluentVisible = () => {
+  //   setIsEffluentVisible(!isEffluentVisible)
+  //   setWaterVisible(false);
+  //   setEnergySectionVisible(false);
+  //   setWasteVisible(false);
+  //   setMaterialsVisible(false);
+  //   setIsSupplierVisible(false);
+  //   setEmisssion(false);
+  // };
+
+  const toggleAirQualityVisible = () => {
+    setIsAirQualityVisible(!isAirQualityVisible);
+    setWaterVisible(false);
+    setEnergySectionVisible(false);
+    setWasteVisible(false);
+    setMaterialsVisible(false);
+    setIsSupplierVisible(false);
+    setEmisssion(false);
+    setIsPackagingMaterialVisible(false)
   };
 
   const toggleMaterialsVisible = () => {
@@ -69,18 +108,34 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
   };
-  const handleemssionClick = (option) => {
-    // Handle clicking on an option in the Energy dropdown list
-    handleTabClick(`${option}`);
+  const togglePackagingMaterialsVisible = () => {
+    setIsPackagingMaterialVisible(!isPackagingMaterialVisible);
     setEnergySectionVisible(false);
     setWasteVisible(false);
+    setMaterialsVisible(false)
     setWaterVisible(false);
-    setMaterialsVisible(false); // Hide the section after clicking an option
     setIsSupplierVisible(false);
+    setEmisssion(false);
+    setIsAirQualityVisible(false)
   };
+  // const handleemssionClick = (option) => {
+  //   handleTabClick(`${option}`);
+  //   setEnergySectionVisible(false);
+  //   setWasteVisible(false);
+  //   setWaterVisible(false);
+  //   setMaterialsVisible(false);
+  //   setIsSupplierVisible(false);
+  // };
+
+  //Management of Material topic emission
   useEffect(() => {
-    if (activeTab === "Management of Material topic emission") {
+    if (
+      activeTab === "GHG Emissions" ||
+      activeTab === "Management of Material topic emission"
+    ) {
       setEmisssion(true);
       setWasteVisible(false);
       setMaterialsVisible(false);
@@ -89,16 +144,27 @@ const Aside = ({ activeTab, handleTabClick }) => {
       setIsSupplierVisible(false);
     }
   }, [activeTab]);
+  const toggleSidebar = () => {
+    setMobileopen(false);
+  };
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md  h-full">
-      <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
+      <div className="flex items-start py-4 h-screen 4k:h-auto rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] 4k:w-[200px] 2k:w-[240px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
-          <button className="flex items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
+          <button className="flex justify-between items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
+            <div>
             <span className="text-[16px] font-extrabold">Environment</span>
+            
+            </div>
+            <div className=" float-end block xl:hidden md:hidden lg:hidden 2xl:hidden 4k:hidden">
+            <MdClose onClick={toggleSidebar} className="text-3xl"/>
+            </div>
+          
           </button>
+          {/* emission start */}
           <div>
             <button
-              className={`flex items-center  px-2 py-2 mb-2 focus:outline-none w-full ${
+              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full ${
                 activeTab === "Management of Material topic" ||
                 activeTab === "GHG Emissions"
                   ? "text-[#007EEF]"
@@ -106,14 +172,24 @@ const Aside = ({ activeTab, handleTabClick }) => {
               }`}
               onClick={toggleEmission}
             >
-              <div className="w-[20%]">
+              <div className="w-[15%]">
                 <MdOutlineFactory className="w-5 h-5 mr-2" />
               </div>
-              <div className="w-[47%] text-left ml-2">
+              <div className="w-[50%] text-left ml-2">
                 <span className="indent-0">Emissions</span>
               </div>
+              {materialityEnvData &&
+              materialityEnvData.EnvGhgEmission?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span> */}
 
                 <MdKeyboardArrowDown
@@ -127,26 +203,37 @@ const Aside = ({ activeTab, handleTabClick }) => {
             {/* Energy section content */}
             {isEmission && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  <div>
-                    <p className="text-[12px]  ml-3  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic emission"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic emission")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.EnvGhgEmission?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic emission"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic emission"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
                       Topic disclosure
@@ -164,6 +251,66 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       GHG Emissions
                     </p>
                   </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Base Year"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Base Year")}
+                    >
+                      Base Year
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Consolidation Approach"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Consolidation Approach")}
+                    >
+                      Consolidation Approach and Assumptions
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Standards"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Standards")}
+                    >
+                      Standards, methodologies and/or calculation tools used
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "EmissionIntensity"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("EmissionIntensity")}
+                    >
+                      GHG Emission Intensity 
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-1.5  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "EmissionReductionInitiatives"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("EmissionReductionInitiatives")}
+                    >
+                     GHG Emission Reduction Initiatives 
+                    </p>
+                  </div>
                 </div>
               </>
             )}
@@ -172,14 +319,15 @@ const Aside = ({ activeTab, handleTabClick }) => {
           {/* Energy start  */}
           <div>
             <button
-              className={`flex items-center  px-2 py-2 mb-2 focus:outline-none w-full ${
+              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full ${
                 activeTab === "Energy consumed inside the organization" ||
                 activeTab ===
                   "Energy consumption outside of the organization" ||
                 activeTab === "Energy Intensity" ||
                 activeTab === "Reduction of energy consumption" ||
-                activeTab === "Management of Material topic energy" || 
-                activeTab === "Standards, methodologies, assumptions and calculation tools used" ||  
+                activeTab === "Management of Material topic energy" ||
+                activeTab ===
+                  "Standards, methodologies, assumptions and calculation tools used" ||
                 activeTab ===
                   "Reductions in energy requirements of products and services"
                   ? "text-[#007EEF]"
@@ -187,14 +335,24 @@ const Aside = ({ activeTab, handleTabClick }) => {
               }`}
               onClick={toggleEnergySectionVisibility}
             >
-              <div className="w-[20%]">
+              <div className="w-[15%]">
                 <MdOutlineTungsten className="w-5 h-5 mr-2" />
               </div>
-              <div className="w-[47%] text-left ml-2">
+              <div className="w-[50%] text-left ml-2">
                 <span className="indent-0">Energy</span>
               </div>
+              {materialityEnvData &&
+              materialityEnvData.EnvEnergy?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span> */}
 
                 <MdKeyboardArrowDown
@@ -208,31 +366,42 @@ const Aside = ({ activeTab, handleTabClick }) => {
             {/* Energy section content */}
             {isEnergySectionVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  <div>
-                    <p className="text-[12px]  ml-3  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic energy"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic energy")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.EnvEnergy?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic energy"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic energy"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
+
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
@@ -323,7 +492,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Standards, methodologies, assumptions and calculation tools used
+                      Standards, methodologies, assumptions and calculation
+                      tools used
                     </p>
                   </div>
                 </div>
@@ -336,24 +506,35 @@ const Aside = ({ activeTab, handleTabClick }) => {
               className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full ${
                 activeTab === "Significant waste related impact" ||
                 activeTab ===
-                  "Management of significant waste related impacts" || activeTab === "Management of Material topic waste" ||
+                  "Management of significant waste related impacts" ||
+                activeTab === "Management of Material topic waste" ||
                 activeTab === "Waste generated" ||
                 activeTab === "Waste Diverted from disposal" ||
-                activeTab === "Data Collection Methodology" ||  
+                activeTab === "Data Collection Methodology" ||
                 activeTab === "Waste diverted to disposal"
                   ? "text-blue-400"
                   : "bg-transparent text-[#727272]"
               }`}
               onClick={toggleWasteVisible}
             >
-              <div className="w-[20%]">
+              <div className="w-[15%]">
                 <MdOutlineDeleteOutline className="w-5 h-5 mr-2" />
               </div>
-              <div className="w-[47%] text-left ml-2">
-                <span className="indent-0">Waste</span>
+              <div className="w-[50%] text-left ml-2">
+                <span className="indent-0">Waste Management</span>
               </div>
+              {materialityEnvData &&
+              materialityEnvData.EnvWasteManagement?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -365,29 +546,36 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
             </button>
 
-          
             {isWasteVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                <div>
-                    <p className="text-[12px]  ml-3  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic waste"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic waste")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.EnvWasteManagement?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic waste"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick("Management of Material topic waste")
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
                       Topic Management Disclosure
@@ -485,32 +673,150 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       Data Collection Methodology
                     </p>
                   </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Significant Spills"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Significant Spills")}
+                    >
+                      Significant Spills
+                    </p>
+                  </div>
                 </div>
               </>
             )}
           </div>
-          {/* Materials start  */}
+          {/* effluent start */}
+          {/* <div>
+            <button
+              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
+              ${
+                activeTab === "Significant Spills" ||
+                activeTab === "Management of Material topic effluent"
+                  ? "text-[#007EEF]"
+                  : "bg-transparent text-[#727272] "
+              }`}
+              onClick={toggleEffluentVisible}
+            >
+              <div className="w-[15%]">
+                <GiWaterfall className="w-5 h-5 mr-2" />
+              </div>
+              <div className="w-[50%] text-left ml-2">
+                <span className="indent-0">Effluents</span>
+              </div>
+              {materialityEnvData&&materialityEnvData.EnvWasteManagement?.is_material_topic?(
+                <div className="w-[20%] flex justify-end">
+                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+          </span>
+                </div>
+                 
+              ):(
+                <span  className="w-[20%]"></span>
+              )}
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
+               
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isEffluentVisible && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+    
+            {isEffluentVisible && (
+              <>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData&&materialityEnvData.EnvWasteManagement?.is_material_topic?(
+                    <div>
+                      <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Mandatory Management Disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Management of Material topic effluent"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Management of Material topic effluent")
+                      }
+                    >
+                      Management of Material topic
+                    </p>
+                  </div>
+                    </div>
+                  ):(
+                    <div></div>
+                  )}
+                
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                    Topic Disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Significant Spills"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Significant Spills")
+                      }
+                    >
+                      {" "}
+                      Significant Spills
+                    </p>
+                  </div>
+                 
+                </div>
+              </>
+            )}
+          </div> */}
+
+          {/* Materials use and Efficiency start  */}
 
           <div>
             <button
               className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
               ${
                 activeTab === "Materials used by weight or volume" ||
-                activeTab === "Recycled input materials used" || activeTab === "Management of Material topic Materials" ||
-                activeTab === "Reclaimed products and their packaging materials"
+                activeTab === "Recycled input materials used" ||
+                activeTab === "Management of Material topic Materials"
                   ? "text-[#007EEF]"
                   : "bg-transparent text-[#727272] "
               }`}
               onClick={toggleMaterialsVisible}
             >
-              <div className="w-[20%]">
+              <div className="w-[15%]">
                 <GiWoodPile className="w-5 h-5 mr-2" />
               </div>
-              <div className="w-[47%] text-left ml-2">
-                <span className="indent-0">Materials</span>
+              <div className="w-[50%] text-left ml-2">
+                <span className="indent-0">Material Use and Efficiency</span>
               </div>
+              {materialityEnvData &&
+              materialityEnvData.
+              EnvRawMaterialSourcing?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -522,32 +828,43 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
             </button>
 
-    
             {isMaterialsVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                <div>
-                    <p className="text-[12px]  ml-3  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.
+                  EnvRawMaterialSourcing?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Materials"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Materials"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Materials"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Materials")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
-                  <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
-                    Topic Disclosure
+                      Topic Disclosure
                     </p>
                   </div>
                   <div>
@@ -577,6 +894,90 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       }
                     >
                       Recycled input materials used
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Packaging Material */}
+          <div>
+            <button
+              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
+              ${
+                activeTab === "Management of Material topic Packaging Materials" ||
+                activeTab === "Reclaimed products and their packaging materials"
+                  ? "text-[#007EEF]"
+                  : "bg-transparent text-[#727272] "
+              }`}
+              onClick={togglePackagingMaterialsVisible}
+            >
+              <div className="w-[15%]">
+                <LuPackage className="w-5 h-5 mr-2" />
+              </div>
+              <div className="w-[50%] text-left ml-2">
+                <span className="indent-0">Packaging Material</span>
+              </div>
+              {materialityEnvData &&
+              materialityEnvData.EnvPackagingMaterial?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
+                {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+                </span> */}
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isPackagingMaterialVisible && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {isPackagingMaterialVisible && (
+              <>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.EnvPackagingMaterial?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Packaging Materials"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Packaging Materials"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Topic Disclosure
                     </p>
                   </div>
                   <div>
@@ -610,7 +1011,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
                 activeTab ===
                   "Water Withdrawal and Water Discharge from All Areas" ||
                 activeTab ===
-                  "Water withdrawal/Discharge from areas with water stress" || activeTab === "Management of Material topic Water" ||
+                  "Water withdrawal/Discharge from areas with water stress" ||
+                activeTab === "Management of Material topic Water" ||
                 activeTab === "Substances of concern" ||
                 activeTab === "Change in water storage"
                   ? "text-blue-400"
@@ -618,14 +1020,24 @@ const Aside = ({ activeTab, handleTabClick }) => {
               }`}
               onClick={toggleWaterVisible}
             >
-              <div className="w-[20%]">
+              <div className="w-[15%]">
                 <MdOutlineWater className="w-5 h-5 mr-2" />
               </div>
-              <div className="w-[47%] text-left ml-2">
+              <div className="w-[50%] text-left ml-2">
                 <span className="indent-0">Water and effluents</span>
               </div>
+              {materialityEnvData &&
+              materialityEnvData.EnvWaterEffluent?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -640,26 +1052,34 @@ const Aside = ({ activeTab, handleTabClick }) => {
             {/* Water and effluents section content */}
             {isWaterVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                <div>
-                    <p className="text-[12px]  ml-3  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Water"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Water")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.EnvWaterEffluent?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic Water"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick("Management of Material topic Water")
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
                       Topic management disclosure
@@ -758,7 +1178,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <button
               className={`flex justify-between px-2  mb-2 focus:outline-none w-full ${
                 activeTab ===
-                  "New suppliers that were screened using environmental criteria" ||  activeTab === "Management of Material topic Supplier"||
+                  "New suppliers that were screened using environmental criteria" ||
+                activeTab === "Management of Material topic Supplier" ||
                 activeTab ===
                   "Negative environmental impacts in the supply chain and actions taken"
                   ? "text-[#007EEF]"
@@ -766,16 +1187,27 @@ const Aside = ({ activeTab, handleTabClick }) => {
               }`}
               onClick={toggleSupplierSectionVisibility}
             >
-              <div className="w-[20%]">
+              <div className="w-[15%]">
                 <MdOutlineWarehouse className="w-5 h-5 mr-2" />
               </div>
-              <div className="w-[47%] text-left ml-2">
+              <div className="w-[50%] text-left ml-2">
                 <span className="indent-0">
                   Supplier Environmental Assessment
                 </span>
               </div>
+              {materialityEnvData &&
+              materialityEnvData.EnvSupplyChainSustainability
+                ?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end items-center">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -790,26 +1222,38 @@ const Aside = ({ activeTab, handleTabClick }) => {
             {/* Energy section content */}
             {isSupplierVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                <div>
-                    <p className="text-[12px]  ml-3  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Supplier"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Supplier")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.EnvSupplyChainSustainability
+                    ?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Supplier"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Supplier"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
                   <div>
                     <p className="text-[12px]  ml-3  text-[#727272]">
                       Topic disclosure
@@ -849,6 +1293,140 @@ const Aside = ({ activeTab, handleTabClick }) => {
                     >
                       Negative environmental impacts in the supply chain and
                       actions taken
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Air quality Start */}
+          <div>
+            <button
+              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
+              ${
+                activeTab === "Nitrogen Oxides" ||
+                activeTab === "Management of Material topic air quality"
+                  ? "text-[#007EEF]"
+                  : "bg-transparent text-[#727272] "
+              }`}
+              onClick={toggleAirQualityVisible}
+            >
+              <div className="w-[15%]">
+                <MdOutlineAir className="w-5 h-5 mr-2" />
+              </div>
+              <div className="w-[50%] text-left ml-2">
+                <span className="indent-0">Air Quality & other emissions</span>
+              </div>
+              {materialityEnvData &&
+              materialityEnvData.EnvAirQuality?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isAirQualityVisible && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {isAirQualityVisible && (
+              <>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.EnvAirQuality?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic air quality"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic air quality"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Topic Disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Nitrogen Oxides"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Nitrogen Oxides")}
+                    >
+                      {" "}
+                      Nitrogen oxides (NOx), sulfur oxides (SOx), and other
+                      significant air emissions
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Standard Methodology"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Standard Methodology")}
+                    >
+                      {" "}
+                      Standards, methodologies, and assumptions used
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "ODS Import Export"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("ODS Import Export")}
+                    >
+                      {" "}
+                      ODS Production, Import and Export
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Emissions ODS"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Emissions ODS")}
+                    >
+                      {" "}
+                      Emissions of ozone- depleting substances (ODS)
                     </p>
                   </div>
                 </div>

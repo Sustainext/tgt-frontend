@@ -12,10 +12,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import CheckboxWidget3 from "../../../../shared/widgets/Input/checkboxWidget3"
+import CheckboxWidget3 from "../../../../shared/widgets/Input/checkboxWidget3";
+import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 const widgets = {
   inputWidget: inputWidget2,
   RadioWidget: CheckboxWidget3,
+  RadioWidget2: RadioWidget2,
 };
 
 const view_path = "gri-social-ohs-403-1a-ohs_management_system";
@@ -42,7 +44,6 @@ const schema = {
           "Risk management and accident prevention",
           "Improvement of worker safety and well-being",
           "Enhancing corporate social responsibility",
-       
         ],
       },
       Q3: {
@@ -53,12 +54,25 @@ const schema = {
       Q4: {
         type: "string",
         title: "Standards/Guidelines",
-        format: "textarea",
+        enum: ["Yes", "No"],
       },
-      Q5: {
-        type: "string",
-        title: "List of Standards/Guidelines (if applicable)",
-        format: "textarea",
+    },
+    dependencies: {
+      Q4: {
+        oneOf: [
+          {
+            properties: {
+              Q4: {
+                enum: ["Yes"],
+              },
+              Q5: {
+                type: "string",
+                title: "List of Standards/Guidelines (if applicable)",
+                format: "textarea",
+              },
+            },
+          },
+        ],
       },
     },
   },
@@ -106,7 +120,7 @@ const uiSchema = {
       "ui:tooltip":
         "Indicate whether any recognized risk management or management system standards/guidelines were adopted in developing the system. Example: ISO 45001 (Occupational Health and Safety Management Systems)OHSAS 18001 (Occupational Health and Safety Assessment Series) National or industry-specific standards",
       "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
+      "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -131,38 +145,61 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data) => {
+  const errors = {};
+  data.forEach((row) => {
+    if (!row.Q1) {
+      errors.Q1 = "This field is required";
+    }
+    if (!row.Q2 || row.Q2.length === 0) {
+      errors.Q2 = "This field is required";
+    }
 
-const Screen1 = ({ location, year}) => {
+    if (
+      row.Q2?.selected.includes("Compliance with legal requirements") &&
+      !row.Q3
+    ) {
+      errors.Q3 = "This field is required";
+    }
+
+    if (row.Q2?.selected.includes("Risk management and accident prevention")) {
+      if (!row.Q4) {
+        errors.Q4 = "This field is required";
+      }
+      if (!row.Q5) {
+        errors.Q5 = "This field is required";
+      }
+    }
+  });
+  return errors;
+};
+
+const Screen1 = ({ location, year }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
 
+  console.log(formData, "test error fromdata");
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
   const handleChange = (e) => {
-    setFormData(e.formData);
+    let newFormData = { ...e.formData[0] };
+    if (newFormData.Q4 === "No") {
+      newFormData.Q5 = "";
+    }
+    setFormData([newFormData]);
   };
+  // const handleChange = (e) => {
+  //   setFormData(e.formData);
+  // };
 
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -172,12 +209,11 @@ const Screen1 = ({ location, year}) => {
       form_data: formData,
       location,
       year,
-
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axios.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -228,7 +264,7 @@ const Screen1 = ({ location, year}) => {
     setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
-      const response = await axios.get(url, axiosConfig);
+      const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -239,15 +275,6 @@ const Screen1 = ({ location, year}) => {
       LoaderClose();
     }
   };
-  //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
-
-  // console log the form data change
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
 
   // fetch backend and replace initialized forms
   useEffect(() => {
@@ -263,17 +290,30 @@ const Screen1 = ({ location, year}) => {
   }, [location, year]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    updateFormData();
+    e.preventDefault();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+
+    const hasErrors = Object.keys(errors).length > 0;
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("validation error");
+    }
   };
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Occupational Health and Safety Management System
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -302,8 +342,8 @@ const Screen1 = ({ location, year}) => {
             </h2>
           </div>
 
-          <div className="w-[20%]">
-            <div className="float-end">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 403-1a
@@ -320,19 +360,20 @@ const Screen1 = ({ location, year}) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
-     <div className='mt-4'>
+        <div className="mt-4">
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
-              }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !location || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
             disabled={!location || !year}
           >
             Submit
           </button>
-
         </div>
       </div>
       {loopen && (

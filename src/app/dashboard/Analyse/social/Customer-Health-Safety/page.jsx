@@ -1,35 +1,36 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import AnalyseHeader2 from "../../AnalyseHeader2";
-import Section from "./section"
+import AnalyseHeader5 from "../../AnalyseHeader5";
+import Section from "./section";
 const AnalyseCustomerHealthSafety = () => {
-    const [activeMonth, setActiveMonth] = useState(1);
-    const [year, setYear] = useState();
-    const [selectedOrg, setSelectedOrg] = useState("");
-    const [selectedCorp, setSelectedCorp] = useState("");
-  
-  
-    return (
-      <>
-   
-        <AnalyseHeader2
-          activeMonth={activeMonth}
-          setActiveMonth={setActiveMonth}
-          selectedOrg={selectedOrg}
-          setSelectedOrg={setSelectedOrg}
-          selectedCorp={selectedCorp}
-          setSelectedCorp={setSelectedCorp}
-          year={year}
-          setYear={setYear}
-        />
-        <Section
-          selectedOrg={selectedOrg}
-          selectedCorp={selectedCorp}
-          year={year}
-          month={activeMonth}
-        />
-      </>
-    );
-  };
+  const [activeMonth, setActiveMonth] = useState(1);
+  const [dateRange, setDateRange] = useState({
+    start: null,
+    end: null,
+  });
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
+  const [togglestatus, setToggleStatus] = useState("Organization");
+
+  return (
+    <>
+      <AnalyseHeader5
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
+        dateRange={dateRange}
+        setDateRange={setDateRange}
+        setToggleStatus={setToggleStatus}
+      />
+      <Section
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        dateRange={dateRange}
+        togglestatus={togglestatus}
+      />
+    </>
+  );
+};
 
 export default AnalyseCustomerHealthSafety;

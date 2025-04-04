@@ -64,7 +64,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -151,15 +151,24 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -229,7 +238,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
                 data-tooltip-id={`es30`}
                 data-tooltip-html="Specify the total number of suppliers that were assessed 
 for their environmental impacts during the reporting period."
-                className="mt-1.5 ml-2 text-[15px]"
+                className="mt-1.5 ml-2 text-[15px] w-[20%] xl:w-0 lg:w-0 2xl:w-0 md:w-0 4k:w-0 2k:w-0"
               />
               <ReactTooltip
                 id={`es30`}
@@ -272,10 +281,17 @@ for their environmental impacts during the reporting period."
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

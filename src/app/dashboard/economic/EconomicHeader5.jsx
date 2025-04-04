@@ -12,6 +12,9 @@ const EconomicHeader5 = ({
   setSelectedCorp,
   year,
   setYear,
+  setToggleStatus,
+  setSelectedLocation,
+  selectedLocation,
 }) => {
   const [formState, setFormState] = useState({
     selectedCorp: selectedCorp,
@@ -21,6 +24,20 @@ const EconomicHeader5 = ({
     location: "", // Adding location to the form state
   });
   const [reportType, setReportType] = useState("Organization");
+
+  const handleReportTypeChange = (type) => {
+    setReportType(type);
+    setToggleStatus(type);
+  
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+    if (type === "Corporate") {
+    
+      setSelectedLocation(""); 
+    }
+  };
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
     organization: "Please select Organisation",
@@ -134,12 +151,24 @@ const EconomicHeader5 = ({
   const handleCorpChange = (e) => {
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
+    setYear("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      corporate: newCorp ? "" : "Please select Corporate", // Proper error handling for corporate
+      corporate: newCorp ? "" : "Please select Corporate",
+      year:  "Please select year", 
     }));
   };
 
+  const handlelocationChange = (e) => {
+    const newlocation = e.target.value;
+    setSelectedLocation(newlocation);
+    setYear("");
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      location: newlocation ? "" : "Please select location", 
+      year:  "Please select year", 
+    }));
+  };
   useEffect(() => {
     const fetchLocation = async () => {
       if (selectedCorp) {
@@ -160,7 +189,14 @@ const EconomicHeader5 = ({
 
     fetchLocation();
   }, [selectedCorp]);
+  // useEffect(() => {
+  //   if (selectedCorp) {
+  //     setReportType("Corporate");
 
+  //   }else if (selectedLocation){
+  //     setReportType("Location");
+  //   }
+  // }, [selectedCorp,selectedLocation]);
   return (
     <>
       <div>
@@ -174,7 +210,7 @@ const EconomicHeader5 = ({
                 <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-[#D2DFEB]" : "bg-white"}`}
-                    onClick={() => setReportType("Organization")}
+                    onClick={() => handleReportTypeChange("Organization")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Organization
@@ -182,7 +218,7 @@ const EconomicHeader5 = ({
                   </div>
                   <div
                     className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-[#D2DFEB]" : "bg-white"}`}
-                    onClick={() => setReportType("Corporate")}
+                    onClick={() => handleReportTypeChange("Corporate")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                     Corporate
@@ -190,7 +226,7 @@ const EconomicHeader5 = ({
                   </div>
                   <div
                     className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${reportType === "Location" ? "bg-[#D2DFEB]" : "bg-white"}`}
-                    onClick={() => setReportType("Location")}
+                    onClick={() => handleReportTypeChange("Location")}
                   >
                     
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
@@ -200,7 +236,7 @@ const EconomicHeader5 = ({
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"}`}
+                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"}`}
               >
                 <div className="mr-2">
                   <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal ml-1">
@@ -265,8 +301,8 @@ const EconomicHeader5 = ({
                       <select
                         name="location"
                         className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                        value={formState.location} // Using formState.location
-                        onChange={handleChange}
+                        value={selectedLocation} // Using formState.location
+                        onChange={handlelocationChange}
                       >
                         <option value="">Select location</option>
                         {locations.map((location, index) => (

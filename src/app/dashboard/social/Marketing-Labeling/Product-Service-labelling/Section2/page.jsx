@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -8,15 +8,32 @@ import Socialheader2 from "../../../socialheader2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./screen1";
-const ProductServicelabelling2 = () => {
+import { useSelector } from "react-redux";
+import SocialTopBar from "../../../socialTopBar";
+
+const ProductServicelabelling2 = ({ apiData,setMobileopen }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -36,41 +53,53 @@ const ProductServicelabelling2 = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 417 - 1",
+      toggle: "72",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P9-E2",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 9-Essential Indicators-2",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 12",
+      toggle: "73",
+      textColor: "#fff",
+      bgColor: "bg-[#CD8B2A]",
+    },
+  ];
 
   return (
     <>
-     <ToastContainer style={{ fontSize: "12px" }} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                  Marketing and labeling
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end ">
-            <div className="flex float-end border-l">
-            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('72')}>GRI 417 - 1</button>
-            <button className="text-[#fff] bg-[#CD8B2A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('73')}>SDG 12</button>
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Marketing and labeling"}
+          topic={"SocMarketingLabeling"}
+          brsr={brsr}
+          griData={griData}
+          setMobileopen={setMobileopen}
+        />
 
-
-            </div>
-          </div>
-        </div>
-
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Requirements for product and service information and labeling
+            Requirements for product and service information and labeling
           </h6>
         </div>
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -94,9 +123,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -122,10 +158,14 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
-    <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
-
-
+      <Screen1
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        togglestatus={togglestatus}
+      />
     </>
   );
 };

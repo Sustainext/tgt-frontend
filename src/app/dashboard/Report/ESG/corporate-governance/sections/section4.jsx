@@ -15,7 +15,7 @@ const Section4=({section9_2_2Ref,data})=>{
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
         9.2.2 Chair of the Highest Governance Body
             </h3>
-            <p className="text-sm mb-4">{data["2_11_b"]?data["2_11_b"].is_chair_of_highest_governance?data["2_11_b"].is_chair_of_highest_governance:"No data available":"No data available"}</p>
+            <p className="text-sm mb-4">{data["2_11_b"]?data["2_11_b"].is_chair_of_highest_governance?data["2_11_b"].is_chair_of_highest_governance=="No"?data["2_11_b"].is_chair_of_highest_governance:'':"No data available":"No data available"}</p>
         
         {data["2_11_b"]?data["2_11_b"].table?(
             <div className="rounded-md shadow-md mb-4">

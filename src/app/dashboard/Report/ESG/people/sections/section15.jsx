@@ -20,13 +20,15 @@ const Section15=({section13_4_3Ref,data})=>{
     }
     const columns = [
         { header: "Basic Salary per Employee Category", subHeaders: [] }, // No sub-headers for this column
-        { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
-        { header: "Significant Location of Operations", subHeaders: [] } // No sub-headers
+        { header: "Significant Location of Operations", subHeaders: [] },
+        { header: "Ratio of basic salary by Gender ", subHeaders: ["Women to men", "Non-Binary to Women", "Non-binary to Men"] },
+         // No sub-headers
       ];
       const columns2 = [
         { header: "Remuneration per Employee Category", subHeaders: [] }, // No sub-headers for this column
-        { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
-        { header: "Significant Location of Operations", subHeaders: [] } // No sub-headers
+        { header: "Significant Location of Operations", subHeaders: [] },
+        { header: "Ratio of remuneration by Gender ", subHeaders: ["Women to men", "Non-binary to Women", "Non-binary to Men"] },
+         // No sub-headers
       ];
 
       const basicSalaryData = data["405-2a_analyse"]
@@ -36,10 +38,12 @@ const Section15=({section13_4_3Ref,data})=>{
         return entry["Q2"].map((val) => {
           return {
             "Basic Salary per Employee Category": val.category,
-            Male: val.male,
-            Female: val.female,
-            "Non-Binary": val.nonBinary,
-            "Significant Location of Operations": val.locationandoperation,
+            "Women to men": val.women_to_men,
+            "Non-Binary to Women": val.non_binary_to_women,
+            "Non-binary to Men": val.non_binary_to_men,
+            "Significant Location of Operations": Array.isArray(val.locationandoperation)
+              ? val.locationandoperation.join(", ")
+              : val.locationandoperation,
             "Currency": entry["Q1"] // This will use the associated currency for each Q2 entry
           };
         });
@@ -47,9 +51,9 @@ const Section15=({section13_4_3Ref,data})=>{
     : [
         {
           "Basic Salary per Employee Category": "No data available",
-          Male: "No data available",
-          Female: "No data available",
-          "Non-Binary": "No data available",
+         "Women to men": "No data available",
+            "Non-Binary to Women": "No data available",
+            "Non-binary to Men": "No data available",
           "Significant Location of Operations": "No data available",
           "Currency": "No data available"
         },
@@ -57,9 +61,9 @@ const Section15=({section13_4_3Ref,data})=>{
   : [
       {
         "Basic Salary per Employee Category": "No data available",
-        Male: "No data available",
-        Female: "No data available",
-        "Non-Binary": "No data available",
+        "Women to men": "No data available",
+            "Non-Binary to Women": "No data available",
+            "Non-binary to Men": "No data available",
         "Significant Location of Operations": "No data available",
         "Currency": "No data available"
       },
@@ -74,10 +78,12 @@ const Section15=({section13_4_3Ref,data})=>{
             return entry["Q2"].map((val) => {
               return {
                 "Remuneration per Employee Category": val.category,
-                Male: val.male,
-                Female: val.female,
-                "Non-Binary": val.nonBinary,
-                "Significant Location of Operations": val.locationandoperation,
+                "Women to men": val.women_to_men,
+                "Non-binary to Women": val.non_binary_to_women,
+                "Non-binary to Men": val.non_binary_to_men,
+                "Significant Location of Operations": Array.isArray(val.locationandoperation)
+                ? val.locationandoperation.join(", ")
+                : val.locationandoperation,
                 "Currency": entry["Q1"] // This will use the associated currency for each Q2 entry
               };
             });
@@ -85,9 +91,9 @@ const Section15=({section13_4_3Ref,data})=>{
         : [
             {
               "Remuneration per Employee Category": "No data available",
-              Male: "No data available",
-              Female: "No data available",
-              "Non-Binary": "No data available",
+              "Women to men": "No data available",
+            "Non-Binary to Women": "No data available",
+            "Non-binary to Men": "No data available",
               "Significant Location of Operations": "No data available",
               "Currency": "No data available"
             },
@@ -95,9 +101,9 @@ const Section15=({section13_4_3Ref,data})=>{
       : [
           {
             "Remuneration per Employee Category": "No data available",
-            Male: "No data available",
-            Female: "No data available",
-            "Non-Binary": "No data available",
+            "Women to men": "No data available",
+            "Non-Binary to Women": "No data available",
+            "Non-binary to Men": "No data available",
             "Significant Location of Operations": "No data available",
             "Currency": "No data available"
           },
@@ -131,13 +137,13 @@ const Section15=({section13_4_3Ref,data})=>{
         />
 
         <p className="text-[15px]  mb-2 font-semibold">
-        Ratio of basic salary of women to men   
+        Ratio of basic salary by Gender  
             </p>
             <div className="shadow-md rounded-md mb-4">
                 <EmployeeCategoryTable columns={columns} data={basicSalaryData} />
             </div>
             <p className="text-[15px]  mb-2 font-semibold">
-            Ratio of remuneration of women to men
+            Ratio of remuneration by Gender
             </p>
             <div className="shadow-md rounded-md mb-4">
                 <EmployeeCategoryTable columns={columns2} data={remunerationData} />

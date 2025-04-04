@@ -20,7 +20,7 @@ const Section27=({section13_6_10Ref,data})=>{
     }
 
     const col1=[
-        "Rate of fatalities as a result of work-related injury ",
+        "",
         "Percentage of all Employees ",
         "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization ",
        
@@ -36,7 +36,7 @@ const Section27=({section13_6_10Ref,data})=>{
             
           {
            
-            "Rate of fatalities as a result of work-related injury ":val[""],
+            "":val[""],
             "Percentage of all Employees ":val["Percentage of all Employees"],
             "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization ":val["Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization"],
         
@@ -47,14 +47,14 @@ const Section27=({section13_6_10Ref,data})=>{
 :[
   {
      
-   "Rate of fatalities as a result of work-related injury ":"No data available",
+   "":"",
             "Percentage of all Employees ":"No data available",
             "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization ":"No data available",
 },
 ]:[
   {
    
-   "Rate of fatalities as a result of work-related injury ":"No data available",
+   "":"",
             "Percentage of all Employees ":"No data available",
             "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization ":"No data available",
 },
@@ -93,7 +93,7 @@ Workers excluded & type of workers excluded
             ? data["403-8b"].data
               ? data["403-8b"].data.length > 0
                 ? data["403-8b"].data[0].Q1
-                  ? data["403-8b"].data[0].Q1
+                  ? data["403-8b"].data[0].Q1=="No"?data["403-8b"].data[0].Q1:''
                   : "No data available"
                 : "No data available"
               : "No data available"

@@ -7,7 +7,12 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { MdInfoOutline } from "react-icons/md";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-const AnalyseAnnualtotalsection = ({ selectedOrg, selectedCorp, year }) => {
+const AnalyseAnnualtotalsection = ({
+  selectedOrg,
+  selectedCorp,
+  year,
+  togglestatus,
+}) => {
   const [customerhealth, setCustomerhealth] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -53,15 +58,22 @@ const AnalyseAnnualtotalsection = ({ selectedOrg, selectedCorp, year }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
-      fetchData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        fetchData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setCustomerhealth([]);
+      } else {
+        fetchData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
   return (
     <div>
       <div>
@@ -70,9 +82,9 @@ const AnalyseAnnualtotalsection = ({ selectedOrg, selectedCorp, year }) => {
             <div className="mb-6">
               <div
                 id="ReductionOfEnergy"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
               >
-                <h2 className="flex mx-2 text-[15px] text-neutral-700  font-bold mb-2">
+                <h2 className="flex mx-2 text-[15px] text-neutral-700  font-bold mb-2 w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%]">
                   Ratio of annual total compensation & ratio of percentage
                   increase in annual total compensation
                   <MdInfoOutline
@@ -86,7 +98,7 @@ in Disclosure 401-1, the reporting organization
 should use data from Disclosure 2-7 in
 GRI 2: General Disclosures 2021 to identify the
 total number of employees"
-                    className="mt-1.5 ml-2 text-[15px]"
+                    className="mt-1.5 ml-2 text-[15px] w-[10%] xl:w-[2%] md:w-[2%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
                   />
                   <ReactTooltip
                     id={`tooltip-$e1`}
@@ -103,7 +115,7 @@ total number of employees"
                     }}
                   ></ReactTooltip>
                 </h2>
-                <div className="flex justify-between gap-2">
+                <div className="flex xl:justify-between  gap-2">
                   <div className="w-[70px] h-[26px] p-2  bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 2-21a

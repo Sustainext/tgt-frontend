@@ -1,99 +1,80 @@
 import React from 'react';
 
 const Table2 = ({ data }) => {
-  // Check if all rows are empty objects
-  const isEmptyData = data.every(row => Object.keys(row).length === 0);
-
   const columns = [
-    "Category",
+    "Location",
     "Male",
     "Female",
-    // "Total number of employee",
     "Non-Binary",
-    "<30 years",
-    "30-50 years",
-    ">50 years",
-    // "Total number of employee",
-    "Minority group",
-    "Vulnerable Communities"
-  ];
 
+  ];
+console.log(data,"markete table");
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border-collapse block md:table w-full rounded-lg overflow-hidden">
-        <thead className="block md:table-header-group border">
+    <div className="overflow-x-auto custom-scrollbar">
+       <table
+         className="min-w-[828px] w-full rounded-lg border border-gray-300 "
+         style={{ borderCollapse: "separate", borderSpacing: 0 }}
+       >
+        <thead className=" md:table-header-group border">
           <tr className="border border-gray-300 md:table-row gradient-background">
-            <th rowSpan="2" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-            Percentage of employee per employee category 
+            <th
+              className="px-2 py-3 text-[#727272]  md:table-cell text-[12px] text-center border border-gray-300 w-[25%]"
+            
+            >
+              {columns[0]}
             </th>
-            <th colSpan="3" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              Gender
+            <th
+              className="px-2 py-3 text-[#727272]  md:table-cell text-[12px] text-center border border-gray-300 w-[25%]"
+          
+            >
+              {columns[1]}
             </th>
-            <th colSpan="3" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              Age Group
+     
+            <th
+              className="px-2 py-3 text-[#727272]  md:table-cell text-[12px] text-center border border-gray-300 w-[25%]"
+           
+            >
+              {columns[2]}
             </th>
-            <th colSpan="2" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              Diversity groups
+            <th
+              className="px-2 py-3 text-[#727272]  md:table-cell text-[12px] text-center border border-gray-300 w-[25%]"
+          
+            >
+              {columns[3]}
             </th>
           </tr>
-          <tr className="border border-gray-300 md:table-row gradient-background">
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              Male
-            </th>
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              Female
-            </th>
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              Non-Binary
-            </th>
-            {/* <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              Total number of employee
-            </th> */}
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              {'<30 years'}
-            </th>
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              30-50 years
-            </th>
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              {'>50 years'}
-            </th>
-            {/* <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              Total number of employee
-            </th> */}
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              {'Minority group'}
-            </th>
-            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              {'Vulnerable Communities'}
-            </th>
-          </tr>
+   
         </thead>
-        <tbody className="block md:table-row-group">
-          {data.length === 0 || isEmptyData ? (
+        <tbody className=" md:table-row-group">
+          {data?.length === 0 ? (
             <tr className="border border-gray-300 md:table-row">
               <td
                 colSpan={columns.length}
-                className="text-center p-2 block md:table-cell text-[12px] font-[400] h-20"
+                className="text-center p-2  md:table-cell text-[12px] font-[400]  border-r border-gray-300"
               >
                 No data available
               </td>
             </tr>
           ) : (
-            data.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border border-gray-300 md:table-row">
-                {columns.map((column, colIndex) => (
-                  <td
-                    key={colIndex}
-                    className={`p-2 block md:table-cell h-20 ${
-                      colIndex === 0 ? 'text-left font-normal text-slate-500' : 'text-center font-normal text-slate-500'
-                    } text-[12px] border border-gray-300`}
-                  >
-                    {row[column] || 'N/A'}
+           
+              data.map((entry) => (
+                <tr className="border border-gray-300 md:table-row">
+                  <td className="p-2  md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                    {entry.Location}
                   </td>
-                ))}
-              </tr>
-            ))
+                  <td className="p-2  md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                    {entry.Male}
+                  </td>
+                  <td className="p-2  md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                    {entry.Female}
+                  </td>
+                  <td className="p-2  md:table-cell  text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                  {entry['Non-binary']}
+                  </td>
+               
+                </tr>
+              ))
+            
           )}
         </tbody>
       </table>
@@ -102,4 +83,3 @@ const Table2 = ({ data }) => {
 };
 
 export default Table2;
-

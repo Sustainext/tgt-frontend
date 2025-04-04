@@ -4,13 +4,13 @@ import { MdChevronRight, MdChevronLeft } from "react-icons/md";
 import Section1 from "./Section1/page";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Ratiosstandard = () => {
+const Ratiosstandard = ({setMobileopen}) => {
   
 
   return (
       <>
           <ToastContainer style={{ fontSize: "12px" }} />
-          <Section1/>
+          <Section1 setMobileopen={setMobileopen}/>
         
       </>
   );

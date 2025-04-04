@@ -8,12 +8,15 @@ import Screenfive from "./screen5";
 import Screensix from "./screen6";
 import Screenseven from "./screen7";
 import Screenend from "./screen8";
-import { MdOutlineNavigateNext,MdOutlineNavigateBefore  } from "react-icons/md";
+import { MdOutlineNavigateNext,MdOutlineNavigateBefore,MdKeyboardArrowDown  } from "react-icons/md";
 import SocialBillS211Header from '../../socialBillS211Header'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Annualreport = () => {
+const Annualreport = ({ setMobileopen }) => {
+  const toggleSidebar = () => {
+    setMobileopen(true);
+  };
   const [currentStep, setCurrentStep] = useState(1);
   const nextStep = () => setCurrentStep(currentStep + 1);
   const prevStep = () => setCurrentStep(currentStep - 1);
@@ -32,19 +35,45 @@ const Annualreport = () => {
 
   return (
     <>
-       <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-      <div className="w-full">
+           <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+          <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-[11px]">Social</p>
               <div className="flex">
                 <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
+                    Bill S-211 - Fighting Bill Forced Labour and Child Labour in
+                    Supply Chains Act
                   </p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+          <div
+            className="w-full  py-4  rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+            onClick={toggleSidebar}
+          >
+            <div className="text-left mb-2 ml-3 pt-5">
+              <p className="text-[11px]">Social</p>
+              <div className="flex">
+                <div className="h-[50px]">
+                  <p className="gradient-text text-[16px] h-[52px] font-bold pt-1">
+                    Bill S-211 - Fighting Bill Forced Labour and Child Labour in
+                    Supply Chains Act
+                  </p>
+                </div>
+                <div className="flex items-center me-5">
+                  <MdKeyboardArrowDown className={`text-2xl float-end `} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="container mx-auto mt-5">
             <div className="flex">
@@ -69,7 +98,7 @@ const Annualreport = () => {
         setReportType={setReportType}
       />
 
-      <div className="h-[670px] overflow-y-auto scrollable-content">
+      <div className="xl:h-[670px] lg:h-[670px] md:h-[670px] 2k:h-[670px] 4k:h-[670px] h-auto overflow-y-auto scrollable-content">
         {currentStep === 1 && (
           <Screenone
             nextStep={nextStep}
@@ -97,7 +126,7 @@ const Annualreport = () => {
         )}
        {currentStep === 8 && <Screenend prevStep={prevStep} selectedCorp={selectedCorp} selectedOrg={selectedOrg} year={year}  reportType={reportType}/>}
       </div>
-      <div className="w-full">
+      <div className="w-full mb-5">
         <div className="flex justify-center space-x-4 mt-[15px] w-full">
           {/* Previous Button */}
           <button

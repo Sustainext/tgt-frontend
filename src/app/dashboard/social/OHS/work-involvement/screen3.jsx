@@ -10,7 +10,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: CustomTableWidget,
@@ -63,6 +63,24 @@ const uiSchema = {
     ],
   },
 };
+const validateRows = (data) => {
+  return data.map((row) => {
+    const rowErrors = {};
+    if (!row.committeeName) {
+      rowErrors.committeeName = "This field is required";
+    }
+    if (!row.responsibilities) {
+      rowErrors.responsibilities = "This field is required";
+    }
+    if (!row.meetingFrequency) {
+      rowErrors.meetingFrequency = "This field is required";
+    }
+    if (!row.decisionMaking) {
+      rowErrors.decisionMaking = "This field is required";
+    }
+    return rowErrors;
+  });
+};
 const Screen3 = ({ location, year }) => {
   const initialFormData = [
     {
@@ -77,14 +95,9 @@ const Screen3 = ({ location, year }) => {
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -97,12 +110,7 @@ const Screen3 = ({ location, year }) => {
     setFormData(e.formData);
   };
 
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
+
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -117,7 +125,7 @@ const Screen3 = ({ location, year }) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axios.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -167,7 +175,7 @@ const Screen3 = ({ location, year }) => {
     setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
-      const response = await axios.get(url, axiosConfig);
+      const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -203,8 +211,18 @@ const Screen3 = ({ location, year }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    console.log("Submit button clicked"); // Debugging log
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+    console.log("Validation Errors:", errors); // Debugging log
+  
+    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+    if (!hasErrors) {
+      console.log("No validation errors, proceeding to update data"); // Debugging log
+      updateFormData();
+    } else {
+      console.log("Validation errors found, submission aborted"); // Debugging log
+    }
   };
 
   const handleAddCommittee = () => {
@@ -218,22 +236,22 @@ const Screen3 = ({ location, year }) => {
     setFormData([...formData, newCommittee]);
   };
 
-  const handleRemoveCommittee = (index) => {
-    const newFormData = formData.filter((_, i) => i !== index);
-    setFormData(newFormData);
-  };
+  // const handleRemoveCommittee = (index) => {
+  //   const newFormData = formData.filter((_, i) => i !== index);
+  //   setFormData(newFormData);
+  // };
 
   return (
     <>
-      <div
-        className="mx-2 pb-8 pt-3 px-3 mb-6 rounded-md"
+<div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="flex">
-          <div className="w-[80%] relative">
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
             <h2 className="flex mx-2 text-[15px] font-[500] mb-6">
               Formal joint management-worker health and safety committees
               <MdInfoOutline
@@ -285,8 +303,8 @@ const Screen3 = ({ location, year }) => {
               ></ReactTooltip>
             </h2>
           </div>
-          <div className="w-[20%]">
-            <div className="float-end">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 403-4b
@@ -303,9 +321,10 @@ const Screen3 = ({ location, year }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              onRemove: handleRemoveCommittee,
-            }}
+            formContext={{ validationErrors}}
+            // formContext={{
+            //   onRemove: handleRemoveCommittee,
+            // }}
           />
         </div>
         {location && year && (

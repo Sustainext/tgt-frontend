@@ -22,6 +22,8 @@ const TableSidebar = () => {
         "ep2",
         "ep3",
         "ep4",
+        "ep5",
+        "ep6",
       ];
 
       const threshold = 150;
@@ -66,6 +68,14 @@ const TableSidebar = () => {
         {
           id: "ep4",
           name: "Suppliers at significant risk for incidents of young workers exposed to hazardous work ",
+        },
+        {
+          id: "ep5",
+          name: "Operations considered to have significant risk for incidents of forced or compulsory labor",
+        },
+        {
+          id: "ep6",
+          name: "Suppliers at significant risk for incidents of forced or compulsory labor",
         },
       ].map((link) => (
         <div key={link.id} className="self-stretch justify-end items-center gap-2 inline-flex">

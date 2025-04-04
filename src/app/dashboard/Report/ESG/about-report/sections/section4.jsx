@@ -59,7 +59,7 @@ const Section4=({section7_3Ref,data})=>{
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Link or reference to the external assurance reports or assurance statements:
             </p>
-            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q1?data["2-5-b"].Q1:"No data avaailable":"No data available"}</p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q1?data["2-5-b"].Q1=="No"?data["2-5-b"].Q1:'':"No data avaailable":"No data available"}</p>
             <p className="text-sm mb-4">{data["2-5-b"]?data["2-5-b"].Q2?data["2-5-b"].Q2.text?data["2-5-b"].Q2.text:"":"":""}</p>
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Data that was assured and the basis of assurance:

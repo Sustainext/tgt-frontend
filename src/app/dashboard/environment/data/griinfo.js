@@ -48,7 +48,6 @@ export const Energydata = [
               sold.
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -96,7 +95,6 @@ export const Energydata = [
               Energy intensity measured in terms of primary energy and GDP
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -151,7 +149,6 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -195,7 +192,6 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -246,11 +242,10 @@ export const Energydata = [
               risk reduction strategies
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link: "https://sdgs.un.org/goals/goal3",
+    link: "https://sdgs.un.org/goals/goal13",
   },
   {
     category: ["6"],
@@ -276,7 +271,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-            Learn more <MdChevronRight className="text-lg pt-1" />
+              Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -319,7 +314,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-            Learn more <MdChevronRight className="text-lg pt-1" />
+              Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -379,7 +374,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-            Learn more <MdChevronRight className="text-lg pt-1" />
+              Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -425,7 +420,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-            Learn more <MdChevronRight className="text-lg pt-1" />
+              Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -463,7 +458,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-            Learn more <MdChevronRight className="text-lg pt-1" />
+              Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -511,7 +506,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-            Learn more <MdChevronRight className="text-lg pt-1" />
+              Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -563,7 +558,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-            Learn more <MdChevronRight className="text-lg pt-1" />
+              Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -612,7 +607,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-            Learn more <MdChevronRight className="text-lg pt-1" />
+              Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -650,7 +645,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-            Learn more <MdChevronRight className="text-lg pt-1" />
+              Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -728,7 +723,6 @@ export const Energydata = [
               sells, and the end-of-life treatment of products.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -814,7 +808,6 @@ export const Energydata = [
               to other organizations.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -895,7 +888,6 @@ export const Energydata = [
               travelled or per time unit (hour, average working day)
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -966,7 +958,6 @@ export const Energydata = [
               travelled or per time unit (hour, average working day).
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -1068,7 +1059,6 @@ export const Energydata = [
               national and global health risks
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -1149,7 +1139,6 @@ export const Energydata = [
               communities in water and sanitation management
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -1195,7 +1184,6 @@ export const Energydata = [
               PM10) in cities (population weighted)
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -1254,7 +1242,6 @@ export const Energydata = [
               National recycling rate, tons of material recycled
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -1304,7 +1291,6 @@ export const Energydata = [
               type
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -1406,7 +1392,6 @@ export const Energydata = [
               </li>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -1532,7 +1517,6 @@ export const Energydata = [
               its value chain.
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -1616,7 +1600,6 @@ export const Energydata = [
               assurance, or audits of waste-related data.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -1672,7 +1655,6 @@ export const Energydata = [
                 The materials that are present in the waste (e.g., biomass,
                 metals, non-metallic minerals, plastics, textiles)
               </li>
-           
             </ul>
             <p className="text-[13px] text-[#222222] mb-2">
               Guidance for Disclosures 306-4-b and 306-4-c
@@ -1714,7 +1696,6 @@ export const Energydata = [
               assurance, or audits of waste-related data.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -1811,7 +1792,6 @@ export const Energydata = [
               collectors, external assurance, or audits of waste-related data.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -1910,7 +1890,6 @@ export const Energydata = [
               communities in water and sanitation management.
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -1953,7 +1932,7 @@ export const Energydata = [
               commitments and obligations in transmitting information as
               required by each relevant agreement.
             </p>
-            <p className="text-[11px] text-[#222222] mb-2">12.2.2</p>
+            <p className="text-[11px] text-[#222222] mb-2">12.4.2</p>
             <p className="text-[11px] text-[#727272] mb-1">
               (a) Hazardous waste generated per capita; and
             </p>
@@ -1961,7 +1940,6 @@ export const Energydata = [
               (b) Proportion of hazardous waste treated, by type of treatment
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -2126,7 +2104,6 @@ export const Energydata = [
               </li>
             </ul>
           </div>
-      
         </div>
       </>,
     ],
@@ -2160,7 +2137,6 @@ export const Energydata = [
               receiving waterbody.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -2241,7 +2217,6 @@ export const Energydata = [
               organization’s water stewardship efforts and practices.
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -2325,7 +2300,6 @@ export const Energydata = [
               facility in areas with water stress.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2378,7 +2352,6 @@ export const Energydata = [
               availability.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -2428,7 +2401,6 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2472,7 +2444,6 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -2512,7 +2483,7 @@ export const Energydata = [
               years, such as Fossil Fuel, Glass, Fuel.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">
-            Externally sourced materials
+              Externally sourced materials
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
@@ -2546,7 +2517,6 @@ export const Energydata = [
               manipulation, such as reporting it as ‘dry weight’.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -2606,8 +2576,8 @@ export const Energydata = [
               </li>
             </ul>
             <p className="text-[11px] text-[#727272] mb-2">
-              Percentage of recycled input materials used = [Total recycled input
-              materials used/Total input materials used] * 100
+              Percentage of recycled input materials used = [Total recycled
+              input materials used/Total input materials used] * 100
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">GRI Guidance:</p>
@@ -2618,7 +2588,6 @@ export const Energydata = [
               units.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -2666,7 +2635,6 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2733,7 +2701,6 @@ export const Energydata = [
               (b) proportion of hazardous waste treated, by type of treatment
             </p>
           </div>
-   
         </div>
       </>,
     ],
@@ -2759,7 +2726,9 @@ export const Energydata = [
               <b>Reclaimed products</b> are products that have been used and
               then collected, processed, and marketed for reuse. Reclaimed
               products can be reused in their original form or they can be used
-              to manufacture new products.Examples include refurbished electronics, recycled clothing, reclaimed wood, and reclaimed building materials.
+              to manufacture new products.Examples include refurbished
+              electronics, recycled clothing, reclaimed wood, and reclaimed
+              building materials.
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
@@ -2780,8 +2749,9 @@ export const Energydata = [
                 Exclude rejects and recalls of products
               </li>
               <li className="text-[11px] text-[#727272]">
-              · calculate the percentage of reclaimed products and their packaging materials
-              for each product category using the following formula:
+                · calculate the percentage of reclaimed products and their
+                packaging materials for each product category using the
+                following formula:
               </li>
             </ul>
             <p className="text-[11px] text-[#727272] mb-2">
@@ -2797,7 +2767,6 @@ export const Energydata = [
               packaging separately.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -2845,7 +2814,6 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2889,7 +2857,6 @@ export const Energydata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-
         </div>
       </>,
     ],
@@ -2948,7 +2915,6 @@ export const Energydata = [
               National recycling rate, tons of material recycled
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -3048,7 +3014,6 @@ export const Energydata = [
               national and global health risks
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3129,7 +3094,6 @@ export const Energydata = [
               communities in water and sanitation management
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -3175,7 +3139,6 @@ export const Energydata = [
               PM10) in cities (population weighted)
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -3239,7 +3202,6 @@ export const Energydata = [
               communities in water and sanitation management
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -3293,7 +3255,6 @@ export const Energydata = [
               availability.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -3303,61 +3264,302 @@ export const Energydata = [
     category: ["51"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-      GRI 301: Materials 2016
+        GRI 301: Materials 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 301-1 Materials used by weight or volume
+            Disclosure 301-1 Materials used by weight or volume
           </p>
 
           <div>
             <p className="text-[11px] text-[#222222] mb-2">
-            Renewable Materials:
+              Renewable Materials:
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
-            Materials that can be replenished naturally over time, such as Wood, Paper, Leather.
+              Materials that can be replenished naturally over time, such as
+              Wood, Paper, Leather.
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">
-            Non-Renewable Materials:
+              Non-Renewable Materials:
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
-            Materials that cannot be replenished naturally over time. They are typically formed from geological processes that take millions of years, such as Fossil Fuel, Glass, Fuel.
-</p>
-            <p className="text-[11px] text-[#222222] mb-2">Internally sourced materials</p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            Materials that the company makes itself. 
+              Materials that cannot be replenished naturally over time. They are
+              typically formed from geological processes that take millions of
+              years, such as Fossil Fuel, Glass, Fuel.
             </p>
-            <p className="text-[11px] text-[#222222] mb-2">Externally sourced materials</p>
+            <p className="text-[11px] text-[#222222] mb-2">
+              Internally sourced materials
+            </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Materials that the company buys from other companies. 
+              Materials that the company makes itself.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">
+              Externally sourced materials
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Materials that the company buys from other companies.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Estimation</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Process of making an approximate calculation of something.
+              Process of making an approximate calculation of something.
             </p>
-            <p className="text-[11px] text-[#222222] mb-2">Direct measurement</p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            Process of measuring something directly. For example, a company might directly measure the total weight or volume of materials used by weighing or measuring each batch of materials used.
+            <p className="text-[11px] text-[#222222] mb-2">
+              Direct measurement
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            GRI 301-1 focuses on the materials an organization uses, measured by weight or volume. This data is important to understand the organization's resource consumption.
+              Process of measuring something directly. For example, a company
+              might directly measure the total weight or volume of materials
+              used by weighing or measuring each batch of materials used.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              GRI 301-1 focuses on the materials an organization uses, measured
+              by weight or volume. This data is important to understand the
+              organization's resource consumption.
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">GRI Guidance: </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            The reported usage data are to reflect the material in its original state, and not to be presented with further data manipulation, such as reporting it as ‘dry weight’.
+              The reported usage data are to reflect the material in its
+              original state, and not to be presented with further data
+              manipulation, such as reporting it as ‘dry weight’.
             </p>
           </div>
-        
         </div>
       </>,
     ],
     link: "https://globalreporting.org/pdf.ashx?id=12456&page=1",
+  },
+  {
+    category: ["52"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 306: Effluents and Waste 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 306-3 Significant Spills
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">Requirements</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The reporting organization shall report the following information:
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              a. Total number and total volume of recorded significant spills.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              b. The following additional information for each spill that was
+              reported in the organization’s financial statements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              i. Location of spill;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              ii. Volume of spill;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              iii. Material of spill, categorized by: oil spills (soil or water
+              surfaces), fuel spills (soil or water surfaces), spills of wastes
+              (soil or water surfaces), spills of chemicals (mostly soil or
+              water surfaces), and other (to be specified by the organization).
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              c. Impacts of significant spills.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=15010",
+  },
+  {
+    category: ["53"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 305-7 Nitrogen oxides (NOx), sulfur oxides (SOx), and
+            other significant air emissions
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Compilation Requirements
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.13 When compiling the information specified in Disclosure 305-7,
+              the reporting organization shall select one of the following
+              approaches for calculating significant air emissions:
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.13.1 Direct measurement of emissions (such as online analyzers);
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.13.2 Calculation based on site-specific data;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.13.3 Calculation based on published emission factors;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.13.4 Estimation. If estimations are used due to a lack of
+              default figures, the organization shall indicate the basis on
+              which figures were estimated.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
+  },
+
+  {
+    category: ["54"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-15.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-400 text-[17px] font-bold ml-2">SDG 15</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 15: Protect, restore and promote
+            sustainable use of terrestrial ecosystems, sustainably manage
+            forests, combat desertification, and halt and reverse land
+            degradation and halt biodiversity loss
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 15.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2020, promote the implementation of sustainable management of
+              all types of forests, halt deforestation, restore degraded forests
+              and substantially increase afforestation and reforestation
+              globally
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">15.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Progress towards sustainable forest management
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal15",
+  },
+  {
+    category: ["55"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-14.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#007DBC] text-[17px] font-bold ml-2">SDG 14</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Conserve and sustainably use the oceans, seas and marine resources
+            for sustainable development
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 14.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Minimize and address the impacts of ocean acidification, including
+              through enhanced scientific cooperation at all levels
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">14.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average marine acidity (pH) measured at agreed suite of
+              representative sampling stations
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal14",
+  },
+  {
+    category: ["56"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 305: GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 305-6 Emissions of ozone-depleting substances (ODS){" "}
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Compilation Requirements
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.11 When compiling the information specified in Disclosure 305-6,
+              the reporting organization shall:
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.11.1 calculate the production of ODS as the amount of ODS
+              produced, minus the amount destroyed by approved technologies, and
+              minus the amount entirely used as feedstock in the manufacture of
+              other chemicals;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Production of ODS = ODS produced - ODS destroyed by approved
+              technologies - ODS entirely used as feedstock in the manufacture
+              of other chemicals. 2.11.2 exclude ODS recycled and reused.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+            Guidance for Disclosure 305-6            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            The reporting organization can report separate or combined data for the substances included in the calculation.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+            Background          </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+            Measuring ODS production, imports, and exports helps to indicate how an organization complies with legislation. This is particularly relevant if the organization produces or uses ODS in its processes, products and services and is subject to phase-out commitments. Results on ODS phase-out help to indicate the organization’s position in any markets affected by regulation on ODS. This disclosure covers the substances included in Annexes A, B, C, and E of the ‘Montreal Protocol’ as well as any other ODS produced, imported, or exported by an organization.          </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
   },
 ];

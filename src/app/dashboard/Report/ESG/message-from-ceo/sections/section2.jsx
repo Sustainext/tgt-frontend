@@ -9,6 +9,7 @@ import {
   setSignatureimage,
 } from "../../../../../../lib/redux/features/ESGSlice/screen1Slice";
 import { BlobServiceClient } from "@azure/storage-blob";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section2 = ({ orgName,selectedfile,setSelectedFile }) => {
@@ -20,7 +21,13 @@ const Section2 = ({ orgName,selectedfile,setSelectedFile }) => {
   const imagePreview = useSelector(
     (state) => state.screen1Slice.signature_image
   );
-
+  const text1 = useSelector((state) => state.header.headertext1);
+  const text2 = useSelector((state) => state.header.headertext2);
+  const middlename = useSelector((state) => state.header.middlename);
+  const useremail = typeof window !== 'undefined' ? localStorage.getItem("userEmail") : '';
+  const roles = typeof window !== 'undefined' 
+  ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
+  : '';
 
   const handleCompanyname = (e) => {
     dispatch(setCompanyname(e.target.value));
@@ -61,6 +68,7 @@ const Section2 = ({ orgName,selectedfile,setSelectedFile }) => {
       const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
       return url;
     } catch (error) {
+      LoginlogDetails("Failed", "Uploaded");
       console.error("Error uploading file:", error.message);
       return null;
     }
@@ -86,7 +94,9 @@ const Section2 = ({ orgName,selectedfile,setSelectedFile }) => {
         const url = await uploadFileToAzure(selectedFile, newFileName);
   
         if (url) {
-        
+          setTimeout(() => {
+            LoginlogDetails("Success", "Uploaded");
+          }, 500);
           dispatch(setSignatureimage(url));
         } else {
           errorMessages = "Failed to upload image to Azure.";
@@ -106,10 +116,52 @@ const Section2 = ({ orgName,selectedfile,setSelectedFile }) => {
 
   const handleFileCancel=()=>{
     setSelectedFile('')
+    setTimeout(() => {
+      LoginlogDetails("Success", "Deleted");
+    }, 500);
     dispatch(setSignatureimage(''));
   }
 
+  const getIPAddress = async () => {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.error("Error fetching IP address:", error);
+      return null;
+    }
+  };
 
+
+  const LoginlogDetails = async (status, actionType) => {
+    const backendUrl = process.env.BACKEND_API_URL;
+    const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
+  
+    try {
+      const ipAddress = await getIPAddress();
+  
+      
+      const data = {
+        event_type: "Report",
+        event_details: "File",
+        action_type: actionType,
+        status: status,
+        user_email:useremail,
+        user_role:roles,
+        ip_address: ipAddress,
+        logs: `${text1} > ${middlename} > ${text2}`,
+      };
+  
+      const response = await axiosInstance.post(userDetailsUrl, data);
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error logging login details:", error);
+ 
+      return null;
+    }
+  };
   return (
     <>
       <div>

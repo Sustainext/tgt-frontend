@@ -37,7 +37,11 @@ const schema = {
       },
       Q3: {
         type: "string",
-        title: "Which of these hazards have caused high-consequence injuries?",
+        title: "Which of these hazards have caused ill health?",
+      },
+      Q4: {
+        type: "string",
+        title: "Actions taken or underway to eliminate these hazards and minimize risk",
       },
     },
   },
@@ -45,7 +49,7 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2", "Q3"],
+    "ui:order": ["Q1", "Q2", "Q3","Q4"],
     Q1: {
       "ui:title":
         "Are there work-related hazards that pose a risk of ill health?",
@@ -69,10 +73,20 @@ const uiSchema = {
       },
     },
     Q3: {
+      "ui:title": "Which of these hazards have caused ill health?",
+      "ui:tooltip": "Please specify the hazards that have caused ill health.",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q4: {
       "ui:title":
-        "Which of these hazards have caused high-consequence injuries?",
+        "Actions taken or underway to eliminate these hazards and minimize risk",
       "ui:tooltip":
-        "Please specify the hazards that have caused high-consequence injuries.",
+        "Please provide description of actions taken or underway to eliminate these hazards and minimize risks using the hierarchy of controls.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -89,14 +103,35 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data) => {
 
+  const errors = {};
+  data.forEach((row) => {
+    if (!row.Q1) {
+      errors.Q1 = "This field is required";
+    }
+    if (row.Q1 === "Yes") {
+      if (!row.Q2) {
+        errors.Q2 = "This field is required";
+      }
+      if (!row.Q3) {
+        errors.Q3 = "This field is required";
+      }
+      if (!row.Q4) {
+        errors.Q4 = "This field is required";
+      }
+    }
+   
+  });
+  return errors;
+};
 const Screen3 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-
+ const [validationErrors, setValidationErrors] = useState([]);
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -170,6 +205,7 @@ const Screen3 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
+    setValidationErrors();
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -208,21 +244,28 @@ const Screen3 = ({ location, year, month }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+  
+    const hasErrors = Object.keys(errors).length > 0;
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("validation error");
+    }
   };
 
   return (
     <>
-      <div
-        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+     <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
             <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Work-related hazards that pose a risk of ill health
               <MdInfoOutline
@@ -247,8 +290,8 @@ const Screen3 = ({ location, year, month }) => {
               ></ReactTooltip>
             </h2>
           </div>
-          <div className="w-[20%]">
-            <div className="float-end">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
               <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 403-10c
@@ -265,6 +308,7 @@ const Screen3 = ({ location, year, month }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

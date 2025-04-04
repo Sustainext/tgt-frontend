@@ -12,27 +12,27 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
     setLocalValues(item); 
   }, [item]);
 
-  const debouncedUpdate = debounce((key, value) => {
-    updateField(rowIndex, key, value);
-  }, 400);
+  const updateFieldDebounced = useRef(debounce(updateField, 600)).current;
 
   const handleChange = (key, value) => {
-    // Check if the selected location already exists in other rows
-    const locationKey = Object.keys(localValues).find(
-      (k) => options?.titles?.some((title) => title.widgettype === "select" && title.title === k)
+    // Prevent duplicate location selection
+    const locationKey = Object.keys(localValues).find((k) =>
+      options?.titles?.some((title) => title.widgettype === "select" && title.title === k)
     );
 
     if (key === locationKey && selectedLocations.includes(value)) {
       setError("This location is already selected. Please choose another location.");
-      return; // Do not update the local state if the location is a duplicate
+      return;
     }
 
-    setError(""); // Clear any previous errors
-    setLocalValues((prevValues) => ({ ...prevValues, [key]: value })); // Update local input values immediately
+    setError("");
+    // Update UI immediately
+    setLocalValues((prev) => ({ ...prev, [key]: value }));
 
-    // Use debounce for updating the parent state to avoid focus loss
-    debouncedUpdate(key, value);
+    // Efficiently update parent state with debounce
+    updateFieldDebounced(rowIndex, key, value);
   };
+
   const handleKeyDown = (event) => {
     if (["e", "E", "+", "-"].includes(event.key)) {
       event.preventDefault();
@@ -49,7 +49,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
               <select
                 value={localValues[key]}
                 onChange={(e) => handleChange(key, e.target.value)}
-                className="text-sm pl-2 py-2 w-full"
+                className="text-[12px] pl-2 py-2 w-full"
               >
                 <option value="">Select location</option>
                 {locationdata?.length > 0 &&
@@ -68,14 +68,14 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
                 onKeyDown={handleKeyDown} 
                 style={{ width: "100%" }} 
                 placeholder="Enter data" 
-                className="text-sm pl-2 py-2" 
-                min="0" 
+                className="text-[12px] pl-2 py-2" 
+              
               />
             )}
           </td>
         ))}
         {locationdata.length > 1 && (
-          <td className="border border-gray-300 p-3 flex justify-center">
+          <td className="border-l border-t border-gray-300 p-3 flex justify-center">
             <button onClick={() => onRemove(rowIndex)}>
               <MdOutlineDeleteOutline className="text-[20px] text-red-600" />
             </button>
@@ -152,7 +152,7 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
         minWidth: "100%",
         width: "80vw",
       }}
-      className="mb-2 pb-2"
+      className="mb-2 pb-2 custom-scrollbar"
     >
       <table id={id} className="table-fixed border-collapse w-full rounded-md border border-gray-300" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="gradient-background">
@@ -160,11 +160,11 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
-                style={{ width: "17vw", textAlign: "left" }}
-                className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-2 py-2 text-center border-gray-300 `}
+                style={{textAlign: "left" }}
+                className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-2 py-2 text-center border-gray-300 xl:w-[17vw] lg:w-[17vw] 2xl:w-[17vw] 4k:w-[17vw] 2k:w-[17vw] 3xl:w-[17vw] md:w-[17vw] w-[77vw] `}
               
               >
-                <div className="flex items-center relative justify-center">
+                <div className="flex items-center relative justify-center xl:w-auto lg:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto  3xl:w-auto  md:w-auto  w-[57vw]">
                   <p>{item.title}</p>
                   {item.tooltipdisplay === "block" && (
                     <p>
@@ -193,7 +193,7 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
               </th>
             ))}
             {locationdata.length > 1 && (
-              <th className="w-[5vw] border border-gray-300 "></th>
+              <th className="w-[7vw] xl:w-[5vw] lg:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] 2xl:w-[5vw] 3xl:w-[5vw] md:w-[5vw] border-l  "></th>
             )}
           </tr>
         </thead>
@@ -217,7 +217,7 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
           <button
             type="button"
             onClick={addRow}
-            className="text-blue-500 flex items-center text-[15px]"
+            className="text-blue-500 flex items-center text-[12px] ml-2"
           >
             Add Location <div className="ml-2 mt-1"><MdAdd /></div>
           </button>

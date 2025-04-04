@@ -1,10 +1,11 @@
 export const columns1 = [
   { header: 'Type of Employees' },
+  { header: 'Total no of employees' },
   { header: 'Percentage of male employees' },
   { header: 'Percentage of female employees' },
   { header: 'Percentage of Non-Binary employees' },
   { header: 'Percentage of employee by age group', colSpan: 3 },
-
+ 
   ];
 
   export const data1 = [
@@ -56,6 +57,7 @@ export const columns1 = [
   ];
   export const columns2 = [
     { header: 'Type of Employees' },
+    { header: 'Total no of employees' },
     { header: 'Percentage of male employees' },
     { header: 'Percentage of female employees' },
     { header: 'Percentage of Non-Binary employees' },
@@ -135,3 +137,10 @@ export const columns1 = [
       { 'Employee category': 'Return to work rate', Male: "10", Female: "10" },
       { 'Employee category': 'Retention rate', Male: "10", Female: "10" },
     ];
+    export const columns6 = [
+      { header: 'Number of employees per employee category' },
+      { header: 'Gender',colSpan: 3 },
+      { header: 'Age Group',colSpan: 3 },
+      { header: 'Diversity groups',colSpan: 2 },
+     
+      ];

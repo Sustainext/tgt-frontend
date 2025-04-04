@@ -128,7 +128,7 @@ const SDGCards = () => {
         <h2 className="text-2xl font-bold mb-8 text-gray-700">
           Select UN SDGs
         </h2>
-        <div className="grid grid-cols-6 gap-6 m-6">
+        <div className="grid grid-cols-2 xl:grid-cols-6  lg:grid-cols-6  md:grid-cols-6  2k:grid-cols-6  4k:grid-cols-6 gap-6 m-6">
           {data &&
             data.map((item) => (
               <div key={item.id} onClick={() => toggleSelect(item.id)}>
@@ -194,20 +194,10 @@ const SDGCards = () => {
         </div>
       </div>
       {data && data.length > 0 ? (
-        <button
-          className="px-4 py-2 font-bold text-white w-[10%] text-center rounded-md mr-6 bg-blue-500 bg-opacity-100 shadow-md hover:shadow-lg active:shadow-none float-right"
-          onClick={submitForm}
-        >
-          Save
-        </button>
-      ) : (
-        <button
-          className="px-4 py-2 text-gray-400 w-[10%] text-center rounded-md mr-6 bg-gray-300 bg-opacity-100 shadow-md hover:shadow-lg active:shadow-none float-right"
-          disabled
-        >
-          Save
-        </button>
-      )}
+      <button className="xl:px-4 py-2 font-bold text-white xl:w-[10%] lg:w-[10%] md:w-[10%] 2xl:w-[10%] 2k:w-[10%] 4k:w-[10%] w-[20%] mb-2 text-center rounded-md mr-6 bg-blue-500 bg-opacity-100 shadow-md hover:shadow-lg active:shadow-none float-right" onClick={submitForm}>Save</button>
+    ) : (
+      <button className="xl:px-4 py-2  text-gray-400 xl:w-[10%] lg:w-[10%] md:w-[10%] 2xl:w-[10%] 2k:w-[10%] 4k:w-[10%]  w-[20%] mb-2  text-center rounded-md mr-6 bg-gray-300 bg-opacity-100 shadow-md hover:shadow-lg active:shadow-none float-right" disabled>Save</button>
+    )}
 
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

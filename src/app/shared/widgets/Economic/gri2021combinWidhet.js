@@ -193,7 +193,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
             <button
               type="button"
               onClick={addRow}
-              className="text-blue-500 flex items-center ml-1"
+              className="text-blue-500 flex items-center ml-1 text-[14px]"
             >
               Add Row <MdAdd className="ml-2" />
             </button>

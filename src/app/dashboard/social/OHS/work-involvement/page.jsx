@@ -6,7 +6,9 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Socialheader3 from "../../socialheader3";
 import Workinvolvementscreen from "./work-involvement";
-const Workinvolvement = () => {
+import SocialTopBar from '../../socialTopBar'
+
+const Workinvolvement = ({apiData,setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -34,45 +36,32 @@ const Workinvolvement = () => {
     setData(newData);
   }, [category]);
 
+  const sdgData=[
+    {
+        tagName:'GRI 403 - 4',
+        toggle:'27',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+    {
+      tagName:'SDG 8',
+      toggle:'28',
+      textColor:"#fff",
+      bgColor:"bg-red-900"
+  },  
+  {
+    tagName:'SDG 16',
+    toggle:'29',
+    textColor:"#fff",
+    bgColor:"bg-blue-900"
+},  
+]
+
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold py-2">
-                    Occupational Health and Safety
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end pt-5 me-1">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("27")}
-              >
-                GRI 403 - 4
-              </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("28")}
-              >
-                SDG 8
-              </button>
-              <button
-                className="text-[#fff] bg-blue-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("29")}
-              >
-                SDG 16
-              </button>
-            </div>
-          </div>
-        </div>
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} setMobileopen={setMobileopen} />
+       
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px]  font-semibold flex">
@@ -128,9 +117,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

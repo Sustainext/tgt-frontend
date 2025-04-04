@@ -13,8 +13,9 @@ import {
 } from "@/lib/redux/features/emissionSlice";
 import { Energydata } from "../../../shared/data/Energydata";
 import { MdOutlineClear,MdChevronRight  } from "react-icons/md";
+import EmissionTopBar from './emissionTopbar'
 
-const Emissions = ({ open }) => {
+const Emissions = ({ open,apiData,setMobileopen}) => {
   const dispatch = useDispatch();
   const { location, year, month } = useSelector((state) => state.emissions);
   const countryCode = useSelector((state) => state.emissions.countryCode);
@@ -46,84 +47,83 @@ const Emissions = ({ open }) => {
     setData(newData);
   }, [category]);
 
+  const griData=[
+    {
+      tagName:'GRI 305 - 1',
+      toggle:'43',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+ 
+  {
+      tagName:'GRI 305 - 2',
+      toggle:'44',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  {
+      tagName:'GRI 305 - 3',
+      toggle:'45',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ]
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P6-E7",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 6-Essential Indicators-7",
+    },
+    {
+      tagName: "BRSR C-P6-L2",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 6-Leadership  Indicators-2",
+    },
+  ];
+  const sdgData=[
+   
+
+  {
+    tagName:'SDG 3',
+    toggle:'sd5',
+    textColor:"#fff",
+    bgColor:"bg-[#4C9F38]"
+},
+{
+  tagName:'SDG 12',
+  toggle:'sd35',
+  textColor:"#fff",
+  bgColor:"bg-[#BF8B2E]"
+},
+{
+  tagName:'SDG 13',
+  toggle:'sd4',
+  textColor:"#fff",
+  bgColor:"bg-lime-900"
+},
+{
+  tagName:'SDG 14',
+  toggle:'sd24',
+  textColor:"#fff",
+  bgColor:"bg-[#007DBC]"
+},
+{
+  tagName:'SDG 15',
+  toggle:'sd38',
+  textColor:"#fff",
+  bgColor:"bg-[#40AE49]"
+},
+   
+]
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <EmissionsProvider>
         <>
           <div className="flex flex-col justify-start overflow-x-hidden ">
-            <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-              <div className="w-full">
-                <div className="text-left mb-4 ml-3 pt-5">
-                  <p className="text-[11px]">Environment</p>
-                  <div className="flex h-[28px]">
-                    <div className="h-[28px]">
-                      <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                        Emission
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full float-end me-2">
-                <div className="float-end border-l">
-                  <div className="flex mb-2">
-                  <button
-                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("43")}
-                  >
-                    GRI 305 - 1
-                  </button>
-                  <button
-                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("44")}
-                  >
-                    GRI 305 - 2
-                  </button>
-                  <button
-                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("45")}
-                  >
-                    GRI 305 - 3
-                  </button>
-                </div>
-
-                <div className="flex">
-                  <button
-                    className="text-[#fff] bg-[#4C9F38] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                    onClick={() => toggleDrawer("sd5")}
-                  >
-                    SDG 3
-                  </button>
-               
-                  <button
-                    className="text-[#fff] bg-[#BF8B2E] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                    onClick={() => toggleDrawer("sd3")}
-                  >
-                    SDG 12
-                  </button>
-                  <button
-                    className="text-[#fff] bg-lime-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("sd4")}
-                  >
-                    SDG 13
-                  </button>
-                  <button
-                    className="text-[#fff] bg-[#007DBC] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("sd24")}
-                  >
-                    SDG 14
-                  </button>
-                  <button
-                    className="text-[#fff] bg-[#40AE49] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("sd8")}
-                  >
-                    SDG 15
-                  </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+           <EmissionTopBar toggleDrawer={toggleDrawer} apiData={apiData} sdgData={sdgData} griData={griData} brsr={brsr} setMobileopen={setMobileopen} />
             <div
            className={`${
             isOpen
@@ -150,8 +150,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
 
                 {/* Data Content */}
+        
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

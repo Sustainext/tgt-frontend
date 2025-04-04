@@ -5,7 +5,7 @@ import DynamicTable2 from "./customTable2";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
 import { Oval } from 'react-loader-spinner';
-const Section = ({selectedOrg,selectedCorp,year,isBoxOpen}) => {
+const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen,togglestatus}) => {
   const [customerhealth, setCustomerhealth] = useState([]);
   const toastShown = useRef(false);
   const [loopen, setLoOpen] = useState(false);
@@ -25,7 +25,7 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen}) => {
     setCustomerhealth([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_marketing_and_labeling_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`,
+        `/sustainapp/get_marketing_and_labeling_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`,
       
       );
 
@@ -58,15 +58,22 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen}) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
+    if (selectedOrg &&  dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
         fetchData();
-        toastShown.current = false;
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setCustomerhealth([]);
+      } else {
+        fetchData();
+      }
+
+      toastShown.current = false;
     } else {
-        if (!toastShown.current) {
-            toastShown.current = true;
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-}, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus]);
 
 
   return (
@@ -85,7 +92,7 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen}) => {
                     Requirements for product and service information and labeling
                   </p>
                 </div>
-                <div className="flex justify-between items-center mb-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
                   <p className="text-gray-500 text-[13px]">
                     Percentage of significant product or service categories covered by and assessed
                   </p>
@@ -115,7 +122,7 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen}) => {
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className=" mb-8 me-2"
+          className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
         >
           <TableSidebar />
         </div>

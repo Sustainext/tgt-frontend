@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../app/utils/axiosMiddleware";
 import { getMonthName } from "../../../app/utils/dateUtils";
 import { v4 as uuidv4 } from "uuid";
-import { set } from "lodash";
 
 export const fetchEmissionsData = createAsyncThunk(
   "emissions/fetchEmissionsData",
@@ -71,6 +70,7 @@ export const fetchEmissionsData = createAsyncThunk(
         ...processScope(scope2Response, "scope2"),
         ...processScope(scope3Response, "scope3"),
         params: { location, year, month },
+        scope_wise_data: climatiqResponse.data.scope_wise_data || {},
       };
     } catch (error) {
       console.error("Error fetching emissions data:", error);
@@ -80,6 +80,23 @@ export const fetchEmissionsData = createAsyncThunk(
     }
   }
 );
+
+const findClimatiqDataById = (rawData, searchId) => {
+  console.log("Raw Data:", rawData,searchId);
+  
+  if (!rawData || !rawData.result || !Array.isArray(rawData.result)) return null;
+  const foundItem = rawData.result.find(item => {
+    console.log("Checking item:", { itemId: item.unique_id, searchId });
+    return item.unique_id === searchId;
+  });
+ 
+  console.log("Search result:", foundItem);
+  return foundItem || null;
+};
+
+export const searchClimatiqDataById = (state, searchId) => {
+  return findClimatiqDataById(state.emissions.climatiqData.rawData, searchId);
+};
 
 export const fetchPreviousMonthData = createAsyncThunk(
   "emissions/fetchPreviousMonthData",
@@ -179,9 +196,14 @@ export const updateScopeData = createAsyncThunk(
 );
 
 const calculateTotalClimatiqScore = (data) => {
-  if (data && data.result && Array.isArray(data.result)) {
-    const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
-    return (total / 1000).toFixed(3);
+  console.log('Calculating total climatiq score for data:', data);
+  
+  if (data && data.result) {
+    // const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
+    const total = data.total_emission;
+    console.log('Total climatiq score:', total);
+    
+    return total;
   }
   return 0;
 };
@@ -309,19 +331,23 @@ export const fetchLocations = createAsyncThunk(
 const emissionsSlice = createSlice({
   name: "emissions",
   initialState: {
-    userData: [],
     locations: {
       data: [],
-      status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+      status: "idle", 
       error: null,
     },
     location: "",
+    locationName:"",
     year: "",
     month: 1,
+    monthName:"Jan",
     countryCode: "",
     climatiqData: {
       rawData: {},
       totalScore: 0,
+      scope1: 0,
+      scope2: 0,
+      scope3: 0,
       status: "idle",
       error: null,
       params: null,
@@ -399,8 +425,64 @@ const emissionsSlice = createSlice({
       field: null,
     },
     validationErrors: {},
+    activitiesCache: {}, // Store for cached activities by key
+    activeRequests: [],
   },
   reducers: {
+    addActiveRequest: (state, action) => {
+      const requestKey = action.payload;
+      if (!state.activeRequests.includes(requestKey)) {
+        state.activeRequests.push(requestKey);
+      }
+    },
+    
+    // Remove request from active tracking
+    removeActiveRequest: (state, action) => {
+      const requestKey = action.payload;
+      state.activeRequests = state.activeRequests.filter(
+        request => request !== requestKey
+      );
+    },
+    
+    // Store activity data in cache
+    setActivitiesForRow: (state, action) => {
+      const { key, activities } = action.payload;
+      if (key && activities) {
+        state.activitiesCache[key] = activities;
+      }
+    },
+    
+    // Clear cache for specific keys or patterns
+    clearActivitiesCache: (state, action) => {
+      const pattern = action.payload;
+      if (!pattern) {
+        // Clear entire cache if no pattern provided
+        state.activitiesCache = {};
+      } else {
+        // Clear only entries matching the pattern
+        Object.keys(state.activitiesCache).forEach(key => {
+          if (key.includes(pattern)) {
+            delete state.activitiesCache[key];
+          }
+        });
+      }
+    },
+    
+    // Clear cache entries older than specified time
+    pruneActivitiesCache: (state, action) => {
+      const maxAge = action.payload || 60 * 60 * 1000; // Default: 1 hour
+      const now = Date.now();
+      
+      Object.entries(state.activitiesCache).forEach(([key, entry]) => {
+        if (entry.timestamp && now - entry.timestamp > maxAge) {
+          delete state.activitiesCache[key];
+        }
+      });
+    },
+    setActivitiesForRow: (state, action) => {
+      const { requestKey, data } = action.payload;
+      state.activitiesCache[requestKey] = data;
+    },
     setUserData: (state, action) => {
       state.userData = action.payload;
     },
@@ -410,11 +492,17 @@ const emissionsSlice = createSlice({
     setLocation: (state, action) => {
       state.location = action.payload;
     },
+    f_setLocationName: (state, action) => {
+      state.locationName = action.payload;
+    },
     setYear: (state, action) => {
       state.year = action.payload;
     },
     setMonth: (state, action) => {
       state.month = action.payload;
+    },
+    f_setMonthName: (state, action) => {
+      state.monthName = action.payload;
     },
     setCountryCode: (state, action) => {
       state.countryCode = action.payload;
@@ -587,6 +675,10 @@ const emissionsSlice = createSlice({
     clearValidationErrors: (state) => {
       state.validationErrors = {};
     },
+    setActivitiesForRow: (state, action) => {
+      const { rowId, activities } = action.payload;
+      state.activitiesCache[rowId] = activities;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -606,6 +698,10 @@ const emissionsSlice = createSlice({
         state.climatiqData.totalScore = calculateTotalClimatiqScore(
           action.payload.climatiqData
         );
+        // state.climatiqData.totalScore = action.payload.total_emission || 0;
+        state.climatiqData.scope1 = action.payload.scope_wise_data.scope_1 || 0;
+        state.climatiqData.scope2 = action.payload.scope_wise_data.scope_2 || 0;
+        state.climatiqData.scope3 = action.payload.scope_wise_data.scope_3 || 0;
         state.scope1Data.data = action.payload.scope1Data;
         state.scope2Data.data = action.payload.scope2Data;
         state.scope3Data.data = action.payload.scope3Data;
@@ -642,6 +738,7 @@ const emissionsSlice = createSlice({
         const { scope, data, params } = action.payload;
         state[`scope${scope}Data`].data = data;
         state.updateScopeParams = params;
+        state.approvedTasks[`scope${scope}`] = [];
       })
       .addCase(updateScopeData.rejected, (state, action) => {
         state.updateScopeStatus = "failed";
@@ -726,6 +823,16 @@ const emissionsSlice = createSlice({
       .addCase(fetchLocations.rejected, (state, action) => {
         state.locations.status = "failed";
         state.locations.error = action.payload;
+      })
+      .addCase(setLocation, (state, action) => {
+        state.location = action.payload;
+        // Clear activities cache when location changes
+        state.activitiesCache = {};
+      })
+      .addCase(setYear, (state, action) => {
+        state.year = action.payload;
+        // Clear activities cache when year changes
+        state.activitiesCache = {};
       });
   },
 });
@@ -734,8 +841,10 @@ export const {
   setUserData,
   setLocationsRedux,
   setLocation,
+  f_setLocationName,
   setYear,
   setMonth,
+  f_setMonthName,
   setCountryCode,
   updateScopeDataLocal,
   resetPreviousMonthData,
@@ -756,6 +865,11 @@ export const {
   clearFocusedField,
   setValidationErrors,
   clearValidationErrors,
+  addActiveRequest,
+  removeActiveRequest,
+  setActivitiesForRow,
+  clearActivitiesCache,
+  pruneActivitiesCache,
 } = emissionsSlice.actions;
 
 export default emissionsSlice.reducer;

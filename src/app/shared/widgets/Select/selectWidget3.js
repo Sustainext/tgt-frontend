@@ -23,7 +23,7 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
       <div className="mb-3 px-1">
        {id.startsWith("root_0") && ( 
          <div className={`relative flex ${label!== "Metric Unit" ? 'justify-center' : 'pl-2'}`}>
-          <p className={`flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 ${label !== "Metric Unit" && schema.display !== "none" ? 'pl-5' : ''}`}>
+          <p className={`flex text-[13px] 4k:text-[15px] h-[35px] text-neutral-950 font-[400] mb-1 ${label !== "Metric Unit" && schema.display !== "none" ? 'pl-5' : ''}`}>
             {label}
             <MdInfoOutline
               data-tooltip-id={tooltipId}
@@ -50,10 +50,11 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
       )}
        <div className="flex justify-center items-center mt-2">
         <select
-          className={`text-center py-1 text-[12px] w-[100px] rounded-md ${
+          className={`text-center py-1 text-[12px] 4k:text-[14px] w-[100px] rounded-md ${
             value ? 'bg-white text-blue-500 shadow' : 'bg-blue-500 text-white'
           }`}
           value={value || ''}
+          disabled={uiSchema['ui:widgetDisable']?`${uiSchema['ui:widgetDisable']}`:false}
           onChange={handleChange}
         >
           <option value="" disabled={!!value}>{`Unit` || "Select..."}</option>

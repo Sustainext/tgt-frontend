@@ -11,8 +11,9 @@ import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen4 from "./screen4";
+import EconomicTopBar from '../../economicTopBar'
 
-const PortionForSeniorManagement = () => {
+const PortionForSeniorManagement = ({apiData,setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [year, setYear] = useState();
@@ -42,41 +43,29 @@ const PortionForSeniorManagement = () => {
     setData(newData);
   }, [category]);
 
+  const sdgData=[
+    {
+        tagName:'GRI 202-2',
+        toggle:'114',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+   
+    {
+      tagName:'SDG 8',
+      toggle:'3',
+      textColor:"#fff",
+      bgColor:"bg-[#A21942]"
+  },
+   
+]
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
-                <p className="text-[11px]">Economic</p>
-              <div className="flex">
-                <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Economic Governance
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end ">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("114")}
-              >
-                GRI 202-1
-              </button>
-              <button
-                className="text-[#fff] bg-[#A21942] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("3")}
-              >
-                SDG 8
-              </button>
-             
-            </div>
-          </div>
-        </div>
+        <EconomicTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Economic Governance'} topic={'GovGovernance'} setMobileopen={setMobileopen} />
+      
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -127,9 +116,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

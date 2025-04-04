@@ -38,7 +38,7 @@ const uiSchema = {
     Q1: {
       "ui:title": "Standard notice period for all employees (in weeks)",
       "ui:tooltip":
-        "Please indicate whether you have a formal Occupational Health & Safety Management System implemented.",
+        "What is the minimum notice period employees typically get before significant operational changes? Significant operational change: alteration to the organizationâ€™s pattern of operations that can potentially have significant positive or negative impacts on workers performing the organizationâ€™s activities. Examples: closures, expansions, mergers, new openings, outsourcing of operations, restructuring, sale of all or part of the organization, takeovers",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -55,10 +55,20 @@ const uiSchema = {
     },
   },
 };
+const validateRows = (data) => {
 
+  const errors = {};
+  data.forEach((row) => {
+    if (!row.Q1) {
+      errors.Q1 = "This field is required";
+    }
+  });
+  return errors;
+};
 const Screen1 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -164,22 +174,29 @@ const Screen1 = ({ location, year, month }) => {
   }, [location, year]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    updateFormData();
+    e.preventDefault();
+    const errors = validateRows(formData);
+    setValidationErrors(errors);
+  
+    const hasErrors = Object.keys(errors).length > 0;
+    if (!hasErrors) {
+      updateFormData();
+    } else {
+      console.log("validation error");
+    }
   };
 
   return (
     <>
-      <div
-        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+     <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
             <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Minimum number of weeksâ€™ notice
               <MdInfoOutline
@@ -209,8 +226,8 @@ significant positive or negative impacts on workers performing the organizationâ
             </h2>
           </div>
 
-          <div className="w-[20%] ">
-            <div className="float-end">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 402-1a
@@ -227,6 +244,7 @@ significant positive or negative impacts on workers performing the organizationâ
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">

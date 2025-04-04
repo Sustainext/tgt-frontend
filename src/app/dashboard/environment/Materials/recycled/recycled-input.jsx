@@ -49,6 +49,13 @@ const schema = {
                 display: "block",
 
             },
+            Unit: {
+              type: "string",
+              title: "Unit",
+              enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram (Kg)', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
+              tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+              display: "none",
+          },
             Recycledmaterialsused: {
                 type: "string",
                 title: "Recycled materials used",
@@ -70,10 +77,10 @@ const schema = {
                 display: "block",
             },
 
-            Unit: {
+            Unit1: {
                 type: "string",
                 title: "Unit",
-                enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
+                enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram (Kg)', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
                 tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
                 display: "none",
             },
@@ -87,7 +94,7 @@ const schema = {
             Unit2: {
                 type: "string",
                 title: "Unit",
-                enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
+                enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram (Kg)', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
                 tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
                 display: "none",
             },
@@ -114,7 +121,7 @@ const uiSchema = {
     items: {
         classNames: 'fieldset',
         'ui:order': [
-            'Totalweight', 'Recycledmaterialsused', 'Typeofrecycledmaterialused', 'Amountofmaterialrecycled', 'Unit', 'Amountofrecycledinputmaterialused', 'Unit2', 'AssignTo', 'FileUpload', 'Remove'
+            'Totalweight','Unit', 'Recycledmaterialsused', 'Typeofrecycledmaterialused', 'Amountofmaterialrecycled', 'Unit1', 'Amountofrecycledinputmaterialused', 'Unit2', 'AssignTo', 'FileUpload', 'Remove'
         ],
         Totalweight: {
             'ui:widget': 'inputWidget',
@@ -124,6 +131,13 @@ const uiSchema = {
                 label: false
             },
         },
+        Unit: {
+          'ui:widget': 'selectWidget3',
+          'ui:horizontal': true,
+          'ui:options': {
+              label: false
+          },
+      },
         Recycledmaterialsused: {
             'ui:widget': 'selectWidget',
             'ui:horizontal': true,
@@ -146,8 +160,9 @@ const uiSchema = {
         },
 
 
-        Unit: {
+        Unit1: {
             'ui:widget': 'selectWidget3',
+            'ui:widgetDisable':true,
             'ui:horizontal': true,
             'ui:options': {
                 label: false
@@ -162,6 +177,7 @@ const uiSchema = {
         },
         Unit2: {
             'ui:widget': 'selectWidget3',
+            'ui:widgetDisable':true,
             'ui:horizontal': true,
             'ui:options': {
                 label: false
@@ -214,6 +230,9 @@ const validateRows = (data) => {
     }
     if (!row.Unit) {
       rowErrors.Unit = "Unit is required";
+    }
+    if (!row.Unit1) {
+      rowErrors.Unit1 = "Unit is required";
     }
     if (!row.Amountofrecycledinputmaterialused) {
       rowErrors.Amountofrecycledinputmaterialused = "Amount of recycled input material used is required";
@@ -323,13 +342,22 @@ const Recycledinput = ({location, year, month}) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
-  const handleChange = (e) => {
-    const newData = e.formData.map((item, index) => ({
-      ...item, // Ensure each item retains its structure
-    }));
-    setFormData(newData); // Update the formData with new values
-  };
+  }, [location, year, month]);
+   // Dependencies // React only triggers this effect if these dependencies change
+   const handleChange = (e) => {
+    const updatedFormData = e.formData.map((item, index) => {
+        const updatedItem = { ...item };
+        // Check if Unit is updated and update Unit2
+        if (updatedItem.Unit && updatedItem.Unit !== formData[index]?.Unit) {
+          updatedItem.Unit1 = updatedItem.Unit; // Mirror the value of Unit to Unit1
+            updatedItem.Unit2 = updatedItem.Unit; // Mirror the value of Unit to Unit2
+        }
+
+        return updatedItem;
+    });
+
+    setFormData(updatedFormData);
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -31,32 +31,24 @@ const CustomTableWidget2 = ({ id, options, value, required, onChange }) => {
       }, [value]);
     return (
         <div style={{ overflowX: "auto", maxHeight: "400px" }} className='mb-2'>
-            <table id={id} className="rounded-md border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
-                <thead className="gradient-background h-[54px]">
+            <table id={id} className="rounded-md border border-gray-300 w-full">
+                <thead className="gradient-background">
                     <tr>
-                        <th className="w-[20%]" style={{ textAlign: "left" }} > </th>
+                        <th className="border border-gray-300" style={{ textAlign: "left" }}> </th>
                         {options.titles.map((item, idx) => (
-                            <th key={idx} className="text-[12px]  px-2 border-l border-gray-300 w-[23%] relative" style={{ textAlign: "left" }}>
-                                <div className="flex items-center">
+                            <th key={idx} className="text-[12px] border border-gray-300 px-2 ">
+                                <div className="flex items-center w-[187px] xl:w-[330px] lg:w-[330px] md:w-[330px] 2xl:w-[330px] 4k:w-[330px] 2k:w-[330px]">
                                     <p>{item.title}</p>
                                     <MdInfoOutline
                                         data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
                                         data-tooltip-content={item.tooltip}
-                                        className="cursor-pointer ml-1 w-[10%]"
+                                        className="ml-2 cursor-pointer w-[20%]"
                                     />
                                     <ReactTooltip
                                         id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
                                         place="top"
                                         effect="solid"
-                                        style={{
-                                            width:"400px",
-                                            backgroundColor: "#000",
-                                            color: "white",
-                                            fontSize: "12px",
-                                            boxShadow: 3,
-                                            borderRadius: "8px",
-                                            zIndex:"1000",
-                                          }}
+                                        className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
                                     />
                                 </div>
                             </th>
@@ -66,15 +58,15 @@ const CustomTableWidget2 = ({ id, options, value, required, onChange }) => {
                 <tbody>
                     {options.rowLabels.map((rowLabel, rowIndex) => (
                         <tr key={rowIndex}>
-                            <td className="border-t border-gray-300 p-3 text-[13px]">{rowLabel}</td>
+                            <td className="border border-gray-300 p-3 text-[13px]">{rowLabel}</td>
                             {options.titles.map((column, columnIndex) => (
-                                <td key={columnIndex} className="border-t border-l border-gray-300 p-3">
+                                <td key={columnIndex} className="border border-gray-300 p-3">
                                     <input
-                                        type="number"
+                                        type="text"
                                         required={required}
                                         value={localValue[rowIndex] && localValue[rowIndex][column.key] || ""}
                                         onChange={(e) => handleFieldChange(rowIndex, column.key, e.target.value)}
-                                        className="text-[12px] pl-2 py-2 w-full"
+                                        className="text-sm pl-2 py-2 w-full"
                                         placeholder="Enter data"
                                     />
                                 </td>

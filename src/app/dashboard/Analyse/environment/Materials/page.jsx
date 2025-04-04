@@ -7,7 +7,7 @@ import DynamicTable from "./customTable";
 import DateRangePicker from "@/app/utils/DatePickerComponent";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-import { columns1, columns2, columns3, columns4 } from "./data";
+import { columns1, columns2, columns3 } from "./data";
 
 const AnalyseMaterials = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
@@ -19,7 +19,6 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
   const [materialdata1, setMaterialdata1] = useState([]);
   const [materialdata2, setMaterialdata2] = useState([]);
   const [materialdata3, setMaterialdata3] = useState([]);
-  const [materialdata4, setMaterialdata4] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
@@ -73,7 +72,6 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
     setMaterialdata1([]);
     setMaterialdata2([]);
     setMaterialdata3([]);
-    setMaterialdata4([]);
     try {
       const response = await axiosInstance.get(
         `/sustainapp/get_material_analysis`,
@@ -139,7 +137,6 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       setMaterialdata1(Nonrenewablematerials);
       setMaterialdata2(renewablematerials);
       setMaterialdata3(recycledmaterials);
-      setMaterialdata4(reclaimedmaterials);
 
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
@@ -223,6 +220,31 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
 
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+    if(type === "Corporate"){
+      setMaterialdata1([]);
+      setMaterialdata2([]);
+      setMaterialdata3([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+    if(type === "Location"){
+      setMaterialdata1([]);
+      setMaterialdata2([]);
+      setMaterialdata3([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
   };
 
   const handleOrganizationChange = (e) => {
@@ -233,7 +255,6 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
     setMaterialdata1([]);
     setMaterialdata2([]);
     setMaterialdata3([]);
-    setMaterialdata4([]);
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
@@ -311,8 +332,8 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
   return (
     <>
       <div>
-        <div className="mb-2 flex-col items-center pt-4  gap-6">
-          <div className="mt-4 pb-3 mx-5 text-left">
+           <div className="mb-2 flex-col items-center xl:pt-4  gap-6">
+           <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2  text-left">
             <div className="mb-2 flex-col items-center pt-2  gap-6">
             <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
@@ -352,9 +373,8 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
-                  reportType !== "" ? "visible" : "hidden"
-                }`}
+              className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
+              }`}
               >
                 <div className="mr-2">
                   <label
@@ -474,9 +494,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
               </p>
               <div
                 id="materials1"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Non-Renewable materials used</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1 font-bold">Non-Renewable materials used</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 301-1a
@@ -488,9 +508,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="materials2"
-                className="text-neutral-700 text-[15px] font-bold  font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Renewable materials used</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1">Renewable materials used</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 301-1a
@@ -505,9 +525,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
               </p>
               <div
                 id="materials3"
-                className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Percentage of recycled materials used (Production)</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1 font-bold">Percentage of recycled materials used (Production)</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 301-2a
@@ -516,27 +536,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
               </div>
               <DynamicTable columns={columns3} data={materialdata3} />
             </div>
-            <div className="mb-6">
-              <div
-                id="materials4"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Reclaimed products and their packaging materials</p>
-                <div className="flex gap-2">
-                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                      GRI 301-3a
-                    </div>
-                  </div>
-                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                      GRI 301-3b
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <DynamicTable columns={columns4} data={materialdata4} />
-            </div>
+          
           </div>
           <div
             style={{
@@ -547,7 +547,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+              className=" mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

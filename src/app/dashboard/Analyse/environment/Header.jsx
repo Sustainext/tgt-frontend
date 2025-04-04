@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Energydata } from "./../../../shared/data/Energydata";
-import { MdOutlineClear } from "react-icons/md";
+import { MdOutlineClear, MdKeyboardArrowDown } from "react-icons/md";
 import { MdChevronRight } from "react-icons/md";
-const Header = ({ activeTab, setIsBoxOpen }) => {
+const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState([]);
@@ -24,7 +24,9 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     );
     setData(newData);
   }, [category]);
-
+  const toggleSidebar = () => {
+    setMobileopen(true);
+  };
   const gri = [
     {
       category: "Emissions",
@@ -47,7 +49,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
-      category: "Waste",
+      category: "Waste Management",
       tag: "GRI 306",
       data: [
         { tagid: "1", infoid: "6" },
@@ -55,16 +57,30 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
         { tagid: "3", infoid: "8" },
         { tagid: "4", infoid: "9" },
         { tagid: "5", infoid: "10" },
+        { tagid: "3, 2016", infoid: "54" },
       ],
     },
+    // {
+    //   category: "Effluents",
+    //   tag: "GRI 306",
+    //   data: [
+    //     { tagid: "3", infoid: "54" },
+
+    //   ],
+    // },
     {
-      category: "Materials",
+      category: "Material Use and Efficiency",
       tag: "GRI 301",
       data: [
         { tagid: "1", infoid: "11" },
         { tagid: "2", infoid: "12" },
-        { tagid: "3", infoid: "13" },
+        // { tagid: "3", infoid: "13" },
       ],
+    },
+    {
+      category: "Packaging Materials",
+      tag: "GRI 301",
+      data: [{ tagid: "3", infoid: "13" }],
     },
     {
       category: "Water and effluents",
@@ -83,6 +99,14 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       data: [
         { tagid: "1", infoid: "49" },
         { tagid: "2", infoid: "50" },
+      ],
+    },
+    {
+      category: "Air Quality & other emissions",
+      tag: "GRI 305",
+      data: [
+        { tagid: "7", infoid: "58" },
+        { tagid: "6", infoid: "57" },
       ],
     },
   ];
@@ -107,18 +131,35 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
-      category: "Waste",
+      category: "Waste Management",
       data: [
         { id: "sd5", label: "SDG 3", bgColor: "bg-[#4C9F38]" },
         { id: "sd6", label: "SDG 6", bgColor: "bg-cyan-500" },
         { id: "sd2", label: "SDG 8", bgColor: "bg-red-900" },
         { id: "sd7", label: "SDG 11", bgColor: "bg-amber-400" },
-        { id: "sd3", label: "SDG 12", bgColor: "bg-yellow-600" },
+        { id: "sd37", label: "SDG 12", bgColor: "bg-yellow-600" },
         { id: "sd8", label: "SDG 15", bgColor: "bg-[#56C02B]" },
       ],
     },
+    // {
+    //   category: "Effluents",
+    //   data: [
+
+    //     { id: "sd5", label: "SDG 3", bgColor: "bg-[#4c9f38]" },
+    //     { id: "sd34", label: "SDG 6", bgColor: "bg-cyan-500" },
+    //     { id: "sd35", label: "SDG 12", bgColor: "bg-yellow-600" },
+    //     { id: "sd8", label: "SDG 15", bgColor: "bg-[#4c9f38]" },
+    //   ],
+    // },
     {
-      category: "Materials",
+      category: "Material Use and Efficiency",
+      data: [
+        { id: "sd2", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd9", label: "SDG 12", bgColor: "bg-yellow-600" },
+      ],
+    },
+    {
+      category: "Packaging Materials",
       data: [
         { id: "sd2", label: "SDG 8", bgColor: "bg-red-900" },
         { id: "sd9", label: "SDG 12", bgColor: "bg-yellow-600" },
@@ -128,61 +169,141 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       category: "Water and effluents",
       data: [{ id: "sd6", label: "SDG 6", bgColor: "bg-cyan-500" }],
     },
+    {
+      category: "Air Quality & other emissions",
+      data: [
+        { id: "sd5", label: "SDG 3", bgColor: "bg-[#4c9f38]" },
+        { id: "sd9", label: "SDG 12", bgColor: "bg-yellow-600" },
+        { id: "sd24", label: "SDG 14", bgColor: "bg-[#007dbc]" },
+        { id: "sd38", label: "SDG 15", bgColor: "bg-[#4c9f38]" },
+      ],
+    },
   ];
   return (
     <>
-      <div className="flex justify-between items-center border-b border-gray-200 pb-4 z-[100] relative">
-        <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
-          <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
-            Environment
-          </div>
-          <div className="h-[30px]">
-            <div className=" flex justify-start items-end gap-3">
-              <div className="h-[28px] gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem] pt-1">
-                {activeTab}
-              </div>
-              <div className="w-[95px] pl-1 pr-0.5 bg-slate-200 rounded justify-center items-center flex">
-                <div className="text-zinc-600 text-xs font-normal font-['Manrope'] leading-[21px]">
-                  Material Topic
+      <div className="flex justify-between items-center  xl:border-b border-gray-200 pb-4 xl:z-[100] relative">
+        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block ">
+          <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
+            <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
+              Environment
+            </div>
+            <div className="h-[30px]">
+              <div className=" flex justify-start items-end gap-3">
+                <div className="h-[28px] gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem] pt-1">
+                  {activeTab}
+                </div>
+                <div className="w-[95px] pl-1 pr-0.5 bg-slate-200 rounded justify-center items-center flex">
+                  <div className="text-zinc-600 text-xs font-normal font-['Manrope'] leading-[21px]">
+                    Material Topic
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-col border-l gap-2 absolute right-[1rem] top-8">
-          <div className="flex">
-            {gri
-              .filter((g) => g.category === activeTab)
-              .map((g) =>
-                g.data.map((item) => (
-                  <button
-                    key={item.tagid}
-                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer(item.infoid)}
-                  >
-                    {g.tag} - {item.tagid}
-                  </button>
-                ))
-              )}
+          <div className="flex flex-col border-l gap-2 absolute right-[1rem] top-8">
+            <div className="flex">
+              {gri
+                .filter((g) => g.category === activeTab)
+                .map((g) =>
+                  g.data.map((item) => (
+                    <button
+                      key={item.tagid}
+                      className={`text-[#007EEF] bg-slate-200 rounded-full text-[11px] ${
+                        item.tagid == "3, 2016" ? "w-[100px]" : "w-[72px]"
+                      } h-[22px] ml-2 text-center pt-0.5`}
+                      onClick={() => toggleDrawer(item.infoid)}
+                    >
+                      {g.tag} - {item.tagid}
+                    </button>
+                  ))
+                )}
+            </div>
+            <div className="flex">
+              {sdg
+                .filter((s) => s.category === activeTab)
+                .map((s) =>
+                  s.data.map((item) => (
+                    <button
+                      key={item.id}
+                      className={`text-[#fff] ${item.bgColor} rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5`}
+                      onClick={() => toggleDrawer(item.id)}
+                    >
+                      {item.label}
+                    </button>
+                  ))
+                )}
+            </div>
           </div>
-          <div className="flex">
-            {sdg
-              .filter((s) => s.category === activeTab)
-              .map((s) =>
-                s.data.map((item) => (
-                  <button
-                    key={item.id}
-                    className={`text-[#fff] ${item.bgColor} rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5`}
-                    onClick={() => toggleDrawer(item.id)}
-                  >
-                    {item.label}
-                  </button>
-                ))
-              )}
+        </div>
+        {/* mobile version */}
+        <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+          <div
+            className="w-full  py-4 h-[100px]   rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+            onClick={toggleSidebar}
+          >
+            <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
+              <div className="">
+                <p className="text-[11px]">Environment</p>
+                <div className="h-[28px] ">
+                  <div className="h-[28px]">
+                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
+                      {activeTab}
+                    </p>
+                  </div>
+                  <div className="w-[100px] pl-1 mt-2 pr-0.5 bg-slate-200 rounded justify-center items-center flex">
+                    <div className="text-zinc-600 text-xs font-normal font-['Manrope'] leading-[21px]">
+                      Material Topic
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center me-5">
+                <MdKeyboardArrowDown className={`text-2xl float-end `} />
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full float-end pt-2 me-1 my-4">
+            <div className="">
+              <div className="flex mb-2">
+                {gri
+                  .filter((g) => g.category === activeTab)
+                  .map((g) =>
+                    g.data.map((item) => (
+                      <button
+                        key={item.tagid}
+                        className={`text-[#007EEF] bg-slate-200 rounded-full text-[11px] ${
+                          item.tagid == "3, 2016" ? "w-[100px]" : "w-[72px]"
+                        } h-[22px] ml-2 text-center pt-0.5`}
+                        onClick={() => toggleDrawer(item.infoid)}
+                      >
+                        {g.tag} - {item.tagid}
+                      </button>
+                    ))
+                  )}
+              </div>
+
+              <div className="flex">
+                {sdg
+                  .filter((s) => s.category === activeTab)
+                  .map((s) =>
+                    s.data.map((item) => (
+                      <button
+                        key={item.id}
+                        className={`text-[#fff] ${item.bgColor} rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5`}
+                        onClick={() => toggleDrawer(item.id)}
+                      >
+                        {item.label}
+                      </button>
+                    ))
+                  )}
+              </div>
+            </div>
           </div>
         </div>
         <div
-           className={`${
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -206,9 +327,15 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
-                <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
-                  {program.data}
+                <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
+                  <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                    {program.data}
+                  </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                  <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                    {program.data}
+                  </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

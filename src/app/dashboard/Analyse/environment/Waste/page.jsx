@@ -7,6 +7,7 @@ import DynamicTable from "./customTable";
 import DateRangePicker from "@/app/utils/DatePickerComponent";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
+import DynamicTable2 from './customTable2'
 import {
   columns1,
   columns2,
@@ -17,6 +18,9 @@ import {
   columns7,
   columns8,
   columns9,
+  columns10,
+  columns11,
+  columns12
 } from "./data";
 
 const AnalyseWaste = ({ isBoxOpen }) => {
@@ -35,6 +39,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
   const [wastedata7, setWastedata7] = useState([]);
   const [wastedata8, setWastedata8] = useState([]);
   const [wastedata9, setWastedata9] = useState([]);
+  const [Effdata1, setEffdata1] = useState([]);
+  const [Effdata2, setEffdata2] = useState([]);
+  const [Effdata3, setEffdata3] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
@@ -94,6 +101,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
     setWastedata7([]);
     setWastedata8([]);
     setWastedata9([]);
+    setEffdata1([]);
+    setEffdata2([]);
+    setEffdata3([]);
     try {
       const response = await axiosInstance.get(
         `/sustainapp/get_waste_analysis`,
@@ -115,6 +125,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
         non_hazardeous_waste_diverted_from_disposal,
         hazardeous_waste_directed_to_disposal,
         non_hazardeous_waste_directed_to_disposal,
+        total_number_and_volume_by_material,
+        total_number_and_volume_by_location,
+        total_number_and_volume_significant_spills,
       } = data;
       const removeAndStoreLastObject = (array) => {
         if (array.length > 0) {
@@ -313,6 +326,38 @@ const AnalyseWaste = ({ isBoxOpen }) => {
         value: data[key],
       }));
 
+      const formattedMaterialData = formatMaterialData(total_number_and_volume_by_material || []);
+      const formattedLocationData = formatLocationData(total_number_and_volume_by_location || []);
+      const formattedSignificantSpillsData = formatSignificantSpillsData(total_number_and_volume_significant_spills || []);
+      
+      setEffdata1(formattedMaterialData);
+      setEffdata2(formattedLocationData);
+      setEffdata3(formattedSignificantSpillsData);
+  
+      function formatMaterialData(materialData) {
+        return materialData.map((item) => ({
+          "Material of the spill": item.material || "N/A",
+          "Volume of the spill": item.volume_of_spills || "N/A",
+          Unit: item.unit || "N/A",
+        }));
+      }
+      
+      function formatLocationData(locationData) {
+        return locationData.map((item) => ({
+          "Location of the spill": item.location || "N/A",
+          "Volume of the spill": item.volume_of_spills || "N/A",
+          Unit: item.unit || "N/A",
+        }));
+      }
+      
+      function formatSignificantSpillsData(significantSpills) {
+        return significantSpills.map((item) => ({
+          "Total number of Significant spill": item.number_of_significant_spills || "N/A",
+          "Total volume of Significant spill": item.volume_of_spills || "N/A",
+          Unit: item.unit || "N/A",
+        }));
+      }
+
       setAnalyseData(resultArray);
       LoaderClose();
     } catch (error) {
@@ -390,6 +435,49 @@ const AnalyseWaste = ({ isBoxOpen }) => {
 
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+    if(type === "Corporate"){
+      setWastedata1([]);
+      setWastedata2([]);
+      setWastedata3([]);
+      setWastedata4([]);
+      setWastedata5([]);
+      setWastedata6([]);
+      setWastedata7([]);
+      setWastedata8([]);
+      setWastedata9([]);
+      setEffdata1([]);
+      setEffdata2([]);
+      setEffdata3([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+    if(type === "Location"){
+      setWastedata1([]);
+    setWastedata2([]);
+    setWastedata3([]);
+    setWastedata4([]);
+    setWastedata5([]);
+    setWastedata6([]);
+    setWastedata7([]);
+    setWastedata8([]);
+    setWastedata9([]);
+    setEffdata1([]);
+    setEffdata2([]);
+    setEffdata3([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
   };
   const handleOrganizationChange = (e) => {
     const newOrg = e.target.value;
@@ -489,8 +577,8 @@ const AnalyseWaste = ({ isBoxOpen }) => {
   return (
     <>
       <div>
-        <div className="mb-2 flex-col items-center pt-4  gap-6">
-        <div className="mt-4 pb-3 mx-5 text-left">
+      <div className="mb-2 flex-col items-center xl:pt-4  gap-6">
+      <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2  text-left">
           <div className="mb-2 flex-col items-center pt-2  gap-6">
           <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
@@ -530,8 +618,8 @@ const AnalyseWaste = ({ isBoxOpen }) => {
                 </div>
               </div>
             <div
-              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
-                }`}
+                 className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
+                 }`}
             >
               <div className="mr-2">
                 <label
@@ -648,9 +736,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="waste1"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Waste generated by material</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+            >
+              <p className="mb-2 ml-1"> Waste generated by material</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 306-3a
@@ -662,9 +750,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="waste2"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Waste Generated by Location</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+            >
+              <p className="mb-2 ml-1"> Waste Generated by Location</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 306-3
@@ -676,9 +764,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="waste3"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p> Hazardous and Non-Hazardous waste composition</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1"> Hazardous and Non-Hazardous waste composition</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 306-3a
@@ -690,9 +778,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="waste4"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Waste directed to disposal by material type</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1"> Waste directed to disposal by material type</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 306-5
@@ -704,9 +792,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="waste5"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Waste diverted from disposal by material type</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1"> Waste diverted from disposal by material type</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 306-4
@@ -718,9 +806,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="waste6"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Hazardous waste diverted from disposal</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1"> Hazardous waste diverted from disposal</p>
                 <div className="flex gap-2">
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -739,9 +827,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="waste7"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Non-hazardous waste diverted from disposal</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+            >
+              <p className="mb-2 ml-1"> Non-hazardous waste diverted from disposal</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 306-4c
@@ -753,9 +841,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="waste8"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Hazardous waste directed to disposal</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+            >
+              <p className="mb-2 ml-1"> Hazardous waste directed to disposal</p>
                 <div className="flex gap-2">
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -774,9 +862,9 @@ const AnalyseWaste = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="waste9"
-                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-              >
-                <p>Non-hazardous waste directed to disposal</p>
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1">Non-hazardous waste directed to disposal</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 306-5c
@@ -785,18 +873,76 @@ const AnalyseWaste = ({ isBoxOpen }) => {
               </div>
               <DynamicTable columns={columns9} data={wastedata9} />
             </div>
+            <div className="mb-6">
+              <div
+                id="eff1"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1">
+                    Total number & volume of spills by material
+                  </p>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 306-3b
+                    </div>
+                  </div>
+                  </div>
+                  <DynamicTable2 columns={columns10} data={Effdata1} />
+             
+            </div>
+
+            <div className="mb-6">
+              <div
+                id="eff2"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1">
+                    Total number & volume of by location
+                  </p>
+              
+                 
+
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 306-3b
+                    </div>
+                  </div>
+                </div>
+                <DynamicTable2 columns={columns11} data={Effdata2} />
+            </div>
+
+            <div className="mb-6">
+              <div
+                id="eff3"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+                >
+                  <p className="mb-2 ml-1">
+                    Total number & volume of significant spills
+                  </p>
+
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 306-3a
+                    </div>
+                  </div>
+                </div>
+                <DynamicTable2
+                    columns={columns12}
+                    data={Effdata3}
+                  />
+            </div>
           </div>
           <div
-            style={{
-              position: `${isBoxOpen ? "unset" : "sticky"}`,
-              top: "10rem",
-              // zIndex: "0",
-              height: "fit-content",
-              backgroundColor: "white",
-              paddingBottom: "1rem",
-            }}
-            className=" mb-8 me-2"
-          >
+          style={{
+            position: `${isBoxOpen ? "unset" : "sticky"}`,
+            top: "10rem",
+            // zIndex: "0",
+            height: "fit-content",
+            backgroundColor: "white",
+            paddingBottom: "1rem",
+          }}
+           className=" mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
+        >
             <TableSidebar />
           </div>
         </div>

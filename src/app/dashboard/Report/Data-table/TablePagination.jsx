@@ -10,6 +10,7 @@ import {
   MdMoreVert,
   MdOutlineEmail,
 } from "react-icons/md";
+import { LuListFilter } from "react-icons/lu";
 import {
   BsFileEarmarkPdf,
   BsFileEarmarkWord,
@@ -21,8 +22,10 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
+import FilterComponent from './FilterComponent'
 
 import axiosInstance, { del } from "@/app/utils/axiosMiddleware";
+
 
 const TableWithPagination = ({
   data,
@@ -30,6 +33,7 @@ const TableWithPagination = ({
   fetchReoprts,
   isMenuOpen,
   setIsMenuOpen,
+  setData
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
@@ -45,8 +49,22 @@ const TableWithPagination = ({
   const [reporttepname, setReportTepname] = useState();
   const [isCIDownloading, setIsCIDownloading] = useState(false);
   const [isCIXLDownloading, setIsCIXLDownloading] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const router = useRouter();
+  const [search, setSearch] = useState('');
+  const [selectedCreators, setSelectedCreators] = useState([]);
+  const [filteredData,setFilterData]=useState([])
 
+  
+ useEffect(()=>{
+if(selectedCreators.length>0){
+  const filteredData = data.filter(item => selectedCreators.includes(item.created_by));
+  setFilterData(filteredData)
+}
+else{
+  setFilterData(data)
+}
+ },[data,selectedCreators])
   const ActionMenu = ({ item }) => {
     const isGRIReport =
       item.report_type === "GRI Report: In accordance With" ||
@@ -199,6 +217,8 @@ const TableWithPagination = ({
       </div>
     );
   };
+
+  
 
   const toggleMenu = (itemId) => {
     setIsMenuOpen(itemId === isMenuOpen ? null : itemId);
@@ -357,7 +377,7 @@ const TableWithPagination = ({
             </div>,
             {
               position: "top-right",
-              autoClose: false,
+              autoClose: 4000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
@@ -394,25 +414,66 @@ const TableWithPagination = ({
   };
 
   // Sorting data
-  // Sorting data
+  // // Sorting data
+  // const sortedData = useMemo(() => {
+  //   if (sort.column) {
+  //     return [...filteredData].sort((a, b) => {
+  //       const columnA = a[sort.column];
+  //       const columnB = b[sort.column];
+  //       if (columnA < columnB) {
+  //         return sort.direction === "asc" ? -1 : 1;
+  //       }
+  //       if (columnA > columnB) {
+  //         return sort.direction === "asc" ? 1 : -1;
+  //       }
+  //       return 0;
+  //     });
+  //   } else {
+  //     // If no column is selected for sorting, return the original data
+  //     return filteredData;
+  //   }
+  // }, [filteredData, sort]);
   const sortedData = useMemo(() => {
     if (sort.column) {
-      return [...data].sort((a, b) => {
-        const columnA = a[sort.column];
-        const columnB = b[sort.column];
-        if (columnA < columnB) {
-          return sort.direction === "asc" ? -1 : 1;
-        }
-        if (columnA > columnB) {
-          return sort.direction === "asc" ? 1 : -1;
-        }
-        return 0;
-      });
+        return [...filteredData].sort((a, b) => {
+            const columnA = a[sort.column];
+            const columnB = b[sort.column];
+
+            // Check if the value is a valid date
+            const isDateA = !isNaN(Date.parse(columnA));
+            const isDateB = !isNaN(Date.parse(columnB));
+
+            if (isDateA && isDateB) {
+                // Sort by date (oldest to newest or newest to oldest)
+                const dateA = new Date(columnA);
+                const dateB = new Date(columnB);
+                return sort.direction === "asc"
+                    ? dateA - dateB // Oldest to Newest
+                    : dateB - dateA; // Newest to Oldest
+            }
+
+            // Case-insensitive string comparison
+            if (typeof columnA === "string" && typeof columnB === "string") {
+                return columnA.localeCompare(columnB, undefined, { sensitivity: "base" }) * 
+                       (sort.direction === "asc" ? 1 : -1);
+            }
+
+            // Default fallback (if values are neither dates nor strings)
+            if (columnA < columnB) {
+                return sort.direction === "asc" ? -1 : 1;
+            }
+            if (columnA > columnB) {
+                return sort.direction === "asc" ? 1 : -1;
+            }
+            return 0;
+        });
     } else {
-      // If no column is selected for sorting, return the original data
-      return data;
+        // If no column is selected for sorting, return the original filtered data
+        return filteredData;
     }
-  }, [data, sort]);
+}, [filteredData, sort]);
+
+
 
   const currentItems = sortedData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -607,8 +668,15 @@ const TableWithPagination = ({
 
   return (
     <>
-      <div>
-        <table className="min-w-max w-full table-auto ">
+      <div  style={{
+          display: "block",
+          overflowX: "auto",
+          // overflowY:"hidden",
+          maxWidth: "100%",
+          minWidth: "100%",
+          width: "30vw",
+        }} className="rounded-md table-scrollbar">
+        <table className="min-w-max w-full table-auto">
           <thead className="py-3 px-6 text-center text-[#727272] text-[13px] font-extrabold leading-none gradient-background">
             <tr>
               <th
@@ -616,7 +684,7 @@ const TableWithPagination = ({
                 onClick={() => handleSort("name")}
               >
                 <div className="flex justify-center">
-                  Name of report
+                  Report Name
                   {sort.column === "name" ? (
                     sort.direction === "asc" ? (
                       <MdKeyboardArrowUp />
@@ -647,6 +715,40 @@ const TableWithPagination = ({
               </th>
               <th
                 className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]"
+                onClick={() => handleSort("organization_name")}
+              >
+                <div className="flex justify-center">
+                  Organization{" "}
+                  {sort.column === "organization_name" ? (
+                    sort.direction === "asc" ? (
+                      <MdKeyboardArrowUp />
+                    ) : (
+                      <MdKeyboardArrowDown />
+                    )
+                  ) : (
+                    <MdKeyboardArrowDown />
+                  )}
+                </div>
+              </th>
+              <th
+                className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]"
+                onClick={() => handleSort("corporate_name")}
+              >
+                <div className="flex justify-center">
+                 Corporate{" "}
+                  {sort.column === "corporate_name" ? (
+                    sort.direction === "asc" ? (
+                      <MdKeyboardArrowUp />
+                    ) : (
+                      <MdKeyboardArrowDown />
+                    )
+                  ) : (
+                    <MdKeyboardArrowDown />
+                  )}
+                </div>
+              </th>
+              <th
+                className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]"
                 onClick={() => handleSort("start_date")}
               >
                 <div className="flex justify-center">
@@ -663,10 +765,35 @@ const TableWithPagination = ({
                 </div>
               </th>
               <th className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]">
-                <div className="flex justify-center">Created by</div>
+                <div className="flex justify-center gap-2">Created by
+                  <LuListFilter
+                                      className="text-[18px] -mt-1 cursor-pointer"
+                                      onClick={() => setIsFilterOpen(!isFilterOpen)}
+                                    />
+                </div>
+                {isFilterOpen && (
+                  <FilterComponent data={filteredData} setData={setFilterData} search={search}
+                  setSearch={setSearch}
+                  selectedCreators={selectedCreators}
+                  setSelectedCreators={setSelectedCreators}
+                  originalData={data}
+                  setIsFilterOpen={setIsFilterOpen}
+                 
+                  />
+                 
+                
+                )}
               </th>
-              <th className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]">
-                <div className="flex justify-center">Last Edited on </div>
+              <th className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]" onClick={() => handleSort("updated_at")}>
+                <div className="flex justify-center">Last Edited on{" "} {sort.column === "updated_at" ? (
+                    sort.direction === "asc" ? (
+                      <MdKeyboardArrowUp />
+                    ) : (
+                      <MdKeyboardArrowDown />
+                    )
+                  ) : (
+                    <MdKeyboardArrowDown />
+                  )} </div>
               </th>
               <th className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]">
                 <div className="flex justify-center">Last Edited by </div>
@@ -678,7 +805,7 @@ const TableWithPagination = ({
           </thead>
 
           <tbody className="text-gray-600 text-sm font-light">
-            {data.length > 0 &&
+            {filteredData.length > 0 &&
               currentItems.map((item, index) => (
                 <tr
                   key={index}
@@ -691,6 +818,12 @@ const TableWithPagination = ({
                     {item.report_type}
                   </td>
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
+                    {item.organization_name}
+                  </td>
+                  <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
+                    {item.corporate_name?item.corporate_name:"Not Selected"}
+                  </td>
+                  <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.start_date} to {item.end_date}
                   </td>
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
@@ -698,10 +831,10 @@ const TableWithPagination = ({
                   </td>
 
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
-                    {item.last_report_date}
+                    {item.updated_at}
                   </td>
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
-                    {item.created_by}
+                    {item.last_updated_by }
                   </td>
                   <td className="py-3 px-6 relative text-center flex justify-center">
                     <MdMoreVert

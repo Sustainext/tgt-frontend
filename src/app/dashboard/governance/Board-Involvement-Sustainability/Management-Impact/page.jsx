@@ -10,7 +10,8 @@ import { Socialdata } from "../../../social/data/socialgriinfo"
 import Screen1 from "./screen1"
 import Screen2 from "./screen2"
 import Screen3 from "./screen3"
-const ManagementImpact = () => {
+import GovernancesTopBar from "../../governancesTopBar";
+const ManagementImpact = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -19,7 +20,7 @@ const ManagementImpact = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-
+  const [togglestatus,setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -39,12 +40,43 @@ const ManagementImpact = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 2 - 9",
+      toggle: "83",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
+  const brsr = [
+    {
+      tagName: "BRSR C-P4-L1",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 4-Leadership Indicators-1",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 16",
+      toggle: "29",
+      textColor: "#fff",
+      bgColor: "bg-[#00558A]",
+    },
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <GovernancesTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          griData={griData}
+          brsr={brsr}
+          title={"Management of Impact"}
+          setMobileopen={setMobileopen}
+        />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Governance</p>
@@ -59,27 +91,58 @@ const ManagementImpact = () => {
           </div>
           <div className="w-full float-end ">
             <div className="flex float-end border-l">
+              <div>
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("76")}
               >
                 GRI 2 - 12
               </button>
+              </div>
+          
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr1`}
+                  data-tooltip-content="BRSR-Section C-Principle 4-Leadership Indicators-1"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR C-P4-L1
+                </button>
+                <ReactTooltip
+                  id={`tooltip-$brsr1`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                    width: "290px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
+       
+              <div>
               <button
                 className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("29")}
               >
                 SDG 16
               </button>
+              </div>
+            
             </div>
           </div>
-        </div>
+        </div> */}
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Role of the highest governance body in overseeing the management of impacts
             <MdInfoOutline data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the role of the highest governance body in overseeing the management of impacts." className="mt-1.5 ml-2 text-[15px]" />
+              data-tooltip-content="This section documents the data corresponding to the role of the highest governance body in overseeing the management of impacts." className="mt-1.5 ml-2 text-[15px] w-[10%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]" />
             <ReactTooltip id={`tooltip-$e10`} place="top" effect="solid" style={{
               width: "290px", backgroundColor: "#000",
               color: "white",
@@ -117,9 +180,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -145,6 +215,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
@@ -152,6 +223,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
       <Screen2
         selectedOrg={selectedOrg}
@@ -159,6 +231,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
            <Screen3
         selectedOrg={selectedOrg}
@@ -166,6 +239,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
     </>
   );

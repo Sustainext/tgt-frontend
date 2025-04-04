@@ -7,7 +7,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from "react-loader-spinner";
-const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
+const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen,togglestatus }) => {
   const [customerhealth, setCustomerhealth] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -28,7 +28,7 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
     setCustomerhealth([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_customer_health_safety_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`,
+        `/sustainapp/get_customer_health_safety_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`,
       
       );
 
@@ -38,10 +38,8 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
 
       const formatcustomerhealth = (data) => {
         return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage).toFixed(2);
-          const formattedPercentage = percentage.endsWith(".00")
-            ? percentage.slice(0, -3)
-            : percentage;
+          const percentage = parseFloat(data.percentage);
+          const formattedPercentage = percentage
           return {
             "Organisation/Corporation": data.org_or_corp,
             "Percentage of significant product and service categories for which health and safety impacts are assessed for improvement":
@@ -59,15 +57,23 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
+    if (selectedOrg &&  dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
         fetchData();
-        toastShown.current = false;
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setCustomerhealth([]);
+       
+      } else {
+        fetchData();
+      }
+
+      toastShown.current = false;
     } else {
-        if (!toastShown.current) {
-            toastShown.current = true;
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-}, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus]);
   return (
     <div>
       <div>
@@ -85,8 +91,8 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
                     service categories
                   </p>
                 </div>
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500 text-[13px]">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                  <p className="text-gray-500 text-[13px] mb-2">
                     Percentage of significant product and service categories
                   </p>
 
@@ -111,7 +117,7 @@ const Section = ({ selectedOrg,selectedCorp,year,isBoxOpen }) => {
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+            className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

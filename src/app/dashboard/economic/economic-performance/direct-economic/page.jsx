@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,16 +9,33 @@ import { Socialdata } from "../../../social/data/socialgriinfo";
 import EconomicHeader2 from "../../EconomicHeader2";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
-const Directeconomic = () => {
+import { useSelector } from "react-redux";
+import EconomicTopBar from "../../economicTopBar";
+
+const Directeconomic = ({ apiData,setMobileopen }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
   const [activeMonth, setActiveMonth] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [year, setYear] = useState();
+
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
-
+  const [togglestatus,setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -39,50 +56,54 @@ const Directeconomic = () => {
     setData(newData);
   }, [category]);
 
+  const griData = [
+    {
+      tagName: "GRI 201-1",
+      toggle: "115",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 8",
+      toggle: "116",
+      textColor: "#fff",
+      bgColor: "bg-[#A21942]",
+    },
+
+    {
+      tagName: "SDG 9",
+      toggle: "117",
+      textColor: "#fff",
+      bgColor: "bg-[#F36E24]",
+    },
+  ];
+  const brsr = [
+    {
+      tagName: "BRSR A-VI-24ii",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section A-VI-24ii",
+    },
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
-                <p className="text-[11px]">Economic</p>
-              <div className="flex">
-                <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Economic Performance
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end ">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("115")}
-              >
-                GRI 201-1
-              </button>
-              <button
-                className="text-[#fff] bg-[#A21942] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("116")}
-              >
-                SDG 8
-              </button>
-              <button
-                className="text-[#fff] bg-[#F36E24] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("117")}
-              >
-                SDG 9
-              </button>
-            </div>
-          </div>
-        </div>
+        <EconomicTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Economic Performance"}
+          topic={"GovEconomicPerformance"}
+          brsr={brsr}
+          griData={griData}
+          setMobileopen={setMobileopen}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Direct economic value generated & distributed
+            Direct economic value generated & distributed
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es10`}
               data-tooltip-content="This section documents the data corresponding to the direct economic value generated and distributed."
@@ -104,8 +125,8 @@ const Directeconomic = () => {
             ></ReactTooltip>
           </h6>
         </div>
-          <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -129,9 +150,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -149,24 +177,31 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         </div>
       </div>
       <EconomicHeader2
-           selectedOrg={selectedOrg}
-           setSelectedOrg={setSelectedOrg}
-           selectedCorp={selectedCorp}
-           setSelectedCorp={setSelectedCorp}
-           year={year}
-           setYear={setYear}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
+        year={year}
+        setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
 
-      <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-5">This data should be collected at market level, regional level and country level. 	</h2>
+      <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-5">
+        This data should be collected at market level, regional level and
+        country level.{" "}
+      </h2>
       <Screen1
-      selectedOrg={selectedOrg}
-      selectedCorp={selectedCorp}
-      year={year} />
-          <Screen2
-      selectedOrg={selectedOrg}
-      selectedCorp={selectedCorp}
-      year={year} />
-
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        togglestatus={togglestatus}
+      />
+      <Screen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        togglestatus={togglestatus}
+      />
     </>
   );
 };

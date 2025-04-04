@@ -56,7 +56,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
+const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, ref) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -116,16 +116,17 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
       //   LoaderClose();
       // }
     } catch (error) {
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      console.log("test data",error);
+      // toast.error("Oops, something went wrong", {
+      //   position: "top-right",
+      //   autoClose: 1000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "colored",
+      // });
       LoaderClose();
     }
   };
@@ -147,15 +148,24 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -170,17 +180,23 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
   useImperativeHandle(ref, () => updateFormData);
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
+    <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               List of entities
             </h2>
           </div>
 
-          <div className="w-[20%]">
-            <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 2-2-a
                 </div>
@@ -188,7 +204,32 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
             </div>
           </div>
         </div>
-        {selectedOrg && year && (
+        {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
+          <p className="flex mx-2 text-sm text-gray-700 relative">
+          List all entities included in the sustainability report
+          <MdInfoOutline
+            data-tooltip-id={`tooltip-$e1`}
+            data-tooltip-content="Provide a list of all entities included in the sustainability report. "
+            className="mt-1.5 ml-2 text-[15px]"
+          />
+          <ReactTooltip
+            id={`tooltip-$e1`}
+            place="top"
+            effect="solid"
+            style={{
+              width: "290px",
+              backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              textAlign: "left",
+            }}
+          ></ReactTooltip>
+        </p>
+        ) : null}
+        {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report
             <MdInfoOutline
@@ -211,7 +252,7 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
               }}
             ></ReactTooltip>
           </p>
-        )}
+        )} */}
         <div className="mx-2 mb-2">
           <Form
             schema={r_schema}
@@ -222,19 +263,19 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
             widgets={widgets}
           />
         </div>
-        {selectedOrg && year && (
-        <div className="flex justify-between right-1  mx-2">
-        
-            <button
+        {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
+          <div className="flex right-1 mx-2">
+              <button
               type="button"
               className="text-[#007EEF] text-[13px] flex cursor-pointer my-auto"
               onClick={handleAddNew}
             >
               Add text box <MdAdd className="text-lg" />
             </button>
-         
-        </div>
-         )}
+          </div>
+        ) : null}
+   
 
       </div>
       {loopen && (

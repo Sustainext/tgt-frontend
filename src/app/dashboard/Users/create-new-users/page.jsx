@@ -21,7 +21,8 @@ import Link from "next/link";
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
+  setMiddlename
 } from "../../../../lib/redux/features/topheaderSlice";
 const AddNewUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -48,15 +49,23 @@ const AddNewUser = () => {
   useEffect(() => {
 
     if (edit === "true") {
+      dispatch(setHeadertext1("User"));
+      dispatch(setHeaderdisplay("none"));
       dispatch(setHeadertext2("Manage Users"));
+      dispatch(setMiddlename("Social"));
+     
     } else {
+      dispatch(setHeadertext1("User"));
+      dispatch(setHeaderdisplay("none"));
       dispatch(setHeadertext2("Create New User"));
+      dispatch(setMiddlename("Social"));
+ 
     }
   }, [dispatch, edit]);
   return (
     <>
       <ToastContainer />
-      <div className="w-full px-6 py-4 border-b border-[#edeae9] justify-between items-center inline-flex mt-2">
+      <div className="w-full xl:px-6 py-4 border-b border-[#edeae9] justify-between items-center inline-flex mt-2">
         <div className="flex-col justify-start items-start gap-1 inline-flex">
           {/* Conditionally render heading based on 'edit' parameter */}
           {!edit && (
@@ -73,7 +82,7 @@ const AddNewUser = () => {
         <div className="w-[19px] h-[9px]" />
     
       </div>
-      <div className="container mx-auto px-8 pb-10">
+      <div className="container  xl:px-8 lg:px-8 md:px-8 2k:px-8 4k:px-8 mx-2 pb-10">
       {edit && (
           <Link href="/dashboard/Users/manage-users" className="text-[#007EEF] text-[12px] flex mt-5"> 
           <div className="flex">

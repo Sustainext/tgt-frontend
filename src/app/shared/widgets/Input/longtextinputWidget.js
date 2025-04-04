@@ -78,7 +78,7 @@ const LonginputWidget = ({
             </>
           )}
            <input
-          className={`block w-[25vw]  py-2  text-[12px]  leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300 ${hasError ? 'border-red-500' : 'border-gray-300'}`}
+          className={`block w-[67vw] xl:w-[25vw] lg:w-[25vw] md:w-[25vw] 2xl:w-[25vw] 4k:w-[10vw]  py-2  text-[12px]  leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300 ${hasError ? 'border-red-500' : 'border-gray-300'}`}
           placeholder={placeholder || `Enter ${label || title}`}
           type={inputType}
           value={value}

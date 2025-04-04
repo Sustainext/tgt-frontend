@@ -6,16 +6,22 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Socialheader2 from "../../socialheader2";
 import Forcedorcompulsorylabourscreen from "./forcedor";
-const Forcedorcompulsorylabour = () => {
+import { useSelector } from "react-redux";
+import SocialTopBar from '../../socialTopBar'
+
+const Forcedorcompulsorylabour = ({apiData,setMobileopen}) => {
+  const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
+    (state) => state.materialitySlice
+  );
+  const [year, setYear] = useState(materiality_year?materiality_year:'');
+  const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
+  const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
-
+  const [togglestatus,setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -36,46 +42,32 @@ const Forcedorcompulsorylabour = () => {
     setData(newData);
   }, [category]);
 
+  const sdgData=[
+    {
+        tagName:'GRI 409-1',
+        toggle:'16',
+        textColor:"#007EEF",
+        bgColor:"bg-slate-200"
+    },
+    {
+        tagName:'SDG 5',
+        toggle:'17',
+        textColor:"#fff",
+        bgColor:"bg-orange-600"
+    },
+    {
+        tagName:'SDG 8',
+        toggle:'18',
+        textColor:"#fff",
+        bgColor:"bg-red-900"
+    },
+   
+]
+
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold py-2">
-                  Child and Forced Labour
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end pt-5 me-1">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("16")}
-              >
-                GRI 409 - 1
-              </button>
-              <button
-                className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("17")}
-              >
-                SDG 5
-              </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("18")}
-              >
-                SDG 8
-              </button>
-            </div>
-          </div>
-        </div>
-
+        <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Child and Forced Labour'} topic={'SocChildLabour'} setMobileopen={setMobileopen} />
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Operations and suppliers at significant risk for incidents of forced or compulsory labor
@@ -119,9 +111,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -147,11 +146,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Forcedorcompulsorylabourscreen
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
     </>
   );

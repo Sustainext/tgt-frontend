@@ -28,13 +28,13 @@ const GovernancetableWidget2 = ({ id, options, value, required, onChange, schema
     }, [localValue, debouncedUpdate]);
 
     return (
-        <div style={{ maxHeight: "400px" }} className='mb-2'>
+        <div style={{ maxHeight: "400px" }} className='mb-2  overflow-auto custom-scrollbar'>
             <table id={id} className="border border-gray-300 rounded-lg w-full">
                 <tbody>
                     {options.rowLabels.map((label, rowIndex) => (
                         <tr key={rowIndex} className='border border-gray-300'>
-                            <td className=" p-3 text-left w-2/5">
-                                <span className='text-[12px]'>{label.title}</span>
+                            <td className=" p-3 text-left w-[450px] xl:w-2/5  lg:w-2/5  md:w-2/5 4k:w-2/5  2k:w-2/5 2xl:w-2/5 ">
+                                <p className='text-[12px] w-[450px] xl:w-auto  lg:w-auto   md:w-auto  4k:w-auto   2k:w-auto 2xl:w-auto '>{label.title}</p>
                                 <MdInfoOutline
                                     data-tooltip-id={`tooltip-${label.title?.replace(/\s+/g, '-')}`}
                                     data-tooltip-content={label.tooltip}
@@ -56,7 +56,9 @@ const GovernancetableWidget2 = ({ id, options, value, required, onChange, schema
                                       }}
                                 />
                             </td>
-                            {Object.keys(localValue[rowIndex] || {}).map((key, cellIndex) => {
+                            {options.titles
+  .filter((col) => col.display !== "none").map((col, cellIndex) => {
+                                const key=col.key
                                 const propertySchema = schema.items.properties[key];
                                 const isEnum = propertySchema && propertySchema.hasOwnProperty('enum');
 
@@ -66,7 +68,7 @@ const GovernancetableWidget2 = ({ id, options, value, required, onChange, schema
                                             <select
                                                 value={localValue[rowIndex][key]}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-[12px] pl-2 py-2 w-full border-b"
+                                                className="text-[12px] pl-2 py-2 w-[150px] xl:w-full lg:w-full md:w-full 4k:w-full 2k:w-full 2xl:w-full   border-b"
                                                 required={required}
                                             >
                                                 <option value="">Select</option>
@@ -80,7 +82,7 @@ const GovernancetableWidget2 = ({ id, options, value, required, onChange, schema
                                                 required={required}
                                                 value={localValue[rowIndex][key] || ""}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-[12px] pl-2 py-2 w-full"
+                                                className="text-[12px] pl-2 py-2 w-[150px] xl:w-full lg:w-full md:w-full 4k:w-full 2k:w-full 2xl:w-full"
                                                 placeholder="Enter"
                                             />
                                         )}

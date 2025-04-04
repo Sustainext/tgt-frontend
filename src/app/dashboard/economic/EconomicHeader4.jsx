@@ -4,6 +4,19 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import { useDispatch,useSelector } from "react-redux";
+import {
+  fetchMaterialityData,
+  setCorpID,
+  setOrgID,
+  setOrgName,
+  setCorpName,
+  setYear,
+  setStartDate,
+  setEndDate,
+  setMaterialityYear,
+  setIsYearChanged
+} from "../../../lib/redux/features/materialitySlice";
 const monthMapping = {
   Jan: 1,
   Feb: 2,
@@ -34,16 +47,40 @@ const EconomicHeader4 = ({
   setSelectedCorp,
   year,
   setYear,
+  setToggleStatus,
 }) => {
+  const dispatch = useDispatch();
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    assessment_year,
+    is_year_changed,
+    data,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+
   const [formState, setFormState] = useState({
     selectedCorp: selectedCorp,
     selectedOrg: selectedOrg,
     year: year,
     month: activeMonth,
   });
+
   const [reportType, setReportType] = useState("Organization");
+  // const[isYearChanged,setIsyearChanged]=useState(false)
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    setToggleStatus(type);
+
+    if (type === "Organization") {
+      setSelectedCorp(""); // Clear selectedCorp when Organization is chosen
+      dispatch(setCorpID("")); // Reset corporate ID in Redux store
+      dispatch(setCorpName("")); // Reset corporate name in Redux store
+    }
   };
   console.log(activeMonth, "test month value chnages");
   const [errors, setErrors] = useState({
@@ -66,6 +103,9 @@ const EconomicHeader4 = ({
       setActiveMonth(monthMapping[value]);
     } else if (name === "year") {
       setYear(value);
+      // setIsyearChanged(true)
+      dispatch(setIsYearChanged(true));
+      dispatch(setMaterialityYear(value));
       setErrors((prevErrors) => ({
         ...prevErrors,
         year: value ? "" : "Please select year",
@@ -99,7 +139,7 @@ const EconomicHeader4 = ({
   }, []);
 
   useEffect(() => {
-     const fetchCorporates = async () => {
+    const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -107,19 +147,59 @@ const EconomicHeader4 = ({
           });
           setCorporates(response.data);
         } catch (e) {
-          if(e.status === 404) {
+          if (e.status === 404) {
             setCorporates([]);
-          }
-          else{
+          } else {
             console.error("Failed fetching corporates:", e);
           }
-          
         }
       }
     };
 
     fetchCorporates();
   }, [selectedOrg]);
+
+  const loadMaterialityDashboard = () => {
+    if (selectedOrg && year) {
+      dispatch(
+        fetchMaterialityData({
+          corporate: selectedCorp,
+          organization: selectedOrg,
+          start_date: year ? `${year}-01-01` : "",
+          end_date: year ? `${year}-12-31` : "",
+          // start_date: year==assessment_year?start_date?start_date:`${year}-01-01`:is_year_changed?`${year}-01-01`:start_date?start_date:`${year}-01-01`,
+          // end_date: year==assessment_year?end_date?end_date:`${year}-12-31`:is_year_changed?`${year}-12-31`:end_date?end_date:`${year}-12-31`,
+        })
+      );
+    } else {
+      dispatch(
+        fetchMaterialityData({
+          corporate: "",
+          organization: "",
+          start_date: "",
+          end_date: "",
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (organization_id) {
+      setSelectedOrg(organization_id);
+    }
+    if (corporate_id) {
+      setSelectedCorp(corporate_id);
+    }
+    if (materiality_year) {
+      setYear(materiality_year);
+    }
+    setErrors({
+      organization:
+        organization_id || selectedOrg ? "" : "Please select Organisation",
+      corporate: corporate_id || selectedCorp ? "" : "Please select Corporate",
+      year: materiality_year || year ? "" : "Please select year",
+    });
+  }, [organization_id, corporate_id, materiality_year]);
 
   useEffect(() => {
     setFormState({
@@ -128,11 +208,21 @@ const EconomicHeader4 = ({
       year: year,
       month: activeMonth,
     });
+    dispatch(setOrgID(selectedOrg));
+    dispatch(setCorpID(selectedCorp));
+    dispatch(setMaterialityYear(year));
+    loadMaterialityDashboard();
   }, [selectedOrg, selectedCorp, year, activeMonth]);
 
   const handleOrgChange = (e) => {
     const newOrg = e.target.value;
+    const selectedOption = e.target.selectedOptions[0];
+    const newOrgName = selectedOption.getAttribute("name");
     setSelectedOrg(newOrg);
+    dispatch(setOrgID(newOrg));
+    dispatch(setOrgName(newOrgName));
+    dispatch(setCorpID(""));
+    dispatch(setCorpName(""));
     setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -142,18 +232,26 @@ const EconomicHeader4 = ({
 
   const handleCorpChange = (e) => {
     const newCorp = e.target.value;
+    const selectedOption = e.target.selectedOptions[0];
+    const newCorpName = selectedOption.getAttribute("name");
     setSelectedCorp(newCorp);
+    dispatch(setCorpID(newCorp));
+    dispatch(setCorpName(newCorpName));
     setErrors((prevErrors) => ({
       ...prevErrors,
       corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
-
+  useEffect(() => {
+    if (selectedCorp) {
+      setReportType("Corporate");
+    }
+  }, [selectedCorp]);
   return (
     <>
       <div>
         <div className="flex-col items-center ">
-          <div className="mt-4 pb-3 mx-5 text-left">
+          <div className="mt-4 pb-2 mx-5 text-left">
             <div className="mb-2 flex-col items-center">
               <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
@@ -162,7 +260,9 @@ const EconomicHeader4 = ({
                 <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
+                      reportType === "Organization"
+                        ? "bg-[#d2dfeb]"
+                        : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
@@ -183,7 +283,7 @@ const EconomicHeader4 = ({
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4  ${
                   reportType !== "" ? "visible" : "hidden"
                 }`}
               >
@@ -203,7 +303,7 @@ const EconomicHeader4 = ({
                       <option value="01">Select Organization</option>
                       {organisations &&
                         organisations.map((org) => (
-                          <option key={org.id} value={org.id}>
+                          <option key={org.id} value={org.id} name={org.name}>
                             {org.name}
                           </option>
                         ))}
@@ -232,7 +332,11 @@ const EconomicHeader4 = ({
                         <option value="">Select Corporate </option>
                         {corporates &&
                           corporates.map((corp) => (
-                            <option key={corp.id} value={corp.id}>
+                            <option
+                              key={corp.id}
+                              value={corp.id}
+                              name={corp.name}
+                            >
                               {corp.name}
                             </option>
                           ))}
@@ -274,42 +378,71 @@ const EconomicHeader4 = ({
                     )}
                   </div>
                 </div>
+                <div className="mr-2 xl:ml-3 md:ml-3 lg:ml-3 2xl:ml-3 4k:ml-3 ml-0 relative mb-2 block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+                  <label
+                    htmlFor="cname"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
+                  >
+                    Select Month
+                  </label>
+                  <div className="mt-2">
+                  <select
+                      name="month"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                      value={Object.keys(monthMapping).find(
+                        (key) => monthMapping[key] === formState.month
+                      )}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select month</option>
+                      {months.map((month, index) => (
+                        <option key={index} value={month}>
+                          {month}
+                        </option>
+                      ))}
+                    </select>
+              
+                  </div>
+                </div>
+                
               </div>
             </div>
           </div>
         </div>
-        <div className="flex justify-between mb-4 ml-3">
-          <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
-            {months.map((month, index) => (
-              <button
-                key={index}
-                className={`text-[12px] border-r mx-1 ${
-                  formState.month === monthMapping[month]
-                    ? "bg-white shadow-md rounded-lg"
-                    : ""
-                }`}
-                onClick={() =>
-                  handleChange({
-                    target: {
-                      name: "month",
-                      value: month, // assuming 'month' here is the string representation like "Jan", "Feb", etc.
-                    },
-                  })
-                }
-              >
-                <p
-                  className={`text-center ${
+        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+          <div className="flex justify-between mb-4 ml-3">
+            <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
+              {months.map((month, index) => (
+                <button
+                  key={index}
+                  className={`text-[12px] border-r mx-1 ${
                     formState.month === monthMapping[month]
-                      ? "custom-gradient-text"
-                      : "text-[#A1A1A1]"
-                  } hover:bg-[#f7f7f7] py-1 w-[55px] ${
-                    index === 0 ? "rounded-l" : ""
-                  } ${index === months.length - 1 ? "rounded-r" : ""}`}
+                      ? "bg-white shadow-md rounded-lg"
+                      : ""
+                  }`}
+                  onClick={() =>
+                    handleChange({
+                      target: {
+                        name: "month",
+                        value: month, // assuming 'month' here is the string representation like "Jan", "Feb", etc.
+                      },
+                    })
+                  }
                 >
-                  {month}
-                </p>
-              </button>
-            ))}
+                  <p
+                    className={`text-center ${
+                      formState.month === monthMapping[month]
+                        ? "custom-gradient-text"
+                        : "text-[#A1A1A1]"
+                    } hover:bg-[#f7f7f7] py-1 w-[55px] ${
+                      index === 0 ? "rounded-l" : ""
+                    } ${index === months.length - 1 ? "rounded-r" : ""}`}
+                  >
+                    {month}
+                  </p>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

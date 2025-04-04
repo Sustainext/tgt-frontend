@@ -1,553 +1,369 @@
-"use client";
-import React, { useState, useEffect, useRef } from "react";
-import { FiPlus, FiCheckCircle, FiTrash2, FiCircle } from "react-icons/fi";
-import { toast } from "react-toastify";
+import React, { useState, useEffect } from "react";
+import { FiPlus, FiCheckCircle } from "react-icons/fi";
+import { ToastContainer,toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Moment from "react-moment";
-import axios from "axios";
 import { useAuth } from "../../../Context/auth";
 import axiosInstance, { del, patch, post } from "../../utils/axiosMiddleware";
+import GoalsModal from "./GoalsModal";
 
 const MyGoals = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isMounted = useRef(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentGoal, setCurrentGoal] = useState(null);
   const [goals, setGoals] = useState({});
   const [loopen, setLoOpen] = useState(false);
-  const [addgoles, setaddgoles] = useState({
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const { userDetails, token } = useAuth();
+  const [userId, setUserId] = useState(null);
+
+  const [activeTab, setActiveTab] = useState("upcoming");
+  const [formData, setFormData] = useState({
+    status: "not_started",
     title: "",
+    organization: "",
+    description: "",
     deadline: "",
   });
 
-  const { title, deadline } = addgoles;
-  const { userDetails, token } = useAuth();
-  const [userId, setUserId] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const response = await axiosInstance.get("/api/auth/get_user_roles/");
+        
+        if (response.status === 200) {
+          const data = await response.data;
+          console.log("Fetched user role:", data);
+          setIsAdmin(data.admin);
+        } else {
+          console.error("Failed to fetch user role");
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+    fetchUserRole();
+  }, []);
 
   useEffect(() => {
-    console.log("user details and token", userDetails, token);
     if (userDetails) {
       setUserId(userDetails?.user_detail[0]?.id);
     }
-    if (token) {
-      setAccessToken(token?.replace(/"/g, ""));
+  }, [userDetails]);
+
+  const LoaderOpen = () => setLoOpen(true);
+  const LoaderClose = () => setLoOpen(false);
+
+  const fetchGoals = async () => {
+    try {
+      LoaderOpen();
+      const response = await axiosInstance.get(
+        `/sustainapp/my_goal/?assigned_to=${userId}`
+      );
+      setGoals(response.data);
+    } catch (error) {
+      toast.error("Error fetching goals");
+    } finally {
+      LoaderClose();
     }
-  }, [userDetails, token]);
-
-  // const options = {
-  //   headers: {
-  //     Authorization: `Bearer ${accessToken}`
-  //   }
-  // };
-
-  const getTodayDate = () => {
-    const today = new Date();
-    let month = "" + (today.getMonth() + 1);
-    let day = "" + today.getDate();
-    const year = today.getFullYear();
-
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-
-    return [year, month, day].join("-");
   };
 
-  const LoaderOpen = () => {
-    setLoOpen(true);
-  };
-
-  const LoaderClose = () => {
-    setLoOpen(false);
-  };
-
-  const handleCompleted = async (id) => {
-    LoaderOpen();
-    const sandData = {
-      completed: true,
-    };
-    await patch(`/mygoal/${id}/`, sandData)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success("Goal has been completed successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          fetchMygoleDetails();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      })
-      .finally(() => LoaderClose());
-  };
-
-  const handleDelete = async (id) => {
-    LoaderOpen();
-    await del(`/mygoal/${id}/`)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success("Goal has been deleted successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          fetchMygoleDetails();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      })
-      .finally(() => LoaderClose());
-  };
-
-  const datahandleChange = (e) => {
-    setaddgoles({ ...addgoles, [e.target.name]: e.target.value });
-  };
-
-  const submitForm = async (e) => {
-    e.preventDefault();
-    LoaderOpen();
-
-    const sandData = {
-      ...addgoles,
-      assigned_to: userId,
-      completed: false,
-    };
-    await post(`/mygoal/`, sandData)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success("Goal has been added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          handleCloseModal();
-          fetchMygoleDetails();
-          setaddgoles({ title: "", deadline: "" });
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      })
-      .finally(() => LoaderClose());
-  };
+  useEffect(() => {
+    if (userId) {
+      fetchGoals();
+    }
+  }, [userId]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
+    setIsEditing(false);
+    setFormData({
+      status: "not_started",
+      title: "",
+      organization: "",
+      description: "",
+      deadline: "",
+    });
+  };
+
+  const handleEditModal = (goal) => {
+    if (!goal) {
+      toast.error("Invalid goal selected");
+      return;
+    }
+    setIsModalOpen(true);
+    setIsEditing(true);
+    setCurrentGoal(goal);
+    setFormData({
+      status: goal.status || "not_started",
+      title: goal.title || "",
+      organization: goal.organization || "",
+      description: goal.description || "",
+      deadline: goal.deadline || "",
+    });
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsEditing(false);
+    setCurrentGoal(null);
+    setFormData({
+      status: "not_started",
+      title: "",
+      organization: "",
+      description: "",
+      deadline: "",
+    });
   };
 
-  const [activeTab, setActiveTab] = useState("upcoming");
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const fetchMygoleDetails = async () => {
+  const handleStatusChange = (status) => {
+    setFormData((prev) => ({ ...prev, status }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    LoaderOpen();
+  
     try {
-      LoaderOpen();
-      const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/mygoal/?assigned_to=${userId}`
-      );
-      setGoals(response.data);
-      LoaderClose();
+      let response;
+      if (isEditing) {
+        response = await patch(`/sustainapp/my_goal/${currentGoal.id}/`, formData);
+        if (response.status === 200) {
+          toast.success("Goal updated successfully!");
+        }
+      } else {
+        response = await post(`/sustainapp/my_goal/`, {
+          ...formData,
+          assigned_to: userId,
+          completed: false,
+        });
+  
+        if (response.status === 201) {
+          toast.success("Goal added successfully!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      }
+      
+      setTimeout(() => {
+        fetchGoals();
+        handleCloseModal();
+      }, 1000); // Delay to allow toast to show
+  
     } catch (error) {
+      toast.error("Error saving goal: "+ error.message);
+    } finally {
       LoaderClose();
-      console.log(error);
     }
   };
+  
 
-  useEffect(() => {
-    if (userId && accessToken) {
-      fetchMygoleDetails();
+  const handleDelete = async () => {
+    if (!currentGoal) {
+      toast.error("Invalid goal selected");
+      return;
     }
-  }, [userId, accessToken]);
+  
+    LoaderOpen();
+    try {
+      const response = await del(`/sustainapp/my_goal/${currentGoal.id}/`);
+      if (response.status === 204) {
+        toast.success("Goal deleted successfully!");
+      }
+  
+      setTimeout(() => {
+        fetchGoals();
+        handleCloseModal();
+      }, 1000); // Delay to show toast
+  
+    } catch (error) {
+      toast.error("Error deleting goal");
+    } finally {
+      LoaderClose();
+    }
+  };
+  
 
-  return (
-    <>
-      <div className="rounded-lg shadow border border-gray-200 p-4 h-[320px] ">
-        <div className="flex justify-between mb-4">
-          <div className="text-neutral-800 text-[15px] font-bold leading-tight">
-            My Goals
+  const renderGoalsList = (goalsList) => {
+    if (!goalsList || goalsList.length === 0) {
+      return (
+        <div className="flex flex-col justify-center items-center h-full">
+          <div className="flex justify-center items-center pb-5">
+            <FiCheckCircle style={{ color: "#ACACAC", fontSize: "36px" }} />
           </div>
-
-          <div
-            className="text-sky-600 text-[10px] cursor-pointer font-normal leading-[13px] flex items-center me-2 space-x-2"
+          <p className="text-[14px] text-[#101828] font-bold text-center">
+            Start by creating a goal
+          </p>
+          <button
+            className="bg-[#007EEF] text-white w-[150px] px-2 py-1.5 rounded-md shadow-md mt-4 text-sm"
             onClick={handleOpenModal}
           >
-            <FiPlus style={{ fontSize: "18px" }} />
-            <span>Add goal</span>
-          </div>
+            Add a goal
+          </button>
         </div>
-        <div>
-          <div className={`flex my-6 border-b text-sm text-start`}>
-            <button
-              className={`pr-2 py-1 rounded-b-none text-xs font-bold leading-[15px] ${
-                activeTab === "upcoming"
-                  ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
-                  : "border-transparent text-neutral-500"
-              }`}
-              onClick={() => setActiveTab("upcoming")}
-            >
-              Upcoming
-            </button>
-            <button
-              className={`px-4 py-1 rounded-b-none text-xs font-bold leading-[15px] ${
-                activeTab === "overdue"
-                  ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
-                  : "border-transparent text-neutral-500"
-              }`}
-              onClick={() => setActiveTab("overdue")}
-            >
-              Overdue
-            </button>
-            <button
-              className={`px-4 py-1 rounded-b-none text-xs font-bold leading-[15px] ${
-                activeTab === "completed"
-                  ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
-                  : "border-transparent text-neutral-500"
-              }`}
-              onClick={() => setActiveTab("completed")}
-            >
-              Completed
-            </button>
-          </div>
+      );
+    }
 
-          <div className="p-4 h-[188px] overflow-y-auto table-scrollbar">
-            {activeTab === "upcoming" && (
-              <div>
-                {goals.upcoming == "" ? (
-                  <div className="justify-center items-center ">
-                    <div className="flex justify-center items-center pb-5">
-                      <FiCheckCircle
-                        style={{ color: "#ACACAC", fontSize: "36px" }}
-                      />
-                    </div>
-                    <div>
-                      <p className="text-[14px] text-[#101828] font-bold text-center">
-                        Start by creating a goal
-                      </p>
-                    </div>
-                    <div className="mb-2">
-                      <p className="text-[12px] text-[#667085] text-center">
-                        All task created or assigned to you will be here
-                      </p>
-                    </div>
-                    <div className="flex justify-center items-center">
-                      <button
-                        className="bg-[#007EEF] text-white w-[150px] p-1 rounded-md shadow-md"
-                        onClick={handleOpenModal}
-                      >
-                        Add a goal
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <div className="space-y-3 mb-6 mt-2 ">
-                      {goals.upcoming &&
-                        goals.upcoming.map((ugoals) => (
-                          <div className="flex justify-between" key={ugoals.id}>
-                            <div className="flex cursor-pointer">
-                              <div>
-                                <FiCircle
-                                  style={{ fontSize: "21px", mt: -1.3 }}
-                                  onClick={() => handleCompleted(ugoals.id)}
-                                />
-                              </div>
-                              <div className="w-auto text-neutral-800 text-[13px] font-normal leading-none ml-3 ">
-                                {ugoals.title}
-                              </div>
-                            </div>
-                            <div className="flex">
-                              <div className="w-[68px] text-neutral-500 text-xs font-normal leading-[15px]">
-                                <Moment format="DD/MM/YYYY">
-                                  {ugoals.deadline}
-                                </Moment>
-                              </div>
-                              <div className="w-[18px] cursor-pointer ">
-                                <FiTrash2
-                                  style={{
-                                    color: "#0000008F",
-                                    fontSize: "18px",
-                                    mt: -1,
-                                  }}
-                                  onClick={() => handleDelete(ugoals.id)}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeTab === "overdue" && (
-              <div>
-                {goals.overdue == "" ? (
-                  <div className="h-screen justify-center items-center ">
-                    <h4 className="text-center">No data found</h4>
-                  </div>
-                ) : (
-                  <div>
-                    <div className="space-y-3 mb-6 nt-2">
-                      {goals.overdue &&
-                        goals.overdue.map((ugoals) => (
-                          <>
-                            {ugoals.completed == false ? (
-                              <div
-                                className="flex justify-between"
-                                key={ugoals.id}
-                              >
-                                <div className="flex cursor-pointer">
-                                  <div>
-                                    <FiCircle
-                                      style={{
-                                        fontSize: "21px",
-                                        mt: -1.1,
-                                        color: "#cc0000",
-                                        cursor: "pointer",
-                                      }}
-                                      onClick={() => handleCompleted(ugoals.id)}
-                                    />
-                                  </div>
-                                  <div className="w-auto text-red-600 text-[13px] font-normal leading-none ml-3 ">
-                                    {ugoals.title}
-                                  </div>
-                                </div>
-                                <div className="flex">
-                                  <div className="w-[68px] text-red-600 text-xs font-normal leading-[15px]">
-                                    <Moment format="DD/MM/YYYY">
-                                      {ugoals.deadline}
-                                    </Moment>
-                                  </div>
-                                  <div className="w-[18px] cursor-pointer ">
-                                    <FiTrash2
-                                      style={{
-                                        color: "#cc0000",
-                                        fontSize: "18px",
-                                        mt: -1,
-                                      }}
-                                      onClick={() => handleDelete(ugoals.id)}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            ) : null}
-                          </>
-                        ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-            {activeTab === "completed" && (
-              <div>
-                {goals.completed == "" ? (
-                  <div className="h-screen justify-center items-center ">
-                    <h4 className="text-center">No data found</h4>
-                  </div>
-                ) : (
-                  <div>
-                    <div className="space-y-3 mb-6 mt-2">
-                      {goals.completed &&
-                        goals.completed.map((ugoals) => (
-                          <div className="flex justify-between" key={ugoals.id}>
-                            <div className="flex">
-                              <div>
-                                <FiCheckCircle
-                                  style={{
-                                    fontSize: "21px",
-                                    mt: -1.3,
-                                    color: "#3DCA7C",
-                                  }}
-                                />
-                              </div>
-                              <div className="w-auto text-neutral-800 text-[13px] font-normal leading-none ml-3 ">
-                                {ugoals.title}
-                              </div>
-                            </div>
-                            <div className="flex">
-                              <div className="w-[68px] text-neutral-500 text-xs font-normal leading-[15px]">
-                                <Moment format="DD/MM/YYYY">
-                                  {ugoals.deadline}
-                                </Moment>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="px-[5px] py-1 rounded flex-col justify-center items-center inline-flex">
-          <div className="justify-center items-center gap-2 inline-flex">
-            <div className="h-[18px] flex-col justify-center items-center inline-flex">
-              <div className="w-[18px] h-[18px] relative flex-col justify-start items-start flex" />
+    return goalsList.map((goal) => {
+      // Check if the goal object is valid
+      if (!goal || typeof goal !== "object") {
+        return (
+          <div className="flex flex-col justify-center items-center h-full">
+            <div className="flex justify-center items-center pb-5">
+              <FiCheckCircle style={{ color: "#ACACAC", fontSize: "36px" }} />
             </div>
+            <p className="text-[14px] text-[#101828] font-bold text-center">
+              Start by creating a goal
+            </p>
+            {isAdmin && (
+              <button
+                className="bg-[#007EEF] text-white w-[150px] px-2 py-1 rounded-md shadow-md mt-4 text-sm"
+                onClick={handleOpenModal}
+              >
+                Add a goal
+              </button>
+            )}
           </div>
-        </div>
-      </div>
+        );
+      }
 
-      {isModalOpen && (
-        <div className="modal-overlay z-50">
-          <div className="modal-center">
-            <div className="modal-content">
-              <div className="flex justify-between items-center drop-shadow-lg border-b-2 py-6 w-full">
-                <h2 className="self-stretch text-black text-opacity-90 text-[22px] font-normal leading-relaxed flex space-x-8 items-center ms-6">
-                  <span>Add Goal</span>
-                </h2>
-                <button
-                  className="absolute top-2 right-2 mt-4 text-gray-500 hover:text-gray-700 focus:outline-none"
-                  onClick={handleCloseModal}
+      return (
+        <>
+        {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
+          <div
+            key={goal.id}
+            className="flex justify-between border-b border-[#ebeced] py-2"
+          >
+            {/* Task Name Column */}
+            <div className="flex w-[10rem] xl:w-[26rem] md:w-[26rem] lg:w-[26rem] 4k:w-[26rem] 2xl:w-[26rem] cursor-pointer">
+              <div className="w-72 truncate text-[#007eef] text-[13px] font-normal leading-none ml-3">
+                <p
+                  className="py-1 cursor-pointer"
+                  data-tooltip-id={`goal-tooltip-${goal.id}`}
+                  data-tooltip-content={goal.title}
+                  onClick={() => isAdmin && handleEditModal(goal)}
+                  style={{ cursor: isAdmin ? "pointer" : "default" }}
                 >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+                  {goal.title || "Untitled Goal"}
+                </p>
               </div>
-              <div className="my-6 mx-8 ">
-                <div className="mb-2 py-4 px-3">
-                  <div>
-                    <form className="w-full text-left" onSubmit={submitForm}>
-                      <div className="mr-2 mb-4 w-[101%]">
-                        <label
-                          htmlFor="cname"
-                          className="block text-neutral-800 text-[13px] font-normal"
-                        >
-                          Goal Title
-                        </label>
+            </div>
 
-                        <div className="mt-2 mr-2">
-                          <input
-                            id="title"
-                            title="title"
-                            type="text"
-                            name="title"
-                            autoComplete="off"
-                            required
-                            placeholder="Enter Goal Title"
-                            onChange={datahandleChange}
-                            value={title}
-                            className="block  w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
-                      </div>
-                      <div className="flex ">
-                        <div className="col-span-2 mb-4 flex-1">
-                          <div>
-                            <label
-                              htmlFor="dateField"
-                              className="block text-neutral-800 text-[13px] font-normal"
-                            >
-                              Deadline
-                            </label>
-                            <div className="mt-2 ">
-                              <input
-                                id="deadline"
-                                title="deadline" // Use name instead of title
-                                type="date"
-                                name="deadline"
-                                autoComplete="off"
-                                onChange={datahandleChange}
-                                value={deadline}
-                                min={getTodayDate()}
-                                required
-                                className="block w-full px-1 rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex justify-center mt-5">
-                        <input
-                          type="submit"
-                          value="Save"
-                          className="w-[30%] h-auto  px-[22px] py-2 bg-blue-500 text-white rounded shadow flex-col justify-center items-center inline-flex cursor-pointer"
-                        />
-                      </div>
-                    </form>
-                  </div>
+            {/* Status Column */}
+            <div className="flex-grow">
+              <div className="text-left">
+                <div className="flex items-center gap-2">
+                  <div
+                    className={`w-2 h-2 rounded-full ${
+                      goal.status === "completed"
+                        ? "bg-green-500"
+                        : goal.status === "in_progress"
+                        ? "bg-yellow-400"
+                        : "bg-gray-300"
+                    }`}
+                  ></div>
+                  <div className="text-xs">{goal.status_display || "Not Started"}</div>
                 </div>
               </div>
             </div>
+
+            {/* Due Date Column */}
+            <div className="flex mr-4">
+              <div className="w-[68px] text-neutral-500 text-xs font-normal leading-[15px]">
+                <Moment format="DD/MM/YYYY">{goal.deadline}</Moment>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-      {loopen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="flex items-center justify-center space-x-2 text-sm text-white">
-            <svg
-              className="w-6 h-6 animate-spin"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+        </>
+      );
+    });
+  };
+
+  return (
+    <>
+      {/* <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} /> */}
+      <div className="p-6 bg-white rounded-lg shadow-sm border border-gray-200 h-[450px] xl:h-[470px] lg:h-[470px] md:h-[470px] 4k:h-[470px] flex flex-col">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-[#0f1728] text-lg font-medium font-['Manrope'] leading-7">
+            Organization Goals
+          </h1>
+          {isAdmin && (
+            <button
+              onClick={handleOpenModal}
+              className="text-sky-600 text-sm cursor-pointer font-normal leading-[13px] flex items-center me-2 space-x-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 4.75V7.25M12 12V14.75M12 19V21.25M4.75 12H7.25M16.75 12H19.25M7.29 7.29L8.7 8.7M15.29 15.29L16.7 16.7M7.29 16.7L8.7 15.29M15.29 8.7L16.7 7.29"
-              />
-            </svg>
-            <span>Loading...</span>
-          </div>
+              <FiPlus className="w-5 h-5" />
+              Add Goal
+            </button>
+          )}
         </div>
-      )}
+
+        <div className="flex gap-8 border-b border-gray-200 mb-6">
+          {["Upcoming", "Overdue", "Completed"].map((tab) => (
+            <button
+              key={tab}
+              className={`pb-2 ${
+                activeTab === tab.toLowerCase()
+                  ? "text-blue-500 border-b-2 border-blue-500"
+                  : "text-gray-500"
+              }`}
+              onClick={() => setActiveTab(tab.toLowerCase())}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex justify-between px-4 py-2 text-sm font-medium text-gray-500 border-b">
+          {/* Task Name Column */}
+          <div className="w-[10rem] xl:w-[26rem] md:w-[26rem] lg:w-[26rem] 4k:w-[26rem] 2xl:w-[26rem] -ml-2">Tasks</div>
+
+          {/* Status Column */}
+          <div className="flex-grow ml-2">Status</div>
+
+          {/* Due Date Column */}
+          <div className="w-[68px] mr-1">Due Date</div>
+        </div>
+
+        <div className="flex-1 overflow-auto table-scrollbar">
+          {goals && goals[activeTab]
+            ? renderGoalsList(goals[activeTab])
+            : renderGoalsList([])}
+        </div>
+
+        {isModalOpen && (
+          <GoalsModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            isEditing={isEditing}
+            formData={formData}
+            onSubmit={handleSubmit}
+            onChange={handleInputChange}
+            onDelete={handleDelete}
+            handleStatusChange={handleStatusChange}
+          />
+        )}
+      </div>
     </>
   );
 };

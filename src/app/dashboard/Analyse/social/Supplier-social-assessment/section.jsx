@@ -6,7 +6,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2 } from "./data";
 
 import { Oval } from "react-loader-spinner";
-const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
+const Section = ({ selectedOrg, selectedCorp, dateRange, isBoxOpen,togglestatus }) => {
   const [Suppliersocialassessment1, setSuppliersocialassessment1] = useState(
     []
   );
@@ -35,7 +35,7 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
     setSuppliersocialassessment2([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_supplier_social_assessment_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`,
+        `/sustainapp/get_supplier_social_assessment_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`,
      
       );
       const data = response.data;
@@ -88,17 +88,24 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
-      fetchData();
+    if (selectedOrg &&  dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        fetchData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setSuppliersocialassessment1([]);
+        setSuppliersocialassessment2([]);
+      
+      } else {
+        fetchData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
-        setSuppliersocialassessment1([]);
-        setSuppliersocialassessment2([]);
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus]);
 
   return (
     <div>
@@ -116,12 +123,12 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
                     New suppliers that were screened using social criteria
                   </p>
                 </div>
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500 text-[13px] ">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                  <p className="text-gray-500 text-[13px] mb-2">
                     Percentage of suppliers screened using social criteria
                   </p>
 
-                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex xl:ml-0 lg:ml-0 md:ml-0 2xl:ml-0 2k:ml-0 4k:ml-0 ml-2">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 414-1a
                     </div>
@@ -146,12 +153,12 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
                     taken
                   </p>
                 </div>
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500 text-[13px]">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                  <p className="text-gray-500 text-[13px] mb-2">
                     Percentage of Suppliers
                   </p>
 
-                  <div className="flex justify-between gap-2">
+                  <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between gap-2">
                     <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                       <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                         GRI 414-2d
@@ -182,7 +189,7 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+             className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

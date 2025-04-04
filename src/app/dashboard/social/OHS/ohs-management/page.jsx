@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -8,7 +8,9 @@ import Socialheader3 from "../../socialheader3";
 import Ohsscreeen1 from "./ohs-screeen";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Ohsmanagment = () => {
+import SocialTopBar from "../../socialTopBar";
+
+const Ohsmanagment = ({ apiData,setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -36,45 +38,49 @@ const Ohsmanagment = () => {
     setData(newData);
   }, [category]);
 
+  const griData = [
+    {
+      tagName: "GRI 403 - 1",
+      toggle: "21",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P3-E10a",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-10a",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 8",
+      toggle: "22",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
+    },
+  ];
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold py-2">
-                  Occupational Health and Safety
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full float-end pt-5 me-1">
-            <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("21")}
-              >
-                GRI 403 - 1
-              </button>
-
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("22")}
-              >
-                SDG 8
-              </button>
-            </div>
-          </div>
-        </div>
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Occupational Health and Safety"}
+          topic={"SocHealthSafety"}
+          brsr={brsr}
+          griData={griData}
+          setMobileopen={setMobileopen}
+        />
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Occupational health and safety management system
+            Occupational health and safety management system
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -90,8 +96,8 @@ const Ohsmanagment = () => {
                         </ReactTooltip> */}
           </h6>
         </div>
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -115,9 +121,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

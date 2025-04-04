@@ -65,7 +65,54 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
+  const handleReportTypeChange = (type) => {
+    setReportType(type);
+    
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+    if(type === "Corporate"){
+      setFuelConsumptionRenewable([]);
+      setFuelConsumptionNonRenewable([]);
+      setEnergyWithinOrganization([]);
+      setDirectFromRenewable([]);
+      setDirectFromNonRenewable([]);
+      setSelfGenFromRenewable([]);
+      setSelfGenFromNonRenewable([]);
+      setEnergySoldRenewable([]);
+      setEnergySoldNonRenewable([]);
+      setEnergyOutsideOrganization([]);
+      setEnergyIntensity([]);
+      setReductionOfEnergy([]);
+      setReductionInEnergyOfPS([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+    if(type === "Location"){
+      setFuelConsumptionRenewable([]);
+      setFuelConsumptionNonRenewable([]);
+      setEnergyWithinOrganization([]);
+      setDirectFromRenewable([]);
+      setDirectFromNonRenewable([]);
+      setSelfGenFromRenewable([]);
+      setSelfGenFromNonRenewable([]);
+      setEnergySoldRenewable([]);
+      setEnergySoldNonRenewable([]);
+      setEnergyOutsideOrganization([]);
+      setEnergyIntensity([]);
+      setReductionOfEnergy([]);
+      setReductionInEnergyOfPS([]);
+      setDateRange({
+        start: null,
+        end: null
+      });
+      setIsDateRangeValid(false);
+    }
+  };
   const fetchData = async (params) => {
     if (!params.start || !params.end) {
       setIsDateRangeValid(false);
@@ -371,9 +418,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
     fetchLocation();
   }, [selectedCorp]);
 
-  const handleReportTypeChange = (type) => {
-    setReportType(type);
-  };
+
 
   const handleOrganizationChange = (e) => {
     const newOrg = e.target.value;
@@ -456,8 +501,8 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
 
   return (
     <div>
-    <div className="mb-2 flex-col items-center pt-4  gap-6">
-        <div className="mt-4 pb-3 mx-5 text-left">
+  <div className="mb-2 flex-col items-center xl:pt-4  gap-6">
+  <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2  text-left">
           <div className="mb-2 flex-col items-center pt-2  gap-6">
           <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
@@ -497,7 +542,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             <div
-              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
+              className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
                 }`}
             >
               <div className="mr-2">
@@ -611,14 +656,14 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
         </div>
 
       </div>
-      <div className="flex">
+      <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block">
         <div className={`ps-4 w-[100%] me-4`}>
           <div className="mb-6">
             <div
               id="fuelFromRenewable"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
             >
-              <p>
+              <p className="mb-2 ml-1">
                 Fuel Consumption within the organisation from Renewable sources
               </p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -632,9 +677,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="fuelFromNonRenewable"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
                 Fuel Consumption within the organisation from Non-renewable
                 sources
               </p>
@@ -652,9 +697,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="EnergyWithinOrganization"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Energy Consumption Within the organisation</p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">Energy Consumption Within the organisation</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 302-1e
@@ -666,9 +711,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="DirectFromRenewable"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
                 Direct Purchased Heating, Cooling, Electricity and Steam from
                 renewable sources
               </p>
@@ -683,9 +728,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="DirectFromNonRenewable"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
                 Direct Purchased Heating, Cooling, Electricity and Steam from
                 non-renewable sources
               </p>
@@ -700,9 +745,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="SelfGenFromRenewable"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
                 Self Generated Energy - not consumed or sold (Renewable Energy)
               </p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -716,9 +761,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="SelfGenFromNonRenewable"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1">
                 Self Generated Energy - not consumed or sold (non-renewable
                 Energy)
               </p>
@@ -733,9 +778,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="EnergySoldRenewable"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Energy Sold (Renewable energy)</p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1"> Energy Sold (Renewable energy)</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 302-1d
@@ -747,9 +792,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="EnergySoldNonRenewable"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Energy Sold (non-renewable energy)</p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1"> Energy Sold (non-renewable energy)</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 302-1d
@@ -761,9 +806,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="EnergyOutsideOrganization"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Energy Consumption outside of the organization</p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1"> Energy Consumption outside of the organization</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 302-2a
@@ -778,9 +823,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="EnergyIntensity"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Energy Intensity</p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1"> Energy Intensity</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 302-3a
@@ -792,9 +837,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="ReductionOfEnergy"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Reduction of energy consumption</p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1"> Reduction of energy consumption</p>
               <div className="">
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center mx-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -813,9 +858,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="ReductionInEnergyOfPS"
-              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
-              <p>Reductions in energy requirements of products and services</p>
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center"
+              >
+                <p className="mb-2 ml-1"> Reductions in energy requirements of products and services</p>
               <div className="gap-4">
                 <div className="w-[70px] h-[26px] p-2  bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center mx-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -841,7 +886,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className=" mb-8 me-2"
+          className=" mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
         >
           <TableSidebar />
         </div>

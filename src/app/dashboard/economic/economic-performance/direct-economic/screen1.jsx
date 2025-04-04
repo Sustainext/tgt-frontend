@@ -4,6 +4,7 @@ import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import inputWidget3 from "../../../../shared/widgets/Input/inputWidget3";
 import AddmultiInput from "../../../../shared/widgets/Economic/addmultiInput";
+import AddMultiInputNew from "../../../../shared/widgets/Economic/addMutliInputNew";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -13,10 +14,13 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import CurrencyselectWidget from "../../../../shared/widgets/Select/currencyselectWidget";
+import InputredonlyWidget from "../../../../shared/widgets/Input/inputredonlyWidget";
 const widgets = {
   inputWidget: inputWidget3,
   selectWidget:CurrencyselectWidget,
   AddmultiInput:AddmultiInput,
+  InputredonlyWidget:InputredonlyWidget,
+  AddMultiInputNew:AddMultiInputNew
 };
 
 const view_path = "gri-economic-direct_economic_value-report-201-1a-1b";
@@ -60,38 +64,31 @@ const schema = {
       },
       Q8: {
         type: "string",
-        title: "Enter Country name",
+        title: "Community investments",
       },
       Q9: {
         type: "string",
-        title: "Community investments",
+        title: "Economic value retained",
       },
-      Q10: {
-        type: "string",
-        title: "Direct economic value generated",
-      },
-      Q11: {
-        type: "string",
-        title: "Economic value distributed",
-      },
+   
     },
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10","Q11"],
+    "ui:order": ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9"],
     Q1: {
       "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
       "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
       "ui:haddingdisplay":"none",
-      "ui:haddingtooltipdisplay":"block",
+      "ui:haddingtooltipdisplay":"none",
         "ui:title":
         "Select Currency",
       "ui:tooltip": "Specify the frequency of sustainability reporting..",
       "ui:tooltipdisplay": "none",
       "ui:widget": "selectWidget",
-      "ui:widgtclass":"block w-[20vw] text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+      "ui:widgtclass":"block w-[64vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2x:w-[20vw] 4k:w-[20vw] 2k:w-[20vw] 3xl:w-[20vw] text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -113,9 +110,9 @@ const uiSchema = {
         "ui:title":
           "2.Economic Value distributed",
         "ui:tooltip":
-          "An organization can calculate revenues as net sales plus revenues from financial investments and sales of assets. Net sales can be calculated as gross sales from products and services minus returns,discounts, and allowances. ",
-        "ui:tooltipdisplay": "none",
-        "ui:widget": "inputWidget",
+          "Economic value distributed (EVD): Refers to the way a company distributes the wealth it has generated through its operations. It represents the various outflows of cash or economic benefits from the organization.",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "InputredonlyWidget",
         "ui:horizontal": true,
         "ui:options": {
           label: false,
@@ -161,34 +158,28 @@ const uiSchema = {
         "ui:title":
           "2.4) Payments to governments by country",
         "ui:tooltip":
-          "An organization can calculate payments to governments as all of the organization’s taxes plus related penalties paid at the international, national, and local levels. Organization taxes can include corporate, income, and property..",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
-      Q8: {
-        "ui:title":
-          "Enter Country name",
-        "ui:tooltip":
-          "Enter Country name",
+          "An organization can calculate payments to governments as all of the organization’s taxes plus related penalties paid at the international, national, and local levels. Organization taxes can include corporate, income, and property.",
         "ui:tooltipdisplay": "none",
-        "ui:titledisplay": "none",
-        "ui:widget": "AddmultiInput",
+        "ui:widget": "AddMultiInputNew",
         "ui:inputtype1": "text",
         "ui:inputtype2": "number",
-        "ui:widgetplaceholder": "Enter Country name",
+        "ui:widgetplaceholder": "Enter Country",
         "ui:widgetplaceholder2": "Enter Value",
-        "ui:widgtclass":"block w-[30vw] py-2 mb-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300",
-        "ui:widgtclass2":"backdrop:before:w-[48rem] mb-2 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full",
-        "ui:horizontal": true,
+        "ui:widgtclass":"mb-2 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full",
+        "ui:widgtclass2":"mb-2 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full",
+       "ui:topHeading1":"Country Name",
+       "ui:topHeading2":"Payments to governments by country",
+        "ui:tooltip1":"Please specify name of the country.",
+         "ui:tooltip2":"Please specify payments to governments by country. Note - An organization can calculate  payments to governments as all of the organization’s taxes plus related penalties paid at the international, national, and local levels. Organization taxes can include corporate, income, and property.",
+         "ui:tooltipdisplay1": "block",
+         "ui:tooltipdisplay2": "block",
+         "ui:horizontal": true,
         "ui:options": {
           label: false,
         },
       },
-      Q9: {
+      
+      Q8: {
         "ui:title":
           "2.5) Community investments",
         "ui:tooltip":
@@ -200,30 +191,19 @@ const uiSchema = {
           label: false,
         },
       },
-      Q10: {
+      Q9: {
         "ui:title":
-          "3.Direct economic value generated",
+          "3.Economic value retained",
         "ui:tooltip":
-          "Specify direct economic value generated.Direct economic value generated: Refers to the revenue of an organization.",
+          "Economic value retained represents the portion of economic value generated by an organization that remains after accounting for economic value distributed.",
         "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
+        "ui:widget": "InputredonlyWidget",
         "ui:horizontal": true,
         "ui:options": {
           label: false,
         },
       },
-      Q11: {
-        "ui:title":
-          "4.Economic value distributed",
-        "ui:tooltip":
-          "Specify economic value distributed. Economic value distributed (EVD): Refers to the way a company distributes the wealth it has generated through its operations. It represents the various outflows of cash or economic benefits from the organization.",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
+     
     "ui:options": {
       orderable: false,
       addable: false,
@@ -233,7 +213,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -250,9 +230,37 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   const handleChange = (e) => {
-    setFormData(e.formData);
+    const updatedFormData = e.formData;
+    // let Currency=updatedFormData[0]?.Q1 || "";
+    if (updatedFormData[0]?.Q4 || updatedFormData[0]?.Q5 || updatedFormData[0]?.Q6 || updatedFormData[0]?.Q7.length>0  || updatedFormData[0]?.Q8) {
+      const totalDistributed =
+      Number(updatedFormData[0]?.Q4 || 0) +
+      Number(updatedFormData[0]?.Q5 || 0) +
+      Number(updatedFormData[0]?.Q6 || 0) +
+      Number(
+        updatedFormData[0]?.Q7.reduce((total, val) => {
+          return total + Number(val.paymentCode || 0);
+        }, 0) || 0
+      ) +
+      Number(updatedFormData[0]?.Q8 || 0);
+    
+      // Update Q3 with the calculated value
+      updatedFormData[0].Q3 = totalDistributed!=0?totalDistributed.toString():''
+    
+      // Calculate Q9 as the difference between Q2 and Q3
+      const economicValueRetained = 
+        Number(updatedFormData[0]?.Q2 || 0) - Number(updatedFormData[0]?.Q3 || 0);
+    
+      // Update Q9 with the calculated value
+      updatedFormData[0].Q9 = economicValueRetained!=0?economicValueRetained.toString():'';
+    
+      setFormData(updatedFormData);
+  }
+  
+   
   };
-
+ 
+ 
   const updateFormData = async () => {
     const data = {
       client_id: client_id,
@@ -324,27 +332,43 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
-    // console.log("test form data", formData);
+   
   };
+ 
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
+     <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
             Report the direct economic value generated and distributed (EVG&D) on an accruals basis for the reporting period, including the basic components for the organization’s global operations as listed below:
               <MdInfoOutline
@@ -357,7 +381,7 @@ report EVG&D separately at country, regional, or market levels, and the criteria
 <p>
 Note: Compile the EVG&D from data in the organization’s audited financial or profit and loss
 (P&L) statement, or its internally audited management accounts.</p> "
-                className="text-[18px] mt-1"
+                className="text-[18px] mt-1 w-[20%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
               />
               <ReactTooltip
                 id={`es25`}
@@ -376,14 +400,14 @@ Note: Compile the EVG&D from data in the organization’s audited financial or p
               ></ReactTooltip>
             </h2>
           </div>
-          <div className="w-[20%]">
-            <div className="flex float-end gap-2">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 201-1a
                 </div>
               </div>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 201-1b
                 </div>
@@ -405,10 +429,17 @@ Note: Compile the EVG&D from data in the organization’s audited financial or p
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

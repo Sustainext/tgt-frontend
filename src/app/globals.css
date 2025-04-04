@@ -3,12 +3,65 @@
 @tailwind utilities;
 
 
-body{
-  height: 100vh;
-  zoom: 0.8;
-  overflow-x: hidden;
- 
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
+
+/* 4K screens (3840px width and above) */
+@media (min-width: 3840px) {
+  body {
+    zoom: 2;
+    overflow-x: hidden;
+  }
+}
+
+/* 3K screens (3200px width and above) */
+@media (min-width: 3200px) and (max-width: 3839px) {
+  body {
+    zoom: 1.3;
+  }
+}
+
+/* 2K screens (2560px width and above) */
+@media (min-width: 2560px) and (max-width: 3199px) {
+  body {
+    zoom: 1.2;
+    overflow-x: hidden;
+  }
+}
+
+/* Full HD (1920x1080) */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  body {
+    zoom: 1.0;
+    overflow-x: hidden;
+  }
+}
+
+/* Default Zoom for smaller screens */
+@media (max-width: 1919px) {
+  body {
+    zoom: 0.8;
+    overflow-x: hidden;
+  }
+}
+@media (max-width: 768px) {
+  body {
+    zoom: 0.8;
+    overflow-x: hidden;
+  }
+}
+body{
+  box-sizing: border-box;
 }
 button,
 input,
@@ -26,6 +79,26 @@ h1,h2,h3,h4,h5,h6,p,div {
     /* For Webkit (Chrome, Safari, etc.) */
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+  @media (max-width: 768px) {
+    .scrollable-content {
+      scrollbar-width: auto; /* Firefox */
+      -ms-overflow-style: auto; /* IE/Edge */
+  
+      &::-webkit-scrollbar {
+        display: none;
+        width: 6px;
+      }
+  
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+      }
+  
+      &::-webkit-scrollbar-track {
+        background-color: transparent;
+      }
     }
   }
   .gradient-text {
@@ -126,7 +199,12 @@ h1,h2,h3,h4,h5,h6,p,div {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 30%;
   }
-
+  @media (max-width: 768px) {
+    .modal-content-custom {
+   
+      width: 80%;
+    }
+  }
   .modal-content-custom-width {
     background-color: white;
     padding: 20px;
@@ -134,7 +212,12 @@ h1,h2,h3,h4,h5,h6,p,div {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 35%;
   }
-
+  @media (max-width: 768px) {
+    .modal-content-custom-width{
+   
+      width: 89% !important;
+    }
+  }
   .modal-close {
     margin-top: 10px;
     background-color: #007bff;
@@ -466,4 +549,40 @@ color:"#ACACAC";
   padding: 5px;              /* Add some padding */
   border: none;              /* Remove borders */
   background-color: transparent; /* Transparent background */
+}
+
+.modal-contentnew {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 30%;
+}
+@media (max-width: 768px) {
+  .modal-contentnew {
+    width: 95%;
+   
+  }
+}
+.panel-danger{
+  display: none;
+}
+.error-detail{
+  display: none;
+}
+.desktop-wide {
+  width: 25vw;
+}
+
+.desktop-narrow {
+  width: 17vw;
+}
+@media (max-width: 768px) {
+  .desktop-wide {
+    width: 45vw;
+  }
+  
+  .desktop-narrow {
+    width: 37vw;
+  }
 }
