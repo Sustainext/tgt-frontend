@@ -74,7 +74,7 @@ export default function DashboardLayout({ children }) {
             <div className="fixed top-0 left-0 w-full z-50 h-16">
               <MobileSidenav />
             </div>
-            <div className="flex-1 overflow-y-auto mt-36 overflow-x-hidden">{children}</div>
+            <div className="flex-1 overflow-y-auto mt-36 overflow-x-hidden scrollable-content">{children}</div>
           </div>
         ) : (
           // **Desktop Version**
