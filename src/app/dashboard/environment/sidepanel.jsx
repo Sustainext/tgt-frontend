@@ -20,6 +20,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
   const [isWasteVisible, setWasteVisible] = useState(false);
   const [isWaterVisible, setWaterVisible] = useState(false);
+  const [isBioDiversityVisible, setBioDiversityVisible] = useState(false);
   const [isMaterialsVisible, setMaterialsVisible] = useState(false);
   const [isSupplierVisible, setIsSupplierVisible] = useState(false);
   // const [isEffluentVisible, setIsEffluentVisible] = useState(false);
@@ -34,6 +35,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setWasteVisible(false);
     setMaterialsVisible(false);
     setWaterVisible(false);
+    setBioDiversityVisible(false);
     setEnergySectionVisible(false);
     setIsSupplierVisible(false);
     setIsAirQualityVisible(false)
@@ -44,6 +46,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setWasteVisible(false);
     setMaterialsVisible(false);
     setWaterVisible(false);
+    setBioDiversityVisible(false);
     setEnergySectionVisible(false);
     setEmisssion(false);
     setIsAirQualityVisible(false)
@@ -53,6 +56,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setEnergySectionVisible(!isEnergySectionVisible);
     setWasteVisible(false);
     setMaterialsVisible(false);
+    setBioDiversityVisible(false);
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
@@ -64,6 +68,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setEnergySectionVisible(false);
     setMaterialsVisible(false);
     setWaterVisible(false);
+    setBioDiversityVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsAirQualityVisible(false)
@@ -73,6 +78,20 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setWaterVisible(!isWaterVisible);
     setEnergySectionVisible(false);
     setWasteVisible(false);
+    setBioDiversityVisible(false);
+    setMaterialsVisible(false);
+    setIsSupplierVisible(false);
+    setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
+  };
+
+  const toggleBioDiversityVisible = () => {
+    setBioDiversityVisible(!isBioDiversityVisible);
+    setEnergySectionVisible(false);
+    setWasteVisible(false);
+    setBioDiversityVisible(false);
+    setWaterVisible(false);
     setMaterialsVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
@@ -95,6 +114,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setWasteVisible(false);
+    setBioDiversityVisible(false);
     setMaterialsVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
@@ -106,6 +126,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setEnergySectionVisible(false);
     setWasteVisible(false);
     setWaterVisible(false);
+    setBioDiversityVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsAirQualityVisible(false)
@@ -116,6 +137,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setEnergySectionVisible(false);
     setWasteVisible(false);
     setMaterialsVisible(false)
+    setBioDiversityVisible(false);
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
@@ -1055,6 +1077,178 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
                 <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   {materialityEnvData &&
                   materialityEnvData.EnvWaterEffluent?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic Water"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick("Management of Material topic Water")
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Topic management disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Interaction with water as shared resource"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Interaction with water as shared resource"
+                        )
+                      }
+                    >
+                      Interaction with water as shared resource
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Topic Disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Water Withdrawal and Water Discharge from All Areas"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Water Withdrawal and Water Discharge from All Areas"
+                        )
+                      }
+                    >
+                      {" "}
+                      Water Withdrawal and Water Discharge from All Areas
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Water withdrawal/Discharge from areas with water stress"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Water withdrawal/Discharge from areas with water stress"
+                        )
+                      }
+                    >
+                      Water withdrawal and Water Discharge from areas with water
+                      stress
+                    </p>
+                  </div>
+
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Substances of concern"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Substances of concern")}
+                    >
+                      Substances of concern
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Change in water storage"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Change in water storage")}
+                    >
+                      Change in water storage
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+
+          {/* bio diversity */}
+          <div className={`relative `}>
+            <button
+              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
+              ${
+                activeTab === "Policies to halt and reverse biodiversity loss" ||
+                // activeTab ===
+                //   "Water Withdrawal and Water Discharge from All Areas" ||
+                // activeTab ===
+                //   "Water withdrawal/Discharge from areas with water stress" ||
+                activeTab === "Management of Material topic Bio diversity"
+                // activeTab === "Substances of concern" ||
+                // activeTab === "Change in water storage"
+                  ? "text-blue-400"
+                  : "bg-transparent text-[#727272] "
+              }`}
+              onClick={toggleBioDiversityVisible}
+            >
+              <div className="w-[15%]">
+                <MdOutlineWater className="w-5 h-5 mr-2" />
+              </div>
+              <div className="w-[50%] text-left ml-2">
+                <span className="indent-0">Bio Diversity</span>
+              </div>
+              {materialityEnvData &&
+              materialityEnvData.EnvBioDiversityLandUse?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
+                {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+                </span> */}
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isBioDiversityVisible && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {/* Water and effluents section content */}
+            {isBioDiversityVisible && (
+              <>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.EnvBioDiversityLandUse?.is_material_topic ? (
                     <div>
                       <div>
                         <p className="text-[12px]  ml-3  text-gray-400">
