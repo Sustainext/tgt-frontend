@@ -27,7 +27,6 @@ const SupplierAssessment = () => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-<<<<<<< HEAD
   const Tabs = [
     {
       title: "Assessments",
@@ -42,22 +41,6 @@ const SupplierAssessment = () => {
       id: "tab3",
     },
   ];
-=======
-  const Tabs=[
-   {
-    title:"Assessments",
-    id:"tab1"
-   },
-   {
-    title:"Forms",
-    id:"tab2"
-   },
-   {
-    title:"Stakeholders Groups",
-    id:"tab3"
-   }
-  ]
->>>>>>> 9051dd0922117fd7a86ad7eb6a5de4ae241a735c
   useEffect(() => {
     dispatch(setHeadertext1(""));
     dispatch(setHeaderdisplay("none"));
