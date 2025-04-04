@@ -140,7 +140,9 @@ useEffect(()=>{
                 columns.map((val, i) => (
                   <th
                     key={i}
-                    className={`px-6 py-3 text-sm font-semibold text-gray-600 cursor-pointer ${
+                    className={`px-6 py-3 text-sm font-semibold text-gray-600 cursor-pointer 
+                         ${i === 0 ? "min-w-[25px]" : "min-w-[150px]"} 
+                      ${
                       columns.length - 1 === i ? "text-center" : "text-left"
                     }`}
                     onClick={() =>
