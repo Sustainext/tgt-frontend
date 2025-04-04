@@ -15,7 +15,7 @@ import {
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import OrgTreeMobile from "./OrgTreeMobile";
 const OrgTree = ({ data }) => {
   const nodeWidth = 180;
   const nodeHeight = 60;
@@ -461,6 +461,7 @@ const OrgTree = ({ data }) => {
 
   return (
     <div className="w-full overflow-auto">
+  
       <AddButtons />
       <svg width={maxWidth} height={maxHeight} className="ml-0 pt-2">
         <g transform={`translate(50, 50)`}>
@@ -840,6 +841,7 @@ const OrgTree = ({ data }) => {
         />
       )}
     </div>
+  
   );
 };
 
@@ -881,7 +883,7 @@ const OrganizationTreePage = () => {
   return (
     <>
     <ToastContainer position="top-right" autoClose={3000} />
-    <div className="w-full p-8 rounded-lg">
+    <div className="w-full p-8 rounded-lg hidden xl:block">
       <div className="text-[22px] font-medium font-['Manrope'] leading-relaxed gradient-text pb-6">
         Organization Structure
       </div>
@@ -896,6 +898,9 @@ const OrganizationTreePage = () => {
         </div>
       </div>
       <OrgTree data={orgData} />
+    </div>
+    <div className="block xl:hidden">
+    <OrgTreeMobile data={orgData} />
     </div>
     </>
   );
