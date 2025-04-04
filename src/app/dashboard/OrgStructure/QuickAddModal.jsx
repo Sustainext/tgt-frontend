@@ -83,17 +83,27 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
     if (!formData.name.trim()) {
       errors.name = "Name is required";
     }
+    if (!formData.country) {
+      errors.country = "Country is required";
+    }
 
-    if (type === "location") {
-      if (!formData.country) {
-        errors.country = "Country is required";
+    if (!formData.sector && (type==="corporate"||type==='organization')) {
+      errors.sector = "Sector is required";
+    }
+
+    if (type === "corporate") {
+      if (!formData.subIndustry) {
+        errors.subIndustry = "Sub Industry is required";
       }
-      // if (!formData.state) {
-      //   errors.state = "State is required";
-      // }
-      // if (!formData.city) {
-      //   errors.city = "City is required";
-      // }
+    }
+   
+    if (type === "location") {
+      if (!formData.state) {
+        errors.state = "State is required";
+      }
+      if (!formData.city) {
+        errors.city = "City is required";
+      }
     }
 
     setFormErrors(errors);
@@ -170,12 +180,12 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
         // };
         payload = {
           name: formData.name || 'Entity 1',
-          type_corporate_entity: 'Private Limited',
+          type_corporate_entity: 'Not Specified',
           owner:  '',
           location_of_headquarters: 'Not Specified',
           phone: 9999999999,
           mobile: '',
-          website: 'https://www.sustainext.ai',
+          website: 'Not Provided',
           fax: "",
           employeecount:  0,
           revenue: 0,
@@ -237,12 +247,12 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
 
         payload = {
           name: formData.name || "Test Corp",
-          corporatetype:  "Default",
+          corporatetype:  "Not Specified",
           ownershipnature:  "",
           location_headquarters:  "Not Specified",
           phone:  9999999999,
           mobile:  '',
-          website:  'https://www.sustainext.ai',
+          website:  'Not Provided',
           fax:  '',
           employeecount:  0,
           revenue:  0,
@@ -303,9 +313,9 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
         payload = {
           corporateentity: parentName.id,
           name: formData.name || "Location 1",
-          phone:  999999999,
+          phone:  9999999999,
           mobile:  '',
-          website:  "https://www.sustainext.ai",
+          website:  "Not Provided",
           fax:  "",
           employeecount:  0,
           revenue:  0,
@@ -330,14 +340,15 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
     }
 
     try {
-      await post(endpoint, payload);
+     const response= await post(endpoint, payload);
       showToast(`${entityType} added successfully`);
       onClose();
       setTimeout(() => {
         window.location.reload();
       }, 1000)
     } catch (error) {
-      showToast(`Failed to add ${entityType.toLowerCase()}`, 'error');
+      const message = error?.response?.data?.message[0] || `Failed to add ${entityType.toLowerCase()}`
+      showToast(message,'error');
       console.error("Error adding:", error);
     }
   };
@@ -394,7 +405,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
 
         <div className="mb-3">
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            State
+            State *
           </label>
           <select
             name="state"
@@ -419,7 +430,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            City
+            City *
           </label>
           <select
             name="city"
@@ -515,13 +526,15 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
         {type !== "location" && (
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Country
+              Country *
             </label>
             <select
               name="country"
               value={formData.country}
               onChange={handleInputChange}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm"
+              className={`w-full border ${
+                formErrors.country ? "border-red-500" : "border-gray-300"
+              } rounded-md p-2 text-sm`}
             >
               <option value="">Select Country</option>
               {Country.getAllCountries().map((country) => (
@@ -530,6 +543,9 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
                 </option>
               ))}
             </select>
+            {formErrors.country && (
+            <p className="text-red-500 text-xs mt-1">{formErrors.country}</p>
+          )}
           </div>
         )}
 
@@ -537,13 +553,15 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
           <>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Sector
+                Sector *
               </label>
               <select
                 name="sector"
                 value={formData.sector}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm"
+                className={`w-full border ${
+                  formErrors.sector ? "border-red-500" : "border-gray-300"
+                } rounded-md p-2 text-sm`}
               >
                 <option value="">Select Sector</option>
                 {industryList.map((industry) => (
@@ -552,18 +570,23 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
                   </option>
                 ))}
               </select>
+              {formErrors.sector && (
+            <p className="text-red-500 text-xs mt-1">{formErrors.sector}</p>
+          )}
             </div>
 
             {type === "corporate" && (
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Sub Industry
+                  Sub Industry *
                 </label>
                 <select
                   name="subIndustry"
                   value={formData.subIndustry}
                   onChange={handleInputChange}
-                  className="w-full border border-gray-300 rounded-md p-2 text-sm"
+                  className={`w-full border ${
+                    formErrors.subIndustry ? "border-red-500" : "border-gray-300"
+                  } rounded-md p-2 text-sm`}
                   disabled={!formData.sector}
                 >
                   <option value="">Select Sub Industry</option>
@@ -573,6 +596,9 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
                     </option>
                   ))}
                 </select>
+                {formErrors.subIndustry && (
+            <p className="text-red-500 text-xs mt-1">{formErrors.subIndustry}</p>
+          )}
               </div>
             )}
           </>

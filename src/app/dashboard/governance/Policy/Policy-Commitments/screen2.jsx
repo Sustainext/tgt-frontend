@@ -47,7 +47,7 @@ const uiSchema = {
         key: "",
         title: "Qcolumn2",
         type: "text",
-        display: "none",
+        display: "block",
         tooltip:
           "Indicate whether the given conflict of interest are disclosed to stakeholders.",
       },

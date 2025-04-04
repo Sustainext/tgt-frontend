@@ -39,12 +39,12 @@ const Entity = () => {
     const url = `/corporate${id ? `/${id}/` : ""}`;
     const payload = {
       name: data.generalDetails.name || "Test Corp",
-      corporatetype: data.generalDetails.type || "Default",
+      corporatetype: data.generalDetails.type || "Not Specified",
       ownershipnature: data.generalDetails.ownership || "",
       location_headquarters: data.generalDetails.location || null,
       phone: data.generalDetails.phone || 9999999999,
       mobile: data.generalDetails.mobile || '',
-      website: data.generalDetails.website || 'https://www.sustainext.ai',
+      website: data.generalDetails.website || 'Not Provided',
       fax: data.generalDetails.fax || '',
       employeecount: data.generalDetails.Empcount || 0,
       revenue: data.generalDetails.revenue || 0,
@@ -98,7 +98,8 @@ const Entity = () => {
     } catch (error) {
       console.error("Error:", error);
       const messageAction = method === "post" ? "add" : "update";
-      toast.error(`Failed to ${messageAction} corporate entity`, "error");
+      const message = error?.response?.data?.message[0] || `Failed to ${messageAction} corporate entity`
+      toast.error(message, "error");
     }
   };
 

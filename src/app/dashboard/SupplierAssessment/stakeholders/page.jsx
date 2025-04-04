@@ -224,7 +224,7 @@ const StakeholderPage = ({
           </div>
           <p className="text-[14px] text-[#667085] mb-6">
             List of stakeholders in this group. Add individual stakeholders from
-            + Add New Stakeholder group or import to add in bulk.
+            + Add New Stakeholder or import to add in bulk.
           </p>
           <div className="flex justify-between">
             <button

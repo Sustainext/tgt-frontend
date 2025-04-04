@@ -149,8 +149,37 @@ const StakeholderGroup = ({
     }
     // debouncedFetch();
 
+<<<<<<< HEAD
     return () => debouncedFetch.cancel();
   }, [searchQuery, currentPage, rowsPerPage]);
+=======
+    return (
+        <div className="p-4 min-h-screen">
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-[20px] font-semibold text-[#101828]">Stakeholder Groups</h1>
+                <div className="relative flex gap-4">
+                    <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        placeholder="Search"
+                        className="pl-10 pr-4 py-2 min-w-[25vw] border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="bg-[#007EEF] text-white px-4 py-2 text-[13px] rounded-md hover:bg-blue-600"
+                    >
+                        <div className="flex gap-1">
+                            <MdAdd className="w-4 h-4 mt-0.5" /> Create New Stakeholder Group
+                        </div>
+                    </button>
+                </div>
+            </div>
+            {/* <p className="text-[14px] text-[#667085] mb-6">
+                List of stakeholders in this group. Add individual stakeholders from + Add New Stakeholder group or import to add in bulk.
+            </p> */}
+>>>>>>> 9051dd0922117fd7a86ad7eb6a5de4ae241a735c
 
   const columns = [
     { key: "sno", label: "Sno" },
