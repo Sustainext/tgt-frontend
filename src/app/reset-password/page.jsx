@@ -6,7 +6,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import PasswordChecklist from 'react-password-checklist';
 import { useRouter } from 'next/navigation';
 import 'react-tooltip/dist/react-tooltip.css';
-import { post } from '../utils/axiosMiddleware';
+import axiosInstance from "@/app/utils/axiosMiddleware";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import CryptoJS from "crypto-js";
 const ClientPasswordReset = () => {
@@ -19,7 +19,18 @@ const ClientPasswordReset = () => {
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
-
+  const getAuthToken = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('token')?.replace(/"/g, "");
+    }
+    return '';
+};
+const token = getAuthToken();
+let axiosConfig = {
+  headers: {
+    Authorization: 'Bearer ' + token,
+  },
+};
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -28,16 +39,6 @@ const ClientPasswordReset = () => {
   const handleClickShowPasswordCon = () => setConshowPassword((show) => !show);
 
   const confirmPassword = (event) => {
-    const val = event.target.value;
-    if (password === val) {
-      setConfirmPass('New Password and Confirm Password are matched');
-      setMessageColor('text-green-500');
-    } else if (password === '') {
-      setConfirmPass('');
-    } else {
-      setConfirmPass('New Password and Confirm Password are not matched');
-      setMessageColor('text-red-500');
-    }
   };
   const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
   const handleSetPassword = async (e) => {
@@ -50,9 +51,9 @@ const ClientPasswordReset = () => {
     };
 
     try {
-      const response = await post(
+      const response = await axiosInstance.post(
         `${process.env.BACKEND_API_URL}/api/auth/change_password/`,
-        data,
+        data,axiosConfig
       );
       if (response.status === 200) {
         setSuccess(true);
