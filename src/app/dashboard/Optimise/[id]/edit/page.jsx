@@ -6,6 +6,7 @@ import WeightageInputModal from "../../WeightageInputModal";
 import ActivitySelectTable from "../../ActivitySelectTable";
 import ConfirmActivitiesModal from "../../ConfirmActivitiesModal";
 import ActivitySummarySection from "../../ActivitiesSummary";
+import EmissionProjectionView from "../../EmissionProjectionView"
 import { GlobalState } from "@/Context/page";
 
 const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
@@ -79,8 +80,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
     if (currentStep === 2) {
       setIsConfirmModalOpen(true);
       return;
-    }
-     else if (currentStep < 4) {
+    } else if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     } else {
       onSave(scenario);
@@ -106,7 +106,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
   // Go back to dashboard
   const handleBackToDashboard = () => {
     onCancel();
-  };  
+  };
 
   return (
     <>
@@ -150,7 +150,12 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
                   Select Activities
                 </h2>
                 <p className="text-gray-600 mb-6">
-                Select the activities from the below table for which you foresee changes in the consumption pattern for this scenario. Select and confirm the activities here and use the graph to increase or decrease the percentage consumptions for the available years within the time period of the scenario in the next screen.
+                  Select the activities from the below table for which you
+                  foresee changes in the consumption pattern for this scenario.
+                  Select and confirm the activities here and use the graph to
+                  increase or decrease the percentage consumptions for the
+                  available years within the time period of the scenario in the
+                  next screen.
                 </p>
               </div>
             )}
@@ -158,10 +163,26 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
             {currentStep === 3 && (
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                Select Changes in the Consumption Pattern
+                  Select Changes in the Consumption Pattern
                 </h2>
                 <p className="text-gray-600 mb-6">
-                Select the consumption pattern changes for years projected under each activities. Add if there will also be any activity changes for the years under each activities.
+                  Select the consumption pattern changes for years projected
+                  under each activities. Add if there will also be any activity
+                  changes for the years under each activities.
+                </p>
+              </div>
+            )}
+
+            {currentStep === 4 && (
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                  Scenario Visualization
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Visualize your scenario for the chosen activities. Filter
+                  results by scope, category, sub category and activity.
+                  Visualize net zero scenario by checking the filter and adding
+                  the target year.{" "}
                 </p>
               </div>
             )}
@@ -275,7 +296,11 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
         {/* Step 1: Select Business Metric */}
         {currentStep === 1 && (
           <>
-            <div className={`space-y-4 px-8 mr-2 ${open ? "max-w-[108vw]": "max-w-[120vw]"}`}>
+            <div
+              className={`space-y-4 px-8 mr-2 ${
+                open ? "max-w-[108vw]" : "max-w-[120vw]"
+              }`}
+            >
               {businessMetrics.map((metric) => (
                 <div
                   key={metric.id}
@@ -318,11 +343,27 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
           </>
         )}
 
-        {currentStep === 2 &&<div className="px-6"> <ActivitySelectTable selectedActivities={selectedActivities} setSelectedActivities={setSelectedActivities} /></div>}
+        {currentStep === 2 && (
+          <div className="px-6">
+            {" "}
+            <ActivitySelectTable
+              selectedActivities={selectedActivities}
+              setSelectedActivities={setSelectedActivities}
+            />
+          </div>
+        )}
 
-        {currentStep === 3 && <div className="px-6">
-          <ActivitySummarySection activities={selectedActivities} />
-        </div>}
+        {currentStep === 3 && (
+          <div className="px-6">
+            <ActivitySummarySection activities={selectedActivities} />
+          </div>
+        )}
+
+        {currentStep === 4 && (
+          <div className="px-6">
+            <EmissionProjectionView />
+          </div>
+        )}
 
         {/* Footer with navigation buttons */}
         <div className="mt-8 flex justify-end px-8 gap-4">
