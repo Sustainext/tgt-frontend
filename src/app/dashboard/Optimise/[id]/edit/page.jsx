@@ -155,6 +155,17 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
               </div>
             )}
 
+            {currentStep === 3 && (
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Select Changes in the Consumption Pattern
+                </h2>
+                <p className="text-gray-600 mb-6">
+                Select the consumption pattern changes for years projected under each activities. Add if there will also be any activity changes for the years under each activities.
+                </p>
+              </div>
+            )}
+
             {/* Progress Steps */}
             <div className="mb-8 max-w-lg">
               <div className="flex items-center justify-between">
@@ -309,9 +320,9 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
 
         {currentStep === 2 &&<div className="px-6"> <ActivitySelectTable selectedActivities={selectedActivities} setSelectedActivities={setSelectedActivities} /></div>}
 
-        {/* {currentStep === 3 && <div className="px-6">
+        {currentStep === 3 && <div className="px-6">
           <ActivitySummarySection activities={selectedActivities} />
-        </div>} */}
+        </div>}
 
         {/* Footer with navigation buttons */}
         <div className="mt-8 flex justify-end px-8 gap-4">

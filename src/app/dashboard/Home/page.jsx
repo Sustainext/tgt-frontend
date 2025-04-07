@@ -3,7 +3,7 @@ import MyGoals from "./MyGoals";
 import MyTasks from "./TasksNew/MyTask";
 import Preferences from "./Preferences/page";
 import { ToastContainer } from "react-toastify";
-import NivoYearlyGrowth from "@/app/dashboard/Optimise/NivoYearlyGrowth";
+import NivoYearlyGrowth from "@/app/dashboard/Optimise/ActivitiesGraph";
 
 const HomeDashboard = ({setActiveTab}) => {
   return (
