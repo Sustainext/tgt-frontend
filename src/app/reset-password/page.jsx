@@ -45,11 +45,6 @@ let axiosConfig = {
     e.preventDefault();
     setLoading(true);
 
-    const data = {
-      password1: hashedPassword,
-      password2: hashedPassword,
-    };
-
     try {
       const response = await axiosInstance.post(
         `${process.env.BACKEND_API_URL}/api/auth/change_password/`,
