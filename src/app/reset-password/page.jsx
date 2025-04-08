@@ -47,11 +47,11 @@ let axiosConfig = {
       setConfirmPass('');
     }
    else if (password === val) {
-      setConfirmPass('New Password and Confirm Password are matched');
+      setConfirmPass('New Password and Confirm Password are matching');
       setMessageColor('text-green-500');
       setResetenabled(false)
     } else {
-      setConfirmPass('New Password and Confirm Password are not matched');
+      setConfirmPass('New Password and Confirm Password are not matching');
       setMessageColor('text-red-500');
       setResetenabled(true)
     }
@@ -137,11 +137,11 @@ let axiosConfig = {
                           setConfirmPass('');
                         }
                         else if (confirmPassVariable === e.target.value) {
-                          setConfirmPass('New Password and Confirm Password are matched');
+                          setConfirmPass('New Password and Confirm Password are matching');
                           setMessageColor('text-green-500');
                           setResetenabled(false)
                         } else {
-                          setConfirmPass('New Password and Confirm Password are not matched');
+                          setConfirmPass('New Password and Confirm Password are not matching');
                           setMessageColor('text-red-500');
                           setResetenabled(true)
                         }
