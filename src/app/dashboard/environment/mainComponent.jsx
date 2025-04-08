@@ -34,6 +34,7 @@ import ConsolidationApproach from "./Emissions/consolidationApproach/page";
 import Standards from "./Emissions/standards/page";
 import EmissionIntensity from "./Emissions/emission-Intensity/page";
 import Emissionreductioninitiativesnew from "./Emissions/emission-reduction-initiatives/page";
+import BioDiversityPolicies from './BioDiversity/BioDiversityPolicies/page'
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -52,6 +53,8 @@ import StandardMethodology from "./AirQuality/StandardMethodology/page";
 import ODSImportExport from "./AirQuality/ODS-Import-Export/page";
 import EmissionsODS from "./AirQuality/Emissions-ODS/page";
 import MaterialTopicPackagingMaterial from "./PackageingMaterial/Management-Material-topic/page";
+import MaterialTopicBioDiversity from './BioDiversity/Management-of-material-topic/page'
+import AccessProfitSharing from "./BioDiversity/AccessandProfitSharing/page";
 import {
   fetchLocations,
   fetchUsers,
@@ -108,6 +111,7 @@ const environment = () => {
       "Management of Material topic Materials",
       "Management of Material topic waste",
       "Management of Material topic energy",
+      "Management of Material topic Bio diversity",
       // "Management of Material topic effluent",
       "Management of Material topic air quality",
       "Management of Material topic Packaging Materials",
@@ -170,6 +174,13 @@ const environment = () => {
       "Emissions ODS",
     ];
 
+    const bioDiversityTab = [
+      "Biodiversity Policies",
+      "Management of biodiversity impacts",
+      "Synergies, Trade-offs & Stakeholder Engagement",
+      "Access and benefit-sharing",
+    ];
+
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Emission"));
@@ -186,9 +197,9 @@ const environment = () => {
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Supplier Environmental Assessment"));
     }
-    // else if (effluentTab.includes(activeTab)) {
-    //   dispatch(setHeadertext2("Effluents"));
-    // }
+    else if (bioDiversityTab.includes(activeTab)) {
+      dispatch(setHeadertext2("Biodiversity"));
+    }
     else if (airQualityTab.includes(activeTab)) {
       dispatch(setHeadertext2("Air Quality"));
     } else if (materialnewTabs.includes(activeTab)) {
@@ -367,6 +378,29 @@ const environment = () => {
               {activeTab ===
                 "Reclaimed products and their packaging materials" && (
                 <Reclaimedproducts
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+
+              {/* Bio diversity */}
+              {activeTab ===
+                "Management of Material topic Bio diversity" && (
+                <MaterialTopicBioDiversity
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Biodiversity Policies" && (
+                <BioDiversityPolicies
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Access and benefit-sharing" && (
+                <AccessProfitSharing
                   apiData={data}
                   setMobileopen={setMobileopen}
                 />

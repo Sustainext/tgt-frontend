@@ -14,10 +14,12 @@ const ClientPasswordReset = () => {
   const [conshowPassword, setConshowPassword] = useState(false);
   const [confirmPass, setConfirmPass] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassVariable, setConfirmPassVariable] = useState('');
   const [messageColor, setMessageColor] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isResetenabled,setResetenabled]=useState(false)
   const router = useRouter();
   const getAuthToken = () => {
     if (typeof window !== 'undefined') {
@@ -39,11 +41,30 @@ let axiosConfig = {
   const handleClickShowPasswordCon = () => setConshowPassword((show) => !show);
 
   const confirmPassword = (event) => {
+    const val = event.target.value;
+    setConfirmPassVariable(val)
+    if (password === '' || val==='') {
+      setConfirmPass('');
+    }
+   else if (password === val) {
+      setConfirmPass('New Password and Confirm Password are matched');
+      setMessageColor('text-green-500');
+      setResetenabled(false)
+    } else {
+      setConfirmPass('New Password and Confirm Password are not matched');
+      setMessageColor('text-red-500');
+      setResetenabled(true)
+    }
   };
   const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
   const handleSetPassword = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    const data = {
+      password1: hashedPassword,
+      password2: hashedPassword,
+    };
 
     try {
       const response = await axiosInstance.post(
@@ -111,7 +132,20 @@ let axiosConfig = {
                       autoComplete="current-password"
                       required
                       className="block w-full rounded-md border-0 py-1.5 pl-4 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => {setPassword(e.target.value)
+                        if (e.target.value === '' || confirmPassVariable==='') {
+                          setConfirmPass('');
+                        }
+                        else if (confirmPassVariable === e.target.value) {
+                          setConfirmPass('New Password and Confirm Password are matched');
+                          setMessageColor('text-green-500');
+                          setResetenabled(false)
+                        } else {
+                          setConfirmPass('New Password and Confirm Password are not matched');
+                          setMessageColor('text-red-500');
+                          setResetenabled(true)
+                        }
+                      }}
                     />
                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                       <button type="button" onClick={handleClickShowPassword}>
@@ -169,7 +203,8 @@ let axiosConfig = {
                 <div>
                   <button
                     type="submit"
-                    className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-gradient-to-r from-[#364161] to-[#06081f] hover:from-[#06081f] hover:to-[#364161] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    disabled={isResetenabled || password==='' || confirmPassVariable===''}
+                    className={`flex w-full justify-center ${isResetenabled || password==='' || confirmPassVariable===''?'opacity-40 cursor-not-allowed':'cursor-pointer'} rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-gradient-to-r from-[#364161] to-[#06081f] hover:from-[#06081f] hover:to-[#364161] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                   >
                     {loading ? 'Please wait...' : 'Reset Password'}
                   </button>

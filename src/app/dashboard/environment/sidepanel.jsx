@@ -11,6 +11,7 @@ import {
   MdOutlineEmojiNature,
   MdOutlineAir,
   MdClose,
+  MdEmojiNature
 } from "react-icons/md";
 import { LuPackage } from "react-icons/lu";
 import { GiWoodPile, GiWaterfall } from "react-icons/gi";
@@ -90,7 +91,6 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setBioDiversityVisible(!isBioDiversityVisible);
     setEnergySectionVisible(false);
     setWasteVisible(false);
-    setBioDiversityVisible(false);
     setWaterVisible(false);
     setMaterialsVisible(false);
     setIsSupplierVisible(false);
@@ -98,6 +98,8 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setIsAirQualityVisible(false)
     setIsPackagingMaterialVisible(false)
   };
+
+  console.log(isBioDiversityVisible,"see")
 
   // const toggleEffluentVisible = () => {
   //   setIsEffluentVisible(!isEffluentVisible)
@@ -1201,9 +1203,9 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
             <button
               className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
               ${
-                activeTab === "Policies to halt and reverse biodiversity loss" ||
-                // activeTab ===
-                //   "Water Withdrawal and Water Discharge from All Areas" ||
+                activeTab === "Biodiversity Policies" ||
+                activeTab ===
+                  "Access and benefit-sharing" ||
                 // activeTab ===
                 //   "Water withdrawal/Discharge from areas with water stress" ||
                 activeTab === "Management of Material topic Bio diversity"
@@ -1215,7 +1217,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
               onClick={toggleBioDiversityVisible}
             >
               <div className="w-[15%]">
-                <MdOutlineWater className="w-5 h-5 mr-2" />
+                <MdEmojiNature className="w-6 h-6 mr-2" />
               </div>
               <div className="w-[50%] text-left ml-2">
                 <span className="indent-0">Bio Diversity</span>
@@ -1258,12 +1260,12 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
                       <div>
                         <p
                           className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                            activeTab === "Management of Material topic Water"
+                            activeTab === "Management of Material topic Bio diversity"
                               ? "text-blue-400"
                               : "bg-transparent text-[#727272]"
                           }`}
                           onClick={() =>
-                            handleTabClick("Management of Material topic Water")
+                            handleTabClick("Management of Material topic Bio diversity")
                           }
                         >
                           Management of Material topic
@@ -1283,83 +1285,70 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab ===
-                        "Interaction with water as shared resource"
+                        "Biodiversity Policies"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
                       onClick={() =>
                         handleTabClick(
-                          "Interaction with water as shared resource"
+                          "Biodiversity Policies"
                         )
                       }
                     >
-                      Interaction with water as shared resource
+                     Biodiversity Policies
                     </p>
                   </div>
-                  <div>
+                  {/* <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
                       Topic Disclosure
                     </p>
-                  </div>
+                  </div> */}
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab ===
-                        "Water Withdrawal and Water Discharge from All Areas"
+                        "Management of biodiversity impacts"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
                       onClick={() =>
                         handleTabClick(
-                          "Water Withdrawal and Water Discharge from All Areas"
+                          "Management of biodiversity impacts"
                         )
                       }
                     >
                       {" "}
-                      Water Withdrawal and Water Discharge from All Areas
+                      Management of biodiversity impacts
                     </p>
                   </div>
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab ===
-                        "Water withdrawal/Discharge from areas with water stress"
+                        "Synergies, Trade-offs & Stakeholder Engagement"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
                       onClick={() =>
                         handleTabClick(
-                          "Water withdrawal/Discharge from areas with water stress"
+                          "Synergies, Trade-offs & Stakeholder Engagement"
                         )
                       }
                     >
-                      Water withdrawal and Water Discharge from areas with water
-                      stress
+                     Synergies, Trade-offs & Stakeholder Engagement
                     </p>
                   </div>
 
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Substances of concern"
+                        activeTab === "Access and benefit-sharing"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
-                      onClick={() => handleTabClick("Substances of concern")}
+                      onClick={() => handleTabClick("Access and benefit-sharing")}
                     >
-                      Substances of concern
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Change in water storage"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Change in water storage")}
-                    >
-                      Change in water storage
+                      Access and benefit-sharing
                     </p>
                   </div>
                 </div>
