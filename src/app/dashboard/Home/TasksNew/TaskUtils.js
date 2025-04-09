@@ -49,7 +49,7 @@ export const TABS = [
 
 export const TABLE_HEADERS = [
   { label: "Tasks", className: "col-span-6 text-left" },
-  { label: "Status", className: "col-span-3 text-center" },
+  { label: "Status", className: "col-span-3 text-left" },
   { label: "Due date", className: "col-span-3 text-right mr-5" },
 ];
 

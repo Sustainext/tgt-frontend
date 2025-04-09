@@ -8,7 +8,7 @@ function Organizationalboundaries({ locatiodata, setBoundaries, boundaries }) {
   return (
     <>
       <div className="div">
-        <div className="px-3">
+        <div className="xl:px-3">
           <h3 className="text-left mb-2 p-3">
             <b>BOUNDARIES</b>
           </h3>
@@ -22,7 +22,7 @@ function Organizationalboundaries({ locatiodata, setBoundaries, boundaries }) {
               emissions by deciding the approach to consolidate GHG emissions.{" "}
               {orgname} adopts the
               <select
-                className=" mx-2 w-[26%] rounded-md border-0 py-1 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className=" xl:mx-2 xl:w-[26%] w-full rounded-md border-0 py-1 xl:pl-4 xl:mt-0 mt-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={boundaries}
                 onChange={handleBoundaries}
               >

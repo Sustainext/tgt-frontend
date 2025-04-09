@@ -42,7 +42,7 @@ function Executivesummary({
   const reportby = typeof window !== 'undefined' ? localStorage.getItem("reportby") : '';
   return (
     <>
-      <div className="px-3">
+      <div className="xl:px-3">
         <div className="flex">
           <h3 className="text-left mb-2 p-3">
             <b>EXECUTIVE SUMMARY</b>

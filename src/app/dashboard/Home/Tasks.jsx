@@ -403,40 +403,43 @@ const TasksPage = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center justify-between w-full">
-          <div className="bg-white rounded-md shadow-sm border border-r-0 border-gray-300">
-            {[
-              { id: "upcoming", label: "Upcoming" },
-              { id: "overdue", label: "Overdue" },
-              { id: "completed", label: "Completed" },
-              { id: "for_review", label: "For Review" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                className={`px-4 py-2 border-r border-gray-300 text-sm transition-colors ${
-                  activeTab === tab.id
-                    ? "bg-[#f8f9fb] text-gray-800"
-                    : "text-gray-600 hover:bg-gray-100"
-                }`}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-          <div className="ml-8">
-            {activeTab === "for_review" && (
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-70"
-                disabled={selectedTasks.length === 0}
-                onClick={openReviewModal}
-              >
-                Review Tasks ({selectedTasks.length})
-              </button>
-            )}
-          </div>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-3 md:space-y-0">
+        {/* Tab Buttons */}
+        <div className="bg-white rounded-md shadow-sm border border-gray-300 overflow-x-auto flex md:inline-flex w-full md:w-auto">
+          {[
+            { id: "upcoming", label: "Upcoming" },
+            { id: "overdue", label: "Overdue" },
+            { id: "completed", label: "Completed" },
+            { id: "for_review", label: "For Review" },
+          ].map((tab, index, array) => (
+            <button
+              key={tab.id}
+              className={`px-4 py-2 text-sm whitespace-nowrap transition-colors ${
+                index !== array.length - 1 ? "border-r" : ""
+              } border-gray-300 ${
+                activeTab === tab.id
+                  ? "bg-[#f8f9fb] text-gray-800"
+                  : "text-gray-600 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
+
+        {/* Review Button */}
+        {activeTab === "for_review" && (
+          <div className="md:ml-8 md:self-end">
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-70 w-full md:w-auto"
+              disabled={selectedTasks.length === 0}
+              onClick={openReviewModal}
+            >
+              Review Tasks ({selectedTasks.length})
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Filter Tags */}
@@ -516,6 +519,8 @@ const TasksPage = () => {
       </div>
 
       {/* Modified Table Header */}
+      {/* desktop version */}
+      <div className=" xl:block hidden">
       <div className="bg-white rounded-lg flex flex-col h-[calc(100vh-280px)]">
         <div className="grid grid-cols-9 gap-4 px-6 py-4 border-b border-gray-200 text-sm font-medium text-gray-500">
           <div className="col-span-3 flex items-center gap-4">
@@ -712,6 +717,146 @@ const TasksPage = () => {
           ))}
         </div>
       </div>
+      </div>
+    
+
+      <div className=" xl:hidden">
+  <table className="w-full table-auto">
+    <thead>
+      <tr className="text-sm font-medium text-gray-500 border-b border-gray-200">
+        <th className="">
+          <input
+            type="checkbox"
+            checked={selectedTasks.length === tasks.length}
+            onChange={handleSelectAllVisible}
+            className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${activeTab === "for_review" ? "" : "opacity-0"}`}
+            disabled={activeTab !== "for_review"}
+          />
+          <div className="" onClick={() => handleSort("task_name")}>
+            Tasks
+            {sortColumn === "task_name" &&
+              (sortOrder === "asc" ? (
+                <FiChevronUp />
+              ) : sortOrder === "desc" ? (
+                <FiChevronDown />
+              ) : (
+                <LuChevronsUpDown />
+              ))}
+          </div>
+        </th>
+        <th className="" ref={statusFilterRef}>
+          <div className="flex items-center gap-2">
+            Status
+            <button onClick={() => setIsStatusFilterOpen(!isStatusFilterOpen)} className="hover:bg-gray-100 p-1 rounded">
+              <MdFilterList className="w-4 h-4" />
+            </button>
+          </div>
+          {/* Status Filter Popover */}
+          {isStatusFilterOpen && <StatusFilterModal />}
+        </th>
+        <th className="" ref={assigneeFilterRef}>
+          <div className="flex items-center gap-2">
+            Assignee
+            <button onClick={() => setIsAssigneeFilterOpen(!isAssigneeFilterOpen)} className="hover:bg-gray-100 p-1 rounded">
+              <MdFilterList className="w-4 h-4" />
+            </button>
+          </div>
+          {/* Assignee Filter Popover */}
+          {isAssigneeFilterOpen && (
+            <div className="absolute z-10 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
+              <div className="p-4">
+                <h3 className="text-sm font-medium text-gray-900 mb-3">Filter by Assignee</h3>
+                {/* Search input */}
+                <div className="relative mb-3">
+                  <input
+                    type="text"
+                    placeholder="Search assignees..."
+                    className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-md"
+                    value={assigneeSearchQuery}
+                    onChange={(e) => setAssigneeSearchQuery(e.target.value)}
+                  />
+                  <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                </div>
+                {/* Assignee list */}
+                <div className="space-y-2 max-h-60 overflow-y-auto">
+                  {users
+                    .filter(
+                      (user) =>
+                        user.username.toLowerCase().includes(assigneeSearchQuery.toLowerCase()) ||
+                        user.email.toLowerCase().includes(assigneeSearchQuery.toLowerCase())
+                    )
+                    .map((user) => (
+                      <label key={user.id} className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={selectedAssignees.includes(user.id)}
+                          onChange={() => handleAssigneeSelection(user.id)}
+                          className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm font-medium text-gray-900 truncate">{user.name}</div>
+                          <div className="text-sm text-gray-500 truncate">{user.email}</div>
+                        </div>
+                      </label>
+                    ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </th>
+        <th className="col-span-1 px-6 py-4 text-gray-500 cursor-pointer" onClick={() => handleSort("created_at")}>
+          Assigned on
+          {sortColumn === "created_at" &&
+            (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
+        </th>
+        <th className="col-span-1 px-6 py-4 text-gray-500 cursor-pointer" onClick={() => handleSort("deadline")}>
+          Due Date
+          {sortColumn === "deadline" && (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
+        </th>
+        <th className="col-span-1 px-6 py-4">Attachment</th>
+      </tr>
+    </thead>
+
+    <tbody className="divide-y divide-gray-200 overflow-y-auto">
+      {tasks.map((task) => (
+        <tr key={task.id} className="hover:bg-gray-50">
+          <td className="col-span-3 flex items-center gap-4 px-6 py-4">
+            <input
+              type="checkbox"
+              checked={selectedTasks.includes(task.id)}
+              onChange={() => handleRowSelection(task.id)}
+              className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${activeTab === "for_review" ? "" : "opacity-0"}`}
+              disabled={activeTab !== "for_review"}
+            />
+            <span className="text-blue-600 truncate cursor-pointer w-[30vw]" onClick={() => handleTaskClick(task)}>
+              {task.task_name}
+            </span>
+          </td>
+          <td className="col-span-1 flex items-center space-x-2 px-6 py-4">
+            <span className={`h-2 w-2 rounded-full ${getStatusBadgeClasses(task.task_status)}`} />
+            <span className="text-gray-900 font-semibold">{getStatusLabel(task.task_status)}</span>
+          </td>
+          <td className="col-span-2 px-6 py-4">
+            <div className="text-gray-900 font-semibold">{task.assign_to_user_name}</div>
+            <div className="text-gray-500 text-sm">{task.assign_to_email}</div>
+          </td>
+          <td className="col-span-1 text-gray-500 px-6 py-4">
+            <Moment format="DD/MM/YYYY">{task.assigned_date}</Moment>
+          </td>
+          <td className="col-span-1 text-gray-500 px-6 py-4">
+            <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
+          </td>
+          <td className={`col-span-1 ${task.file_data?.name ? "text-blue-500" : "text-gray-400"} flex items-start justify-start gap-1 px-6 py-4`}>
+            <span>
+              {task.file_data?.name && <MdFilePresent className="text-2xl text-green-500" />}
+            </span>
+            <span>{task.file_data?.name || "No attachment"}</span>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
 
       {/* Pagination */}
       <div className="flex items-center justify-center gap-6 mt-4">
