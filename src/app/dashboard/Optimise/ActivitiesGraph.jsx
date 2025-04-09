@@ -146,6 +146,51 @@ const ActivitiesGraph = ({
     return false;
   };
 
+  // Function to handle percentage input
+  const handlePercentageChange = (index, value) => {
+    // Handle special case: if user is just typing a minus sign
+    if (value === "-") {
+      const newData = [...data];
+      // Store the negative sign as a special flag in the data
+      // Use a string to maintain the "negative intent" for future input
+      newData[index] = { ...newData[index], y: "-" };
+      setData(newData);
+      return;
+    }
+
+    // Check if we have a negative sign stored
+    const isNegativeIntent = data[index].y === "-";
+    
+    // Strip non-numeric characters except the leading minus
+    let processedValue = value.replace(/[^0-9\-+]/g, "");
+    
+    // If there's a negative intent and user is now typing numbers
+    if (isNegativeIntent && /^\d+$/.test(processedValue)) {
+      // Apply the stored negative sign
+      processedValue = "-" + processedValue;
+    }
+    
+    // Parse the value as an integer
+    let numValue = parseInt(processedValue, 10);
+    
+    // Check if the value is valid
+    if (isNaN(numValue)) {
+      return; // Keep the current value if invalid
+    }
+    
+    // Apply constraints based on current max range
+    numValue = Math.min(numValue, maxRange);
+    numValue = Math.max(numValue, -maxRange);
+    
+    // Update the data
+    const newData = [...data];
+    newData[index] = { ...newData[index], y: numValue };
+    setData(newData);
+    
+    // Check if range needs to be adjusted
+    autoAdjustRange(numValue);
+  };
+
   // Function to handle point drag
   const handlePointDrag = (pointIndex, event) => {
     const year = years[pointIndex];
@@ -329,12 +374,12 @@ const ActivitiesGraph = ({
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {years.map((year) => (
                     <div key={year} className="mb-4">
-                      <div className="text-sm font-medium text-gray-700 mb-1 pl-3">{year}</div>
+                      <div className="text-sm font-medium text-neutral-600 mb-1 pl-3">{year}</div>
                       <div className="relative">
                         <select
                           value={selectedActivities[year] || ""}
                           onChange={(e) => handleActivityChange(year, e.target.value)}
-                          className="w-full py-2 pl-3 pr-10 text-sm border-b border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white appearance-none"
+                          className="w-full py-2 pl-3 pr-10 text-sm border-b border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white appearance-none text-neutral-500"
                         >
                           <option value="">Select activity...</option>
                           {activityOptions.map((option) => (
@@ -555,14 +600,30 @@ const ActivitiesGraph = ({
                   >
                     <input
                       type="text"
-                      value={`${data[index].y > 0 ? "+" : ""}${data[index].y}%`}
+                      value={
+                        // Special handling for negative intent
+                        data[index].y === "-"
+                          ? "-"
+                          : data[index].y > 0
+                          ? `+${data[index].y}%`
+                          : `${data[index].y}%`
+                      }
+                      onFocus={(e) => {
+                        e.target.select();
+                      }}
                       className="w-16 text-center border-b border-gray-300 rounded py-1 text-[11px] focus:outline-none focus:border-blue-500"
                       onChange={(e) => {
-                        const value = e.target.value.replace(/[^0-9\-+]/g, "");
-                        const numValue = parseInt(value) || 0;
-                        const newData = [...data];
-                        newData[index] = { ...newData[index], y: numValue };
-                        setData(newData);
+                        // Pass the raw value to our handler function
+                        const rawValue = e.target.value.replace("%", "");
+                        handlePercentageChange(index, rawValue);
+                      }}
+                      onBlur={(e) => {
+                        // On blur, ensure we don't leave a bare minus sign
+                        if (data[index].y === "-") {
+                          const newData = [...data];
+                          newData[index] = { ...newData[index], y: 0 };
+                          setData(newData);
+                        }
                       }}
                     />
                   </div>

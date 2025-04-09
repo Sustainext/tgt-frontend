@@ -17,6 +17,9 @@ const MetricsGraph = ({
   baseYear = 2025,
   targetYear = 2045,
   metricName = "FTE",
+  initialMaxRange = 100,
+  allowNegative = true,
+  rangeSteps = [100, 200, 500, 1000, 2000, 5000],
 }) => {
   // Initial data structure
   const initialData = [];
@@ -59,24 +62,18 @@ const MetricsGraph = ({
   // State for the absolute value in base year
   const [baseValue, setBaseValue] = useState();
   // State for the y-axis range
-  const [maxRange, setMaxRange] = useState(100);
+  const [maxRange, setMaxRange] = useState(initialMaxRange);
 
   // Function to auto-adjust range based on values
   const autoAdjustRange = (value) => {
     // If a value exceeds current range, bump up to the next range level
     if (Math.abs(value) > maxRange) {
-      // Determine next appropriate range
-      if (maxRange === 100) {
-        setMaxRange(200);
-      } else if (maxRange === 200) {
-        setMaxRange(500);
-      } else if (maxRange === 500) {
-        setMaxRange(1000);
-      } else if (maxRange === 1000) {
-        setMaxRange(2000);
+      // Find the next appropriate range level
+      const currentIndex = rangeSteps.indexOf(maxRange);
+      if (currentIndex !== -1 && currentIndex < rangeSteps.length - 1) {
+        setMaxRange(rangeSteps[currentIndex + 1]);
+        return true;
       }
-      // Return true to indicate the range was adjusted
-      return true;
     }
     return false;
   };
@@ -111,16 +108,21 @@ const MetricsGraph = ({
       // Check if we need to auto-adjust range
       const rangeAdjusted = autoAdjustRange(newValue);
 
-      // Apply constraints based on current max range
+      // Apply constraints based on current max range and whether negative values are allowed
       const constrainedValue = rangeAdjusted
         ? newValue
-        : Math.max(Math.min(newValue, maxRange), -maxRange);
+        : Math.min(newValue, maxRange);
+
+      // Apply negative constraint if needed
+      const finalValue = allowNegative
+        ? Math.max(constrainedValue, -maxRange)
+        : Math.max(constrainedValue, 0);
 
       // Update state
       const updatedData = [...data];
       updatedData[pointIndex] = {
         ...updatedData[pointIndex],
-        y: constrainedValue,
+        y: finalValue,
       };
       setData(updatedData);
     };
@@ -178,6 +180,59 @@ const MetricsGraph = ({
     };
   }, []);
 
+  // Function to handle percentage input
+  const handlePercentageChange = (index, value) => {
+    // Handle special case: if user is just typing a minus sign
+    if (value === "-" && allowNegative) {
+      const newData = [...data];
+      // Store the negative sign as a special flag in the data
+      // Use a string to maintain the "negative intent" for future input
+      newData[index] = { ...newData[index], y: "-" };
+      setData(newData);
+      return;
+    }
+
+    // Check if we have a negative sign stored
+    const isNegativeIntent = data[index].y === "-";
+    
+    // Strip non-numeric characters except the leading minus
+    let processedValue = value.replace(/[^0-9\-]/g, "");
+    
+    // If there's a negative intent and user is now typing numbers
+    if (isNegativeIntent && /^\d+$/.test(processedValue)) {
+      // Apply the stored negative sign
+      processedValue = "-" + processedValue;
+    }
+    
+    // Parse the value as an integer
+    let numValue = parseInt(processedValue, 10);
+    
+    // Check if the value is valid
+    if (isNaN(numValue)) {
+      return; // Keep the current value if invalid
+    }
+    
+    // Apply constraints based on allowNegative and maxRange
+    if (!allowNegative && numValue < 0) {
+      numValue = 0;
+    }
+    
+    numValue = Math.min(numValue, maxRange);
+    if (allowNegative) {
+      numValue = Math.max(numValue, -maxRange);
+    } else {
+      numValue = Math.max(numValue, 0);
+    }
+    
+    // Update the data
+    const newData = [...data];
+    newData[index] = { ...newData[index], y: numValue };
+    setData(newData);
+    
+    // Check if range needs to be adjusted
+    autoAdjustRange(numValue);
+  };
+
   return (
     <div className="bg-white rounded-lg pl-2 overflow-auto">
       {/* Add the style for scrollable-content */}
@@ -201,6 +256,7 @@ const MetricsGraph = ({
 
       <div className="text-gray-500 text-sm mb-4">
         Increase or decrease the percentage of the consumption pattern
+        {!allowNegative && " (positive values only)"}
       </div>
 
       {/* Chart - Contained in the scrollable-content wrapper */}
@@ -215,7 +271,7 @@ const MetricsGraph = ({
             }}
             yScale={{
               type: "linear",
-              min: -maxRange,
+              min: allowNegative ? -maxRange : 0,
               max: maxRange,
               stacked: false,
               reverse: false,
@@ -383,14 +439,30 @@ const MetricsGraph = ({
                 >
                   <input
                     type="text"
-                    value={`${data[index].y > 0 ? "+" : ""}${data[index].y}%`}
+                    value={
+                      // Special handling for negative intent
+                      data[index].y === "-"
+                        ? "-"
+                        : data[index].y > 0
+                        ? `+${data[index].y}%`
+                        : `${data[index].y}%`
+                    }
                     className="w-16 text-center border-b border-gray-300 rounded py-1 text-[11px] focus:outline-none focus:border-blue-500"
                     onChange={(e) => {
-                      const value = e.target.value.replace(/[^0-9\-+]/g, ""); // Removed '%' to avoid parsing issue
-                      const numValue = parseInt(value) || 0;
-                      const newData = [...data];
-                      newData[index] = { ...newData[index], y: numValue };
-                      setData(newData);
+                      // Pass the raw value to our handler function
+                      const rawValue = e.target.value.replace("%", "");
+                      handlePercentageChange(index, rawValue);
+                    }}
+                    onFocus={(e) => {
+                        e.target.select();
+                      }}
+                    onBlur={(e) => {
+                      // On blur, ensure we don't leave a bare minus sign
+                      if (data[index].y === "-") {
+                        const newData = [...data];
+                        newData[index] = { ...newData[index], y: 0 };
+                        setData(newData);
+                      }
                     }}
                   />
                 </div>

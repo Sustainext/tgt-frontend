@@ -6,7 +6,7 @@ import WeightageInputModal from "../../WeightageInputModal";
 import ActivitySelectTable from "../../ActivitySelectTable";
 import ConfirmActivitiesModal from "../../ConfirmActivitiesModal";
 import ActivitySummarySection from "../../ActivitiesSummary";
-import EmissionProjectionView from "../../EmissionProjectionView"
+import EmissionProjectionView from "../../EmissionProjectionView";
 import { GlobalState } from "@/Context/page";
 
 const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
@@ -333,7 +333,28 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
                   {selectedMetrics[metric.id] && (
                     <div className="border-t border-gray-200 p-4">
                       <div className="h-[530px] mr-4">
-                        <MetricsGraph />
+                        <MetricsGraph
+                          metricName={metric.id}
+                          initialMaxRange={
+                            metric.id === "fte"
+                              ? 500
+                              : metric.id === "area"
+                              ? 500
+                              : metric.id === "productionVolume" ||
+                                metric.id === "revenue"
+                              ? 1000
+                              : 100
+                          }
+                          allowNegative={metric.id !== "fte"}
+                          rangeSteps={
+                            metric.id === "fte" || metric.id === "area"
+                              ? [100, 200, 300, 400, 500]
+                              : metric.id === "productionVolume" ||
+                                metric.id === "revenue"
+                              ? [100, 200, 500, 1000]
+                              : [100, 200, 500, 1000, 2000]
+                          }
+                        />
                       </div>
                     </div>
                   )}
