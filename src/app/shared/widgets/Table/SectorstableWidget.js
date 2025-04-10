@@ -1,64 +1,69 @@
 import React, { useState, useEffect } from "react";
-import { MdInfoOutline, MdOutlineDeleteOutline } from "react-icons/md";
+import { MdInfoOutline, MdOutlineDeleteOutline, MdEdit } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import { FaSave } from "react-icons/fa";
 
 const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
-  const [sectorInputs, setSectorInputs] = useState([]);
   const tabledata = uiSchema["ui:options"]?.tabledata || [];
+  const [allRows, setAllRows] = useState([]);
 
   useEffect(() => {
-    console.log("Table data:", tabledata); // Check if tabledata is received correctly
-    // Initialize sectorInputs only with new input boxes, not the existing table data
-    setSectorInputs([]);
+    // Combine initial tabledata with editing state
+    const combinedRows = tabledata.map((row, index) => ({
+      id: Date.now() + index, // unique ID
+      Sector: row.Sector,
+      Sub_industry: row.Sub_industry,
+      isEditing: false,
+    }));
+    setAllRows(combinedRows);
   }, [tabledata]);
 
-  const handleSectorChange = (id, newValue) => {
-    const updatedInputs = sectorInputs.map((input) =>
-      input.id === id ? { ...input, sector: newValue } : input
-    );
-    setSectorInputs(updatedInputs);
+  const updateFinalValue = (rows) => {
+    const cleaned = rows.map(({ id, isEditing, ...rest }) => rest);
+    onChange(cleaned);
+  };
 
-    // Update the value array with the correct structure
-    const updatedValue = [
-      ...tabledata, // Keep existing table data
-      ...updatedInputs.map((input) => ({
-        Sector: input.sector,
-        Sub_industry: "", // Always pass an empty string for Sub_industry
-      })),
-    ];
-    onChange(updatedValue);
+  const handleRowChange = (id, field, newValue) => {
+    const updatedRows = allRows.map((row) =>
+      row.id === id ? { ...row, [field]: newValue } : row
+    );
+    setAllRows(updatedRows);
+    updateFinalValue(updatedRows);
+  };
+
+  const toggleEdit = (id) => {
+    const updatedRows = allRows.map((row) =>
+      row.id === id ? { ...row, isEditing: !row.isEditing } : row
+    );
+    setAllRows(updatedRows);
+  };
+
+  const removeRow = (id) => {
+    const updatedRows = allRows.filter((row) => row.id !== id);
+    setAllRows(updatedRows);
+    updateFinalValue(updatedRows);
   };
 
   const addInputBox = () => {
-    setSectorInputs([...sectorInputs, { id: Date.now(), sector: "" }]);
-  };
-
-  const removeInputBox = (id) => {
-    const updatedInputs = sectorInputs.filter((input) => input.id !== id);
-    setSectorInputs(updatedInputs);
-
-    // Update the value array after removing an input box
-    const updatedValue = [
-      ...tabledata, // Keep existing table data
-      ...updatedInputs.map((input) => ({
-        Sector: input.sector,
-        Sub_industry: "",
-      })),
-    ];
-    onChange(updatedValue);
+    const newRow = {
+      id: Date.now(),
+      Sector: "",
+      Sub_industry: "",
+      isEditing: true,
+    };
+    const updatedRows = [...allRows, newRow];
+    setAllRows(updatedRows);
   };
 
   return (
     <div className="mb-6">
+      {/* Tooltip & Title */}
       <div className="flex mb-2">
         <div className="relative">
           <p className="text-[12px] text-gray-700 font-[500] flex">
             {uiSchema["ui:title"]}
             <MdInfoOutline
-              data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
-                /\s+/g,
-                "-"
-              )}`}
+              data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
               data-tooltip-html={uiSchema["ui:tooltip"]}
               className="mt-1 ml-2 w-[30px] text-[14px]"
               style={{ display: uiSchema["ui:tooltipdisplay"] }}
@@ -80,68 +85,99 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
         </div>
       </div>
 
-      {/* Displaying the table */}
+      {/* Editable Table */}
       <div className="bg-white rounded-md w-full mb-4">
         <table className="w-full text-left">
           <thead className="gradient-background">
             <tr className="text-center">
               <th className="py-2 px-4 font-[500] text-[12px]">Sector</th>
               <th className="py-2 px-4 font-[500] text-[12px]">Sub Industry</th>
+              <th className="py-2 px-4 font-[500] text-[12px]">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {tabledata && tabledata.length > 0 ? (
-              tabledata
-                .filter((row) => row.Sector && row.Sector !== "Default") // Filter out rows with null or "Default" Sector
-                .map((row, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-gray-200 text-center"
-                  >
-                    <td className="py-2 px-4 text-[12px]">{row.Sector}</td>
-                    <td className="py-2 px-4 text-[12px]">{row.Sub_industry || "-"}</td>{" "}
-                    {/* Show empty string if Sub_industry is null */}
-                  </tr>
-                ))
+            {allRows.length > 0 ? (
+              allRows.map((row) => (
+                <tr key={row.id} className="border-b border-gray-200 text-center">
+                  {row.isEditing ? (
+                    <>
+                      <td className="py-2 px-4">
+                        <input
+                          type="text"
+                          value={row.Sector}
+                          onChange={(e) =>
+                            handleRowChange(row.id, "Sector", e.target.value)
+                          }
+                          placeholder="Enter Sector"
+                          className="w-full border-b border-gray-300 p-2 focus:outline-none text-[12px]"
+                        />
+                      </td>
+                      <td className="py-2 px-4">
+                        <input
+                          type="text"
+                          value={row.Sub_industry}
+                          onChange={(e) =>
+                            handleRowChange(row.id, "Sub_industry", e.target.value)
+                          }
+                          placeholder="Enter Sub Industry"
+                          className="w-full border-b border-gray-300 p-2 focus:outline-none text-[12px]"
+                        />
+                      </td>
+                      <td className="py-2 px-4 flex justify-center items-center gap-2">
+                        <button
+                          type="button"
+                          className="text-blue-500"
+                          onClick={() => toggleEdit(row.id)}
+                        >
+                          <FaSave size={16} />
+                        </button>
+                        <button
+                          type="button"
+                          className="text-red-500"
+                          onClick={() => removeRow(row.id)}
+                        >
+                          <MdOutlineDeleteOutline size={18} />
+                        </button>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td className="py-2 px-4 text-[12px]">{row.Sector}</td>
+                      <td className="py-2 px-4 text-[12px]">
+                        {row.Sub_industry || "-"}
+                      </td>
+                      <td className="py-2 px-4 flex justify-center items-center gap-2">
+                        <button
+                          type="button"
+                          className="text-gray-500"
+                          onClick={() => toggleEdit(row.id)}
+                        >
+                          <MdEdit size={18} />
+                        </button>
+                        <button
+                          type="button"
+                          className="text-red-500"
+                          onClick={() => removeRow(row.id)}
+                        >
+                          <MdOutlineDeleteOutline size={18} />
+                        </button>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              ))
             ) : (
               <tr>
-                <td colSpan={2} className="py-2 px-4 text-center text-[12px]">
+                <td colSpan={3} className="py-2 px-4 text-center text-[12px]">
                   No data available
                 </td>
               </tr>
             )}
-            {sectorInputs.map((input) => (
-              <tr
-                key={input.id}
-                className="border-b border-gray-200 text-center"
-              >
-                <td colSpan={2} className="py-2 px-4">
-                  <div className="flex">
-                    <input
-                      type="text"
-                      value={input.sector}
-                      onChange={(e) =>
-                        handleSectorChange(input.id, e.target.value)
-                      }
-                      placeholder="Enter Sector/Industry"
-                      className="w-full border-b border-gray-300 p-2 focus:outline-none text-[12px]"
-                    />
-                    <button
-                      type="button"
-                      className="text-red-500 ml-2"
-                      onClick={() => removeInputBox(input.id)}
-                    >
-                      <MdOutlineDeleteOutline size={20} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
           </tbody>
         </table>
       </div>
 
-      {/* Button to add more input boxes */}
+      {/* Add New Row */}
       <button
         type="button"
         className="text-blue-500 mt-4 flex items-center text-[12px]"

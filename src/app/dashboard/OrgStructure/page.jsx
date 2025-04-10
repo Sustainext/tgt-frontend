@@ -15,7 +15,7 @@ import {
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import OrgTreeMobile from "./OrgTreeMobile";
 const OrgTree = ({ data }) => {
   const nodeWidth = 180;
   const nodeHeight = 60;
@@ -59,7 +59,7 @@ const OrgTree = ({ data }) => {
     const nodeData = {
       ...node,
       organization: findOrganization(node),
-      corporate: node.type === "location" ? findCorporate(node) : null,
+      corporate: node.type === "location" ? findCorporate(node).name : null,
     };
     setSelectedNode(nodeData);
     setIsModalOpen(true);
@@ -72,24 +72,30 @@ const OrgTree = ({ data }) => {
     const org = transformedData.find((org) =>
       org.children?.some(
         (child) =>
-          child.name === node.name ||
-          child.children?.some((loc) => loc.name === node.name)
+          child.id === node.id ||
+          child.children?.some((loc) => loc.id === node.id)
       )
     );
+    // const org = transformedData.find((org) =>
+    //   org.children?.some((child) => {
+    //     if (child.id === node.parentCorpId) return true; // match by corporate's parent
+    //     return child.children?.some((loc) => loc.id === node.id && child.parentOrgId === org.id); // match location to correct org
+    //   })
+    // );
     return {name:org?.name,id:org?.id}
   };
 
   const findCorporate = (node) => {
-    if (node.type === "corporate") return node.name;
+    if (node.type === "corporate") return {name:node.name,id:node.id};
     const org = transformedData.find((org) =>
       org.children?.some((corp) =>
-        corp.children?.some((loc) => loc.name === node.name)
+        corp.children?.some((loc) => loc.id === node.id)
       )
     );
     const corp = org?.children?.find((corp) =>
-      corp.children?.some((loc) => loc.name === node.name)
+      corp.children?.some((loc) => loc.id === node.id)
     );
-    return corp?.name;
+    return {name:corp?.name,id:corp?.id};
   };
 
   const transformData = (apiData) => {
@@ -103,12 +109,14 @@ const OrgTree = ({ data }) => {
       children: org.corporatenetityorg?.filter(Boolean).map((entity) => ({
         id: entity.id,
         name: entity.name,
+        parentOrgId: org.id,
         type: "corporate",
         info: `${entity.sector || ""}, ${entity.Country || ""}`,
         locationCount: entity.location?.length || 0,
         children: entity.location?.filter(Boolean).map((loc) => ({
           id: loc.id,
           name: loc.name,
+          parentCorpId: entity.id,
           type: "location",
           info: `${loc.typelocation || "Head office"}`,
         })),
@@ -269,8 +277,10 @@ const OrgTree = ({ data }) => {
     });
   };
 
+
   const transformedData = transformData(data);
   const layoutNodes = transformedData ? calculateLayout(transformedData) : [];
+
 
   const maxWidth =
     layoutNodes.length > 0
@@ -310,10 +320,10 @@ const OrgTree = ({ data }) => {
       // For adding locations, use findCorporate to get the corporate entity parent
       const corporateEntity = transformedData
         .find((org) =>
-          org.children?.some((corp) => corp.name === findCorporate(node))
+          org.children?.some((corp) => corp.id === findCorporate(node).id)
         )
-        ?.children?.find((corp) => corp.name === findCorporate(node));
-       
+        ?.children?.find((corp) => corp.id === findCorporate(node).id);
+
       const organization = findOrganization(node);
       
 
@@ -461,6 +471,7 @@ const OrgTree = ({ data }) => {
 
   return (
     <div className="w-full overflow-auto">
+  
       <AddButtons />
       <svg width={maxWidth} height={maxHeight} className="ml-0 pt-2">
         <g transform={`translate(50, 50)`}>
@@ -496,12 +507,12 @@ const OrgTree = ({ data }) => {
                   return node.children.map((child, index) => {
                     const childNode = layoutNodes.find(
                       (n) =>
-                        n.name === child.name && n.type !== "location-header"
+                        n.id === child.id && n.type === "location"
                     );
                     if (childNode) {
                       return (
                         <path
-                          key={`${node.name}-${child.name}-${index}`}
+                          key={`${node.id}-${child.id}-${index}`}
                           d={renderCurvedLine(
                             node.x + nodeWidth,
                             node.y + nodeHeight / 2,
@@ -520,12 +531,12 @@ const OrgTree = ({ data }) => {
               } else if (node.type === "organization") {
                 return node.children.map((child, index) => {
                   const childNode = layoutNodes.find(
-                    (n) => n.name === child.name && n.type !== "location-header"
+                    (n) => n.id === child.id && n.type !== "location-header" && n.type !== "location" && n.type !== "organization"
                   );
                   if (childNode) {
                     return (
                       <path
-                        key={`${node.name}-${child.name}-${index}`}
+                        key={`${node.id}-${child.id}-${index}`}
                         d={renderCurvedLine(
                           node.x + nodeWidth,
                           node.y + nodeHeight / 2,
@@ -618,7 +629,7 @@ const OrgTree = ({ data }) => {
 
             return (
               <g
-                key={`${node.name}-${node.type}`}
+                key={`${node.id}-${node.type}`}
                 transform={`translate(${node.x},${node.y})`}
                 className={`transition-all duration-200 ${style.group} group cursor-pointer`}
                 onClick={() => handleNodeClick(node)}
@@ -840,6 +851,7 @@ const OrgTree = ({ data }) => {
         />
       )}
     </div>
+  
   );
 };
 
@@ -881,7 +893,7 @@ const OrganizationTreePage = () => {
   return (
     <>
     <ToastContainer position="top-right" autoClose={3000} />
-    <div className="w-full p-8 rounded-lg">
+    <div className="w-full p-8 rounded-lg hidden xl:block">
       <div className="text-[22px] font-medium font-['Manrope'] leading-relaxed gradient-text pb-6">
         Organization Structure
       </div>
@@ -896,6 +908,9 @@ const OrganizationTreePage = () => {
         </div>
       </div>
       <OrgTree data={orgData} />
+    </div>
+    <div className="block xl:hidden">
+    <OrgTreeMobile data={orgData} />
     </div>
     </>
   );

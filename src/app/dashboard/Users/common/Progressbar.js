@@ -15,7 +15,7 @@ const ProgressBar = ({ currentStep }) => {
       <div className={`my-6 text-xl font-bold leading-snug tracking-tight ${currentStep > 0 ? "text-black" : "text-black"}`}>
         {steps[currentStepIndex] ? steps[currentStepIndex].label : "No Step Selected"}
       </div>
-      <div className="flex justify-between items-center w-[35%] pr-4">
+      <div className="flex justify-between items-center xl:w-[35%] lg:w-[35%] 2k:w-[35%] 4k:w-[35%] md:w-[35%] pr-4">
         {steps.map((step, index) => (
           <React.Fragment key={step.id}>
             <div className="flex items-center">

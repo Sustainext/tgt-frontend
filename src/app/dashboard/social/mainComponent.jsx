@@ -131,7 +131,7 @@ const Social = () => {
       "Management of Material topic Labor Management",
       "Management of Material topic OHS",
       "Management of Material topic Training and Development",
-      "Management of Material topic Diversity & Equal Oppportunity",
+      "Management of Material topic Diversity & Equal Opportunity",
       "Management of Material topic Non Discrimination",
       "Management of Material topic Human Rights",
       "Management of Material topic Labour",
@@ -223,7 +223,7 @@ const Social = () => {
     } else if (materialTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Training and Development"));
     } else if (waterTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Diversity & Equal Oppportunity"));
+      dispatch(setHeadertext2("Diversity & Equal Opportunity"));
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Non - Discrimination"));
     } else if (materialnewTabs.includes(activeTab)) {
@@ -414,7 +414,7 @@ const Social = () => {
               )}
 
               {activeTab ===
-                "Management of Material topic Diversity & Equal Oppportunity" && (
+                "Management of Material topic Diversity & Equal Opportunity" && (
                 <DiversityInclusionMaterialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}

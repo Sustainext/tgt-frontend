@@ -509,7 +509,7 @@ const Sidenav = () => {
   <React.Fragment key={menu.id}>
     {menu.submenu ? (
       <li
-        className={`text-white text-sm flex items-center gap-x-4 cursor-pointer rounded-md mt-2 w-full p-2
+        className={`text-white text-sm flex items-center hover:bg-[#007EEF] gap-x-4 cursor-pointer rounded-md mt-2 w-full p-2
           ${submenuOpen[index] || isSubmenuActive(menu) ? "bg-[#081746]" : ""}
           ${!open && activeIndex === menu.id ? "bg-[#081746]" : ""}`}
         onClick={() => {

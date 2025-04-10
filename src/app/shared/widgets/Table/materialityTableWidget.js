@@ -31,18 +31,22 @@ const MaterialityTableWidget = ({ id, options, value, required, onChange, schema
     }, [localValue, debouncedUpdate]);
 
     return (
-        <div style={{ maxHeight: "auto" }} className="mb-2">
-            <table id={id} className="rounded-md  w-full">
+        <div style={{ overflowY: 'auto', maxHeight: '400px' }} className='custom-scrollbar'>
+      <table
+        id={id}
+        className="rounded-md w-full border border-gray-300"
+        style={{ borderCollapse: 'separate', borderSpacing: 0 }}
+      >
                 <thead className="gradient-background">
                     <tr>
                         {options.titles.map((item, idx) => (
                             <th
                                 key={idx}
                                 style={{ minWidth: "120px", textAlign: "center" }}
-                                className="text-[12px] border-r px-4 py-4 rounded-md"
+                                className="text-[12px] border-r px-4 py-4 rounded-md "
                             >
-                                <div className="relative flex justify-center items-center text-gray-500">
-                                    <p className="flex items-center">
+                                <div className="relative flex justify-center items-center text-gray-500 ">
+                                    <p className="flex items-center justify-center w-[200px]">
                                         {item.title}
                                         <MdInfoOutline
                                             data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, "-")}`}

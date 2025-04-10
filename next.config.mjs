@@ -10,6 +10,8 @@ const nextConfig = {
       "https://superset-dev.sustainext.ai/superset/dashboard/12/?standalone=3&refreshTime=120",
     CLIMATIQ_KEY: "98YJN6V0VC4M5KPQNSVHWCVEM8NT",
     NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: "16",
+    REDIS_HOST:'127.0.0.1',
+    REDIS_PORT:6379,
 
     // SSO
     AUTH0_SECRET: "LONG RANDOM VALsUE",

@@ -323,6 +323,7 @@ const Location = ({ heading }) => {
     const cityId = event.target.value;
     setSelectedCity(cityId);
   };
+  
 
   const handleAddLocation = async (event, data) => {
     event.preventDefault();
@@ -332,9 +333,9 @@ const Location = ({ heading }) => {
     const payload = {
       corporateentity: data.generalDetails.corporateEntity || null,
       name: data.generalDetails.name || "Location 1",
-      phone: data.generalDetails.phone || 999999999,
+      phone: data.generalDetails.phone || 9999999999,
       mobile: data.generalDetails.mobile || '',
-      website: data.generalDetails.website || "https://www.sustainext.ai",
+      website: data.generalDetails.website || "Not Provided",
       fax: data.generalDetails.fax || "",
       employeecount: data.generalDetails.Empcount || 0,
       revenue: data.generalDetails.revenue || 0,
@@ -375,7 +376,8 @@ const Location = ({ heading }) => {
       }, 1000);
       console.log("POST request successful:", response.data);
     } catch (error) {
-      toast.error('Failed to add location', 'error');
+       const message = error?.response?.data?.message[0] || 'Failed to add location'
+      toast.error(message, 'error');
       console.error("Error:", error);
     }
 
@@ -423,9 +425,9 @@ const Location = ({ heading }) => {
     const payload = {
       // corporateentity: data.generalDetails.corporateEntity || null,
       name: data.generalDetails.name || "Location 1",
-      phone: data.generalDetails.phone || 999999999,
+      phone: data.generalDetails.phone || 9999999999,
       mobile: data.generalDetails.mobile || '',
-      website: data.generalDetails.website || "https://www.sustainext.ai",
+      website: data.generalDetails.website || "Not Provided",
       fax: data.generalDetails.fax || "",
       employeecount: data.generalDetails.Empcount || 0,
       revenue: data.generalDetails.revenue || 0,
@@ -470,12 +472,13 @@ const Location = ({ heading }) => {
     const corporateEntityDetails = corporates.find(
       (corp) => corp.id == selectedCorporateEntityName
     );
+
     setSelectedCorporateEntityDetails(corporateEntityDetails || null);
   };
-
+    
   const handleSameAsCorporateChange = (e) => {
     setIsSameAsCorporate(e.target.checked);
-    if (e.target.checked && !formData.generalDetails.corporateEntity) {
+    if (e.target.checked && !formData.generalDetails.corporateEntity && !editData) {
       setIsSameAsCorporate(false);
       alert("Please select Corporate entity first.");
       return;
@@ -548,7 +551,6 @@ const Location = ({ heading }) => {
     if (editData) {
       const selectedCountryCode = editData.filteredData[0].country;
       const selectedStateCode = editData.filteredData[0].state;
-
       const statesOfSelectedCountry =
         State.getStatesOfCountry(selectedCountryCode);
       const citiesOfSelectedState = City.getCitiesOfState(
@@ -562,6 +564,8 @@ const Location = ({ heading }) => {
       const selectedIndustryData = industryList.find(
         (industry) => industry.industry === selectedIndustryValue
       );
+
+      setSelectedCorporateEntityDetails(editData.filteredData[0].corporate_data || null);
 
       // Get the sub-industries for the selected industry
       const subIndustriesForSelectedIndustry =
@@ -577,32 +581,32 @@ const Location = ({ heading }) => {
 
       setFormData({
         generalDetails: {
-          name: editData.filteredData[0].name,
-          email: editData.filteredData[0].email,
-          phone: editData.filteredData[0].phone,
-          website: editData.filteredData[0].website,
-          typelocation: editData.filteredData[0].location_type,
-          ownership: editData.filteredData[0].owner,
-          location: editData.filteredData[0].location_of_headquarters,
-          Empcount: editData.filteredData[0].employeecount,
-          revenue: editData.filteredData[0].revenue,
-          mobile: editData.filteredData[0].mobile,
-          fax: editData.filteredData[0].fax,
-          sector: editData.filteredData[0].sector,
-          subIndustry: editData.filteredData[0].sub_industry,
+          name: editData.filteredData[0].name || "",
+          email: editData.filteredData[0].email || "",
+          phone: editData.filteredData[0].phone=='9999999999'?'':editData.filteredData[0].phone || "",
+          website: editData.filteredData[0].website=='Not Provided'?'':editData.filteredData[0].website || "",
+          typelocation: editData.filteredData[0].location_type=='Default'?'':editData.filteredData[0].location_type || "",
+          ownership: editData.filteredData[0].owner || "",
+          location: editData.filteredData[0].location_of_headquarters || "",
+          Empcount: editData.filteredData[0].employeecount || "",
+          revenue: editData.filteredData[0].revenue || "",
+          mobile: editData.filteredData[0].mobile || "",
+          fax: editData.filteredData[0].fax || "",
+          sector: editData.filteredData[0].sector=='General'?'':editData.filteredData[0].sector || "",
+          subIndustry: editData.filteredData[0].sub_industry=='General'?'':editData.filteredData[0].sub_industry || "",
           organisation: editData.filteredData[0].organisation,
           dateFormat: editData.filteredData[0].dateformat,
           currency: editData.filteredData[0].currency,
           timeZone: editData.filteredData[0].timezone,
-          language: editData.filteredData[0].language,
+          language: editData.filteredData[0].language || "",
         },
 
         addressInformation: {
-          country: editData.filteredData[0].country,
-          state: editData.filteredData[0].state,
-          city: editData.filteredData[0].city,
-          street: editData.filteredData[0].street,
-          zipCode: editData.filteredData[0].zipcode,
+          country: editData.filteredData[0]?.country=='N/A'?'':editData.filteredData[0]?.country || "",
+          state: editData.filteredData[0]?.state=='N/A'?'':editData.filteredData[0]?.state || "",
+          city: editData.filteredData[0]?.city=='N/A'?'':editData.filteredData[0]?.city || "",
+          street: editData.filteredData[0]?.street=='Not Provided'?'':editData.filteredData[0]?.street || "",
+          zipCode: editData.filteredData[0].zipcode=='N/A'?'':editData.filteredData[0].zipcode || "",
           latitude: editData.filteredData[0].latitude,
           longitude: editData.filteredData[0].longitude,
         },
@@ -709,11 +713,12 @@ const Location = ({ heading }) => {
                 htmlFor="name"
                 className="block text-neutral-800 text-[13px] font-normal"
               >
-                Name <span className="text-red-500">*</span>
+                Location Name <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 name="name"
+                placeholder="Enter Location name"
                 value={formData.generalDetails?.name}
                 onChange={handleGeneralDetailsChange}
                 className={`border ${
@@ -736,6 +741,7 @@ const Location = ({ heading }) => {
               <input
                 type="number"
                 name="phone"
+                placeholder="Enter Phone Number"
                 value={formData.generalDetails?.phone}
                 onChange={handleGeneralDetailsChange}
                 className={`border ${
@@ -772,6 +778,7 @@ const Location = ({ heading }) => {
               <input
                 type="text"
                 name="website"
+                placeholder="Enter Website URL"
                 value={formData.generalDetails?.website}
                 onChange={handleGeneralDetailsChange}
                 className={`border ${
@@ -807,6 +814,7 @@ const Location = ({ heading }) => {
               <input
                 type="number"
                 name="Empcount"
+                placeholder="Enter Employee Count"
                 value={formData.generalDetails?.Empcount}
                 onChange={handleGeneralDetailsChange}
                 className={`border ${
@@ -828,6 +836,7 @@ const Location = ({ heading }) => {
               <input
                 type="number"
                 name="revenue"
+                 placeholder="Enter Revenue"
                 value={formData.generalDetails?.revenue}
                 onChange={handleGeneralDetailsChange}
                 className={`border ${
@@ -904,6 +913,7 @@ const Location = ({ heading }) => {
               <input
                 type="text"
                 name="typelocation"
+                 placeholder="Enter type of Location"
                 value={formData.generalDetails?.typelocation}
                 onChange={handleGeneralDetailsChange}
                 className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
@@ -925,6 +935,7 @@ const Location = ({ heading }) => {
               <input
                 type="text"
                 name="street"
+                 placeholder="Enter Street Address"
                 value={formData.addressInformation?.street}
                 onChange={handleAddressInformationChange}
                 className={`border ${
@@ -1033,6 +1044,7 @@ const Location = ({ heading }) => {
               <input
                 type="text"
                 name="zipCode"
+                placeholder="Enter zip code"
                 value={formData.addressInformation?.zipCode}
                 onChange={handleAddressInformationChange}
                 className={`border ${
