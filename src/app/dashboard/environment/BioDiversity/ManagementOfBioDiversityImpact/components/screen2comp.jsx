@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiselectTableWidget";
+import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiSelectTableWidgetBioDiversity";
 // Simple Custom Table Widget
 const widgets = {
   MultiselectTableWidget: MultiselectTableWidget,
