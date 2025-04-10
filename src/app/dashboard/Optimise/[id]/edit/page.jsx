@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiArrowLeft, FiInfo, FiCheck } from "react-icons/fi";
+import { Tooltip } from "react-tooltip";
 import MetricsGraph from "../../MetricsGraph";
 import WeightageInputModal from "../../WeightageInputModal";
 import ActivitySelectTable from "../../ActivitySelectTable";
@@ -8,6 +9,13 @@ import ConfirmActivitiesModal from "../../ConfirmActivitiesModal";
 import ActivitySummarySection from "../../ActivitiesSummary";
 import EmissionProjectionView from "../../EmissionProjectionView";
 import { GlobalState } from "@/Context/page";
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay,
+} from "../../../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
+import BusinessMetricsWithTooltips from "./BusinessMetricsWithTooltips";
 
 const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
   // Current step in the wizard (1-4)
@@ -18,6 +26,13 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const { open, setOpen } = GlobalState();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setHeadertext1("Optimise"));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2(scenario?.name || "Scenario 1"));
+  }, [dispatch, scenario]);
 
   // Selected metrics with toggle state
   const [selectedMetrics, setSelectedMetrics] = useState({
@@ -57,7 +72,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
 
   // Handle toggle selection of a metric
   const toggleMetric = (metricId) => {
-    setOpen(false);
+    // setOpen(false);
     setSelectedMetrics((prev) => ({
       ...prev,
       [metricId]: !prev[metricId],
@@ -83,7 +98,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
     } else if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     } else {
-      onSave(scenario);
+      // onSave(scenario);
     }
   };
 
@@ -133,13 +148,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
                   Select Business Metric
                 </h2>
                 <p className="text-gray-600 mb-6">
-                  Select the key metrics which will be required for planning the
-                  emission reduction initiative for this scenario?. Include
-                  current year absolute value for the selected business metric
-                  and apply any changes in the consumption pattern that you
-                  foresee. Use the graph to increase or decrease the percentage
-                  consumptions for the available years within the time period of
-                  the scenario?.
+                  Select the key metrics which will be required for planning the emission reduction initiative for this scenario. Include current year absolute value for the selected business metric and apply any changes in the consumption pattern that you foresee. Use the graph to increase or decrease the percentage consumptions for the available years within the time period of the scenario.
                 </p>
               </div>
             )}
@@ -295,78 +304,18 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
 
         {/* Step 1: Select Business Metric */}
         {currentStep === 1 && (
-          <>
-            <div
-              className={`space-y-4 px-8 mr-2 ${
-                open ? "max-w-[108vw]" : "max-w-[120vw]"
-              }`}
-            >
-              {businessMetrics.map((metric) => (
-                <div
-                  key={metric.id}
-                  className={`bg-white border rounded-lg shadow-sm overflow-hidden ${
-                    selectedMetrics[metric.id]
-                      ? "border-green-500"
-                      : "border-gray-200"
-                  }`}
-                >
-                  <div className="p-4 grid grid-cols-[1fr,3fr] gap-4 items-center">
-                    <div className="flex items-center">
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          value=""
-                          className="sr-only peer"
-                          checked={selectedMetrics[metric.id]}
-                          onChange={() => toggleMetric(metric.id)}
-                        />
-                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
-                      </label>
-                      <span className="ml-3 font-medium">{metric.name}</span>
-                      <FiInfo className="ml-2 text-gray-400" />
-                    </div>
-                    <div className="text-gray-600">{metric.description}</div>
-                    {/* <div></div> */}
-                  </div>
-
-                  {/* Expanded content when metric is selected */}
-                  {selectedMetrics[metric.id] && (
-                    <div className="border-t border-gray-200 p-4">
-                      <div className="h-[530px] mr-4">
-                        <MetricsGraph
-                          metricName={metric.id}
-                          initialMaxRange={
-                            metric.id === "fte"
-                              ? 500
-                              : metric.id === "area"
-                              ? 500
-                              : metric.id === "productionVolume" ||
-                                metric.id === "revenue"
-                              ? 1000
-                              : 100
-                          }
-                          allowNegative={metric.id !== "fte"}
-                          rangeSteps={
-                            metric.id === "fte" || metric.id === "area"
-                              ? [100, 200, 300, 400, 500]
-                              : metric.id === "productionVolume" ||
-                                metric.id === "revenue"
-                              ? [100, 200, 500, 1000]
-                              : [100, 200, 500, 1000, 2000]
-                          }
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </>
+          <BusinessMetricsWithTooltips
+            businessMetrics={businessMetrics}
+            selectedMetrics={selectedMetrics}
+            toggleMetric={toggleMetric}
+            scenario={scenario}
+            MetricsGraph={MetricsGraph}
+            open={open}
+          />
         )}
 
         {currentStep === 2 && (
           <div className="px-6">
-            {" "}
             <ActivitySelectTable
               selectedActivities={selectedActivities}
               setSelectedActivities={setSelectedActivities}
@@ -399,6 +348,10 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
           <button
             onClick={handleNext}
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            disabled={
+              currentStep === 1 &&
+              Object.values(selectedMetrics).every((value) => !value)
+            }
           >
             {currentStep < 4 ? "Next" : "Save"} →
           </button>

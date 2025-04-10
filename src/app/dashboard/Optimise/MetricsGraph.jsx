@@ -19,6 +19,7 @@ const MetricsGraph = ({
   metricName = "FTE",
   initialMaxRange = 100,
   allowNegative = true,
+  minNegativeValue = -100, 
   rangeSteps = [100, 200, 500, 1000, 2000, 5000],
 }) => {
   // Initial data structure
@@ -61,8 +62,18 @@ const MetricsGraph = ({
   const [data, setData] = useState(initialData);
   // State for the absolute value in base year
   const [baseValue, setBaseValue] = useState();
-  // State for the y-axis range
   const [maxRange, setMaxRange] = useState(initialMaxRange);
+  
+  // Calculate effective min negative value - dynamic unless specified for certain metrics
+  const getEffectiveMinNegative = () => {
+    // For FTE, always keep it at -100 regardless of the positive range
+    if (metricName === "fte") {
+      return -100;
+    }
+    
+    // For others, mirror the positive range (i.e., -maxRange) unless specified
+    return minNegativeValue || -maxRange;
+  };
 
   // Function to auto-adjust range based on values
   const autoAdjustRange = (value) => {
@@ -71,7 +82,12 @@ const MetricsGraph = ({
       // Find the next appropriate range level
       const currentIndex = rangeSteps.indexOf(maxRange);
       if (currentIndex !== -1 && currentIndex < rangeSteps.length - 1) {
-        setMaxRange(rangeSteps[currentIndex + 1]);
+        // Get the next range step
+        const nextRange = rangeSteps[currentIndex + 1];
+        
+        // Set the new max range
+        setMaxRange(nextRange);
+        
         return true;
       }
     }
@@ -108,15 +124,20 @@ const MetricsGraph = ({
       // Check if we need to auto-adjust range
       const rangeAdjusted = autoAdjustRange(newValue);
 
-      // Apply constraints based on current max range and whether negative values are allowed
-      const constrainedValue = rangeAdjusted
-        ? newValue
-        : Math.min(newValue, maxRange);
-
-      // Apply negative constraint if needed
-      const finalValue = allowNegative
-        ? Math.max(constrainedValue, -maxRange)
-        : Math.max(constrainedValue, 0);
+      // Apply constraints based on current max range
+      const upperConstrained = Math.min(newValue, maxRange);
+      
+      // Apply negative constraint based on allowNegative and minNegativeValue
+      let finalValue;
+      if (!allowNegative) {
+        finalValue = Math.max(upperConstrained, 0);
+      } else {
+        // Get the current effective min negative value
+        const effectiveMin = getEffectiveMinNegative();
+        
+        // Apply the constraint
+        finalValue = Math.max(upperConstrained, effectiveMin);
+      }
 
       // Update state
       const updatedData = [...data];
@@ -212,16 +233,17 @@ const MetricsGraph = ({
       return; // Keep the current value if invalid
     }
     
-    // Apply constraints based on allowNegative and maxRange
-    if (!allowNegative && numValue < 0) {
-      numValue = 0;
-    }
-    
+    // Apply constraints based on allowNegative, minNegativeValue, and maxRange
     numValue = Math.min(numValue, maxRange);
-    if (allowNegative) {
-      numValue = Math.max(numValue, -maxRange);
-    } else {
+    
+    if (!allowNegative) {
       numValue = Math.max(numValue, 0);
+    } else {
+      // Get the current effective min negative value
+      const effectiveMin = getEffectiveMinNegative();
+      
+      // Apply the constraint
+      numValue = Math.max(numValue, effectiveMin);
     }
     
     // Update the data
@@ -256,7 +278,6 @@ const MetricsGraph = ({
 
       <div className="text-gray-500 text-sm mb-4">
         Increase or decrease the percentage of the consumption pattern
-        {!allowNegative && " (positive values only)"}
       </div>
 
       {/* Chart - Contained in the scrollable-content wrapper */}
@@ -267,11 +288,11 @@ const MetricsGraph = ({
             margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
             xScale={{
               type: "point",
-              padding: 0.5, // Add padding to give more space around points, especially the first one
+              padding: 0.5, 
             }}
             yScale={{
               type: "linear",
-              min: allowNegative ? -maxRange : 0,
+              min: allowNegative ? getEffectiveMinNegative() : 0,
               max: maxRange,
               stacked: false,
               reverse: false,

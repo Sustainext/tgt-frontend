@@ -3,12 +3,12 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-const ConfirmActivitiesModal = ({ 
-  isOpen, 
-  onClose, 
-  selectedActivities = [], 
+const ConfirmActivitiesModal = ({
+  isOpen,
+  onClose,
+  selectedActivities = [],
   onProceed,
-  onGoBack 
+  onGoBack,
 }) => {
   if (!selectedActivities.length) return null;
 
@@ -46,7 +46,8 @@ const ConfirmActivitiesModal = ({
                       Confirm Selected Activities
                     </Dialog.Title>
                     <p className="mt-1 text-sm text-gray-500">
-                      Click on proceed to confirm the with the selected activities emission reduction initiatives are planned
+                      Click on proceed to confirm the with the selected
+                      activities emission reduction initiatives are planned
                     </p>
                   </div>
                   <button
@@ -61,30 +62,47 @@ const ConfirmActivitiesModal = ({
                 {/* Selected Activities Summary */}
                 <div className="bg-white rounded-lg border border-gray-200 mb-6 max-h-[500px]">
                   <div className="p-4 border-b border-gray-200">
-                    <h3 className="font-medium">Selected Activities: {selectedActivities.length}</h3>
-                  </div>
-                  
-                  {/* Table Headers */}
-                  <div className="grid grid-cols-5 gap-4 px-6 py-3 border-b border-gray-200 bg-gray-50 text-sm font-medium text-gray-500">
-                    <div>Scope</div>
-                    <div>Category</div>
-                    <div>Sub Category</div>
-                    <div>Activity</div>
-                    <div className="text-center">Activity Region</div>
+                    <h3 className="font-medium">
+                      Selected Activities: {selectedActivities.length}
+                    </h3>
                   </div>
 
-                  {/* Table Body */}
-                  <div className="max-h-[400px] overflow-y-auto">
-                    <div className="divide-y divide-gray-200 text-gray-600">
-                      {selectedActivities.map((activity, index) => (
-                        <div key={index} className="grid grid-cols-5 gap-4 px-6 py-4 text-sm">
-                          <div>{activity.scope}</div>
-                          <div>{activity.category}</div>
-                          <div>{activity.subCategory}</div>
-                          <div className="truncate">{activity.activity}</div>
-                          <div className="text-center">{activity.region}</div>
-                        </div>
-                      ))}
+                  <div className="overflow-hidden border-b border-gray-200 bg-white shadow sm:rounded-lg">
+                    {/* Table Headers */}
+                    <div className="grid grid-cols-7 gap-4 px-6 py-3 border-b border-gray-200 bg-gray-50 text-sm font-medium text-gray-500">
+                      <div className="col-span-1">Scope</div>
+                      <div className="col-span-1">Category</div>
+                      <div className="col-span-1">Sub Category</div>
+                      <div className="col-span-3">Activity</div>
+                      <div className="text-center col-span-1">
+                        Activity Region
+                      </div>
+                    </div>
+
+                    {/* Table Body */}
+                    <div className="max-h-[400px] overflow-y-auto">
+                      <div className="divide-y divide-gray-200 text-gray-600">
+                        {selectedActivities.map((activity, index) => (
+                          <div
+                            key={index}
+                            className="grid grid-cols-7 gap-4 px-6 py-4 text-sm"
+                          >
+                            <div className="col-span-1">{activity.scope}</div>
+                            <div className="col-span-1">
+                              {activity.category}
+                            </div>
+                            <div className="col-span-1">
+                              {activity.subCategory}
+                            </div>
+                            <div className="col-span-3">
+                              {activity.activity}
+                            </div>
+                            <div className="text-center col-span-1">
+                              {activity.region}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>

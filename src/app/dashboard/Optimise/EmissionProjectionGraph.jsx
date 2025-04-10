@@ -4,11 +4,12 @@ import { ResponsiveLine } from '@nivo/line';
 const EmissionsProjectionGraph = ({ 
   scenario, 
   includeNetZero, 
-  targetYear,
-  selectedScope, 
+  targetYear,  // This is the extendedTargetYear that can be changed by the user
+  mainTargetYear,
+  selectedScope= "scope1", 
   selectedBusinessMetrics 
 }) => {
-  // Set up the years for the x-axis
+  // Set up the years for the x-axis, based on extendedTargetYear
   const baseYear = scenario?.baseYear || 2024;
   const years = [];
   for (let year = baseYear; year <= targetYear; year++) {
@@ -27,13 +28,15 @@ const EmissionsProjectionGraph = ({
       if (index === 0) {
         value = initialValue;
       } else if (index === 1) {
-        value = initialValue - 0.0015;
+        value = initialValue + 56.0015;
       } else if (index === 2) {
-        value = initialValue - 0.0025;
+        value = initialValue - 17.0025;
       } else if (index === 3) {
-        value = initialValue + 0.0015;
+        value = initialValue + 10.0015;
       } else {
-        value = initialValue + 0.0015;
+        // For years beyond the original scenario, continue with a slight trend
+        const beyondBaseYears = index - 4;
+        value = initialValue + 37.0015 + (beyondBaseYears * 0.0005);
       }
       
       return {
@@ -48,17 +51,27 @@ const EmissionsProjectionGraph = ({
   // Generate net zero trajectory data
   const generateNetZeroData = () => {
     const initialValue = 76.2225;
-    const finalValue = 0;
-    const totalYears = targetYear - baseYear;
     
     return years.map((year, index) => {
-      // Linear reduction to reach zero by target year
-      const reduction = index / totalYears;
+      // Calculate based on the main target year for net zero goal
+      const yearsToTarget = mainTargetYear - baseYear;
+      const currentYearProgress = year - baseYear;
+      
+      // If we're beyond the main target year, keep at zero
+      if (year > mainTargetYear) {
+        return {
+          x: year,
+          y: 0
+        };
+      }
+      
+      // Linear reduction to reach zero by mainTargetYear
+      const reduction = currentYearProgress / yearsToTarget;
       const value = initialValue * (1 - reduction);
       
       return {
         x: year,
-        y: value
+        y: Math.max(0, value) // Ensure we don't go below zero
       };
     });
   };
@@ -66,7 +79,7 @@ const EmissionsProjectionGraph = ({
   // Generate data for the graph
   const [graphData, setGraphData] = useState([
     {
-      id: "Business As Usual",
+      id: "Usual",
       data: generateEmissionsData()
     }
   ]);
@@ -74,7 +87,7 @@ const EmissionsProjectionGraph = ({
   // Update graph data when relevant props change
   useEffect(() => {
     const businessData = {
-      id: "Business As Usual",
+      id: "Usual",
       data: generateEmissionsData(),
       curve: "monotoneX" // Apply curve to business as usual line
     };
@@ -90,7 +103,20 @@ const EmissionsProjectionGraph = ({
     } else {
       setGraphData([businessData]);
     }
-  }, [scenario, includeNetZero, targetYear, selectedScope, selectedBusinessMetrics]);
+  }, [scenario, includeNetZero, targetYear, mainTargetYear, selectedScope, selectedBusinessMetrics]);
+
+  // Add markers for the main target year
+  const markers = [
+    // {
+    //   axis: 'x',
+    //   value: mainTargetYear,
+    //   lineStyle: { stroke: '#FF6B6B', strokeWidth: 2, strokeDasharray: '6 6' },
+    //   legend: 'Main Target',
+    //   legendOrientation: 'vertical',
+    //   legendPosition: 'top',
+    //   textStyle: { fill: '#FF6B6B', fontSize: 12 }
+    // }
+  ];
 
   // Custom theme for the graph
   const theme = {
@@ -138,7 +164,7 @@ const EmissionsProjectionGraph = ({
       <ResponsiveLine
         data={graphData}
         theme={theme}
-        margin={{ top: 40, right: 110, bottom: 50, left: 80 }} // Increased top and left margins
+        margin={{ top: 40, right: 110, bottom: 50, left: 80 }}
         xScale={{ 
           type: 'point',
           padding: 0.3 
@@ -166,8 +192,8 @@ const EmissionsProjectionGraph = ({
           tickPadding: 10, // Increased padding between ticks and labels
           tickRotation: 0,
           tickValues: 5,
-          legend: 'Emissions (in kgCO2e)',
-          legendOffset: -65, // Move legend further from axis
+          legend: 'Emissions (in tCO2e)',
+          legendOffset: -75, // Move legend further from axis
           legendPosition: 'middle',
           format: value => `${value.toFixed(4)}M`
         }}
@@ -177,6 +203,7 @@ const EmissionsProjectionGraph = ({
         pointBorderColor={{ from: 'serieColor' }}
         pointLabelYOffset={-12}
         useMesh={true}
+        markers={markers}
         legends={[
           {
             anchor: 'bottom-right',
