@@ -210,15 +210,15 @@ const NodeDetailModal = ({
           // Find organization containing this location
           const org = rawData.find((o) =>
             o.corporatenetityorg?.some((c) =>
-              c.location?.some((l) => l.name === nodeData.name)
+              c.location?.some((l) => l.id === nodeData.id)
             )
           );
           // Find corporate entity containing this location
           const corp = org?.corporatenetityorg?.find((c) =>
-            c.location?.some((l) => l.name === nodeData.name)
+            c.location?.some((l) => l.id === nodeData.id)
           );
           // Find the location itself
-          const loc = corp?.location?.find((l) => l.name === nodeData.name);
+          const loc = corp?.location?.find((l) => l.id === nodeData.id);
 
           foundDetails = {
             ...loc,
@@ -233,10 +233,10 @@ const NodeDetailModal = ({
         }
         case "corporate": {
           const org = rawData.find((o) =>
-            o.corporatenetityorg?.some((c) => c.name === nodeData.name)
+            o.corporatenetityorg?.some((c) => c.id === nodeData.id)
           );
           const entity = org?.corporatenetityorg?.find(
-            (c) => c.name === nodeData.name
+            (c) => c.id === nodeData.id
           );
 
           foundDetails = {
@@ -254,7 +254,7 @@ const NodeDetailModal = ({
           break;
         }
         case "organization": {
-          const org = rawData.find((o) => o.name === nodeData.name);
+          const org = rawData.find((o) => o.id === nodeData.id);
           foundDetails = {
             ...org,
             type: "organization",

@@ -3,7 +3,7 @@ import { debounce } from "lodash";
 import { MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-const MultiselectTableWidget = ({
+const MultiselectTableWidgetBioDiversity = ({
   id,
   options,
   value,
@@ -11,7 +11,9 @@ const MultiselectTableWidget = ({
   onChange,
   schema,
   formContext,
+  locationData
 }) => {
+
   const [localValue, setLocalValue] = useState(value || []);
   const [othersInputs, setOthersInputs] = useState([]);
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -105,6 +107,18 @@ const MultiselectTableWidget = ({
     }
     updatedValues[rowIndex][key] = selectedValue;
 
+    options.titles.forEach((fieldConfig) => {
+      if (fieldConfig.enableOn && fieldConfig.enableOn.field === key) {
+        const { equals } = fieldConfig.enableOn;
+        const targetField = fieldConfig.key;
+  
+        // If the condition is no longer satisfied, clear the dependent field
+        if (selectedValue !== equals) {
+          console.log("inside")
+          updatedValues[rowIndex][targetField]='';
+        } 
+      }
+    });
     const updatedOthersInputs = [...othersInputs];
     if (!updatedOthersInputs[rowIndex]) {
       updatedOthersInputs[rowIndex] = {};
@@ -140,7 +154,7 @@ const MultiselectTableWidget = ({
     setOthersInputs(updatedOthersInputs);
   };
 
-  const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
+  const debouncedUpdate = useCallback(debounce(onChange, 500), [onChange]);
 
   useEffect(() => {
     debouncedUpdate(localValue);
@@ -188,6 +202,7 @@ const MultiselectTableWidget = ({
                     )}`}
                     data-tooltip-content={item.tooltip}
                     className="cursor-pointer ml-1 w-[20%]"
+                    style={{display:item.display?item.display:'block'}}
                   />
                   <ReactTooltip
                     id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
@@ -206,6 +221,8 @@ const MultiselectTableWidget = ({
                 </div>
               </th>
             ))}
+           
+
             <th className="text-[12px] p-3 text-center border-gray-300 px-2 py-2 w-[25vw] xl:w-[3vw] lg:w-[3vw] md:w-[3vw] 2xl:w-[3vw] 4k:w-[3vw] 2k:w-[3vw]"></th>
           </tr>
         </thead>
@@ -217,7 +234,16 @@ const MultiselectTableWidget = ({
                 const uiSchemaField = options.titles.find(
                   (title) => title.key === key
                 );
+// Handle dynamic disable logic
+                  let isDisabled = false;
+                  if (uiSchemaField?.enableOn) {
+                    const { field, equals } = uiSchemaField.enableOn;
+                    const conditionValue = row[field];
+                    isDisabled = conditionValue !== equals;
+                  }
                 const layoutType = uiSchemaField?.layouttype || "select";
+                const inputType =uiSchemaField?.inputType || 'text'
+                
 
                 return (
                   <td
@@ -329,7 +355,7 @@ const MultiselectTableWidget = ({
                       </>
                     ) : layoutType === "input" ? (
                       <input
-                        type="text"
+                        type={inputType}
                         required={required}
                         value={localValue[rowIndex][key] || ""}
                         onChange={
@@ -339,7 +365,35 @@ const MultiselectTableWidget = ({
                         className="text-[12px] pl-2 py-2 w-full border-b rounded-md"
                         placeholder="Enter"
                       />
-                    ) : null}
+                    ) : layoutType === "locationSelect"?(
+                      <select
+                        value={row[key] || ""}
+                        onChange={(e) => handleSelectChange(rowIndex, key, e.target.value)}
+                        className="text-[12px] pl-2 py-2 w-full border-b"
+                      >
+                        <option value="">Select location</option>
+                        {locationData && locationData.map((option) => (
+                          <option key={option.location_id} value={option.location_name}>
+                            {option.location_name}
+                          </option>
+                        ))}
+                      </select>
+                    ):layoutType=='textarea'?(
+                      <textarea
+                      type="text"
+                      required={required}
+                      disabled={isDisabled}
+                      value={localValue[rowIndex][key] || ""}
+                      onChange={
+                        (e) =>
+                          handleInputChange(rowIndex, key, e.target.value) // Use the new handler here
+                      }
+                      className={`text-[12px] pl-2 py-2 w-full border-b rounded-md ${
+                        isDisabled ? 'bg-gray-100 cursor-not-allowed' : ''
+                      }`}
+                      placeholder="Enter description"
+                    />
+                    ):null}
                   </td>
                 );
               })}
@@ -368,4 +422,4 @@ const MultiselectTableWidget = ({
   );
 };
 
-export default MultiselectTableWidget;
+export default MultiselectTableWidgetBioDiversity;
