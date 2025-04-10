@@ -62,7 +62,7 @@ function Datacollection({
   return (
     <>
       <div className="div">
-        <div className="px-3">
+        <div className="xl:px-3">
           <h3 className="text-left mb-2 p-3">
             <b>DATA COLLECTION AND QUANTIFICATION METHODOLOGY</b>
           </h3>
@@ -177,7 +177,8 @@ function Datacollection({
               <b>Emission Factors Considered</b>
             </h4>
             <p className="text-left mb-2">Table 4: Emission Factors</p>
-            <table className="min-w-full leading-normal border border-slate-200 rounded-lg">
+            <div className="overflow-x-auto custom-scrollbar">
+            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg ">
               <thead className="border-s-slate-200">
                 <tr className="border-s-slate-200">
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider ">
@@ -217,6 +218,7 @@ function Datacollection({
                   ))}
               </tbody>
             </table>
+            </div>
           </div>
         </div>
         <div className="px-3">
@@ -230,7 +232,8 @@ function Datacollection({
             </p>
             <h5 className="text-left mb-4">Direct GHG Emission: Scope 1</h5>
             <p className="text-left mb-2">Table 5 : Scope 1</p>
-            <table className="min-w-full leading-normal border border-slate-200 rounded-lg">
+            <div className="overflow-x-auto custom-scrollbar">
+            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg ">
               <thead className="border-s-slate-200 mb-5">
                 <tr className="border-s-slate-200">
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider ">
@@ -267,6 +270,7 @@ function Datacollection({
                   ))}
               </tbody>
             </table>
+            </div>
             <p className="text-left mb-2 mt-4 wordsping">
               The total Scope 1 emissions from {orgname} were {totalone} tCO2e
               for FY {display}
@@ -282,7 +286,9 @@ function Datacollection({
               purchased cooling/HVAC are considered indirect emissions (Scope 2)
             </p>
             <p className="text-left">Table 6: Scope 2</p>
-            <table className="min-w-full leading-normal border border-slate-200 rounded-lg">
+
+            <div className="overflow-x-auto custom-scrollbar">
+            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg ">
               <thead className="border-s-slate-200 mb-5">
                 <tr className="border-s-slate-200">
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider ">
@@ -319,6 +325,7 @@ function Datacollection({
                   ))}
               </tbody>
             </table>
+</div>
             <p className="text-left mt-4 wordsping">
               The total Scope 2 emissions from {orgname} were {totaltwo} tCO2e
               for FY {display}
@@ -334,7 +341,8 @@ function Datacollection({
               under other indirect emissions (Scope 3).
             </p>
             <p className="text-left mb-2">Table 7: Scope 3</p>
-            <table className="min-w-full leading-normal border border-slate-200 rounded-lg">
+            <div className="overflow-x-auto custom-scrollbar">
+            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg ">
               <thead className="border-s-slate-200 mb-5">
                 <tr className="border-s-slate-200">
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider ">
@@ -371,6 +379,7 @@ function Datacollection({
                   ))}
               </tbody>
             </table>
+            </div>
             <p className="text-left mb-2 mt-4 wordsping">
               The total Scope 3 emissions from {orgname} were {totalthree} tCO2e
               for FY {display}

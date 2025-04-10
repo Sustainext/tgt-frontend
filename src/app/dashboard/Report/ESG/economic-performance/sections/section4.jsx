@@ -10,7 +10,7 @@ const Section4 = ({ section11_1_3Ref, orgName }) => {
   const content = useSelector(
     (state) => state.screen11Slice.financial_assistance_from_government
   );
-  const data = useSelector(state => state.screen11Slice.getdata);
+  const data = useSelector((state) => state.screen11Slice.getdata);
   const dispatch = useDispatch();
   const loadContent3 = () => {
     dispatch(
@@ -22,17 +22,38 @@ const Section4 = ({ section11_1_3Ref, orgName }) => {
   const handleChange = (e) => {
     dispatch(setFinancialassistanc(e.target.value));
   };
-  const economicData = data?.['201_4ab']; 
-  const tableData = economicData ? [
-    { label: "Tax relief and tax credits", value: economicData.tax_relief_and_tax_credits },
-    { label: "Subsidies", value: economicData.subsidies },
-    { label: "Provide details of investment grants, research and development grants, and other relevant types of grant", value: economicData.provide_details_of_investment_grants_research_and_development_grants_and_other_relevant_types_of_grant },
-    { label: "Awards", value: economicData.awards },
-    { label: "Royalty holidays", value: economicData.royalty_holidays },
-    { label: "Financial assistance from Export Credit Agencies (ECAs)", value: economicData.financial_assistance_from_export_credit_agencies },
-    { label: "Financial incentives", value: economicData.financial_incentives },
-    { label: "Other financial benefits received or receivable from any government for any operation", value: economicData.other_financial_benefits_received_or_receivable_from_any_government_for_any_operation }
-  ] : [];
+  const economicData = data?.["201_4ab"];
+  const tableData = economicData
+    ? [
+        {
+          label: "Tax relief and tax credits",
+          value: economicData.tax_relief_and_tax_credits,
+        },
+        { label: "Subsidies", value: economicData.subsidies },
+        {
+          label:
+            "Provide details of investment grants, research and development grants, and other relevant types of grant",
+          value:
+            economicData.provide_details_of_investment_grants_research_and_development_grants_and_other_relevant_types_of_grant,
+        },
+        { label: "Awards", value: economicData.awards },
+        { label: "Royalty holidays", value: economicData.royalty_holidays },
+        {
+          label: "Financial assistance from Export Credit Agencies (ECAs)",
+          value: economicData.financial_assistance_from_export_credit_agencies,
+        },
+        {
+          label: "Financial incentives",
+          value: economicData.financial_incentives,
+        },
+        {
+          label:
+            "Other financial benefits received or receivable from any government for any operation",
+          value:
+            economicData.other_financial_benefits_received_or_receivable_from_any_government_for_any_operation,
+        },
+      ]
+    : [];
 
   return (
     <>
@@ -40,7 +61,7 @@ const Section4 = ({ section11_1_3Ref, orgName }) => {
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           11.1.3 Financial Assistance Received from Government
         </h3>
-        <div className="flex justify-between">
+        <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
             Add introduction about financial assistance received from government
           </p>
@@ -59,7 +80,7 @@ const Section4 = ({ section11_1_3Ref, orgName }) => {
           rows={4}
           onChange={handleChange}
         />
-            <div className="shadow-md rounded-md mb-4">
+        <div className="shadow-md rounded-md mb-4">
           {/* Conditionally render the table if tableData is available */}
           {tableData.length > 0 && (
             <Table1 values={tableData} currency={economicData.currency} />

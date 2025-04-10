@@ -23,7 +23,7 @@ function Carbonaccountingobjectives({ value, setValue, roles, setRoles }) {
   return (
     <>
       <div className="div">
-        <div className="px-3">
+        <div className="xl:px-3">
           <h3 className="text-left mb-2 p-3">
             <b>CARBON ACCOUNTING OBJECTIVES</b>
           </h3>
@@ -70,12 +70,12 @@ function Carbonaccountingobjectives({ value, setValue, roles, setRoles }) {
               // onChange={handleEditorChange}
               />
             </div>
-            <p className="text-left wordsping">
+            <p className="text-left wordsping px-">
               The quantification of {orgname} carbon emissions was led by the
               <input
                 type="text"
                 placeholder="Designation of Organizational Admin"
-                className=" ml-2 w-[25%] border appearance-none text-xs text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
+                className="xl:ml-2 xl:w-[25%] w-full border appearance-none text-xs text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
               ></input>{" "}
