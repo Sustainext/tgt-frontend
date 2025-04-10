@@ -92,7 +92,7 @@ const Breadcrumb = () => {
 
           {text1 !== "" && (
             <>
-              <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold">
+              <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold w-auto">
                 {text1}
               </span>
               <span className="text-[#222222] mx-1">&gt;</span>

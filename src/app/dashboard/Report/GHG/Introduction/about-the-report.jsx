@@ -66,7 +66,7 @@ function Aboutthereport({
   const renderSecondSelect = () => {
     if (firstSelection === 'financialyear') {
       return (
-        <div className="flex mt-5">
+        <div className="flex xl:mt-5">
           <div className="w-[45%]">
             <div className="relative mb-1">
               <input
@@ -135,7 +135,7 @@ function Aboutthereport({
   };
   return (
     <>
-      <div className="px-3">
+      <div className="xl:px-3">
         <h3 className="text-left mb-2 p-3">
           <b>INTRODUCTION</b>
         </h3>
@@ -161,7 +161,7 @@ function Aboutthereport({
               <Moment format="MMM-YYYY">{reportstartdateStr}</Moment> to{' '}
               <Moment format="MMM-YYYY">{reportenddateStr}</Moment> . The base year for {orgname} GHG emissions inventory is{' '}
               <select
-                className="w-[30%] rounded-md border-0 py-1 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="xl:w-[30%] w-full rounded-md border-0 py-1 xl:pl-4 xl:mt-0 mt-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 onChange={handleFirstSelectChange}
                 value={firstSelection}
               >

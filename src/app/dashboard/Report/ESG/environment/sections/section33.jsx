@@ -370,7 +370,8 @@ function generateColumns(apiResponse) {
     return {
       label: capitalizeFirstLetter(key.replace(/_/g, " ")),
       dataIndex: key,
-      headerClass: "px-2 py-2  border-r text-[12px] text-[#727272] w-[10%] text-center",
+      headerClass:
+        "px-2 py-2  border-r text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y border-r text-center font-normal text-[13px]",
     };
@@ -401,12 +402,50 @@ const Section33 = ({ section12_7Ref, data }) => {
     );
   };
 
-  const TableData1 = data && data['air_quality_analyze']? data['air_quality_analyze']['air_emission_by_pollution']?data['air_quality_analyze']['air_emission_by_pollution']:[] :[]
-  const TableData2 = data && data['air_quality_analyze']? data['air_quality_analyze']['air_emission_by_pollution_ppm_or_ugm2']?data['air_quality_analyze']['air_emission_by_pollution_ppm_or_ugm2']:[] :[]
-  const TableData3 = data && data['air_quality_analyze']? data['air_quality_analyze']['percentage_contribution_of_pollutant_by_location']?data['air_quality_analyze']['percentage_contribution_of_pollutant_by_location']:[] :[]
-  const TableData4 = data && data['air_quality_analyze']? data['air_quality_analyze']['total_air_pollution_by_location']?data['air_quality_analyze']['total_air_pollution_by_location']:[] :[]
-  const TableData5 = data && data['air_quality_analyze']? data['air_quality_analyze']['total_air_pollution_by_location_ppm_or_ugm2']?data['air_quality_analyze']['total_air_pollution_by_location_ppm_or_ugm2']:[] :[]
-  const TableData6= data && data['air_quality_collect']? data['air_quality_collect']['air_quality_standard_methodology']?data['air_quality_collect']['air_quality_standard_methodology']:[] :[]
+  const TableData1 =
+    data && data["air_quality_analyze"]
+      ? data["air_quality_analyze"]["air_emission_by_pollution"]
+        ? data["air_quality_analyze"]["air_emission_by_pollution"]
+        : []
+      : [];
+  const TableData2 =
+    data && data["air_quality_analyze"]
+      ? data["air_quality_analyze"]["air_emission_by_pollution_ppm_or_ugm2"]
+        ? data["air_quality_analyze"]["air_emission_by_pollution_ppm_or_ugm2"]
+        : []
+      : [];
+  const TableData3 =
+    data && data["air_quality_analyze"]
+      ? data["air_quality_analyze"][
+          "percentage_contribution_of_pollutant_by_location"
+        ]
+        ? data["air_quality_analyze"][
+            "percentage_contribution_of_pollutant_by_location"
+          ]
+        : []
+      : [];
+  const TableData4 =
+    data && data["air_quality_analyze"]
+      ? data["air_quality_analyze"]["total_air_pollution_by_location"]
+        ? data["air_quality_analyze"]["total_air_pollution_by_location"]
+        : []
+      : [];
+  const TableData5 =
+    data && data["air_quality_analyze"]
+      ? data["air_quality_analyze"][
+          "total_air_pollution_by_location_ppm_or_ugm2"
+        ]
+        ? data["air_quality_analyze"][
+            "total_air_pollution_by_location_ppm_or_ugm2"
+          ]
+        : []
+      : [];
+  const TableData6 =
+    data && data["air_quality_collect"]
+      ? data["air_quality_collect"]["air_quality_standard_methodology"]
+        ? data["air_quality_collect"]["air_quality_standard_methodology"]
+        : []
+      : [];
 
   useEffect(() => {
     if (
@@ -494,7 +533,7 @@ const Section33 = ({ section12_7Ref, data }) => {
           12.7 Air Quality
         </h3>
 
-        <div className="flex justify-between">
+        <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
             Add statement about company’s commitment to protect and maintain air
             quality

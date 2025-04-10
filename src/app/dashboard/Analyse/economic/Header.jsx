@@ -139,15 +139,15 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
         {/* mobile version */}
         <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
           <div
-            className="w-full  py-4 h-[100px]   rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+            className="w-full  py-4 h-auto rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
             onClick={toggleSidebar}
           >
             <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
               <div className="">
                 <p className="text-[11px]">Economic</p>
-                <div className="h-[28px] ">
-                  <div className="h-[28px]">
-                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
+                <div className="">
+                  <div className="">
+                    <p className="gradient-text text-[22px] font-bold  pt-1">
                     {activeTab === "Tab1"
                   ? "Economic Performance"
                   : activeTab === "Tab2"

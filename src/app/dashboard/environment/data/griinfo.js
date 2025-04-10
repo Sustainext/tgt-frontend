@@ -3548,18 +3548,626 @@ export const Energydata = [
             </p>
 
             <p className="text-[12px] text-[#222222] mb-2">
-            Guidance for Disclosure 305-6            </p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            The reporting organization can report separate or combined data for the substances included in the calculation.
+              Guidance for Disclosure 305-6{" "}
             </p>
-            <p className="text-[12px] text-[#222222] mb-2">
-            Background          </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The reporting organization can report separate or combined data
+              for the substances included in the calculation.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">Background </p>
             <p className="text-[12px] text-[#727272] mb-2">
-            Measuring ODS production, imports, and exports helps to indicate how an organization complies with legislation. This is particularly relevant if the organization produces or uses ODS in its processes, products and services and is subject to phase-out commitments. Results on ODS phase-out help to indicate the organization’s position in any markets affected by regulation on ODS. This disclosure covers the substances included in Annexes A, B, C, and E of the ‘Montreal Protocol’ as well as any other ODS produced, imported, or exported by an organization.          </p>
+              Measuring ODS production, imports, and exports helps to indicate
+              how an organization complies with legislation. This is
+              particularly relevant if the organization produces or uses ODS in
+              its processes, products and services and is subject to phase-out
+              commitments. Results on ODS phase-out help to indicate the
+              organization’s position in any markets affected by regulation on
+              ODS. This disclosure covers the substances included in Annexes A,
+              B, C, and E of the ‘Montreal Protocol’ as well as any other ODS
+              produced, imported, or exported by an organization.{" "}
+            </p>
           </div>
         </div>
       </>,
     ],
     link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
+  },
+  {
+    category: ["57"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-15.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-400 text-[17px] font-bold ml-2">SDG 15</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 15: Protect, restore and promote
+            sustainable use of terrestrial ecosystems, sustainably manage
+            forests, combat desertification, and halt and reverse land
+            degradation and halt biodiversity loss
+          </p>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal15",
+  },
+  {
+    category: ["58"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-1 Policies to halt and reverse biodiversity loss
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-1-a
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can provide a high-level description of its
+              policies or commitments to halt and reverse biodiversity loss. For
+              example, the organization can describe that it has implemented a
+              policy in line with Target 5 of the Global Biodiversity Framework
+              to source from suppliers that take appropriate measures to prevent
+              exporting species that are alien and invasive to the buying
+              country.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              If the policies or commitments to halt and reverse biodiversity
+              loss are not informed by the 2050 Goals and 2030 Targets in the
+              Global Biodiversity Framework, a brief statement of this fact is
+              sufficient to comply with the requirement. The organization can
+              explain if it intends to do so and, if so, by which timeframe.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization has described its policies or commitments to
+              halt and reverse biodiversity loss under Disclosure 2-23 in GRI 2:
+              General Disclosures 2021 or under 3-3-c in GRI 3: Material Topics
+              2021, it can provide a reference to this information under 101-1-a
+              and does not need to repeat the information.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-1-b{" "}
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              If the policies or commitments apply to all of the organization’s
+              activities and business relationships equally, a brief statement
+              of this fact is sufficient to comply with the requirement.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              If the policies or commitments apply to only some of the
+              organization’s activities (e.g., they apply only to entities
+              located in certain countries or to certain subsidiaries) or to
+              some of its business relationships (e.g., they apply only to
+              suppliers), then the organization should report to which
+              activities and business relationships the policies or commitments
+              apply. It can also explain why the policies or commitments are
+              limited to these activities and business relationships.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should also explain whether its business
+              relationships are obligated to abide by the policies or
+              commitments, or are encouraged (but not obligated) to do so. When
+              its business relationships are encouraged to abide by the policies
+              or commitments, the organization can describe how it encourages
+              adoption and what incentives or support it provides.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-1-c{" "}
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              To halt and reverse biodiversity loss, the organization may have
+              goals and targets to achieve net positive impact, no net loss and
+              net gain of biodiversity, or to contribute to nature positive
+              goals. In such a case, the organization should explain how it has
+              defined these concepts and list the sources used to inform its
+              definition.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              When reporting on goals and targets, the organization should
+              report how the goals and targets are set. For example, it can use
+              the Science Based Targets Network (SBTN) target-setting tools and
+              guidance or the SBTN and the Taskforce on Nature-related Financial
+              Disclosures (TNFD) Guidance for corporates on science-based
+              targets for nature.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              The organization should report how scientific consensus informed
+              its goals and targets. For example, it can use national
+              biodiversity strategies and action plans developed in the context
+              of the Convention on Biological Diversity, or independent
+              assessments of the ecological status of an area.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-4">
+              The organization should also report the baseline for the goals and
+              targets and the timeline for achieving the goals and targets. When
+              reporting progress toward the goals and targets and assessing if
+              the progress is satisfactory, the organization can, for example,
+              report that it sourced 60% of deforestation-free products in 2023.
+              It can further report that it is on track
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">Background </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              The Convention on Biological Diversity adopted the
+              Kunming-Montreal Global Biodiversity Framework (hereafter the
+              Global Biodiversity Framework). The Global Biodiversity Framework
+              lays out its 2050 vision of a world ‘living in harmony with
+              nature’ where ‘biodiversity is valued, conserved, restored and
+              wisely used, maintaining ecosystem services, sustaining a healthy
+              planet and delivering benefits essential for all people’.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              The Global Biodiversity Framework recognizes the need to reduce or
+              reverse the drivers of biodiversity loss. The framework proposes
+              the 2050 Goals, together with the related 2030 Targets. The goals
+              with the related targets are designed to stimulate efforts in
+              three key areas:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                reducing the threats to biodiversity;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                meeting people’s needs through sustainable use and
+                benefit-sharing; and
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                providing tools and solutions for implementing and integrating
+                practices that conserve and sustainably use biodiversity.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "",
+  },
+  {
+    category: ["59"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-2 Management of biodiversity impacts
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-a-i
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Avoidance actions aim to anticipate and prevent negative impacts
+              on biodiversity before actions or decisions leading to such
+              impacts are taken. Impacts can be avoided by finding alternative
+              locations for the activities (e.g., relocating the site), changing
+              the timing of the activities (e.g., timing activities when they do
+              not interfere with a species' breeding or migration), or by
+              deciding not to undertake activities when they generate
+              irremediable biodiversity losses (e.g., deciding against expanding
+              the site). Organizations are expected to prioritize avoidance as
+              the primary step in the mitigation hierarchy.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should explain if it avoids activities in or near
+              ecologically sensitive areas, such as protected areas and Key
+              Biodiversity Areas. See Disclosure 101-5 and Table 1 in the
+              Appendix for more information on ecologically sensitive areas.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-a-ii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Actions taken to minimize negative impacts on biodiversity aim to
+              reduce the duration, intensity, and extent of impacts that cannot
+              be completely avoided. The organization should explain why the
+              impacts could not be avoided.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Examples of minimization measures include preventing the spread of
+              invasive alien species, designing ecological corridors to minimize
+              ecosystem fragmentation, or locating sites to areas that are less
+              sensitive to an organization’s activities.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-a-iii
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              This requirement covers the actions taken to restore or
+              rehabilitate ecosystems that are affected by the organization’s
+              activities. Actions taken outside of the area affected by the
+              organization’s activities are reported as offsets under 101-2-a-iv
+              or as additional conservation actions under 101-2-a-v. Restoration
+              is the process of assisting the recovery of an ecosystem that has
+              been degraded, damaged, or destroyed. Rehabilitation is the
+              process of stabilizing the terrain, ensuring public safety,
+              enhancing aesthetics, and restoring the land to a purpose deemed
+              useful within the regional context. Actions taken to restore and
+              rehabilitate affected ecosystems aim to return the environment to
+              its original state or to a state where it has a healthy and
+              functioning ecosystem.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              The organization should specify if the restoration and
+              rehabilitation actions are implemented while the organization's
+              activities are ongoing or after the activities have ended (e.g.,
+              restoration actions taken after the closure of a site). The
+              organization should also report the stage of its restoration and
+              rehabilitation actions. Examples of stages of restoration and
+              rehabilitation are as follows:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                planning and design;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">implementation;</li>
+              <li className="text-[11px] text-[#727272]">
+                monitoring, documentation, evaluation, and reporting;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                ongoing activities and maintenance. The UN Decade on Ecosystem
+                Restoration has identified principles that detail best practices
+                for restoring degraded land, freshwater, and marine ecosystems.
+                The organization should provide information on the species and
+                ecosystems targeted through the restoration and rehabilitation
+                actions. The organization should also explain how these actions
+                support species recovery.
+              </li>
+            </ul>
+            <p className="text-[12px] text-[#727272] mb-2">
+              When reporting on the goals of the restoration and rehabilitation,
+              the organization can report to what extent the actions are
+              proportional, viable, and measurable. ‘Proportional’ means that
+              the area targeted for restoration or rehabilitation is equivalent
+              in size to the area that has been affected. ‘Viable’ means that no
+              known constraints can hinder the successful implementation of the
+              restoration or rehabilitation in the short, medium, and long term,
+              and the set goals are attainable based on the current ecological
+              assessment results. An example of short, medium and long term
+              restoration and rehabilitation is that the land ownership is not
+              limited in time. ’Measurable’ means that objectives have been
+              defined and are regularly monitored. Stakeholder engagement can
+              include co-design, co-management, co-governance, and regular and
+              inclusive reporting and communication of activities.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-4">
+              Organizations are expected to obtain free, prior, and informed
+              consent (FPIC) before and throughout restoration and
+              rehabilitation activities that could have impacts on land or
+              resources that Indigenous Peoples use or own. Organizations are
+              also expected to seek FPIC when restoration and rehabilitation
+              activities have impacts on land or resources that local
+              communities use or own.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-a-iv
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              Offsets are management interventions in areas not affected by the
+              organization’s activities. These can include the restoration or
+              rehabilitation of degraded ecosystems or actions taken to halt and
+              reverse biodiversity loss.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              The organization should report the types of offsets used. Examples
+              of biodiversity offsets include averted loss, restoration, and
+              one-off offsets.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              The organization should report the phases that the offset projects
+              are in, for example, design, implementation, or completion. It
+              should also report the delivery deadlines and the conservation
+              goals.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              The organization should also report the co-benefits and trade-offs
+              associated with the offsets, and how those trade-offs are managed.
+              Examples of co-benefits include the capture and storage of carbon
+              and social or cultural benefits. An example of a trade-off would
+              be replacing non-native trees with native trees, while the local
+              community preferred the non-native species for the purpose of
+              firewood.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-a-v
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              Transformative actions contribute to systemic change inside and
+              outside the organization’s value chain to generate positive
+              impacts on biodiversity. They address the drivers of biodiversity
+              loss through technological, economic, institutional, and social
+              factors, emphasizing the importance of underlying values and
+              behavioral changes. Transformative actions can happen before,
+              during, and after other avoidance, minimization, restoration and
+              rehabilitation, and offset actions. Transformative actions include
+              actions taken with third parties (e.g., experts, governments,
+              local communities), and actions that enable other organizations to
+              generate positive impacts on biodiversity.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              The organization can describe how it ensures that its business
+              model is compatible with the transition to halt and reverse
+              biodiversity loss or the steps taken to transition to a
+              circulareconomy. The organization can also describe actions that
+              advance the sustainable use of biodiversity, for example,
+              promoting farming practices that support biodiversity.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              Additional conservation actions aim to have a positive impact on
+              biodiversity and should not be used to manage the organization’s
+              negative impacts. They include actions taken to conserve or
+              restore biodiversity in collaboration with third parties, such as
+              scientific experts, nongovernmental organizations, or local
+              communities. For example, joint research projects, technical and
+              scientific cooperation, capacity-building, training, or knowledge
+              sharing.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-b
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              Requirement 101-2-b provides information about the size of the
+              area under restoration or rehabilitation and the size of the area
+              restored or rehabilitated for each site with the most significant
+              impacts on biodiversity. The sites with the most significant
+              impacts are those reported under 101-5-a. This information can be
+              compared to the size of the ecosystem affected by the
+              organization’s activities reported under 101-7-a-ii. It can also
+              be compared to the size of the site reported under 101-5-a. These
+              comparisons provide insight into how much of the affected area is
+              under restoration and rehabilitation and how much has been
+              restored and rehabilitated.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-c-i
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              An offset aims to deliver or contribute to no net loss or net gain
+              goals for a site, a species, or other biodiversity features. The
+              organization can report the delivered outcomes in the case an
+              offset has been finalized.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              The organization should report how the goal to achieve no net loss
+              or net gain is demonstrated and verified. The organization should
+              provide information on the species and ecosystems targeted through
+              the actions to offset its residual negative impacts.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              The organization can also report the residual negative impacts of
+              its activities. It can apply a no net loss and loss-gain
+              calculation as described in the Business and Biodiversity Offsets
+              Programme (BBOP) Resource Paper: No Net Loss and Loss-Gain
+              Calculations in Biodiversity Offsets
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-c-iii
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              The organization should explain whether it identifies, designs,
+              and manages offsets according to applicable national legislation
+              or principles of good offset practices, such as the BBOP Standard
+              on Biodiversity Offsets or the International Union for
+              Conservation of Nature (IUCN) Policy on Biodiversity Offsets. The
+              Organisation for Economic Cooperation and Development (OECD)
+              Biodiversity Offsets: Effective Design and Implementation also
+              provides lessons learned and insights on good practices, such as
+              additionality, ecological equivalence, and permanence.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Additionality’ is a property of a biodiversity offset, where the
+              conservation outcomes are demonstrably new and additional and
+              would not have resulted without the offset (e.g., weed control
+              measures required by legislation cannot contribute to an offset).
+              As no two areas are ecologically identical, ‘ecological
+              equivalence’ means that the biodiversity gains from the offset
+              must be equivalent to the residual impacts. ‘Permanence’ means
+              that the offsets must provide biodiversity gains that correspond
+              to the duration of the biodiversity loss from the residual impacts
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "",
+  },
+  {
+    category: ["60"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-2 Management of biodiversity impacts
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-d
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Requirement 101-2-d provides information about which sites with
+              the most significant impacts on biodiversity have a biodiversity
+              management plan. The sites with the most significant impacts are
+              those reported under 101-5-a.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              A biodiversity management plan describes how the actions to manage
+              biodiversity impacts are implemented within a particular site. It
+              includes a monitoring plan, a time schedule, milestones, and
+              targets. The plans to manage biodiversity impacts may be
+              integrated into broader site environmental management plans.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-e
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Synergies include actions taken to protect biodiversity that
+              contribute to climate change mitigation or adaptation. Actions can
+              also improve the capacity of species or ecosystems to adapt to
+              unavoidable climate change impacts. For example, planting
+              mangroves can protect biodiversity by increasing the wildlife
+              population and contribute to climate change mitigation and
+              adaptation by capturing and storing carbon and controlling floods.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              In contrast, trade-offs include climate change mitigation or
+              adaptation actions that result in biodiversity loss. For example,
+              foresting an area with non-native species may contribute to
+              climate change mitigation and adaptation by absorbing greenhouse
+              gases and controlling erosion. However, it may also result in the
+              loss of biodiversity and ecosystem services that flow from the
+              affected ecosystems.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization does not enhance synergies or reduce
+              trade-offs between actions taken to manage its biodiversity and
+              climate change impacts, a brief statement of this fact is
+              sufficient to comply with the requirement
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-2-f
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              Actions taken to manage impacts on biodiversity may lead to
+              negative impacts on stakeholders. For example, when an
+              organization’s offset measures form a new protected area
+              restricting the local community from using the area and accessing
+              natural resources.
+            </p>
+            <p className="text-[12px] text-[#727272] mb-2">
+              The organization should report which stakeholders are affected or
+              potentially affected and explain how it identifies, addresses, and
+              monitors the negative and positive impacts on stakeholders. The
+              organization should explain how it engages with stakeholders to
+              identify and avoid negative impacts that are considered
+              unacceptable and cannot be mitigated or compensated for. It should
+              also describe the actions taken to achieve equitable social
+              outcomes. For example, a privately owned protected area invests
+              part of its revenue from tourism in local energy and healthcare
+              projects, but it restricts local communities from utilizing the
+              land for agricultural purposes. The organization should also
+              explain how it engages with stakeholders and describe any conflict
+              resolution or grievance mechanisms it has implemented. For more
+              information on good practice principles to generate positive
+              social outcomes while mitigating biodiversity impacts.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "",
+  },
+  {
+    category: ["61"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-3 Access and benefit-sharing
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-3-a
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Where ABS regulations and measures apply, the organization should
+              describe:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                how it allocates responsibility to ensure compliance with ABS
+                regulations and measures across different levels within the
+                organization;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                how it identifies which provider countries have access and
+                benefit-sharing regulations and measures;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how it integrates ABS regulations and measures into
+                organizational strategies, operational policies, and operational
+                procedures;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                what training it provides on implementing the ABS regulations
+                and measures. When the organization has identified significant
+                instances of non-compliance with laws and regulations related to
+                ABS, these are reported under Disclosure 2-27 in GRI 2: General
+                Disclosures 2021.
+              </li>
+            </ul>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-3-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Examples of voluntary actions include joint research projects,
+              training, or knowledge sharing related to using genetic resources
+              or associated traditional knowledge in research and innovation.
+              The ABS Clearing-House includes examples of good practices, codes
+              of conduct, guidelines, and standards. The UN Nagoya Protocol [4]
+              lists examples of monetary and non-monetary benefits, which can
+              inform the organization’s voluntary actions.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can report how engagement with stakeholders,
+              particularly Indigenous Peoples and local communities, has
+              informed its voluntary actions.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization has not taken any voluntary actions to advance
+              access and fair and equitable benefit-sharing, a brief statement
+              of this fact is sufficient to comply with the requirement.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "",
   },
 ];

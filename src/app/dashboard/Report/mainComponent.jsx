@@ -613,8 +613,8 @@ const Report = () => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="my-10 pb-5 mx-8 text-left border border-gray-300 rounded-md">
-        <div className="px-3 flex py-4  justify-between">
+      <div className="my-10 pb-5 xl:mx-8 md:mx-8 text-left border border-gray-300 rounded-md">
+        <div className="px-3 xl:flex py-4  justify-between">
           <div>
             <h1 className="text-[#101828] mb-1 text-[1.375rem] font-bold">
               Report
@@ -625,7 +625,7 @@ const Report = () => {
             </p>
           </div>
           <div
-            className="flex items-center space-x-2 text-[#007EEF] text-xs font-bold leading-[15px] cursor-pointer ml-2 float-end"
+            className="flex items-center space-x-2 text-[#007EEF] text-xs font-bold leading-[15px] cursor-pointer xl:ml-2 xl:float-end xl:mt-0 mt-2"
             onClick={handleOpenModal}
           >
             <div className="text-[#007EEF] text-[14px] font-bold leading-[15px]">
@@ -654,7 +654,7 @@ const Report = () => {
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-          <div className="relative top-5  p-5 border w-[50%] shadow-lg rounded-md bg-white ml-40">
+          <div className="relative top-5  p-5 border xl:w-[50%] w-[95%] shadow-lg rounded-md bg-white xl:ml-40">
             <div className="mt-3 text-center">
               <div className="flex justify-between items-center drop-shadow-lg border-b-2 pt-6 w-full">
                 <h2 className="self-stretch text-black text-opacity-90 text-[22px] font-normal leading-relaxed flex space-x-8 items-center ms-6">
@@ -755,7 +755,7 @@ const Report = () => {
                 </div>
               )}
               {/* validation code end */}
-              <div className="mt-2 px-7 py-3">
+              <div className="mt-2 xl:px-7 py-3">
                 <form className="w-full text-left">
                   <div className="mr-2 mb-4 w-[101%]">
                     <label
@@ -782,16 +782,16 @@ const Report = () => {
                     )}
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 mb-4">
-                    <div className="mr-2">
+                    <div className="xl:mr-2">
                       <label
                         htmlFor="sdate"
                         className="block text-neutral-800 text-[13px] font-normal"
                       >
                         Select Type Of Report
                       </label>
-                      <div className="mt-2 mr-2">
+                      <div className="mt-2 xl:mr-2">
                         <select
-                          className="block w-full rounded-md border-0 py-2 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-2 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleChangeReporttype}
                           value={reporttype}
                           name="Reporttype"
@@ -810,7 +810,7 @@ const Report = () => {
                       </div>
                     </div>
 
-                    <div className="ml-2">
+                    <div className="xl:ml-2">
                       <label
                         htmlFor="cname"
                         className="block text-neutral-800 text-[13px] font-normal"
@@ -819,7 +819,7 @@ const Report = () => {
                       </label>
                       <div className="mt-2">
                         <select
-                          className="block w-full rounded-md border-0 py-2 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-2 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleFirstSelectChange}
                           value={firstSelection}
                         >
@@ -902,7 +902,7 @@ const Report = () => {
                       >
                         Reporting Period (From)
                       </label>
-                      <div className="mt-2 mr-4">
+                      <div className="mt-2 xl:mr-4">
                         <input
                           id="sdate"
                           name="startdate"
@@ -919,14 +919,14 @@ const Report = () => {
                         <p className="text-red-500 ml-1">{error.startdate}</p>
                       )}
                     </div>
-                    <div className="ml-3 w-full">
+                    <div className="xl:ml-3 w-full">
                       <label
                         htmlFor="edate"
                         className="block text-neutral-800 text-[13px] font-normal"
                       >
                         Reporting Period (To)
                       </label>
-                      <div className="mt-2 mr-3">
+                      <div className="mt-2 xl:mr-3">
                         <input
                           id="edate"
                           name="enddate"

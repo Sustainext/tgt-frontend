@@ -59,7 +59,7 @@ function CoverSheet({
   return (
     <>
       <div className="box rounded-lg p-4 h-[497px]">
-        <div className="flex items-center justify-between">
+        <div className="xl:flex items-center justify-between">
           <div className="flex mt-5">
             <h1 className="text-lg">
               <p className="text-gray-500">{reportby} name</p>

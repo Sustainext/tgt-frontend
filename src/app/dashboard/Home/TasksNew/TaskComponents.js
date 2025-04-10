@@ -21,7 +21,7 @@ const TaskHeader = ({ onAddTask }) => (
 
 const TaskTabs = ({ activeTab, onTabChange, tabs }) => (
   <div className="border-b border-gray-200 mb-6">
-    <nav className="flex space-x-8">
+   <nav className="flex xl:space-x-8 space-x-4 px-2 min-w-max">
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -147,12 +147,12 @@ const TaskRow = ({ task, onTaskClick }) => {
   }, [task.task_name]); // Re-run when task name changes
 
   return (
-    <div className="flex justify-between border-b border-[#ebeced] py-2">
-      <div className="flex w-[22rem] cursor-pointer">
-        <div className="w-[17rem] text-[#007eef] text-[13px] font-normal leading-none ml-3 relative">
+    <div className="flex justify-between border-b border-[#ebeced] py-2 gap-2">
+      <div className="flex xl:w-[22rem] cursor-pointer">
+        <div className="xl:w-[17rem] text-[#007eef] text-[13px] font-normal leading-none ml-3 relative">
           <p
             ref={textRef}
-            className="py-1 cursor-pointer truncate"
+            className="py-1 cursor-pointer truncate w-[180px] xl:w-auto"
             data-tooltip-id={isTextTruncated ? `task-tooltip-${task.id}` : undefined}
             data-tooltip-content={isTextTruncated ? task.task_name : undefined}
             onClick={() => onTaskClick(task)}

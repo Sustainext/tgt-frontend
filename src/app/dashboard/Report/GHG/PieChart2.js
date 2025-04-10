@@ -1,6 +1,14 @@
 import { ResponsivePie } from "@nivo/pie";
-
+import { useEffect, useState } from "react";
 function MyResponsivesouresdata({ souresdata }) {
+    const [isMobile, setIsMobile] = useState(false);
+  
+    useEffect(() => {
+      const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+      checkMobile();
+      window.addEventListener("resize", checkMobile);
+      return () => window.removeEventListener("resize", checkMobile);
+    }, []);
   const uniqueSources = new Map();
 
   souresdata.forEach(corporate => {
@@ -18,7 +26,9 @@ function MyResponsivesouresdata({ souresdata }) {
 
   const sourcesDataForChart = Array.from(uniqueSources.values()).map(source => ({
     id: source.source_name,
-    label: source.category_name,
+    label: source.category_name.length > 14
+    ? source.category_name.slice(0, 14) + "…"
+    : source.category_name,
     value: parseFloat(source.total_co2e),
     color: `hsl(${Math.random() * 360}, 70%, 50%)`,
   }));
@@ -35,7 +45,7 @@ function MyResponsivesouresdata({ souresdata }) {
       <ResponsivePie
         data={sourcesDataForChart}
         enableArcLabels={false}
-        margin={{ top: 40, right: 250, bottom: 80, left: 0 }}
+        margin={{ top: 40, right: isMobile ? 10 : 250, bottom: isMobile ? 120 : 80, left: 0 }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
@@ -126,14 +136,14 @@ function MyResponsivesouresdata({ souresdata }) {
         ]}
         legends={[
           {
-            anchor: "right",
-            direction: "column",
-            justify: false,
-            translateX: 120, // Adjust this value to move the legend closer or further from the chart
-            translateY: 0,
-            itemsSpacing: 2,
-            itemWidth: 80, // Adjust based on your text length
-            itemHeight: 20,
+            anchor: isMobile ? "bottom" : "right",
+            direction: isMobile ? "row" : "column",
+              justify: false,
+              translateX: isMobile ? 0 : 120,
+              translateY: isMobile ? 60 : 0,
+              itemsSpacing: isMobile ? 40 : 2,
+              itemWidth: isMobile ? 40 : 80,
+            itemHeight: 10,
             itemTextColor: "#999",
             itemDirection: "left-to-right",
             itemOpacity: 1,

@@ -66,7 +66,7 @@ const StatementPopup = ({reportid, statement,setStatement,handleChange,isModalOp
       {isModalOpen && (
         <div className="modal-overlay z-50">
           <div className="modal-center">
-            <div className="bg-white p-5 rounded-lg shadow-md w-auto">
+            <div className="bg-white p-5 rounded-lg shadow-md xl:w-auto w-[95%]">
               <div className="flex justify-between items-center pt-6 w-full">
                 <div className="flex gap-2">
                   <Image src={GRISVG} className="w-7 h-7 mr-2" alt="gri-logo" />
