@@ -297,7 +297,7 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    // updateFormData();
     console.log("test form data", formData);
   };
 

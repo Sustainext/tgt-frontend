@@ -5,18 +5,18 @@ import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import TextareaWidgetnew from '../../../../../shared/widgets/Textarea/TextAreaWidget5';
-
+import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiSelectTableWidgetBioDiversity";
+// Simple Custom Table Widget
 const widgets = {
-  TextareaWidgetnew:TextareaWidgetnew
+  MultiselectTableWidget: MultiselectTableWidget,
 };
 
-const view_path = "gri-economic-public_legal_cases-205-3d";
+const view_path = "gri-social-ohs-403-2a-process_for_hazard-new";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,63 +25,99 @@ const schema = {
     items: {
       type: "object",
       properties: {
-        Q1: {
+        Location: {
           type: "string",
-          title: "How does the organization ensure compliance with access and benefit-sharing (ABS) regulations and measures?",
+          title: "Location",
+          // enum:[]
+        },
+        BiodiversityManagement: {
+          type: "string",
+          title: "Biodiversity Management Plan in Place? ",
+          enum:[
+              "Yes","No"
+          ]
+        },
+        Reason: {
+          type: "string",
+          title: "Reason",
         },
       }
-    }
+    },
   };
   
-
-  const uiSchema = {
-    items: {
-      "ui:order": ["Q1"],
-      Q1: {
-        "ui:title":
-          "How does the organization ensure compliance with access and benefit-sharing (ABS) regulations and measures?",
-        "ui:tooltipstitle":
-          "Describe the process to ensure compliance with access and benefit-sharing regulations and measures.",
-        "ui:titlediplay": "block",
-        "ui:titletooltipdisplay": "block",
-        "ui:widget": "TextareaWidgetnew",
-        "ui:options": {
-          label: false,
-        },
-      },
+    
+    const uiSchema = {
+      "ui:widget": "MultiselectTableWidget",
       "ui:options": {
-        orderable: false,
-        addable: false,
-        removable: false,
-        layout: "horizontal"
-      }
-    }
-  };
-  
-
-const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
-  const [formData, setFormData] = useState([{}]);
+        titles: [
+          {
+            key: "Location",
+            title: "Location",
+            tooltip:
+              "Select the location of site with the most significant biodiversity impact.",
+              layouttype: "locationSelect",
+          },
+          {
+            key: "BiodiversityManagement",
+            title: "Biodiversity Management Plan in Place?",
+            tooltip:
+              "Indicate whether the site have a biodiversity management plan.",
+              layouttype: "select",
+          },
+          {
+            key: "Reason",
+            title: "Reason",
+            tooltip:
+              "If no, why the site does not have a biodiversity management plan.",
+              layouttype: "textarea",
+              enableOn: {
+                field: "BiodiversityManagement",
+                equals: "No"
+              }
+          },
+        ],
+      },
+    };
+const Screen1comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
+  const initialFormData = [
+    {
+      Location: "",
+      BiodiversityManagement: "",
+      Reason: "",
+    },
+  ];
+  const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const { open } = GlobalState();
+  const [locationData,setLocationdata]=useState([])
+
+
+  const fetchloctiondata = async () => {
+      setLocationdata();
+      LoaderOpen();
+      const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
+      try {
+        const response = await axiosInstance.get(url);
+        setLocationdata(response.data);
+      } catch (error) {
+        LoaderClose();
+        setLocationdata();
+      } finally {
+        LoaderClose();
+      }
+    };
 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
-
   const LoaderClose = () => {
     setLoOpen(false);
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-    }
-
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
 
   const updateFormData = async () => {
@@ -90,8 +126,7 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      corporate: selectedCorp,
-      organisation: selectedOrg,
+      location,
       year,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -136,12 +171,17 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
       });
       LoaderClose();
     }
+    // console.log('Response:', response.data);
+    // } catch (error) {
+    // console.error('Error:', error);
+    // }
   };
 
   const loadFormData = async () => {
+    console.log("loadFormData screen 2");
     LoaderOpen();
-    setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    setFormData(initialFormData);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -149,35 +189,38 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData(initialFormData);
     } finally {
       LoaderClose();
     }
   };
-//   useEffect(() => {
-//     if (selectedOrg && year && togglestatus) {
-//       if (togglestatus === "Corporate" && selectedCorp) {
-//         loadFormData();
-//       } else if (togglestatus === "Corporate" && !selectedCorp) {
-//         setFormData([{}]);
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});
-//       } else {
-//         loadFormData();
-//       }
 
-//       toastShown.current = false;
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true;
-//       }
-//     }
-//   }, [selectedOrg, year, selectedCorp, togglestatus]);
+  useEffect(() => {
+     if (selectedOrg && year && togglestatus) {
+       if (togglestatus === "Corporate" && selectedCorp) {
+        //  loadFormData();
+         fetchloctiondata()
+       } else if (togglestatus === "Corporate" && !selectedCorp) {
+         setFormData([{}]);
+         setRemoteSchema({});
+         setRemoteUiSchema({});
+       } else {
+         loadFormData();
+         fetchloctiondata()
+       }
+ 
+       toastShown.current = false;
+     } else {
+       if (!toastShown.current) {
+         toastShown.current = true;
+       }
+     }
+   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
+    console.log("Form data:", formData);
     // updateFormData();
-    console.log("test form data", formData);
   };
 
   return (
@@ -188,18 +231,18 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
         {/* <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
             <h2 className="flex mx-2 text-[14px] text-neutral-950 font-[500]">
-            Does the organization have a formal biodiversity policy or commitments?
+            Report the goals and targets to halt and reverse biodiversity loss - 
               <MdInfoOutline
-                data-tooltip-id={`es30`}
-                data-tooltip-html="Indicate whether the organisation have a formal biodiversity policy or commitment to halt and reverse biodiversity loss."
-                className="mt-1.5 ml-2 text-[15px] w-[20%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
+                data-tooltip-id={`tooltip-$e86`}
+                data-tooltip-content="This section documents data corresponding to your organization's systematic approach to identifying work-related hazards, assessing their associated risks, and implementing effective control measures to minimize those risks, ensuring a safe and healthy work environment."
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
-                id={`es30`}
+                id={`tooltip-$e86`}
                 place="top"
                 effect="solid"
                 style={{
-                  width: "390px",
+                  width: "290px",
                   backgroundColor: "#000",
                   color: "white",
                   fontSize: "12px",
@@ -210,16 +253,10 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
               ></ReactTooltip>
             </h2>
           </div>
-          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
-            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 205-3d
-                </div>
-              </div>
-            </div>
-          </div>
+
+        
         </div> */}
+        {Array.isArray(locationData) && locationData.length > 0 ? (
         <div className="mx-2">
           <Form
             schema={schema}
@@ -227,24 +264,32 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            widgets={widgets}
+            widgets={{
+              ...widgets,
+               MultiselectTableWidget: (props) => (
+                                  <MultiselectTableWidget
+                                    {...props}
+                                    locationData={locationData}
+                                    isAbled="No"
+                                  />
+                                ),
+            }}
           />
         </div>
+        ):(
+<div className="mx-2">
+
+</div>
+        )}
+
         <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              (!selectedCorp && togglestatus === "Corporate") ||
-              !selectedOrg ||
-              !year
-                ? "cursor-not-allowed opacity-90"
-                : ""
+              !location || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={
-              (togglestatus === "Corporate" && !selectedCorp) ||
-              (togglestatus !== "Corporate" && (!selectedOrg || !year))
-            }
+            disabled={!location || !year}
           >
             Submit
           </button>

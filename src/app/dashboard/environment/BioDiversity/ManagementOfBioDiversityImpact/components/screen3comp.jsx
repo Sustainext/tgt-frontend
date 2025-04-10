@@ -27,7 +27,7 @@ const schema = {
       properties: {
         Q1: {
           type: "string",
-          title: "How does the organization ensure compliance with access and benefit-sharing (ABS) regulations and measures?",
+          title: "Describe actions taken to offset residual negative impacts on biodiversity",
         },
       }
     }
@@ -39,9 +39,9 @@ const schema = {
       "ui:order": ["Q1"],
       Q1: {
         "ui:title":
-          "How does the organization ensure compliance with access and benefit-sharing (ABS) regulations and measures?",
+          "Describe actions taken to offset residual negative impacts on biodiversity",
         "ui:tooltipstitle":
-          "Describe the process to ensure compliance with access and benefit-sharing regulations and measures.",
+          "Here, organization can specify the types of offsets used. Examples of biodiversity offsets include averted loss, restoration, and one-off offsets.",
         "ui:titlediplay": "block",
         "ui:titletooltipdisplay": "block",
         "ui:widget": "TextareaWidgetnew",
@@ -59,7 +59,7 @@ const schema = {
   };
   
 
-const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
+const Screen3comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -266,4 +266,4 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   );
 };
 
-export default Screen1comp;
+export default Screen3comp;

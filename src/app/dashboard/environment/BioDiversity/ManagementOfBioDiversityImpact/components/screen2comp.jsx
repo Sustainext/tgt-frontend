@@ -10,11 +10,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import GeneralWorkersEmployees from "../../../../../shared/widgets/Table/generalWorkersEmployees";
-import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiSelectTableWidgetBioDiversity";
+import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiselectTableWidget";
 // Simple Custom Table Widget
 const widgets = {
-  TableWidget: MultiselectTableWidget,
+  MultiselectTableWidget: MultiselectTableWidget,
 };
 
 const view_path = "gri-social-ohs-403-2a-process_for_hazard-new";
@@ -22,110 +21,88 @@ const client_id = 1;
 const user_id = 1;
 
 const schema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      GoalsTraget: {
-        type: "string",
-        title: "Goals or Traget",
-        texttype: "text",
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        Location: {
+          type: "string",
+          title: "Location",
+          // enum:[]
+        },
+        UnderRestoration: {
+          type: "string",
+          title: "Size of the area under restoration or rehabilitation (in hectares)",
+        },
+        AlreadyRestored: {
+          type: "string",
+          title: "Size of the area already restored or rehabilitated (in hectares)",
+        },
+        ActionsTaken: {
+          type: "string",
+          title: "Goals of the actions taken to restore and rehabilitate affected ecosystem.",
+        },
+        Stakeholders: {
+          type: "string",
+          title: "How stakeholders are involved in the process of restoration and rehabilitation.",
+        },
       },
-
-      Description: {
-        type: "string",
-        title: "Description",
-        texttype: "text",
-      },
-      IsScientificConsensus: {
-        type: "string",
-        title: "Whether these goals and targets are informed by scientific consensus?",
-        enum:[
-            "Yes","No"
-        ]
-      },
-      ScientificConsensus: {
-        type: "string",
-        title: "Scientific Consensus",
-        texttype: "text",
-      },
-      BaseYear: {
-        type: "string",
-        title: "Base Year",
-        texttype: "text",
-      },
-      Indicatorsused: {
-        type: "string",
-        title: "Indicators used",
-        texttype: "text",
-      }
     },
-  },
-};
-
-const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      {
-        key: "GoalsTraget",
-        title: "Goals or target",
-        tooltip:
-          "Mention organisation's goals or target to halt and reverse biodiversity loss. For example, organisation can use the Science Based Targets Network (SBTN) target-setting tools and guidance or the SBTN and the Taskforce on Nature-related Financial Disclosures (TNFD) Guidance for corporates  on science-based targets for nature.",
-          layouttype: "textarea",
+  };
+  
+    
+    const uiSchema = {
+      "ui:widget": "MultiselectTableWidget",
+      "ui:options": {
+        titles: [
+          {
+            key: "Location",
+            title: "Location",
+            tooltip:
+              "Select the location of site with the most significant biodiversity impact.",
+              layouttype: "locationSelect",
+          },
+          {
+            key: "UnderRestoration",
+            title: "Size of the area under restoration or rehabilitation (in hectares)",
+            tooltip:
+              "Specify size in hectares of the area under restoration or rehabilitation.",
+              layouttype: "input",
+              inputType:'number'
+          },
+          {
+            key: "AlreadyRestored",
+            title: "Size of the area already restored or rehabilitated (in hectares)",
+            tooltip:
+              "Specify size in hectares of the area restored or rehabilitated.",
+              layouttype: "input",
+              inputType:'number'
+          },
+          {
+            key: "ActionsTaken",
+            title: "Goals of the actions taken to restore and rehabilitate affected ecosystem.",
+            tooltip:
+              "Describe goals of the actions taken to restore and rehabilitate affected ecosystem. Restoration is the process of assisting the recovery of an ecosystem that has been degraded, damaged, or destroyed. Rehabilitation is the process of  stabilizing the terrain ensuring public safety, enhancing aesthetics, and restoring the land to a purpose deemed useful within the regional context.",
+              layouttype: "textarea",
+          },
+          {
+            key: "Stakeholders",
+            title: "How stakeholders are involved in the process of restoration and rehabilitation.",
+            tooltip:
+              "Explain the process of stakeholder involvement. Stakeholder engagement can include co-design, co-management, co-governance, and regular and inclusive reporting and communication of activities.",
+              layouttype: "textarea",
+          },
+        ],
       },
-      {
-        key: "Description",
-        title: "Description",
-        tooltip:
-          "Provide description of organisation's goals or targets to halt and reverse biodiversity loss.",
-          layouttype: "textarea",
-      },
-      {
-        key: "IsScientificConsensus",
-        title: "Whether these goals and targets are informed by scientific consensus?",
-        tooltip:
-          "Indicate whether the mentioned goals and targets are informed by scientific consensus.",
-          layouttype: "select",
-      },
-      {
-        key: "ScientificConsensus",
-        title: "Scientific Consensus",
-        tooltip:
-          "Explain the scientific consensus informed by goals and target.",
-          layouttype: "textarea",
-          enableOn: {
-            field: "IsScientificConsensus",
-            equals: "Yes"
-          }
-      },
-      {
-        key: "BaseYear",
-        title: "Base year",
-        tooltip:
-          "Mention the base year for the mentioned goals and targets.",
-          layouttype: "input",
-          inputType:"number"
-      },
-      {
-        key: "Indicatorsused",
-        title: "Indicators used",
-        tooltip:
-          "Mention the indicators used to evaluate progress of goals and targets.",
-          layouttype: "textarea",
-      },
-    ],
-  },
-};
-const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
+    };
+const Screen2comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const initialFormData = [
     {
-        GoalsTraget: "",
-        Description: "",
-        IsScientificConsensus: "",
-        ScientificConsensus: "",
-        BaseYear: "",
-        Indicatorsused: "",
+      Location: "",
+      UnderRestoration: "",
+      AlreadyRestored: "",
+      ActionsTaken:'',
+      Stakeholders:''
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -133,6 +110,23 @@ const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const [locationData,setLocationdata]=useState([])
+
+
+  const fetchloctiondata = async () => {
+      setLocationdata();
+      LoaderOpen();
+      const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
+      try {
+        const response = await axiosInstance.get(url);
+        setLocationdata(response.data);
+      } catch (error) {
+        LoaderClose();
+        setLocationdata();
+      } finally {
+        LoaderClose();
+      }
+    };
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -220,25 +214,27 @@ const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     }
   };
 
-//   useEffect(() => {
-//      if (selectedOrg && year && togglestatus) {
-//        if (togglestatus === "Corporate" && selectedCorp) {
-//          loadFormData();
-//        } else if (togglestatus === "Corporate" && !selectedCorp) {
-//          setFormData([{}]);
-//          setRemoteSchema({});
-//          setRemoteUiSchema({});
-//        } else {
-//          loadFormData();
-//        }
+  useEffect(() => {
+     if (selectedOrg && year && togglestatus) {
+       if (togglestatus === "Corporate" && selectedCorp) {
+        //  loadFormData();
+         fetchloctiondata()
+       } else if (togglestatus === "Corporate" && !selectedCorp) {
+         setFormData([{}]);
+         setRemoteSchema({});
+         setRemoteUiSchema({});
+       } else {
+         loadFormData();
+         fetchloctiondata()
+       }
  
-//        toastShown.current = false;
-//      } else {
-//        if (!toastShown.current) {
-//          toastShown.current = true;
-//        }
-//      }
-//    }, [selectedOrg, year, selectedCorp, togglestatus]);
+       toastShown.current = false;
+     } else {
+       if (!toastShown.current) {
+         toastShown.current = true;
+       }
+     }
+   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -254,7 +250,7 @@ const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
         <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
             <h2 className="flex mx-2 text-[14px] text-neutral-950 font-[500]">
-            Report the goals and targets to halt and reverse biodiversity loss - 
+            Report the actions taken to restore and rehabilitate affected biodiversity for each site with the most significant biodiversity impacts:
               {/* <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="This section documents data corresponding to your organization's systematic approach to identifying work-related hazards, assessing their associated risks, and implementing effective control measures to minimize those risks, ensuring a safe and healthy work environment."
@@ -279,6 +275,7 @@ const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
 
         
         </div>
+        {Array.isArray(locationData) && locationData.length > 0 ? (
         <div className="mx-2">
           <Form
             schema={schema}
@@ -286,9 +283,23 @@ const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            widgets={widgets}
+            widgets={{
+              ...widgets,
+               MultiselectTableWidget: (props) => (
+                                  <MultiselectTableWidget
+                                    {...props}
+                                    locationData={locationData}
+                                    isAbled="No"
+                                  />
+                                ),
+            }}
           />
         </div>
+        ):(
+<div className="mx-2">
+
+</div>
+        )}
 
         <div className="mt-4">
           <button
@@ -319,4 +330,4 @@ const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   );
 };
 
-export default Screen3comp;
+export default Screen2comp;

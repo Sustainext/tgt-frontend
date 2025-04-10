@@ -4,7 +4,7 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Screen2comp from './components/screen1comp'
+import Screen5comp from './components/screen5comp'
 
 const AccordionItem = ({
   title,
@@ -90,21 +90,21 @@ const AccordionItem = ({
   );
 };
 
-const Screen2 = ({ year, selectedOrg, selectedCorp, setOrgMessage, togglestatus }) => {
+const Screen5 = ({ year, selectedOrg, selectedCorp, setOrgMessage, togglestatus }) => {
   return (
     <div className="xl:mx-3 lg:mx-3 md:mx-3 2xl:mx-3 4k:mx-3 2k:mx-3 mx-1">
       <AccordionItem
-        title="Voluntary actions taken to advance access and benefit-sharing"
-        tooltiptext="This section documents data corresponding to the  voluntary actions taken to advance access and benefit-sharing."
-        sdg={["GRI 101-3b"]}
+        title="Transformative actions"
+        tooltiptext="This section documents the data corresponding to the transformative actions taken by the organisation."
+        sdg={["GRI 101-2a"]}
         display="block"
         selectedOrg={selectedOrg}
         setOrgMessage={setOrgMessage}
       >
-        <Screen2comp selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} togglestatus={togglestatus} />
+        <Screen5comp selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} togglestatus={togglestatus} />
       </AccordionItem>
     </div>
   );
 };
 
-export default Screen2;
+export default Screen5;

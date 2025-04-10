@@ -72,11 +72,11 @@ const BioDiversityMaterialTopic = ({apiData,setMobileopen}) => {
                     <div className="flex h-[28px]">
                       <div className="h-[28px]">
                         <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                        Air Quality & other emissions
+                        Biodiversity
                         </p>
                       </div>
                       {materialityEnvData &&
-                      materialityEnvData.EnvAirQuality
+                      materialityEnvData.EnvBioDiversityLandUse
                         ?.is_material_topic ? (
                         <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
                           <p className="text-gray-500 text-[12px] pt-0.5 px-2">
@@ -100,7 +100,7 @@ const BioDiversityMaterialTopic = ({apiData,setMobileopen}) => {
                           GRI 3-3
                         </button>
                       </div>
-                      <div className=" relative">
+                      {/* <div className=" relative">
                         <button
                           data-tooltip-id={`tooltip-$brsr1`}
                           data-tooltip-content="BRSR-Section C-Principle 1-Essential Indicators-4"
@@ -171,7 +171,7 @@ const BioDiversityMaterialTopic = ({apiData,setMobileopen}) => {
                             textAlign: "center",
                           }}
                         ></ReactTooltip>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -190,11 +190,11 @@ const BioDiversityMaterialTopic = ({apiData,setMobileopen}) => {
                     <div className="h-[28px]">
                       <div className="h-[28px]">
                         <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                        Air Quality & other emissions
+                        Biodiversity
                         </p>
                       </div>
                       {materialityEnvData &&
-                      materialityEnvData.EnvAirQuality
+                      materialityEnvData.EnvBioDiversityLandUse
                         ?.is_material_topic ? (
                         <div className="bg-gray-100 h-[22px] w-[100px] mt-2 rounded-md">
                           <p className="text-gray-500 text-[12px] pt-0.5 px-2">
@@ -223,7 +223,7 @@ const BioDiversityMaterialTopic = ({apiData,setMobileopen}) => {
                         GRI 3-3
                       </button>
                     </div>
-                    <div className=" relative">
+                    {/* <div className=" relative">
                       <button
                         data-tooltip-id={`tooltip-$brsr1`}
                         data-tooltip-content="BRSR-Section C-Principle 1-Essential Indicators-4"
@@ -296,7 +296,7 @@ const BioDiversityMaterialTopic = ({apiData,setMobileopen}) => {
                           textAlign: "center",
                         }}
                       ></ReactTooltip>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

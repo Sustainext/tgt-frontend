@@ -10,13 +10,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import TextareaWidgetnew from '../../../../../shared/widgets/Textarea/TextAreaWidget5';
-
+import RichTextAreaWidget from '../../../../../shared/widgets/Textarea/richTextArea'
 const widgets = {
-  TextareaWidgetnew:TextareaWidgetnew
+    RichTextAreaWidget:RichTextAreaWidget
 };
 
-const view_path = "gri-economic-public_legal_cases-205-3d";
+const view_path = "gri-environment-emissions-consolidation_approach_q2";
 const client_id = 1;
 const user_id = 1;
 
@@ -27,45 +26,48 @@ const schema = {
       properties: {
         Q1: {
           type: "string",
-          title: "How does the organization ensure compliance with access and benefit-sharing (ABS) regulations and measures?",
+          title:
+            "How does the organization ensure that its actions to manage biodiversity impacts maximize positive outcomes for stakeholders?"
         },
-      }
-    }
+      },
+    },
   };
   
-
   const uiSchema = {
     items: {
       "ui:order": ["Q1"],
+  
       Q1: {
         "ui:title":
-          "How does the organization ensure compliance with access and benefit-sharing (ABS) regulations and measures?",
+          "How does the organization ensure that its actions to manage biodiversity impacts maximize positive outcomes for stakeholders?",
         "ui:tooltipstitle":
-          "Describe the process to ensure compliance with access and benefit-sharing regulations and measures.",
-        "ui:titlediplay": "block",
-        "ui:titletooltipdisplay": "block",
-        "ui:widget": "TextareaWidgetnew",
+          "Explain which stakeholders are affected or potentially affected and explain how organisation identifies, addresses, and monitors the  positive impacts on stakeholders.",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "RichTextAreaWidget",
+        "ui:horizontal": true,
         "ui:options": {
           label: false,
         },
       },
+  
       "ui:options": {
         orderable: false,
         addable: false,
         removable: false,
-        layout: "horizontal"
-      }
-    }
+        layout: "horizontal",
+      },
+    },
   };
   
 
-const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
+const Screen3comp = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const { open } = GlobalState();
+  const [validationErrors, setValidationErrors] = useState([]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -76,14 +78,21 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-    }
-
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
+ 
+//   const validateRows = (data) => {
+//     const errors = {};
+//     data.forEach((row) => {
+//       if (!row.Q1) {
+//         errors.Q1 = "This field is required";
+//       }
+//     });
+//     return errors;
+//   };
 
+
+  
   const updateFormData = async () => {
     const data = {
       client_id: client_id,
@@ -154,7 +163,7 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
       LoaderClose();
     }
   };
-//   useEffect(() => {
+//  useEffect(() => {
 //     if (selectedOrg && year && togglestatus) {
 //       if (togglestatus === "Corporate" && selectedCorp) {
 //         loadFormData();
@@ -177,50 +186,60 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // updateFormData();
-    console.log("test form data", formData);
   };
 
   return (
     <>
-      <div
-        className="pb-2 mb-6 rounded-md xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0"
-      >
-        {/* <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
-          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-            <h2 className="flex mx-2 text-[14px] text-neutral-950 font-[500]">
-            Does the organization have a formal biodiversity policy or commitments?
+      <div  className="pb-2 mb-6 rounded-md xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0">
+      {/* <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+      <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+           <h2 className="flex mx-2 gap-6 text-[15px] text-neutral-950 font-[500]">
+           Assumptions considered
               <MdInfoOutline
-                data-tooltip-id={`es30`}
-                data-tooltip-html="Indicate whether the organisation have a formal biodiversity policy or commitment to halt and reverse biodiversity loss."
-                className="mt-1.5 ml-2 text-[15px] w-[20%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
+                data-tooltip-id={`es25`}
+                data-tooltip-html="This section documents the data corresponding to the consolidation approach for emissions, whether equity share, financial control, or
+operational control."
+                className="text-[14px] mt-1"
               />
               <ReactTooltip
-                id={`es30`}
-                place="top"
+                id={`es25`}
+                place="bottom"
                 effect="solid"
                 style={{
-                  width: "390px",
+                  width: "290px",
                   backgroundColor: "#000",
                   color: "white",
                   fontSize: "12px",
                   boxShadow: 3,
                   borderRadius: "8px",
                   textAlign: "left",
+                  zIndex: "100",
                 }}
               ></ReactTooltip>
             </h2>
           </div>
-          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
-            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+          <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-1 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+          <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex mb-1 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 205-3d
+                GRI 305-1g
                 </div>
               </div>
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex mb-1 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                GRI 305-2g
+                </div>
+              </div>
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex mb-1 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                GRI 305-3g
+                </div>
+              </div>
+             
             </div>
           </div>
         </div> */}
-        <div className="mx-2">
+        <div className="mx-2 mb-2">
           <Form
             schema={schema}
             uiSchema={uiSchema}
@@ -249,6 +268,18 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
             Submit
           </button>
         </div>
+        {/* <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+                (selectedOrg && year) && formData[0].Q1?false:true ? "cursor-not-allowed" : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={(selectedOrg && year) && formData[0].Q1?false:true }
+          >
+            Submit
+          </button>
+        </div> */}
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -266,4 +297,4 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   );
 };
 
-export default Screen1comp;
+export default Screen3comp;

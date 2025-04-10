@@ -11,8 +11,11 @@ import BioDiversityTopBar from "../bioDiversityTopBar";
 import { useSelector } from "react-redux";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
+import Screen3 from "./screen3";
+import Screen4 from "./screen4";
+import Screen5 from "./screen5";
 
-const AccessProfitSharing = ({ apiData, isSidepanelOpen,setMobileopen }) => {
+const ManagementOfBiodiversityImpact = ({ apiData, isSidepanelOpen,setMobileopen }) => {
   const {
     corporate_id,
     organization_id,
@@ -85,8 +88,8 @@ const AccessProfitSharing = ({ apiData, isSidepanelOpen,setMobileopen }) => {
   ];
   const griData = [
     {
-      tagName: "GRI 101-3",
-      toggle: "61",
+      tagName: "GRI 101-2",
+      toggle: "59",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
@@ -105,7 +108,7 @@ const AccessProfitSharing = ({ apiData, isSidepanelOpen,setMobileopen }) => {
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Access and benefit-sharing
+          Synergies, Trade-offs & Stakeholder Engagement
             {/* <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="This section documents data corresponding to the organisation's policies or commitments to halt and reverse biodiversity loss."
@@ -206,7 +209,28 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         selectedCorp={selectedCorp}
         togglestatus={togglestatus}
       />
+      <Screen3
+        year={year}
+        setYearMessage={setYearMessage}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
+      />
+      <Screen4
+        year={year}
+        setYearMessage={setYearMessage}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
+      />
+      <Screen5
+        year={year}
+        setYearMessage={setYearMessage}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
+      />
     </>
   );
 };
-export default AccessProfitSharing;
+export default ManagementOfBiodiversityImpact;

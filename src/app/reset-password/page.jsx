@@ -37,6 +37,20 @@ let axiosConfig = {
     setIsMounted(true);
   }, []);
 
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasNumber = /\d/;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+    const hasUpperCase = /[A-Z]/;
+    const hasLowerCase = /[a-z]/;
+
+    return password.length >= minLength && 
+           hasNumber.test(password) && 
+           hasSpecialChar.test(password) && 
+           hasUpperCase.test(password) && 
+           hasLowerCase.test(password);
+  };
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowPasswordCon = () => setConshowPassword((show) => !show);
 
@@ -47,9 +61,17 @@ let axiosConfig = {
       setConfirmPass('');
     }
    else if (password === val) {
+    if (!validatePassword(password)) {
+      setConfirmPass('Password does not meet the required criteria.');
+      setMessageColor('text-red-500');
+      setResetenabled(true)
+    }
+    else{
       setConfirmPass('New Password and Confirm Password are matched');
       setMessageColor('text-green-500');
       setResetenabled(false)
+    }
+      
     } else {
       setConfirmPass('New Password and Confirm Password are not matched');
       setMessageColor('text-red-500');
@@ -59,6 +81,12 @@ let axiosConfig = {
   const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
   const handleSetPassword = async (e) => {
     e.preventDefault();
+    if (!validatePassword(password)) {
+      setConfirmPass('Password does not meet the required criteria.');
+      setMessageColor('text-red-500');
+      setResetenabled(true)
+      return;
+    }
     setLoading(true);
 
     const data = {
@@ -137,9 +165,17 @@ let axiosConfig = {
                           setConfirmPass('');
                         }
                         else if (confirmPassVariable === e.target.value) {
-                          setConfirmPass('New Password and Confirm Password are matched');
+                          if (!validatePassword(e.target.value)) {
+                            setConfirmPass('Password does not meet the required criteria.');
+                            setMessageColor('text-red-500');
+                            setResetenabled(true)
+                          }
+                          else{
+                            setConfirmPass('New Password and Confirm Password are matched');
                           setMessageColor('text-green-500');
                           setResetenabled(false)
+                          }
+                          
                         } else {
                           setConfirmPass('New Password and Confirm Password are not matched');
                           setMessageColor('text-red-500');
@@ -203,8 +239,8 @@ let axiosConfig = {
                 <div>
                   <button
                     type="submit"
-                    disabled={isResetenabled || password==='' || confirmPassVariable===''}
-                    className={`flex w-full justify-center ${isResetenabled || password==='' || confirmPassVariable===''?'opacity-40 cursor-not-allowed':'cursor-pointer'} rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-gradient-to-r from-[#364161] to-[#06081f] hover:from-[#06081f] hover:to-[#364161] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                    disabled={isResetenabled}
+                    className={`flex w-full justify-center ${isResetenabled?'opacity-40 cursor-not-allowed':'cursor-pointer'} rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-gradient-to-r from-[#364161] to-[#06081f] hover:from-[#06081f] hover:to-[#364161] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                   >
                     {loading ? 'Please wait...' : 'Reset Password'}
                   </button>

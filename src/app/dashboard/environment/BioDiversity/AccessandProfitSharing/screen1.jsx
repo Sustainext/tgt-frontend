@@ -94,10 +94,9 @@ const Screen1 = ({ year, selectedOrg, selectedCorp, setOrgMessage, togglestatus 
   return (
     <div className="xl:mx-3 lg:mx-3 md:mx-3 2xl:mx-3 4k:mx-3 2k:mx-3 mx-1">
       <AccordionItem
-        title="Biodiversity Policy & Commitments"
-        tooltiptext="This section documents data corresponding to the organisation’s policies or commitments to halt and reverse biodiversity loss, 
-and how these are informed by the 2050 Goals and 2030 Targets in the Kunming-Montreal Global Biodiversity Framework."
-        sdg={["GRI 101-1a"]}
+        title="Compliance with access and benefit-sharing"
+        tooltiptext="This section documents data corresponding to the process to ensure compliance with acess and benefit sharing."
+        sdg={["GRI 101-3a"]}
         display="block"
         selectedOrg={selectedOrg}
         setOrgMessage={setOrgMessage}

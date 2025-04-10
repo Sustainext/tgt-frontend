@@ -27,7 +27,7 @@ const schema = {
       properties: {
         Q1: {
           type: "string",
-          title: "How does the organization ensure compliance with access and benefit-sharing (ABS) regulations and measures?",
+          title: "Describe how organisation enhances synergies and reduces trade-offs between actions taken to manage its biodiversity and climate change impacts.",
         },
       }
     }
@@ -39,9 +39,9 @@ const schema = {
       "ui:order": ["Q1"],
       Q1: {
         "ui:title":
-          "How does the organization ensure compliance with access and benefit-sharing (ABS) regulations and measures?",
+          "Describe how organisation enhances synergies and reduces trade-offs between actions taken to manage its biodiversity and climate change impacts.",
         "ui:tooltipstitle":
-          "Describe the process to ensure compliance with access and benefit-sharing regulations and measures.",
+          "Synergies include actions taken to protect biodiversity that contribute to climate change mitigation or adaptation. Trade-offs include climate change mitigation or adaptation actions that result in biodiversity loss. For example, foresting an area with non-native species may contribute to climate change mitigation and adaptation by absorbing greenhouse gases and controlling erosion.",
         "ui:titlediplay": "block",
         "ui:titletooltipdisplay": "block",
         "ui:widget": "TextareaWidgetnew",
@@ -59,7 +59,7 @@ const schema = {
   };
   
 
-const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
+const Screen2comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -266,4 +266,4 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   );
 };
 
-export default Screen1comp;
+export default Screen2comp;

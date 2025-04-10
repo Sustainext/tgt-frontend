@@ -27,7 +27,7 @@ const schema = {
       properties: {
         Q1: {
           type: "string",
-          title: "To what extent do these policies or commitments apply to the organization’s operations and business relationships?",
+          title: "What voluntary actions does the organization take to advance ABS beyond legal requirements or in the absence of regulations? (if any)",
         },
       }
     }
@@ -39,9 +39,9 @@ const schema = {
       "ui:order": ["Q1"],
       Q1: {
         "ui:title":
-          "To what extent do these policies or commitments apply to the organization’s operations and business relationships?",
+          "What voluntary actions does the organization take to advance ABS beyond legal requirements or in the absence of regulations? (if any)",
         "ui:tooltipstitle":
-          "Report the extent to which organisation's biodiversity policies or commitments apply to the organization’s activities and to its business relationships. Note: If the policies or commitments apply to only some of the organization’s activities (e.g., they apply only to entities located in certain countries or to certain subsidiaries) or to some of its business relationships (e.g., they apply only to suppliers), then mention activities and business relationships for which the policies or commitments apply.",
+          "Describe voluntary actions taken to advance access and benefit-sharing that are additional to legal obligations or when there are no regulations and measures. Examples of voluntary actions include joint research projects, training, or knowledge sharing related to using genetic resources or associated traditional knowledge in research and innovation.",
         "ui:titlediplay": "block",
         "ui:titletooltipdisplay": "block",
         "ui:widget": "TextareaWidgetnew",
@@ -176,7 +176,7 @@ const Screen2comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    // updateFormData();
     console.log("test form data", formData);
   };
 

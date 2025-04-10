@@ -99,8 +99,6 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setIsPackagingMaterialVisible(false)
   };
 
-  console.log(isBioDiversityVisible,"see")
-
   // const toggleEffluentVisible = () => {
   //   setIsEffluentVisible(!isEffluentVisible)
   //   setWaterVisible(false);
@@ -1206,10 +1204,10 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
                 activeTab === "Biodiversity Policies" ||
                 activeTab ===
                   "Access and benefit-sharing" ||
-                // activeTab ===
-                //   "Water withdrawal/Discharge from areas with water stress" ||
-                activeTab === "Management of Material topic Bio diversity"
-                // activeTab === "Substances of concern" ||
+                activeTab ===
+                  "Synergies, Trade-offs & Stakeholder Engagement" ||
+                activeTab === "Management of Material topic Bio diversity"||
+                activeTab === "Management of biodiversity impacts"
                 // activeTab === "Change in water storage"
                   ? "text-blue-400"
                   : "bg-transparent text-[#727272] "

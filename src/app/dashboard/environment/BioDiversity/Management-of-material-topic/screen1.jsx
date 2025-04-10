@@ -18,7 +18,7 @@ const widgets = {
 };
 
 const view_path =
-  "gri-environment-air-quality-management_of_material_topic";
+  "gri-environment-biodiversity-management-of-material-topic";
 const client_id = 1;
 const user_id = 1;
 

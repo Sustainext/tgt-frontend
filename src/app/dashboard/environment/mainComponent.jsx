@@ -59,6 +59,8 @@ import {
   fetchLocations,
   fetchUsers,
 } from "../../../lib/redux/features/emissionSlice";
+import StakeholderEngagement from "./BioDiversity/StakeholderEngagement/page";
+import ManagementOfBiodiversityImpact from "./BioDiversity/ManagementOfBioDiversityImpact/page";
 
 const environment = () => {
   const { open } = GlobalState();
@@ -405,6 +407,22 @@ const environment = () => {
                   setMobileopen={setMobileopen}
                 />
               )}
+              {
+                activeTab==="Synergies, Trade-offs & Stakeholder Engagement" &&(
+                  <StakeholderEngagement
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+                )
+              }
+              {
+                activeTab==="Management of biodiversity impacts" &&(
+                  <ManagementOfBiodiversityImpact
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+                )
+              }
               {/* Water start */}
               {activeTab === "Management of Material topic Water" && (
                 <WaterMaterialtopic

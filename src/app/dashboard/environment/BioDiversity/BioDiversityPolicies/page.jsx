@@ -78,7 +78,7 @@ const BioDiversityPolicies = ({ apiData, isSidepanelOpen,setMobileopen }) => {
   const sdgData = [
     {
         tagName:'SDG 15',
-        toggle:'2',
+        toggle:'57',
         textColor:"#fff",
        bgColor:"bg-[#40AE49]"
     },
@@ -87,7 +87,7 @@ const BioDiversityPolicies = ({ apiData, isSidepanelOpen,setMobileopen }) => {
   const griData = [
     {
       tagName: "GRI 101-1",
-      toggle: "53",
+      toggle: "58",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },

@@ -27,7 +27,7 @@ const schema = {
       properties: {
         Q1: {
           type: "string",
-          title: "How does the organization ensure compliance with access and benefit-sharing (ABS) regulations and measures?",
+          title: "Describe transformative actions taken and additional conservation actions taken by your organisation.",
         },
       }
     }
@@ -39,9 +39,9 @@ const schema = {
       "ui:order": ["Q1"],
       Q1: {
         "ui:title":
-          "How does the organization ensure compliance with access and benefit-sharing (ABS) regulations and measures?",
+          "Describe transformative actions taken and additional conservation actions taken by your organisation.",
         "ui:tooltipstitle":
-          "Describe the process to ensure compliance with access and benefit-sharing regulations and measures.",
+          "Transformative actions contribute to systemic change inside and outside the organization’s value chain to generate positive impacts on biodiversity. Transformative actions include actions taken with third parties (e.g., experts, governments, local communities), and actions that enable other organizations to generate positive impacts on biodiversity.",
         "ui:titlediplay": "block",
         "ui:titletooltipdisplay": "block",
         "ui:widget": "TextareaWidgetnew",
@@ -59,7 +59,7 @@ const schema = {
   };
   
 
-const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
+const Screem5Comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -266,4 +266,4 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   );
 };
 
-export default Screen1comp;
+export default Screem5Comp;

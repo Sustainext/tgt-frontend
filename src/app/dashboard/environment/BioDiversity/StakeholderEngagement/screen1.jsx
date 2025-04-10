@@ -4,7 +4,7 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Screen2comp from './components/screen1comp'
+import Screen1comp from './components/screen1comp'
 
 const AccordionItem = ({
   title,
@@ -90,21 +90,21 @@ const AccordionItem = ({
   );
 };
 
-const Screen2 = ({ year, selectedOrg, selectedCorp, setOrgMessage, togglestatus }) => {
+const Screen1 = ({ year, selectedOrg, selectedCorp, setOrgMessage, togglestatus }) => {
   return (
     <div className="xl:mx-3 lg:mx-3 md:mx-3 2xl:mx-3 4k:mx-3 2k:mx-3 mx-1">
       <AccordionItem
-        title="Voluntary actions taken to advance access and benefit-sharing"
-        tooltiptext="This section documents data corresponding to the  voluntary actions taken to advance access and benefit-sharing."
-        sdg={["GRI 101-3b"]}
+        title="List of Sites with the Most Significant Biodiversity Impacts"
+        tooltiptext="This section documents the data corresponding to the list of organisation's sites with the most significant impacts on biodiversity have a biodiversity management plan and explain why the other sites do not have a management plan."
+        sdg={["GRI 101-2d"]}
         display="block"
         selectedOrg={selectedOrg}
         setOrgMessage={setOrgMessage}
       >
-        <Screen2comp selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} togglestatus={togglestatus} />
+        <Screen1comp selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} togglestatus={togglestatus} />
       </AccordionItem>
     </div>
   );
 };
 
-export default Screen2;
+export default Screen1;

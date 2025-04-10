@@ -4,7 +4,7 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Screen2comp from './components/screen1comp'
+import Screen2comp from './components/screen2comp'
 
 const AccordionItem = ({
   title,
@@ -64,7 +64,7 @@ const AccordionItem = ({
       {isOpen ? (
           <>
             {sdg && sdg.map((sdgItem, index) => (
-              <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2" style={{ display: display }} >
+              <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2" >
                 <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
               </div>
             ))}
@@ -94,10 +94,10 @@ const Screen2 = ({ year, selectedOrg, selectedCorp, setOrgMessage, togglestatus 
   return (
     <div className="xl:mx-3 lg:mx-3 md:mx-3 2xl:mx-3 4k:mx-3 2k:mx-3 mx-1">
       <AccordionItem
-        title="Voluntary actions taken to advance access and benefit-sharing"
-        tooltiptext="This section documents data corresponding to the  voluntary actions taken to advance access and benefit-sharing."
-        sdg={["GRI 101-3b"]}
-        display="block"
+        title="Biodiversity & Climate Action Synergies"
+        tooltiptext="This section documents data corresponding to the process to ensure compliance with acess and benefit sharing."
+        sdg={["GRI 101-2e"]}
+        display="none"
         selectedOrg={selectedOrg}
         setOrgMessage={setOrgMessage}
       >
