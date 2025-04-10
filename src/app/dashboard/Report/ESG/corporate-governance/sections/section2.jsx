@@ -40,7 +40,7 @@ const Section2 = ({ section9_1Ref, section9_1_1Ref, data }) => {
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           9.1.1 Governance structure and composition
         </h3>
-        <div className="flex justify-between">
+        <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
             Add statement about company’s board of directors
           </p>

@@ -19,7 +19,7 @@ const Section1=({orgName})=>{
     return (
         <>
         <div>
-        <div className="flex justify-between">
+        <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s responsibility to minimize the environmental impact</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
