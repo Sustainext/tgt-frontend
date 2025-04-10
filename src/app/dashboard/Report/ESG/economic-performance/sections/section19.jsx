@@ -1,6 +1,6 @@
-import React from 'react';
-import DynamicTable from '../tables/dynamicTable';
-import DynamicTable2 from '../tables/dynamicTable2';
+import React from "react";
+import DynamicTable from "../tables/dynamicTable";
+import DynamicTable2 from "../tables/dynamicTable2";
 import { useSelector } from "react-redux";
 
 const Section19 = ({ section11_5_4Ref }) => {
@@ -13,24 +13,57 @@ const Section19 = ({ section11_5_4Ref }) => {
     analyze_205_2b = [],
     analyze_205_2c = [],
     analyze_205_2d = [],
-    analyze_205_2e = []
-  } = data?.economic_analyse?.communication_training_analyze || {}
+    analyze_205_2e = [],
+  } = data?.economic_analyse?.communication_training_analyze || {};
 
   // Define titles and column headers for each table
-  const title1 = "Total number and percentage of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, by region:";
-  const columns1 = ["Location", "Total Communicated", "Total Region", "Percentage"];
+  const title1 =
+    "Total number and percentage of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, by region:";
+  const columns1 = [
+    "Location",
+    "Total Communicated",
+    "Total Region",
+    "Percentage",
+  ];
 
-  const title2 = "Total number and percentage of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region:";
-  const columns2 = ["Location", "Employee Category", "Total Communicated", "Total Employees in Region", "Percentage"];
+  const title2 =
+    "Total number and percentage of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region:";
+  const columns2 = [
+    "Location",
+    "Employee Category",
+    "Total Communicated",
+    "Total Employees in Region",
+    "Percentage",
+  ];
 
-  const title3 = "Total number and percentage of business partners that the organization’s anti-corruption policies and procedures have been communicated to, broken down by type of business partner and region:";
-  const columns3 = ["Location", "Type of Business Partner", "Total Communicated", "Total Partners in Region", "Percentage"];
+  const title3 =
+    "Total number and percentage of business partners that the organization’s anti-corruption policies and procedures have been communicated to, broken down by type of business partner and region:";
+  const columns3 = [
+    "Location",
+    "Type of Business Partner",
+    "Total Communicated",
+    "Total Partners in Region",
+    "Percentage",
+  ];
 
-  const title4 = "Total number and percentage of governance body members that have received training on anti-corruption, broken down by region:";
-  const columns4 = ["Location", "Total Received Training", "Total Members", "Percentage"];
+  const title4 =
+    "Total number and percentage of governance body members that have received training on anti-corruption, broken down by region:";
+  const columns4 = [
+    "Location",
+    "Total Received Training",
+    "Total Members",
+    "Percentage",
+  ];
 
-  const title5 = "Total number and percentage of employees that have received training on anti-corruption, broken down by region:";
-  const columns5 = ["Location", "Employee Category", "Total Received Training", "Total Employees", "Percentage"];
+  const title5 =
+    "Total number and percentage of employees that have received training on anti-corruption, broken down by region:";
+  const columns5 = [
+    "Location",
+    "Employee Category",
+    "Total Received Training",
+    "Total Employees",
+    "Percentage",
+  ];
 
   // Function to format data for employees communication
   const formatcollectivebargaining2 = (data) => {
@@ -41,7 +74,7 @@ const Section19 = ({ section11_5_4Ref }) => {
       // For each location, iterate over the array of employee data
       data[location].forEach((employeeData) => {
         const percentage = parseFloat(employeeData.percentage);
-        const formattedPercentage = percentage
+        const formattedPercentage = percentage;
 
         // If the location is not already in the formattedData, initialize it
         if (!formattedData[location]) {
@@ -53,7 +86,7 @@ const Section19 = ({ section11_5_4Ref }) => {
           "Employee Category": employeeData.EmployeeCategory,
           "Total Communicated": employeeData.Totalnumberemployees,
           "Total Employees in Region": employeeData.Totalemployeeinthisregion,
-          "Percentage": formattedPercentage,
+          Percentage: formattedPercentage,
         });
       });
     });
@@ -70,7 +103,7 @@ const Section19 = ({ section11_5_4Ref }) => {
       // For each location, iterate over the array of business partner data
       data[location].forEach((partnerData) => {
         const percentage = parseFloat(partnerData.percentage);
-        const formattedPercentage = percentage
+        const formattedPercentage = percentage;
 
         // If the location is not already in the formattedData, initialize it
         if (!formattedData[location]) {
@@ -82,7 +115,7 @@ const Section19 = ({ section11_5_4Ref }) => {
           "Type of Business Partner": partnerData.Typeofbusinesspartner,
           "Total Communicated": partnerData.Totalnumberemployees,
           "Total Partners in Region": partnerData.Totalemployeeinthisregion,
-          "Percentage": formattedPercentage,
+          Percentage: formattedPercentage,
         });
       });
     });
@@ -99,7 +132,7 @@ const Section19 = ({ section11_5_4Ref }) => {
       // For each location, iterate over the array of employee data
       data[location].forEach((employeeData) => {
         const percentage = parseFloat(employeeData.percentage);
-        const formattedPercentage = percentage
+        const formattedPercentage = percentage;
 
         // If the location is not already in the formattedData, initialize it
         if (!formattedData[location]) {
@@ -111,7 +144,7 @@ const Section19 = ({ section11_5_4Ref }) => {
           "Employee Category": employeeData.EmployeeCategory,
           "Total Received Training": employeeData.Totalnumberemployees,
           "Total Employees": employeeData.Totalemployeeinthisregion,
-          "Percentage": formattedPercentage,
+          Percentage: formattedPercentage,
         });
       });
     });
@@ -131,28 +164,40 @@ const Section19 = ({ section11_5_4Ref }) => {
       </h3>
 
       {/* Table 1: Governance Body Members - Communication */}
-      <div className='rounded-md shadow-md mb-4'>
+      <div className="rounded-md shadow-md mb-4">
         <DynamicTable title={title1} columns={columns1} data={analyze_205_2a} />
       </div>
 
       {/* Table 2: Employees - Communication */}
-      <div className='rounded-md shadow-md mb-4'>
-        <DynamicTable2 title={title2} columns={columns2} data={formattedData2b} />
+      <div className="rounded-md shadow-md mb-4">
+        <DynamicTable2
+          title={title2}
+          columns={columns2}
+          data={formattedData2b}
+        />
       </div>
 
       {/* Table 3: Business Partners - Communication */}
-      <div className='rounded-md shadow-md mb-4'>
-        <DynamicTable2 title={title3} columns={columns3} data={formattedData3c} />
+      <div className="rounded-md shadow-md mb-4">
+        <DynamicTable2
+          title={title3}
+          columns={columns3}
+          data={formattedData3c}
+        />
       </div>
 
       {/* Table 4: Governance Body Members - Training */}
-      <div className='rounded-md shadow-md mb-4'>
+      <div className="rounded-md shadow-md mb-4">
         <DynamicTable title={title4} columns={columns4} data={analyze_205_2d} />
       </div>
 
       {/* Table 5: Employees - Training */}
-      <div className='rounded-md shadow-md mb-4'>
-        <DynamicTable2 title={title5} columns={columns5} data={formattedData5e} />
+      <div className="rounded-md shadow-md mb-4">
+        <DynamicTable2
+          title={title5}
+          columns={columns5}
+          data={formattedData5e}
+        />
       </div>
     </div>
   );
