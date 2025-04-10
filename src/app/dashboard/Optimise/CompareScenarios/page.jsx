@@ -1,4 +1,4 @@
-// page.jsx - CompareScenarios
+'use client'
 import React, { useState, useEffect } from "react";
 import ScenarioSearch from "./ScenarioSearch";
 import ScenarioList from "./ScenarioList";
