@@ -14,7 +14,7 @@ const ClientPasswordReset = () => {
   const [conshowPassword, setConshowPassword] = useState(false);
   const [confirmPass, setConfirmPass] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassVariable, setConfirmPassVariable] = useState('');;
+  const [confirmPassVariable, setConfirmPassVariable] = useState('');
   const [messageColor, setMessageColor] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -75,7 +75,6 @@ let axiosConfig = {
     } else {
       setConfirmPass('New Password and Confirm Password are not matching');
       setMessageColor('text-red-500');
-      setResetenabled(true)
       setResetenabled(true)
     }
   };
