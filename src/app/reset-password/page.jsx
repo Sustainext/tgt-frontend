@@ -7,6 +7,7 @@ import PasswordChecklist from 'react-password-checklist';
 import { useRouter } from 'next/navigation';
 import 'react-tooltip/dist/react-tooltip.css';
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import CryptoJS from "crypto-js";
 const ClientPasswordReset = () => {
@@ -15,12 +16,26 @@ const ClientPasswordReset = () => {
   const [confirmPass, setConfirmPass] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassVariable, setConfirmPassVariable] = useState('');
+  const [confirmPassVariable, setConfirmPassVariable] = useState('');
   const [messageColor, setMessageColor] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [isResetenabled,setResetenabled]=useState(false)
+  const [isResetenabled,setResetenabled]=useState(false)
   const router = useRouter();
+  const getAuthToken = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('token')?.replace(/"/g, "");
+    }
+    return '';
+};
+const token = getAuthToken();
+let axiosConfig = {
+  headers: {
+    Authorization: 'Bearer ' + token,
+  },
+};
   const getAuthToken = () => {
     if (typeof window !== 'undefined') {
         return localStorage.getItem('token')?.replace(/"/g, "");
@@ -73,8 +88,9 @@ let axiosConfig = {
     }
       
     } else {
-      setConfirmPass('New Password and Confirm Password are not matched');
+      setConfirmPass('New Password and Confirm Password are not matching');
       setMessageColor('text-red-500');
+      setResetenabled(true)
       setResetenabled(true)
     }
   };
@@ -96,7 +112,9 @@ let axiosConfig = {
 
     try {
       const response = await axiosInstance.post(
+      const response = await axiosInstance.post(
         `${process.env.BACKEND_API_URL}/api/auth/change_password/`,
+        data,axiosConfig
         data,axiosConfig
       );
       if (response.status === 200) {
@@ -239,6 +257,8 @@ let axiosConfig = {
                 <div>
                   <button
                     type="submit"
+                    disabled={isResetenabled}
+                    className={`flex w-full justify-center ${isResetenabled?'opacity-40 cursor-not-allowed':'cursor-pointer'} rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-gradient-to-r from-[#364161] to-[#06081f] hover:from-[#06081f] hover:to-[#364161] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                     disabled={isResetenabled}
                     className={`flex w-full justify-center ${isResetenabled?'opacity-40 cursor-not-allowed':'cursor-pointer'} rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-gradient-to-r from-[#364161] to-[#06081f] hover:from-[#06081f] hover:to-[#364161] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                   >
