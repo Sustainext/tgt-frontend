@@ -387,7 +387,7 @@ const Section20 = ({ section12_4_2Ref, data }) => {
           12.4.2 Energy Consumption within the Organization
         </h3>
 
-        <div className="flex justify-between">
+        <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
             Add statement about company’s energy consumption within organisation
           </p>

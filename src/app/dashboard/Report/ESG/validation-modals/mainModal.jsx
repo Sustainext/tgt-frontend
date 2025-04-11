@@ -224,11 +224,13 @@ const MainValidationPopup = ({
   return (
     <>
       {isModalOpen && (
+        <>
+        <div className="">
         <div className="flex gap-2 w-full">
           <div className="top-0 z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center pt-14">
             <div
               className={`bg-white p-6 rounded-lg shadow-md w-full max-w-xl mx-4 ${
-                selectedField ? "mr-[400px]" : ""
+                selectedField ? "xl:mr-[400px]" : ""
               }`}
             >
               <div className="flex flex-col gap-4">
@@ -260,9 +262,9 @@ const MainValidationPopup = ({
                     <p className="text-[#101828] text-[13px] font-semibold">
                       {createdBy}
                     </p>
-                    <p className="text-[#667085] text-[13px]">
-                      {email}
-                    </p>
+                    <p className="text-[#667085] text-[13px] overflow-hidden text-ellipsis whitespace-nowrap sm:w-full md:w-auto">
+    {email}
+  </p>
                   </div>
                 </div>
                 <div className="flex justify-between">
@@ -382,8 +384,8 @@ const MainValidationPopup = ({
           {selectedField && (
             <div className="z-50 fixed inset-0 flex justify-center items-center pt-14">
               <div
-                className={`bg-white rounded-lg shadow-md w-full max-w-xl h-[655px] ${
-                  selectedField ? "ml-[800px]" : ""
+                className={`bg-white rounded-lg shadow-md w-full xl:max-w-xl max-w-md h-[655px] ${
+                  selectedField ? "xl:ml-[800px]" : ""
                 }`}
               >
                 <div className="flex flex-col h-full">
@@ -460,6 +462,9 @@ const MainValidationPopup = ({
             </div>
           )}
         </div>
+        </div>
+      
+        </>
       )}
     </>
   );

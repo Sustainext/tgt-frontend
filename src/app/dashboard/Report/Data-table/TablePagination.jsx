@@ -54,7 +54,7 @@ const TableWithPagination = ({
   const [search, setSearch] = useState('');
   const [selectedCreators, setSelectedCreators] = useState([]);
   const [filteredData,setFilterData]=useState([])
-
+  const [menuDirection, setMenuDirection] = useState("down");
   
  useEffect(()=>{
 if(selectedCreators.length>0){
@@ -70,7 +70,9 @@ else{
       item.report_type === "GRI Report: In accordance With" ||
       item.report_type === "GRI Report: With Reference to";
     return (
-      <div className="absolute bg-white shadow-lg rounded-lg py-2 mt-5 w-[211px] z-10 right-8">
+      <div   className={`absolute bg-white shadow-lg rounded-lg py-2 w-[211px] z-10 right-8 ${
+        menuDirection === "up" ? "bottom-full mb-2" : "mt-5"
+      }`}>
         <button
           className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
           onClick={() => {
@@ -226,7 +228,19 @@ else{
 
   let timeoutId;
 
-  const handleMouseEnter = (itemId) => {
+  const handleMouseEnter = (itemId,e) => {
+    const rect = e?.currentTarget?.getBoundingClientRect();
+
+    if (rect) {
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+  
+      if (spaceBelow < 250 && spaceAbove > 250) {
+        setMenuDirection("up"); // not enough space below, open upward
+      } else {
+        setMenuDirection("down"); // open downward
+      }
+    }
     clearTimeout(timeoutId); // Clear any pending timeout
     setIsMenuOpen(itemId); // Open the menu immediately
   };
@@ -844,7 +858,7 @@ else{
                     />
                     {isMenuOpen === item.id && (
                       <div
-                        onMouseEnter={() => handleMouseEnter(item.id)} // Ensure menu stays open
+                      onMouseEnter={(e) => handleMouseEnter(item.id, e)} // Ensure menu stays open
                         onMouseLeave={handleMouseLeave} // Allow menu to close
                       >
                         <ActionMenu item={item} />

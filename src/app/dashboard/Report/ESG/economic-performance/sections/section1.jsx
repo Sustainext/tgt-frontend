@@ -3,24 +3,28 @@ import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { setCompanyeconomic } from "../../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
-const Section1 = ({orgName}) => {
-  const content = useSelector(state => state.screen11Slice.company_economic_performance_statement);
+const Section1 = ({ orgName }) => {
+  const content = useSelector(
+    (state) => state.screen11Slice.company_economic_performance_statement
+  );
   const dispatch = useDispatch();
   const loadContent = () => {
-    dispatch(setCompanyeconomic(
-      `Our economic performance is a testament to ${orgName}'s resilience, innovation, and commitment to creating value for our stakeholders. Through strategic investments, prudent financial management, and robust risk mitigation, we aim to sustain long-term economic growth while addressing social and environmental challenges.`
-    ))
-  }
-  const handleChange=(e)=>{
-    dispatch(setCompanyeconomic(e.target.value))
-  }
+    dispatch(
+      setCompanyeconomic(
+        `Our economic performance is a testament to ${orgName}'s resilience, innovation, and commitment to creating value for our stakeholders. Through strategic investments, prudent financial management, and robust risk mitigation, we aim to sustain long-term economic growth while addressing social and environmental challenges.`
+      )
+    );
+  };
+  const handleChange = (e) => {
+    dispatch(setCompanyeconomic(e.target.value));
+  };
   return (
     <>
       <div>
-        <div className="flex justify-between">
+        <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
             Add statement about company’s economic performance
           </p>

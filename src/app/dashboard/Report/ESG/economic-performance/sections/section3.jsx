@@ -2,73 +2,97 @@ import { useState, useRef, useEffect } from "react";
 import Table1 from "../tables/table1";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { setIntroductionto } from "../../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
 const Section3 = ({ section11_1_2Ref, orgName }) => {
-  const content = useSelector(state => state.screen11Slice.introduction_to_economic_value_creation);
-  const data = useSelector(state => state.screen11Slice.getdata);
+  const content = useSelector(
+    (state) => state.screen11Slice.introduction_to_economic_value_creation
+  );
+  const data = useSelector((state) => state.screen11Slice.getdata);
   const dispatch = useDispatch();
 
   const loadContents = () => {
-    dispatch(setIntroductionto(
-      `In ${data.year}, ${orgName} generated substantial economic value through our operations, creating benefits for shareholders, employees, suppliers, and communities. Key highlights include`
-    ));
-  }
+    dispatch(
+      setIntroductionto(
+        `In ${data.year}, ${orgName} generated substantial economic value through our operations, creating benefits for shareholders, employees, suppliers, and communities. Key highlights include`
+      )
+    );
+  };
 
   const handleChange = (e) => {
     dispatch(setIntroductionto(e.target.value));
-  }
+  };
 
   // Safely accessing the nested data from "201_1ab"
-  const economicData = data?.['201_1ab'];  // Optional chaining to prevent errors
+  const economicData = data?.["201_1ab"]; // Optional chaining to prevent errors
 
-const tableData = economicData ? [
-  {
-    label: "1) Direct Economic value generated (Revenues)",
-    value: economicData.revenues ? economicData.revenues : ''
-  },
-  {
-    label: "2) Economic Value distributed",
-    value: economicData.economic_value_distributed_1 ? economicData.economic_value_distributed_1 : ''
-  },
-  {
-    label: "i) Operating costs",
-    value: economicData.operating_costs ? economicData.operating_costs : ''
-  },
-  {
-    label: "ii) Employee wages & benefits",
-    value: economicData.employee_wages_benefits ? economicData.employee_wages_benefits : ''
-  },
-  {
-    label: "iii) Payments to providers of capital",
-    value: economicData.payments_to_providers_of_capital ? economicData.payments_to_providers_of_capital : ''
-  },
-  {
-    label: "iv) Payments to governments by country",
-    value: Array.isArray(economicData.payments_to_governments_by_country) ? '' : economicData.payments_to_governments_by_country || ''
-  },
-  ...(
-    Array.isArray(economicData.payments_to_governments_by_country) 
-      ? [
-          { label: 'Country Name', value: 'Payments to governments by country' },
-          ...economicData.payments_to_governments_by_country.map(country => ({
-            label: `      ${country.country}`,
-            value: country.paymentCode
-          }))
-        ] 
-      : []
-  ),
-  {
-    label:"v) Community investments",
-    value:economicData.countries_and_payments?Array.isArray(economicData.countries_and_payments)?'':economicData.countries_and_payments:''
-  },
-  {
-    label:"3) Economic value retained",
-    value:economicData.community_investments?economicData.community_investments:''
-  }
-] : [];
-
+  const tableData = economicData
+    ? [
+        {
+          label: "1) Direct Economic value generated (Revenues)",
+          value: economicData.revenues ? economicData.revenues : "",
+        },
+        {
+          label: "2) Economic Value distributed",
+          value: economicData.economic_value_distributed_1
+            ? economicData.economic_value_distributed_1
+            : "",
+        },
+        {
+          label: "i) Operating costs",
+          value: economicData.operating_costs
+            ? economicData.operating_costs
+            : "",
+        },
+        {
+          label: "ii) Employee wages & benefits",
+          value: economicData.employee_wages_benefits
+            ? economicData.employee_wages_benefits
+            : "",
+        },
+        {
+          label: "iii) Payments to providers of capital",
+          value: economicData.payments_to_providers_of_capital
+            ? economicData.payments_to_providers_of_capital
+            : "",
+        },
+        {
+          label: "iv) Payments to governments by country",
+          value: Array.isArray(economicData.payments_to_governments_by_country)
+            ? ""
+            : economicData.payments_to_governments_by_country || "",
+        },
+        ...(Array.isArray(economicData.payments_to_governments_by_country)
+          ? [
+              {
+                label: "Country Name",
+                value: "Payments to governments by country",
+              },
+              ...economicData.payments_to_governments_by_country.map(
+                (country) => ({
+                  label: `      ${country.country}`,
+                  value: country.paymentCode,
+                })
+              ),
+            ]
+          : []),
+        {
+          label: "v) Community investments",
+          value: economicData.countries_and_payments
+            ? Array.isArray(economicData.countries_and_payments)
+              ? ""
+              : economicData.countries_and_payments
+            : "",
+        },
+        {
+          label: "3) Economic value retained",
+          value: economicData.community_investments
+            ? economicData.community_investments
+            : "",
+        },
+      ]
+    : [];
 
   return (
     <>
@@ -76,7 +100,7 @@ const tableData = economicData ? [
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           11.1.2 Economic Value Creation
         </h3>
-        <div className="flex justify-between">
+        <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
             Add introduction for company’s economic value creation
           </p>
