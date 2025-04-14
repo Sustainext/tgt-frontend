@@ -2,7 +2,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FiChevronDown, FiX, FiCheck } from "react-icons/fi";
 
-const MetricsSelector = ({ scenario, businessMetrics, setBusinessMetrics }) => {
+const MetricsSelector = ({ 
+  scenario, 
+  scenarioMetrics,  // Metrics specific to this scenario
+  onMetricsChange   // Callback to update metrics
+}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   
@@ -21,35 +25,32 @@ const MetricsSelector = ({ scenario, businessMetrics, setBusinessMetrics }) => {
   }, []);
   
   const toggleMetric = (metricId) => {
-    setBusinessMetrics(metrics => 
-      metrics.map(metric => 
-        metric.id === metricId 
-          ? { ...metric, selected: !metric.selected } 
-          : metric
-      )
+    // Create a copy of the metrics array with the selected state toggled
+    const updatedMetrics = scenarioMetrics.map(metric => 
+      metric.id === metricId 
+        ? { ...metric, selected: !metric.selected } 
+        : metric
     );
+    
+    // Call the callback with the updated metrics
+    onMetricsChange(updatedMetrics);
   };
   
-  const selectedMetrics = businessMetrics.filter(metric => metric.selected);
+  const selectedMetrics = scenarioMetrics.filter(metric => metric.selected);
   const selectedCount = selectedMetrics.length;
   
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 col-span-2">
       <div className="relative" ref={dropdownRef}>
         <button
           type="button"
-          className="flex items-center justify-between w-full md:w-64 rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+          className="flex items-center justify-between w-full md:w-64 rounded-md bg-white px-3 py-2 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           aria-expanded={isDropdownOpen}
           aria-haspopup="listbox"
         >
           <span className="flex items-center">
             <span className="truncate mr-2">Business metrics for {scenario.name}</span>
-            {selectedCount > 0 && (
-              <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">
-                {selectedCount}
-              </span>
-            )}
           </span>
           <FiChevronDown 
             className={`h-4 w-4 ml-1 transform transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
@@ -66,7 +67,7 @@ const MetricsSelector = ({ scenario, businessMetrics, setBusinessMetrics }) => {
             <div className="px-3 py-2 border-b border-gray-200">
               <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Select Business Metrics</h4>
             </div>
-            {businessMetrics.map((metric) => (
+            {scenarioMetrics.map((metric) => (
               <div 
                 key={metric.id} 
                 className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"

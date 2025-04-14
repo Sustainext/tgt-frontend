@@ -445,7 +445,7 @@ const MetricsGraph = ({
       >
         <div className="flex justify-between items-center">
           <div className="flex-none w-12 text-[11px] font-medium text-gray-500 relative -left-6">
-            Percentage change in consumption
+            Percentage change
           </div>
           <div className="flex-1">
             <div

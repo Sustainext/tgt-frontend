@@ -6,12 +6,13 @@ import EmissionsTrendChart from "./EmissionsTrendChart";
 import EmissionsGapChart from "./EmissionsGapChart";
 
 const ComparisonView = ({ selectedScenarios, allScenarios }) => {
-  const [includeNetZero, setIncludeNetZero] = useState(true);
-  const [targetYear, setTargetYear] = useState(2035);
   const [selectedScope, setSelectedScope] = useState("Aggregated Scope");
   const [selectedCategory, setSelectedCategory] = useState("Aggregated Scope");
   const [selectedSubCategory, setSelectedSubCategory] = useState("Aggregated Scope");
   const [selectedActivity, setSelectedActivity] = useState("Aggregated Scope");
+  
+  // Replace single state with scenario-specific settings
+  const [scenarioSettings, setScenarioSettings] = useState({});
   
   const [businessMetrics, setBusinessMetrics] = useState([
     { id: "fte", name: "FTE", selected: true },
@@ -24,27 +25,47 @@ const ComparisonView = ({ selectedScenarios, allScenarios }) => {
   const [emissionsLineData, setEmissionsLineData] = useState([]);
   const [emissionsGapData, setEmissionsGapData] = useState([]);
 
+  // Initialize scenario settings when scenarios change
+  useEffect(() => {
+    const initialSettings = {};
+    
+    selectedScenarios.forEach(scenarioId => {
+      const scenario = allScenarios.find(s => s.id === scenarioId);
+      if (!scenario) return;
+      
+      initialSettings[scenarioId] = {
+        includeNetZero: true,
+        targetYear: scenario.targetYear || 2035
+      };
+    });
+    
+    setScenarioSettings(initialSettings);
+  }, [selectedScenarios, allScenarios]);
+
+  // Handle scenario settings changes from FilterSection
+  const handleScenarioSettingsChange = (newSettings) => {
+    setScenarioSettings(newSettings);
+  };
+
   // Generate chart data when selected scenarios or other parameters change
   useEffect(() => {
-    if (selectedScenarios.length > 0) {
+    if (selectedScenarios.length > 0 && Object.keys(scenarioSettings).length > 0) {
       setEmissionsLineData(generateEmissionsLineData());
       setEmissionsGapData(generateEmissionsGapData());
     }
-  }, [selectedScenarios, includeNetZero, targetYear, selectedScope]);
+  }, [selectedScenarios, scenarioSettings, selectedScope]);
 
   // Generate data for line chart
   const generateEmissionsLineData = () => {
-    const years = [];
-    const baseYear = 2024;
-    for (let year = baseYear; year <= targetYear; year++) {
-      years.push(year);
-    }
-
     let result = [];
 
     selectedScenarios.forEach(scenarioId => {
       const scenario = allScenarios.find(s => s.id === scenarioId);
       if (!scenario) return;
+      
+      // Get settings for this scenario
+      const settings = scenarioSettings[scenarioId];
+      if (!settings) return;
       
       // Determine initial value based on selected scope
       let initialValue;
@@ -57,6 +78,13 @@ const ComparisonView = ({ selectedScenarios, allScenarios }) => {
       } else {
         // Aggregated scope
         initialValue = scenario.scope1Emissions + scenario.scope2Emissions + scenario.scope3Emissions;
+      }
+
+      // Generate years array based on scenario's target year
+      const years = [];
+      const baseYear = 2024;
+      for (let year = baseYear; year <= settings.targetYear; year++) {
+        years.push(year);
       }
 
       // Generate business-as-usual (BAU) data
@@ -93,7 +121,7 @@ const ComparisonView = ({ selectedScenarios, allScenarios }) => {
       });
 
       // Generate net-zero trajectory if included
-      if (includeNetZero) {
+      if (settings.includeNetZero) {
         const netZeroData = years.map((year) => {
           if (year > scenario.targetYear) {
             return { x: year, y: 0 };
@@ -141,11 +169,20 @@ const ComparisonView = ({ selectedScenarios, allScenarios }) => {
   
   // Generate data for gap chart
   const generateEmissionsGapData = () => {
-    const years = [];
+    const allYears = new Set();
     const baseYear = 2024;
-    for (let year = baseYear; year <= targetYear; year++) {
-      years.push(year);
-    }
+    
+    // Collect all years across all scenarios
+    selectedScenarios.forEach(scenarioId => {
+      const settings = scenarioSettings[scenarioId];
+      if (!settings) return;
+      
+      for (let year = baseYear; year <= settings.targetYear; year++) {
+        allYears.add(year);
+      }
+    });
+    
+    const years = Array.from(allYears).sort((a, b) => a - b);
     
     return years.map(year => {
       const result = { year };
@@ -153,6 +190,17 @@ const ComparisonView = ({ selectedScenarios, allScenarios }) => {
       selectedScenarios.forEach(scenarioId => {
         const scenario = allScenarios.find(s => s.id === scenarioId);
         if (!scenario) return;
+        
+        // Get settings for this scenario
+        const settings = scenarioSettings[scenarioId];
+        if (!settings) return;
+        
+        // Only calculate gap if we're including net-zero for this scenario
+        // and the year is within the scenario's target year range
+        if (!settings.includeNetZero || year > settings.targetYear) {
+          result[`${scenario.name} Gap`] = 0;
+          return;
+        }
         
         // Get initial value based on selected scope
         let initialValue;
@@ -229,10 +277,7 @@ const ComparisonView = ({ selectedScenarios, allScenarios }) => {
         setSelectedActivity={setSelectedActivity}
         businessMetrics={businessMetrics}
         setBusinessMetrics={setBusinessMetrics}
-        includeNetZero={includeNetZero}
-        setIncludeNetZero={setIncludeNetZero}
-        targetYear={targetYear}
-        setTargetYear={setTargetYear}
+        onScenarioSettingsChange={handleScenarioSettingsChange}
       />
 
       <div className="p-6">

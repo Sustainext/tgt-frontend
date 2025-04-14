@@ -1,21 +1,47 @@
 // EmissionsTrendChart.jsx
 import React from "react";
 import { ResponsiveLine } from '@nivo/line';
-import { FiDownload } from "react-icons/fi";
 
 const EmissionsTrendChart = ({ data, selectedScope }) => {
+  const CustomTooltip = ({ point }) => {
+    if (!point) return null;
+    
+    // Get the year (x value) from the hovered point
+    const year = point.data.x;
+    
+    // Find all points from all series that match this year
+    const allSeriesPoints = data.map(series => {
+      const matchingPoint = series.data.find(d => d.x === year);
+      return {
+        id: series.id,
+        color: series.color,
+        value: matchingPoint ? matchingPoint.y : null,
+        dashed: series.dashed
+      };
+    }).filter(p => p.value !== null);
+    
+    return (
+      <div className="bg-gray-100 p-2 shadow-lg border border-gray-200 rounded-md text-xs">
+        <div className="font-medium text-gray-800 mb-2">Year: {year}</div>
+        {allSeriesPoints.map((p, i) => (
+          <div key={i} className="flex items-center gap-2 mb-1">
+            <div 
+              className="w-3 h-3 rounded-full" 
+              style={{ 
+                backgroundColor: p.color,
+                border: p.dashed ? '1px dashed currentColor' : 'none'
+              }} 
+            />
+            <span className="text-sm">{p.id}: </span>
+            <span className="text-sm font-medium">{Math.round(p.value).toLocaleString()} tCO₂e</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="mb-12">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-base font-bold text-gray-900">
-          Predicted Trend of chosen Business Metrics over Years for ({selectedScope})
-        </h3>
-        <button className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-          Download results
-          <FiDownload className="ml-2 h-4 w-4" />
-        </button>
-      </div>
-
       <div className="bg-white p-4 rounded-lg border border-gray-100" style={{ height: 400 }}>
         <ResponsiveLine
           data={data}
@@ -28,6 +54,7 @@ const EmissionsTrendChart = ({ data, selectedScope }) => {
             stacked: false, 
             reverse: false 
           }}
+          curve="monotoneX"
           axisTop={null}
           axisRight={null}
           axisBottom={{
@@ -42,14 +69,14 @@ const EmissionsTrendChart = ({ data, selectedScope }) => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'Emissions (in kgCO₂e)',
-            legendOffset: -50,
+            legend: 'Emissions (in tCO₂e)',
+            legendOffset: -55,
             legendPosition: 'middle',
             format: value => `${value}M`
           }}
           enableGridX={false}
           colors={{ scheme: 'paired' }}
-          lineWidth={3}
+          lineWidth={2}
           pointSize={8}
           pointColor={{ theme: 'background' }}
           pointBorderWidth={2}
@@ -58,6 +85,9 @@ const EmissionsTrendChart = ({ data, selectedScope }) => {
           enableArea={true}
           areaOpacity={0.1}
           useMesh={true}
+          tooltip={CustomTooltip}
+          crosshairType="x"
+          enableSlices="x"
           legends={[
             {
               anchor: 'bottom-right',
