@@ -343,7 +343,7 @@ const ActivitiesGraph = ({
                   <select
                     value={commonActivity}
                     onChange={(e) => applyCommonActivity(e.target.value)}
-                    className="w-full py-2 pl-3 pr-10 text-gray-700 bg-white borderb border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+                    className="w-full py-2 pl-3 pr-10 text-gray-700 bg-white border-b border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
                   >
                     <option value="">Select activity...</option>
                     {activityOptions.map((option) => (
@@ -394,9 +394,9 @@ const ActivitiesGraph = ({
                         {selectedActivities[year] && (
                           <button
                             onClick={() => handleClearActivity(year)}
-                            className="absolute right-8 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            className="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                           >
-                            <FiTrash2 className="w-4 h-4" />
+                            <FiTrash2 className="w-4 h-4 hover:text-red-600" />
                           </button>
                         )}
                       </div>
