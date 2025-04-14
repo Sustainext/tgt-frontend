@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import NivoYearlyGrowth from './NivoYearlyGrowth'; // Import your graph component
+import ActivitiesGraph from './ActivitiesGraph'; // Import your graph component
+import { GlobalState } from "@/Context/page";
 
 const ExpandableActivityItem = ({ activity }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { open, setOpen } = GlobalState();
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
   return (
-    <div className="border rounded-lg mb-4 overflow-hidden bg-white shadow-sm text-slate-700">
+    <div className={`border rounded-lg mb-4 overflow-hidden bg-white shadow-md text-slate-700 ${open ? "max-w-[105vw]": "max-w-[116vw]"}`}>
       {/* Header - Always visible */}
       <div 
         className="grid grid-cols-7 gap-4 p-4 cursor-pointer hover:bg-gray-50 relative"
@@ -42,10 +44,9 @@ const ExpandableActivityItem = ({ activity }) => {
 
       {/* Expandable content */}
       {isExpanded && (
-        <div className="p-6 border-t">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Emission Reduction Projection</h3>
-          <div className="h-80">
-            {/* <NivoYearlyGrowth /> */}
+        <div className="p-4">
+          <div className="min-h-80 p-2">
+            <ActivitiesGraph />
           </div>
         </div>
       )}

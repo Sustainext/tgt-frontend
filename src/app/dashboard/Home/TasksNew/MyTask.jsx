@@ -747,6 +747,7 @@ const MyTask = ({ HomeActiveTab }) => {
           setTaskAssigndata({
             ...taskassigndata,
             activity: e.target.value,
+            unit_type: e.target.value.split("-")[e.target.value.split("-").length - 1].trim(),
           });
         }}
         onTaskDataChange={(changes) => {

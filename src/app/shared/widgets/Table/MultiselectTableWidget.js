@@ -336,7 +336,7 @@ const MultiselectTableWidget = ({
                           (e) =>
                             handleInputChange(rowIndex, key, e.target.value) // Use the new handler here
                         }
-                        className="text-[12px] pl-2 py-2 w-full border rounded-md"
+                        className="text-[12px] pl-2 py-2 w-full border-b rounded-md"
                         placeholder="Enter"
                       />
                     ) : null}
