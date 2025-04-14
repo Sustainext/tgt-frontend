@@ -2,10 +2,42 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FiChevronDown } from "react-icons/fi";
 
-const ScopeDropdown = ({ label, selected, setSelected, options }) => {
+const ScopeDropdown = ({ 
+  label, 
+  selected, 
+  setSelected, 
+  options,
+  multiSelect = true
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   
+  // Convert to array if string is passed
+  const selectedArray = Array.isArray(selected) ? selected : [selected];
+  
+  // Handle selection
+  const handleSelection = (option) => {
+    if (!multiSelect) {
+      setSelected(option);
+      setIsOpen(false);
+      return;
+    }
+
+    if (option === "Aggregated Scope") {
+      setSelected(["Aggregated Scope"]);
+      setIsOpen(false);
+    } else if (selectedArray.includes("Aggregated Scope")) {
+      setSelected([option]);
+    } else if (selectedArray.includes(option)) {
+      // Prevent removing last option
+      if (selectedArray.length > 1) {
+        setSelected(selectedArray.filter(item => item !== option));
+      }
+    } else {
+      setSelected([...selectedArray, option]);
+    }
+  };
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -20,46 +52,62 @@ const ScopeDropdown = ({ label, selected, setSelected, options }) => {
     };
   }, []);
   
+  // Display label for selected items
+  const displayLabel = selectedArray.includes("Aggregated Scope") 
+    ? "Aggregated Scope" 
+    : selectedArray.join(", ");
+  
   return (
-    <div className="flex items-center">
-      <label className="text-sm font-medium text-gray-700 w-24">
+    <div className="flex items-center" ref={dropdownRef}>
+      <span className="text-gray-600 font-medium mr-1">
         {label}
-      </label>
-      <div className="relative flex-1" ref={dropdownRef}>
-        <div 
-          className="flex items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 cursor-pointer hover:border-gray-400 transition-colors"
+      </span>
+      <div className="relative">
+        <button
           onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none"
           aria-haspopup="listbox"
           aria-expanded={isOpen}
         >
-          <span className="block truncate">{selected}</span>
+          <span className="truncate max-w-[140px]">{displayLabel}</span>
           <FiChevronDown 
-            className={`h-4 w-4 ml-1 transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+            className={`ml-1 h-4 w-4 text-gray-500 transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
           />
-        </div>
+        </button>
         
         {isOpen && (
           <div 
-            className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-md border border-gray-200 max-h-60 overflow-auto"
+            className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-md z-10"
             role="listbox"
           >
             <div className="py-1">
               {options.map((option) => (
                 <div 
                   key={option} 
-                  className={`px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm ${
-                    selected === option ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-700'
-                  }`}
-                  onClick={() => {
-                    setSelected(option);
-                    setIsOpen(false);
-                  }}
+                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleSelection(option)}
                   role="option"
-                  aria-selected={selected === option}
+                  aria-selected={selectedArray.includes(option)}
                 >
-                  {option}
+                  <input
+                    type="checkbox"
+                    checked={selectedArray.includes(option)}
+                    onChange={() => {}}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  />
+                  <label className="ml-2 block text-sm text-gray-900">
+                    {option}
+                  </label>
                 </div>
               ))}
+            </div>
+            <div className="border-t border-gray-200 px-4 py-2">
+              <button
+                className="text-sm text-blue-600 hover:text-blue-800"
+                onClick={() => setIsOpen(false)}
+              >
+                Done
+              </button>
             </div>
           </div>
         )}
