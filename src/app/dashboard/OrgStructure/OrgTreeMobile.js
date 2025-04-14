@@ -96,7 +96,12 @@ const OrgTreeMobile = ({ data }) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
+  // const totalOrganizations = data.length;
+  // const corporateCount = org.corporatenetityorg?.length || 0;
+  // const locationCount = org.corporatenetityorg?.reduce(
+  //   (sum, corp) => sum + (corp.location?.length || 0),
+  //   0
+  // );
   return (
     <>
       {/* Top Add Buttons */}
@@ -132,7 +137,11 @@ const OrgTreeMobile = ({ data }) => {
         <div className="space-y-6">
           {paginatedData.map((org) => {
             const isExpanded = expandedOrgId === org.id;
-
+            const corporateCount = org.corporatenetityorg?.length || 0;
+            const locationCount = org.corporatenetityorg?.reduce(
+              (sum, corp) => sum + (corp.location?.length || 0),
+              0
+            );
             return (
               <div
                 key={org.id}
@@ -162,20 +171,22 @@ const OrgTreeMobile = ({ data }) => {
                 {/* Add buttons if org not expanded */}
                 {!isExpanded && isAdmin && (
                   <div className="px-4 pb-3 flex flex-wrap gap-3">
-                    <button
+                     Corporates: <strong>{corporateCount}</strong> | Locations: <strong>{locationCount}</strong>
+                    {/* Total Locations: <strong>{totalLocations}</strong> */}
+                    {/* <button
                       onClick={() =>
                         handleQuickAdd("corporate", { id: org.id, name: org.name })
                       }
                       className="text-sm text-blue-600 flex items-center hover:underline"
                     >
                       <FaPlus className="mr-1" /> Add Corporate
-                    </button>
-                    <button
+                    </button> */}
+                    {/* <button
                       onClick={() => handleQuickAdd("organization", null)}
                       className="text-sm text-blue-600 flex items-center hover:underline"
                     >
                       <FaPlus className="mr-1" /> Add Organization
-                    </button>
+                    </button> */}
                   </div>
                 )}
 
@@ -210,7 +221,8 @@ const OrgTreeMobile = ({ data }) => {
 
                               {isAdmin && (
                                 <div className="flex flex-row gap-2 items-end">
-                                  <button
+                              
+                                  {/* <button
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       handleQuickAdd("corporate", {
@@ -233,7 +245,7 @@ const OrgTreeMobile = ({ data }) => {
                                     className="text-xs text-blue-600 flex items-center hover:underline"
                                   >
                                     <FaPlus className="mr-1" /> Add Location
-                                  </button>
+                                  </button> */}
                                 </div>
                               )}
                             </div>
