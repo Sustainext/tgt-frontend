@@ -46,8 +46,7 @@ const ConfirmActivitiesModal = ({
                       Confirm Selected Activities
                     </Dialog.Title>
                     <p className="mt-1 text-sm text-gray-500">
-                      Click on proceed to confirm the with the selected
-                      activities emission reduction initiatives are planned
+                    Click 'Proceed' to confirm the selected activities for which changes are to be calculated.
                     </p>
                   </div>
                   <button

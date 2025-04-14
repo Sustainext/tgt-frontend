@@ -743,11 +743,12 @@ const Location = ({ heading }) => {
                   htmlFor="name"
                   className="block text-neutral-800 text-[13px] font-normal"
                 >
-                  Name <span className="text-red-500">*</span>
+                  Location Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   name="name"
+                  placeholder="Enter Location name"
                   value={formData.generalDetails?.name}
                   onChange={handleGeneralDetailsChange}
                   className={`border ${
@@ -772,6 +773,7 @@ const Location = ({ heading }) => {
                 <input
                   type="number"
                   name="phone"
+                  placeholder="Enter Phone Number"
                   value={formData.generalDetails?.phone}
                   onChange={handleGeneralDetailsChange}
                   className={`border ${

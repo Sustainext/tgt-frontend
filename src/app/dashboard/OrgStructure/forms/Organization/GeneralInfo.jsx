@@ -476,6 +476,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
             <input
               type="text"
               name="name"
+              placeholder="Enter Legal Name"
               value={formData.generalDetails.name}
               onChange={handleGeneralDetailsChange}
               className={`border ${

@@ -1,41 +1,192 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { FiX, FiDownload, FiChevronDown } from "react-icons/fi";
-import NivoYearlyGrowth from "@/app/dashboard/Optimise/ActivitiesGraph";
+import { FiX, FiDownload, FiInfo, FiChevronDown } from "react-icons/fi";
+import EmissionsProjectionGraph from "./EmissionProjectionGraph";
 
-const ScenarioViewModal = ({ isOpen, onClose, scenarioData }) => {
+const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
   if (!scenarioData) return null;
-  
-  // States for the form selections
-  const [selectedScenarios, setSelectedScenarios] = useState([
-    { id: scenarioData.id, name: scenarioData.name }
-  ]);
-  const [scope, setScope] = useState("Aggregated Scope");
-  const [category, setCategory] = useState("Aggregated Scope");
-  const [subCategory, setSubCategory] = useState("Aggregated Scope");
-  const [activity, setActivity] = useState("Aggregated Scope");
-  const [businessMetrics, setBusinessMetrics] = useState([
-    { id: "fte", name: "FTE" },
-    { id: "area", name: "Area" },
-    { id: "production-volume", name: "Production Volume" }
-  ]);
+
+  // Main target year comes from scenario
+  const mainTargetYear = scenarioData.targetYear || 2030;
+  // Extended target year can be adjusted by the user (defaults to main target year)
+  const [extendedTargetYear, setExtendedTargetYear] = useState(mainTargetYear);
   const [includeNetZero, setIncludeNetZero] = useState(true);
-  const [targetYear, setTargetYear] = useState(scenarioData.targetYear || 2030);
-  
-  const handleRemoveMetric = (metricId) => {
-    setBusinessMetrics(businessMetrics.filter(m => m.id !== metricId));
-  };
-  
-  const handleAnalyze = () => {
-    // This would trigger the analysis process
-    console.log("Analyzing scenarios:", selectedScenarios);
+
+  // Update extended target year if main target year changes
+  useEffect(() => {
+    setExtendedTargetYear(mainTargetYear);
+  }, [mainTargetYear]);
+
+  // Dropdown selections - now arrays for multiselect
+  const [selectedScopes, setSelectedScopes] = useState(["Aggregated Scope"]);
+  const [selectedCategories, setSelectedCategories] = useState([
+    "Aggregated Scope",
+  ]);
+  const [selectedSubCategories, setSelectedSubCategories] = useState([
+    "Aggregated Scope",
+  ]);
+  const [selectedActivities, setSelectedActivities] = useState([
+    "Aggregated Scope",
+  ]);
+
+  // Dropdown open states
+  const [isScopeDropdownOpen, setScopeDropdownOpen] = useState(false);
+  const [isCategoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+  const [isSubCategoryDropdownOpen, setSubCategoryDropdownOpen] =
+    useState(false);
+  const [isActivityDropdownOpen, setActivityDropdownOpen] = useState(false);
+
+  // Refs for detecting clicks outside dropdowns
+  const scopeRef = useRef(null);
+  const categoryRef = useRef(null);
+  const subCategoryRef = useRef(null);
+  const activityRef = useRef(null);
+  const metricsRef = useRef(null);
+
+  // Business metrics filter state
+  const [isMetricsDropdownOpen, setIsMetricsDropdownOpen] = useState(false);
+  const [businessMetrics, setBusinessMetrics] = useState([
+    { id: "fte", name: "FTE", selected: true },
+    { id: "area", name: "Area", selected: false },
+    { id: "productionVolume", name: "Production Volume", selected: false },
+    { id: "revenue", name: "Revenue", selected: false },
+  ]);
+
+  const toggleMetric = (metricId) => {
+    setBusinessMetrics((metrics) =>
+      metrics.map((metric) =>
+        metric.id === metricId
+          ? { ...metric, selected: !metric.selected }
+          : metric
+      )
+    );
   };
 
-  const handleDownloadResult = () => {
-    // Logic to download analysis results
-    console.log("Downloading results");
+  const removeMetric = (metricId) => {
+    toggleMetric(metricId);
   };
+
+  const selectedMetrics = businessMetrics.filter((metric) => metric.selected);
+
+  const handleDownloadResults = () => {
+    console.log("Downloading results...");
+  };
+
+  const handleAnalyze = () => {
+    console.log("Analyzing scenario:", scenarioData.name);
+  };
+
+  // Information about target years for display
+  const isExtended = extendedTargetYear > mainTargetYear;
+
+  // Available options for dropdowns
+  const scopeOptions = ["Aggregated Scope", "Scope 1", "Scope 2", "Scope 3"];
+  const categoryOptions = [
+    "Aggregated Scope",
+    "Mobile Combustion",
+    "Stationary Combustion",
+    "Fugitive Emissions",
+  ];
+  const subCategoryOptions = [
+    "Aggregated Scope",
+    "Fuel",
+    "Rail Freight",
+    "Refrigerants",
+  ];
+  const activityOptions = [
+    "Aggregated Scope",
+    "Diesel Combustion",
+    "Natural Gas",
+    "Electricity",
+  ];
+
+  // Handle scope selection
+  const handleScopeSelection = (scope) => {
+    if (scope === "Aggregated Scope") {
+      setSelectedScopes(["Aggregated Scope"]);
+      setScopeDropdownOpen(false);
+    } else if (selectedScopes.includes("Aggregated Scope")) {
+      setSelectedScopes([scope]);
+    } else if (selectedScopes.includes(scope)) {
+      setSelectedScopes(selectedScopes.filter((s) => s !== scope));
+    } else {
+      setSelectedScopes([...selectedScopes, scope]);
+    }
+  };
+
+  // Handle category selection
+  const handleCategorySelection = (category) => {
+    if (category === "Aggregated Scope") {
+      setSelectedCategories(["Aggregated Scope"]);
+      setCategoryDropdownOpen(false);
+    } else if (selectedCategories.includes("Aggregated Scope")) {
+      setSelectedCategories([category]);
+    } else if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((c) => c !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
+
+  // Handle subcategory selection
+  const handleSubCategorySelection = (subCategory) => {
+    if (subCategory === "Aggregated Scope") {
+      setSelectedSubCategories(["Aggregated Scope"]);
+      setSubCategoryDropdownOpen(false);
+    } else if (selectedSubCategories.includes("Aggregated Scope")) {
+      setSelectedSubCategories([subCategory]);
+    } else if (selectedSubCategories.includes(subCategory)) {
+      setSelectedSubCategories(
+        selectedSubCategories.filter((s) => s !== subCategory)
+      );
+    } else {
+      setSelectedSubCategories([...selectedSubCategories, subCategory]);
+    }
+  };
+
+  // Handle activity selection
+  const handleActivitySelection = (activity) => {
+    if (activity === "Aggregated Scope") {
+      setSelectedActivities(["Aggregated Scope"]);
+      setActivityDropdownOpen(false);
+    } else if (selectedActivities.includes("Aggregated Scope")) {
+      setSelectedActivities([activity]);
+    } else if (selectedActivities.includes(activity)) {
+      setSelectedActivities(selectedActivities.filter((a) => a !== activity));
+    } else {
+      setSelectedActivities([...selectedActivities, activity]);
+    }
+  };
+
+  // Handle outside clicks to close dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (scopeRef.current && !scopeRef.current.contains(event.target)) {
+        setScopeDropdownOpen(false);
+      }
+      if (categoryRef.current && !categoryRef.current.contains(event.target)) {
+        setCategoryDropdownOpen(false);
+      }
+      if (
+        subCategoryRef.current &&
+        !subCategoryRef.current.contains(event.target)
+      ) {
+        setSubCategoryDropdownOpen(false);
+      }
+      if (activityRef.current && !activityRef.current.contains(event.target)) {
+        setActivityDropdownOpen(false);
+      }
+      if (metricsRef.current && !metricsRef.current.contains(event.target)) {
+        setIsMetricsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -69,177 +220,410 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData }) => {
                   <Dialog.Title className="text-2xl font-medium text-gray-900 mb-3">
                     {scenarioData.name || "Scenario Name"}
                   </Dialog.Title>
-                  
+
                   <div className="flex flex-wrap gap-x-8 text-sm">
                     <div className="mb-2">
                       <span className="text-gray-500">Organization:</span>{" "}
-                      <span className="text-blue-600 font-semibold bg-blue-100 rounded-md px-2 py-0.5">{scenarioData.organization || "Umbrella Pharmaceuticals"}</span>
+                      <span className="text-blue-600 font-semibold bg-blue-100 rounded-md px-2 py-0.5">
+                        {scenarioData.organization ||
+                          "Umbrella Pharmaceuticals"}
+                      </span>
                     </div>
                     <div className="mb-2">
                       <span className="text-gray-500">Corporate Entity:</span>{" "}
-                      <span className="text-green-600 font-semibold bg-green-100 rounded-md px-2 py-0.5">{scenarioData.corporate || "Umbrella Corp."}</span>
+                      <span className="text-green-600 font-semibold bg-green-100 rounded-md px-2 py-0.5">
+                        {scenarioData.corporate || "Umbrella Corp."}
+                      </span>
                     </div>
                     <div className="mb-2">
                       <span className="text-gray-500">Base Year:</span>{" "}
-                      <span className="font-medium">{scenarioData.baseYear || "2024"}</span>
+                      <span className="font-medium">
+                        {scenarioData.baseYear || "2024"}
+                      </span>
                     </div>
                     <div className="mb-2">
                       <span className="text-gray-500">Target Year:</span>{" "}
-                      <span className="font-medium">{scenarioData.targetYear || "2030"}</span>
+                      <span className="font-medium">
+                        {scenarioData.targetYear || "2030"}
+                      </span>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="border-t border-gray-200"></div>
 
                 {/* Scrollable content area */}
                 <div className="flex-1 overflow-y-auto px-6 py-4">
                   {/* Results section */}
                   <div className="mb-6">
-                    <h2 className="text-md font-semibold text-gray-900 mb-4">Showing Result for:</h2>
-                    
+                    <h2 className="text-md font-semibold text-gray-900 mb-4">
+                      Showing Result for:
+                    </h2>
+
                     {/* Filters row */}
                     <div className="grid grid-cols-4 gap-4 mb-6">
-                      <div className="flex justify-start items-center">
-                        <label className="block text-sm text-gray-500 mb-1">
+                      <div className="flex items-center" ref={scopeRef}>
+                        <span className="text-gray-600 font-medium mr-1">
                           Scope:
-                        </label>
+                        </span>
                         <div className="relative">
-                          <select
-                            className="block w-full rounded-md border-none border-gray-300 py-1.5 pl-3 pr-10 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 appearance-none bg-white"
-                            value={scope}
-                            onChange={e => setScope(e.target.value)}
+                          <button
+                            onClick={() =>
+                              setScopeDropdownOpen(!isScopeDropdownOpen)
+                            }
+                            className="flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none"
                           >
-                            <option>Aggregated Scope</option>
-                            <option>Scope 1</option>
-                            <option>Scope 2</option>
-                            <option>Scope 3</option>
-                          </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <FiChevronDown className="h-4 w-4 text-gray-400" />
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="flex justify-start items-center">
-                        <label className="block text-sm text-gray-500 mb-1">
-                          Category:
-                        </label>
-                        <div className="relative">
-                          <select
-                            className="block w-full rounded-md border-none border-gray-300 py-1.5 pl-3 pr-10 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 appearance-none bg-white"
-                            value={category}
-                            onChange={e => setCategory(e.target.value)}
-                          >
-                            <option>Aggregated Scope</option>
-                            <option>Category 1</option>
-                            <option>Category 2</option>
-                          </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <FiChevronDown className="h-4 w-4 text-gray-400" />
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="flex justify-start items-center">
-                        <label className="block text-sm text-gray-500 mb-1">
-                          Sub Category:
-                        </label>
-                        <div className="relative">
-                          <select
-                            className="block w-full rounded-md border-none border-gray-300 py-1.5 pl-3 pr-10 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 appearance-none bg-white"
-                            value={subCategory}
-                            onChange={e => setSubCategory(e.target.value)}
-                          >
-                            <option>Aggregated Scope</option>
-                            <option>Sub-Category 1</option>
-                            <option>Sub-Category 2</option>
-                          </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <FiChevronDown className="h-4 w-4 text-gray-400" />
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="flex justify-start items-center">
-                        <label className="block text-sm text-gray-500 mb-1">
-                          Activity:
-                        </label>
-                        <div className="relative">
-                          <select
-                            className="block w-full rounded-md border-none border-gray-300 py-1.5 pl-3 pr-10 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 appearance-none bg-white"
-                            value={activity}
-                            onChange={e => setActivity(e.target.value)}
-                          >
-                            <option>Aggregated Scope</option>
-                            <option>Activity 1</option>
-                            <option>Activity 2</option>
-                          </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <FiChevronDown className="h-4 w-4 text-gray-400" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Business metrics and Net Zero settings */}
-                    <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
-                      <div className="flex items-center">
-                        <label className="block text-sm text-gray-500 mr-2">
-                          Business Metrics:
-                        </label>
-                        <div className="relative">
-                          <div className="flex flex-wrap gap-2">
-                            {businessMetrics.map(metric => (
-                              <span key={metric.id} className="bg-blue-100 text-blue-800 rounded-md px-3 py-1 text-xs flex items-center">
-                                {metric.name}
-                                <button 
-                                  className="ml-1 text-blue-500 hover:text-blue-700"
-                                  onClick={() => handleRemoveMetric(metric.id)}
+                            <span>
+                              {selectedScopes.includes("Aggregated Scope")
+                                ? "Aggregated Scope"
+                                : selectedScopes.join(", ")}
+                            </span>
+                            <FiChevronDown className="ml-1 h-4 w-4 text-gray-500" />
+                          </button>
+
+                          {isScopeDropdownOpen && (
+                            <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-md z-10">
+                              <div className="py-1">
+                                {scopeOptions.map((scope) => (
+                                  <div
+                                    key={scope}
+                                    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                    onClick={() => handleScopeSelection(scope)}
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={selectedScopes.includes(scope)}
+                                      onChange={() => {}}
+                                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    />
+                                    <label className="ml-2 block text-sm text-gray-900">
+                                      {scope}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                              <div className="border-t border-gray-200 px-4 py-2">
+                                <button
+                                  className="text-sm text-blue-600 hover:text-blue-800"
+                                  onClick={() => setScopeDropdownOpen(false)}
                                 >
-                                  <FiX className="h-3 w-3" />
+                                  Done
                                 </button>
-                              </span>
-                            ))}
-                          </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
 
-                      <div className="flex items-center">
-                      <div className="flex items-center ml-4">
-                        <input
-                          id="include-net-zero"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
-                          checked={includeNetZero}
-                          onChange={e => setIncludeNetZero(e.target.checked)}
-                        />
-                        <label htmlFor="include-net-zero" className="ml-2 block text-sm text-gray-700">
-                          Include a net zero scenario
-                        </label>
+                      {/* Category Dropdown */}
+                      <div className="flex items-center" ref={categoryRef}>
+                        <span className="text-gray-600 font-medium mr-1">
+                          Category:
+                        </span>
+                        <div className="relative">
+                          <button
+                            onClick={() =>
+                              setCategoryDropdownOpen(!isCategoryDropdownOpen)
+                            }
+                            className="flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none"
+                          >
+                            <span>
+                              {selectedCategories.includes("Aggregated Scope")
+                                ? "Aggregated Scope"
+                                : selectedCategories.join(", ")}
+                            </span>
+                            <FiChevronDown className="ml-1 h-4 w-4 text-gray-500" />
+                          </button>
+
+                          {isCategoryDropdownOpen && (
+                            <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-md z-10">
+                              <div className="py-1">
+                                {categoryOptions.map((category) => (
+                                  <div
+                                    key={category}
+                                    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                    onClick={() =>
+                                      handleCategorySelection(category)
+                                    }
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={selectedCategories.includes(
+                                        category
+                                      )}
+                                      onChange={() => {}}
+                                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    />
+                                    <label className="ml-2 block text-sm text-gray-900">
+                                      {category}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                              <div className="border-t border-gray-200 px-4 py-2">
+                                <button
+                                  className="text-sm text-blue-600 hover:text-blue-800"
+                                  onClick={() => setCategoryDropdownOpen(false)}
+                                >
+                                  Done
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      
-                      <div className="flex items-center ml-4">
-                        <label className="block text-sm text-gray-500 mr-2">Enter Target Year:</label>
-                        <input
-                          type="text"
-                          className="w-20 rounded-md border-b border-gray-300 py-1 px-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-                          value={targetYear}
-                          onChange={e => setTargetYear(e.target.value)}
-                        />
+
+                      {/* Sub Category Dropdown */}
+                      <div className="flex items-center" ref={subCategoryRef}>
+                        <span className="text-gray-600 font-medium mr-1">
+                          Sub Category:
+                        </span>
+                        <div className="relative">
+                          <button
+                            onClick={() =>
+                              setSubCategoryDropdownOpen(
+                                !isSubCategoryDropdownOpen
+                              )
+                            }
+                            className="flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none"
+                          >
+                            <span>
+                              {selectedSubCategories.includes(
+                                "Aggregated Scope"
+                              )
+                                ? "Aggregated Scope"
+                                : selectedSubCategories.join(", ")}
+                            </span>
+                            <FiChevronDown className="ml-1 h-4 w-4 text-gray-500" />
+                          </button>
+
+                          {isSubCategoryDropdownOpen && (
+                            <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-md z-10">
+                              <div className="py-1">
+                                {subCategoryOptions.map((subCategory) => (
+                                  <div
+                                    key={subCategory}
+                                    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                    onClick={() =>
+                                      handleSubCategorySelection(subCategory)
+                                    }
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={selectedSubCategories.includes(
+                                        subCategory
+                                      )}
+                                      onChange={() => {}}
+                                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    />
+                                    <label className="ml-2 block text-sm text-gray-900">
+                                      {subCategory}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                              <div className="border-t border-gray-200 px-4 py-2">
+                                <button
+                                  className="text-sm text-blue-600 hover:text-blue-800"
+                                  onClick={() =>
+                                    setSubCategoryDropdownOpen(false)
+                                  }
+                                >
+                                  Done
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Activity Dropdown */}
+                      <div className="flex items-center" ref={activityRef}>
+                        <span className="text-gray-600 font-medium mr-1">
+                          Activity:
+                        </span>
+                        <div className="relative">
+                          <button
+                            onClick={() =>
+                              setActivityDropdownOpen(!isActivityDropdownOpen)
+                            }
+                            className="flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none"
+                          >
+                            <span>
+                              {selectedActivities.includes("Aggregated Scope")
+                                ? "Aggregated Scope"
+                                : selectedActivities.join(", ")}
+                            </span>
+                            <FiChevronDown className="ml-1 h-4 w-4 text-gray-500" />
+                          </button>
+
+                          {isActivityDropdownOpen && (
+                            <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-md z-10">
+                              <div className="py-1">
+                                {activityOptions.map((activity) => (
+                                  <div
+                                    key={activity}
+                                    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                    onClick={() =>
+                                      handleActivitySelection(activity)
+                                    }
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={selectedActivities.includes(
+                                        activity
+                                      )}
+                                      onChange={() => {}}
+                                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    />
+                                    <label className="ml-2 block text-sm text-gray-900">
+                                      {activity}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                              <div className="border-t border-gray-200 px-4 py-2">
+                                <button
+                                  className="text-sm text-blue-600 hover:text-blue-800"
+                                  onClick={() => setActivityDropdownOpen(false)}
+                                >
+                                  Done
+                                </button>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
-                    
+
+                    {/* Business Metrics & Target Year Row */}
+                    <div className="flex flex-wrap items-center gap-4 mt-6">
+                      <div className="relative" ref={metricsRef}>
+                        <div className="relative">
+                          <button
+                            type="button"
+                            className="flex items-center justify-between w-48 rounded-md border border-gray-300 px-3 py-2 text-gray-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 text-sm"
+                            onClick={() =>
+                              setIsMetricsDropdownOpen(!isMetricsDropdownOpen)
+                            }
+                          >
+                            <span>Business metrics</span>
+                            <FiChevronDown className="h-4 w-4" />
+                          </button>
+
+                          {isMetricsDropdownOpen && (
+                            <div className="absolute z-10 mt-1 w-48 rounded-md bg-white shadow-lg border border-gray-200">
+                              <div className="py-1">
+                                {businessMetrics.map((metric) => (
+                                  <div
+                                    key={metric.id}
+                                    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                    onClick={() => toggleMetric(metric.id)}
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={metric.selected}
+                                      onChange={() => {}}
+                                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    />
+                                    <label className="ml-2 block text-sm text-gray-900">
+                                      {metric.name}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-2 ml-2">
+                        {selectedMetrics.map((metric) => (
+                          <div
+                            key={metric.id}
+                            className="flex items-center bg-blue-50 text-blue-700 px-2 py-1 rounded text-sm"
+                          >
+                            {metric.name}
+                            <button
+                              type="button"
+                              onClick={() => removeMetric(metric.id)}
+                              className="ml-1 text-blue-500 hover:text-blue-700"
+                            >
+                              <FiX className="h-3 w-3" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center ml-auto">
+                        <input
+                          id="include-net-zero"
+                          type="checkbox"
+                          checked={includeNetZero}
+                          onChange={() => setIncludeNetZero(!includeNetZero)}
+                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        />
+                        <label
+                          htmlFor="include-net-zero"
+                          className="ml-2 text-sm text-gray-700"
+                        >
+                          Include Net Zero
+                        </label>
+                      </div>
+
+                      <div className="flex items-center gap-2 ml-4">
+                        <label
+                          htmlFor="target-year"
+                          className="text-sm text-gray-700 whitespace-nowrap"
+                        >
+                          Target Year:
+                        </label>
+                        <input
+                          id="target-year"
+                          type="number"
+                          min={scenarioData.baseYear || 2024}
+                          max={2050}
+                          value={extendedTargetYear}
+                          onChange={(e) =>
+                            setExtendedTargetYear(parseInt(e.target.value))
+                          }
+                          className="w-24 rounded-md border border-gray-300 py-1 px-2 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-blue-500 text-sm"
+                        />
+                      </div>
+                    </div>
+
                     {/* Chart visualization */}
-                    <div className="bg-gray-100 rounded-lg p-4 flex items-center justify-center min-h-[500px]">
-                      <div className="text-gray-600 italic text-lg">Graph area</div>
-                      {/* Replace with actual graph component */}
-                      {/* <NivoYearlyGrowth /> */}
+                    <div className="mb-6 mt-6">
+                      <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-base font-semibold text-gray-900">
+                          Predicted Trend of chosen Business Metrics over Years
+                          for ({selectedScopes.join(", ")})
+                        </h3>
+                        <button
+                          onClick={handleDownloadResults}
+                          className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                          Download result
+                          <FiDownload className="ml-2 h-4 w-4" />
+                        </button>
+                      </div>
+
+                      {/* Insert the Nivo chart component */}
+                      <div className="border border-gray-200 rounded-lg overflow-hidden">
+                        <EmissionsProjectionGraph
+                          scenario={scenarioData}
+                          includeNetZero={includeNetZero}
+                          targetYear={mainTargetYear}
+                          mainTargetYear={extendedTargetYear}
+                          selectedBusinessMetrics={businessMetrics
+                            .filter((m) => m.selected)
+                            .map((m) => m.id)}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Close button - fixed at top right corner */}
                 <button
                   type="button"
