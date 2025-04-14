@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import ScenarioSearch from "./ScenarioSearch";
-import ScenarioList from "./ScenarioList";
 import ComparisonView from "./ComparisonView";
 import EmptyState from "./EmptyState";
 import LoadingSpinner from "./LoadingSpinner";
@@ -81,12 +80,6 @@ const CompareScenarios = () => {
     }, 1000);
   };
 
-  // Filter scenarios based on search
-  const filteredScenarios = allScenarios.filter(scenario =>
-    scenario.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    scenario.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   // Handle scenario selection
   const handleScenarioSelect = (scenarioId) => {
     if (selectedScenarios.includes(scenarioId)) {
@@ -102,47 +95,43 @@ const CompareScenarios = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl font-semibold text-gray-900">
+            <h1 className="text-2xl font-semibold text-gray-900 mb-6">
               Scenario Analysis
             </h1>
-            <p className="text-gray-500 mt-1 max-w-3xl">
+            <p className="text-gray-500 mt-1 max-w-full">
               Analyze scenarios, view existing ones, and make adjustments to your plans. Track your progress, compare different strategies, and visualize your path to achieving net-zero goals. Start by creating a new scenario or explore your saved plans to refine and optimize your sustainability journey.
             </p>
           </div>
         </div>
         
         {/* Search Component */}
-        <ScenarioSearch 
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
-        
-        {/* Scenarios List or Empty State */}
         {isLoading ? (
           <LoadingSpinner />
         ) : allScenarios.length === 0 ? (
           <EmptyState setIsCreateModalOpen={setIsCreateModalOpen} />
         ) : (
           <>
-            <ScenarioList 
-              scenarios={filteredScenarios}
+            <ScenarioSearch 
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              scenarios={allScenarios}
               selectedScenarios={selectedScenarios}
               handleScenarioSelect={handleScenarioSelect}
             />
             
             {/* Show message if no scenarios selected */}
-            {filteredScenarios.length > 0 && selectedScenarios.length === 0 && (
+            {selectedScenarios.length === 0 && (
               <NoScenarioSelected />
             )}
+            
+            {/* Comparison View when scenarios are selected */}
+            {selectedScenarios.length > 0 && (
+              <ComparisonView 
+                selectedScenarios={selectedScenarios}
+                allScenarios={allScenarios}
+              />
+            )}
           </>
-        )}
-        
-        {/* Comparison View when scenarios are selected */}
-        {selectedScenarios.length > 0 && (
-          <ComparisonView 
-            selectedScenarios={selectedScenarios}
-            allScenarios={allScenarios}
-          />
         )}
       </div>
     </div>

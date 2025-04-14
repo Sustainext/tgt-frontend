@@ -66,7 +66,7 @@ const ScenarioDashboard = () => {
 
         {/* Content based on active tab */}
         {activeTab === "home" ? <ScenarioTable /> : ""}
-        {/* {activeTab === "analysis" ? <CompareScenarios /> : ""} */}
+        {activeTab === "analysis" ? <CompareScenarios /> : ""}
       </div>
     </>
   );

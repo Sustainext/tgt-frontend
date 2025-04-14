@@ -16,6 +16,7 @@ import {
 } from "../../../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 import BusinessMetricsWithTooltips from "./BusinessMetricsWithTooltips";
+import {useRouter} from 'next/navigation'
 
 const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
   // Current step in the wizard (1-4)
@@ -119,25 +120,34 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
   };
 
   // Go back to dashboard
+  const router = useRouter();
+
   const handleBackToDashboard = () => {
-    onCancel();
+    // Navigate to the Optimise dashboard using Next.js router
+    router.push("/dashboard/Optimise");
   };
 
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        {/* Header */}
-        <div className="bg-white shadow-sm border-b">
-          <div className="max-w-full px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <h1 className="text-xl font-medium gradient-text">
-                  {scenario?.name || "Scenario 1"}
-                </h1>
-              </div>
-            </div>
+      <div className="bg-white shadow-sm border-b border-gray-100">
+      <div className="max-w-full px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex justify-between items-center w-full">
+          <div className="flex items-center">
+            <h1 className="text-xl font-medium gradient-text">
+              {scenario?.name || "Scenario 1"}
+            </h1>
           </div>
+          <button
+            onClick={handleBackToDashboard}
+            className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+          >
+            <FiArrowLeft className="mr-2 h-4 w-4" />
+            Back to Dashboard
+          </button>
         </div>
+      </div>
+    </div>
 
         {/* Header */}
         <div className="mx-8 my-8 flex justify-between items-center gap-[5rem]">
