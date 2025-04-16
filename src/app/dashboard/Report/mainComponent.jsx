@@ -48,6 +48,7 @@ const Report = () => {
   const [reportExist,setReportExist]=useState(false)
   const [selectedOrgName,setSelectedOrgName]=useState("")
   const [selectedCorpName,setSelectedCorpName]=useState("")
+  const [showInvestmentMessage,setshowInvestmentMessage]=useState(false)
 
 
   const getAuthToken = () => {
@@ -126,10 +127,12 @@ const Report = () => {
     dispatch(setHeaderdisplay("none"));
     dispatch(setHeadertext2("Report"));
   }, [dispatch]);
-  const handleCheckboxChange = (index) => {
+  const handleCheckboxChange = (index,hasData) => {
     const newEntities = [...entities];
     newEntities[index].checked = !newEntities[index].checked;
+    newEntities[index].ownershipRatio="";
     setEntities(newEntities);
+    // setshowInvestmentMessage(hasData)
   };
 
   const handleOwnershipRatioChange = (index, value) => {
@@ -143,21 +146,29 @@ const Report = () => {
   const handleChangeallcrop = async (event) => {
     const selectedId = event.target.value;
     setSelectedOrg(selectedId);
+  };
+
+  const fetchInvestementCorporate=async()=>{
     try {
       const response = await axiosInstance.get(
         `/sustainapp/all_corporate_list/`,
         {
-          params: { organization_id: selectedId },
+          params: { 
+            organisation: selectedOrg,
+            corporate:selectedCorp,
+            start:startdate,
+            end:enddate,
+            reportBy:firstSelection
+           },
         }
       );
       setEntities(response.data);
     } catch (e) {
       console.log(
-        "failed fetching organization",
-        process.env.REACT_APP_BACKEND_URL
+        "failed fetching organization", e
       );
     }
-  };
+  }
 
   const fetchOrg = async () => {
     try {
@@ -183,6 +194,14 @@ const Report = () => {
       isMounted.current = false;
     };
   }, []);
+
+  useEffect(()=>{
+    if(selectedOrg && startdate && enddate){
+      fetchInvestementCorporate()
+    }
+  },[selectedOrg,startdate,enddate,selectedCorp])
+
+
   useEffect(() => {
     // Remove items from local storage when the component mounts
     localStorage.removeItem("reportid");
@@ -602,6 +621,8 @@ const Report = () => {
     setMaterialityAssessmentLen([])
     setError({});
     setReportExist(false)
+    setEntities([])
+    // setshowInvestmentMessage(false)
   };
 
   const formatDate = (dateString) => {
@@ -838,62 +859,7 @@ const Report = () => {
                   <div className="mb-3">
                     {showSecondSelect && renderSecondSelect()}
                   </div>
-                  {reporttype === "GHG Report - Investments" && (
-                    <div className="mr-2 h-[250px] overflow-y-auto">
-                      <label
-                        htmlFor="sdate"
-                        className="block text-neutral-800 text-[13px] font-normal"
-                      >
-                        Select Investment Corporate
-                      </label>
-                      <div className="mt-2 mr-2">
-                        <div className="p-4">
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="text-gray-400 font-semibold text-[13px]">
-                              Investment Corporate
-                            </div>
-                            <div className="text-gray-400 font-semibold text-[13px]">
-                              Ownership Ratio %
-                            </div>
-
-                            {entities.map((entity, index) => (
-                              <React.Fragment key={index}>
-                                <div className="flex items-center space-x-2">
-                                  <input
-                                    id={entity.id}
-                                    type="checkbox"
-                                    checked={entity.checked}
-                                    onChange={() => handleCheckboxChange(index)}
-                                    className="form-checkbox h-5 w-5 text-green-600"
-                                    value={entity.id}
-                                  />
-                                  <label
-                                    htmlFor={entity.id}
-                                    className="text-gray-800 text-[13px]"
-                                  >
-                                    {entity.name}
-                                  </label>
-                                </div>
-                                <input
-                                  type="number"
-                                  placeholder="Enter Ownership Ratio %"
-                                  className="border p-2 rounded w-full text-[13px]"
-                                  disabled={!entity.checked}
-                                  value={entity.ownershipRatio}
-                                  onChange={(e) =>
-                                    handleOwnershipRatioChange(
-                                      index,
-                                      e.target.value
-                                    )
-                                  }
-                                />
-                              </React.Fragment>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                 
                   <div className="grid grid-cols-1 md:grid-cols-2 mb-3">
                     <div>
                       <label
@@ -944,6 +910,96 @@ const Report = () => {
                       )}
                     </div>
                   </div>
+
+                  {/* investment corporate */}
+                  {reporttype === "GHG Report - Investments" && entities?.length>0 ?
+                   (
+                    <div className={``}>
+                      <label
+                        htmlFor="sdate"
+                        className="block text-neutral-800 text-[13px] font-normal"
+                      >
+                        Select Investment Corporate
+                      </label>
+                      <div className={`mt-2 border border-gray-300 rounded-md ${entities?.length>0?'h-[200px]':'h-auto'} overflow-y-auto table-scrollbar`}>
+                        <div className="p-3">
+                          <div className="grid grid-cols-2 gap-2">
+                            <div className="text-gray-400 font-semibold text-[13px]">
+                              Investment Corporate
+                            </div>
+                            <div className="text-gray-400 font-semibold text-[13px]">
+                              Ownership Ratio %
+                            </div>
+
+                            {entities.map((entity, index) => (
+                              <React.Fragment key={index}>
+                                <div className={`flex items-center space-x-2 ${!entity.emission_data?'opacity-30':''}`}>
+                                  <input
+                                    id={entity.id}
+                                    type="checkbox"
+                                    disabled={!entity.emission_data}
+                                    checked={entity.checked}
+                                    onChange={() => handleCheckboxChange(index,entity.emission_data)}
+                                    className="form-checkbox h-4 w-4 accent-green-600"
+                                    value={entity.id}
+                                  />
+                                  <label
+                                    htmlFor={entity.id}
+                                    className="text-gray-800 text-[13px] cursor-pointer"
+                                    data-tooltip-id={`tooltip-${index}`}
+                        data-tooltip-html={`${!entity.emission_data?'<p>No data available for the selected corporate</p>':''}`}
+                                  >
+                                    {entity.name}
+                                  </label>
+                                </div>
+                                <ReactTooltip
+                        id={`tooltip-${index}`}
+                        place="top"
+                        effect="solid"
+                        style={{
+                          width: "290px",
+                          backgroundColor: "#FFF",
+                          color: "#000",
+                          fontSize: "12px",
+                          boxShadow: 3,
+                          borderRadius: "8px",
+                          textAlign: "left",
+                          zIndex: 100,
+                          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                          opacity: 1,
+                        }}
+                      ></ReactTooltip>
+                                <input
+                                  type="number"
+                                  placeholder="Enter Ownership Ratio %"
+                                  className={`border-b p-2 rounded w-full text-[13px] ${!entity.checked?'opacity-35':''}`}
+                                  disabled={!entity.checked}
+                                  value={entity.ownershipRatio}
+                                  onChange={(e) =>
+                                    handleOwnershipRatioChange(
+                                      index,
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                              </React.Fragment>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ):(
+                    <div>
+                       {/* {showInvestmentMessage && (
+                      <div className="flex gap-2 mb-2">
+                      <IoIosWarning className="text-[#F98845] w-5 h-5" />
+                    <p className="text-[14px] text-[#F98845] font-[500]">No Investment corporate data is available for the selected Corporate</p>
+                    </div>
+                    )} */}
+                    </div>
+                   
+                    
+                  )}
                   {/* materiality assessment */}
                   {materialityAssessmentLen&&materialityAssessmentLen.length>1?(
                      <div>
@@ -969,7 +1025,7 @@ const Report = () => {
                     <div></div>
                   )}
                  
-                  <div className="flex justify-center mt-10">
+                  <div className="flex justify-center mt-5">
                     <div className="">
                       <button
                         type="submit"

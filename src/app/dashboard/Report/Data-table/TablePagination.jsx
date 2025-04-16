@@ -71,7 +71,7 @@ else{
       item.report_type === "GRI Report: With Reference to";
     return (
       <div   className={`absolute bg-white shadow-lg rounded-lg py-2 w-[211px] z-10 right-8 ${
-        menuDirection === "up" ? "bottom-full mb-2" : "mt-5"
+        menuDirection === "up" ? "bottom-full mb-2" : " top-full mt-2"
       }`}>
         <button
           className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
@@ -228,19 +228,28 @@ else{
 
   let timeoutId;
 
-  const handleMouseEnter = (itemId,e) => {
+  const handleMouseEnter = (itemId,itemsPerPage,index,e) => {
     const rect = e?.currentTarget?.getBoundingClientRect();
 
-    if (rect) {
-      const spaceBelow = window.innerHeight - rect.bottom;
-      const spaceAbove = rect.top;
+    // if (rect) {
+    //   const spaceBelow = window.innerHeight - rect.bottom;
+    //   const spaceAbove = rect.top;
   
-      if (spaceBelow < 250 && spaceAbove > 250) {
-        setMenuDirection("up"); // not enough space below, open upward
-      } else {
-        setMenuDirection("down"); // open downward
-      }
+    //   if (spaceBelow < 250 && spaceAbove > 250) {
+    //     setMenuDirection("up"); // not enough space below, open upward
+    //   } else {
+    //     setMenuDirection("down"); // open downward
+    //   }
+    // }
+
+    const splitPoint = Math.ceil(itemsPerPage / 2);
+    
+    if (index < splitPoint) {
+        setMenuDirection("down");
+    } else {
+        setMenuDirection("up");
     }
+    
     clearTimeout(timeoutId); // Clear any pending timeout
     setIsMenuOpen(itemId); // Open the menu immediately
   };
@@ -853,12 +862,12 @@ else{
                   <td className="py-3 px-6 relative text-center flex justify-center">
                     <MdMoreVert
                       className="cursor-pointer"
-                      onMouseEnter={() => handleMouseEnter(item.id)}
+                      onMouseEnter={() => handleMouseEnter(item.id,itemsPerPage,index)}
                       onMouseLeave={handleMouseLeave}
                     />
                     {isMenuOpen === item.id && (
                       <div
-                      onMouseEnter={(e) => handleMouseEnter(item.id, e)} // Ensure menu stays open
+                      onMouseEnter={(e) => handleMouseEnter(item.id,itemsPerPage,index, e)} // Ensure menu stays open
                         onMouseLeave={handleMouseLeave} // Allow menu to close
                       >
                         <ActionMenu item={item} />
