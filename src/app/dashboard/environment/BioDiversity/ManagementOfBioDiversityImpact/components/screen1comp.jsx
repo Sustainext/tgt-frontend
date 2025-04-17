@@ -15,7 +15,7 @@ const widgets = {
   TableWidget: BioDiveristyTableWidget,
 };
 
-const view_path = "gri-governance-policy_commitments-2-23-b-human_rights";
+const view_path = "gri-environment-biodiversity-101-2a-2f-mitigation_hierarchy";
 const client_id = 1;
 const user_id = 1;
 
@@ -161,7 +161,7 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData(initialFormData);
+    // setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -176,30 +176,30 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
     }
   };
 
-//   useEffect(() => {
-//     if (selectedOrg && year && togglestatus) {
-//       if (togglestatus === "Corporate" && selectedCorp) {
-//         loadFormData();
-//       } else if (togglestatus === "Corporate" && !selectedCorp) {
-//         setFormData(initialFormData);
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});
-//       } else {
-//         loadFormData();
-//       }
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
 
-//       toastShown.current = false;
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true;
-//       }
-//     }
-//   }, [selectedOrg, year, selectedCorp, togglestatus]);
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
   return (
     <>
@@ -245,8 +245,8 @@ to respect human rights."
           </div> */}
         </div>
         <Form
-          schema={schema}
-          uiSchema={uiSchema}
+          schema={r_schema}
+          uiSchema={r_ui_schema}
           formData={formData}
           onChange={handleChange}
           validator={validator}

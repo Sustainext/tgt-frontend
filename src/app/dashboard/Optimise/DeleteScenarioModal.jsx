@@ -63,7 +63,7 @@ const DeleteScenarioModal = ({ isOpen, onClose, scenarioData, onConfirm }) => {
                   </button>
                   <button
                     type="button"
-                    // onClick={handleDelete}
+                    onClick={handleDelete}
                     className="w-full py-3 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                   >
                     Yes, Delete
