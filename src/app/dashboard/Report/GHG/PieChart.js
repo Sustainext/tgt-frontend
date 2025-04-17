@@ -138,12 +138,12 @@ function MyResponsivePie({ exdata }) {
           {
             anchor: isMobile ? "bottom" : "right",
             direction: isMobile ? "row" : "column",
-              justify: false,
-              translateX: isMobile ? 0 : 120,
-              translateY: isMobile ? 60 : 0,
-              itemsSpacing: isMobile ? 20 : 2,
-              itemWidth: isMobile ? 80 : 80,
-              itemHeight: 10,
+            justify: false,
+            translateX: isMobile ? 0 : 120,
+            translateY: isMobile ? 80 : 0,
+            itemsSpacing: isMobile ? 10 : 10, // more spacing between items on mobile
+            itemWidth: isMobile ? 100 : 80,  // give more width
+            itemHeight: isMobile ? 20 : 10,  // increase height to avoid squish
               itemTextColor: '#999',
               itemDirection: 'left-to-right',
               itemOpacity: 1,

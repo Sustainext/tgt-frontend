@@ -342,7 +342,7 @@ const EditStakeholderGroup = ({
     <>
       {isModalOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-[#00000080] z-50 mt-12">
-          <div className="relative bg-white p-6 rounded-lg shadow-lg w-[40%] max-w-3xl">
+          <div className="relative bg-white p-6 rounded-lg shadow-lg xl:w-[40%] max-w-3xl xl:mx-0 mx-2">
             {/* Header */}
             <div>
               <div className="flex justify-between items-center mb-2">
