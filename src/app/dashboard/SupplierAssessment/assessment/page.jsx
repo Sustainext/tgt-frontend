@@ -69,7 +69,7 @@ const Assessment = ({ setActiveTab }) => {
                 onClick={() => {
                   setIsModalOpen(true);
                 }}
-                className="bg-[#007EEF] text-white px-4 py-2 text-[14px] rounded-md hover:bg-blue-600 xl:w-full w-[50%]"
+                className="bg-[#007EEF] text-white px-4 py-2 text-[14px] rounded-md hover:bg-blue-600 xl:w-full "
               >
                 <div className="flex gap-1">
                   <MdAdd className="w-4 h-4 mt-0.5" /> Create New Assessment

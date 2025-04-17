@@ -32,6 +32,7 @@ const CustomOptionnew = ({children,...props}) => {
         alignItems: "center",
 
         textAlign: "left",
+        cursor:'pointer'
       }}
     >
       <input

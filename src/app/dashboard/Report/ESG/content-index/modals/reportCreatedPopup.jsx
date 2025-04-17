@@ -173,7 +173,7 @@ const ReportCreatedPopup = ({
       {isCreateReportModalOpen && (
         <div className="modal-overlay z-50">
           <div className="modal-center">
-            <div className="bg-white p-5 rounded-lg shadow-md w-[45%]">
+            <div className="bg-white p-5 rounded-lg shadow-md xl:w-[45%]">
               <div className="flex justify-between items-center pt-2 w-full">
                 <div className="flex gap-2">
                   <Image

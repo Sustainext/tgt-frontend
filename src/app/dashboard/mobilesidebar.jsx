@@ -220,7 +220,7 @@ const MobileSidenav = () => {
       permission: "report",
       role: true,
       lockicon: <MdLockOutline />,
-      lockiconshow: true,
+      lockiconshow: false,
     },
     {
       id: 6,

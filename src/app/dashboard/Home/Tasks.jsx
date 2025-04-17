@@ -384,7 +384,7 @@ const TasksPage = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="xl:p-4 p-1">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <div>
@@ -443,10 +443,10 @@ const TasksPage = () => {
       </div>
 
       {/* Filter Tags */}
-      <div className="flex items-center gap-4 mb-6">
-        <div className="flex items-center gap-2 relative">
+      <div className="xl:flex items-center gap-4 mb-6">
+        <div className="xl:flex items-center gap-2 relative w-full">
           <button
-            className="inline-flex items-center gap-2 text-gray-600 px-3 py-2"
+            className="inline-flex items-center gap-2 text-gray-600 px-3 py-2 mb-2"
             onClick={() => setIsDateRangePickerOpen(!isDateRangePickerOpen)}
           >
             <FaCalendarAlt className="w-4 h-4" />
@@ -456,7 +456,7 @@ const TasksPage = () => {
 
           {/* DateRangePicker */}
           {isDateRangePickerOpen && (
-            <div className="absolute top-full mt-2 z-10 bg-white border border-gray-200 shadow-md rounded-lg">
+            <div className="absolute top-full mt-2 z-10 mb-2 bg-white border border-gray-200 shadow-md rounded-lg">
               <DateRangePicker
                 startDate={selectedDateRange.start}
                 endDate={selectedDateRange.end}
@@ -471,7 +471,7 @@ const TasksPage = () => {
 
           {/* Selected Date Range */}
           {selectedDateRange.start && selectedDateRange.end && (
-            <div className="inline-flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2 ml-2 text-blue-500 font-semibold">
+            <div className="inline-flex w-full items-center gap-2 mb-2 bg-blue-50 rounded-lg px-3 py-2 xl:ml-2 text-blue-500 font-semibold">
               <span>
                 {`${selectedDateRange.start} - ${selectedDateRange.end} (${dateFilterType})`}
               </span>
@@ -485,7 +485,7 @@ const TasksPage = () => {
           )}
 
           {selectedAssignees.length > 0 && (
-            <div className="inline-flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
+            <div className="inline-flex w-full items-center gap-2 mb-2 bg-blue-50 rounded-lg px-3 py-2">
               <span className="text-gray-600">Assignee:</span>
               <span className="text-blue-500 font-semibold">
                 {selectedAssignees.length} Selected
@@ -500,7 +500,7 @@ const TasksPage = () => {
           )}
 
           {selectedStatuses.length > 0 && (
-            <div className="inline-flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
+            <div className="inline-flex w-full items-center gap-2 mb-2 bg-blue-50 rounded-lg px-3 py-2">
               <span className="text-gray-600">Status:</span>
               <span className="text-blue-500 font-semibold">
                 {selectedStatuses
@@ -521,342 +521,417 @@ const TasksPage = () => {
       {/* Modified Table Header */}
       {/* desktop version */}
       <div className=" xl:block hidden">
-      <div className="bg-white rounded-lg flex flex-col h-[calc(100vh-280px)]">
-        <div className="grid grid-cols-9 gap-4 px-6 py-4 border-b border-gray-200 text-sm font-medium text-gray-500">
-          <div className="col-span-3 flex items-center gap-4">
-            <input
-              type="checkbox"
-              checked={selectedTasks.length === tasks.length}
-              onChange={handleSelectAllVisible}
-              className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${
-                activeTab === "for_review" ? "" : "opacity-0"
-              }`}
-              disabled={activeTab !== "for_review"}
-            />
-            <div
-              className="col-span-3 flex items-center gap-2 cursor-pointer"
-              onClick={() => handleSort("task_name")}
-            >
-              Tasks
-              {sortColumn === "task_name" &&
-                (sortOrder === "asc" ? (
-                  <FiChevronUp />
-                ) : sortOrder === "desc" ? (
-                  <FiChevronDown />
-                ) : (
-                  <LuChevronsUpDown />
-                ))}
-            </div>
-          </div>
-          <div className="col-span-1 relative" ref={statusFilterRef}>
-            <div className="flex items-center gap-2">
-              Status
-              <button
-                onClick={() => setIsStatusFilterOpen(!isStatusFilterOpen)}
-                className="hover:bg-gray-100 p-1 rounded"
-              >
-                <MdFilterList className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Status Filter Popover */}
-            {isStatusFilterOpen && <StatusFilterModal />}
-          </div>
-          <div className="col-span-2 relative" ref={assigneeFilterRef}>
-            <div className="flex items-center gap-2">
-              Assignee
-              <button
-                onClick={() => setIsAssigneeFilterOpen(!isAssigneeFilterOpen)}
-                className="hover:bg-gray-100 p-1 rounded"
-              >
-                <MdFilterList className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Assignee Filter Popover */}
-            {isAssigneeFilterOpen && (
-              <div className="absolute z-10 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
-                <div className="p-4">
-                  <h3 className="text-sm font-medium text-gray-900 mb-3">
-                    Filter by Assignee
-                  </h3>
-
-                  {/* Search input */}
-                  <div className="relative mb-3">
-                    <input
-                      type="text"
-                      placeholder="Search assignees..."
-                      className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-md"
-                      value={assigneeSearchQuery}
-                      onChange={(e) => setAssigneeSearchQuery(e.target.value)}
-                    />
-                    <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  </div>
-
-                  {/* Assignee list */}
-                  <div className="space-y-2 max-h-60 overflow-y-auto">
-                    {users
-                      .filter(
-                        (user) =>
-                          user.username
-                            .toLowerCase()
-                            .includes(assigneeSearchQuery.toLowerCase()) ||
-                          user.email
-                            .toLowerCase()
-                            .includes(assigneeSearchQuery.toLowerCase())
-                      )
-                      .map((user) => (
-                        <label
-                          key={user.id}
-                          className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={selectedAssignees.includes(user.id)}
-                            onChange={() => handleAssigneeSelection(user.id)}
-                            className="w-4 h-4 text-blue-600 rounded border-gray-300"
-                          />
-                          <div className="flex-1 min-w-0">
-                            <div className="text-sm font-medium text-gray-900 truncate">
-                              {user.name}
-                            </div>
-                            <div className="text-sm text-gray-500 truncate">
-                              {user.email}
-                            </div>
-                          </div>
-                        </label>
-                      ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          {/* Assigned On Sorting */}
-          <div
-            className="col-span-1 flex items-center gap-2 cursor-pointer"
-            onClick={() => handleSort("created_at")}
-          >
-            Assigned on
-            {sortColumn === "created_at" &&
-              (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
-          </div>
-
-          {/* Due Date Sorting */}
-          <div
-            className="col-span-1 flex items-center gap-2 cursor-pointer"
-            onClick={() => handleSort("deadline")}
-          >
-            Due Date
-            {sortColumn === "deadline" &&
-              (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
-          </div>
-          <div className="col-span-1">Attachment</div>
-        </div>
-
-        {/* Modified Table Body */}
-        <div className="divide-y divide-gray-200 overflow-y-auto flex-1">
-          {tasks.map((task) => (
-            <div
-              key={task.id}
-              className="grid grid-cols-9 gap-4 px-6 py-4 hover:bg-gray-50"
-            >
-              <div className="col-span-3 flex items-center gap-4">
-                <input
-                  type="checkbox"
-                  checked={selectedTasks.includes(task.id)}
-                  onChange={() => handleRowSelection(task.id)}
-                  className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${
-                    activeTab === "for_review" ? "" : "opacity-0"
-                  }`}
-                  disabled={activeTab !== "for_review"}
-                />
-                <span
-                  className="text-blue-600 truncate cursor-pointer w-[30vw]"
-                  onClick={() => handleTaskClick(task)}
-                >
-                  {task.task_name}
-                </span>
-              </div>
-              <div className="col-span-1 flex items-center space-x-2">
-                <span
-                  className={`h-2 w-2 rounded-full ${getStatusBadgeClasses(
-                    task.task_status
-                  )}`}
-                />
-                <span className="text-gray-900 font-semibold">
-                  {getStatusLabel(task.task_status)}
-                </span>
-              </div>
-              <div className="col-span-2">
-                <div className="text-gray-900 font-semibold">
-                  {task.assign_to_user_name}
-                </div>
-                <div className="text-gray-500 text-sm">
-                  {task.assign_to_email}
-                </div>
-              </div>
-              <div className="col-span-1 text-gray-500">
-                <Moment format="DD/MM/YYYY">{task.assigned_date}</Moment>
-              </div>
-              <div className="col-span-1 text-gray-500">
-                <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
-              </div>
+        <div className="bg-white rounded-lg flex flex-col h-[calc(100vh-280px)]">
+          <div className="grid grid-cols-9 gap-4 px-6 py-4 border-b border-gray-200 text-sm font-medium text-gray-500">
+            <div className="col-span-3 flex items-center gap-4">
+              <input
+                type="checkbox"
+                checked={selectedTasks.length === tasks.length}
+                onChange={handleSelectAllVisible}
+                className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${
+                  activeTab === "for_review" ? "" : "opacity-0"
+                }`}
+                disabled={activeTab !== "for_review"}
+              />
               <div
-                className={`col-span-1 ${
-                  task.file_data?.name ? "text-blue-500" : "text-gray-400"
-                } flex items-start justify-start gap-1`}
+                className="col-span-3 flex items-center gap-2 cursor-pointer"
+                onClick={() => handleSort("task_name")}
               >
-                <span>
-                  {task.file_data?.name && (
-                    <MdFilePresent className="text-2xl text-green-500" />
-                  )}
-                </span>{" "}
-                <span>{task.file_data?.name || "No attachment"}</span>
+                Tasks
+                {sortColumn === "task_name" &&
+                  (sortOrder === "asc" ? (
+                    <FiChevronUp />
+                  ) : sortOrder === "desc" ? (
+                    <FiChevronDown />
+                  ) : (
+                    <LuChevronsUpDown />
+                  ))}
               </div>
             </div>
-          ))}
+            <div className="col-span-1 relative" ref={statusFilterRef}>
+              <div className="flex items-center gap-2">
+                Status
+                <button
+                  onClick={() => setIsStatusFilterOpen(!isStatusFilterOpen)}
+                  className="hover:bg-gray-100 p-1 rounded"
+                >
+                  <MdFilterList className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Status Filter Popover */}
+              {isStatusFilterOpen && <StatusFilterModal />}
+            </div>
+            <div className="col-span-2 relative" ref={assigneeFilterRef}>
+              <div className="flex items-center gap-2">
+                Assignee
+                <button
+                  onClick={() => setIsAssigneeFilterOpen(!isAssigneeFilterOpen)}
+                  className="hover:bg-gray-100 p-1 rounded"
+                >
+                  <MdFilterList className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Assignee Filter Popover */}
+              {isAssigneeFilterOpen && (
+                <div className="absolute z-10 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
+                  <div className="p-4">
+                    <h3 className="text-sm font-medium text-gray-900 mb-3">
+                      Filter by Assignee
+                    </h3>
+
+                    {/* Search input */}
+                    <div className="relative mb-3">
+                      <input
+                        type="text"
+                        placeholder="Search assignees..."
+                        className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-md"
+                        value={assigneeSearchQuery}
+                        onChange={(e) => setAssigneeSearchQuery(e.target.value)}
+                      />
+                      <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    </div>
+
+                    {/* Assignee list */}
+                    <div className="space-y-2 max-h-60 overflow-y-auto">
+                      {users
+                        .filter(
+                          (user) =>
+                            user.username
+                              .toLowerCase()
+                              .includes(assigneeSearchQuery.toLowerCase()) ||
+                            user.email
+                              .toLowerCase()
+                              .includes(assigneeSearchQuery.toLowerCase())
+                        )
+                        .map((user) => (
+                          <label
+                            key={user.id}
+                            className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={selectedAssignees.includes(user.id)}
+                              onChange={() => handleAssigneeSelection(user.id)}
+                              className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                            />
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-medium text-gray-900 truncate">
+                                {user.name}
+                              </div>
+                              <div className="text-sm text-gray-500 truncate">
+                                {user.email}
+                              </div>
+                            </div>
+                          </label>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            {/* Assigned On Sorting */}
+            <div
+              className="col-span-1 flex items-center gap-2 cursor-pointer"
+              onClick={() => handleSort("created_at")}
+            >
+              Assigned on
+              {sortColumn === "created_at" &&
+                (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
+            </div>
+
+            {/* Due Date Sorting */}
+            <div
+              className="col-span-1 flex items-center gap-2 cursor-pointer"
+              onClick={() => handleSort("deadline")}
+            >
+              Due Date
+              {sortColumn === "deadline" &&
+                (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
+            </div>
+            <div className="col-span-1">Attachment</div>
+          </div>
+
+          {/* Modified Table Body */}
+          <div className="divide-y divide-gray-200 overflow-y-auto flex-1">
+            {tasks.map((task) => (
+              <div
+                key={task.id}
+                className="grid grid-cols-9 gap-4 px-6 py-4 hover:bg-gray-50"
+              >
+                <div className="col-span-3 flex items-center gap-4">
+                  <input
+                    type="checkbox"
+                    checked={selectedTasks.includes(task.id)}
+                    onChange={() => handleRowSelection(task.id)}
+                    className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${
+                      activeTab === "for_review" ? "" : "opacity-0"
+                    }`}
+                    disabled={activeTab !== "for_review"}
+                  />
+                  <span
+                    className="text-blue-600 truncate cursor-pointer w-[30vw]"
+                    onClick={() => handleTaskClick(task)}
+                  >
+                    {task.task_name}
+                  </span>
+                </div>
+                <div className="col-span-1 flex items-center space-x-2">
+                  <span
+                    className={`h-2 w-2 rounded-full ${getStatusBadgeClasses(
+                      task.task_status
+                    )}`}
+                  />
+                  <span className="text-gray-900 font-semibold">
+                    {getStatusLabel(task.task_status)}
+                  </span>
+                </div>
+                <div className="col-span-2">
+                  <div className="text-gray-900 font-semibold">
+                    {task.assign_to_user_name}
+                  </div>
+                  <div className="text-gray-500 text-sm">
+                    {task.assign_to_email}
+                  </div>
+                </div>
+                <div className="col-span-1 text-gray-500">
+                  <Moment format="DD/MM/YYYY">{task.assigned_date}</Moment>
+                </div>
+                <div className="col-span-1 text-gray-500">
+                  <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
+                </div>
+                <div
+                  className={`col-span-1 ${
+                    task.file_data?.name ? "text-blue-500" : "text-gray-400"
+                  } flex items-start justify-start gap-1`}
+                >
+                  <span>
+                    {task.file_data?.name && (
+                      <MdFilePresent className="text-2xl text-green-500" />
+                    )}
+                  </span>{" "}
+                  <span>{task.file_data?.name || "No attachment"}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      </div>
-    
 
-      <div className=" xl:hidden">
-  <table className="w-full table-auto">
-    <thead>
-      <tr className="text-sm font-medium text-gray-500 border-b border-gray-200">
-        <th className="">
-          <input
-            type="checkbox"
-            checked={selectedTasks.length === tasks.length}
-            onChange={handleSelectAllVisible}
-            className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${activeTab === "for_review" ? "" : "opacity-0"}`}
-            disabled={activeTab !== "for_review"}
-          />
-          <div className="" onClick={() => handleSort("task_name")}>
-            Tasks
-            {sortColumn === "task_name" &&
-              (sortOrder === "asc" ? (
-                <FiChevronUp />
-              ) : sortOrder === "desc" ? (
-                <FiChevronDown />
-              ) : (
-                <LuChevronsUpDown />
-              ))}
-          </div>
-        </th>
-        <th className="" ref={statusFilterRef}>
-          <div className="flex items-center gap-2">
-            Status
-            <button onClick={() => setIsStatusFilterOpen(!isStatusFilterOpen)} className="hover:bg-gray-100 p-1 rounded">
-              <MdFilterList className="w-4 h-4" />
-            </button>
-          </div>
-          {/* Status Filter Popover */}
-          {isStatusFilterOpen && <StatusFilterModal />}
-        </th>
-        <th className="" ref={assigneeFilterRef}>
-          <div className="flex items-center gap-2">
-            Assignee
-            <button onClick={() => setIsAssigneeFilterOpen(!isAssigneeFilterOpen)} className="hover:bg-gray-100 p-1 rounded">
-              <MdFilterList className="w-4 h-4" />
-            </button>
-          </div>
-          {/* Assignee Filter Popover */}
-          {isAssigneeFilterOpen && (
-            <div className="absolute z-10 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
-              <div className="p-4">
-                <h3 className="text-sm font-medium text-gray-900 mb-3">Filter by Assignee</h3>
-                {/* Search input */}
-                <div className="relative mb-3">
+      <div className="overflow-x-auto xl:hidden">
+        <table className="min-w-full table-fixed">
+          <thead>
+            <tr className="text-sm font-medium text-gray-500 border-b border-gray-200 bg-gray-50">
+              <th className="w-1/4 px-4 py-3 text-left">
+                <div className="flex items-center space-x-2">
                   <input
-                    type="text"
-                    placeholder="Search assignees..."
-                    className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-md"
-                    value={assigneeSearchQuery}
-                    onChange={(e) => setAssigneeSearchQuery(e.target.value)}
+                    type="checkbox"
+                    checked={selectedTasks.length === tasks.length}
+                    onChange={handleSelectAllVisible}
+                    className={`w-4 h-4 text-blue-600 border-gray-300 rounded ${
+                      activeTab === "for_review" ? "" : "opacity-0"
+                    }`}
+                    disabled={activeTab !== "for_review"}
                   />
-                  <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <span
+                    onClick={() => handleSort("task_name")}
+                    className="cursor-pointer flex items-center gap-1"
+                  >
+                    Tasks
+                    {sortColumn === "task_name" &&
+                      (sortOrder === "asc" ? (
+                        <FiChevronUp />
+                      ) : sortOrder === "desc" ? (
+                        <FiChevronDown />
+                      ) : (
+                        <LuChevronsUpDown />
+                      ))}
+                  </span>
                 </div>
-                {/* Assignee list */}
-                <div className="space-y-2 max-h-60 overflow-y-auto">
-                  {users
-                    .filter(
-                      (user) =>
-                        user.username.toLowerCase().includes(assigneeSearchQuery.toLowerCase()) ||
-                        user.email.toLowerCase().includes(assigneeSearchQuery.toLowerCase())
-                    )
-                    .map((user) => (
-                      <label key={user.id} className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={selectedAssignees.includes(user.id)}
-                          onChange={() => handleAssigneeSelection(user.id)}
-                          className="w-4 h-4 text-blue-600 rounded border-gray-300"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <div className="text-sm font-medium text-gray-900 truncate">{user.name}</div>
-                          <div className="text-sm text-gray-500 truncate">{user.email}</div>
-                        </div>
-                      </label>
-                    ))}
-                </div>
-              </div>
-            </div>
-          )}
-        </th>
-        <th className="col-span-1 px-6 py-4 text-gray-500 cursor-pointer" onClick={() => handleSort("created_at")}>
-          Assigned on
-          {sortColumn === "created_at" &&
-            (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
-        </th>
-        <th className="col-span-1 px-6 py-4 text-gray-500 cursor-pointer" onClick={() => handleSort("deadline")}>
-          Due Date
-          {sortColumn === "deadline" && (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
-        </th>
-        <th className="col-span-1 px-6 py-4">Attachment</th>
-      </tr>
-    </thead>
+              </th>
 
-    <tbody className="divide-y divide-gray-200 overflow-y-auto">
-      {tasks.map((task) => (
-        <tr key={task.id} className="hover:bg-gray-50">
-          <td className="col-span-3 flex items-center gap-4 px-6 py-4">
-            <input
-              type="checkbox"
-              checked={selectedTasks.includes(task.id)}
-              onChange={() => handleRowSelection(task.id)}
-              className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${activeTab === "for_review" ? "" : "opacity-0"}`}
-              disabled={activeTab !== "for_review"}
-            />
-            <span className="text-blue-600 truncate cursor-pointer w-[30vw]" onClick={() => handleTaskClick(task)}>
-              {task.task_name}
-            </span>
-          </td>
-          <td className="col-span-1 flex items-center space-x-2 px-6 py-4">
-            <span className={`h-2 w-2 rounded-full ${getStatusBadgeClasses(task.task_status)}`} />
-            <span className="text-gray-900 font-semibold">{getStatusLabel(task.task_status)}</span>
-          </td>
-          <td className="col-span-2 px-6 py-4">
-            <div className="text-gray-900 font-semibold">{task.assign_to_user_name}</div>
-            <div className="text-gray-500 text-sm">{task.assign_to_email}</div>
-          </td>
-          <td className="col-span-1 text-gray-500 px-6 py-4">
-            <Moment format="DD/MM/YYYY">{task.assigned_date}</Moment>
-          </td>
-          <td className="col-span-1 text-gray-500 px-6 py-4">
-            <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
-          </td>
-          <td className={`col-span-1 ${task.file_data?.name ? "text-blue-500" : "text-gray-400"} flex items-start justify-start gap-1 px-6 py-4`}>
-            <span>
-              {task.file_data?.name && <MdFilePresent className="text-2xl text-green-500" />}
-            </span>
-            <span>{task.file_data?.name || "No attachment"}</span>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+              <th className="w-1/6 px-4 py-3 text-left">
+                <div className="relative" ref={statusFilterRef}>
+                  <div className="flex items-center gap-2">
+                    Status
+                    <button
+                      onClick={() => setIsStatusFilterOpen(!isStatusFilterOpen)}
+                      className="hover:bg-gray-100 p-1 rounded"
+                    >
+                      <MdFilterList className="w-4 h-4" />
+                    </button>
+                  </div>
+                  {isStatusFilterOpen && (
+                    <div className="absolute z-10 mt-2 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
+                      <StatusFilterModal />
+                    </div>
+                  )}
+                </div>
+              </th>
+
+              <th className="w-1/4 px-4 py-3 text-left" ref={assigneeFilterRef}>
+                <div className="flex items-center gap-2">
+                  Assignee
+                  <button
+                    onClick={() =>
+                      setIsAssigneeFilterOpen(!isAssigneeFilterOpen)
+                    }
+                    className="hover:bg-gray-100 p-1 rounded"
+                  >
+                    <MdFilterList className="w-4 h-4" />
+                  </button>
+                </div>
+                {isAssigneeFilterOpen && (
+                  <div className="absolute z-10 mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
+                    <div className="p-4">
+                      <h3 className="text-sm font-medium text-gray-900 mb-3">
+                        Filter by Assignee
+                      </h3>
+                      <div className="relative mb-3">
+                        <input
+                          type="text"
+                          placeholder="Search assignees..."
+                          className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-md"
+                          value={assigneeSearchQuery}
+                          onChange={(e) =>
+                            setAssigneeSearchQuery(e.target.value)
+                          }
+                        />
+                        <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      </div>
+                      <div className="space-y-2 max-h-60 overflow-y-auto">
+                        {users
+                          .filter(
+                            (user) =>
+                              user.username
+                                .toLowerCase()
+                                .includes(assigneeSearchQuery.toLowerCase()) ||
+                              user.email
+                                .toLowerCase()
+                                .includes(assigneeSearchQuery.toLowerCase())
+                          )
+                          .map((user) => (
+                            <label
+                              key={user.id}
+                              className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={selectedAssignees.includes(user.id)}
+                                onChange={() =>
+                                  handleAssigneeSelection(user.id)
+                                }
+                                className="w-4 h-4 text-blue-600 border-gray-300 rounded"
+                              />
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-medium text-gray-900 truncate">
+                                  {user.name}
+                                </div>
+                                <div className="text-sm text-gray-500 truncate">
+                                  {user.email}
+                                </div>
+                              </div>
+                            </label>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </th>
+
+              <th
+                className="w-1/6 px-4 py-3 text-left cursor-pointer"
+                onClick={() => handleSort("created_at")}
+              >
+                Assigned on
+                {sortColumn === "created_at" &&
+                  (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
+              </th>
+
+              <th
+                className="w-1/6 px-4 py-3 text-left cursor-pointer"
+                onClick={() => handleSort("deadline")}
+              >
+                Due Date
+                {sortColumn === "deadline" &&
+                  (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
+              </th>
+
+              <th className="w-1/6 px-4 py-3 text-left">Attachment</th>
+            </tr>
+          </thead>
+
+          <tbody className="divide-y divide-gray-200">
+            {tasks.map((task) => (
+              <tr key={task.id} className="hover:bg-gray-50">
+                <td className="px-4 py-4">
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      checked={selectedTasks.includes(task.id)}
+                      onChange={() => handleRowSelection(task.id)}
+                      className={`w-4 h-4 text-blue-600 border-gray-300 rounded ${
+                        activeTab === "for_review" ? "" : "opacity-0"
+                      }`}
+                      disabled={activeTab !== "for_review"}
+                    />
+                    <span
+                      className="text-blue-600 truncate cursor-pointer text-[12px]"
+                      onClick={() => handleTaskClick(task)}
+                    >
+                      {task.task_name}
+                    </span>
+                  </div>
+                </td>
+
+                <td className="px-4 py-4">
+                  <div className="flex items-center space-x-2">
+                    <span
+                      className={`h-2 w-2 rounded-full ${getStatusBadgeClasses(
+                        task.task_status
+                      )}`}
+                    />
+                    <span className="text-gray-900 font-semibold text-[12px]">
+                      {getStatusLabel(task.task_status)}
+                    </span>
+                  </div>
+                </td>
+
+                <td className="px-4 py-4">
+                  <div className="text-gray-900 font-semibold text-[12px]">
+                    {task.assign_to_user_name}
+                  </div>
+                  <div className="text-gray-500 text-[12px]">
+                    {task.assign_to_email}
+                  </div>
+                </td>
+
+                <td className="px-4 py-4 text-gray-500 text-[12px]">
+                  <Moment format="DD/MM/YYYY">{task.assigned_date}</Moment>
+                </td>
+
+                <td className="px-4 py-4 text-gray-500 text-[12px]">
+                  <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
+                </td>
+
+                <td className="px-4 py-4 flex items-center gap-2 text-[12px]">
+                  {task.file_data?.name ? (
+                    <>
+                      <MdFilePresent className="text-2xl text-green-500" />
+                      <span className="text-blue-500 truncate">
+                        {task.file_data.name}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-gray-400">No attachment</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Pagination */}
       <div className="flex items-center justify-center gap-6 mt-4">

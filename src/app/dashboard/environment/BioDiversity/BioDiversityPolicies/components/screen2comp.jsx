@@ -11,12 +11,13 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import TextareaWidgetnew from '../../../../../shared/widgets/Textarea/TextAreaWidget5';
+import RichTextAreaWidget from '../../../../../shared/widgets/Textarea/richTextArea'
 
 const widgets = {
-  TextareaWidgetnew:TextareaWidgetnew
+  RichTextAreaWidget:RichTextAreaWidget
 };
 
-const view_path = "gri-economic-public_legal_cases-205-3d";
+const view_path = "gri-environment-biodiversity-101-1b-scope_of_policy_application";
 const client_id = 1;
 const user_id = 1;
 
@@ -44,7 +45,7 @@ const schema = {
           "Report the extent to which organisation's biodiversity policies or commitments apply to the organization’s activities and to its business relationships. Note: If the policies or commitments apply to only some of the organization’s activities (e.g., they apply only to entities located in certain countries or to certain subsidiaries) or to some of its business relationships (e.g., they apply only to suppliers), then mention activities and business relationships for which the policies or commitments apply.",
         "ui:titlediplay": "block",
         "ui:titletooltipdisplay": "block",
-        "ui:widget": "TextareaWidgetnew",
+        "ui:widget": "RichTextAreaWidget",
         "ui:options": {
           label: false,
         },
@@ -76,12 +77,7 @@ const Screen2comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-    }
-
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
 
   const updateFormData = async () => {
@@ -154,29 +150,29 @@ const Screen2comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
       LoaderClose();
     }
   };
-//   useEffect(() => {
-//     if (selectedOrg && year && togglestatus) {
-//       if (togglestatus === "Corporate" && selectedCorp) {
-//         loadFormData();
-//       } else if (togglestatus === "Corporate" && !selectedCorp) {
-//         setFormData([{}]);
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});
-//       } else {
-//         loadFormData();
-//       }
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
 
-//       toastShown.current = false;
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true;
-//       }
-//     }
-//   }, [selectedOrg, year, selectedCorp, togglestatus]);
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -222,8 +218,8 @@ const Screen2comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
         </div> */}
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

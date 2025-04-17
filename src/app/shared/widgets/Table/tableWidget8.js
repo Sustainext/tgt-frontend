@@ -22,6 +22,7 @@ const CustomOptionnew = ({ children, ...props }) => {
         alignItems: "center",
 
         textAlign: "left",
+        cursor:'pointer'
       }}
     >
       <input
@@ -89,13 +90,15 @@ const CustomTableWidget8 = ({
   const locationOptions = locationdata.map((loc) => ({
     value: loc.location_name,
     label: loc.location_name,
-  }));
 
+  }));
+  console.log(locationdata,"test value");
   const updateField = (index, key, newValue) => {
     const updatedRows = localData.map((row, rowIndex) =>
       rowIndex === index ? { ...row, [key]: newValue } : row
     );
     setLocalData(updatedRows);
+    console.log(index, key, newValue,"test data");
   };
 
   const syncWithParent = () => {

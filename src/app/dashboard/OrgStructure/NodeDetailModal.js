@@ -6,7 +6,6 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/app/utils/toastUtils";
 
-
 const NodeDetailModal = ({
   isOpen,
   onClose,
@@ -115,7 +114,7 @@ const NodeDetailModal = ({
           timezone: details.timezone,
           employeecount: details.employeecount,
           language: details.language,
-          corporate_data:details.corporate_data,
+          corporate_data: details.corporate_data,
           revenue: details.revenue,
           street: details.streetaddress,
           country: details.country,
@@ -191,7 +190,7 @@ const NodeDetailModal = ({
       onClose();
       setTimeout(() => {
         window.location.reload();
-      }, 1000)
+      }, 1000);
     } catch (error) {
       showToast("Failed to delete entity", "error");
       console.error(
@@ -278,10 +277,10 @@ const NodeDetailModal = ({
 
   return (
     <>
-      <div className="fixed right-0 top-[5rem] z-50 flex justify-end border border-gray-300 rounded-xl h-[110vh]">
+      <div className="fixed xl:right-0 right-2 top-[5rem] z-50 xl:flex xl:justify-end border border-gray-300 rounded-xl h-[110vh]">
         <div
           ref={modalRef}
-          className="w-[480px] bg-white shadow-xl h-full overflow-y-auto"
+          className=" bg-white shadow-xl h-full overflow-y-auto xl:w-[100%] w-[120vw] "
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b">
@@ -408,9 +407,7 @@ const NodeDetailModal = ({
                     Employee Count
                   </label>
                   <p className="text-sm text-gray-900">
-                    {details.employeecount ||
-                      details.no_of_employees ||
-                      0}
+                    {details.employeecount || details.no_of_employees || 0}
                   </p>
                 </div>
                 <div>
@@ -459,14 +456,13 @@ const NodeDetailModal = ({
                     </p>
                   </div>
                   {nodeType === "location" && (
-                     <div>
-                     <label className="text-sm text-gray-600">Zip Code</label>
-                     <p className="text-sm text-gray-900">
-                       {details.zipCode || details.zipcode || "-"}
-                     </p>
-                   </div>
+                    <div>
+                      <label className="text-sm text-gray-600">Zip Code</label>
+                      <p className="text-sm text-gray-900">
+                        {details.zipCode || details.zipcode || "-"}
+                      </p>
+                    </div>
                   )}
-                 
                 </div>
               </div>
             </div>

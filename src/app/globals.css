@@ -63,6 +63,20 @@
 body{
   box-sizing: border-box;
 }
+@media (max-width: 768px) {
+  .Toastify__toast-container {
+    width: 124vw;
+    left: env(safe-area-inset-left);
+    margin: 0;
+  }
+  .Toastify__toast {
+    --toastify-toast-width: 100%;
+    margin-bottom: 0;
+    border-radius: 0;
+    top: 18px;
+  
+  }
+}
 button,
 input,
 optgroup,
@@ -203,6 +217,10 @@ h1,h2,h3,h4,h5,h6,p,div {
     .modal-content-custom {
    
       width: 80%;
+    }
+    .modal-content {
+
+      width: 95%;
     }
   }
   .modal-content-custom-width {

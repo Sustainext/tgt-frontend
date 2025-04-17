@@ -19,7 +19,7 @@ const BenefitTable = ({ locationdata, data }) => {
         className="w-full rounded-lg border-x border-t border-gray-300 "
         style={{ borderCollapse: "separate", borderSpacing: 0 }}
       >
-        <thead className="block md:table-header-group border sticky top-0 z-100  bg-white ">
+        <thead className=" md:table-header-group border sticky top-0 z-100  bg-white ">
           <tr className="gradient-background ">
             {/* Static header for "Significant location of operation" */}
             <th
@@ -56,7 +56,7 @@ const BenefitTable = ({ locationdata, data }) => {
             locationdata.map((location, rowIndex) => (
               <tr key={rowIndex}>
                 {/* First column will show the location name */}
-                <td className="px-6 py-4 border-b border-gray-200 text-gray-700 bg-white z-10 text-[12px] font-medium">
+                <td className="px-6 py-4 border-b border-gray-200 text-gray-700 bg-white z-10 text-[12px] font-medium w-[20px]">
                   {location.location_name}
                 </td>
   

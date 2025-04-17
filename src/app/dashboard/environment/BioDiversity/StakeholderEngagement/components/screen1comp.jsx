@@ -16,7 +16,7 @@ const widgets = {
   MultiselectTableWidget: MultiselectTableWidget,
 };
 
-const view_path = "gri-social-ohs-403-2a-process_for_hazard-new";
+const view_path = "gri-environment-biodiversity-101-2d-significant_biodivesity_impacts";
 const client_id = 1;
 const user_id = 1;
 
@@ -94,6 +94,7 @@ const Screen1comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const [locationData,setLocationdata]=useState([])
 
 
+
   const fetchloctiondata = async () => {
       setLocationdata();
       LoaderOpen();
@@ -126,7 +127,8 @@ const Screen1comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -180,8 +182,8 @@ const Screen1comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const loadFormData = async () => {
     console.log("loadFormData screen 2");
     LoaderOpen();
-    setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    // setFormData(initialFormData);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -198,7 +200,7 @@ const Screen1comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   useEffect(() => {
      if (selectedOrg && year && togglestatus) {
        if (togglestatus === "Corporate" && selectedCorp) {
-        //  loadFormData();
+         loadFormData();
          fetchloctiondata()
        } else if (togglestatus === "Corporate" && !selectedCorp) {
          setFormData([{}]);
@@ -220,7 +222,7 @@ const Screen1comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -256,11 +258,10 @@ const Screen1comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
 
         
         </div> */}
-        {Array.isArray(locationData) && locationData.length > 0 ? (
-        <div className="mx-2">
+         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -276,11 +277,6 @@ const Screen1comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
             }}
           />
         </div>
-        ):(
-<div className="mx-2">
-
-</div>
-        )}
 
         <div className="mt-4">
           <button
