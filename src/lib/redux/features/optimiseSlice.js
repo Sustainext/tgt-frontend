@@ -115,33 +115,30 @@ const optimiseSlice = createSlice({
     toggleMetric: (state, action) => {
       const metricId = action.payload;
       
-      // Simply toggle the boolean value of the metric
-      state[metricId] = !state[metricId];
+      // Toggle the boolean value of the metric
+      state.selectedMetrics[metricId] = !state.selectedMetrics[metricId];
       
-      // If metric was toggled on, initialize data if needed
-      if (state[metricId] && !state[`${metricId}_data`]) {
-        state[`${metricId}_data`] = {};
-      }
+      // Update weightages when a metric is toggled
+      const activeMetrics = Object.keys(state.selectedMetrics)
+        .filter(key => state.selectedMetrics[key]);
       
-      // Update weightages whenever a metric is toggled
-      const activeMetrics = ['fte', 'area', 'productionVolume', 'revenue'].filter(m => state[m]);
-      const metricCount = activeMetrics.length;
+      const count = activeMetrics.length;
       
-      if (metricCount > 0) {
+      if (count > 0) {
         // Calculate equal weightage distribution
-        const equalWeight = parseFloat((1 / metricCount).toFixed(2));
+        const equalWeight = parseFloat((1 / count).toFixed(2));
         
-        // Update weightages for all metrics
+        // Create new weightages object
+        const newWeightages = {};
         activeMetrics.forEach(metric => {
-          state[`${metric}_weightage`] = equalWeight;
+          newWeightages[metric] = equalWeight;
         });
         
-        // Set weightages for inactive metrics to 0
-        ['fte', 'area', 'productionVolume', 'revenue']
-          .filter(m => !state[m])
-          .forEach(metric => {
-            state[`${metric}_weightage`] = 0;
-          });
+        // Update state
+        state.metricsWeightages = newWeightages;
+      } else {
+        // If no metrics are selected, clear weightages
+        state.metricsWeightages = {};
       }
     },
     setMetricWeightages: (state, action) => {
@@ -149,6 +146,9 @@ const optimiseSlice = createSlice({
     },
     updateMetricData: (state, action) => {
       const { metricId, data } = action.payload;
+      if (!state.metricsData[metricId]) {
+        state.metricsData[metricId] = {};
+      }
       state.metricsData[metricId] = {
         ...state.metricsData[metricId],
         ...data
@@ -180,7 +180,7 @@ const optimiseSlice = createSlice({
       })
       .addCase(fetchScenarioById.rejected, (state, action) => {
         state.loading.scenario = false;
-        state.error.scenario = action.payload;
+        state.error.scenario = action.payload || 'Failed to fetch scenario';
       })
       
       // Fetch scenario metrics
@@ -190,36 +190,44 @@ const optimiseSlice = createSlice({
       })
       .addCase(fetchScenarioMetrics.fulfilled, (state, action) => {
         state.loading.metrics = false;
-        state.metricsData = action.payload;
         
-        // Update selected metrics based on API response
-        const newSelectedMetrics = { ...state.selectedMetrics };
-        Object.keys(state.selectedMetrics).forEach(metric => {
-          if (action.payload[metric] !== undefined) {
-            newSelectedMetrics[metric] = Boolean(action.payload[metric]);
-          }
-        });
-        state.selectedMetrics = newSelectedMetrics;
-        
-        // Extract weightages from response
+        // Extract metrics data from API response
+        const metricsData = {};
+        const selectedMetrics = { ...initialState.selectedMetrics };
         const weightages = {};
+        
+        // Process each key in the API response
         Object.keys(action.payload).forEach(key => {
-          if (key.endsWith('_weightage')) {
+          // Handle main metric toggles (e.g., "fte", "area")
+          if (key in selectedMetrics) {
+            selectedMetrics[key] = Boolean(action.payload[key]);
+          }
+          // Handle metric data (e.g., "fte_data")
+          else if (key.endsWith('_data')) {
+            const metricId = key.replace('_data', '');
+            metricsData[metricId] = action.payload[key] || {};
+          }
+          // Handle weightages (e.g., "fte_weightage")
+          else if (key.endsWith('_weightage')) {
             const metricId = key.replace('_weightage', '');
             weightages[metricId] = action.payload[key];
           }
         });
         
+        // Update state with extracted data
+        state.selectedMetrics = selectedMetrics;
+        state.metricsData = metricsData;
+        
+        // If weightages were provided in the response, use them; otherwise calculate equal weights
         if (Object.keys(weightages).length > 0) {
           state.metricsWeightages = weightages;
         } else {
-          // If no weightages in response, calculate equal distribution
-          state.metricsWeightages = calculateEqualWeightages(newSelectedMetrics);
+          state.metricsWeightages = calculateEqualWeightages(selectedMetrics);
         }
       })
       .addCase(fetchScenarioMetrics.rejected, (state, action) => {
         state.loading.metrics = false;
-        state.error.metrics = action.payload;
+        state.error.metrics = action.payload || 'Failed to fetch metrics data';
       })
       
       // Update scenario metrics
@@ -230,11 +238,22 @@ const optimiseSlice = createSlice({
       .addCase(updateScenarioMetrics.fulfilled, (state, action) => {
         state.loading.metrics = false;
         
-        // Update state with new values from response
+        // Update state based on API response
         Object.keys(action.payload).forEach(key => {
           // Handle metric toggles
-          if (Object.keys(state.selectedMetrics).includes(key)) {
+          if (key in state.selectedMetrics) {
             state.selectedMetrics[key] = Boolean(action.payload[key]);
+          }
+          // Handle metric data
+          else if (key.endsWith('_data')) {
+            const metricId = key.replace('_data', '');
+            if (!state.metricsData[metricId]) {
+              state.metricsData[metricId] = {};
+            }
+            state.metricsData[metricId] = {
+              ...state.metricsData[metricId],
+              ...action.payload[key]
+            };
           }
           // Handle weightages
           else if (key.endsWith('_weightage')) {
@@ -244,16 +263,11 @@ const optimiseSlice = createSlice({
             }
             state.metricsWeightages[metricId] = action.payload[key];
           }
-          // Handle data
-          else if (key.endsWith('_data')) {
-            const metricId = key.replace('_data', '');
-            state.metricsData[metricId] = action.payload[key];
-          }
         });
       })
       .addCase(updateScenarioMetrics.rejected, (state, action) => {
         state.loading.metrics = false;
-        state.error.metrics = action.payload;
+        state.error.metrics = action.payload || 'Failed to update metrics';
       })
       
       // Fetch scenario activities
@@ -263,11 +277,11 @@ const optimiseSlice = createSlice({
       })
       .addCase(fetchScenarioActivities.fulfilled, (state, action) => {
         state.loading.activities = false;
-        state.selectedActivities = action.payload;
+        state.selectedActivities = action.payload || [];
       })
       .addCase(fetchScenarioActivities.rejected, (state, action) => {
         state.loading.activities = false;
-        state.error.activities = action.payload;
+        state.error.activities = action.payload || 'Failed to fetch activities';
       })
       
       // Update scenario activities
@@ -277,11 +291,11 @@ const optimiseSlice = createSlice({
       })
       .addCase(updateScenarioActivities.fulfilled, (state, action) => {
         state.loading.activities = false;
-        state.selectedActivities = action.payload;
+        state.selectedActivities = action.payload || [];
       })
       .addCase(updateScenarioActivities.rejected, (state, action) => {
         state.loading.activities = false;
-        state.error.activities = action.payload;
+        state.error.activities = action.payload || 'Failed to update activities';
       });
   }
 });
