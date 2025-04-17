@@ -114,6 +114,7 @@ const Screen2 = ({location, year}) => {
     setFormData(e.formData);
   };
 
+
   const updateFormData = async () => {
     const data = {
       client_id: client_id,

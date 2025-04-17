@@ -108,7 +108,7 @@ const ManagementOfBiodiversityImpact = ({ apiData, isSidepanelOpen,setMobileopen
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Synergies, Trade-offs & Stakeholder Engagement
+          Management of Biodiversity Impacts
             {/* <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="This section documents data corresponding to the organisation's policies or commitments to halt and reverse biodiversity loss."

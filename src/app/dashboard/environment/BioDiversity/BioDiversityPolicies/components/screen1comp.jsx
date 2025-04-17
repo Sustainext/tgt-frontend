@@ -24,7 +24,7 @@ const widgets = {
   TextareaWidgetnew:TextareaWidgetnew
 };
 
-const view_path = "gri-economic-public_legal_cases-205-3d";
+const view_path = "gri-environment-biodiversity-101-1a-biodiversity_policy_committments";
 const client_id = 1;
 const user_id = 1;
 
@@ -107,7 +107,7 @@ const schema = {
       "ui:order": ["Q1", "Q2", "Q3", "Q4", "Q5"],
       Q1: {
         "ui:title": "Does the organization have a formal biodiversity policy or commitments?",
-        "ui:tooltip": "Indicate whether the organisation has a formal biodiversity policy or commitment.",
+        "ui:tooltip": "Indicate whether the organisation have a formal biodiversity policy or commitment to halt and reverse biodiversity loss.",
         "ui:tooltipdisplay": "block",
         "ui:titledisplay": "block",
         "ui:widgetType": "radio",
@@ -134,8 +134,8 @@ const schema = {
         },
       },
       Q3: {
-        "ui:title": "Are the organization's policies aligned with the 2050 Goals and 2030 Targets?",
-        "ui:tooltip": "Indicate if policies align with Global Biodiversity Framework.",
+        "ui:title": "Are the organization's policies or commitments aligned with the 2050 Goals and 2030 Targets of the Kunming-Montreal Global Biodiversity Framework?",
+        "ui:tooltip": "Indicate whether organisation's policies or commitments to halt and reverse biodiversity loss are informed by the 2050 Goals and 2030 Targets in the e Kunming-Montreal Global Biodiversity Framework.",
        "ui:tooltipdisplay": "block",
         "ui:titledisplay": "block",
         "ui:widgetType": "radio",
@@ -197,12 +197,8 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-    }
 
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
 
   const updateFormData = async () => {
@@ -275,29 +271,29 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
       LoaderClose();
     }
   };
-//   useEffect(() => {
-//     if (selectedOrg && year && togglestatus) {
-//       if (togglestatus === "Corporate" && selectedCorp) {
-//         loadFormData();
-//       } else if (togglestatus === "Corporate" && !selectedCorp) {
-//         setFormData([{}]);
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});
-//       } else {
-//         loadFormData();
-//       }
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
 
-//       toastShown.current = false;
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true;
-//       }
-//     }
-//   }, [selectedOrg, year, selectedCorp, togglestatus]);
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -343,8 +339,8 @@ const Screen1comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
         </div> */}
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

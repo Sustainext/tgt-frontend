@@ -16,7 +16,7 @@ const DynamicTable2 = ({ data, columns }) => {
               <th
                 key={column}
                 className={`px-2 py-3  text-[#727272]  md:table-cell text-[12px] ${
-                  column === 'Percentage of suppliers screened using social criteria' ? 'text-center' : 'text-left'
+                  column === 'Percentage of suppliers screened using social criteria' ? 'text-center' : 'text-center'
                 }`}
               >
                 {column}
