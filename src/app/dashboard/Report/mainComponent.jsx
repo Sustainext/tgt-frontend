@@ -137,7 +137,7 @@ const Report = () => {
 
   const handleOwnershipRatioChange = (index, value) => {
     const newValue = Number(value);
-    if (newValue >= 0 && newValue <= 99) {
+    if (newValue >= 0 && newValue <= 100) {
       const newEntities = [...entities];
       newEntities[index].ownershipRatio = newValue;
       setEntities(newEntities);
@@ -947,7 +947,7 @@ const Report = () => {
                                     htmlFor={entity.id}
                                     className="text-gray-800 text-[13px] cursor-pointer"
                                     data-tooltip-id={`tooltip-${index}`}
-                        data-tooltip-html={`${!entity.emission_data?'<p>No data available for the selected corporate</p>':''}`}
+                        data-tooltip-html={`${!entity.emission_data?'<p>No data available for the selected Reporting period</p>':''}`}
                                   >
                                     {entity.name}
                                   </label>
