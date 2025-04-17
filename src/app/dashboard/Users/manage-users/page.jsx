@@ -345,10 +345,10 @@ const ManageUsers = () => {
                       }}
                     />
                     <MdSearch
-                      className="absolute left-0 top-1/2 -translate-y-1/2"
+                      className={`absolute left-0 top-1/2 -translate-y-1/2      ${searchFocus || searchTerm ? "left-[12rem] md:left-[17rem]" : "left-[0.625rem] "} `}
                       style={{
                         transition: "left 300ms",
-                        left: searchFocus || searchTerm ? "17rem" : "0.625rem",
+                        // left: searchFocus || searchTerm ? "17rem" : "0.625rem",
                         top: "1.1rem",
                       }}
                     />
