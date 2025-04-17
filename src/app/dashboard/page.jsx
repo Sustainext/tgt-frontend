@@ -10,8 +10,7 @@ import {
 import { useDispatch } from "react-redux";
 import TasksPage from "./Home/Tasks";
 import axiosInstance from "../utils/axiosMiddleware";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -55,13 +54,15 @@ const Dashboard = () => {
 
   return (
     <>
-     <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
+    
       <div>
+     
         <div className="xl:ms-6">
           <div
             className="my-4 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed"
             translate="no"
           >
+           
             Sustainext HQ
           </div>
 
