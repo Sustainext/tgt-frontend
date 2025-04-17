@@ -37,7 +37,7 @@ const [notified,setNotified]=useState(false)
       {isNotifyModalOpen && (
         <div className="modal-overlay z-50 mt-5">
           <div className="modal-center">
-            <div className="bg-white rounded-lg shadow-md w-[45%] h-fit">
+            <div className="bg-white rounded-lg shadow-md xl:w-[45%] h-fit mx-2">
                <div className="w-full shadow-md px-5 py-3">
                <div>
                       <button 
