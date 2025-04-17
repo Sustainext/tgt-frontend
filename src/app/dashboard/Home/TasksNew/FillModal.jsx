@@ -44,7 +44,7 @@ const FillModal = ({
     if (!isOpen || !taskassigndata) return null;
 
   return (
-    <div className="fixed inset-0 top-10 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 xl:top-10  z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-4 rounded-lg shadow-lg w-[375px] h-[600px] overflow-y-auto table-scrollbar">
         <div className="mb-4">
           <div className="flex justify-between">

@@ -21,7 +21,7 @@ const DynamicTable2 = ({ data = [], columns }) => {
             ))}
           </tr>
         </thead>
-        <tbody className="block md:table-row-group">
+        <tbody className="md:table-row-group">
           {isEmptyData ? (
             <tr className="border border-gray-300 md:table-row">
               <td

@@ -25,11 +25,21 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
   });
 
   const datePickerRef = useRef(null); // Reference for click outside handling
-
+  const [isMobile, setIsMobile] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
   // Close picker when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (datePickerRef.current && !datePickerRef.current.contains(event.target)) {
+      if (
+        datePickerRef.current &&
+        !datePickerRef.current.contains(event.target)
+      ) {
         onDateChange({
           type: filterType,
           start: range.start ? format(range.start, "yyyy-MM-dd") : null,
@@ -76,7 +86,9 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
       >
         &lt;
       </button>
-      <span className="font-semibold text-sm">{format(month, "MMMM yyyy")}</span>
+      <span className="font-semibold text-sm">
+        {format(month, "MMMM yyyy")}
+      </span>
       <button
         onClick={() => setMonth(addMonths(month, 1))}
         className="px-2 py-1 hover:bg-gray-100 rounded"
@@ -151,89 +163,193 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
   };
 
   return (
-    <div className="relative w-[40vw]" ref={datePickerRef}>
-      <div className="absolute z-10 mt-2 p-4 bg-white border shadow-md rounded-md w-full">
-        {/* Header */}
-        <div className="flex items-center justify-between pb-2">
-          <div className="flex items-center gap-1">
-            <FiFilter className="text-blue-500" />
-            <span className="font-semibold text-md">Filter by Date</span>
+    <>
+      <div className="relative w-[40vw] hidden xl:block" ref={datePickerRef}>
+        <div className="absolute z-10 mt-2 p-4 bg-white border shadow-md rounded-md w-full">
+          {/* Header */}
+          <div className="flex items-center justify-between pb-2">
+            <div className="flex items-center gap-1">
+              <FiFilter className="text-blue-500" />
+              <span className="font-semibold text-md">Filter by Date</span>
+            </div>
           </div>
-        </div>
 
-        {/* Filter Type Selection */}
-        <div className="flex justify-between items-center text-sm mb-8 mt-2 text-gray-700">
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="filterType"
-              value="assigned"
-              checked={filterType === "assigned"}
-              onChange={() => setFilterType("assigned")}
-            />
-            Filter tasks by Assigned Date
-          </label>
-          <label className="flex items-center gap-2 mr-12">
-            <input
-              type="radio"
-              name="filterType"
-              value="due"
-              checked={filterType === "due"}
-              onChange={() => setFilterType("due")}
-            />
-            Filter tasks by Due Date
-          </label>
-        </div>
+          {/* Filter Type Selection */}
+          <div className="flex justify-between items-center text-sm mb-8 mt-2 text-gray-700">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="filterType"
+                value="assigned"
+                checked={filterType === "assigned"}
+                onChange={() => setFilterType("assigned")}
+              />
+              Filter tasks by Assigned Date
+            </label>
+            <label className="flex items-center gap-2 mr-12">
+              <input
+                type="radio"
+                name="filterType"
+                value="due"
+                checked={filterType === "due"}
+                onChange={() => setFilterType("due")}
+              />
+              Filter tasks by Due Date
+            </label>
+          </div>
 
-        {/* Calendar Grids */}
-        <div className="grid grid-cols-2 gap-4 border-b border-gray-200 pb-4">
-          <div>
-            {renderHeader(startMonth, setStartMonth)}
-            {renderDays()}
-            {renderCells(startMonth)}
+          {/* Calendar Grids */}
+          <div className="grid grid-cols-2 gap-4 border-b border-gray-200 pb-4">
+            <div>
+              {renderHeader(startMonth, setStartMonth)}
+              {renderDays()}
+              {renderCells(startMonth)}
+            </div>
+            <div className="border-l border-gray-300 pl-4">
+              {renderHeader(endMonth, setEndMonth)}
+              {renderDays()}
+              {renderCells(endMonth)}
+            </div>
           </div>
-          <div className="border-l border-gray-300 pl-4">
-            {renderHeader(endMonth, setEndMonth)}
-            {renderDays()}
-            {renderCells(endMonth)}
-          </div>
-        </div>
 
-        {/* Buttons */}
-        <div className="flex justify-between items-center mt-4">
-          <div>
-            {range.start && range.end ? (
-              <span className="text-sm text-gray-600">
-                <span className="bg-white border border-gray-200 rounded-md p-2">{format(range.start, "dd MMM yyyy")}</span> - {" "}
-                <span className="bg-white border border-gray-200 rounded-md p-2">{format(range.end, "dd MMM yyyy")}</span>
-              </span>
-            ) : (
-              "No date selected"
-            )}
-          </div>
-          <div className="flex space-x-2">
-            <button
-              className="px-4 py-2 bg-gray-200 text-sm text-gray-800 rounded-md hover:bg-gray-300"
-              onClick={() => setRange({ start: null, end: null })}
-            >
-              Cancel
-            </button>
-            <button
-              className="px-4 py-2 bg-blue-500 text-sm text-white rounded-md hover:bg-blue-600"
-              onClick={() =>
-                onDateChange({
-                  type: filterType,
-                  start: range.start ? format(range.start, "yyyy-MM-dd") : null,
-                  end: range.end ? format(range.end, "yyyy-MM-dd") : null,
-                })
-              }
-            >
-              Apply
-            </button>
+          {/* Buttons */}
+          <div className="flex justify-between items-center mt-4">
+            <div>
+              {range.start && range.end ? (
+                <span className="text-sm text-gray-600">
+                  <span className="bg-white border border-gray-200 rounded-md p-2">
+                    {format(range.start, "dd MMM yyyy")}
+                  </span>{" "}
+                  -{" "}
+                  <span className="bg-white border border-gray-200 rounded-md p-2">
+                    {format(range.end, "dd MMM yyyy")}
+                  </span>
+                </span>
+              ) : (
+                "No date selected"
+              )}
+            </div>
+            <div className="flex space-x-2">
+              <button
+                className="px-4 py-2 bg-gray-200 text-sm text-gray-800 rounded-md hover:bg-gray-300"
+                onClick={() => setRange({ start: null, end: null })}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-blue-500 text-sm text-white rounded-md hover:bg-blue-600"
+                onClick={() =>
+                  onDateChange({
+                    type: filterType,
+                    start: range.start
+                      ? format(range.start, "yyyy-MM-dd")
+                      : null,
+                    end: range.end ? format(range.end, "yyyy-MM-dd") : null,
+                  })
+                }
+              >
+                Apply
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      {/* mobile verison */}
+      <div className="xl:hidden md:hidden lg:hidden block">
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center  ">
+          <div className="relative w-[120vw]" ref={datePickerRef}>
+            <div className=" z-10 mt-8 p-4 bg-white border shadow-md rounded-md w-full">
+              {/* Header */}
+              <div className="flex items-center justify-between pb-2">
+                <div className="flex items-center gap-1">
+                  <FiFilter className="text-blue-500" />
+                  <span className="font-semibold text-md">Filter by Date</span>
+                </div>
+              </div>
+
+              {/* Filter Type Selection */}
+              <div className="flex justify-between items-center text-sm mb-8 mt-2 text-gray-700">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="filterType"
+                    value="assigned"
+                    checked={filterType === "assigned"}
+                    onChange={() => setFilterType("assigned")}
+                  />
+                  Filter tasks by Assigned Date
+                </label>
+                <label className="flex items-center gap-2 mr-12">
+                  <input
+                    type="radio"
+                    name="filterType"
+                    value="due"
+                    checked={filterType === "due"}
+                    onChange={() => setFilterType("due")}
+                  />
+                  Filter tasks by Due Date
+                </label>
+              </div>
+
+              {/* Calendar Grids */}
+              <div className="grid grid-cols-1 xl:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 border-b border-gray-200 pb-4">
+                <div>
+                  {renderHeader(startMonth, setStartMonth)}
+                  {renderDays()}
+                  {renderCells(startMonth)}
+                </div>
+                <div className="border-l border-gray-300 pl-4">
+                  {renderHeader(endMonth, setEndMonth)}
+                  {renderDays()}
+                  {renderCells(endMonth)}
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex justify-between items-center mt-4">
+                <div>
+                  {range.start && range.end ? (
+                    <span className="text-sm text-gray-600">
+                      <span className="bg-white border border-gray-200 rounded-md p-2">
+                        {format(range.start, "dd MMM yyyy")}
+                      </span>{" "}
+                      -{" "}
+                      <span className="bg-white border border-gray-200 rounded-md p-2">
+                        {format(range.end, "dd MMM yyyy")}
+                      </span>
+                    </span>
+                  ) : (
+                    "No date selected"
+                  )}
+                </div>
+                <div className="flex space-x-2">
+                  <button
+                    className="px-4 py-2 bg-gray-200 text-sm text-gray-800 rounded-md hover:bg-gray-300"
+                    onClick={() => setRange({ start: null, end: null })}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="px-4 py-2 bg-blue-500 text-sm text-white rounded-md hover:bg-blue-600"
+                    onClick={() =>
+                      onDateChange({
+                        type: filterType,
+                        start: range.start
+                          ? format(range.start, "yyyy-MM-dd")
+                          : null,
+                        end: range.end ? format(range.end, "yyyy-MM-dd") : null,
+                      })
+                    }
+                  >
+                    Apply
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

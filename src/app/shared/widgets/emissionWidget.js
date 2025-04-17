@@ -64,7 +64,7 @@ const EmissionWidget = React.memo(
     const [quantity2, setQuantity2] = useState(value.Quantity2 || "");
     const [unit2, setUnit2] = useState(value.Unit2 || "");
     const [activity_id, setActivityId] = useState(value.activity_id || "");
-    const [act_id,setActId] = useState(value.act_id || '')
+    const [act_id, setActId] = useState(value.act_id || "");
     const [unit_type, setUnitType] = useState(value.unit_type || "");
     const [subcategories, setSubcategories] = useState([]);
     const [activities, setActivities] = useState([]);
@@ -85,6 +85,17 @@ const EmissionWidget = React.memo(
     const text1 = useSelector((state) => state.header.headertext1);
     const text2 = useSelector((state) => state.header.headertext2);
     const middlename = useSelector((state) => state.header.middlename);
+    const [isMobile, setIsMobile] = useState(false);
+    const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 768); // Adjust as needed
+      };
+
+      handleResize(); // on mount
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
     const useremail =
       typeof window !== "undefined" ? localStorage.getItem("userEmail") : "";
     const roles =
@@ -1055,42 +1066,55 @@ const EmissionWidget = React.memo(
     const handleDropdownScroll = useCallback(
       (e) => {
         const { scrollTop, scrollHeight, clientHeight } = e.target;
-        
+
         // If we're near the bottom (within 50px) and there are more items to load
         if (scrollHeight - scrollTop - clientHeight < 50 && hasMore) {
           // Calculate next page
           const nextPage = currentPage + 1;
           const startIndex = currentPage * itemsPerPage;
-          const endIndex = Math.min(startIndex + itemsPerPage, filteredActivities.length);
-          
+          const endIndex = Math.min(
+            startIndex + itemsPerPage,
+            filteredActivities.length
+          );
+
           // Check if we've already loaded all items or if there are no more items to load
-          if (startIndex >= filteredActivities.length || startIndex >= endIndex) {
+          if (
+            startIndex >= filteredActivities.length ||
+            startIndex >= endIndex
+          ) {
             setHasMore(false);
             return;
           }
-          
+
           // Get next batch of items
           const newItems = filteredActivities.slice(startIndex, endIndex);
-          
+
           // Update state
-          setVisibleActivities(prevItems => {
+          setVisibleActivities((prevItems) => {
             // Create a Set of existing IDs to avoid duplicates
-            const existingIds = new Set(prevItems.map(item => 
-              item.id || item.activity_id || `${item.name}-${item.source}-${item.unit_type}`
-            ));
-            
+            const existingIds = new Set(
+              prevItems.map(
+                (item) =>
+                  item.id ||
+                  item.activity_id ||
+                  `${item.name}-${item.source}-${item.unit_type}`
+              )
+            );
+
             // Only add items that aren't already in the list
-            const uniqueNewItems = newItems.filter(item => {
-              const itemId = item.id || item.activity_id || 
-                            `${item.name}-${item.source}-${item.unit_type}`;
+            const uniqueNewItems = newItems.filter((item) => {
+              const itemId =
+                item.id ||
+                item.activity_id ||
+                `${item.name}-${item.source}-${item.unit_type}`;
               return !existingIds.has(itemId);
             });
-            
+
             return [...prevItems, ...uniqueNewItems];
           });
-          
+
           setCurrentPage(nextPage);
-          
+
           // Check if we've loaded all items
           if (endIndex >= filteredActivities.length) {
             setHasMore(false);
@@ -1271,7 +1295,7 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Activity Dropdown */}
-              <td className="py-2  w-[25vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw]">
+              <td className="py-2  w-[55vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw]">
                 <div
                   className={`relative ${
                     activity &&
@@ -1287,10 +1311,16 @@ const EmissionWidget = React.memo(
                     placeholder={getActivityPlaceholder()}
                     value={activitySearch}
                     onChange={handleSearchChange}
-                    onFocus={toggleDropdown}
+                    onFocus={() => {
+                      if (isMobile) {
+                        setIsActivityModalOpen(true);
+                      } else {
+                        toggleDropdown();
+                      }
+                    }}
                     className={getFieldClass(
                       "Activity",
-                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[25vw] py-1"
+                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[55vw] py-1"
                     )}
                     disabled={["assigned", "calculated", "approved"].includes(
                       value.rowType
@@ -1348,7 +1378,12 @@ const EmissionWidget = React.memo(
 
                           // Check if this item's ID matches the currently selected activity's ID
                           const isSelected = item.id === act_id;
-                          console.log('isSelected:, item id, act_id', isSelected, item.id,act_id);
+                          console.log(
+                            "isSelected:, item id, act_id",
+                            isSelected,
+                            item.id,
+                            act_id
+                          );
 
                           return (
                             <div
@@ -1374,6 +1409,66 @@ const EmissionWidget = React.memo(
                         <div className="p-2 text-center text-[12px] text-gray-500 border-t">
                           Scroll down to load more...
                         </div>
+                      )}
+                    </div>
+                  )}
+                  {/* mobile version */}
+                  {isActivityModalOpen && isMobile && (
+                    <div className="fixed inset-0 z-50 bg-white overflow-y-auto px-4 py-6">
+                      <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-lg font-semibold">
+                          Select Activity
+                        </h2>
+                        <button onClick={() => setIsActivityModalOpen(false)}>
+                          <MdClose size={24} />
+                        </button>
+                      </div>
+
+                      <input
+                        type="text"
+                        value={activitySearch}
+                        onChange={handleSearchChange}
+                        placeholder="Search activities..."
+                        className="w-full border rounded px-2 py-1 mb-4"
+                      />
+
+                      <div
+                        className="max-h-[80vh] overflow-y-auto border rounded"
+                        onScroll={handleDropdownScroll}
+                      >
+                        {isLoadingActivities ? (
+                          <p className="text-sm text-gray-500 text-center py-4">
+                            Loading...
+                          </p>
+                        ) : filteredActivities.length === 0 ? (
+                          <p className="text-sm text-gray-500 text-center py-4">
+                            No matching activities
+                          </p>
+                        ) : (
+                          visibleActivities.map((item, index) => {
+                            const displayText = `${item.name} - (${item.source}) - ${item.unit_type}`;
+                            const value = `${item.name} - (${item.source}) - ${item.unit_type}`;
+                            return (
+                              <div
+                                key={item.id || index}
+                                className="p-2 border-b text-sm hover:bg-gray-100 cursor-pointer"
+                                onClick={() => {
+                                  handleActivityChange(value);
+                                  setIsActivityModalOpen(false);
+                                  setActivitySearch("");
+                                }}
+                              >
+                                {displayText}
+                              </div>
+                            );
+                          })
+                        )}
+                      </div>
+
+                      {hasMore && (
+                        <p className="text-center text-xs text-gray-400 mt-4">
+                          Scroll to load more...
+                        </p>
                       )}
                     </div>
                   )}
