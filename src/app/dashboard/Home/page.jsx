@@ -10,33 +10,34 @@ const HomeDashboard = ({ setActiveTab }) => {
 
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
+     
 
       {/* Mobile Tabs */}
       <div className="md:hidden block mb-4">
-  <div className="flex justify-center space-x-2 p-2  rounded-full w-full max-w-md mx-auto">
-    {["tasks", "goals", "preferences"].map((tab) => (
-      <button
-        key={tab}
-        onClick={() => setMobileTab(tab)}
-        className={`flex-1 text-sm py-2 px-3 rounded-md transition-all duration-200 ${
-          mobileTab === tab
-            ? "bg-blue-500 text-white "
-            : "bg-white text-gray-700 border border-gray-300"
-        }`}
-      >
-        {tab.charAt(0).toUpperCase() + tab.slice(1)}
-      </button>
-    ))}
-  </div>
+      <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
+        <div className="flex justify-center space-x-2 p-2  rounded-full w-full max-w-md mx-auto">
+          {["tasks", "goals", "preferences"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setMobileTab(tab)}
+              className={`flex-1 text-sm py-2 px-3 rounded-md transition-all duration-200 ${
+                mobileTab === tab
+                  ? "bg-blue-500 text-white "
+                  : "bg-white text-gray-700 border border-gray-300"
+              }`}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </div>
 
-  <div className="mt-4 px-2">
-    {mobileTab === "tasks" && <MyTasks HomeActiveTab={setActiveTab} />}
-    {mobileTab === "goals" && <MyGoals />}
-    {mobileTab === "preferences" && <Preferences />}
-  </div>
-</div>
-
+        <div className="mt-4 px-2">
+          {mobileTab === "tasks" && <MyTasks HomeActiveTab={setActiveTab} />}
+          {mobileTab === "goals" && <MyGoals />}
+          {mobileTab === "preferences" && <Preferences />}
+        </div>
+      </div>
+      <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
       {/* Desktop Layout */}
       <div className="hidden md:flex xl:space-x-3 lg:space-x-3 2xl:space-x-3 md:space-x-3 xl:pe-4">
         <div className="xl:w-1/2 2xl:w-1/2 lg:w-1/2 md:w-1/2 space-y-4 mb-8">

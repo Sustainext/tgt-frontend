@@ -114,8 +114,8 @@ const Profile = ({ onClose }) => {
       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 welcome-screen">
         {isModalOpen ? (
           <div className="modal-content relative bg-white rounded-md p-0 w-[365px] h-[200px]">
-            <div className="py-4 flex justify-around items-center">
-              <div className="flex justify-center items-center">
+            <div className="py-4 xl:flex justify-around items-center">
+              <div className="xl:flex justify-center items-center">
                 <AiOutlineWarning
                   style={{ color: "#ffd11a", fontSize: "100px" }}
                 />
@@ -136,28 +136,28 @@ const Profile = ({ onClose }) => {
             </div>
           </div>
         ) : (
-          <div className="modal-content relative flex bg-white rounded-md p-0 w-[645px] h-[329px]">
+          <div className="modal-content relative xl:flex bg-white rounded-md p-0 xl:w-[645px] xl:h-[329px]">
             <button
               onClick={onClose}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none"
             >
               <IoClose />
             </button>
-            <div className=" ps-8 w-full">
+            <div className=" xl:ps-8 w-full">
               <button
                 className="text-black text-[18px] font-medium leading-relaxed cursor-pointer flex justify-start gap-3 mb-5 items-center"
                 onClick={handleShow}
               >
                 <AiOutlineEdit /> Edit Profile
               </button>
-              <div className="flex space-x-[60px] ps-4 h-[329px]">
+              <div className="xl:flex xl:space-x-[60px] xl:ps-4 h-[329px]">
                 <ProfileImage
                   firstName={firstName}
                   lastName={lastName}
                   spacing="108px"
                   textsize="30px"
                 />
-                <div>
+                <div className="">
                   {isShow ? (
                     <form onSubmit={submitForm}>
                       <div className="w-full h-8 flex space-x-6 my-3 items-center">

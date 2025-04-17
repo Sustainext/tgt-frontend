@@ -333,7 +333,7 @@ const CreateStakeholderGroup = ({
                     in the group.
                   </p>
                 </div>
-                <div className="flex gap-3 mt-6 justify-end">
+                <div className="flex gap-3 mt-6 xl:justify-end">
                   <button
                     type="button"
                     onClick={() => {
