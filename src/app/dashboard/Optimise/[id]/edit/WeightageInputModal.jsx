@@ -7,6 +7,7 @@ const WeightageInputModal = ({
   selectedMetrics,
   onProceed,
   setCurrentStep,
+  weightages
 }) => {
   // Initial weightages - equal distribution by default
   const initialWeightages = () => {
@@ -16,34 +17,45 @@ const WeightageInputModal = ({
     if (metricCount === 0) return {};
 
     const equalWeight = parseFloat((1 / metricCount).toFixed(2));
-    const weightages = {};
+    const newWeightages = {};
 
     Object.keys(selectedMetrics).forEach((metric) => {
       if (selectedMetrics[metric]) {
-        weightages[metric] = equalWeight;
+        newWeightages[metric] = equalWeight;
       }
     });
 
-    return weightages;
+    return newWeightages;
   };
 
-  const [weightages, setWeightages] = useState(initialWeightages());
+  // Use provided weightages if available, otherwise calculate default
+  const [localWeightages, setLocalWeightages] = useState(
+    Object.keys(weightages || {}).length > 0 ? weightages : initialWeightages()
+  );
   const [total, setTotal] = useState(1);
   const [isValid, setIsValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const inputRefs = useRef({});
 
-  // Reset when metrics change
+  // Reset when metrics change or modal opens
   useEffect(() => {
-    setWeightages(initialWeightages());
-    setTotal(1);
-    setIsValid(true);
-    setErrorMessage("");
-  }, [selectedMetrics]);
+    if (isOpen) {
+      // If we have weightages from props, use those
+      if (weightages && Object.keys(weightages).length > 0) {
+        setLocalWeightages(weightages);
+      } else {
+        // Otherwise calculate equal distribution
+        setLocalWeightages(initialWeightages());
+      }
+      setTotal(1);
+      setIsValid(true);
+      setErrorMessage("");
+    }
+  }, [selectedMetrics, isOpen, weightages]);
 
   // Calculate total when weightages change
   useEffect(() => {
-    const newTotal = Object.values(weightages).reduce(
+    const newTotal = Object.values(localWeightages).reduce(
       (sum, weight) => sum + weight,
       0
     );
@@ -61,19 +73,19 @@ const WeightageInputModal = ({
       setIsValid(true);
       setErrorMessage("");
     }
-  }, [weightages]);
+  }, [localWeightages]);
 
   // Update a specific metric's weightage
   const handleWeightageChange = (metric, value) => {
     // If there's only one metric, keep it at 1
-    if (Object.keys(weightages).length === 1) {
+    if (Object.keys(localWeightages).length === 1) {
       return;
     }
 
     // Ensure value is between 0 and 1
     const newValue = Math.max(0, Math.min(1, value));
 
-    setWeightages((prev) => ({
+    setLocalWeightages((prev) => ({
       ...prev,
       [metric]: parseFloat(newValue.toFixed(2)),
     }));
@@ -82,7 +94,7 @@ const WeightageInputModal = ({
   // Handle slider change
   const handleSliderChange = (metric, e) => {
     // If there's only one metric, keep it at 1
-    if (Object.keys(weightages).length === 1) {
+    if (Object.keys(localWeightages).length === 1) {
       return;
     }
 
@@ -112,15 +124,14 @@ const WeightageInputModal = ({
 
   // Reset to equal distribution
   const handleReset = () => {
-    setWeightages(initialWeightages());
+    setLocalWeightages(initialWeightages());
   };
 
   // Handle proceed button click
   const handleProceed = () => {
     if (isValid) {
-      onProceed(weightages);
+      onProceed(localWeightages);
       onClose();
-      setCurrentStep(2); // Move to step 2
     }
   };
 
@@ -191,7 +202,7 @@ const WeightageInputModal = ({
                     {/* Green progress part */}
                     <div
                       className="h-full bg-green-500 rounded-full"
-                      style={{ width: `${weightages[metric] * 100}%` }}
+                      style={{ width: `${localWeightages[metric] * 100}%` }}
                     ></div>
                   </div>
 
@@ -200,7 +211,7 @@ const WeightageInputModal = ({
                     min="0"
                     max="100"
                     step="1"
-                    value={weightages[metric] * 100}
+                    value={localWeightages[metric] * 100}
                     onChange={(e) => handleSliderChange(metric, e)}
                     disabled={disableSliders}
                     className="appearance-none w-full h-1 bg-transparent relative z-10 cursor-pointer"
@@ -215,14 +226,14 @@ const WeightageInputModal = ({
                   {!disableSliders && (
                     <div
                       className="w-4 h-4 absolute top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white border border-gray-300 rounded-full shadow"
-                      style={{ left: `${weightages[metric] * 100}%` }}
+                      style={{ left: `${localWeightages[metric] * 100}%` }}
                     ></div>
                   )}
                 </div>
                 <input
                   ref={(el) => (inputRefs.current[metric] = el)}
                   type="text"
-                  value={weightages[metric].toFixed(2)}
+                  value={localWeightages[metric].toFixed(2)}
                   onChange={(e) => handleInputChange(metric, e.target.value)}
                   onFocus={handleInputFocus}
                   disabled={disableSliders}
