@@ -3,7 +3,8 @@ import { useState } from "react";
 import MyGoals from "./MyGoals";
 import MyTasks from "./TasksNew/MyTask";
 import Preferences from "./Preferences/page";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 const HomeDashboard = ({ setActiveTab }) => {
   const [mobileTab, setMobileTab] = useState("tasks"); // Default active tab
@@ -11,7 +12,6 @@ const HomeDashboard = ({ setActiveTab }) => {
   return (
     <>
      
-    
       {/* Mobile Tabs */}
       <div className="md:hidden block mb-4">
     

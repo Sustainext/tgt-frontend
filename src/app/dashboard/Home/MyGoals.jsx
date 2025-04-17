@@ -301,6 +301,7 @@ const MyGoals = () => {
 
   return (
     <>
+         <ToastContainer style={{ fontSize: "12px" }} />
       {/* <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} /> */}
       <div className="xl:p-6 p-4 bg-white rounded-lg shadow-sm border border-gray-200 h-[450px] xl:h-[470px] lg:h-[470px] md:h-[470px] 4k:h-[470px] flex flex-col">
         <div className="flex justify-between items-center mb-6">
