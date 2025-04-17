@@ -165,8 +165,8 @@ const StakeholderPage = ({
         <div className="flex flex-col justify-start overflow-x-hidden ">
           <div className="flex justify-between items-center border-b border-gray-200 mb-2 w-full">
             <div className="w-full">
-              <div className=" flex justify-between text-left mb-2 ml-2 pt-1">
-                <div className="flex">
+              <div className="xl:flex justify-between text-left mb-2 ml-2 pt-1">
+                <div className="xl:flex">
                   <div>
                     <p className="gradient-text text-[22px] font-bold pt-4  ml-2">
                       {groupId?.name}
@@ -197,7 +197,7 @@ const StakeholderPage = ({
         </div>
 
         <div className="p-4 min-h-screen">
-          <div className="flex justify-between items-center mb-2">
+          <div className="xl:flex justify-between items-center mb-2">
             <h1 className="text-[20px] font-semibold text-[#101828]">
               Stakeholders List
             </h1>
@@ -207,7 +207,7 @@ const StakeholderPage = ({
                   setIsUploadModalOpen(true);
                 }}
                 type="button"
-                className="bg-transparent flex gap-2 font-medium text-[#344054] text-[14px] px-4 py-2 rounded-md border border-gray-300"
+                className="bg-transparent flex gap-2 font-medium text-[#344054] text-[14px] px-4 py-2 rounded-md border border-gray-300 xl:w-[100px] w-[170px] justify-center"
               >
                 Import <AiOutlineUpload className="mt-0.5 w-4 h-4" />
               </button>
@@ -226,7 +226,7 @@ const StakeholderPage = ({
             List of stakeholders in this group. Add individual stakeholders from
             + Add New Stakeholder or import to add in bulk.
           </p>
-          <div className="flex justify-between">
+          <div className="xl:flex justify-between gap-2">
             <button
               type="button"
               onClick={() => {
@@ -235,7 +235,7 @@ const StakeholderPage = ({
               disabled={deleteDisabled}
               className={`bg-transparent ${
                 deleteDisabled ? "opacity-30" : "cursor-pointer"
-              } font-medium text-[#344054] text-[14px] px-4 py-2 rounded-md border border-gray-500`}
+              } font-medium text-[#344054] text-[14px] px-4 py-2 rounded-md border border-gray-500 mb-2 xl:mb-0`}
             >
               Delete Selected items
             </button>
@@ -244,7 +244,7 @@ const StakeholderPage = ({
               <input
                 type="text"
                 placeholder="Search"
-                className="pl-10 pr-4 py-2 min-w-[25vw] border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="pl-10 pr-4 py-2 xl:min-w-[25vw] min-w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={searchQuery}
                 onChange={handleSearch}
               />

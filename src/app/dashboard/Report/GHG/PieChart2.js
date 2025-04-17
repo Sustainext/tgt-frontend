@@ -1,18 +1,18 @@
 import { ResponsivePie } from "@nivo/pie";
 import { useEffect, useState } from "react";
 function MyResponsivesouresdata({ souresdata }) {
-    const [isMobile, setIsMobile] = useState(false);
-  
-    useEffect(() => {
-      const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-      checkMobile();
-      window.addEventListener("resize", checkMobile);
-      return () => window.removeEventListener("resize", checkMobile);
-    }, []);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
   const uniqueSources = new Map();
 
-  souresdata.forEach(corporate => {
-    corporate.sources.forEach(source => {
+  souresdata.forEach((corporate) => {
+    corporate.sources.forEach((source) => {
       const key = source.source_name;
       // Check if the source is already added, if not or if you want to aggregate, adjust the logic here
       if (!uniqueSources.has(key)) {
@@ -24,17 +24,19 @@ function MyResponsivesouresdata({ souresdata }) {
     });
   });
 
-  const sourcesDataForChart = Array.from(uniqueSources.values()).map(source => ({
-    id: source.source_name,
-    label: source.category_name.length > 14
-    ? source.category_name.slice(0, 14) + "…"
-    : source.category_name,
-    value: parseFloat(source.total_co2e),
-    color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-  }));
+  const sourcesDataForChart = Array.from(uniqueSources.values()).map(
+    (source) => ({
+      id: source.source_name,
+      label:
+        source.category_name.length > 14
+          ? source.category_name.slice(0, 14) + "…"
+          : source.category_name,
+      value: parseFloat(source.total_co2e),
+      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+    })
+  );
 
   // Your existing component code continues here...
-
 
   return (
     <>
@@ -45,7 +47,12 @@ function MyResponsivesouresdata({ souresdata }) {
       <ResponsivePie
         data={sourcesDataForChart}
         enableArcLabels={false}
-        margin={{ top: 40, right: isMobile ? 10 : 250, bottom: isMobile ? 120 : 80, left: 0 }}
+        margin={{
+          top: 40,
+          right: isMobile ? 10 : 250,
+          bottom: isMobile ? 120 : 80,
+          left: 0,
+        }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
@@ -138,12 +145,12 @@ function MyResponsivesouresdata({ souresdata }) {
           {
             anchor: isMobile ? "bottom" : "right",
             direction: isMobile ? "row" : "column",
-              justify: false,
-              translateX: isMobile ? 0 : 120,
-              translateY: isMobile ? 60 : 0,
-              itemsSpacing: isMobile ? 40 : 2,
-              itemWidth: isMobile ? 40 : 80,
-            itemHeight: 10,
+            justify: false,
+            translateX: isMobile ? 0 : 0,
+            translateY: isMobile ? 80 : 0,
+            itemsSpacing: isMobile ? 20 : 10, // more spacing between items on mobile
+            itemWidth: isMobile ? 100 : 80, // give more width
+            itemHeight: isMobile ? 20 : 10, // increase height to avoid squish
             itemTextColor: "#999",
             itemDirection: "left-to-right",
             itemOpacity: 1,

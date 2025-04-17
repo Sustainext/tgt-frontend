@@ -59,7 +59,7 @@ const OrgTreeMobile = ({ data }) => {
   // 🔹 Handle node click for details modal
   const handleNodeClick = (node, org = null, entity = null) => {
     let nodeData = {};
-  
+
     if (node?.location) {
       // Clicked on full org or corp object (not location)
       nodeData = {
@@ -84,7 +84,7 @@ const OrgTreeMobile = ({ data }) => {
         corporate: null,
       };
     }
-  
+
     setSelectedNode(nodeData);
     setIsModalOpen(true);
     setActiveNode(node.id);
@@ -153,10 +153,13 @@ const OrgTreeMobile = ({ data }) => {
                   onClick={() => handleOrgToggle(org.id)}
                 >
                   <div>
-                    <div className="text-base font-semibold text-blue-600"   onClick={(e) => {
-    e.stopPropagation();
-    handleNodeClick(org);
-  }}>
+                    <div
+                      className="text-base font-semibold text-blue-600"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNodeClick(org);
+                      }}
+                    >
                       {org.name}
                     </div>
                     <div className="text-sm text-gray-500">
@@ -171,7 +174,14 @@ const OrgTreeMobile = ({ data }) => {
                 {/* Add buttons if org not expanded */}
                 {!isExpanded && isAdmin && (
                   <div className="px-4 pb-3 flex flex-wrap gap-3">
-                     Corporates: <strong>{corporateCount}</strong> | Locations: <strong>{locationCount}</strong>
+                    <p className="text-sm">
+                      {" "}
+                      Total Corporates: <strong>{corporateCount}</strong>
+                    </p>{" "}
+                    <p className="text-sm">
+                      {" "}
+                      Total Locations: <strong>{locationCount}</strong>
+                    </p>
                     {/* Total Locations: <strong>{totalLocations}</strong> */}
                     {/* <button
                       onClick={() =>
@@ -207,11 +217,14 @@ const OrgTreeMobile = ({ data }) => {
                               className="flex justify-between items-start gap-x-2 cursor-pointer"
                               onClick={() => handleEntityToggle(entity.id)}
                             >
-                              <div className="flex-1">
-                                <div className="text-sm font-medium text-blue-500"   onClick={(e) => {
-    e.stopPropagation();
-    handleNodeClick(entity, org); // send corporate and org
-  }}>
+                              <div className="flex-1 ">
+                                <div
+                                  className="text-sm font-medium text-blue-500 w-[200px]"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleNodeClick(entity, org); // send corporate and org
+                                  }}
+                                >
                                   {entity.name}
                                 </div>
                                 <div className="text-xs text-gray-500">
@@ -221,7 +234,6 @@ const OrgTreeMobile = ({ data }) => {
 
                               {isAdmin && (
                                 <div className="flex flex-row gap-2 items-end">
-                              
                                   {/* <button
                                     onClick={(e) => {
                                       e.stopPropagation();
@@ -258,9 +270,16 @@ const OrgTreeMobile = ({ data }) => {
                                     <div
                                       key={loc.id}
                                       className="pl-4 border-l-4 border-blue-200 bg-white p-2 rounded cursor-pointer"
-                                      onClick={() => handleNodeClick(loc, org, entity)}
+                                      onClick={() =>
+                                        handleNodeClick(loc, org, entity)
+                                      }
                                     >
-                                      <div className="text-sm font-medium text-blue-400" onClick={() => handleNodeClick(loc, org, entity)}>
+                                      <div
+                                        className="text-sm font-medium text-blue-400"
+                                        onClick={() =>
+                                          handleNodeClick(loc, org, entity)
+                                        }
+                                      >
                                         {loc.name}
                                       </div>
                                       <div className="text-xs text-gray-500">

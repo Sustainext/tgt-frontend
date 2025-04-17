@@ -181,12 +181,12 @@ const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmi
             </div>
           )}
   
-          <div className="flex justify-end mt-4">
+          <div className="xl:flex xl:justify-end  mt-4 w-[860px] xl:w-full">
             <button
             data-tooltip-id={`tooltip-env`}
             data-tooltip-html={isFormComplete?"":"Provide reason for omission for all the disclosures to proceed further"}
               onClick={handleSubmit}
-              className={`bg-blue-500 text-white px-3 py-2 rounded-lg ${!isFormComplete ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`bg-blue-500 text-white px-3 py-2 rounded-lg float-end ${!isFormComplete ? 'opacity-50 cursor-not-allowed' : ''}`}
               disabled={!isFormComplete}
             >
               Save & Proceed to Preview Content Index {">"}
