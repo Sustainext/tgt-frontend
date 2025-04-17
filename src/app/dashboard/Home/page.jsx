@@ -11,10 +11,10 @@ const HomeDashboard = ({ setActiveTab }) => {
   return (
     <>
      
-
+    
       {/* Mobile Tabs */}
       <div className="md:hidden block mb-4">
-      <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
+    
         <div className="flex justify-center space-x-2 p-2  rounded-full w-full max-w-md mx-auto">
           {["tasks", "goals", "preferences"].map((tab) => (
             <button
@@ -37,7 +37,7 @@ const HomeDashboard = ({ setActiveTab }) => {
           {mobileTab === "preferences" && <Preferences />}
         </div>
       </div>
-      <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
+
       {/* Desktop Layout */}
       <div className="hidden md:flex xl:space-x-3 lg:space-x-3 2xl:space-x-3 md:space-x-3 xl:pe-4">
         <div className="xl:w-1/2 2xl:w-1/2 lg:w-1/2 md:w-1/2 space-y-4 mb-8">
