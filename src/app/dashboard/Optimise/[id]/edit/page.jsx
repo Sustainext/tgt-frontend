@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FiArrowLeft, FiInfo, FiCheck } from "react-icons/fi";
 import { Tooltip } from "react-tooltip";
 import MetricsGraph from "../../MetricsGraph";
-import WeightageInputModal from "../../WeightageInputModal";
+import WeightageInputModal from "./WeightageInputModal";
 import ActivitySelectTable from "../../ActivitySelectTable";
 import ConfirmActivitiesModal from "../../ConfirmActivitiesModal";
 import ActivitySummarySection from "../../ActivitiesSummary";

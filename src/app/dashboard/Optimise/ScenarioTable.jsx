@@ -9,6 +9,7 @@ import {
   FiEye,
   FiEdit,
   FiTrash2,
+  FiFilter,
 } from "react-icons/fi";
 import Moment from "react-moment";
 import { debounce } from "lodash";
@@ -22,12 +23,14 @@ import CreateScenarioModal from "./CreateScenarioModal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import scenarioService from "./service/scenarioService";
 
 const ScenarioTable = () => {
   // Main states
   const [scenarios, setScenarios] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [count, setCount] = useState(0);
+  const [error, setError] = useState(null);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,6 +39,10 @@ const ScenarioTable = () => {
   // Search and filter states
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOrganizations, setSelectedOrganizations] = useState([]);
+  const [selectedOrganizationNames, setSelectedOrganizationNames] = useState(
+    []
+  );
+
   const [selectedStatuses, setSelectedStatuses] = useState([]);
   const [isOrgFilterOpen, setIsOrgFilterOpen] = useState(false);
   const [isStatusFilterOpen, setIsStatusFilterOpen] = useState(false);
@@ -50,6 +57,8 @@ const ScenarioTable = () => {
   const [selectedBaseYears, setSelectedBaseYears] = useState([]);
   const [selectedTargetYears, setSelectedTargetYears] = useState([]);
   const [selectedCorporates, setSelectedCorporates] = useState([]);
+  const [selectedCorporateNames, setSelectedCorporateNames] = useState([]);
+
   const [isBaseYearFilterOpen, setIsBaseYearFilterOpen] = useState(false);
   const [isTargetYearFilterOpen, setIsTargetYearFilterOpen] = useState(false);
   const [isCorporateFilterOpen, setIsCorporateFilterOpen] = useState(false);
@@ -72,23 +81,14 @@ const ScenarioTable = () => {
   const corpFilterRef = useRef(null);
 
   // Sorting states
-  const [sortColumn, setSortColumn] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortColumn, setSortColumn] = useState('created_at');
+  const [sortOrder, setSortOrder] = useState("des");
 
-  // Sample data
-  const organizations = [
-    { id: 1, name: "Org Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" },
-    { id: 2, name: "Org B" },
-    { id: 3, name: "Org C" },
-    { id: 4, name: "Org D" },
-  ];
-
-  const corporates = [
-    { id: 1, name: "Corp A" },
-    { id: 2, name: "Corp B" },
-    { id: 3, name: "Corp C" },
-    { id: 4, name: "Corp D" },
-  ];
+  // Available options for filtering
+  const [organizations, setOrganizations] = useState([]);
+  const [corporates, setCorporates] = useState([]);
+  const [baseYears, setBaseYears] = useState([]);
+  const [targetYears, setTargetYears] = useState([]);
 
   // Status options
   const statusOptions = [
@@ -97,571 +97,27 @@ const ScenarioTable = () => {
     { id: "completed", label: "Completed" },
   ];
 
-  // Sample data for scenarios
-  const sampleScenarios = [
-    {
-      id: 1,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 2,
-      name: "Scenario A",
-      status: "In Progress",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 3,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 4,
-      name: "Scenario B",
-      status: "Completed",
-      baseYear: 2023,
-      targetYear: 2035,
-      organization: "Org B",
-      corporate: "Corp B",
-      created: "2023-02-15T00:00:00",
-      edited: "2025-03-10T14:30:22",
-      createdBy: "Lisa Simpson",
-      editedBy: "Lisa Simpson",
-    },
-    {
-      id: 5,
-      name: "Scenario C",
-      status: "In Progress",
-      baseYear: 2025,
-      targetYear: 2040,
-      organization: "Org C",
-      corporate: "Corp C",
-      created: "2023-05-05T00:00:00",
-      edited: "2025-02-20T09:22:11",
-      createdBy: "Bart Simpson",
-      editedBy: "Bart Simpson",
-    },
-    {
-      id: 1,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 2,
-      name: "Scenario A",
-      status: "In Progress",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 3,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 4,
-      name: "Scenario B",
-      status: "Completed",
-      baseYear: 2023,
-      targetYear: 2035,
-      organization: "Org B",
-      corporate: "Corp B",
-      created: "2023-02-15T00:00:00",
-      edited: "2025-03-10T14:30:22",
-      createdBy: "Lisa Simpson",
-      editedBy: "Lisa Simpson",
-    },
-    {
-      id: 5,
-      name: "Scenario C",
-      status: "In Progress",
-      baseYear: 2025,
-      targetYear: 2040,
-      organization: "Org C",
-      corporate: "Corp C",
-      created: "2023-05-05T00:00:00",
-      edited: "2025-02-20T09:22:11",
-      createdBy: "Bart Simpson",
-      editedBy: "Bart Simpson",
-    },
-    {
-      id: 1,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 2,
-      name: "Scenario A",
-      status: "In Progress",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 3,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 4,
-      name: "Scenario B",
-      status: "Completed",
-      baseYear: 2023,
-      targetYear: 2035,
-      organization: "Org B",
-      corporate: "Corp B",
-      created: "2023-02-15T00:00:00",
-      edited: "2025-03-10T14:30:22",
-      createdBy: "Lisa Simpson",
-      editedBy: "Lisa Simpson",
-    },
-    {
-      id: 5,
-      name: "Scenario C",
-      status: "In Progress",
-      baseYear: 2025,
-      targetYear: 2040,
-      organization: "Org C",
-      corporate: "Corp C",
-      created: "2023-05-05T00:00:00",
-      edited: "2025-02-20T09:22:11",
-      createdBy: "Bart Simpson",
-      editedBy: "Bart Simpson",
-    },
-    {
-      id: 1,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 2,
-      name: "Scenario A",
-      status: "In Progress",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 3,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 4,
-      name: "Scenario B",
-      status: "Completed",
-      baseYear: 2023,
-      targetYear: 2035,
-      organization: "Org B",
-      corporate: "Corp B",
-      created: "2023-02-15T00:00:00",
-      edited: "2025-03-10T14:30:22",
-      createdBy: "Lisa Simpson",
-      editedBy: "Lisa Simpson",
-    },
-    {
-      id: 5,
-      name: "Scenario C",
-      status: "In Progress",
-      baseYear: 2025,
-      targetYear: 2040,
-      organization: "Org C",
-      corporate: "Corp C",
-      created: "2023-05-05T00:00:00",
-      edited: "2025-02-20T09:22:11",
-      createdBy: "Bart Simpson",
-      editedBy: "Bart Simpson",
-    },
-    {
-      id: 1,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 2,
-      name: "Scenario A",
-      status: "In Progress",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 3,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 4,
-      name: "Scenario B",
-      status: "Completed",
-      baseYear: 2023,
-      targetYear: 2035,
-      organization: "Org B",
-      corporate: "Corp B",
-      created: "2023-02-15T00:00:00",
-      edited: "2025-03-10T14:30:22",
-      createdBy: "Lisa Simpson",
-      editedBy: "Lisa Simpson",
-    },
-    {
-      id: 5,
-      name: "Scenario C",
-      status: "In Progress",
-      baseYear: 2025,
-      targetYear: 2040,
-      organization: "Org C",
-      corporate: "Corp C",
-      created: "2023-05-05T00:00:00",
-      edited: "2025-02-20T09:22:11",
-      createdBy: "Bart Simpson",
-      editedBy: "Bart Simpson",
-    },
-    {
-      id: 1,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 2,
-      name: "Scenario A",
-      status: "In Progress",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 3,
-      name: "Scenario A",
-      status: "Draft",
-      baseYear: 2024,
-      targetYear: 2030,
-      organization: "Org A",
-      corporate: "Corp A",
-      created: "2023-01-27T00:00:00",
-      edited: "2025-03-18T10:14:53",
-      createdBy: "Homer Simpson",
-      editedBy: "Homer Simpson",
-    },
-    {
-      id: 4,
-      name: "Scenario B",
-      status: "Completed",
-      baseYear: 2023,
-      targetYear: 2035,
-      organization: "Org B",
-      corporate: "Corp B",
-      created: "2023-02-15T00:00:00",
-      edited: "2025-03-10T14:30:22",
-      createdBy: "Lisa Simpson",
-      editedBy: "Lisa Simpson",
-    },
-    {
-      id: 5,
-      name: "Scenario C",
-      status: "In Progress",
-      baseYear: 2025,
-      targetYear: 2040,
-      organization: "Org C",
-      corporate: "Corp C",
-      created: "2023-05-05T00:00:00",
-      edited: "2025-02-20T09:22:11",
-      createdBy: "Bart Simpson",
-      editedBy: "Bart Simpson",
-    },
-  ];
+  const router = useRouter();
 
-  // Get unique base and target years
-  const baseYears = [...new Set(sampleScenarios.map((s) => s.baseYear))];
-  const targetYears = [...new Set(sampleScenarios.map((s) => s.targetYear))];
-
-  // Fetch scenarios (simulation)
-  const fetchScenarios = async (
-    searchQuery = "",
-    page = 1,
-    dateFilterType = "created",
-    dateFilterValue = {}
-  ) => {
-    setIsLoading(true);
-    try {
-      // This would normally be an API call
-      // For now, let's filter the sample data
-      let filteredScenarios = [...sampleScenarios];
-
-      // Apply search filter
-      if (searchQuery) {
-        filteredScenarios = filteredScenarios.filter((scenario) =>
-          scenario.name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-      }
-
-      // Apply organization filter
-      if (selectedOrganizations.length > 0) {
-        filteredScenarios = filteredScenarios.filter((scenario) =>
-          selectedOrganizations.includes(scenario.organization)
-        );
-      }
-
-      // Apply corporate filter
-      if (selectedCorporates.length > 0) {
-        filteredScenarios = filteredScenarios.filter((scenario) =>
-          selectedCorporates.includes(scenario.corporate)
-        );
-      }
-
-      // Apply base year filter
-      if (selectedBaseYears.length > 0) {
-        filteredScenarios = filteredScenarios.filter((scenario) =>
-          selectedBaseYears.includes(scenario.baseYear)
-        );
-      }
-
-      // Apply target year filter
-      if (selectedTargetYears.length > 0) {
-        filteredScenarios = filteredScenarios.filter((scenario) =>
-          selectedTargetYears.includes(scenario.targetYear)
-        );
-      }
-
-      // Apply status filter
-      if (selectedStatuses.length > 0) {
-        filteredScenarios = filteredScenarios.filter((scenario) =>
-          selectedStatuses.includes(scenario.status)
-        );
-      }
-
-      // Apply date range filter if applicable
-      if (selectedDateRange?.start && selectedDateRange?.end) {
-        const startDate = new Date(selectedDateRange.start).getTime();
-        const endDate = new Date(selectedDateRange.end).getTime();
-
-        filteredScenarios = filteredScenarios.filter((scenario) => {
-          const dateToCheck =
-            dateFilterType === "created"
-              ? new Date(scenario.created).getTime()
-              : new Date(scenario.edited).getTime();
-          return dateToCheck >= startDate && dateToCheck <= endDate;
-        });
-      }
-
-      // Apply sorting if needed
-      if (sortColumn) {
-        filteredScenarios.sort((a, b) => {
-          let valueA = a[sortColumn];
-          let valueB = b[sortColumn];
-
-          if (sortColumn === "created" || sortColumn === "edited") {
-            valueA = new Date(valueA);
-            valueB = new Date(valueB);
-          } else if (typeof valueA === "string") {
-            valueA = valueA.toLowerCase();
-            valueB = valueB.toLowerCase();
-          }
-
-          if (valueA < valueB) return sortOrder === "asc" ? -1 : 1;
-          if (valueA > valueB) return sortOrder === "asc" ? 1 : -1;
-          return 0;
-        });
-      }
-
-      setCount(filteredScenarios.length);
-
-      // Simulate pagination
-      const startIndex = (page - 1) * itemsPerPage;
-      const paginatedScenarios = filteredScenarios.slice(
-        startIndex,
-        startIndex + itemsPerPage
-      );
-
-      setScenarios(paginatedScenarios);
-    } catch (error) {
-      console.error("Error fetching scenarios:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleDeleteClick = (scenario) => {
-    setScenarioToDelete(scenario);
-    setIsDeleteModalOpen(true);
-  };
-
-  const handleConfirmDelete = () => {
-    // Here you would implement the actual delete functionality
-    // For example:
-    deleteScenario(scenarioToDelete.id);
-
-    // For now, we'll just remove it from the local state
-    setScenarios(scenarios.filter((s) => s.id !== scenarioToDelete.id));
-    setCount(count - 1);
-
-    toast.success(
-      `Scenario "${scenarioToDelete.name}" has been deleted successfully`,
-      {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      }
-    );
-
-    // Close the modal
-    setIsDeleteModalOpen(false);
-    setScenarioToDelete(null);
-  };
-
-  // View scenario handler
-  const handleViewScenario = (scenario) => {
-    setScenarioToView(scenario);
-    setIsViewModalOpen(true);
-  };
-
-  // Initial fetch and refetch on filter/search/pagination changes
+  // When any filter changes, trigger fetch
   useEffect(() => {
-    fetchScenarios(searchQuery, currentPage, dateFilterType, selectedDateRange);
+    fetchScenariosFromAPI();
   }, [
+    currentPage,
+    itemsPerPage,
+    sortColumn,
+    sortOrder,
     selectedOrganizations,
     selectedCorporates,
     selectedBaseYears,
     selectedTargetYears,
     selectedStatuses,
-    currentPage,
-    itemsPerPage,
-    sortColumn,
-    sortOrder,
   ]);
 
   // Debounced search
   useEffect(() => {
     const debouncedFetch = debounce(() => {
-      fetchScenarios(
-        searchQuery,
-        currentPage,
-        dateFilterType,
-        selectedDateRange
-      );
+      fetchScenariosFromAPI();
     }, 400);
 
     if (searchQuery !== null) {
@@ -670,6 +126,484 @@ const ScenarioTable = () => {
 
     return () => debouncedFetch.cancel();
   }, [searchQuery]);
+
+  // The key function to fetch scenarios with filters
+const fetchScenariosFromAPI = async () => {
+  setIsLoading(true);
+  setError(null);
+
+  try {
+    // Build filter object with smallcase and underscores for API
+    const filters = {
+      page: currentPage,
+      page_size: itemsPerPage,
+    };
+
+    // Add search query if not empty
+    if (searchQuery) {
+      filters.search = searchQuery;
+    }
+
+    // Add sorting if column is selected
+    if (sortColumn) {
+      // Convert camelCase to snake_case for API parameters
+      const apiSortColumn = sortColumn.replace(/([A-Z])/g, '_$1').toLowerCase();
+      filters.ordering = sortOrder === "asc" ? apiSortColumn : `-${apiSortColumn}`;
+    }
+
+    // Add array filters using IDs where applicable
+    if (selectedOrganizations.length > 0) {
+      // For organization, pass the IDs
+      filters.organization = selectedOrganizations;
+    }
+    
+    if (selectedCorporates.length > 0) {
+      // For corporate, pass the IDs
+      filters.corporate = selectedCorporates;
+    }
+    
+    if (selectedBaseYears.length > 0) {
+      filters.base_year = selectedBaseYears;
+    }
+    
+    if (selectedTargetYears.length > 0) {
+      filters.target_year = selectedTargetYears;
+    }
+    
+    if (selectedStatuses.length > 0) {
+      filters.status = selectedStatuses.map(status => status.toLowerCase().replace(/ /g, '_'));
+    }
+    
+    // Date range filters
+    if (selectedDateRange.start && selectedDateRange.end) {
+      if (dateFilterType === "created") {
+        filters.created_after = selectedDateRange.start;
+        filters.created_before = selectedDateRange.end;
+      } else {
+        filters.updated_after = selectedDateRange.start;
+        filters.updated_before = selectedDateRange.end;
+      }
+    }
+
+    // Call API service with filters
+    const response = await scenarioService.fetchScenarios(filters);
+    
+    // Update local state with response
+    setScenarios(response.results || []);
+    setCount(response.count || 0);
+    
+    // Extract unique values for filters from response
+    if (response.results && response.results.length > 0) {
+      // Use Map to ensure uniqueness of organizations and corporates
+      const orgMap = new Map();
+      const corpMap = new Map();
+      
+      response.results.forEach(s => {
+        // Add organizations to map (id -> name)
+        if (s.organization && s.organization_name) {
+          orgMap.set(s.organization, s.organization_name);
+        }
+        
+        // Add corporates to map (id -> name)
+        if (s.corporate && s.corporate_name) {
+          corpMap.set(s.corporate, s.corporate_name);
+        }
+      });
+      
+      // Convert maps to arrays of {id, name} objects
+      const orgs = Array.from(orgMap.entries()).map(([id, name]) => ({ id, name }));
+      const corps = Array.from(corpMap.entries()).map(([id, name]) => ({ id, name }));
+      
+      // Extract unique base years and target years
+      const baseYrs = [...new Set(response.results.map(s => s.base_year).filter(Boolean))];
+      const targetYrs = [...new Set(response.results.map(s => s.target_year).filter(Boolean))];
+      
+      // Update state
+      setOrganizations(orgs);
+      setCorporates(corps);
+      setBaseYears(baseYrs);
+      setTargetYears(targetYrs);
+    }
+  } catch (error) {
+    console.error("Error fetching scenarios:", error);
+    setError("Failed to load scenarios. Please try again later.");
+    toast.error("Failed to load scenarios. Please try again later.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+  const handleDeleteClick = (scenario) => {
+    setScenarioToDelete(scenario);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!scenarioToDelete || !scenarioToDelete.id) return;
+
+    setIsLoading(true);
+    try {
+      const response = await scenarioService.deleteScenario(scenarioToDelete.id);
+
+      // Update local state
+      setScenarios(scenarios.filter((s) => s.id !== scenarioToDelete.id));
+      setCount(count - 1);
+
+      toast.success(
+        `Scenario "${scenarioToDelete.name}" has been deleted successfully`,
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
+
+      // Close the modal
+      setIsDeleteModalOpen(false);
+      setScenarioToDelete(null);
+    } catch (error) {
+      console.error("Error deleting scenario:", error);
+      toast.error("Failed to delete scenario. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // View scenario handler
+  const handleViewScenario = (scenario) => {
+    setScenarioToView(scenario);
+    setIsViewModalOpen(true);
+  };
+
+  // Handle create scenario
+  const handleCreateScenario = async (newScenarioData) => {
+    setIsLoading(true);
+    try {
+      const response = await scenarioService.createScenario(
+        newScenarioData
+      );
+      const createdScenario = response.data;
+      // Refresh scenarios list after creation
+      fetchScenariosFromAPI();
+
+      toast.success(
+        response.message,
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
+      if(createdScenario.id)
+      router.push(`Optimise/${createdScenario.id}/edit`)
+      return createdScenario;
+    } catch (error) {
+      console.error("Error creating scenario:", error);
+      toast.error("Failed to create scenario. Please try again.");
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSort = (column) => {
+    setSortColumn(column);
+    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
+  };
+
+// Organization selection handler
+const handleOrgSelection = (orgId, orgName, isClearAll = false) => {
+  if (isClearAll) {
+    // Clear all organizations
+    setSelectedOrganizations([]);
+    setSelectedOrganizationNames([]);
+    return;
+  }
+  
+  // If we only receive an ID (for backward compatibility)
+  if (orgName === undefined) {
+    // Try to find the name in the organizations array
+    const org = organizations.find(o => o.id === orgId);
+    orgName = org ? org.name : orgId; // Fallback to using ID as name
+  }
+  
+  // Check if organization is already selected
+  const isAlreadySelected = selectedOrganizations.includes(orgId);
+  
+  if (isAlreadySelected) {
+    // Remove organization ID
+    const indexToRemove = selectedOrganizations.indexOf(orgId);
+    const newSelectedOrgs = selectedOrganizations.filter(id => id !== orgId);
+    
+    // Also remove the name
+    const newSelectedOrgNames = [...selectedOrganizationNames];
+    if (indexToRemove !== -1) {
+      newSelectedOrgNames.splice(indexToRemove, 1);
+    }
+    
+    // Set both states separately
+    setSelectedOrganizations(newSelectedOrgs);
+    setSelectedOrganizationNames(newSelectedOrgNames);
+  } else {
+    // Add organization ID and name
+    const newSelectedOrgs = [...selectedOrganizations, orgId];
+    const newSelectedOrgNames = [...selectedOrganizationNames, orgName];
+    
+    // Set both states separately
+    setSelectedOrganizations(newSelectedOrgs);
+    setSelectedOrganizationNames(newSelectedOrgNames);
+  }
+};
+
+// Corporate selection handler
+const handleCorporateSelection = (corpId, corpName, isClearAll = false) => {
+  if (isClearAll) {
+    // Clear all corporates
+    setSelectedCorporates([]);
+    setSelectedCorporateNames([]);
+    return;
+  }
+  
+  // If we only receive an ID (for backward compatibility)
+  if (corpName === undefined) {
+    // Try to find the name in the corporates array
+    const corp = corporates.find(c => c.id === corpId);
+    corpName = corp ? corp.name : corpId; // Fallback to using ID as name
+  }
+  
+  // Check if corporate is already selected
+  const isAlreadySelected = selectedCorporates.includes(corpId);
+  
+  if (isAlreadySelected) {
+    // Remove corporate ID
+    const indexToRemove = selectedCorporates.indexOf(corpId);
+    const newSelectedCorps = selectedCorporates.filter(id => id !== corpId);
+    
+    // Also remove the name
+    const newSelectedCorpNames = [...selectedCorporateNames];
+    if (indexToRemove !== -1) {
+      newSelectedCorpNames.splice(indexToRemove, 1);
+    }
+    
+    // Set both states separately
+    setSelectedCorporates(newSelectedCorps);
+    setSelectedCorporateNames(newSelectedCorpNames);
+  } else {
+    // Add corporate ID and name
+    const newSelectedCorps = [...selectedCorporates, corpId];
+    const newSelectedCorpNames = [...selectedCorporateNames, corpName];
+    
+    // Set both states separately
+    setSelectedCorporates(newSelectedCorps);
+    setSelectedCorporateNames(newSelectedCorpNames);
+  }
+};
+
+// Modified FilterModal component
+const FilterModal = ({
+  title,
+  items,
+  selectedItems,
+  handleSelection,
+  onClose,
+  useIdForValue = false,
+}) => {
+  return (
+    <div className="absolute z-10 top-full mt-2 left-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
+      <div className="p-4">
+        <div className="flex justify-between items-center mb-3">
+          <div className="flex items-center gap-1">
+          <FiFilter className="w-4 h-4" />
+          <h3 className="text-sm font-semibold text-gray-900">{title}</h3></div>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            <FiX className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="space-y-2 max-h-60 overflow-y-auto">
+          {items.map((item) => {
+            // Check if item is an object with id and name
+            const isObjectWithIdName = typeof item === "object" && item !== null && 'id' in item && 'name' in item;
+            
+            // Get ID and name from item
+            const id = isObjectWithIdName ? item.id : item;
+            const name = isObjectWithIdName ? item.name : (typeof item === "object" ? item.label || item.name : item);
+            
+            // Check if item is selected by ID
+            const isSelected = selectedItems.includes(id);
+            
+            return (
+              <label
+                key={id}
+                className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  checked={isSelected}
+                  onChange={() => handleSelection(id, name)}
+                  className="w-4 h-4 green-checkbox rounded border-gray-300"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-gray-900 truncate">
+                    {name}
+                  </div>
+                </div>
+              </label>
+            );
+          })}
+        </div>
+        {selectedItems.length > 0 && (
+          <div className="pt-2 mt-2 border-t border-gray-200">
+            <button
+              onClick={() => {
+                // Clear all selections for this filter
+                const filterType = title.toLowerCase().includes('organization') ? 'organization' :
+                                  title.toLowerCase().includes('corporate') ? 'corporate' :
+                                  title.toLowerCase().includes('base year') ? 'baseYear' :
+                                  title.toLowerCase().includes('target year') ? 'targetYear' : 'status';
+                handleSelection(null, null, true); // Pass true to indicate clearing all
+                onClose();
+              }}
+              className="text-sm text-blue-600 hover:text-blue-800"
+            >
+              Clear selections
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+  const handleBaseYearSelection = (year) => {
+    setSelectedBaseYears((prev) => {
+      if (prev.includes(year)) {
+        return prev.filter((item) => item !== year);
+      }
+      return [...prev, year];
+    });
+    // Trigger fetch with updated filters
+  };
+
+  const handleTargetYearSelection = (year) => {
+    setSelectedTargetYears((prev) => {
+      if (prev.includes(year)) {
+        return prev.filter((item) => item !== year);
+      }
+      return [...prev, year];
+    });
+    // Trigger fetch with updated filters
+  };
+
+  const handleClearOrgFilter = (orgId) => {
+    // Find the index of the ID in the selectedOrganizations array
+    const index = selectedOrganizations.indexOf(orgId);
+
+    if (index !== -1) {
+      // Remove both the ID and the corresponding name
+      setSelectedOrganizations((prev) => prev.filter((id) => id !== orgId));
+      setSelectedOrganizationNames((prev) => {
+        const newNames = [...prev];
+        newNames.splice(index, 1);
+        return newNames;
+      });
+    } else if (!orgId) {
+      // Clear all organizations
+      setSelectedOrganizations([]);
+      setSelectedOrganizationNames([]);
+    }
+  };
+
+  // Clear a specific corporate filter value
+  const handleClearCorpFilter = (corpId) => {
+    // Find the index of the ID in the selectedCorporates array
+    const index = selectedCorporates.indexOf(corpId);
+
+    if (index !== -1) {
+      // Remove both the ID and the corresponding name
+      setSelectedCorporates((prev) => prev.filter((id) => id !== corpId));
+      setSelectedCorporateNames((prev) => {
+        const newNames = [...prev];
+        newNames.splice(index, 1);
+        return newNames;
+      });
+    } else if (!corpId) {
+      // Clear all corporates
+      setSelectedCorporates([]);
+      setSelectedCorporateNames([]);
+    }
+  };
+
+  // Modified clear filter function to handle ID-based filters
+  const handleClearFilter = (filterType, value) => {
+    switch (filterType) {
+      case "organization":
+        handleClearOrgFilter(value);
+        break;
+      case "corporate":
+        handleClearCorpFilter(value);
+        break;
+      case "baseYear":
+        if (value) {
+          // Clear specific base year
+          setSelectedBaseYears((prev) => prev.filter((item) => item !== value));
+        } else {
+          // Clear all base years
+          setSelectedBaseYears([]);
+        }
+        break;
+      case "targetYear":
+        if (value) {
+          // Clear specific target year
+          setSelectedTargetYears((prev) =>
+            prev.filter((item) => item !== value)
+          );
+        } else {
+          // Clear all target years
+          setSelectedTargetYears([]);
+        }
+        break;
+      case "status":
+        if (value) {
+          // Clear specific status
+          setSelectedStatuses((prev) => prev.filter((item) => item !== value));
+        } else {
+          // Clear all statuses
+          setSelectedStatuses([]);
+        }
+        break;
+      case "date":
+        // Clear date range
+        setSelectedDateRange({ start: null, end: null });
+        break;
+      case "all":
+        // Clear all filters
+        setSelectedOrganizations([]);
+        setSelectedOrganizationNames([]);
+        setSelectedCorporates([]);
+        setSelectedCorporateNames([]);
+        setSelectedBaseYears([]);
+        setSelectedTargetYears([]);
+        setSelectedStatuses([]);
+        setSelectedDateRange({ start: null, end: null });
+        setSearchQuery("");
+        break;
+      default:
+        break;
+    }
+  };
 
   // Add click outside handler for filters
   useEffect(() => {
@@ -710,115 +644,17 @@ const ScenarioTable = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleSort = (column) => {
-    setSortColumn(column);
-    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
-  };
-
-  // Selection handlers for different filter types
-  const handleOrgSelection = (org) => {
-    setSelectedOrganizations((prev) => {
-      if (prev.includes(org)) {
-        return prev.filter((item) => item !== org);
-      }
-      return [...prev, org];
-    });
-  };
-
-  const handleStatusSelection = (status) => {
-    setSelectedStatuses((prev) => {
-      if (prev.includes(status)) {
-        return prev.filter((item) => item !== status);
-      }
-      return [...prev, status];
-    });
-  };
-
-  const handleBaseYearSelection = (year) => {
-    setSelectedBaseYears((prev) => {
-      if (prev.includes(year)) {
-        return prev.filter((item) => item !== year);
-      }
-      return [...prev, year];
-    });
-  };
-
-  const handleTargetYearSelection = (year) => {
-    setSelectedTargetYears((prev) => {
-      if (prev.includes(year)) {
-        return prev.filter((item) => item !== year);
-      }
-      return [...prev, year];
-    });
-  };
-
-  const handleCorporateSelection = (corp) => {
-    setSelectedCorporates((prev) => {
-      if (prev.includes(corp)) {
-        return prev.filter((item) => item !== corp);
-      }
-      return [...prev, corp];
-    });
-  };
-
-  const router = useRouter();
-
   const totalPages = Math.ceil(count / itemsPerPage);
 
-  // Filter Modal component
-  const FilterModal = ({
-    title,
-    items,
-    selectedItems,
-    handleSelection,
-    onClose,
-  }) => {
-    return (
-      <div className="absolute z-10 top-full mt-2 left-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
-        <div className="p-4">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-sm font-medium text-gray-900">{title}</h3>
-            <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
-            >
-              <FiX className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="space-y-2 max-h-60 overflow-y-auto">
-            {items.map((item) => (
-              <label
-                key={typeof item === "object" ? item.id : item}
-                className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  checked={selectedItems.includes(
-                    typeof item === "object" ? item.name || item.label : item
-                  )}
-                  onChange={() =>
-                    handleSelection(
-                      typeof item === "object" ? item.name || item.label : item
-                    )
-                  }
-                  className="w-4 h-4 green-checkbox rounded border-gray-300"
-                />
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-900 truncate">
-                    {typeof item === "object" ? item.name || item.label : item}
-                  </div>
-                </div>
-              </label>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
+  // Check if any filters are active
+  const hasActiveFilters =
+    selectedOrganizations.length > 0 ||
+    selectedCorporates.length > 0 ||
+    selectedBaseYears.length > 0 ||
+    selectedTargetYears.length > 0 ||
+    selectedStatuses.length > 0 ||
+    (selectedDateRange.start && selectedDateRange.end) ||
+    searchQuery;
 
   // Empty state component
   const EmptyState = () => (
@@ -843,6 +679,27 @@ const ScenarioTable = () => {
     </div>
   );
 
+  // Error state component
+  const ErrorState = () => (
+    <div className="flex flex-col items-center justify-center py-16 my-8">
+      <div className="mb-8 text-red-500">
+        <FiX className="w-16 h-16" />
+      </div>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Error Loading Scenarios
+      </h2>
+      <p className="text-center text-gray-600 mb-8 max-w-lg">
+        {error || "Something went wrong. Please try again later."}
+      </p>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-medium hover:bg-blue-600 transition-colors"
+        onClick={() => fetchScenariosFromAPI()}
+      >
+        Try Again
+      </button>
+    </div>
+  );
+
   return (
     <>
       <div>
@@ -853,18 +710,22 @@ const ScenarioTable = () => {
               Scenario Creation Dashboard
             </h1>
             <p className="text-gray-500 mt-1 w-[80%]">
-            Create new scenarios, view existing ones, and make adjustments to your plans. Track your progress, compare different strategies, and visualize your path to achieving net-zero goals. Start by creating a new scenario or explore your saved plans to refine and optimize your sustainability journey.
+              Create new scenarios, view existing ones, and make adjustments to
+              your plans. Track your progress, compare different strategies, and
+              visualize your path to achieving net-zero goals. Start by creating
+              a new scenario or explore your saved plans to refine and optimize
+              your sustainability journey.
             </p>
           </div>
 
           <div className="w-[20%] flex justify-end">
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-1 w-[210px]"
-            onClick={() => setIsCreateModalOpen(true)}
-          >
-            <span>Create New Scenario</span>
-            <span className="font-bold ml-2">+</span>
-          </button>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-1 w-[210px]"
+              onClick={() => setIsCreateModalOpen(true)}
+            >
+              <span>Create New Scenario</span>
+              <span className="font-bold ml-2">+</span>
+            </button>
           </div>
         </div>
 
@@ -880,9 +741,7 @@ const ScenarioTable = () => {
                 </span>
                 <button
                   className="text-gray-400 hover:text-gray-600"
-                  onClick={() =>
-                    setSelectedDateRange({ start: null, end: null })
-                  }
+                  onClick={() => handleClearFilter("date")}
                 >
                   <FiX className="w-4 h-4" />
                 </button>
@@ -897,7 +756,7 @@ const ScenarioTable = () => {
                 </span>
                 <button
                   className="text-gray-400 hover:text-gray-600"
-                  onClick={() => setSelectedBaseYears([])}
+                  onClick={() => handleClearFilter("baseYear")}
                 >
                   <FiX className="w-4 h-4" />
                 </button>
@@ -912,37 +771,37 @@ const ScenarioTable = () => {
                 </span>
                 <button
                   className="text-gray-400 hover:text-gray-600"
-                  onClick={() => setSelectedTargetYears([])}
+                  onClick={() => handleClearFilter("targetYear")}
                 >
                   <FiX className="w-4 h-4" />
                 </button>
               </div>
             )}
 
-            {selectedOrganizations.length > 0 && (
+            {selectedOrganizationNames.length > 0 && (
               <div className="inline-flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2 text-blue-600">
                 <span className="text-gray-600">Organization:</span>
                 <span className="font-medium">
-                  {selectedOrganizations.join(", ")}
+                  {selectedOrganizationNames.join(", ")}
                 </span>
                 <button
                   className="text-gray-400 hover:text-gray-600"
-                  onClick={() => setSelectedOrganizations([])}
+                  onClick={() => handleClearFilter("organization")}
                 >
                   <FiX className="w-4 h-4" />
                 </button>
               </div>
             )}
 
-            {selectedCorporates.length > 0 && (
+            {selectedCorporateNames.length > 0 && (
               <div className="inline-flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2 text-blue-600">
                 <span className="text-gray-600">Corporate:</span>
                 <span className="font-medium">
-                  {selectedCorporates.join(", ")}
+                  {selectedCorporateNames.join(", ")}
                 </span>
                 <button
                   className="text-gray-400 hover:text-gray-600"
-                  onClick={() => setSelectedCorporates([])}
+                  onClick={() => handleClearFilter("corporate")}
                 >
                   <FiX className="w-4 h-4" />
                 </button>
@@ -957,11 +816,22 @@ const ScenarioTable = () => {
                 </span>
                 <button
                   className="text-gray-400 hover:text-gray-600"
-                  onClick={() => setSelectedStatuses([])}
+                  onClick={() => handleClearFilter("status")}
                 >
                   <FiX className="w-4 h-4" />
                 </button>
               </div>
+            )}
+
+            {/* Clear all filters button - only show when filters are active */}
+            {hasActiveFilters && (
+              <button
+                onClick={() => handleClearFilter("all")}
+                className="inline-flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-200"
+              >
+                <span>Clear all filters</span>
+                <FiX className="w-4 h-4" />
+              </button>
             )}
           </div>
 
@@ -975,11 +845,21 @@ const ScenarioTable = () => {
               value={searchQuery}
               onChange={handleSearch}
             />
+            {searchQuery && (
+              <button
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                onClick={() => setSearchQuery("")}
+              >
+                <FiX className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Conditional rendering - show empty state or table */}
-        {count === 0 && !isLoading ? (
+        {/* Conditional rendering - show empty state, error state, or table */}
+        {error ? (
+          <ErrorState />
+        ) : count === 0 && !isLoading ? (
           <EmptyState />
         ) : (
           <>
@@ -1011,18 +891,9 @@ const ScenarioTable = () => {
                   <div className="flex items-center gap-2">
                     <div
                       className="flex items-center gap-1 cursor-pointer"
-                      onClick={() => handleSort("baseYear")}
+                      // onClick={() => handleSort("base_year")}
                     >
                       Base Year
-                      {sortColumn === "baseYear" ? (
-                        sortOrder === "asc" ? (
-                          <FiChevronUp />
-                        ) : (
-                          <FiChevronDown />
-                        )
-                      ) : (
-                        <LuChevronsUpDown className="ml-1 h-4 w-4" />
-                      )}
                     </div>
                     <button
                       onClick={() =>
@@ -1056,10 +927,10 @@ const ScenarioTable = () => {
                   <div className="flex items-center gap-2">
                     <div
                       className="flex items-center gap-1 cursor-pointer"
-                      onClick={() => handleSort("targetYear")}
+                      // onClick={() => handleSort("target_year")}
                     >
                       Target Year
-                      {sortColumn === "targetYear" ? (
+                      {/* {sortColumn === "target_year" ? (
                         sortOrder === "asc" ? (
                           <FiChevronUp />
                         ) : (
@@ -1067,7 +938,7 @@ const ScenarioTable = () => {
                         )
                       ) : (
                         <LuChevronsUpDown className="ml-1 h-4 w-4" />
-                      )}
+                      )} */}
                     </div>
                     <button
                       onClick={() =>
@@ -1159,10 +1030,10 @@ const ScenarioTable = () => {
                 {/* Created - Sortable */}
                 <div
                   className="col-span-1 flex items-center gap-2 cursor-pointer"
-                  onClick={() => handleSort("created")}
+                  onClick={() => handleSort("created_at")}
                 >
                   Created
-                  {sortColumn === "created" ? (
+                  {sortColumn === "created_at" ? (
                     sortOrder === "asc" ? (
                       <FiChevronUp />
                     ) : (
@@ -1176,10 +1047,10 @@ const ScenarioTable = () => {
                 {/* Edited - Sortable */}
                 <div
                   className="col-span-1 flex items-center gap-2 cursor-pointer"
-                  onClick={() => handleSort("edited")}
+                  onClick={() => handleSort("created_at")}
                 >
                   Edited
-                  {sortColumn === "edited" ? (
+                  {sortColumn === "created_at" ? (
                     sortOrder === "asc" ? (
                       <FiChevronUp />
                     ) : (
@@ -1194,7 +1065,7 @@ const ScenarioTable = () => {
               </div>
 
               {/* Scrollable Table body */}
-              <div className="max-h-[410px] overflow-y-auto">
+              <div className="min-h-[410px] max-h-[410px] overflow-y-auto">
                 <div className="divide-y divide-gray-200">
                   {isLoading ? (
                     <div className="py-12 flex justify-center">
@@ -1215,27 +1086,37 @@ const ScenarioTable = () => {
                           )}
                         </div>
 
-                        <div className="col-span-1">{scenario.baseYear}</div>
-                        <div className="col-span-1">{scenario.targetYear}</div>
-                        <div className="col-span-1">
-                          {scenario.organization}
+                        <div className="col-span-1 text-slate-600">
+                          {scenario.base_year}
                         </div>
-                        <div className="col-span-1">{scenario.corporate}</div>
+                        <div className="col-span-1 text-slate-600">
+                          {scenario.target_year}
+                        </div>
+                        <div className="col-span-1 text-slate-600">
+                          {scenario.organization_name}
+                        </div>
+                        <div className="col-span-1 text-slate-600">
+                          {scenario.corporate_name || (
+                            <span className="text-slate-400 text-sm font-semibold">
+                              Not Applicable
+                            </span>
+                          )}
+                        </div>
 
-                        <div className="col-span-1 text-gray-500">
-                          <div>{scenario.createdBy}</div>
+                        <div className="col-span-1 text-slate-600">
+                          <div>{scenario.created_by_name}</div>
                           <div className="text-xs">
                             <Moment format="DD/MM/YYYY">
-                              {scenario.created}
+                              {scenario.created_at}
                             </Moment>
                           </div>
                         </div>
 
-                        <div className="col-span-1 text-gray-500">
-                          <div>{scenario.editedBy}</div>
+                        <div className="col-span-1 text-slate-600">
+                          <div>{scenario.updated_by_name}</div>
                           <div className="text-xs">
                             <Moment format="DD/MM/YYYY">
-                              {scenario.edited}
+                              {scenario.updated_at}
                             </Moment>
                           </div>
                         </div>
@@ -1336,10 +1217,14 @@ const ScenarioTable = () => {
                   <option value="50">50 per page</option>
                 </select>
 
-                {/* <div className="text-sm text-gray-500 ml-4">
-                Showing {scenarios.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0} to{" "}
-                {Math.min(currentPage * itemsPerPage, count)} of {count} scenarios
-              </div> */}
+                <div className="text-sm text-gray-500 ml-4">
+                  Showing{" "}
+                  {scenarios.length > 0
+                    ? (currentPage - 1) * itemsPerPage + 1
+                    : 0}{" "}
+                  to {Math.min(currentPage * itemsPerPage, count)} of {count}{" "}
+                  scenarios
+                </div>
               </div>
             </div>
           </>
@@ -1364,7 +1249,7 @@ const ScenarioTable = () => {
       <CreateScenarioModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
-        scenarioData={scenarioToView}
+        onCreateScenario={handleCreateScenario}
       />
     </>
   );
