@@ -692,8 +692,6 @@ const MyTask = ({ HomeActiveTab }) => {
 
   return (
     <>
-      <ToastContainer style={{ fontSize: "12px" }} />
-
       <div className="rounded-lg shadow border border-gray-200 xl:p-4 xl:px-6 p-2 flex flex-col h-[650px] xl:h-[470px] lg:h-[470px] md:h-[470px] 4k:h-[470px]">
         <TaskHeader onAddTask={() => toggleModal("isModalOpen", true)} />
         <TaskTabs
@@ -747,7 +745,9 @@ const MyTask = ({ HomeActiveTab }) => {
           setTaskAssigndata({
             ...taskassigndata,
             activity: e.target.value,
-            unit_type: e.target.value.split("-")[e.target.value.split("-").length - 1].trim(),
+            unit_type: e.target.value
+              .split("-")
+              [e.target.value.split("-").length - 1].trim(),
           });
         }}
         onTaskDataChange={(changes) => {
