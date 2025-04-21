@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Select from 'react-select';
 import { MdOutlineDeleteOutline, MdAdd, MdInfoOutline } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
@@ -92,17 +92,21 @@ const CustomTableWidget8 = ({
     label: loc.location_name,
 
   }));
-  console.log(locationdata,"test value");
+
   const updateField = (index, key, newValue) => {
     const updatedRows = localData.map((row, rowIndex) =>
       rowIndex === index ? { ...row, [key]: newValue } : row
+    
     );
     setLocalData(updatedRows);
+    onChange(updatedRows);
     console.log(index, key, newValue,"test data");
+    console.log(updatedRows,"test value");
   };
 
   const syncWithParent = () => {
     onChange(localData);
+    console.log(localData,"test value loacdata");
   };
 
   const handleAddRow = () => {
@@ -114,15 +118,18 @@ const CustomTableWidget8 = ({
       locationandoperation: [],
     };
     setLocalData([...localData, newRow]);
-    syncWithParent(); // Update parent
+    // syncWithParent(); // Update parent
   };
 
   const handleRemoveRow = (index) => {
     const updatedRows = localData.filter((_, rowIndex) => rowIndex !== index);
     setLocalData(updatedRows);
-    syncWithParent(); // Update parent
+    // syncWithParent(); // Update parent
   };
-
+  useEffect(() => {
+    onChange(localData); // Sync data with the parent whenever `localData` changes
+    console.log("Synced with parent:", localData);
+  }, [localData, onChange]); // Only run when `localData` changes
   const customStyles = {
     control: (provided) => ({
       ...provided,
@@ -314,6 +321,7 @@ const CustomTableWidget8 = ({
                       onChange={(selectedOptions) => {
                         const updatedValues = selectedOptions.map((opt) => opt.value);
                         updateField(rowIndex, key, updatedValues);
+                        syncWithParent(); // ✅ IMMEDIATE SYNC here
                       }}
                       onBlur={syncWithParent} // Sync with parent on blur
                       options={locationOptions}
