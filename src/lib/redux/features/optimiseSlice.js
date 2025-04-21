@@ -65,14 +65,7 @@ export const updateScenarioActivities = createAsyncThunk(
 // Initial state
 const initialState = {
   currentScenario: null,
-  selectedMetrics: {
-    fte: false,
-    area: false,
-    productionVolume: false,
-    revenue: false,
-  },
-  metricsWeightages: {},
-  metricsData: {},
+  metricsData: {}, // This will contain all metrics data including weightages
   selectedActivities: [],
   currentStep: 1,
   loading: {
@@ -87,8 +80,28 @@ const initialState = {
   }
 };
 
+// Helper function to extract selected metrics from metrics data
+const getSelectedMetrics = (metricsData) => {
+  const selectedMetrics = {};
+  
+  // For each metric (fte, area, etc), check if it's enabled in the data
+  Object.keys(metricsData).forEach(key => {
+    // Only process direct metric keys (fte, area, etc), not fte_data or fte_weightage
+    if (!key.includes('_')) {
+      // Check if key is a valid business metric
+      if (['fte', 'area', 'production_volume', 'revenue'].includes(key)) {
+        selectedMetrics[key] = Boolean(metricsData[key]);
+      }
+    }
+  });
+  
+  return selectedMetrics;
+};
+
 // Helper function to calculate equal weightages
-const calculateEqualWeightages = (selectedMetrics) => {
+const calculateEqualWeightages = (metricsData) => {
+  // Get selected metrics from the metrics data
+  const selectedMetrics = getSelectedMetrics(metricsData);
   const activeMetrics = Object.keys(selectedMetrics).filter(key => selectedMetrics[key]);
   const count = activeMetrics.length;
   
@@ -98,7 +111,10 @@ const calculateEqualWeightages = (selectedMetrics) => {
   const weightages = {};
   
   activeMetrics.forEach(metric => {
-    weightages[metric] = equalWeight;
+    // Only valid business metrics should receive weightages
+    if (['fte', 'area', 'production_volume', 'revenue'].includes(metric)) {
+      weightages[metric] = equalWeight;
+    }
   });
   
   return weightages;
@@ -115,42 +131,35 @@ const optimiseSlice = createSlice({
     toggleMetric: (state, action) => {
       const metricId = action.payload;
       
-      // Toggle the boolean value of the metric
-      state.selectedMetrics[metricId] = !state.selectedMetrics[metricId];
+      // Toggle the metric in metricsData
+      state.metricsData[metricId] = !state.metricsData[metricId];
       
-      // Update weightages when a metric is toggled
-      const activeMetrics = Object.keys(state.selectedMetrics)
-        .filter(key => state.selectedMetrics[key]);
-      
-      const count = activeMetrics.length;
+      // Get selected metrics from updated metrics data
+      const validMetricIds = ['fte', 'area', 'production_volume', 'revenue'];
+      const activeMetricIds = validMetricIds.filter(key => state.metricsData[key]);
+      const count = activeMetricIds.length;
       
       if (count > 0) {
         // Calculate equal weightage distribution
         const equalWeight = parseFloat((1 / count).toFixed(2));
         
-        // Create new weightages object
-        const newWeightages = {};
-        activeMetrics.forEach(metric => {
-          newWeightages[metric] = equalWeight;
+        // Update the weightages in metricsData
+        activeMetricIds.forEach(metric => {
+          state.metricsData[`${metric}_weightage`] = equalWeight;
         });
-        
-        // Update state
-        state.metricsWeightages = newWeightages;
-      } else {
-        // If no metrics are selected, clear weightages
-        state.metricsWeightages = {};
       }
-    },
-    setMetricWeightages: (state, action) => {
-      state.metricsWeightages = action.payload;
     },
     updateMetricData: (state, action) => {
       const { metricId, data } = action.payload;
-      if (!state.metricsData[metricId]) {
-        state.metricsData[metricId] = {};
+      
+      // Initialize metric data structure if it doesn't exist
+      if (!state.metricsData[`${metricId}_data`]) {
+        state.metricsData[`${metricId}_data`] = {};
       }
-      state.metricsData[metricId] = {
-        ...state.metricsData[metricId],
+      
+      // Update metric data with new values
+      state.metricsData[`${metricId}_data`] = {
+        ...state.metricsData[`${metricId}_data`],
         ...data
       };
     },
@@ -191,39 +200,8 @@ const optimiseSlice = createSlice({
       .addCase(fetchScenarioMetrics.fulfilled, (state, action) => {
         state.loading.metrics = false;
         
-        // Extract metrics data from API response
-        const metricsData = {};
-        const selectedMetrics = { ...initialState.selectedMetrics };
-        const weightages = {};
-        
-        // Process each key in the API response
-        Object.keys(action.payload).forEach(key => {
-          // Handle main metric toggles (e.g., "fte", "area")
-          if (key in selectedMetrics) {
-            selectedMetrics[key] = Boolean(action.payload[key]);
-          }
-          // Handle metric data (e.g., "fte_data")
-          else if (key.endsWith('_data')) {
-            const metricId = key.replace('_data', '');
-            metricsData[metricId] = action.payload[key] || {};
-          }
-          // Handle weightages (e.g., "fte_weightage")
-          else if (key.endsWith('_weightage')) {
-            const metricId = key.replace('_weightage', '');
-            weightages[metricId] = action.payload[key];
-          }
-        });
-        
-        // Update state with extracted data
-        state.selectedMetrics = selectedMetrics;
-        state.metricsData = metricsData;
-        
-        // If weightages were provided in the response, use them; otherwise calculate equal weights
-        if (Object.keys(weightages).length > 0) {
-          state.metricsWeightages = weightages;
-        } else {
-          state.metricsWeightages = calculateEqualWeightages(selectedMetrics);
-        }
+        // Store all metrics data directly
+        state.metricsData = action.payload || {};
       })
       .addCase(fetchScenarioMetrics.rejected, (state, action) => {
         state.loading.metrics = false;
@@ -238,31 +216,9 @@ const optimiseSlice = createSlice({
       .addCase(updateScenarioMetrics.fulfilled, (state, action) => {
         state.loading.metrics = false;
         
-        // Update state based on API response
-        Object.keys(action.payload).forEach(key => {
-          // Handle metric toggles
-          if (key in state.selectedMetrics) {
-            state.selectedMetrics[key] = Boolean(action.payload[key]);
-          }
-          // Handle metric data
-          else if (key.endsWith('_data')) {
-            const metricId = key.replace('_data', '');
-            if (!state.metricsData[metricId]) {
-              state.metricsData[metricId] = {};
-            }
-            state.metricsData[metricId] = {
-              ...state.metricsData[metricId],
-              ...action.payload[key]
-            };
-          }
-          // Handle weightages
-          else if (key.endsWith('_weightage')) {
-            const metricId = key.replace('_weightage', '');
-            if (!state.metricsWeightages) {
-              state.metricsWeightages = {};
-            }
-            state.metricsWeightages[metricId] = action.payload[key];
-          }
+        // Update metricsData with the response data
+        Object.keys(action.payload || {}).forEach(key => {
+          state.metricsData[key] = action.payload[key];
         });
       })
       .addCase(updateScenarioMetrics.rejected, (state, action) => {
@@ -304,7 +260,6 @@ const optimiseSlice = createSlice({
 export const {
   setCurrentStep,
   toggleMetric,
-  setMetricWeightages,
   updateMetricData,
   setSelectedActivities,
   addSelectedActivity,

@@ -49,7 +49,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
   const [businessMetrics, setBusinessMetrics] = useState([
     { id: "fte", name: "FTE", selected: true },
     { id: "area", name: "Area", selected: false },
-    { id: "productionVolume", name: "Production Volume", selected: false },
+    { id: "production_volume", name: "Production Volume", selected: false },
     { id: "revenue", name: "Revenue", selected: false },
   ]);
 

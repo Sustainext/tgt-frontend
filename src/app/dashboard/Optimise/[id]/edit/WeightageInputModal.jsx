@@ -7,39 +7,57 @@ const WeightageInputModal = ({
   selectedMetrics,
   onProceed,
   setCurrentStep,
+  weightages: initialWeightagesFromProps = {}
 }) => {
+  // List of valid business metrics to display in the modal
+  const validMetrics = ["fte", "area", "productionVolume", "revenue"];
+  
   // Initial weightages - equal distribution by default
   const initialWeightages = () => {
-    const metricCount = Object.keys(selectedMetrics).filter(
-      (key) => selectedMetrics[key]
-    ).length;
+    // Filter only valid business metrics that are selected
+    const selectedValidMetrics = validMetrics.filter(metric => selectedMetrics[metric]);
+    const metricCount = selectedValidMetrics.length;
+    
     if (metricCount === 0) return {};
 
     const equalWeight = parseFloat((1 / metricCount).toFixed(2));
     const weightages = {};
 
-    Object.keys(selectedMetrics).forEach((metric) => {
-      if (selectedMetrics[metric]) {
-        weightages[metric] = equalWeight;
-      }
+    // Assign equal weights to selected metrics
+    selectedValidMetrics.forEach(metric => {
+      weightages[metric] = equalWeight;
     });
 
     return weightages;
   };
 
-  const [weightages, setWeightages] = useState(initialWeightages());
+  // Use initialWeightagesFromProps if provided, otherwise calculate defaults
+  const [weightages, setWeightages] = useState(
+    Object.keys(initialWeightagesFromProps).length > 0 
+      ? initialWeightagesFromProps 
+      : initialWeightages()
+  );
+  
   const [total, setTotal] = useState(1);
   const [isValid, setIsValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const inputRefs = useRef({});
 
-  // Reset when metrics change
+  // Reset when metrics change or modal opens
   useEffect(() => {
-    setWeightages(initialWeightages());
-    setTotal(1);
-    setIsValid(true);
-    setErrorMessage("");
-  }, [selectedMetrics]);
+    if (isOpen) {
+      // If we have weightages from props, use those
+      if (Object.keys(initialWeightagesFromProps).length > 0) {
+        setWeightages(initialWeightagesFromProps);
+      } else {
+        // Otherwise calculate equal distribution
+        setWeightages(initialWeightages());
+      }
+      setTotal(1);
+      setIsValid(true);
+      setErrorMessage("");
+    }
+  }, [selectedMetrics, isOpen]);
 
   // Calculate total when weightages change
   useEffect(() => {
@@ -115,19 +133,27 @@ const WeightageInputModal = ({
     setWeightages(initialWeightages());
   };
 
-  // Handle proceed button click
-  const handleProceed = () => {
-    if (isValid) {
-      onProceed(weightages);
+ // Handle proceed button click
+ const handleProceed = async () => {
+  if (isValid) {
+    try {
+      // First, send the updated weightages to the parent component
+      // The parent component is responsible for making the API call
+      // and handling any loading/error states
+      await onProceed(weightages);
+      
+      // Once the API call is successful, close the modal
       onClose();
-      setCurrentStep(2); // Move to step 2
+    } catch (error) {
+      console.error("Error updating weightages:", error);
+      // You could add error handling here, like showing an error message
+      // For now, we'll just log the error and not close the modal
     }
-  };
+  }
+};
 
-  // Get the active metrics as an array
-  const activeMetrics = Object.keys(selectedMetrics).filter(
-    (key) => selectedMetrics[key]
-  );
+  // Get the active metrics as an array - filter only valid business metrics that are selected
+  const activeMetrics = validMetrics.filter(metric => selectedMetrics[metric]);
 
   // Format metric name for display
   const formatMetricName = (name) => {
