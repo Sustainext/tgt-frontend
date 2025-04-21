@@ -33,7 +33,7 @@ const TaskDetailsModal = ({ isOpen, onClose, task, setShowFilePreview }) => {
     <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-end z-50">
       {/* Modal Content */}
       <div
-        className="fixed top-[10rem] right-4 w-[30vw] h-[95vh] bg-white rounded-lg shadow-lg overflow-y-scroll table-scrollbar transition-transform duration-300 ease-in-out transform"
+        className="fixed top-[10rem] right-4 xl:w-[30vw] md:w-[30vw] lg:w-[30vw] 2xl:w-[30vw] 4k:w-[30vw] 2k:w-[30vw] w-[116vw] h-[95vh] bg-white rounded-lg shadow-lg overflow-y-scroll table-scrollbar transition-transform duration-300 ease-in-out transform"
         style={{ transform: animate ? "translateX(0)" : "translateX(100%)" }}
       >
         {/* Modal Header */}
@@ -49,7 +49,7 @@ const TaskDetailsModal = ({ isOpen, onClose, task, setShowFilePreview }) => {
 
         {task.roles === 3 ? (
           <>
-            <div className="bg-white rounded-lg w-[30vw] max-h-[90vh] overflow-y-auto table-scrollbar">
+            <div className="bg-white rounded-lg xl:w-[30vw] md:w-[30vw] lg:w-[30vw] 2xl:w-[30vw] 4k:w-[30vw] 2k:w-[30vw] w-[116vw] max-h-[90vh] overflow-y-auto table-scrollbar">
               <div className="p-6">
                 {/* Content */}
                 <div className="space-y-6">
