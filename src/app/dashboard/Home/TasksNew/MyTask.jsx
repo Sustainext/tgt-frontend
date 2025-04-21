@@ -756,6 +756,7 @@ const MyTask = ({ HomeActiveTab }) => {
             activity: e.target.value,
             //last index of the array after splitting value
             unit_type: e.target.value.split("-")[e.target.value.split("-").length - 1].trim(),
+            activity_id : selectedActivity.activity_id,
           });
         }}
         onTaskDataChange={(changes) => {
