@@ -62,35 +62,104 @@ export const updateScenarioActivities = createAsyncThunk(
   }
 );
 
+// New thunk for fetching emission data
+export const fetchEmissionData = createAsyncThunk(
+  'optimise/fetchEmissionData',
+  async ({ scenarioId, filters = {} }, { rejectWithValue }) => {
+    try {
+      const response = await scenarioService.fetchEmissionData(scenarioId, filters);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+// Thunk for adding activities to a scenario
+export const addActivitiesToScenario = createAsyncThunk(
+  'optimise/addActivitiesToScenario',
+  async ({ scenarioId, activityIds }, { rejectWithValue }) => {
+    try {
+      const response = await scenarioService.addActivitiesToScenario(scenarioId, activityIds);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+// Thunk for removing an activity from a scenario
+export const removeActivityFromScenario = createAsyncThunk(
+  'optimise/removeActivityFromScenario',
+  async ({ scenarioId, activityId }, { rejectWithValue }) => {
+    try {
+      const response = await scenarioService.removeActivityFromScenario(scenarioId, activityId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 // Initial state
 const initialState = {
   currentScenario: null,
   metricsData: {}, // This will contain all metrics data including weightages
   selectedActivities: [],
   currentStep: 1,
+  // Emission data state
+  emissionData: {
+    activities: [],
+    count: 0,
+    filters: {
+      search: '',
+      scopes: [],
+      categories: [],
+      subCategories: [],
+      regions: []
+    },
+    sorting: {
+      column: null,
+      order: 'asc'
+    },
+    pagination: {
+      currentPage: 1,
+      itemsPerPage: 10
+    }
+  },
   loading: {
     scenario: false,
     metrics: false,
     activities: false,
+    emissionData: false
   },
   error: {
     scenario: null,
     metrics: null,
     activities: null,
+    emissionData: null
   }
 };
 
 // Helper function to extract selected metrics from metrics data
 const getSelectedMetrics = (metricsData) => {
-  const selectedMetrics = {};
+  const selectedMetrics = {
+    fte: false,
+    area: false,
+    productionVolume: false,
+    revenue: false
+  };
   
-  // For each metric (fte, area, etc), check if it's enabled in the data
+  // For each metric check if it's enabled in the data
   Object.keys(metricsData).forEach(key => {
     // Only process direct metric keys (fte, area, etc), not fte_data or fte_weightage
     if (!key.includes('_')) {
-      // Check if key is a valid business metric
-      if (['fte', 'area', 'production_volume', 'revenue'].includes(key)) {
-        selectedMetrics[key] = Boolean(metricsData[key]);
+      // Map from snake_case to camelCase if needed
+      const metricKey = key === 'production_volume' ? 'productionVolume' : key;
+      
+      // Set the value if it's a valid business metric
+      if (Object.keys(selectedMetrics).includes(metricKey)) {
+        selectedMetrics[metricKey] = Boolean(metricsData[key]);
       }
     }
   });
@@ -98,22 +167,19 @@ const getSelectedMetrics = (metricsData) => {
   return selectedMetrics;
 };
 
-// Helper function to calculate equal weightages
-const calculateEqualWeightages = (metricsData) => {
-  // Get selected metrics from the metrics data
-  const selectedMetrics = getSelectedMetrics(metricsData);
-  const activeMetrics = Object.keys(selectedMetrics).filter(key => selectedMetrics[key]);
-  const count = activeMetrics.length;
-  
-  if (count === 0) return {};
-  
-  const equalWeight = parseFloat((1 / count).toFixed(2));
+// Helper function to extract weightages from metrics data
+const extractWeightages = (metricsData) => {
   const weightages = {};
   
-  activeMetrics.forEach(metric => {
-    // Only valid business metrics should receive weightages
-    if (['fte', 'area', 'production_volume', 'revenue'].includes(metric)) {
-      weightages[metric] = equalWeight;
+  Object.keys(metricsData).forEach(key => {
+    if (key.endsWith('_weightage')) {
+      // Extract the base metric name
+      const metricName = key.replace('_weightage', '');
+      
+      // Convert snake_case to camelCase if needed
+      const metricKey = metricName === 'production_volume' ? 'productionVolume' : metricName;
+      
+      weightages[metricKey] = metricsData[key];
     }
   });
   
@@ -132,47 +198,82 @@ const optimiseSlice = createSlice({
       const metricId = action.payload;
       
       // Toggle the metric in metricsData
-      state.metricsData[metricId] = !state.metricsData[metricId];
+      const snakeCaseMetricId = metricId === 'productionVolume' ? 'production_volume' : metricId;
+      state.metricsData[snakeCaseMetricId] = !state.metricsData[snakeCaseMetricId];
       
-      // Get selected metrics from updated metrics data
-      const validMetricIds = ['fte', 'area', 'production_volume', 'revenue'];
-      const activeMetricIds = validMetricIds.filter(key => state.metricsData[key]);
-      const count = activeMetricIds.length;
+      // Calculate new equal weightage distribution
+      const selectedMetrics = getSelectedMetrics(state.metricsData);
+      const activeMetrics = Object.keys(selectedMetrics).filter(key => selectedMetrics[key]);
+      const count = activeMetrics.length;
       
       if (count > 0) {
-        // Calculate equal weightage distribution
+        // Calculate equal weightage
         const equalWeight = parseFloat((1 / count).toFixed(2));
         
-        // Update the weightages in metricsData
-        activeMetricIds.forEach(metric => {
-          state.metricsData[`${metric}_weightage`] = equalWeight;
+        // Update weightages
+        activeMetrics.forEach(metric => {
+          const snakeMetric = metric === 'productionVolume' ? 'production_volume' : metric;
+          state.metricsData[`${snakeMetric}_weightage`] = equalWeight;
         });
       }
     },
+    setMetricWeightages: (state, action) => {
+      const weightages = action.payload;
+      
+      // Update the weightages in metricsData
+      Object.keys(weightages).forEach(metricId => {
+        const snakeMetric = metricId === 'productionVolume' ? 'production_volume' : metricId;
+        state.metricsData[`${snakeMetric}_weightage`] = weightages[metricId];
+      });
+    },
     updateMetricData: (state, action) => {
       const { metricId, data } = action.payload;
+      const snakeMetric = metricId === 'productionVolume' ? 'production_volume' : metricId;
       
       // Initialize metric data structure if it doesn't exist
-      if (!state.metricsData[`${metricId}_data`]) {
-        state.metricsData[`${metricId}_data`] = {};
+      if (!state.metricsData[`${snakeMetric}_data`]) {
+        state.metricsData[`${snakeMetric}_data`] = {};
       }
       
       // Update metric data with new values
-      state.metricsData[`${metricId}_data`] = {
-        ...state.metricsData[`${metricId}_data`],
+      state.metricsData[`${snakeMetric}_data`] = {
+        ...state.metricsData[`${snakeMetric}_data`],
         ...data
       };
     },
     setSelectedActivities: (state, action) => {
       state.selectedActivities = action.payload;
     },
-    addSelectedActivity: (state, action) => {
-      state.selectedActivities.push(action.payload);
+    setEmissionDataFilter: (state, action) => {
+      const { filterType, value } = action.payload;
+      state.emissionData.filters[filterType] = value;
+      
+      // Reset to first page when filters change
+      state.emissionData.pagination.currentPage = 1;
     },
-    removeSelectedActivity: (state, action) => {
-      state.selectedActivities = state.selectedActivities.filter(
-        activity => activity.id !== action.payload
-      );
+    clearEmissionDataFilters: (state) => {
+      state.emissionData.filters = {
+        search: '',
+        scopes: [],
+        categories: [],
+        subCategories: [],
+        regions: []
+      };
+    },
+    setEmissionDataSorting: (state, action) => {
+      const { column, order } = action.payload;
+      state.emissionData.sorting = { column, order };
+    },
+    setEmissionDataPagination: (state, action) => {
+      const { currentPage, itemsPerPage } = action.payload;
+      
+      if (currentPage !== undefined) {
+        state.emissionData.pagination.currentPage = currentPage;
+      }
+      
+      if (itemsPerPage !== undefined) {
+        state.emissionData.pagination.itemsPerPage = itemsPerPage;
+      }
     },
     resetOptimiseState: () => initialState
   },
@@ -217,9 +318,7 @@ const optimiseSlice = createSlice({
         state.loading.metrics = false;
         
         // Update metricsData with the response data
-        Object.keys(action.payload || {}).forEach(key => {
-          state.metricsData[key] = action.payload[key];
-        });
+        state.metricsData = action.payload || state.metricsData;
       })
       .addCase(updateScenarioMetrics.rejected, (state, action) => {
         state.loading.metrics = false;
@@ -252,6 +351,51 @@ const optimiseSlice = createSlice({
       .addCase(updateScenarioActivities.rejected, (state, action) => {
         state.loading.activities = false;
         state.error.activities = action.payload || 'Failed to update activities';
+      })
+      
+      // Fetch emission data
+      .addCase(fetchEmissionData.pending, (state) => {
+        state.loading.emissionData = true;
+        state.error.emissionData = null;
+      })
+      .addCase(fetchEmissionData.fulfilled, (state, action) => {
+        state.loading.emissionData = false;
+        state.emissionData.activities = action.payload.results || [];
+        state.emissionData.count = action.payload.count || 0;
+      })
+      .addCase(fetchEmissionData.rejected, (state, action) => {
+        state.loading.emissionData = false;
+        state.error.emissionData = action.payload || 'Failed to fetch emission data';
+      })
+      
+      // Add activities to scenario
+      .addCase(addActivitiesToScenario.pending, (state) => {
+        state.loading.activities = true;
+        state.error.activities = null;
+      })
+      .addCase(addActivitiesToScenario.fulfilled, (state, action) => {
+        state.loading.activities = false;
+        // Update selected activities with the new list from API
+        state.selectedActivities = action.payload || state.selectedActivities;
+      })
+      .addCase(addActivitiesToScenario.rejected, (state, action) => {
+        state.loading.activities = false;
+        state.error.activities = action.payload || 'Failed to add activities to scenario';
+      })
+      
+      // Remove activity from scenario
+      .addCase(removeActivityFromScenario.pending, (state) => {
+        state.loading.activities = true;
+        state.error.activities = null;
+      })
+      .addCase(removeActivityFromScenario.fulfilled, (state, action) => {
+        state.loading.activities = false;
+        // Update selected activities with the new list from API
+        state.selectedActivities = action.payload || state.selectedActivities;
+      })
+      .addCase(removeActivityFromScenario.rejected, (state, action) => {
+        state.loading.activities = false;
+        state.error.activities = action.payload || 'Failed to remove activity from scenario';
       });
   }
 });
@@ -260,10 +404,13 @@ const optimiseSlice = createSlice({
 export const {
   setCurrentStep,
   toggleMetric,
+  setMetricWeightages,
   updateMetricData,
   setSelectedActivities,
-  addSelectedActivity,
-  removeSelectedActivity,
+  setEmissionDataFilter,
+  clearEmissionDataFilters,
+  setEmissionDataSorting,
+  setEmissionDataPagination,
   resetOptimiseState
 } = optimiseSlice.actions;
 

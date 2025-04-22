@@ -23,7 +23,8 @@ import {
   fetchScenarioActivities,
   setCurrentStep,
   setSelectedActivities,
-  resetOptimiseState
+  resetOptimiseState,
+  updateScenarioMetrics
 } from "../../../../../lib/redux/features/optimiseSlice";
 
 const ScenarioEditor = () => {
@@ -141,46 +142,61 @@ const ScenarioEditor = () => {
     dispatch(setCurrentStep(3)); // Move to step 3
   };
 
-   // Process weightage values and move to next step
- const handleWeightageProceed = async (updatedWeightages) => {
-   try {
-     // Show loading indicator if needed
-     
-     // Update Redux state
-     dispatch(setMetricWeightages(updatedWeightages));
-     
-     // Prepare API payload with weightages for selected metrics
-     const payload = {};
-     
-     // Add weightage for each selected metric
-     Object.keys(updatedWeightages).forEach(metric => {
-       payload[`${metric}_weightage`] = updatedWeightages[metric];
-     });
-     
-     // Make the API call if scenarioId exists
-     if (scenarioId) {
-       // Dispatch the API call and wait for it to complete
-       await dispatch(updateScenarioMetrics({ scenarioId, payload })).unwrap();
-       
-       // Log success or show a notification
-       console.log("Weightages successfully updated");
-       
-       // Move to next step only after successful API call
-       dispatch(setCurrentStep(2));
-     } else {
-       // If no scenarioId (unlikely in production), just move to next step
-       dispatch(setCurrentStep(2));
-     }
-   } catch (error) {
-     // Handle errors
-     console.error("Failed to update weightages:", error);
-     
-     // Show error notification to user
-     // You could use a toast notification library here
-     
-     // Don't move to next step if API call fails
-   }
- };
+ // Process weightage values and move to next step
+const handleWeightageProceed = async (updatedWeightages) => {
+  console.log('handleWeightageProceed called with:', updatedWeightages);
+  console.log('Current scenarioId:', scenarioId);
+  
+  try {
+    // Show loading indicator if needed
+    
+    // Prepare API payload with weightages for selected metrics
+    const payload = {};
+    
+    // Add weightage for each selected metric
+    Object.keys(updatedWeightages).forEach(metric => {
+      payload[`${metric}_weightage`] = updatedWeightages[metric];
+    });
+        
+    // Make the API call if scenarioId exists
+    if (scenarioId) {
+      console.log('Making API call to update scenario metrics');
+      
+      // Dispatch the API call and wait for it to complete
+      try {
+        const resultAction = await dispatch(updateScenarioMetrics({ scenarioId, payload }));
+
+        // Check if the action was fulfilled or rejected
+        if (updateScenarioMetrics.fulfilled.match(resultAction)) {
+          
+          dispatch(setCurrentStep(2));
+        } else if (updateScenarioMetrics.rejected.match(resultAction)) {
+          console.error('API call failed with error:', resultAction.error);
+          throw new Error(resultAction.error?.message || 'API call failed');
+        }
+      } catch (innerError) {
+        console.error('Error during API dispatch:', innerError);
+        throw innerError; // Re-throw for outer catch
+      }
+    } else {
+      // If no scenarioId (unlikely in production), just move to next step
+      console.log('No scenarioId found, skipping API call and moving to next step');
+      dispatch(setCurrentStep(2));
+    }
+  } catch (error) {
+    // Handle errors
+    console.error("Failed to update weightages, detailed error:", error);
+    console.error("Error name:", error.name);
+    console.error("Error message:", error.message);
+    console.error("Error stack:", error.stack);
+    
+    // If there's a response error, log it
+    if (error.response) {
+      console.error("Error response data:", error.response.data);
+      console.error("Error response status:", error.response.status);
+    }
+  }
+};
 
   // Go back to dashboard
   const handleBackToDashboard = () => {

@@ -37,6 +37,7 @@ apiClient.interceptors.request.use(
 
 // Scenario API endpoints
 const SCENARIO_ENDPOINT = "/optimize/scenario/";
+const EMISSION_DATA_ENDPOINT = "/optimize/emissiondata/";
 
 /**
  * Get all scenarios with optional filtering
@@ -68,6 +69,79 @@ export const fetchScenarios = async (filters = {}) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching scenarios:", error);
+    throw error;
+  }
+};
+
+/**
+ * Fetch emission data (activities) with optional filtering
+ * @param {number} scenarioId - The ID of the scenario to fetch emission data for
+ * @param {Object} filters - Optional filters for emission data
+ * @returns {Promise} Promise resolving to emission data
+ */
+export const fetchEmissionData = async (scenarioId, filters = {}) => {
+  try {
+    // Convert filters object to URL query params
+    const queryParams = new URLSearchParams();
+    
+    Object.keys(filters).forEach((key) => {
+      if (
+        filters[key] !== null &&
+        filters[key] !== undefined &&
+        filters[key] !== ""
+      ) {
+        // Handle arrays for multi-select filters
+        if (Array.isArray(filters[key]) && filters[key].length > 0) {
+          filters[key].forEach((value) => queryParams.append(key, value));
+        } else {
+          queryParams.append(key, filters[key]);
+        }
+      }
+    });
+
+    const response = await apiClient.get(
+      `/optimize/${scenarioId}/emissiondata/?${queryParams.toString()}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching emission data for scenario ${scenarioId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Add activities to a scenario
+ * @param {number} scenarioId - Scenario ID
+ * @param {Array} activityIds - Array of activity IDs to add
+ * @returns {Promise} Promise resolving to updated scenario activities
+ */
+export const addActivitiesToScenario = async (scenarioId, activityIds) => {
+  try {
+    const response = await apiClient.post(
+      `${SCENARIO_ENDPOINT}${scenarioId}/activities/add/`,
+      { activity_ids: activityIds }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error adding activities to scenario ${scenarioId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Remove an activity from a scenario
+ * @param {number} scenarioId - Scenario ID
+ * @param {number} activityId - Activity ID to remove
+ * @returns {Promise} Promise resolving to updated scenario activities
+ */
+export const removeActivityFromScenario = async (scenarioId, activityId) => {
+  try {
+    const response = await apiClient.delete(
+      `${SCENARIO_ENDPOINT}${scenarioId}/activities/${activityId}/`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error removing activity from scenario ${scenarioId}:`, error);
     throw error;
   }
 };
@@ -182,65 +256,65 @@ export const deleteScenario = async (id) => {
  * @returns {Promise} Promise resolving to metrics data
  */
 export const fetchScenarioMetrics = async (scenarioId) => {
-    try {
-      const response = await apiClient.get(
-        `/optimize/${scenarioId}/businessmetric/`
-      );
-      return response.data;
-    } catch (error) {
-      console.error(`Error fetching metrics for scenario ${scenarioId}:`, error);
-      throw error;
-    }
-  };
+  try {
+    const response = await apiClient.get(
+      `/optimize/${scenarioId}/businessmetric/`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching metrics for scenario ${scenarioId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Update business metrics for a scenario
+ * @param {number} scenarioId - Scenario ID
+ * @param {Object} payload - Metrics data with updates
+ * @returns {Promise} Promise resolving to updated metrics
+ */
+export const updateScenarioMetrics = async (scenarioId, payload) => {
+  try {
+    const response = await apiClient.patch(
+      `/optimize/${scenarioId}/businessmetric/`,
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating metrics for scenario ${scenarioId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Transform metrics data from component format to API payload format
+ * Utility function for when you need to send complete metrics data
+ * @param {Object} metrics - Metrics data from component state
+ * @returns {Object} API-formatted payload
+ */
+export const formatMetricsPayload = (metrics) => {
+  const payload = {};
   
-  /**
-   * Update business metrics for a scenario
-   * @param {number} scenarioId - Scenario ID
-   * @param {Object} payload - Metrics data with updates
-   * @returns {Promise} Promise resolving to updated metrics
-   */
-  export const updateScenarioMetrics = async (scenarioId, payload) => {
-    try {
-      const response = await apiClient.patch(
-        `/optimize/${scenarioId}/businessmetric/`,
-        payload
-      );
-      return response.data;
-    } catch (error) {
-      console.error(`Error updating metrics for scenario ${scenarioId}:`, error);
-      throw error;
+  // Process each metric
+  Object.keys(metrics).forEach(metricKey => {
+    // Handle boolean toggle fields (e.g., "fte")
+    if (!metricKey.includes('_')) {
+      payload[metricKey] = metrics[metricKey];
     }
-  };
+    
+    // Handle data fields (e.g., "fte_data")
+    if (metricKey.endsWith('_data')) {
+      payload[metricKey] = metrics[metricKey];
+    }
+    
+    // Handle weightage fields (e.g., "fte_weightage")
+    if (metricKey.endsWith('_weightage')) {
+      payload[metricKey] = metrics[metricKey];
+    }
+  });
   
-  /**
-   * Transform metrics data from component format to API payload format
-   * Utility function for when you need to send complete metrics data
-   * @param {Object} metrics - Metrics data from component state
-   * @returns {Object} API-formatted payload
-   */
-  export const formatMetricsPayload = (metrics) => {
-    const payload = {};
-    
-    // Process each metric
-    Object.keys(metrics).forEach(metricKey => {
-      // Handle boolean toggle fields (e.g., "fte")
-      if (!metricKey.includes('_')) {
-        payload[metricKey] = metrics[metricKey];
-      }
-      
-      // Handle data fields (e.g., "fte_data")
-      if (metricKey.endsWith('_data')) {
-        payload[metricKey] = metrics[metricKey];
-      }
-      
-      // Handle weightage fields (e.g., "fte_weightage")
-      if (metricKey.endsWith('_weightage')) {
-        payload[metricKey] = metrics[metricKey];
-      }
-    });
-    
-    return payload;
-  };
+  return payload;
+};
 
 /**
  * Get activities for a scenario
@@ -248,42 +322,64 @@ export const fetchScenarioMetrics = async (scenarioId) => {
  * @returns {Promise} Promise resolving to scenario activities
  */
 export const fetchScenarioActivities = async (scenarioId) => {
-    try {
-      const response = await apiClient.get(
-        `${SCENARIO_ENDPOINT}${scenarioId}/activities/`
-      );
-      return response.data;
-    } catch (error) {
-      console.error(
-        `Error fetching activities for scenario ${scenarioId}:`,
-        error
-      );
-      throw error;
-    }
-  };
-  
-  /**
-   * Update activities for a scenario
-   * @param {number} scenarioId - Scenario ID
-   * @param {Array} activities - Array of activity objects
-   * @returns {Promise} Promise resolving to updated activities
-   */
-  export const updateScenarioActivities = async (scenarioId, activities) => {
-    try {
-      const response = await apiClient.put(
-        `${SCENARIO_ENDPOINT}${scenarioId}/activities/`,
-        { activities }
-      );
-      return response.data;
-    } catch (error) {
-      console.error(
-        `Error updating activities for scenario ${scenarioId}:`,
-        error
-      );
-      throw error;
-    }
-  };
-  
+  try {
+    const response = await apiClient.get(
+      `${SCENARIO_ENDPOINT}${scenarioId}/activities/`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Error fetching activities for scenario ${scenarioId}:`,
+      error
+    );
+    throw error;
+  }
+};
+
+/**
+ * Update activities for a scenario
+ * @param {number} scenarioId - Scenario ID
+ * @param {Array} activities - Array of activity objects
+ * @returns {Promise} Promise resolving to updated activities
+ */
+export const updateScenarioActivities = async (scenarioId, activities) => {
+  try {
+    const response = await apiClient.put(
+      `${SCENARIO_ENDPOINT}${scenarioId}/activities/`,
+      { activities }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Error updating activities for scenario ${scenarioId}:`,
+      error
+    );
+    throw error;
+  }
+};
+
+/**
+ * Update consumption pattern for a specific activity in a scenario
+ * @param {number} scenarioId - Scenario ID
+ * @param {number} activityId - Activity ID
+ * @param {Object} consumptionData - Consumption pattern data
+ * @returns {Promise} Promise resolving to updated activity data
+ */
+export const updateActivityConsumption = async (scenarioId, activityId, consumptionData) => {
+  try {
+    const response = await apiClient.patch(
+      `${SCENARIO_ENDPOINT}${scenarioId}/activities/${activityId}/consumption/`,
+      consumptionData
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Error updating consumption for activity ${activityId} in scenario ${scenarioId}:`,
+      error
+    );
+    throw error;
+  }
+};
 
 const EMISSION_DATA_CHECK_ENDPOINT = 'optimize/emissiondataexists/'
 export const checkEmissionDataExists = async (
@@ -324,4 +420,8 @@ export default {
   updateScenarioActivities,
   fetchScenarioMetrics,
   updateScenarioMetrics,
+  fetchEmissionData,
+  addActivitiesToScenario,
+  removeActivityFromScenario,
+  updateActivityConsumption
 };

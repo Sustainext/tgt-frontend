@@ -60,7 +60,7 @@ const BusinessMetricsWithTooltips = ({
       } catch (err) {
         console.error(`Error updating ${metricId} data:`, err);
       }
-    }, 0), // Debounce for 1 second
+    }, 1000), // Debounce for 1 second
     [dispatch, scenarioId]
   );
 

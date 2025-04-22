@@ -292,7 +292,7 @@ const WeightageInputModal = ({
             Reset
           </button>
           <button
-            onClick={handleProceed}
+            // onClick={handleProceed}
             disabled={!isValid}
             className={`px-4 py-2 rounded text-white ${
               isValid
