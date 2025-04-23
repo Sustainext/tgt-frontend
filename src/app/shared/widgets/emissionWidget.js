@@ -53,6 +53,8 @@ const EmissionWidget = React.memo(
     id,
     formRef,
   }) => {
+
+    console.log(value,"see it")
     const dispatch = useDispatch();
     const rowId = scope + "_" + index;
     const [rowType, setRowType] = useState(value.rowType || "default");
@@ -1308,6 +1310,7 @@ const EmissionWidget = React.memo(
                   <input
                     ref={inputRef}
                     type="text"
+                    title={value.Activity?value.Activity:''}
                     placeholder={getActivityPlaceholder()}
                     value={activitySearch}
                     onChange={handleSearchChange}
