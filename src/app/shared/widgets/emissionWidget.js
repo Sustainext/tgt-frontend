@@ -89,6 +89,7 @@ const EmissionWidget = React.memo(
     const middlename = useSelector((state) => state.header.middlename);
     const [isMobile, setIsMobile] = useState(false);
     const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
+
     useEffect(() => {
       const handleResize = () => {
         setIsMobile(window.innerWidth < 768); // Adjust as needed
@@ -107,6 +108,7 @@ const EmissionWidget = React.memo(
 
     const locationname = useSelector((state) => state.emissions.locationName);
     const monthName = useSelector((state) => state.emissions.monthName);
+
 
     //file log code//
     const getIPAddress = async () => {
@@ -239,6 +241,7 @@ const EmissionWidget = React.memo(
     const selectedRows = useSelector(
       (state) => state.emissions.selectedRows[scope]
     );
+
     const scopeDataFull = useSelector(
       (state) => state.emissions[`${scope}Data`]
     );
@@ -525,7 +528,16 @@ const EmissionWidget = React.memo(
         // Find the selected activity object from our activities array
         const foundActivity = activities.find(
           (act) =>
-            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+            // `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+          `${act.name} - (${
+                            act.source
+                          }) - ${act.unit_type} - ${act.region} - ${
+                            act.year
+                          }${
+                            act.source_lca_activity !== "unknown"
+                              ? ` - ${act.source_lca_activity}`
+                              : ""
+                          }` === newActivity
         );
 
         console.log("Found activity:", foundActivity);
@@ -550,6 +562,8 @@ const EmissionWidget = React.memo(
           Unit: "",
           Unit2: "",
         };
+
+        // setUnitType(foundActivity ? foundActivity.unit_type : "")
 
         // Update form state
         onChange(updatedValue);
@@ -1397,7 +1411,7 @@ const EmissionWidget = React.memo(
                                   : "hover:bg-gray-100"
                               }`}
                               onClick={() => {
-                                handleActivityChange(value);
+                                handleActivityChange(displayText);
                                 toggleDropdown();
                                 setActivitySearch("");
                               }}
@@ -1429,6 +1443,7 @@ const EmissionWidget = React.memo(
 
                       <input
                         type="text"
+                        title={value.Activity?value.Activity:''}
                         value={activitySearch}
                         onChange={handleSearchChange}
                         placeholder="Search activities..."
@@ -1449,7 +1464,16 @@ const EmissionWidget = React.memo(
                           </p>
                         ) : (
                           visibleActivities.map((item, index) => {
-                            const displayText = `${item.name} - (${item.source}) - ${item.unit_type}`;
+                            // const displayText = `${item.name} - (${item.source}) - ${item.unit_type}`;
+                            const displayText = `${item.name} - (${
+                              item.source
+                            }) - ${item.unit_type} - ${item.region} - ${
+                              item.year
+                            }${
+                              item.source_lca_activity !== "unknown"
+                                ? ` - ${item.source_lca_activity}`
+                                : ""
+                            }`;
                             const value = `${item.name} - (${item.source}) - ${item.unit_type}`;
                             return (
                               <div
