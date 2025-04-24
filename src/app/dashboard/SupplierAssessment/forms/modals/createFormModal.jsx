@@ -10,7 +10,7 @@ const CreateFormModal = ({ isModalOpen, setIsModalOpen }) => {
   return (
     <>
       {isModalOpen && (
-        <div className="fixed inset-0 flex justify-center items-center bg-[#00000080] z-50 mt-12">
+        <div className="fixed inset-0 flex justify-center items-center bg-[#00000080] z-50 xl:mt-12">
      <div className="relative bg-white p-6 rounded-lg shadow-lg xl:w-[30%] md:w-[30%] lg:w-[30%] 2xl:w-[30%] 4k:w-[30%] 2k:w-[30%]  max-w-3xl">
             {/* Header */}
             <div className="flex justify-between items-center mb-2">
