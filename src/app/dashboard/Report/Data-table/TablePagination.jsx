@@ -242,16 +242,24 @@ else{
     //   }
     // }
 
-    const splitPoint = Math.ceil(itemsPerPage / 2);
-    
-    if (index < splitPoint) {
-        setMenuDirection("down");
-    } else {
-        setMenuDirection("up");
+    if (itemsPerPage <= 5) {
+      setMenuDirection("down");
+      clearTimeout(timeoutId); 
+      setIsMenuOpen(itemId); 
+      return;
     }
+
+      const splitPoint = Math.ceil(itemsPerPage / 2)+1;
+  
+      if (index < splitPoint) {
+        setMenuDirection("down");
+      } else {
+        setMenuDirection("up");
+      }
     
-    clearTimeout(timeoutId); // Clear any pending timeout
-    setIsMenuOpen(itemId); // Open the menu immediately
+    
+    clearTimeout(timeoutId); 
+    setIsMenuOpen(itemId); 
   };
 
   const handleMouseLeave = () => {
@@ -698,8 +706,10 @@ else{
           maxWidth: "100%",
           minWidth: "100%",
           width: "30vw",
-        }} className="rounded-md table-scrollbar">
-        <table className="min-w-max w-full table-auto">
+        }} className="rounded-md table-scrollbar h-[500px]">
+
+
+<table className="min-w-max w-full table-auto">
           <thead className="py-3 px-6 text-center text-[#727272] text-[13px] font-extrabold leading-none gradient-background">
             <tr>
               <th
@@ -879,7 +889,9 @@ else{
           </tbody>
         </table>
 
-        <div className="justify-end items-center gap-2 flex w-[100%] mt-4">
+        
+      </div>
+      <div className="justify-end items-center gap-2 flex w-[100%] mt-4">
           <div>
             <label className="text-black text-opacity-60 text-xs font-normal leading-[15px] text-[15px]">
               Rows per page:
@@ -920,7 +932,6 @@ else{
             </div>
           </div>
         </div>
-      </div>
       {/* <div className="mt-16">
       <table className="min-w-max w-full table-auto ">
         <thead className="py-3 px-6 text-center text-neutral-500 text-[13px] font-extrabold leading-none">

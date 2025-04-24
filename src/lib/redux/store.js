@@ -51,7 +51,7 @@ const rootReducer = combineReducers({
   screen15Slice:screen15SliceReducer,
   materialitySlice:materialitySliceReducer,
   FileInfoSlice:FileInfoSliceReducer,
-  optimiseSlice:optimiseSliceReduceer
+  optimise:optimiseSliceReduceer
 })
 
 export const makeStore = () => {

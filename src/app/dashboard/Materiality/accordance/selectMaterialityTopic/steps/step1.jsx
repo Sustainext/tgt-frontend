@@ -186,7 +186,7 @@ const Step1 = ({ handleNext, esgSeleted }) => {
       </div>
 
       {/* checkbox */}
-      <div className="mx-5 hidden xl:block">
+      <div className="mx-5 hidden xl:block md:hidden lg:block 4k:block 2k:block 2xl:block">
         <div className="flex justify-between items-start">
           <div className="shadow-lg rounded-lg  w-[32.5%]">
             <div className="relative gradient-background p-2 rounded-t-lg flex justify-between">
@@ -324,8 +324,8 @@ and transparency in reporting. </p>`}
           </div>
         </div>
       </div>
-
-      <div className="md:hidden">
+{/* mobile and tablet version */}
+      <div className="block xl:hidden md:block lg:hidden 4k:hidden 2k:hidden 2xl:hidden">
         <AccordionItem
           title="Environmental"
           tooltipId="tooltip-env"
@@ -339,12 +339,11 @@ pollution, climate change mitigation,
  and biodiversity conservation. </p>`}
           checked={envChecked}
           onCheck={handleChecked}
-            name="env"
-            id="env"
+          name="env"
+          id="env"
         >
           <Enviroment
             envChecked={envChecked}
-          
             formData={formData}
             setFormData={setFormData}
           />
@@ -360,8 +359,8 @@ practices, diversity and inclusion, human rights,
 customer relations, and community engagement. </p>`}
           checked={socChecked}
           onCheck={handleChecked}
-            name="soc"
-            id="soc"
+          name="soc"
+          id="soc"
         >
           <Social
             socChecked={socChecked}
@@ -380,8 +379,8 @@ board diversity, executive compensation, anti-corruption efforts,
 and transparency in reporting. </p>`}
           checked={govChecked}
           onCheck={handleChecked}
-            name="gov"
-            id="gov"
+          name="gov"
+          id="gov"
         >
           <Governance
             govChecked={govChecked}

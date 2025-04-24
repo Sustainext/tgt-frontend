@@ -91,6 +91,10 @@ export default function DashboardLayout({ children }) {
             >
               <div className="mb-5">
                 <DashboardHeader />
+                  {/* Elfsight Widget */}
+                  <div className="elfsight-widget mb-5">
+                <div className="elfsight-app-1163c096-07de-4281-9338-996a26b6eec8" data-elfsight-app-lazy></div>
+              </div>
                 <div>{children}</div>
               </div>
             </div>
