@@ -1088,6 +1088,12 @@ const Location = ({ heading }) => {
                       {city.name}
                     </option>
                   ))}
+                   {/* {formData.addressInformation?.state === "26" && (
+                    <>
+    <option value="tokoo">Tokoo</option>
+    <option value="tokoonew">Tokoonew</option>
+    </>
+  )} */}
                 </select>
                 {validationErrors.city && (
                   <p className="text-red-500 text-xs">
