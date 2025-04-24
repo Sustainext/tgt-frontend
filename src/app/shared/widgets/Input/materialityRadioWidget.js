@@ -23,8 +23,8 @@ const MaterialityRadioWidget = ({
 
   return (
     <div className="mb-6 pb-4">
-        <div className="flex  xl:flex-row flex-col items-center mb-2 xl:gap-2 gap-4">
-        <div className="flex items-start  xl:w-[53.5%] w-full px-2">
+        <div className="flex  xl:flex-row md:flex-row lg:flex-row 4k:flex-row 2k:flex-row   flex-col items-center mb-2 xl:gap-2 gap-4">
+        <div className="flex items-start  xl:w-[53.5%] md:w-[55%] lg:w-[55%] 4k:w-[55%] 2k:w-[55%] w-full px-2">
           <p className="text-[12px] text-gray-700 w-auto xl:mx-3">
             {uiSchema["ui:title"]}
           </p>

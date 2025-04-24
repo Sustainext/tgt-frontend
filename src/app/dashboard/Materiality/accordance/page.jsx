@@ -99,9 +99,14 @@ const Accordance = () => {
                 />
               )}
               {activeTab === "materialAssessmentProcess" && (
-                <MaterialAssessmentProcess handleTabClick={handleTabClick}     setMobileopen={setMobileopen} />
+                <MaterialAssessmentProcess
+                  handleTabClick={handleTabClick}
+                  setMobileopen={setMobileopen}
+                />
               )}
-              {activeTab === "managementApproach" && <ManagementApproach     setMobileopen={setMobileopen} />}
+              {activeTab === "managementApproach" && (
+                <ManagementApproach setMobileopen={setMobileopen} />
+              )}
             </div>
           )}
         </div>

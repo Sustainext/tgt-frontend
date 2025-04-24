@@ -25,6 +25,7 @@ import screen13SliceReducer from './features/ESGSlice/screen13Slice'
 import screen15SliceReducer from './features/ESGSlice/screen15Slice'
 import materialitySliceReducer from './features/materialitySlice'
 import FileInfoSliceReducer from './features/FileInfoSlice'
+import optimiseSliceReduceer from './features/optimiseSlice'
 
 const rootReducer = combineReducers({
   counter: counterReducer,
@@ -50,6 +51,7 @@ const rootReducer = combineReducers({
   screen15Slice:screen15SliceReducer,
   materialitySlice:materialitySliceReducer,
   FileInfoSlice:FileInfoSliceReducer,
+  optimiseSlice:optimiseSliceReduceer
 })
 
 export const makeStore = () => {
