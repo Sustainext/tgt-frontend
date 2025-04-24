@@ -359,8 +359,12 @@ const MultiselectTableWidgetBioDiversity = ({
                         required={required}
                         value={localValue[rowIndex][key] || ""}
                         onChange={
-                          (e) =>
-                            handleInputChange(rowIndex, key, e.target.value) // Use the new handler here
+                          (e) =>{
+                            const value = e.target.value;
+                            if (value === "" || (!isNaN(value) && Number(value) >= 0)) {
+                              handleInputChange(rowIndex, key, value);
+                            }
+                          }
                         }
                         className="text-[12px] pl-2 py-2 w-full border-b rounded-md"
                         placeholder="Enter"

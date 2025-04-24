@@ -22,6 +22,7 @@ const CustomOptionnew = ({ children, ...props }) => {
         alignItems: "center",
 
         textAlign: "left",
+        cursor:'pointer'
       }}
     >
       <input
@@ -316,7 +317,7 @@ const EmissionReductionInitiativesWidget = ({
             <div key={index} className="flex mb-4">
               <div className="mx-2 relative mb-4">
                 {index === 0 && (
-                  <label className="font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] flex mb-1">
+                  <label className="font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] flex mb-1">
                     {schema.items.properties.Q2.title}{" "}
                     <MdInfoOutline
                       data-tooltip-id="tooltip-Q2"
@@ -345,7 +346,7 @@ const EmissionReductionInitiativesWidget = ({
                 <input
                   type="text"
                   placeholder="Enter Data"
-                  className={`block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw] 4k:w-[8vw] ${
+                  className={`block w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw] 4k:w-[8vw] ${
                     index === 0 ? "py-2" : "py-1.5"
                   } text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
                   value={entry.Q2 || ""}
@@ -355,7 +356,7 @@ const EmissionReductionInitiativesWidget = ({
 
               <div className="mx-2 relative mb-4">
                 {index === 0 && (
-                  <label className="font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] flex mb-2">
+                  <label className="font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] flex mb-2">
                     {schema.items.properties.Q3.title}
                     <MdInfoOutline
                       data-tooltip-id="tooltip-Q3"
@@ -382,7 +383,7 @@ const EmissionReductionInitiativesWidget = ({
                   </label>
                 )}
                 <select
-                  className={`block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
+                  className={`block w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
                   value={entry.Q3 || ""}
                   onChange={(e) => handleChange(index, "Q3", e.target.value)}
                 >
@@ -398,7 +399,7 @@ const EmissionReductionInitiativesWidget = ({
                 {entry.Q3 === "Other (please specify)" && (
                   <input
                     type="text"
-                    className="block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none mt-2"
+                    className="block w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 focus:outline-none mt-2"
                     placeholder="Specify unit"
                     value={entry.customUnit || ""}
                     onChange={(e) =>
@@ -409,7 +410,7 @@ const EmissionReductionInitiativesWidget = ({
               </div>
               <div className="mx-2 relative mb-4">
                 {index === 0 && (
-                  <label className="font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] flex mb-2">
+                  <label className="font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] flex mb-2">
                     {schema.items.properties.Q4.title}
                     <MdInfoOutline
                       data-tooltip-id="tooltip-Q4"
@@ -436,7 +437,7 @@ const EmissionReductionInitiativesWidget = ({
                   </label>
                 )}
                 <select
-                  className={`block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
+                  className={`block w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
                   value={entry.Q4 || ""}
                   onChange={(e) => handleChange(index, "Q4", e.target.value)}
                 >
@@ -453,7 +454,7 @@ const EmissionReductionInitiativesWidget = ({
 
               <div className="mx-2 relative mb-4">
                 {index === 0 && (
-                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] mb-2">
+                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] mb-2">
                     {schema.items.properties.Q5.title}
                     <MdInfoOutline
                       data-tooltip-id="tooltip-Q5"
@@ -485,13 +486,13 @@ const EmissionReductionInitiativesWidget = ({
                   onDateChange={(newRange) =>
                     handleChange(index, "Q5", newRange)
                   }
-                  className={`block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
+                  className={`block w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
                 />
               </div>
 
               <div className="mx-2 relative mb-4">
                 {index === 0 && (
-                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] mb-2">
+                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] mb-2">
                     {schema.items.properties.Q6.title}
                     <MdInfoOutline
                       data-tooltip-id="tooltip-Q6"
@@ -518,7 +519,7 @@ const EmissionReductionInitiativesWidget = ({
                   </label>
                 )}
                 <textarea
-                  className={`block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
+                  className={`block w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
                   rows="1"
                   placeholder="Enter Data"
                   value={entry.Q6 || ""}
@@ -528,7 +529,7 @@ const EmissionReductionInitiativesWidget = ({
 
               <div className="mx-2 relative mb-4">
                 {index === 0 && (
-                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] mb-2">
+                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] mb-2">
                     {schema.items.properties.Q7.title}
                     <MdInfoOutline
                       data-tooltip-id="tooltip-Q7"
@@ -557,14 +558,14 @@ const EmissionReductionInitiativesWidget = ({
                 <input
                   type="number"
                   placeholder="Enter Data"
-                  className={`block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
+                  className={`block w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
                   value={entry.Q7 || ""}
                   onChange={(e) => handleChange(index, "Q7", e.target.value)}
                 />
               </div>
               <div className="mx-2 relative mb-4">
                 {index === 0 && (
-                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw]  h-[35px] mb-2">
+                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw]  h-[35px] mb-2">
                     {schema.items.properties.Q8.title}
                     <MdInfoOutline
                       data-tooltip-id="tooltip-Q8"
@@ -614,13 +615,13 @@ const EmissionReductionInitiativesWidget = ({
                       selectedOptions.map((opt) => opt.value)
                     )
                   }
-                  className={` w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] text-[12px] `}
+                  className={` w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] text-[12px] `}
                 />
               </div>
 
               <div className="mx-2 relative mb-4">
                 {index === 0 && (
-                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] mb-2">
+                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw] h-[35px] mb-2">
                     {schema.items.properties.Q9.title}
                     <MdInfoOutline
                       data-tooltip-id="tooltip-Q9"
@@ -670,13 +671,13 @@ const EmissionReductionInitiativesWidget = ({
                       selectedOptions.map((opt) => opt.value)
                     )
                   }
-                  className={` w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw]  text-[12px] `}
+                  className={` w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[8vw]  text-[12px] `}
                 />
               </div>
 
               <div className="mx-2 relative mb-4">
                 {index === 0 && (
-                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[9vw] h-[35px] mb-2">
+                  <label className="flex font-medium text-gray-700 text-[13px] 4k:text-[15px] w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[9vw] h-[35px] mb-2">
                     {schema.items.properties.Q10.title}
                     <MdInfoOutline
                       data-tooltip-id="tooltip-Q10"
@@ -705,7 +706,7 @@ const EmissionReductionInitiativesWidget = ({
                 <input
                   type="text"
                   placeholder="Enter Data"
-                  className={`block w-[71vw] xl:w-[20vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[9vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
+                  className={`block w-[71vw] xl:w-[20vw] md:w-[33vw] lg:w-[20vw] 2xl:w-[20vw] 2k:w-[20vw]  4k:w-[9vw] py-2 text-[12px] 4k:text-[14px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300`}
                   value={entry.Q10 || ""}
                   onChange={(e) => handleChange(index, "Q10", e.target.value)}
                 />

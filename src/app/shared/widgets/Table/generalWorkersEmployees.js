@@ -13,6 +13,7 @@ const GeneralWorkersEmployees = ({
   schema,
   formContext = {},
 }) => {
+
   const [localValue, setLocalValue] = useState(value || []);
   const [othersInputs, setOthersInputs] = useState([]);
   const [localErrors, setLocalErrors] = useState(formContext.validationErrors || []);
@@ -21,6 +22,12 @@ const GeneralWorkersEmployees = ({
   useEffect(() => {
     setLocalErrors(formContext.validationErrors || []);
   }, [formContext.validationErrors]);
+
+   useEffect(() => {
+      if (Array.isArray(value) && value.length > 0) {
+        setLocalValue(value);
+      }
+    }, [value]);
 
   useEffect(() => {
     const initializeOthersInputs = () => {

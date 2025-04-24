@@ -23,6 +23,12 @@ const GeneralWorkersEmployees = ({
   }, [formContext.validationErrors]);
 
   useEffect(() => {
+    if (Array.isArray(value) && value.length > 0) {
+      setLocalValue(value);
+    }
+  }, [value]);
+
+  useEffect(() => {
     const initializeOthersInputs = () => {
       const newOthersInputs = localValue.map((row) => {
         let rowOthers = {};

@@ -16,7 +16,7 @@ const widgets = {
   MultiselectTableWidget: MultiselectTableWidget,
 };
 
-const view_path = "gri-social-ohs-403-2a-process_for_hazard-new";
+const view_path = "gri-environment-biodiversity-101-2c-details_offset";
 const client_id = 1;
 const user_id = 1;
 
@@ -152,13 +152,14 @@ const Screen4comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
 
     },
   ];
+
+  
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const [locationData,setLocationdata]=useState([])
-
 
   const fetchloctiondata = async () => {
       setLocationdata();
@@ -192,7 +193,8 @@ const Screen4comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -246,8 +248,8 @@ const Screen4comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const loadFormData = async () => {
     console.log("loadFormData screen 2");
     LoaderOpen();
-    setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    // setFormData(initialFormData);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -261,32 +263,32 @@ const Screen4comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     }
   };
 
-  useEffect(() => {
-     if (selectedOrg && year && togglestatus) {
-       if (togglestatus === "Corporate" && selectedCorp) {
-        //  loadFormData();
-         fetchloctiondata()
-       } else if (togglestatus === "Corporate" && !selectedCorp) {
-         setFormData([{}]);
-         setRemoteSchema({});
-         setRemoteUiSchema({});
-       } else {
-         loadFormData();
-         fetchloctiondata()
-       }
- 
-       toastShown.current = false;
-     } else {
-       if (!toastShown.current) {
-         toastShown.current = true;
-       }
-     }
-   }, [selectedOrg, year, selectedCorp, togglestatus]);
+ useEffect(() => {
+      if (selectedOrg && year && togglestatus) {
+        if (togglestatus === "Corporate" && selectedCorp) {
+          loadFormData();
+          fetchloctiondata()
+        } else if (togglestatus === "Corporate" && !selectedCorp) {
+          setFormData([{}]);
+          setRemoteSchema({});
+          setRemoteUiSchema({});
+        } else {
+          loadFormData();
+          fetchloctiondata()
+        }
+  
+        toastShown.current = false;
+      } else {
+        if (!toastShown.current) {
+          toastShown.current = true;
+        }
+      }
+    }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -297,7 +299,7 @@ const Screen4comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
         <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
             <h2 className="flex mx-2 text-[14px] text-neutral-950 font-[500]">
-            Report the details of offset:
+            Report on actions taken to restore and rehabilitate affected biodiversity for each site with the most significant biodiversity impacts:
               {/* <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="This section documents data corresponding to your organization's systematic approach to identifying work-related hazards, assessing their associated risks, and implementing effective control measures to minimize those risks, ensuring a safe and healthy work environment."
@@ -322,11 +324,10 @@ const Screen4comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
 
         
         </div>
-        {Array.isArray(locationData) && locationData.length > 0 ? (
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -342,11 +343,6 @@ const Screen4comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
             }}
           />
         </div>
-        ):(
-<div className="mx-2">
-
-</div>
-        )}
 
         <div className="mt-4">
           <button

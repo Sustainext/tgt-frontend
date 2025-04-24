@@ -164,7 +164,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-
+console.log(formData,"test fromdata");
 
   const LoaderOpen = () => {
     setLoOpen(true);

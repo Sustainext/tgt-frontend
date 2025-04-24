@@ -17,7 +17,7 @@ const widgets = {
   TableWidget: MultiselectTableWidget,
 };
 
-const view_path = "gri-social-ohs-403-2a-process_for_hazard-new";
+const view_path = "gri-environment-biodiversity-101-1c-goals_and_targets";
 const client_id = 1;
 const user_id = 1;
 
@@ -151,7 +151,8 @@ const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -205,8 +206,8 @@ const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const loadFormData = async () => {
     console.log("loadFormData screen 2");
     LoaderOpen();
-    setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    // setFormData(initialFormData);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -220,30 +221,30 @@ const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     }
   };
 
-//   useEffect(() => {
-//      if (selectedOrg && year && togglestatus) {
-//        if (togglestatus === "Corporate" && selectedCorp) {
-//          loadFormData();
-//        } else if (togglestatus === "Corporate" && !selectedCorp) {
-//          setFormData([{}]);
-//          setRemoteSchema({});
-//          setRemoteUiSchema({});
-//        } else {
-//          loadFormData();
-//        }
+  useEffect(() => {
+     if (selectedOrg && year && togglestatus) {
+       if (togglestatus === "Corporate" && selectedCorp) {
+         loadFormData();
+       } else if (togglestatus === "Corporate" && !selectedCorp) {
+         setFormData([{}]);
+         setRemoteSchema({});
+         setRemoteUiSchema({});
+       } else {
+         loadFormData();
+       }
  
-//        toastShown.current = false;
-//      } else {
-//        if (!toastShown.current) {
-//          toastShown.current = true;
-//        }
-//      }
-//    }, [selectedOrg, year, selectedCorp, togglestatus]);
+       toastShown.current = false;
+     } else {
+       if (!toastShown.current) {
+         toastShown.current = true;
+       }
+     }
+   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -281,8 +282,8 @@ const Screen3comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

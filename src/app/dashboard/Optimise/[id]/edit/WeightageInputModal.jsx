@@ -14,13 +14,13 @@ const WeightageInputModal = ({
   const metricsData = optimiseState.metricsData || {};
   
   // List of valid business metrics to display in the modal
-  const validMetrics = ["fte", "area", "productionVolume", "revenue"];
+  const validMetrics = ["fte", "area", "production_volume", "revenue"];
   
   // Map between camelCase and snake_case metric names
   const metricNameMap = {
     fte: "fte",
     area: "area",
-    productionVolume: "production_volume",
+    production_volume: "production_volume",
     revenue: "revenue"
   };
   
@@ -213,7 +213,7 @@ const WeightageInputModal = ({
     switch (name) {
       case "fte":
         return "FTE";
-      case "productionVolume":
+      case "production_volume":
         return "Production Volume";
       default:
         return name.charAt(0).toUpperCase() + name.slice(1);
