@@ -495,6 +495,7 @@ const handleWeightageProceed = async (updatedWeightages) => {
         selectedActivities={selectedActivities}
         onProceed={handleConfirmProceed}
         onGoBack={() => setIsConfirmModalOpen(false)}
+        scenarioId={scenarioId}
       />
     </>
   );

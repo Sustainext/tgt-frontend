@@ -1,63 +1,92 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FiX } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 const WeightageInputModal = ({
   isOpen,
   onClose,
   selectedMetrics,
   onProceed,
-  setCurrentStep,
-  weightages: initialWeightagesFromProps = {}
+  setCurrentStep
 }) => {
+  // Get state from Redux to ensure we have the latest weightages
+  const optimiseState = useSelector((state) => state.optimise) || {};
+  const metricsData = optimiseState.metricsData || {};
+  
   // List of valid business metrics to display in the modal
   const validMetrics = ["fte", "area", "productionVolume", "revenue"];
   
+  // Map between camelCase and snake_case metric names
+  const metricNameMap = {
+    fte: "fte",
+    area: "area",
+    productionVolume: "production_volume",
+    revenue: "revenue"
+  };
+  
   // Initial weightages - equal distribution by default
-  const initialWeightages = () => {
-    // Filter only valid business metrics that are selected
+  const getInitialWeightages = () => {
+    // First try to get values from Redux store
+    const weightagesFromRedux = {};
+    let hasWeightages = false;
+    
+    // For each valid metric that is selected, check if we have a weightage in Redux
+    validMetrics.forEach(metricKey => {
+      if (selectedMetrics[metricKey]) {
+        // Convert from camelCase to snake_case for Redux lookup
+        const snakeMetric = metricNameMap[metricKey];
+        const weightageKey = `${snakeMetric}_weightage`;
+        
+        // Check if the weightage exists in Redux
+        if (metricsData[weightageKey] !== undefined) {
+          weightagesFromRedux[metricKey] = metricsData[weightageKey];
+          hasWeightages = true;
+        }
+      }
+    });
+    
+    // If we found weightages in Redux, return those
+    if (hasWeightages) {
+      return weightagesFromRedux;
+    }
+    
+    // Otherwise, calculate equal distribution
     const selectedValidMetrics = validMetrics.filter(metric => selectedMetrics[metric]);
     const metricCount = selectedValidMetrics.length;
     
     if (metricCount === 0) return {};
 
+    // Calculate equal distribution
     const equalWeight = parseFloat((1 / metricCount).toFixed(2));
-    const weightages = {};
+    const equalWeightages = {};
 
-    // Assign equal weights to selected metrics
+    // Assign equal weights to all selected metrics
     selectedValidMetrics.forEach(metric => {
-      weightages[metric] = equalWeight;
+      equalWeightages[metric] = equalWeight;
     });
 
-    return weightages;
+    return equalWeightages;
   };
 
-  // Use initialWeightagesFromProps if provided, otherwise calculate defaults
-  const [weightages, setWeightages] = useState(
-    Object.keys(initialWeightagesFromProps).length > 0 
-      ? initialWeightagesFromProps 
-      : initialWeightages()
-  );
-  
+  // State management
+  const [weightages, setWeightages] = useState(getInitialWeightages);
   const [total, setTotal] = useState(1);
   const [isValid, setIsValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const inputRefs = useRef({});
 
-  // Reset when metrics change or modal opens
+  // Reset when metrics change or modal opens or Redux state updates
   useEffect(() => {
     if (isOpen) {
-      // If we have weightages from props, use those
-      if (Object.keys(initialWeightagesFromProps).length > 0) {
-        setWeightages(initialWeightagesFromProps);
-      } else {
-        // Otherwise calculate equal distribution
-        setWeightages(initialWeightages());
-      }
+      // Get the latest weightages whenever the modal opens
+      setWeightages(getInitialWeightages());
       setTotal(1);
       setIsValid(true);
       setErrorMessage("");
+      setIsSubmitting(false);
     }
-  }, [selectedMetrics, isOpen]);
+  }, [isOpen, selectedMetrics, metricsData]);
 
   // Calculate total when weightages change
   useEffect(() => {
@@ -71,9 +100,9 @@ const WeightageInputModal = ({
     if (Math.abs(newTotal - 1) > 0.001) {
       setIsValid(false);
       if (newTotal > 1) {
-        setErrorMessage(`Reduce by: -${(newTotal - 1).toFixed(1)}`);
+        setErrorMessage(`Reduce by: -${(newTotal - 1).toFixed(2)}`);
       } else {
-        setErrorMessage(`Increase by: +${(1 - newTotal).toFixed(1)}`);
+        setErrorMessage(`Increase by: +${(1 - newTotal).toFixed(2)}`);
       }
     } else {
       setIsValid(true);
@@ -130,27 +159,51 @@ const WeightageInputModal = ({
 
   // Reset to equal distribution
   const handleReset = () => {
-    setWeightages(initialWeightages());
+    // Filter only selected metrics
+    const selectedValidMetrics = validMetrics.filter(metric => selectedMetrics[metric]);
+    const metricCount = selectedValidMetrics.length;
+    
+    if (metricCount === 0) return;
+
+    // Calculate equal distribution
+    const equalWeight = parseFloat((1 / metricCount).toFixed(2));
+    const resetWeightages = {};
+
+    // Special handling for 3 metrics to make sure they sum to exactly 1.0
+    if (metricCount === 3) {
+      // First metric gets 0.34, others get 0.33
+      selectedValidMetrics.forEach((metric, index) => {
+        resetWeightages[metric] = index === 0 ? 0.34 : 0.33;
+      });
+    } else {
+      // Equal distribution for other cases
+      selectedValidMetrics.forEach(metric => {
+        resetWeightages[metric] = equalWeight;
+      });
+    }
+
+    setWeightages(resetWeightages);
   };
 
- // Handle proceed button click
- const handleProceed = async () => {
-  if (isValid) {
-    try {
-      // First, send the updated weightages to the parent component
-      // The parent component is responsible for making the API call
-      // and handling any loading/error states
-      await onProceed(weightages);
-      
-      // Once the API call is successful, close the modal
-      onClose();
-    } catch (error) {
-      console.error("Error updating weightages:", error);
-      // You could add error handling here, like showing an error message
-      // For now, we'll just log the error and not close the modal
+  // Handle proceed button click
+  const handleProceed = async () => {
+    if (isValid) {
+      try {
+        setIsSubmitting(true);
+        
+        // First, send the updated weightages to the parent component
+        await onProceed(weightages);
+        
+        // Once the API call is successful, close the modal
+        onClose();
+      } catch (error) {
+        console.error("Error updating weightages:", error);
+        setErrorMessage("Failed to save weightages. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
-  }
-};
+  };
 
   // Get the active metrics as an array - filter only valid business metrics that are selected
   const activeMetrics = validMetrics.filter(metric => selectedMetrics[metric]);
@@ -217,7 +270,7 @@ const WeightageInputModal = ({
                     {/* Green progress part */}
                     <div
                       className="h-full bg-green-500 rounded-full"
-                      style={{ width: `${weightages[metric] * 100}%` }}
+                      style={{ width: `${(weightages[metric] || 0) * 100}%` }}
                     ></div>
                   </div>
 
@@ -226,7 +279,7 @@ const WeightageInputModal = ({
                     min="0"
                     max="100"
                     step="1"
-                    value={weightages[metric] * 100}
+                    value={(weightages[metric] || 0) * 100}
                     onChange={(e) => handleSliderChange(metric, e)}
                     disabled={disableSliders}
                     className="appearance-none w-full h-1 bg-transparent relative z-10 cursor-pointer"
@@ -241,14 +294,14 @@ const WeightageInputModal = ({
                   {!disableSliders && (
                     <div
                       className="w-4 h-4 absolute top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white border border-gray-300 rounded-full shadow"
-                      style={{ left: `${weightages[metric] * 100}%` }}
+                      style={{ left: `${(weightages[metric] || 0) * 100}%` }}
                     ></div>
                   )}
                 </div>
                 <input
                   ref={(el) => (inputRefs.current[metric] = el)}
                   type="text"
-                  value={weightages[metric].toFixed(2)}
+                  value={(weightages[metric] || 0).toFixed(2)}
                   onChange={(e) => handleInputChange(metric, e.target.value)}
                   onFocus={handleInputFocus}
                   disabled={disableSliders}
@@ -268,7 +321,7 @@ const WeightageInputModal = ({
                 isValid ? "text-green-500" : "text-red-500"
               }`}
             >
-              {total.toFixed(1)}
+              {total.toFixed(2)}
             </span>
             {!isValid && (
               <span className="ml-4 text-sm text-red-500">{errorMessage}</span>
@@ -288,19 +341,27 @@ const WeightageInputModal = ({
           <button
             onClick={handleReset}
             className="px-4 py-2 border border-gray-300 rounded text-gray-700 bg-white hover:bg-gray-50"
+            disabled={isSubmitting}
           >
             Reset
           </button>
           <button
-            // onClick={handleProceed}
-            disabled={!isValid}
+            onClick={handleProceed}
+            disabled={!isValid || isSubmitting}
             className={`px-4 py-2 rounded text-white ${
-              isValid
+              isValid && !isSubmitting
                 ? "bg-blue-500 hover:bg-blue-600"
                 : "bg-blue-300 cursor-not-allowed"
             } flex items-center`}
           >
-            Proceed <span className="ml-2">→</span>
+            {isSubmitting ? (
+              <>
+                <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                Saving...
+              </>
+            ) : (
+              <>Proceed <span className="ml-2">→</span></>
+            )}
           </button>
         </div>
       </div>

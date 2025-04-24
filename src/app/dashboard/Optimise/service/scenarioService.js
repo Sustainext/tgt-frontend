@@ -79,6 +79,48 @@ export const fetchScenarios = async (filters = {}) => {
  * @param {Object} filters - Optional filters for emission data
  * @returns {Promise} Promise resolving to emission data
  */
+
+/**
+ * Submit selected activities to the backend in a single call
+ * This is used when confirming activities in the review modal
+ * 
+ * @param {number} scenarioId - The ID of the scenario
+ * @param {Array} activities - Array of formatted activity objects to submit
+ * @returns {Promise} Promise resolving to API response
+ */
+export const submitSelectedActivities = async (scenarioId, activities) => {
+  try {
+    // Ensure we have a valid scenarioId and activities array
+    if (!scenarioId || !Array.isArray(activities)) {
+      throw new Error("Invalid scenarioId or activities array");
+    }
+    
+    // Check that each activity has the required fields
+    activities.forEach(activity => {
+      if (!activity.uuid || !activity.activity_id || !activity.activity_name || !activity.sub_category) {
+        console.warn("Activity missing required fields:", activity);
+      }
+    });
+    
+    // Make API call to the selected activities endpoint
+    const response = await apiClient.post(
+      `/optimize/${scenarioId}/selectedactivity/`,
+      activities
+    );
+    
+    return response.data;
+  } catch (error) {
+    console.error("Error submitting selected activities:", error);
+    throw error;
+  }
+};
+
+/**
+ * Fetch emission data (activities) with optional filtering
+ * @param {number} scenarioId - The ID of the scenario to fetch emission data for
+ * @param {Object} filters - Optional filters for emission data
+ * @returns {Promise} Promise resolving to emission data
+ */
 export const fetchEmissionData = async (scenarioId, filters = {}) => {
   try {
     // Convert filters object to URL query params
@@ -324,7 +366,7 @@ export const formatMetricsPayload = (metrics) => {
 export const fetchScenarioActivities = async (scenarioId) => {
   try {
     const response = await apiClient.get(
-      `${SCENARIO_ENDPOINT}${scenarioId}/activities/`
+      `${SCENARIO_ENDPOINT}${scenarioId}/selectedactivity/`
     );
     return response.data;
   } catch (error) {
@@ -409,6 +451,8 @@ export const checkEmissionDataExists = async (
   }
 };
 
+
+
 export default {
   checkEmissionDataExists,
   fetchScenarios,
@@ -423,5 +467,6 @@ export default {
   fetchEmissionData,
   addActivitiesToScenario,
   removeActivityFromScenario,
-  updateActivityConsumption
+  updateActivityConsumption,
+  submitSelectedActivities,
 };

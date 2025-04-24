@@ -12,26 +12,29 @@ import {
 import { MdFilterList } from "react-icons/md";
 import { LuChevronsUpDown } from "react-icons/lu";
 import { debounce } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchEmissionData,
-  setEmissionDataFilter,
-  setEmissionDataSorting,
-  setEmissionDataPagination,
-  clearEmissionDataFilters,
-  addActivitiesToScenario,
-  removeActivityFromScenario
-} from "../../../lib/redux/features/optimiseSlice";
+import scenarioService from './service/scenarioService';
 
-const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenarioId }) => {
-  const dispatch = useDispatch();
-  
-  // Get emission data state from Redux
-  const emissionData = useSelector(state => state.optimise.emissionData || {});
-  const { activities = [], count = 0, filters = {}, sorting = {}, pagination = {} } = emissionData;
-  
-  const loading = useSelector(state => state.optimise.loading.emissionData);
-  const error = useSelector(state => state.optimise.error.emissionData);
+const ActivitySelectTable = ({ selectedActivities = [], setSelectedActivities, scenarioId }) => {
+  // Main states
+  const [activities, setActivities] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [count, setCount] = useState(0);
+  const [error, setError] = useState(null);
+
+  // Sorting states
+  const [sortColumn, setSortColumn] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  // Search and filter states
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedScopes, setSelectedScopes] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedSubCategories, setSelectedSubCategories] = useState([]);
+  const [selectedRegions, setSelectedRegions] = useState([]);
 
   // Filter dropdowns states
   const [isScopeFilterOpen, setIsScopeFilterOpen] = useState(false);
@@ -39,8 +42,11 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
   const [isSubCategoryFilterOpen, setIsSubCategoryFilterOpen] = useState(false);
   const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false);
 
-  // Local state for search input
-  const [searchInput, setSearchInput] = useState("");
+  // Filter options (will be populated from API responses)
+  const [scopeOptions, setScopeOptions] = useState([]);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [subCategoryOptions, setSubCategoryOptions] = useState([]);
+  const [regionOptions, setRegionOptions] = useState([]);
 
   // Refs for filter dropdowns
   const scopeFilterRef = useRef(null);
@@ -48,252 +54,142 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
   const subCategoryFilterRef = useRef(null);
   const regionFilterRef = useRef(null);
 
-  // Initial fetch when component mounts
-  useEffect(() => {
-    if (scenarioId) {
-      // Fetch activities on component mount with default filters
-      dispatch(fetchEmissionData({ 
-        scenarioId,
-        filters: {
-          page: 1,
-          page_size: 10
-        } 
+  // Fetch activities with filters
+  const fetchActivities = async () => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      // Build API query parameters
+      const filters = {
+        page: currentPage,
+        page_size: itemsPerPage,
+        search: searchQuery || undefined,
+      };
+      
+      // Add scope filters (assuming API expects 'scope' parameter)
+      if (selectedScopes.length > 0) {
+        filters.scope = selectedScopes.join(',');
+      }
+      
+      // Add category filters
+      if (selectedCategories.length > 0) {
+        filters.category = selectedCategories.join(',');
+      }
+      
+      // Add sub-category filters
+      if (selectedSubCategories.length > 0) {
+        filters.subcategory = selectedSubCategories.join(',');
+      }
+      
+      // Add region filters
+      if (selectedRegions.length > 0) {
+        filters.region = selectedRegions.join(',');
+      }
+      
+      // Add sorting
+      if (sortColumn) {
+        // Apply proper ordering format for API
+        const ordering = sortOrder === 'asc' ? sortColumn === 'activity_name' ? 'activity' : sortColumn : `-${sortColumn === 'activity_name' ? 'activity' : sortColumn}`;
+        filters.ordering = ordering;
+      }
+      
+      // Call API to fetch emission data
+      const response = await scenarioService.fetchEmissionData(scenarioId, filters);
+      
+      // Transform API response to match the expected format for activities
+      const transformedActivities = response.results.map(item => ({
+        id: item.activity_id, // Keep for compatibility
+        activity_id: item.activity_id,
+        uuid: item.uuid, // Ensure we have the uuid field
+        scope: item.scope,
+        category: item.category,
+        subCategory: item.sub_category,
+        sub_category: item.sub_category,
+        activity: item.activity_name,
+        activity_name: item.activity_name,
+        region: item.region,
+        // Add additional fields that might be needed
+        quantity: item.quantity,
+        unit: item.unit,
+        co2e_total: item.co2e_total,
+        unit_type: item.unit_type,
+        factor_id: item.factor_id
       }));
+      
+      setActivities(transformedActivities);
+      setCount(response.count || 0);
+      
+      // Extract unique values for filter options from the fetched data
+      if (response.results && response.results.length > 0) {
+        const uniqueScopes = [...new Set(response.results.map(item => item.scope))];
+        const uniqueCategories = [...new Set(response.results.map(item => item.category))];
+        const uniqueSubCategories = [...new Set(response.results.map(item => item.sub_category))];
+        const uniqueRegions = [...new Set(response.results.map(item => item.region))];
+        
+        setScopeOptions(uniqueScopes);
+        setCategoryOptions(uniqueCategories);
+        setSubCategoryOptions(uniqueSubCategories);
+        setRegionOptions(uniqueRegions);
+      }
+    } catch (error) {
+      console.error("Error fetching activities:", error);
+      setError("Failed to load activities. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-  }, [dispatch, scenarioId]);
-
-  // Debounced search function
-  const debouncedSearch = useRef(
-    debounce((searchValue) => {
-      dispatch(setEmissionDataFilter({
-        filterType: 'search',
-        value: searchValue
-      }));
-    }, 400)
-  ).current;
-
-  // Handle search input change
-  const handleSearch = (e) => {
-    setSearchInput(e.target.value);
-    debouncedSearch(e.target.value);
   };
 
-  // Toggle selection of an activity
+  // Toggle selection of an activity - only managed in local state, using uuid for identification
   const toggleActivitySelection = (activity) => {
-    // Check if activity is already selected
-    const isAlreadySelected = selectedActivities.some(item => item.id === activity.id);
+    // Check if activity is already selected based on uuid
+    const isAlreadySelected = selectedActivities.some(item => item.uuid === activity.uuid);
     
     if (isAlreadySelected) {
       // Remove from selected list
-      if (scenarioId) {
-        // If scenario ID exists, use API to remove activity
-        dispatch(removeActivityFromScenario({
-          scenarioId,
-          activityId: activity.id
-        }));
-      } else {
-        // Otherwise just update local state
-        setSelectedActivities(prevSelected => 
-          prevSelected.filter(item => item.id !== activity.id)
-        );
-      }
+      const newSelectedActivities = selectedActivities.filter(item => item.uuid !== activity.uuid);
+      setSelectedActivities(newSelectedActivities);
     } else {
       // Add to selected list
-      if (scenarioId) {
-        // If scenario ID exists, use API to add activity
-        dispatch(addActivitiesToScenario({
-          scenarioId,
-          activityIds: [activity.id]
-        }));
-      } else {
-        // Otherwise just update local state
-        setSelectedActivities(prevSelected => [...prevSelected, activity]);
-      }
+      const newSelectedActivities = [...selectedActivities, activity];
+      setSelectedActivities(newSelectedActivities);
     }
   };
 
-  // Check if an activity is selected
-  const isSelected = (activityId) => {
-    return selectedActivities.some(activity => activity.id === activityId);
+  // Check if an activity is selected using uuid
+  const isSelected = (uuid) => {
+    return selectedActivities.some(activity => activity.uuid === uuid);
   };
 
-  // Handle sort action when a column header is clicked
-  const handleSort = (column) => {
-    // If clicking the same column, toggle sort order
-    if (sorting.column === column) {
-      dispatch(setEmissionDataSorting({
-        column,
-        order: sorting.order === "asc" ? "desc" : "asc"
-      }));
-    } else {
-      // If clicking a new column, set it as sort column with ascending order
-      dispatch(setEmissionDataSorting({
-        column,
-        order: "asc"
-      }));
+  // Initial fetch and refetch on filter/search/pagination/sort changes
+  useEffect(() => {
+    if (scenarioId) {
+      fetchActivities();
     }
-  };
+  }, [
+    scenarioId,
+    selectedScopes,
+    selectedCategories,
+    selectedSubCategories,
+    selectedRegions,
+    currentPage,
+    itemsPerPage,
+    sortColumn,
+    sortOrder,
+  ]);
 
-  // Update pagination
-  const handlePageChange = (newPage) => {
-    dispatch(setEmissionDataPagination({
-      currentPage: newPage,
-      itemsPerPage: pagination.itemsPerPage || 10
-    }));
-  };
+  // Debounced search
+  useEffect(() => {
+    const debouncedFetch = debounce(() => {
+      fetchActivities();
+    }, 400);
 
-  const handleItemsPerPageChange = (newValue) => {
-    dispatch(setEmissionDataPagination({
-      currentPage: 1, // Reset to first page when changing items per page
-      itemsPerPage: parseInt(newValue)
-    }));
-  };
-
-  // Filter selection handlers
-  const handleScopeSelection = (scope) => {
-    const newScopes = [...(filters.scopes || [])];
-    if (newScopes.includes(scope)) {
-      // Remove scope if already selected
-      const index = newScopes.indexOf(scope);
-      newScopes.splice(index, 1);
-    } else {
-      // Add scope if not already selected
-      newScopes.push(scope);
+    if (searchQuery !== null && scenarioId) {
+      debouncedFetch();
     }
-    
-    dispatch(setEmissionDataFilter({
-      filterType: 'scopes',
-      value: newScopes
-    }));
-  };
 
-  const handleCategorySelection = (category) => {
-    const newCategories = [...(filters.categories || [])];
-    if (newCategories.includes(category)) {
-      // Remove category if already selected
-      const index = newCategories.indexOf(category);
-      newCategories.splice(index, 1);
-    } else {
-      // Add category if not already selected
-      newCategories.push(category);
-    }
-    
-    dispatch(setEmissionDataFilter({
-      filterType: 'categories',
-      value: newCategories
-    }));
-  };
-
-  const handleSubCategorySelection = (subCategory) => {
-    const newSubCategories = [...(filters.subCategories || [])];
-    if (newSubCategories.includes(subCategory)) {
-      // Remove subCategory if already selected
-      const index = newSubCategories.indexOf(subCategory);
-      newSubCategories.splice(index, 1);
-    } else {
-      // Add subCategory if not already selected
-      newSubCategories.push(subCategory);
-    }
-    
-    dispatch(setEmissionDataFilter({
-      filterType: 'subCategories',
-      value: newSubCategories
-    }));
-  };
-
-  const handleRegionSelection = (region) => {
-    const newRegions = [...(filters.regions || [])];
-    if (newRegions.includes(region)) {
-      // Remove region if already selected
-      const index = newRegions.indexOf(region);
-      newRegions.splice(index, 1);
-    } else {
-      // Add region if not already selected
-      newRegions.push(region);
-    }
-    
-    dispatch(setEmissionDataFilter({
-      filterType: 'regions',
-      value: newRegions
-    }));
-  };
-
-  // Clear specific filter or all filters
-  const handleClearFilter = (filterType, value) => {
-    switch (filterType) {
-      case "scope":
-        if (value) {
-          // Clear specific scope
-          const newScopes = (filters.scopes || []).filter(scope => scope !== value);
-          dispatch(setEmissionDataFilter({
-            filterType: 'scopes',
-            value: newScopes
-          }));
-        } else {
-          // Clear all scopes
-          dispatch(setEmissionDataFilter({
-            filterType: 'scopes',
-            value: []
-          }));
-        }
-        break;
-      case "category":
-        if (value) {
-          // Clear specific category
-          const newCategories = (filters.categories || []).filter(category => category !== value);
-          dispatch(setEmissionDataFilter({
-            filterType: 'categories',
-            value: newCategories
-          }));
-        } else {
-          // Clear all categories
-          dispatch(setEmissionDataFilter({
-            filterType: 'categories',
-            value: []
-          }));
-        }
-        break;
-      case "subCategory":
-        if (value) {
-          // Clear specific subCategory
-          const newSubCategories = (filters.subCategories || []).filter(subCategory => subCategory !== value);
-          dispatch(setEmissionDataFilter({
-            filterType: 'subCategories',
-            value: newSubCategories
-          }));
-        } else {
-          // Clear all subCategories
-          dispatch(setEmissionDataFilter({
-            filterType: 'subCategories',
-            value: []
-          }));
-        }
-        break;
-      case "region":
-        if (value) {
-          // Clear specific region
-          const newRegions = (filters.regions || []).filter(region => region !== value);
-          dispatch(setEmissionDataFilter({
-            filterType: 'regions',
-            value: newRegions
-          }));
-        } else {
-          // Clear all regions
-          dispatch(setEmissionDataFilter({
-            filterType: 'regions',
-            value: []
-          }));
-        }
-        break;
-      case "all":
-        // Clear all filters
-        dispatch(clearEmissionDataFilters());
-        setSearchInput(""); // Clear search input
-        break;
-      default:
-        break;
-    }
-  };
+    return () => debouncedFetch.cancel();
+  }, [searchQuery]);
 
   // Add click outside handler for filters
   useEffect(() => {
@@ -328,73 +224,117 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Fetch activities when filters, sorting, or pagination changes
-  useEffect(() => {
-    if (scenarioId) {
-      // Prepare API filter parameters
-      const apiFilters = {
-        search: filters.search,
-        page: pagination.currentPage || 1,
-        page_size: pagination.itemsPerPage || 10,
-      };
-  
-      // Add array filters
-      if (filters.scopes && filters.scopes.length > 0) {
-        apiFilters.scope = filters.scopes;
-      }
-      if (filters.categories && filters.categories.length > 0) {
-        apiFilters.category = filters.categories;
-      }
-      if (filters.subCategories && filters.subCategories.length > 0) {
-        apiFilters.sub_category = filters.subCategories;
-      }
-      if (filters.regions && filters.regions.length > 0) {
-        apiFilters.region = filters.regions;
-      }
-  
-      // Add sorting if column is selected
-      if (sorting.column) {
-        // Convert camelCase to snake_case for API parameters
-        const apiSortColumn = sorting.column.replace(/([A-Z])/g, '_$1').toLowerCase();
-        apiFilters.ordering = sorting.order === "asc" ? apiSortColumn : `-${apiSortColumn}`;
-      }
-  
-      // Dispatch the action to fetch emission data with scenarioId and filters
-      dispatch(fetchEmissionData({
-        scenarioId,
-        filters: apiFilters
-      }));
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Handle sort action when a column header is clicked
+  const handleSort = (column) => {
+    // If clicking the same column, toggle sort order
+    if (sortColumn === column) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      // If clicking a new column, set it as sort column with ascending order
+      setSortColumn(column);
+      setSortOrder("asc");
     }
-  }, [
-    dispatch,
-    scenarioId,
-    filters.scopes,
-    filters.categories,
-    filters.subCategories,
-    filters.regions,
-    filters.search,
-    pagination.currentPage,
-    pagination.itemsPerPage,
-    sorting.column,
-    sorting.order,
-  ]);
+  };
 
-  // Calculate total pages
-  const totalPages = Math.ceil(count / (pagination.itemsPerPage || 10));
+  // Filter selection handlers
+  const handleScopeSelection = (scope) => {
+    setSelectedScopes((prev) => {
+      if (prev.includes(scope)) {
+        return prev.filter((item) => item !== scope);
+      }
+      return [...prev, scope];
+    });
+  };
 
-  // Check if any filters are active
-  const hasActiveFilters =
-    (filters.scopes && filters.scopes.length > 0) ||
-    (filters.categories && filters.categories.length > 0) ||
-    (filters.subCategories && filters.subCategories.length > 0) ||
-    (filters.regions && filters.regions.length > 0) ||
-    filters.search;
+  const handleCategorySelection = (category) => {
+    setSelectedCategories((prev) => {
+      if (prev.includes(category)) {
+        return prev.filter((item) => item !== category);
+      }
+      return [...prev, category];
+    });
+  };
+
+  const handleSubCategorySelection = (subCategory) => {
+    setSelectedSubCategories((prev) => {
+      if (prev.includes(subCategory)) {
+        return prev.filter((item) => item !== subCategory);
+      }
+      return [...prev, subCategory];
+    });
+  };
+
+  const handleRegionSelection = (region) => {
+    setSelectedRegions((prev) => {
+      if (prev.includes(region)) {
+        return prev.filter((item) => item !== region);
+      }
+      return [...prev, region];
+    });
+  };
+
+  const handleClearFilter = (filterType, value) => {
+    switch (filterType) {
+      case "scope":
+        if (value) {
+          // Clear specific scope
+          setSelectedScopes(prev => prev.filter(scope => scope !== value));
+        } else {
+          // Clear all scopes
+          setSelectedScopes([]);
+        }
+        break;
+      case "category":
+        if (value) {
+          // Clear specific category
+          setSelectedCategories(prev => prev.filter(category => category !== value));
+        } else {
+          // Clear all categories
+          setSelectedCategories([]);
+        }
+        break;
+      case "subCategory":
+        if (value) {
+          // Clear specific subCategory
+          setSelectedSubCategories(prev => prev.filter(subCategory => subCategory !== value));
+        } else {
+          // Clear all subCategories
+          setSelectedSubCategories([]);
+        }
+        break;
+      case "region":
+        if (value) {
+          // Clear specific region
+          setSelectedRegions(prev => prev.filter(region => region !== value));
+        } else {
+          // Clear all regions
+          setSelectedRegions([]);
+        }
+        break;
+      case "all":
+        // Clear all filters
+        setSelectedScopes([]);
+        setSelectedCategories([]);
+        setSelectedSubCategories([]);
+        setSelectedRegions([]);
+        setSearchQuery("");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const totalPages = Math.ceil(count / itemsPerPage);
 
   // Filter Modal component
   const FilterModal = ({
     title,
     items,
-    selectedItems = [],
+    selectedItems,
     handleSelection,
     onClose,
   }) => {
@@ -466,53 +406,55 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
     );
   };
 
-  // Sample options for filters - these could be filled from the API
-  const scopeOptions = ["Scope 1", "Scope 2", "Scope 3"];
-  const categoryOptions = [
-    "Mobile Combustion",
-    "Stationary Combustion",
-    "Refrigerants and Fugitive Gases",
-  ];
-  const subCategoryOptions = [
-    "Fuel",
-    "Rail Freight",
-    "Refrigerants and Fugitive Gases",
-  ];
-  const regionOptions = ["US", "RU", "IN", "GB"];
+  // Check if any filters are active
+  const hasActiveFilters =
+    selectedScopes.length > 0 ||
+    selectedCategories.length > 0 ||
+    selectedSubCategories.length > 0 ||
+    selectedRegions.length > 0 ||
+    searchQuery;
 
   return (
     <div className="bg-white rounded-lg shadow-sm">
       {/* Header with search and total counts */}
       <div className="relative w-full p-4">
-        <FiSearch className="absolute left-8 top-1/2 transform -translate-y-1/2 text-gray-400" />
-        <input
-          type="text"
-          placeholder="Search by Scope, Category, Sub category or Activity"
-          className="pl-10 pr-4 py-2 w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          onChange={handleSearch}
-          value={searchInput}
-        />
+        <div className="relative">
+          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search by Scope, Category, Sub category or Activity"
+            className="pl-10 pr-4 py-2 w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={searchQuery}
+            onChange={handleSearch}
+          />
+          {searchQuery && (
+            <button
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              onClick={() => setSearchQuery("")}
+            >
+              <FiX className="w-4 h-4" />
+            </button>
+          )}
+        </div>
       </div>
-      <div className="flex justify-start items-center p-4">
+      
+      <div className="flex justify-start items-center px-4 py-2">
         <div className="flex space-x-4 w-[18%] gap-6">
           <div className="flex items-center">
-            <span className="text-gray-500 text-sm">
-              <div>Total</div> activities
-            </span>
+            <span className="text-gray-500 text-sm">Total activities</span>
             <div className="text-xl font-semibold ml-3">{count}</div>
           </div>
           <div className="flex items-center">
-            <span className="text-gray-500 text-sm">
-              <div>Selected</div> activities
-            </span>
+            <span className="text-gray-500 text-sm">Selected activities</span>
             <div className="text-xl font-semibold text-green-500 ml-3">
               {selectedActivities.length}
             </div>
           </div>
         </div>
+        
         {/* Active filters */}
         <div className="flex flex-wrap items-center gap-2 text-sky-700 font-semibold w-[82%]">
-          {(filters.scopes || []).map(scope => (
+          {selectedScopes.map(scope => (
             <div key={`scope-${scope}`} className="flex items-center bg-sky-50 rounded-md px-3 py-1.5 text-sm">
               <span className="mr-2">{scope}</span>
               <button
@@ -524,7 +466,7 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
             </div>
           ))}
           
-          {(filters.categories || []).map(category => (
+          {selectedCategories.map(category => (
             <div key={`category-${category}`} className="flex items-center bg-sky-50 rounded-md px-3 py-1.5 text-sm">
               <span className="mr-2">{category}</span>
               <button
@@ -536,7 +478,7 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
             </div>
           ))}
           
-          {(filters.subCategories || []).map(subCategory => (
+          {selectedSubCategories.map(subCategory => (
             <div key={`subcategory-${subCategory}`} className="flex items-center bg-sky-50 rounded-md px-3 py-1.5 text-sm">
               <span className="mr-2">{subCategory}</span>
               <button
@@ -548,7 +490,7 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
             </div>
           ))}
           
-          {(filters.regions || []).map(region => (
+          {selectedRegions.map(region => (
             <div key={`region-${region}`} className="flex items-center bg-sky-50 rounded-md px-3 py-1.5 text-sm">
               <span className="mr-2">{region}</span>
               <button
@@ -572,7 +514,7 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
         </div>
       </div>
 
-      {/* Table headers */}
+      {/* Table headers - fixed alignment */}
       <div className="grid grid-cols-11 gap-4 px-6 py-3 border-y border-gray-200 bg-gray-50 text-sm font-medium text-gray-500">
         {/* Include column - 1 unit */}
         <div className="col-span-1 flex items-center">
@@ -581,15 +523,15 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
 
         {/* Scope - with filter - 1 unit */}
         <div className="col-span-1 relative" ref={scopeFilterRef}>
-          <div className="flex items-center gap-2">
-            <span>Scope</span>
+          <div className="flex items-center">
+            <span className="whitespace-nowrap">Scope</span>
             <button
               onClick={() => setIsScopeFilterOpen(!isScopeFilterOpen)}
-              className="hover:bg-gray-100 p-1 rounded"
+              className="hover:bg-gray-100 p-1 rounded ml-1"
             >
               <MdFilterList
                 className={`w-4 h-4 ${
-                  (filters.scopes && filters.scopes.length > 0) ? "text-blue-500" : "text-gray-400"
+                  selectedScopes.length > 0 ? "text-blue-500" : "text-gray-400"
                 } hover:text-blue-500`}
               />
             </button>
@@ -599,7 +541,7 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
             <FilterModal
               title="Filter by Scope"
               items={scopeOptions}
-              selectedItems={filters.scopes || []}
+              selectedItems={selectedScopes}
               handleSelection={handleScopeSelection}
               onClose={() => setIsScopeFilterOpen(false)}
             />
@@ -608,15 +550,17 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
 
         {/* Category - with filter - 2 units */}
         <div className="col-span-2 relative" ref={categoryFilterRef}>
-          <div className="flex items-center gap-2">
-            <span>Category</span>
+          <div className="flex items-center">
+            <span className="whitespace-nowrap">Category</span>
             <button
               onClick={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
-              className="hover:bg-gray-100 p-1 rounded"
+              className="hover:bg-gray-100 p-1 rounded ml-1"
             >
               <MdFilterList
                 className={`w-4 h-4 ${
-                  (filters.categories && filters.categories.length > 0) ? "text-blue-500" : "text-gray-400"
+                  selectedCategories.length > 0
+                    ? "text-blue-500"
+                    : "text-gray-400"
                 } hover:text-blue-500`}
               />
             </button>
@@ -626,7 +570,7 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
             <FilterModal
               title="Filter by Category"
               items={categoryOptions}
-              selectedItems={filters.categories || []}
+              selectedItems={selectedCategories}
               handleSelection={handleCategorySelection}
               onClose={() => setIsCategoryFilterOpen(false)}
             />
@@ -635,17 +579,19 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
 
         {/* Sub Category - with filter - 2 units */}
         <div className="col-span-2 relative" ref={subCategoryFilterRef}>
-          <div className="flex items-center gap-2">
-            <span>Sub Category</span>
+          <div className="flex items-center">
+            <span className="whitespace-nowrap">Sub Category</span>
             <button
               onClick={() =>
                 setIsSubCategoryFilterOpen(!isSubCategoryFilterOpen)
               }
-              className="hover:bg-gray-100 p-1 rounded"
+              className="hover:bg-gray-100 p-1 rounded ml-1"
             >
               <MdFilterList
                 className={`w-4 h-4 ${
-                  (filters.subCategories && filters.subCategories.length > 0) ? "text-blue-500" : "text-gray-400"
+                  selectedSubCategories.length > 0
+                    ? "text-blue-500"
+                    : "text-gray-400"
                 } hover:text-blue-500`}
               />
             </button>
@@ -655,7 +601,7 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
             <FilterModal
               title="Filter by Sub Category"
               items={subCategoryOptions}
-              selectedItems={filters.subCategories || []}
+              selectedItems={selectedSubCategories}
               handleSelection={handleSubCategorySelection}
               onClose={() => setIsSubCategoryFilterOpen(false)}
             />
@@ -666,11 +612,11 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
         <div className="col-span-4 flex items-center">
           <div
             className="flex items-center gap-1 cursor-pointer"
-            onClick={() => handleSort("activity")}
+            onClick={() => handleSort("activity_name")}
           >
             <span>Activity</span>
-            {sorting.column === "activity" ? (
-              sorting.order === "asc" ? (
+            {sortColumn === "activity_name" ? (
+              sortOrder === "asc" ? (
                 <FiChevronUp className="h-4 w-4" />
               ) : (
                 <FiChevronDown className="h-4 w-4" />
@@ -681,41 +627,43 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
           </div>
         </div>
 
-        {/* Region column - 1 unit - Added Sorting */}
+        {/* Region column - 1 unit - Added Sorting and Filter */}
         <div className="col-span-1 relative" ref={regionFilterRef}>
-          <div className="flex items-center justify-between">
-            <div
-              className="flex items-center gap-1 cursor-pointer"
-              onClick={() => handleSort("region")}
-            >
-              <span>Activity Region</span>
-              {sorting.column === "region" ? (
-                sorting.order === "asc" ? (
-                  <FiChevronUp className="h-4 w-4" />
+          <div className="flex items-center">
+            <span className="whitespace-nowrap">Activity Region</span>
+            <div className="flex ml-1">
+              <button
+                onClick={() => handleSort("region")}
+                className="hover:bg-gray-100 rounded"
+              >
+                {sortColumn === "region" ? (
+                  sortOrder === "asc" ? (
+                    <FiChevronUp className="h-4 w-4" />
+                  ) : (
+                    <FiChevronDown className="h-4 w-4" />
+                  )
                 ) : (
-                  <FiChevronDown className="h-4 w-4" />
-                )
-              ) : (
-                <LuChevronsUpDown className="h-4 w-4 text-gray-400" />
-              )}
+                  <LuChevronsUpDown className="h-4 w-4 text-gray-400" />
+                )}
+              </button>
+              <button
+                onClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}
+                className="hover:bg-gray-100 p-1 rounded"
+              >
+                <MdFilterList
+                  className={`w-4 h-4 ${
+                    selectedRegions.length > 0 ? "text-blue-500" : "text-gray-400"
+                  } hover:text-blue-500`}
+                />
+              </button>
             </div>
-            <button
-              onClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}
-              className="hover:bg-gray-100 p-1 rounded ml-1"
-            >
-              <MdFilterList
-                className={`w-4 h-4 ${
-                  (filters.regions && filters.regions.length > 0) ? "text-blue-500" : "text-gray-400"
-                } hover:text-blue-500`}
-              />
-            </button>
           </div>
 
           {isRegionFilterOpen && (
             <FilterModal
               title="Filter by Region"
               items={regionOptions}
-              selectedItems={filters.regions || []}
+              selectedItems={selectedRegions}
               handleSelection={handleRegionSelection}
               onClose={() => setIsRegionFilterOpen(false)}
             />
@@ -726,21 +674,15 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
       {/* Table body */}
       <div className="max-h-[410px] overflow-y-auto">
         <div className="divide-y divide-gray-200">
-          {loading ? (
+          {isLoading ? (
             <div className="py-12 flex justify-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
             </div>
           ) : error ? (
             <div className="py-8 text-center text-red-500">
-              <p>Error loading activities: {error}</p>
+              <p>{error}</p>
               <button 
-                onClick={() => dispatch(fetchEmissionData({ 
-                  scenarioId,
-                  filters: {
-                    page: 1,
-                    page_size: 10
-                  }
-                }))}
+                onClick={fetchActivities}
                 className="mt-4 px-4 py-2 bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
               >
                 Try Again
@@ -761,10 +703,11 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
           ) : (
             activities.map((activity) => (
               <div
-                key={activity.id}
+                key={activity.uuid}
                 className={`grid grid-cols-11 gap-4 px-6 py-4 hover:bg-gray-50 ${
-                  isSelected(activity.id) ? "bg-blue-50" : ""
+                  isSelected(activity.uuid) ? "bg-blue-50" : ""
                 }`}
+                onClick={() => toggleActivitySelection(activity)}
                 style={{ cursor: "pointer" }}
               >
                 {/* Include column - 1 unit */}
@@ -772,10 +715,13 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
                   <div className="flex items-center justify-center h-5">
                     <input
                       type="checkbox"
-                      checked={isSelected(activity.id)}
-                      onChange={() => toggleActivitySelection(activity)} 
+                      checked={isSelected(activity.uuid)}
+                      onChange={() => {}} // onChange handled by parent div click
                       className="w-4 h-4 green-checkbox border-gray-300 rounded focus:ring-green-500"
-                      onClick={(e) => e.stopPropagation()} // Prevent double triggering
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent double triggering
+                        toggleActivitySelection(activity);
+                      }}
                     />
                   </div>
                 </div>
@@ -787,13 +733,15 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
                 <div className="col-span-2">{activity.category}</div>
 
                 {/* Sub Category - 2 units */}
-                <div className="col-span-2">{activity.sub_category || activity.subCategory}</div>
+                <div className="col-span-2">{activity.subCategory}</div>
 
                 {/* Activity - 4 units */}
-                <div className="col-span-4 truncate">{activity.activity}</div>
+                <div className="col-span-4 truncate" title={activity.activity}>
+                  {activity.activity}
+                </div>
 
                 {/* Region - 1 unit */}
-                <div className="col-span-1 text-gray-500 text-center">
+                <div className="col-span-1 text-center">
                   {activity.region}
                 </div>
               </div>
@@ -806,8 +754,8 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
       <div className="flex items-center justify-center p-4 border-t">
         <div className="flex items-center space-x-2">
           <button
-            onClick={() => handlePageChange(Math.max(1, (pagination.currentPage || 1) - 1))}
-            disabled={(pagination.currentPage || 1) === 1}
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
             className="p-2 rounded-md border border-gray-200 disabled:opacity-50"
           >
             <FiChevronLeft />
@@ -818,20 +766,20 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
 
             if (totalPages <= 7) {
               pageNumber = i + 1;
-            } else if ((pagination.currentPage || 1) <= 4) {
+            } else if (currentPage <= 4) {
               pageNumber = i + 1;
-            } else if ((pagination.currentPage || 1) >= totalPages - 3) {
+            } else if (currentPage >= totalPages - 3) {
               pageNumber = totalPages - 6 + i;
             } else {
-              pageNumber = (pagination.currentPage || 1) - 3 + i;
+              pageNumber = currentPage - 3 + i;
             }
 
             return (
               <button
                 key={pageNumber}
-                onClick={() => handlePageChange(pageNumber)}
+                onClick={() => setCurrentPage(pageNumber)}
                 className={`w-8 h-8 rounded-md ${
-                  (pagination.currentPage || 1) === pageNumber
+                  currentPage === pageNumber
                     ? "bg-blue-500 text-white"
                     : "text-gray-500 hover:bg-gray-50"
                 }`}
@@ -842,8 +790,8 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
           })}
 
           <button
-            onClick={() => handlePageChange(Math.min(totalPages, (pagination.currentPage || 1) + 1))}
-            disabled={(pagination.currentPage || 1) === totalPages || totalPages === 0}
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
             className="p-2 rounded-md border border-gray-200 disabled:opacity-50"
           >
             <FiChevronRight />
@@ -852,8 +800,11 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
 
         <div className="flex items-center ml-4">
           <select
-            value={pagination.itemsPerPage || 10}
-            onChange={(e) => handleItemsPerPageChange(e.target.value)}
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(Number(e.target.value));
+              setCurrentPage(1);
+            }}
             className="border border-gray-200 rounded-md px-3 py-1 text-sm"
           >
             <option value="10">10 per page</option>
@@ -864,9 +815,9 @@ const ActivitySelectTable = ({ selectedActivities, setSelectedActivities, scenar
           <div className="text-sm text-gray-500 ml-4">
             Showing{" "}
             {activities.length > 0
-              ? ((pagination.currentPage || 1) - 1) * (pagination.itemsPerPage || 10) + 1
+              ? (currentPage - 1) * itemsPerPage + 1
               : 0}{" "}
-            to {Math.min((pagination.currentPage || 1) * (pagination.itemsPerPage || 10), count)} of {count}{" "}
+            to {Math.min(currentPage * itemsPerPage, count)} of {count}{" "}
             activities
           </div>
         </div>
