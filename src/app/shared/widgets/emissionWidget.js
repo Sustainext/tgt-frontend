@@ -54,7 +54,6 @@ const EmissionWidget = React.memo(
     formRef,
   }) => {
 
-    console.log(value,"see it")
     const dispatch = useDispatch();
     const rowId = scope + "_" + index;
     const [rowType, setRowType] = useState(value.rowType || "default");
