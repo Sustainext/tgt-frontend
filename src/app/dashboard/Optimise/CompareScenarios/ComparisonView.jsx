@@ -17,7 +17,7 @@ const ComparisonView = ({ selectedScenarios, allScenarios }) => {
   const [businessMetrics, setBusinessMetrics] = useState([
     { id: "fte", name: "FTE", selected: true },
     { id: "area", name: "Area", selected: true },
-    { id: "productionVolume", name: "Production Volume", selected: true },
+    { id: "production_volume", name: "Production Volume", selected: true },
     { id: "revenue", name: "Revenue", selected: false },
     { id: "employees", name: "Employees", selected: false }
   ]);
