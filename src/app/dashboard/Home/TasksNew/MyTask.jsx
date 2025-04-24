@@ -113,6 +113,13 @@ const MyTask = ({ HomeActiveTab }) => {
   // Add this state near other modal states
   const [isSelfTaskFillModalOpen, setSelfTaskFillModalOpen] = useState(false);
 
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const userRole = localStorage.getItem("isAdmin");
+    setIsAdmin(userRole);
+  }, []);
+
   // Add this useEffect to fetch client list if needed
   useEffect(() => {
     const fetchClintList = async () => {
@@ -148,22 +155,29 @@ const MyTask = ({ HomeActiveTab }) => {
   // Handle unit options when activity changes
   useEffect(() => {
     if (selectedActivityName && activitiesList.length > 0) {
-      const activity = activitiesList.find(
-        (act) =>
-          `${act.name} - (${act.source}) - ${act.unit_type}` ===
-          selectedActivityName
-      );
+      // Use for loop to find the activity (more reliable than find())
+      let foundActivity = null;
+      for (let i = 0; i < activitiesList.length; i++) {
+        const act = activitiesList[i];
+        const fullActivityName = `${act.name} - (${act.source}) - ${act.unit_type}`;
 
-      if (activity) {
-        const type = activity.unit_type;
+        if (fullActivityName === selectedActivityName) {
+          foundActivity = act;
+          break;
+        }
+      }
+
+      if (foundActivity) {
+        const type = foundActivity.unit_type;
         // Find matching unit types from the unitTypes array
         const matchingUnitType = unitTypes.find((ut) => ut.unit_type === type);
 
         if (matchingUnitType) {
           setSelectedActivity({
-            ...activity,
+            ...foundActivity,
             unit_type: type,
             units: matchingUnitType.units,
+            activity_id: foundActivity.id, // Use id directly from the found activity
           });
         }
       }
@@ -741,13 +755,28 @@ const MyTask = ({ HomeActiveTab }) => {
         activitiesList={activitiesList}
         unitTypes={unitTypes}
         onActivityChange={(e) => {
-          setSelectedActivityName(e.target.value);
+          const activityName = e.target.value;
+          setSelectedActivityName(activityName);
+
+          // Use for loop to find the activity_id (more reliable than find())
+          let foundActivityId = null;
+          for (let i = 0; i < activitiesList.length; i++) {
+            const act = activitiesList[i];
+            const fullActivityName = `${act.name} - (${act.source}) - ${act.unit_type}`;
+
+            if (fullActivityName === activityName) {
+              foundActivityId = act.activity_id;
+              break;
+            }
+          }
+
           setTaskAssigndata({
             ...taskassigndata,
-            activity: e.target.value,
-            unit_type: e.target.value
+            activity: activityName,
+            unit_type: activityName
               .split("-")
-              [e.target.value.split("-").length - 1].trim(),
+              [activityName.split("-").length - 1].trim(),
+            activity_id: foundActivityId,
           });
         }}
         onTaskDataChange={(changes) => {

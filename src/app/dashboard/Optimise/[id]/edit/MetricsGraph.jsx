@@ -21,20 +21,34 @@ const MetricsGraph = ({
   allowNegative = true,
   minNegativeValue = -100, 
   rangeSteps = [100, 200, 500, 1000, 2000, 5000],
+  // Added props for syncing with Redux
+  metricData = {},
+  onPercentageChange = () => {},
+  onBaseValueChange = () => {},
 }) => {
-  // Initial data structure
-  const initialData = [];
-
   // Generate years between base and target
   const years = [];
   for (let year = baseYear; year <= targetYear; year++) {
     years.push(year.toString());
-    // Start with 0% growth for all years
-    initialData.push({
-      x: year.toString(),
-      y: 0,
-    });
   }
+
+  // Initialize data structure with values from metricData if available
+  const initializeData = () => {
+    const initialData = [];
+    
+    years.forEach(year => {
+      const percentageChange = metricData.percentage_change 
+        ? metricData.percentage_change[year] || 0 
+        : 0;
+        
+      initialData.push({
+        x: year,
+        y: percentageChange
+      });
+    });
+    
+    return initialData;
+  };
 
   // Calculate dynamic width based on number of years
   const yearCount = years.length;
@@ -44,8 +58,40 @@ const MetricsGraph = ({
 
   // Container width calculation - will be the visible container width
   const [containerWidth, setContainerWidth] = useState(0);
+  
+  // State for the growth data
+  const [data, setData] = useState(initializeData);
+  
+  // State for the absolute value in base year
+  const [baseValue, setBaseValue] = useState(metricData.abs_value || "");
+  
+  const [maxRange, setMaxRange] = useState(initialMaxRange);
+
+  // Update data when metricData changes (from Redux)
   useEffect(() => {
-    // Update container width on mount and resize
+    // Update base value if it exists in metricData
+    if (metricData.abs_value !== undefined) {
+      setBaseValue(metricData.abs_value);
+    }
+    
+    // Update percentage changes if they exist
+    if (metricData.percentage_change) {
+      const newData = [...data];
+      years.forEach((year, index) => {
+        const percentageChange = metricData.percentage_change[year];
+        if (percentageChange !== undefined) {
+          newData[index] = {
+            ...newData[index],
+            y: percentageChange
+          };
+        }
+      });
+      setData(newData);
+    }
+  }, [metricData]);
+
+  // Update container width on mount and resize
+  useEffect(() => {
     const updateContainerWidth = () => {
       const container = document.querySelector(".scrollable-content");
       if (container) {
@@ -57,12 +103,6 @@ const MetricsGraph = ({
     window.addEventListener("resize", updateContainerWidth);
     return () => window.removeEventListener("resize", updateContainerWidth);
   }, []);
-
-  // State for the growth data
-  const [data, setData] = useState(initialData);
-  // State for the absolute value in base year
-  const [baseValue, setBaseValue] = useState();
-  const [maxRange, setMaxRange] = useState(initialMaxRange);
   
   // Calculate effective min negative value - dynamic unless specified for certain metrics
   const getEffectiveMinNegative = () => {
@@ -146,6 +186,21 @@ const MetricsGraph = ({
         y: finalValue,
       };
       setData(updatedData);
+      
+      // Create complete object with both abs_value and percentage_change
+      const updatedPercentageChanges = {};
+      updatedData.forEach((item) => {
+        updatedPercentageChanges[item.x] = item.y;
+      });
+      
+      // Create complete data object for Redux
+      const completeData = {
+        abs_value: baseValue,
+        percentage_change: updatedPercentageChanges
+      };
+      
+      // Update the parent via callback with complete data object
+      onPercentageChange(completeData);
     };
 
     const handleMouseUp = () => {
@@ -253,6 +308,41 @@ const MetricsGraph = ({
     
     // Check if range needs to be adjusted
     autoAdjustRange(numValue);
+    
+    // Create complete object with both abs_value and percentage_change
+    const updatedPercentageChanges = {};
+    newData.forEach((item) => {
+      updatedPercentageChanges[item.x] = item.y;
+    });
+    
+    // Create complete data object for Redux
+    const completeData = {
+      abs_value: baseValue,
+      percentage_change: updatedPercentageChanges
+    };
+    
+    // Update the parent via callback with complete data object
+    onPercentageChange(completeData);
+  };
+
+  // Handle base value changes
+  const handleBaseValueChange = (e) => {
+    const value = Number(e.target.value) || 0;
+    setBaseValue(value);
+    
+    // Create complete data object with current percentage changes
+    const percentageChanges = {};
+    data.forEach((item) => {
+      percentageChanges[item.x] = item.y;
+    });
+    
+    // Send complete data object to parent
+    const completeData = {
+      abs_value: value,
+      percentage_change: percentageChanges
+    };
+    
+    onBaseValueChange(completeData);
   };
 
   return (
@@ -268,7 +358,7 @@ const MetricsGraph = ({
             <input
               type="text"
               value={baseValue}
-              onChange={(e) => setBaseValue(Number(e.target.value) || 0)}
+              onChange={handleBaseValueChange}
               className="w-32 text-center bg-white border-b border-gray-300 rounded py-1 px-2 text-sm focus:outline-none focus:border-blue-500"
               placeholder="Enter Value"
             />
@@ -483,6 +573,21 @@ const MetricsGraph = ({
                         const newData = [...data];
                         newData[index] = { ...newData[index], y: 0 };
                         setData(newData);
+                        
+                        // Create the year-wise percentage changes for Redux with complete data
+                        const percentageChanges = {};
+                        newData.forEach((item) => {
+                          percentageChanges[item.x] = item.y;
+                        });
+                        
+                        // Create complete data object
+                        const completeData = {
+                          abs_value: baseValue,
+                          percentage_change: percentageChanges
+                        };
+                        
+                        // Update the parent via callback with complete data
+                        onPercentageChange(completeData);
                       }
                     }}
                   />
