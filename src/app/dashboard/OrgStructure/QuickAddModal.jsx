@@ -4,7 +4,8 @@ import industryList from "@/app/shared/data/sectors";
 import { post } from "@/app/utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/app/utils/toastUtils";
-
+import axiosInstance from "../../utils/axiosMiddleware";
+import SearchableCityDropdown from "./forms/SearchableCityDropdown";
 const INITIAL_FORM_STATE = {
   name: "",
   country: "",
@@ -19,10 +20,15 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
   const router = useRouter();
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
   const [subIndustries, setSubIndustries] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [formErrors, setFormErrors] = useState({});
-
+  const [countriesids, setCountriesids] = useState();
+  const [statesids, setStatesids] = useState();
+  const [selectedCountry, setSelectedCountry] = useState(``);
+  const [selectedState, setSelectedState] = useState(``);
+  const [selectedCity, setSelectedCity] = useState("");
   const handleCancel = () => {
     setFormData(INITIAL_FORM_STATE);
     setFormErrors({});
@@ -31,39 +37,157 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
     setCities([]);
     onClose();
   };
+  const handleAddCity = async (cityName) => {
+    try {
+      // API request to create a new city
+      const response = await axiosInstance.post("geo_data/cities/create/", {
+        city_name: cityName,
+        state: statesids,
+      });
 
-  
+      // Assuming the response contains the newly created city object
+      const newCity = response.data;
 
-  useEffect(() => {
-    // Only handle state/city updates for location type
-    if (type === "location" && formData.country) {
-      const statesOfCountry = State.getStatesOfCountry(formData.country);
-      setStates(statesOfCountry);
-      setCities([]);
-      setFormData((prev) => ({ ...prev, state: "", city: "" }));
+      // Add the newly created city to the state
+      setCities((prevCities) => [...prevCities, newCity]);
+
+      // Show a success toast message
+      toast.success("City added successfully!");
+
+      // Return the newly added city (optional)
+      return newCity;
+    } catch (error) {
+      console.error("Error adding city:", error);
+      // Show an error toast message
+      toast.error("Failed to add city. Please try again.");
+      // Handle error accordingly
+      throw new Error("Failed to add city");
     }
-  }, [formData.country, type]);
-
+  };
   useEffect(() => {
-    // Only handle city updates for location type
-    if (type === "location" && formData.country && formData.state) {
-      const citiesOfState = City.getCitiesOfState(
-        formData.country,
-        formData.state
-      );
-      setCities(citiesOfState);
-      setFormData((prev) => ({ ...prev, city: "" }));
-    }
-  }, [formData.state, type]);
+    const loadCountries = async () => {
+      try {
+        const response = await axiosInstance.get("/geo_data/countries/");
+        setCountries(response.data);
+      } catch (error) {
+        console.error("Failed to load countries:", error);
+      }
+    };
+
+    loadCountries();
+  }, []);
+  useEffect(() => {
+    const fetchStates = async () => {
+      if (type === "location" && countriesids) {
+        try {
+          const response = await axiosInstance.get(
+            `/geo_data/states/?country_id=${countriesids}`
+          );
+          setStates(response.data);
+          setCities([]);
+          setFormData((prev) => ({ ...prev, state: "", city: "" }));
+        } catch (err) {
+          console.error("Failed to fetch states:", err);
+        }
+      }
+    };
+
+    fetchStates();
+  }, [countriesids, type]);
+  useEffect(() => {
+    const fetchCities = async () => {
+      if (type === "location" && statesids) {
+        try {
+          const response = await axiosInstance.get(
+            `/geo_data/cities/?state_id=${statesids}`
+          );
+          setCities(response.data);
+          setFormData((prev) => ({ ...prev, city: "" }));
+        } catch (err) {
+          console.error("Failed to fetch cities:", err);
+        }
+      }
+    };
+
+    fetchCities();
+  }, [statesids, type]);
+
+  // useEffect(() => {
+  //   // Only handle state/city updates for location type
+  //   if (type === "location" && formData.country) {
+  //     const statesOfCountry = State.getStatesOfCountry(formData.country);
+  //     setStates(statesOfCountry);
+  //     setCities([]);
+  //     setFormData((prev) => ({ ...prev, state: "", city: "" }));
+  //   }
+  // }, [formData.country, type]);
+
+  // useEffect(() => {
+  //   // Only handle city updates for location type
+  //   if (type === "location" && formData.country && formData.state) {
+  //     const citiesOfState = City.getCitiesOfState(
+  //       formData.country,
+  //       formData.state
+  //     );
+  //     setCities(citiesOfState);
+  //     setFormData((prev) => ({ ...prev, city: "" }));
+  //   }
+  // }, [formData.state, type]);
+
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+
+  //   // Clear error when field is changed
+  //   setFormErrors((prev) => ({
+  //     ...prev,
+  //     [name]: "",
+  //   }));
+
+  //   if (name === "sector") {
+  //     const selectedIndustry = industryList.find(
+  //       (industry) => industry.industry === value
+  //     );
+  //     setSubIndustries(selectedIndustry?.subIndustries || []);
+  //   }
+  // };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
 
-    // Clear error when field is changed
+    if (name === "country") {
+      const [countryId, countryCode] = value.split(":");
+      setCountriesids(countryId);
+      setSelectedCountry(value);
+      setFormData((prev) => ({
+        ...prev,
+        country: countryCode,
+
+        state: "",
+        city: "",
+      }));
+    } else if (name === "state") {
+      const [stateId, stateName] = value.split(":");
+      setStatesids(stateId);
+      setSelectedState(value);
+      setFormData((prev) => ({
+        ...prev,
+        state: stateName,
+        city: "",
+      }));
+    } else if (name === "city") {
+      setSelectedCity(value);
+    } 
+    else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+
     setFormErrors((prev) => ({
       ...prev,
       [name]: "",
@@ -87,7 +211,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
       errors.country = "Country is required";
     }
 
-    if (!formData.sector && (type==="corporate"||type==='organization')) {
+    if (!formData.sector && (type === "corporate" || type === "organization")) {
       errors.sector = "Sector is required";
     }
 
@@ -96,7 +220,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
         errors.subIndustry = "Sub Industry is required";
       }
     }
-   
+
     if (type === "location") {
       if (!formData.state) {
         errors.state = "State is required";
@@ -179,36 +303,36 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
         //   username: "mahinder.singh@sustainext.ai",
         // };
         payload = {
-          name: formData.name || 'Entity 1',
-          type_corporate_entity: 'Not Specified',
-          owner:  '',
-          location_of_headquarters: 'Not Specified',
+          name: formData.name || "Entity 1",
+          type_corporate_entity: "Not Specified",
+          owner: "",
+          location_of_headquarters: "Not Specified",
           phone: 9999999999,
-          mobile: '',
-          website: 'Not Provided',
+          mobile: "",
+          website: "Not Provided",
           fax: "",
-          employeecount:  0,
+          employeecount: 0,
           revenue: 0,
-          sector: formData.sector || 'General',
-          subindustry: formData.subIndustry || 'General',
-          address: formData.address || 'Not Provided',
-          country: formData.country || 'N/A',
-          state: formData.state || 'N/A',
-          city: formData.city || 'N/A',
+          sector: formData.sector || "General",
+          subindustry: formData.subIndustry || "General",
+          address: formData.address || "Not Provided",
+          country: formData.country || "N/A",
+          state: formData.state || "N/A",
+          city: formData.city || "N/A",
           date_format: "YYYY/MM/DD",
-          currency: 'USD',
-          timezone: 'UTC',
+          currency: "USD",
+          timezone: "UTC",
           from_date: formData.from_date || null,
           to_date: formData.to_date || null,
           sdg: [],
           rating: [],
           certification: [],
           target: [],
-          framework:  [1],
+          framework: [1],
           // language: data.generalDetails.language || 'English',
           // active: true,
           // no_of_employees: 100,
-           // amount: null,
+          // amount: null,
           // ownership_and_legal_form: null,
           // group: null,
           // type_of_corporate_entity: data.generalDetails.type || 'Default',
@@ -247,28 +371,28 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
 
         payload = {
           name: formData.name || "Test Corp",
-          corporatetype:  "Not Specified",
-          ownershipnature:  "",
-          location_headquarters:  "Not Specified",
-          phone:  9999999999,
-          mobile:  '',
-          website:  'Not Provided',
-          fax:  '',
-          employeecount:  0,
-          revenue:  0,
+          corporatetype: "Not Specified",
+          ownershipnature: "",
+          location_headquarters: "Not Specified",
+          phone: 9999999999,
+          mobile: "",
+          website: "Not Provided",
+          fax: "",
+          employeecount: 0,
+          revenue: 0,
           organization: parentName.id,
           sector: formData.sector || "General",
           subindustry: formData.subIndustry || "General",
-          address:  "Not Provided",
+          address: "Not Provided",
           country: formData.country || "N/A",
-          state:  "N/A",
-          city:  "N/A",
+          state: "N/A",
+          city: "N/A",
           // zipcode:  null,
-          date_format:  "YYYY/MM/DD",
-          currency:  "USD",
-          timezone:  "UTC",
-          from_date:  null,
-          to_date:  null,
+          date_format: "YYYY/MM/DD",
+          currency: "USD",
+          timezone: "UTC",
+          from_date: null,
+          to_date: null,
           // legalform: "1",
           // ownership:  "",
           // group: null,
@@ -278,12 +402,11 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
           // type_of_product: null,
           // type_of_services: null,
           // type_of_business_relationship: null,
-        framework:[1],
-        sdg: [],
-        rating: [],
-        certification: [],
-        target: []
-    
+          framework: [1],
+          sdg: [],
+          rating: [],
+          certification: [],
+          target: [],
         };
         break;
 
@@ -313,26 +436,26 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
         payload = {
           corporateentity: parentName.id,
           name: formData.name || "Location 1",
-          phone:  9999999999,
-          mobile:  '',
-          website:  "Not Provided",
-          fax:  "",
-          employeecount:  0,
-          revenue:  0,
+          phone: 9999999999,
+          mobile: "",
+          website: "Not Provided",
+          fax: "",
+          employeecount: 0,
+          revenue: 0,
           sector: "General",
-          sub_industry:  "General",
-          streetaddress:  "Not Provided",
-          zipcode: 'N/A',
-          state: formData.state || 'N/A',
-          city: formData.city || 'N/A',
-          country: formData.country || 'N/A',
-          latitude:  null,
-          longitude:  null,
+          sub_industry: "General",
+          streetaddress: "Not Provided",
+          zipcode: "N/A",
+          state: formData.state || "N/A",
+          city: formData.city || "N/A",
+          country: formData.country || "N/A",
+          latitude: null,
+          longitude: null,
           timezone: "UTC",
           currency: "USD",
-          dateformat:  "YYYY/MM/DD",
-          from_date:  null,
-          to_date:null,
+          dateformat: "YYYY/MM/DD",
+          from_date: null,
+          to_date: null,
           language: "English",
           location_type: formData.locationType || "Default",
         };
@@ -340,15 +463,17 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
     }
 
     try {
-     const response= await post(endpoint, payload);
+      const response = await post(endpoint, payload);
       showToast(`${entityType} added successfully`);
       onClose();
       setTimeout(() => {
         window.location.reload();
-      }, 1000)
+      }, 1000);
     } catch (error) {
-      const message = error?.response?.data?.message[0] || `Failed to add ${entityType.toLowerCase()}`
-      showToast(message,'error');
+      const message =
+        error?.response?.data?.message[0] ||
+        `Failed to add ${entityType.toLowerCase()}`;
+      showToast(message, "error");
       console.error("Error adding:", error);
     }
   };
@@ -385,16 +510,19 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
           </label>
           <select
             name="country"
-            value={formData.country}
+            value={selectedCountry}
             onChange={handleInputChange}
             className={`w-full border ${
               formErrors.country ? "border-red-500" : "border-gray-300"
             } rounded-md p-2 text-sm`}
           >
             <option value="">Select Country</option>
-            {Country.getAllCountries().map((country) => (
-              <option key={country.isoCode} value={country.isoCode}>
-                {country.name}
+            {countries.map((country) => (
+              <option
+                key={country.id}
+                value={`${country.id}:${country.sortname}`}
+              >
+                {country.country_name}
               </option>
             ))}
           </select>
@@ -409,7 +537,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
           </label>
           <select
             name="state"
-            value={formData.state}
+            value={selectedState}
             onChange={handleInputChange}
             className={`w-full border ${
               formErrors.state ? "border-red-500" : "border-gray-300"
@@ -418,8 +546,8 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
           >
             <option value="">Select State</option>
             {states.map((state) => (
-              <option key={state.isoCode} value={state.isoCode}>
-                {state.name}
+              <option key={state.id} value={`${state.id}:${state.state_name}`}>
+                {state.state_name}
               </option>
             ))}
           </select>
@@ -429,7 +557,22 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <SearchableCityDropdown
+            cities={cities}
+            selectedCity={formData.city} // Directly bind to formData.city
+            onSelectCity={(cityName) => {
+              setSelectedCity(cityName);
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                city: cityName, // Directly update city in the form data
+              }));
+           
+            }}
+            onAddCity={handleAddCity}
+            error={formErrors.city }
+          />
+
+          {/* <label className="block text-sm font-medium text-gray-700 mb-1">
             City *
           </label>
           <select
@@ -443,14 +586,14 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
           >
             <option value="">Select City</option>
             {cities.map((city) => (
-              <option key={city.name} value={city.name}>
-                {city.name}
+              <option key={city.id} value={city.city_name}>
+                {city.city_name}
               </option>
             ))}
           </select>
           {formErrors.city && (
             <p className="text-red-500 text-xs mt-1">{formErrors.city}</p>
-          )}
+          )} */}
         </div>
       </>
     );
@@ -530,22 +673,25 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
             </label>
             <select
               name="country"
-              value={formData.country}
+              value={countriesids}
               onChange={handleInputChange}
               className={`w-full border ${
                 formErrors.country ? "border-red-500" : "border-gray-300"
               } rounded-md p-2 text-sm`}
             >
               <option value="">Select Country</option>
-              {Country.getAllCountries().map((country) => (
-                <option key={country.isoCode} value={country.isoCode}>
-                  {country.name}
+              {countries.map((country) => (
+                <option
+                  key={country.id}
+                  value={`${country.id}:${country.sortname}`}
+                >
+                  {country.country_name}
                 </option>
               ))}
             </select>
             {formErrors.country && (
-            <p className="text-red-500 text-xs mt-1">{formErrors.country}</p>
-          )}
+              <p className="text-red-500 text-xs mt-1">{formErrors.country}</p>
+            )}
           </div>
         )}
 
@@ -571,8 +717,8 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
                 ))}
               </select>
               {formErrors.sector && (
-            <p className="text-red-500 text-xs mt-1">{formErrors.sector}</p>
-          )}
+                <p className="text-red-500 text-xs mt-1">{formErrors.sector}</p>
+              )}
             </div>
 
             {type === "corporate" && (
@@ -585,7 +731,9 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
                   value={formData.subIndustry}
                   onChange={handleInputChange}
                   className={`w-full border ${
-                    formErrors.subIndustry ? "border-red-500" : "border-gray-300"
+                    formErrors.subIndustry
+                      ? "border-red-500"
+                      : "border-gray-300"
                   } rounded-md p-2 text-sm`}
                   disabled={!formData.sector}
                 >
@@ -597,8 +745,10 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
                   ))}
                 </select>
                 {formErrors.subIndustry && (
-            <p className="text-red-500 text-xs mt-1">{formErrors.subIndustry}</p>
-          )}
+                  <p className="text-red-500 text-xs mt-1">
+                    {formErrors.subIndustry}
+                  </p>
+                )}
               </div>
             )}
           </>
