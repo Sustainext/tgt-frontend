@@ -933,7 +933,7 @@ const Report = () => {
 
                             {entities.map((entity, index) => (
                               <React.Fragment key={index}>
-                                <div className={`flex items-center space-x-2 ${!entity.emission_data?'opacity-30':''}`}>
+                                <div className={`flex relative items-center space-x-2 ${!entity.emission_data?'opacity-30':''}`}>
                                   <input
                                     id={entity.id}
                                     type="checkbox"
@@ -946,14 +946,14 @@ const Report = () => {
                                   <label
                                     htmlFor={entity.id}
                                     className="text-gray-800 text-[13px] cursor-pointer"
-                                    data-tooltip-id={`tooltip-${index}`}
+                                    data-tooltip-id={`tooltip-${entity.id}`}
                         data-tooltip-html={`${!entity.emission_data?'<p>No data available for the selected Reporting period</p>':''}`}
                                   >
                                     {entity.name}
                                   </label>
                                 </div>
                                 <ReactTooltip
-                        id={`tooltip-${index}`}
+                        id={`tooltip-${entity.id}`}
                         place="top"
                         effect="solid"
                         style={{

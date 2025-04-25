@@ -17,15 +17,24 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 }; // Fallback values
+  const [userID, setUserID] = useState(null);
+
+  // Load user ID from local storage
+  useEffect(() => {
+    const userID = loadFromLocalStorage("user_id");
+    if (userID) {
+      setUserID(userID);
+    }
+  })
 
   const filter = {
     $schema: "http://powerbi.com/product/schema#basic",
     target: {
-      table: "Client_Info",
-      column: "uuid",
+      table: "Org_Info",
+      column: "Custom User ID",
     },
     operator: "In",
-    values: [loadFromLocalStorage("client_key")],
+    values: [userID],
   };
 
   const tabs = [

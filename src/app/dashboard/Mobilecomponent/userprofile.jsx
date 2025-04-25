@@ -171,7 +171,7 @@ const Userprofile = () => {
   return (
     <>
    
-        <div className="lg:hidden xl:hidden 2xl:hidden md:hidden 4k:hidden block items-center h-full ">
+        <div className="lg:hidden xl:hidden 2xl:hidden md:block 4k:hidden block items-center h-full ">
         <div className="flex justify-end items-center h-full  ">
           <div className="flex">
           

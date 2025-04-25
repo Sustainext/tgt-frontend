@@ -15,16 +15,24 @@ const EconomicTrack = ({ contentSize, dashboardData }) => {
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 };
-  // const [filter, setFilter] = useState()
+  const [userID, setUserID] = useState(null);
+
+  // Load user ID from local storage
+  useEffect(() => {
+    const userID = loadFromLocalStorage("user_id");
+    if (userID) {
+      setUserID(userID);
+    }
+  })
+
   const filter = {
     $schema: "http://powerbi.com/product/schema#basic",
     target: {
-      table: "Client_Info",
-      column: "uuid",
+      table: "Org_Info",
+      column: "Custom User ID",
     },
     operator: "In",
-    values: [loadFromLocalStorage("client_key")],
-    // values: ["8d44f5f4-8e58-4032-aa0a-4ff022288f7c"]
+    values: [userID],
   };
 
   const tabs = [{ id: "powerbiEconomic", label: "Economic (PowerBI)" }];

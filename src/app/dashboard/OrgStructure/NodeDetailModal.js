@@ -114,7 +114,14 @@ const NodeDetailModal = ({
           timezone: details.timezone,
           employeecount: details.employeecount,
           language: details.language,
-          corporate_data: details.corporate_data,
+          corporate_data: {
+            id: details.corporate_data.id,
+            name: details.corporate_data.name,
+            country: details.corporate_data.country,
+            state: details.corporate_data.state,
+            city: details.corporate_data.city,
+            address: details.corporate_data.address
+          },
           revenue: details.revenue,
           street: details.streetaddress,
           country: details.country,
@@ -225,7 +232,14 @@ const NodeDetailModal = ({
             organization: org?.name,
             corporate: corp?.name,
             organization_data: org,
-            corporate_data: corp,
+            corporate_data: {
+              id: corp?.id,
+              name: corp?.name,
+              country: corp?.country,
+              state: corp?.state,
+              city: corp?.city,
+              address: corp?.address
+            },
             breadcrumb: [org?.name, corp?.name, loc?.name],
           };
           break;
