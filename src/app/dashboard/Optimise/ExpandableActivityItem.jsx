@@ -65,10 +65,7 @@ const ExpandableActivityItem = ({ activity }) => {
       {isExpanded && (
         <div className="p-4 border-t border-gray-200">
           {/* Additional activity details */}
-          <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-            {/* <div>
-              <span className="text-gray-500">UUID:</span> {uuid}
-            </div> */}
+          <div className="grid grid-cols-2 gap-4 mb-4 text-sm ml-3">
             <div>
               <span className="text-gray-500">Activity ID:</span> {activityId}
             </div>
@@ -78,9 +75,9 @@ const ExpandableActivityItem = ({ activity }) => {
             <div>
               <span className="text-gray-500">Quantity:</span> {quantity} {unit}
             </div>
-            <div>
+            {/* <div>
               <span className="text-gray-500">Unit Type:</span> {unitType}
-            </div>
+            </div> */}
             <div>
               <span className="text-gray-500">CO2e Total:</span> {co2eTotal.toFixed(2)}
             </div>
@@ -90,7 +87,7 @@ const ExpandableActivityItem = ({ activity }) => {
           <div className="min-h-80 p-2">
             <ActivitiesGraph
               activityName={activityName}
-              baseYear={2025} // You may want to get these from props or context
+              baseYear={2025} 
               targetYear={2030}
             />
           </div>
