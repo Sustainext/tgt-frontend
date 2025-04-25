@@ -118,6 +118,13 @@ const BusinessMetricsWithTooltips = ({
         }
       });
 
+      await dispatch(
+        updateMetricData({
+          scenarioId,
+          payload,
+        })
+      ).unwrap();
+
       // Dispatch the API update with the complete payload
       await dispatch(
         updateScenarioMetrics({
