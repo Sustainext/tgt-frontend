@@ -15,6 +15,10 @@
   }
 }
 
+div[class*="background__Container"] {
+  margin-right: 220px !important;
+}
+
 
 /* 4K screens (3840px width and above) */
 @media (min-width: 3840px) {
