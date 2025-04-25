@@ -78,7 +78,7 @@ export default function DashboardLayout({ children }) {
           </div>
         ) : (
           // **Desktop Version**
-          <div className="xl:flex lg:flex md:flex 2xl:flex w-full hidden">
+          <div className="xl:flex lg:flex md:hidden 2xl:flex w-full hidden">
             <div className="block float-left w-full xl:w-0 lg:w-0 2xl:w-0 md:-0">
               <Sidenav />
             </div>
