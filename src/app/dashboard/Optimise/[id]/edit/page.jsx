@@ -39,6 +39,7 @@ const ScenarioEditor = () => {
     currentStep = 1,
     selectedActivities = [],
     currentScenario: scenario = null,
+    metricsData = {},
     loading = { scenario: false, metrics: false, activities: false },
     error = { scenario: null, metrics: null, activities: null },
   } = optimiseState;
@@ -156,6 +157,8 @@ const handleWeightageProceed = async (updatedWeightages) => {
     // Add weightage for each selected metric
     Object.keys(updatedWeightages).forEach(metric => {
       payload[`${metric}_weightage`] = updatedWeightages[metric];
+      payload[`${metric}_data`] = metricsData[`${metric}_data`];
+      payload[`${metric}`] = metricsData[metric];
     });
         
     // Make the API call if scenarioId exists
