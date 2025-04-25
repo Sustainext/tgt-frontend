@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   FiX,
   FiSearch,
@@ -13,8 +14,9 @@ import { MdFilterList } from "react-icons/md";
 import { LuChevronsUpDown } from "react-icons/lu";
 import { debounce } from "lodash";
 import scenarioService from './service/scenarioService';
+import { setSelectedActivities } from "../../../lib/redux/features/optimiseSlice";
 
-const ActivitySelectTable = ({ selectedActivities = [], setSelectedActivities, scenarioId }) => {
+const ActivitySelectTable = ({ scenarioId }) => {
   // Main states
   const [activities, setActivities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,6 +55,9 @@ const ActivitySelectTable = ({ selectedActivities = [], setSelectedActivities, s
   const categoryFilterRef = useRef(null);
   const subCategoryFilterRef = useRef(null);
   const regionFilterRef = useRef(null);
+
+  const selectedActivities = useSelector(state => state.optimise.selectedActivities);
+  const dispatch = useDispatch();
 
   // Fetch activities with filters
   const fetchActivities = async () => {
@@ -148,11 +153,11 @@ const ActivitySelectTable = ({ selectedActivities = [], setSelectedActivities, s
     if (isAlreadySelected) {
       // Remove from selected list
       const newSelectedActivities = selectedActivities.filter(item => item.uuid !== activity.uuid);
-      setSelectedActivities(newSelectedActivities);
+      dispatch(setSelectedActivities(newSelectedActivities));
     } else {
       // Add to selected list
       const newSelectedActivities = [...selectedActivities, activity];
-      setSelectedActivities(newSelectedActivities);
+      dispatch(setSelectedActivities(newSelectedActivities));
     }
   };
 

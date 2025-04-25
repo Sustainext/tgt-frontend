@@ -366,7 +366,7 @@ export const formatMetricsPayload = (metrics) => {
 export const fetchScenarioActivities = async (scenarioId) => {
   try {
     const response = await apiClient.get(
-      `${SCENARIO_ENDPOINT}${scenarioId}/selectedactivity/`
+      `/optimize/${scenarioId}/selectedactivity/`
     );
     return response.data;
   } catch (error) {
