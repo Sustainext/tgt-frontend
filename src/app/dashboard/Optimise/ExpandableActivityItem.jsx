@@ -66,9 +66,9 @@ const ExpandableActivityItem = ({ activity }) => {
         <div className="p-4 border-t border-gray-200">
           {/* Additional activity details */}
           <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-            <div>
+            {/* <div>
               <span className="text-gray-500">UUID:</span> {uuid}
-            </div>
+            </div> */}
             <div>
               <span className="text-gray-500">Activity ID:</span> {activityId}
             </div>

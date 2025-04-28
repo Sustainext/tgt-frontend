@@ -60,35 +60,59 @@ const LoaderOpen = () => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
+  const loadFormData = async () => {
+    const url = `${process.env.BACKEND_API_URL}/geo_data/countries/`;
+    try {
+      const response = await axiosInstance.get(url);
+      setCountries(response.data);
+      console.log("API call data", response.data);
+    } catch (error) {
+      console.error("API call failed:", error);
+    } finally {
+    }
+  };
   useEffect(() => {
-    const allCountries = Country.getAllCountries();
-    setCountries(allCountries);
+    // const allCountries = Country.getAllCountries();
+    // setCountries(allCountries);
+    loadFormData();
   }, []);
+  // useEffect(() => {
+  //   const allCountries = Country.getAllCountries();
+  //   setCountries(allCountries);
+  // }, []);
 
-  const handleCountryChange = (event) => {
+  const handleCountryChange = async (event) => {
     const countryId = event.target.value;
     setSelectedCountry(countryId);
     const selectedCountryName =
-    event.target.options[event.target.selectedIndex].getAttribute("data-name");
-      setSelectedCountryName(selectedCountryName)
-
-    const statesOfSelectedCountry = State.getStatesOfCountry(countryId);
-    setStates(statesOfSelectedCountry);
+      event.target.options[event.target.selectedIndex].getAttribute("data-name");
+    setSelectedCountryName(selectedCountryName);
+  
+    try {
+      const response = await axiosInstance.get(
+        `/geo_data/states/?country_id=${countryId}`
+      );
+      setStates(response.data);
+    } catch (error) {
+      console.error("Error fetching states:", error);
+    }
   };
 
-  const handleStateChange = (event) => {
+  const handleStateChange = async (event) => {
     const stateId = event.target.value;
     setSelectedState(stateId);
     const selectedStateName =
-    event.target.options[event.target.selectedIndex].getAttribute("data-name");
-      setSelectedStateName(selectedStateName)
-
-    const citiesOfSelectedState = City.getCitiesOfState(
-      selectedCountry,
-      stateId
-    );
-    setCities(citiesOfSelectedState);
+      event.target.options[event.target.selectedIndex].getAttribute("data-name");
+    setSelectedStateName(selectedStateName);
+  
+    try {
+      const response = await axiosInstance.get(
+        `/geo_data/cities/?state_id=${stateId}`
+      );
+      setCities(response.data);
+    } catch (error) {
+      console.error("Error fetching cities:", error);
+    }
   };
   const handleChangeEmail=(event)=>{
     const email = event.target.value;
@@ -409,8 +433,8 @@ const LoaderOpen = () => {
                       >
                         <option value="">Select Country</option>
                         {countries.map((country) => (
-                          <option key={country.isoCode} value={country.isoCode}  data-name={country.name}>
-                            {country.name}
+                          <option key={country.isoCode} value={country.id}  data-name={country.country_name}>
+                            {country.country_name}
                           </option>
                         ))}
                       </select>
@@ -431,8 +455,8 @@ const LoaderOpen = () => {
                       >
                         <option value="">Select State</option>
                         {states.map((state) => (
-                          <option key={state.isoCode} value={state.isoCode} data-name={state.name}>
-                            {state.name}
+                          <option key={state.isoCode} value={state.id} data-name={state.state_name}>
+                            {state.state_name}
                           </option>
                         ))}
                       </select>
@@ -454,8 +478,8 @@ const LoaderOpen = () => {
                     >
                       <option value="">Select City</option>
                       {cities.map((city) => (
-                        <option key={city.id} value={city.id}>
-                          {city.name}
+                        <option key={city.id} value={city.city_name}>
+                          {city.city_name}
                         </option>
                       ))}
                     </select>

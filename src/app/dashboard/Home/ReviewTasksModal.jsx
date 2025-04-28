@@ -113,7 +113,7 @@ const ReviewTasksModal = ({
 
   return (
     <div className="fixed top-12 inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white rounded-lg shadow-lg p-4 w-[45vw] min-h-[70vh] relative">
+      <div className="bg-white rounded-lg shadow-lg p-4 xl:w-[45vw] md:w-[45vw] w-[101vw] min-h-[70vh] relative">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Review Task</h2>
           <button

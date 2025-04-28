@@ -167,25 +167,6 @@ const getSelectedMetrics = (metricsData) => {
   return selectedMetrics;
 };
 
-// Helper function to extract weightages from metrics data
-const extractWeightages = (metricsData) => {
-  const weightages = {};
-  
-  Object.keys(metricsData).forEach(key => {
-    if (key.endsWith('_weightage')) {
-      // Extract the base metric name
-      const metricName = key.replace('_weightage', '');
-      
-      // Convert snake_case to camelCase if needed
-      const metricKey = metricName === 'production_volume' ? 'productionVolume' : metricName;
-      
-      weightages[metricKey] = metricsData[key];
-    }
-  });
-  
-  return weightages;
-};
-
 // Create the slice
 const optimiseSlice = createSlice({
   name: 'optimise',
@@ -318,7 +299,7 @@ const optimiseSlice = createSlice({
         state.loading.metrics = false;
         
         // Update metricsData with the response data
-        state.metricsData = action.payload || state.metricsData;
+        // state.metricsData = action.payload || state.metricsData;
       })
       .addCase(updateScenarioMetrics.rejected, (state, action) => {
         state.loading.metrics = false;
