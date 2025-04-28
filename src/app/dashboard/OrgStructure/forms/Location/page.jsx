@@ -726,6 +726,74 @@ const Location = ({ heading }) => {
       setSelectedFrameworks(selectedFrameworks);
     }
   }, [editData]);
+  useEffect(() => {
+    const loadEditableLocationData = async () => {
+      if (!editData || countries.length === 0) return;
+  
+      const selectedData = editData.filteredData[0] || {};
+      const selectedCountryCode = selectedData.country || "";
+      const selectedStateCode = selectedData.state || "";
+      const selectedCityName = selectedData.city || "";
+  
+      // Match country by sortname (e.g., IN, US)
+      const matchedCountry = countries.find(
+        (country) => country.sortname === selectedCountryCode
+      );
+  
+      const newCountryValue = matchedCountry
+        ? `${matchedCountry.id}:${matchedCountry.sortname}`
+        : "";
+  
+      setSelectedCountry(selectedCountryCode);
+      setnewSelectedCountry(newCountryValue);
+      console.log(newCountryValue,"test newCountryValue edite");
+  
+      if (matchedCountry?.id) {
+        try {
+          // Fetch states
+          const stateResponse = await axiosInstance.get(
+            `/geo_data/states/?country_id=${matchedCountry.id}`
+          );
+          const fetchedStates = stateResponse.data || [];
+          setStates(fetchedStates);
+  
+          // Match state by code
+          const matchedState = fetchedStates.find(
+            (state) => state.state_name === selectedStateCode
+          );
+  
+          const newStateValue = matchedState
+            ? `${matchedState.id}:${matchedState.state_name}`
+            : "";
+  
+          setSelectedState(selectedStateCode);
+          setnewSelectedState(newStateValue);
+          console.log(newStateValue,"test newStateValue edite");
+          if (matchedState?.id) {
+            try {
+              // Fetch cities
+              const cityResponse = await axiosInstance.get(
+                `/geo_data/cities/?state_id=${matchedState.id}`
+              );
+              const fetchedCities = cityResponse.data || [];
+              setCities(fetchedCities);
+  
+              // Set selected city
+              setSelectedCity(selectedCityName);
+            } catch (cityError) {
+              console.error("Failed to fetch cities:", cityError);
+              setCities([]);
+            }
+          }
+        } catch (stateError) {
+          console.error("Failed to fetch states:", stateError);
+          setStates([]);
+        }
+      }
+    };
+  
+    loadEditableLocationData();
+  }, [editData,countries]);
   const handleAddCity = async (cityName) => {
     try {
       // API request to create a new city

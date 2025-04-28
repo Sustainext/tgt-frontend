@@ -294,7 +294,7 @@ const NodeDetailModal = ({
       <div className="fixed xl:right-0 right-2 top-[5rem] z-50 xl:flex xl:justify-end border border-gray-300 rounded-xl h-[110vh]">
         <div
           ref={modalRef}
-          className=" bg-white shadow-xl h-full overflow-y-auto xl:w-[100%] w-[120vw] "
+          className=" bg-white shadow-xl h-full overflow-y-auto xl:w-[29vw] w-[120vw] "
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b">
