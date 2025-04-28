@@ -284,7 +284,7 @@ const ESGReport = () => {
                         Back to Reports
                       </button>
                         {/* mobile section */}
-                      <div className="xl:hidden">
+                      <div className="xl:hidden lg:hidden">
                         <div className="flex gap-2">
                           <button
                             onClick={() => setIsOpenMobile(true)}
@@ -299,7 +299,7 @@ const ESGReport = () => {
                         </div>
                       </div>
                          {/* desktop section */}
-                      <div className=" hidden xl:block">
+                      <div className="hidden xl:block lg:block">
                         <p className="gradient-text text-[22px] font-bold pt-3 pb-3 ml-3">
                           {reportName}
                         </p>

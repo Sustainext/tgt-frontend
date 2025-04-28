@@ -283,7 +283,7 @@ const Socialheader4 = ({
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4  ${
+                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[100%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4  ${
                   reportType !== "" ? "visible" : "hidden"
                 }`}
               >
@@ -409,7 +409,7 @@ const Socialheader4 = ({
             </div>
           </div>
         </div>
-        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+        <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
           <div className="flex justify-between mb-4 ml-3">
             <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
               {months.map((month, index) => (

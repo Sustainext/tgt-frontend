@@ -281,7 +281,7 @@ const Aside = ({
   };
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md h-full">
-      <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
+      <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[43%] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
           <button className="flex justify-between items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
             <div>
@@ -289,7 +289,7 @@ const Aside = ({
               <span className="text-[16px] font-extrabold">Social</span>
             </div>
 
-            <div className=" float-end block xl:hidden md:hidden lg:hidden 2xl:hidden 4k:hidden">
+            <div className="float-end block xl:hidden md:block lg:hidden 2xl:hidden 4k:hidden">
               <MdClose onClick={toggleSidebar} className="text-3xl" />
             </div>
           </button>

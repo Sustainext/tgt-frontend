@@ -343,7 +343,7 @@ const MultiselectTableWidget = ({
                 </div>
               </th>
             ))}
-            <th className="text-[12px] p-3 text-center border-gray-300 px-2 py-2 w-[25vw] xl:w-[3vw] lg:w-[3vw] md:w-[3vw] 2xl:w-[3vw] 4k:w-[3vw] 2k:w-[3vw]"></th>
+            <th className="text-[12px] p-3 text-center border-gray-300 px-2 py-2 w-[25vw] xl:w-[3vw] lg:w-[3vw] md:w-[10vw] 2xl:w-[3vw] 4k:w-[3vw] 2k:w-[3vw]"></th>
           </tr>
         </thead>
         <tbody>
