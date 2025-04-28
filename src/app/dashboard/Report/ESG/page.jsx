@@ -284,7 +284,7 @@ const ESGReport = () => {
                         Back to Reports
                       </button>
                         {/* mobile section */}
-                      <div className="xl:hidden">
+                      <div className="xl:hidden lg:hidden">
                         <div className="flex gap-2">
                           <button
                             onClick={() => setIsOpenMobile(true)}
@@ -299,7 +299,7 @@ const ESGReport = () => {
                         </div>
                       </div>
                          {/* desktop section */}
-                      <div className=" hidden xl:block">
+                      <div className="hidden xl:block lg:block">
                         <p className="gradient-text text-[22px] font-bold pt-3 pb-3 ml-3">
                           {reportName}
                         </p>
@@ -309,7 +309,7 @@ const ESGReport = () => {
                 </div>
               </div>
                    {/* desktop section */}
-              <div className=" hidden xl:block">
+              <div className=" hidden xl:block lg:block">
               <div className="float-right mr-2 flex items-center justify-center">
                 <div className="flex items-center justify-center">
                   {activeStep == 16 ? (
@@ -386,7 +386,7 @@ const ESGReport = () => {
             </div>
           </div>
               {/* mobile section */}
-          <div className="block  xl:hidden mb-2 h-[43px]">
+          <div className="block  xl:hidden lg:hidden mb-2 h-[43px]">
               <div className="float-right mr-2 flex items-center justify-center mb-2">
                 <div className="flex items-center justify-center">
                   {activeStep == 16 ? (

@@ -97,7 +97,7 @@ const Socialheader = ({
       <div className="ml-2 mb-5">
         <div className="block mb-5 xl:flex md:flex lg:flex 2xl:flex 4k:flex ">
           <div>
-            <div className="relative mb-5 md:mb-0 xl:mb-0 lg:mb-0 2xl:mb-0 4k:mb-0">
+            <div className="relative mb-5 md:mb-4 xl:mb-0 lg:mb-0 2xl:mb-0 4k:mb-0">
               <select
                 name="location"
                 className="border m-0.5 text-[12px] text-neutral-500 appearance-none xl:w-[240px] lg:w-[240px] md:w-[240px] 2xl:w-[240px] 4k:w-[240px] w-[98%] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -184,7 +184,7 @@ const Socialheader = ({
             </div>
           </div>
         </div>
-        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+        <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
           <div className="flex justify-between mb-4 mt-6">
             <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
               {months.map((month, index) => (

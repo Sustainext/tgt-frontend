@@ -24,7 +24,7 @@ const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile }) => {
 
   return (
     <div className="font-medium">
-      <div className="flex items-center justify-between mb-4 xl:hidden">
+      <div className="flex items-center justify-between mb-4 xl:hidden lg:hidden">
         <span className="text-[16px] font-[600] text-[#727272] ml-2">
           Report Module
         </span>
@@ -35,7 +35,7 @@ const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile }) => {
           <MdKeyboardArrowLeft className="h-6 w-6" />
         </button>
       </div>
-      <div className="hidden xl:block">
+      <div className="hidden xl:block ">
         <div className="flex items-center px-2 py-2 -mt-4 text-[#727272] font-bold ">
           <span className="text-[16px] font-[600] p-2">Report Module</span>
         </div>
@@ -72,7 +72,7 @@ const ESGSidebar = ({ activeStep, setActiveStep,setIsOpenMobile,isOpenMobile }) 
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="m-3 ml-2 border border-r-2 border-b-2 shadow-lg rounded-lg h-auto hidden xl:block">
+      <div className="m-3 ml-2 border border-r-2 border-b-2 shadow-lg rounded-lg h-auto hidden xl:block lg:block">
         <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
           <ESGSidebarContent
             activeStep={activeStep}

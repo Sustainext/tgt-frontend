@@ -409,7 +409,7 @@ const EconomicHeader4 = ({
             </div>
           </div>
         </div>
-        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+        <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
           <div className="flex justify-between mb-4 ml-3">
             <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
               {months.map((month, index) => (
