@@ -75,7 +75,7 @@ const Accordance = () => {
     <>
       <div className="flex w-full">
         <div className="block xl:flex lg:flex md:flex 2xl:flex 4k:flex w-full">
-          <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+          <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
             <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
           </div>
           {mobileopen ? (
