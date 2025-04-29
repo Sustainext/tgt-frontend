@@ -97,7 +97,7 @@ const Governance = () => {
     <>
       <div className="w-full">
         <div className="block xl:flex lg:flex md:flex 2xl:flex 4k:flex">
-          <div className=" hidden xl:block lg:block md:block 2xl:block 4k:block">
+          <div className=" hidden xl:block lg:block md:hidden 2xl:block 4k:block">
             <Aside
               activeTab={activeTab}
               handleTabClick={handleTabClick}
@@ -105,7 +105,7 @@ const Governance = () => {
             />
           </div>
           {mobileopen ? (
-            <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+            <div className="block xl:hidden lg:hidden md:block 2xl:hidden 4k:hidden">
               <div>
                 <Aside
                   activeTab={activeTab}
@@ -116,11 +116,11 @@ const Governance = () => {
             </div>
           ) : (
             <div
-              className={`${
-                open
-                  ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw]"
-                  : " sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw]"
-              }`}
+           className={`${
+                      open
+                        ? "sm:w-[87vw]  md:w-[120vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
+                        : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
+                    }`}
             >
               {/* Emissions start */}
               {activeTab === "Structure" && (

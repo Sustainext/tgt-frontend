@@ -852,8 +852,8 @@ const Location = ({ heading }) => {
         </div>
         <div className="space-y-4 bg-white py-4">
           <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 4k:grid-cols-3 2k:grid-cols-3 2xl:grid-cols-3   gap-5">
-            <div className="hidden xl:block"></div>
-            <div className="hidden xl:block"></div>
+            <div className="hidden xl:block md:block lg:block"></div>
+            <div className="hidden xl:block md:block lg:block"></div>
             {editData ? (
               ""
             ) : (
@@ -917,8 +917,8 @@ const Location = ({ heading }) => {
                   </p>
                 )}
               </div>
-              <div className="hidden xl:block"></div>
-              <div className="hidden xl:block"></div>
+              <div className="hidden xl:block md:block lg:block"></div>
+              <div className="hidden xl:block md:block lg:block"></div>
               <div className="space-y-3">
                 <label
                   htmlFor="phone"
@@ -1158,8 +1158,8 @@ const Location = ({ heading }) => {
                   </p>
                 )}
               </div>
-              <div className="hidden xl:block"></div>
-              <div className="hidden xl:block"></div>
+              <div className="hidden xl:block md:block lg:block"></div>
+              <div className="hidden xl:block md:block lg:block"></div>
               <div className="space-y-3">
                 <label
                   htmlFor="country"

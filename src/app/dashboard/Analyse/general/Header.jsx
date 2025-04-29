@@ -57,7 +57,7 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
   return (
     <>
       <div className="flex justify-between items-center  xl:border-b border-gray-200 pb-4 xl:z-[100] relative">
-        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block ">
+        <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block ">
           <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
             <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
               General
@@ -167,10 +167,7 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
                       </button>
                     ))
                   )}
-              </div>
-
-              <div className="flex">
-                {sdg
+                          {sdg
                   .filter((s) => s.category === activeTab)
                   .map((s) =>
                     s.data.map((item) => (
@@ -184,6 +181,8 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
                     ))
                   )}
               </div>
+
+            
             </div>
           </div>
         </div>

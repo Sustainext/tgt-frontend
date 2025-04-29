@@ -43,7 +43,7 @@ const EconmiccutomTable = ({
               <th
                 key={idx}
                 style={{textAlign: "left" }}
-                className={` ${idx === 0 ? "" :"border-l" } text-[12px]  px-2 py-2 border-gray-300 xl:w-[17vw] lg:w-[17vw] 2xl:w-[17vw] 4k:w-[17vw] 2k:w-[17vw] 3xl:w-[17vw] md:w-[17vw] w-[77vw]`}
+                className={` ${idx === 0 ? "" :"border-l" } text-[12px]  px-2 py-2 border-gray-300 xl:w-[17vw] lg:w-[17vw] 2xl:w-[17vw] 4k:w-[17vw] 2k:w-[17vw] 3xl:w-[17vw] md:w-[37vw] w-[77vw]`}
              
               >
                 <div className="flex items-center relative">
