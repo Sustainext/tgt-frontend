@@ -101,6 +101,41 @@ export const removeActivityFromScenario = createAsyncThunk(
   }
 );
 
+// Utility functions for working with activities
+const findActivityById = (activities, activityId) => {
+  if (!activities || !Array.isArray(activities)) return null;
+  return activities.find(activity => {
+    const id = activity.activity_id || activity.id || activity.uuid;
+    return id === activityId;
+  }) || null;
+};
+
+const getActivityIndexById = (activities, activityId) => {
+  if (!activities || !Array.isArray(activities)) return -1;
+  return activities.findIndex(activity => {
+    const id = activity.activity_id || activity.id || activity.uuid;
+    return id === activityId;
+  });
+};
+
+// Async thunk for updating a specific activity within a scenario
+export const updateScenarioActivity = createAsyncThunk(
+  'optimise/updateScenarioActivity',
+  async ({ scenarioId, activityId, updates }, { rejectWithValue }) => {
+    try {
+      const response = await scenarioService.updateScenarioActivity(scenarioId, activityId, updates);
+      return { 
+        activityId, 
+        updates, 
+        response 
+      };
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+
 // Initial state
 const initialState = {
   currentScenario: null,
@@ -256,7 +291,45 @@ const optimiseSlice = createSlice({
         state.emissionData.pagination.itemsPerPage = itemsPerPage;
       }
     },
-    resetOptimiseState: () => initialState
+    resetOptimiseState: () => initialState,
+    // Update activity_change for a specific activity
+    setActivityChange: (state, action) => {
+      const { activityId, activityChange } = action.payload;
+      const activityIndex = getActivityIndexById(state.selectedActivities, activityId);
+      
+      if (activityIndex !== -1) {
+        state.selectedActivities[activityIndex] = {
+          ...state.selectedActivities[activityIndex],
+          activity_change: activityChange
+        };
+      }
+    },
+    
+    // Update changes_in_activity for a specific activity
+    setChangesInActivity: (state, action) => {
+      const { activityId, changesInActivity } = action.payload;
+      const activityIndex = getActivityIndexById(state.selectedActivities, activityId);
+      
+      if (activityIndex !== -1) {
+        state.selectedActivities[activityIndex] = {
+          ...state.selectedActivities[activityIndex],
+          changes_in_activity: changesInActivity
+        };
+      }
+    },
+    
+    // Update multiple properties of a specific activity at once
+    updateActivityProperties: (state, action) => {
+      const { activityId, properties } = action.payload;
+      const activityIndex = getActivityIndexById(state.selectedActivities, activityId);
+      
+      if (activityIndex !== -1) {
+        state.selectedActivities[activityIndex] = {
+          ...state.selectedActivities[activityIndex],
+          ...properties
+        };
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -377,6 +450,29 @@ const optimiseSlice = createSlice({
       .addCase(removeActivityFromScenario.rejected, (state, action) => {
         state.loading.activities = false;
         state.error.activities = action.payload || 'Failed to remove activity from scenario';
+      })
+      .addCase(updateScenarioActivity.pending, (state) => {
+        state.loading.activities = true;
+        state.error.activities = null;
+      })
+      .addCase(updateScenarioActivity.fulfilled, (state, action) => {
+        state.loading.activities = false;
+        
+        // Extract data from the action
+        const { activityId, updates } = action.payload;
+        
+        // Find and update the specific activity in the state
+        const activityIndex = getActivityIndexById(state.selectedActivities, activityId);
+        if (activityIndex !== -1) {
+          state.selectedActivities[activityIndex] = {
+            ...state.selectedActivities[activityIndex],
+            ...updates
+          };
+        }
+      })
+      .addCase(updateScenarioActivity.rejected, (state, action) => {
+        state.loading.activities = false;
+        state.error.activities = action.payload || 'Failed to update activity';
       });
   }
 });
@@ -392,7 +488,16 @@ export const {
   clearEmissionDataFilters,
   setEmissionDataSorting,
   setEmissionDataPagination,
-  resetOptimiseState
+  resetOptimiseState,
+
+  setActivityChange,
+  setChangesInActivity,
+  updateActivityProperties
 } = optimiseSlice.actions;
+
+export const selectActivities = state => state.optimise.selectedActivities || [];
+export const selectLoading = state => state.optimise.loading;
+export const selectInitialized = state => state.optimise.initialized;
+export const selectError = state => state.optimise.error;
 
 export default optimiseSlice.reducer;

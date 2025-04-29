@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ResponsiveLine } from "@nivo/line";
+import { useDispatch } from "react-redux";
 import {
   FiChevronDown,
   FiInfo,
   FiPlus,
   FiTrash2,
-  FiRefreshCw
+  FiRefreshCw,
+  FiChevronUp
 } from "react-icons/fi";
+import useActivityChanges from "../../../lib/redux/customHooks/useActivityChanges";
 
 // Add CSS for the scrollable-content class to hide scrollbars if needed
 const scrollableContentStyle = `
@@ -26,13 +29,21 @@ const ActivitiesGraph = ({
   activityId = "",
   factorId = "",
   activity = {},
+  scenarioId = null,
   onActivityChange = () => {},
+  saveToAPI = false,
 }) => {
-  // State for expanded/collapsed view
-  const [isExpanded, setIsExpanded] = useState(false);
+  const dispatch = useDispatch();
+  // Make sure we're using the fixed hook
+  const { handleActivityGraphChange } = useActivityChanges();
+  
+  // State for expanded/collapsed view - default to expanded when activity_change is already enabled
+  const [isExpanded, setIsExpanded] = useState(activity?.activity_change ? true : false);
 
   // State for including activity changes
-  const [includeActivityChanges, setIncludeActivityChanges] = useState(false);
+  const [includeActivityChanges, setIncludeActivityChanges] = useState(
+    activity?.activity_change ? true : false
+  );
 
   // Generate years between base and target
   const years = [];
@@ -68,18 +79,22 @@ const ActivitiesGraph = ({
 
   // Sample activity options for dropdown
   const activityOptions = [
-    { id: "act1", name: "Agricultural byproducts - EPA - Energy - US - 2024 - biogenic_co2_combustion" },
+    { id: "fuel-type_agricultural_byproducts_bio_100-fuel_use_stationary", name: "Agricultural byproducts - EPA - Energy - US - 2024 - biogenic_co2_combustion" },
     { id: "act2", name: "Rail freight - EPA - WeightOverDistance - GB - 2024 - fuel_combustion" },
     { id: "act3", name: "Motor vehicles/trailers - EXIOBASE - Money - RU - 2019 - unknown" },
     { id: "act4", name: "Bamboo - EPA - Energy - US - 2024 - biogenic_co2_combustion" },
     { id: "fuel-type_asphalt_and_road_oil-fuel_use_stationary", name: "Asphalt and road oil - EPA - Volume - US - 2024 - fuel_combustion", factorId: "2f4f236b-2807-4927-b0bb-ad54d2265caf" },
   ];
 
-  // Initialize data structure for the graph with values from existing percentage_change if available
+  // Initialize data structure for the graph with values from existing activity_change
   const [data, setData] = useState(() => {
     const initialData = [];
     years.forEach((year) => {
-      const existingValue = activity?.percentage_change?.[year] || 0;
+      // Get values from activity_change only
+      const existingValue = activity?.activity_change?.[year] !== undefined 
+        ? activity.activity_change[year] 
+        : 0;
+      
       initialData.push({
         x: year,
         y: existingValue,
@@ -102,18 +117,25 @@ const ActivitiesGraph = ({
 
   // Update the activity change state and notify parent
   const updateActivityChange = (updatedData, updatedActivityChanges) => {
-    // Prepare the new percentage_change object
-    const newPercentageChange = {};
-    updatedData.forEach(point => {
-      newPercentageChange[point.x] = point.y;
-    });
+    // Prepare the new activity_change object in the format { "2024": 5, "2025": -7, ... }
+    // Only include activity_change if the toggle is on
+    const newActivityChange = includeActivityChanges
+      ? Object.fromEntries(updatedData.map(point => [point.x, point.y]))
+      : false;
     
-    // Update the parent component with new data
-    onActivityChange({
-      activity_change: includeActivityChanges,
-      percentage_change: newPercentageChange,
+    // Create the update object with only activity_change (no percentage_change)
+    const changes = {
+      activity_change: newActivityChange,
       changes_in_activity: updatedActivityChanges || {}
-    });
+    };
+    
+    // Update the parent component with new data (for local state updates)
+    onActivityChange(changes);
+    
+    // If we have an activityId and saveToAPI is true, update the Redux store and optionally API
+    if (activityId) {
+      handleActivityGraphChange(activityId, changes, saveToAPI, scenarioId);
+    }
   };
 
   // Apply common activity to all years
@@ -344,13 +366,72 @@ const ActivitiesGraph = ({
 
   // Listen for changes to activity_change toggle
   useEffect(() => {
-    // Update parent component with new activity_change state
-    onActivityChange({
-      activity_change: includeActivityChanges,
-      percentage_change: Object.fromEntries(data.map(point => [point.x, point.y])),
+    // Create the activity_change object from the current data
+    const newActivityChange = includeActivityChanges ? 
+      Object.fromEntries(data.map(point => [point.x, point.y])) : 
+      false;
+    
+    // Update parent component with new activity_change state - no percentage_change field
+    const changes = {
+      activity_change: newActivityChange,
       changes_in_activity: activity?.changes_in_activity || {}
-    });
+    };
+    
+    // Update the parent component
+    onActivityChange(changes);
+    
+    // If we have an activityId, update the Redux store as well
+    if (activityId) {
+      handleActivityGraphChange(activityId, changes, saveToAPI, scenarioId);
+    }
+    
+    // Auto-expand when activity_change is enabled
+    if (includeActivityChanges) {
+      setIsExpanded(true);
+    }
   }, [includeActivityChanges]);
+
+  // Listen for changes to the activity prop to update the local state
+  useEffect(() => {
+    if (activity) {
+      // Update includeActivityChanges state
+      const hasActivityChanges = Boolean(activity.activity_change);
+      setIncludeActivityChanges(hasActivityChanges);
+      
+      // Auto expand if activity changes are already enabled
+      if (hasActivityChanges) {
+        setIsExpanded(true);
+      }
+      
+      // Update selectedActivities state
+      if (activity.changes_in_activity) {
+        const updatedSelections = {};
+        years.forEach((year) => {
+          if (activity.changes_in_activity[year]) {
+            updatedSelections[year] = activity.changes_in_activity[year].activity_id;
+          } else {
+            updatedSelections[year] = null;
+          }
+        });
+        setSelectedActivities(updatedSelections);
+      }
+      
+      // Update data state - only use activity_change
+      const updatedData = [];
+      years.forEach((year) => {
+        // Only try to get the value from activity_change
+        const existingValue = activity?.activity_change?.[year] !== undefined 
+          ? activity.activity_change[year] 
+          : 0;
+        
+        updatedData.push({
+          x: year,
+          y: existingValue,
+        });
+      });
+      setData(updatedData);
+    }
+  }, [activity]);
 
   // Format the chart data for Nivo
   const chartData = [
@@ -392,12 +473,25 @@ const ActivitiesGraph = ({
 
   // Toggle the expanded/collapsed state
   const toggleExpanded = () => {
-    setIsExpanded(!isExpanded);
+    // If activity changes are enabled, don't allow collapse
+    if (includeActivityChanges) {
+      // Keep it expanded
+      setIsExpanded(true);
+    } else {
+      // Normal toggle behavior when activity changes are disabled
+      setIsExpanded(!isExpanded);
+    }
   };
 
   // Toggle include activity changes
   const toggleIncludeActivityChanges = () => {
-    setIncludeActivityChanges(!includeActivityChanges);
+    const newValue = !includeActivityChanges;
+    setIncludeActivityChanges(newValue);
+    
+    // When enabling, always expand the section
+    if (newValue) {
+      setIsExpanded(true);
+    }
   };
   
   // Get activity name from ID
@@ -433,9 +527,16 @@ const ActivitiesGraph = ({
             </label>
             <span className="font-medium">Include Activity Changes</span>
             <FiInfo className="ml-2 text-gray-400" />
+            
+            {/* Only show collapse/expand button if activity changes are disabled */}
+            {!includeActivityChanges && (
+              <button className="ml-auto text-gray-500">
+                {isExpanded ? <FiChevronUp size={20} /> : <FiChevronDown size={20} />}
+              </button>
+            )}
           </div>
 
-          {/* Expanded activity changes content */}
+          {/* Expanded activity changes content - always visible when includeActivityChanges is true */}
           {isExpanded && includeActivityChanges && (
             <div className="mb-6 px-4">
               {/* Common activity selector */}
