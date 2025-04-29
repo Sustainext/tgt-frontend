@@ -21,8 +21,12 @@ const scrollableContentStyle = `
 
 const ActivitiesGraph = ({
   baseYear = 2025,
-  targetYear = 2038,
+  targetYear = 2030,
   activityName = "Agricultural byproducts - EPA - Energy - US - 2024 - biogenic_co2_combustion",
+  activityId = "",
+  factorId = "",
+  activity = {},
+  onActivityChange = () => {},
 }) => {
   // State for expanded/collapsed view
   const [isExpanded, setIsExpanded] = useState(false);
@@ -38,11 +42,25 @@ const ActivitiesGraph = ({
 
   // State for the selected activities per year
   const [selectedActivities, setSelectedActivities] = useState(() => {
-    const initialSelections = {};
-    years.forEach((year) => {
-      initialSelections[year] = null;
-    });
-    return initialSelections;
+    // Initialize from existing changes_in_activity if available
+    if (activity?.changes_in_activity) {
+      const initialSelections = {};
+      years.forEach((year) => {
+        if (activity.changes_in_activity[year]) {
+          initialSelections[year] = activity.changes_in_activity[year].activity_id;
+        } else {
+          initialSelections[year] = null;
+        }
+      });
+      return initialSelections;
+    } else {
+      // Default initialization if no existing data
+      const initialSelections = {};
+      years.forEach((year) => {
+        initialSelections[year] = null;
+      });
+      return initialSelections;
+    }
   });
 
   // State for common activity selection
@@ -54,19 +72,21 @@ const ActivitiesGraph = ({
     { id: "act2", name: "Rail freight - EPA - WeightOverDistance - GB - 2024 - fuel_combustion" },
     { id: "act3", name: "Motor vehicles/trailers - EXIOBASE - Money - RU - 2019 - unknown" },
     { id: "act4", name: "Bamboo - EPA - Energy - US - 2024 - biogenic_co2_combustion" },
+    { id: "fuel-type_asphalt_and_road_oil-fuel_use_stationary", name: "Asphalt and road oil - EPA - Volume - US - 2024 - fuel_combustion", factorId: "2f4f236b-2807-4927-b0bb-ad54d2265caf" },
   ];
 
-  // Initial data structure for the graph
-  const initialData = [];
-  years.forEach((year) => {
-    initialData.push({
-      x: year,
-      y: 0,
+  // Initialize data structure for the graph with values from existing percentage_change if available
+  const [data, setData] = useState(() => {
+    const initialData = [];
+    years.forEach((year) => {
+      const existingValue = activity?.percentage_change?.[year] || 0;
+      initialData.push({
+        x: year,
+        y: existingValue,
+      });
     });
+    return initialData;
   });
-
-  // State for the growth data
-  const [data, setData] = useState(initialData);
 
   // State for the absolute value in base year
   const [baseValue, setBaseValue] = useState("");
@@ -80,43 +100,106 @@ const ActivitiesGraph = ({
   const yearSpacing = 140; // Approximate spacing per year point
   const dynamicWidth = Math.max(baseWidth, yearCount * yearSpacing);
 
+  // Update the activity change state and notify parent
+  const updateActivityChange = (updatedData, updatedActivityChanges) => {
+    // Prepare the new percentage_change object
+    const newPercentageChange = {};
+    updatedData.forEach(point => {
+      newPercentageChange[point.x] = point.y;
+    });
+    
+    // Update the parent component with new data
+    onActivityChange({
+      activity_change: includeActivityChanges,
+      percentage_change: newPercentageChange,
+      changes_in_activity: updatedActivityChanges || {}
+    });
+  };
+
   // Apply common activity to all years
   const applyCommonActivity = (activityId) => {
     setCommonActivity(activityId);
     
     if (activityId) {
       const updatedActivities = {};
-      years.forEach(year => {
-        updatedActivities[year] = activityId;
-      });
-      setSelectedActivities(updatedActivities);
+      const selectedOption = activityOptions.find(opt => opt.id === activityId);
+      
+      if (selectedOption) {
+        // Create changes_in_activity structure for all years
+        const changes = {};
+        years.forEach(year => {
+          updatedActivities[year] = activityId;
+          changes[year] = {
+            activity_id: selectedOption.id,
+            activity_name: selectedOption.name,
+            factor_id: selectedOption.factorId || "default-factor-id"
+          };
+        });
+        
+        setSelectedActivities(updatedActivities);
+        updateActivityChange(data, changes);
+      }
     }
   };
 
   // Function to handle activity selection for a specific year
   const handleActivityChange = (year, activityId) => {
-    setSelectedActivities((prev) => ({
-      ...prev,
-      [year]: activityId,
-    }));
+    const updatedActivities = {
+      ...selectedActivities,
+      [year]: activityId
+    };
     
-    // If all years now have the same activity, update common activity state
-    const allSame = Object.values(selectedActivities).every(val => val === activityId);
+    setSelectedActivities(updatedActivities);
+    
+    // Create or update the changes_in_activity object
+    const changesInActivity = { ...(activity?.changes_in_activity || {}) };
+    
+    if (activityId) {
+      const selectedOption = activityOptions.find(opt => opt.id === activityId);
+      if (selectedOption) {
+        changesInActivity[year] = {
+          activity_id: selectedOption.id,
+          activity_name: selectedOption.name,
+          factor_id: selectedOption.factorId || "default-factor-id"
+        };
+      }
+    } else {
+      // If no activity selected, remove the entry
+      delete changesInActivity[year];
+    }
+    
+    // Check if all years now have the same activity
+    const allSame = Object.values(updatedActivities).every(val => val === activityId) && Object.values(updatedActivities).every(val => val !== null);
     if (allSame) {
       setCommonActivity(activityId);
     } else {
       setCommonActivity("");
     }
+    
+    // Update the parent component
+    updateActivityChange(data, changesInActivity);
   };
 
   // Function to clear activity for a specific year
   const handleClearActivity = (year) => {
-    setSelectedActivities((prev) => ({
-      ...prev,
-      [year]: null,
-    }));
+    const updatedActivities = {
+      ...selectedActivities,
+      [year]: null
+    };
+    
+    setSelectedActivities(updatedActivities);
+    
+    // Create or update the changes_in_activity object
+    const changesInActivity = { ...(activity?.changes_in_activity || {}) };
+    
+    // Remove the entry for this year
+    delete changesInActivity[year];
+    
     // Clear common activity since they're no longer all the same
     setCommonActivity("");
+    
+    // Update the parent component
+    updateActivityChange(data, changesInActivity);
   };
 
   // Reset all year-specific selections
@@ -127,6 +210,9 @@ const ActivitiesGraph = ({
     });
     setSelectedActivities(emptySelections);
     setCommonActivity("");
+    
+    // Update the parent component with empty changes_in_activity
+    updateActivityChange(data, {});
   };
 
   // Function to auto-adjust range based on values
@@ -189,6 +275,9 @@ const ActivitiesGraph = ({
     
     // Check if range needs to be adjusted
     autoAdjustRange(numValue);
+    
+    // Update the parent component
+    updateActivityChange(newData, activity?.changes_in_activity);
   };
 
   // Function to handle point drag
@@ -233,6 +322,9 @@ const ActivitiesGraph = ({
         y: constrainedValue,
       };
       setData(updatedData);
+      
+      // Update the parent component
+      updateActivityChange(updatedData, activity?.changes_in_activity);
     };
 
     const handleMouseUp = () => {
@@ -249,6 +341,16 @@ const ActivitiesGraph = ({
     event.preventDefault();
     event.stopPropagation();
   };
+
+  // Listen for changes to activity_change toggle
+  useEffect(() => {
+    // Update parent component with new activity_change state
+    onActivityChange({
+      activity_change: includeActivityChanges,
+      percentage_change: Object.fromEntries(data.map(point => [point.x, point.y])),
+      changes_in_activity: activity?.changes_in_activity || {}
+    });
+  }, [includeActivityChanges]);
 
   // Format the chart data for Nivo
   const chartData = [
@@ -409,7 +511,8 @@ const ActivitiesGraph = ({
         </div>
 
         <div className="text-sm mb-4">
-        For each year based on the emission projection, increase or decrease the percentage of the consumption activity         </div>
+          For each year based on the emission projection, increase or decrease the percentage of the consumption activity
+        </div>
 
         {/* Chart - Contained in the scrollable-content wrapper */}
         <div
@@ -623,6 +726,7 @@ const ActivitiesGraph = ({
                           const newData = [...data];
                           newData[index] = { ...newData[index], y: 0 };
                           setData(newData);
+                          updateActivityChange(newData, activity?.changes_in_activity);
                         }
                       }}
                     />

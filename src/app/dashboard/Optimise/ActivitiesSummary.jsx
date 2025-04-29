@@ -8,49 +8,63 @@ const ActivitySummarySection = ({ activities = [], scenarioId }) => {
   const [displayActivities, setDisplayActivities] = useState(activities);
 
   // Fetch activities from API if scenarioId is provided
-  // useEffect(() => {
-  //   const fetchActivities = async () => {
-  //     if (!scenarioId) {
-  //       // If no scenarioId provided, use the activities prop directly
-  //       setDisplayActivities(activities);
-  //       return;
-  //     }
+  useEffect(() => {
+    const fetchActivities = async () => {
+      if (!scenarioId) {
+        // If no scenarioId provided, use the activities prop directly
+        setDisplayActivities(activities);
+        return;
+      }
 
-  //     setIsLoading(true);
-  //     setError(null);
+      setIsLoading(true);
+      setError(null);
 
-  //     try {
-  //       // Fetch activities from the API
-  //       const response = await scenarioService.fetchScenarioActivities(scenarioId);
+      try {
+        // Fetch activities from the API
+        const response = await scenarioService.fetchScenarioActivities(scenarioId);
         
-  //       // If the API returned an array, use it directly
-  //       if (Array.isArray(response)) {
-  //         setDisplayActivities(response);
-  //       } 
-  //       // If the API returned an object with a 'results' property, use that
-  //       else if (response && Array.isArray(response.results)) {
-  //         setDisplayActivities(response.results);
-  //       } 
-  //       // Otherwise, check if there's an 'activities' property
-  //       else if (response && Array.isArray(response.activities)) {
-  //         setDisplayActivities(response.activities);
-  //       }
-  //       // If none of the above, fallback to the activities prop
-  //       else {
-  //         setDisplayActivities(activities);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching scenario activities:", error);
-  //       setError("Failed to load activities. Using local data instead.");
-  //       // Fallback to the activities prop
-  //       setDisplayActivities(activities);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+        // If the API returned an array, use it directly
+        if (Array.isArray(response)) {
+          setDisplayActivities(response);
+        } 
+        // If the API returned an object with a 'results' property, use that
+        else if (response && Array.isArray(response.results)) {
+          setDisplayActivities(response.results);
+        } 
+        // Otherwise, check if there's an 'activities' property
+        else if (response && Array.isArray(response.activities)) {
+          setDisplayActivities(response.activities);
+        }
+        // If none of the above, fallback to the activities prop
+        else {
+          setDisplayActivities(activities);
+        }
+      } catch (error) {
+        console.error("Error fetching scenario activities:", error);
+        setError("Failed to load activities. Using local data instead.");
+        // Fallback to the activities prop
+        setDisplayActivities(activities);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  //   fetchActivities();
-  // }, [scenarioId, activities]);
+    fetchActivities();
+  }, [scenarioId, activities]);
+
+  // Handler for activity updates from child components
+  const handleActivityUpdate = (updatedActivity) => {
+    // Update the activity in the local state
+    setDisplayActivities(prev => 
+      prev.map(activity => 
+        (activity.id === updatedActivity.id || 
+         activity.activity_id === updatedActivity.activity_id || 
+         activity.uuid === updatedActivity.uuid) 
+          ? updatedActivity 
+          : activity
+      )
+    );
+  };
 
   return (
     <div className="space-y-6 table-scrollbar">
@@ -87,7 +101,12 @@ const ActivitySummarySection = ({ activities = [], scenarioId }) => {
       ) : (
         <div className="space-y-6">
           {displayActivities.map((activity, index) => (
-            <ExpandableActivityItem key={activity.id || index} activity={activity} />
+            <ExpandableActivityItem 
+              key={activity.id || activity.uuid || index} 
+              activity={activity} 
+              scenarioId={scenarioId}
+              onActivityUpdate={handleActivityUpdate}
+            />
           ))}
         </div>
       )}

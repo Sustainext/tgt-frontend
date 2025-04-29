@@ -1,31 +1,125 @@
-import React, { useState, useContext } from 'react';
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import ActivitiesGraph from './ActivitiesGraph'; // Import your graph component
+import React, { useState, useContext, useEffect } from 'react';
+import { FiChevronDown, FiChevronUp, FiSave, FiCheck } from 'react-icons/fi';
+import ActivitiesGraph from './ActivitiesGraph'; // Import the updated graph component
 import { GlobalState } from "@/Context/page";
+import scenarioService from './service/scenarioService'; // Import scenario service for potential API updates
 
-const ExpandableActivityItem = ({ activity }) => {
+const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { open, setOpen } = GlobalState();
+  const [localActivity, setLocalActivity] = useState(activity);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  
+  // Initialize activity with proper structure if needed fields are missing
+  useEffect(() => {
+    if (activity && !activity.percentage_change) {
+      setLocalActivity({
+        ...activity,
+        activity_change: activity.activity_change || false,
+        percentage_change: activity.percentage_change || {},
+        changes_in_activity: activity.changes_in_activity || {}
+      });
+    }
+  }, [activity]);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
   // Handle field mappings from API response structure
-  const scope = activity.scope || '';
-  const category = activity.category || '';
-  const subCategory = activity.sub_category || activity.subCategory || '';
-  const activityName = activity.activity_name || activity.activity || '';
-  const region = activity.region || '';
-  const uuid = activity.uuid || '';
-  const activityId = activity.activity_id || activity.id || '';
-  const factorId = activity.factor_id || '';
+  const scope = localActivity.scope || '';
+  const category = localActivity.category || '';
+  const subCategory = localActivity.sub_category || localActivity.subCategory || '';
+  const activityName = localActivity.activity_name || localActivity.activity || '';
+  const region = localActivity.region || '';
+  const uuid = localActivity.uuid || '';
+  const activityId = localActivity.activity_id || localActivity.id || '';
+  const factorId = localActivity.factor_id || '';
   
   // Additional fields that might be useful for further details
-  const quantity = activity.quantity || 0;
-  const unit = activity.unit || '';
-  const co2eTotal = activity.co2e_total || 0;
-  const unitType = activity.unit_type || '';
+  const quantity = localActivity.quantity || 0;
+  const unit = localActivity.unit || '';
+  const co2eTotal = localActivity.co2e_total || 0;
+  const unitType = localActivity.unit_type || '';
+
+  // Handle activity changes from the graph component
+  const handleActivityChange = async (changes) => {
+    // Create a new updated activity object
+    const updatedActivity = {
+      ...localActivity,
+      activity_change: changes.activity_change,
+      percentage_change: changes.percentage_change || {},
+      changes_in_activity: changes.changes_in_activity || {}
+    };
+
+    // Update local state immediately for responsive UI
+    setLocalActivity(updatedActivity);
+
+    // If onActivityUpdate is provided, call it (for parent component state updates)
+    if (onActivityUpdate) {
+      onActivityUpdate(updatedActivity);
+    }
+
+    // If scenarioId is provided, update the activity via API
+    if (scenarioId) {
+      try {
+        setIsSaving(true);
+        setSaveSuccess(false);
+        
+        // Construct the payload for updating the scenario activity
+        const payload = {
+          activity_id: activityId,
+          activity_change: changes.activity_change,
+          percentage_change: changes.percentage_change || {},
+          changes_in_activity: changes.changes_in_activity || {}
+        };
+        
+        // Call the API to update the activity
+        // This assumes a method exists in scenarioService for updating a specific activity
+        // You might need to adapt this based on your actual API
+        await scenarioService.updateScenarioActivity(scenarioId, uuid || activityId, payload);
+        
+        // Show success indicator briefly
+        setSaveSuccess(true);
+        setTimeout(() => setSaveSuccess(false), 2000);
+      } catch (error) {
+        console.error("Error updating activity:", error);
+        // Optionally revert to previous state or show error message
+      } finally {
+        setIsSaving(false);
+      }
+    }
+  };
+  
+  // Save changes manually if needed
+  const handleSaveChanges = async () => {
+    if (!scenarioId) return;
+    
+    try {
+      setIsSaving(true);
+      setSaveSuccess(false);
+      
+      // Construct the payload for the API
+      const payload = {
+        activity_id: activityId,
+        activity_change: localActivity.activity_change,
+        percentage_change: localActivity.percentage_change || {},
+        changes_in_activity: localActivity.changes_in_activity || {}
+      };
+      
+      // Call API to update the scenario activity
+      await scenarioService.updateScenarioActivity(scenarioId, uuid || activityId, payload);
+      
+      // Show success indicator briefly
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 2000);
+    } catch (error) {
+      console.error("Error saving activity changes:", error);
+    } finally {
+      setIsSaving(false);
+    }
+  }
 
   return (
     <div className={`border rounded-lg mb-4 overflow-hidden bg-white shadow-md text-slate-700 ${open ? "max-w-[105vw]": "max-w-[116vw]"}`}>
@@ -79,7 +173,7 @@ const ExpandableActivityItem = ({ activity }) => {
               <span className="text-gray-500">Unit Type:</span> {unitType}
             </div> */}
             <div>
-              <span className="text-gray-500">CO2e Total:</span> {co2eTotal.toFixed(2)}
+              <span className="text-gray-500">CO2e Total:</span> {Number(co2eTotal).toFixed(2)}
             </div>
           </div>
           

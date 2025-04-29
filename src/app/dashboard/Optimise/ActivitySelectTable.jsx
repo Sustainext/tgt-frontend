@@ -104,7 +104,7 @@ const ActivitySelectTable = ({ scenarioId }) => {
       
       // Transform API response to match the expected format for activities
       const transformedActivities = response.results.map(item => ({
-        id: item.activity_id, // Keep for compatibility
+        id: item.uuid, 
         activity_id: item.activity_id,
         uuid: item.uuid, // Ensure we have the uuid field
         scope: item.scope,
