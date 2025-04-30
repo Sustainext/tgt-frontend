@@ -805,7 +805,8 @@ else{
                                     />
                 </div>
                 {isFilterOpen && (
-                  <FilterComponent data={filteredData} setData={setFilterData} search={search}
+                  <div className="relative inline-block">
+                     <FilterComponent data={filteredData} setData={setFilterData} search={search}
                   setSearch={setSearch}
                   selectedCreators={selectedCreators}
                   setSelectedCreators={setSelectedCreators}
@@ -813,6 +814,8 @@ else{
                   setIsFilterOpen={setIsFilterOpen}
                  
                   />
+                  </div>
+                 
                  
                 
                 )}

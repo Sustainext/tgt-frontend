@@ -309,7 +309,7 @@ const ESGReport = () => {
                 </div>
               </div>
                    {/* desktop section */}
-              <div className=" hidden xl:block lg:block">
+              <div className="hidden md:block lg:block xl:block">
               <div className="float-right mr-2 flex items-center justify-center">
                 <div className="flex items-center justify-center">
                   {activeStep == 16 ? (
@@ -321,7 +321,7 @@ const ESGReport = () => {
                       }}
                       className={`${
                         activeStep === 1 ? "" : "text-gray-500"
-                      } px-3 py-1.5 rounded font-semibold`}
+                      } px-3 py-1.5 rounded font-semibold w-[120px]`}
                       onClick={handlePreviousStep}
                       disabled={activeStep === 1}
                     >
@@ -372,7 +372,7 @@ const ESGReport = () => {
                           onClick={() => {
                             handleNextStep("last");
                           }}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                          className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                         >
                           Save & Fill Content Index
                         </button>
@@ -386,7 +386,7 @@ const ESGReport = () => {
             </div>
           </div>
               {/* mobile section */}
-          <div className="block  xl:hidden lg:hidden mb-2 h-[43px]">
+          <div className="block md:hidden lg:hidden  xl:hidden mb-2 h-[43px]">
               <div className="float-right mr-2 flex items-center justify-center mb-2">
                 <div className="flex items-center justify-center">
                   {activeStep == 16 ? (
