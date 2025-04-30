@@ -30,7 +30,7 @@ const Index = () => {
   useEffect(() => {
     dispatch(setHeadertext1("Track"));
     dispatch(setHeaderdisplay(null));
-    dispatch(setHeadertext2(null));
+    dispatch(setHeadertext2(activeModule));
     dispatch(setMiddlename(null));
   }, [activeModule, dispatch]);
   useLayoutEffect(() => {
