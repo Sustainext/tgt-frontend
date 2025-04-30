@@ -67,7 +67,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
   return (
     <>
       {/* Desktop Aside */}
-      <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-lg hidden xl:block md:block min-w-[240px] max-w-[351px]">
+      <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-lg hidden xl:block md:block min-w-[200px] max-w-[351px]">
         <div className="flex flex-col py-4 min-h-[84vh] text-sm overflow-x-hidden">
           <AsideContent activeTab={activeTab} handleTabClick={handleTabClick} />
         </div>

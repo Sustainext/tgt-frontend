@@ -82,7 +82,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="xl:flex md:flex justify-center overflow-x-auto">
+    <div className="xl:flex md:flex justify-center overflow-x-auto xl:overflow-y-hidden">
       <div
         className="xl:flex md:flex justify-start"
         style={{ width: containerWidth, minWidth: "100%" }}
