@@ -802,7 +802,7 @@ const Report = () => {
                       <p className="text-red-500 ml-1">{error.reportname}</p>
                     )}
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 mb-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-4">
                     <div className="xl:mr-2">
                       <label
                         htmlFor="sdate"
@@ -860,7 +860,7 @@ const Report = () => {
                     {showSecondSelect && renderSecondSelect()}
                   </div>
                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 mb-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-4">
                     <div>
                       <label
                         htmlFor="sdate"

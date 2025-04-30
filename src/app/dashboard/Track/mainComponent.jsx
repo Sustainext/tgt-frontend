@@ -125,6 +125,18 @@ const Index = () => {
         </div>
       </div>
     </div>
+
+     // track section under maintainance design
+  //   <div className="flex flex-col items-center justify-center min-h-screen px-4 py-8 bg-white">
+  //   <img
+  //     src="https://sustainextstorage1.blob.core.windows.net/static/ico%201.png" // <-- replace with correct path
+  //     alt="maintenance icon"
+  //     className="w-[40%] sm:w-[40%] md:w-[25%] lg:w-[20%] object-contain mb-6"
+  //   />
+  //   <h2 className="text-center text-2xl md:text-xl font-bold text-gray-700">
+  //   This section is currently under maintenance and will be back soon
+  //   </h2>
+  // </div>
   );
 };
 
