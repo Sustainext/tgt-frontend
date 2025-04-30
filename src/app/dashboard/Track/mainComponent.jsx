@@ -1,13 +1,13 @@
 "use client";
 import React, { useState, useEffect, useLayoutEffect } from "react";
-// import Aside from "./Aside";
-// import EnvironmentTrack from "./Environment/page";
-// import SocialTrack from "./Social/page";
-// import GovernanceTrack from "./Governance/page";
-// import GeneralTrack from "./General/page";
-// import EconomicTrack from "./Economic/page";
-// import { GlobalState } from "../../../Context/page";
-// import axiosInstance from "../../utils/axiosMiddleware";
+import Aside from "./Aside";
+import EnvironmentTrack from "./Environment/page";
+import SocialTrack from "./Social/page";
+import GovernanceTrack from "./Governance/page";
+import GeneralTrack from "./General/page";
+import EconomicTrack from "./Economic/page";
+import { GlobalState } from "../../../Context/page";
+import axiosInstance from "../../utils/axiosMiddleware";
 import {
   setHeadertext1,
   setHeadertext2,
@@ -24,9 +24,9 @@ const Index = () => {
 
   const open = GlobalState();
   const dispatch = useDispatch();
-  // const handleTabClick = (module) => {
-  //   setActiveModule(module);
-  // };
+  const handleTabClick = (module) => {
+    setActiveModule(module);
+  };
   useEffect(() => {
     dispatch(setHeadertext1("Track"));
     dispatch(setHeaderdisplay(null));
@@ -70,16 +70,16 @@ const Index = () => {
     return () => window.removeEventListener("resize", updateSizes);
   }, [open]);
 
-  // useEffect(() => {
-  //   const fetchDashboardData = async () => {
-  //     const response = await axiosInstance("/sustainapp/track_dashboards/");
-  //     console.log("response", response);
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      const response = await axiosInstance("/sustainapp/track_dashboards/");
+      console.log("response", response);
 
-  //     const data = response.data;
-  //     setDashboardData(data);
-  //   };
-  //   fetchDashboardData();
-  // }, []);
+      const data = response.data;
+      setDashboardData(data);
+    };
+    fetchDashboardData();
+  }, []);
 
   return (
     <div className="xl:flex md:flex justify-center overflow-x-auto">
@@ -125,6 +125,18 @@ const Index = () => {
         </div>
       </div>
     </div>
+
+     // track section under maintainance design
+  //   <div className="flex flex-col items-center justify-center min-h-screen px-4 py-8 bg-white">
+  //   <img
+  //     src="https://sustainextstorage1.blob.core.windows.net/static/ico%201.png" // <-- replace with correct path
+  //     alt="maintenance icon"
+  //     className="w-[40%] sm:w-[40%] md:w-[25%] lg:w-[20%] object-contain mb-6"
+  //   />
+  //   <h2 className="text-center text-2xl md:text-xl font-bold text-gray-700">
+  //   This section is currently under maintenance and will be back soon
+  //   </h2>
+  // </div>
   );
 };
 
