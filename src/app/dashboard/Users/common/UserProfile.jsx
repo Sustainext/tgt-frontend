@@ -63,8 +63,8 @@ const UserProfile = ({ onClose, user }) => {
             </div>
           </div>
           <div>
-            <div className="text-[13px] font-semibold">Department</div>
-            <div className="text-[13px] text-gray-500">
+            <div className="text-[13px] font-semibold text-right">Department</div>
+            <div className="text-[13px] text-gray-500 text-right">
               {user.department || ""}
             </div>
           </div>

@@ -8,7 +8,7 @@ const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
     <div
     className={`m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-lg fixed`}
     >
-        <div className="flex items-start py-4 min-h-[110vh] max-h-[120px] h-[550px] scrollable-content overflow-y-auto   w-[199px] xl:min-w-[200px] lg:min-w-[200px] md:min-w-[200px] 4k:min-w-[200px] 2k:min-w-[200px] 2xl:min-w-[200px] min-w-[422px]  rounded-lg text-[0.875rem]">
+        <div className="flex items-start py-4 min-h-[110vh] max-h-[120px] h-[550px] scrollable-content overflow-y-auto   w-[199px] xl:min-w-[200px] lg:min-w-[200px] md:min-w-[400px] 4k:min-w-[200px] 2k:min-w-[200px] 2xl:min-w-[200px] min-w-[422px]  rounded-lg text-[0.875rem]">
         <div className="flex flex-col w-full font-medium">
           <div className="flex  items-start gap-2 mb-8 w-full">
             <div className="w-full">
@@ -16,7 +16,7 @@ const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
                 Social
               </div>
             </div>
-            <div className="float-end block xl:hidden md:hidden lg:hidden 2xl:hidden 4k:hidden">
+            <div className="float-end block xl:hidden md:block lg:hidden 2xl:hidden 4k:hidden">
               <MdClose onClick={toggleSidebar} className="text-3xl" />
             </div>
           </div>

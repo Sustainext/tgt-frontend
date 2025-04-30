@@ -500,7 +500,7 @@ const Screen2 = ({
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-      className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
+      className="mb-8 me-2 hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block"
         >
           <TableSidebar2 />
         </div>

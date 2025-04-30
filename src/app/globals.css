@@ -575,14 +575,9 @@ color:"#ACACAC";
   padding: 25px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 30%;
+
 }
-@media (max-width: 768px) {
-  .modal-contentnew {
-    width: 95%;
-   
-  }
-}
+
 .panel-danger{
   display: none;
 }

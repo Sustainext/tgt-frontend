@@ -75,7 +75,7 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen,togglestatus }) 
     }
   }, [selectedOrg, dateRange, selectedCorp, togglestatus]);
   return (
-    <div>
+    <div  className="h-[100vh]">
       <div>
     
         <div className="flex">
@@ -117,7 +117,7 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen,togglestatus }) 
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className="mb-8 me-2 hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block"
+            className="mb-8 me-2 hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>
