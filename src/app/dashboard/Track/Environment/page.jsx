@@ -229,7 +229,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
           </div>
         )}
       </div>
-      <div className="w-full flex-grow flex justify-center items-center">
+      <div className="w-full xl:flex-grow xl:flex xl:justify-center items-center">
         {activeTab.startsWith("powerbi") && powerBIToken ? (
           <div style={embedContainerStyle}>
             <PowerBIEmbed

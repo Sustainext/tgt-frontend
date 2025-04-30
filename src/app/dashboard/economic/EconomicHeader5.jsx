@@ -28,14 +28,13 @@ const EconomicHeader5 = ({
   const handleReportTypeChange = (type) => {
     setReportType(type);
     setToggleStatus(type);
-  
+
     if (type === "Organization") {
-      setSelectedCorp(""); 
-      setSelectedLocation(""); 
+      setSelectedCorp("");
+      setSelectedLocation("");
     }
     if (type === "Corporate") {
-    
-      setSelectedLocation(""); 
+      setSelectedLocation("");
     }
   };
   const [locations, setLocations] = useState([]);
@@ -104,7 +103,7 @@ const EconomicHeader5 = ({
   }, []);
 
   useEffect(() => {
-     const fetchCorporates = async () => {
+    const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -112,13 +111,11 @@ const EconomicHeader5 = ({
           });
           setCorporates(response.data);
         } catch (e) {
-          if(e.status === 404) {
+          if (e.status === 404) {
             setCorporates([]);
-          }
-          else{
+          } else {
             console.error("Failed fetching corporates:", e);
           }
-          
         }
       }
     };
@@ -155,7 +152,7 @@ const EconomicHeader5 = ({
     setErrors((prevErrors) => ({
       ...prevErrors,
       corporate: newCorp ? "" : "Please select Corporate",
-      year:  "Please select year", 
+      year: "Please select year",
     }));
   };
 
@@ -165,8 +162,8 @@ const EconomicHeader5 = ({
     setYear("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      location: newlocation ? "" : "Please select location", 
-      year:  "Please select year", 
+      location: newlocation ? "" : "Please select location",
+      year: "Please select year",
     }));
   };
   useEffect(() => {
@@ -209,7 +206,11 @@ const EconomicHeader5 = ({
                 </div>
                 <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
-                    className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-[#D2DFEB]" : "bg-white"}`}
+                    className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Organization"
+                        ? "bg-[#D2DFEB]"
+                        : "bg-white"
+                    }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
@@ -217,29 +218,37 @@ const EconomicHeader5 = ({
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-[#D2DFEB]" : "bg-white"}`}
+                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Corporate" ? "bg-[#D2DFEB]" : "bg-white"
+                    }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
-                    Corporate
+                      Corporate
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${reportType === "Location" ? "bg-[#D2DFEB]" : "bg-white"}`}
+                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Location" ? "bg-[#D2DFEB]" : "bg-white"
+                    }`}
                     onClick={() => handleReportTypeChange("Location")}
                   >
-                    
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
-                    Location
+                      Location
                     </div>
                   </div>
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"}`}
+                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[100%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4  ${
+                  reportType !== "" ? "visible" : "hidden"
+                }`}
               >
                 <div className="mr-2">
-                  <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal ml-1">
+                  <label
+                    htmlFor="cname"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
+                  >
                     Select Organization*
                   </label>
                   <div className="mt-2">
@@ -257,7 +266,7 @@ const EconomicHeader5 = ({
                         ))}
                     </select>
                     {errors.organization && (
-                       <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.organization}
                       </p>
                     )}
@@ -266,7 +275,10 @@ const EconomicHeader5 = ({
 
                 {(reportType === "Corporate" || reportType === "Location") && (
                   <div className="mr-2">
-                    <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal ml-1">
+                    <label
+                      htmlFor="cname"
+                      className="text-neutral-800 text-[12px] font-normal ml-1"
+                    >
                       Select Corporate
                     </label>
                     <div className="mt-2">
@@ -284,7 +296,7 @@ const EconomicHeader5 = ({
                           ))}
                       </select>
                       {errors.corporate && (
-                         <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                        <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                           {errors.corporate}
                         </p>
                       )}
@@ -294,7 +306,10 @@ const EconomicHeader5 = ({
 
                 {reportType === "Location" && (
                   <div className="mr-2">
-                    <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal ml-1">
+                    <label
+                      htmlFor="cname"
+                      className="text-neutral-800 text-[12px] font-normal ml-1"
+                    >
                       Select Location
                     </label>
                     <div className="mt-2">
@@ -312,7 +327,7 @@ const EconomicHeader5 = ({
                         ))}
                       </select>
                       {errors.location && (
-                         <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                        <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                           {errors.location}
                         </p>
                       )}
@@ -321,7 +336,10 @@ const EconomicHeader5 = ({
                 )}
 
                 <div className="mr-2">
-                  <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal ml-1">
+                  <label
+                    htmlFor="cname"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
+                  >
                     Select year
                   </label>
                   <div className="mt-2">
@@ -339,7 +357,7 @@ const EconomicHeader5 = ({
                       ))}
                     </select>
                     {errors.year && (
-                       <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.year}
                       </p>
                     )}

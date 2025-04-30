@@ -657,8 +657,8 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
             )}
           </div>
 
-          <div className="hidden xl:block"></div>
-          <div className="hidden xl:block w-full"> </div>
+          <div className="hidden xl:block md:block lg:block"></div>
+          <div className="hidden xl:block md:block lg:block w-full"> </div>
 
           {/* Type of Incorporation */}
           <div className="space-y-3">
@@ -944,8 +944,8 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
             )}
           </div>
 
-          <div className="hidden xl:block"></div>
-          <div className="hidden xl:block w-full"> </div>
+          <div className="hidden xl:block md:block lg:block"></div>
+          <div className="hidden xl:block md:block lg:block w-full"> </div>
 
           {/* Country */}
           <div className="space-y-3">
