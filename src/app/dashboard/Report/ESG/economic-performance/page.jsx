@@ -315,7 +315,9 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
           </div>
           {/* page sidebar */}
 
-          <div className="p-4 border border-r-2 border-b-2 shadow-lg sticky rounded-lg h-fit top-20 w-[20%] md:w-[25%] lg:w-[20%] hidden md:block">
+          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36  md:fixed 
+  md:top-[19rem]
+  md:right-4  hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
             <p className="text-[11px] text-[#727272] mb-2 uppercase">
               11. Economic Performance
             </p>

@@ -288,7 +288,7 @@ const Companyoperations = forwardRef(({ onSubmitSuccess }, ref) => {
           </h3>
         </div>
         <div className="flex gap-4">
-          <div className="xl:w-[80%] md:w-[80%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
+          <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
             <Section1 orgName={orgName} data={screenTwoData} />
             <Section2
               orgName={orgName}
@@ -306,8 +306,8 @@ const Companyoperations = forwardRef(({ onSubmitSuccess }, ref) => {
           {/* page sidebar */}
 
           <div
-            className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky mt-2 w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36  md:fixed 
-  md:top-[20rem]
+            className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36  md:fixed 
+  md:top-[19rem]
   md:right-4  hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block "
           >
             <p className="text-[11px] text-[#727272] mb-2 uppercase">
