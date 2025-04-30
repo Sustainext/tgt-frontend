@@ -91,7 +91,7 @@ const EnergyTopBar = ({ toggleDrawer, sdgData, apiData, griData, brsr,setMobileo
         </div>
       </div>
       {/* mobile version */}
-      <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+      <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden  2xl:hidden 4k:hidden">
         <div className="w-full  py-4  rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]" onClick={toggleSidebar}>
           <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
             <div className="">

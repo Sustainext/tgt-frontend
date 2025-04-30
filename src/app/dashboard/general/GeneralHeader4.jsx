@@ -171,9 +171,9 @@ const GeneralHeader4 = ({
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
-                    }`}
+                      className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[100%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4  ${
+                        reportType !== "" ? "visible" : "hidden"
+                      }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">

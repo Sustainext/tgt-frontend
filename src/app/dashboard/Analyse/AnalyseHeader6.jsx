@@ -78,7 +78,7 @@ const AnalyseHeader6 = ({ location, setLocation, dateRange, setDateRange }) => {
       <div className="ml-2 mb-5 w-full mt-4">
         <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex mb-5 gap-4">
           {/* Location Selector */}
-          <div className="w-[97%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  2k:w-[20%]  4k:w-[20%]  relative">
+          <div className="w-[97%] xl:w-[20%]  lg:w-[20%]  md:w-[30%]  2xl:w-[20%]  2k:w-[20%]  4k:w-[20%]  relative">
             <label
               htmlFor="location"
               className="block text-neutral-800 text-[12px] font-normal mb-1"
@@ -115,7 +115,7 @@ const AnalyseHeader6 = ({ location, setLocation, dateRange, setDateRange }) => {
           </div>
 
           {/* Date Range Picker */}
-          <div className="w-[97%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  2k:w-[20%]  4k:w-[20%] ">
+          <div className="w-[97%] xl:w-[20%]  lg:w-[20%]  md:w-[30%]  2xl:w-[20%]  2k:w-[20%]  4k:w-[20%] ">
             <label
               htmlFor="dateRange"
               className="block text-neutral-800 text-[12px] font-normal mb-1"

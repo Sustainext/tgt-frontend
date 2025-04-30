@@ -532,10 +532,10 @@ const ManageUsers = () => {
         )} */}
         {selectedUser && (
           <>
-            <div className="w-[35%] max-h-[93vh] min-h-[93vh] rounded-lg shadow-lg max-w-md hidden xl:block md:block lg:block 2xl:block 4k:block 2k:block ">
+            <div className="w-[35%] max-h-[93vh] min-h-[93vh] rounded-lg shadow-lg max-w-md hidden xl:block md:hidden lg:block 2xl:block 4k:block 2k:block ">
               <UserProfile user={selectedUser} onClose={handleCloseProfile} />
             </div>
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 xl:hidden md:hidden lg:hidden 2xl:hidden 4k:hidden 2k:hidden">
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 xl:hidden md:fixed lg:hidden 2xl:hidden 4k:hidden 2k:hidden">
               <div className="bg-white w-full h-full rounded-t-lg p-4 overflow-y-auto relative">
                 <button
                   className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"

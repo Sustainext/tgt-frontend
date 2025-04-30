@@ -644,7 +644,7 @@ function Ghgtemplates() {
                     )}
                   </div>
                 </div>
-                <div className="h-[800px] overflow-y-auto mt-2">
+                <div className="h-auto overflow-y-auto mt-2">
                   {/* Step 1 */}
                   {activeStep === 1 && (
                     <>
@@ -1040,7 +1040,7 @@ function Ghgtemplates() {
               </div>
             </div>
             <div className="mx-3 my-2">
-              <div className="h-[800px] overflow-y-auto">
+              <div className="h-auto overflow-y-auto">
                 {/* Step 1 */}
                 {activeStep === 1 && (
                   <>

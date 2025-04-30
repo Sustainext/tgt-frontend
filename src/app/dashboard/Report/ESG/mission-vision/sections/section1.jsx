@@ -45,6 +45,7 @@ const Section1 = ({ orgName }) => {
       fontSize: "14px",
       color: "#667085",
     },
+    height:500,
     allowResizeY: false,
     defaultActionOnPaste: "insert_clear_html",
     toolbarSticky: false,

@@ -235,7 +235,7 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
           15. Customers, Products & Services 
         </h3>
         <div className="flex gap-4">
-          <div className="xl:w-[80%] md:w-[80%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
+          <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
             <Section1 section15_1Ref={section15_1Ref} data={data} />
             <Section2 section15_1_1Ref={section15_1_1Ref} data={data} />
             <Section3 section15_1_2Ref={section15_1_2Ref} data={data} />
@@ -252,7 +252,9 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
           </div>
           {/* page sidebar */}
 
-          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[550px] top-36 sticky mt-2 w-[20%] hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
+          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[550px] top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36  md:fixed 
+  md:top-[19rem]
+  md:right-4  hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
             <p className="text-[11px] text-[#727272] mb-2 uppercase">
               15. Customers, products & services 
             </p>
