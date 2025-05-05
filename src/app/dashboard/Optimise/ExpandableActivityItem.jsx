@@ -20,7 +20,8 @@ const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate, id }) 
       // Ensure proper structure for all required fields
       setLocalActivity({
         ...activity,
-        activity_change: activity.activity_change || false, // This will be { "2024": 5, "2025": -7, ... } when active
+        activity_change: activity.activity_change || false,
+        percentage_change: activity.percentage_change || {}, // This will be { "2024": 5, "2025": -7, ... } when active
         changes_in_activity: activity.changes_in_activity || {}
       });
     }
@@ -51,7 +52,8 @@ const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate, id }) 
     // Create a new updated activity object 
     const updatedActivity = {
       ...localActivity,
-      activity_change: changes.activity_change, // This will be { "2024": 5, "2025": -7, ... } or false
+      activity_change: changes.activity_change, // This will be true or false
+      percentage_change: changes.percentage_change, // This will be { "2024": 5, "2025": -7, ... } or false
       changes_in_activity: changes.changes_in_activity || {}
     };
 
@@ -80,6 +82,7 @@ const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate, id }) 
         activityId,
         {
           activity_change: localActivity.activity_change,
+          percentage_change: localActivity.percentage_change,
           changes_in_activity: localActivity.changes_in_activity || {}
         },
         true, // saveToAPI = true
@@ -97,8 +100,8 @@ const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate, id }) 
   };
 
   // Count the number of years with changes
-  const activityChangeYearCount = localActivity?.activity_change && typeof localActivity.activity_change === 'object' ? 
-    Object.keys(localActivity.activity_change).length : 0;
+  const activityChangeYearCount = localActivity?.percentage_change && typeof localActivity.percentage_change === 'object' ? 
+    Object.keys(localActivity.percentage_change).length : 0;
   
   // Count the number of years with activity changes
   const changesInActivityYearCount = localActivity?.changes_in_activity ? 
@@ -157,7 +160,7 @@ const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate, id }) 
             </div>
             
             {/* Show activity change status */}
-            {/* {localActivity.activity_change && (
+            {/* {localActivity.percentage_change && (
               <div className="col-span-2">
                 <span className="text-gray-500">Activity Change:</span> 
                 <span className="ml-2 text-green-600">Enabled for {activityChangeYearCount} years</span>

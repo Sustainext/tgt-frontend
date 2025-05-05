@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { useDispatch } from "react-redux";
 import {
@@ -7,9 +7,10 @@ import {
   FiPlus,
   FiTrash2,
   FiRefreshCw,
-  FiChevronUp
+  FiChevronUp,
 } from "react-icons/fi";
 import useActivityChanges from "../../../lib/redux/customHooks/useActivityChanges";
+import { fetchClimatiqActivities } from "../../utils/climatiqApi";
 
 // Add CSS for the scrollable-content class to hide scrollbars if needed
 const scrollableContentStyle = `
@@ -33,18 +34,54 @@ const ActivitiesGraph = ({
   onActivityChange = () => {},
   saveToAPI = false,
 }) => {
-  const dispatch = useDispatch();
+  // Using useRef to track whether we're in an update cycle to prevent infinite loops
+  const isUpdating = useRef(false);
+  const initialRender = useRef(true);
+  
+  console.log("[ActivitiesGraph] Rendering with activity:", 
+    activity?.activity_change ? "activity_change: true" : "activity_change: false"
+  );
+  
   // Make sure we're using the fixed hook
   const { handleActivityGraphChange } = useActivityChanges();
-  
-  // State for expanded/collapsed view - default to expanded when activity_change is already enabled
-  const [isExpanded, setIsExpanded] = useState(activity?.activity_change ? true : false);
 
-  // State for including activity changes
-  const [includeActivityChanges, setIncludeActivityChanges] = useState(
+  // Initial activity options for bootstrapping (will be replaced with API data)
+  const initialActivityOptions = [
+    { 
+      id: "fuel-type_agricultural_byproducts_bio_100-fuel_use_stationary", 
+      activity_id: "fuel-type_agricultural_byproducts_bio_100-fuel_use_stationary",
+      name: "Agricultural byproducts - EPA - Energy - US - 2024 - biogenic_co2_combustion",
+      source: "EPA",
+      unit_type: "Energy",
+      region: "US",
+      year: "2024"
+    },
+    { 
+      id: "act2", 
+      activity_id: "act2",
+      name: "Rail freight - EPA - WeightOverDistance - GB - 2024 - fuel_combustion",
+      source: "EPA",
+      unit_type: "WeightOverDistance",
+      region: "GB",
+      year: "2024"
+    },
+  ];
+
+  // State for activity options
+  const [activityOptions, setActivityOptions] = useState(initialActivityOptions);
+  const [isLoadingActivities, setIsLoadingActivities] = useState(false);
+  const [activityError, setActivityError] = useState(null);
+
+  // State for expanded/collapsed view - default to expanded when activity_change is already enabled
+  const [isExpanded, setIsExpanded] = useState(
     activity?.activity_change ? true : false
   );
 
+  // State for including activity changes - initialize based on activity_change or percentage_change
+  const [includeActivityChanges, setIncludeActivityChanges] = useState(
+    activity?.activity_change ? true : false
+  );
+  
   // Generate years between base and target
   const years = [];
   for (let year = baseYear; year <= targetYear; year++) {
@@ -55,16 +92,29 @@ const ActivitiesGraph = ({
   const [selectedActivities, setSelectedActivities] = useState(() => {
     // Initialize from existing changes_in_activity if available
     if (activity?.changes_in_activity) {
+      console.log("[ActivitiesGraph] Initializing with existing changes_in_activity");
       const initialSelections = {};
       years.forEach((year) => {
         if (activity.changes_in_activity[year]) {
-          initialSelections[year] = activity.changes_in_activity[year].activity_id;
+          // Store the ID that matches our selection dropdown (the option.id value)
+          // We need to match this with how we're setting the dropdown value
+          const activityData = activity.changes_in_activity[year];
+          // Look for an option that matches this activity_id
+          const matchingOption = initialActivityOptions.find(
+            (opt) =>
+              opt.activity_id === activityData.activity_id ||
+              opt.id === activityData.activity_id
+          );
+
+          // If we find a matching option, use its id (which is what the dropdown uses)
+          initialSelections[year] = matchingOption ? matchingOption.id : null;
         } else {
           initialSelections[year] = null;
         }
       });
       return initialSelections;
     } else {
+      console.log("[ActivitiesGraph] No existing changes_in_activity, using empty selection");
       // Default initialization if no existing data
       const initialSelections = {};
       years.forEach((year) => {
@@ -77,29 +127,22 @@ const ActivitiesGraph = ({
   // State for common activity selection
   const [commonActivity, setCommonActivity] = useState("");
 
-  // Sample activity options for dropdown
-  const activityOptions = [
-    { id: "fuel-type_agricultural_byproducts_bio_100-fuel_use_stationary", name: "Agricultural byproducts - EPA - Energy - US - 2024 - biogenic_co2_combustion" },
-    { id: "act2", name: "Rail freight - EPA - WeightOverDistance - GB - 2024 - fuel_combustion" },
-    { id: "act3", name: "Motor vehicles/trailers - EXIOBASE - Money - RU - 2019 - unknown" },
-    { id: "act4", name: "Bamboo - EPA - Energy - US - 2024 - biogenic_co2_combustion" },
-    { id: "fuel-type_asphalt_and_road_oil-fuel_use_stationary", name: "Asphalt and road oil - EPA - Volume - US - 2024 - fuel_combustion", factorId: "2f4f236b-2807-4927-b0bb-ad54d2265caf" },
-  ];
-
-  // Initialize data structure for the graph with values from existing activity_change
+  // Initialize data structure for the graph with values from existing activity_change or percentage_change
   const [data, setData] = useState(() => {
     const initialData = [];
     years.forEach((year) => {
-      // Get values from activity_change only
-      const existingValue = activity?.activity_change?.[year] !== undefined 
-        ? activity.activity_change[year] 
-        : 0;
-      
+      // Get values from percentage_change (for backward compatibility)
+      const existingValue =
+          activity?.percentage_change?.[year] !== undefined
+          ? activity.percentage_change[year]
+          : 0;
+
       initialData.push({
         x: year,
         y: existingValue,
       });
     });
+    console.log("[ActivitiesGraph] Initialized data from activity_change/percentage_change:", initialData);
     return initialData;
   });
 
@@ -117,47 +160,70 @@ const ActivitiesGraph = ({
 
   // Update the activity change state and notify parent
   const updateActivityChange = (updatedData, updatedActivityChanges) => {
-    // Prepare the new activity_change object in the format { "2024": 5, "2025": -7, ... }
-    // Only include activity_change if the toggle is on
-    const newActivityChange = includeActivityChanges
-      ? Object.fromEntries(updatedData.map(point => [point.x, point.y]))
-      : false;
+    if (isUpdating.current) {
+      console.log("[ActivitiesGraph] Skipping updateActivityChange due to active update");
+      return;
+    }
     
-    // Create the update object with only activity_change (no percentage_change)
+    console.log("[ActivitiesGraph] updateActivityChange called", 
+      "includeActivityChanges:", includeActivityChanges);
+    
+    // Generate the change data object based on current graph data
+    const newChangeData = includeActivityChanges
+      ? Object.fromEntries(updatedData.map((point) => [point.x, point.y]))
+      : false;
+      
+    console.log("[ActivitiesGraph] New activity/percentage change value:", newChangeData);
+
+    // Create the update object with all required fields
     const changes = {
-      activity_change: newActivityChange,
-      changes_in_activity: updatedActivityChanges || {}
+      // IMPORTANT: Include both activity_change and percentage_change
+      activity_change: includeActivityChanges,
+      percentage_change: newChangeData, // Keep percentage_change for backward compatibility
+      changes_in_activity: updatedActivityChanges || {},
     };
+
+    // Log payload for debugging
+    console.log("[ActivitiesGraph] Update payload:", changes);
     
     // Update the parent component with new data (for local state updates)
     onActivityChange(changes);
-    
+
     // If we have an activityId and saveToAPI is true, update the Redux store and optionally API
     if (activityId) {
+      console.log("[ActivitiesGraph] Calling handleActivityGraphChange with activityId:", activityId);
       handleActivityGraphChange(activityId, changes, saveToAPI, scenarioId);
     }
   };
 
   // Apply common activity to all years
   const applyCommonActivity = (activityId) => {
+    console.log("[ActivitiesGraph] applyCommonActivity called with:", activityId);
     setCommonActivity(activityId);
-    
+
     if (activityId) {
       const updatedActivities = {};
-      const selectedOption = activityOptions.find(opt => opt.id === activityId);
-      
+      const selectedOption = activityOptions.find(
+        (opt) => opt.id === activityId
+      );
+
       if (selectedOption) {
         // Create changes_in_activity structure for all years
         const changes = {};
-        years.forEach(year => {
+        years.forEach((year) => {
           updatedActivities[year] = activityId;
           changes[year] = {
-            activity_id: selectedOption.id,
+            // Use the activity_id field from selectedOption
+            activity_id: selectedOption.activity_id || selectedOption.id,
             activity_name: selectedOption.name,
-            factor_id: selectedOption.factorId || "default-factor-id"
+            // Use the factor_id field from selectedOption
+            factor_id:
+              selectedOption.factor_id ||
+              selectedOption.factorId ||
+              "default-factor-id",
           };
         });
-        
+
         setSelectedActivities(updatedActivities);
         updateActivityChange(data, changes);
       }
@@ -166,73 +232,85 @@ const ActivitiesGraph = ({
 
   // Function to handle activity selection for a specific year
   const handleActivityChange = (year, activityId) => {
+    console.log("[ActivitiesGraph] handleActivityChange called for year:", year);
     const updatedActivities = {
       ...selectedActivities,
-      [year]: activityId
+      [year]: activityId,
     };
-    
+
     setSelectedActivities(updatedActivities);
-    
+
     // Create or update the changes_in_activity object
     const changesInActivity = { ...(activity?.changes_in_activity || {}) };
-    
+
     if (activityId) {
-      const selectedOption = activityOptions.find(opt => opt.id === activityId);
+      const selectedOption = activityOptions.find(
+        (opt) => opt.id === activityId
+      );
       if (selectedOption) {
         changesInActivity[year] = {
-          activity_id: selectedOption.id,
+          // Use the activity_id field from the selectedOption
+          activity_id: selectedOption.activity_id || selectedOption.id,
           activity_name: selectedOption.name,
-          factor_id: selectedOption.factorId || "default-factor-id"
+          // Use the factor_id field from the selectedOption
+          factor_id:
+            selectedOption.factor_id ||
+            selectedOption.factorId ||
+            "default-factor-id",
         };
       }
     } else {
       // If no activity selected, remove the entry
       delete changesInActivity[year];
     }
-    
+
     // Check if all years now have the same activity
-    const allSame = Object.values(updatedActivities).every(val => val === activityId) && Object.values(updatedActivities).every(val => val !== null);
+    const allSame =
+      Object.values(updatedActivities).every((val) => val === activityId) &&
+      Object.values(updatedActivities).every((val) => val !== null);
     if (allSame) {
       setCommonActivity(activityId);
     } else {
       setCommonActivity("");
     }
-    
+
     // Update the parent component
     updateActivityChange(data, changesInActivity);
   };
 
   // Function to clear activity for a specific year
   const handleClearActivity = (year) => {
+    console.log("[ActivitiesGraph] handleClearActivity called for year:", year);
     const updatedActivities = {
       ...selectedActivities,
-      [year]: null
+      [year]: null,
     };
-    
+
     setSelectedActivities(updatedActivities);
-    
+
     // Create or update the changes_in_activity object
     const changesInActivity = { ...(activity?.changes_in_activity || {}) };
-    
+
     // Remove the entry for this year
     delete changesInActivity[year];
-    
+
     // Clear common activity since they're no longer all the same
     setCommonActivity("");
-    
+
     // Update the parent component
     updateActivityChange(data, changesInActivity);
   };
 
   // Reset all year-specific selections
   const handleResetActivities = () => {
+    console.log("[ActivitiesGraph] handleResetActivities called");
     const emptySelections = {};
-    years.forEach(year => {
+    years.forEach((year) => {
       emptySelections[year] = null;
     });
     setSelectedActivities(emptySelections);
     setCommonActivity("");
-    
+
     // Update the parent component with empty changes_in_activity
     updateActivityChange(data, {});
   };
@@ -268,36 +346,36 @@ const ActivitiesGraph = ({
 
     // Check if we have a negative sign stored
     const isNegativeIntent = data[index].y === "-";
-    
+
     // Strip non-numeric characters except the leading minus
     let processedValue = value.replace(/[^0-9\-+]/g, "");
-    
+
     // If there's a negative intent and user is now typing numbers
     if (isNegativeIntent && /^\d+$/.test(processedValue)) {
       // Apply the stored negative sign
       processedValue = "-" + processedValue;
     }
-    
+
     // Parse the value as an integer
     let numValue = parseInt(processedValue, 10);
-    
+
     // Check if the value is valid
     if (isNaN(numValue)) {
       return; // Keep the current value if invalid
     }
-    
+
     // Apply constraints based on current max range
     numValue = Math.min(numValue, maxRange);
     numValue = Math.max(numValue, -maxRange);
-    
+
     // Update the data
     const newData = [...data];
     newData[index] = { ...newData[index], y: numValue };
     setData(newData);
-    
+
     // Check if range needs to be adjusted
     autoAdjustRange(numValue);
-    
+
     // Update the parent component
     updateActivityChange(newData, activity?.changes_in_activity);
   };
@@ -344,7 +422,7 @@ const ActivitiesGraph = ({
         y: constrainedValue,
       };
       setData(updatedData);
-      
+
       // Update the parent component
       updateActivityChange(updatedData, activity?.changes_in_activity);
     };
@@ -364,82 +442,122 @@ const ActivitiesGraph = ({
     event.stopPropagation();
   };
 
-  // Listen for changes to activity_change toggle
-  useEffect(() => {
-    // Create the activity_change object from the current data
-    const newActivityChange = includeActivityChanges ? 
-      Object.fromEntries(data.map(point => [point.x, point.y])) : 
-      false;
+  const handleToggleChange = (e) => {
+    console.log('[ActivitiesGraph] Toggle checkbox clicked, new value:', e.target.checked);
     
-    // Update parent component with new activity_change state - no percentage_change field
-    const changes = {
-      activity_change: newActivityChange,
-      changes_in_activity: activity?.changes_in_activity || {}
-    };
+    // Set the isUpdating flag to prevent effects from triggering additional updates
+    isUpdating.current = true;
     
-    // Update the parent component
-    onActivityChange(changes);
-    
-    // If we have an activityId, update the Redux store as well
-    if (activityId) {
-      handleActivityGraphChange(activityId, changes, saveToAPI, scenarioId);
-    }
-    
-    // Auto-expand when activity_change is enabled
-    if (includeActivityChanges) {
-      setIsExpanded(true);
-    }
-  }, [includeActivityChanges]);
-
-  // Listen for changes to the activity prop to update the local state
-  useEffect(() => {
-    if (activity) {
-      // Update includeActivityChanges state
-      const hasActivityChanges = Boolean(activity.activity_change);
-      setIncludeActivityChanges(hasActivityChanges);
+    try {
+      const newValue = e.target.checked;
+      setIncludeActivityChanges(newValue);
       
-      // Auto expand if activity changes are already enabled
-      if (hasActivityChanges) {
+      // When enabling, always expand the section
+      if (newValue) {
         setIsExpanded(true);
       }
       
-      // Update selectedActivities state
-      if (activity.changes_in_activity) {
-        const updatedSelections = {};
-        years.forEach((year) => {
-          if (activity.changes_in_activity[year]) {
-            updatedSelections[year] = activity.changes_in_activity[year].activity_id;
-          } else {
-            updatedSelections[year] = null;
-          }
-        });
-        setSelectedActivities(updatedSelections);
-      }
+      // Create change data from the current data
+      const newChangeData = newValue
+        ? Object.fromEntries(data.map((point) => [point.x, point.y]))
+        : false;
       
-      // Update data state - only use activity_change
-      const updatedData = [];
-      years.forEach((year) => {
-        // Only try to get the value from activity_change
-        const existingValue = activity?.activity_change?.[year] !== undefined 
-          ? activity.activity_change[year] 
-          : 0;
-        
-        updatedData.push({
-          x: year,
-          y: existingValue,
-        });
-      });
-      setData(updatedData);
+      // Create the complete changes object with all required fields
+      const changes = {
+        activity_change: includeActivityChanges,
+        percentage_change: newChangeData, // Add percentage_change for backward compatibility
+        changes_in_activity: activity?.changes_in_activity || {}
+      };
+      
+      console.log('[ActivitiesGraph] Sending toggle update with changes:', changes);
+      
+      // Update parent component and Redux directly in the handler
+      onActivityChange(changes);
+      
+      if (activityId) {
+        handleActivityGraphChange(activityId, changes, saveToAPI, scenarioId);
+      }
+    } finally {
+      // Clear the updating flag to allow future updates
+      isUpdating.current = false;
     }
-  }, [activity]);
+  };
 
-  // Format the chart data for Nivo
-  const chartData = [
-    {
-      id: activityName,
-      data: data,
-    },
-  ];
+  // Toggle the expanded/collapsed state
+  const toggleExpanded = () => {
+    // If activity changes are enabled, don't allow collapse
+    if (includeActivityChanges) {
+      // Keep it expanded
+      setIsExpanded(true);
+    } else {
+      // Normal toggle behavior when activity changes are disabled
+      setIsExpanded(!isExpanded);
+    }
+  };
+
+  // Get activity name from ID
+  const getActivityName = (activityId) => {
+    if (!activityId) return "";
+    const activity = activityOptions.find((a) => a.id === activityId);
+    return activity ? activity.name : "";
+  };
+
+  // Fetch activity options when needed
+  useEffect(() => {
+    const fetchActivities = async () => {
+      // Only fetch activities if toggle is enabled and we don't have options yet
+      if (includeActivityChanges && activityOptions.length === initialActivityOptions.length) {
+        try {
+          console.log("[ActivitiesGraph] Fetching activity options");
+          setIsLoadingActivities(true);
+          setActivityError(null);
+
+          // Extract subcategory from the activity
+          const subcategory =
+            activity?.sub_category || activity?.subCategory || "";
+          const unitType = activity?.unit_type || "";
+          const region = activity?.region || "*";
+
+          // Call the fetch function with the appropriate parameters
+          const response = await fetchClimatiqActivities({
+            subcategory,
+            unit_type: unitType,
+            region,
+            year: baseYear.toString(),
+            page: 1,
+          });
+
+          // Transform the API response into activity options
+          const options = response.results.map((item) => ({
+            id: item.id,
+            activity_id: item.activity_id,
+            name: item.name || item.activity_name,
+            factorId: item.id || item.factor_id,
+            source: item.source || "",
+            unit_type: item.unit_type || "",
+            region: item.region || "",
+            year: item.year || "",
+            source_lca_activity: item.source_lca_activity || "",
+          }));
+
+          console.log("[ActivitiesGraph] Fetched options:", options.length);
+          setActivityOptions([...initialActivityOptions, ...options]);
+        } catch (error) {
+          console.error("Error fetching activity options:", error);
+          setActivityError(
+            "Failed to load activity options. Please try again."
+          );
+
+          // Fallback options in case of error
+          setActivityOptions([...initialActivityOptions]);
+        } finally {
+          setIsLoadingActivities(false);
+        }
+      }
+    };
+
+    fetchActivities();
+  }, [includeActivityChanges, activity, baseYear]);
 
   // Refs for scroll synchronization
   const chartScrollRef = useRef(null);
@@ -471,35 +589,103 @@ const ActivitiesGraph = ({
     };
   }, [isExpanded, includeActivityChanges]);
 
-  // Toggle the expanded/collapsed state
-  const toggleExpanded = () => {
-    // If activity changes are enabled, don't allow collapse
-    if (includeActivityChanges) {
-      // Keep it expanded
-      setIsExpanded(true);
-    } else {
-      // Normal toggle behavior when activity changes are disabled
-      setIsExpanded(!isExpanded);
+  // Listen for changes to the activity prop to update the local state
+  useEffect(() => {
+    // Skip this effect during updates initiated by this component
+    if (isUpdating.current) {
+      console.log("[ActivitiesGraph] Skipping activity update effect due to active update");
+      return;
     }
-  };
-
-  // Toggle include activity changes
-  const toggleIncludeActivityChanges = () => {
-    const newValue = !includeActivityChanges;
-    setIncludeActivityChanges(newValue);
     
-    // When enabling, always expand the section
-    if (newValue) {
-      setIsExpanded(true);
+    // Skip the first render to avoid double-initialization
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
     }
-  };
-  
-  // Get activity name from ID
-  const getActivityName = (activityId) => {
-    if (!activityId) return "";
-    const activity = activityOptions.find(a => a.id === activityId);
-    return activity ? activity.name : "";
-  };
+    
+    if (!activity) return;
+    
+    console.log("[ActivitiesGraph] Activity prop changed, updating component state");
+    console.log("[ActivitiesGraph] New activity has activity_change:", 
+      activity.activity_change ? "true" : "false");
+    
+    // Set the updating flag to prevent infinite loops
+    isUpdating.current = true;
+    
+    try {
+      // Update includeActivityChanges state based on activity_change or percentage_change
+      // (for backward compatibility)
+      const hasActivityChanges = Boolean(activity.activity_change);
+      
+      // Auto expand if activity changes are already enabled
+      if (hasActivityChanges) {
+        setIsExpanded(true);
+      }
+      
+      // Update selectedActivities state when we have activityOptions available
+      if (activity.changes_in_activity && activityOptions.length > 0) {
+        console.log("[ActivitiesGraph] Updating selectedActivities from changes_in_activity");
+        const updatedSelections = {};
+
+        years.forEach((year) => {
+          if (activity.changes_in_activity[year]) {
+            const activityData = activity.changes_in_activity[year];
+
+            // Find the matching option in our dropdown options
+            const matchingOption = activityOptions.find(
+              (opt) =>
+                opt.activity_id === activityData.activity_id ||
+                opt.id === activityData.activity_id
+            );
+
+            // Store the option.id which is what our dropdown uses for value
+            updatedSelections[year] = matchingOption ? matchingOption.id : null;
+          } else {
+            updatedSelections[year] = null;
+          }
+        });
+
+        setSelectedActivities(updatedSelections);
+
+        // Check if all selections are the same to update commonActivity
+        const uniqueValues = [
+          ...new Set(Object.values(updatedSelections).filter(Boolean)),
+        ];
+        if (uniqueValues.length === 1 && uniqueValues[0]) {
+          setCommonActivity(uniqueValues[0]);
+        } else {
+          setCommonActivity("");
+        }
+      }
+
+      // Update data state - use activity_change or percentage_change (for backward compatibility)
+      console.log("[ActivitiesGraph] Updating chart data from activity_change/percentage_change");
+      const updatedData = [];
+      years.forEach((year) => {
+        // Try to get the value from activity_change or percentage_change
+        const existingValue = activity?.percentage_change?.[year] !== undefined
+          ? activity.percentage_change[year]
+          : 0;
+
+        updatedData.push({
+          x: year,
+          y: existingValue,
+        });
+      });
+      setData(updatedData);
+    } finally {
+      // Clear the updating flag
+      isUpdating.current = false;
+    }
+  }, [activity, activityOptions, years]);
+
+  // Format the chart data for Nivo
+  const chartData = [
+    {
+      id: activityName,
+      data: data,
+    },
+  ];
 
   return (
     <div className="bg-white rounded-lg overflow-hidden mb-6">
@@ -514,12 +700,12 @@ const ActivitiesGraph = ({
             className="flex items-center cursor-pointer mb-4"
             onClick={toggleExpanded}
           >
-            {/* Toggle switch */}
+            {/* Toggle switch - FIXED to use handleToggleChange */}
             <label className="relative inline-flex items-center cursor-pointer mr-4">
               <input
                 type="checkbox"
                 checked={includeActivityChanges}
-                onChange={toggleIncludeActivityChanges}
+                onChange={handleToggleChange}
                 className="sr-only peer"
                 onClick={(e) => e.stopPropagation()}
               />
@@ -527,11 +713,15 @@ const ActivitiesGraph = ({
             </label>
             <span className="font-medium">Include Activity Changes</span>
             <FiInfo className="ml-2 text-gray-400" />
-            
+
             {/* Only show collapse/expand button if activity changes are disabled */}
             {!includeActivityChanges && (
               <button className="ml-auto text-gray-500">
-                {isExpanded ? <FiChevronUp size={20} /> : <FiChevronDown size={20} />}
+                {isExpanded ? (
+                  <FiChevronUp size={20} />
+                ) : (
+                  <FiChevronDown size={20} />
+                )}
               </button>
             )}
           </div>
@@ -541,7 +731,9 @@ const ActivitiesGraph = ({
             <div className="mb-6 px-4">
               {/* Common activity selector */}
               <div className="my-6 flex items-center">
-                <div className="text-gray-600 mb-2 w-1/4">Select a common activity change for all the years:</div>
+                <div className="text-gray-600 mb-2 w-1/4">
+                  Select a common activity change for all the years:
+                </div>
                 <div className="relative w-3/4">
                   <select
                     value={commonActivity}
@@ -552,6 +744,11 @@ const ActivitiesGraph = ({
                     {activityOptions.map((option) => (
                       <option key={option.id} value={option.id}>
                         {option.name}
+                        {option.source && ` - (${option.source})`}
+                        {option.unit_type && ` - ${option.unit_type}`}
+                        {option.region && ` - ${option.region}`}
+                        {option.year && ` - ${option.year}`}
+                        {option.source_lca_activity && ` - ${option.source_lca_activity}`}
                       </option>
                     ))}
                   </select>
@@ -564,8 +761,10 @@ const ActivitiesGraph = ({
               {/* Individual year activity selectors */}
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="text-gray-600">Select activity change for years individually</div>
-                  <button 
+                  <div className="text-gray-600">
+                    Select activity change for years individually
+                  </div>
+                  <button
                     onClick={handleResetActivities}
                     className="text-blue-500 flex items-center text-sm"
                   >
@@ -575,36 +774,50 @@ const ActivitiesGraph = ({
 
                 {/* Year-by-year selectors - grid layout with no scrolling */}
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {years.map((year) => (
-                    <div key={year} className="mb-4">
-                      <div className="text-sm font-medium text-neutral-600 mb-1 pl-3">{year}</div>
-                      <div className="relative">
-                        <select
-                          value={selectedActivities[year] || ""}
-                          onChange={(e) => handleActivityChange(year, e.target.value)}
-                          className="w-full py-2 pl-3 pr-10 text-sm border-b border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white appearance-none text-neutral-500"
-                        >
-                          <option value="">Select activity...</option>
-                          {activityOptions.map((option) => (
-                            <option key={option.id} value={option.id}>
-                              {option.name}
-                            </option>
-                          ))}
-                        </select>
-                        <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                          <FiChevronDown className="w-4 h-4 text-gray-400" />
+                  {years.map((year) => {
+                    // Get the currently selected activity ID for this year
+                    const selectedActivityId = selectedActivities[year] || "";
+
+                    return (
+                      <div key={year} className="mb-4">
+                        <div className="text-sm font-medium text-neutral-600 mb-1 pl-3">
+                          {year}
                         </div>
-                        {selectedActivities[year] && (
-                          <button
-                            onClick={() => handleClearActivity(year)}
-                            className="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        <div className="relative">
+                          <select
+                            value={selectedActivityId}
+                            onChange={(e) =>
+                              handleActivityChange(year, e.target.value)
+                            }
+                            className="w-full py-2 pl-3 pr-10 text-sm border-b border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white appearance-none text-neutral-500"
                           >
-                            <FiTrash2 className="w-4 h-4 hover:text-red-600" />
-                          </button>
-                        )}
+                            <option value="">Select activity...</option>
+                            {activityOptions.map((option) => (
+                              <option key={option.id} value={option.id}>
+                                {option.name}
+                                {option.source && ` - (${option.source || "N/A"})`}
+                                {option.unit_type && ` - ${option.unit_type || "N/A"}`}
+                                {option.region && ` - ${option.region || "N/A"}`}
+                                {option.year && ` - ${option.year || "N/A"}`}
+                                {option.source_lca_activity && ` - ${option.source_lca_activity || "N/A"}`}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                            <FiChevronDown className="w-4 h-4 text-gray-400" />
+                          </div>
+                          {selectedActivityId && (
+                            <button
+                              onClick={() => handleClearActivity(year)}
+                              className="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            >
+                              <FiTrash2 className="w-4 h-4 hover:text-red-600" />
+                            </button>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -612,7 +825,8 @@ const ActivitiesGraph = ({
         </div>
 
         <div className="text-sm mb-4">
-          For each year based on the emission projection, increase or decrease the percentage of the consumption activity
+          For each year based on the emission projection, increase or decrease
+          the percentage of the consumption activity
         </div>
 
         {/* Chart - Contained in the scrollable-content wrapper */}
@@ -827,7 +1041,10 @@ const ActivitiesGraph = ({
                           const newData = [...data];
                           newData[index] = { ...newData[index], y: 0 };
                           setData(newData);
-                          updateActivityChange(newData, activity?.changes_in_activity);
+                          updateActivityChange(
+                            newData,
+                            activity?.changes_in_activity
+                          );
                         }
                       }}
                     />

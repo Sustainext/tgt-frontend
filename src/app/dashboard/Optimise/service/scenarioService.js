@@ -451,7 +451,80 @@ export const checkEmissionDataExists = async (
   }
 };
 
+/**
+ * Update a specific activity in a scenario
+ * @param {number} scenarioId - Scenario ID
+ * @param {string|number} activityId - Activity ID
+ * @param {Object} updates - Object containing the fields to update
+ * @returns {Promise} Promise resolving to updated activity data
+ */
+export const updateScenarioActivity = async (scenarioId, activityId, updates) => {
+  try {
+    if (!scenarioId || !activityId) {
+      throw new Error("Both scenarioId and activityId are required");
+    }
+    
+    // Ensure we're only sending valid update fields
+    const validUpdateFields = ['activity_change', 'changes_in_activity', 'percentage_change'];
+    const filteredUpdates = {};
+    
+    Object.keys(updates).forEach(key => {
+      if (validUpdateFields.includes(key)) {
+        filteredUpdates[key] = updates[key];
+      }
+    });
+    
+    const response = await apiClient.patch(
+      `/optimize/${scenarioId}/selectedactivity/${activityId}/`,
+      filteredUpdates
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Error updating activity ${activityId} in scenario ${scenarioId}:`,
+      error
+    );
+    throw error;
+  }
+};
 
+/**
+ * Update multiple activities in a scenario with a single API call
+ * @param {number} scenarioId - Scenario ID
+ * @param {Array} activities - Array of activities with their updates
+ * @returns {Promise} Promise resolving to updated activities data
+ */
+export const updateAllScenarioActivities = async (scenarioId, activities) => {
+  try {
+    if (!scenarioId || !Array.isArray(activities) || activities.length === 0) {
+      throw new Error("Valid scenarioId and activities array are required");
+    }
+    
+    // Process activities for API submission
+    const payload = activities.map(activity => {
+
+      console.log("Processing activity:", activity);
+      
+      return {
+        id: activity.id,
+        activity_change: activity.activity_change,
+        percentage_change: activity.percentage_change || {},
+        changes_in_activity: activity.changes_in_activity || {}
+      };
+    });
+    
+    // Make a single API call with all activities
+    const response = await apiClient.patch(
+      `/optimize/${scenarioId}/selectedactivity/`,
+      payload
+    );
+    
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating activities for scenario ${scenarioId}:`, error);
+    throw error;
+  }
+};
 
 export default {
   checkEmissionDataExists,
@@ -469,4 +542,6 @@ export default {
   removeActivityFromScenario,
   updateActivityConsumption,
   submitSelectedActivities,
+  updateScenarioActivity,
+  updateAllScenarioActivities
 };
