@@ -1,6 +1,12 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateScenarioActivity, updateAllSelectedActivities } from '../../../lib/redux/features/optimiseSlice';
+import { 
+  updateScenarioActivity, 
+  updateAllSelectedActivities,
+  setActivityChange,
+  setChangesInActivity,
+  updateActivityProperties
+} from '../../../lib/redux/features/optimiseSlice';
 
 /**
  * Custom hook for working with activity changes
@@ -32,24 +38,17 @@ const useActivityChanges = () => {
   );
   
   /**
-   * Update an activity's field with a specific value
+   * Update an activity's activity_change property
    * @param {string} activityId - ID of the activity to update
-   * @param {string} fieldName - Name of the field to update
-   * @param {any} fieldValue - New value for the field
+   * @param {Object|boolean} activityChange - New activity_change value
    * @param {boolean} saveToAPI - Whether to save to the API
    * @param {string} scenarioId - ID of the scenario (required if saveToAPI is true)
    * @returns {Promise} Promise that resolves when the update is complete
    */
-  const updateActivityField = useCallback(
-    (activityId, fieldName, fieldValue, saveToAPI = false, scenarioId = null) => {
-      // Create updates object with the specified field
-      const updates = { [fieldName]: fieldValue };
-      
-      // Update the field in Redux store
-      dispatch({
-        type: 'optimise/updateActivityProperties',
-        payload: { activityId, properties: updates }
-      });
+  const updateActivityChange = useCallback(
+    (activityId, activityChange, saveToAPI = false, scenarioId = null) => {
+      // Dispatch action to update the activity_change in the Redux store
+      dispatch(setActivityChange({ activityId, activityChange }));
       
       // Save to API if requested
       if (saveToAPI && scenarioId) {
@@ -57,7 +56,7 @@ const useActivityChanges = () => {
           updateScenarioActivity({
             scenarioId,
             activityId,
-            updates
+            updates: { activity_change: activityChange }
           })
         );
       }
@@ -68,40 +67,7 @@ const useActivityChanges = () => {
   );
   
   /**
-   * Update an activity's activity_change property specifically
-   * (Maintained for backward compatibility and convenience)
-   * @param {string} activityId - ID of the activity to update
-   * @param {Object|boolean} activityChange - New activity_change value
-   * @param {boolean} saveToAPI - Whether to save to the API
-   * @param {string} scenarioId - ID of the scenario (required if saveToAPI is true)
-   * @returns {Promise} Promise that resolves when the update is complete
-   */
-  const updateActivityChange = useCallback(
-    (activityId, activityChange, saveToAPI = false, scenarioId = null) => {
-      return updateActivityField(activityId, 'activity_change', activityChange, saveToAPI, scenarioId);
-    },
-    [updateActivityField]
-  );
-  
-  /**
-   * Update an activity's percentage_change property specifically
-   * (Maintained for backward compatibility with older implementations)
-   * @param {string} activityId - ID of the activity to update
-   * @param {Object|boolean} percentageChange - New percentage_change value
-   * @param {boolean} saveToAPI - Whether to save to the API
-   * @param {string} scenarioId - ID of the scenario (required if saveToAPI is true)
-   * @returns {Promise} Promise that resolves when the update is complete
-   */
-  const updatePercentageChange = useCallback(
-    (activityId, percentageChange, saveToAPI = false, scenarioId = null) => {
-      return updateActivityField(activityId, 'percentage_change', percentageChange, saveToAPI, scenarioId);
-    },
-    [updateActivityField]
-  );
-  
-  /**
-   * Update an activity's changes_in_activity property specifically
-   * (Maintained for backward compatibility and convenience)
+   * Update an activity's changes_in_activity property
    * @param {string} activityId - ID of the activity to update
    * @param {Object} changesInActivity - New changes_in_activity value
    * @param {boolean} saveToAPI - Whether to save to the API
@@ -110,9 +76,23 @@ const useActivityChanges = () => {
    */
   const updateChangesInActivity = useCallback(
     (activityId, changesInActivity, saveToAPI = false, scenarioId = null) => {
-      return updateActivityField(activityId, 'changes_in_activity', changesInActivity, saveToAPI, scenarioId);
+      // Dispatch action to update the changes_in_activity in the Redux store
+      dispatch(setChangesInActivity({ activityId, changesInActivity }));
+      
+      // Save to API if requested
+      if (saveToAPI && scenarioId) {
+        return dispatch(
+          updateScenarioActivity({
+            scenarioId,
+            activityId,
+            updates: { changes_in_activity: changesInActivity }
+          })
+        );
+      }
+      
+      return Promise.resolve();
     },
-    [updateActivityField]
+    [dispatch]
   );
   
   /**
@@ -126,10 +106,7 @@ const useActivityChanges = () => {
   const updateActivity = useCallback(
     (activityId, properties, saveToAPI = false, scenarioId = null) => {
       // Dispatch action to update multiple properties in the Redux store
-      dispatch({
-        type: 'optimise/updateActivityProperties',
-        payload: { activityId, properties }
-      });
+      dispatch(updateActivityProperties({ activityId, properties }));
       
       // Save to API if requested
       if (saveToAPI && scenarioId) {
@@ -149,9 +126,8 @@ const useActivityChanges = () => {
   
   /**
    * Handle changes from the ActivitiesGraph component
-   * This function is flexible and handles whichever fields are present in the changes object
    * @param {string} activityId - ID of the activity being changed
-   * @param {Object} changes - Changes object containing any activity properties to update
+   * @param {Object} changes - Changes object containing activity_change and changes_in_activity
    * @param {boolean} saveToAPI - Whether to save to the API
    * @param {string} scenarioId - ID of the scenario (required if saveToAPI is true)
    * @returns {Promise} Promise that resolves when the update is complete
@@ -159,11 +135,6 @@ const useActivityChanges = () => {
   const handleActivityGraphChange = useCallback(
     (activityId, changes, saveToAPI = false, scenarioId = null) => {
       // Use the updateActivity function to update all properties at once
-      // This will work with any fields in the changes object including:
-      // - activity_change
-      // - percentage_change 
-      // - changes_in_activity
-      // - Any other fields that might be required
       return updateActivity(activityId, changes, saveToAPI, scenarioId);
     },
     [updateActivity]
@@ -198,68 +169,6 @@ const useActivityChanges = () => {
     [dispatch]
   );
 
-  /**
-   * Toggle any boolean field for an activity (not just activity_change)
-   * @param {string} activityId - ID of the activity to toggle
-   * @param {string} fieldName - Name of the field to toggle (e.g., 'activity_change')
-   * @param {boolean} enabled - Whether the field should be enabled
-   * @param {any} enabledValue - Value to use when enabled (default: empty object {})
-   * @param {any} disabledValue - Value to use when disabled (default: false)
-   * @param {boolean} saveToAPI - Whether to save to the API
-   * @param {string} scenarioId - ID of the scenario (required if saveToAPI is true)
-   * @returns {Promise} Promise that resolves when the update is complete
-   */
-  const toggleActivityField = useCallback(
-    (
-      activityId, 
-      fieldName, 
-      enabled, 
-      enabledValue = {}, 
-      disabledValue = false, 
-      saveToAPI = false, 
-      scenarioId = null
-    ) => {
-      // Get the current activity
-      const activity = getActivity(activityId);
-      
-      if (!activity) {
-        console.warn(`Activity with ID ${activityId} not found`);
-        return Promise.resolve();
-      }
-      
-      // Set the new value based on the enabled state
-      const newValue = enabled ? enabledValue : disabledValue;
-      
-      // Update the field
-      return updateActivityField(activityId, fieldName, newValue, saveToAPI, scenarioId);
-    },
-    [getActivity, updateActivityField]
-  );
-
-  /**
-   * Toggle specifically the activity_change state for an activity
-   * (Maintained for backward compatibility and convenience)
-   * @param {string} activityId - ID of the activity to toggle
-   * @param {boolean} enabled - Whether activity_change should be enabled
-   * @param {boolean} saveToAPI - Whether to save to the API
-   * @param {string} scenarioId - ID of the scenario (required if saveToAPI is true)
-   * @returns {Promise} Promise that resolves when the update is complete
-   */
-  const toggleActivityChange = useCallback(
-    (activityId, enabled, saveToAPI = false, scenarioId = null) => {
-      return toggleActivityField(
-        activityId, 
-        'activity_change', 
-        enabled, 
-        {}, // Default enabled value: empty object to be populated later
-        false, // Default disabled value: false
-        saveToAPI, 
-        scenarioId
-      );
-    },
-    [toggleActivityField]
-  );
-
   return {
     // State
     activities,
@@ -269,22 +178,14 @@ const useActivityChanges = () => {
     // Getters
     getActivity,
     
-    // Generic update functions
-    updateActivityField,
-    updateActivity,
-    
-    // Specific field update functions
+    // Update functions
     updateActivityChange,
-    updatePercentageChange,
     updateChangesInActivity,
-    
-    // Toggle functions
-    toggleActivityField,
-    toggleActivityChange,
+    updateActivity,
     
     // Higher-level functions
     handleActivityGraphChange,
-    batchUpdateAllActivities,
+    batchUpdateAllActivities
   };
 };
 

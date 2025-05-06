@@ -169,26 +169,26 @@ const ActivitiesGraph = ({
       "includeActivityChanges:", includeActivityChanges);
     
     // Generate the change data object based on current graph data
-    const newChangeData = includeActivityChanges
-      ? Object.fromEntries(updatedData.map((point) => [point.x, point.y]))
-      : false;
-      
-    console.log("[ActivitiesGraph] New activity/percentage change value:", newChangeData);
-
+    const newChangeData = Object.fromEntries(updatedData.map((point) => [point.x, point.y]));
+        
+    console.log("[ActivitiesGraph] New percentage change value:", newChangeData);
+  
     // Create the update object with all required fields
     const changes = {
-      // IMPORTANT: Include both activity_change and percentage_change
+      // Set activity_change to the current toggle state
       activity_change: includeActivityChanges,
-      percentage_change: newChangeData, // Keep percentage_change for backward compatibility
+      // Always include percentage_change data
+      percentage_change: newChangeData,
+      // Include changes_in_activity if provided
       changes_in_activity: updatedActivityChanges || {},
     };
-
+  
     // Log payload for debugging
     console.log("[ActivitiesGraph] Update payload:", changes);
     
     // Update the parent component with new data (for local state updates)
     onActivityChange(changes);
-
+  
     // If we have an activityId and saveToAPI is true, update the Redux store and optionally API
     if (activityId) {
       console.log("[ActivitiesGraph] Calling handleActivityGraphChange with activityId:", activityId);
@@ -338,7 +338,6 @@ const ActivitiesGraph = ({
     if (value === "-") {
       const newData = [...data];
       // Store the negative sign as a special flag in the data
-      // Use a string to maintain the "negative intent" for future input
       newData[index] = { ...newData[index], y: "-" };
       setData(newData);
       return;
@@ -458,14 +457,12 @@ const ActivitiesGraph = ({
       }
       
       // Create change data from the current data
-      const newChangeData = newValue
-        ? Object.fromEntries(data.map((point) => [point.x, point.y]))
-        : false;
+      const newChangeData = Object.fromEntries(data.map((point) => [point.x, point.y]));
       
       // Create the complete changes object with all required fields
       const changes = {
-        activity_change: includeActivityChanges,
-        percentage_change: newChangeData, // Add percentage_change for backward compatibility
+        activity_change: newValue, // Use the new value directly
+        percentage_change: newChangeData,
         changes_in_activity: activity?.changes_in_activity || {}
       };
       

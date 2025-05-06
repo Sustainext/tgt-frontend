@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { ResponsiveLine } from '@nivo/line';
 
-const EmissionsProjectionGraph = ({ 
+/**
+ * EmissionProjectionGraph Component
+ * Displays emissions projections based on API data with support for multiple business metrics
+ * and optional net zero trajectory
+ */
+const EmissionProjectionGraph = ({ 
   scenario, 
+  graphData, // Expected format matches the API response with metadata, totals and yearly_data
   includeNetZero, 
-  targetYear,  // This is the extendedTargetYear that can be changed by the user
-  mainTargetYear,
-  selectedScope= "scope1", 
-  selectedBusinessMetrics 
+  targetYear,  // Extended target year that can be modified by the user
+  mainTargetYear, // Original target year from scenario creation
+  selectedScope = "scope1", 
+  selectedBusinessMetrics = ["total"] // Default to showing total emissions if no metrics selected
 }) => {
   // Set up the years for the x-axis, based on extendedTargetYear
   const baseYear = scenario?.baseYear || 2024;
@@ -16,43 +22,116 @@ const EmissionsProjectionGraph = ({
     years.push(year);
   }
 
-  // Generate sample data for the emissions projection
-  const generateEmissionsData = () => {
-    // Initial value (starting at a higher value)
-    const initialValue = 76.2225;
-    const dataPoints = years.map((year, index) => {
-      // Business-as-usual projection (slight increase over time)
-      let value = initialValue;
-      
-      // Create a more realistic curve - initial decrease then stabilization
-      if (index === 0) {
-        value = initialValue;
-      } else if (index === 1) {
-        value = initialValue + 56.0015;
-      } else if (index === 2) {
-        value = initialValue - 17.0025;
-      } else if (index === 3) {
-        value = initialValue + 10.0015;
-      } else {
-        // For years beyond the original scenario, continue with a slight trend
-        const beyondBaseYears = index - 4;
-        value = initialValue + 37.0015 + (beyondBaseYears * 0.0005);
-      }
-      
-      return {
-        x: year,
-        y: value
+  // Process API data into format needed for Nivo
+  const processGraphData = () => {
+    if (!graphData || !graphData.totals) return [];
+    
+    // Create lines for each selected business metric
+    const businessMetricLines = [];
+    
+    // If no specific metrics are selected, use total
+    const metricsToShow = selectedBusinessMetrics.length ? selectedBusinessMetrics : ["total"];
+    
+    // Create a line for each metric
+    metricsToShow.forEach(metric => {
+      const metricData = {
+        id: metric === "total" ? "Total Emissions" : `${metric.charAt(0).toUpperCase() + metric.slice(1)} Emissions`,
+        curve: "monotoneX",
+        data: []
       };
+      
+      // Get data for each year
+      years.forEach(year => {
+        const yearStr = year.toString();
+        if (graphData.totals[yearStr] && graphData.totals[yearStr][metric] !== undefined) {
+          metricData.data.push({
+            x: year,
+            y: graphData.totals[yearStr][metric]
+          });
+        } else {
+          metricData.data.push({
+            x: year,
+            y: null
+          });
+        }
+      });
+      
+      // Fill in any missing data points using interpolation
+      metricData.data = interpolateMissingValues(metricData.data);
+      businessMetricLines.push(metricData);
     });
-
-    return dataPoints;
+    
+    return businessMetricLines;
   };
 
+  // Helper function to interpolate missing values
+  const interpolateMissingValues = (dataPoints) => {
+    const result = [...dataPoints];
+    
+    // Find first and last valid data points
+    const firstValidIndex = result.findIndex(point => point.y !== null);
+    const lastValidIndex = result.map(point => point.y !== null).lastIndexOf(true);
+    
+    if (firstValidIndex === -1) return result; // No valid data
+    
+    // Interpolate between data points
+    for (let i = firstValidIndex + 1; i < lastValidIndex; i++) {
+      if (result[i].y === null) {
+        // Find next valid point
+        let nextValidIndex = i + 1;
+        while (nextValidIndex < result.length && result[nextValidIndex].y === null) {
+          nextValidIndex++;
+        }
+        
+        if (nextValidIndex < result.length) {
+          // Interpolate between last valid and next valid
+          const lastValid = result[i - 1];
+          const nextValid = result[nextValidIndex];
+          const totalSteps = nextValidIndex - (i - 1);
+          
+          for (let step = 1; step < totalSteps; step++) {
+            const progress = step / totalSteps;
+            result[i - 1 + step].y = lastValid.y + (nextValid.y - lastValid.y) * progress;
+          }
+          
+          // Skip to next valid index
+          i = nextValidIndex - 1;
+        }
+      }
+    }
+    
+    // Forward-fill any remaining nulls after last valid point
+    for (let i = lastValidIndex + 1; i < result.length; i++) {
+      if (result[i].y === null) {
+        // Use slight trend based on last two points if available
+        if (lastValidIndex > 0) {
+          const lastTwo = result.slice(lastValidIndex - 1, lastValidIndex + 1);
+          const trend = (lastTwo[1].y - lastTwo[0].y) * 0.5; // Reduced trend
+          result[i].y = result[lastValidIndex].y + trend * (i - lastValidIndex);
+        } else {
+          result[i].y = result[lastValidIndex].y;
+        }
+      }
+    }
+    
+    return result;
+  };
+  
   // Generate net zero trajectory data
   const generateNetZeroData = () => {
-    const initialValue = 76.2225;
+    // Find initial emissions value from first year of data
+    if (!graphData || !graphData.totals) return [];
     
-    return years.map((year, index) => {
+    // Use total emissions as base for net zero calculation
+    const initialYear = baseYear.toString();
+    let initialValue = 0;
+    
+    if (graphData.totals[initialYear]) {
+      // Use the "total" field if available
+      initialValue = graphData.totals[initialYear].total || 0;
+    }
+    
+    return years.map((year) => {
       // Calculate based on the main target year for net zero goal
       const yearsToTarget = mainTargetYear - baseYear;
       const currentYearProgress = year - baseYear;
@@ -76,46 +155,44 @@ const EmissionsProjectionGraph = ({
     });
   };
 
-  // Generate data for the graph
-  const [graphData, setGraphData] = useState([
-    {
-      id: "Usual",
-      data: generateEmissionsData()
-    }
-  ]);
+  // State for graph data
+  const [nivoGraphData, setNivoGraphData] = useState([]);
 
   // Update graph data when relevant props change
   useEffect(() => {
-    const businessData = {
-      id: "Usual",
-      data: generateEmissionsData(),
-      curve: "monotoneX" // Apply curve to business as usual line
-    };
+    // Process the business metrics data
+    const businessData = processGraphData();
     
-    const netZeroData = {
-      id: "Net Zero Scenario",
-      data: generateNetZeroData(),
-      curve: "linear" // Keep net zero line straight
-    };
-    
-    if (includeNetZero) {
-      setGraphData([businessData, netZeroData]);
-    } else {
-      setGraphData([businessData]);
+    if (!businessData || businessData.length === 0) {
+      setNivoGraphData([]);
+      return;
     }
-  }, [scenario, includeNetZero, targetYear, mainTargetYear, selectedScope, selectedBusinessMetrics]);
+    
+    // Create net zero data if enabled
+    if (includeNetZero) {
+      const netZeroData = {
+        id: "Net Zero Scenario",
+        data: generateNetZeroData(),
+        curve: "linear" // Keep net zero line straight
+      };
+      
+      setNivoGraphData([...businessData, netZeroData]);
+    } else {
+      setNivoGraphData(businessData);
+    }
+  }, [graphData, includeNetZero, targetYear, mainTargetYear, selectedScope, selectedBusinessMetrics]);
 
   // Add markers for the main target year
   const markers = [
-    // {
-    //   axis: 'x',
-    //   value: mainTargetYear,
-    //   lineStyle: { stroke: '#FF6B6B', strokeWidth: 2, strokeDasharray: '6 6' },
-    //   legend: 'Main Target',
-    //   legendOrientation: 'vertical',
-    //   legendPosition: 'top',
-    //   textStyle: { fill: '#FF6B6B', fontSize: 12 }
-    // }
+    {
+      axis: 'x',
+      value: mainTargetYear,
+      lineStyle: { stroke: '#FF6B6B', strokeWidth: 2, strokeDasharray: '6 6' },
+      legend: 'Net Zero Target',
+      legendOrientation: 'vertical',
+      legendPosition: 'top',
+      textStyle: { fill: '#FF6B6B', fontSize: 12 }
+    }
   ];
 
   // Custom theme for the graph
@@ -159,10 +236,74 @@ const EmissionsProjectionGraph = ({
     }
   };
 
+  // Extract activities from the API data for parent component
+  useEffect(() => {
+    if (!graphData || !graphData.yearly_data) return;
+    
+    // This should be handled via a callback to inform the parent component
+    // Implementation would depend on how the parent wants to receive this data
+    // This is a placeholder for the actual implementation
+    console.log("Activities available:", extractActivities(graphData.yearly_data));
+  }, [graphData]);
+  
+  // Helper function to extract unique activities from graph data
+  const extractActivities = (yearlyData) => {
+    const activitySet = new Set();
+    
+    // Go through each year's data
+    Object.keys(yearlyData).forEach(year => {
+      const activities = yearlyData[year];
+      
+      // Extract activity names
+      activities.forEach(activity => {
+        if (activity.activity_name) {
+          activitySet.add(activity.activity_name);
+        }
+      });
+    });
+    
+    // Convert to array
+    return Array.from(activitySet);
+  };
+
+  // If no data is available
+  if (!nivoGraphData.length || !nivoGraphData[0]?.data?.length) {
+    return (
+      <div className="flex items-center justify-center h-80 bg-gray-50 rounded-md border border-gray-200">
+        <div className="text-gray-500 text-center">
+          <p className="mb-2 font-medium">No emission data available</p>
+          <p className="text-sm">Adjust your filters or check if this scenario has emission data</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Format Y-axis values
+  const formatYValue = (value) => {
+    if (value >= 1000000) {
+      return `${(value / 1000000).toFixed(2)}M`;
+    } else if (value >= 1000) {
+      return `${(value / 1000).toFixed(2)}K`;
+    }
+    return value.toFixed(2);
+  };
+
+  // Generate dynamic colors for the metrics
+  const generateColors = () => {
+    const baseColors = ['#3182CE', '#38A169', '#DD6B20', '#805AD5', '#D69E2E'];
+    
+    if (includeNetZero) {
+      // Reserve the last color for Net Zero
+      return [...baseColors.slice(0, nivoGraphData.length - 1), '#48BB78'];
+    }
+    
+    return baseColors.slice(0, nivoGraphData.length);
+  };
+
   return (
     <div style={{ height: 400 }}>
       <ResponsiveLine
-        data={graphData}
+        data={nivoGraphData}
         theme={theme}
         margin={{ top: 40, right: 110, bottom: 50, left: 80 }}
         xScale={{ 
@@ -176,7 +317,7 @@ const EmissionsProjectionGraph = ({
           stacked: false, 
           reverse: false 
         }}
-        yFormat=" >-.4f"
+        yFormat=" >-.2f"
         axisTop={null}
         axisRight={null}
         axisBottom={{
@@ -189,13 +330,13 @@ const EmissionsProjectionGraph = ({
         }}
         axisLeft={{
           tickSize: 5,
-          tickPadding: 10, // Increased padding between ticks and labels
+          tickPadding: 10,
           tickRotation: 0,
           tickValues: 5,
-          legend: 'Emissions (in tCO2e)',
-          legendOffset: -75, // Move legend further from axis
+          legend: `Emissions (${graphData?.metadata?.unit || 'tCO2e'})`,
+          legendOffset: -75,
           legendPosition: 'middle',
-          format: value => `${value.toFixed(4)}M`
+          format: value => formatYValue(value)
         }}
         pointSize={10}
         pointColor={{ theme: 'background' }}
@@ -213,7 +354,7 @@ const EmissionsProjectionGraph = ({
             translateY: 0,
             itemsSpacing: 0,
             itemDirection: 'left-to-right',
-            itemWidth: 80,
+            itemWidth: 120,
             itemHeight: 20,
             itemOpacity: 0.75,
             symbolSize: 12,
@@ -234,59 +375,24 @@ const EmissionsProjectionGraph = ({
         enableArea={true}
         areaOpacity={0.1}
         enableGridX={false}
-        colors={includeNetZero ? ['#3182CE', '#48BB78'] : ['#3182CE']}
+        colors={generateColors()}
         lineWidth={3}
-        curve="monotoneX" // Apply curve to all lines by default
-        layers={[
-          'grid',
-          'markers',
-          'axes',
-          'areas',
-          'crosshair',
-          'lines',
-          'points',
-          'slices',
-          'mesh',
-          'legends',
-          ({ points }) => {
-            // Add the value labels above each point
-            return (
-              <g>
-                {points.map(point => {
-                  // Only apply to specific series if needed
-                  if (point.serieId === 'Business As Usual') {
-                    return (
-                      <g key={`value-${point.id}`} transform={`translate(${point.x},${point.y - 20})`}> {/* Increased vertical offset */}
-                        <rect 
-                          x="-20" 
-                          y="-10" 
-                          width="40" 
-                          height="16" 
-                          fill="white" 
-                          fillOpacity="0.7" 
-                          rx="2" 
-                        />
-                        <text
-                          textAnchor="middle"
-                          dominantBaseline="middle"
-                          fontSize={11}
-                          fontWeight="bold"
-                          fill="#555"
-                        >
-                          {point.data.yFormatted}
-                        </text>
-                      </g>
-                    );
-                  }
-                  return null;
-                })}
-              </g>
-            );
-          }
-        ]}
+        curve="monotoneX"
+        tooltip={({ point }) => (
+          <div className="bg-white p-2 shadow-md border border-gray-200 rounded">
+            <strong>{point.serieId}</strong>
+            <div className="text-sm">
+              <div>Year: {point.data.x}</div>
+              <div>Emissions: {formatYValue(point.data.y)} {graphData?.metadata?.unit || 'tCO2e'}</div>
+              {selectedBusinessMetrics && selectedBusinessMetrics.length > 0 && (
+                <div>Metric: {selectedBusinessMetrics.join(', ')}</div>
+              )}
+            </div>
+          </div>
+        )}
       />
     </div>
   );
 };
 
-export default EmissionsProjectionGraph;
+export default EmissionProjectionGraph;

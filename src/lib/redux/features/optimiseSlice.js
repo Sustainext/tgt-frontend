@@ -158,14 +158,66 @@ export const updateScenarioActivity = createAsyncThunk(
   }
 );
 
+export const calculateEmissionsForOptimise = createAsyncThunk(
+  "optimise/calculateEmissionsForOptimise",
+  async (scenarioId, { rejectWithValue }) => {
+    try {
+      const response = await scenarioService.calculateEmissionsForOptimise(scenarioId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+// export const updateAllSelectedActivities = createAsyncThunk(
+//   "optimise/updateAllSelectedActivities",
+//   async ({ scenarioId, activities }, { rejectWithValue }) => {
+//     try {
+//       const response = await scenarioService.updateAllScenarioActivities(
+//         scenarioId,
+//         activities
+//       );
+//       return response;
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
+
 export const updateAllSelectedActivities = createAsyncThunk(
   "optimise/updateAllSelectedActivities",
-  async ({ scenarioId, activities }, { rejectWithValue }) => {
+  async ({ scenarioId, activities }, { dispatch, rejectWithValue }) => {
     try {
+      // First, update all activities
       const response = await scenarioService.updateAllScenarioActivities(
         scenarioId,
         activities
       );
+      
+      // Then, trigger the climate calculation
+      // We use unwrap() to ensure errors are properly caught and handled
+      try {
+        await dispatch(calculateEmissionsForOptimise(scenarioId)).unwrap();
+        console.log("Climate result calculation completed successfully");
+      } catch (climateError) {
+        console.error("Climate calculation failed:", climateError);
+        // We'll still return the activities response even if climate calc fails
+      }
+      
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+// New thunk for fetching scenario graph data
+export const fetchScenarioGraphData = createAsyncThunk(
+  "optimise/fetchScenarioGraphData",
+  async ({ scenarioId, filters = {} }, { rejectWithValue }) => {
+    try {
+      const response = await scenarioService.getScenarioGraphData(scenarioId, filters);
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -178,7 +230,7 @@ const initialState = {
   currentScenario: null,
   metricsData: {}, // This will contain all metrics data including weightages
   selectedActivities: [],
-  currentStep: 3,
+  currentStep: 4,
   // Emission data state
   emissionData: {
     activities: [],
@@ -199,18 +251,25 @@ const initialState = {
       itemsPerPage: 10,
     },
   },
+  climateResult: null,
+  graphData: null,
   loading: {
     scenario: false,
     metrics: false,
     activities: false,
     emissionData: false,
+    EmissionCalculation: false, 
+    graphData: false,
   },
   error: {
     scenario: null,
     metrics: null,
     activities: null,
     emissionData: null,
+    EmissionCalculation: null, 
+    graphData: null,
   },
+  
 };
 
 // Helper function to extract selected metrics from metrics data
@@ -336,8 +395,19 @@ const optimiseSlice = createSlice({
       }
     },
     resetOptimiseState: () => initialState,
-    // Update percentage_change for a specific activity
     setActivityChange: (state, action) => {
+      const { activityId, activityChange } = action.payload;
+      const activityIndex = getActivityIndexById(state.selectedActivities, activityId);
+      
+      if (activityIndex !== -1) {
+        state.selectedActivities[activityIndex] = {
+          ...state.selectedActivities[activityIndex],
+          activity_change: activityChange
+        };
+      }
+    },
+    // Update percentage_change for a specific activity
+    setPercentageChange: (state, action) => {
       const { activityId, activityChange } = action.payload;
       const activityIndex = getActivityIndexById(
         state.selectedActivities,
@@ -549,6 +619,31 @@ const optimiseSlice = createSlice({
         state.loading.activities = false;
         state.error.activities =
           action.payload || "Failed to update activities";
+      })
+      .addCase(calculateEmissionsForOptimise.pending, (state) => {
+        state.loading.EmissionCalculation = true;
+        state.error.EmissionCalculation = null;
+      })
+      .addCase(calculateEmissionsForOptimise.fulfilled, (state, action) => {
+        state.loading.EmissionCalculation = false;
+        // Store the climate result data if needed
+        state.climateResult = action.payload;
+      })
+      .addCase(calculateEmissionsForOptimise.rejected, (state, action) => {
+        state.loading.EmissionCalculation = false;
+        state.error.EmissionCalculation = action.payload || "Failed to calculate climate results";
+      })
+      .addCase(fetchScenarioGraphData.pending, (state) => {
+        state.loading.graphData = true;
+        state.error.graphData = null;
+      })
+      .addCase(fetchScenarioGraphData.fulfilled, (state, action) => {
+        state.loading.graphData = false;
+        state.graphData = action.payload;
+      })
+      .addCase(fetchScenarioGraphData.rejected, (state, action) => {
+        state.loading.graphData = false;
+        state.error.graphData = action.payload || "Failed to fetch graph data";
       });
   },
 });
@@ -565,8 +660,8 @@ export const {
   setEmissionDataSorting,
   setEmissionDataPagination,
   resetOptimiseState,
-
   setActivityChange,
+  setPercentageChange,
   setChangesInActivity,
   updateActivityProperties,
 } = optimiseSlice.actions;

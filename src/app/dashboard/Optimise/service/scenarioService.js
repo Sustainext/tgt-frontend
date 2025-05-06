@@ -526,6 +526,67 @@ export const updateAllScenarioActivities = async (scenarioId, activities) => {
   }
 };
 
+/**
+ * Calculate climate result for a scenario after updating activities
+ * @param {number} scenarioId - Scenario ID
+ * @returns {Promise} Promise resolving to calculation results
+ */
+export const calculateEmissionsForOptimise = async (scenarioId) => {
+  try {
+    if (!scenarioId) {
+      throw new Error("Valid scenarioId is required");
+    }
+    
+    const response = await apiClient.get(
+      `/optimize/${scenarioId}/calculateclimatiqresult/`
+    );
+    
+    return response.data;
+  } catch (error) {
+    console.error(`Error calculating climate result for scenario ${scenarioId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Get graph data for a scenario's emission projection
+ * @param {number} scenarioId - Scenario ID
+ * @param {Object} filters - Optional filters for the graph data
+ * @returns {Promise} Promise resolving to graph data
+ */
+export const getScenarioGraphData = async (scenarioId, filters = {}) => {
+  try {
+    if (!scenarioId) {
+      throw new Error("Valid scenarioId is required");
+    }
+    
+    // Convert filters object to URL query params
+    const queryParams = new URLSearchParams();
+    
+    Object.keys(filters).forEach((key) => {
+      if (filters[key] !== null && filters[key] !== undefined && filters[key] !== "") {
+        // Handle arrays for multi-select filters
+        if (Array.isArray(filters[key]) && filters[key].length > 0) {
+          filters[key].forEach((value) => queryParams.append(key, value));
+        } else {
+          queryParams.append(key, filters[key]);
+        }
+      }
+    });
+    
+    // Append query parameters if they exist
+    const url = queryParams.toString() 
+      ? `/optimize/${scenarioId}/getgraphdata/?${queryParams.toString()}`
+      : `/optimize/${scenarioId}/getgraphdata/`;
+    
+    const response = await apiClient.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching graph data for scenario ${scenarioId}:`, error);
+    throw error;
+  }
+};
+
 export default {
   checkEmissionDataExists,
   fetchScenarios,
@@ -543,5 +604,7 @@ export default {
   updateActivityConsumption,
   submitSelectedActivities,
   updateScenarioActivity,
-  updateAllScenarioActivities
+  updateAllScenarioActivities,
+  calculateEmissionsForOptimise,
+  getScenarioGraphData
 };

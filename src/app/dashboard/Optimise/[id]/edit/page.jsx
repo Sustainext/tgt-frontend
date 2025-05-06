@@ -28,6 +28,35 @@ import {
   updateAllSelectedActivities,
 } from "../../../../../lib/redux/features/optimiseSlice";
 
+// Add this to your component that uses updateAllSelectedActivities
+const LoadingIndicator = () => {
+  const loading = useSelector(state => state.optimise?.loading);
+  const isLoading = loading?.activities || loading?.climateCalculation;
+  const isCalculatingClimate = !loading?.activities && loading?.climateCalculation;
+  
+  if (!isLoading) return null;
+  
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-xl max-w-md">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+          <h3 className="text-lg font-semibold mb-2">
+            {isCalculatingClimate 
+              ? "Calculating Climate Impact..." 
+              : "Updating Activities..."}
+          </h3>
+          <p className="text-gray-600 text-center">
+            {isCalculatingClimate
+              ? "Please wait while we calculate the climate impact of your changes."
+              : "Saving your activity changes to the scenario."}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ScenarioEditor = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -556,6 +585,8 @@ const ScenarioEditor = () => {
         onGoBack={() => setIsConfirmModalOpen(false)}
         scenarioId={scenarioId}
       />
+
+      <LoadingIndicator />
     </>
   );
 };
