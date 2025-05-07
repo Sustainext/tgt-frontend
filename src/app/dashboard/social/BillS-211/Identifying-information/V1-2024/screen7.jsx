@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose,MdDeleteOutline   } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
-import { GlobalState } from '../../../../../Context/page';
-import { countryname } from "../../data/countryname"
+import { GlobalState } from "../../../../../../Context/page";
+import { countryname } from "../../../data/countryname"
 import { Oval } from "react-loader-spinner";
 
 const Screenseven = ({ prevStep, activeSteps,selectedCorp,selectedOrg,year,reportType }) => {

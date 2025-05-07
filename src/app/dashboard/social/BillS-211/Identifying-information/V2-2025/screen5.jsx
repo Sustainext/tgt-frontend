@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose,MdDeleteOutline   } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
-import { GlobalState } from '../../../../../Context/page';
+import { GlobalState } from "../../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
 
 const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType }) => {
@@ -464,8 +464,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                     className="block text-gray-700 text-[14px] font-[500] mb-2 ml-2"
                     htmlFor="username"
                   >
-                    8. For entities only: Which of the following categorizations applies to the
-                    entity? Select all that apply*
+                    9.For entities only: Which of the following categories apply to the entity? Select all that apply*
                   </label>
                 </div>
                 <div className="ml-4">

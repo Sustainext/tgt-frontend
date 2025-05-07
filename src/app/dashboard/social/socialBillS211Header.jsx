@@ -4,6 +4,14 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import {
+  setOrgnization,
+  setCorporate,
+  setyear,
+  setReportTypes,
+} from "../../../lib/redux/features/Bills201";
+
+import { useDispatch, useSelector } from "react-redux";
 const SocialBillS211Header = ({
   activeMonth,
   setActiveMonth,
@@ -14,7 +22,7 @@ const SocialBillS211Header = ({
   year,
   setYear,
   reportType,
-  setReportType
+  setReportType,
 }) => {
   const [formState, setFormState] = useState({
     selectedCorp: selectedCorp,
@@ -22,8 +30,10 @@ const SocialBillS211Header = ({
     year: year,
     month: activeMonth,
   });
+  const dispatch = useDispatch();
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    dispatch(setReportTypes(type));
   };
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
@@ -47,6 +57,7 @@ const SocialBillS211Header = ({
       setActiveMonth(monthMapping[value]);
     } else if (name === "year") {
       setYear(value);
+      dispatch(setyear(value));
       setErrors((prevErrors) => ({
         ...prevErrors,
         year: value ? "" : "Please select year",
@@ -69,7 +80,9 @@ const SocialBillS211Header = ({
   useEffect(() => {
     const fetchOrg = async () => {
       try {
-        const response = await axiosInstance.get(`/canadabills211/canada_section/`);
+        const response = await axiosInstance.get(
+          `/canadabills211/canada_section/`
+        );
         setOrganisations(response.data.org_list);
       } catch (e) {
         console.error("Failed fetching organization:", e);
@@ -80,21 +93,22 @@ const SocialBillS211Header = ({
   }, []);
 
   useEffect(() => {
-     const fetchCorporates = async () => {
+    const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
-          const response = await axiosInstance.get(`/canadabills211/corporate_list/`, {
-            params: { org_id: selectedOrg },
-          });
+          const response = await axiosInstance.get(
+            `/canadabills211/corporate_list/`,
+            {
+              params: { org_id: selectedOrg },
+            }
+          );
           setCorporates(response.data);
         } catch (e) {
-          if(e.status === 404) {
+          if (e.status === 404) {
             setCorporates([]);
-          }
-          else{
+          } else {
             console.error("Failed fetching corporates:", e);
           }
-          
         }
       }
     };
@@ -114,6 +128,7 @@ const SocialBillS211Header = ({
   const handleOrgChange = (e) => {
     const newOrg = e.target.value;
     setSelectedOrg(newOrg);
+    dispatch(setOrgnization(newOrg));
     setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -124,6 +139,7 @@ const SocialBillS211Header = ({
   const handleCorpChange = (e) => {
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
+    dispatch(setCorporate(newCorp));
     setErrors((prevErrors) => ({
       ...prevErrors,
       corporate: newCorp ? "" : "Please select Corporate",
@@ -143,14 +159,14 @@ const SocialBillS211Header = ({
                 <div className="rounded-lg shadow justify-start items-start flex">
                   <div
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
+                      reportType === "Organization"
+                        ? "bg-[#d2dfeb]"
+                        : "bg-white"
                     }`}
-                    onClick={() => {handleReportTypeChange("Organization")
-                        setSelectedCorp("")
-                        
-                    }
-
-                    }
+                    onClick={() => {
+                      handleReportTypeChange("Organization");
+                      setSelectedCorp("");
+                    }}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Organization
@@ -160,12 +176,15 @@ const SocialBillS211Header = ({
                     className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
-                    onClick={() => {handleReportTypeChange("Corporate")
+                    onClick={() => {
+                      handleReportTypeChange("Corporate");
 
-                        setErrors((prevErrors) => ({
-                            ...prevErrors,
-                            corporate: selectedCorp ? "" : "Please select Corporate",
-                          }));
+                      setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        corporate: selectedCorp
+                          ? ""
+                          : "Please select Corporate",
+                      }));
                     }}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
@@ -192,7 +211,9 @@ const SocialBillS211Header = ({
                       value={selectedOrg}
                       onChange={handleOrgChange}
                     >
-                      <option disabled value="" >Select Organization</option>
+                      <option disabled value="">
+                        Select Organization
+                      </option>
                       {organisations &&
                         organisations.map((org) => (
                           <option key={org.id} value={org.id}>
@@ -221,7 +242,9 @@ const SocialBillS211Header = ({
                         value={selectedCorp}
                         onChange={handleCorpChange}
                       >
-                        <option disabled value="">Select Corporate </option>
+                        <option disabled value="">
+                          Select Corporate{" "}
+                        </option>
                         {corporates &&
                           corporates.map((corp) => (
                             <option key={corp.id} value={corp.id}>
@@ -252,7 +275,9 @@ const SocialBillS211Header = ({
                       value={formState.year}
                       onChange={handleChange}
                     >
-                      <option disabled value="">Select year</option>
+                      <option disabled value="">
+                        Select year
+                      </option>
                       {yearInfo.map((item) => (
                         <option value={item.slice(0, 4)} key={item}>
                           {item.slice(0, 4)}

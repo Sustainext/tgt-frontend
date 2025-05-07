@@ -1,20 +1,23 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axiosInstance from "../../../../utils/axiosMiddleware";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose  } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
-import { GlobalState } from '../../../../../Context/page';
+import { GlobalState } from '../../../../../../Context/page';
 import { Oval } from "react-loader-spinner";
 
-const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportType }) => {
-    const { open } = GlobalState();
+const Screenfive = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportType }) => {
+
+ const { open } = GlobalState();
   const [error, setError] = useState({});
   const [reportradio, setReportnradio] = useState("");
   const [reportingdescription, setReportingdescription] = useState("");
+  const [reportingentity, setReportingentit] = useState("");
   const [loopen, setLoOpen] = useState(false);
-  
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("token")?.replace(/"/g, "");
@@ -28,22 +31,30 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
       Authorization: "Bearer " + token,
     },
   };
-
-  const fetchBillSsix = async () => {
+  
+  const fetchBillSfive = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
 
     try {
-     const response = await axiosInstance.get(
+      const response = await axiosInstance.get(
         `${
           process.env.BACKEND_API_URL
-        }/canadabills211/annual-report/?screen=6&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        }/canadabills211/annual-report/?screen=5&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
         axiosConfig
       );
 
       // If the request is successful but you specifically want to handle 404 inside here
       if (response.status === 200) {
-        setReportnradio(response.data.measures_taken_loss_income_13);
-        setReportingdescription(response.data.additional_info_loss_income_14);
+        setReportnradio(response.data.measures_remediate_activaties_11);
+        setReportingdescription(
+          response.data.remediation_measures_12
+        );
+        setReportingentit(response.data.remediation_measures_taken_description_11_1);
+        if (response.data.remediation_measures_taken_11_1 == null) {
+          setSelectedOptions([]);
+        } else {
+          setSelectedOptions(response.data.remediation_measures_taken_11_1);
+        }
         LoaderClose();
       }
       else{
@@ -59,7 +70,7 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
           theme: "colored",
         });
       }
-    } catch (error) {
+    }catch (error) {
       LoaderClose();
       console.error("API call failed:", error);
       toast.error("Oops, something went wrong", {
@@ -86,18 +97,69 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
     // };
     if(reportType=="Organization"){
       if(selectedOrg&&year){
-        fetchBillSsix();
+        fetchBillSfive();
       }
     }
     else{
       if(selectedOrg&&year&&selectedCorp){
-        fetchBillSsix();
+        fetchBillSfive();
       }
     }
     setReportnradio("");
-    setReportingdescription("");
+    setReportingdescription(
+      ""
+    );
+    setReportingentit("");
+    setSelectedOptions([])
     
   }, [selectedCorp,selectedOrg,year]);
+  
+  const options = [
+    {
+      label:
+        "Actions to support victims of forced labour or child labour and/or their families, such as workforce reintegration and psychosocial support",
+      value: "1",
+    },
+    {
+      label:
+        "Compensation for victims of forced labour or child labour and/or their families",
+      value: "2",
+    },
+    {
+      label:
+        "Actions to prevent forced labour or child labour and associated harms from reoccurring",
+      value: "3",
+    },
+    { label: "Grievance mechanisms", value: "4" },
+    { label: "Formal apologies", value: "5" },
+    {
+      label: "Other, please specify:",
+      value: "other",
+    },
+  ];
+
+  const handleCheckboxChange = (event) => {
+    const value = event.target.value;
+    const newSelectedOptions = event.target.checked
+      ? [...selectedOptions, value]
+      : selectedOptions.filter((option) => option !== value);
+
+    setSelectedOptions(newSelectedOptions);
+
+    // Optionally clear the error for checkboxes when at least one option is selected
+    if (newSelectedOptions.length > 0 && error.checkboxes) {
+      setError((prevErrors) => {
+        const newErrors = { ...prevErrors };
+        delete newErrors.checkboxes;
+        return newErrors;
+      });
+    }
+  };
+  const handleReportingentity = (event) => {
+    setReportingentit(event.target.value);
+    setError((prev) => ({ ...prev, reportingentity: "" }));
+    
+  };
  
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
@@ -116,20 +178,28 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
   };
  
   const submitForm = async () => {
+    let unewentities;
+    if (selectedOptions.includes("Other, please specify:")) {
+      unewentities = reportingentity;
+    } else {
+      unewentities = null;
+    }
 
     try{
       LoaderOpen();
 
       const sendData = {
-        measures_taken_loss_income_13: reportradio,
-        additional_info_loss_income_14: reportingdescription?reportingdescription:null,
+        measures_remediate_activaties_11: reportradio,
+        remediation_measures_taken_11_1: selectedOptions,
+        remediation_measures_taken_description_11_1: unewentities,
+        remediation_measures_12: reportingdescription?reportingdescription:null,
         organization_id: selectedOrg,
         corporate_id: selectedCorp?selectedCorp:null,
         year: year
       };
       const response= await axiosInstance
       .post(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=6`,
+        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=5`,
         sendData,
         axiosConfig
       )
@@ -175,6 +245,7 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
       });
     }
     
+   
   };
   const continueToNextStep = () => {
     let newErrors = {};
@@ -182,7 +253,19 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
     if (!reportradio) {
       newErrors.reportradio = "This field is required. Please fill it out.";
     }
+    if(reportradio === "Yes" || reportradio === "Yesone"){
+      if (selectedOptions.length === 0) {
+        newErrors.checkboxes = "Please select at least one option";
+      }
+    }
 
+    if (selectedOptions.includes("Other, please specify:")) {
+      // If it's an array and "other" is one of the options
+      if (!reportingentity) {
+        // Check if reportingentity is not filled out
+        newErrors.reportingentity = "Please enter a description";
+      }
+    }
     if (Object.keys(newErrors).length === 0) {
       setError({});
       submitForm();
@@ -190,20 +273,19 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
       setError(newErrors);
     }
   };
-
+  
+  
   return (
     <>
-      
-      <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
-      <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
+     
+    <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
+    <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
                   <div className="mb-5">
                     <label
                       className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                       htmlFor="username"
                     >
-                      13. Has the entity taken any measures to remediate the
-                      loss of income to the most vulnerable families that
-                      results from any measure taken to eliminate the use of
+                      11. Has the entity taken any measures to remediate any
                       forced labour or child labour in its activities and supply
                       chains?*
                     </label>
@@ -223,9 +305,9 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                           htmlFor="Yes"
                           className="text-[14px] text-gray-700"
                         >
-                          Yes, we have taken substantial remediation measures
-                          and will continue to identify and address any gaps in
-                          our response.
+                          Yes, we have taken remediation measures and will
+                          continue to identify and address any gaps in our
+                          response.
                         </label>
                         <br />
                       </div>
@@ -284,30 +366,76 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                           htmlFor="Noone"
                           className="text-[14px] text-gray-700 "
                         >
-                          Not applicable, we have not identified any loss of
-                          income to vulnerable families resulting from measures
-                          taken to eliminate the use of forced labour or child
-                          labour in our activities and supply chains.
+                          Not applicable, we have not identified any forced
+                          labour or child labour in our activities and supply
+                          chains.
                         </label>
                         <br />
                       </div>
                     </div>
                     {error.reportradio && (
-                      <p className="text-red-500  ml-1 text-[12px] mt-1">{error.reportradio}</p>
+                      <p className="text-red-500 ml-1 text-[12px] mt-1">{error.reportradio}</p>
                     )}
                   </div>
-
+                  {(reportradio === "Yes" || reportradio === "Yesone") && (
+                  <div className="mb-5">
+                    <label
+                      className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
+                      htmlFor="username"
+                    >
+                      11.1 If yes, which remediation measures has the entity
+                      taken? Select all that apply.*
+                    </label>
+                    <div>
+                      {options.map((option, index) => (
+                        <div key={index} className="mb-2 ml-2">
+                          <label className="text-[14px] text-gray-600">
+                            <input
+                              type="checkbox"
+                              value={option.label}
+                              checked={selectedOptions.includes(option.label)}
+                              onChange={handleCheckboxChange}
+                              className="mr-3"
+                            />
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                      {selectedOptions.includes("Other, please specify:") && (
+                        <div className="mb-5">
+                          <input
+                            type="text"
+                            placeholder="Enter a description..."
+                            className={`${
+                              open ? "w-[90%]" : "w-[90%]"
+                            } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
+                            value={reportingentity}
+                            onChange={handleReportingentity}
+                          ></input>
+                          {error.reportingentity && (
+                            <div className="text-red-500 ml-1 text-[12px] mt-1">
+                              {error.reportingentity}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      {error.checkboxes && (
+                        <div className="text-red-500 ml-1 text-[12px] mt-1">
+                          {error.checkboxes}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+  )}
                   <div className="mb-5 mt-3">
                     <label
                       className="block text-gray-700 text-[14px] font-[500] mb-2"
                       html
                       htmlFor="industryCheckbox"
                     >
-                      14. Please provide additional information on any measures
-                      the entity has taken to remediate the loss of income to
-                      the most vulnerable families that results from any measure
-                      taken to eliminate the use of forced labour or child
-                      labour in its activities and supply chains (if applicable).
+                      12. Please provide additional information on any measures
+                      the entity has taken to remediate any forced labour or
+                      child labour (if applicable).
                     </label>
                     <textarea
                       id="countriesOfOperation"
@@ -315,7 +443,7 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                       placeholder="Enter a description..."
                       className={`${
                         open ? "w-full" : "w-full"
-                      }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
+                      }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                       value={reportingdescription}
                       // value={formData.countriesOfOperation}
                       // onChange={handleInputChange}
@@ -353,8 +481,9 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                     </button>
                   </div>
                 </div>
-      </div>
-      {loopen && (
+
+    </div>
+    {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
             height={50}
@@ -370,4 +499,4 @@ const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
   );
 };
 
-export default Screensix;
+export default Screenfive;

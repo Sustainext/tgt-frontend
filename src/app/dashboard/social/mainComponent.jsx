@@ -65,6 +65,7 @@ import CustomerPrivacy2 from "./Customer-Privacy/Section2/page";
 import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page";
 import IdentifingInformation from "./BillS-211/Identifying-information/page";
 import AnnualReport from "./BillS-211/annual-report/page";
+import BILLs201 from "./BillS-211/page"
 
 import {
   setHeadertext1,
@@ -148,7 +149,7 @@ const Social = () => {
       ,
       "Diversity of Employees",
     ];
-    const BillS211Tabs = ["Identifying Information", "Annual report"];
+    const BillS211Tabs = ["Identifying Information", "Annual report","BILLs201"];
     const energyTabs = ["Notice Period", "Collective Bargaining"];
 
     // List of tabs related to Waste
@@ -284,6 +285,12 @@ const Social = () => {
               {/* Emissions start */}
               {activeTab === "Management of Material topic Employment" && (
                 <EmploymentMaterialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+                  {activeTab === "BILLs201" && (
+                <BILLs201
                   apiData={data}
                   setMobileopen={setMobileopen}
                 />

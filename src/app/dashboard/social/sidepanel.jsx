@@ -252,7 +252,7 @@ const Aside = ({
       if (response.status === 200) {
         if (response.data.enable_section) {
           setShowBillS211(response.data.enable_section);
-          handleTabClick("Identifying Information");
+          handleTabClick("BILLs201");
           toggleBillS211();
         }
       }
@@ -338,7 +338,7 @@ const Aside = ({
                         }}
                     
                       >
-                        Identifying Information
+                        Submission Information
                       </p>
                     </div>
 
@@ -355,7 +355,7 @@ const Aside = ({
                         }}
                     
                       >
-                        Annual report
+                        Reporting for Entities
                       </p>
                     </div>
                   </div>

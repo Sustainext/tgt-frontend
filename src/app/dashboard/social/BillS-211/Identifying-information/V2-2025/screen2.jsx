@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axiosInstance from "../../../../utils/axiosMiddleware";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose  } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
-import { GlobalState } from '../../../../../Context/page';
+import { GlobalState } from "../../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
 
 const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType }) => {
@@ -14,21 +14,9 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
   const [reportradio, setReportnradio] = useState("");
   const [reportingdate, setReportingdate] = useState("");
   const [reportingdescription, setReportingdescription] = useState("");
+   const [reportingbusinessnumber, setReportingbusinessnumber] = useState("");
   const [loopen, setLoOpen] = useState(false);
 
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
-
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   const fetchBillStwo = async () => {
     LoaderOpen();
@@ -37,8 +25,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
       const response = await axiosInstance.get(
         `${
           process.env.BACKEND_API_URL
-        }/canadabills211/identifying-information/?screen=2&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        }/canadabills211/identifying-information/?screen=2&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`
       );
 
       if (response.status === 200) {
@@ -140,7 +127,14 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  
+  const handleReportnbusinessnumber = (event) =>
+    setReportingbusinessnumber(event.target.value);
+
+  const handleKeyDown = (event) => {
+    if (["+", "-", "."].includes(event.key)) {
+      event.preventDefault();
+    }
+  };
 
   const submitForm = async () => {
     let newentities;
@@ -160,6 +154,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
         is_revised_version_4: reportradio,
         original_report_date_4_1: newentities,
         changes_description_4_2: oherinpute,
+        business_number_5: reportingbusinessnumber,
         organization_id: selectedOrg,
         corporate_id: selectedCorp?selectedCorp:null,
         year: year
@@ -167,8 +162,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
      const response= await axiosInstance
         .post(
           `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=2`,
-          sendData,
-          axiosConfig
+          sendData
         )
         if (response.status == "200") {
           toast.success("Data added successfully", {
@@ -246,8 +240,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
                     className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                     htmlFor="username"
                   >
-                    4. Is this a revised version of a report already submitted
-                    this reporting year?*
+                    5. Is this a revised version of a report already submitted this reporting year?*
                   </label>
                   <div className="relative mb-1 flex">
                     <div>
@@ -301,8 +294,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
                         className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                         htmlFor="username"
                       >
-                        4.1 If yes, identify the date the original report was
-                        submitted.*
+                        5.1 If yes, on what date was the original report submitted?*
                       </label>
                       <div className="relative mb-1">
                         <input
@@ -323,9 +315,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
                         className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1 w-[78%]"
                         htmlFor="username"
                       >
-                        4.2 Describe the changes made to the original report,
-                        including by listing the questions or sections that were
-                        revised*
+                        5.2 Describe the changes made to the original submission, including the sections of the original report that were revised or any changes made to questionnaire responses *
                       </label>
                       <div className="relative">
                         <textarea
@@ -334,6 +324,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
                           placeholder="Enter a description..."
                           className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer "
                           value={reportingdescription}
+                          maxlength={3000}
                           // value={formData.countriesOfOperation}
                           // onChange={handleInputChange}
                           rows={5}
@@ -348,7 +339,26 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportType
                     </div>
                   </>
                 )}
-
+    <div className="mb-5">
+                  <label
+                    className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
+                    htmlFor="username"
+                  >
+                    6. For entities only: Business number(s) (if applicable):
+                  </label>
+                  <div className="relative mb-1 flex">
+                    <input
+                      type="number"
+                      placeholder="Enter number"
+                      className={`${
+                        open ? "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%]" : "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%]"
+                      } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
+                      value={reportingbusinessnumber}
+                      onChange={handleReportnbusinessnumber}
+                      onKeyDown={handleKeyDown}
+                    ></input>
+                  </div>
+                </div>
                 <div className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%]  w-full mb-5">
                   <div className="float-right">
                     <button
