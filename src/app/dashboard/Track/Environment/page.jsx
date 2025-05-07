@@ -184,7 +184,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
 
   const embedContainerStyle = {
     width: `${width}px`,
-    height: `${height - 50}px`,
+    height: `${height - 40}px`,
   };
 
   if (!models || !PowerBIEmbed || !dashboardData) return <p>Loading...</p>;
@@ -254,14 +254,14 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
             ref={iframeRef}
             frameBorder="0"
             width={width}
-            height={height - 50}
+            height={height - 40}
             src={supersetUrl}
           ></iframe>
         ) : getIframeUrl(activeTab) ? (
           <iframe
             frameBorder="0"
             width={width}
-            height={height - 50}
+            height={height - 40}
             src={getIframeUrl(activeTab)}
           ></iframe>
         ) : (

@@ -386,14 +386,14 @@ useEffect(() => {
   const activitySet = new Set();
   
   // Go through each year and each activity
-  Object.values(graphData).forEach(yearData => {
-    yearData.forEach(activity => {
-      // Extract activity name if available
-      if (activity.activity_name) {
-        activitySet.add(activity.activity_name);
-      }
-    });
-  });
+  // Object.values(graphData).forEach(yearData => {
+  //   yearData.forEach(activity => {
+  //     // Extract activity name if available
+  //     if (activity.activity_name) {
+  //       activitySet.add(activity.activity_name);
+  //     }
+  //   });
+  // });
   
   // Convert Set to array and ensure "Aggregated Scope" is the first option
   const extractedActivities = ["Aggregated Scope", ...Array.from(activitySet)];
@@ -795,7 +795,8 @@ useEffect(() => {
           )}
 
           {/* No data state */}
-          {!loading && !error && !graphData && (
+          {
+            (
             <div className="flex flex-col items-center justify-center h-80 bg-gray-50 rounded-md border border-gray-200">
               <FiInfo className="h-12 w-12 text-gray-400 mb-4" />
               <p className="text-gray-500 text-center max-w-md">
@@ -805,7 +806,7 @@ useEffect(() => {
           )}
           
           {/* Graph component */}
-          {!loading && !error && graphData && (
+          {/* {!loading && !error && graphData && (
             <EmissionProjectionGraph
               scenario={scenario}
               graphData={graphData}
@@ -817,7 +818,7 @@ useEffect(() => {
                 .filter((m) => m.selected)
                 .map((m) => m.id)}
             />
-          )}
+          )} */}
         </div>
       </div>
     </div>

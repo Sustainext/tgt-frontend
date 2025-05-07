@@ -116,7 +116,9 @@ const ActivitySelectTable = ({ scenarioId }) => {
         region: item.region,
         // Add additional fields that might be needed
         quantity: item.quantity,
+        quantity2: item.quantity2 || null,
         unit: item.unit,
+        unit2: item.unit2 || null,
         co2e_total: item.co2e_total,
         unit_type: item.unit_type,
         factor_id: item.factor_id

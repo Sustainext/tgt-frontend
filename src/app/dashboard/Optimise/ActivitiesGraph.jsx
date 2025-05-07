@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { useDispatch } from "react-redux";
 import {
@@ -11,6 +11,7 @@ import {
 } from "react-icons/fi";
 import useActivityChanges from "../../../lib/redux/customHooks/useActivityChanges";
 import { fetchClimatiqActivities } from "../../utils/climatiqApi";
+
 
 // Add CSS for the scrollable-content class to hide scrollbars if needed
 const scrollableContentStyle = `
@@ -34,6 +35,7 @@ const ActivitiesGraph = ({
   onActivityChange = () => {},
   saveToAPI = false,
 }) => {
+  const dispatch = useDispatch();
   // Using useRef to track whether we're in an update cycle to prevent infinite loops
   const isUpdating = useRef(false);
   const initialRender = useRef(true);
@@ -47,24 +49,7 @@ const ActivitiesGraph = ({
 
   // Initial activity options for bootstrapping (will be replaced with API data)
   const initialActivityOptions = [
-    { 
-      id: "fuel-type_agricultural_byproducts_bio_100-fuel_use_stationary", 
-      activity_id: "fuel-type_agricultural_byproducts_bio_100-fuel_use_stationary",
-      name: "Agricultural byproducts - EPA - Energy - US - 2024 - biogenic_co2_combustion",
-      source: "EPA",
-      unit_type: "Energy",
-      region: "US",
-      year: "2024"
-    },
-    { 
-      id: "act2", 
-      activity_id: "act2",
-      name: "Rail freight - EPA - WeightOverDistance - GB - 2024 - fuel_combustion",
-      source: "EPA",
-      unit_type: "WeightOverDistance",
-      region: "GB",
-      year: "2024"
-    },
+
   ];
 
   // State for activity options
@@ -82,11 +67,18 @@ const ActivitiesGraph = ({
     activity?.activity_change ? true : false
   );
   
-  // Generate years between base and target
-  const years = [];
-  for (let year = baseYear; year <= targetYear; year++) {
-    years.push(year.toString());
-  }
+  // Generate years between base and target (fixed to convert to numbers first)
+  const years = React.useMemo(() => {
+    const baseYearNum = parseInt(baseYear);
+    const targetYearNum = parseInt(targetYear);
+    const yearArray = [];
+    
+    // Ensure we always generate years from baseYear to targetYear inclusive
+    for (let year = baseYearNum; year <= targetYearNum; year++) {
+      yearArray.push(year.toString());
+    }
+    return yearArray;
+  }, [baseYear, targetYear]);
 
   // State for the selected activities per year
   const [selectedActivities, setSelectedActivities] = useState(() => {
@@ -131,7 +123,7 @@ const ActivitiesGraph = ({
   const [data, setData] = useState(() => {
     const initialData = [];
     years.forEach((year) => {
-      // Get values from percentage_change (for backward compatibility)
+      // Get values from activity_change or percentage_change (for backward compatibility)
       const existingValue =
           activity?.percentage_change?.[year] !== undefined
           ? activity.percentage_change[year]
@@ -503,7 +495,7 @@ const ActivitiesGraph = ({
   useEffect(() => {
     const fetchActivities = async () => {
       // Only fetch activities if toggle is enabled and we don't have options yet
-      if (includeActivityChanges && activityOptions.length === initialActivityOptions.length) {
+      if (includeActivityChanges) {
         try {
           console.log("[ActivitiesGraph] Fetching activity options");
           setIsLoadingActivities(true);
@@ -538,7 +530,8 @@ const ActivitiesGraph = ({
           }));
 
           console.log("[ActivitiesGraph] Fetched options:", options.length);
-          setActivityOptions([...initialActivityOptions, ...options]);
+          const filteredOptions = options.filter(item=>item.unit_type===activity.unit_type)
+          setActivityOptions([...initialActivityOptions, ...filteredOptions]);
         } catch (error) {
           console.error("Error fetching activity options:", error);
           setActivityError(
@@ -555,6 +548,59 @@ const ActivitiesGraph = ({
 
     fetchActivities();
   }, [includeActivityChanges, activity, baseYear]);
+
+  // Update data state when years change to ensure all years are represented
+  useEffect(() => {
+    // Skip if we're in the middle of another update
+    if (isUpdating.current) return;
+    
+    console.log("[ActivitiesGraph] Years changed, updating data structure");
+    
+    // Set updating flag to prevent infinite loops
+    isUpdating.current = true;
+    
+    try {
+      // Create a new data array with entries for each year
+      const updatedData = [];
+      
+      // For each year in our current years array
+      years.forEach((year) => {
+        // Try to find existing data point for this year
+        const existingPoint = data.find(point => point.x === year);
+        
+        if (existingPoint) {
+          // If we have data for this year, use it
+          updatedData.push(existingPoint);
+        } else {
+          // Otherwise create a new data point with default value
+          updatedData.push({
+            x: year,
+            y: 0
+          });
+        }
+      });
+      
+      // Update the data state with our new array
+      setData(updatedData);
+      
+      // Also update selectedActivities to include all years
+      setSelectedActivities((prev) => {
+        const updatedSelections = {...prev};
+        
+        // Ensure each year has an entry (null if not previously set)
+        years.forEach((year) => {
+          if (updatedSelections[year] === undefined) {
+            updatedSelections[year] = null;
+          }
+        });
+        
+        return updatedSelections;
+      });
+    } finally {
+      // Clear the updating flag
+      isUpdating.current = false;
+    }
+  }, [years]);
 
   // Refs for scroll synchronization
   const chartScrollRef = useRef(null);
@@ -613,6 +659,7 @@ const ActivitiesGraph = ({
       // Update includeActivityChanges state based on activity_change or percentage_change
       // (for backward compatibility)
       const hasActivityChanges = Boolean(activity.activity_change);
+      setIncludeActivityChanges(hasActivityChanges);
       
       // Auto expand if activity changes are already enabled
       if (hasActivityChanges) {

@@ -3,6 +3,7 @@ import { FiChevronDown, FiChevronUp, FiSave, FiCheck } from 'react-icons/fi';
 import { GlobalState } from "@/Context/page";
 import useActivityChanges from '../../../lib/redux/customHooks/useActivityChanges';
 import IntegratedActivitiesGraph from './ActivitiesGraph';
+import { useSelector } from 'react-redux';
 
 const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate, id }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -10,6 +11,7 @@ const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate, id }) 
   const [localActivity, setLocalActivity] = useState(activity);
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const currentScenario = useSelector(state=>state.optimise.currentScenario)
   
   // Get activity management functions from the hook
   const { handleActivityGraphChange } = useActivityChanges();
@@ -182,8 +184,8 @@ const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate, id }) 
               activityName={activityName}
               activityId={activityId}
               factorId={factorId}
-              baseYear={2025} 
-              targetYear={2030}
+              baseYear={currentScenario.base_year}
+              targetYear={currentScenario.target_year}
               activity={localActivity}
               scenarioId={scenarioId}
               onActivityChange={handleActivityChange}

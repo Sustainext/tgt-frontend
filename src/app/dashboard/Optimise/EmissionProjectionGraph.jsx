@@ -184,15 +184,6 @@ const EmissionProjectionGraph = ({
 
   // Add markers for the main target year
   const markers = [
-    {
-      axis: 'x',
-      value: mainTargetYear,
-      lineStyle: { stroke: '#FF6B6B', strokeWidth: 2, strokeDasharray: '6 6' },
-      legend: 'Net Zero Target',
-      legendOrientation: 'vertical',
-      legendPosition: 'top',
-      textStyle: { fill: '#FF6B6B', fontSize: 12 }
-    }
   ];
 
   // Custom theme for the graph

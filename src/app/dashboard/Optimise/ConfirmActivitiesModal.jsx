@@ -44,7 +44,9 @@ const ConfirmActivitiesModal = ({
         category: activity.category || "",
         region: activity.region || "",
         quantity: activity.quantity || 0,
+        quantity2: activity.quantity2 || null,
         unit: activity.unit || "",
+        unit2: activity.unit2 || null,
         unit_type: activity.unit_type || "",
         co2e_total: activity.co2e_total || 0
       }));
