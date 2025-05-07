@@ -87,7 +87,7 @@ const Index = () => {
         className="xl:flex md:flex justify-start"
         style={{ width: containerWidth, minWidth: "100%" }}
       >
-        <div className="xl:w-[220px] xl:min-h-[90vh] py-[11px] flex-shrink-0">
+        <div className="xl:w-[220px] xl:min-h-[105vh] py-[11px] flex-shrink-0">
           <Aside activeTab={activeModule} handleTabClick={handleTabClick} />
         </div>
 
