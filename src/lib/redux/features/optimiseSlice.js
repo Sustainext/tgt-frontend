@@ -230,7 +230,7 @@ const initialState = {
   currentScenario: null,
   metricsData: {}, // This will contain all metrics data including weightages
   selectedActivities: [],
-  currentStep: 3,
+  currentStep: 4,
   // Emission data state
   emissionData: {
     activities: [],

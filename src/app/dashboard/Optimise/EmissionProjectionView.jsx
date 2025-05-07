@@ -15,7 +15,8 @@ const EmissionProjectionView = ({ scenario = {}, onSave, onPrevious }) => {
   const error = useSelector(state => state.optimise?.error?.graphData);
 
   // Main target year comes from scenario creation
-  const mainTargetYear = scenario?.targetYear || 2030;
+  const baseYear = scenario?.base_year || 2024;
+  const mainTargetYear = scenario?.target_year || 2030;
   // Extended target year can be adjusted by the user (defaults to main target year)
   const [extendedTargetYear, setExtendedTargetYear] = useState(mainTargetYear);
   const [includeNetZero, setIncludeNetZero] = useState(true);
@@ -810,6 +811,7 @@ useEffect(() => {
               scenario={scenario}
               graphData={graphData}
               includeNetZero={includeNetZero}
+              baseYear={baseYear}
               targetYear={extendedTargetYear}
               mainTargetYear={mainTargetYear}
               selectedScope={selectedScopes.includes("Aggregated Scope") ? "scope1" : selectedScopes[0]?.toLowerCase().replace(" ", "")}

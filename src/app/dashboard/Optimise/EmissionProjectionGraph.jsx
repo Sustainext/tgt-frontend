@@ -10,13 +10,13 @@ const EmissionProjectionGraph = ({
   scenario, 
   graphData, // Expected format matches the API response with metadata, totals and yearly_data
   includeNetZero, 
+  baseYear,
   targetYear,  // Extended target year that can be modified by the user
   mainTargetYear, // Original target year from scenario creation
   selectedScope = "scope1", 
   selectedBusinessMetrics = ["total"] // Default to showing total emissions if no metrics selected
 }) => {
   // Set up the years for the x-axis, based on extendedTargetYear
-  const baseYear = scenario?.baseYear || 2024;
   const years = [];
   for (let year = baseYear; year <= targetYear; year++) {
     years.push(year);
