@@ -1,14 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { FiX, FiDownload, FiInfo, FiChevronDown } from "react-icons/fi";
-import EmissionsProjectionGraph from "./EmissionProjectionGraph";
+import { FiX, FiDownload, FiChevronDown } from "react-icons/fi";
+import EmissionProjectionGraph from "./EmissionProjectionGraph";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchScenarioGraphData } from "../../../lib/redux/features/optimiseSlice";
 
-const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
+const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
+  const dispatch = useDispatch();
+  
+  // Get graph data from Redux store
+  const graphData = useSelector(state => state.optimise?.graphData);
+  const loading = useSelector(state => state.optimise?.loading?.graphData);
+  const error = useSelector(state => state.optimise?.error?.graphData);
+
   if (!scenarioData) return null;
 
   // Main target year comes from scenario
-  const mainTargetYear = scenarioData.targetYear || 2030;
+  const baseYear = scenarioData.base_year || scenarioData.baseYear || 2024;
+  const mainTargetYear = scenarioData.target_year || scenarioData.targetYear || 2030;
+  
   // Extended target year can be adjusted by the user (defaults to main target year)
   const [extendedTargetYear, setExtendedTargetYear] = useState(mainTargetYear);
   const [includeNetZero, setIncludeNetZero] = useState(true);
@@ -20,21 +31,14 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
 
   // Dropdown selections - now arrays for multiselect
   const [selectedScopes, setSelectedScopes] = useState(["Aggregated Scope"]);
-  const [selectedCategories, setSelectedCategories] = useState([
-    "Aggregated Scope",
-  ]);
-  const [selectedSubCategories, setSelectedSubCategories] = useState([
-    "Aggregated Scope",
-  ]);
-  const [selectedActivities, setSelectedActivities] = useState([
-    "Aggregated Scope",
-  ]);
+  const [selectedCategories, setSelectedCategories] = useState(["Aggregated Scope"]);
+  const [selectedSubCategories, setSelectedSubCategories] = useState(["Aggregated Scope"]);
+  const [selectedActivities, setSelectedActivities] = useState(["Aggregated Scope"]);
 
   // Dropdown open states
   const [isScopeDropdownOpen, setScopeDropdownOpen] = useState(false);
   const [isCategoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-  const [isSubCategoryDropdownOpen, setSubCategoryDropdownOpen] =
-    useState(false);
+  const [isSubCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false);
   const [isActivityDropdownOpen, setActivityDropdownOpen] = useState(false);
 
   // Refs for detecting clicks outside dropdowns
@@ -53,6 +57,19 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
     { id: "revenue", name: "Revenue", selected: false },
   ]);
 
+  // Generate options dynamically based on available data
+  // We'll use hardcoded options for now, but these could be fetched from the API
+  const scopeOptions = ["Aggregated Scope", "Scope 1", "Scope 2", "Scope 3"];
+  const categoryOptions = ["Aggregated Scope", "Mobile Combustion", "Stationary Combustion", "Fugitive Emissions"];
+  const subCategoryOptions = ["Aggregated Scope", "Fuel", "Rail Freight", "Refrigerants"];
+  const activityOptions = ["Aggregated Scope", "Diesel Combustion", "Natural Gas", "Electricity"];
+
+  // Determine if child dropdowns should be disabled based on parent selection
+  const isCategoryDropdownDisabled = selectedScopes.includes("Aggregated Scope");
+  const isSubCategoryDropdownDisabled = isCategoryDropdownDisabled || selectedCategories.includes("Aggregated Scope");
+  const isActivityDropdownDisabled = isSubCategoryDropdownDisabled || selectedSubCategories.includes("Aggregated Scope");
+
+  // Toggle business metric selection
   const toggleMetric = (metricId) => {
     setBusinessMetrics((metrics) =>
       metrics.map((metric) =>
@@ -63,53 +80,48 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
     );
   };
 
+  // Remove a selected metric
   const removeMetric = (metricId) => {
     toggleMetric(metricId);
   };
 
+  // Get the currently selected metrics
   const selectedMetrics = businessMetrics.filter((metric) => metric.selected);
 
+  // Handle downloading results
   const handleDownloadResults = () => {
-    console.log("Downloading results...");
+    if (!graphData) return;
+    
+    // Create a JSON blob and download it
+    const dataStr = JSON.stringify(graphData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', `scenario-${scenarioData.id}-projection.json`);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
-
-  const handleAnalyze = () => {
-    console.log("Analyzing scenario:", scenarioData.name);
-  };
-
-  // Information about target years for display
-  const isExtended = extendedTargetYear > mainTargetYear;
-
-  // Available options for dropdowns
-  const scopeOptions = ["Aggregated Scope", "Scope 1", "Scope 2", "Scope 3"];
-  const categoryOptions = [
-    "Aggregated Scope",
-    "Mobile Combustion",
-    "Stationary Combustion",
-    "Fugitive Emissions",
-  ];
-  const subCategoryOptions = [
-    "Aggregated Scope",
-    "Fuel",
-    "Rail Freight",
-    "Refrigerants",
-  ];
-  const activityOptions = [
-    "Aggregated Scope",
-    "Diesel Combustion",
-    "Natural Gas",
-    "Electricity",
-  ];
 
   // Handle scope selection
   const handleScopeSelection = (scope) => {
     if (scope === "Aggregated Scope") {
       setSelectedScopes(["Aggregated Scope"]);
       setScopeDropdownOpen(false);
+      // Force child dropdowns to "Aggregated Scope" too
+      setSelectedCategories(["Aggregated Scope"]);
+      setSelectedSubCategories(["Aggregated Scope"]);
+      setSelectedActivities(["Aggregated Scope"]);
     } else if (selectedScopes.includes("Aggregated Scope")) {
       setSelectedScopes([scope]);
     } else if (selectedScopes.includes(scope)) {
-      setSelectedScopes(selectedScopes.filter((s) => s !== scope));
+      // Prevent removing the last scope
+      if (selectedScopes.length > 1) {
+        setSelectedScopes(selectedScopes.filter((s) => s !== scope));
+      }
     } else {
       setSelectedScopes([...selectedScopes, scope]);
     }
@@ -117,13 +129,22 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
 
   // Handle category selection
   const handleCategorySelection = (category) => {
+    // Do nothing if the dropdown is disabled
+    if (isCategoryDropdownDisabled) return;
+    
     if (category === "Aggregated Scope") {
       setSelectedCategories(["Aggregated Scope"]);
       setCategoryDropdownOpen(false);
+      // Force child dropdowns to "Aggregated Scope" too
+      setSelectedSubCategories(["Aggregated Scope"]);
+      setSelectedActivities(["Aggregated Scope"]);
     } else if (selectedCategories.includes("Aggregated Scope")) {
       setSelectedCategories([category]);
     } else if (selectedCategories.includes(category)) {
-      setSelectedCategories(selectedCategories.filter((c) => c !== category));
+      // Prevent removing the last category
+      if (selectedCategories.length > 1) {
+        setSelectedCategories(selectedCategories.filter((c) => c !== category));
+      }
     } else {
       setSelectedCategories([...selectedCategories, category]);
     }
@@ -131,15 +152,23 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
 
   // Handle subcategory selection
   const handleSubCategorySelection = (subCategory) => {
+    // Do nothing if the dropdown is disabled
+    if (isSubCategoryDropdownDisabled) return;
+    
     if (subCategory === "Aggregated Scope") {
       setSelectedSubCategories(["Aggregated Scope"]);
       setSubCategoryDropdownOpen(false);
+      // Force child dropdown to "Aggregated Scope" too
+      setSelectedActivities(["Aggregated Scope"]);
     } else if (selectedSubCategories.includes("Aggregated Scope")) {
       setSelectedSubCategories([subCategory]);
     } else if (selectedSubCategories.includes(subCategory)) {
-      setSelectedSubCategories(
-        selectedSubCategories.filter((s) => s !== subCategory)
-      );
+      // Prevent removing the last subcategory
+      if (selectedSubCategories.length > 1) {
+        setSelectedSubCategories(
+          selectedSubCategories.filter((s) => s !== subCategory)
+        );
+      }
     } else {
       setSelectedSubCategories([...selectedSubCategories, subCategory]);
     }
@@ -147,13 +176,19 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
 
   // Handle activity selection
   const handleActivitySelection = (activity) => {
+    // Do nothing if the dropdown is disabled
+    if (isActivityDropdownDisabled) return;
+    
     if (activity === "Aggregated Scope") {
       setSelectedActivities(["Aggregated Scope"]);
       setActivityDropdownOpen(false);
     } else if (selectedActivities.includes("Aggregated Scope")) {
       setSelectedActivities([activity]);
     } else if (selectedActivities.includes(activity)) {
-      setSelectedActivities(selectedActivities.filter((a) => a !== activity));
+      // Prevent removing the last activity
+      if (selectedActivities.length > 1) {
+        setSelectedActivities(selectedActivities.filter((a) => a !== activity));
+      }
     } else {
       setSelectedActivities([...selectedActivities, activity]);
     }
@@ -168,10 +203,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
       if (categoryRef.current && !categoryRef.current.contains(event.target)) {
         setCategoryDropdownOpen(false);
       }
-      if (
-        subCategoryRef.current &&
-        !subCategoryRef.current.contains(event.target)
-      ) {
+      if (subCategoryRef.current && !subCategoryRef.current.contains(event.target)) {
         setSubCategoryDropdownOpen(false);
       }
       if (activityRef.current && !activityRef.current.contains(event.target)) {
@@ -187,6 +219,64 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  
+  // Fetch graph data when filters change or modal opens
+  useEffect(() => {
+    if (!isOpen || !scenarioData.id) return;
+
+    // Build filter object for API call
+    const filters = {};
+    
+    // Only add scopes if not using aggregated
+    if (!selectedScopes.includes("Aggregated Scope")) {
+      filters.scope = selectedScopes.map(scope => scope.toLowerCase().replace(" ", ""));
+    }
+    
+    // Only add categories if not using aggregated
+    if (!selectedCategories.includes("Aggregated Scope")) {
+      filters.category = selectedCategories;
+    }
+    
+    // Only add subcategories if not using aggregated
+    if (!selectedSubCategories.includes("Aggregated Scope")) {
+      filters.sub_category = selectedSubCategories;
+    }
+    
+    // Only add activities if not using aggregated
+    if (!selectedActivities.includes("Aggregated Scope")) {
+      filters.activity = selectedActivities;
+    }
+    
+    // Add net zero parameter
+    filters.include_net_zero = includeNetZero;
+    
+    // Add target year parameters
+    filters.target_year = extendedTargetYear;
+    filters.main_target_year = mainTargetYear;
+    
+    // Add business metrics
+    filters.metrics = businessMetrics
+      .filter(m => m.selected)
+      .map(m => m.id)
+      .join(',');
+    
+    // Fetch the graph data
+    dispatch(fetchScenarioGraphData({ 
+      scenarioId: scenarioData.id, 
+      filters 
+    }));
+  }, [
+    isOpen,
+    dispatch, 
+    scenarioData.id, 
+    selectedScopes, 
+    selectedCategories, 
+    selectedSubCategories, 
+    selectedActivities,
+    includeNetZero,
+    extendedTargetYear,
+    businessMetrics.filter(m => m.selected).length
+  ]);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -214,7 +304,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-[1200px] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all my-8 max-h-[105vh] flex flex-col">
+              <Dialog.Panel className="w-full max-w-[1200px] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all my-8 max-h-[90vh] flex flex-col">
                 {/* Header section with scenario details */}
                 <div className="p-6 pb-4">
                   <Dialog.Title className="text-2xl font-medium text-gray-900 mb-3">
@@ -225,28 +315,44 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
                     <div className="mb-2">
                       <span className="text-gray-500">Organization:</span>{" "}
                       <span className="text-blue-600 font-semibold bg-blue-100 rounded-md px-2 py-0.5">
-                        {scenarioData.organization ||
-                          "Umbrella Pharmaceuticals"}
+                        {scenarioData.organization_name || scenarioData.organization || "-"}
                       </span>
                     </div>
                     <div className="mb-2">
                       <span className="text-gray-500">Corporate Entity:</span>{" "}
                       <span className="text-green-600 font-semibold bg-green-100 rounded-md px-2 py-0.5">
-                        {scenarioData.corporate || "Umbrella Corp."}
+                        {scenarioData.corporate_name || scenarioData.corporate || "-"}
                       </span>
                     </div>
                     <div className="mb-2">
                       <span className="text-gray-500">Base Year:</span>{" "}
                       <span className="font-medium">
-                        {scenarioData.baseYear || "2024"}
+                        {baseYear}
                       </span>
                     </div>
                     <div className="mb-2">
                       <span className="text-gray-500">Target Year:</span>{" "}
                       <span className="font-medium">
-                        {scenarioData.targetYear || "2030"}
+                        {mainTargetYear}
                       </span>
                     </div>
+                    {/* <div className="mb-2">
+                      <span className="text-gray-500">Status:</span>{" "}
+                      <span className="font-medium">
+                        {scenarioData.status ? (
+                          <span className={`px-2 py-0.5 rounded ${
+                            scenarioData.status.toLowerCase() === "completed" 
+                              ? "bg-green-100 text-green-700" 
+                              : scenarioData.status.toLowerCase() === "in_progress" || 
+                                scenarioData.status.toLowerCase() === "in progress"
+                                ? "bg-blue-100 text-blue-700"
+                                : "bg-gray-100 text-gray-700"
+                          }`}>
+                            {scenarioData.status.replace("_", " ")}
+                          </span>
+                        ) : "Draft"}
+                      </span>
+                    </div> */}
                   </div>
                 </div>
 
@@ -262,15 +368,14 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
 
                     {/* Filters row */}
                     <div className="grid grid-cols-4 gap-4 mb-6">
+                      {/* Scope Dropdown */}
                       <div className="flex items-center" ref={scopeRef}>
                         <span className="text-gray-600 font-medium mr-1">
                           Scope:
                         </span>
                         <div className="relative">
                           <button
-                            onClick={() =>
-                              setScopeDropdownOpen(!isScopeDropdownOpen)
-                            }
+                            onClick={() => setScopeDropdownOpen(!isScopeDropdownOpen)}
                             className="flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none"
                           >
                             <span>
@@ -322,35 +427,33 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
                         </span>
                         <div className="relative">
                           <button
-                            onClick={() =>
-                              setCategoryDropdownOpen(!isCategoryDropdownOpen)
-                            }
-                            className="flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none"
+                            onClick={() => !isCategoryDropdownDisabled && setCategoryDropdownOpen(!isCategoryDropdownOpen)}
+                            className={`flex items-center font-medium focus:outline-none ${
+                              isCategoryDropdownDisabled 
+                                ? "text-gray-400 cursor-not-allowed" 
+                                : "text-gray-800 hover:text-gray-900 cursor-pointer"
+                            }`}
                           >
                             <span>
                               {selectedCategories.includes("Aggregated Scope")
                                 ? "Aggregated Scope"
                                 : selectedCategories.join(", ")}
                             </span>
-                            <FiChevronDown className="ml-1 h-4 w-4 text-gray-500" />
+                            <FiChevronDown className={`ml-1 h-4 w-4 ${isCategoryDropdownDisabled ? "text-gray-300" : "text-gray-500"}`} />
                           </button>
 
-                          {isCategoryDropdownOpen && (
+                          {isCategoryDropdownOpen && !isCategoryDropdownDisabled && (
                             <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-md z-10">
                               <div className="py-1">
                                 {categoryOptions.map((category) => (
                                   <div
                                     key={category}
                                     className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                    onClick={() =>
-                                      handleCategorySelection(category)
-                                    }
+                                    onClick={() => handleCategorySelection(category)}
                                   >
                                     <input
                                       type="checkbox"
-                                      checked={selectedCategories.includes(
-                                        category
-                                      )}
+                                      checked={selectedCategories.includes(category)}
                                       onChange={() => {}}
                                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                     />
@@ -380,39 +483,33 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
                         </span>
                         <div className="relative">
                           <button
-                            onClick={() =>
-                              setSubCategoryDropdownOpen(
-                                !isSubCategoryDropdownOpen
-                              )
-                            }
-                            className="flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none"
+                            onClick={() => !isSubCategoryDropdownDisabled && setSubCategoryDropdownOpen(!isSubCategoryDropdownOpen)}
+                            className={`flex items-center font-medium focus:outline-none ${
+                              isSubCategoryDropdownDisabled 
+                                ? "text-gray-400 cursor-not-allowed" 
+                                : "text-gray-800 hover:text-gray-900 cursor-pointer"
+                            }`}
                           >
                             <span>
-                              {selectedSubCategories.includes(
-                                "Aggregated Scope"
-                              )
+                              {selectedSubCategories.includes("Aggregated Scope")
                                 ? "Aggregated Scope"
                                 : selectedSubCategories.join(", ")}
                             </span>
-                            <FiChevronDown className="ml-1 h-4 w-4 text-gray-500" />
+                            <FiChevronDown className={`ml-1 h-4 w-4 ${isSubCategoryDropdownDisabled ? "text-gray-300" : "text-gray-500"}`} />
                           </button>
 
-                          {isSubCategoryDropdownOpen && (
+                          {isSubCategoryDropdownOpen && !isSubCategoryDropdownDisabled && (
                             <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-md z-10">
                               <div className="py-1">
                                 {subCategoryOptions.map((subCategory) => (
                                   <div
                                     key={subCategory}
                                     className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                    onClick={() =>
-                                      handleSubCategorySelection(subCategory)
-                                    }
+                                    onClick={() => handleSubCategorySelection(subCategory)}
                                   >
                                     <input
                                       type="checkbox"
-                                      checked={selectedSubCategories.includes(
-                                        subCategory
-                                      )}
+                                      checked={selectedSubCategories.includes(subCategory)}
                                       onChange={() => {}}
                                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                     />
@@ -425,9 +522,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
                               <div className="border-t border-gray-200 px-4 py-2">
                                 <button
                                   className="text-sm text-blue-600 hover:text-blue-800"
-                                  onClick={() =>
-                                    setSubCategoryDropdownOpen(false)
-                                  }
+                                  onClick={() => setSubCategoryDropdownOpen(false)}
                                 >
                                   Done
                                 </button>
@@ -444,35 +539,33 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
                         </span>
                         <div className="relative">
                           <button
-                            onClick={() =>
-                              setActivityDropdownOpen(!isActivityDropdownOpen)
-                            }
-                            className="flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none"
+                            onClick={() => !isActivityDropdownDisabled && setActivityDropdownOpen(!isActivityDropdownOpen)}
+                            className={`flex items-center font-medium focus:outline-none ${
+                              isActivityDropdownDisabled 
+                                ? "text-gray-400 cursor-not-allowed" 
+                                : "text-gray-800 hover:text-gray-900 cursor-pointer"
+                            }`}
                           >
                             <span>
                               {selectedActivities.includes("Aggregated Scope")
                                 ? "Aggregated Scope"
                                 : selectedActivities.join(", ")}
                             </span>
-                            <FiChevronDown className="ml-1 h-4 w-4 text-gray-500" />
+                            <FiChevronDown className={`ml-1 h-4 w-4 ${isActivityDropdownDisabled ? "text-gray-300" : "text-gray-500"}`} />
                           </button>
 
-                          {isActivityDropdownOpen && (
+                          {isActivityDropdownOpen && !isActivityDropdownDisabled && (
                             <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-md z-10">
                               <div className="py-1">
                                 {activityOptions.map((activity) => (
                                   <div
                                     key={activity}
                                     className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                    onClick={() =>
-                                      handleActivitySelection(activity)
-                                    }
+                                    onClick={() => handleActivitySelection(activity)}
                                   >
                                     <input
                                       type="checkbox"
-                                      checked={selectedActivities.includes(
-                                        activity
-                                      )}
+                                      checked={selectedActivities.includes(activity)}
                                       onChange={() => {}}
                                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                     />
@@ -503,9 +596,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
                           <button
                             type="button"
                             className="flex items-center justify-between w-48 rounded-md border border-gray-300 px-3 py-2 text-gray-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 text-sm"
-                            onClick={() =>
-                              setIsMetricsDropdownOpen(!isMetricsDropdownOpen)
-                            }
+                            onClick={() => setIsMetricsDropdownOpen(!isMetricsDropdownOpen)}
                           >
                             <span>Business metrics</span>
                             <FiChevronDown className="h-4 w-4" />
@@ -581,12 +672,10 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
                         <input
                           id="target-year"
                           type="number"
-                          min={scenarioData.baseYear || 2024}
+                          min={baseYear}
                           max={2050}
                           value={extendedTargetYear}
-                          onChange={(e) =>
-                            setExtendedTargetYear(parseInt(e.target.value))
-                          }
+                          onChange={(e) => setExtendedTargetYear(parseInt(e.target.value))}
                           className="w-24 rounded-md border border-gray-300 py-1 px-2 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-blue-500 text-sm"
                         />
                       </div>
@@ -597,28 +686,103 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData={} }) => {
                       <div className="flex justify-between items-center mb-4">
                         <h3 className="text-base font-semibold text-gray-900">
                           Predicted Trend of chosen Business Metrics over Years
-                          for ({selectedScopes.join(", ")})
+                          for {selectedScopes.includes("Aggregated Scope")
+                               ? " (Aggregated Scopes)"
+                               : ` (${selectedScopes.join(", ")})`}
                         </h3>
                         <button
                           onClick={handleDownloadResults}
-                          className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                          disabled={!graphData || loading}
+                          className={`inline-flex items-center px-3 py-2 border ${
+                            !graphData || loading
+                              ? "border-gray-200 text-gray-400 cursor-not-allowed" 
+                              : "border-gray-300 shadow-sm text-gray-700 hover:bg-gray-50"
+                          } rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
                         >
                           Download result
                           <FiDownload className="ml-2 h-4 w-4" />
                         </button>
                       </div>
 
-                      {/* Insert the Nivo chart component */}
-                      <div className="border border-gray-200 rounded-lg overflow-hidden">
-                        <EmissionsProjectionGraph
-                          scenario={scenarioData}
-                          includeNetZero={includeNetZero}
-                          targetYear={mainTargetYear}
-                          mainTargetYear={extendedTargetYear}
-                          selectedBusinessMetrics={businessMetrics
-                            .filter((m) => m.selected)
-                            .map((m) => m.id)}
-                        />
+                      {/* Graph container with loading, error, and no data states */}
+                      <div className="border border-gray-200 rounded-lg overflow-hidden relative">
+                        {/* Loading state */}
+                        {loading && (
+                          <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-10">
+                            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                          </div>
+                        )}
+                        
+                        {/* Error state */}
+                        {error && !loading && (
+                          <div className="h-80 flex items-center justify-center">
+                            <div className="bg-red-50 border border-red-200 rounded-md p-4 max-w-md">
+                              <p className="text-red-700">{error}</p>
+                              <button 
+                                onClick={() => {
+                                  // Retry fetching
+                                  if (scenarioData.id) {
+                                    dispatch(fetchScenarioGraphData({
+                                      scenarioId: scenarioData.id,
+                                      filters: {
+                                        scope: !selectedScopes.includes("Aggregated Scope") 
+                                          ? selectedScopes.map(scope => scope.toLowerCase().replace(" ", ""))
+                                          : undefined,
+                                        category: !selectedCategories.includes("Aggregated Scope")
+                                          ? selectedCategories
+                                          : undefined,
+                                        sub_category: !selectedSubCategories.includes("Aggregated Scope")
+                                          ? selectedSubCategories
+                                          : undefined,
+                                        activity: !selectedActivities.includes("Aggregated Scope")
+                                          ? selectedActivities
+                                          : undefined,
+                                        include_net_zero: includeNetZero,
+                                        target_year: extendedTargetYear,
+                                        main_target_year: mainTargetYear,
+                                        metrics: businessMetrics
+                                          .filter(m => m.selected)
+                                          .map(m => m.id)
+                                          .join(',')
+                                      }
+                                    }));
+                                  }
+                                }}
+                                className="mt-2 px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200"
+                              >
+                                Retry
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* No data state */}
+                        {!loading && !error && (!graphData || !Object.keys(graphData).length) && (
+                          <div className="h-80 flex items-center justify-center">
+                            <div className="text-gray-500 text-center">
+                              <p className="mb-2 font-medium">No emission data available</p>
+                              <p className="text-sm">Adjust your filters or check if this scenario has emission data</p>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Graph component */}
+                        {!loading && !error && graphData && Object.keys(graphData).length > 0 && (
+                          <EmissionProjectionGraph
+                            scenario={scenarioData}
+                            graphData={graphData}
+                            includeNetZero={includeNetZero}
+                            baseYear={baseYear}
+                            targetYear={extendedTargetYear}
+                            mainTargetYear={mainTargetYear}
+                            selectedScope={selectedScopes.includes("Aggregated Scope") 
+                              ? "scope1" 
+                              : selectedScopes[0]?.toLowerCase().replace(" ", "")}
+                            selectedBusinessMetrics={businessMetrics
+                              .filter(m => m.selected)
+                              .map(m => m.id)}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>

@@ -227,36 +227,6 @@ const EmissionProjectionGraph = ({
     }
   };
 
-  // Extract activities from the API data for parent component
-  useEffect(() => {
-    if (!graphData || !graphData.yearly_data) return;
-    
-    // This should be handled via a callback to inform the parent component
-    // Implementation would depend on how the parent wants to receive this data
-    // This is a placeholder for the actual implementation
-    console.log("Activities available:", extractActivities(graphData.yearly_data));
-  }, [graphData]);
-  
-  // Helper function to extract unique activities from graph data
-  const extractActivities = (yearlyData) => {
-    const activitySet = new Set();
-    
-    // Go through each year's data
-    Object.keys(yearlyData).forEach(year => {
-      const activities = yearlyData[year];
-      
-      // Extract activity names
-      activities.forEach(activity => {
-        if (activity.activity_name) {
-          activitySet.add(activity.activity_name);
-        }
-      });
-    });
-    
-    // Convert to array
-    return Array.from(activitySet);
-  };
-
   // If no data is available
   if (!nivoGraphData.length || !nivoGraphData[0]?.data?.length) {
     return (
