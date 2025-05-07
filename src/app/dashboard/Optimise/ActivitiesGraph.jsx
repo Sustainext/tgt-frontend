@@ -74,7 +74,7 @@ const ActivitiesGraph = ({
     const yearArray = [];
     
     // Ensure we always generate years from baseYear to targetYear inclusive
-    for (let year = baseYearNum; year <= targetYearNum; year++) {
+    for (let year = baseYearNum+1; year <= targetYearNum; year++) {
       yearArray.push(year.toString());
     }
     return yearArray;
