@@ -203,7 +203,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
   // Information about target years for display
   const isExtended = extendedTargetYear > mainTargetYear;
 
- // Handle scope selection
+// Handle scope selection
 const handleScopeSelection = (scope) => {
   if (scope === "Aggregated Scope") {
     // Reset all dropdowns to "Aggregated Scope"
@@ -458,9 +458,12 @@ useEffect(() => {
     });
   });
   
-  // Update scope options if we're not in the middle of a filter
+  // Make sure we always include the standard scopes
+  const allScopes = new Set([...uniqueScopes, "Scope-1", "Scope-2", "Scope-3"]);
+  
+  // Only update scope options if we're not in the middle of a filter
   if (!isScopeDropdownOpen) {
-    setScopeOptions(Array.from(uniqueScopes));
+    setScopeOptions(Array.from(allScopes));
   }
   
   // Filter activities based on selected filters
