@@ -17,24 +17,54 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import BusinessMetricsWithTooltips from "./BusinessMetricsWithTooltips";
 import { useRouter, useParams } from "next/navigation";
-import { 
-  fetchScenarioById, 
-  fetchScenarioMetrics, 
+import {
+  fetchScenarioById,
+  fetchScenarioMetrics,
   fetchScenarioActivities,
   setCurrentStep,
   setSelectedActivities,
   resetOptimiseState,
-  updateScenarioMetrics
+  updateScenarioMetrics,
+  updateAllSelectedActivities,
 } from "../../../../../lib/redux/features/optimiseSlice";
+
+// Add this to your component that uses updateAllSelectedActivities
+const LoadingIndicator = () => {
+  const loading = useSelector(state => state.optimise?.loading);
+  const isLoading = loading?.activities || loading?.climateCalculation;
+  const isCalculatingClimate = !loading?.activities && loading?.climateCalculation;
+  
+  if (!isLoading) return null;
+  
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-xl max-w-md">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+          <h3 className="text-lg font-semibold mb-2">
+            {isCalculatingClimate 
+              ? "Calculating Climate Impact..." 
+              : "Updating Activities..."}
+          </h3>
+          <p className="text-gray-600 text-center">
+            {isCalculatingClimate
+              ? "Please wait while we calculate the climate impact of your changes."
+              : "Saving your activity changes to the scenario."}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ScenarioEditor = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const params = useParams();
   const scenarioId = params?.id;
-  
+
   // Get state from Redux with safety checks
-  const optimiseState = useSelector(state => state.optimise) || {};
+  const optimiseState = useSelector((state) => state.optimise) || {};
   const {
     currentStep = 1,
     selectedActivities = [],
@@ -43,7 +73,7 @@ const ScenarioEditor = () => {
     loading = { scenario: false, metrics: false, activities: false },
     error = { scenario: null, metrics: null, activities: null },
   } = optimiseState;
-  
+
   const [isWeightageModalOpen, setIsWeightageModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const { open } = GlobalState();
@@ -53,14 +83,14 @@ const ScenarioEditor = () => {
     if (scenarioId) {
       // Fetch the scenario details
       dispatch(fetchScenarioById(scenarioId));
-      
+
       // Fetch the business metrics for this scenario
       dispatch(fetchScenarioMetrics(scenarioId));
-      
+
       // Fetch the activities for this scenario
       dispatch(fetchScenarioActivities(scenarioId));
     }
-    
+
     // Cleanup on unmount
     return () => {
       dispatch(resetOptimiseState());
@@ -112,23 +142,45 @@ const ScenarioEditor = () => {
   };
 
   // Go to next step
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep === 1) {
       // Check if at least one metric is selected before opening weightage modal
       const metricsData = optimiseState.metricsData || {};
-      const anyMetricSelected = businessMetrics.some(metric => Boolean(metricsData[metric.id]));
-      
+      const anyMetricSelected = businessMetrics.some((metric) =>
+        Boolean(metricsData[metric.id])
+      );
+
       if (anyMetricSelected) {
         setIsWeightageModalOpen(true);
       }
       return;
     }
-    
+
     if (currentStep === 2) {
       if (selectedActivities.length > 0) {
         setIsConfirmModalOpen(true);
       }
       return;
+    } else if (currentStep === 3) {
+      // Save all activities before proceeding to step 4
+      try {
+        // Only make the API call if we have activities and a scenarioId
+        if (selectedActivities.length > 0 && scenarioId) {
+          // Dispatch the thunk to update all activities in one API call
+          await dispatch(
+            updateAllSelectedActivities({
+              scenarioId,
+              activities: selectedActivities,
+            })
+          ).unwrap();
+        }
+
+        // If successful, proceed to next step
+        dispatch(setCurrentStep(currentStep + 1));
+      } catch (error) {
+        console.error("Failed to save activity changes:", error);
+        // Could show an error message here
+      }
     } else if (currentStep < 4) {
       dispatch(setCurrentStep(currentStep + 1));
     } else {
@@ -143,63 +195,66 @@ const ScenarioEditor = () => {
     dispatch(setCurrentStep(3)); // Move to step 3
   };
 
- // Process weightage values and move to next step
-const handleWeightageProceed = async (updatedWeightages) => {
-  console.log('handleWeightageProceed called with:', updatedWeightages);
-  console.log('Current scenarioId:', scenarioId);
-  
-  try {
-    // Show loading indicator if needed
-    
-    // Prepare API payload with weightages for selected metrics
-    const payload = {};
-    
-    // Add weightage for each selected metric
-    Object.keys(updatedWeightages).forEach(metric => {
-      payload[`${metric}_weightage`] = updatedWeightages[metric];
-      payload[`${metric}_data`] = metricsData[`${metric}_data`];
-      payload[`${metric}`] = metricsData[metric];
-    });
-        
-    // Make the API call if scenarioId exists
-    if (scenarioId) {
-      console.log('Making API call to update scenario metrics');
-      
-      // Dispatch the API call and wait for it to complete
-      try {
-        const resultAction = await dispatch(updateScenarioMetrics({ scenarioId, payload }));
+  // Process weightage values and move to next step
+  const handleWeightageProceed = async (updatedWeightages) => {
+    console.log("handleWeightageProceed called with:", updatedWeightages);
+    console.log("Current scenarioId:", scenarioId);
 
-        // Check if the action was fulfilled or rejected
-        if (updateScenarioMetrics.fulfilled.match(resultAction)) {
-          
-          dispatch(setCurrentStep(2));
-        } else if (updateScenarioMetrics.rejected.match(resultAction)) {
-          console.error('API call failed with error:', resultAction.error);
-          throw new Error(resultAction.error?.message || 'API call failed');
+    try {
+      // Show loading indicator if needed
+
+      // Prepare API payload with weightages for selected metrics
+      const payload = {};
+
+      // Add weightage for each selected metric
+      Object.keys(updatedWeightages).forEach((metric) => {
+        payload[`${metric}_weightage`] = updatedWeightages[metric];
+        payload[`${metric}_data`] = metricsData[`${metric}_data`];
+        payload[`${metric}`] = metricsData[metric];
+      });
+
+      // Make the API call if scenarioId exists
+      if (scenarioId) {
+        console.log("Making API call to update scenario metrics");
+
+        // Dispatch the API call and wait for it to complete
+        try {
+          const resultAction = await dispatch(
+            updateScenarioMetrics({ scenarioId, payload })
+          );
+
+          // Check if the action was fulfilled or rejected
+          if (updateScenarioMetrics.fulfilled.match(resultAction)) {
+            dispatch(setCurrentStep(2));
+          } else if (updateScenarioMetrics.rejected.match(resultAction)) {
+            console.error("API call failed with error:", resultAction.error);
+            throw new Error(resultAction.error?.message || "API call failed");
+          }
+        } catch (innerError) {
+          console.error("Error during API dispatch:", innerError);
+          throw innerError; // Re-throw for outer catch
         }
-      } catch (innerError) {
-        console.error('Error during API dispatch:', innerError);
-        throw innerError; // Re-throw for outer catch
+      } else {
+        // If no scenarioId (unlikely in production), just move to next step
+        console.log(
+          "No scenarioId found, skipping API call and moving to next step"
+        );
+        dispatch(setCurrentStep(2));
       }
-    } else {
-      // If no scenarioId (unlikely in production), just move to next step
-      console.log('No scenarioId found, skipping API call and moving to next step');
-      dispatch(setCurrentStep(2));
+    } catch (error) {
+      // Handle errors
+      console.error("Failed to update weightages, detailed error:", error);
+      console.error("Error name:", error.name);
+      console.error("Error message:", error.message);
+      console.error("Error stack:", error.stack);
+
+      // If there's a response error, log it
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+        console.error("Error response status:", error.response.status);
+      }
     }
-  } catch (error) {
-    // Handle errors
-    console.error("Failed to update weightages, detailed error:", error);
-    console.error("Error name:", error.name);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
-    
-    // If there's a response error, log it
-    if (error.response) {
-      console.error("Error response data:", error.response.data);
-      console.error("Error response status:", error.response.status);
-    }
-  }
-};
+  };
 
   // Go back to dashboard
   const handleBackToDashboard = () => {
@@ -221,8 +276,12 @@ const handleWeightageProceed = async (updatedWeightages) => {
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="bg-red-50 p-4 rounded-lg text-red-700 max-w-md text-center">
           <h2 className="font-bold mb-2">Error Loading Scenario</h2>
-          <p>{typeof error.scenario === 'string' ? error.scenario : 'Failed to load scenario data'}</p>
-          <button 
+          <p>
+            {typeof error.scenario === "string"
+              ? error.scenario
+              : "Failed to load scenario data"}
+          </p>
+          <button
             onClick={() => router.push("/dashboard/Optimise")}
             className="mt-4 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-800 rounded"
           >
@@ -264,7 +323,13 @@ const handleWeightageProceed = async (updatedWeightages) => {
                   Select Business Metric
                 </h2>
                 <p className="text-gray-600 mb-6">
-                  Select the key metrics which will be required for planning the emission reduction initiative for this scenario. Include current year absolute value for the selected business metric and apply any changes in the consumption pattern that you foresee. Use the graph to increase or decrease the percentage consumptions for the available years within the time period of the scenario.
+                  Select the key metrics which will be required for planning the
+                  emission reduction initiative for this scenario. Include
+                  current year absolute value for the selected business metric
+                  and apply any changes in the consumption pattern that you
+                  foresee. Use the graph to increase or decrease the percentage
+                  consumptions for the available years within the time period of
+                  the scenario.
                 </p>
               </div>
             )}
@@ -404,15 +469,23 @@ const handleWeightageProceed = async (updatedWeightages) => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Corporate</p>
-                <p className="font-medium">{scenario?.corporate_name || scenario?.corporate || <span className="text-slate-700 text-sm">Not Selected</span>}</p>
+                <p className="font-medium">
+                  {scenario?.corporate_name || scenario?.corporate || (
+                    <span className="text-slate-700 text-sm">Not Selected</span>
+                  )}
+                </p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Base Year</p>
-                <p className="font-medium">{scenario?.base_year || scenario?.baseYear || ""}</p>
+                <p className="font-medium">
+                  {scenario?.base_year || scenario?.baseYear || ""}
+                </p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Target Year</p>
-                <p className="font-medium">{scenario?.target_year || scenario?.targetYear || ""}</p>
+                <p className="font-medium">
+                  {scenario?.target_year || scenario?.targetYear || ""}
+                </p>
               </div>
             </div>
           </div>
@@ -435,7 +508,9 @@ const handleWeightageProceed = async (updatedWeightages) => {
           <div className="px-6">
             <ActivitySelectTable
               selectedActivities={selectedActivities}
-              setSelectedActivities={(activities) => dispatch(setSelectedActivities(activities))}
+              setSelectedActivities={(activities) =>
+                dispatch(setSelectedActivities(activities))
+              }
               scenarioId={scenarioId}
             />
           </div>
@@ -443,7 +518,7 @@ const handleWeightageProceed = async (updatedWeightages) => {
 
         {currentStep === 3 && (
           <div className="px-6">
-            <ActivitySummarySection 
+            <ActivitySummarySection
               activities={selectedActivities}
               scenarioId={scenarioId}
             />
@@ -452,7 +527,7 @@ const handleWeightageProceed = async (updatedWeightages) => {
 
         {currentStep === 4 && (
           <div className="px-6">
-            <EmissionProjectionView 
+            <EmissionProjectionView
               scenario={scenario}
               onPrevious={handlePrevious}
             />
@@ -473,11 +548,21 @@ const handleWeightageProceed = async (updatedWeightages) => {
             onClick={handleNext}
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             disabled={
-              (currentStep === 1 && (!optimiseState.metricsData || Object.keys(optimiseState.metricsData).filter(k => !k.includes('_') && optimiseState.metricsData[k]).length === 0)) ||
-              (currentStep === 2 && (!selectedActivities || selectedActivities.length === 0))
+              (currentStep === 1 &&
+                (!optimiseState.metricsData ||
+                  Object.keys(optimiseState.metricsData).filter(
+                    (k) => !k.includes("_") && optimiseState.metricsData[k]
+                  ).length === 0)) ||
+              (currentStep === 2 &&
+                (!selectedActivities || selectedActivities.length === 0))
             }
           >
-            {currentStep < 4 ? "Next" : "Save"} →
+            {currentStep === 3
+              ? "Calculate and Visualize"
+              : currentStep < 4
+              ? "Next"
+              : "Save"}{" "}
+            →
           </button>
         </div>
       </div>
@@ -500,6 +585,8 @@ const handleWeightageProceed = async (updatedWeightages) => {
         onGoBack={() => setIsConfirmModalOpen(false)}
         scenarioId={scenarioId}
       />
+
+      <LoadingIndicator />
     </>
   );
 };

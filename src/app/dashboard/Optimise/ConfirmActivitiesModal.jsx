@@ -31,26 +31,28 @@ const ConfirmActivitiesModal = ({
     try {
       // Format the activities array to match the expected API payload format
       // Using uuid for identification as per the updated requirements
-      // const formattedActivities = selectedActivities.map(activity => ({
-      //   // Required fields for the API
-      //   uuid: activity.uuid,
-      //   activity_id: activity.activity_id || activity.id,
-      //   activity_name: activity.activity_name || activity.activity,
-      //   sub_category: activity.sub_category || activity.subCategory,
-      //   factor_id: activity.factor_id || "",
+      const formattedActivities = selectedActivities.map(activity => ({
+        // Required fields for the API
+        uuid: activity.uuid,
+        activity_id: activity.activity_id || activity.id,
+        activity_name: activity.activity_name || activity.activity,
+        sub_category: activity.sub_category || activity.subCategory,
+        factor_id: activity.factor_id || "",
         
-      //   // Additional fields to maintain data integrity
-      //   scope: activity.scope || "",
-      //   category: activity.category || "",
-      //   region: activity.region || "",
-      //   quantity: activity.quantity || 0,
-      //   unit: activity.unit || "",
-      //   unit_type: activity.unit_type || "",
-      //   co2e_total: activity.co2e_total || 0
-      // }));
+        // Additional fields to maintain data integrity
+        scope: activity.scope || "",
+        category: activity.category || "",
+        region: activity.region || "",
+        quantity: activity.quantity || 0,
+        quantity2: activity.quantity2 || null,
+        unit: activity.unit || "",
+        unit2: activity.unit2 || null,
+        unit_type: activity.unit_type || "",
+        co2e_total: activity.co2e_total || 0
+      }));
       
-      // // Make a single POST call to /selectedactivity with the formatted activities array
-      // await scenarioService.submitSelectedActivities(scenarioId, formattedActivities);
+      // Make a single POST call to /selectedactivity with the formatted activities array
+      await scenarioService.submitSelectedActivities(scenarioId, formattedActivities);
       
       // Call the onProceed function to move to the next step
       onProceed();

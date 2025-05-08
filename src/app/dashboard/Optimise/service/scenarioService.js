@@ -451,7 +451,153 @@ export const checkEmissionDataExists = async (
   }
 };
 
+/**
+ * Update a specific activity in a scenario
+ * @param {number} scenarioId - Scenario ID
+ * @param {string|number} activityId - Activity ID
+ * @param {Object} updates - Object containing the fields to update
+ * @returns {Promise} Promise resolving to updated activity data
+ */
+export const updateScenarioActivity = async (scenarioId, activityId, updates) => {
+  try {
+    if (!scenarioId || !activityId) {
+      throw new Error("Both scenarioId and activityId are required");
+    }
+    
+    // Ensure we're only sending valid update fields
+    const validUpdateFields = ['activity_change', 'changes_in_activity', 'percentage_change'];
+    const filteredUpdates = {};
+    
+    Object.keys(updates).forEach(key => {
+      if (validUpdateFields.includes(key)) {
+        filteredUpdates[key] = updates[key];
+      }
+    });
+    
+    const response = await apiClient.patch(
+      `/optimize/${scenarioId}/selectedactivity/${activityId}/`,
+      filteredUpdates
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Error updating activity ${activityId} in scenario ${scenarioId}:`,
+      error
+    );
+    throw error;
+  }
+};
 
+/**
+ * Update multiple activities in a scenario with a single API call
+ * @param {number} scenarioId - Scenario ID
+ * @param {Array} activities - Array of activities with their updates
+ * @returns {Promise} Promise resolving to updated activities data
+ */
+export const updateAllScenarioActivities = async (scenarioId, activities) => {
+  try {
+    if (!scenarioId || !Array.isArray(activities) || activities.length === 0) {
+      throw new Error("Valid scenarioId and activities array are required");
+    }
+    
+    // Process activities for API submission
+    const payload = activities.map(activity => {
+
+      console.log("Processing activity:", activity);
+      
+      return {
+        id: activity.id,
+        activity_change: activity.activity_change,
+        percentage_change: activity.percentage_change || {},
+        changes_in_activity: activity.changes_in_activity || {}
+      };
+    });
+    
+    // Make a single API call with all activities
+    const response = await apiClient.patch(
+      `/optimize/${scenarioId}/selectedactivity/`,
+      payload
+    );
+    
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating activities for scenario ${scenarioId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Calculate climate result for a scenario after updating activities
+ * @param {number} scenarioId - Scenario ID
+ * @returns {Promise} Promise resolving to calculation results
+ */
+export const calculateEmissionsForOptimise = async (scenarioId) => {
+  try {
+    if (!scenarioId) {
+      throw new Error("Valid scenarioId is required");
+    }
+    
+    const response = await apiClient.get(
+      `/optimize/${scenarioId}/calculateclimatiqresult/`
+    );
+    
+    return response.data;
+  } catch (error) {
+    console.error(`Error calculating climate result for scenario ${scenarioId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Get graph data for a scenario's emission projection
+ * @param {number} scenarioId - Scenario ID
+ * @param {Object} filters - Optional filters for the graph data
+ * @returns {Promise} Promise resolving to graph data
+ */
+export const getScenarioGraphData = async (scenarioId, filters = {}) => {
+  try {
+    if (!scenarioId) {
+      throw new Error("Valid scenarioId is required");
+    }
+    
+    // Convert filters object to URL query params
+    const queryParams = new URLSearchParams();
+    
+    // Process filters handling arrays properly
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== "") {
+        // Handle arrays for multi-select filters
+        if (Array.isArray(value) && value.length > 0) {
+          // Check if this is a case where we should use comma-separated values
+          // This is typically for filter parameters that expect multiple values
+          // For example: scope=scope1,scope2,scope3
+          const shouldUseCommas = ["scope", "category", "subcategory", "activity", "region"].includes(key);
+          
+          if (shouldUseCommas) {
+            // Join array values with commas
+            queryParams.append(key, value.join(','));
+          } else {
+            // Use separate parameters for each value in the array
+            value.forEach(item => queryParams.append(key, item));
+          }
+        } else {
+          queryParams.append(key, value);
+        }
+      }
+    });
+    
+    // Build URL with query parameters if they exist
+    const url = queryParams.toString() 
+      ? `/optimize/${scenarioId}/getgraphdata/?${queryParams.toString()}` 
+      : `/optimize/${scenarioId}/getgraphdata/`;
+    
+    const response = await apiClient.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching graph data for scenario ${scenarioId}:`, error);
+    throw error;
+  }
+};
 
 export default {
   checkEmissionDataExists,
@@ -469,4 +615,8 @@ export default {
   removeActivityFromScenario,
   updateActivityConsumption,
   submitSelectedActivities,
+  updateScenarioActivity,
+  updateAllScenarioActivities,
+  calculateEmissionsForOptimise,
+  getScenarioGraphData
 };

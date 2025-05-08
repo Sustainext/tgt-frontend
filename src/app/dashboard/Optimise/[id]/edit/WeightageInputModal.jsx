@@ -56,16 +56,23 @@ const WeightageInputModal = ({
     
     if (metricCount === 0) return {};
 
-    // Calculate equal distribution
-    const equalWeight = parseFloat((1 / metricCount).toFixed(2));
-    const equalWeightages = {};
-
-    // Assign equal weights to all selected metrics
-    selectedValidMetrics.forEach(metric => {
-      equalWeightages[metric] = equalWeight;
-    });
-
-    return equalWeightages;
+    // Special handling for 3 metrics to ensure they sum to exactly 1.0
+    if (metricCount === 3) {
+      const equalWeightages = {};
+      // First metric gets 0.34, others get 0.33
+      selectedValidMetrics.forEach((metric, index) => {
+        equalWeightages[metric] = index === 0 ? 0.34 : 0.33;
+      });
+      return equalWeightages;
+    } else {
+      // Normal equal distribution for other cases
+      const equalWeight = parseFloat((1 / metricCount).toFixed(2));
+      const equalWeightages = {};
+      selectedValidMetrics.forEach(metric => {
+        equalWeightages[metric] = equalWeight;
+      });
+      return equalWeightages;
+    }
   };
 
   // State management
