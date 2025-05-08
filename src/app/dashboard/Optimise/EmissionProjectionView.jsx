@@ -19,7 +19,7 @@ const EmissionProjectionView = ({ scenario = {}, onSave, onPrevious }) => {
   const mainTargetYear = scenario?.target_year || 2030;
   // Extended target year can be adjusted by the user (defaults to main target year)
   const [extendedTargetYear, setExtendedTargetYear] = useState(mainTargetYear);
-  const [includeNetZero, setIncludeNetZero] = useState(true);
+  const [includeNetZero, setIncludeNetZero] = useState(false);
 
   // Update extended target year if main target year changes
   useEffect(() => {
@@ -160,9 +160,9 @@ const EmissionProjectionView = ({ scenario = {}, onSave, onPrevious }) => {
   // Business metrics filter state
   const [isMetricsDropdownOpen, setIsMetricsDropdownOpen] = useState(false);
   const [businessMetrics, setBusinessMetrics] = useState([
-    { id: "fte", name: "FTE", selected: true },
-    { id: "area", name: "Area", selected: true },
-    { id: "production_volume", name: "Production Volume", selected: true },
+    { id: "fte", name: "FTE", selected: false },
+    { id: "area", name: "Area", selected: false },
+    { id: "production_volume", name: "Production Volume", selected: false },
     { id: "revenue", name: "Revenue", selected: false },
   ]);
 

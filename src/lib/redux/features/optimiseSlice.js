@@ -170,21 +170,6 @@ export const calculateEmissionsForOptimise = createAsyncThunk(
   }
 );
 
-// export const updateAllSelectedActivities = createAsyncThunk(
-//   "optimise/updateAllSelectedActivities",
-//   async ({ scenarioId, activities }, { rejectWithValue }) => {
-//     try {
-//       const response = await scenarioService.updateAllScenarioActivities(
-//         scenarioId,
-//         activities
-//       );
-//       return response;
-//     } catch (error) {
-//       return rejectWithValue(error.response?.data || error.message);
-//     }
-//   }
-// );
-
 export const updateAllSelectedActivities = createAsyncThunk(
   "optimise/updateAllSelectedActivities",
   async ({ scenarioId, activities }, { dispatch, rejectWithValue }) => {
@@ -230,7 +215,7 @@ const initialState = {
   currentScenario: null,
   metricsData: {}, // This will contain all metrics data including weightages
   selectedActivities: [],
-  currentStep: 4,
+  currentStep: 1,
   // Emission data state
   emissionData: {
     activities: [],

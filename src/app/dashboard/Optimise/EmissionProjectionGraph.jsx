@@ -182,9 +182,8 @@ const EmissionProjectionGraph = ({
     }
   }, [graphData, includeNetZero, targetYear, mainTargetYear, selectedScope, selectedBusinessMetrics]);
 
-  // Add markers for the main target year
-  const markers = [
-  ];
+  // Add markers for the main target year if needed
+  const markers = [];
 
   // Custom theme for the graph
   const theme = {
@@ -261,12 +260,27 @@ const EmissionProjectionGraph = ({
     return baseColors.slice(0, nivoGraphData.length);
   };
 
+  // Calculate if we need scrolling based on number of years
+  const needsScrolling = years.length > 10;
+  
+  // Calculate minimum width based on number of years
+  const minWidth = needsScrolling ? years.length * 80 : '100%';
+
   return (
-    <div style={{ height: 400 }}>
-      <ResponsiveLine
+    <div style={{ height: 400, position: 'relative', overflow: 'hidden' }}>
+      <div style={{ 
+        overflowX: needsScrolling ? 'auto' : 'hidden', 
+        overflowY: 'hidden',
+        height: '100%'
+      }}>
+        <div style={{ 
+          minWidth: minWidth, 
+          height: '100%'
+        }}>
+          <ResponsiveLine
         data={nivoGraphData}
         theme={theme}
-        margin={{ top: 40, right: 110, bottom: 50, left: 80 }}
+        margin={{ top: 40, right: 160, bottom: 50, left: 80 }}
         xScale={{ 
           type: 'point',
           padding: 0.3 
@@ -308,16 +322,16 @@ const EmissionProjectionGraph = ({
         markers={markers}
         legends={[
           {
-            anchor: 'bottom-right',
+            anchor: 'right',
             direction: 'column',
             justify: false,
-            translateX: 100,
+            translateX: 140,
             translateY: 0,
-            itemsSpacing: 0,
+            itemsSpacing: 6,
             itemDirection: 'left-to-right',
             itemWidth: 120,
             itemHeight: 20,
-            itemOpacity: 0.75,
+            itemOpacity: 0.85,
             symbolSize: 12,
             symbolShape: 'circle',
             symbolBorderColor: 'rgba(0, 0, 0, .5)',
@@ -352,6 +366,13 @@ const EmissionProjectionGraph = ({
           </div>
         )}
       />
+        </div>
+      </div>
+      {needsScrolling && (
+        <div className="text-xs text-center text-gray-500 mt-1">
+          Scroll horizontally to view all years
+        </div>
+      )}
     </div>
   );
 };
