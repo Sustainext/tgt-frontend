@@ -14,21 +14,13 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
   const loading = useSelector(state => state.optimise?.loading?.graphData);
   const error = useSelector(state => state.optimise?.error?.graphData);
 
-  if (!scenarioData) return null;
-
-  // Main target year comes from scenario
-  const baseYear = scenarioData.base_year || scenarioData.baseYear || 2024;
-  const mainTargetYear = scenarioData.target_year || scenarioData.targetYear || 2030;
+  // IMPORTANT: Use safe defaults that don't directly depend on props
+  // We'll update them in useEffect based on props changes
+  const [baseYear, setBaseYear] = useState(2024);
+  const [mainTargetYear, setMainTargetYear] = useState(2030);
+  const [extendedTargetYear, setExtendedTargetYear] = useState(2030);
+  const [includeNetZero, setIncludeNetZero] = useState(false);
   
-  // Extended target year can be adjusted by the user (defaults to main target year)
-  const [extendedTargetYear, setExtendedTargetYear] = useState(mainTargetYear);
-  const [includeNetZero, setIncludeNetZero] = useState(true);
-
-  // Update extended target year if main target year changes
-  useEffect(() => {
-    setExtendedTargetYear(mainTargetYear);
-  }, [mainTargetYear]);
-
   // Dropdown selections - now arrays for multiselect
   const [selectedScopes, setSelectedScopes] = useState(["Aggregated Scope"]);
   const [selectedCategories, setSelectedCategories] = useState(["Aggregated Scope"]);
@@ -40,6 +32,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
   const [isCategoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [isSubCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false);
   const [isActivityDropdownOpen, setActivityDropdownOpen] = useState(false);
+  const [isMetricsDropdownOpen, setIsMetricsDropdownOpen] = useState(false);
 
   // Refs for detecting clicks outside dropdowns
   const scopeRef = useRef(null);
@@ -49,25 +42,123 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
   const metricsRef = useRef(null);
 
   // Business metrics filter state
-  const [isMetricsDropdownOpen, setIsMetricsDropdownOpen] = useState(false);
   const [businessMetrics, setBusinessMetrics] = useState([
-    { id: "fte", name: "FTE", selected: true },
+    { id: "fte", name: "FTE", selected: false },
     { id: "area", name: "Area", selected: false },
     { id: "production_volume", name: "Production Volume", selected: false },
     { id: "revenue", name: "Revenue", selected: false },
   ]);
 
-  // Generate options dynamically based on available data
-  // We'll use hardcoded options for now, but these could be fetched from the API
-  const scopeOptions = ["Aggregated Scope", "Scope 1", "Scope 2", "Scope 3"];
-  const categoryOptions = ["Aggregated Scope", "Mobile Combustion", "Stationary Combustion", "Fugitive Emissions"];
-  const subCategoryOptions = ["Aggregated Scope", "Fuel", "Rail Freight", "Refrigerants"];
-  const activityOptions = ["Aggregated Scope", "Diesel Combustion", "Natural Gas", "Electricity"];
+  // Options for dropdowns - defined here to avoid recreation on each render
+  const [scopeOptions] = useState(["Aggregated Scope", "Scope 1", "Scope 2", "Scope 3"]);
+  const [categoryOptions] = useState(["Aggregated Scope", "Mobile Combustion", "Stationary Combustion", "Fugitive Emissions"]);
+  const [subCategoryOptions] = useState(["Aggregated Scope", "Fuel", "Rail Freight", "Refrigerants"]);
+  const [activityOptions] = useState(["Aggregated Scope", "Diesel Combustion", "Natural Gas", "Electricity"]);
 
-  // Determine if child dropdowns should be disabled based on parent selection
+  // Extract values from props in useEffect instead of directly in render
+  useEffect(() => {
+    if (scenarioData) {
+      const newBaseYear = scenarioData?.base_year || scenarioData?.baseYear || 2024;
+      const newMainTargetYear = scenarioData?.target_year || scenarioData?.targetYear || 2030;
+      
+      setBaseYear(newBaseYear);
+      setMainTargetYear(newMainTargetYear);
+      setExtendedTargetYear(newMainTargetYear);
+    }
+  }, [scenarioData]);
+
+  // Handle outside clicks to close dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (scopeRef.current && !scopeRef.current.contains(event.target)) {
+        setScopeDropdownOpen(false);
+      }
+      if (categoryRef.current && !categoryRef.current.contains(event.target)) {
+        setCategoryDropdownOpen(false);
+      }
+      if (subCategoryRef.current && !subCategoryRef.current.contains(event.target)) {
+        setSubCategoryDropdownOpen(false);
+      }
+      if (activityRef.current && !activityRef.current.contains(event.target)) {
+        setActivityDropdownOpen(false);
+      }
+      if (metricsRef.current && !metricsRef.current.contains(event.target)) {
+        setIsMetricsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  
+  // Fetch graph data when filters change or modal opens
+  useEffect(() => {
+    if (!isOpen || !scenarioData?.id) return;
+
+    // Build filter object for API call
+    const filters = {};
+    
+    // Only add scopes if not using aggregated
+    if (!selectedScopes.includes("Aggregated Scope")) {
+      filters.scope = selectedScopes.map(scope => scope.toLowerCase().replace(" ", ""));
+    }
+    
+    // Only add categories if not using aggregated
+    if (!selectedCategories.includes("Aggregated Scope")) {
+      filters.category = selectedCategories;
+    }
+    
+    // Only add subcategories if not using aggregated
+    if (!selectedSubCategories.includes("Aggregated Scope")) {
+      filters.sub_category = selectedSubCategories;
+    }
+    
+    // Only add activities if not using aggregated
+    if (!selectedActivities.includes("Aggregated Scope")) {
+      filters.activity = selectedActivities;
+    }
+    
+    // Add net zero parameter
+    filters.include_net_zero = includeNetZero;
+    
+    // Add target year parameters
+    filters.target_year = extendedTargetYear;
+    filters.main_target_year = mainTargetYear;
+    
+    // Add business metrics
+    filters.metrics = businessMetrics
+      .filter(m => m.selected)
+      .map(m => m.id)
+      .join(',');
+    
+    // Fetch the graph data
+    dispatch(fetchScenarioGraphData({ 
+      scenarioId: scenarioData.id, 
+      filters 
+    }));
+  }, [
+    isOpen,
+    dispatch, 
+    scenarioData?.id, 
+    selectedScopes, 
+    selectedCategories, 
+    selectedSubCategories, 
+    selectedActivities,
+    includeNetZero,
+    extendedTargetYear,
+    mainTargetYear,
+    businessMetrics
+  ]);
+
+  // These should be derived from state, not calculated during render
   const isCategoryDropdownDisabled = selectedScopes.includes("Aggregated Scope");
   const isSubCategoryDropdownDisabled = isCategoryDropdownDisabled || selectedCategories.includes("Aggregated Scope");
   const isActivityDropdownDisabled = isSubCategoryDropdownDisabled || selectedSubCategories.includes("Aggregated Scope");
+  
+  // Get the currently selected metrics
+  const selectedMetrics = businessMetrics.filter((metric) => metric.selected);
 
   // Toggle business metric selection
   const toggleMetric = (metricId) => {
@@ -84,9 +175,6 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
   const removeMetric = (metricId) => {
     toggleMetric(metricId);
   };
-
-  // Get the currently selected metrics
-  const selectedMetrics = businessMetrics.filter((metric) => metric.selected);
 
   // Handle downloading results
   const handleDownloadResults = () => {
@@ -194,89 +282,10 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
     }
   };
 
-  // Handle outside clicks to close dropdowns
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (scopeRef.current && !scopeRef.current.contains(event.target)) {
-        setScopeDropdownOpen(false);
-      }
-      if (categoryRef.current && !categoryRef.current.contains(event.target)) {
-        setCategoryDropdownOpen(false);
-      }
-      if (subCategoryRef.current && !subCategoryRef.current.contains(event.target)) {
-        setSubCategoryDropdownOpen(false);
-      }
-      if (activityRef.current && !activityRef.current.contains(event.target)) {
-        setActivityDropdownOpen(false);
-      }
-      if (metricsRef.current && !metricsRef.current.contains(event.target)) {
-        setIsMetricsDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-  
-  // Fetch graph data when filters change or modal opens
-  useEffect(() => {
-    if (!isOpen || !scenarioData.id) return;
-
-    // Build filter object for API call
-    const filters = {};
-    
-    // Only add scopes if not using aggregated
-    if (!selectedScopes.includes("Aggregated Scope")) {
-      filters.scope = selectedScopes.map(scope => scope.toLowerCase().replace(" ", ""));
-    }
-    
-    // Only add categories if not using aggregated
-    if (!selectedCategories.includes("Aggregated Scope")) {
-      filters.category = selectedCategories;
-    }
-    
-    // Only add subcategories if not using aggregated
-    if (!selectedSubCategories.includes("Aggregated Scope")) {
-      filters.sub_category = selectedSubCategories;
-    }
-    
-    // Only add activities if not using aggregated
-    if (!selectedActivities.includes("Aggregated Scope")) {
-      filters.activity = selectedActivities;
-    }
-    
-    // Add net zero parameter
-    filters.include_net_zero = includeNetZero;
-    
-    // Add target year parameters
-    filters.target_year = extendedTargetYear;
-    filters.main_target_year = mainTargetYear;
-    
-    // Add business metrics
-    filters.metrics = businessMetrics
-      .filter(m => m.selected)
-      .map(m => m.id)
-      .join(',');
-    
-    // Fetch the graph data
-    dispatch(fetchScenarioGraphData({ 
-      scenarioId: scenarioData.id, 
-      filters 
-    }));
-  }, [
-    isOpen,
-    dispatch, 
-    scenarioData.id, 
-    selectedScopes, 
-    selectedCategories, 
-    selectedSubCategories, 
-    selectedActivities,
-    includeNetZero,
-    extendedTargetYear,
-    businessMetrics.filter(m => m.selected).length
-  ]);
+  // If there's no scenarioData or it's not open, don't render anything
+  if (!scenarioData || !isOpen) {
+    return null;
+  }
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -304,7 +313,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-[1200px] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all my-8 max-h-[90vh] flex flex-col">
+              <Dialog.Panel className="w-full max-w-[1200px] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all my-8 max-h-[100vh] flex flex-col">
                 {/* Header section with scenario details */}
                 <div className="p-6 pb-4">
                   <Dialog.Title className="text-2xl font-medium text-gray-900 mb-3">
@@ -336,23 +345,6 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                         {mainTargetYear}
                       </span>
                     </div>
-                    {/* <div className="mb-2">
-                      <span className="text-gray-500">Status:</span>{" "}
-                      <span className="font-medium">
-                        {scenarioData.status ? (
-                          <span className={`px-2 py-0.5 rounded ${
-                            scenarioData.status.toLowerCase() === "completed" 
-                              ? "bg-green-100 text-green-700" 
-                              : scenarioData.status.toLowerCase() === "in_progress" || 
-                                scenarioData.status.toLowerCase() === "in progress"
-                                ? "bg-blue-100 text-blue-700"
-                                : "bg-gray-100 text-gray-700"
-                          }`}>
-                            {scenarioData.status.replace("_", " ")}
-                          </span>
-                        ) : "Draft"}
-                      </span>
-                    </div> */}
                   </div>
                 </div>
 

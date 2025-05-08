@@ -5,7 +5,7 @@ import EmissionProjectionGraph from "./EmissionProjectionGraph";
 import { scope1Info, scope2Info, scope3Info } from "../../shared/data/scopeInfo";
 import { fetchScenarioGraphData } from "../../../lib/redux/features/optimiseSlice";
 
-const EmissionProjectionView = ({ scenario = {}, onSave, onPrevious }) => {
+const EmissionProjectionView = ({ scenario = {} }) => {
   const dispatch = useDispatch();
   const scenarioId = scenario?.id;
 
@@ -28,14 +28,14 @@ const EmissionProjectionView = ({ scenario = {}, onSave, onPrevious }) => {
 
   // Generate dropdown options from scope info
   const generateScopeOptions = () => {
-    return ["Aggregated Scope", "Scope 1", "Scope 2", "Scope 3"];
+    return ["Aggregated Scope", "Scope-1", "Scope-2", "Scope-3"];
   };
 
   // Generate category options based on selected scope
   const generateCategoryOptions = (selectedScopes) => {
     let categoryOptions = ["Aggregated Scope"];
     
-    if (selectedScopes.includes("Scope 1") || selectedScopes.includes("Aggregated Scope")) {
+    if (selectedScopes.includes("Scope-1") || selectedScopes.includes("Aggregated Scope")) {
       scope1Info[0].Category.forEach(cat => {
         if (!categoryOptions.includes(cat.name)) {
           categoryOptions.push(cat.name);
@@ -43,7 +43,7 @@ const EmissionProjectionView = ({ scenario = {}, onSave, onPrevious }) => {
       });
     }
     
-    if (selectedScopes.includes("Scope 2") || selectedScopes.includes("Aggregated Scope")) {
+    if (selectedScopes.includes("Scope-2") || selectedScopes.includes("Aggregated Scope")) {
       scope2Info[0].Category.forEach(cat => {
         if (!categoryOptions.includes(cat.name)) {
           categoryOptions.push(cat.name);
@@ -51,7 +51,7 @@ const EmissionProjectionView = ({ scenario = {}, onSave, onPrevious }) => {
       });
     }
     
-    if (selectedScopes.includes("Scope 3") || selectedScopes.includes("Aggregated Scope")) {
+    if (selectedScopes.includes("Scope-3") || selectedScopes.includes("Aggregated Scope")) {
       scope3Info[0].Category.forEach(cat => {
         if (!categoryOptions.includes(cat.name)) {
           categoryOptions.push(cat.name);
@@ -392,7 +392,7 @@ const handleSubCategorySelection = (subCategory) => {
     
     // Only add scopes if not using aggregated
     if (!selectedScopes.includes("Aggregated Scope")) {
-      filters.scope = selectedScopes.map(scope => scope.toLowerCase().replace(" ", ""));
+      filters.scope = selectedScopes.map(scope => scope);
     }
     
     // Only add categories if not using aggregated
@@ -410,15 +410,15 @@ const handleSubCategorySelection = (subCategory) => {
       filters.activity = selectedActivities;
     }
     
-    // Add net zero parameter
-    filters.include_net_zero = includeNetZero;
+    // // Add net zero parameter
+    // filters.include_net_zero = includeNetZero;
     
-    // Add target year parameters
-    filters.target_year = extendedTargetYear;
-    filters.main_target_year = mainTargetYear;
+    // // Add target year parameters
+    // filters.target_year = extendedTargetYear;
+    // filters.main_target_year = mainTargetYear;
     
     // Add business metrics
-    filters.metrics = businessMetrics
+    filters.metric = businessMetrics
       .filter(m => m.selected)
       .map(m => m.id)
       .join(',');
@@ -451,7 +451,7 @@ useEffect(() => {
     
     yearActivities.forEach(activity => {
       // Extract each field and add to the corresponding Set
-      if (activity.scope) uniqueScopes.add(activity.scope.replace('-', ' '));
+      if (activity.scope) uniqueScopes.add(activity.scope);
       if (activity.category) uniqueCategories.add(activity.category);
       if (activity.sub_category) uniqueSubCategories.add(activity.sub_category);
       if (activity.activity_name) uniqueActivities.add(activity.activity_name);
@@ -469,7 +469,7 @@ useEffect(() => {
   Object.values(graphData.yearly_data).forEach(yearActivities => {
     yearActivities.forEach(activity => {
       const matchesScope = selectedScopes.includes("Aggregated Scope") || 
-        selectedScopes.includes(activity.scope.replace('-', ' '));
+        selectedScopes.includes(activity.scope);
       
       const matchesCategory = selectedCategories.includes("Aggregated Scope") || 
         selectedCategories.includes(activity.category);

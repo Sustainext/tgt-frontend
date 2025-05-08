@@ -563,20 +563,32 @@ export const getScenarioGraphData = async (scenarioId, filters = {}) => {
     // Convert filters object to URL query params
     const queryParams = new URLSearchParams();
     
-    Object.keys(filters).forEach((key) => {
-      if (filters[key] !== null && filters[key] !== undefined && filters[key] !== "") {
+    // Process filters handling arrays properly
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== "") {
         // Handle arrays for multi-select filters
-        if (Array.isArray(filters[key]) && filters[key].length > 0) {
-          filters[key].forEach((value) => queryParams.append(key, value));
+        if (Array.isArray(value) && value.length > 0) {
+          // Check if this is a case where we should use comma-separated values
+          // This is typically for filter parameters that expect multiple values
+          // For example: scope=scope1,scope2,scope3
+          const shouldUseCommas = ["scope", "category", "subcategory", "activity", "region"].includes(key);
+          
+          if (shouldUseCommas) {
+            // Join array values with commas
+            queryParams.append(key, value.join(','));
+          } else {
+            // Use separate parameters for each value in the array
+            value.forEach(item => queryParams.append(key, item));
+          }
         } else {
-          queryParams.append(key, filters[key]);
+          queryParams.append(key, value);
         }
       }
     });
     
-    // Append query parameters if they exist
+    // Build URL with query parameters if they exist
     const url = queryParams.toString() 
-      ? `/optimize/${scenarioId}/getgraphdata/?${queryParams.toString()}`
+      ? `/optimize/${scenarioId}/getgraphdata/?${queryParams.toString()}` 
       : `/optimize/${scenarioId}/getgraphdata/`;
     
     const response = await apiClient.get(url);

@@ -118,17 +118,6 @@ export const removeActivityFromScenario = createAsyncThunk(
   }
 );
 
-// Utility functions for working with activities
-const findActivityById = (activities, activityId) => {
-  if (!activities || !Array.isArray(activities)) return null;
-  return (
-    activities.find((activity) => {
-      const id = activity.activity_id || activity.id || activity.uuid;
-      return id === activityId;
-    }) || null
-  );
-};
-
 const getActivityIndexById = (activities, activityId) => {
   if (!activities || !Array.isArray(activities)) return -1;
   return activities.findIndex((activity) => {

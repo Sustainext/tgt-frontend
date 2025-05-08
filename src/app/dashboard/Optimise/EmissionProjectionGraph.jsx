@@ -14,11 +14,12 @@ const EmissionProjectionGraph = ({
   targetYear,  // Extended target year that can be modified by the user
   mainTargetYear, // Original target year from scenario creation
   selectedScope = "scope1", 
-  selectedBusinessMetrics = ["total"] // Default to showing total emissions if no metrics selected
+  selectedBusinessMetrics = ["total"], // Default to showing total emissions if no metrics selected
+  loading = false // Loading state prop
 }) => {
   // Set up the years for the x-axis, based on extendedTargetYear
   const years = [];
-  for (let year = baseYear; year <= targetYear; year++) {
+  for (let year = baseYear; year <= mainTargetYear; year++) {
     years.push(year);
   }
 
@@ -35,7 +36,7 @@ const EmissionProjectionGraph = ({
     // Create a line for each metric
     metricsToShow.forEach(metric => {
       const metricData = {
-        id: metric === "total" ? "Total Emissions" : `${metric.charAt(0).toUpperCase() + metric.slice(1)} Emissions`,
+        id: metric === "total" ? "Total" : `${metric.charAt(0).toUpperCase() + metric.slice(1)}`,
         curve: "monotoneX",
         data: []
       };
@@ -131,20 +132,36 @@ const EmissionProjectionGraph = ({
       initialValue = graphData.totals[initialYear].total || 0;
     }
     
+    // Determine the effective target year for net zero
+    // If extendedTargetYear is less than mainTargetYear, use extendedTargetYear
+    // Otherwise use mainTargetYear
+    const effectiveTargetYear = targetYear < mainTargetYear ? targetYear : mainTargetYear;
+
+    //add validation if targetYear>mainTargetYear
+
+    
     return years.map((year) => {
-      // Calculate based on the main target year for net zero goal
-      const yearsToTarget = mainTargetYear - baseYear;
+      // Skip years beyond the effective target year if it's less than mainTargetYear
+      if (targetYear < mainTargetYear && year > targetYear) {
+        return {
+          x: year,
+          y: 0 // Use 0 to indicate no data point (won't be rendered)
+        };
+      }
+      
+      // Calculate based on the effective target year for net zero goal
+      const yearsToTarget = effectiveTargetYear - baseYear;
       const currentYearProgress = year - baseYear;
       
-      // If we're beyond the main target year, keep at zero
-      if (year > mainTargetYear) {
+      // If we're beyond the effective target year, keep at zero
+      if (year > effectiveTargetYear) {
         return {
           x: year,
           y: 0
         };
       }
       
-      // Linear reduction to reach zero by mainTargetYear
+      // Linear reduction to reach zero by effectiveTargetYear
       const reduction = currentYearProgress / yearsToTarget;
       const value = initialValue * (1 - reduction);
       
@@ -171,8 +188,8 @@ const EmissionProjectionGraph = ({
     // Create net zero data if enabled
     if (includeNetZero) {
       const netZeroData = {
-        id: "Net Zero Scenario",
-        data: generateNetZeroData(),
+        id: "Net Zero",
+        data: generateNetZeroData().filter(point => point.y !== null), // Filter out null points
         curve: "linear" // Keep net zero line straight
       };
       
@@ -250,10 +267,11 @@ const EmissionProjectionGraph = ({
 
   // Generate dynamic colors for the metrics
   const generateColors = () => {
-    const baseColors = ['#3182CE', '#38A169', '#DD6B20', '#805AD5', '#D69E2E'];
+    // Use highly contrasting colors for better distinction
+    const baseColors = ['#3182CE', '#E53E3E', '#805AD5', '#F6AD55', '#2C7A7B', '#F56565', '#FC8181', '#68D391', '#4FD1C5', '#63B3ED'];
     
     if (includeNetZero) {
-      // Reserve the last color for Net Zero
+      // Reserve a specific green for Net Zero
       return [...baseColors.slice(0, nivoGraphData.length - 1), '#48BB78'];
     }
     
