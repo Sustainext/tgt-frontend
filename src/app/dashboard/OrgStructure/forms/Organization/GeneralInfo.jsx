@@ -9,7 +9,9 @@ import { timeZones } from "../../../../shared/data/timezones";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
 import { Currency } from "../../../../shared/data/currency";
-
+import SearchableCityDropdown from "../SearchableCityDropdown";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const dateFormatOptions = [
   { label: "MM/DD/YYYY", value: "MM/DD/YYYY" },
   { label: "DD/MM/YYYY", value: "DD/MM/YYYY" },
@@ -59,6 +61,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
   const [formData, setFormData] = useState(initialState);
   const router = useRouter();
 
+  
   useEffect(() => {
     if (editData) {
       const selectedCountryCode = editData.filteredData[0]?.country || "";
@@ -204,21 +207,109 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
       // setSelectedFrameworks(selectedFrameworks);
     }
   }, [editData]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const [selectedIndustry, setSelectedIndustry] = useState("");
   const [subIndustries, setSubIndustries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedState, setSelectedState] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState(``);
+  const [selectedState, setSelectedState] = useState(``);
   const [selectedCity, setSelectedCity] = useState("");
+  const [newselectedCountry, setnewSelectedCountry] = useState(``);
+  const [newselectedState, setnewSelectedState] = useState(``);
+
   const [selectedTimeZone, setSelectedTimeZone] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
-
+  // console.log(formData,'formData');
+  // console.log(selectedCity,"selectedCountry test");
   useEffect(() => {
-    const allCountries = Country.getAllCountries();
-    setCountries(allCountries);
+    const loadEditableLocationData = async () => {
+      if (!editData || countries.length === 0) return;
+  
+      const selectedData = editData.filteredData[0] || {};
+      const selectedCountryCode = selectedData.country || "";
+      const selectedStateCode = selectedData.state || "";
+      const selectedCityName = selectedData.city || "";
+  
+      // Match country by sortname (e.g., IN, US)
+      const matchedCountry = countries.find(
+        (country) => country.sortname === selectedCountryCode
+      );
+  
+      const newCountryValue = matchedCountry
+        ? `${matchedCountry.id}:${matchedCountry.sortname}`
+        : "";
+  
+      setSelectedCountry(selectedCountryCode);
+      setnewSelectedCountry(newCountryValue);
+      console.log(newCountryValue,"test newCountryValue edite");
+  
+      if (matchedCountry?.id) {
+        try {
+          // Fetch states
+          const stateResponse = await axiosInstance.get(
+            `/geo_data/states/?country_id=${matchedCountry.id}`
+          );
+          const fetchedStates = stateResponse.data || [];
+          setStates(fetchedStates);
+  
+          // Match state by code
+          const matchedState = fetchedStates.find(
+            (state) => state.state_name === selectedStateCode
+          );
+  
+          const newStateValue = matchedState
+            ? `${matchedState.id}:${matchedState.state_name}`
+            : "";
+  
+          setSelectedState(selectedStateCode);
+          setnewSelectedState(newStateValue);
+          console.log(newStateValue,"test newStateValue edite");
+          if (matchedState?.id) {
+            try {
+              // Fetch cities
+              const cityResponse = await axiosInstance.get(
+                `/geo_data/cities/?state_id=${matchedState.id}`
+              );
+              const fetchedCities = cityResponse.data || [];
+              setCities(fetchedCities);
+  
+              // Set selected city
+              setSelectedCity(selectedCityName);
+            } catch (cityError) {
+              console.error("Failed to fetch cities:", cityError);
+              setCities([]);
+            }
+          }
+        } catch (stateError) {
+          console.error("Failed to fetch states:", stateError);
+          setStates([]);
+        }
+      }
+    };
+  
+    loadEditableLocationData();
+  }, [editData,countries]);
+  const loadFormData = async () => {
+    const url = `${process.env.BACKEND_API_URL}/geo_data/countries/`;
+    try {
+      const response = await axiosInstance.get(url);
+      setCountries(response.data);
+      console.log("API call data", response.data);
+    } catch (error) {
+      console.error("API call failed:", error);
+    } finally {
+    }
+  };
+  useEffect(() => {
+    // const allCountries = Country.getAllCountries();
+    // setCountries(allCountries);
+    loadFormData();
   }, []);
 
   const validateForm = () => {
@@ -318,6 +409,9 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
     if (name === "state") {
       handleStateChange({ target: { value } });
     }
+    if (name === "city") {
+      setSelectedCity(value);
+    }
   };
 
   const handleReportingPeriodChange = (event) => {
@@ -331,22 +425,69 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
     }));
   };
 
-  const handleCountryChange = (event) => {
-    const countryId = event.target.value;
-    setSelectedCountry(countryId);
-    const statesOfSelectedCountry = State.getStatesOfCountry(countryId);
-    setStates(statesOfSelectedCountry);
+  const handleCountryChange = async (event) => {
+    const [countryId, countryShortname] = event.target.value.split(":"); // Split the value by ":"
+    setSelectedCountry(countryId); // Store the country ID
+    const newsortname = countryShortname;
+    setnewSelectedCountry(event.target.value);
+
+    try {
+      // Fetch states based on the selected country ID
+      const response = await axiosInstance.get(
+        `/geo_data/states/?country_id=${countryId}`
+      );
+      setStates(response.data || []); // Set the fetched states into the state variable
+      console.log("Fetched states:", response.data);
+    } catch (error) {
+      console.error("Failed to fetch states:", error);
+      setStates([]); // Reset states in case of an error
+    }
+
+    // Update form data to reflect the selected country, and reset state and city selections
+    setFormData((prevState) => ({
+      ...prevState,
+      addressInformation: {
+        ...prevState.addressInformation,
+        country: newsortname, // Set the selected country ID in the form data
+        state: "", // Clear state selection
+        city: "", // Clear city selection
+      },
+    }));
+
+    setCities([]); // Reset cities
+    setSelectedState(""); // Reset selected state
+    setSelectedCity(""); // Reset selected city
   };
 
-  const handleStateChange = (event) => {
-    const stateId = event.target.value;
-    setSelectedState(stateId);
-    const citiesOfSelectedState = City.getCitiesOfState(
-      selectedCountry,
-      stateId
-    );
-    setCities(citiesOfSelectedState);
-    console.log(selectedCountry, event.target.value, citiesOfSelectedState);
+  const handleStateChange = async (event) => {
+    const [stateId, statename] = event.target.value.split(":"); // Split the value by ":"
+    setSelectedState(stateId); // Store the country ID
+    const newstatename = statename;
+    setnewSelectedState(event.target.value);
+    // const stateId = event.target.value;
+    // setSelectedState(stateId);
+
+    try {
+      const response = await axiosInstance.get(
+        `/geo_data/cities/?state_id=${stateId}`
+      );
+      setCities(response.data || []);
+      console.log("api to fetch cities:", response.data);
+    } catch (error) {
+      console.error("Failed to fetch cities:", error);
+      setCities([]);
+    }
+
+    setFormData((prevState) => ({
+      ...prevState,
+      addressInformation: {
+        ...prevState.addressInformation,
+        state: newstatename,
+        city: "",
+      },
+    }));
+
+    setSelectedCity("");
   };
 
   const handleTimezoneChange = (event) => {
@@ -389,6 +530,34 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
     };
   }, []);
 
+  const handleAddCity = async (cityName) => {
+    try {
+      // API request to create a new city
+      const response = await axiosInstance.post("geo_data/cities/create/", {
+        city_name: cityName,
+        state: selectedState,
+      });
+
+      // Assuming the response contains the newly created city object
+      const newCity = response.data;
+
+      // Add the newly created city to the state
+      setCities((prevCities) => [...prevCities, newCity]);
+
+      // Show a success toast message
+      toast.success("City added successfully!");
+
+      // Return the newly added city (optional)
+      return newCity;
+    } catch (error) {
+      console.error("Error adding city:", error);
+      // Show an error toast message
+      toast.error("Failed to add city. Please try again.");
+      // Handle error accordingly
+      throw new Error("Failed to add city");
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center drop-shadow-lg border-b-2 py-6 w-full">
@@ -422,8 +591,8 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
 
       <div className="space-y-4 bg-white py-4 mx-4">
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
-        <div className="hidden xl:block"></div>
-        <div className="hidden xl:block"></div>
+          <div className="hidden xl:block"></div>
+          <div className="hidden xl:block"></div>
           <div>
             {heading === "Corporate Entity Details" && (
               <div className="space-y-3">
@@ -488,8 +657,8 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
             )}
           </div>
 
-          <div className="hidden xl:block"></div>
-          <div className="hidden xl:block"></div>
+          <div className="hidden xl:block md:block lg:block"></div>
+          <div className="hidden xl:block md:block lg:block w-full"> </div>
 
           {/* Type of Incorporation */}
           <div className="space-y-3">
@@ -775,8 +944,8 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
             )}
           </div>
 
-          <div className="hidden xl:block"></div>
-          <div className="hidden xl:block"></div>
+          <div className="hidden xl:block md:block lg:block"></div>
+          <div className="hidden xl:block md:block lg:block w-full"> </div>
 
           {/* Country */}
           <div className="space-y-3">
@@ -788,7 +957,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
             </label>
             <select
               name="country"
-              value={formData.addressInformation.country}
+              value={newselectedCountry}
               onChange={handleAddressInformationChange}
               className={`border ${
                 validationErrors.country ? "border-red-500" : "border-gray-300"
@@ -796,8 +965,11 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
             >
               <option value="">Select Country</option>
               {countries.map((country) => (
-                <option key={country.isoCode} value={country.isoCode}>
-                  {country.name}
+                <option
+                  key={country.id}
+                  value={`${country.id}:${country.sortname}`}
+                >
+                  {country.country_name}
                 </option>
               ))}
             </select>
@@ -816,7 +988,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
             </label>
             <select
               name="state"
-              value={formData.addressInformation.state}
+              value={newselectedState}
               onChange={handleAddressInformationChange}
               className={`border ${
                 validationErrors.state ? "border-red-500" : "border-gray-300"
@@ -824,8 +996,11 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
             >
               <option value="">Select State</option>
               {states.map((state) => (
-                <option key={state.isoCode} value={state.isoCode}>
-                  {state.name}
+                <option
+                  key={state.id}
+                  value={`${state.id}:${state.state_name}`}
+                >
+                  {state.state_name}
                 </option>
               ))}
             </select>
@@ -836,30 +1011,26 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
 
           {/* City */}
           <div className="space-y-3">
-            <label
-              htmlFor="city"
-              className="block text-neutral-800 text-[13px] font-normal"
-            >
-              City <span className="text-red-500">*</span>
-            </label>
-            <select
-              name="city"
-              value={formData.addressInformation.city}
-              onChange={handleAddressInformationChange}
-              className={`border ${
-                validationErrors.city ? "border-red-500" : "border-gray-300"
-              } rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight`}
-            >
-              <option value="">Select City</option>
-              {cities.map((city) => (
-                <option key={city.id} value={city.id}>
-                  {city.name}
-                </option>
-              ))}
-            </select>
-            {validationErrors.city && (
-              <p className="text-red-500 text-xs">{validationErrors.city}</p>
-            )}
+            <SearchableCityDropdown
+              cities={cities}
+              selectedCity={selectedCity}
+              onSelectCity={(cityName) => {
+                setSelectedCity(cityName);
+                setFormData((prevFormData) => ({
+                  ...prevFormData,
+                  addressInformation: {
+                    ...prevFormData.addressInformation,
+                    city: cityName,
+                  },
+                }));
+                setValidationErrors((prev) => ({
+                  ...prev,
+                  city: "",
+                }));
+              }}
+              onAddCity={handleAddCity} // ✅ from parent
+              error={validationErrors.city}
+            />
           </div>
         </div>
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Energydata } from "./../../../shared/data/Energydata";
 import { MdOutlineClear, MdKeyboardArrowDown } from "react-icons/md";
 import { MdChevronRight } from "react-icons/md";
-const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
+const Header = ({ activeTab, setIsBoxOpen, setMobileopen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState([]);
@@ -182,7 +182,7 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
   return (
     <>
       <div className="flex justify-between items-center  xl:border-b border-gray-200 pb-4 xl:z-[100] relative">
-        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block ">
+        <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block ">
           <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
             <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
               Environment
@@ -236,12 +236,12 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
           </div>
         </div>
         {/* mobile version */}
-        <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+        <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden  2xl:hidden 4k:hidden">
           <div
             className="w-full  py-4 h-[100px]   rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
             onClick={toggleSidebar}
           >
-            <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
+            <div className="text-left mb-2 ml-3  pt-0 flex justify-between">
               <div className="">
                 <p className="text-[11px]">Environment</p>
                 <div className="h-[28px] ">
@@ -299,6 +299,73 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
                     ))
                   )}
               </div>
+            </div>
+          </div>
+        </div>
+
+         {/* tablet version */}
+         <div className="hidden justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:block  2xl:hidden 4k:hidden">
+          <div
+            className="w-full  py-4 h-[100px]   rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+            onClick={toggleSidebar}
+          >
+            <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
+              <div className="">
+                <p className="text-[11px]">Environment</p>
+                <div className="h-[28px] ">
+                  <div className="h-[28px]">
+                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
+                      {activeTab}
+                    </p>
+                  </div>
+                  <div className="w-[100px] pl-1 mt-2 pr-0.5 bg-slate-200 rounded justify-center items-center flex">
+                    <div className="text-zinc-600 text-xs font-normal font-['Manrope'] leading-[21px]">
+                      Material Topic
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center me-5">
+                <MdKeyboardArrowDown className={`text-2xl float-end `} />
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full float-end pt-2 me-1 my-4">
+            <div className="">
+              <div className="flex mb-2">
+                {gri
+                  .filter((g) => g.category === activeTab)
+                  .map((g) =>
+                    g.data.map((item) => (
+                      <button
+                        key={item.tagid}
+                        className={`text-[#007EEF] bg-slate-200 rounded-full text-[11px] ${
+                          item.tagid == "3, 2016" ? "w-[100px]" : "w-[72px]"
+                        } h-[22px] ml-2 text-center pt-0.5`}
+                        onClick={() => toggleDrawer(item.infoid)}
+                      >
+                        {g.tag} - {item.tagid}
+                      </button>
+                    ))
+                  )}
+                        {sdg
+                  .filter((s) => s.category === activeTab)
+                  .map((s) =>
+                    s.data.map((item) => (
+                      <button
+                        key={item.id}
+                        className={`text-[#fff] ${item.bgColor} rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5`}
+                        onClick={() => toggleDrawer(item.id)}
+                      >
+                        {item.label}
+                      </button>
+                    ))
+                  )}
+              </div>
+
+         
             </div>
           </div>
         </div>

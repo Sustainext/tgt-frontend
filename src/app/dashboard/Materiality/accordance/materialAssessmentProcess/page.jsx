@@ -64,7 +64,7 @@ const MaterialAssessmentProcess = ({ handleTabClick, setMobileopen }) => {
       </div>
       {/* select Materiality topic start */}
       <div className="w-full">
-        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+        <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
           <div className="flex flex-col justify-start overflow-x-hidden ">
             <div className="flex justify-between items-center border-b border-gray-200 w-full">
               <div className="w-full">
@@ -142,7 +142,7 @@ const MaterialAssessmentProcess = ({ handleTabClick, setMobileopen }) => {
             </div>
           </div>
         </div>
-        <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+        <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:block  2xl:hidden 4k:hidden">
           <div
             className="w-full  py-4  rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
             onClick={toggleSidebar}

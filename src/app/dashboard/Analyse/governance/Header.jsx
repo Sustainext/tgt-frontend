@@ -40,7 +40,7 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
   return (
     <>
         <div className="flex justify-between items-center  xl:border-b border-gray-200 pb-4 xl:z-[100] relative">
-           <div className="hidden xl:block lg:block md:block 2xl:block 4k:block ">
+           <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block ">
              <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
                <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
                Governance
@@ -98,7 +98,7 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
              </div>
            </div>
            {/* mobile version */}
-           <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+           <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:block  2xl:hidden 4k:hidden">
              <div
                className="w-full  py-4 h-auto  rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
                onClick={toggleSidebar}
