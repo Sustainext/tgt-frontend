@@ -360,7 +360,7 @@ const Report = () => {
       .filter((entity) => entity.checked)
       .map((entity) => ({
         corporate_id: entity.id,
-        ownership_ratio: entity.ownershipRatio,
+        ownership_ratio: parseInt(entity.ownershipRatio),
       }));
     const sandData = {
       name: reportname,
