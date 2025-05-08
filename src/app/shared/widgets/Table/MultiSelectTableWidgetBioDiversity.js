@@ -114,7 +114,6 @@ const MultiselectTableWidgetBioDiversity = ({
   
         // If the condition is no longer satisfied, clear the dependent field
         if (selectedValue !== equals) {
-          console.log("inside")
           updatedValues[rowIndex][targetField]='';
         } 
       }
@@ -154,11 +153,15 @@ const MultiselectTableWidgetBioDiversity = ({
     setOthersInputs(updatedOthersInputs);
   };
 
-  const debouncedUpdate = useCallback(debounce(onChange, 500), [onChange]);
+  const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
 
   useEffect(() => {
     debouncedUpdate(localValue);
   }, [localValue, debouncedUpdate]);
+
+  // useEffect(() => {
+  //   onChange(localValue);
+  // }, [localValue]);
 
   const handleInputChange = (rowIndex, key, newValue) => {
     const updatedValues = [...localValue];
@@ -168,6 +171,7 @@ const MultiselectTableWidgetBioDiversity = ({
     updatedValues[rowIndex][key] = newValue; // Directly update the value for the input field
     setLocalValue(updatedValues);
   };
+
   return (
     <div
       style={{

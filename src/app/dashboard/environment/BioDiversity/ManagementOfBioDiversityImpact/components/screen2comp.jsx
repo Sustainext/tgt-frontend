@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useMemo } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
@@ -243,6 +243,17 @@ const Screen2comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     updateFormData();
   };
 
+  const customWidgets = useMemo(() => ({
+    ...widgets,
+    MultiselectTableWidget: (props) => (
+      <MultiselectTableWidget
+        {...props}
+        locationData={locationData}
+        isAbled="No"
+      />
+    ),
+  }), [widgets, locationData]);
+
   return (
     <>
       <div
@@ -283,16 +294,7 @@ const Screen2comp = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            widgets={{
-              ...widgets,
-               MultiselectTableWidget: (props) => (
-                                  <MultiselectTableWidget
-                                    {...props}
-                                    locationData={locationData}
-                                    isAbled="No"
-                                  />
-                                ),
-            }}
+            widgets={customWidgets}
           />
         </div>
 

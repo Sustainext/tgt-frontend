@@ -17,6 +17,8 @@ import LogoutPopup from '../shared/components/logoutModal'
 import SettingPanel from './settingPanel'
 import axiosInstance, { patch } from "../utils/axiosMiddleware";
 import { MdOutlineLanguage } from "react-icons/md";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const DashboardHeader = () => {
   const { open } = GlobalState();
@@ -24,11 +26,14 @@ const DashboardHeader = () => {
   const [profileVisible, setProfileVisible] = useState(false);
   const [isModalOpen,setIsModalOpen] = useState(false)
   const [activeTab, setActiveTab] = useState('profile');
+  const [refresh,setRefresh]=useState(false)
 
   const [userData, setUserData] = useState({
     username: "",
     email: "",
     initials: "",
+    first_name:'',
+    last_name:''
   });
   const { logout, userDetails } = useAuth(); // Get userDetails from Auth context
   const router = useRouter();
@@ -68,7 +73,8 @@ const DashboardHeader = () => {
           designation:data.designation,
           jobDescription:data.job_description,
           role:data.custom_role,
-          phone:data.phone
+          phone:data.phone,
+          profile_pic:data.profile_pic
         })
        }
       } catch (error) {
@@ -81,7 +87,7 @@ const DashboardHeader = () => {
       // setLoading(false);
     };
     fetchUserDetails()
-  }, []);
+  }, [refresh]);
 
 
   const getInitials = (email) => {
@@ -96,6 +102,11 @@ const DashboardHeader = () => {
     return input.includes("@") ? input.split("@")[0] : input;
   };
 
+  function capitalizeName(name) {
+    if (!name) return '';
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  }
+
 
   // Combined effect for initializing user data
   useEffect(() => {
@@ -103,11 +114,15 @@ const DashboardHeader = () => {
       // First try to get data from Auth context
       if (userDetails?.user_detail?.[0]) {
         const email = userDetails.user_detail[0].username;
+        const first_name=userDetails.user_detail[0].first_name
+        const last_name= userDetails.user_detail[0].last_name
         setUserData({
           username: extractUsername(email),
           email: email,
           initials: getInitials(email),
-        });
+          last_name:capitalizeName(last_name),
+          first_name:capitalizeName(first_name)
+        })
         return;
       }
 
@@ -270,15 +285,46 @@ const DashboardHeader = () => {
         <div className="flex justify-end items-center  ">
           <div className="flex">
           
-            {/* <div className="text-[#007EEF] flex items-center">
-              <span className="text-[#007EEF]">Hi,</span>
-              <span className="me-4 text-[#007EEF]">{userData.username}</span>
-            </div> */}
+          <div className="text-[#007EEF] flex relative items-center whitespace-nowrap">
+  <span className="text-[#007EEF] me-1">Hi,</span>
+  <span title={userData?.first_name ? `${userData.first_name} ${userData.last_name}` : userData?.username} 
+  className="me-4 truncate max-w-[200px] overflow-hidden inline-block">
+    {userData?.first_name ? `${userData.first_name} ${userData.last_name}` : userData?.username}
+  </span>
+  {/* <ReactTooltip
+                    id={`tooltip-$e1`}
+                    place="top"
+                    effect="solid"
+                    style={{
+                      width: "fit-content",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "left",
+                    }}
+                  ></ReactTooltip> */}
+</div>
+
+
+
           
          
-            <div className="relative cursor-pointer" onClick={toggleDropdown}>
+            <div className="relative cursor-pointer flex-shrink-0" onClick={toggleDropdown}>
               <div className="flex justify-center items-center">
-                <div
+                 {userProfileData?.profile_pic?(
+                  <div className=" w-[30px] h-[30px] flex justify-center items-center overflow-hidden">
+                     <img
+                   src={userProfileData.profile_pic}
+                   alt="Profile"
+                   className="w-full h-full rounded-full object-cover border border-gray-300"
+                 />
+                  </div>
+                  
+                  
+                ):(
+                  <div
                   style={{
                     background:
                       "linear-gradient(rgb(0, 126, 239), rgb(42, 228, 255))",
@@ -295,6 +341,9 @@ const DashboardHeader = () => {
                 >
                   {userData.initials}
                 </div>
+                )} 
+                
+                
                 <div>
                   <svg
                     className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv"
@@ -408,14 +457,14 @@ const DashboardHeader = () => {
       Account Settings
     </button>
 
-    <button
+    {/* <button
       // onClick={() => {setProfileVisible(true);
       //   setDropdownVisible(false); setActiveTab('account')}}
       className="w-full  p-2 flex items-center hover:bg-blue-50 hover:rounded-md text-gray-700 text-sm hover:text-gray-900"
     >
      <MdOutlineLanguage className="w-4 h-4 mr-2" />
       Language Settings
-    </button>
+    </button> */}
 
 
 <div className="border-b pb-4 border-gray-200">
@@ -453,7 +502,7 @@ const DashboardHeader = () => {
           className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
         >
           {/* <Profile onClose={() => setProfileVisible(false)} /> */}
-          <SettingPanel activeTab={activeTab} setActiveTab={setActiveTab} setProfileVisible={setProfileVisible} userProfileData={userProfileData} email={userData.email} />
+          <SettingPanel setRefresh={setRefresh} activeTab={activeTab} setActiveTab={setActiveTab} setProfileVisible={setProfileVisible} userProfileData={userProfileData} email={userData.email} />
         </div>
       )}
       {opens && (

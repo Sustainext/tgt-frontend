@@ -3,6 +3,7 @@ import MyResponsivePie from "./PieChart";
 import MyResponsivesouresdata from "./PieChart2";
 import MyResponsiveloction from "./PieChart3";
 import Moment from "react-moment";
+import EmissionByInvestment from './PieChart4'
 
 function Results({ exdata, totalContributionScope, souresdata, locatiodata }) {
   let totalScope1 = 0;
@@ -109,6 +110,9 @@ function Results({ exdata, totalContributionScope, souresdata, locatiodata }) {
       </div>
       <div className="h-[401px] w-[90%]  mt-16 mb-5">
         <MyResponsiveloction locatiodata={locatiodata} />
+      </div>
+      <div className="h-[401px] w-[90%]  mt-16 mb-5">
+        <EmissionByInvestment souresdata={souresdata} />
       </div>
     </>
   );
