@@ -101,38 +101,44 @@ const BusinessMetricsWithTooltips = ({
   // Save changes to the server - can be called manually or automatically
   const saveChangesToServer = useCallback(async () => {
     if (!scenarioId || Object.keys(pendingChanges).length === 0) return;
-
+    
     try {
       setLocalSaving(true);
-
+  
       // Build payload with all pending changes
       const payload = {};
-
+  
       // Add all changed metrics data
       Object.keys(pendingChanges).forEach((metricId) => {
         if (pendingChanges[metricId]) {
-          payload[`${metricId}_data`] =
+          payload[`${metricId}_data`] = 
             metricsDataRef.current[`${metricId}_data`] || {};
-          payload[`${metricId}_weightage`] =
+          payload[`${metricId}_weightage`] = 
             metricsDataRef.current[`${metricId}_weightage`] || 0;
         }
       });
-
-      await dispatch(
+  
+      // Update local state first - no need for unwrap
+      dispatch(
         updateMetricData({
-          scenarioId,
-          payload,
+          metricId: Object.keys(pendingChanges)[0], // Just need to pass any metricId
+          data: payload
         })
-      ).unwrap();
-
-      // Dispatch the API update with the complete payload
-      await dispatch(
+      );
+  
+      // Then send to API - handle as a regular promise if possible
+      const result = dispatch(
         updateScenarioMetrics({
           scenarioId,
           payload,
         })
-      ).unwrap(); // .unwrap() to handle the promise result
-
+      );
+      
+      // Wait for the promise to resolve if it is one
+      if (result && typeof result.then === 'function') {
+        await result;
+      }
+  
       // Clear pending changes after successful save
       setPendingChanges({});
       showSaveMessage("success", "✅ Saved");

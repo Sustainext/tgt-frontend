@@ -11,12 +11,50 @@ function Carbonaccountingobjectives({ value, setValue, roles, setRoles }) {
   const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
   const editor = useRef(null);
   const [content, setContent] = useState("");
+  // const config = {
+  //   askBeforePasteHTML: false,
+  //   askBeforePasteFromWord: false,
+  //   defaultActionOnPaste: 'insert_clear_html',
+  //   height: 400, // sets the height to 400 pixels
+  // };
   const config = {
-    askBeforePasteHTML: false,
-    askBeforePasteFromWord: false,
+    enter: "BR", // Or customize behavior on Enter key
+cleanHTML: true,
+    enablePasteHTMLFilter: false, 
+  askBeforePasteHTML: false, 
+  askBeforePasteFromWord: false,
+    style: {
+      fontSize: "14px",
+      color:"#667085"
+    },
+    height:400,
+    allowResizeY: false,
     defaultActionOnPaste: 'insert_clear_html',
-    height: 400, // sets the height to 400 pixels
+    toolbarSticky: false,
+    toolbar: true,
+    buttons: [
+        'bold',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'align',
+        'outdent',
+        'indent',
+        'ul',
+        'ol',
+        'paragraph',
+        'link',
+        'table',
+        'undo',
+        'redo',
+        'hr',
+        'fontsize',
+        'selectall'
+    ],
+    // Remove buttons from the extra buttons list
+    removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
   };
+
   const handleEditorChange = (newContent) => {
     setRoles(newContent);
   };

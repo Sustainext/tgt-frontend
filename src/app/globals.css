@@ -17,7 +17,91 @@
 
 div[class*="background__Container"] {
   margin-right: 220px !important;
+  margin-top: 5px !important;
 }
+
+div[class*="EmbedRoot__Root"]{
+  z-index: 1000 !important;
+}
+
+div[class*="Popout__PopoutContent"] {
+  transform: translate(98vw, 5vh) !important;
+  margin-top: 15px !important;
+}
+
+@media (min-width: 3840px){
+  div[class*="background__Container"] {
+    margin-right: 300px !important;
+    margin-top: 5px !important;
+  }
+  
+  div[class*="Popout__PopoutContent"] {
+    transform: translate(37vw, 5vh) !important;
+    margin-top: -20px !important;
+  }
+}
+
+@media (min-width: 3200px) and (max-width: 3839px){
+  div[class*="background__Container"] {
+    margin-right: 280px !important;
+    margin-top: 5px !important;
+  }
+  
+  
+  div[class*="Popout__PopoutContent"] {
+    transform: translate(65vw, 5vh) !important;
+    margin-top: -15px !important;
+  }
+}
+
+@media (min-width: 2560px) and (max-width: 3199px) {
+  div[class*="background__Container"] {
+    margin-right: 260px !important;
+    margin-top: 5px !important;
+  }
+  
+  
+  div[class*="Popout__PopoutContent"] {
+    transform: translate(70vw, 5vh) !important;
+    margin-top: 5px !important;
+  }
+}
+
+@media (min-width: 1950px) and (max-width: 2559px) {
+  div[class*="background__Container"] {
+    margin-right: 220px !important;
+    margin-top: 5px !important;
+  }
+  
+  div[class*="Popout__PopoutContent"] {
+    transform: translate(85vw, 5vh) !important;
+    margin-top: 10px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  div[class*="background__Container"] {
+    margin-right: 200px !important;
+    margin-top: 8px !important;
+  }
+  
+  div[class*="Popout__PopoutContent"] {
+    transform: translate(50vw, 5vh) !important;
+    margin-top: 10px !important;
+  }
+}
+
+
+@media (min-width: 761px) and (max-width: 1025px) {
+  div[class*="background__Container"] {
+    margin-right: 220px !important;
+  }
+
+  div[class*="Popout__PopoutContent"] {
+    transform: translate(80vw, 5vh) !important;
+  }
+}
+
 
 
 /* 4K screens (3840px width and above) */
