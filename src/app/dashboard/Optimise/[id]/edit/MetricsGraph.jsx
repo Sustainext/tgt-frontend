@@ -28,7 +28,7 @@ const MetricsGraph = ({
 }) => {
   // Generate years between base and target
   const years = [];
-  for (let year = baseYear; year <= targetYear; year++) {
+  for (let year = baseYear+1; year <= targetYear; year++) {
     years.push(year.toString());
   }
 

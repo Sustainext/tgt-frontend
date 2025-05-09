@@ -1,6 +1,6 @@
 import { ResponsivePie } from "@nivo/pie";
 import { useEffect, useState } from "react";
-function MyResponsivesouresdata({ souresdata }) {
+function EmissionByInvestment({ souresdata }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -11,42 +11,37 @@ function MyResponsivesouresdata({ souresdata }) {
   }, []);
   const uniqueSources = new Map();
 
-  // console.log(souresdata,"see the data")
 
-  // souresdata.forEach((corporate) => {
-  //   corporate.sources.forEach((source) => {
-  //     const key = source.source_name;
-  //     // Check if the source is already added, if not or if you want to aggregate, adjust the logic here
-  //     if (!uniqueSources.has(key)) {
-  //       uniqueSources.set(key, {
-  //         ...source,
-  //         corporate_name: corporate.corporate_name,
-  //       });
-  //     }
-  //   });
-  // });
+//   souresdata.forEach((corporate) => {
+//     corporate.sources.forEach((source) => {
+//       const key = source.source_name;
+//       // Check if the source is already added, if not or if you want to aggregate, adjust the logic here
+//       if (!uniqueSources.has(key)) {
+//         uniqueSources.set(key, {
+//           ...source,
+//           corporate_name: corporate.corporate_name,
+//         });
+//       }
+//     });
+//   });
 
-  // const sourcesDataForChart = Array.from(uniqueSources.values()).map(
-  //   (source) => ({
-  //     id: source.source_name,
-  //     label:
-  //       source.category_name.length > 14
-  //         ? source.category_name.slice(0, 14) + "…"
-  //         : source.category_name,
-  //     value: parseFloat(source.total_co2e),
-  //     color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-  //   })
-  // );
+//   const sourcesDataForChart = Array.from(uniqueSources.values()).map(
+//     (source) => ({
+//       id: source.source_name,
+//       label:
+//         source.category_name.length > 14
+//           ? source.category_name.slice(0, 14) + "…"
+//           : source.category_name,
+//       value: parseFloat(source.total_co2e),
+//       color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+//     })
+//   );
 
-  let investmentTotal = 0;
-  souresdata.forEach((corporate) => {
-    corporate.sources.forEach((source) => {
-      if (source.category_name === "Investment") {
-        // Sum up all Investment category emissions
-        const co2e = parseFloat(source.total_co2e);
-        investmentTotal += isNaN(co2e) ? 0 : co2e;
-      } else {
-        // Handle non-Investment categories as usual
+
+souresdata.forEach((corporate) => {
+    // Only process corporates with type 'Investment'
+    if (corporate.corporate_type === "Investment") {
+      corporate.sources.forEach((source) => {
         const key = source.source_name;
         if (!uniqueSources.has(key)) {
           uniqueSources.set(key, {
@@ -54,37 +49,30 @@ function MyResponsivesouresdata({ souresdata }) {
             corporate_name: corporate.corporate_name,
           });
         }
-      }
-    });
+      });
+    }
   });
   
-  // Convert unique non-investment sources to chart format
-  const sourcesDataForChart = Array.from(uniqueSources.values()).map((source) => ({
-    id: source.source_name,
-    label:
-      source.category_name.length > 14
-        ? source.category_name.slice(0, 14) + "…"
-        : source.category_name,
-    value: parseFloat(source.total_co2e),
-    color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-  }));
-
-  if (investmentTotal > 0) {
-    sourcesDataForChart.push({
-      id: "Investment",
-      label: "Investment",
-      value: parseFloat(investmentTotal.toFixed(2)),
+  const sourcesDataForChart = Array.from(uniqueSources.values()).map(
+    (source) => ({
+      id: source.source_name,
+      label:
+        source.category_name?.length > 14
+          ? source.category_name.slice(0, 14) + "…"
+          : source.category_name || source.source_name,
+      value: parseFloat(source.total_co2e),
       color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-    });
-  }
+    })
+  );
   
 
+ 
   // Your existing component code continues here...
 
   return (
     <>
       <h3 className="text-left mb-2 p-3 mt-3">
-        <b>Emissions by Sources</b>
+        <b>Emissions by Investments</b>
       </h3>
 
       <ResponsivePie
@@ -215,4 +203,4 @@ function MyResponsivesouresdata({ souresdata }) {
   );
 }
 
-export default MyResponsivesouresdata;
+export default EmissionByInvestment;

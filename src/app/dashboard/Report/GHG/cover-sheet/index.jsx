@@ -58,18 +58,18 @@ function CoverSheet({
 
   return (
     <>
-      <div className="box rounded-lg p-4 h-[497px]">
+      <div className="box rounded-lg p-2 h-[497px]">
         <div className="xl:flex items-center justify-between">
           <div className="flex mt-5">
             <h1 className="text-lg">
-              <p className="text-gray-500">{reportby} name</p>
+              <p className="text-gray-500">{reportby} Name</p>
             </h1>
             <h1 className="ml-2">-</h1>
             <h1 className="text-lg text-gray-500 ml-2">{reportreportorgname}</h1>
           </div>
           <div className="flex mt-5">
             <h1 className="text-lg">
-              <p className="text-gray-500">Year</p>
+              <p className="text-gray-500">Reporting Year</p>
             </h1>
             <h1 className="ml-2">:</h1>
             <h1 className="text-lg text-gray-500 ml-2">{display}</h1>
@@ -103,7 +103,7 @@ function CoverSheet({
         </div>
         <div>
           <h1 className="text-sm mt-2 text-gray-500">
-            Upload image file of organization
+          Upload your organization logo
           </h1>
           {error && <p className="text-gray-500 text-sm mt-4">{error}</p>}
         </div>
