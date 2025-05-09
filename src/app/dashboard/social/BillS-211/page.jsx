@@ -8,7 +8,8 @@ import SocialBillS211Header from "../socialBillS211Header";
 import { setReportTypes } from "../../../../lib/redux/features/Bills201";
 import { useDispatch, useSelector } from "react-redux";
 import Identifyinginformation from "./Identifying-information/page"
-const BILLs201 = ({ setMobileopen }) => {
+
+const BILLs201 = ({ setMobileopen,handleTabClick,setActiveTab }) => {
   const dispatch = useDispatch();
   const toggleSidebar = () => {
     setMobileopen(true);
@@ -19,6 +20,7 @@ const BILLs201 = ({ setMobileopen }) => {
   const [reportType, setReportType] = useState("Organization");
   useEffect(() => {
     dispatch(setReportTypes("Organization"));
+ 
   }, []);
 
   // State to keep track of selected options
@@ -29,7 +31,7 @@ const BILLs201 = ({ setMobileopen }) => {
     <>
     {selectedOrg && year ? (
       // Show only Identifyinginformation when both are selected
-      <Identifyinginformation
+      <Identifyinginformation handleTabClick={handleTabClick} setSelectedOrgnew={setSelectedOrg} setSelectedCorpnew={setSelectedCorp} setYearnew={setYear} setActiveTab={setActiveTab}
       />
     ) : (
       // Show the rest of the UI when selection is not complete

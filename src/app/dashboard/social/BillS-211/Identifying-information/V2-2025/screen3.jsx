@@ -24,26 +24,26 @@ const Screenthree = ({
   const [entities, setEntities] = useState([
     { legalName: "", businessNumber: "" },
   ]);
-
+  const screenId = 3;
   const fetchBillSthree = async () => {
     LoaderOpen();
 
     try {
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=3&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
       );
       if (response.status === 200) {
-        setReportingbusinessnumber(response.data.business_number_5);
-        setReportnradiojoint(response.data.is_joint_report_6);
-        if (!response.data.legal_name_and_business_numbers_6_1_2) {
+
+        setReportnradiojoint(response.data.data.screen3_q1);
+        if (!response.data.data.screen3_q2) {
           setEntities([{ legalName: "", businessNumber: "" }]);
         } else {
-          setEntities(response.data.legal_name_and_business_numbers_6_1_2);
+          setEntities(response.data.data.screen3_q2);
         }
 
         LoaderClose();
       } else if (response.status == 404) {
-        setReportingbusinessnumber("");
+  
         setReportnradiojoint("");
         setEntities([{ legalName: "", businessNumber: "" }]);
         LoaderClose();
@@ -62,17 +62,7 @@ const Screenthree = ({
       }
     } catch (error) {
       LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+
     } finally {
       LoaderClose();
     }
@@ -94,7 +84,7 @@ const Screenthree = ({
         fetchBillSthree();
       }
     }
-    setReportingbusinessnumber("");
+
     setReportnradiojoint("");
     setEntities([{ legalName: "", businessNumber: "" }]);
   }, [selectedCorp, selectedOrg, year]);
@@ -162,30 +152,25 @@ const Screenthree = ({
     setError((prev) => ({ ...prev, reportradiojoint: "" }));
   };
 
-  const handleReportnbusinessnumber = (event) =>
-    setReportingbusinessnumber(event.target.value);
 
-  const handleKeyDown = (event) => {
-    if (["+", "-", "."].includes(event.key)) {
-      event.preventDefault();
-    }
-  };
 
   const submitForm = async () => {
     try {
       LoaderOpen();
 
       const sendData = {
-        legal_name_and_business_numbers_6_1_2: entities,
-        is_joint_report_6: reportradiojoint,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp ? selectedCorp : null,
-        year: year,
+        data:{
+          screen3_q1: reportradiojoint,
+          screen3_q2: entities,
+        },
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year
       };
-      const response = await axiosInstance.post(
-        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=3`,
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/`,
         sendData
-      );
+      )
       if (response.status == "200") {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -248,6 +233,11 @@ const Screenthree = ({
       submitForm();
     } else {
       setError(newErrors);
+    }
+  };
+  const handleKeyDown = (event) => {
+    if (["+", "-", "."].includes(event.key)) {
+      event.preventDefault();
     }
   };
 

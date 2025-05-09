@@ -63,7 +63,7 @@ import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material
 import CustomerPrivacy from "./Customer-Privacy/Section1/page";
 import CustomerPrivacy2 from "./Customer-Privacy/Section2/page";
 import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page";
-import IdentifingInformation from "./BillS-211/Identifying-information/page";
+import Identifyinginformation from "./BillS-211/Identifying-information/page";
 import AnnualReport from "./BillS-211/annual-report/page";
 import BILLs201 from "./BillS-211/page"
 
@@ -91,6 +91,7 @@ const Social = () => {
   const [activeTab, setActiveTab] = useState(
     "Management of Material topic OHS"
   );
+
   const [mobileopen, setMobileopen] = useState(false);
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
@@ -287,18 +288,27 @@ const Social = () => {
                 <EmploymentMaterialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
                 />
               )}
                   {activeTab === "BILLs201" && (
                 <BILLs201
+                handleTabClick={handleTabClick}
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+       
+                  
                 />
               )}
               {activeTab === "Identifying Information" && (
-                <IdentifingInformation
+                <Identifyinginformation
+                  handleTabClick={handleTabClick}
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                
+        
                 />
               )}
               {activeTab === "Annual report" && (

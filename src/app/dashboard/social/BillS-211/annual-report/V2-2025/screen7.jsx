@@ -20,37 +20,26 @@ const Screenseven = ({
   const [error, setError] = useState({});
   const [reportradio, setReportnradio] = useState("");
   const [reportradioone, setReportnradioone] = useState("");
-  const [reportingdescription, setReportingdescription] = useState("");
+  const [reportradiotwo, setReportnradiotwo] = useState("");
   const [loopen, setLoOpen] = useState(false);
+  const screenId = 7;
 
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
-
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   const fetchBillSseven = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
 
     try {
+      // or use a dynamic value
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=7&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
       );
 
       // If the request is successful but you specifically want to handle 404 inside here
       if (response.status === 200) {
-        setReportnradio(response.data.training_provided_15);
-        setReportnradioone(response.data.training_mandatory_15_1);
-        setReportingdescription(response.data.additional_info_training_16);
+        setReportnradiotwo(response.data.data.screen7_q1)
+        setReportnradio(response.data.data.screen7_q2);
+        setReportnradioone(response.data.data.screen7_q3);
+
         LoaderClose();
       } else {
         LoaderClose();
@@ -67,17 +56,7 @@ const Screenseven = ({
       }
     } catch (error) {
       LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+
     } finally {
       LoaderClose();
     }
@@ -99,9 +78,10 @@ const Screenseven = ({
         fetchBillSseven();
       }
     }
+    setReportnradiotwo("")
     setReportnradio("");
     setReportnradioone("");
-    setReportingdescription("");
+
   }, [selectedCorp, selectedOrg, year]);
 
   const handleReportnradio = (event) => {
@@ -113,8 +93,9 @@ const Screenseven = ({
     setError((prev) => ({ ...prev, reportradioone: "" }));
   };
 
-  const handleReportingdescription = (event) => {
-    setReportingdescription(event.target.value);
+  const handleReportnradiotwo = (event) => {
+    setReportnradiotwo(event.target.value);
+    setError((prev) => ({ ...prev, reportradiotwo: "" }));
   };
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -135,20 +116,19 @@ const Screenseven = ({
       LoaderOpen();
 
       const sendData = {
-        training_provided_15: reportradio,
-        additional_info_training_16: reportingdescription
-          ? reportingdescription
-          : null,
-        training_mandatory_15_1: unewentities,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp ? selectedCorp : null,
+        data:{
+          screen7_q1: reportradiotwo,
+          screen7_q2:reportradio,
+          screen7_q3: unewentities,
+        },
+        organization: selectedOrg,
+        corporate: selectedCorp,
         year: year,
       };
-      const response = await axiosInstance.post(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=7`,
-        sendData,
-        axiosConfig
-      );
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
+        sendData
+      )
       if (response.status == "200") {
         console.log(response.status);
         toast.success("Data added successfully", {
@@ -193,7 +173,9 @@ const Screenseven = ({
   };
   const continueToNextStep = () => {
     let newErrors = {};
-
+    if (!reportradiotwo) {
+      newErrors.reportradiotwo = "This field is required. Please fill it out.";
+    }
     if (!reportradio) {
       newErrors.reportradio = "This field is required. Please fill it out.";
     }
@@ -232,14 +214,14 @@ const Screenseven = ({
                  {" "}
                 <input
                   type="radio"
-                  id="Yes"
-                  name="radio"
+                  id="Yes1"
+                  name="radio2"
                   value="Yes"
-                  checked={reportradio === "Yes"}
-                  onChange={handleReportnradio}
+                  checked={reportradiotwo === "Yes"}
+                  onChange={handleReportnradiotwo}
                 />
                  {" "}
-                <label html htmlFor="Yes" className="text-[14px] text-gray-700">
+                <label html htmlFor="Yes1" className="text-[14px] text-gray-700">
                   Yes, we have taken measures
                 </label>
                 <br />
@@ -249,14 +231,14 @@ const Screenseven = ({
                  {" "}
                 <input
                   type="radio"
-                  id="No"
-                  name="radio"
+                  id="No1"
+                  name="radio2"
                   value="No"
-                  checked={reportradio === "No"}
-                  onChange={handleReportnradio}
+                  checked={reportradiotwo === "No"}
+                  onChange={handleReportnradiotwo}
                 />
                  {" "}
-                <label html htmlFor="No" className="text-[14px] text-gray-700 ">
+                <label html htmlFor="No1" className="text-[14px] text-gray-700 ">
                   No, we have not taken measures
                 </label>
                 <br />
@@ -266,10 +248,10 @@ const Screenseven = ({
                 <input
                   type="radio"
                   id="Not applicable"
-                  name="radio"
+                  name="radio2"
                   value="Not applicable"
-                  checked={reportradio === "Not applicable"}
-                  onChange={handleReportnradio}
+                  checked={reportradiotwo === "Not applicable"}
+                  onChange={handleReportnradiotwo}
                 />
                  {" "}
                 <label
@@ -285,9 +267,9 @@ const Screenseven = ({
                 <br />
               </div>
             </div>
-            {error.reportradio && (
+            {error.reportradiotwo && (
               <p className="text-red-500 ml-1 text-[12px] mt-1">
-                {error.reportradio}
+                {error.reportradiotwo}
               </p>
             )}
           </div>

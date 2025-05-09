@@ -27,6 +27,7 @@ const Screenone = ({
   const [error, setError] = useState("");
   const { open } = GlobalState();
   const [loopen, setLoOpen] = useState(false);
+  const screenId = 1;
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -34,35 +35,22 @@ const Screenone = ({
     setLoOpen(false);
   };
 
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
 
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   const fetchBillSsix = async () => {
     LoaderOpen();
-
     try {
-      const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=6&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
-      );
+      // or use a dynamic value
+        const response = await axiosInstance.get(
+          `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
+        );
 
       if (response.status === 200) {
-        setReportingentit(response.data.sectors_or_industries_description_9);
-        if (!response.data.sectors_or_industries_9) {
+        setReportnradio(response.data.data.screen1_q1);
+        if (!response.data.data.screen1_q2) {
           setSelectedOptions([]);
         } else {
-          setSelectedOptions(response.data.sectors_or_industries_9);
+          setSelectedOptions(response.data.data.screen1_q2);
         }
         LoaderClose();
       } else {
@@ -80,17 +68,7 @@ const Screenone = ({
       }
     } catch (error) {
       LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+
     } finally {
       LoaderClose();
     }
@@ -197,17 +175,18 @@ const Screenone = ({
       LoaderOpen();
 
       const sendData = {
-        sectors_or_industries_9: selectedOptions,
-        sectors_or_industries_description_9: reportradio,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp ? selectedCorp : null,
-        year: year,
+        data:{
+          screen1_q1: reportradio,
+          screen1_q2: selectedOptions,
+        },
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year
       };
-      const response = await axiosInstance.post(
-        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=6`,
-        sendData,
-        axiosConfig
-      );
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
+        sendData
+      )
       if (response.status == "200") {
         toast.success("Data added successfully", {
           position: "top-right",

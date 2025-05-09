@@ -21,7 +21,7 @@ const Screenthree = ({
   const [reportradio, setReportnradio] = useState("");
   const [reportingdescription, setReportingdescription] = useState("");
   const [loopen, setLoOpen] = useState(false);
-
+  const screenId = 3;
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -29,37 +29,23 @@ const Screenthree = ({
     setLoOpen(false);
   };
 
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
 
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   const fetchBillSthree = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
 
     try {
+      // or use a dynamic value
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=3&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
       );
-
       // If the request is successful but you specifically want to handle 404 inside here
       if (response.status === 200) {
-        setReportnradio(response.data.policies_in_place_6);
-        setReportingdescription(response.data.additional_info_policies_7);
-        if (response.data.elements_implemented_6_1 == null) {
+        setReportnradio(response.data.data.screen3_q1);
+        if (response.data.data.screen3_q2 == null) {
           setSelectedOptions([]);
         } else {
-          setSelectedOptions(response.data.elements_implemented_6_1);
+          setSelectedOptions(response.data.data.screen3_q2);
         }
         LoaderClose();
       } else {
@@ -77,17 +63,7 @@ const Screenthree = ({
       }
     } catch (error) {
       LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+
     } finally {
       LoaderClose();
     }
@@ -171,20 +147,18 @@ const Screenthree = ({
       LoaderOpen();
 
       const sendData = {
-        policies_in_place_6: reportradio,
-        elements_implemented_6_1: unewentities,
-        additional_info_policies_7: reportingdescription
-          ? reportingdescription
-          : null,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp ? selectedCorp : null,
+        data:{
+          screen3_q1: reportradio,
+          screen3_q2: unewentities,
+        },
+        organization: selectedOrg,
+        corporate: selectedCorp,
         year: year,
       };
-      const response = await axiosInstance.post(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=3`,
-        sendData,
-        axiosConfig
-      );
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
+        sendData
+      )
       if (response.status == "200") {
         toast.success("Data added successfully", {
           position: "top-right",

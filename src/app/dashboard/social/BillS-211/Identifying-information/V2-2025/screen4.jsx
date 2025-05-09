@@ -16,40 +16,24 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
   const [reportingentity, setReportingentit] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [loopen, setLoOpen] = useState(false);
-  
+  const screenId = 4;
 
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
 
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
- 
   const fetchBillSfour = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
 
     try {
       const response = await axiosInstance.get(
-        `${
-          process.env.BACKEND_API_URL
-        }/canadabills211/identifying-information/?screen=4&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
       );
 
       if (response.status === 200) {
-        setReportnradio(response.data.subject_to_supply_chain_legislation_7);
-        setReportingentit(response.data.other_laws_description_7_1);
-        if (response.data.applicable_laws_7_1 == null) {
+        setReportnradio(response.data.data.screen4_q1);
+        setReportingentit(response.data.screen4_q3_other);
+        if (response.data.data.screen4_q2 == null) {
           setSelectedOptions([]);
         } else {
-          setSelectedOptions(response.data.applicable_laws_7_1);
+          setSelectedOptions(response.data.data.screen4_q2);
         }
         LoaderClose();
       }
@@ -73,17 +57,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
       }
     } catch (error) {
       LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+   
     }
     finally {
       LoaderClose();
@@ -194,20 +168,20 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
     try{
       LoaderOpen();
 
-      const send = {
-        subject_to_supply_chain_legislation_7: reportradio,
-        other_laws_description_7_1: uoherinpute,
-        applicable_laws_7_1: unewentities,
-        organization_id: selectedOrg,
-          corporate_id: selectedCorp?selectedCorp:null,
-          year: year
+      const sendData = {
+        data:{
+          screen4_q1: reportradio,
+          screen4_q3_other: uoherinpute,
+          screen4_q2: unewentities,
+        },
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year
       };
-     const response= await axiosInstance
-        .post(
-          `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=4`,
-          send,
-          axiosConfig
-        )
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/`,
+        sendData
+      )
         if (response.status == "200") {
           toast.success("Data added successfully", {
             position: "top-right",

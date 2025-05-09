@@ -12,35 +12,20 @@ const Screensix = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, report
   const [error, setError] = useState({});
   const { open } = GlobalState();
   const [loopen, setLoOpen] = useState(false);
-
+  const screenId = 6;
   const LoaderOpen = () => setLoOpen(true);
   const LoaderClose = () => setLoOpen(false);
-
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
-
-  const axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   const fetchBillSsix = async () => {
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=6&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
       );
 
       if (response.status === 200) {
-        setReportingentit(response.data.sectors_or_industries_description_9);
-        const selectedData = response.data.sectors_or_industries_9 || {};
+        setReportingentit(response.data.data.screen6_q2);
+        const selectedData = response.data.data.screen6_q1 || {};
         setSelectedOptions(selectedData);
       } else {
         toast.error("Oops, something went wrong");
@@ -120,19 +105,20 @@ const Screensix = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, report
       LoaderOpen();
 
       const sendData = {
-        sectors_or_industries_9: selectedOptions,
-        sectors_or_industries_description_9: selectedOptions["other"] ? reportingentity : null,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp || null,
-        year: year,
+        data:{
+          screen6_q1: selectedOptions,
+          screen6_q2: selectedOptions["other"] ? reportingentity : null,
+        },
+   
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year
       };
 
-      const response = await axiosInstance.post(
-        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=6`,
-        sendData,
-        axiosConfig
-      );
-
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/`,
+        sendData
+      )
       if (response.status === 200) {
         toast.success("Data added successfully");
         nextStep();
@@ -372,6 +358,7 @@ const Screensix = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, report
           {optionsTwo.map((option, index) => (
             <div key={index} className="mb-2 ">
               <div className="flex items-center ">
+              <label className="text-[14px] text-gray-700">
                 <input
                   type="checkbox"
                   value={option.value}
@@ -379,7 +366,8 @@ const Screensix = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, report
                   onChange={handleCheckboxChange}
                   className="mr-2"
                 />
-                <label className="text-[14px] text-gray-700">{option.label}</label>
+                {option.label}
+                </label>
               </div>
 
               {option.subcategories && (

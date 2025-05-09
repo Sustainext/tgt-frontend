@@ -20,13 +20,14 @@ const Screenseven = ({
   selectedOrg,
   year,
   reportType,
+  handleTabClick,
 }) => {
   const [error, setError] = useState({});
   const { open } = GlobalState();
   const [entitylocated, setEntitylocated] = useState("");
   const [territorylocated, setTerritorylocated] = useState("");
   const [loopen, setLoOpen] = useState(false);
-
+  const screenId = 7;
   const canadian = [
     { code: "spoo", name: "Select province" },
     { code: "AB", name: "Alberta" },
@@ -62,13 +63,12 @@ const Screenseven = ({
 
     try {
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=7&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
       );
-      // If the request is successful but you specifically want to handle 404 inside here
+
       if (response.status === 200) {
-        setEntitylocated(response.data.country_10);
-        setTerritorylocated(response.data.province_or_territory_10_1);
+        setEntitylocated(response.data.data.screen7_q1);
+        setTerritorylocated(response.data.data.screen7_q2);
         LoaderClose();
       } else {
         LoaderClose();
@@ -145,17 +145,18 @@ const Screenseven = ({
       LoaderOpen();
 
       const sendData = {
-        country_10: entitylocated,
-        province_or_territory_10_1: territorylocated,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp ? selectedCorp : null,
-        year: year,
+        data:{
+          screen7_q1: entitylocated,
+          screen7_q2: territorylocated,
+        },
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year
       };
-      const response = await axiosInstance.post(
-        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=7`,
-        sendData,
-        axiosConfig
-      );
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/`,
+        sendData
+      )
       if (response.status == "200") {
         toast.success("Data Added  successfully", {
           position: "top-right",
@@ -168,6 +169,7 @@ const Screenseven = ({
           theme: "light",
         });
         LoaderClose();
+        handleTabClick("Annual report")
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",

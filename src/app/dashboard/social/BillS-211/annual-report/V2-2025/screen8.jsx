@@ -28,44 +28,30 @@ const Screenend = ({
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [isSubmitted,setIsSubmitted]= useState(false)
   const [submitDisabled,setSubmitDisbaled]=useState(false)
+  const screenId = 8;
 
-  console.log(isSubmitted,"check")
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
 
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   const fetchBillSeight = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
-
     try {
+      // or use a dynamic value
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=8&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
       );
 
       // If the request is successful but you specifically want to handle 404 inside here
       if (response.status === 200) {
-        setReportnradio(response.data.policies_procedures_assess_17);
-        setReportingdescription(response.data.additional_info_assessment_18);
-        setReportingentit(response.data.assessment_method_description_17_1);
-        if (!response.data.assessment_method_17_1) {
+        setReportnradio(response.data.data.screen8_q1);
+        setReportingentit(response.data.data.screen8_q3);
+        if (!response.data.data.screen8_q2) {
           setIsSubmitted(false)
           setSubmitDisbaled(false)
           setSelectedOptions([]);
         } else {
           setIsSubmitted(true)
           setSubmitDisbaled(true)
-          setSelectedOptions(response.data.assessment_method_17_1);
+          setSelectedOptions(response.data.data.screen8_q2);
         }
         LoaderClose();
       } else {
@@ -83,17 +69,7 @@ const Screenend = ({
       }
     } catch (error) {
       LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+
     } finally {
       LoaderClose();
     }
@@ -126,28 +102,25 @@ const Screenend = ({
   const options = [
     {
       label:
-        "Setting up a regular review or audit of the organization’s policies and procedures related to forced labour and child labour",
-      value: "1",
+        "Setting up a regular review or audit of the entity's policies and procedures related to forced labour and child labour",
+      value: "Setting up a regular review or audit of the entity's policies and procedures related to forced labour and child labour",
     },
     {
       label:
-        "Tracking relevant performance indicators, such as levels of employee awareness, numbers of cases reported and solved through grievance mechanisms and numbers of contracts with anti-forced labour and -child labour clauses",
-      value: "2",
+        "Tracking relevant performance indicators, such as levels of employee awareness, numbers of cases reported and solved through grievance mechanisms and numbers of contracts with anti-forced labour and child labour clauses",
+      value: "Tracking relevant performance indicators, such as levels of employee awareness, numbers of cases reported and solved through grievance mechanisms and numbers of contracts with anti-forced labour and child labour clauses",
     },
     {
       label:
-        "Partnering with an external organization to conduct an independent review or audit of the organization’s actions",
-      value: "3",
+        "Partnering with an external organization to conduct an independent review or audit of the entity's actions",
+      value: "Partnering with an external organization to conduct an independent review or audit of the entity's actions",
     },
     {
       label:
         "Working with suppliers to measure the effectiveness of their actions to address forced labour and child labour, including by tracking relevant performance indicators",
-      value: "4",
+      value: "Working with suppliers to measure the effectiveness of their actions to address forced labour and child labour, including by tracking relevant performance indicators",
     },
-    {
-      label: "Other, please specify:",
-      value: "other",
-    },
+
   ];
 
   const handleCheckboxChange = (event) => {
@@ -205,21 +178,18 @@ const Screenend = ({
       LoaderOpen();
 
       const sendData = {
-        policies_procedures_assess_17: reportradio,
-        assessment_method_17_1: unewentities,
-        additional_info_assessment_18: reportingdescription
-          ? reportingdescription
-          : null,
-        assessment_method_description_17_1: uotherfiles,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp ? selectedCorp : null,
-        year: year,
+        data:{ screen8_q1: reportradio,
+          screen8_q2: unewentities,
+          screen8_q3: uotherfiles,
+        },
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year
       };
-      const response = await axiosInstance.post(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=8`,
-        sendData,
-        axiosConfig
-      );
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
+        sendData
+      )
       if (response.status == "200") {
         setIsSubmitted(true)
         setSubmitDisbaled(true)

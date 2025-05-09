@@ -7,42 +7,39 @@ import "react-toastify/dist/ReactToastify.css";
 import { GlobalState } from "../../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
-const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, reportType }) => {
+const Screenfive = ({
+  nextStep,
+  prevStep,
+  selectedCorp,
+  selectedOrg,
+  year,
+  reportType,
+}) => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [reportingentity, setReportingentit] = useState("");
   const [error, setError] = useState({});
   const { open } = GlobalState();
   const [loopen, setLoOpen] = useState(false);
   const [reportingdescription, setReportingdescription] = useState("");
+  const screenId = 5;
   const LoaderOpen = () => setLoOpen(true);
   const LoaderClose = () => setLoOpen(false);
 
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
 
-  const axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   const fetchBillSsix = async () => {
     LoaderOpen();
     try {
+      // or use a dynamic value
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=6&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
       );
 
       if (response.status === 200) {
-        setReportingentit(response.data.sectors_or_industries_description_9);
-        const selectedData = response.data.sectors_or_industries_9 || {};
+        setReportingentit(response.data.data.screen5_q2);
+        const selectedData = response.data.data.screen5_q1 || {};
         setSelectedOptions(selectedData);
+        setReportingdescription(response.data.data.screen5_q3)
       } else {
         toast.error("Oops, something went wrong");
       }
@@ -55,7 +52,10 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
   };
 
   useEffect(() => {
-    if ((reportType === "Organization" && selectedOrg && year) || (selectedOrg && year && selectedCorp)) {
+    if (
+      (reportType === "Organization" && selectedOrg && year) ||
+      (selectedOrg && year && selectedCorp)
+    ) {
       fetchBillSsix();
     }
     setReportingentit("");
@@ -98,7 +98,6 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
   };
   const handleReportingdescription = (value) => {
     setReportingdescription(value);
-   
   };
   const continueToNextStep = () => {
     const errors = {};
@@ -124,18 +123,23 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
       LoaderOpen();
 
       const sendData = {
-        sectors_or_industries_9: selectedOptions,
-        sectors_or_industries_description_9: selectedOptions["other"] ? reportingentity : null,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp || null,
+        data:{
+          screen5_q1: selectedOptions,
+          screen5_q2: selectedOptions["other"]
+            ? reportingentity
+            : null,
+            screen5_q3:reportingdescription,
+        },
+      
+        organization: selectedOrg,
+        corporate: selectedCorp,
         year: year,
       };
 
-      const response = await axiosInstance.post(
-        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=6`,
-        sendData,
-        axiosConfig
-      );
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
+        sendData
+      )
 
       if (response.status === 200) {
         toast.success("Data added successfully");
@@ -159,8 +163,8 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         "Animal production and aquaculture",
         "Forestry and logging",
         "Fishing, hunting and trapping",
-        "Support activities for agriculture and forestry"
-      ]
+        "Support activities for agriculture and forestry",
+      ],
     },
     {
       label: "Mining, quarrying, and oil and gas extraction",
@@ -168,12 +172,12 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
       subcategories: [
         "Oil and gas extraction",
         "Mining and quarrying (except oil and gas)",
-        "Support activities for mining, and oil and gas extraction"
-      ]
+        "Support activities for mining, and oil and gas extraction",
+      ],
     },
     {
       label: "Utilities",
-      value: "Utilities"
+      value: "Utilities",
     },
     {
       label: "Construction",
@@ -181,8 +185,8 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
       subcategories: [
         "Construction of buildings",
         "Heavy and civil engineering construction",
-        "Specialty trade contractors"
-      ]
+        "Specialty trade contractors",
+      ],
     },
     {
       label: "Manufacturing",
@@ -208,8 +212,8 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         "Electrical equipment, appliance and component manufacturing",
         "Transportation equipment manufacturing",
         "Furniture and related product manufacturing",
-        "Other manufacturing"
-      ]
+        "Other manufacturing",
+      ],
     },
     {
       label: "Wholesale trade",
@@ -223,8 +227,8 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         "Building material and suppliers merchant wholesalers",
         "Machinery, equipment and supplies merchant wholesalers",
         "Business-to-business electronic markets, and agents and brokers",
-        "Other merchant wholesalers"
-      ]
+        "Other merchant wholesalers",
+      ],
     },
     {
       label: "Retail trade",
@@ -238,8 +242,8 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         "Health and personal care retailers",
         "Gasoline stations and fuel vendors",
         "Clothing, clothing accessories, shoes, jewelry, luggage and leather goods retailers",
-        "Sporting goods, hobby, musical instrument, book, and other retailers"
-      ]
+        "Sporting goods, hobby, musical instrument, book, and other retailers",
+      ],
     },
     {
       label: "Transportation and warehousing",
@@ -255,8 +259,8 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         "Support activities for transportation",
         "Postal service",
         "Couriers and messengers",
-        "Warehousing and storage"
-      ]
+        "Warehousing and storage",
+      ],
     },
     {
       label: "Information and cultural industries",
@@ -267,8 +271,8 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         "Broadcasting and content providers",
         "Telecommunications",
         "Computing infrastructure providers, data processing, web hosting, and related services",
-        "Web search portals, libraries, archives, and all other information services"
-      ]
+        "Web search portals, libraries, archives, and all other information services",
+      ],
     },
     {
       label: "Finance and insurance",
@@ -278,8 +282,8 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         "Credit intermediation and related activities",
         "Securities, commodity contracts, and other financial investment and related activities",
         "Insurance carriers and related activities",
-        "Funds and other financial vehicles"
-      ]
+        "Funds and other financial vehicles",
+      ],
     },
     {
       label: "Real estate and rental and leasing",
@@ -287,28 +291,30 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
       subcategories: [
         "Real estate",
         "Rental and leasing services",
-        "Lessors of non-financial intangible assets (except copyrighted works)"
-      ]
+        "Lessors of non-financial intangible assets (except copyrighted works)",
+      ],
     },
     {
       label: "Professional, scientific and technical services",
-      value: "Professional, scientific and technical services"
+      value: "Professional, scientific and technical services",
     },
     {
       label: "Management of companies and enterprises",
-      value: "Management of companies and enterprises"
+      value: "Management of companies and enterprises",
     },
     {
-      label: "Administrative and support, waste management and remediation services",
-      value: "Administrative and support, waste management and remediation services",
+      label:
+        "Administrative and support, waste management and remediation services",
+      value:
+        "Administrative and support, waste management and remediation services",
       subcategories: [
         "Administrative and support services",
-        "Waste management and remediation services"
-      ]
+        "Waste management and remediation services",
+      ],
     },
     {
       label: "Educational services",
-      value: "Educational services"
+      value: "Educational services",
     },
     {
       label: "Health care and social assistance",
@@ -317,8 +323,8 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         "Ambulatory health care services",
         "Hospitals",
         "Nursing and residential care facilities",
-        "Social assistance"
-      ]
+        "Social assistance",
+      ],
     },
     {
       label: "Arts, entertainment and recreation",
@@ -326,16 +332,16 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
       subcategories: [
         "Performing arts, spectator sports and related industries",
         "Heritage institutions",
-        "Amusement, gambling and recreation industries"
-      ]
+        "Amusement, gambling and recreation industries",
+      ],
     },
     {
       label: "Accommodation and food services",
       value: "Accommodation and food services",
       subcategories: [
         "Accommodation services",
-        "Food services and drinking places"
-      ]
+        "Food services and drinking places",
+      ],
     },
     {
       label: "Other services (except public administration)",
@@ -344,8 +350,8 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         "Repair and maintenance",
         "Personal and laundry services",
         "Religious, grant-making, civic, and professional and similar organizations",
-        "Private households"
-      ]
+        "Private households",
+      ],
     },
     {
       label: "Public administration",
@@ -355,15 +361,15 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         "Provincial and territorial public administration",
         "Local, municipal and regional public administration",
         "Indigenous public administration",
-        "International and other extra-territorial public administration"
-      ]
+        "International and other extra-territorial public administration",
+      ],
     },
     {
       label: "Other, please specify:",
-      value: "other"
-    }
+      value: "other",
+    },
   ];
-  
+
   const config = {
     enter: "BR", // Or customize behavior on Enter key
     cleanHTML: true,
@@ -418,12 +424,15 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
       <div className="mt-2 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%]">
         <div className="mx-2 xl:mx-4">
           <label className="block text-gray-700 text-[14px] font-[500] mb-2">
-            7. Has the entity identified forced labour or child labour risks in its activities and supply chains related to any of the following sectors and industries? Select all that apply. *
+            7. Has the entity identified forced labour or child labour risks in
+            its activities and supply chains related to any of the following
+            sectors and industries? Select all that apply. *
           </label>
-  
+
           {optionsTwo.map((option, index) => (
             <div key={index} className="mb-2 ">
               <div className="flex items-center ">
+              <label className="text-[14px] text-gray-700">
                 <input
                   type="checkbox"
                   value={option.value}
@@ -431,22 +440,35 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
                   onChange={handleCheckboxChange}
                   className="mr-2"
                 />
-                <label className="text-[14px] text-gray-700">{option.label}</label>
+               
+                  {option.label}
+                </label>
               </div>
 
               {option.subcategories && (
                 <div
                   className={`ml-6 mt-1 gap-2 mb-2 ${
-                    selectedOptions.hasOwnProperty(option.value) ? "" : "opacity-50 pointer-events-none"
+                    selectedOptions.hasOwnProperty(option.value)
+                      ? ""
+                      : "opacity-50 pointer-events-none"
                   }`}
                 >
                   {option.subcategories.map((sub, idx) => (
-                    <label key={idx} className="flex items-center text-[13px] text-gray-600 mb-2">
+                    <label
+                      key={idx}
+                      className="flex items-center text-[13px] text-gray-600 mb-2"
+                    >
                       <input
                         type="checkbox"
-                        checked={selectedOptions[option.value]?.includes(sub) || false}
+                        checked={
+                          selectedOptions[option.value]?.includes(sub) || false
+                        }
                         onChange={(e) =>
-                          handleSubcategoryChange(option.value, sub, e.target.checked)
+                          handleSubcategoryChange(
+                            option.value,
+                            sub,
+                            e.target.checked
+                          )
                         }
                         disabled={!selectedOptions.hasOwnProperty(option.value)}
                         className="mr-2"
@@ -460,7 +482,9 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
           ))}
 
           {error.checkboxes && (
-            <div className="text-red-500 text-[12px] ml-1">{error.checkboxes}</div>
+            <div className="text-red-500 text-[12px] ml-1">
+              {error.checkboxes}
+            </div>
           )}
 
           {selectedOptions["other"] && (
@@ -473,27 +497,31 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
                 onChange={handleReportingentity}
               />
               {error.reportingentity && (
-                <div className="text-red-500 text-[12px] ml-1">{error.reportingentity}</div>
+                <div className="text-red-500 text-[12px] ml-1">
+                  {error.reportingentity}
+                </div>
               )}
             </div>
           )}
-   <div className="mb-5 mt-5">
-                    <label
-                      className="block text-gray-700 text-[14px] font-[500] mb-2"
-                      html
-                      htmlFor="industryCheckbox"
-                    >
-                      8. Please provide additional information on the parts of the entity's activities and supply chains that carry a risk of forced labour or child labour being used, as well as the steps that the entity has taken to assess and manage that risk (if applicable).
-                    </label>
-                    <JoditEditor
-            // ref={editor}
-            value={reportingdescription}
-            config={config}
-            tabIndex={1}
-            onBlur={handleReportingdescription}
-          />
-                 
-                  </div>
+          <div className="mb-5 mt-5">
+            <label
+              className="block text-gray-700 text-[14px] font-[500] mb-2"
+              html
+              htmlFor="industryCheckbox"
+            >
+              8. Please provide additional information on the parts of the
+              entity's activities and supply chains that carry a risk of forced
+              labour or child labour being used, as well as the steps that the
+              entity has taken to assess and manage that risk (if applicable).
+            </label>
+            <JoditEditor
+              // ref={editor}
+              value={reportingdescription}
+              config={config}
+              tabIndex={1}
+              onBlur={handleReportingdescription}
+            />
+          </div>
           <div className="flex justify-end mt-5">
             <button
               className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
@@ -505,9 +533,21 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
             <button
               type="button"
               onClick={continueToNextStep}
-              disabled={!(selectedOrg && year && (reportType === "Organization" || selectedCorp))}
+              disabled={
+                !(
+                  selectedOrg &&
+                  year &&
+                  (reportType === "Organization" || selectedCorp)
+                )
+              }
               className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-                !(selectedOrg && year && (reportType === "Organization" || selectedCorp)) ? "opacity-30 cursor-not-allowed" : ""
+                !(
+                  selectedOrg &&
+                  year &&
+                  (reportType === "Organization" || selectedCorp)
+                )
+                  ? "opacity-30 cursor-not-allowed"
+                  : ""
               }`}
             >
               Next &gt;
@@ -518,7 +558,13 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
 
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <Oval height={50} width={50} color="#00BFFF" secondaryColor="#f3f3f3" strokeWidth={2} />
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+          />
         </div>
       )}
     </>

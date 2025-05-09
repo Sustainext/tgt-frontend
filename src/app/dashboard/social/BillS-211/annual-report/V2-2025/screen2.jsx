@@ -7,7 +7,8 @@ import { MdOutlineModeEditOutline, MdClose } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
 import { GlobalState } from "../../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
-
+import dynamic from "next/dynamic";
+const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 const Screentwo = ({
   nextStep,
   prevStep,
@@ -23,21 +24,55 @@ const Screentwo = ({
   const [error, setError] = useState("");
   const [reportingentity, setReportingentit] = useState("");
   const [loopen, setLoOpen] = useState(false);
-
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
-
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
+  const screenId = 2;
+  const config = {
+    enter: "BR", // Or customize behavior on Enter key
+    cleanHTML: true,
+    enablePasteHTMLFilter: false,
+    askBeforePasteHTML: false,
+    askBeforePasteFromWord: false,
+    style: {
+      fontSize: "14px",
+      color: "#667085",
     },
+    allowResizeY: false,
+    defaultActionOnPaste: "insert_clear_html",
+    toolbarSticky: false,
+    toolbar: true,
+    buttons: [
+      "bold",
+      "italic",
+      "underline",
+      "strikeThrough",
+      "align",
+      "outdent",
+      "indent",
+      "ul",
+      "ol",
+      "paragraph",
+      "link",
+      "table",
+      "undo",
+      "redo",
+      "hr",
+      "fontsize",
+      "selectall",
+    ],
+    // Remove buttons from the extra buttons list
+    removeButtons: [
+      "fullsize",
+      "preview",
+      "source",
+      "print",
+      "about",
+      "find",
+      "changeMode",
+      "paintFormat",
+      "image",
+      "brush",
+      "font",
+    ],
   };
-
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -49,19 +84,18 @@ const Screentwo = ({
     LoaderOpen(); // Assume this is to show some loading UI
 
     try {
+      // or use a dynamic value
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=1&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
       );
 
       // If the request is successful but you specifically want to handle 404 inside here
       if (response.status === 200) {
-        setReportingdescription(response.data.additional_information_2);
-        setReportingentit(response.data.steps_taken_description_1);
-        if (response.data.steps_taken_1 == null) {
+        setReportingdescription(response.data.data.screen2_q2);
+        if (response.data.data.screen2_q1 == null) {
           setSelectedOptions([]);
         } else {
-          setSelectedOptions(response.data.steps_taken_1);
+          setSelectedOptions(response.data.data.screen2_q1);
         }
         LoaderClose();
       } else {
@@ -79,17 +113,6 @@ const Screentwo = ({
       }
     } catch (error) {
       LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
     } finally {
       LoaderClose();
     }
@@ -112,112 +135,130 @@ const Screentwo = ({
       }
     }
     setReportingdescription("");
-    setReportingentit("");
+
     setSelectedOptions([]);
   }, [selectedCorp, selectedOrg, year]);
 
-  const handleReportingdescription = (event) => {
-    setReportingdescription(event.target.value);
+  const handleReportingdescription = (value) => {
+    setReportingdescription(value);
   };
 
   const optionsTwo = [
-    { label: "Mapping activities", value: "1" },
-    { label: "Mapping supply chains", value: "2" },
+    { label: "Mapping activities", value: "Mapping activities" },
+    { label: "Mapping supply chains", value: "Mapping supply chains" },
     {
       label:
         "Conducting an internal assessment of risks of forced labour and/or child labour in the organization's activities and supply chains",
-      value: "3",
+      value:
+        "Conducting an internal assessment of risks of forced labour and/or child labour in the organization's activities and supply chains",
     },
     {
       label:
         "Contracting an external assessment of risks of forced labour and/or child labour in the organization's activities and supply chains",
-      value: "4",
+      value:
+        "Contracting an external assessment of risks of forced labour and/or child labour in the organization's activities and supply chains",
     },
     {
       label:
         "Developing and implementing an action plan for addressing forced labour and/or child labour",
-      value: "5",
+      value:
+        "Developing and implementing an action plan for addressing forced labour and/or child labour",
     },
     {
       label:
         "Gathering information on worker recruitment and maintaining internal controls to ensure that all workers are recruited voluntarily",
-      value: "6",
+      value:
+        "Gathering information on worker recruitment and maintaining internal controls to ensure that all workers are recruited voluntarily",
     },
     {
       label:
         "Addressing practices in the organization's activities and supply chains that may cause or contribute to the risk of forced labour and/or child labour",
-      value: "7",
+      value:
+        "Addressing practices in the organization's activities and supply chains that may cause or contribute to the risk of forced labour and/or child labour",
     },
     {
       label:
         "Developing and implementing due diligence policies and processes for identifying, addressing and prohibiting the use of forced labour and/or child labour in the organization's activities and supply chains",
-      value: "8",
+      value:
+        "Developing and implementing due diligence policies and processes for identifying, addressing and prohibiting the use of forced labour and/or child labour in the organization's activities and supply chains",
     },
     {
       label:
         "Carrying out a prioritization exercise to focus due diligence efforts on the most severe risks of forced and child labour",
-      value: "9",
+      value:
+        "Carrying out a prioritization exercise to focus due diligence efforts on the most severe risks of forced and child labour",
     },
     {
       label:
         "Requiring suppliers to have policies and procedures for identifying and prohibiting the use of forced labour and/or child labour in their activities and supply chains",
-      value: "10",
+      value:
+        "Requiring suppliers to have policies and procedures for identifying and prohibiting the use of forced labour and/or child labour in their activities and supply chains",
     },
     {
       label:
         "Developing and implementing child protection policies and processes",
-      value: "11",
+      value:
+        "Developing and implementing child protection policies and processes",
     },
     {
       label:
         "Developing and implementing anti-forced labour and/or -child labour contractual clauses",
-      value: "12",
+      value:
+        "Developing and implementing anti-forced labour and/or -child labour contractual clauses",
     },
     {
       label:
         "Developing and implementing anti-forced labour and/or -child labour standards, codes of conduct and/or compliance checklists",
-      value: "13",
+      value:
+        "Developing and implementing anti-forced labour and/or -child labour standards, codes of conduct and/or compliance checklists",
     },
-    { label: "Auditing suppliers", value: "14" },
-    { label: "Monitoring suppliers", value: "15" },
+    { label: "Auditing suppliers", value: "Auditing suppliers" },
+    { label: "Monitoring suppliers", value: "Monitoring suppliers" },
     {
       label:
         "Enacting measures to provide for, or cooperate in, remediation of forced labour and/or child labour",
-      value: "16",
+      value:
+        "Enacting measures to provide for, or cooperate in, remediation of forced labour and/or child labour",
     },
     {
       label:
         "Developing and implementing grievance mechanisms to address complaints in the workplace",
-      value: "17",
+      value:
+        "Developing and implementing grievance mechanisms to address complaints in the workplace",
     },
     {
       label:
         "Developing and implementing training and awareness materials on forced labour and/or child labour",
-      value: "18",
+      value:
+        "Developing and implementing training and awareness materials on forced labour and/or child labour",
     },
     {
       label:
         "Developing and implementing procedures to track effectiveness in addressing forced labour and/or child labour",
-      value: "19",
+      value:
+        "Developing and implementing procedures to track effectiveness in addressing forced labour and/or child labour",
     },
     {
       label:
         "Engaging with supply chain partners on the issue of addressing forced labour and/or child labour",
-      value: "20",
+      value:
+        "Engaging with supply chain partners on the issue of addressing forced labour and/or child labour",
     },
     {
       label:
         "Engaging with civil society groups, experts and other stakeholders on the issue of addressing forced labour and/or child labour",
-      value: "21",
+      value:
+        "Engaging with civil society groups, experts and other stakeholders on the issue of addressing forced labour and/or child labour",
     },
     {
       label:
         "Engaging directly with workers and families potentially affected by forced labour and/or child labour to assess and address risks",
-      value: "22",
+      value:
+        "Engaging directly with workers and families potentially affected by forced labour and/or child labour to assess and address risks",
     },
     {
       label: "Information not available for this reporting period",
-      value: "23",
+      value: "Information not available for this reporting period",
     },
   ];
 
@@ -235,26 +276,22 @@ const Screentwo = ({
   // Function to proceed to the next step, includes validation
 
   const submitForm = async () => {
-
-
     try {
       LoaderOpen();
 
       const sendData = {
-  
-        additional_information_2: reportingdescription
-          ? reportingdescription
-          : null,
-        steps_taken_1: selectedOptions,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp ? selectedCorp : null,
+        data: {
+          screen2_q2: reportingdescription ? reportingdescription : null,
+          screen2_q1: selectedOptions,
+        },
+        organization: selectedOrg,
+        corporate: selectedCorp,
         year: year,
       };
-      const response = await axiosInstance.post(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=1`,
-        sendData,
-        axiosConfig
-      );
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
+        sendData
+      )
       if (response.status == "200") {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -283,17 +320,6 @@ const Screentwo = ({
       }
     } catch (error) {
       LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
     }
   };
 
@@ -304,8 +330,6 @@ const Screentwo = ({
       newErrors.selectedOptions =
         "Please select at least one sector or industry.";
     }
-
- 
 
     if (Object.keys(newErrors).length === 0) {
       setError({});
@@ -365,7 +389,14 @@ const Screentwo = ({
               4. Please provide additional information describing the steps
               taken (if applicable)
             </label>
-            <textarea
+            <JoditEditor
+              // ref={editor}
+              value={reportingdescription}
+              config={config}
+              tabIndex={1}
+              onBlur={handleReportingdescription}
+            />
+            {/* <textarea
               id="countriesOfOperation"
               name="countriesOfOperation"
               placeholder="Enter a description..."
@@ -377,8 +408,8 @@ const Screentwo = ({
               // value={formData.countriesOfOperation}
               // onChange={handleInputChange}
               rows={5}
-              onChange={handleReportingdescription} // Specify the number of rows to determine the initial height
-            />
+              onChange={handleReportingdescription} 
+            /> */}
             {/* <div className="my-1">
                     {error.reportingdescription && (
                       <p className="text-red-500">

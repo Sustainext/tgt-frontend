@@ -19,52 +19,31 @@ const Screenfour = ({
   const { open } = GlobalState();
   const [error, setError] = useState({});
   const [reportradio, setReportnradio] = useState("");
-  const [reportingdescription, setReportingdescription] = useState("");
-  const [reportingentity, setReportingentity] = useState("");
-  const [reportingentityone, setReportingentityone] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [selectedOptionsone, setSelectedOptionsone] = useState([]);
 
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+  const screenId = 4;
 
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   const fetchBillSfour = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
 
     try {
+      // or use a dynamic value
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=4&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
       );
-      // If the request is successful but you specifically want to handle 404 inside here
+
       if (response.status === 200) {
-        setReportnradio(response.data.risk_identified_8);
-        setReportingdescription(response.data.additional_info_entity_10);
-        setReportingentity(response.data.risk_aspects_description_8_1);
-        setReportingentityone(response.data.risk_activaties_description_9);
-        if (response.data.risk_aspects_8_1 == null) {
+        setReportnradio(response.data.data.screen4_q1);
+
+        if (response.data.data.screen4_q2 == null) {
           setSelectedOptions([]);
         } else {
-          setSelectedOptions(response.data.risk_aspects_8_1);
+          setSelectedOptions(response.data.data.screen4_q2);
         }
-        if (response.data.risk_activaties_9 == null) {
-          setSelectedOptionsone([]);
-        } else {
-          setSelectedOptionsone(response.data.risk_activaties_9);
-        }
+    
         LoaderClose();
       } else {
         LoaderClose();
@@ -81,17 +60,7 @@ const Screenfour = ({
       }
     } catch (error) {
       LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+   
     } finally {
       LoaderClose();
     }
@@ -114,10 +83,6 @@ const Screenfour = ({
       }
     }
     setReportnradio("");
-    setReportingdescription("");
-    setReportingentity("");
-    setReportingentityone("");
-    setSelectedOptionsone([]);
     setSelectedOptions([]);
   }, [selectedCorp, selectedOrg, year]);
 
@@ -197,17 +162,18 @@ const Screenfour = ({
       LoaderOpen();
 
       const sendData = {
-        risk_identified_8: reportradio,
-        risk_aspects_8_1: selectedOptions,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp ? selectedCorp : null,
+        data:{
+          screen4_q1: reportradio,
+          screen4_q2: selectedOptions,
+        },
+        organization: selectedOrg,
+        corporate: selectedCorp,
         year: year,
       };
-      const response = await axiosInstance.post(
-        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=4`,
-        sendData,
-        axiosConfig
-      );
+      const response= await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
+        sendData
+      )
       if (response.status == "200") {
         toast.success("Data added successfully", {
           position: "top-right",

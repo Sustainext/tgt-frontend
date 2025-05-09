@@ -15,65 +15,45 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
   const [reportingentity, setReportingentit] = useState("");
   const [reportingdateform, setReportingdateform] = useState("");
   const [reportingdateto, setReportingdateto] = useState("");
+  const [reportingyear, setReportingyear] = useState("");
   const [loopen, setLoOpen] = useState(false);
+  const screenId = 1;
 const yearInfo =[
   "May 31, 2024",
   "May 31, 2025"
 ]
 
-  const fetchBillSone = async () => {
-    LoaderOpen(); // Assume this is to show some loading UI
+const fetchBillSone = async () => {
+  LoaderOpen();
 
-    try {
-      const response = await axiosInstance.get(
-        `${
-          process.env.BACKEND_API_URL
-        }/canadabills211/identifying-information/?screen=1&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`
-      );
+  try {
+  // or use a dynamic value
+    const response = await axiosInstance.get(
+      `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
+    );
 
-      if (response.status === 200) {
-        setReportname(response.data.report_purpose_1);
-        setReportingentit(response.data.reporting_legal_name_2);
-        setReportingdateform(response.data.financial_reporting_year_from_3);
-        setReportingdateto(response.data.financial_reporting_year_to_3);
-        LoaderClose();
-      }
-      else if(response.status==404){
-        setReportname("Select Entity");
-        setReportingentit("");
-        setReportingdateform("");
-        setReportingdateto("");
-        LoaderClose();
-      }
-      else{
-        toast.error("Oops, something went wrong", {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }
-    }  catch (error) {
-      LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    } finally {
-      LoaderClose();
+    if (response.status == "200") {
+      setReportname(response.data.data.screen1_q1);
+      setReportingentit(response.data.data.screen1_q2);
+      setReportingdateform(response.data.data.screen1_form_q4);
+      setReportingdateto(response.data.data.screen1_to_q4);
+      setReportingyear(response.data.data.screen1_q3)
+    } else if (response.status == "404") {
+      setReportname("Select Entity");
+      setReportingentit("");
+      setReportingdateform("");
+      setReportingdateto("");
+    } else {
+      toast.error("Oops, something went wrong", { /* toast config */ });
     }
-  };
+  } catch (error) {
+    LoaderClose();
+
+  } finally {
+    LoaderClose();
+  }
+};
+
 
   useEffect(() => {
     // if (isMounted.current) {
@@ -118,6 +98,13 @@ const yearInfo =[
     }
   };
 
+  const handlereportingyear = (event) => {
+    const value = event.target.value;
+    setReportingyear(value);
+    if (value.trim() !== "") {
+      setError((prev) => ({ ...prev, reportingyear: "" }));
+    }
+  };
   // const handleReportndate = (event) => {
   //   const value = event.target.value;
   //   setReportingdateform(value);
@@ -182,17 +169,20 @@ const yearInfo =[
       LoaderOpen();
 
       const sendData = {
-        report_purpose_1: reportname,
-        reporting_legal_name_2: reportingentity,
-        financial_reporting_year_from_3: reportingdateform,
-        financial_reporting_year_to_3: reportingdateto,
-        organization_id: selectedOrg,
-        corporate_id: selectedCorp?selectedCorp:null,
+        data:{
+          screen1_q1: reportname,
+          screen1_q2: reportingentity,
+          screen1_q3: reportingyear,
+          screen1_form_q4: reportingdateform,
+          screen1_to_q4: reportingdateto,
+        },
+     
+        organization: selectedOrg,
+        corporate: selectedCorp,
         year: year
       };
-      const response= await axiosInstance
-        .post(
-          `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=1`,
+      const response= await axiosInstance.put(
+          `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/`,
           sendData
         )
         if (response.status == "200") {
@@ -251,7 +241,10 @@ const yearInfo =[
       newErrors.reportingdateform = "Please select a date";
     }
     if (!reportingdateto) {
-      newErrors.reportingdateto = "Please select a date";
+      newErrors.reportingdateto = "Please select a date";  
+    }
+    if (!reportingyear) {
+      newErrors.reportingdateto = "Please select reporting year";  
     }
     if(reportingdateto<reportingdateform){
       newErrors.reportingdateto = "To date cannot be earlier than from date.";
@@ -334,8 +327,8 @@ const yearInfo =[
                 <select
                       name="year"
                       className="block w-full rounded-md  pl-4 text-neutral-600 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 py-3 border-gray-400 border "
-                      // value={formState.year}
-                      // onChange={handleChange}
+                      value={reportingyear}
+                      onChange={handlereportingyear}
                     >
                       <option disabled value="">
                         Select year
@@ -347,9 +340,9 @@ const yearInfo =[
                       ))}
                     </select>
                 </div>
-                {error.reportingdateform && (
+                {error.reportingyear && (
                   <p className="text-red-500 ml-1 text-[12px]">
-                    {error.reportingdateform}
+                    {error.reportingyear}
                   </p>
                 )}
              
