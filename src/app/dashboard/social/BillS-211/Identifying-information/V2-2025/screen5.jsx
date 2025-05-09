@@ -30,8 +30,7 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
         toast.error("Oops, something went wrong");
       }
     } catch (error) {
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong");
+      LoaderClose();
     } finally {
       LoaderClose();
     }
