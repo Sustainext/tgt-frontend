@@ -67,7 +67,7 @@ const uiSchema = {
       "ui:tooltipdisplay": "none",
       "ui:widget": "CurrencyselectWidget",
       "ui:widgtclass":
-      "block w-[64vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2x:w-[20vw] 4k:w-[20vw] 2k:w-[20vw] 3xl:w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+      "block w-[64vw] xl:w-[20vw] lg:w-[20vw] md:w-[33vw] 2x:w-[20vw] 4k:w-[20vw] 2k:w-[20vw] 3xl:w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
       "ui:horizontal": true,
       "ui:options": {
         label: false,

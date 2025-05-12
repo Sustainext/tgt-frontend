@@ -11,19 +11,57 @@ function Carbonaccountingobjectives({ value, setValue, roles, setRoles }) {
   const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
   const editor = useRef(null);
   const [content, setContent] = useState("");
+  // const config = {
+  //   askBeforePasteHTML: false,
+  //   askBeforePasteFromWord: false,
+  //   defaultActionOnPaste: 'insert_clear_html',
+  //   height: 400, // sets the height to 400 pixels
+  // };
   const config = {
-    askBeforePasteHTML: false,
-    askBeforePasteFromWord: false,
+    enter: "BR", // Or customize behavior on Enter key
+cleanHTML: true,
+    enablePasteHTMLFilter: false, 
+  askBeforePasteHTML: false, 
+  askBeforePasteFromWord: false,
+    style: {
+      fontSize: "14px",
+      color:"#667085"
+    },
+    height:400,
+    allowResizeY: false,
     defaultActionOnPaste: 'insert_clear_html',
-    height: 400, // sets the height to 400 pixels
+    toolbarSticky: false,
+    toolbar: true,
+    buttons: [
+        'bold',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'align',
+        'outdent',
+        'indent',
+        'ul',
+        'ol',
+        'paragraph',
+        'link',
+        'table',
+        'undo',
+        'redo',
+        'hr',
+        'fontsize',
+        'selectall'
+    ],
+    // Remove buttons from the extra buttons list
+    removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
   };
+
   const handleEditorChange = (newContent) => {
     setRoles(newContent);
   };
   return (
     <>
       <div className="div">
-        <div className="px-3">
+        <div className="xl:px-3">
           <h3 className="text-left mb-2 p-3">
             <b>CARBON ACCOUNTING OBJECTIVES</b>
           </h3>
@@ -70,12 +108,12 @@ function Carbonaccountingobjectives({ value, setValue, roles, setRoles }) {
               // onChange={handleEditorChange}
               />
             </div>
-            <p className="text-left wordsping">
+            <p className="text-left wordsping px-">
               The quantification of {orgname} carbon emissions was led by the
               <input
                 type="text"
                 placeholder="Designation of Organizational Admin"
-                className=" ml-2 w-[25%] border appearance-none text-xs text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
+                className="xl:ml-2 xl:w-[25%] w-full border appearance-none text-xs text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
               ></input>{" "}

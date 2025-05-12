@@ -270,7 +270,7 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
   return (
     <>
        <div className="flex justify-between items-center  xl:border-b border-gray-200 pb-4 xl:z-[100] relative">
-        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block ">
+        <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block ">
           <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
             <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
             Social
@@ -356,17 +356,17 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
           </div>
         </div>
         {/* mobile version */}
-        <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+        <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden  2xl:hidden 4k:hidden">
           <div
-            className="w-full  py-4 h-[100px]   rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+            className="w-full  py-4 h-auto  rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
             onClick={toggleSidebar}
           >
             <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
               <div className="">
                 <p className="text-[11px]">Social</p>
-                <div className="h-[28px] ">
-                  <div className="h-[28px]">
-                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
+                <div className=" ">
+                  <div className="">
+                    <p className="gradient-text text-[21px] font-bold  pt-1">
                     {activeTab === "Tab2"
                   ? "Human Rights and Community Impact"
                   : activeTab === "Tab1"
@@ -452,6 +452,106 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
                     ))
                   )}
               </div>
+            </div>
+          </div>
+        </div>
+
+           {/* tablet version */}
+           <div className="hidden justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:block  2xl:hidden 4k:hidden">
+          <div
+            className="w-full  py-4 h-auto  rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+            onClick={toggleSidebar}
+          >
+            <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
+              <div className="">
+                <p className="text-[11px]">Social</p>
+                <div className=" ">
+                  <div className="">
+                    <p className="gradient-text text-[21px] font-bold h-[50px]  pt-1">
+                    {activeTab === "Tab2"
+                  ? "Human Rights and Community Impact"
+                  : activeTab === "Tab1"
+                  ? "Occupational Health and Safety 2018"
+                  : activeTab === "Tab3"
+                  ? "Labor Management"
+                  : activeTab === "Tab4"
+                  ? "Forced or Compulsory Labor 2016"
+                  : activeTab === "Tab5"
+                  ? "Employment"
+                  : activeTab === "Tab6"
+                  ? "Training and Development"
+                  : activeTab === "Tab7"
+                  ? "Customer Privacy & Data Security"
+                  : activeTab === "Tab8"
+                  ? "Product safety and quality"
+                  : activeTab === "Tab9"
+                  ? "Marketing and labeling"
+                  : activeTab === "Tab10"
+                  ? "Supply Chain Labor Standards"
+                  : activeTab === "Tab11"
+                  ? "Diversity & Equal Opportunity"
+                  : activeTab === "Tab12"
+                  ? " Non-discrimination"
+                  : activeTab === "Tab13"
+                  ? "Marketing and labeling"
+                   : activeTab === "Tab14"
+                  ? "Customer Privacy"
+                   : activeTab === "Tab15"
+                  ? "Security Practices 2016"
+                  : ""}
+                    </p>
+                  </div>
+                  {activeTab === "Tab1" && (
+            <div className="w-[95px] pl-1 pr-0.5 mt-2 bg-slate-200 rounded justify-center items-center flex">
+            <div className="text-zinc-600 text-xs font-normal font-['Manrope'] leading-[21px]">
+              Material Topic
+            </div>
+          </div>
+              )}
+               
+                </div>
+              </div>
+
+              <div className="flex items-center me-5">
+                <MdKeyboardArrowDown className={`text-2xl float-end `} />
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full float-end pt-2 me-1 my-4">
+            <div className="">
+              <div className="flex mb-2">
+              {gri
+            .filter((g) => g.category === activeTab)
+            .flatMap((g) =>
+              g.tags.map((tag, index) =>
+                tag.data.map((item) => (
+                  <button
+                    key={`${tag.label}-${item.tagid}`}
+                    className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[80px] h-[22px] ml-2 text-center"
+                    onClick={() => toggleDrawer(item.infoid)}
+                  >
+                    {tag.label} - {item.tagid}
+                  </button>
+                ))
+              )
+            )}
+                      {sdg
+                  .filter((s) => s.category === activeTab)
+                  .map((s) =>
+                    s.data.map((item) => (
+                      <button
+                        key={item.id}
+                        className={`text-[#fff] ${item.bgColor} rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5`}
+                        onClick={() => toggleDrawer(item.id)}
+                      >
+                        {item.label}
+                      </button>
+                    ))
+                  )}
+              </div>
+
+            
             </div>
           </div>
         </div>

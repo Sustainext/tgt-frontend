@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMaterialityData,
   setCorpID,
@@ -15,7 +15,7 @@ import {
   setStartDate,
   setEndDate,
   setMaterialityYear,
-  setIsYearChanged
+  setIsYearChanged,
 } from "../../../lib/redux/features/materialitySlice";
 const monthMapping = {
   Jan: 1,
@@ -283,7 +283,7 @@ const EconomicHeader4 = ({
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4  ${
+                className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[100%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4  ${
                   reportType !== "" ? "visible" : "hidden"
                 }`}
               >
@@ -386,7 +386,7 @@ const EconomicHeader4 = ({
                     Select Month
                   </label>
                   <div className="mt-2">
-                  <select
+                    <select
                       name="month"
                       className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={Object.keys(monthMapping).find(
@@ -401,15 +401,13 @@ const EconomicHeader4 = ({
                         </option>
                       ))}
                     </select>
-              
                   </div>
                 </div>
-                
               </div>
             </div>
           </div>
         </div>
-        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block">
+        <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
           <div className="flex justify-between mb-4 ml-3">
             <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
               {months.map((month, index) => (

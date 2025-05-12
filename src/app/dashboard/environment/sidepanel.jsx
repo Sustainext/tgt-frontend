@@ -11,6 +11,7 @@ import {
   MdOutlineEmojiNature,
   MdOutlineAir,
   MdClose,
+  MdEmojiNature
 } from "react-icons/md";
 import { LuPackage } from "react-icons/lu";
 import { GiWoodPile, GiWaterfall } from "react-icons/gi";
@@ -20,6 +21,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
   const [isWasteVisible, setWasteVisible] = useState(false);
   const [isWaterVisible, setWaterVisible] = useState(false);
+  const [isBioDiversityVisible, setBioDiversityVisible] = useState(false);
   const [isMaterialsVisible, setMaterialsVisible] = useState(false);
   const [isSupplierVisible, setIsSupplierVisible] = useState(false);
   // const [isEffluentVisible, setIsEffluentVisible] = useState(false);
@@ -34,6 +36,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setWasteVisible(false);
     setMaterialsVisible(false);
     setWaterVisible(false);
+    setBioDiversityVisible(false);
     setEnergySectionVisible(false);
     setIsSupplierVisible(false);
     setIsAirQualityVisible(false)
@@ -44,6 +47,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setWasteVisible(false);
     setMaterialsVisible(false);
     setWaterVisible(false);
+    setBioDiversityVisible(false);
     setEnergySectionVisible(false);
     setEmisssion(false);
     setIsAirQualityVisible(false)
@@ -53,6 +57,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setEnergySectionVisible(!isEnergySectionVisible);
     setWasteVisible(false);
     setMaterialsVisible(false);
+    setBioDiversityVisible(false);
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
@@ -64,6 +69,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setEnergySectionVisible(false);
     setMaterialsVisible(false);
     setWaterVisible(false);
+    setBioDiversityVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsAirQualityVisible(false)
@@ -73,6 +79,19 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setWaterVisible(!isWaterVisible);
     setEnergySectionVisible(false);
     setWasteVisible(false);
+    setBioDiversityVisible(false);
+    setMaterialsVisible(false);
+    setIsSupplierVisible(false);
+    setEmisssion(false);
+    setIsAirQualityVisible(false)
+    setIsPackagingMaterialVisible(false)
+  };
+
+  const toggleBioDiversityVisible = () => {
+    setBioDiversityVisible(!isBioDiversityVisible);
+    setEnergySectionVisible(false);
+    setWasteVisible(false);
+    setWaterVisible(false);
     setMaterialsVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
@@ -95,6 +114,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setWasteVisible(false);
+    setBioDiversityVisible(false);
     setMaterialsVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
@@ -106,6 +126,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setEnergySectionVisible(false);
     setWasteVisible(false);
     setWaterVisible(false);
+    setBioDiversityVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsAirQualityVisible(false)
@@ -116,6 +137,7 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
     setEnergySectionVisible(false);
     setWasteVisible(false);
     setMaterialsVisible(false)
+    setBioDiversityVisible(false);
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
@@ -149,14 +171,14 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
   };
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md  h-full">
-      <div className="flex items-start py-4 h-screen 4k:h-auto rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] 4k:w-[200px] 2k:w-[240px] scrollable-content">
+      <div className="flex items-start py-4 h-screen 4k:h-auto rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[43%] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] 4k:w-[200px] 2k:w-[240px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
           <button className="flex justify-between items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
             <div>
             <span className="text-[16px] font-extrabold">Environment</span>
             
             </div>
-            <div className=" float-end block xl:hidden md:hidden lg:hidden 2xl:hidden 4k:hidden">
+            <div className=" float-end block xl:hidden md:block lg:hidden 2xl:hidden 4k:hidden">
             <MdClose onClick={toggleSidebar} className="text-3xl"/>
             </div>
           
@@ -1166,6 +1188,165 @@ const Aside = ({ activeTab, handleTabClick, apiData,setMobileopen }) => {
                       onClick={() => handleTabClick("Change in water storage")}
                     >
                       Change in water storage
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+
+          {/* bio diversity */}
+          <div className={`relative `}>
+            <button
+              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
+              ${
+                activeTab === "Biodiversity Policies" ||
+                activeTab ===
+                  "Access and benefit-sharing" ||
+                activeTab ===
+                  "Synergies, Trade-offs & Stakeholder Engagement" ||
+                activeTab === "Management of Material topic Bio diversity"||
+                activeTab === "Management of biodiversity impacts"
+                // activeTab === "Change in water storage"
+                  ? "text-blue-400"
+                  : "bg-transparent text-[#727272] "
+              }`}
+              onClick={toggleBioDiversityVisible}
+            >
+              <div className="w-[15%]">
+                <MdEmojiNature className="w-6 h-6 mr-2" />
+              </div>
+              <div className="w-[50%] text-left ml-2">
+                <span className="indent-0">Bio Diversity</span>
+              </div>
+              {materialityEnvData &&
+              materialityEnvData.EnvBioDiversityLandUse?.is_material_topic ? (
+                <div className="w-[20%] flex justify-end">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )}
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
+                {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+                </span> */}
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isBioDiversityVisible && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {/* Water and effluents section content */}
+            {isBioDiversityVisible && (
+              <>
+                <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.EnvBioDiversityLandUse?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-3  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic Bio diversity"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick("Management of Material topic Bio diversity")
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Topic management disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Biodiversity Policies"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Biodiversity Policies"
+                        )
+                      }
+                    >
+                     Biodiversity Policies
+                    </p>
+                  </div>
+                  {/* <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Topic Disclosure
+                    </p>
+                  </div> */}
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Management of biodiversity impacts"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Management of biodiversity impacts"
+                        )
+                      }
+                    >
+                      {" "}
+                      Management of biodiversity impacts
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Synergies, Trade-offs & Stakeholder Engagement"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Synergies, Trade-offs & Stakeholder Engagement"
+                        )
+                      }
+                    >
+                     Synergies, Trade-offs & Stakeholder Engagement
+                    </p>
+                  </div>
+
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Access and benefit-sharing"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Access and benefit-sharing")}
+                    >
+                      Access and benefit-sharing
                     </p>
                   </div>
                 </div>

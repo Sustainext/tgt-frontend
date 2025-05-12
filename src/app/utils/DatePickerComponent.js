@@ -349,7 +349,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
             position === "top"
               ? "bottom-full mb-2"
               : position === "left"
-              ? "right-full mr-2"
+              ? "right-3 mr-2"
               : position === "right"
               ? "ml-2"
               : "top-full mt-2"

@@ -1,15 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ScenarioTable from "./ScenarioTable";
-// import ScenarioAnalysis from "./ScenarioAnalysis";
+import CompareScenarios from "./CompareScenarios/page";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay,
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
 
 const ScenarioDashboard = () => {
   const [activeTab, setActiveTab] = useState("home");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (activeTab === "home") {
+      dispatch(setHeadertext1("Optimise"));
+      dispatch(setHeaderdisplay("none"));
+      dispatch(setHeadertext2("Scenario Creation Dashboard"));
+    }
+    else {
+      dispatch(setHeadertext1("Optimise"));
+      dispatch(setHeaderdisplay("none"));
+      dispatch(setHeadertext2("Compare Scenarios"));
+    }
+  }, [dispatch, activeTab]);
 
   return (
     <>
-      <ToastContainer style={{fontSize: '12px'}} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="px-0 py-4">
         {/* Header */}
         <div className="h-20 px-8 py-4 bg-white shadow-sm border-b border-gray-200 flex items-center mb-4">
@@ -46,6 +66,7 @@ const ScenarioDashboard = () => {
 
         {/* Content based on active tab */}
         {activeTab === "home" ? <ScenarioTable /> : ""}
+        {activeTab === "analysis" ? <CompareScenarios /> : ""}
       </div>
     </>
   );

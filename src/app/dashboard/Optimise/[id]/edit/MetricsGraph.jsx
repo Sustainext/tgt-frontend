@@ -17,20 +17,38 @@ const MetricsGraph = ({
   baseYear = 2025,
   targetYear = 2045,
   metricName = "FTE",
+  initialMaxRange = 100,
+  allowNegative = true,
+  minNegativeValue = -100, 
+  rangeSteps = [100, 200, 500, 1000, 2000, 5000],
+  // Added props for syncing with Redux
+  metricData = {},
+  onPercentageChange = () => {},
+  onBaseValueChange = () => {},
 }) => {
-  // Initial data structure
-  const initialData = [];
-
   // Generate years between base and target
   const years = [];
-  for (let year = baseYear; year <= targetYear; year++) {
+  for (let year = baseYear+1; year <= targetYear; year++) {
     years.push(year.toString());
-    // Start with 0% growth for all years
-    initialData.push({
-      x: year.toString(),
-      y: 0,
-    });
   }
+
+  // Initialize data structure with values from metricData if available
+  const initializeData = () => {
+    const initialData = [];
+    
+    years.forEach(year => {
+      const percentageChange = metricData.percentage_change 
+        ? metricData.percentage_change[year] || 0 
+        : 0;
+        
+      initialData.push({
+        x: year,
+        y: percentageChange
+      });
+    });
+    
+    return initialData;
+  };
 
   // Calculate dynamic width based on number of years
   const yearCount = years.length;
@@ -40,8 +58,40 @@ const MetricsGraph = ({
 
   // Container width calculation - will be the visible container width
   const [containerWidth, setContainerWidth] = useState(0);
+  
+  // State for the growth data
+  const [data, setData] = useState(initializeData);
+  
+  // State for the absolute value in base year
+  const [baseValue, setBaseValue] = useState(metricData.abs_value || "");
+  
+  const [maxRange, setMaxRange] = useState(initialMaxRange);
+
+  // Update data when metricData changes (from Redux)
   useEffect(() => {
-    // Update container width on mount and resize
+    // Update base value if it exists in metricData
+    if (metricData.abs_value !== undefined) {
+      setBaseValue(metricData.abs_value);
+    }
+    
+    // Update percentage changes if they exist
+    if (metricData.percentage_change) {
+      const newData = [...data];
+      years.forEach((year, index) => {
+        const percentageChange = metricData.percentage_change[year];
+        if (percentageChange !== undefined) {
+          newData[index] = {
+            ...newData[index],
+            y: percentageChange
+          };
+        }
+      });
+      setData(newData);
+    }
+  }, [metricData]);
+
+  // Update container width on mount and resize
+  useEffect(() => {
     const updateContainerWidth = () => {
       const container = document.querySelector(".scrollable-content");
       if (container) {
@@ -53,30 +103,33 @@ const MetricsGraph = ({
     window.addEventListener("resize", updateContainerWidth);
     return () => window.removeEventListener("resize", updateContainerWidth);
   }, []);
-
-  // State for the growth data
-  const [data, setData] = useState(initialData);
-  // State for the absolute value in base year
-  const [baseValue, setBaseValue] = useState();
-  // State for the y-axis range
-  const [maxRange, setMaxRange] = useState(100);
+  
+  // Calculate effective min negative value - dynamic unless specified for certain metrics
+  const getEffectiveMinNegative = () => {
+    // For FTE, always keep it at -100 regardless of the positive range
+    if (metricName === "fte") {
+      return -100;
+    }
+    
+    // For others, mirror the positive range (i.e., -maxRange) unless specified
+    return minNegativeValue || -maxRange;
+  };
 
   // Function to auto-adjust range based on values
   const autoAdjustRange = (value) => {
     // If a value exceeds current range, bump up to the next range level
     if (Math.abs(value) > maxRange) {
-      // Determine next appropriate range
-      if (maxRange === 100) {
-        setMaxRange(200);
-      } else if (maxRange === 200) {
-        setMaxRange(500);
-      } else if (maxRange === 500) {
-        setMaxRange(1000);
-      } else if (maxRange === 1000) {
-        setMaxRange(2000);
+      // Find the next appropriate range level
+      const currentIndex = rangeSteps.indexOf(maxRange);
+      if (currentIndex !== -1 && currentIndex < rangeSteps.length - 1) {
+        // Get the next range step
+        const nextRange = rangeSteps[currentIndex + 1];
+        
+        // Set the new max range
+        setMaxRange(nextRange);
+        
+        return true;
       }
-      // Return true to indicate the range was adjusted
-      return true;
     }
     return false;
   };
@@ -112,17 +165,42 @@ const MetricsGraph = ({
       const rangeAdjusted = autoAdjustRange(newValue);
 
       // Apply constraints based on current max range
-      const constrainedValue = rangeAdjusted
-        ? newValue
-        : Math.max(Math.min(newValue, maxRange), -maxRange);
+      const upperConstrained = Math.min(newValue, maxRange);
+      
+      // Apply negative constraint based on allowNegative and minNegativeValue
+      let finalValue;
+      if (!allowNegative) {
+        finalValue = Math.max(upperConstrained, 0);
+      } else {
+        // Get the current effective min negative value
+        const effectiveMin = getEffectiveMinNegative();
+        
+        // Apply the constraint
+        finalValue = Math.max(upperConstrained, effectiveMin);
+      }
 
       // Update state
       const updatedData = [...data];
       updatedData[pointIndex] = {
         ...updatedData[pointIndex],
-        y: constrainedValue,
+        y: finalValue,
       };
       setData(updatedData);
+      
+      // Create complete object with both abs_value and percentage_change
+      const updatedPercentageChanges = {};
+      updatedData.forEach((item) => {
+        updatedPercentageChanges[item.x] = item.y;
+      });
+      
+      // Create complete data object for Redux
+      const completeData = {
+        abs_value: baseValue,
+        percentage_change: updatedPercentageChanges
+      };
+      
+      // Update the parent via callback with complete data object
+      onPercentageChange(completeData);
     };
 
     const handleMouseUp = () => {
@@ -178,6 +256,95 @@ const MetricsGraph = ({
     };
   }, []);
 
+  // Function to handle percentage input
+  const handlePercentageChange = (index, value) => {
+    // Handle special case: if user is just typing a minus sign
+    if (value === "-" && allowNegative) {
+      const newData = [...data];
+      // Store the negative sign as a special flag in the data
+      // Use a string to maintain the "negative intent" for future input
+      newData[index] = { ...newData[index], y: "-" };
+      setData(newData);
+      return;
+    }
+
+    // Check if we have a negative sign stored
+    const isNegativeIntent = data[index].y === "-";
+    
+    // Strip non-numeric characters except the leading minus
+    let processedValue = value.replace(/[^0-9\-]/g, "");
+    
+    // If there's a negative intent and user is now typing numbers
+    if (isNegativeIntent && /^\d+$/.test(processedValue)) {
+      // Apply the stored negative sign
+      processedValue = "-" + processedValue;
+    }
+    
+    // Parse the value as an integer
+    let numValue = parseInt(processedValue, 10);
+    
+    // Check if the value is valid
+    if (isNaN(numValue)) {
+      return; // Keep the current value if invalid
+    }
+    
+    // Apply constraints based on allowNegative, minNegativeValue, and maxRange
+    numValue = Math.min(numValue, maxRange);
+    
+    if (!allowNegative) {
+      numValue = Math.max(numValue, 0);
+    } else {
+      // Get the current effective min negative value
+      const effectiveMin = getEffectiveMinNegative();
+      
+      // Apply the constraint
+      numValue = Math.max(numValue, effectiveMin);
+    }
+    
+    // Update the data
+    const newData = [...data];
+    newData[index] = { ...newData[index], y: numValue };
+    setData(newData);
+    
+    // Check if range needs to be adjusted
+    autoAdjustRange(numValue);
+    
+    // Create complete object with both abs_value and percentage_change
+    const updatedPercentageChanges = {};
+    newData.forEach((item) => {
+      updatedPercentageChanges[item.x] = item.y;
+    });
+    
+    // Create complete data object for Redux
+    const completeData = {
+      abs_value: baseValue,
+      percentage_change: updatedPercentageChanges
+    };
+    
+    // Update the parent via callback with complete data object
+    onPercentageChange(completeData);
+  };
+
+  // Handle base value changes
+  const handleBaseValueChange = (e) => {
+    const value = Number(e.target.value) || 0;
+    setBaseValue(value);
+    
+    // Create complete data object with current percentage changes
+    const percentageChanges = {};
+    data.forEach((item) => {
+      percentageChanges[item.x] = item.y;
+    });
+    
+    // Send complete data object to parent
+    const completeData = {
+      abs_value: value,
+      percentage_change: percentageChanges
+    };
+    
+    onBaseValueChange(completeData);
+  };
+
   return (
     <div className="bg-white rounded-lg pl-2 overflow-auto">
       {/* Add the style for scrollable-content */}
@@ -191,7 +358,7 @@ const MetricsGraph = ({
             <input
               type="text"
               value={baseValue}
-              onChange={(e) => setBaseValue(Number(e.target.value) || 0)}
+              onChange={handleBaseValueChange}
               className="w-32 text-center bg-white border-b border-gray-300 rounded py-1 px-2 text-sm focus:outline-none focus:border-blue-500"
               placeholder="Enter Value"
             />
@@ -211,11 +378,11 @@ const MetricsGraph = ({
             margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
             xScale={{
               type: "point",
-              padding: 0.5, // Add padding to give more space around points, especially the first one
+              padding: 0.5, 
             }}
             yScale={{
               type: "linear",
-              min: -maxRange,
+              min: allowNegative ? getEffectiveMinNegative() : 0,
               max: maxRange,
               stacked: false,
               reverse: false,
@@ -368,7 +535,7 @@ const MetricsGraph = ({
       >
         <div className="flex justify-between items-center">
           <div className="flex-none w-12 text-[11px] font-medium text-gray-500 relative -left-6">
-            Percentage change in consumption
+            Percentage change
           </div>
           <div className="flex-1">
             <div
@@ -383,14 +550,45 @@ const MetricsGraph = ({
                 >
                   <input
                     type="text"
-                    value={`${data[index].y > 0 ? "+" : ""}${data[index].y}%`}
+                    value={
+                      // Special handling for negative intent
+                      data[index].y === "-"
+                        ? "-"
+                        : data[index].y > 0
+                        ? `+${data[index].y}%`
+                        : `${data[index].y}%`
+                    }
                     className="w-16 text-center border-b border-gray-300 rounded py-1 text-[11px] focus:outline-none focus:border-blue-500"
                     onChange={(e) => {
-                      const value = e.target.value.replace(/[^0-9\-+]/g, ""); // Removed '%' to avoid parsing issue
-                      const numValue = parseInt(value) || 0;
-                      const newData = [...data];
-                      newData[index] = { ...newData[index], y: numValue };
-                      setData(newData);
+                      // Pass the raw value to our handler function
+                      const rawValue = e.target.value.replace("%", "");
+                      handlePercentageChange(index, rawValue);
+                    }}
+                    onFocus={(e) => {
+                        e.target.select();
+                      }}
+                    onBlur={(e) => {
+                      // On blur, ensure we don't leave a bare minus sign
+                      if (data[index].y === "-") {
+                        const newData = [...data];
+                        newData[index] = { ...newData[index], y: 0 };
+                        setData(newData);
+                        
+                        // Create the year-wise percentage changes for Redux with complete data
+                        const percentageChanges = {};
+                        newData.forEach((item) => {
+                          percentageChanges[item.x] = item.y;
+                        });
+                        
+                        // Create complete data object
+                        const completeData = {
+                          abs_value: baseValue,
+                          percentage_change: percentageChanges
+                        };
+                        
+                        // Update the parent via callback with complete data
+                        onPercentageChange(completeData);
+                      }
                     }}
                   />
                 </div>

@@ -13,18 +13,19 @@ function Executivesummary({
   let uint2 = '';
   let uint3 = '';
 
-  // console.log(exdata, "data passing");
+
+  const regularCorporateData = exdata && exdata.filter(item => item.corporate_type === "Regular");
 
   // Loop through each corporate's scopes to sum up the emissions by scope
   exdata.forEach((corporate) => {
     corporate.scopes.forEach((scope) => {
-      if (scope.scope_name.toLowerCase() === "scope-1") {
+      if (scope.scope_name.toLowerCase() === "scope-1" && corporate.corporate_type === "Regular") {
         totalScope1 += parseFloat(scope.total_co2e);
         uint1 = scope.co2e_unit;
-      } else if (scope.scope_name.toLowerCase() === "scope-2") {
+      } else if (scope.scope_name.toLowerCase() === "scope-2" && corporate.corporate_type === "Regular") {
         totalScope2 += parseFloat(scope.total_co2e);
         uint2 = scope.co2e_unit;
-      } else if (scope.scope_name.toLowerCase() === "scope-3") {
+      } else if (scope.scope_name.toLowerCase() === "scope-3" && corporate.corporate_type === "Regular") {
         totalScope3 += parseFloat(scope.total_co2e);
         uint3 = scope.co2e_unit;
       }
@@ -42,7 +43,7 @@ function Executivesummary({
   const reportby = typeof window !== 'undefined' ? localStorage.getItem("reportby") : '';
   return (
     <>
-      <div className="px-3">
+      <div className="xl:px-3">
         <div className="flex">
           <h3 className="text-left mb-2 p-3">
             <b>EXECUTIVE SUMMARY</b>
@@ -117,12 +118,12 @@ function Executivesummary({
           )}
 
           <div className="mb-5">
-            {exdata &&
-              exdata.map((corporate, corpIndex) => (
+            {regularCorporateData &&
+              regularCorporateData.map((corporate, corpIndex) => (
                 corporate.scopes.length > 0 && ( // Check if there are scopes before rendering the table
                   <div key={corpIndex} className="mb-5">
                     <h2 className="text-lg font-semibold my-4">
-                      {exdata.length > 1 ? `Table 1.${corpIndex + 1}` : "Table 1"} : {corporate.corporate_name} GHG emissions by scope
+                      {regularCorporateData.length > 0 ? `Table 1.${corpIndex + 1}` : "Table 1"} : {corporate.corporate_name} GHG emissions by scope
                     </h2>
                     <table className="min-w-full leading-normal border border-slate-200 rounded-lg">
                       <thead className="border-s-slate-200">

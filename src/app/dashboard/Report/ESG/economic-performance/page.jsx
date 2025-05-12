@@ -40,8 +40,7 @@ import {
 } from "../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
 const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
-
-  const [data,setData]=useState("")
+  const [data, setData] = useState("");
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const orgName =
@@ -56,7 +55,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
     (state) => state.screen11Slice.introduction_to_economic_value_creation
   );
 
-  const infrastructure_investement=useSelector(
+  const infrastructure_investement = useSelector(
     (state) => state.screen11Slice.infrastructure_investement
   );
 
@@ -102,17 +101,45 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
   const submitForm = async (type) => {
     LoaderOpen();
     const data = {
-      company_economic_performance_statement:
-      {"page":"screen_eleven","label":"11. Economic Performance","subLabel":"Add statement about company’s economic performance","type":"textarea","content":company_economic_performance_statement,"field":"company_economic_performance_statement","isSkipped":false},
-      introduction_to_economic_value_creation:
-      {"page":"screen_eleven","label":"11.1.2 Economic Value Creation","subLabel":"Add introduction for company’s economic value creation","type":"textarea","content":introduction_to_economic_value_creation,"field":"introduction_to_economic_value_creation","isSkipped":false},
-      financial_assistance_from_government:
-      {"page":"screen_eleven","label":"11.1.3 Financial Assistance Received from Government","subLabel":"Add introduction about financial assistance received from government","type":"textarea","content":financial_assistance_from_government,"field":"financial_assistance_from_government","isSkipped":false},
-      infrastructure_investement: 
-       {"page":"screen_eleven","label":"11.2 Infrastructure Investment and Services Supported","subLabel":"Add statement for infrastructure investment and services provided","type":"textarea","content":infrastructure_investement,"field":"infrastructure_investement","isSkipped":false},
-    
+      company_economic_performance_statement: {
+        page: "screen_eleven",
+        label: "11. Economic Performance",
+        subLabel: "Add statement about company’s economic performance",
+        type: "textarea",
+        content: company_economic_performance_statement,
+        field: "company_economic_performance_statement",
+        isSkipped: false,
+      },
+      introduction_to_economic_value_creation: {
+        page: "screen_eleven",
+        label: "11.1.2 Economic Value Creation",
+        subLabel: "Add introduction for company’s economic value creation",
+        type: "textarea",
+        content: introduction_to_economic_value_creation,
+        field: "introduction_to_economic_value_creation",
+        isSkipped: false,
+      },
+      financial_assistance_from_government: {
+        page: "screen_eleven",
+        label: "11.1.3 Financial Assistance Received from Government",
+        subLabel:
+          "Add introduction about financial assistance received from government",
+        type: "textarea",
+        content: financial_assistance_from_government,
+        field: "financial_assistance_from_government",
+        isSkipped: false,
+      },
+      infrastructure_investement: {
+        page: "screen_eleven",
+        label: "11.2 Infrastructure Investment and Services Supported",
+        subLabel:
+          "Add statement for infrastructure investment and services provided",
+        type: "textarea",
+        content: infrastructure_investement,
+        field: "infrastructure_investement",
+        isSkipped: false,
+      },
     };
-       
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
     try {
@@ -171,19 +198,35 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
     dispatch(setCompanyeconomic(""));
     dispatch(setFinancialassistanc(""));
     dispatch(setIntroductionto(""));
-    dispatch(setInfrastructureInvestment(""))
+    dispatch(setInfrastructureInvestment(""));
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
         console.error("API response data11", response.data);
-        setData(response.data)
+        setData(response.data);
         dispatch(setgetdata(response.data));
-        dispatch(setCompanyeconomic(response.data.company_economic_performance_statement?.content || ""));
-        dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation?.content || ""));
-        dispatch(setFinancialassistanc(response.data.financial_assistance_from_government?.content || ""));
-        dispatch(setInfrastructureInvestment(response.data.infrastructure_investement?.content || ""));
+        dispatch(
+          setCompanyeconomic(
+            response.data.company_economic_performance_statement?.content || ""
+          )
+        );
+        dispatch(
+          setIntroductionto(
+            response.data.introduction_to_economic_value_creation?.content || ""
+          )
+        );
+        dispatch(
+          setFinancialassistanc(
+            response.data.financial_assistance_from_government?.content || ""
+          )
+        );
+        dispatch(
+          setInfrastructureInvestment(
+            response.data.infrastructure_investement?.content || ""
+          )
+        );
       }
 
       LoaderClose();
@@ -194,13 +237,11 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
   };
 
   useEffect(() => {
- 
     if (!apiCalledRef.current && reportid) {
-      apiCalledRef.current = true; 
-      loadFormData(); 
+      apiCalledRef.current = true;
+      loadFormData();
     }
   }, [reportid]);
-  
 
   const scrollToSection = (sectionRef, sectionId) => {
     setActiveSection(sectionId);
@@ -222,52 +263,61 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
           11. Economic Performance 
         </h3>
         <div className="flex gap-4">
-          <div className="w-[80%]">
-            <Section1 orgName={orgName} data={data}/>
+          <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
+            <Section1 orgName={orgName} data={data} />
             <Section2
               data={data}
               section11_1Ref={section11_1Ref}
               section11_1_1Ref={section11_1_1Ref}
-            
             />
-        <Section3 section11_1_2Ref={section11_1_2Ref}  orgName={orgName} data={data} />
-              <Section4 section11_1_3Ref={section11_1_3Ref} orgName={orgName} data={data} />
+            <Section3
+              section11_1_2Ref={section11_1_2Ref}
+              orgName={orgName}
+              data={data}
+            />
+            <Section4
+              section11_1_3Ref={section11_1_3Ref}
+              orgName={orgName}
+              data={data}
+            />
             <Section5 section11_2Ref={section11_2Ref} data={data} />
-              <Section6 section11_2_1Ref={section11_2_1Ref} data={data} />
+            <Section6 section11_2_1Ref={section11_2_1Ref} data={data} />
             <Section7 section11_2_2Ref={section11_2_2Ref} data={data} />
-           <Section8
+            <Section8
               section11_3Ref={section11_3Ref}
               section11_3_1Ref={section11_3_1Ref}
               data={data}
-            /> 
-          <Section9 section11_3_2Ref={section11_3_2Ref} data={data} />
+            />
+            <Section9 section11_3_2Ref={section11_3_2Ref} data={data} />
             <Section10 section11_3_3Ref={section11_3_3Ref} data={data} />
             <Section11 section11_3_4Ref={section11_3_4Ref} data={data} />
             <Section12
               section11_4Ref={section11_4Ref}
               section11_4_1Ref={section11_4_1Ref}
               data={data}
-            /> 
-          <Section13 section11_4_2Ref={section11_4_2Ref} data={data} />
-          <Section14 section11_4_3Ref={section11_4_3Ref} data={data} /> 
-          <Section15 section11_4_4Ref={section11_4_4Ref} data={data} /> 
-           <Section16
+            />
+            <Section13 section11_4_2Ref={section11_4_2Ref} data={data} />
+            <Section14 section11_4_3Ref={section11_4_3Ref} data={data} />
+            <Section15 section11_4_4Ref={section11_4_4Ref} data={data} />
+            <Section16
               section11_5Ref={section11_5Ref}
               section11_5_1Ref={section11_5_1Ref}
               data={data}
-            />  
-        <Section17 section11_5_2Ref={section11_5_2Ref} data={data} />
+            />
+            <Section17 section11_5_2Ref={section11_5_2Ref} data={data} />
             <Section18 section11_5_3Ref={section11_5_3Ref} data={data} />
             <Section19 section11_5_4Ref={section11_5_4Ref} data={data} />
             <Section20
               section11_6Ref={section11_6Ref}
               section11_6_1Ref={section11_6_1Ref}
               data={data}
-            /> 
+            />
           </div>
           {/* page sidebar */}
 
-          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-36 sticky mt-2 w-[20%]">
+          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36  md:fixed 
+  md:top-[19rem]
+  md:right-4  hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
             <p className="text-[11px] text-[#727272] mb-2 uppercase">
               11. Economic Performance
             </p>

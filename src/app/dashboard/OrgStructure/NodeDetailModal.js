@@ -6,7 +6,6 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/app/utils/toastUtils";
 
-
 const NodeDetailModal = ({
   isOpen,
   onClose,
@@ -115,7 +114,14 @@ const NodeDetailModal = ({
           timezone: details.timezone,
           employeecount: details.employeecount,
           language: details.language,
-          corporate_data:details.corporate_data,
+          corporate_data: {
+            id: details.corporate_data.id,
+            name: details.corporate_data.name,
+            country: details.corporate_data.country,
+            state: details.corporate_data.state,
+            city: details.corporate_data.city,
+            address: details.corporate_data.address
+          },
           revenue: details.revenue,
           street: details.streetaddress,
           country: details.country,
@@ -191,7 +197,7 @@ const NodeDetailModal = ({
       onClose();
       setTimeout(() => {
         window.location.reload();
-      }, 1000)
+      }, 1000);
     } catch (error) {
       showToast("Failed to delete entity", "error");
       console.error(
@@ -210,15 +216,15 @@ const NodeDetailModal = ({
           // Find organization containing this location
           const org = rawData.find((o) =>
             o.corporatenetityorg?.some((c) =>
-              c.location?.some((l) => l.name === nodeData.name)
+              c.location?.some((l) => l.id === nodeData.id)
             )
           );
           // Find corporate entity containing this location
           const corp = org?.corporatenetityorg?.find((c) =>
-            c.location?.some((l) => l.name === nodeData.name)
+            c.location?.some((l) => l.id === nodeData.id)
           );
           // Find the location itself
-          const loc = corp?.location?.find((l) => l.name === nodeData.name);
+          const loc = corp?.location?.find((l) => l.id === nodeData.id);
 
           foundDetails = {
             ...loc,
@@ -226,17 +232,24 @@ const NodeDetailModal = ({
             organization: org?.name,
             corporate: corp?.name,
             organization_data: org,
-            corporate_data: corp,
+            corporate_data: {
+              id: corp?.id,
+              name: corp?.name,
+              country: corp?.country,
+              state: corp?.state,
+              city: corp?.city,
+              address: corp?.address
+            },
             breadcrumb: [org?.name, corp?.name, loc?.name],
           };
           break;
         }
         case "corporate": {
           const org = rawData.find((o) =>
-            o.corporatenetityorg?.some((c) => c.name === nodeData.name)
+            o.corporatenetityorg?.some((c) => c.id === nodeData.id)
           );
           const entity = org?.corporatenetityorg?.find(
-            (c) => c.name === nodeData.name
+            (c) => c.id === nodeData.id
           );
 
           foundDetails = {
@@ -254,7 +267,7 @@ const NodeDetailModal = ({
           break;
         }
         case "organization": {
-          const org = rawData.find((o) => o.name === nodeData.name);
+          const org = rawData.find((o) => o.id === nodeData.id);
           foundDetails = {
             ...org,
             type: "organization",
@@ -278,10 +291,10 @@ const NodeDetailModal = ({
 
   return (
     <>
-      <div className="fixed right-0 top-[5rem] z-50 flex justify-end border border-gray-300 rounded-xl h-[110vh]">
+      <div className="fixed xl:right-0 right-2 top-[5rem] z-50 xl:flex xl:justify-end border border-gray-300 rounded-xl h-[110vh]">
         <div
           ref={modalRef}
-          className="w-[480px] bg-white shadow-xl h-full overflow-y-auto"
+          className=" bg-white shadow-xl h-full overflow-y-auto xl:w-[29vw] w-[120vw] "
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b">
@@ -408,9 +421,7 @@ const NodeDetailModal = ({
                     Employee Count
                   </label>
                   <p className="text-sm text-gray-900">
-                    {details.employeecount ||
-                      details.no_of_employees ||
-                      0}
+                    {details.employeecount || details.no_of_employees || 0}
                   </p>
                 </div>
                 <div>
@@ -459,14 +470,13 @@ const NodeDetailModal = ({
                     </p>
                   </div>
                   {nodeType === "location" && (
-                     <div>
-                     <label className="text-sm text-gray-600">Zip Code</label>
-                     <p className="text-sm text-gray-900">
-                       {details.zipCode || details.zipcode || "-"}
-                     </p>
-                   </div>
+                    <div>
+                      <label className="text-sm text-gray-600">Zip Code</label>
+                      <p className="text-sm text-gray-900">
+                        {details.zipCode || details.zipcode || "-"}
+                      </p>
+                    </div>
                   )}
-                 
                 </div>
               </div>
             </div>

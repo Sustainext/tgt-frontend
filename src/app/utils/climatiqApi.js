@@ -12,19 +12,21 @@ const createCacheKey = (params) => JSON.stringify(params);
 
 export async function fetchClimatiqActivities({ 
   subcategory, 
+  unit_type='*',
   page = 1, 
   region, 
   year, 
   customFetchExecuted = false, 
 }) {
   console.log(`\n=== fetchClimatiqActivities called ===`);
-  console.log(`Params:`, { subcategory, page, region, year });
+  console.log(`Params:`, { subcategory, unit_type, page, region, year }); // Log unit_type
 
   // Adjust year if it's 2025
   const adjustedYear = year === "2025" || year === 2025 ? "2024" : year;
   
   const cacheKey = createCacheKey({ 
     subcategory, 
+    unit_type, // Include unit_type in cache key
     page, 
     region, 
     year: adjustedYear
@@ -99,9 +101,10 @@ export async function fetchClimatiqActivities({
   try {
     console.log(`Starting initial data fetch...`);
     
-    // Initial fetch with region
+    // Initial fetch with region and unit_type
     const initialData = await fetchData({ 
       subcategory, 
+      unit_type, // Pass unit_type to API
       region, 
       year: adjustedYear, 
       page, 
@@ -109,7 +112,7 @@ export async function fetchClimatiqActivities({
 
     console.log(`Initial fetch returned ${initialData.results.length} results.`);
     activitiesData = await fetchAllPages(
-      { subcategory, region, year: adjustedYear }, 
+      { subcategory, unit_type, region, year: adjustedYear }, // Include unit_type
       initialData
     );
 
@@ -128,13 +131,14 @@ export async function fetchClimatiqActivities({
       wildcardFetched = true; // Prevent second wildcard fetch
       const wildcardInitialData = await fetchData({
         subcategory,
+        unit_type, // Include unit_type in wildcard search
         page,
         region: "*",
         year: adjustedYear,
       });
 
       wildcardActivitiesData = await fetchAllPages(
-        { subcategory, region: "*", year: adjustedYear },
+        { subcategory, unit_type, region: "*", year: adjustedYear }, // Include unit_type
         wildcardInitialData
       );
 
@@ -156,12 +160,14 @@ export async function fetchClimatiqActivities({
           return shouldFetchFromCustomMapping(entry, {
             year: adjustedYear,
             region,
+            unit_type, // Pass unit_type to condition check
           });
         })
         .map(async (entry) => {
           console.log(`Fetching custom data from source: ${entry.source}`);
           const initialCustomData = await fetchData({
             subcategory,
+            unit_type, // Include unit_type in custom fetch
             page,
             year: entry.year,
             source: entry.source,
@@ -170,7 +176,12 @@ export async function fetchClimatiqActivities({
           });
 
           return fetchAllPages(
-            { subcategory, year: entry.year, source: entry.source },
+            { 
+              subcategory, 
+              unit_type, // Include unit_type
+              year: entry.year, 
+              source: entry.source 
+            },
             initialCustomData
           );
         });
@@ -202,9 +213,12 @@ export async function fetchClimatiqActivities({
     // Cache the result
     requestCache.set(cacheKey, { data: result, timestamp: now });
 
-    // Clear cache when subcategory changes
+    // Clear cache when subcategory or unit_type changes
     requestCache.forEach((value, key) => {
-      if (!key.includes(`"subcategory":"${subcategory}"`)) {
+      if (
+        !key.includes(`"subcategory":"${subcategory}"`) || 
+        (unit_type && !key.includes(`"unit_type":"${unit_type}"`))
+      ) {
         requestCache.delete(key);
       }
     });

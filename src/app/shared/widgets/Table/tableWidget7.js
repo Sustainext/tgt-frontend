@@ -145,7 +145,7 @@ const CustomTableWidget7 = ({
                 className="text-[12px] border-t border-r border-gray-300  px-2 py-2"
                 colSpan={item.colSpan}
               >
-                <div className="relative w-[150px] xl:w-auto lg:w-auto  md:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto">
+                <div className="relative w-[150px] xl:w-auto lg:w-auto  md:w-[150px] 2xl:w-auto  4k:w-auto  2k:w-auto">
                   <p className="flex justify-center">
                     {item.title}{" "}
                     <MdInfoOutline

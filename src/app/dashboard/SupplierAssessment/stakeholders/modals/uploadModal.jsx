@@ -168,7 +168,7 @@ const UploadFileModal = ({
     <>
       {isModalOpen && (
          <div className="fixed inset-0 flex justify-center items-center bg-[#00000080] z-50 mt-12">
-          <div className={`relative bg-white p-6 rounded-lg shadow-lg w-[30%] max-w-3xl`}>
+          <div className={`relative bg-white p-6 rounded-lg shadow-lg xl:w-[30%] max-w-3xl`}>
                 {isPreviewOpen?(
                     <div>
                     <div className="flex gap-2 items-center mb-2">

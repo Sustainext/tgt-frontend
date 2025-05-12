@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FiPlus, FiCheckCircle } from "react-icons/fi";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Moment from "react-moment";
 import { useAuth } from "../../../Context/auth";
@@ -35,7 +35,7 @@ const MyGoals = () => {
         if (!token) return;
 
         const response = await axiosInstance.get("/api/auth/get_user_roles/");
-        
+
         if (response.status === 200) {
           const data = await response.data;
           console.log("Fetched user role:", data);
@@ -46,7 +46,7 @@ const MyGoals = () => {
       } catch (error) {
         console.error("Error fetching user role:", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -136,13 +136,25 @@ const MyGoals = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     LoaderOpen();
-  
+
     try {
       let response;
       if (isEditing) {
-        response = await patch(`/sustainapp/my_goal/${currentGoal.id}/`, formData);
+        response = await patch(
+          `/sustainapp/my_goal/${currentGoal.id}/`,
+          formData
+        );
         if (response.status === 200) {
-          toast.success("Goal updated successfully!");
+          toast.success("Goal updated successfully", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
       } else {
         response = await post(`/sustainapp/my_goal/`, {
@@ -150,7 +162,7 @@ const MyGoals = () => {
           assigned_to: userId,
           completed: false,
         });
-  
+
         if (response.status === 201) {
           toast.success("Goal added successfully!", {
             position: "top-right",
@@ -164,45 +176,41 @@ const MyGoals = () => {
           });
         }
       }
-      
+
       setTimeout(() => {
         fetchGoals();
         handleCloseModal();
       }, 1000); // Delay to allow toast to show
-  
     } catch (error) {
-      toast.error("Error saving goal: "+ error.message);
+      toast.error("Error saving goal: " + error.message);
     } finally {
       LoaderClose();
     }
   };
-  
 
   const handleDelete = async () => {
     if (!currentGoal) {
       toast.error("Invalid goal selected");
       return;
     }
-  
+
     LoaderOpen();
     try {
       const response = await del(`/sustainapp/my_goal/${currentGoal.id}/`);
       if (response.status === 204) {
         toast.success("Goal deleted successfully!");
       }
-  
+
       setTimeout(() => {
         fetchGoals();
         handleCloseModal();
       }, 1000); // Delay to show toast
-  
     } catch (error) {
       toast.error("Error deleting goal");
     } finally {
       LoaderClose();
     }
   };
-  
 
   const renderGoalsList = (goalsList) => {
     if (!goalsList || goalsList.length === 0) {
@@ -249,7 +257,7 @@ const MyGoals = () => {
 
       return (
         <>
-        {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
+          {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
           <div
             key={goal.id}
             className="flex justify-between border-b border-[#ebeced] py-2"
@@ -282,7 +290,9 @@ const MyGoals = () => {
                         : "bg-gray-300"
                     }`}
                   ></div>
-                  <div className="text-xs">{goal.status_display || "Not Started"}</div>
+                  <div className="text-xs">
+                    {goal.status_display || "Not Started"}
+                  </div>
                 </div>
               </div>
             </div>
@@ -302,7 +312,7 @@ const MyGoals = () => {
   return (
     <>
       {/* <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} /> */}
-      <div className="p-6 bg-white rounded-lg shadow-sm border border-gray-200 h-[450px] xl:h-[470px] lg:h-[470px] md:h-[470px] 4k:h-[470px] flex flex-col">
+      <div className="xl:p-6 p-4 bg-white rounded-lg shadow-sm border border-gray-200 h-[450px] xl:h-[470px] lg:h-[470px] md:h-[470px] 4k:h-[470px] flex flex-col">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-[#0f1728] text-lg font-medium font-['Manrope'] leading-7">
             Organization Goals
@@ -336,7 +346,9 @@ const MyGoals = () => {
 
         <div className="flex justify-between px-4 py-2 text-sm font-medium text-gray-500 border-b">
           {/* Task Name Column */}
-          <div className="w-[10rem] xl:w-[26rem] md:w-[26rem] lg:w-[26rem] 4k:w-[26rem] 2xl:w-[26rem] -ml-2">Tasks</div>
+          <div className="w-[10rem] xl:w-[26rem] md:w-[26rem] lg:w-[26rem] 4k:w-[26rem] 2xl:w-[26rem] -ml-2">
+            Tasks
+          </div>
 
           {/* Status Column */}
           <div className="flex-grow ml-2">Status</div>

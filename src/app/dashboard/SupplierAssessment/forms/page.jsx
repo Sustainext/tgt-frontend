@@ -45,13 +45,13 @@ const Forms = () => {
     <div className="p-4 min-h-screen">
       <div className="xl:flex justify-between items-center mb-6">
         <h1 className="text-[20px] font-semibold text-[#101828]">Form</h1>
-        <div className="relative xl:flex gap-4">
+        <div className="relative xl:flex md:flex lg:flex 4k:flex 2k:flex  gap-4">
           <div className="w-full mb-4">
             <FiSearch className="absolute left-3 top-[1.25rem] xl:top-[1.30rem] transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               placeholder="Search"
-              className="pl-10 pr-4 py-2 xl:min-w-[25vw] w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="pl-10 pr-4 py-2 xl:min-w-[25vw] md:min-w-[89vw] w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               // value={searchQuery}
               // onChange={handleSearch}
             />
@@ -61,7 +61,7 @@ const Forms = () => {
               onClick={() => {
                 setIsModalOpen(true);
               }}
-              className="bg-[#007EEF] text-white px-4 py-2 text-[14px] rounded-md hover:bg-blue-600 xl:w-full w-[50%]"
+              className="bg-[#007EEF] text-white px-4 py-2 text-[14px] rounded-md hover:bg-blue-600 xl:w-full md:w-full lg:w-full w-[50%]"
             >
               <div className="flex gap-1">
                 <MdAdd className="w-4 h-4 mt-0.5" /> Create New Form

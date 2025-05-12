@@ -63,7 +63,7 @@ const CustomTableWidget = ({
                   idx === 0 ? "" : "border-l"
                 } text-[12px] px-2 py-2 border-gray-300`}
               >
-                <div className="relative w-[357px] xl:w-auto lg:w-auto  md:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto ">
+                <div className="relative w-[357px] xl:w-auto lg:w-auto  md:w-[357px]  2xl:w-auto  4k:w-auto  2k:w-auto ">
                   <p className="flex">
                     {item.title}
                     <MdInfoOutline

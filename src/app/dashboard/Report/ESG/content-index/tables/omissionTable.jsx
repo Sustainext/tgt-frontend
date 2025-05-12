@@ -103,7 +103,7 @@ const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmi
                     key={index}
                     colSpan={col.subHeaders.length || 1}
                     rowSpan={col.subHeaders.length ? 1 : 2}
-                    className={`text-[12px] border-r px-4 py-4 border-b ${col.subHeaders.length > 0 ? 'text-center' : 'text-left'}`}
+                    className={`text-[12px] border-r px-4 py-4 border-b ${col.subHeaders.length > 0 ? 'text-center' : 'text-left'} min-w-[170px] xl:min-w-0`}
                   >
                     {col.header}
                   </th>
@@ -123,14 +123,14 @@ const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmi
             <tbody className="bg-white divide-y divide-gray-200">
               {currentRows.map((row, index) => (
                 <tr key={index} className="text-[13px] text-[#667085]">
-                  <td className="px-4 py-4 w-[20%]">{row.title}</td>
-                  <td className="px-4 py-4 w-[10%]">{"GRI "+row.key || ""}</td>
-                  <td className="px-4 py-4 w-[10%]">{row.omission[0].req_omitted || ""}</td>
-                  <td className="px-4 py-4 w-[25%]">
+                  <td className="px-4 py-4 xl:w-[20%] w-[45%]">{row.title}</td>
+                  <td className="px-4 py-4 xl:w-[10%] w-[45%]">{"GRI "+row.key || ""}</td>
+                  <td className="px-4 py-4 xl:w-[10%] w-[45%]">{row.omission[0].req_omitted || ""}</td>
+                  <td className="px-4 py-4 xl:w-[25%] w-[45%]">
                     <select
                       value={row.omission[0].reason || ''}
                       onChange={(e) => handleInputChange(indexOfFirstRow + index, 'reason', e.target.value)}
-                      className="bg-white border border-gray-300 rounded-md px-2 py-1 w-full"
+                      className="bg-white border border-gray-300 rounded-md px-2 py-1 xl:w-full w-[95%]"
                     >
                       <option value="">Select reason</option>
                       <option value="Information unavailable/incomplete">Information unavailable/incomplete</option>
@@ -139,7 +139,7 @@ const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmi
                       <option value="Confidentiality constraints">Confidentiality constraints</option>
                     </select>
                   </td>
-                  <td className="px-4 py-4 w-[35%]">
+                  <td className="px-4 py-4 xl:w-[35%] w-[45%]">
                     <textarea
                       value={row.omission[0].explanation || ''}
                       onChange={(e) => handleInputChange(indexOfFirstRow + index, 'explanation', e.target.value)}
@@ -181,12 +181,12 @@ const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmi
             </div>
           )}
   
-          <div className="flex justify-end mt-4">
+          <div className="xl:flex xl:justify-end  mt-4 w-[860px] xl:w-full">
             <button
             data-tooltip-id={`tooltip-env`}
             data-tooltip-html={isFormComplete?"":"Provide reason for omission for all the disclosures to proceed further"}
               onClick={handleSubmit}
-              className={`bg-blue-500 text-white px-3 py-2 rounded-lg ${!isFormComplete ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`bg-blue-500 text-white px-3 py-2 rounded-lg float-end ${!isFormComplete ? 'opacity-50 cursor-not-allowed' : ''}`}
               disabled={!isFormComplete}
             >
               Save & Proceed to Preview Content Index {">"}

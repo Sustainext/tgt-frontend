@@ -9,13 +9,15 @@ function Datacollection({
   excludedsources,
   setExcludedsources,
 }) {
+
   const orgname = localStorage.getItem("reportorgname");
-  const sourcesData = souresdata.flatMap((corporate) => corporate.sources || []); // Flatten sources if nested
+  const sourcesData = souresdata.filter((corporate) => corporate.corporate_type !== "Investment").flatMap((corporate) => corporate.sources || []); // Flatten sources if nested
   const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
   // Filter sources by scope
+  const sourcesData3=souresdata.flatMap((corporate) => corporate.sources || []);
   const scope1 = sourcesData.filter((source) => source.scope_name === "Scope-1");
   const scope2 = sourcesData.filter((source) => source.scope_name === "Scope-2");
-  const scope3 = sourcesData.filter((source) => source.scope_name === "Scope-3");
+  const scope3 = sourcesData3.filter((source) => source.scope_name === "Scope-3");
 
   // Calculate total CO2e emissions for each scope
   const calculateTotalEmissions = (scope) => {
@@ -41,12 +43,51 @@ function Datacollection({
   };
 
   const editor = useRef(null);
+  // const config = {
+  //   // askBeforePasteHTML: false,
+  //   // askBeforePasteFromWord: false,
+  //   // defaultActionOnPaste: 'insert_clear_html',
+  //   // height: 400, // sets the height to 400 pixels
+  // };
+
   const config = {
-    askBeforePasteHTML: false,
-    askBeforePasteFromWord: false,
+    enter: "BR", // Or customize behavior on Enter key
+cleanHTML: true,
+    enablePasteHTMLFilter: false, 
+  askBeforePasteHTML: false, 
+  askBeforePasteFromWord: false,
+    style: {
+      fontSize: "14px",
+      color:"#667085"
+    },
+    height:400,
+    allowResizeY: false,
     defaultActionOnPaste: 'insert_clear_html',
-    height: 400, // sets the height to 400 pixels
+    toolbarSticky: false,
+    toolbar: true,
+    buttons: [
+        'bold',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'align',
+        'outdent',
+        'indent',
+        'ul',
+        'ol',
+        'paragraph',
+        'link',
+        'table',
+        'undo',
+        'redo',
+        'hr',
+        'fontsize',
+        'selectall'
+    ],
+    // Remove buttons from the extra buttons list
+    removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
   };
+
 
   const options = [
     { value: "Bill/Invoice", label: "Bill/Invoice" },
@@ -62,7 +103,7 @@ function Datacollection({
   return (
     <>
       <div className="div">
-        <div className="px-3">
+        <div className="xl:px-3">
           <h3 className="text-left mb-2 p-3">
             <b>DATA COLLECTION AND QUANTIFICATION METHODOLOGY</b>
           </h3>
@@ -177,7 +218,8 @@ function Datacollection({
               <b>Emission Factors Considered</b>
             </h4>
             <p className="text-left mb-2">Table 4: Emission Factors</p>
-            <table className="min-w-full leading-normal border border-slate-200 rounded-lg">
+            <div className="overflow-x-auto custom-scrollbar">
+            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg ">
               <thead className="border-s-slate-200">
                 <tr className="border-s-slate-200">
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider ">
@@ -217,6 +259,7 @@ function Datacollection({
                   ))}
               </tbody>
             </table>
+            </div>
           </div>
         </div>
         <div className="px-3">
@@ -230,7 +273,8 @@ function Datacollection({
             </p>
             <h5 className="text-left mb-4">Direct GHG Emission: Scope 1</h5>
             <p className="text-left mb-2">Table 5 : Scope 1</p>
-            <table className="min-w-full leading-normal border border-slate-200 rounded-lg">
+            <div className="overflow-x-auto custom-scrollbar">
+            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg ">
               <thead className="border-s-slate-200 mb-5">
                 <tr className="border-s-slate-200">
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider ">
@@ -267,6 +311,7 @@ function Datacollection({
                   ))}
               </tbody>
             </table>
+            </div>
             <p className="text-left mb-2 mt-4 wordsping">
               The total Scope 1 emissions from {orgname} were {totalone} tCO2e
               for FY {display}
@@ -282,7 +327,9 @@ function Datacollection({
               purchased cooling/HVAC are considered indirect emissions (Scope 2)
             </p>
             <p className="text-left">Table 6: Scope 2</p>
-            <table className="min-w-full leading-normal border border-slate-200 rounded-lg">
+
+            <div className="overflow-x-auto custom-scrollbar">
+            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg ">
               <thead className="border-s-slate-200 mb-5">
                 <tr className="border-s-slate-200">
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider ">
@@ -319,22 +366,27 @@ function Datacollection({
                   ))}
               </tbody>
             </table>
+</div>
             <p className="text-left mt-4 wordsping">
               The total Scope 2 emissions from {orgname} were {totaltwo} tCO2e
               for FY {display}
             </p>
           </div>
-          <div className="box rounded-lg p-4 mb-5">
+
+          {/* new section */}
+          {/* <div className="box rounded-lg p-4 mb-5">
             <h4 className="text-left">
-              <b>Other indirect GHG Emission: Scope 3</b>
+              <b>Details of investements</b>
             </h4>
-            <p className="text-left mb-4">
-              Employee commute, business travel, public transport travel, waste
-              consumption and T&D losses from grid electricity are categorized
-              under other indirect emissions (Scope 3).
+            <p className="text-left mb-2">
+            Entity name
             </p>
-            <p className="text-left mb-2">Table 7: Scope 3</p>
-            <table className="min-w-full leading-normal border border-slate-200 rounded-lg">
+            <p className="text-left mb-4">
+            Owner ship ratio
+            </p>
+            <p className="text-left mb-2">Table 7: Scope 1 & Scope 2</p>
+            <div className="overflow-x-auto custom-scrollbar">
+            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg ">
               <thead className="border-s-slate-200 mb-5">
                 <tr className="border-s-slate-200">
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider ">
@@ -354,7 +406,8 @@ function Datacollection({
                   scope3.map((data, index) => (
                     <tr key={index}>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
-                        {data.source_name} - {data.category_name}
+                      {data.category_name.includes('Investment')?data.category_name + " - " +data.source_name:data.source_name + " - " +data.category_name}
+                      
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
                         {data.activity_data && (
@@ -371,6 +424,65 @@ function Datacollection({
                   ))}
               </tbody>
             </table>
+            </div>
+            <p className="text-left mb-2 mt-4 wordsping">
+              The total Scope 3 emissions from {orgname} were {totalthree} tCO2e
+              for FY {display}
+            </p>
+          </div> */}
+
+
+          {/* end new section */}
+          <div className="box rounded-lg p-4 mb-5">
+            <h4 className="text-left">
+              <b>Other indirect GHG Emission: Scope 3</b>
+            </h4>
+            <p className="text-left mb-4">
+              Employee commute, business travel, public transport travel, waste
+              consumption and T&D losses from grid electricity are categorized
+              under other indirect emissions (Scope 3).
+            </p>
+            <p className="text-left mb-2">Table 7: Scope 3</p>
+            <div className="overflow-x-auto custom-scrollbar">
+            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg ">
+              <thead className="border-s-slate-200 mb-5">
+                <tr className="border-s-slate-200">
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider ">
+                    Scope 3 - Activity
+                  </th>
+                  <th className="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    Consumption {display}
+                  </th>
+                  <th className="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    Greenhouse Gas Emissions {display}{" "}
+                    <p className="normal-case">(tCO2e)</p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {scope3 &&
+                  scope3.map((data, index) => (
+                    <tr key={index}>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
+                      {data.category_name.includes('Investment')?data.category_name + " - " +data.source_name:data.source_name + " - " +data.category_name}
+                      
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                        {data.activity_data && (
+                          <>
+                            {data.activity_data.activity_value}{" "}
+                            {data.activity_data.activity_unit}
+                          </>
+                        )}
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                        {data.total_co2e}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+            </div>
             <p className="text-left mb-2 mt-4 wordsping">
               The total Scope 3 emissions from {orgname} were {totalthree} tCO2e
               for FY {display}

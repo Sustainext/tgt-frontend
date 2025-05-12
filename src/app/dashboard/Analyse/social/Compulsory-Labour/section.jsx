@@ -152,7 +152,7 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className=" mb-8 me-2"
+     className="mb-8 me-2 hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block"
         >
           <TableSidebar />
         </div>

@@ -341,7 +341,7 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
 
       {isSubmitted && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-sm">
+          <div className="bg-white rounded-lg shadow-lg w-full xl:max-w-sm md:max-w-sm mx-2">
             <UserAddedModal addNewUser={addNewUser} edit={edit} />
           </div>
         </div>

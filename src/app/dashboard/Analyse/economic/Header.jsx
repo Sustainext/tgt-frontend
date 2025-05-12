@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import { Energydata } from "./../../../shared/data/Energydata";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight,MdKeyboardArrowDown } from "react-icons/md";
+import {
+  MdOutlineClear,
+  MdInfoOutline,
+  MdChevronRight,
+  MdKeyboardArrowDown,
+} from "react-icons/md";
 import { toast } from "react-toastify";
 import { patch } from "../../../utils/axiosMiddleware";
-const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
+const Header = ({ activeTab, setIsBoxOpen, setMobileopen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState([]);
@@ -32,65 +37,55 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
     {
       category: "Tab1",
       tag: "GRI 202",
-      data: [
-        { tagid: "1", infoid: "48" },
-      ],
+      data: [{ tagid: "1", infoid: "48" }],
     },
     {
       category: "Tab2",
       tag: "GRI 205",
-      data: [
-        { tagid: "1", infoid: "47" },
-      ],
+      data: [{ tagid: "1", infoid: "47" }],
     },
     {
       category: "Tab3",
       tag: "GRI 205",
-      data: [
-        { tagid: "2", infoid: "46" },
-      ],
+      data: [{ tagid: "2", infoid: "46" }],
     },
   ];
   const sdg = [
     {
       category: "Tab1",
       data: [
-        { id: 'sd26', label: 'SDG 1', bgColor: 'bg-[#EF412A]' },
-        { id: 'sd27', label: 'SDG 5', bgColor: 'bg-[#EF402B]' },
-        { id: 'sd28', label: 'SDG 8', bgColor: 'bg-[#A21942]' },
-      ]
+        { id: "sd26", label: "SDG 1", bgColor: "bg-[#EF412A]" },
+        { id: "sd27", label: "SDG 5", bgColor: "bg-[#EF402B]" },
+        { id: "sd28", label: "SDG 8", bgColor: "bg-[#A21942]" },
+      ],
     },
     {
       category: "Tab2",
-      data: [
-        { id: 'sd25', label:'SDG 16', bgColor: 'bg-[#00558A]' },
-      ]
+      data: [{ id: "sd25", label: "SDG 16", bgColor: "bg-[#00558A]" }],
     },
     {
       category: "Tab3",
-      data: [
-        { id: 'sd25', label:'SDG 16', bgColor: 'bg-[#00558A]' },
-      ]
+      data: [{ id: "sd25", label: "SDG 16", bgColor: "bg-[#00558A]" }],
     },
   ];
   return (
     <>
-         <div className="flex justify-between items-center  xl:border-b border-gray-200 pb-4 xl:z-[100] relative">
-        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block ">
+      <div className="flex justify-between items-center  xl:border-b border-gray-200 pb-4 xl:z-[100] relative">
+        <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block ">
           <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
             <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
-            Economic
+              Economic
             </div>
             <div className="h-[30px]">
               <div className=" flex justify-start items-end gap-3">
                 <div className="h-[28px] gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem] pt-1">
-                {activeTab === "Tab1"
-                  ? "Economic Performance"
-                  : activeTab === "Tab2"
-                  ? "Anti Corruption"
-                  :activeTab === "Tab3"
-                  ? "Anti Corruption"
-                  : ""}
+                  {activeTab === "Tab1"
+                    ? "Economic Performance"
+                    : activeTab === "Tab2"
+                    ? "Anti Corruption"
+                    : activeTab === "Tab3"
+                    ? "Anti Corruption"
+                    : ""}
                 </div>
 
                 <div className="w-[95px] pl-1 pr-0.5 bg-slate-200 rounded justify-center items-center flex">
@@ -137,24 +132,24 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
           </div>
         </div>
         {/* mobile version */}
-        <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
+        <div className="block justify-between items-center border-b border-gray-200 mb-5 w-full xl:hidden lg:hidden md:block  2xl:hidden 4k:hidden">
           <div
-            className="w-full  py-4 h-[100px]   rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+            className="w-full  py-4 h-auto rounded-md  shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
             onClick={toggleSidebar}
           >
             <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
               <div className="">
                 <p className="text-[11px]">Economic</p>
-                <div className="h-[28px] ">
-                  <div className="h-[28px]">
-                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                    {activeTab === "Tab1"
-                  ? "Economic Performance"
-                  : activeTab === "Tab2"
-                  ? "Anti Corruption"
-                  :activeTab === "Tab3"
-                  ? "Anti Corruption"
-                  : ""}
+                <div className="">
+                  <div className="">
+                    <p className="gradient-text text-[22px] font-bold  pt-1">
+                      {activeTab === "Tab1"
+                        ? "Economic Performance"
+                        : activeTab === "Tab2"
+                        ? "Anti Corruption"
+                        : activeTab === "Tab3"
+                        ? "Anti Corruption"
+                        : ""}
                     </p>
                   </div>
 
@@ -190,9 +185,6 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
                       </button>
                     ))
                   )}
-              </div>
-
-              <div className="flex">
                 {sdg
                   .filter((s) => s.category === activeTab)
                   .map((s) =>
@@ -260,7 +252,6 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
             ))}
         </div>
       </div>
-  
     </>
   );
 };

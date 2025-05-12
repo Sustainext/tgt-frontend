@@ -226,7 +226,7 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
                     : ""
                 }`}
               >
-                <div className="xl:flex gap-10 items-start">
+                <div className="xl:flex md:flex gap-10 items-start">
                   <p className="text-[#2E0B34] text-[15px] mx-2 pt-2 min-w-[200px]">
                     {topicName}
                   </p>

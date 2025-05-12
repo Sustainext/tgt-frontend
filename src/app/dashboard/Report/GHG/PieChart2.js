@@ -1,30 +1,85 @@
 import { ResponsivePie } from "@nivo/pie";
-
+import { useEffect, useState } from "react";
 function MyResponsivesouresdata({ souresdata }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
   const uniqueSources = new Map();
 
-  souresdata.forEach(corporate => {
-    corporate.sources.forEach(source => {
-      const key = source.source_name;
-      // Check if the source is already added, if not or if you want to aggregate, adjust the logic here
-      if (!uniqueSources.has(key)) {
-        uniqueSources.set(key, {
-          ...source,
-          corporate_name: corporate.corporate_name,
-        });
+  // console.log(souresdata,"see the data")
+
+  // souresdata.forEach((corporate) => {
+  //   corporate.sources.forEach((source) => {
+  //     const key = source.source_name;
+  //     // Check if the source is already added, if not or if you want to aggregate, adjust the logic here
+  //     if (!uniqueSources.has(key)) {
+  //       uniqueSources.set(key, {
+  //         ...source,
+  //         corporate_name: corporate.corporate_name,
+  //       });
+  //     }
+  //   });
+  // });
+
+  // const sourcesDataForChart = Array.from(uniqueSources.values()).map(
+  //   (source) => ({
+  //     id: source.source_name,
+  //     label:
+  //       source.category_name.length > 14
+  //         ? source.category_name.slice(0, 14) + "…"
+  //         : source.category_name,
+  //     value: parseFloat(source.total_co2e),
+  //     color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+  //   })
+  // );
+
+  let investmentTotal = 0;
+  souresdata.forEach((corporate) => {
+    corporate.sources.forEach((source) => {
+      if (source.category_name === "Investment") {
+        // Sum up all Investment category emissions
+        const co2e = parseFloat(source.total_co2e);
+        investmentTotal += isNaN(co2e) ? 0 : co2e;
+      } else {
+        // Handle non-Investment categories as usual
+        const key = source.source_name;
+        if (!uniqueSources.has(key)) {
+          uniqueSources.set(key, {
+            ...source,
+            corporate_name: corporate.corporate_name,
+          });
+        }
       }
     });
   });
-
-  const sourcesDataForChart = Array.from(uniqueSources.values()).map(source => ({
+  
+  // Convert unique non-investment sources to chart format
+  const sourcesDataForChart = Array.from(uniqueSources.values()).map((source) => ({
     id: source.source_name,
-    label: source.category_name,
+    label:
+      source.category_name.length > 14
+        ? source.category_name.slice(0, 14) + "…"
+        : source.category_name,
     value: parseFloat(source.total_co2e),
     color: `hsl(${Math.random() * 360}, 70%, 50%)`,
   }));
 
-  // Your existing component code continues here...
+  if (investmentTotal > 0) {
+    sourcesDataForChart.push({
+      id: "Investment",
+      label: "Investment",
+      value: parseFloat(investmentTotal.toFixed(2)),
+      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+    });
+  }
+  
 
+  // Your existing component code continues here...
 
   return (
     <>
@@ -35,7 +90,12 @@ function MyResponsivesouresdata({ souresdata }) {
       <ResponsivePie
         data={sourcesDataForChart}
         enableArcLabels={false}
-        margin={{ top: 40, right: 250, bottom: 80, left: 0 }}
+        margin={{
+          top: 40,
+          right: isMobile ? 10 : 250,
+          bottom: isMobile ? 120 : 80,
+          left: 0,
+        }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
@@ -126,14 +186,14 @@ function MyResponsivesouresdata({ souresdata }) {
         ]}
         legends={[
           {
-            anchor: "right",
-            direction: "column",
+            anchor: isMobile ? "bottom" : "right",
+            direction: isMobile ? "row" : "column",
             justify: false,
-            translateX: 120, // Adjust this value to move the legend closer or further from the chart
-            translateY: 0,
-            itemsSpacing: 2,
-            itemWidth: 80, // Adjust based on your text length
-            itemHeight: 20,
+            translateX: isMobile ? 0 : 0,
+            translateY: isMobile ? 80 : 0,
+            itemsSpacing: isMobile ? 20 : 10, // more spacing between items on mobile
+            itemWidth: isMobile ? 100 : 80, // give more width
+            itemHeight: isMobile ? 20 : 10, // increase height to avoid squish
             itemTextColor: "#999",
             itemDirection: "left-to-right",
             itemOpacity: 1,

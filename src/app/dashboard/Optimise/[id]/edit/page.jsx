@@ -1,30 +1,110 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiArrowLeft, FiInfo, FiCheck } from "react-icons/fi";
-import MetricsGraph from "../../MetricsGraph";
-import WeightageInputModal from "../../WeightageInputModal";
+import { Tooltip } from "react-tooltip";
+import MetricsGraph from "./MetricsGraph";
+import WeightageInputModal from "./WeightageInputModal";
 import ActivitySelectTable from "../../ActivitySelectTable";
 import ConfirmActivitiesModal from "../../ConfirmActivitiesModal";
 import ActivitySummarySection from "../../ActivitiesSummary";
+import EmissionProjectionView from "../../EmissionProjectionView";
 import { GlobalState } from "@/Context/page";
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay,
+} from "../../../../../lib/redux/features/topheaderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import BusinessMetricsWithTooltips from "./BusinessMetricsWithTooltips";
+import { useRouter, useParams } from "next/navigation";
+import {
+  fetchScenarioById,
+  fetchScenarioMetrics,
+  fetchScenarioActivities,
+  setCurrentStep,
+  setSelectedActivities,
+  resetOptimiseState,
+  updateScenarioMetrics,
+  updateAllSelectedActivities,
+} from "../../../../../lib/redux/features/optimiseSlice";
 
-const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
-  // Current step in the wizard (1-4)
-  const [currentStep, setCurrentStep] = useState(1);
+// Add this to your component that uses updateAllSelectedActivities
+const LoadingIndicator = () => {
+  const loading = useSelector(state => state.optimise?.loading);
+  const isLoading = loading?.activities || loading?.climateCalculation;
+  const isCalculatingClimate = !loading?.activities && loading?.climateCalculation;
+  
+  if (!isLoading) return null;
+  
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-xl max-w-md">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+          <h3 className="text-lg font-semibold mb-2">
+            {isCalculatingClimate 
+              ? "Calculating Climate Impact..." 
+              : "Updating Activities..."}
+          </h3>
+          <p className="text-gray-600 text-center">
+            {isCalculatingClimate
+              ? "Please wait while we calculate the climate impact of your changes."
+              : "Saving your activity changes to the scenario."}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ScenarioEditor = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const params = useParams();
+  const scenarioId = params?.id;
+
+  // Get state from Redux with safety checks
+  const optimiseState = useSelector((state) => state.optimise) || {};
+  const {
+    currentStep = 1,
+    selectedActivities = [],
+    currentScenario: scenario = null,
+    metricsData = {},
+    loading = { scenario: false, metrics: false, activities: false },
+    error = { scenario: null, metrics: null, activities: null },
+  } = optimiseState;
+
   const [isWeightageModalOpen, setIsWeightageModalOpen] = useState(false);
-
-  const [selectedActivities, setSelectedActivities] = useState([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const { open } = GlobalState();
 
-  const { open, setOpen } = GlobalState();
+  // Fetch scenario data on component mount
+  useEffect(() => {
+    if (scenarioId) {
+      // Fetch the scenario details
+      dispatch(fetchScenarioById(scenarioId));
 
-  // Selected metrics with toggle state
-  const [selectedMetrics, setSelectedMetrics] = useState({
-    fte: false,
-    area: false,
-    productionVolume: false,
-    revenue: false,
-  });
+      // Fetch the business metrics for this scenario
+      dispatch(fetchScenarioMetrics(scenarioId));
+
+      // Fetch the activities for this scenario
+      dispatch(fetchScenarioActivities(scenarioId));
+    }
+
+    // Cleanup on unmount
+    return () => {
+      dispatch(resetOptimiseState());
+    };
+  }, [dispatch, scenarioId]);
+
+  // Set header information when scenario data is available
+  useEffect(() => {
+    if (scenario) {
+      dispatch(setHeadertext1("Optimise"));
+      dispatch(setHeaderdisplay("none"));
+      dispatch(setHeadertext2(scenario.name || "Scenario"));
+    }
+  }, [dispatch, scenario]);
 
   // Business metric data (expanded when selected)
   const businessMetrics = [
@@ -41,7 +121,7 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
         "Area refers to the physical area occupied or operated by the organization — office space, factory, or land area.",
     },
     {
-      id: "productionVolume",
+      id: "production_volume",
       name: "Production Volume",
       description:
         "The total number of units produced within a specific timeframe",
@@ -54,72 +134,182 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
     },
   ];
 
-  // Handle toggle selection of a metric
-  const toggleMetric = (metricId) => {
-    setOpen(false);
-    setSelectedMetrics((prev) => ({
-      ...prev,
-      [metricId]: !prev[metricId],
-    }));
-  };
-
   // Go to prev step
   const handlePrevious = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+      dispatch(setCurrentStep(currentStep - 1));
     }
   };
 
   // Go to next step
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep === 1) {
-      setIsWeightageModalOpen(true);
+      // Check if at least one metric is selected before opening weightage modal
+      const metricsData = optimiseState.metricsData || {};
+      const anyMetricSelected = businessMetrics.some((metric) =>
+        Boolean(metricsData[metric.id])
+      );
+
+      if (anyMetricSelected) {
+        setIsWeightageModalOpen(true);
+      }
       return;
     }
+
     if (currentStep === 2) {
-      setIsConfirmModalOpen(true);
+      if (selectedActivities.length > 0) {
+        setIsConfirmModalOpen(true);
+      }
       return;
-    }
-     else if (currentStep < 4) {
-      setCurrentStep(currentStep + 1);
+    } else if (currentStep === 3) {
+      // Save all activities before proceeding to step 4
+      try {
+        // Only make the API call if we have activities and a scenarioId
+        if (selectedActivities.length > 0 && scenarioId) {
+          // Dispatch the thunk to update all activities in one API call
+          await dispatch(
+            updateAllSelectedActivities({
+              scenarioId,
+              activities: selectedActivities,
+            })
+          ).unwrap();
+        }
+
+        // If successful, proceed to next step
+        dispatch(setCurrentStep(currentStep + 1));
+      } catch (error) {
+        console.error("Failed to save activity changes:", error);
+        // Could show an error message here
+      }
+    } else if (currentStep < 4) {
+      dispatch(setCurrentStep(currentStep + 1));
     } else {
-      onSave(scenario);
+      // Handle save/complete scenario
+      router.push("/dashboard/Optimise");
     }
   };
 
   // Handle proceed from confirmation modal
   const handleConfirmProceed = () => {
     setIsConfirmModalOpen(false);
-    setCurrentStep(3); // Move to step 3
+    dispatch(setCurrentStep(3)); // Move to step 3
   };
 
   // Process weightage values and move to next step
-  const handleWeightageProceed = (weightages) => {
-    // Save weightages to your state/data structure
-    console.log("Weightages:", weightages);
+  const handleWeightageProceed = async (updatedWeightages) => {
+    console.log("handleWeightageProceed called with:", updatedWeightages);
+    console.log("Current scenarioId:", scenarioId);
 
-    // Close modal and move to next step
-    setIsWeightageModalOpen(false);
-    setCurrentStep(2);
+    try {
+      // Show loading indicator if needed
+
+      // Prepare API payload with weightages for selected metrics
+      const payload = {};
+
+      // Add weightage for each selected metric
+      Object.keys(updatedWeightages).forEach((metric) => {
+        payload[`${metric}_weightage`] = updatedWeightages[metric];
+        payload[`${metric}_data`] = metricsData[`${metric}_data`];
+        payload[`${metric}`] = metricsData[metric];
+      });
+
+      // Make the API call if scenarioId exists
+      if (scenarioId) {
+        console.log("Making API call to update scenario metrics");
+
+        // Dispatch the API call and wait for it to complete
+        try {
+          const resultAction = await dispatch(
+            updateScenarioMetrics({ scenarioId, payload })
+          );
+
+          // Check if the action was fulfilled or rejected
+          if (updateScenarioMetrics.fulfilled.match(resultAction)) {
+            dispatch(setCurrentStep(2));
+          } else if (updateScenarioMetrics.rejected.match(resultAction)) {
+            console.error("API call failed with error:", resultAction.error);
+            throw new Error(resultAction.error?.message || "API call failed");
+          }
+        } catch (innerError) {
+          console.error("Error during API dispatch:", innerError);
+          throw innerError; // Re-throw for outer catch
+        }
+      } else {
+        // If no scenarioId (unlikely in production), just move to next step
+        console.log(
+          "No scenarioId found, skipping API call and moving to next step"
+        );
+        dispatch(setCurrentStep(2));
+      }
+    } catch (error) {
+      // Handle errors
+      console.error("Failed to update weightages, detailed error:", error);
+      console.error("Error name:", error.name);
+      console.error("Error message:", error.message);
+      console.error("Error stack:", error.stack);
+
+      // If there's a response error, log it
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+        console.error("Error response status:", error.response.status);
+      }
+    }
   };
 
   // Go back to dashboard
   const handleBackToDashboard = () => {
-    onCancel();
-  };  
+    router.push("/dashboard/Optimise");
+  };
+
+  // Handle loading state
+  if (loading.scenario && !scenario) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  // Handle error state
+  if (error.scenario && !scenario) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="bg-red-50 p-4 rounded-lg text-red-700 max-w-md text-center">
+          <h2 className="font-bold mb-2">Error Loading Scenario</h2>
+          <p>
+            {typeof error.scenario === "string"
+              ? error.scenario
+              : "Failed to load scenario data"}
+          </p>
+          <button
+            onClick={() => router.push("/dashboard/Optimise")}
+            className="mt-4 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-800 rounded"
+          >
+            Return to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        {/* Header */}
-        <div className="bg-white shadow-sm border-b">
+        <div className="bg-white shadow-sm border-b border-gray-100">
           <div className="max-w-full px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center w-full">
               <div className="flex items-center">
                 <h1 className="text-xl font-medium gradient-text">
-                  {scenario?.name || "Scenario 1"}
+                  {scenario?.name || "Scenario"}
                 </h1>
               </div>
+              <button
+                onClick={handleBackToDashboard}
+                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+              >
+                <FiArrowLeft className="mr-2 h-4 w-4" />
+                Back to Dashboard
+              </button>
             </div>
           </div>
         </div>
@@ -134,12 +324,12 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
                 </h2>
                 <p className="text-gray-600 mb-6">
                   Select the key metrics which will be required for planning the
-                  emission reduction initiative for this scenario?. Include
+                  emission reduction initiative for this scenario. Include
                   current year absolute value for the selected business metric
                   and apply any changes in the consumption pattern that you
                   foresee. Use the graph to increase or decrease the percentage
                   consumptions for the available years within the time period of
-                  the scenario?.
+                  the scenario.
                 </p>
               </div>
             )}
@@ -150,7 +340,39 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
                   Select Activities
                 </h2>
                 <p className="text-gray-600 mb-6">
-                Select the activities from the below table for which you foresee changes in the consumption pattern for this scenario. Select and confirm the activities here and use the graph to increase or decrease the percentage consumptions for the available years within the time period of the scenario in the next screen.
+                  Select the activities from the below table for which you
+                  foresee changes in the consumption pattern for this scenario.
+                  Select and confirm the activities here and use the graph to
+                  increase or decrease the percentage consumptions for the
+                  available years within the time period of the scenario in the
+                  next screen.
+                </p>
+              </div>
+            )}
+
+            {currentStep === 3 && (
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                  Select Changes in the Consumption Pattern
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Select the consumption pattern changes for years projected
+                  under each activities. Add if there will also be any activity
+                  changes for the years under each activities.
+                </p>
+              </div>
+            )}
+
+            {currentStep === 4 && (
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                  Scenario Visualization
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Visualize your scenario for the chosen activities. Filter
+                  results by scope, category, sub category and activity.
+                  Visualize net zero scenario by checking the filter and adding
+                  the target year.{" "}
                 </p>
               </div>
             )}
@@ -242,20 +464,28 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
               <div>
                 <p className="text-sm text-gray-500">Organization</p>
                 <p className="font-medium">
-                  {scenario?.organization || "Org A"}
+                  {scenario?.organization_name || scenario?.organization || ""}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Corporate</p>
-                <p className="font-medium">{scenario?.corporate || "Corp A"}</p>
+                <p className="font-medium">
+                  {scenario?.corporate_name || scenario?.corporate || (
+                    <span className="text-slate-700 text-sm">Not Selected</span>
+                  )}
+                </p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Base Year</p>
-                <p className="font-medium">{scenario?.baseYear || "2024"}</p>
+                <p className="font-medium">
+                  {scenario?.base_year || scenario?.baseYear || ""}
+                </p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Target Year</p>
-                <p className="font-medium">{scenario?.targetYear || "2030"}</p>
+                <p className="font-medium">
+                  {scenario?.target_year || scenario?.targetYear || ""}
+                </p>
               </div>
             </div>
           </div>
@@ -263,55 +493,46 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
 
         {/* Step 1: Select Business Metric */}
         {currentStep === 1 && (
-          <>
-            <div className={`space-y-4 px-8 mr-2 ${open ? "max-w-[108vw]": "max-w-[120vw]"}`}>
-              {businessMetrics.map((metric) => (
-                <div
-                  key={metric.id}
-                  className={`bg-white border rounded-lg shadow-sm overflow-hidden ${
-                    selectedMetrics[metric.id]
-                      ? "border-green-500"
-                      : "border-gray-200"
-                  }`}
-                >
-                  <div className="p-4 grid grid-cols-[1fr,3fr] gap-4 items-center">
-                    <div className="flex items-center">
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          value=""
-                          className="sr-only peer"
-                          checked={selectedMetrics[metric.id]}
-                          onChange={() => toggleMetric(metric.id)}
-                        />
-                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
-                      </label>
-                      <span className="ml-3 font-medium">{metric.name}</span>
-                      <FiInfo className="ml-2 text-gray-400" />
-                    </div>
-                    <div className="text-gray-600">{metric.description}</div>
-                    {/* <div></div> */}
-                  </div>
-
-                  {/* Expanded content when metric is selected */}
-                  {selectedMetrics[metric.id] && (
-                    <div className="border-t border-gray-200 p-4">
-                      <div className="h-[530px] mr-4">
-                        <MetricsGraph />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </>
+          <BusinessMetricsWithTooltips
+            businessMetrics={businessMetrics}
+            scenario={scenario}
+            MetricsGraph={MetricsGraph}
+            open={open}
+            scenarioId={scenarioId}
+            loading={loading.metrics}
+            error={error.metrics}
+          />
         )}
 
-        {currentStep === 2 &&<div className="px-6"> <ActivitySelectTable selectedActivities={selectedActivities} setSelectedActivities={setSelectedActivities} /></div>}
+        {currentStep === 2 && (
+          <div className="px-6">
+            <ActivitySelectTable
+              selectedActivities={selectedActivities}
+              setSelectedActivities={(activities) =>
+                dispatch(setSelectedActivities(activities))
+              }
+              scenarioId={scenarioId}
+            />
+          </div>
+        )}
 
-        {/* {currentStep === 3 && <div className="px-6">
-          <ActivitySummarySection activities={selectedActivities} />
-        </div>} */}
+        {currentStep === 3 && (
+          <div className="px-6">
+            <ActivitySummarySection
+              activities={selectedActivities}
+              scenarioId={scenarioId}
+            />
+          </div>
+        )}
+
+        {currentStep === 4 && (
+          <div className="px-6">
+            <EmissionProjectionView
+              scenario={scenario}
+              onPrevious={handlePrevious}
+            />
+          </div>
+        )}
 
         {/* Footer with navigation buttons */}
         <div className="mt-8 flex justify-end px-8 gap-4">
@@ -326,8 +547,22 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
           <button
             onClick={handleNext}
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            disabled={
+              (currentStep === 1 &&
+                (!optimiseState.metricsData ||
+                  Object.keys(optimiseState.metricsData).filter(
+                    (k) => !k.includes("_") && optimiseState.metricsData[k]
+                  ).length === 0)) ||
+              (currentStep === 2 &&
+                (!selectedActivities || selectedActivities.length === 0))
+            }
           >
-            {currentStep < 4 ? "Next" : "Save"} →
+            {currentStep === 3
+              ? "Calculate and Visualize"
+              : currentStep < 4
+              ? "Next"
+              : "Save"}{" "}
+            →
           </button>
         </div>
       </div>
@@ -336,9 +571,9 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
       <WeightageInputModal
         isOpen={isWeightageModalOpen}
         onClose={() => setIsWeightageModalOpen(false)}
-        selectedMetrics={selectedMetrics}
+        selectedMetrics={optimiseState.metricsData}
         onProceed={handleWeightageProceed}
-        setCurrentStep={setCurrentStep}
+        setCurrentStep={(step) => dispatch(setCurrentStep(step))}
       />
 
       {/* Confirm Activities Modal */}
@@ -348,7 +583,10 @@ const ScenarioEditor = ({ scenario, onSave, onCancel }) => {
         selectedActivities={selectedActivities}
         onProceed={handleConfirmProceed}
         onGoBack={() => setIsConfirmModalOpen(false)}
+        scenarioId={scenarioId}
       />
+
+      <LoadingIndicator />
     </>
   );
 };

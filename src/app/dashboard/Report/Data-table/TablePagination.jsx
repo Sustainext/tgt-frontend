@@ -54,7 +54,7 @@ const TableWithPagination = ({
   const [search, setSearch] = useState('');
   const [selectedCreators, setSelectedCreators] = useState([]);
   const [filteredData,setFilterData]=useState([])
-
+  const [menuDirection, setMenuDirection] = useState("down");
   
  useEffect(()=>{
 if(selectedCreators.length>0){
@@ -70,7 +70,9 @@ else{
       item.report_type === "GRI Report: In accordance With" ||
       item.report_type === "GRI Report: With Reference to";
     return (
-      <div className="absolute bg-white shadow-lg rounded-lg py-2 mt-5 w-[211px] z-10 right-8">
+      <div   className={`absolute bg-white shadow-lg rounded-lg py-2 w-[211px] z-10 right-8 ${
+        menuDirection === "up" ? "bottom-full mb-2" : " top-full mt-2"
+      }`}>
         <button
           className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
           onClick={() => {
@@ -226,9 +228,38 @@ else{
 
   let timeoutId;
 
-  const handleMouseEnter = (itemId) => {
-    clearTimeout(timeoutId); // Clear any pending timeout
-    setIsMenuOpen(itemId); // Open the menu immediately
+  const handleMouseEnter = (itemId,itemsPerPage,index,e) => {
+    const rect = e?.currentTarget?.getBoundingClientRect();
+
+    // if (rect) {
+    //   const spaceBelow = window.innerHeight - rect.bottom;
+    //   const spaceAbove = rect.top;
+  
+    //   if (spaceBelow < 250 && spaceAbove > 250) {
+    //     setMenuDirection("up"); // not enough space below, open upward
+    //   } else {
+    //     setMenuDirection("down"); // open downward
+    //   }
+    // }
+
+    if (itemsPerPage <= 5) {
+      setMenuDirection("down");
+      clearTimeout(timeoutId); 
+      setIsMenuOpen(itemId); 
+      return;
+    }
+
+      const splitPoint = Math.ceil(itemsPerPage / 2)+1;
+  
+      if (index < splitPoint) {
+        setMenuDirection("down");
+      } else {
+        setMenuDirection("up");
+      }
+    
+    
+    clearTimeout(timeoutId); 
+    setIsMenuOpen(itemId); 
   };
 
   const handleMouseLeave = () => {
@@ -675,8 +706,10 @@ else{
           maxWidth: "100%",
           minWidth: "100%",
           width: "30vw",
-        }} className="rounded-md table-scrollbar">
-        <table className="min-w-max w-full table-auto">
+        }} className="rounded-md table-scrollbar h-[500px]">
+
+
+<table className="min-w-max w-full table-auto">
           <thead className="py-3 px-6 text-center text-[#727272] text-[13px] font-extrabold leading-none gradient-background">
             <tr>
               <th
@@ -772,7 +805,8 @@ else{
                                     />
                 </div>
                 {isFilterOpen && (
-                  <FilterComponent data={filteredData} setData={setFilterData} search={search}
+                  <div className="relative inline-block">
+                     <FilterComponent data={filteredData} setData={setFilterData} search={search}
                   setSearch={setSearch}
                   selectedCreators={selectedCreators}
                   setSelectedCreators={setSelectedCreators}
@@ -780,6 +814,8 @@ else{
                   setIsFilterOpen={setIsFilterOpen}
                  
                   />
+                  </div>
+                 
                  
                 
                 )}
@@ -839,12 +875,12 @@ else{
                   <td className="py-3 px-6 relative text-center flex justify-center">
                     <MdMoreVert
                       className="cursor-pointer"
-                      onMouseEnter={() => handleMouseEnter(item.id)}
+                      onMouseEnter={() => handleMouseEnter(item.id,itemsPerPage,index)}
                       onMouseLeave={handleMouseLeave}
                     />
                     {isMenuOpen === item.id && (
                       <div
-                        onMouseEnter={() => handleMouseEnter(item.id)} // Ensure menu stays open
+                      onMouseEnter={(e) => handleMouseEnter(item.id,itemsPerPage,index, e)} // Ensure menu stays open
                         onMouseLeave={handleMouseLeave} // Allow menu to close
                       >
                         <ActionMenu item={item} />
@@ -856,7 +892,9 @@ else{
           </tbody>
         </table>
 
-        <div className="justify-end items-center gap-2 flex w-[100%] mt-4">
+        
+      </div>
+      <div className="justify-end items-center gap-2 flex w-[100%] mt-4">
           <div>
             <label className="text-black text-opacity-60 text-xs font-normal leading-[15px] text-[15px]">
               Rows per page:
@@ -897,7 +935,6 @@ else{
             </div>
           </div>
         </div>
-      </div>
       {/* <div className="mt-16">
       <table className="min-w-max w-full table-auto ">
         <thead className="py-3 px-6 text-center text-neutral-500 text-[13px] font-extrabold leading-none">

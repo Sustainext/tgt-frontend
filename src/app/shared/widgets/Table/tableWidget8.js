@@ -1,11 +1,11 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Select from 'react-select';
 import { MdOutlineDeleteOutline, MdAdd, MdInfoOutline } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { components } from "react-select";
-
+import { debounce } from "lodash";
 const CustomOptionnew = ({ children, ...props }) => {
   const { isSelected, isFocused, innerProps } = props;
 
@@ -22,6 +22,7 @@ const CustomOptionnew = ({ children, ...props }) => {
         alignItems: "center",
 
         textAlign: "left",
+        cursor:'pointer'
       }}
     >
       <input
@@ -89,6 +90,7 @@ const CustomTableWidget8 = ({
   const locationOptions = locationdata.map((loc) => ({
     value: loc.location_name,
     label: loc.location_name,
+
   }));
 
   const updateField = (index, key, newValue) => {
@@ -102,6 +104,15 @@ const CustomTableWidget8 = ({
     onChange(localData);
   };
 
+  // Debounced function to sync data with the parent
+  const debouncedSyncWithParent = debounce(syncWithParent, 800); // 500ms debounce
+
+  const handleChange = (e, rowIndex, key) => {
+    const value = e.target.value;
+    updateField(rowIndex, key, value);
+    debouncedSyncWithParent(); // Call debounced sync to avoid frequent re-renders
+  };
+
   const handleAddRow = () => {
     const newRow = {
       category: '',
@@ -111,14 +122,19 @@ const CustomTableWidget8 = ({
       locationandoperation: [],
     };
     setLocalData([...localData, newRow]);
-    syncWithParent(); // Update parent
+    // syncWithParent(); // Update parent
   };
 
   const handleRemoveRow = (index) => {
     const updatedRows = localData.filter((_, rowIndex) => rowIndex !== index);
     setLocalData(updatedRows);
-    syncWithParent(); // Update parent
+    // syncWithParent(); // Update parent
   };
+  useEffect(() => {
+    debouncedSyncWithParent(); // Sync with parent after the initial render
+    return () => debouncedSyncWithParent.cancel(); // Cleanup on unmount
+  }, [localData]);
+
 
   const customStyles = {
     control: (provided) => ({
@@ -311,8 +327,9 @@ const CustomTableWidget8 = ({
                       onChange={(selectedOptions) => {
                         const updatedValues = selectedOptions.map((opt) => opt.value);
                         updateField(rowIndex, key, updatedValues);
+                        debouncedSyncWithParent();
                       }}
-                      onBlur={syncWithParent} // Sync with parent on blur
+               
                       options={locationOptions}
                       className="text-[12px] w-full border-b"
                       styles={updatedMultiSelectStyle}
@@ -333,8 +350,8 @@ const CustomTableWidget8 = ({
                       }
                       required={required}
                       value={row[key] || ''}
-                      onChange={(e) => updateField(rowIndex, key, e.target.value)}
-                      onBlur={syncWithParent} // Sync with parent on blur
+                      onChange={(e) => handleChange(e, rowIndex, key)}
+             
                       className="text-[12px] pl-2 py-2  border border-gray-300 rounded-md w-full"
                       placeholder="Enter data"
                     />

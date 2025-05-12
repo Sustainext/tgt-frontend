@@ -48,6 +48,7 @@ const Report = () => {
   const [reportExist,setReportExist]=useState(false)
   const [selectedOrgName,setSelectedOrgName]=useState("")
   const [selectedCorpName,setSelectedCorpName]=useState("")
+  const [showInvestmentMessage,setshowInvestmentMessage]=useState(false)
 
 
   const getAuthToken = () => {
@@ -126,38 +127,76 @@ const Report = () => {
     dispatch(setHeaderdisplay("none"));
     dispatch(setHeadertext2("Report"));
   }, [dispatch]);
-  const handleCheckboxChange = (index) => {
+  const handleCheckboxChange = (index,hasData) => {
     const newEntities = [...entities];
     newEntities[index].checked = !newEntities[index].checked;
+    newEntities[index].ownershipRatio="";
     setEntities(newEntities);
+    // setshowInvestmentMessage(hasData)
   };
 
-  const handleOwnershipRatioChange = (index, value) => {
-    const newValue = Number(value);
-    if (newValue >= 0 && newValue <= 99) {
-      const newEntities = [...entities];
-      newEntities[index].ownershipRatio = newValue;
-      setEntities(newEntities);
+  // const handleOwnershipRatioChange = (index, value) => {
+  //   const newValue = Number(value);
+  //   if (newValue >= 1 && newValue <= 100) {
+  //     const newEntities = [...entities];
+  //     newEntities[index].ownershipRatio = newValue;
+  //     setEntities(newEntities);
+  //   }
+  // };
+
+  const handleOwnershipRatioChange = (index, input) => {
+    // Remove % if pasted in
+    const sanitized = input.replace('%', '');
+  
+    // Allow empty input
+    if (sanitized === '') {
+      const updatedEntities = [...entities];
+      updatedEntities[index].ownershipRatio = '';
+      setEntities(updatedEntities);
+      return;
     }
+  
+    // Allow decimals, e.g., "25", "25.5", "25."
+    if (!/^\d{0,3}(\.\d{0,2})?$/.test(sanitized)) return;
+  
+    const numericValue = Number(sanitized);
+  
+    // Reject if 0 or over 100
+    if (numericValue === 0 || numericValue > 100) return;
+  
+    const updatedEntities = [...entities];
+    updatedEntities[index].ownershipRatio = sanitized;
+    setEntities(updatedEntities);
   };
+  
+  
+  
   const handleChangeallcrop = async (event) => {
     const selectedId = event.target.value;
     setSelectedOrg(selectedId);
+  };
+
+  const fetchInvestementCorporate=async()=>{
     try {
       const response = await axiosInstance.get(
         `/sustainapp/all_corporate_list/`,
         {
-          params: { organization_id: selectedId },
+          params: { 
+            organisation: selectedOrg,
+            corporate:selectedCorp,
+            start:startdate,
+            end:enddate,
+            reportBy:firstSelection
+           },
         }
       );
       setEntities(response.data);
     } catch (e) {
       console.log(
-        "failed fetching organization",
-        process.env.REACT_APP_BACKEND_URL
+        "failed fetching organization", e
       );
     }
-  };
+  }
 
   const fetchOrg = async () => {
     try {
@@ -183,6 +222,14 @@ const Report = () => {
       isMounted.current = false;
     };
   }, []);
+
+  useEffect(()=>{
+    if(selectedOrg && startdate && enddate){
+      fetchInvestementCorporate()
+    }
+  },[selectedOrg,startdate,enddate,selectedCorp])
+
+
   useEffect(() => {
     // Remove items from local storage when the component mounts
     localStorage.removeItem("reportid");
@@ -313,7 +360,7 @@ const Report = () => {
       .filter((entity) => entity.checked)
       .map((entity) => ({
         corporate_id: entity.id,
-        ownership_ratio: entity.ownershipRatio,
+        ownership_ratio: parseInt(entity.ownershipRatio),
       }));
     const sandData = {
       name: reportname,
@@ -470,6 +517,25 @@ const Report = () => {
       newErrors.enddate = "Please select a date";
     }
 
+    if (
+      reporttype === "GHG Report - Investments" &&
+      entities?.length > 0
+    ) {
+      const validCheckedEntities = entities.filter(
+        (entity) =>
+          entity.emission_data &&
+          entity.checked &&
+          entity.ownershipRatio !== "" &&
+          !isNaN(entity.ownershipRatio) &&
+          Number(entity.ownershipRatio) > 0 &&
+          Number(entity.ownershipRatio) <= 100
+      );
+  
+      if (validCheckedEntities.length === 0) {
+        newErrors.investmentEntities = "Please check and enter ownership ratio (1–100%) for at least one investment corporate with data.";
+      }
+    }
+
     return newErrors;
   };
   const handleSubmit = async (event) => {
@@ -602,6 +668,8 @@ const Report = () => {
     setMaterialityAssessmentLen([])
     setError({});
     setReportExist(false)
+    setEntities([])
+    // setshowInvestmentMessage(false)
   };
 
   const formatDate = (dateString) => {
@@ -613,8 +681,8 @@ const Report = () => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="my-10 pb-5 mx-8 text-left border border-gray-300 rounded-md">
-        <div className="px-3 flex py-4  justify-between">
+      <div className="my-10 pb-5 xl:mx-8 md:mx-8 text-left border border-gray-300 rounded-md">
+        <div className="px-3 xl:flex py-4  justify-between">
           <div>
             <h1 className="text-[#101828] mb-1 text-[1.375rem] font-bold">
               Report
@@ -625,7 +693,7 @@ const Report = () => {
             </p>
           </div>
           <div
-            className="flex items-center space-x-2 text-[#007EEF] text-xs font-bold leading-[15px] cursor-pointer ml-2 float-end"
+            className="flex items-center space-x-2 text-[#007EEF] text-xs font-bold leading-[15px] cursor-pointer xl:ml-2 xl:float-end xl:mt-0 mt-2"
             onClick={handleOpenModal}
           >
             <div className="text-[#007EEF] text-[14px] font-bold leading-[15px]">
@@ -654,7 +722,7 @@ const Report = () => {
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-          <div className="relative top-5  p-5 border w-[50%] shadow-lg rounded-md bg-white ml-40">
+          <div className="relative top-5  p-5 border xl:w-[50%] w-[95%] shadow-lg rounded-md bg-white xl:ml-40">
             <div className="mt-3 text-center">
               <div className="flex justify-between items-center drop-shadow-lg border-b-2 pt-6 w-full">
                 <h2 className="self-stretch text-black text-opacity-90 text-[22px] font-normal leading-relaxed flex space-x-8 items-center ms-6">
@@ -755,7 +823,7 @@ const Report = () => {
                 </div>
               )}
               {/* validation code end */}
-              <div className="mt-2 px-7 py-3">
+              <div className="mt-2 xl:px-7 py-3">
                 <form className="w-full text-left">
                   <div className="mr-2 mb-4 w-[101%]">
                     <label
@@ -778,20 +846,20 @@ const Report = () => {
                       />
                     </div>
                     {error.reportname && (
-                      <p className="text-red-500 ml-1">{error.reportname}</p>
+                      <p className="text-red-500 text-sm ml-1">{error.reportname}</p>
                     )}
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 mb-4">
-                    <div className="mr-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-4">
+                    <div className="xl:mr-2">
                       <label
                         htmlFor="sdate"
                         className="block text-neutral-800 text-[13px] font-normal"
                       >
                         Select Type Of Report
                       </label>
-                      <div className="mt-2 mr-2">
+                      <div className="mt-2 xl:mr-2">
                         <select
-                          className="block w-full rounded-md border-0 py-2 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-2 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleChangeReporttype}
                           value={reporttype}
                           name="Reporttype"
@@ -803,14 +871,14 @@ const Report = () => {
                           {/* <option>GRI Report: With Reference to</option> */}
                         </select>
                         {error.reporttype && (
-                          <p className="text-red-500 ml-1">
+                          <p className="text-red-500 text-sm ml-1">
                             {error.reporttype}
                           </p>
                         )}
                       </div>
                     </div>
 
-                    <div className="ml-2">
+                    <div className="xl:ml-2">
                       <label
                         htmlFor="cname"
                         className="block text-neutral-800 text-[13px] font-normal"
@@ -819,7 +887,7 @@ const Report = () => {
                       </label>
                       <div className="mt-2">
                         <select
-                          className="block w-full rounded-md border-0 py-2 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-2 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleFirstSelectChange}
                           value={firstSelection}
                         >
@@ -829,7 +897,7 @@ const Report = () => {
                         </select>{" "}
                       </div>
                       {error.firstSelection && (
-                        <p className="text-red-500 ml-1">
+                        <p className="text-red-500 text-sm ml-1">
                           {error.firstSelection}
                         </p>
                       )}
@@ -838,63 +906,8 @@ const Report = () => {
                   <div className="mb-3">
                     {showSecondSelect && renderSecondSelect()}
                   </div>
-                  {reporttype === "GHG Report - Investments" && (
-                    <div className="mr-2 h-[250px] overflow-y-auto">
-                      <label
-                        htmlFor="sdate"
-                        className="block text-neutral-800 text-[13px] font-normal"
-                      >
-                        Select Investment Corporate
-                      </label>
-                      <div className="mt-2 mr-2">
-                        <div className="p-4">
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="text-gray-400 font-semibold text-[13px]">
-                              Investment Corporate
-                            </div>
-                            <div className="text-gray-400 font-semibold text-[13px]">
-                              Ownership Ratio %
-                            </div>
-
-                            {entities.map((entity, index) => (
-                              <React.Fragment key={index}>
-                                <div className="flex items-center space-x-2">
-                                  <input
-                                    id={entity.id}
-                                    type="checkbox"
-                                    checked={entity.checked}
-                                    onChange={() => handleCheckboxChange(index)}
-                                    className="form-checkbox h-5 w-5 text-green-600"
-                                    value={entity.id}
-                                  />
-                                  <label
-                                    htmlFor={entity.id}
-                                    className="text-gray-800 text-[13px]"
-                                  >
-                                    {entity.name}
-                                  </label>
-                                </div>
-                                <input
-                                  type="number"
-                                  placeholder="Enter Ownership Ratio %"
-                                  className="border p-2 rounded w-full text-[13px]"
-                                  disabled={!entity.checked}
-                                  value={entity.ownershipRatio}
-                                  onChange={(e) =>
-                                    handleOwnershipRatioChange(
-                                      index,
-                                      e.target.value
-                                    )
-                                  }
-                                />
-                              </React.Fragment>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  <div className="grid grid-cols-1 md:grid-cols-2 mb-3">
+                 
+                  <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-4">
                     <div>
                       <label
                         htmlFor="sdate"
@@ -902,7 +915,7 @@ const Report = () => {
                       >
                         Reporting Period (From)
                       </label>
-                      <div className="mt-2 mr-4">
+                      <div className="mt-2 xl:mr-4">
                         <input
                           id="sdate"
                           name="startdate"
@@ -916,17 +929,17 @@ const Report = () => {
                         />
                       </div>
                       {error.startdate && (
-                        <p className="text-red-500 ml-1">{error.startdate}</p>
+                        <p className="text-red-500 text-sm ml-1">{error.startdate}</p>
                       )}
                     </div>
-                    <div className="ml-3 w-full">
+                    <div className="xl:ml-3 w-full">
                       <label
                         htmlFor="edate"
                         className="block text-neutral-800 text-[13px] font-normal"
                       >
                         Reporting Period (To)
                       </label>
-                      <div className="mt-2 mr-3">
+                      <div className="mt-2 xl:mr-3">
                         <input
                           id="edate"
                           name="enddate"
@@ -940,10 +953,118 @@ const Report = () => {
                         />
                       </div>
                       {error.enddate && (
-                        <p className="text-red-500 ml-1">{error.enddate}</p>
+                        <p className="text-red-500 text-sm ml-1">{error.enddate}</p>
                       )}
                     </div>
                   </div>
+
+                  {/* investment corporate */}
+                  {reporttype === "GHG Report - Investments" && entities?.length>0 ?
+                   (
+                    <div className={``}>
+                      <label
+                        htmlFor="sdate"
+                        className="block text-neutral-800 text-[13px] font-normal"
+                      >
+                        Select Investment Corporate
+                      </label>
+                      <div className={`mt-2 border border-gray-300 rounded-md ${entities?.length>0?'h-[200px]':'h-auto'} overflow-y-auto table-scrollbar`}>
+                        <div className="p-3">
+                          <div className="grid grid-cols-2 gap-2">
+                            <div className="text-gray-400 font-semibold text-[13px]">
+                              Investment Corporate
+                            </div>
+                            <div className="text-gray-400 font-semibold text-[13px]">
+                              Ownership Ratio %
+                            </div>
+
+                            {entities.map((entity, index) => (
+                              <React.Fragment key={index}>
+                                <div className={`flex relative items-center space-x-2 ${!entity.emission_data?'opacity-30':''}`}>
+                                  <input
+                                    id={entity.id}
+                                    type="checkbox"
+                                    disabled={!entity.emission_data}
+                                    checked={entity.checked}
+                                    onChange={() => handleCheckboxChange(index,entity.emission_data)}
+                                    className="form-checkbox h-4 w-4 accent-green-600"
+                                    value={entity.id}
+                                  />
+                                  <label
+                                    htmlFor={entity.id}
+                                    className="text-gray-800 text-[13px] cursor-pointer"
+                                    data-tooltip-id={`tooltip-${entity.id}`}
+                        data-tooltip-html={`${!entity.emission_data?'<p>No data available for the selected Reporting period</p>':''}`}
+                                  >
+                                    {entity.name}
+                                  </label>
+                                </div>
+                                <ReactTooltip
+                        id={`tooltip-${entity.id}`}
+                        place="top"
+                        effect="solid"
+                        style={{
+                          width: "290px",
+                          backgroundColor: "#FFF",
+                          color: "#000",
+                          fontSize: "12px",
+                          boxShadow: 3,
+                          borderRadius: "8px",
+                          textAlign: "left",
+                          zIndex: 100,
+                          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                          opacity: 1,
+                        }}
+                      ></ReactTooltip>
+                                {/* <input
+                                  type="number"
+                                  placeholder="Enter Ownership Ratio %"
+                                  className={`border-b p-2 rounded w-full text-[13px] ${!entity.checked?'opacity-35':''}`}
+                                  disabled={!entity.checked}
+                                  value={entity.ownershipRatio}
+                                  onChange={(e) =>
+                                    handleOwnershipRatioChange(
+                                      index,
+                                      e.target.value
+                                    )
+                                  }
+                                /> */}
+                                <div className="relative w-full">
+  <input
+    type="text"
+    placeholder="Enter Ownership Ratio"
+    className={`border-b p-2 rounded w-full text-[13px] pr-6 ${!entity.checked ? 'opacity-35' : ''}`}
+    disabled={!entity.checked}
+    value={entity.ownershipRatio}
+    onChange={(e) => handleOwnershipRatioChange(index, e.target.value)}
+  />
+  <span className="absolute right-2 top-2 text-[13px] text-gray-500 pointer-events-none">%</span>
+</div>
+
+
+
+                              </React.Fragment>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      {error.investmentEntities && (
+                      <p className="text-red-500 text-sm mt-1 ml-1">{error.investmentEntities}</p>
+                    )}
+                    </div>
+
+                  ):(
+                    <div>
+                       {/* {showInvestmentMessage && (
+                      <div className="flex gap-2 mb-2">
+                      <IoIosWarning className="text-[#F98845] w-5 h-5" />
+                    <p className="text-[14px] text-[#F98845] font-[500]">No Investment corporate data is available for the selected Corporate</p>
+                    </div>
+                    )} */}
+                    </div>
+                   
+                    
+                  )}
                   {/* materiality assessment */}
                   {materialityAssessmentLen&&materialityAssessmentLen.length>1?(
                      <div>
@@ -969,7 +1090,7 @@ const Report = () => {
                     <div></div>
                   )}
                  
-                  <div className="flex justify-center mt-10">
+                  <div className="flex justify-center mt-5">
                     <div className="">
                       <button
                         type="submit"
