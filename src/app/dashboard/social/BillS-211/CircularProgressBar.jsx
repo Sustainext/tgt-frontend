@@ -1,17 +1,18 @@
 import React from 'react';
 
 const CircularProgressBar = ({ percentage }) => {
-  const radius = 50;
-  const stroke = 10;
+  const radius = 10;
+  const stroke = 2;
   const normalizedRadius = radius - stroke / 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className="flex items-center justify-center h-40 w-40">
+    <div className="flex items-center space-x-1">
+      {/* Circle */}
       <svg height={radius * 2} width={radius * 2}>
         <circle
-          stroke="#e5e7eb" // Tailwind's gray-200
+          stroke="#d1d5db" // Tailwind gray-300
           fill="transparent"
           strokeWidth={stroke}
           r={normalizedRadius}
@@ -19,7 +20,7 @@ const CircularProgressBar = ({ percentage }) => {
           cy={radius}
         />
         <circle
-          stroke="#3b82f6" // Tailwind's blue-500
+          stroke="#047857" // Tailwind green-700
           fill="transparent"
           strokeWidth={stroke}
           strokeLinecap="round"
@@ -30,16 +31,12 @@ const CircularProgressBar = ({ percentage }) => {
           cy={radius}
           style={{ transition: 'stroke-dashoffset 0.35s ease' }}
         />
-        <text
-          x="50%"
-          y="50%"
-          dominantBaseline="middle"
-          textAnchor="middle"
-          className="fill-gray-800 text-lg font-semibold"
-        >
-          {percentage}%
-        </text>
       </svg>
+
+      {/* Percentage Display */}
+      <div className="px-1 py-1 text-[12px] ">
+        {percentage}%
+      </div>
     </div>
   );
 };

@@ -151,6 +151,7 @@ const Screensix = ({
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
+        status:"completed",
       };
       const response= await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,

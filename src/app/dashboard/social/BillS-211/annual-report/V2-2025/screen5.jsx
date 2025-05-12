@@ -134,6 +134,7 @@ const Screenfive = ({
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
+        status:"completed",
       };
 
       const response= await axiosInstance.put(

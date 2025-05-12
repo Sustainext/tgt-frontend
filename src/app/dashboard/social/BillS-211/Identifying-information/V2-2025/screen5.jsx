@@ -92,7 +92,36 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
       setError(errors);
     }
   };
+  const stepsubmitForm = async () => {
+const stepscreenId = 6;
+    try{
 
+
+      const sendData = {
+        data:{
+        
+        },
+     
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year,
+        status:"in_progress",
+      };
+      const response= await axiosInstance.put(
+          `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${stepscreenId}/`,
+          sendData
+        )
+        if (response.status == "200") {
+          console.log("API call susfully:");
+          nextStep();
+        } 
+    }catch (error) {
+     
+      console.error("API call failed:", error);
+    
+    }
+    
+  };
   const submitForm = async () => {
     try {
       LoaderOpen();
@@ -105,7 +134,9 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
    
         organization: selectedOrg,
         corporate: selectedCorp,
-        year: year
+        year: year,
+        status:"completed",
+
       };
 
       const response= await axiosInstance.put(
@@ -114,7 +145,7 @@ const Screenfive = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, repor
       )
       if (response.status === 200) {
         toast.success("Data added successfully");
-        nextStep();
+        stepsubmitForm();
       } else {
         toast.error("Oops, something went wrong");
       }

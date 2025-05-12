@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Screenone from "./screen1";
 import Screentwo from "./screen2";
 import Screenthree from "./screen3";
@@ -9,150 +9,194 @@ import Screensix from "./screen6";
 import Screenseven from "./screen7";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
+import { FaCheck } from "react-icons/fa";
+import { TbPointFilled } from "react-icons/tb";
 import {
   MdOutlineNavigateNext,
   MdOutlineNavigateBefore,
   MdKeyboardArrowDown,
 } from "react-icons/md";
-import Link from "next/link";
 
-const SubmissionInformation = ({ setMobileopen,selectedCorp,selectedOrg,year,reportType,handleTabClick }) => {
-  const toggleSidebar = () => {
-    setMobileopen(true);
-  };
+const SubmissionInformation = ({
+  setMobileopen,
+  selectedCorp,
+  selectedOrg,
+  year,
+  reportType,
+  handleTabClick,
+}) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const nextStep = () => setCurrentStep(currentStep + 1);
-  const prevStep = () => setCurrentStep(currentStep - 1);
-  const totalSteps = 7;
-  const goToStep = (step) => {
-    if (step >= 1 && step <= totalSteps) {
-      setCurrentStep(step);
+  const [status, setStatus] = useState();
+
+  const nextStep = () => {
+    fetchBillSstap(); // Fetch updated status when moving forward
+    setCurrentStep((prev) => prev + 1);
+  };
+
+  const prevStep = () => setCurrentStep((prev) => prev - 1);
+
+  const fetchBillSstap = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/status-report/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
+      );
+      if (response.status === 200) {
+        setStatus(response.data.submission_information);
+        console.log("Fetched status:", response.data.submission_information);
+      } else {
+        toast.error("Oops, something went wrong");
+      }
+    } catch (error) {
+      console.log("Error fetching status:", error);
     }
   };
 
-
-  // State to keep track of selected options
-
-  // Handler for checkbox change
+  useEffect(() => {
+    if (
+      (reportType === "Organization" && selectedOrg && year) ||
+      (reportType !== "Organization" && selectedOrg && selectedCorp && year)
+    ) {
+      fetchBillSstap();
+    }
+  }, [selectedCorp, selectedOrg, year]);
 
   return (
     <>
-     
+      <div className="h-auto overflow-y-auto scrollable-content flex gap-6">
+        {/* Sidebar */}
+        <div className="w-[285px] mt-10 shadow-lg mb-4">
+          <ol className="relative">
+            {status && status.map((step, index) => {
+              let circleColor = "";
+              let lineColor = "";
+              let textColor = "";
 
-      <div className="xl:h-[450px] lg:h-[450px] md:h-[450px] 2k:h-[450px] 4k:h-[450px] h-auto overflow-y-auto scrollable-content">
-        {currentStep === 1 && (
-          <Screenone
-            nextStep={nextStep}
-            selectedCorp={selectedCorp}
-            selectedOrg={selectedOrg}
-            year={year}
-            reportType={reportType}
-            // handleChange={handleChange}
-          />
-        )}
-        {currentStep === 2 && (
-          <Screentwo
-            nextStep={nextStep}
-            prevStep={prevStep}
-            selectedCorp={selectedCorp}
-            selectedOrg={selectedOrg}
-            year={year}
-            reportType={reportType}
-          />
-        )}
-        {currentStep === 3 && (
-          <Screenthree
-            nextStep={nextStep}
-            prevStep={prevStep}
-            selectedCorp={selectedCorp}
-            selectedOrg={selectedOrg}
-            year={year}
-            reportType={reportType}
-          />
-        )}
-        {currentStep === 4 && (
-          <Screenfour
-            nextStep={nextStep}
-            prevStep={prevStep}
-            selectedCorp={selectedCorp}
-            selectedOrg={selectedOrg}
-            year={year}
-            reportType={reportType}
-          />
-        )}
-        {currentStep === 5 && (
-          <Screenfive
-            nextStep={nextStep}
-            prevStep={prevStep}
-            selectedCorp={selectedCorp}
-            selectedOrg={selectedOrg}
-            year={year}
-            reportType={reportType}
-          />
-        )}
-        {currentStep === 6 && (
-          <Screensix
-            nextStep={nextStep}
-            prevStep={prevStep}
-            selectedCorp={selectedCorp}
-            selectedOrg={selectedOrg}
-            year={year}
-            reportType={reportType}
-          />
-        )}
-        {currentStep === 7 && (
-          <Screenseven
-            prevStep={prevStep}
-            selectedCorp={selectedCorp}
-            selectedOrg={selectedOrg}
-            year={year}
-            reportType={reportType}
-            handleTabClick={handleTabClick}
-          />
-        )}
-      </div>
-      <div className="w-full mb-5">
-        <div className="flex justify-center  space-x-4 mt-[15px] w-full">
-          {/* Previous Button */}
-          <button
-            className={`px-2  h-[27px] rounded-md text-dark ${
-              currentStep === 1 ? "text-gray-300" : ""
-            }`}
-            disabled={currentStep === 1}
-            onClick={() => prevStep()}
-            // style={{ display: currentStep === 1 ? "none" : "inline-block" }}
-          >
-            <MdOutlineNavigateBefore />
-          </button>
+              const normalizedStatus = step.status?.toLowerCase();
 
-          {/* Number Buttons */}
-          {[...Array(totalSteps)].map((_, i) => (
-            <button
-              key={i}
-              className={`px-2 h-[27px] text-[0.9rem] rounded-md ${
-                currentStep === i + 1
-                  ? "bg-white shadow-md text-blue-600"
-                  : "text-dark hover:bg-gray-300"
-              }`}
-              onClick={() => goToStep(i + 1)}
-            >
-              {i + 1}
-            </button>
-          ))}
+              if (normalizedStatus === "completed") {
+                circleColor = "bg-[#007EEF]";
+                lineColor = "bg-[#007EEF]";
+                textColor = "text-green-600";
+              } else if (normalizedStatus === "in_progress") {
+                circleColor = " bg-white";
+                lineColor = "bg-[#007EEF]";
+                textColor = "text-[#007EEF]";
+              } else {
+                circleColor = "bg-gray-300";
+                lineColor = "bg-gray-200";
+                textColor = "text-gray-500";
+              }
 
-          {/* Next Button */}
-          <button
-            className={`px-2  h-[27px] rounded-md text-dark ${
-              currentStep === 7 ? "text-gray-300" : ""
-            }`}
-            disabled={currentStep === totalSteps}
-            onClick={() => nextStep()}
-            // style={{ display: currentStep === 7 ? "none" : "inline-block" }}
-          >
-            <MdOutlineNavigateNext />
-          </button>
+              return (
+                <li key={index} className="mb-10 ml-4 relative flex items-start">
+                  {/* Vertical Line */}
+                  {index < status.length - 1 && (
+                    <div
+                      className={`absolute top-14 left-3 transform -translate-y-1/2 w-px h-[60px] ${lineColor}`}
+                    />
+                  )}
+
+                  {/* Status Circle */}
+                  <div
+                    className={`w-6 h-6 ${circleColor} rounded-full flex items-center justify-center border-2 transition-all border-b border-gray-200`}
+                  >
+                    {normalizedStatus === "completed" ? (
+                      <FaCheck className="w-3 h-3 text-white" />
+                    ) : normalizedStatus === "in_progress" ? (
+                       <TbPointFilled className="w-14 h-14  text-[#007EEF]" />
+                      
+                    ) : (
+                      <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                    )}
+                  </div>
+
+                  {/* Step Content */}
+                  <div className="ml-8 pl-4">
+                    <h3 className={`font-semibold text-sm text-gray-500 `}>
+                      Page {step.screen}
+                    </h3>
+                    <p  className={` text-sm ${textColor}`} >{step.status}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+
+        {/* Screen Content */}
+        <div className="w-full">
+          {currentStep === 1 && (
+            <Screenone
+              nextStep={nextStep}
+              selectedCorp={selectedCorp}
+              selectedOrg={selectedOrg}
+              year={year}
+              reportType={reportType}
+            />
+          )}
+          {currentStep === 2 && (
+            <Screentwo
+              nextStep={nextStep}
+              prevStep={prevStep}
+              selectedCorp={selectedCorp}
+              selectedOrg={selectedOrg}
+              year={year}
+              reportType={reportType}
+            />
+          )}
+          {currentStep === 3 && (
+            <Screenthree
+              nextStep={nextStep}
+              prevStep={prevStep}
+              selectedCorp={selectedCorp}
+              selectedOrg={selectedOrg}
+              year={year}
+              reportType={reportType}
+            />
+          )}
+          {currentStep === 4 && (
+            <Screenfour
+              nextStep={nextStep}
+              prevStep={prevStep}
+              selectedCorp={selectedCorp}
+              selectedOrg={selectedOrg}
+              year={year}
+              reportType={reportType}
+            />
+          )}
+          {currentStep === 5 && (
+            <Screenfive
+              nextStep={nextStep}
+              prevStep={prevStep}
+              selectedCorp={selectedCorp}
+              selectedOrg={selectedOrg}
+              year={year}
+              reportType={reportType}
+            />
+          )}
+          {currentStep === 6 && (
+            <Screensix
+              nextStep={nextStep}
+              prevStep={prevStep}
+              selectedCorp={selectedCorp}
+              selectedOrg={selectedOrg}
+              year={year}
+              reportType={reportType}
+            />
+          )}
+          {currentStep === 7 && (
+            <Screenseven
+              prevStep={prevStep}
+              selectedCorp={selectedCorp}
+              selectedOrg={selectedOrg}
+              year={year}
+              reportType={reportType}
+            />
+          )}
         </div>
       </div>
+
       <ToastContainer style={{ fontSize: "12px" }} />
     </>
   );

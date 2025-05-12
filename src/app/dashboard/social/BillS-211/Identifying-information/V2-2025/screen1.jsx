@@ -22,7 +22,7 @@ const yearInfo =[
   "May 31, 2024",
   "May 31, 2025"
 ]
-
+console.log(selectedOrg,"test selectedOrg")
 const fetchBillSone = async () => {
   LoaderOpen();
 
@@ -66,11 +66,13 @@ const fetchBillSone = async () => {
     if(reportType=="Organization"){
       if(selectedOrg&&year){
         fetchBillSone();
+      
       }
     }
     else{
       if(selectedOrg&&year&&selectedCorp){
         fetchBillSone();
+  
       }
     }
     
@@ -162,6 +164,37 @@ const fetchBillSone = async () => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const stepsubmitForm = async () => {
+const stepscreenId = 2;
+    try{
+
+
+      const sendData = {
+        data:{
+        
+        },
+     
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year,
+        status:"in_progress",
+      };
+      const response= await axiosInstance.put(
+          `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${stepscreenId}/`,
+          sendData
+        )
+        if (response.status == "200") {
+          console.log("API call susfully:");
+          nextStep();
+        } 
+    }catch (error) {
+     
+      console.error("API call failed:", error);
+    
+    }
+    
+  };
+
 
   const submitForm = async () => {
 
@@ -179,7 +212,8 @@ const fetchBillSone = async () => {
      
         organization: selectedOrg,
         corporate: selectedCorp,
-        year: year
+        year: year,
+        status:"completed",
       };
       const response= await axiosInstance.put(
           `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/`,
@@ -196,8 +230,10 @@ const fetchBillSone = async () => {
             progress: undefined,
             theme: "light",
           });
+
           LoaderClose();
-          nextStep();
+          
+          stepsubmitForm();
         } else {
           toast.error("Oops, something went wrong", {
             position: "top-right",
