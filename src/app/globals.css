@@ -138,7 +138,7 @@ div[class*="Popout__PopoutContent"] {
 /* Default Zoom for smaller screens */
 @media (max-width: 1919px) {
   body {
-    zoom: 0.8;
+     zoom: 0.8;
     overflow-x: hidden;
   }
 }

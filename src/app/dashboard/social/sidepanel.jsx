@@ -252,7 +252,7 @@ const Aside = ({
       if (response.status === 200) {
         if (response.data.enable_section) {
           setShowBillS211(response.data.enable_section);
-          handleTabClick("BILLs201");
+          handleTabClick("Data collection");
           toggleBillS211();
         }
       }
@@ -299,8 +299,7 @@ const Aside = ({
             <div>
               <button
                 className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
-                  activeTab === "Identifying Information" ||
-                  activeTab === "Annual report"
+                  activeTab === "Data collection" 
                     ? "text-[#007EEF]"
                     : "bg-white text-[#727272] "
                 }`}
@@ -328,21 +327,21 @@ const Aside = ({
                     <div>
                       <p
                         className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                          activeTab === "Identifying Information"
+                          activeTab === "Data collection"
                             ? "text-blue-400"
                             : "bg-transparent text-[#727272]"
                         }`}
                         onClick={() => {
-                          handleTabClick("Identifying Information");
+                          handleTabClick("Data collection");
                           toggleSidebar(); // Call the sidebar close function
                         }}
                     
                       >
-                        Submission Information
+                        Data collection
                       </p>
                     </div>
 
-                    <div>
+                    {/* <div>
                       <p
                         className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                           activeTab === "Annual report"
@@ -357,7 +356,7 @@ const Aside = ({
                       >
                         Reporting for Entities
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                 </>
               )}

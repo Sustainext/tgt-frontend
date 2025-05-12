@@ -192,7 +192,7 @@ let axiosConfig = {
                 </div>
                 <ReactTooltip
                   anchorId="app-title"
-                  place="right"
+                  place="top"
                   style={{
                     backgroundColor: '#000000',
                     boxShadow:'rgba(0, 0, 0, 0.35) 0px 5px 15px',

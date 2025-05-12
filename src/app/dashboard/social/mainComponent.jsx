@@ -150,7 +150,7 @@ const Social = () => {
       ,
       "Diversity of Employees",
     ];
-    const BillS211Tabs = ["Identifying Information", "Annual report","BILLs201"];
+    const BillS211Tabs = ["Data collection"];
     const energyTabs = ["Notice Period", "Collective Bargaining"];
 
     // List of tabs related to Waste
@@ -291,7 +291,7 @@ const Social = () => {
                   setActiveTab={setActiveTab}
                 />
               )}
-                  {activeTab === "BILLs201" && (
+                  {activeTab === "Data collection" && (
                 <BILLs201
                 handleTabClick={handleTabClick}
                   apiData={data}
@@ -301,7 +301,7 @@ const Social = () => {
                   
                 />
               )}
-              {activeTab === "Identifying Information" && (
+              {/* {activeTab === "Identifying Information" && (
                 <Identifyinginformation
                   handleTabClick={handleTabClick}
                   apiData={data}
@@ -310,10 +310,10 @@ const Social = () => {
                 
         
                 />
-              )}
-              {activeTab === "Annual report" && (
+              )} */}
+              {/* {activeTab === "Annual report" && (
                 <AnnualReport apiData={data} setMobileopen={setMobileopen} />
-              )}
+              )} */}
               {activeTab === "Employee Hires & Turnover" && (
                 <EmployeeHiresTurnover
                   apiData={data}
