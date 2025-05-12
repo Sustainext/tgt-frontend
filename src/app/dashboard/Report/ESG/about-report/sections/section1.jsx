@@ -57,7 +57,21 @@ stakeholders informed of our progress.`
           <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
             7.1 Reporting Period, Frequency, and Point of Contact
           </h3>
-          <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+
+          {
+            data && data["2-3-a"]?.Q1 && data["2-3-a"]?.Q2 ? (
+              <div>
+
+                <p className="mb-4 text-sm">
+                This report covers the period from {data["2-3-a"].Q1} and is part of our {data["2-3-a"].Q2} sustainability reporting cycle. 
+                We are committed to providing regular updates on our ESG performance to ensure transparency and keep our stakeholders informed of our progress. 
+                {data["2-3-b"]?.Q1=="Yes"?`The reporting period for the ${orgName ? orgName : "[Company Name]'s"} financial reporting aligns with the period for its sustainability reporting.`:data["2-3-b"]?.Q1=="No"?"The reporting period for the organization's financial reporting does not align with the period for its sustainability reporting.":''}   
+                {data['2-3-c']?`The report was published on ${data['2-3-c']}, which specifies the date of publication, and the reporting information included.`:''} 
+                </p>
+              </div>
+            ):(
+              <div>
+                     <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Reporting Period:
           </p>
           <p className="mb-4 text-sm">
@@ -85,6 +99,10 @@ stakeholders informed of our progress.`
               "No data available"
             )}
           </p>
+              </div>
+            )
+          }
+         
 
           <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Point of Contact:
@@ -92,9 +110,13 @@ stakeholders informed of our progress.`
           <p className="mb-4 text-sm">
             {data && data["2-3d"] ? (
               typeof data["2-3d"] === "object" ? (
-                <pre style={{ fontFamily: "inherit" }}>
+                <div>
+                  <p className="mb-2">For further information regarding this report or our sustainability initiatives, please contact:</p>
+                   <pre style={{ fontFamily: "inherit" }}>
                   {data["2-3d"].Q1 ? data["2-3d"].Q1 : "No Data available"}
                 </pre>
+                </div>
+               
               ) : (
                 "No data available"
               )

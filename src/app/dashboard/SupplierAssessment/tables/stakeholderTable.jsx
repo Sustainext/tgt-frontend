@@ -141,7 +141,7 @@ useEffect(()=>{
                   <th
                     key={i}
                     className={`px-6 py-3 text-sm font-semibold text-gray-600 cursor-pointer 
-                         ${i === 0 ? "min-w-[25px]" : "min-w-[150px]"} 
+                         ${i === 0 ? "min-w-[25px]" : "min-w-[132px]"} 
                       ${
                       columns.length - 1 === i ? "text-center" : "text-left"
                     }`}
