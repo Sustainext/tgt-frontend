@@ -4,7 +4,7 @@ import { FiChevronDown, FiX, FiCheck } from "react-icons/fi";
 
 const MetricsSelector = ({ 
   scenario, 
-  scenarioMetrics,  // Metrics specific to this scenario
+  scenarioMetrics, // Array of { id, name, selected } objects from extractUniqueMetricsForScenarios
   onMetricsChange   // Callback to update metrics
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -23,10 +23,19 @@ const MetricsSelector = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  // Handle empty or undefined scenarioMetrics
+  const metrics = Array.isArray(scenarioMetrics) && scenarioMetrics.length > 0
+    ? scenarioMetrics
+    : [
+        { id: "fte", name: "FTE", selected: true },
+        { id: "area", name: "Area", selected: true },
+        { id: "production_volume", name: "Production Volume", selected: true }
+      ];
   
   const toggleMetric = (metricId) => {
     // Create a copy of the metrics array with the selected state toggled
-    const updatedMetrics = scenarioMetrics.map(metric => 
+    const updatedMetrics = metrics.map(metric => 
       metric.id === metricId 
         ? { ...metric, selected: !metric.selected } 
         : metric
@@ -36,7 +45,7 @@ const MetricsSelector = ({
     onMetricsChange(updatedMetrics);
   };
   
-  const selectedMetrics = scenarioMetrics.filter(metric => metric.selected);
+  const selectedMetrics = metrics.filter(metric => metric.selected);
   const selectedCount = selectedMetrics.length;
   
   return (
@@ -67,7 +76,7 @@ const MetricsSelector = ({
             <div className="px-3 py-2 border-b border-gray-200">
               <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Select Business Metrics</h4>
             </div>
-            {scenarioMetrics.map((metric) => (
+            {metrics.map((metric) => (
               <div 
                 key={metric.id} 
                 className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
@@ -89,6 +98,32 @@ const MetricsSelector = ({
                 </div>
               </div>
             ))}
+            <div className="px-4 py-2 border-t border-gray-200">
+              <div className="flex justify-between">
+                <button
+                  type="button"
+                  className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                  onClick={() => {
+                    // Select all metrics
+                    const allSelected = metrics.map(m => ({ ...m, selected: true }));
+                    onMetricsChange(allSelected);
+                  }}
+                >
+                  Select All
+                </button>
+                <button
+                  type="button"
+                  className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                  onClick={() => {
+                    // Deselect all metrics
+                    const allDeselected = metrics.map(m => ({ ...m, selected: false }));
+                    onMetricsChange(allDeselected);
+                  }}
+                >
+                  Deselect All
+                </button>
+              </div>
+            </div>
             <div className="px-4 py-2 border-t border-gray-200 bg-gray-50">
               <button
                 type="button"

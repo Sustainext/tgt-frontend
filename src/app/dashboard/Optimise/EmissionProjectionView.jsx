@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux"; // Added useSelector import
 import { FiDownload, FiInfo, FiChevronDown, FiX } from "react-icons/fi";
 import EmissionProjectionGraph from "./EmissionProjectionGraph";
-import { scope1Info, scope2Info, scope3Info } from "../../shared/data/scopeInfo";
+import {
+  scope1Info,
+  scope2Info,
+  scope3Info,
+} from "../../shared/data/scopeInfo";
 import { fetchScenarioGraphData } from "../../../lib/redux/features/optimiseSlice";
 
 const EmissionProjectionView = ({ scenario = {} }) => {
@@ -10,9 +14,9 @@ const EmissionProjectionView = ({ scenario = {} }) => {
   const scenarioId = scenario?.id;
 
   // Get state from Redux
-  const graphData = useSelector(state => state.optimise?.graphData);
-  const loading = useSelector(state => state.optimise?.loading?.graphData);
-  const error = useSelector(state => state.optimise?.error?.graphData);
+  const graphData = useSelector((state) => state.optimise?.graphData);
+  const loading = useSelector((state) => state.optimise?.loading?.graphData);
+  const error = useSelector((state) => state.optimise?.error?.graphData);
 
   // Main target year comes from scenario creation
   const baseYear = scenario?.base_year || 2024;
@@ -34,44 +38,56 @@ const EmissionProjectionView = ({ scenario = {} }) => {
   // Generate category options based on selected scope
   const generateCategoryOptions = (selectedScopes) => {
     let categoryOptions = ["Aggregated Scope"];
-    
-    if (selectedScopes.includes("Scope-1") || selectedScopes.includes("Aggregated Scope")) {
-      scope1Info[0].Category.forEach(cat => {
+
+    if (
+      selectedScopes.includes("Scope-1") ||
+      selectedScopes.includes("Aggregated Scope")
+    ) {
+      scope1Info[0].Category.forEach((cat) => {
         if (!categoryOptions.includes(cat.name)) {
           categoryOptions.push(cat.name);
         }
       });
     }
-    
-    if (selectedScopes.includes("Scope-2") || selectedScopes.includes("Aggregated Scope")) {
-      scope2Info[0].Category.forEach(cat => {
+
+    if (
+      selectedScopes.includes("Scope-2") ||
+      selectedScopes.includes("Aggregated Scope")
+    ) {
+      scope2Info[0].Category.forEach((cat) => {
         if (!categoryOptions.includes(cat.name)) {
           categoryOptions.push(cat.name);
         }
       });
     }
-    
-    if (selectedScopes.includes("Scope-3") || selectedScopes.includes("Aggregated Scope")) {
-      scope3Info[0].Category.forEach(cat => {
+
+    if (
+      selectedScopes.includes("Scope-3") ||
+      selectedScopes.includes("Aggregated Scope")
+    ) {
+      scope3Info[0].Category.forEach((cat) => {
         if (!categoryOptions.includes(cat.name)) {
           categoryOptions.push(cat.name);
         }
       });
     }
-    
+
     return categoryOptions;
   };
 
   // Generate subcategory options based on selected categories
   const generateSubCategoryOptions = (selectedCategories) => {
     let subCategoryOptions = ["Aggregated Scope"];
-    
+
     const allScopeInfos = [scope1Info, scope2Info, scope3Info];
-    
-    allScopeInfos.forEach(scopeInfo => {
-      scopeInfo[0].Category.forEach(cat => {
-        if (selectedCategories.includes(cat.name) || selectedCategories.includes("Aggregated Scope")) {
-          cat.SubCategory.forEach(subCat => {
+
+    allScopeInfos.forEach((scopeInfo) => {
+      scopeInfo[0].Category.forEach((cat) => {
+        if (
+          selectedCategories.includes(cat.name) ||
+          selectedCategories.includes("Aggregated Scope")
+        ) {
+          cat.SubCategory.forEach((subCat) => {
             if (!subCategoryOptions.includes(subCat)) {
               subCategoryOptions.push(subCat);
             }
@@ -79,7 +95,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
         }
       });
     });
-    
+
     return subCategoryOptions;
   };
 
@@ -94,32 +110,49 @@ const EmissionProjectionView = ({ scenario = {} }) => {
       "Electricity",
       "Refrigerant Leakage",
       "Freight Transport",
-      "Employee Commuting"
+      "Employee Commuting",
     ];
   };
 
   // Dropdown selections - now arrays for multiselect
   const [selectedScopes, setSelectedScopes] = useState(["Aggregated Scope"]);
-  const [selectedCategories, setSelectedCategories] = useState(["Aggregated Scope"]);
-  const [selectedSubCategories, setSelectedSubCategories] = useState(["Aggregated Scope"]);
-  const [selectedActivities, setSelectedActivities] = useState(["Aggregated Scope"]);
+  const [selectedCategories, setSelectedCategories] = useState([
+    "Aggregated Scope",
+  ]);
+  const [selectedSubCategories, setSelectedSubCategories] = useState([
+    "Aggregated Scope",
+  ]);
+  const [selectedActivities, setSelectedActivities] = useState([
+    "Aggregated Scope",
+  ]);
 
   // Dropdown options - dynamically generated based on selections
   const [scopeOptions, setScopeOptions] = useState(generateScopeOptions());
-  const [categoryOptions, setCategoryOptions] = useState(generateCategoryOptions(selectedScopes));
-  const [subCategoryOptions, setSubCategoryOptions] = useState(generateSubCategoryOptions(selectedCategories));
-  const [activityOptions, setActivityOptions] = useState(generateActivityOptions(selectedSubCategories));
+  const [categoryOptions, setCategoryOptions] = useState(
+    generateCategoryOptions(selectedScopes)
+  );
+  const [subCategoryOptions, setSubCategoryOptions] = useState(
+    generateSubCategoryOptions(selectedCategories)
+  );
+  const [activityOptions, setActivityOptions] = useState(
+    generateActivityOptions(selectedSubCategories)
+  );
 
   // Determine if child dropdowns should be disabled
   // If a parent is set to "Aggregated Scope", all children should be disabled
-  const isCategoryDropdownDisabled = selectedScopes.includes("Aggregated Scope");
-  const isSubCategoryDropdownDisabled = isCategoryDropdownDisabled || selectedCategories.includes("Aggregated Scope");
-  const isActivityDropdownDisabled = isSubCategoryDropdownDisabled || selectedSubCategories.includes("Aggregated Scope");
+  const isCategoryDropdownDisabled =
+    selectedScopes.includes("Aggregated Scope");
+  const isSubCategoryDropdownDisabled =
+    isCategoryDropdownDisabled ||
+    selectedCategories.includes("Aggregated Scope");
+  const isActivityDropdownDisabled =
+    isSubCategoryDropdownDisabled ||
+    selectedSubCategories.includes("Aggregated Scope");
 
   // Update options when selections change
   useEffect(() => {
     setCategoryOptions(generateCategoryOptions(selectedScopes));
-    
+
     // If scope is set to "Aggregated Scope", force categories to "Aggregated Scope" too
     if (selectedScopes.includes("Aggregated Scope")) {
       setSelectedCategories(["Aggregated Scope"]);
@@ -128,7 +161,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
 
   useEffect(() => {
     setSubCategoryOptions(generateSubCategoryOptions(selectedCategories));
-    
+
     // If category is set to "Aggregated Scope", force subcategories to "Aggregated Scope" too
     if (selectedCategories.includes("Aggregated Scope")) {
       setSelectedSubCategories(["Aggregated Scope"]);
@@ -137,7 +170,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
 
   useEffect(() => {
     setActivityOptions(generateActivityOptions(selectedSubCategories));
-    
+
     // If subcategory is set to "Aggregated Scope", force activities to "Aggregated Scope" too
     if (selectedSubCategories.includes("Aggregated Scope")) {
       setSelectedActivities(["Aggregated Scope"]);
@@ -147,7 +180,8 @@ const EmissionProjectionView = ({ scenario = {} }) => {
   // Dropdown open states
   const [isScopeDropdownOpen, setScopeDropdownOpen] = useState(false);
   const [isCategoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-  const [isSubCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false);
+  const [isSubCategoryDropdownOpen, setSubCategoryDropdownOpen] =
+    useState(false);
   const [isActivityDropdownOpen, setActivityDropdownOpen] = useState(false);
 
   // Refs for detecting clicks outside dropdowns
@@ -182,146 +216,270 @@ const EmissionProjectionView = ({ scenario = {} }) => {
 
   const selectedMetrics = businessMetrics.filter((metric) => metric.selected);
 
+  // State to control download options dropdown
+  const [showDownloadOptions, setShowDownloadOptions] = useState(false);
+  const downloadButtonRef = useRef(null);
+
   const handleDownloadResults = () => {
-    // Implementation for downloading results
     if (!graphData) return;
-    
-    // Create a JSON blob and download it
-    const dataStr = JSON.stringify(graphData, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.setAttribute('hidden', '');
-    a.setAttribute('href', url);
-    a.setAttribute('download', `scenario-${scenarioId}-projection.json`);
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+
+    // Toggle download options dropdown
+    setShowDownloadOptions(!showDownloadOptions);
+  };
+
+  // Handle CSV download
+  const handleDownloadCSV = () => {
+    try {
+      // Create CSV header row
+      const headers = [
+        "Year",
+        "Scope",
+        "Category",
+        "Sub_Category",
+        "Activity",
+        "Emissions_Value",
+        "Unit",
+      ];
+      let csvContent = headers.join(",") + "\n";
+
+      // Extract data from graphData
+      if (graphData.yearly_data) {
+        Object.entries(graphData.yearly_data).forEach(([year, activities]) => {
+          activities.forEach((activity) => {
+            // Create a row for each activity
+            const row = [
+              year,
+              activity.scope || "",
+              activity.category || "",
+              activity.sub_category || "",
+              activity.activity_name || "",
+              activity.value || "0",
+              "tCO2e",
+            ];
+
+            // Add the row to CSV content, properly escaped
+            csvContent +=
+              row
+                .map((cell) => {
+                  // Escape cells with commas or quotes
+                  if (
+                    typeof cell === "string" &&
+                    (cell.includes(",") || cell.includes('"'))
+                  ) {
+                    return `"${cell.replace(/"/g, '""')}"`;
+                  }
+                  return cell;
+                })
+                .join(",") + "\n";
+          });
+        });
+      }
+
+      // Create and download the CSV file
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.setAttribute("hidden", "");
+      a.setAttribute("href", url);
+      a.setAttribute("download", `scenario-${scenario.id}-data.csv`);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      // Close dropdown after download
+      setShowDownloadOptions(false);
+    } catch (error) {
+      console.error("Error creating CSV:", error);
+      alert("Failed to download CSV. Please try again.");
+    }
+  };
+
+  // Handle PNG download
+  const handleDownloadPNG = () => {
+    try {
+      // Find the chart SVG element
+      const svgElement = document.querySelector(
+        ".emission-chart-container svg"
+      );
+      if (!svgElement) {
+        console.error("Could not find chart SVG element");
+        alert("Could not find chart to download. Please try again.");
+        return;
+      }
+
+      // Create a canvas for the PNG
+      const canvas = document.createElement("canvas");
+      const width = svgElement.width.baseVal.value || 1200;
+      const height = svgElement.height.baseVal.value || 600;
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
+
+      // Convert SVG to PNG
+      const svgString = new XMLSerializer().serializeToString(svgElement);
+      const img = new Image();
+      const svgBlob = new Blob([svgString], {
+        type: "image/svg+xml;charset=utf-8",
+      });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, width, height);
+        URL.revokeObjectURL(url);
+
+        // Download the PNG
+        canvas.toBlob((blob) => {
+          const pngUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.setAttribute("hidden", "");
+          a.setAttribute("href", pngUrl);
+          a.setAttribute("download", `scenario-${scenario.id}-chart.png`);
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(pngUrl);
+
+          // Close dropdown after download
+          setShowDownloadOptions(false);
+        }, "image/png");
+      };
+
+      img.src = url;
+    } catch (error) {
+      console.error("Error creating PNG:", error);
+      alert("Failed to download PNG. Please try again.");
+    }
   };
 
   // Information about target years for display
   const isExtended = extendedTargetYear > mainTargetYear;
 
-// Handle scope selection
-const handleScopeSelection = (scope) => {
-  if (scope === "Aggregated Scope") {
-    // Reset all dropdowns to "Aggregated Scope"
-    setSelectedScopes(["Aggregated Scope"]);
-    setSelectedCategories(["Aggregated Scope"]);
-    setSelectedSubCategories(["Aggregated Scope"]);
-    setSelectedActivities(["Aggregated Scope"]);
-    setScopeDropdownOpen(false);
-  } else if (selectedScopes.includes("Aggregated Scope")) {
-    // When switching from "Aggregated Scope" to a specific scope
-    // Reset all children to "Aggregated Scope"
-    setSelectedScopes([scope]);
-    setSelectedCategories(["Aggregated Scope"]);
-    setSelectedSubCategories(["Aggregated Scope"]);
-    setSelectedActivities(["Aggregated Scope"]);
-  } else if (selectedScopes.includes(scope)) {
-    // If removing a scope
-    const newSelectedScopes = selectedScopes.filter((s) => s !== scope);
-    if (newSelectedScopes.length === 0) {
-      // If no scopes left, reset to "Aggregated Scope"
+  // Handle scope selection
+  const handleScopeSelection = (scope) => {
+    if (scope === "Aggregated Scope") {
+      // Reset all dropdowns to "Aggregated Scope"
       setSelectedScopes(["Aggregated Scope"]);
       setSelectedCategories(["Aggregated Scope"]);
       setSelectedSubCategories(["Aggregated Scope"]);
       setSelectedActivities(["Aggregated Scope"]);
-    } else {
-      // Just update scopes without affecting children
-      setSelectedScopes(newSelectedScopes);
-    }
-  } else {
-    // Adding another scope - keep children as they are
-    setSelectedScopes([...selectedScopes, scope]);
-  }
-};
-
-// Handle category selection
-const handleCategorySelection = (category) => {
-  // Do nothing if the dropdown is disabled
-  if (isCategoryDropdownDisabled) return;
-  
-  if (category === "Aggregated Scope") {
-    // Reset this dropdown and all children to "Aggregated Scope"
-    setSelectedCategories(["Aggregated Scope"]);
-    setSelectedSubCategories(["Aggregated Scope"]);
-    setSelectedActivities(["Aggregated Scope"]);
-    setCategoryDropdownOpen(false);
-  } else if (selectedCategories.includes("Aggregated Scope")) {
-    // When switching from "Aggregated Scope" to a specific category
-    // Reset all children to "Aggregated Scope"
-    setSelectedCategories([category]);
-    setSelectedSubCategories(["Aggregated Scope"]);
-    setSelectedActivities(["Aggregated Scope"]);
-  } else if (selectedCategories.includes(category)) {
-    // If removing a category
-    const newSelectedCategories = selectedCategories.filter((c) => c !== category);
-    if (newSelectedCategories.length === 0) {
-      // If no categories left, reset to "Aggregated Scope"
+      setScopeDropdownOpen(false);
+    } else if (selectedScopes.includes("Aggregated Scope")) {
+      // When switching from "Aggregated Scope" to a specific scope
+      // Reset all children to "Aggregated Scope"
+      setSelectedScopes([scope]);
       setSelectedCategories(["Aggregated Scope"]);
       setSelectedSubCategories(["Aggregated Scope"]);
       setSelectedActivities(["Aggregated Scope"]);
+    } else if (selectedScopes.includes(scope)) {
+      // If removing a scope
+      const newSelectedScopes = selectedScopes.filter((s) => s !== scope);
+      if (newSelectedScopes.length === 0) {
+        // If no scopes left, reset to "Aggregated Scope"
+        setSelectedScopes(["Aggregated Scope"]);
+        setSelectedCategories(["Aggregated Scope"]);
+        setSelectedSubCategories(["Aggregated Scope"]);
+        setSelectedActivities(["Aggregated Scope"]);
+      } else {
+        // Just update scopes without affecting children
+        setSelectedScopes(newSelectedScopes);
+      }
     } else {
-      // Just update categories
-      setSelectedCategories(newSelectedCategories);
-      
-      // Check if any current subcategories don't belong to the remaining categories
-      // This requires knowing the relationship between categories and subcategories
-      // For now, we'll reset subcategories to be safe
-      setSelectedSubCategories(["Aggregated Scope"]);
-      setSelectedActivities(["Aggregated Scope"]);
+      // Adding another scope - keep children as they are
+      setSelectedScopes([...selectedScopes, scope]);
     }
-  } else {
-    // Adding another category
-    setSelectedCategories([...selectedCategories, category]);
-    // No need to reset children since we're broadening the filter
-  }
-};
+  };
 
-// Handle subcategory selection
-const handleSubCategorySelection = (subCategory) => {
-  // Do nothing if the dropdown is disabled
-  if (isSubCategoryDropdownDisabled) return;
-  
-  if (subCategory === "Aggregated Scope") {
-    // Reset this dropdown and activities to "Aggregated Scope"
-    setSelectedSubCategories(["Aggregated Scope"]);
-    setSelectedActivities(["Aggregated Scope"]);
-    setSubCategoryDropdownOpen(false);
-  } else if (selectedSubCategories.includes("Aggregated Scope")) {
-    // When switching from "Aggregated Scope" to a specific subcategory
-    // Reset activities to "Aggregated Scope"
-    setSelectedSubCategories([subCategory]);
-    setSelectedActivities(["Aggregated Scope"]);
-  } else if (selectedSubCategories.includes(subCategory)) {
-    // If removing a subcategory
-    const newSelectedSubCategories = selectedSubCategories.filter((s) => s !== subCategory);
-    if (newSelectedSubCategories.length === 0) {
-      // If no subcategories left, reset to "Aggregated Scope"
+  // Handle category selection
+  const handleCategorySelection = (category) => {
+    // Do nothing if the dropdown is disabled
+    if (isCategoryDropdownDisabled) return;
+
+    if (category === "Aggregated Scope") {
+      // Reset this dropdown and all children to "Aggregated Scope"
+      setSelectedCategories(["Aggregated Scope"]);
       setSelectedSubCategories(["Aggregated Scope"]);
       setSelectedActivities(["Aggregated Scope"]);
+      setCategoryDropdownOpen(false);
+    } else if (selectedCategories.includes("Aggregated Scope")) {
+      // When switching from "Aggregated Scope" to a specific category
+      // Reset all children to "Aggregated Scope"
+      setSelectedCategories([category]);
+      setSelectedSubCategories(["Aggregated Scope"]);
+      setSelectedActivities(["Aggregated Scope"]);
+    } else if (selectedCategories.includes(category)) {
+      // If removing a category
+      const newSelectedCategories = selectedCategories.filter(
+        (c) => c !== category
+      );
+      if (newSelectedCategories.length === 0) {
+        // If no categories left, reset to "Aggregated Scope"
+        setSelectedCategories(["Aggregated Scope"]);
+        setSelectedSubCategories(["Aggregated Scope"]);
+        setSelectedActivities(["Aggregated Scope"]);
+      } else {
+        // Just update categories
+        setSelectedCategories(newSelectedCategories);
+
+        // Check if any current subcategories don't belong to the remaining categories
+        // This requires knowing the relationship between categories and subcategories
+        // For now, we'll reset subcategories to be safe
+        setSelectedSubCategories(["Aggregated Scope"]);
+        setSelectedActivities(["Aggregated Scope"]);
+      }
     } else {
-      // Just update subcategories
-      setSelectedSubCategories(newSelectedSubCategories);
-      
-      // Reset activities since the subcategory relationship changed
+      // Adding another category
+      setSelectedCategories([...selectedCategories, category]);
+      // No need to reset children since we're broadening the filter
+    }
+  };
+
+  // Handle subcategory selection
+  const handleSubCategorySelection = (subCategory) => {
+    // Do nothing if the dropdown is disabled
+    if (isSubCategoryDropdownDisabled) return;
+
+    if (subCategory === "Aggregated Scope") {
+      // Reset this dropdown and activities to "Aggregated Scope"
+      setSelectedSubCategories(["Aggregated Scope"]);
+      setSelectedActivities(["Aggregated Scope"]);
+      setSubCategoryDropdownOpen(false);
+    } else if (selectedSubCategories.includes("Aggregated Scope")) {
+      // When switching from "Aggregated Scope" to a specific subcategory
+      // Reset activities to "Aggregated Scope"
+      setSelectedSubCategories([subCategory]);
+      setSelectedActivities(["Aggregated Scope"]);
+    } else if (selectedSubCategories.includes(subCategory)) {
+      // If removing a subcategory
+      const newSelectedSubCategories = selectedSubCategories.filter(
+        (s) => s !== subCategory
+      );
+      if (newSelectedSubCategories.length === 0) {
+        // If no subcategories left, reset to "Aggregated Scope"
+        setSelectedSubCategories(["Aggregated Scope"]);
+        setSelectedActivities(["Aggregated Scope"]);
+      } else {
+        // Just update subcategories
+        setSelectedSubCategories(newSelectedSubCategories);
+
+        // Reset activities since the subcategory relationship changed
+        setSelectedActivities(["Aggregated Scope"]);
+      }
+    } else {
+      // Adding another subcategory
+      setSelectedSubCategories([...selectedSubCategories, subCategory]);
+      // Reset activities when a new subcategory is added
       setSelectedActivities(["Aggregated Scope"]);
     }
-  } else {
-    // Adding another subcategory
-    setSelectedSubCategories([...selectedSubCategories, subCategory]);
-    // Reset activities when a new subcategory is added
-    setSelectedActivities(["Aggregated Scope"]);
-  }
-};
+  };
 
   // Handle activity selection
   const handleActivitySelection = (activity) => {
     // Do nothing if the dropdown is disabled
     if (isActivityDropdownDisabled) return;
-    
+
     if (activity === "Aggregated Scope") {
       setSelectedActivities(["Aggregated Scope"]);
       setActivityDropdownOpen(false);
@@ -366,7 +524,10 @@ const handleSubCategorySelection = (subCategory) => {
       if (categoryRef.current && !categoryRef.current.contains(event.target)) {
         setCategoryDropdownOpen(false);
       }
-      if (subCategoryRef.current && !subCategoryRef.current.contains(event.target)) {
+      if (
+        subCategoryRef.current &&
+        !subCategoryRef.current.contains(event.target)
+      ) {
         setSubCategoryDropdownOpen(false);
       }
       if (activityRef.current && !activityRef.current.contains(event.target)) {
@@ -376,10 +537,10 @@ const handleSubCategorySelection = (subCategory) => {
         setIsMetricsDropdownOpen(false);
       }
     };
-    
-    document.addEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -389,183 +550,208 @@ const handleSubCategorySelection = (subCategory) => {
 
     // Build filter object for API call
     const filters = {};
-    
+
     // Only add scopes if not using aggregated
     if (!selectedScopes.includes("Aggregated Scope")) {
-      filters.scope = selectedScopes.map(scope => scope);
+      filters.scope = selectedScopes.map((scope) => scope);
     }
-    
+
     // Only add categories if not using aggregated
     if (!selectedCategories.includes("Aggregated Scope")) {
       filters.category = selectedCategories;
     }
-    
+
     // Only add subcategories if not using aggregated
     if (!selectedSubCategories.includes("Aggregated Scope")) {
       filters.sub_category = selectedSubCategories;
     }
-    
+
     // Only add activities if not using aggregated
     if (!selectedActivities.includes("Aggregated Scope")) {
       filters.activity = selectedActivities;
     }
-    
+
     // // Add net zero parameter
     // filters.include_net_zero = includeNetZero;
-    
+
     // // Add target year parameters
     // filters.target_year = extendedTargetYear;
     // filters.main_target_year = mainTargetYear;
-    
+
     // Add business metrics
     filters.metric = businessMetrics
-      .filter(m => m.selected)
-      .map(m => m.id)
-      .join(',');
-    
+      .filter((m) => m.selected)
+      .map((m) => m.id)
+      .join(",");
+
     // Fetch the graph data
     dispatch(fetchScenarioGraphData({ scenarioId, filters }));
   }, [
-    dispatch, 
-    scenarioId, 
-    selectedScopes, 
-    selectedCategories, 
-    selectedSubCategories, 
-    selectedActivities, 
-    businessMetrics
+    dispatch,
+    scenarioId,
+    selectedScopes,
+    selectedCategories,
+    selectedSubCategories,
+    selectedActivities,
+    businessMetrics,
   ]);
 
-// Extract unique activities from graph data 
-useEffect(() => {
-  if (!graphData || !graphData.yearly_data) return;
-  
-  // Extract unique scopes, categories, subcategories, and activities
-  const uniqueScopes = new Set(["Aggregated Scope"]);
-  const uniqueCategories = new Set(["Aggregated Scope"]);
-  const uniqueSubCategories = new Set(["Aggregated Scope"]);
-  const uniqueActivities = new Set(["Aggregated Scope"]);
-  
-  // Go through each year's data
-  Object.keys(graphData.yearly_data).forEach(year => {
-    const yearActivities = graphData.yearly_data[year];
-    
-    yearActivities.forEach(activity => {
-      // Extract each field and add to the corresponding Set
-      if (activity.scope) uniqueScopes.add(activity.scope);
-      if (activity.category) uniqueCategories.add(activity.category);
-      if (activity.sub_category) uniqueSubCategories.add(activity.sub_category);
-      if (activity.activity_name) uniqueActivities.add(activity.activity_name);
-    });
-  });
-  
-  // Make sure we always include the standard scopes
-  const allScopes = new Set([...uniqueScopes, "Scope-1", "Scope-2", "Scope-3"]);
-  
-  // Only update scope options if we're not in the middle of a filter
-  if (!isScopeDropdownOpen) {
-    setScopeOptions(Array.from(allScopes));
-  }
-  
-  // Filter activities based on selected filters
-  const filteredActivities = new Set(["Aggregated Scope"]);
-  
-  Object.values(graphData.yearly_data).forEach(yearActivities => {
-    yearActivities.forEach(activity => {
-      const matchesScope = selectedScopes.includes("Aggregated Scope") || 
-        selectedScopes.includes(activity.scope);
-      
-      const matchesCategory = selectedCategories.includes("Aggregated Scope") || 
-        selectedCategories.includes(activity.category);
-      
-      const matchesSubCategory = selectedSubCategories.includes("Aggregated Scope") || 
-        selectedSubCategories.includes(activity.sub_category);
-      
-      // Only add if all filters match
-      if (matchesScope && matchesCategory && matchesSubCategory) {
-        filteredActivities.add(activity.activity_name);
-      }
-    });
-  });
-  
-  // Update activity options
-  setActivityOptions(Array.from(filteredActivities));
-  
-}, [graphData, selectedScopes, selectedCategories, selectedSubCategories]);
+  // Extract unique activities from graph data
+  useEffect(() => {
+    if (!graphData || !graphData.yearly_data) return;
 
-// When updating category options based on scope selection
-useEffect(() => {
-  // Generate new category options based on selected scopes
-  const newCategoryOptions = generateCategoryOptions(selectedScopes);
-  setCategoryOptions(newCategoryOptions);
-  
-  // If a scope is selected, filter out any category selections that are no longer valid
-  if (!selectedScopes.includes("Aggregated Scope")) {
-    // Filter out category selections that aren't in the new options
-    const validCategories = selectedCategories.filter(
-      category => category === "Aggregated Scope" || newCategoryOptions.includes(category)
-    );
-    
-    // If we removed some selections and now have none, reset to "Aggregated Scope"
-    if (validCategories.length === 0 || validCategories.length < selectedCategories.length) {
+    // Extract unique scopes, categories, subcategories, and activities
+    const uniqueScopes = new Set(["Aggregated Scope"]);
+    const uniqueCategories = new Set(["Aggregated Scope"]);
+    const uniqueSubCategories = new Set(["Aggregated Scope"]);
+    const uniqueActivities = new Set(["Aggregated Scope"]);
+
+    // Go through each year's data
+    Object.keys(graphData.yearly_data).forEach((year) => {
+      const yearActivities = graphData.yearly_data[year];
+
+      yearActivities.forEach((activity) => {
+        // Extract each field and add to the corresponding Set
+        if (activity.scope) uniqueScopes.add(activity.scope);
+        if (activity.category) uniqueCategories.add(activity.category);
+        if (activity.sub_category)
+          uniqueSubCategories.add(activity.sub_category);
+        if (activity.activity_name)
+          uniqueActivities.add(activity.activity_name);
+      });
+    });
+
+    // Make sure we always include the standard scopes
+    const allScopes = new Set([
+      ...uniqueScopes,
+      "Scope-1",
+      "Scope-2",
+      "Scope-3",
+    ]);
+
+    // Only update scope options if we're not in the middle of a filter
+    if (!isScopeDropdownOpen) {
+      setScopeOptions(Array.from(allScopes));
+    }
+
+    // Filter activities based on selected filters
+    const filteredActivities = new Set(["Aggregated Scope"]);
+
+    Object.values(graphData.yearly_data).forEach((yearActivities) => {
+      yearActivities.forEach((activity) => {
+        const matchesScope =
+          selectedScopes.includes("Aggregated Scope") ||
+          selectedScopes.includes(activity.scope);
+
+        const matchesCategory =
+          selectedCategories.includes("Aggregated Scope") ||
+          selectedCategories.includes(activity.category);
+
+        const matchesSubCategory =
+          selectedSubCategories.includes("Aggregated Scope") ||
+          selectedSubCategories.includes(activity.sub_category);
+
+        // Only add if all filters match
+        if (matchesScope && matchesCategory && matchesSubCategory) {
+          filteredActivities.add(activity.activity_name);
+        }
+      });
+    });
+
+    // Update activity options
+    setActivityOptions(Array.from(filteredActivities));
+  }, [graphData, selectedScopes, selectedCategories, selectedSubCategories]);
+
+  // When updating category options based on scope selection
+  useEffect(() => {
+    // Generate new category options based on selected scopes
+    const newCategoryOptions = generateCategoryOptions(selectedScopes);
+    setCategoryOptions(newCategoryOptions);
+
+    // If a scope is selected, filter out any category selections that are no longer valid
+    if (!selectedScopes.includes("Aggregated Scope")) {
+      // Filter out category selections that aren't in the new options
+      const validCategories = selectedCategories.filter(
+        (category) =>
+          category === "Aggregated Scope" ||
+          newCategoryOptions.includes(category)
+      );
+
+      // If we removed some selections and now have none, reset to "Aggregated Scope"
+      if (
+        validCategories.length === 0 ||
+        validCategories.length < selectedCategories.length
+      ) {
+        setSelectedCategories(["Aggregated Scope"]);
+        setSelectedSubCategories(["Aggregated Scope"]);
+        setSelectedActivities(["Aggregated Scope"]);
+      }
+    } else {
+      // If "Aggregated Scope" is selected in scopes, reset child dropdowns
       setSelectedCategories(["Aggregated Scope"]);
       setSelectedSubCategories(["Aggregated Scope"]);
       setSelectedActivities(["Aggregated Scope"]);
     }
-  } else {
-    // If "Aggregated Scope" is selected in scopes, reset child dropdowns
-    setSelectedCategories(["Aggregated Scope"]);
-    setSelectedSubCategories(["Aggregated Scope"]);
-    setSelectedActivities(["Aggregated Scope"]);
-  }
-}, [selectedScopes]);
+  }, [selectedScopes]);
 
-// When updating subcategory options based on category selection
-useEffect(() => {
-  // Generate new subcategory options based on selected categories
-  const newSubCategoryOptions = generateSubCategoryOptions(selectedCategories);
-  setSubCategoryOptions(newSubCategoryOptions);
-  
-  // If specific categories are selected, filter out any subcategory selections that are no longer valid
-  if (!selectedCategories.includes("Aggregated Scope")) {
-    // Filter out subcategory selections that aren't in the new options
-    const validSubCategories = selectedSubCategories.filter(
-      subCategory => subCategory === "Aggregated Scope" || newSubCategoryOptions.includes(subCategory)
-    );
-    
-    // If we removed some selections and now have none, reset to "Aggregated Scope"
-    if (validSubCategories.length === 0 || validSubCategories.length < selectedSubCategories.length) {
+  // When updating subcategory options based on category selection
+  useEffect(() => {
+    // Generate new subcategory options based on selected categories
+    const newSubCategoryOptions =
+      generateSubCategoryOptions(selectedCategories);
+    setSubCategoryOptions(newSubCategoryOptions);
+
+    // If specific categories are selected, filter out any subcategory selections that are no longer valid
+    if (!selectedCategories.includes("Aggregated Scope")) {
+      // Filter out subcategory selections that aren't in the new options
+      const validSubCategories = selectedSubCategories.filter(
+        (subCategory) =>
+          subCategory === "Aggregated Scope" ||
+          newSubCategoryOptions.includes(subCategory)
+      );
+
+      // If we removed some selections and now have none, reset to "Aggregated Scope"
+      if (
+        validSubCategories.length === 0 ||
+        validSubCategories.length < selectedSubCategories.length
+      ) {
+        setSelectedSubCategories(["Aggregated Scope"]);
+        setSelectedActivities(["Aggregated Scope"]);
+      }
+    } else {
+      // If "Aggregated Scope" is selected in categories, reset child dropdowns
       setSelectedSubCategories(["Aggregated Scope"]);
       setSelectedActivities(["Aggregated Scope"]);
     }
-  } else {
-    // If "Aggregated Scope" is selected in categories, reset child dropdowns
-    setSelectedSubCategories(["Aggregated Scope"]);
-    setSelectedActivities(["Aggregated Scope"]);
-  }
-}, [selectedCategories]);
+  }, [selectedCategories]);
 
-// When updating activity options based on subcategory selection
-useEffect(() => {
-  // Generate new activity options (this would be filtered based on the API data)
-  const newActivityOptions = generateActivityOptions(selectedSubCategories);
-  setActivityOptions(newActivityOptions);
-  
-  // If specific subcategories are selected, filter out any activity selections that are no longer valid
-  if (!selectedSubCategories.includes("Aggregated Scope")) {
-    // Filter out activity selections that aren't in the new options
-    const validActivities = selectedActivities.filter(
-      activity => activity === "Aggregated Scope" || newActivityOptions.includes(activity)
-    );
-    
-    // If we removed some selections and now have none, reset to "Aggregated Scope"
-    if (validActivities.length === 0 || validActivities.length < selectedActivities.length) {
+  // When updating activity options based on subcategory selection
+  useEffect(() => {
+    // Generate new activity options (this would be filtered based on the API data)
+    const newActivityOptions = generateActivityOptions(selectedSubCategories);
+    setActivityOptions(newActivityOptions);
+
+    // If specific subcategories are selected, filter out any activity selections that are no longer valid
+    if (!selectedSubCategories.includes("Aggregated Scope")) {
+      // Filter out activity selections that aren't in the new options
+      const validActivities = selectedActivities.filter(
+        (activity) =>
+          activity === "Aggregated Scope" ||
+          newActivityOptions.includes(activity)
+      );
+
+      // If we removed some selections and now have none, reset to "Aggregated Scope"
+      if (
+        validActivities.length === 0 ||
+        validActivities.length < selectedActivities.length
+      ) {
+        setSelectedActivities(["Aggregated Scope"]);
+      }
+    } else {
+      // If "Aggregated Scope" is selected in subcategories, reset activities
       setSelectedActivities(["Aggregated Scope"]);
     }
-  } else {
-    // If "Aggregated Scope" is selected in subcategories, reset activities
-    setSelectedActivities(["Aggregated Scope"]);
-  }
-}, [selectedSubCategories]);
+  }, [selectedSubCategories]);
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 min-h-screen">
@@ -633,8 +819,8 @@ useEffect(() => {
               <button
                 onClick={toggleCategoryDropdown}
                 className={`flex items-center font-medium focus:outline-none ${
-                  isCategoryDropdownDisabled 
-                    ? "text-gray-400 cursor-not-allowed" 
+                  isCategoryDropdownDisabled
+                    ? "text-gray-400 cursor-not-allowed"
                     : "text-gray-800 hover:text-gray-900 cursor-pointer"
                 }`}
               >
@@ -643,7 +829,13 @@ useEffect(() => {
                     ? "Aggregated Scope"
                     : selectedCategories.join(", ")}
                 </span>
-                <FiChevronDown className={`ml-1 h-4 w-4 ${isCategoryDropdownDisabled ? "text-gray-300" : "text-gray-500"}`} />
+                <FiChevronDown
+                  className={`ml-1 h-4 w-4 ${
+                    isCategoryDropdownDisabled
+                      ? "text-gray-300"
+                      : "text-gray-500"
+                  }`}
+                />
               </button>
 
               {isCategoryDropdownOpen && !isCategoryDropdownDisabled && (
@@ -689,8 +881,8 @@ useEffect(() => {
               <button
                 onClick={toggleSubCategoryDropdown}
                 className={`flex items-center font-medium focus:outline-none ${
-                  isSubCategoryDropdownDisabled 
-                    ? "text-gray-400 cursor-not-allowed" 
+                  isSubCategoryDropdownDisabled
+                    ? "text-gray-400 cursor-not-allowed"
                     : "text-gray-800 hover:text-gray-900 cursor-pointer"
                 }`}
               >
@@ -699,7 +891,13 @@ useEffect(() => {
                     ? "Aggregated Scope"
                     : selectedSubCategories.join(", ")}
                 </span>
-                <FiChevronDown className={`ml-1 h-4 w-4 ${isSubCategoryDropdownDisabled ? "text-gray-300" : "text-gray-500"}`} />
+                <FiChevronDown
+                  className={`ml-1 h-4 w-4 ${
+                    isSubCategoryDropdownDisabled
+                      ? "text-gray-300"
+                      : "text-gray-500"
+                  }`}
+                />
               </button>
 
               {isSubCategoryDropdownOpen && !isSubCategoryDropdownDisabled && (
@@ -743,8 +941,8 @@ useEffect(() => {
               <button
                 onClick={toggleActivityDropdown}
                 className={`flex items-center font-medium focus:outline-none ${
-                  isActivityDropdownDisabled 
-                    ? "text-gray-400 cursor-not-allowed" 
+                  isActivityDropdownDisabled
+                    ? "text-gray-400 cursor-not-allowed"
                     : "text-gray-800 hover:text-gray-900 cursor-pointer"
                 }`}
               >
@@ -753,7 +951,13 @@ useEffect(() => {
                     ? "Aggregated Scope"
                     : selectedActivities.join(", ")}
                 </span>
-                <FiChevronDown className={`ml-1 h-4 w-4 ${isActivityDropdownDisabled ? "text-gray-300" : "text-gray-500"}`} />
+                <FiChevronDown
+                  className={`ml-1 h-4 w-4 ${
+                    isActivityDropdownDisabled
+                      ? "text-gray-300"
+                      : "text-gray-500"
+                  }`}
+                />
               </button>
 
               {isActivityDropdownOpen && !isActivityDropdownDisabled && (
@@ -895,18 +1099,41 @@ useEffect(() => {
                 : ` (${selectedScopes.join(", ")})`}
             </span>
           </h3>
-          <button
-            onClick={handleDownloadResults}
-            disabled={!graphData}
-            className={`inline-flex items-center px-3 py-2 border ${
-              !graphData 
-                ? "border-gray-200 text-gray-400 cursor-not-allowed" 
-                : "border-gray-300 shadow-sm text-gray-700 hover:bg-gray-50"
-            } rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
-          >
-            Download results
-            <FiDownload className="ml-2 h-4 w-4" />
-          </button>
+          <div className="relative">
+            <button
+              ref={downloadButtonRef}
+              onClick={handleDownloadResults}
+              disabled={!graphData || loading}
+              className={`inline-flex items-center px-3 py-2 border ${
+                !graphData || loading
+                  ? "border-gray-200 text-gray-400 cursor-not-allowed"
+                  : "border-gray-300 shadow-sm text-gray-700 hover:bg-gray-50"
+              } rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+            >
+              Download
+              <FiDownload className="ml-2 h-4 w-4" />
+            </button>
+
+            {/* Download options dropdown */}
+            {showDownloadOptions && !loading && graphData && (
+              <div className="absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded shadow-md z-20">
+                <div className="py-1">
+                  <button
+                    onClick={handleDownloadCSV}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
+                  >
+                    Download as CSV
+                  </button>
+                  <button
+                    onClick={handleDownloadPNG}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
+                  >
+                    Download as PNG
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="px-4 py-8 relative">
@@ -916,39 +1143,49 @@ useEffect(() => {
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
             </div>
           )}
-          
+
           {/* Error state */}
           {error && !loading && (
             <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-4">
               <p className="text-red-700">{error}</p>
-              <button 
+              <button
                 onClick={() => {
                   // Retry fetching
                   if (scenarioId) {
-                    dispatch(fetchScenarioGraphData({
-                      scenarioId,
-                      filters: {
-                        scope: !selectedScopes.includes("Aggregated Scope") 
-                          ? selectedScopes.map(scope => scope.toLowerCase().replace(" ", ""))
-                          : undefined,
-                        category: !selectedCategories.includes("Aggregated Scope")
-                          ? selectedCategories
-                          : undefined,
-                        sub_category: !selectedSubCategories.includes("Aggregated Scope")
-                          ? selectedSubCategories
-                          : undefined,
-                        activity: !selectedActivities.includes("Aggregated Scope")
-                          ? selectedActivities
-                          : undefined,
-                        include_net_zero: includeNetZero,
-                        target_year: extendedTargetYear,
-                        main_target_year: mainTargetYear,
-                        metrics: businessMetrics
-                          .filter(m => m.selected)
-                          .map(m => m.id)
-                          .join(',')
-                      }
-                    }));
+                    dispatch(
+                      fetchScenarioGraphData({
+                        scenarioId,
+                        filters: {
+                          scope: !selectedScopes.includes("Aggregated Scope")
+                            ? selectedScopes.map((scope) =>
+                                scope.toLowerCase().replace(" ", "")
+                              )
+                            : undefined,
+                          category: !selectedCategories.includes(
+                            "Aggregated Scope"
+                          )
+                            ? selectedCategories
+                            : undefined,
+                          sub_category: !selectedSubCategories.includes(
+                            "Aggregated Scope"
+                          )
+                            ? selectedSubCategories
+                            : undefined,
+                          activity: !selectedActivities.includes(
+                            "Aggregated Scope"
+                          )
+                            ? selectedActivities
+                            : undefined,
+                          include_net_zero: includeNetZero,
+                          target_year: extendedTargetYear,
+                          main_target_year: mainTargetYear,
+                          metrics: businessMetrics
+                            .filter((m) => m.selected)
+                            .map((m) => m.id)
+                            .join(","),
+                        },
+                      })
+                    );
                   }
                 }}
                 className="mt-2 px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200"
@@ -963,11 +1200,12 @@ useEffect(() => {
             <div className="flex flex-col items-center justify-center h-80 bg-gray-50 rounded-md border border-gray-200">
               <FiInfo className="h-12 w-12 text-gray-400 mb-4" />
               <p className="text-gray-500 text-center max-w-md">
-                No graph data available. Please adjust your filter criteria or check if this scenario has emission data.
+                No graph data available. Please adjust your filter criteria or
+                check if this scenario has emission data.
               </p>
             </div>
           )}
-          
+
           {/* Graph component */}
           {!loading && !error && graphData && (
             <EmissionProjectionGraph
@@ -977,7 +1215,11 @@ useEffect(() => {
               baseYear={baseYear}
               targetYear={extendedTargetYear}
               mainTargetYear={mainTargetYear}
-              selectedScope={selectedScopes.includes("Aggregated Scope") ? "scope1" : selectedScopes[0]?.toLowerCase().replace(" ", "")}
+              selectedScope={
+                selectedScopes.includes("Aggregated Scope")
+                  ? "scope1"
+                  : selectedScopes[0]?.toLowerCase().replace(" ", "")
+              }
               selectedBusinessMetrics={businessMetrics
                 .filter((m) => m.selected)
                 .map((m) => m.id)}

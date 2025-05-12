@@ -72,7 +72,7 @@ const EmissionsTrendChart = ({ data, selectedScope }) => {
             legend: 'Emissions (in tCO₂e)',
             legendOffset: -55,
             legendPosition: 'middle',
-            format: value => `${value}M`
+            format: value => `${value}`
           }}
           enableGridX={false}
           colors={{ scheme: 'paired' }}

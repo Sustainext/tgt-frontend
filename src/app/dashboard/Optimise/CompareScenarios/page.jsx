@@ -1,93 +1,86 @@
 'use client'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ScenarioSearch from "./ScenarioSearch";
 import ComparisonView from "./ComparisonView";
 import EmptyState from "./EmptyState";
 import LoadingSpinner from "./LoadingSpinner";
 import NoScenarioSelected from "./NoScenarioSelected";
+import useComparisonScenarios from "../../../../lib/redux/customHooks/useComparisonScenarios";
 
+/**
+ * Main Scenario Comparison Page
+ * Allows users to select and compare different scenarios with visualizations
+ */
 const CompareScenarios = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  // Local state
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedScenarios, setSelectedScenarios] = useState([]);
-  const [allScenarios, setAllScenarios] = useState([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  
+  // Set up filters with proper structure for multi-select
+  const [filters, setFilters] = useState({
+    scope: ["Aggregated Scope"],
+    category: ["Aggregated Scope"],
+    subCategory: ["Aggregated Scope"],
+    activity: ["Aggregated Scope"],
+    metrics: [],
+    scenarioMetrics: {} // Store metrics specific to each scenario
+  });
+  
+  // This flag will prevent initial API calls when the component mounts
+  const [shouldFetchData, setShouldFetchData] = useState(false);
+  
+  // Use custom hook for scenario data
+  const {
+    allScenarios,
+    selectedScenarios,
+    comparisonData,
+    isLoading,
+    error,
+    fetchComparisonData,
+    handleDownloadResults,
+    handleScenarioSelect
+  } = useComparisonScenarios();
 
-  // Fetch scenarios
+  // Memoize the handleScenarioSelect to avoid recreating it on every render
+  const onScenarioSelect = useCallback((scenarioId) => {
+    handleScenarioSelect(scenarioId);
+    // Enable data fetching when a scenario is selected
+    setShouldFetchData(true);
+  }, [handleScenarioSelect]);
+
+  // Fetch comparison data when filters or selectedScenarios change
   useEffect(() => {
-    fetchScenarios();
+    // Only fetch if we have selected scenarios and shouldFetchData is true
+    if (selectedScenarios.length > 0 && shouldFetchData) {
+      console.log("Fetching comparison data with filters:", filters);
+      fetchComparisonData(selectedScenarios, filters);
+    }
+  }, [selectedScenarios, filters, fetchComparisonData, shouldFetchData]);
+
+  // Handle filter changes from ComparisonView
+  const handleFilterChange = useCallback((newFilters) => {
+    console.log("Filter change detected:", newFilters);
+    
+    // Update filters, maintaining arrays for multi-select
+    setFilters(prev => {
+      const updated = { ...prev };
+      
+      // Process each filter type
+      Object.entries(newFilters).forEach(([key, value]) => {
+        // Ensure value is an array
+        updated[key] = Array.isArray(value) ? value : [value];
+      });
+      console.log('updated filters',updated)
+      return updated;
+    });
   }, []);
 
-  const fetchScenarios = () => {
-    setIsLoading(true);
-    // API call simulation with mock data
-    setTimeout(() => {
-      const mockScenarios = [
-        {
-          id: 1,
-          name: "Scenario 1",
-          description: "Continue with current policies and practices with minimal changes to operations",
-          baseYear: 2024,
-          targetYear: 2035,
-          scope1Emissions: 2500,
-          scope2Emissions: 3800,
-          scope3Emissions: 12000,
-          measures: [
-            "Basic energy efficiency measures",
-            "Standard building maintenance",
-            "Regular equipment upgrades",
-            "Minimal renewable energy adoption"
-          ]
-        },
-        {
-          id: 2,
-          name: "Scenario 2",
-          description: "Gradual implementation of sustainability measures with balanced investment",
-          baseYear: 2024,
-          targetYear: 2035,
-          scope1Emissions: 2500,
-          scope2Emissions: 3800,
-          scope3Emissions: 12000,
-          measures: [
-            "30% renewable energy by 2030",
-            "Electric vehicle fleet transition",
-            "Supply chain optimization",
-            "Smart building technology implementation",
-            "Employee commute reduction program"
-          ]
-        },
-        {
-          id: 3,
-          name: "Scenario 3",
-          description: "Aggressive sustainability strategy aiming for complete carbon neutrality",
-          baseYear: 2024,
-          targetYear: 2035,
-          scope1Emissions: 2500,
-          scope2Emissions: 3800,
-          scope3Emissions: 12000,
-          measures: [
-            "100% renewable energy by 2030",
-            "Complete electrification of fleet",
-            "Carbon-neutral supply chain requirement",
-            "Zero-waste operations",
-            "Carbon removal investments",
-            "Sustainable materials in all products"
-          ]
-        }
-      ];
-      setAllScenarios(mockScenarios);
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  // Handle scenario selection
-  const handleScenarioSelect = (scenarioId) => {
-    if (selectedScenarios.includes(scenarioId)) {
-      setSelectedScenarios(selectedScenarios.filter(id => id !== scenarioId));
-    } else {
-      setSelectedScenarios([...selectedScenarios, scenarioId]);
+  // Handle download request
+  const handleDownload = useCallback((format) => {
+    if (handleDownloadResults) {
+      handleDownloadResults(filters, format);
     }
-  };
+  }, [filters, handleDownloadResults]);
 
   return (
     <div className="bg-white min-h-screen">
@@ -104,8 +97,8 @@ const CompareScenarios = () => {
           </div>
         </div>
         
-        {/* Search Component */}
-        {isLoading ? (
+        {/* Main content */}
+        {isLoading && allScenarios.length === 0 ? (
           <LoadingSpinner />
         ) : allScenarios.length === 0 ? (
           <EmptyState setIsCreateModalOpen={setIsCreateModalOpen} />
@@ -116,20 +109,30 @@ const CompareScenarios = () => {
               setSearchTerm={setSearchTerm}
               scenarios={allScenarios}
               selectedScenarios={selectedScenarios}
-              handleScenarioSelect={handleScenarioSelect}
+              handleScenarioSelect={onScenarioSelect}
             />
             
             {/* Show message if no scenarios selected */}
-            {selectedScenarios.length === 0 && (
+            {selectedScenarios.length === 0 ? (
               <NoScenarioSelected />
-            )}
-            
-            {/* Comparison View when scenarios are selected */}
-            {selectedScenarios.length > 0 && (
+            ) : (
               <ComparisonView 
                 selectedScenarios={selectedScenarios}
                 allScenarios={allScenarios}
+                comparisonData={comparisonData}
+                isLoading={isLoading && selectedScenarios.length > 0}
+                filters={filters}
+                onFilterChange={handleFilterChange}
+                onDownloadResults={handleDownload}
               />
+            )}
+            
+            {/* Show error message if there is one */}
+            {error && (
+              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md text-red-700">
+                <p className="font-medium">Error</p>
+                <p className="text-sm">{error}</p>
+              </div>
             )}
           </>
         )}

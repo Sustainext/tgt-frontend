@@ -1,59 +1,62 @@
 // FilterSection.jsx
 import React, { useState, useEffect } from "react";
-import { FiChevronDown, FiX } from "react-icons/fi";
-import ScopeDropdown from "./ScopeDropdown";
+import FilterDropdown from "./FilterDropdown";
 import MetricsSelector from "./MetricsSelector";
 
+/**
+ * Filter section component for scenario comparison
+ * 
+ * @param {Object} props Component props
+ * @param {Array} props.selectedScenarios IDs of selected scenarios
+ * @param {Array} props.allScenarios All available scenarios
+ * @param {Object} props.filters Current filter values
+ * @param {Function} props.onFilterChange Callback for filter changes
+ * @param {Function} props.onScenarioSettingsChange Callback for scenario settings changes
+ * @param {Array} props.scopeOptions Available scope options
+ * @param {Array} props.categoryOptions Available category options
+ * @param {Array} props.subCategoryOptions Available subcategory options
+ * @param {Array} props.activityOptions Available activity options
+ */
 const FilterSection = ({ 
-  selectedScenarios,
-  allScenarios,
-  selectedScope,
-  setSelectedScope,
-  selectedCategory,
-  setSelectedCategory,
-  selectedSubCategory,
-  setSelectedSubCategory,
-  selectedActivity,
-  setSelectedActivity,
-  
-  // Replace with callback to parent
-  onScenarioSettingsChange
+  selectedScenarios = [],
+  allScenarios = [],
+  filters = {},
+  onFilterChange,
+  onScenarioSettingsChange,
+  scopeOptions = ["Aggregated Scope"],
+  categoryOptions = ["Aggregated Scope"],
+  subCategoryOptions = ["Aggregated Scope"],
+  activityOptions = ["Aggregated Scope"]
 }) => {
-  // Create local state for scenario-specific settings including metrics
+  // Create local state for scenario-specific settings (excluding metrics)
   const [scenarioSettings, setScenarioSettings] = useState({});
-
-  // Default business metrics template
-  const defaultMetrics = [
-    { id: "fte", name: "FTE", selected: true },
-    { id: "area", name: "Area", selected: true },
-    { id: "production_volume", name: "Production Volume", selected: true },
-    { id: "revenue", name: "Revenue", selected: false },
-    { id: "employees", name: "Employees", selected: false }
-  ];
 
   // Initialize settings for each scenario when selectedScenarios changes
   useEffect(() => {
     const initialSettings = {};
-    
+
     selectedScenarios.forEach(scenarioId => {
       const scenario = allScenarios.find(s => s.id === scenarioId);
       if (!scenario) return;
-      
-      // If we don't have settings for this scenario yet, initialize them
+
       if (!scenarioSettings[scenarioId]) {
         initialSettings[scenarioId] = {
           includeNetZero: true,
-          targetYear: scenario.targetYear || 2035,
-          metrics: [...defaultMetrics] // Clone the default metrics
+          targetYear: scenario.targetYear || 2035
         };
       } else {
-        // Keep existing settings
-        initialSettings[scenarioId] = scenarioSettings[scenarioId];
+        initialSettings[scenarioId] = { ...scenarioSettings[scenarioId] };
       }
     });
-    
-    setScenarioSettings(initialSettings);
-  }, [selectedScenarios]);
+
+    if (Object.keys(initialSettings).length > 0) {
+      setScenarioSettings(initialSettings);
+
+      if (onScenarioSettingsChange) {
+        onScenarioSettingsChange(initialSettings);
+      }
+    }
+  }, [selectedScenarios, allScenarios]);
 
   // Update a specific setting for a scenario
   const updateScenarioSetting = (scenarioId, key, value) => {
@@ -64,19 +67,80 @@ const FilterSection = ({
         [key]: value
       }
     };
-    
+
     setScenarioSettings(updatedSettings);
-    
-    // Notify parent component of changes
+
     if (onScenarioSettingsChange) {
       onScenarioSettingsChange(updatedSettings);
     }
   };
-  
-  // Update metrics for a specific scenario
-  const updateScenarioMetrics = (scenarioId, updatedMetrics) => {
-    updateScenarioSetting(scenarioId, 'metrics', updatedMetrics);
+
+  // Handle filter changes
+  const handleFilterChange = (filterType, value) => {
+    if (!onFilterChange) return;
+
+    const arrayValue = Array.isArray(value) ? value : [value];
+
+    switch (filterType) {
+      case 'scope':
+        if (arrayValue.includes("Aggregated Scope")) {
+          onFilterChange({ 
+            scope: arrayValue, 
+            category: ["Aggregated Scope"],
+            subCategory: ["Aggregated Scope"],
+            activity: ["Aggregated Scope"] 
+          });
+        } else {
+          onFilterChange({ scope: arrayValue });
+        }
+        break;
+
+      case 'category':
+        if (arrayValue.includes("Aggregated Scope")) {
+          onFilterChange({ 
+            category: arrayValue,
+            subCategory: ["Aggregated Scope"],
+            activity: ["Aggregated Scope"] 
+          });
+        } else {
+          onFilterChange({ category: arrayValue });
+        }
+        break;
+
+      case 'subCategory':
+        if (arrayValue.includes("Aggregated Scope")) {
+          onFilterChange({ 
+            subCategory: arrayValue,
+            activity: ["Aggregated Scope"] 
+          });
+        } else {
+          onFilterChange({ subCategory: arrayValue });
+        }
+        break;
+
+      case 'activity':
+        onFilterChange({ activity: arrayValue });
+        break;
+
+      default:
+        console.warn(`Unknown filter type: ${filterType}`);
+    }
   };
+
+  const getFilterValue = (key, defaultValue = ["Aggregated Scope"]) => {
+    const value = filters[key];
+    if (!value) return defaultValue;
+    return Array.isArray(value) ? value : [value];
+  };
+
+  const currentScope = getFilterValue("scope");
+  const currentCategory = getFilterValue("category");
+  const currentSubCategory = getFilterValue("subCategory");
+  const currentActivity = getFilterValue("activity");
+
+  const isCategoryDisabled = currentScope.includes("Aggregated Scope");
+  const isSubCategoryDisabled = isCategoryDisabled || currentCategory.includes("Aggregated Scope");
+  const isActivityDisabled = isSubCategoryDisabled || currentSubCategory.includes("Aggregated Scope");
 
   return (
     <div className="border-b border-gray-200 p-6">
@@ -85,104 +149,113 @@ const FilterSection = ({
       </h2>
 
       <div className="border border-gray-100 rounded-md p-3">
-      
-      {/* Scopes and Categories Filters - Horizontal Layout */}
-      <div className="flex flex-wrap items-center justify-between w-full px-3 py-2 text-sm gap-4 mb-6">
-        <ScopeDropdown 
-          label="Scope:"
-          selected={selectedScope}
-          setSelected={setSelectedScope}
-          options={["Aggregated Scope", "Scope 1", "Scope 2", "Scope 3"]}
-          multiSelect={false}
-        />
-        
-        <ScopeDropdown 
-          label="Category:"
-          selected={selectedCategory}
-          setSelected={setSelectedCategory}
-          options={["Aggregated Scope", "Mobile Combustion", "Stationary Combustion", "Fugitive Emissions"]}
-          multiSelect={false}
-        />
-        
-        <ScopeDropdown 
-          label="Sub Category:"
-          selected={selectedSubCategory}
-          setSelected={setSelectedSubCategory}
-          options={["Aggregated Scope", "Fuel", "Rail Freight", "Refrigerants"]}
-          multiSelect={false}
-        />
-        
-        <ScopeDropdown 
-          label="Activity:"
-          selected={selectedActivity}
-          setSelected={setSelectedActivity}
-          options={["Aggregated Scope", "Diesel Combustion", "Natural Gas", "Electricity"]}
-          multiSelect={false}
-        />
-      </div>
 
-      {/* Metrics and settings for each scenario */}
-      {selectedScenarios.map((scenarioId) => {
-        const scenario = allScenarios.find(s => s.id === scenarioId);
-        if (!scenario) return null;
-        
-        // Get settings for this scenario
-        const settings = scenarioSettings[scenarioId] || {
-          includeNetZero: true,
-          targetYear: scenario.targetYear || 2035,
-          metrics: []
-        };
-        
-        return (
-          <div key={scenarioId} className="grid grid-cols-4 gap-4 mb-4">
-            
-            <MetricsSelector 
-              scenario={scenario}
-              scenarioMetrics={settings.metrics || []}
-              onMetricsChange={(updatedMetrics) => updateScenarioMetrics(scenarioId, updatedMetrics)}
-            />
+        {/* Filters */}
+        <div className="flex flex-wrap items-center justify-between w-full px-3 py-2 text-sm gap-4 mb-6">
+          <FilterDropdown 
+            label="Scope:"
+            selected={currentScope}
+            setSelected={(value) => handleFilterChange('scope', value)}
+            options={scopeOptions}
+            defaultLabel="All Scopes"
+            disabled={false}
+          />
+          <FilterDropdown 
+            label="Category:"
+            selected={currentCategory}
+            setSelected={(value) => handleFilterChange('category', value)}
+            options={categoryOptions}
+            defaultLabel="All Categories"
+            disabled={isCategoryDisabled}
+          />
+          <FilterDropdown 
+            label="Sub Category:"
+            selected={currentSubCategory}
+            setSelected={(value) => handleFilterChange('subCategory', value)}
+            options={subCategoryOptions}
+            defaultLabel="All Sub-Categories"
+            disabled={isSubCategoryDisabled}
+          />
+          <FilterDropdown 
+            label="Activity:"
+            selected={currentActivity}
+            setSelected={(value) => handleFilterChange('activity', value)}
+            options={activityOptions}
+            defaultLabel="All Activities"
+            disabled={isActivityDisabled}
+          />
+        </div>
 
-            <div className="flex items-center">
-              <input
-                id={`include-net-zero-${scenarioId}`}
-                type="checkbox"
-                checked={settings.includeNetZero}
-                onChange={() => updateScenarioSetting(
-                  scenarioId, 
-                  'includeNetZero', 
-                  !settings.includeNetZero
-                )}
-                className="h-4 w-4 green-checkbox border-gray-300 rounded focus:ring-blue-500"
+        {/* Scenario-specific metrics and settings */}
+        {selectedScenarios.map((scenarioId) => {
+          const scenario = allScenarios.find(s => s.id === scenarioId);
+          if (!scenario) return null;
+
+          const settings = scenarioSettings[scenarioId] || {
+            includeNetZero: true,
+            targetYear: scenario.targetYear || 2035
+          };
+
+          const scenarioMetrics = filters.scenarioMetrics?.[scenarioId] || [];
+
+          return (
+            <div key={scenarioId} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+              <MetricsSelector 
+                scenario={scenario}
+                scenarioMetrics={scenarioMetrics}
+                onMetricsChange={(updatedMetrics) => {
+                  const updatedScenarioMetrics = {
+                    ...(filters.scenarioMetrics || {}),
+                    [scenarioId]: updatedMetrics
+                  };
+                  onFilterChange({
+                    ...filters,
+                    scenarioMetrics: updatedScenarioMetrics
+                  });
+                }}
               />
-              <label
-                htmlFor={`include-net-zero-${scenarioId}`}
-                className="ml-2 text-sm text-gray-700"
-              >
-                Include a net zero scenario for {scenario.name}
-              </label>
-            </div>
 
-            <div className="flex items-center gap-2 justify-self-end">
-              <label htmlFor={`target-year-${scenarioId}`} className="text-sm text-gray-700 whitespace-nowrap">
-                Enter Target Year:
-              </label>
-              <input
-                id={`target-year-${scenarioId}`}
-                type="number"
-                min={scenario.baseYear}
-                max={2050}
-                value={settings.targetYear}
-                onChange={(e) => updateScenarioSetting(
-                  scenarioId,
-                  'targetYear',
-                  parseInt(e.target.value)
-                )}
-                className="w-24 rounded-md border border-gray-300 py-1 px-2 text-gray-700 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-              />
+              <div className="flex items-center">
+                <input
+                  id={`include-net-zero-${scenarioId}`}
+                  type="checkbox"
+                  checked={settings.includeNetZero}
+                  onChange={() => updateScenarioSetting(
+                    scenarioId, 
+                    'includeNetZero', 
+                    !settings.includeNetZero
+                  )}
+                  className="h-4 w-4 green-checkbox border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor={`include-net-zero-${scenarioId}`}
+                  className="ml-2 text-sm text-gray-700"
+                >
+                  Include a net zero scenario for {scenario.name}
+                </label>
+              </div>
+
+              <div className="flex items-center gap-2 justify-self-end">
+                <label htmlFor={`target-year-${scenarioId}`} className="text-sm text-gray-700 whitespace-nowrap">
+                  Enter Target Year:
+                </label>
+                <input
+                  id={`target-year-${scenarioId}`}
+                  type="number"
+                  min={scenario.baseYear}
+                  max={2050}
+                  value={settings.targetYear}
+                  onChange={(e) => updateScenarioSetting(
+                    scenarioId,
+                    'targetYear',
+                    parseInt(e.target.value)
+                  )}
+                  className="w-24 rounded-md border border-gray-300 py-1 px-2 text-gray-700 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+                />
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
       </div>
     </div>
   );

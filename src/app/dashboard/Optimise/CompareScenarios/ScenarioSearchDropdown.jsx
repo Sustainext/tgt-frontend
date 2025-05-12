@@ -96,7 +96,7 @@ const ScenarioSearchDropdown = ({
                 </div>
                 <div className="flex-1">
                   <h3 className="font-medium text-gray-900">{scenario.name}</h3>
-                  <p className="text-sm text-gray-500 mt-1">{scenario.description}</p>
+                  <p className="text-sm text-gray-500 mt-1">{scenario.description || "No description available"}</p>
                   <div className="flex flex-wrap gap-2 mt-2">
                     <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full">
                       Base Year: {scenario.baseYear}
