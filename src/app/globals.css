@@ -1,4 +1,9 @@
-@tailwind base;
+@media (max-width: 1919px) {
+  body {
+     zoom: 0.8;
+    overflow-x: hidden;
+  }
+}@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
