@@ -1,8 +1,8 @@
-// EmissionsTrendChart.jsx
+// Updated EmissionsTrendChart.jsx with improved tooltip
 import React from "react";
 import { ResponsiveLine } from '@nivo/line';
 
-const EmissionsTrendChart = ({ data }) => {
+const EmissionsTrendChart = ({ data, selectedScope }) => {
   const CustomTooltip = ({ point }) => {
     if (!point) return null;
     
@@ -75,7 +75,7 @@ const EmissionsTrendChart = ({ data }) => {
             format: value => `${value}`
           }}
           enableGridX={false}
-          colors={{ scheme: 'paired' }}
+          colors={(d) => d.color || '#3182CE'} // Use the color from the data
           lineWidth={2}
           pointSize={8}
           pointColor={{ theme: 'background' }}

@@ -474,6 +474,7 @@ const generateEmissionsLineData = () => {
   const result = [];
   
   // First, determine the maximum target year across all selected scenarios
+  // This is for the OVERALL chart display range - it should show all scenarios to their full extent
   let maxTargetYear = 0;
   let minBaseYear = Number.MAX_SAFE_INTEGER;
   
@@ -481,15 +482,15 @@ const generateEmissionsLineData = () => {
     const scenario = allScenarios.find(s => s.id === scenarioId);
     if (!scenario) return;
     
-    // Get base year and target year
+    // Always use the scenario's original target year for chart range calculation
+    // NOT the user-adjusted target year for net-zero pathways
     const baseYear = scenario.baseYear || 2024;
-    const settings = scenarioSettings[scenarioId] || {};
-    const targetYear = settings.targetYear || 2035;
+    const originalTargetYear = scenario.targetYear || 2035;
     
-    console.log(`Scenario ${scenarioId}: baseYear=${baseYear}, targetYear=${targetYear}`);
+    console.log(`Scenario ${scenarioId}: baseYear=${baseYear}, originalTargetYear=${originalTargetYear}`);
     
-    // Update max target year and min base year
-    maxTargetYear = Math.max(maxTargetYear, targetYear);
+    // Update max target year and min base year for CHART RANGE
+    maxTargetYear = Math.max(maxTargetYear, originalTargetYear);
     minBaseYear = Math.min(minBaseYear, baseYear);
   });
   
@@ -540,8 +541,11 @@ const generateEmissionsLineData = () => {
     
     // Get base year and target year for this scenario
     const baseYear = scenario.baseYear || 2024;
+    const scenarioTargetYear = scenario.targetYear || 2035; // Original scenario target year
+    
+    // Get user-adjusted settings (for net-zero pathway only)
     const settings = scenarioSettings[scenarioId] || {};
-    const targetYear = settings.targetYear || 2035;
+    const userTargetYear = settings.targetYear || scenarioTargetYear; // User-adjusted target year
     
     // Extract unique years from the comparison data
     const yearsSet = new Set();
@@ -561,9 +565,10 @@ const generateEmissionsLineData = () => {
     }
     
     // Create a years array from minBaseYear to maxTargetYear for this scenario
-    // Important: We want the x-axis to go up to maxTargetYear
+    // Important: We want the x-axis to go up to the scenario's original target year
+    // NOT the user-adjusted target year (which only affects net-zero)
     const scenarioYears = [];
-    for (let year = minBaseYear; year <= targetYear; year++) {
+    for (let year = minBaseYear; year <= scenarioTargetYear; year++) {
       scenarioYears.push(year);
     }
     
@@ -653,14 +658,22 @@ const generateEmissionsLineData = () => {
       color: colors[index % colors.length]
     });
     
+    // Only generate net-zero line if it's enabled in settings
     if (settings?.includeNetZero) {
       // Find starting emissions value from the first year
       const startValue = dataPoints.find(p => p.x === scenarioYears[0])?.y || 0;
       
-      // Generate net-zero points based on the current target year setting
-      const netZeroPoints = scenarioYears.map(year => {
-        // Calculate based on this scenario's target year (may have been updated by user)
-        const yearFactor = (year - baseYear) / (targetYear - baseYear);
+      // Create a years array specifically for the net-zero pathway
+      // This might be shorter than the scenario years if user selected an earlier target year
+      const netZeroYears = [];
+      for (let year = minBaseYear; year <= Math.max(userTargetYear, baseYear); year++) {
+        netZeroYears.push(year);
+      }
+      
+      // Generate net-zero points based on the user-adjusted target year setting
+      const netZeroPoints = netZeroYears.map(year => {
+        // Calculate based on this scenario's USER-ADJUSTED target year
+        const yearFactor = (year - baseYear) / (userTargetYear - baseYear);
         
         // Linear reduction to zero by target year
         let value;
@@ -682,10 +695,10 @@ const generateEmissionsLineData = () => {
         };
       });
       
-      console.log(`Scenario ${scenarioId} net-zero data points with target year ${targetYear}:`, netZeroPoints);
+      console.log(`Scenario ${scenarioId} net-zero data points with target year ${userTargetYear}:`, netZeroPoints);
       
       result.push({
-        id: `${scenario.name} (Net-Zero)`,
+        id: `${scenario.name} (Net-Zero to ${userTargetYear})`,
         data: netZeroPoints,
         color: netZeroColors[index % netZeroColors.length],
         dashed: true
@@ -706,6 +719,7 @@ const generateEmissionsGapData = () => {
   }
   
   // First, determine the maximum target year and minimum base year across all selected scenarios
+  // For the chart range, use the scenario's ORIGINAL target year, not the user-adjusted one
   let maxTargetYear = 0;
   let minBaseYear = Number.MAX_SAFE_INTEGER;
   
@@ -713,15 +727,14 @@ const generateEmissionsGapData = () => {
     const scenario = allScenarios.find(s => s.id === scenarioId);
     if (!scenario) return;
     
-    // Get base year and target year
+    // Get base year and original target year from scenario
     const baseYear = scenario.baseYear || 2024;
-    const settings = scenarioSettings[scenarioId] || {};
-    const targetYear = settings.targetYear || 2035;
+    const originalTargetYear = scenario.targetYear || 2035;
     
-    console.log(`Scenario ${scenarioId}: baseYear=${baseYear}, targetYear=${targetYear}`);
+    console.log(`Gap chart - Scenario ${scenarioId}: baseYear=${baseYear}, originalTargetYear=${originalTargetYear}`);
     
     // Update max target year and min base year
-    maxTargetYear = Math.max(maxTargetYear, targetYear);
+    maxTargetYear = Math.max(maxTargetYear, originalTargetYear);
     minBaseYear = Math.min(minBaseYear, baseYear);
   });
   
@@ -762,12 +775,13 @@ const generateEmissionsGapData = () => {
         return;
       }
       
-      // Get base year and target year for this scenario
+      // Get base year and target years
       const baseYear = scenario.baseYear || 2024;
-      const targetYear = settings.targetYear || 2035;
+      const originalTargetYear = scenario.targetYear || 2035;
+      const userTargetYear = settings.targetYear || originalTargetYear;
       
-      // If this year is beyond this scenario's target year, set gap to 0
-      if (year > targetYear) {
+      // If net-zero is not included or this year is beyond the user's target year, set gap to 0
+      if (!settings.includeNetZero || year > userTargetYear) {
         yearData[`${scenario.name} Gap`] = 0;
         return;
       }
@@ -821,9 +835,9 @@ const generateEmissionsGapData = () => {
         return value;
       };
       
-      // Create years array for this specific scenario (up to its target year)
+      // Create years array for this specific scenario (up to its original target year)
       const scenarioYears = [];
-      for (let y = minBaseYear; y <= targetYear; y++) {
+      for (let y = minBaseYear; y <= originalTargetYear; y++) {
         scenarioYears.push(y);
       }
       
@@ -889,22 +903,17 @@ const generateEmissionsGapData = () => {
         }
       }
       
-      // Calculate net-zero pathway value for this year
-      if (year <= targetYear) {
-        const yearFactor = (year - baseYear) / (targetYear - baseYear);
-        // Ensure factor is between 0 and 1 for more robust calculation
-        const boundedFactor = Math.max(0, Math.min(1, yearFactor));
-        
-        // Linear reduction to zero by target year
-        const netZeroValue = startingEmissions * (1 - boundedFactor);
-        
-        // The gap is the difference (but never negative)
-        const gap = Math.max(0, emissionsValue - netZeroValue);
-        yearData[`${scenario.name} Gap`] = gap;
-      } else {
-        // For years beyond target year, gap is zero (emissions should be zero)
-        yearData[`${scenario.name} Gap`] = 0;
-      }
+      // Calculate net-zero pathway value for this year using the USER-ADJUSTED target year
+      const yearFactor = (year - baseYear) / (userTargetYear - baseYear);
+      // Ensure factor is between 0 and 1 for more robust calculation
+      const boundedFactor = Math.max(0, Math.min(1, yearFactor));
+      
+      // Linear reduction to zero by target year
+      const netZeroValue = startingEmissions * (1 - boundedFactor);
+      
+      // The gap is the difference (but never negative)
+      const gap = Math.max(0, emissionsValue - netZeroValue);
+      yearData[`${scenario.name} Gap`] = gap;
     });
     
     return yearData;
