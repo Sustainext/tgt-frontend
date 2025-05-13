@@ -30,7 +30,7 @@ const Governance = () => {
     dispatch(setMiddlename("Governance"));
 }, [activeTab, dispatch]);
   return (
-       <div className="relative xl:flex justify-start">
+       <div className="relative xl:flex lg:flex 2xl:flex 4k:flex justify-start">
           <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block">
             <div className="relative left-10 w-[199px] min-h-[90vh] py-[11px] flex-col items-end inline-flex ">
               <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
@@ -49,7 +49,7 @@ const Governance = () => {
             </div>
           ) : (
             <div className="w-full xl:ms-8 md:ms-0 lg:ms-8 2xl:ms-8 4k:ms-8 2k:ms-8">
-              <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block sticky xl:top-14 bg-white z-[100]">
+              <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block sticky xl:top-14 lg:top-14 2xl:top-14 4k:top-14 bg-white z-[100]">
                 <Header
                   activeTab={activeTab}
                   setIsBoxOpen={setIsBoxOpen}

@@ -132,8 +132,8 @@ useEffect(()=>{
 
   return (
     <>
-      <div className="overflow-x-auto table-scrollbar min-h-80">
-        <table className="table-auto w-full bg-white rounded-lg shadow-md">
+   <div className="overflow-auto table-scrollbar min-h-[50vh] max-h-[80vh] max-w-full  scrollable-content">
+        <table className="table-auto  w-full  bg-white rounded-lg shadow-md  ">
           <thead className="bg-gray-100">
             <tr>
               {columns &&
@@ -141,7 +141,7 @@ useEffect(()=>{
                   <th
                     key={i}
                     className={`px-6 py-3 text-sm font-semibold text-gray-600 cursor-pointer 
-                         ${i === 0 ? "min-w-[25px]" : "min-w-[150px]"} 
+                       
                       ${
                       columns.length - 1 === i ? "text-center" : "text-left"
                     }`}

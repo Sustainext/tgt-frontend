@@ -166,7 +166,7 @@ const StakeholderGroup = ({
 
   return (
     <div className="p-4 min-h-screen">
-      <div className="xl:flex justify-between items-center mb-6">
+      <div className="xl:flex lg:flex 2xl:flex 4k :flex justify-between items-center mb-6">
         <h1 className="text-[20px] font-semibold text-[#101828]">
           Stakeholder Groups
         </h1>
@@ -202,7 +202,7 @@ const StakeholderGroup = ({
       </p>
 
       {stakeholderGroupData.length > 0 ? (
-        <div>
+       <div className="overflow-auto table-scrollbar min-h-[50vh] max-h-[80vh]  scrollable-content">
           <Table
             columns={columns}
             currentData={stakeholderGroupData}

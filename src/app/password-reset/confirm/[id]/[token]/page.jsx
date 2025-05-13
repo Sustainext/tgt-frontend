@@ -226,7 +226,7 @@ const PasswordReset = () => {
                 </div>
                 <ReactTooltip
                   anchorId='app-title'
-                  place='right'
+                  place='top'
                   style={{
                     backgroundColor: '#000000',
                     boxShadow:'rgba(0, 0, 0, 0.35) 0px 5px 15px',
@@ -241,7 +241,7 @@ const PasswordReset = () => {
                       iconSize={16}
                       invalidColor='red'
                       validColor='#4BCA81'
-                      style={{ fontSize: '14px' }}
+                      style={{ fontSize: '15px', }}
                       messages={{
                         number: 'At least one number (0-9)',
                         specialChar: 'At least one special character (Eg. @#%$)',

@@ -57,7 +57,7 @@ const Dashboard = () => {
     
       <div>
      
-        <div className="xl:ms-6">
+        <div className="xl:ms-6 lg:ms-6">
           <div
             className="my-4 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed"
             translate="no"
