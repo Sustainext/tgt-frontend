@@ -79,21 +79,21 @@ const Screentwo = ({
 
     try {
       // or use a dynamic value
-        const response = await axiosInstance.get(
-          `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
-        );
+      const response = await axiosInstance.get(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
+      );
 
       if (response.status === 200) {
         setReportnradio(response.data.data.screen2_q1);
         setReportingdate(response.data.data.screen2_q2);
         setReportingdescription(response.data.data.screen2_q3);
-        setReportingbusinessnumber(response.data.data.screen2_q4)
+        setReportingbusinessnumber(response.data.data.screen2_q4);
         LoaderClose();
       } else if (response.status == 404) {
         setReportnradio("");
         setReportingdate("");
         setReportingdescription("");
-        setReportingbusinessnumber("")
+        setReportingbusinessnumber("");
         LoaderClose();
       } else {
         toast.error("Oops, something went wrong", {
@@ -109,8 +109,6 @@ const Screentwo = ({
       }
     } catch (error) {
       LoaderClose();
-     
-
     } finally {
       LoaderClose();
     }
@@ -172,43 +170,35 @@ const Screentwo = ({
   };
   const handleReportnbusinessnumber = (event) => {
     setReportingbusinessnumber(event.target.value);
-  }
+  };
   const handleKeyDown = (event) => {
     if (["+", "-", "."].includes(event.key)) {
       event.preventDefault();
     }
   };
 
-
   const stepsubmitForm = async () => {
-const stepscreenId = 3;
-    try{
-
-
+    const stepscreenId = 3;
+    try {
       const sendData = {
-        data:{
-        
-        },
-     
+        data: {},
+
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status:"in_progress",
+        status: "in_progress",
       };
-      const response= await axiosInstance.put(
-          `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${stepscreenId}/`,
-          sendData
-        )
-        if (response.status == "200") {
-          console.log("API call susfully:");
-          nextStep();
-        } 
-    }catch (error) {
-     
+      const response = await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${stepscreenId}/`,
+        sendData
+      );
+      if (response.status == "200") {
+        console.log("API call susfully:");
+        nextStep();
+      }
+    } catch (error) {
       console.error("API call failed:", error);
-    
     }
-    
   };
 
   const submitForm = async () => {
@@ -225,22 +215,22 @@ const stepscreenId = 3;
       LoaderOpen();
 
       const sendData = {
-        data:{
+        data: {
           screen2_q1: reportradio,
           screen2_q2: newentities,
           screen2_q3: oherinpute,
           screen2_q4: reportingbusinessnumber,
         },
-      
+
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status:"completed",
+        status: "completed",
       };
-      const response= await axiosInstance.put(
+      const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/`,
         sendData
-      )
+      );
       if (response.status == "200") {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -310,96 +300,97 @@ const stepscreenId = 3;
     <>
       <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-0 mt-2">
         <form className="w-full text-left">
-          <div className="mb-5">
-            <label
-              className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
-              htmlFor="username"
-            >
-              5. Is this a revised version of a report already submitted this
-              reporting year?*
-            </label>
-            <div className="relative mb-1 flex">
-              <div>
-                 {" "}
-                <input
-                  type="radio"
-                  id="Yes"
-                  name="radio"
-                  value="Yes"
-                  checked={reportradio === "Yes"}
-                  onChange={handleReportnradio}
-                  className="radio-label"
-                />
-                 {" "}
-                <label htmlFor="Yes" className="text-[15px] text-gray-700">
-                  Yes
-                </label>
-                <br />
-              </div>
-              <div className="ml-5">
-                 {" "}
-                <input
-                  type="radio"
-                  id="No"
-                  name="radio"
-                  value="No"
-                  checked={reportradio === "No"}
-                  onChange={handleReportnradio}
-                />
-                 {" "}
-                <label htmlFor="No" className="text-[15px] text-gray-700 ">
-                  No
-                </label>
-                <br />
-              </div>
-            </div>
-            {error.reportradio && (
-              <p className="text-red-500 ml-1 text-[12px]">
-                {error.reportradio}
-              </p>
-            )}
-          </div>
-          {reportradio === "Yes" && (
-            <>
-              <div className="mb-5">
-                <label
-                  className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
-                  htmlFor="username"
-                >
-                  5.1 If yes, on what date was the original report submitted?*
-                </label>
-                <div className="relative mb-1">
+          <div className="h-[32rem] overflow-y-auto scrollable-content">
+            <div className="mb-5">
+              <label
+                className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
+                htmlFor="username"
+              >
+                5. Is this a revised version of a report already submitted this
+                reporting year?*
+              </label>
+              <div className="relative mb-1 flex">
+                <div>
+                   {" "}
                   <input
-                    type="date"
-                    value={reportingdate}
-                    onChange={handleReportndate}
-                    className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer "
+                    type="radio"
+                    id="Yes"
+                    name="radio"
+                    value="Yes"
+                    checked={reportradio === "Yes"}
+                    onChange={handleReportnradio}
+                    className="radio-label"
                   />
+                   {" "}
+                  <label htmlFor="Yes" className="text-[15px] text-gray-700">
+                    Yes
+                  </label>
+                  <br />
                 </div>
-                {error.reportingdate && (
-                  <p className="text-red-500 ml-1 text-[12px]">
-                    {error.reportingdate}
-                  </p>
-                )}
-              </div>
-              <div className="mb-5 w-[78%]">
-                <label
-                  className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1 w-[78%]"
-                  htmlFor="username"
-                >
-                  5.2 Describe the changes made to the original submission,
-                  including the sections of the original report that were
-                  revised or any changes made to questionnaire responses *
-                </label>
-                <div className="relative">
-                  <JoditEditor
-                    // ref={editor}
-                    value={reportingdescription}
-                    config={config}
-                    tabIndex={1}
-                    onBlur={handleReportingdescription}
+                <div className="ml-5">
+                   {" "}
+                  <input
+                    type="radio"
+                    id="No"
+                    name="radio"
+                    value="No"
+                    checked={reportradio === "No"}
+                    onChange={handleReportnradio}
                   />
-                  {/* <textarea
+                   {" "}
+                  <label htmlFor="No" className="text-[15px] text-gray-700 ">
+                    No
+                  </label>
+                  <br />
+                </div>
+              </div>
+              {error.reportradio && (
+                <p className="text-red-500 ml-1 text-[12px]">
+                  {error.reportradio}
+                </p>
+              )}
+            </div>
+            {reportradio === "Yes" && (
+              <>
+                <div className="mb-5">
+                  <label
+                    className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
+                    htmlFor="username"
+                  >
+                    5.1 If yes, on what date was the original report submitted?*
+                  </label>
+                  <div className="relative mb-1">
+                    <input
+                      type="date"
+                      value={reportingdate}
+                      onChange={handleReportndate}
+                      className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer "
+                    />
+                  </div>
+                  {error.reportingdate && (
+                    <p className="text-red-500 ml-1 text-[12px]">
+                      {error.reportingdate}
+                    </p>
+                  )}
+                </div>
+                <div className="mb-5 w-[78%]">
+                  <label
+                    className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1 w-[78%]"
+                    htmlFor="username"
+                  >
+                    5.2 Describe the changes made to the original submission,
+                    including the sections of the original report that were
+                    revised or any changes made to questionnaire responses *
+                  </label>
+                  <div className="relative">
+                    <JoditEditor
+                      // ref={editor}
+                      value={reportingdescription}
+                      config={config}
+                      tabIndex={1}
+                      onBlur={handleReportingdescription}
+                    />
+                    {/* <textarea
                           id="countriesOfOperation"
                           name="countriesOfOperation"
                           placeholder="Enter a description..."
@@ -411,35 +402,36 @@ const stepscreenId = 3;
                           rows={5}
                           onChange={handleReportingdescription} // Specify the number of rows to determine the initial height
                         /> */}
+                  </div>
+                  {error.reportingdescription && (
+                    <p className="text-red-500 ml-1 text-[12px]">
+                      {error.reportingdescription}
+                    </p>
+                  )}
                 </div>
-                {error.reportingdescription && (
-                  <p className="text-red-500 ml-1 text-[12px]">
-                    {error.reportingdescription}
-                  </p>
-                )}
+              </>
+            )}
+            <div className="mb-5">
+              <label
+                className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
+                htmlFor="username"
+              >
+                6. For entities only: Business number(s) (if applicable):
+              </label>
+              <div className="relative mb-1 flex">
+                <input
+                  type="number"
+                  placeholder="Enter number"
+                  className={`${
+                    open
+                      ? "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%]"
+                      : "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%]"
+                  } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
+                  value={reportingbusinessnumber}
+                  onChange={handleReportnbusinessnumber}
+                  onKeyDown={handleKeyDown}
+                ></input>
               </div>
-            </>
-          )}
-          <div className="mb-5">
-            <label
-              className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
-              htmlFor="username"
-            >
-              6. For entities only: Business number(s) (if applicable):
-            </label>
-            <div className="relative mb-1 flex">
-              <input
-                type="number"
-                placeholder="Enter number"
-                className={`${
-                  open
-                    ? "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%]"
-                    : "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%]"
-                } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
-                value={reportingbusinessnumber}
-                onChange={handleReportnbusinessnumber}
-                onKeyDown={handleKeyDown}
-              ></input>
             </div>
           </div>
           <div className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%]  w-full mb-5">

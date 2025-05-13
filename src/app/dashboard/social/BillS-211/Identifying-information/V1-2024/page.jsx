@@ -15,8 +15,15 @@ import {
   MdKeyboardArrowDown,
 } from "react-icons/md";
 
-
-const Identifyinginformation2024 = ({ setMobileopen,selectedCorp,selectedOrg,year,reportType }) => {
+const Identifyinginformation2024 = ({
+  setMobileopen,
+  selectedCorp,
+  selectedOrg,
+  year,
+  reportType,
+  handleTabClick,
+  setView,
+}) => {
   const toggleSidebar = () => {
     setMobileopen(true);
   };
@@ -30,15 +37,12 @@ const Identifyinginformation2024 = ({ setMobileopen,selectedCorp,selectedOrg,yea
     }
   };
 
-
   // State to keep track of selected options
 
   // Handler for checkbox change
 
   return (
     <>
-   
-
       <div className="xl:h-[450px] lg:h-[450px] md:h-[450px] 2k:h-[450px] 4k:h-[450px] h-auto overflow-y-auto scrollable-content">
         {currentStep === 1 && (
           <Screenone
@@ -107,6 +111,8 @@ const Identifyinginformation2024 = ({ setMobileopen,selectedCorp,selectedOrg,yea
             selectedOrg={selectedOrg}
             year={year}
             reportType={reportType}
+            handleTabClick={handleTabClick}
+            setView={setView}
           />
         )}
       </div>

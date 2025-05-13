@@ -15,12 +15,12 @@ import { Oval } from "react-loader-spinner";
 
 const Screenseven = ({
   prevStep,
-  activeSteps,
   selectedCorp,
   selectedOrg,
   year,
   reportType,
   handleTabClick,
+  setView,
 }) => {
   const [error, setError] = useState({});
   const { open } = GlobalState();
@@ -44,19 +44,7 @@ const Screenseven = ({
     { code: "SK", name: "Saskatchewan" },
     { code: "YT", name: "Yukon" },
   ];
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
 
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   const fetchBillSseven = async () => {
     LoaderOpen();
@@ -170,7 +158,8 @@ const Screenseven = ({
           theme: "light",
         });
         LoaderClose();
-        handleTabClick("Annual report")
+       handleTabClick("Data collection");
+    setView("home");
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",

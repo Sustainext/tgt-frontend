@@ -274,7 +274,29 @@ const Screentwo = ({
   };
 
   // Function to proceed to the next step, includes validation
+  const stepsubmitForm = async () => {
+    const stepscreenId = 3;
+    try {
+      const sendData = {
+        data: {},
 
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year,
+        status: "in_progress",
+      };
+      const response = await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${stepscreenId}/`,
+        sendData
+      );
+      if (response.status == "200") {
+        console.log("API call susfully:");
+        nextStep();
+      }
+    } catch (error) {
+      console.error("API call failed:", error);
+    }
+  };
   const submitForm = async () => {
     try {
       LoaderOpen();
@@ -287,12 +309,12 @@ const Screentwo = ({
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status:"completed",
+        status: "completed",
       };
-      const response= await axiosInstance.put(
+      const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
         sendData
-      )
+      );
       if (response.status == "200") {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -305,7 +327,7 @@ const Screentwo = ({
           theme: "light",
         });
         LoaderClose();
-        nextStep();
+        stepsubmitForm();
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -343,61 +365,62 @@ const Screentwo = ({
   return (
     <>
       <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
-        <form className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%] container text-left">
-          <div className="mb-5">
-            <label
-              className="block text-gray-700 text-[14px] font-[500] mb-2"
-              htmlFor="industryCheckbox"
-            >
-              3. What steps has the entity taken in the previous financial year
-              to prevent and reduce the risk that forced labour or child labour
-              is used at any step of the production of goods in Canada or
-              elsewhere by the entity or of goods imported into Canada by the
-              entity? Select all that apply..*
-            </label>
-          </div>
-          <div className="mb-2">
-            <div className="gap-2">
-              {optionsTwo.map((option, index) => (
-                <div key={index} className="flex items-center mb-2">
-                  <label className="ml-2 text-[14px] text-gray-600">
-                    <input
-                      type="checkbox"
-                      value={option.label}
-                      checked={selectedOptions.includes(option.label)}
-                      onChange={handleCheckboxChange}
-                      className="mr-3 pt-1"
-                    />
-                    {option.label}
-                  </label>
-                </div>
-              ))}
+        <div className="h-[38rem] overflow-y-auto scrollable-content">
+          <form className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%] container text-left">
+            <div className="mb-5 ">
+              <label
+                className="block text-gray-700 text-[14px] font-[500] mb-2"
+                htmlFor="industryCheckbox"
+              >
+                3. What steps has the entity taken in the previous financial
+                year to prevent and reduce the risk that forced labour or child
+                labour is used at any step of the production of goods in Canada
+                or elsewhere by the entity or of goods imported into Canada by
+                the entity? Select all that apply..*
+              </label>
             </div>
-            <div className="my-1">
-              {error.selectedOptions && (
-                <p className="text-red-500 text-[12px] mt-1">
-                  {error.selectedOptions}
-                </p>
-              )}
+            <div className="mb-2">
+              <div className="gap-2">
+                {optionsTwo.map((option, index) => (
+                  <div key={index} className="flex items-center mb-2">
+                    <label className="ml-2 text-[14px] text-gray-600">
+                      <input
+                        type="checkbox"
+                        value={option.label}
+                        checked={selectedOptions.includes(option.label)}
+                        onChange={handleCheckboxChange}
+                        className="mr-3 pt-1"
+                      />
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
+              <div className="my-1">
+                {error.selectedOptions && (
+                  <p className="text-red-500 text-[12px] mt-1">
+                    {error.selectedOptions}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="mb-5 mt-3">
-            <label
-              className="block text-gray-700 text-[14px] font-[500] mb-2"
-              htmlFor="industryCheckbox"
-            >
-              4. Please provide additional information describing the steps
-              taken (if applicable)
-            </label>
-            <JoditEditor
-              // ref={editor}
-              value={reportingdescription}
-              config={config}
-              tabIndex={1}
-              onBlur={handleReportingdescription}
-            />
-            {/* <textarea
+            <div className="mb-5 mt-3">
+              <label
+                className="block text-gray-700 text-[14px] font-[500] mb-2"
+                htmlFor="industryCheckbox"
+              >
+                4. Please provide additional information describing the steps
+                taken (if applicable)
+              </label>
+              <JoditEditor
+                // ref={editor}
+                value={reportingdescription}
+                config={config}
+                tabIndex={1}
+                onBlur={handleReportingdescription}
+              />
+              {/* <textarea
               id="countriesOfOperation"
               name="countriesOfOperation"
               placeholder="Enter a description..."
@@ -411,17 +434,18 @@ const Screentwo = ({
               rows={5}
               onChange={handleReportingdescription} 
             /> */}
-            {/* <div className="my-1">
+              {/* <div className="my-1">
                     {error.reportingdescription && (
                       <p className="text-red-500">
                         {error.reportingdescription}
                       </p>
                     )}
                   </div> */}
-          </div>
-        </form>
+            </div>
+          </form>
+        </div>
         <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full mb-5">
-          <div className="float-right">
+          <div className="float-right me-4">
             <button
               className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
               onClick={prevStep}

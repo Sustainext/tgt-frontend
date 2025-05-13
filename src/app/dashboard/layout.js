@@ -65,7 +65,7 @@ export default function DashboardLayout({ children }) {
   }, []);
 
   return (
-    <section>
+    <section className="">
       <GlobalErrorHandler />
       <StoreProvider>
         {isMobile ? (
@@ -86,7 +86,7 @@ export default function DashboardLayout({ children }) {
               <Sidenav />
             </div>
             <div
-              className={`mx-2 w-full ${
+              className={`mx-2 w-full  ${
                 open
                   ? "xl:ml-[243px] lg:ml-[243px] 2xl:ml-[243px] md:ml-[243px] sm:ml-[0px]"
                   : "xl:ml-[74px] 2xl:ml-[74px] lg:ml-[74px] md:ml-[74px] sm:ml-[0px]"

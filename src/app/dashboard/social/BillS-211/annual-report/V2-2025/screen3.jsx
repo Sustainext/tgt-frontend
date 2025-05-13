@@ -135,7 +135,29 @@ const Screenthree = ({
     setReportnradio(event.target.value);
     setError((prev) => ({ ...prev, reportradio: "" }));
   };
+  const stepsubmitForm = async () => {
+    const stepscreenId = 4;
+    try {
+      const sendData = {
+        data: {},
 
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year,
+        status: "in_progress",
+      };
+      const response = await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${stepscreenId}/`,
+        sendData
+      );
+      if (response.status == "200") {
+        console.log("API call susfully:");
+        nextStep();
+      }
+    } catch (error) {
+      console.error("API call failed:", error);
+    }
+  };
   const submitForm = async () => {
     let unewentities;
     if (reportradio === "No") {
@@ -172,7 +194,7 @@ const Screenthree = ({
           theme: "light",
         });
         LoaderClose();
-        nextStep();
+        stepsubmitForm();
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -224,6 +246,7 @@ const Screenthree = ({
   return (
     <>
       <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
+        <div className="h-[36rem] overflow-y-auto scrollable-content">
         <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
           <div className="mb-5">
             <label
@@ -308,6 +331,7 @@ const Screenthree = ({
             </div>
           )}
         </form>
+        </div>
         <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full mb-5">
           <div className="float-right">
             <button

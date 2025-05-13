@@ -25,7 +25,6 @@ const Screenfour = ({
 
   const screenId = 4;
 
-
   const fetchBillSfour = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
 
@@ -43,7 +42,7 @@ const Screenfour = ({
         } else {
           setSelectedOptions(response.data.data.screen4_q2);
         }
-    
+
         LoaderClose();
       } else {
         LoaderClose();
@@ -60,7 +59,6 @@ const Screenfour = ({
       }
     } catch (error) {
       LoaderClose();
-   
     } finally {
       LoaderClose();
     }
@@ -156,25 +154,47 @@ const Screenfour = ({
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const stepsubmitForm = async () => {
+    const stepscreenId = 5;
+    try {
+      const sendData = {
+        data: {},
 
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year,
+        status: "in_progress",
+      };
+      const response = await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${stepscreenId}/`,
+        sendData
+      );
+      if (response.status == "200") {
+        console.log("API call susfully:");
+        nextStep();
+      }
+    } catch (error) {
+      console.error("API call failed:", error);
+    }
+  };
   const submitForm = async () => {
     try {
       LoaderOpen();
 
       const sendData = {
-        data:{
+        data: {
           screen4_q1: reportradio,
           screen4_q2: selectedOptions,
         },
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status:"completed",
+        status: "completed",
       };
-      const response= await axiosInstance.put(
+      const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
         sendData
-      )
+      );
       if (response.status == "200") {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -187,7 +207,7 @@ const Screenfour = ({
           theme: "light",
         });
         LoaderClose();
-        nextStep();
+        stepsubmitForm();
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -228,7 +248,6 @@ const Screenfour = ({
       }
     }
 
-
     if (Object.keys(newErrors).length === 0) {
       setError({});
       submitForm();
@@ -240,112 +259,114 @@ const Screenfour = ({
   return (
     <>
       <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
-        <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
-          <div className="mb-5">
-            <label
-              className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
-              htmlFor="username"
-            >
-              6. Has the entity identified parts of its activities and supply
-              chains that carry a risk of forced labour or child labour being
-              used?*
-            </label>
-            <div className="relative mb-1">
-              <div className="mb-3">
-                 {" "}
-                <input
-                  type="radio"
-                  id="Yes"
-                  name="radio"
-                  value="Yes"
-                  checked={reportradio === "Yes"}
-                  onChange={handleReportnradio}
-                />
-                 {" "}
-                <label htmlFor="Yes" className="text-[14px] text-gray-700">
-                  Yes, we have identified parts of our activities and/or supply
-                  chains that carry risks to the best of our knowledge and will
-                  continue to identify emerging risks.
-                </label>
-                <br />
-              </div>
-              <div className="mb-3">
-                 {" "}
-                <input
-                  type="radio"
-                  id="Yesone"
-                  name="radio"
-                  value="Yesone"
-                  checked={reportradio === "Yesone"}
-                  onChange={handleReportnradio}
-                />
-                 {" "}
-                <label htmlFor="Yesone" className="text-[14px] text-gray-700">
-                  Yes, we have started the process of identifying parts of our
-                  activities and/or supply chains that carry risks, but there
-                  are still gaps in our assessments.
-                </label>
-                <br />
-              </div>
-              <div className="mb-3">
-                 {" "}
-                <input
-                  type="radio"
-                  id="No"
-                  name="radio"
-                  value="No"
-                  checked={reportradio === "No"}
-                  onChange={handleReportnradio}
-                />
-                 {" "}
-                <label htmlFor="No" className="text-[14px] text-gray-700 ">
-                  No, we have not started the process of identifying parts of
-                  our activities and/or supply chains that carry risks of forced
-                  labour or child labour being used.
-                </label>
-                <br />
-              </div>
-            </div>
-            {error.reportradio && (
-              <p className="text-red-500 ml-1 text-[12px] mt-1">
-                {error.reportradio}
-              </p>
-            )}
-          </div>
-          {(reportradio === "Yes" || reportradio === "Yesone") && (
+        <div className="h-[36rem] overflow-y-auto scrollable-content">
+          <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
             <div className="mb-5">
               <label
                 className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                 htmlFor="username"
               >
-                6.1 If yes, has the entity identified forced labour or child
-                labour risks related to any of the following aspects of its
-                activities and supply chains? Select all that apply *
+                6. Has the entity identified parts of its activities and supply
+                chains that carry a risk of forced labour or child labour being
+                used?*
               </label>
-              <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-2 4k:grid-cols-2 2k:grid-cols-2  md:grid-cols-2">
-                {options.map((option, index) => (
-                  <div key={index} className="mb-1 ml-2">
-                    <label className="text-[14px] text-gray-600">
-                      <input
-                        type="checkbox"
-                        value={option.label}
-                        checked={selectedOptions.includes(option.label)}
-                        onChange={handleCheckboxChange}
-                        className="mr-3"
-                      />
-                      {option.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-              {error.checkboxes && (
-                <div className="text-red-500 ml-1 text-[12px] mt-1">
-                  {error.checkboxes}
+              <div className="relative mb-1">
+                <div className="mb-3">
+                   {" "}
+                  <input
+                    type="radio"
+                    id="Yes"
+                    name="radio"
+                    value="Yes"
+                    checked={reportradio === "Yes"}
+                    onChange={handleReportnradio}
+                  />
+                   {" "}
+                  <label htmlFor="Yes" className="text-[14px] text-gray-700">
+                    Yes, we have identified parts of our activities and/or
+                    supply chains that carry risks to the best of our knowledge
+                    and will continue to identify emerging risks.
+                  </label>
+                  <br />
                 </div>
+                <div className="mb-3">
+                   {" "}
+                  <input
+                    type="radio"
+                    id="Yesone"
+                    name="radio"
+                    value="Yesone"
+                    checked={reportradio === "Yesone"}
+                    onChange={handleReportnradio}
+                  />
+                   {" "}
+                  <label htmlFor="Yesone" className="text-[14px] text-gray-700">
+                    Yes, we have started the process of identifying parts of our
+                    activities and/or supply chains that carry risks, but there
+                    are still gaps in our assessments.
+                  </label>
+                  <br />
+                </div>
+                <div className="mb-3">
+                   {" "}
+                  <input
+                    type="radio"
+                    id="No"
+                    name="radio"
+                    value="No"
+                    checked={reportradio === "No"}
+                    onChange={handleReportnradio}
+                  />
+                   {" "}
+                  <label htmlFor="No" className="text-[14px] text-gray-700 ">
+                    No, we have not started the process of identifying parts of
+                    our activities and/or supply chains that carry risks of
+                    forced labour or child labour being used.
+                  </label>
+                  <br />
+                </div>
+              </div>
+              {error.reportradio && (
+                <p className="text-red-500 ml-1 text-[12px] mt-1">
+                  {error.reportradio}
+                </p>
               )}
             </div>
-          )}
-        </form>
+            {(reportradio === "Yes" || reportradio === "Yesone") && (
+              <div className="mb-5">
+                <label
+                  className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
+                  htmlFor="username"
+                >
+                  6.1 If yes, has the entity identified forced labour or child
+                  labour risks related to any of the following aspects of its
+                  activities and supply chains? Select all that apply *
+                </label>
+                <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-2 4k:grid-cols-2 2k:grid-cols-2  md:grid-cols-2">
+                  {options.map((option, index) => (
+                    <div key={index} className="mb-1 ml-2">
+                      <label className="text-[14px] text-gray-600">
+                        <input
+                          type="checkbox"
+                          value={option.label}
+                          checked={selectedOptions.includes(option.label)}
+                          onChange={handleCheckboxChange}
+                          className="mr-3"
+                        />
+                        {option.label}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+                {error.checkboxes && (
+                  <div className="text-red-500 ml-1 text-[12px] mt-1">
+                    {error.checkboxes}
+                  </div>
+                )}
+              </div>
+            )}
+          </form>
+        </div>
         <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full mb-5">
           <div className="float-right">
             <button

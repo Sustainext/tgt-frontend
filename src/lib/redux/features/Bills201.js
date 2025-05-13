@@ -5,6 +5,8 @@ const initialState = {
   corp: "",
   year: "",
   reportType:"",
+  orgname:"",
+  corpname:"",
 };
 
 export const Bills201 = createSlice({
@@ -23,8 +25,14 @@ export const Bills201 = createSlice({
     setReportTypes: (state, action) => {
       state.reportType = action.payload;
     },
+       setOrgnizationname: (state, action) => {
+      state.orgname = action.payload;
+    },
+    setCorporatename: (state, action) => {
+      state.corpname = action.payload;
+    },
   },
 });
 
-export const { setOrgnization, setCorporate, setyear,setReportTypes } = Bills201.actions;
+export const { setOrgnization, setCorporate, setyear,setReportTypes,setOrgnizationname,setCorporatename } = Bills201.actions;
 export default Bills201.reducer;

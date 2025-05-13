@@ -24,7 +24,6 @@ const Screenseven = ({
   const [loopen, setLoOpen] = useState(false);
   const screenId = 7;
 
-
   const fetchBillSseven = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
 
@@ -36,7 +35,7 @@ const Screenseven = ({
 
       // If the request is successful but you specifically want to handle 404 inside here
       if (response.status === 200) {
-        setReportnradiotwo(response.data.data.screen7_q1)
+        setReportnradiotwo(response.data.data.screen7_q1);
         setReportnradio(response.data.data.screen7_q2);
         setReportnradioone(response.data.data.screen7_q3);
 
@@ -56,7 +55,6 @@ const Screenseven = ({
       }
     } catch (error) {
       LoaderClose();
-
     } finally {
       LoaderClose();
     }
@@ -78,10 +76,9 @@ const Screenseven = ({
         fetchBillSseven();
       }
     }
-    setReportnradiotwo("")
+    setReportnradiotwo("");
     setReportnradio("");
     setReportnradioone("");
-
   }, [selectedCorp, selectedOrg, year]);
 
   const handleReportnradio = (event) => {
@@ -103,7 +100,29 @@ const Screenseven = ({
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const stepsubmitForm = async () => {
+    const stepscreenId = 8;
+    try {
+      const sendData = {
+        data: {},
 
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year,
+        status: "in_progress",
+      };
+      const response = await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${stepscreenId}/`,
+        sendData
+      );
+      if (response.status == "200") {
+        console.log("API call susfully:");
+        nextStep();
+      }
+    } catch (error) {
+      console.error("API call failed:", error);
+    }
+  };
   const submitForm = async () => {
     let unewentities;
     if (reportradio === "No") {
@@ -116,20 +135,20 @@ const Screenseven = ({
       LoaderOpen();
 
       const sendData = {
-        data:{
+        data: {
           screen7_q1: reportradiotwo,
-          screen7_q2:reportradio,
+          screen7_q2: reportradio,
           screen7_q3: unewentities,
         },
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status:"completed",
+        status: "completed",
       };
-      const response= await axiosInstance.put(
+      const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
         sendData
-      )
+      );
       if (response.status == "200") {
         console.log(response.status);
         toast.success("Data added successfully", {
@@ -143,7 +162,7 @@ const Screenseven = ({
           theme: "light",
         });
         LoaderClose();
-        nextStep();
+        stepsubmitForm();
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -198,230 +217,250 @@ const Screenseven = ({
   return (
     <>
       <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
-        <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
-          <div className="mb-5">
-            <label
-              className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
-              html
-              htmlFor="username"
-            >
-              10. Has the entity taken any measures to remediate the loss of
-              income to the most vulnerable individuals and families that
-              results from measures taken to eliminate the use of forced labour
-              or child labour in its activities and supply chains? *
-            </label>
-            <div className="relative mb-1">
-              <div className="mb-3">
-                 {" "}
-                <input
-                  type="radio"
-                  id="Yes1"
-                  name="radio2"
-                  value="Yes"
-                  checked={reportradiotwo === "Yes"}
-                  onChange={handleReportnradiotwo}
-                />
-                 {" "}
-                <label html htmlFor="Yes1" className="text-[14px] text-gray-700">
-                  Yes, we have taken measures
-                </label>
-                <br />
-              </div>
-
-              <div className="mb-3">
-                 {" "}
-                <input
-                  type="radio"
-                  id="No1"
-                  name="radio2"
-                  value="No"
-                  checked={reportradiotwo === "No"}
-                  onChange={handleReportnradiotwo}
-                />
-                 {" "}
-                <label html htmlFor="No1" className="text-[14px] text-gray-700 ">
-                  No, we have not taken measures
-                </label>
-                <br />
-              </div>
-              <div className="mb-3">
-                 {" "}
-                <input
-                  type="radio"
-                  id="Not applicable"
-                  name="radio2"
-                  value="Not applicable"
-                  checked={reportradiotwo === "Not applicable"}
-                  onChange={handleReportnradiotwo}
-                />
-                 {" "}
-                <label
-                  html
-                  htmlFor="Not applicable"
-                  className="text-[14px] text-gray-700 "
-                >
-                  Not applicable, we have not identified any loss of income to
-                  vulnerable families resulting from measures taken to eliminate
-                  the use of forced labour or child labour in our activities and
-                  supply chains.
-                </label>
-                <br />
-              </div>
-            </div>
-            {error.reportradiotwo && (
-              <p className="text-red-500 ml-1 text-[12px] mt-1">
-                {error.reportradiotwo}
-              </p>
-            )}
-          </div>
-          <div className="mb-5">
-            <label
-              className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
-              html
-              htmlFor="username"
-            >
-              11.  Does the entity currently provide training to employees on forced labour and/or child labour? *
-            </label>
-            <div className="relative mb-1">
-              <div className="mb-3">
-                 {" "}
-                <input
-                  type="radio"
-                  id="Yes"
-                  name="radio"
-                  value="Yes"
-                  checked={reportradio === "Yes"}
-                  onChange={handleReportnradio}
-                />
-                 {" "}
-                <label html htmlFor="Yes" className="text-[14px] text-gray-700">
-                  Yes
-                </label>
-                <br />
-              </div>
-
-              <div className="mb-3">
-                 {" "}
-                <input
-                  type="radio"
-                  id="No"
-                  name="radio"
-                  value="No"
-                  checked={reportradio === "No"}
-                  onChange={handleReportnradio}
-                />
-                 {" "}
-                <label html htmlFor="No" className="text-[14px] text-gray-700 ">
-                  No
-                </label>
-                <br />
-              </div>
-            </div>
-            {error.reportradio && (
-              <p className="text-red-500 ml-1 text-[12px] mt-1">
-                {error.reportradio}
-              </p>
-            )}
-          </div>
-          {reportradio === "Yes" && (
+        <div className="h-[36rem] overflow-y-auto scrollable-content">
+          <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
             <div className="mb-5">
               <label
                 className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                 html
                 htmlFor="username"
               >
-                11.1 If yes, is the training mandatory? *
+                10. Has the entity taken any measures to remediate the loss of
+                income to the most vulnerable individuals and families that
+                results from measures taken to eliminate the use of forced
+                labour or child labour in its activities and supply chains? *
               </label>
               <div className="relative mb-1">
                 <div className="mb-3">
                    {" "}
                   <input
                     type="radio"
-                    id="Yesne"
-                    name="radioone"
+                    id="Yes1"
+                    name="radio2"
                     value="Yes"
-                    checked={reportradioone === "Yes"}
-                    onChange={handleReportnradioone}
+                    checked={reportradiotwo === "Yes"}
+                    onChange={handleReportnradiotwo}
                   />
                    {" "}
                   <label
                     html
-                    htmlFor="Yesne"
+                    htmlFor="Yes1"
                     className="text-[14px] text-gray-700"
                   >
-                 Yes, the training is mandatory for all employees.
+                    Yes, we have taken measures
                   </label>
                   <br />
                 </div>
+
                 <div className="mb-3">
                    {" "}
                   <input
                     type="radio"
-                    id="Yesone"
-                    name="radioone"
-                    value="Yesone"
-                    checked={reportradioone === "Yesone"}
-                    onChange={handleReportnradioone}
-                  />
-                   {" "}
-                  <label
-                    html
-                    htmlFor="Yesone"
-                    className="text-[14px] text-gray-700"
-                  >
-                    Yes, the training is mandatory for employees making contracting or purchasing decisions.
-                  </label>
-                  <br />
-                </div>
-                <div className="mb-3">
-                   {" "}
-                  <input
-                    type="radio"
-                    id="Yestwo"
-                    name="radioone"
-                    value="Yestwo"
-                    checked={reportradioone === "Yestwo"}
-                    onChange={handleReportnradioone}
-                  />
-                   {" "}
-                  <label
-                    html
-                    htmlFor="Yestwo"
-                    className="text-[14px] text-gray-700 "
-                  >
-                  Yes, the training is mandatory for some employees.
-                  </label>
-                  <br />
-                </div>
-                <div className="mb-3">
-                   {" "}
-                  <input
-                    type="radio"
-                    id="Noen"
-                    name="radioone"
+                    id="No1"
+                    name="radio2"
                     value="No"
-                    checked={reportradioone === "No"}
-                    onChange={handleReportnradioone}
+                    checked={reportradiotwo === "No"}
+                    onChange={handleReportnradiotwo}
                   />
                    {" "}
                   <label
                     html
-                    htmlFor="Noen"
+                    htmlFor="No1"
                     className="text-[14px] text-gray-700 "
                   >
-                  No, the training is voluntary.
+                    No, we have not taken measures
+                  </label>
+                  <br />
+                </div>
+                <div className="mb-3">
+                   {" "}
+                  <input
+                    type="radio"
+                    id="Not applicable"
+                    name="radio2"
+                    value="Not applicable"
+                    checked={reportradiotwo === "Not applicable"}
+                    onChange={handleReportnradiotwo}
+                  />
+                   {" "}
+                  <label
+                    html
+                    htmlFor="Not applicable"
+                    className="text-[14px] text-gray-700 "
+                  >
+                    Not applicable, we have not identified any loss of income to
+                    vulnerable families resulting from measures taken to
+                    eliminate the use of forced labour or child labour in our
+                    activities and supply chains.
                   </label>
                   <br />
                 </div>
               </div>
-              {error.reportradioone && (
+              {error.reportradiotwo && (
                 <p className="text-red-500 ml-1 text-[12px] mt-1">
-                  {error.reportradioone}
+                  {error.reportradiotwo}
                 </p>
               )}
             </div>
-          )}
-        </form>
+            <div className="mb-5">
+              <label
+                className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
+                html
+                htmlFor="username"
+              >
+                11. Does the entity currently provide training to employees on
+                forced labour and/or child labour? *
+              </label>
+              <div className="relative mb-1">
+                <div className="mb-3">
+                   {" "}
+                  <input
+                    type="radio"
+                    id="Yes"
+                    name="radio"
+                    value="Yes"
+                    checked={reportradio === "Yes"}
+                    onChange={handleReportnradio}
+                  />
+                   {" "}
+                  <label
+                    html
+                    htmlFor="Yes"
+                    className="text-[14px] text-gray-700"
+                  >
+                    Yes
+                  </label>
+                  <br />
+                </div>
+
+                <div className="mb-3">
+                   {" "}
+                  <input
+                    type="radio"
+                    id="No"
+                    name="radio"
+                    value="No"
+                    checked={reportradio === "No"}
+                    onChange={handleReportnradio}
+                  />
+                   {" "}
+                  <label
+                    html
+                    htmlFor="No"
+                    className="text-[14px] text-gray-700 "
+                  >
+                    No
+                  </label>
+                  <br />
+                </div>
+              </div>
+              {error.reportradio && (
+                <p className="text-red-500 ml-1 text-[12px] mt-1">
+                  {error.reportradio}
+                </p>
+              )}
+            </div>
+            {reportradio === "Yes" && (
+              <div className="mb-5">
+                <label
+                  className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
+                  html
+                  htmlFor="username"
+                >
+                  11.1 If yes, is the training mandatory? *
+                </label>
+                <div className="relative mb-1">
+                  <div className="mb-3">
+                     {" "}
+                    <input
+                      type="radio"
+                      id="Yesne"
+                      name="radioone"
+                      value="Yes"
+                      checked={reportradioone === "Yes"}
+                      onChange={handleReportnradioone}
+                    />
+                     {" "}
+                    <label
+                      html
+                      htmlFor="Yesne"
+                      className="text-[14px] text-gray-700"
+                    >
+                      Yes, the training is mandatory for all employees.
+                    </label>
+                    <br />
+                  </div>
+                  <div className="mb-3">
+                     {" "}
+                    <input
+                      type="radio"
+                      id="Yesone"
+                      name="radioone"
+                      value="Yesone"
+                      checked={reportradioone === "Yesone"}
+                      onChange={handleReportnradioone}
+                    />
+                     {" "}
+                    <label
+                      html
+                      htmlFor="Yesone"
+                      className="text-[14px] text-gray-700"
+                    >
+                      Yes, the training is mandatory for employees making
+                      contracting or purchasing decisions.
+                    </label>
+                    <br />
+                  </div>
+                  <div className="mb-3">
+                     {" "}
+                    <input
+                      type="radio"
+                      id="Yestwo"
+                      name="radioone"
+                      value="Yestwo"
+                      checked={reportradioone === "Yestwo"}
+                      onChange={handleReportnradioone}
+                    />
+                     {" "}
+                    <label
+                      html
+                      htmlFor="Yestwo"
+                      className="text-[14px] text-gray-700 "
+                    >
+                      Yes, the training is mandatory for some employees.
+                    </label>
+                    <br />
+                  </div>
+                  <div className="mb-3">
+                     {" "}
+                    <input
+                      type="radio"
+                      id="Noen"
+                      name="radioone"
+                      value="No"
+                      checked={reportradioone === "No"}
+                      onChange={handleReportnradioone}
+                    />
+                     {" "}
+                    <label
+                      html
+                      htmlFor="Noen"
+                      className="text-[14px] text-gray-700 "
+                    >
+                      No, the training is voluntary.
+                    </label>
+                    <br />
+                  </div>
+                </div>
+                {error.reportradioone && (
+                  <p className="text-red-500 ml-1 text-[12px] mt-1">
+                    {error.reportradioone}
+                  </p>
+                )}
+              </div>
+            )}
+          </form>
+        </div>
         <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full mb-5">
           <div className="float-right">
             <button

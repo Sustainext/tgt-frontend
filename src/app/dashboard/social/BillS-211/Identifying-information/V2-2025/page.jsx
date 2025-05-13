@@ -25,10 +25,16 @@ const SubmissionInformation = ({
   year,
   reportType,
   handleTabClick,
+  setView,
+  
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [status, setStatus] = useState();
+  const goToStep = (step) => {
 
+      setCurrentStep(step);
+    
+  };
   const nextStep = () => {
     fetchBillSstap(); // Fetch updated status when moving forward
     setCurrentStep((prev) => prev + 1);
@@ -63,14 +69,15 @@ const SubmissionInformation = ({
 
   return (
     <>
-      <div className="h-auto overflow-y-auto scrollable-content flex gap-6">
+      <div className="h-[38rem] overflow-y-auto scrollable-content flex gap-6">
         {/* Sidebar */}
-        <div className="w-[285px] mt-10 shadow-lg mb-4">
+        <div className="w-[285px]  mt-10 shadow-lg mb-4">
           <ol className="relative">
             {status && status.map((step, index) => {
               let circleColor = "";
               let lineColor = "";
               let textColor = "";
+              let bordercolor= "";
 
               const normalizedStatus = step.status?.toLowerCase();
 
@@ -78,18 +85,21 @@ const SubmissionInformation = ({
                 circleColor = "bg-[#007EEF]";
                 lineColor = "bg-[#007EEF]";
                 textColor = "text-green-600";
+                bordercolor = "border-blue-500";
               } else if (normalizedStatus === "in_progress") {
                 circleColor = " bg-white";
                 lineColor = "bg-[#007EEF]";
                 textColor = "text-[#007EEF]";
+                     bordercolor = "border-blue-500";
               } else {
                 circleColor = "bg-gray-300";
                 lineColor = "bg-gray-200";
                 textColor = "text-gray-500";
+                bordercolor = "border-gray-100";
               }
 
               return (
-                <li key={index} className="mb-10 ml-4 relative flex items-start">
+                <li key={index} className="mb-10 ml-4 relative flex items-start cursor-pointer"  onClick={() => goToStep(index+1)}>
                   {/* Vertical Line */}
                   {index < status.length - 1 && (
                     <div
@@ -99,7 +109,7 @@ const SubmissionInformation = ({
 
                   {/* Status Circle */}
                   <div
-                    className={`w-6 h-6 ${circleColor} rounded-full flex items-center justify-center border-2 transition-all border-b border-gray-200`}
+                    className={`w-6 h-6 ${circleColor} rounded-full flex items-center justify-center border-2 transition-all border-b ${bordercolor}`}
                   >
                     {normalizedStatus === "completed" ? (
                       <FaCheck className="w-3 h-3 text-white" />
@@ -125,7 +135,7 @@ const SubmissionInformation = ({
         </div>
 
         {/* Screen Content */}
-        <div className="w-full">
+        <div className="w-full ">
           {currentStep === 1 && (
             <Screenone
               nextStep={nextStep}
@@ -192,6 +202,8 @@ const SubmissionInformation = ({
               selectedOrg={selectedOrg}
               year={year}
               reportType={reportType}
+              handleTabClick={handleTabClick}
+              setView={setView}
             />
           )}
         </div>

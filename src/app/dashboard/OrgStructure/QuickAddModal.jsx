@@ -35,7 +35,9 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
     setSubIndustries([]);
     setStates([]);
     setCities([]);
+    setSelectedCountry(``);
     onClose();
+
   };
   const handleAddCity = async (cityName) => {
     try {
@@ -162,6 +164,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
       const [countryId, countryCode] = value.split(":");
       setCountriesids(countryId);
       setSelectedCountry(value);
+      console.log(value,"chekc selecte value");
       setFormData((prev) => ({
         ...prev,
         country: countryCode,
@@ -673,7 +676,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
             </label>
             <select
               name="country"
-              value={countriesids}
+              value={selectedCountry}
               onChange={handleInputChange}
               className={`w-full border ${
                 formErrors.country ? "border-red-500" : "border-gray-300"

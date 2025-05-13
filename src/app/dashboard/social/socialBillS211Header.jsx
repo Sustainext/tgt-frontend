@@ -9,6 +9,8 @@ import {
   setCorporate,
   setyear,
   setReportTypes,
+  setOrgnizationname,
+  setCorporatename,
 } from "../../../lib/redux/features/Bills201";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -36,12 +38,14 @@ const SocialBillS211Header = ({
     dispatch(setReportTypes(type));
   };
   const [locations, setLocations] = useState([]);
-  const [errors, setErrors] = useState({
-    organization: "Please select Organization",
-    corporate: "Please select Corporate",
+  const [errors, setErrors] = useState({});
+useEffect(() => {
+  setErrors({
+    organization: selectedOrg ? "" : "Please select Organization",
+    corporate: selectedCorp ? "" : "Please select Corporate",
     year: year ? "" : "Please select year",
   });
-
+}, [selectedOrg, selectedCorp, year]);
   const [organisations, setOrganisations] = useState([]);
   const [corporates, setCorporates] = useState([]);
 
@@ -129,7 +133,14 @@ const SocialBillS211Header = ({
     const newOrg = e.target.value;
     setSelectedOrg(newOrg);
     dispatch(setOrgnization(newOrg));
+    const selectedOrgName =
+      organisations.find((org) => String(org.id) === String(newOrg))?.name ||
+      "";
+    dispatch(setOrgnizationname(selectedOrgName));
+
     setSelectedCorp("");
+    dispatch(setCorporatename(""));
+    dispatch(setCorporate(""));
     setErrors((prevErrors) => ({
       ...prevErrors,
       organization: newOrg ? "" : "Please select Organization",
@@ -140,6 +151,11 @@ const SocialBillS211Header = ({
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
     dispatch(setCorporate(newCorp));
+    const selectedCorpName =
+      corporates.find((corp) => String(corp.id) === String(newCorp))?.name ||
+      "";
+    dispatch(setCorporatename(selectedCorpName));
+    console.log("Org ID:", newCorp, "Org Name:", selectedCorpName);
     setErrors((prevErrors) => ({
       ...prevErrors,
       corporate: newCorp ? "" : "Please select Corporate",

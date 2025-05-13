@@ -120,7 +120,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
     {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
     <div className="modal-overlay z-50">
       <div className="modal-center">
-        <div className="modal-content bg-white rounded-lg shadow-xl p-6 min-w-[450px] max-w-[450px] relative">
+<div className="modal-content bg-white rounded-lg shadow-xl p-6 min-w-[450px] max-w-[450px] min-h-[20em] max-h-[45em] relative overflow-y-auto scrollable-content ">
           {/* Header */}
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Add Task</h2>
           <p className="text-gray-600 text-sm mb-6">

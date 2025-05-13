@@ -35,15 +35,13 @@ const Screenone = ({
     setLoOpen(false);
   };
 
-
-
   const fetchBillSsix = async () => {
     LoaderOpen();
     try {
       // or use a dynamic value
-        const response = await axiosInstance.get(
-          `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
-        );
+      const response = await axiosInstance.get(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/?corporate=${selectedCorp}&organization=${selectedOrg}&year=${year}`
+      );
 
       if (response.status === 200) {
         setReportnradio(response.data.data.screen1_q1);
@@ -68,7 +66,6 @@ const Screenone = ({
       }
     } catch (error) {
       LoaderClose();
-
     } finally {
       LoaderClose();
     }
@@ -170,24 +167,47 @@ const Screenone = ({
     setReportnradio(event.target.value);
     setError((prev) => ({ ...prev, reportradio: "" }));
   };
+  const stepsubmitForm = async () => {
+    const stepscreenId = 2;
+    try {
+      const sendData = {
+        data: {},
+
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year,
+        status: "in_progress",
+      };
+      const response = await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${stepscreenId}/`,
+        sendData
+      );
+      if (response.status == "200") {
+        console.log("API call susfully:");
+        nextStep();
+      }
+    } catch (error) {
+      console.error("API call failed:", error);
+    }
+  };
   const submitForm = async () => {
     try {
       LoaderOpen();
 
       const sendData = {
-        data:{
+        data: {
           screen1_q1: reportradio,
           screen1_q2: selectedOptions,
         },
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status:"completed",
+        status: "completed",
       };
-      const response= await axiosInstance.put(
+      const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
         sendData
-      )
+      );
       if (response.status == "200") {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -200,7 +220,7 @@ const Screenone = ({
           theme: "light",
         });
         LoaderClose();
-        nextStep();
+        stepsubmitForm();
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -232,7 +252,7 @@ const Screenone = ({
   return (
     <>
       <div className="mt-2">
-        <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2">
+        <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 h-[36rem] overflow-y-auto scrollable-content">
           <div className="mb-5">
             <label
               className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"

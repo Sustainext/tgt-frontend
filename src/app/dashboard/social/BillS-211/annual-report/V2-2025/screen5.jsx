@@ -117,7 +117,29 @@ const Screenfive = ({
       setError(errors);
     }
   };
+const stepsubmitForm = async () => {
+    const stepscreenId = 6;
+    try {
+      const sendData = {
+        data: {},
 
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        year: year,
+        status: "in_progress",
+      };
+      const response = await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${stepscreenId}/`,
+        sendData
+      );
+      if (response.status == "200") {
+        console.log("API call susfully:");
+        nextStep();
+      }
+    } catch (error) {
+      console.error("API call failed:", error);
+    }
+  };
   const submitForm = async () => {
     try {
       LoaderOpen();
@@ -144,7 +166,7 @@ const Screenfive = ({
 
       if (response.status === 200) {
         toast.success("Data added successfully");
-        nextStep();
+        stepsubmitForm();
       } else {
         toast.error("Oops, something went wrong");
       }
@@ -423,7 +445,7 @@ const Screenfive = ({
   return (
     <>
       <div className="mt-2 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%]">
-        <div className="mx-2 xl:mx-4">
+        <div className="mx-2 xl:mx-4 h-[38rem] overflow-y-auto scrollable-content">
           <label className="block text-gray-700 text-[14px] font-[500] mb-2">
             7. Has the entity identified forced labour or child labour risks in
             its activities and supply chains related to any of the following
@@ -523,7 +545,8 @@ const Screenfive = ({
               onBlur={handleReportingdescription}
             />
           </div>
-          <div className="flex justify-end mt-5">
+          </div>
+          <div className="flex justify-end mt-5 mx-4">
             <button
               className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
               onClick={prevStep}
@@ -554,7 +577,7 @@ const Screenfive = ({
               Next &gt;
             </button>
           </div>
-        </div>
+        
       </div>
 
       {loopen && (

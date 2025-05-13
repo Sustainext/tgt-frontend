@@ -5,13 +5,14 @@ import SubmissionInformation from "./V2-2025/page";
 import { useSelector, useDispatch } from "react-redux";
 import { MdKeyboardArrowDown, MdChevronLeft } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
-const Identifyinginformation = ({ handleTabClick, setView }) => {
-
+const Identifyinginformation = ({ handleTabClick, setView, setMobileopen }) => {
   const selectedOrg = useSelector((state) => state.bils201filter.org);
   const selectedCorp = useSelector((state) => state.bils201filter.corp);
   const year = useSelector((state) => state.bils201filter.year);
   const reportType = useSelector((state) => state.bils201filter.reportType);
-console.log(selectedOrg,"selectedOrg test");
+  const orgname = useSelector((state) => state.bils201filter.orgname);
+  const corpname = useSelector((state) => state.bils201filter.corpname);
+  console.log(selectedOrg, "selectedOrg test");
   const toggleSidebar = () => {
     setMobileopen(true);
   };
@@ -24,7 +25,7 @@ console.log(selectedOrg,"selectedOrg test");
   //   setActiveTab("Identifying Information");
 
   // }, []);
- 
+
   return (
     <>
       <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
@@ -38,19 +39,28 @@ console.log(selectedOrg,"selectedOrg test");
                     <p className="gradient-text text-[22px]  font-bold pt-1 w-full">
                       Submission Information
                     </p>
-                    <p className=" text-gray-700 text-[12px]  pt-1 w-full gpb-2 gap-1">
-                      Organization / Corporate: {selectedOrg}/ {selectedCorp}{" "}
-                      Year: {year}
-                    </p>
+                    <div className="flex gap-4">
+                      <div>
+                        <p className=" text-gray-700 text-[12px]  pt-1 w-full gpb-2 gap-1">
+                          Organization / Corporate: {orgname}/ {corpname}{" "}
+                        </p>
+                      </div>
+
+                      <div>
+                        <p className=" text-gray-700 text-[12px]  pt-1 w-full gpb-2 gap-1">
+                          Year: {year}
+                        </p>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="float-end">
                     <button
                       onClick={handleBackToBILLs201}
-                      className="bg-transparent text-gray-900 text-[13px]   border border-gray-300  rounded-md flex w-[160px] me-2 py-2 gap-2 px-2 "
+                      className="bg-transparent text-gray-900 text-[13px]   border border-gray-300  rounded-md flex w-[160px] me-2 py-2 gap-1 px-2 "
                     >
                       {" "}
-                      <MdChevronLeft className="mt-1" /> Back to Collect{" "}
+                      <MdChevronLeft className="text-xl" /> Back to Collect{" "}
                     </button>
                   </div>
                 </div>
@@ -83,30 +93,27 @@ console.log(selectedOrg,"selectedOrg test");
           </div>
         </div>
       </div>
-      
-      
-     
-          {year <= 2023 && (
-            <Identifyinginformation2024
-              handleTabClick={handleTabClick}
-              selectedCorp={selectedCorp || ""}
-              selectedOrg={selectedOrg}
-              year={year}
-              reportType={reportType}
-            />
-          )}
-          {year >= 2024 && (
-            <SubmissionInformation
-              selectedCorp={selectedCorp || ""}
-              selectedOrg={selectedOrg}
-              year={year}
-              reportType={reportType}
-              handleTabClick={handleTabClick}
-         
-            />
-          )}
-       
-   
+
+      {year <= 2023 && (
+        <Identifyinginformation2024
+          handleTabClick={handleTabClick}
+          selectedCorp={selectedCorp || ""}
+          selectedOrg={selectedOrg}
+          year={year}
+          reportType={reportType}
+          setView={setView}
+        />
+      )}
+      {year >= 2024 && (
+        <SubmissionInformation
+          selectedCorp={selectedCorp || ""}
+          selectedOrg={selectedOrg}
+          year={year}
+          reportType={reportType}
+          handleTabClick={handleTabClick}
+          setView={setView}
+        />
+      )}
     </>
   );
 };

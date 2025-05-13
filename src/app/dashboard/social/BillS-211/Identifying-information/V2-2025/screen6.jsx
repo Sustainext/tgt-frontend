@@ -6,7 +6,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { GlobalState } from "../../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
 
-const Screensix = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, reportType }) => {
+const Screensix = ({
+  nextStep,
+  prevStep,
+  selectedCorp,
+  selectedOrg,
+  year,
+  reportType,
+}) => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [reportingentity, setReportingentit] = useState("");
   const [error, setError] = useState({});
@@ -39,7 +46,10 @@ const Screensix = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, report
   };
 
   useEffect(() => {
-    if ((reportType === "Organization" && selectedOrg && year) || (selectedOrg && year && selectedCorp)) {
+    if (
+      (reportType === "Organization" && selectedOrg && year) ||
+      (selectedOrg && year && selectedCorp)
+    ) {
       fetchBillSsix();
     }
     setReportingentit("");
@@ -100,55 +110,48 @@ const Screensix = ({ nextStep, prevStep, selectedCorp, selectedOrg, year, report
     }
   };
   const stepsubmitForm = async () => {
-const stepscreenId = 7;
-    try{
-
-
+    const stepscreenId = 7;
+    try {
       const sendData = {
-        data:{
-        
-        },
-     
+        data: {},
+
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status:"in_progress",
+        status: "in_progress",
       };
-      const response= await axiosInstance.put(
-          `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${stepscreenId}/`,
-          sendData
-        )
-        if (response.status == "200") {
-          console.log("API call susfully:");
-          nextStep();
-        } 
-    }catch (error) {
-     
+      const response = await axiosInstance.put(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${stepscreenId}/`,
+        sendData
+      );
+      if (response.status == "200") {
+        console.log("API call susfully:");
+        nextStep();
+      }
+    } catch (error) {
       console.error("API call failed:", error);
-    
     }
-    
   };
   const submitForm = async () => {
     try {
       LoaderOpen();
 
       const sendData = {
-        data:{
+        data: {
           screen6_q1: selectedOptions,
           screen6_q2: selectedOptions["other"] ? reportingentity : null,
         },
-   
+
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status:"completed",
+        status: "completed",
       };
 
-      const response= await axiosInstance.put(
+      const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/`,
         sendData
-      )
+      );
       if (response.status === 200) {
         toast.success("Data added successfully");
         stepsubmitForm();
@@ -171,8 +174,8 @@ const stepscreenId = 7;
         "Animal production and aquaculture",
         "Forestry and logging",
         "Fishing, hunting and trapping",
-        "Support activities for agriculture and forestry"
-      ]
+        "Support activities for agriculture and forestry",
+      ],
     },
     {
       label: "Mining, quarrying, and oil and gas extraction",
@@ -180,12 +183,12 @@ const stepscreenId = 7;
       subcategories: [
         "Oil and gas extraction",
         "Mining and quarrying (except oil and gas)",
-        "Support activities for mining, and oil and gas extraction"
-      ]
+        "Support activities for mining, and oil and gas extraction",
+      ],
     },
     {
       label: "Utilities",
-      value: "Utilities"
+      value: "Utilities",
     },
     {
       label: "Construction",
@@ -193,8 +196,8 @@ const stepscreenId = 7;
       subcategories: [
         "Construction of buildings",
         "Heavy and civil engineering construction",
-        "Specialty trade contractors"
-      ]
+        "Specialty trade contractors",
+      ],
     },
     {
       label: "Manufacturing",
@@ -220,8 +223,8 @@ const stepscreenId = 7;
         "Electrical equipment, appliance and component manufacturing",
         "Transportation equipment manufacturing",
         "Furniture and related product manufacturing",
-        "Other manufacturing"
-      ]
+        "Other manufacturing",
+      ],
     },
     {
       label: "Wholesale trade",
@@ -235,8 +238,8 @@ const stepscreenId = 7;
         "Building material and suppliers merchant wholesalers",
         "Machinery, equipment and supplies merchant wholesalers",
         "Business-to-business electronic markets, and agents and brokers",
-        "Other merchant wholesalers"
-      ]
+        "Other merchant wholesalers",
+      ],
     },
     {
       label: "Retail trade",
@@ -250,8 +253,8 @@ const stepscreenId = 7;
         "Health and personal care retailers",
         "Gasoline stations and fuel vendors",
         "Clothing, clothing accessories, shoes, jewelry, luggage and leather goods retailers",
-        "Sporting goods, hobby, musical instrument, book, and other retailers"
-      ]
+        "Sporting goods, hobby, musical instrument, book, and other retailers",
+      ],
     },
     {
       label: "Transportation and warehousing",
@@ -267,8 +270,8 @@ const stepscreenId = 7;
         "Support activities for transportation",
         "Postal service",
         "Couriers and messengers",
-        "Warehousing and storage"
-      ]
+        "Warehousing and storage",
+      ],
     },
     {
       label: "Information and cultural industries",
@@ -279,8 +282,8 @@ const stepscreenId = 7;
         "Broadcasting and content providers",
         "Telecommunications",
         "Computing infrastructure providers, data processing, web hosting, and related services",
-        "Web search portals, libraries, archives, and all other information services"
-      ]
+        "Web search portals, libraries, archives, and all other information services",
+      ],
     },
     {
       label: "Finance and insurance",
@@ -290,8 +293,8 @@ const stepscreenId = 7;
         "Credit intermediation and related activities",
         "Securities, commodity contracts, and other financial investment and related activities",
         "Insurance carriers and related activities",
-        "Funds and other financial vehicles"
-      ]
+        "Funds and other financial vehicles",
+      ],
     },
     {
       label: "Real estate and rental and leasing",
@@ -299,28 +302,30 @@ const stepscreenId = 7;
       subcategories: [
         "Real estate",
         "Rental and leasing services",
-        "Lessors of non-financial intangible assets (except copyrighted works)"
-      ]
+        "Lessors of non-financial intangible assets (except copyrighted works)",
+      ],
     },
     {
       label: "Professional, scientific and technical services",
-      value: "Professional, scientific and technical services"
+      value: "Professional, scientific and technical services",
     },
     {
       label: "Management of companies and enterprises",
-      value: "Management of companies and enterprises"
+      value: "Management of companies and enterprises",
     },
     {
-      label: "Administrative and support, waste management and remediation services",
-      value: "Administrative and support, waste management and remediation services",
+      label:
+        "Administrative and support, waste management and remediation services",
+      value:
+        "Administrative and support, waste management and remediation services",
       subcategories: [
         "Administrative and support services",
-        "Waste management and remediation services"
-      ]
+        "Waste management and remediation services",
+      ],
     },
     {
       label: "Educational services",
-      value: "Educational services"
+      value: "Educational services",
     },
     {
       label: "Health care and social assistance",
@@ -329,8 +334,8 @@ const stepscreenId = 7;
         "Ambulatory health care services",
         "Hospitals",
         "Nursing and residential care facilities",
-        "Social assistance"
-      ]
+        "Social assistance",
+      ],
     },
     {
       label: "Arts, entertainment and recreation",
@@ -338,16 +343,16 @@ const stepscreenId = 7;
       subcategories: [
         "Performing arts, spectator sports and related industries",
         "Heritage institutions",
-        "Amusement, gambling and recreation industries"
-      ]
+        "Amusement, gambling and recreation industries",
+      ],
     },
     {
       label: "Accommodation and food services",
       value: "Accommodation and food services",
       subcategories: [
         "Accommodation services",
-        "Food services and drinking places"
-      ]
+        "Food services and drinking places",
+      ],
     },
     {
       label: "Other services (except public administration)",
@@ -356,8 +361,8 @@ const stepscreenId = 7;
         "Repair and maintenance",
         "Personal and laundry services",
         "Religious, grant-making, civic, and professional and similar organizations",
-        "Private households"
-      ]
+        "Private households",
+      ],
     },
     {
       label: "Public administration",
@@ -367,52 +372,63 @@ const stepscreenId = 7;
         "Provincial and territorial public administration",
         "Local, municipal and regional public administration",
         "Indigenous public administration",
-        "International and other extra-territorial public administration"
-      ]
+        "International and other extra-territorial public administration",
+      ],
     },
     {
       label: "Other, please specify:",
-      value: "other"
-    }
+      value: "other",
+    },
   ];
-  
 
   return (
     <>
       <div className="mt-2">
-        <div className="mx-2 xl:mx-4">
+        <div className="mx-2 xl:mx-4 h-[32rem] overflow-y-auto">
           <label className="block text-gray-700 text-[14px] font-[500] mb-2">
-            10. For entities only: In which of the following sectors or industries does the entity operate? Select all that apply. *
+            10. For entities only: In which of the following sectors or
+            industries does the entity operate? Select all that apply. *
           </label>
-  
+
           {optionsTwo.map((option, index) => (
-            <div key={index} className="mb-2 ">
+            <div key={index} className="mb-2">
               <div className="flex items-center ">
-              <label className="text-[14px] text-gray-700">
-                <input
-                  type="checkbox"
-                  value={option.value}
-                  checked={selectedOptions.hasOwnProperty(option.value)}
-                  onChange={handleCheckboxChange}
-                  className="mr-2"
-                />
-                {option.label}
+                <label className="text-[14px] text-gray-700">
+                  <input
+                    type="checkbox"
+                    value={option.value}
+                    checked={selectedOptions.hasOwnProperty(option.value)}
+                    onChange={handleCheckboxChange}
+                    className="mr-2"
+                  />
+                  {option.label}
                 </label>
               </div>
 
               {option.subcategories && (
                 <div
                   className={`ml-6 mt-1 gap-2 mb-2 ${
-                    selectedOptions.hasOwnProperty(option.value) ? "" : "opacity-50 pointer-events-none"
+                    selectedOptions.hasOwnProperty(option.value)
+                      ? ""
+                      : "opacity-50 pointer-events-none"
                   }`}
                 >
                   {option.subcategories.map((sub, idx) => (
-                    <label key={idx} className="flex items-center text-[13px] text-gray-600 mb-2">
+                    <label
+                      key={idx}
+                      className="flex items-center text-[13px] text-gray-600 mb-2"
+                    >
                       <input
                         type="checkbox"
-                        checked={selectedOptions[option.value]?.includes(sub) || false}
+                        checked={
+                          selectedOptions[option.value]?.includes(sub) || false
+                        }
                         onChange={(e) =>
-                          handleSubcategoryChange(option.value, sub, e.target.checked)
+                          handleSubcategoryChange(
+                            option.value,
+                            sub,
+                            e.target.checked
+                          )
                         }
                         disabled={!selectedOptions.hasOwnProperty(option.value)}
                         className="mr-2"
@@ -426,7 +442,9 @@ const stepscreenId = 7;
           ))}
 
           {error.checkboxes && (
-            <div className="text-red-500 text-[12px] ml-1">{error.checkboxes}</div>
+            <div className="text-red-500 text-[12px] ml-1">
+              {error.checkboxes}
+            </div>
           )}
 
           {selectedOptions["other"] && (
@@ -439,36 +457,56 @@ const stepscreenId = 7;
                 onChange={handleReportingentity}
               />
               {error.reportingentity && (
-                <div className="text-red-500 text-[12px] ml-1">{error.reportingentity}</div>
+                <div className="text-red-500 text-[12px] ml-1">
+                  {error.reportingentity}
+                </div>
               )}
             </div>
           )}
+        </div>
 
-          <div className="flex justify-end mt-5">
-            <button
-              className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-              onClick={prevStep}
-            >
-              &lt; Previous
-            </button>
+        <div className="flex justify-end mt-5 mx-4">
+          <button
+            className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
+            onClick={prevStep}
+          >
+            &lt; Previous
+          </button>
 
-            <button
-              type="button"
-              onClick={continueToNextStep}
-              disabled={!(selectedOrg && year && (reportType === "Organization" || selectedCorp))}
-              className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-                !(selectedOrg && year && (reportType === "Organization" || selectedCorp)) ? "opacity-30 cursor-not-allowed" : ""
-              }`}
-            >
-              Next &gt;
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={continueToNextStep}
+            disabled={
+              !(
+                selectedOrg &&
+                year &&
+                (reportType === "Organization" || selectedCorp)
+              )
+            }
+            className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+              !(
+                selectedOrg &&
+                year &&
+                (reportType === "Organization" || selectedCorp)
+              )
+                ? "opacity-30 cursor-not-allowed"
+                : ""
+            }`}
+          >
+            Next &gt;
+          </button>
         </div>
       </div>
 
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <Oval height={50} width={50} color="#00BFFF" secondaryColor="#f3f3f3" strokeWidth={2} />
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+          />
         </div>
       )}
     </>
