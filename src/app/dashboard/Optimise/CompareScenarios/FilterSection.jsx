@@ -5,7 +5,7 @@ import MetricsSelector from "./MetricsSelector";
 
 /**
  * Filter section component for scenario comparison
- * 
+ *
  * @param {Object} props Component props
  * @param {Array} props.selectedScenarios IDs of selected scenarios
  * @param {Array} props.allScenarios All available scenarios
@@ -17,7 +17,7 @@ import MetricsSelector from "./MetricsSelector";
  * @param {Array} props.subCategoryOptions Available subcategory options
  * @param {Array} props.activityOptions Available activity options
  */
-const FilterSection = ({ 
+const FilterSection = ({
   selectedScenarios = [],
   allScenarios = [],
   filters = {},
@@ -26,7 +26,7 @@ const FilterSection = ({
   scopeOptions = ["Aggregated Scope"],
   categoryOptions = ["Aggregated Scope"],
   subCategoryOptions = ["Aggregated Scope"],
-  activityOptions = ["Aggregated Scope"]
+  activityOptions = ["Aggregated Scope"],
 }) => {
   // Create local state for scenario-specific settings (excluding metrics)
   const [scenarioSettings, setScenarioSettings] = useState({});
@@ -35,14 +35,14 @@ const FilterSection = ({
   useEffect(() => {
     const initialSettings = {};
 
-    selectedScenarios.forEach(scenarioId => {
-      const scenario = allScenarios.find(s => s.id === scenarioId);
+    selectedScenarios.forEach((scenarioId) => {
+      const scenario = allScenarios.find((s) => s.id === scenarioId);
       if (!scenario) return;
 
       if (!scenarioSettings[scenarioId]) {
         initialSettings[scenarioId] = {
           includeNetZero: true,
-          targetYear: scenario.targetYear || 2035
+          targetYear: scenario.targetYear || 2035,
         };
       } else {
         initialSettings[scenarioId] = { ...scenarioSettings[scenarioId] };
@@ -64,8 +64,8 @@ const FilterSection = ({
       ...scenarioSettings,
       [scenarioId]: {
         ...scenarioSettings[scenarioId],
-        [key]: value
-      }
+        [key]: value,
+      },
     };
 
     setScenarioSettings(updatedSettings);
@@ -82,43 +82,43 @@ const FilterSection = ({
     const arrayValue = Array.isArray(value) ? value : [value];
 
     switch (filterType) {
-      case 'scope':
+      case "scope":
         if (arrayValue.includes("Aggregated Scope")) {
-          onFilterChange({ 
-            scope: arrayValue, 
+          onFilterChange({
+            scope: arrayValue,
             category: ["Aggregated Scope"],
             subCategory: ["Aggregated Scope"],
-            activity: ["Aggregated Scope"] 
+            activity: ["Aggregated Scope"],
           });
         } else {
           onFilterChange({ scope: arrayValue });
         }
         break;
 
-      case 'category':
+      case "category":
         if (arrayValue.includes("Aggregated Scope")) {
-          onFilterChange({ 
+          onFilterChange({
             category: arrayValue,
             subCategory: ["Aggregated Scope"],
-            activity: ["Aggregated Scope"] 
+            activity: ["Aggregated Scope"],
           });
         } else {
           onFilterChange({ category: arrayValue });
         }
         break;
 
-      case 'subCategory':
+      case "subCategory":
         if (arrayValue.includes("Aggregated Scope")) {
-          onFilterChange({ 
+          onFilterChange({
             subCategory: arrayValue,
-            activity: ["Aggregated Scope"] 
+            activity: ["Aggregated Scope"],
           });
         } else {
           onFilterChange({ subCategory: arrayValue });
         }
         break;
 
-      case 'activity':
+      case "activity":
         onFilterChange({ activity: arrayValue });
         break;
 
@@ -139,8 +139,42 @@ const FilterSection = ({
   const currentActivity = getFilterValue("activity");
 
   const isCategoryDisabled = currentScope.includes("Aggregated Scope");
-  const isSubCategoryDisabled = isCategoryDisabled || currentCategory.includes("Aggregated Scope");
-  const isActivityDisabled = isSubCategoryDisabled || currentSubCategory.includes("Aggregated Scope");
+  const isSubCategoryDisabled =
+    isCategoryDisabled || currentCategory.includes("Aggregated Scope");
+  const isActivityDisabled =
+    isSubCategoryDisabled || currentSubCategory.includes("Aggregated Scope");
+
+ // Add/replace this function in FilterSection.jsx
+
+// Handle metrics changes
+const handleMetricsChange = (scenarioId, updatedMetrics) => {
+  console.log("FilterSection: Metrics changed for scenario", scenarioId);
+  console.log("FilterSection: Updated metrics", updatedMetrics);
+  console.log("FilterSection: Current filters", filters);
+  
+  if (!onFilterChange) {
+    console.error("FilterSection: onFilterChange callback is missing!");
+    return;
+  }
+  
+  // Create a deep copy of the current scenarioMetrics
+  const updatedScenarioMetrics = { ...(filters.scenarioMetrics || {}) };
+  
+  // Update the metrics for this specific scenario
+  updatedScenarioMetrics[scenarioId] = [...updatedMetrics];
+  
+  console.log("FilterSection: New scenarioMetrics object", updatedScenarioMetrics);
+  
+  // Call the onFilterChange with the updated filters
+  // Important: Create a new object to ensure React detects the change
+  const newFilters = {
+    ...filters,
+    scenarioMetrics: updatedScenarioMetrics
+  };
+  
+  console.log("FilterSection: Sending updated filters", newFilters);
+  onFilterChange(newFilters);
+};
 
   return (
     <div className="border-b border-gray-200 p-6">
@@ -149,37 +183,36 @@ const FilterSection = ({
       </h2>
 
       <div className="border border-gray-100 rounded-md p-3">
-
         {/* Filters */}
         <div className="flex flex-wrap items-center justify-between w-full px-3 py-2 text-sm gap-4 mb-6">
-          <FilterDropdown 
+          <FilterDropdown
             label="Scope:"
             selected={currentScope}
-            setSelected={(value) => handleFilterChange('scope', value)}
+            setSelected={(value) => handleFilterChange("scope", value)}
             options={scopeOptions}
             defaultLabel="All Scopes"
             disabled={false}
           />
-          <FilterDropdown 
+          <FilterDropdown
             label="Category:"
             selected={currentCategory}
-            setSelected={(value) => handleFilterChange('category', value)}
+            setSelected={(value) => handleFilterChange("category", value)}
             options={categoryOptions}
             defaultLabel="All Categories"
             disabled={isCategoryDisabled}
           />
-          <FilterDropdown 
+          <FilterDropdown
             label="Sub Category:"
             selected={currentSubCategory}
-            setSelected={(value) => handleFilterChange('subCategory', value)}
+            setSelected={(value) => handleFilterChange("subCategory", value)}
             options={subCategoryOptions}
             defaultLabel="All Sub-Categories"
             disabled={isSubCategoryDisabled}
           />
-          <FilterDropdown 
+          <FilterDropdown
             label="Activity:"
             selected={currentActivity}
-            setSelected={(value) => handleFilterChange('activity', value)}
+            setSelected={(value) => handleFilterChange("activity", value)}
             options={activityOptions}
             defaultLabel="All Activities"
             disabled={isActivityDisabled}
@@ -188,31 +221,27 @@ const FilterSection = ({
 
         {/* Scenario-specific metrics and settings */}
         {selectedScenarios.map((scenarioId) => {
-          const scenario = allScenarios.find(s => s.id === scenarioId);
+          const scenario = allScenarios.find((s) => s.id === scenarioId);
           if (!scenario) return null;
 
           const settings = scenarioSettings[scenarioId] || {
             includeNetZero: true,
-            targetYear: scenario.targetYear || 2035
+            targetYear: scenario.targetYear || 2035,
           };
 
           const scenarioMetrics = filters.scenarioMetrics?.[scenarioId] || [];
 
           return (
-            <div key={scenarioId} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-              <MetricsSelector 
+            <div
+              key={scenarioId}
+              className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4"
+            >
+              <MetricsSelector
                 scenario={scenario}
                 scenarioMetrics={scenarioMetrics}
-                onMetricsChange={(updatedMetrics) => {
-                  const updatedScenarioMetrics = {
-                    ...(filters.scenarioMetrics || {}),
-                    [scenarioId]: updatedMetrics
-                  };
-                  onFilterChange({
-                    ...filters,
-                    scenarioMetrics: updatedScenarioMetrics
-                  });
-                }}
+                onMetricsChange={(updatedMetrics) =>
+                  handleMetricsChange(scenarioId, updatedMetrics)
+                }
               />
 
               <div className="flex items-center">
@@ -220,11 +249,13 @@ const FilterSection = ({
                   id={`include-net-zero-${scenarioId}`}
                   type="checkbox"
                   checked={settings.includeNetZero}
-                  onChange={() => updateScenarioSetting(
-                    scenarioId, 
-                    'includeNetZero', 
-                    !settings.includeNetZero
-                  )}
+                  onChange={() =>
+                    updateScenarioSetting(
+                      scenarioId,
+                      "includeNetZero",
+                      !settings.includeNetZero
+                    )
+                  }
                   className="h-4 w-4 green-checkbox border-gray-300 rounded focus:ring-blue-500"
                 />
                 <label
@@ -236,7 +267,10 @@ const FilterSection = ({
               </div>
 
               <div className="flex items-center gap-2 justify-self-end">
-                <label htmlFor={`target-year-${scenarioId}`} className="text-sm text-gray-700 whitespace-nowrap">
+                <label
+                  htmlFor={`target-year-${scenarioId}`}
+                  className="text-sm text-gray-700 whitespace-nowrap"
+                >
                   Enter Target Year:
                 </label>
                 <input
@@ -245,11 +279,13 @@ const FilterSection = ({
                   min={scenario.baseYear}
                   max={2050}
                   value={settings.targetYear}
-                  onChange={(e) => updateScenarioSetting(
-                    scenarioId,
-                    'targetYear',
-                    parseInt(e.target.value)
-                  )}
+                  onChange={(e) =>
+                    updateScenarioSetting(
+                      scenarioId,
+                      "targetYear",
+                      parseInt(e.target.value)
+                    )
+                  }
                   className="w-24 rounded-md border border-gray-300 py-1 px-2 text-gray-700 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
                 />
               </div>

@@ -385,23 +385,63 @@ useEffect(() => {
     };
   }, []);
 
-  // Handle filter changes
-  const handleFilterChange = useCallback((newFilters) => {
-    console.log("Filter change detected:", newFilters);
+// Add/replace this code in ComparisonView.jsx
+
+// Handle filter changes
+const handleFilterChange = useCallback((newFilters) => {
+  console.log("ComparisonView: Filter change detected:", newFilters);
+  
+  // Properly handle the scenarioMetrics to avoid losing state
+  setFilters(prevFilters => {
+    console.log("ComparisonView: Previous filters:", prevFilters);
     
-    // Update filters, maintaining arrays for multi-select
-    setFilters(prev => {
-      const updated = { ...prev };
+    // Create a new object (important for React to detect changes)
+    const updatedFilters = { ...prevFilters };
+    
+    // Special handling for scenarioMetrics
+    if (newFilters.scenarioMetrics) {
+      updatedFilters.scenarioMetrics = {
+        ...(prevFilters.scenarioMetrics || {}),
+        ...newFilters.scenarioMetrics
+      };
       
-      // Process each filter type
-      Object.entries(newFilters).forEach(([key, value]) => {
-        // Ensure value is an array
-        updated[key] = Array.isArray(value) ? value : [value];
-      });
+      console.log("ComparisonView: Updated scenarioMetrics:", updatedFilters.scenarioMetrics);
+    }
+    
+    // Handle all other filter types
+    Object.entries(newFilters).forEach(([key, value]) => {
+      // Skip scenarioMetrics as we've already handled it
+      if (key === 'scenarioMetrics') return;
       
-      return updated;
+      // Ensure value is an array
+      updatedFilters[key] = Array.isArray(value) ? value : [value];
     });
-  }, []);
+    
+    console.log("ComparisonView: New filters state:", updatedFilters);
+    return updatedFilters;
+  });
+}, []);
+
+// Add a dedicated effect to handle metrics changes
+useEffect(() => {
+  // Only trigger chart data regeneration when we have the necessary data
+  if (comparisonData && 
+      Object.keys(comparisonData).length > 0 && 
+      Object.keys(scenarioSettings).length > 0 &&
+      filters.scenarioMetrics) {
+        
+    console.log("ComparisonView: Regenerating chart data due to filters change");
+    console.log("ComparisonView: Current scenarioMetrics:", filters.scenarioMetrics);
+    
+    // Generate emissions line chart data
+    const lineData = generateEmissionsLineData();
+    setEmissionsLineData(lineData);
+    
+    // Generate emissions gap chart data
+    const gapData = generateEmissionsGapData();
+    setEmissionsGapData(gapData);
+  }
+}, [comparisonData, scenarioSettings, filters, filters.scenarioMetrics]);
 
   // Handle scenario settings changes
   const handleScenarioSettingsChange = useCallback((newSettings) => {
@@ -422,106 +462,457 @@ useEffect(() => {
     }
   }, [comparisonData, scenarioSettings, filters]);
 
-  // Generate line chart data
-  const generateEmissionsLineData = () => {
-    // Sample data generation logic - replace with your actual logic
-    const result = [];
+
+const generateEmissionsLineData = () => {
+  console.log("Generating emissions line data");
+  
+  if (!comparisonData || Object.keys(comparisonData).length === 0) {
+    console.log("No comparison data available");
+    return [];
+  }
+  
+  const result = [];
+  
+  // First, determine the maximum target year across all selected scenarios
+  let maxTargetYear = 0;
+  let minBaseYear = Number.MAX_SAFE_INTEGER;
+  
+  selectedScenarios.forEach(scenarioId => {
+    const scenario = allScenarios.find(s => s.id === scenarioId);
+    if (!scenario) return;
     
-    selectedScenarios.forEach((scenarioId, index) => {
+    // Get base year and target year
+    const baseYear = scenario.baseYear || 2024;
+    const settings = scenarioSettings[scenarioId] || {};
+    const targetYear = settings.targetYear || 2035;
+    
+    console.log(`Scenario ${scenarioId}: baseYear=${baseYear}, targetYear=${targetYear}`);
+    
+    // Update max target year and min base year
+    maxTargetYear = Math.max(maxTargetYear, targetYear);
+    minBaseYear = Math.min(minBaseYear, baseYear);
+  });
+  
+  console.log(`Chart range: minBaseYear=${minBaseYear}, maxTargetYear=${maxTargetYear}`);
+  
+  // Default to current year + 10 if maxTargetYear is still 0
+  if (maxTargetYear === 0) {
+    maxTargetYear = new Date().getFullYear() + 10;
+  }
+  
+  // Handle case where minBaseYear wasn't set
+  if (minBaseYear === Number.MAX_SAFE_INTEGER) {
+    minBaseYear = 2024;
+  }
+  
+  // Create the full year range for the x-axis
+  const fullYearRange = [];
+  for (let year = minBaseYear; year <= maxTargetYear; year++) {
+    fullYearRange.push(year);
+  }
+  
+  // Now generate data for each scenario
+  selectedScenarios.forEach((scenarioId, index) => {
+    const scenario = allScenarios.find(s => s.id === scenarioId);
+    if (!scenario) return;
+    
+    // Get scenario-specific data
+    const scenarioData = comparisonData[scenarioId];
+    if (!scenarioData) return;
+    
+    // Get selected metrics for this scenario
+    const scenarioMetrics = filters.scenarioMetrics?.[scenarioId] || [];
+    const selectedMetricIds = scenarioMetrics
+      .filter(metric => metric.selected)
+      .map(metric => metric.id);
+    
+    console.log(`Scenario ${scenarioId} selected metrics:`, selectedMetricIds);
+    
+    // If no metrics are selected, don't show any data
+    if (selectedMetricIds.length === 0) {
+      console.log(`No metrics selected for scenario ${scenarioId}, skipping`);
+      return;
+    }
+    
+    // Colors for emissions and net-zero lines
+    const colors = ["#3182CE", "#2563EB", "#EF4444", "#8B5CF6", "#10B981"];
+    const netZeroColors = ["#48BB78", "#10B981", "#FB7185", "#A78BFA", "#14B8A6"];
+    
+    // Get base year and target year for this scenario
+    const baseYear = scenario.baseYear || 2024;
+    const settings = scenarioSettings[scenarioId] || {};
+    const targetYear = settings.targetYear || 2035;
+    
+    // Extract unique years from the comparison data
+    const yearsSet = new Set();
+    
+    // Add years from yearly_data
+    if (scenarioData.yearly_data) {
+      Object.keys(scenarioData.yearly_data).forEach(year => {
+        yearsSet.add(parseInt(year));
+      });
+    }
+    
+    // Add years from totals
+    if (scenarioData.totals) {
+      Object.keys(scenarioData.totals).forEach(year => {
+        yearsSet.add(parseInt(year));
+      });
+    }
+    
+    // Create a years array from minBaseYear to maxTargetYear for this scenario
+    // Important: We want the x-axis to go up to maxTargetYear
+    const scenarioYears = [];
+    for (let year = minBaseYear; year <= targetYear; year++) {
+      scenarioYears.push(year);
+    }
+    
+    console.log(`Scenario ${scenarioId} year range:`, scenarioYears);
+    
+    // We'll store calculated values for each year to use for extrapolation
+    const calculatedValues = {};
+    
+    // First pass: calculate values for years we have data for
+    scenarioYears.forEach(year => {
+      if (scenarioData.totals && scenarioData.totals[year]) {
+        let totalValue = 0;
+        const yearTotals = scenarioData.totals[year];
+        
+        // Sum up the selected metrics
+        selectedMetricIds.forEach(metricId => {
+          if (yearTotals[metricId] !== undefined) {
+            totalValue += parseFloat(yearTotals[metricId]);
+          }
+        });
+        
+        calculatedValues[year] = totalValue;
+      } 
+      else if (scenarioData.yearly_data && scenarioData.yearly_data[year]) {
+        let totalValue = 0;
+        const activities = scenarioData.yearly_data[year] || [];
+        
+        // Sum up the selected metrics across all activities
+        if (Array.isArray(activities)) {
+          activities.forEach(activity => {
+            selectedMetricIds.forEach(metricId => {
+              if (activity[metricId] !== undefined) {
+                totalValue += parseFloat(activity[metricId]);
+              }
+            });
+          });
+        }
+        
+        calculatedValues[year] = totalValue;
+      }
+    });
+    
+    // Second pass: fill in missing values through extrapolation
+    scenarioYears.forEach(year => {
+      if (calculatedValues[year] === undefined) {
+        // Find the closest year with data before this year
+        const previousYears = scenarioYears.filter(y => y < year && calculatedValues[y] !== undefined);
+        
+        if (previousYears.length > 0) {
+          // Use the most recent year with data for extrapolation
+          const latestPreviousYear = Math.max(...previousYears);
+          const yearDiff = year - latestPreviousYear;
+          
+          // Apply a simple reduction factor (5% per year) for future projections
+          calculatedValues[year] = calculatedValues[latestPreviousYear] * Math.pow(0.95, yearDiff);
+        } else {
+          // No previous data points, check if we have any future data points
+          const futureYears = scenarioYears.filter(y => y > year && calculatedValues[y] !== undefined);
+          
+          if (futureYears.length > 0) {
+            // Use the earliest future year with data for backward extrapolation
+            const earliestFutureYear = Math.min(...futureYears);
+            const yearDiff = earliestFutureYear - year;
+            
+            // Apply an increase factor (5% per year) for backward projections
+            calculatedValues[year] = calculatedValues[earliestFutureYear] * Math.pow(1.05, yearDiff);
+          } else {
+            // No data at all, default to zero
+            calculatedValues[year] = 0;
+          }
+        }
+      }
+    });
+    
+    // Convert to data points format for the chart
+    const dataPoints = scenarioYears.map(year => ({
+      x: year,
+      y: calculatedValues[year] || 0
+    }));
+    
+    console.log(`Scenario ${scenarioId} emissions data points:`, dataPoints);
+    
+    // Add to results with appropriate color - one line per scenario (total)
+    result.push({
+      id: `${scenario.name} (Emissions)`,
+      data: dataPoints,
+      color: colors[index % colors.length]
+    });
+    
+    if (settings?.includeNetZero) {
+      // Find starting emissions value from the first year
+      const startValue = dataPoints.find(p => p.x === scenarioYears[0])?.y || 0;
+      
+      // Generate net-zero points based on the current target year setting
+      const netZeroPoints = scenarioYears.map(year => {
+        // Calculate based on this scenario's target year (may have been updated by user)
+        const yearFactor = (year - baseYear) / (targetYear - baseYear);
+        
+        // Linear reduction to zero by target year
+        let value;
+        
+        if (yearFactor >= 1) {
+          // At or after target year, emissions are zero
+          value = 0;
+        } else if (yearFactor <= 0) {
+          // Before or at base year, emissions are at starting level
+          value = startValue;
+        } else {
+          // In between, linear reduction
+          value = startValue * (1 - yearFactor);
+        }
+        
+        return {
+          x: year,
+          y: Math.max(0, value)
+        };
+      });
+      
+      console.log(`Scenario ${scenarioId} net-zero data points with target year ${targetYear}:`, netZeroPoints);
+      
+      result.push({
+        id: `${scenario.name} (Net-Zero)`,
+        data: netZeroPoints,
+        color: netZeroColors[index % netZeroColors.length],
+        dashed: true
+      });
+    }
+  });
+  
+  console.log("Final chart data:", result);
+  return result;
+};
+  
+const generateEmissionsGapData = () => {
+  console.log("Generating emissions gap data");
+  
+  if (!comparisonData || Object.keys(comparisonData).length === 0) {
+    console.log("No comparison data available");
+    return [];
+  }
+  
+  // First, determine the maximum target year and minimum base year across all selected scenarios
+  let maxTargetYear = 0;
+  let minBaseYear = Number.MAX_SAFE_INTEGER;
+  
+  selectedScenarios.forEach(scenarioId => {
+    const scenario = allScenarios.find(s => s.id === scenarioId);
+    if (!scenario) return;
+    
+    // Get base year and target year
+    const baseYear = scenario.baseYear || 2024;
+    const settings = scenarioSettings[scenarioId] || {};
+    const targetYear = settings.targetYear || 2035;
+    
+    console.log(`Scenario ${scenarioId}: baseYear=${baseYear}, targetYear=${targetYear}`);
+    
+    // Update max target year and min base year
+    maxTargetYear = Math.max(maxTargetYear, targetYear);
+    minBaseYear = Math.min(minBaseYear, baseYear);
+  });
+  
+  console.log(`Gap chart range: minBaseYear=${minBaseYear}, maxTargetYear=${maxTargetYear}`);
+  
+  // Default to current year + 10 if maxTargetYear is still 0
+  if (maxTargetYear === 0) {
+    maxTargetYear = new Date().getFullYear() + 10;
+  }
+  
+  // Handle case where minBaseYear wasn't set
+  if (minBaseYear === Number.MAX_SAFE_INTEGER) {
+    minBaseYear = 2024;
+  }
+  
+  // Create array of years from min base year to max target year
+  const allYears = [];
+  for (let year = minBaseYear; year <= maxTargetYear; year++) {
+    allYears.push(year);
+  }
+  
+  // Generate gap data for each year across the full timeline
+  const result = allYears.map(year => {
+    const yearData = { year };
+    
+    selectedScenarios.forEach(scenarioId => {
       const scenario = allScenarios.find(s => s.id === scenarioId);
       if (!scenario) return;
       
-      // Sample data - replace with real data processing from comparisonData
-      const colors = ["#3182CE", "#2563EB", "#EF4444", "#8B5CF6", "#10B981"];
-      const baseYear = 2024;
-      const years = [];
+      // Get scenario-specific data
+      const scenarioData = comparisonData[scenarioId];
+      if (!scenarioData) return;
       
-      // Create years array
-      for (let year = baseYear; year <= baseYear + 10; year++) {
-        years.push(year);
-      }
-      
-      // Generate sample data points
-      const dataPoints = years.map(year => ({
-        x: year,
-        y: 1000 * (1 - (0.05 * (year - baseYear))) + (index * 100)
-      }));
-      
-      // Add to results with appropriate color
-      result.push({
-        id: `${scenario.name} (Emissions)`,
-        data: dataPoints,
-        color: colors[index % colors.length]
-      });
-      
-      // Add net-zero trajectory if enabled
+      // Get settings for this scenario
       const settings = scenarioSettings[scenarioId];
-      if (settings?.includeNetZero) {
-        const netZeroColors = ["#48BB78", "#10B981", "#FB7185", "#A78BFA", "#14B8A6"];
-        
-        const netZeroPoints = years.map(year => {
-          const targetYear = settings.targetYear || baseYear + 10;
-          const yearFactor = (year - baseYear) / (targetYear - baseYear);
-          const value = 1000 * (1 - yearFactor) + (index * 100);
-          
-          return {
-            x: year,
-            y: Math.max(0, value)
-          };
-        });
-        
-        result.push({
-          id: `${scenario.name} (Net-Zero)`,
-          data: netZeroPoints,
-          color: netZeroColors[index % netZeroColors.length],
-          dashed: true
-        });
+      if (!settings || !settings.includeNetZero) {
+        yearData[`${scenario.name} Gap`] = 0;
+        return;
       }
-    });
-    
-    return result;
-  };
-  
-  // Generate emissions gap chart data
-  const generateEmissionsGapData = () => {
-    // Sample data generation logic - replace with your actual logic
-    const baseYear = 2024;
-    const years = [];
-    
-    // Create years array
-    for (let year = baseYear; year <= baseYear + 10; year++) {
-      years.push(year);
-    }
-    
-    // Generate gap data for each year
-    return years.map(year => {
-      const result = { year };
       
-      selectedScenarios.forEach(scenarioId => {
-        const scenario = allScenarios.find(s => s.id === scenarioId);
-        if (!scenario) return;
+      // Get base year and target year for this scenario
+      const baseYear = scenario.baseYear || 2024;
+      const targetYear = settings.targetYear || 2035;
+      
+      // If this year is beyond this scenario's target year, set gap to 0
+      if (year > targetYear) {
+        yearData[`${scenario.name} Gap`] = 0;
+        return;
+      }
+      
+      // Get selected metrics for this scenario
+      const scenarioMetrics = filters.scenarioMetrics?.[scenarioId] || [];
+      const selectedMetricIds = scenarioMetrics
+        .filter(metric => metric.selected)
+        .map(metric => metric.id);
+      
+      // If no metrics are selected, don't show any gap
+      if (selectedMetricIds.length === 0) {
+        yearData[`${scenario.name} Gap`] = 0;
+        return;
+      }
+      
+      // Store calculated values for each year to use for calculations
+      const calculatedEmissions = {};
+      
+      // Helper function to calculate emissions for a specific year from data
+      const calculateEmissionsForYear = (year) => {
+        let value = 0;
         
-        // Get settings for this scenario
-        const settings = scenarioSettings[scenarioId];
-        if (!settings || !settings.includeNetZero) {
-          result[`${scenario.name} Gap`] = 0;
-          return;
+        // If we have totals data for this year, use it
+        if (scenarioData.totals && scenarioData.totals[year]) {
+          const yearTotals = scenarioData.totals[year];
+          
+          // Sum up the selected metrics
+          selectedMetricIds.forEach(metricId => {
+            if (yearTotals[metricId] !== undefined) {
+              value += parseFloat(yearTotals[metricId]);
+            }
+          });
+        } 
+        // If we don't have totals, try to calculate from yearly_data
+        else if (scenarioData.yearly_data && scenarioData.yearly_data[year]) {
+          const activities = scenarioData.yearly_data[year] || [];
+          
+          // Sum up the selected metrics across all activities
+          if (Array.isArray(activities)) {
+            activities.forEach(activity => {
+              selectedMetricIds.forEach(metricId => {
+                if (activity[metricId] !== undefined) {
+                  value += parseFloat(activity[metricId]);
+                }
+              });
+            });
+          }
         }
         
-        // Sample gap calculation - replace with real data
-        const targetYear = settings.targetYear || baseYear + 10;
-        const yearFactor = (year - baseYear) / (targetYear - baseYear);
-        const emissionsValue = 1000 * (1 - (0.05 * (year - baseYear)));
-        const netZeroValue = 1000 * (1 - yearFactor);
-        
-        // The gap is the difference
-        const gap = Math.max(0, emissionsValue - netZeroValue);
-        result[`${scenario.name} Gap`] = gap;
+        return value;
+      };
+      
+      // Create years array for this specific scenario (up to its target year)
+      const scenarioYears = [];
+      for (let y = minBaseYear; y <= targetYear; y++) {
+        scenarioYears.push(y);
+      }
+      
+      // First calculate values for years with available data
+      scenarioYears.forEach(y => {
+        // Check if we have data for this year
+        if (
+          (scenarioData.totals && scenarioData.totals[y]) ||
+          (scenarioData.yearly_data && scenarioData.yearly_data[y])
+        ) {
+          calculatedEmissions[y] = calculateEmissionsForYear(y);
+        }
       });
       
-      return result;
+      // Now fill in missing years with extrapolated data
+      scenarioYears.forEach(y => {
+        if (calculatedEmissions[y] === undefined) {
+          // Find the closest year with data before this year
+          const previousYears = scenarioYears.filter(prevY => 
+            prevY < y && calculatedEmissions[prevY] !== undefined
+          );
+          
+          if (previousYears.length > 0) {
+            // Use the most recent year with data
+            const latestPreviousYear = Math.max(...previousYears);
+            const yearDiff = y - latestPreviousYear;
+            
+            // Simple 5% reduction per year for future extrapolation
+            calculatedEmissions[y] = calculatedEmissions[latestPreviousYear] * Math.pow(0.95, yearDiff);
+          } else {
+            // No previous data, try future years
+            const futureYears = scenarioYears.filter(futY => 
+              futY > y && calculatedEmissions[futY] !== undefined
+            );
+            
+            if (futureYears.length > 0) {
+              // Use earliest future year
+              const earliestFutureYear = Math.min(...futureYears);
+              const yearDiff = earliestFutureYear - y;
+              
+              // Simple 5% increase per year for backward extrapolation
+              calculatedEmissions[y] = calculatedEmissions[earliestFutureYear] * Math.pow(1.05, yearDiff);
+            } else {
+              // No data at all, default to zero
+              calculatedEmissions[y] = 0;
+            }
+          }
+        }
+      });
+      
+      // Get the emissions value for the current year
+      const emissionsValue = calculatedEmissions[year] || 0;
+      
+      // Get starting emissions value (for baseline)
+      let startingEmissions = calculatedEmissions[minBaseYear] || 0;
+      
+      // If we don't have a starting value, use the first available value
+      if (startingEmissions === 0) {
+        const availableYears = Object.keys(calculatedEmissions).map(y => parseInt(y));
+        if (availableYears.length > 0) {
+          const earliestYear = Math.min(...availableYears);
+          startingEmissions = calculatedEmissions[earliestYear] || 0;
+        }
+      }
+      
+      // Calculate net-zero pathway value for this year
+      if (year <= targetYear) {
+        const yearFactor = (year - baseYear) / (targetYear - baseYear);
+        // Ensure factor is between 0 and 1 for more robust calculation
+        const boundedFactor = Math.max(0, Math.min(1, yearFactor));
+        
+        // Linear reduction to zero by target year
+        const netZeroValue = startingEmissions * (1 - boundedFactor);
+        
+        // The gap is the difference (but never negative)
+        const gap = Math.max(0, emissionsValue - netZeroValue);
+        yearData[`${scenario.name} Gap`] = gap;
+      } else {
+        // For years beyond target year, gap is zero (emissions should be zero)
+        yearData[`${scenario.name} Gap`] = 0;
+      }
     });
-  };
+    
+    return yearData;
+  });
+  
+  console.log("Final gap data:", result);
+  return result;
+};
 
   // Handle download request
   const handleDownloadResults = useCallback(() => {

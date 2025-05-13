@@ -2,7 +2,7 @@
 import React from "react";
 import { ResponsiveLine } from '@nivo/line';
 
-const EmissionsTrendChart = ({ data, selectedScope }) => {
+const EmissionsTrendChart = ({ data }) => {
   const CustomTooltip = ({ point }) => {
     if (!point) return null;
     

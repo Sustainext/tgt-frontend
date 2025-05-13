@@ -1,6 +1,6 @@
 // MetricsSelector.jsx
 import React, { useState, useRef, useEffect } from "react";
-import { FiChevronDown, FiX, FiCheck } from "react-icons/fi";
+import { FiChevronDown, FiX } from "react-icons/fi";
 
 const MetricsSelector = ({ 
   scenario, 
@@ -9,6 +9,17 @@ const MetricsSelector = ({
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  
+  // Maintain a local copy of the metrics to prevent issues during updates
+  const [localMetrics, setLocalMetrics] = useState([]);
+  
+  // Update local metrics when props change
+  useEffect(() => {
+    if (Array.isArray(scenarioMetrics) && scenarioMetrics.length > 0) {
+      console.log("MetricsSelector: Updating local metrics from props", scenarioMetrics);
+      setLocalMetrics(scenarioMetrics);
+    }
+  }, [scenarioMetrics]);
   
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -24,29 +35,55 @@ const MetricsSelector = ({
     };
   }, []);
 
-  // Handle empty or undefined scenarioMetrics
-  const metrics = Array.isArray(scenarioMetrics) && scenarioMetrics.length > 0
-    ? scenarioMetrics
-    : [
-        { id: "fte", name: "FTE", selected: true },
-        { id: "area", name: "Area", selected: true },
-        { id: "production_volume", name: "Production Volume", selected: true }
-      ];
-  
-  const toggleMetric = (metricId) => {
+  const handleCheckboxChange = (metricId) => {
+    console.log("MetricsSelector: Toggling metric", metricId);
+    console.log("MetricsSelector: Current local metrics", localMetrics);
+    
     // Create a copy of the metrics array with the selected state toggled
-    const updatedMetrics = metrics.map(metric => 
+    const updatedMetrics = localMetrics.map(metric => 
       metric.id === metricId 
         ? { ...metric, selected: !metric.selected } 
         : metric
     );
     
-    // Call the callback with the updated metrics
-    onMetricsChange(updatedMetrics);
+    console.log("MetricsSelector: Updated metrics after toggle", updatedMetrics);
+    
+    // Update local state first
+    setLocalMetrics(updatedMetrics);
+    
+    // Then call the callback with the updated metrics
+    if (onMetricsChange) {
+      onMetricsChange(updatedMetrics);
+    }
   };
   
-  const selectedMetrics = metrics.filter(metric => metric.selected);
-  const selectedCount = selectedMetrics.length;
+  const handleSelectAll = () => {
+    console.log("MetricsSelector: Selecting all metrics");
+    
+    const allSelected = localMetrics.map(m => ({ ...m, selected: true }));
+    
+    // Update local state first
+    setLocalMetrics(allSelected);
+    
+    if (onMetricsChange) {
+      onMetricsChange(allSelected);
+    }
+  };
+  
+  const handleDeselectAll = () => {
+    console.log("MetricsSelector: Deselecting all metrics");
+    
+    const allDeselected = localMetrics.map(m => ({ ...m, selected: false }));
+    
+    // Update local state first
+    setLocalMetrics(allDeselected);
+    
+    if (onMetricsChange) {
+      onMetricsChange(allDeselected);
+    }
+  };
+  
+  const selectedMetrics = localMetrics.filter(metric => metric.selected);
   
   return (
     <div className="flex items-center gap-2 col-span-2">
@@ -67,7 +104,7 @@ const MetricsSelector = ({
           />
         </button>
 
-        {isDropdownOpen && (
+        {isDropdownOpen && localMetrics.length > 0 && (
           <div 
             className="absolute z-20 mt-1 w-full rounded-md bg-white shadow-lg border border-gray-200 py-1 max-h-60 overflow-auto focus:outline-none"
             role="listbox"
@@ -76,25 +113,25 @@ const MetricsSelector = ({
             <div className="px-3 py-2 border-b border-gray-200">
               <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Select Business Metrics</h4>
             </div>
-            {metrics.map((metric) => (
+            {localMetrics.map((metric) => (
               <div 
                 key={metric.id} 
-                className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                onClick={() => toggleMetric(metric.id)}
-                role="option"
-                aria-selected={metric.selected}
+                className="flex items-center px-4 py-2 hover:bg-gray-100 text-sm"
               >
                 <div className="flex items-center flex-1">
-                  <span className={`flex items-center justify-center w-5 h-5 mr-3 rounded border ${
-                    metric.selected 
-                      ? 'bg-blue-500 border-blue-500 text-white' 
-                      : 'border-gray-300'
-                  }`}>
-                    {metric.selected && <FiCheck className="w-3 h-3" />}
-                  </span>
-                  <span className={`${metric.selected ? 'font-medium' : 'font-normal'}`}>
+                  <input
+                    id={`metric-${scenario.id}-${metric.id}`}
+                    type="checkbox"
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    checked={metric.selected}
+                    onChange={() => handleCheckboxChange(metric.id)}
+                  />
+                  <label 
+                    htmlFor={`metric-${scenario.id}-${metric.id}`}
+                    className={`ml-3 ${metric.selected ? 'font-medium' : 'font-normal'} cursor-pointer`}
+                  >
                     {metric.name}
-                  </span>
+                  </label>
                 </div>
               </div>
             ))}
@@ -103,36 +140,27 @@ const MetricsSelector = ({
                 <button
                   type="button"
                   className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-                  onClick={() => {
-                    // Select all metrics
-                    const allSelected = metrics.map(m => ({ ...m, selected: true }));
-                    onMetricsChange(allSelected);
-                  }}
+                  onClick={handleSelectAll}
                 >
                   Select All
                 </button>
                 <button
                   type="button"
                   className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-                  onClick={() => {
-                    // Deselect all metrics
-                    const allDeselected = metrics.map(m => ({ ...m, selected: false }));
-                    onMetricsChange(allDeselected);
-                  }}
+                  onClick={handleDeselectAll}
                 >
                   Deselect All
                 </button>
               </div>
             </div>
-            <div className="px-4 py-2 border-t border-gray-200 bg-gray-50">
-              <button
-                type="button"
-                className="w-full text-center text-sm text-blue-600 hover:text-blue-800 font-medium"
-                onClick={() => setIsDropdownOpen(false)}
-              >
-                Done
-              </button>
-            </div>
+          </div>
+        )}
+        
+        {isDropdownOpen && localMetrics.length === 0 && (
+          <div 
+            className="absolute z-20 mt-1 w-full rounded-md bg-white shadow-lg border border-gray-200 py-4 focus:outline-none"
+          >
+            <p className="text-center text-gray-500 text-sm">No business metrics available for this scenario</p>
           </div>
         )}
       </div>
@@ -146,7 +174,7 @@ const MetricsSelector = ({
             {metric.name}
             <button
               type="button"
-              onClick={() => toggleMetric(metric.id)}
+              onClick={() => handleCheckboxChange(metric.id)}
               className="ml-1 text-blue-400 group-hover:text-blue-600 transition-colors"
               aria-label={`Remove ${metric.name} metric`}
             >
