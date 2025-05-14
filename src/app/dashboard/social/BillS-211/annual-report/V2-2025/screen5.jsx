@@ -14,6 +14,7 @@ const Screenfive = ({
   selectedOrg,
   year,
   reportType,
+  status,
 }) => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [reportingentity, setReportingentit] = useState("");
@@ -24,8 +25,6 @@ const Screenfive = ({
   const screenId = 5;
   const LoaderOpen = () => setLoOpen(true);
   const LoaderClose = () => setLoOpen(false);
-
-
 
   const fetchBillSsix = async () => {
     LoaderOpen();
@@ -39,7 +38,7 @@ const Screenfive = ({
         setReportingentit(response.data.data.screen5_q2);
         const selectedData = response.data.data.screen5_q1 || {};
         setSelectedOptions(selectedData);
-        setReportingdescription(response.data.data.screen5_q3)
+        setReportingdescription(response.data.data.screen5_q3);
       } else {
         toast.error("Oops, something went wrong");
       }
@@ -117,16 +116,16 @@ const Screenfive = ({
       setError(errors);
     }
   };
-const stepsubmitForm = async () => {
+  const stepsubmitForm = async () => {
     const stepscreenId = 6;
+    const stepdata = status[5].status;
+    const newStatus = stepdata === "completed" ? "completed" : "in_progress";
     try {
       const sendData = {
-        data: {},
-
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status: "in_progress",
+        status: newStatus,
       };
       const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${stepscreenId}/`,
@@ -145,24 +144,22 @@ const stepsubmitForm = async () => {
       LoaderOpen();
 
       const sendData = {
-        data:{
+        data: {
           screen5_q1: selectedOptions,
-          screen5_q2: selectedOptions["other"]
-            ? reportingentity
-            : null,
-            screen5_q3:reportingdescription,
+          screen5_q2: selectedOptions["other"] ? reportingentity : null,
+          screen5_q3: reportingdescription,
         },
-      
+
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status:"completed",
+        status: "completed",
       };
 
-      const response= await axiosInstance.put(
+      const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${screenId}/`,
         sendData
-      )
+      );
 
       if (response.status === 200) {
         toast.success("Data added successfully");
@@ -455,15 +452,15 @@ const stepsubmitForm = async () => {
           {optionsTwo.map((option, index) => (
             <div key={index} className="mb-2 ">
               <div className="flex items-center ">
-              <label className="text-[14px] text-gray-700">
-                <input
-                  type="checkbox"
-                  value={option.value}
-                  checked={selectedOptions.hasOwnProperty(option.value)}
-                  onChange={handleCheckboxChange}
-                  className="mr-2"
-                />
-               
+                <label className="text-[14px] text-gray-700">
+                  <input
+                    type="checkbox"
+                    value={option.value}
+                    checked={selectedOptions.hasOwnProperty(option.value)}
+                    onChange={handleCheckboxChange}
+                    className="mr-2"
+                  />
+
                   {option.label}
                 </label>
               </div>
@@ -545,39 +542,38 @@ const stepsubmitForm = async () => {
               onBlur={handleReportingdescription}
             />
           </div>
-          </div>
-          <div className="flex justify-end mt-5 mx-4">
-            <button
-              className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-              onClick={prevStep}
-            >
-              &lt; Previous
-            </button>
+        </div>
+        <div className="flex justify-end mt-5 mx-4">
+          <button
+            className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
+            onClick={prevStep}
+          >
+            &lt; Previous
+          </button>
 
-            <button
-              type="button"
-              onClick={continueToNextStep}
-              disabled={
-                !(
-                  selectedOrg &&
-                  year &&
-                  (reportType === "Organization" || selectedCorp)
-                )
-              }
-              className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-                !(
-                  selectedOrg &&
-                  year &&
-                  (reportType === "Organization" || selectedCorp)
-                )
-                  ? "opacity-30 cursor-not-allowed"
-                  : ""
-              }`}
-            >
-              Next &gt;
-            </button>
-          </div>
-        
+          <button
+            type="button"
+            onClick={continueToNextStep}
+            disabled={
+              !(
+                selectedOrg &&
+                year &&
+                (reportType === "Organization" || selectedCorp)
+              )
+            }
+            className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+              !(
+                selectedOrg &&
+                year &&
+                (reportType === "Organization" || selectedCorp)
+              )
+                ? "opacity-30 cursor-not-allowed"
+                : ""
+            }`}
+          >
+            Next &gt;
+          </button>
+        </div>
       </div>
 
       {loopen && (

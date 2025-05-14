@@ -16,6 +16,7 @@ const Screentwo = ({
   selectedOrg,
   year,
   reportType,
+  status,
 }) => {
   // State to track selected options
   const { open } = GlobalState();
@@ -276,14 +277,14 @@ const Screentwo = ({
   // Function to proceed to the next step, includes validation
   const stepsubmitForm = async () => {
     const stepscreenId = 3;
+    const stepdata = status[2].status;
+    const newStatus = stepdata === "completed" ? "completed" : "in_progress";
     try {
       const sendData = {
-        data: {},
-
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status: "in_progress",
+        status: newStatus,
       };
       const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/reporting-for-entities/${stepscreenId}/`,
