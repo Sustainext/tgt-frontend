@@ -166,7 +166,7 @@ const ReportingforEntities = ({
       {/* === Main Content Layout === */}
       <div className="h-[42rem] overflow-y-auto scrollable-content  xl:flex lg:flex md:flex 4k:flex 2xl:flex gap-6">
         {/* === Desktop Sidebar === */}
-        <div className="w-[285px] mt-10 shadow-lg mb-4 hidden xl:block  lg:block md:block 2xl:block 4k:block">
+        <div className="w-[285px] mt-4 shadow-lg mb-4 hidden xl:block  lg:block md:block 2xl:block 4k:block">
           {renderStatusSteps()}
         </div>
 

@@ -173,11 +173,27 @@ const Screentwo = ({
   const handleReportnbusinessnumber = (event) => {
     setReportingbusinessnumber(event.target.value);
   };
-  const handleKeyDown = (event) => {
-    if (["+", "-", "."].includes(event.key)) {
-      event.preventDefault();
-    }
-  };
+const handleKeyDown = (event) => {
+  // Block +, -, .
+  if (["+", "-", "."].includes(event.key)) {
+    event.preventDefault();
+    return;
+  }
+
+  // Allow control keys like Backspace, Tab, Arrow keys, etc.
+  const controlKeys = [
+    "Backspace", "Tab", "ArrowLeft", "ArrowRight", "Delete"
+  ];
+  if (controlKeys.includes(event.key)) {
+    return;
+  }
+
+  // Block further input if length is already 9
+  if (reportingbusinessnumber.length >= 9) {
+    event.preventDefault();
+  }
+};
+
 
   const stepsubmitForm = async () => {
     const stepscreenId = 3;
@@ -302,7 +318,7 @@ const Screentwo = ({
     <>
       <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-0 mt-2">
         <form className="w-full text-left">
-          <div className="h-[32rem] overflow-y-auto scrollable-content">
+          <div className="h-[34rem] overflow-y-auto scrollable-content">
             <div className="mb-5">
               <label
                 className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
@@ -424,11 +440,7 @@ const Screentwo = ({
                 <input
                   type="number"
                   placeholder="Enter number"
-                  className={`${
-                    open
-                      ? "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%]"
-                      : "xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-[99%]"
-                  } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
+                  className={`w-full border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                   value={reportingbusinessnumber}
                   onChange={handleReportnbusinessnumber}
                   onKeyDown={handleKeyDown}

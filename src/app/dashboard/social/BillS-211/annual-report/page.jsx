@@ -36,7 +36,23 @@ const Annualreport = ({ handleTabClick, setView, setMobileopen }) => {
                     <div className="flex gap-4">
                       <div>
                         <p className=" text-gray-700 text-[12px]  pt-1 w-full gpb-2 gap-1">
-                          Organization / Corporate: {orgname}/ {corpname}{" "}
+                          {orgname && (
+                            <span>
+                              <span className="font-semibold">
+                                Organization:
+                              </span>{" "}
+                              {orgname}
+                            </span>
+                          )}
+                          {orgname && corpname && (
+                            <span className="px-2">/</span>
+                          )}
+                          {corpname && (
+                            <span>
+                              <span className="font-semibold">Corporate:</span>{" "}
+                              {corpname}
+                            </span>
+                          )}
                         </p>
                       </div>
 
@@ -79,7 +95,19 @@ const Annualreport = ({ handleTabClick, setView, setMobileopen }) => {
                   <div className="flex gap-4">
                     <div>
                       <p className=" text-gray-700 text-[12px]  pt-1 w-full gpb-2 gap-1">
-                        Organization / Corporate: {orgname}/ {corpname}{" "}
+                        {orgname && (
+                          <span>
+                            <span className="font-semibold">Organization:</span>{" "}
+                            {orgname}
+                          </span>
+                        )}
+                        {orgname && corpname && <span className="px-2">/</span>}
+                        {corpname && (
+                          <span>
+                            <span className="font-semibold">Corporate:</span>{" "}
+                            {corpname}
+                          </span>
+                        )}
                       </p>
                     </div>
 

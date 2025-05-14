@@ -18,7 +18,7 @@ const Screenone = ({
 }) => {
   const [error, setError] = useState({});
   const { open } = GlobalState();
-  const [reportname, setReportname] = useState("An entity");
+  const [reportname, setReportname] = useState("Select Entity");
   const [reportingentity, setReportingentit] = useState("");
   const [reportingdateform, setReportingdateform] = useState("");
   const [reportingdateto, setReportingdateto] = useState("");
@@ -77,7 +77,7 @@ const Screenone = ({
       }
     }
 
-    setReportname("An entity");
+    setReportname("Select Entity");
     setReportingentit("");
     setReportingdateform("");
     setReportingdateto("");
@@ -86,7 +86,7 @@ const Screenone = ({
   const handleReportname = (event) => {
     const value = event.target.value;
     setReportname(value);
-    if (value !== "An entity") {
+    if (value !== "Select Entity") {
       setError((prev) => ({ ...prev, reportname: "" }));
     }
   };
@@ -256,7 +256,7 @@ const Screenone = ({
   const continueToNextStep = () => {
     let newErrors = {};
 
-    if (reportname === "" ) {
+    if (reportname === "" || reportname === "Select Entity") {
       newErrors.reportname = "Please select an entity.";
     }
 
@@ -297,14 +297,14 @@ const Screenone = ({
               </label>
               <div className="relative mb-1">
                 <select
-                  className={`xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-full rounded-md  text-[12px] py-3 px-2 text-neutral-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 border-gray-400 border `}
+                  className={`xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-full rounded-md text-[12px] py-3 px-2 text-neutral-600 shadow-sm  placeholder:text-gray-400  sm:text-sm sm:leading-6 border border-gray-400  right-8`}
                   value={reportname}
                   onChange={handleReportname}
-                  disabled
+               
                 >
-                  {/* <option className="text-sm" value="Select Entity">
+                  <option className="text-sm" value="Select Entity">
                     Select Entity
-                  </option> */}
+                  </option>
                   <option className="text-sm" value="An entity" >
                     An entity
                   </option>
@@ -354,7 +354,7 @@ const Screenone = ({
                 <div className="relative mb-1">
                   <select
                     name="year"
-                    className="block w-full rounded-md  pl-4 text-neutral-600 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 py-3 border-gray-400 border "
+                    className="block w-full rounded-md  pl-4 text-neutral-600 text-[12px] font-normal leading-tight  placeholder:text-gray-400  py-3 border-gray-400 border "
                     value={reportingyear}
                     onChange={handlereportingyear}
                   >
