@@ -14,6 +14,7 @@ const Screenone = ({
   selectedOrg,
   year,
   reportType,
+  status
 }) => {
   const [error, setError] = useState({});
   const { open } = GlobalState();
@@ -164,14 +165,14 @@ const Screenone = ({
   };
   const stepsubmitForm = async () => {
     const stepscreenId = 2;
+    const stepdata = status[1].status
+      const newStatus = stepdata === "completed" ? "completed" : "in_progress";
     try {
       const sendData = {
-        data: {},
-
         organization: selectedOrg,
         corporate: selectedCorp,
         year: year,
-        status: "in_progress",
+        status: newStatus,
       };
       const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${stepscreenId}/`,
@@ -305,7 +306,7 @@ const Screenone = ({
                   <option className="text-sm" value="An entity">
                     An entity
                   </option>
-                  <option className="text-sm" value="A government institution">
+                  <option className="text-sm" value="A government institution" disabled>
                     A government institution
                   </option>
                   {/* Add more options here as needed */}

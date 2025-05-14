@@ -87,7 +87,7 @@ const environment = () => {
         </div>
       ) : (
         <div className="w-full xl:ms-8 md:ms-0 lg:ms-8 2xl:ms-8 4k:ms-8 2k:ms-8">
-          <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block sticky xl:top-14 lg:top-14 2xl:top-14 4k:top-14 bg-white z-[100]">
+          <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block sticky xl:top-14 lg:top-14 2xl:top-14 4k:top-14 bg-white ">
             <Header
               activeTab={activeTab}
               setIsBoxOpen={setIsBoxOpen}

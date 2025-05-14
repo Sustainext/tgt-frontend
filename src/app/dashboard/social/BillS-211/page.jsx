@@ -87,18 +87,57 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
   }, []);
 
   useEffect(() => {
-    if (reportType == "Organization") {
-      if (selectedOrg && year) {
+    if (view === "home") {
+      if (reportType === "Organization" && selectedOrg && year) {
         fetchBillstep();
-      }
-    } else {
-      if (selectedOrg && year && selectedCorp) {
+      } else if (
+        reportType !== "Organization" &&
+        selectedOrg &&
+        selectedCorp &&
+        year
+      ) {
         fetchBillstep();
       }
     }
-  }, [selectedCorp, selectedOrg, year]);
+  }, [view, selectedOrg, selectedCorp, year, reportType]);
 
   const toggleSidebar = () => setMobileopen(true);
+  const handleDownload = async () => {
+    LoaderOpen();
+    try {
+      const response = await axiosInstance.get(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/get-report/?organization=${selectedOrg}&corporate=${selectedCorp}&year=${year}`,
+        {
+          responseType: "blob", // VERY IMPORTANT for file downloads
+        }
+      );
+
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", "Canada_Bill_S211.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      toast.error(error?.message || "Download failed", {
+        position: "top-right",
+        autoClose: 7000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } finally {
+      LoaderClose();
+    }
+  };
 
   return (
     <>
@@ -140,13 +179,19 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
                 className="w-full py-4 rounded-md shadow-[0px_6px_12px_0px_rgba(0,0,0,0.08),0px_1px_3px_0px_rgba(0,0,0,0.10)]"
                 onClick={toggleSidebar}
               >
-                <div className="text-left mb-2 ml-3 pt-5">
+                <div className="text-left mb-2 ml-3">
                   <p className="text-[11px]">Social</p>
-                  <div className="flex">
-                    <p className="gradient-text text-[16px] md:text-[20px] h-[52px] font-bold pt-1">
-                      Bill S-211
-                    </p>
-                    <MdKeyboardArrowDown className="text-2xl ms-2 md:-mt-[18px]" />
+                  <div className="flex justify-between">
+                    <div>
+                      <p className="gradient-text text-[16px] md:text-[20px] font-bold pt-1">
+                        Bill S-211
+                      </p>
+                    </div>
+                    <div className="float-end me-5">
+                      <MdKeyboardArrowDown
+                        className={`text-2xl  md:-mt-[18px] `}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -190,155 +235,10 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
           </div>
 
           {/* Step Panels */}
-          {year >= "2024" ? (
-            <div className="flex mx-4 gap-6 mt-10 ">
+          {year <= 2023 && year !== "" ? (
+            <div className="xl:flex lg:flex md:flex 4k:flex 2xl:flex mx-4 gap-10 mt-10 ">
               {/* Step 1: Submission Info */}
-              <div className="bils201box rounded-2xl p-4 w-[400px] shadow-lg">
-                <div className="flex justify-between">
-                  <div className="border rounded-full w-5 h-5 text-center text-[11px]">
-                    1
-                  </div>
-                  <CircularProgressBar
-                    percentage={submissionProgress.percentage}
-                  />
-                </div>
-                <div>
-                  <p className="text-[14px] text-[#101828] font-medium">
-                    Submission Information
-                  </p>
-                  <p className="text-[11px] text-[#101828] font-medium mb-2">
-                    Please fill out the submission information.
-                  </p>
-                </div>
-                <div className="my-4">
-                  <span
-                    className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
-                      submissionProgress.isComplete
-                        ? "bg-green-100 text-green-800"
-                        : "bg-orange-100 text-[#F98845]"
-                    }`}
-                  >
-                    {submissionProgress.isComplete ? (
-                      <MdOutlineCheck className="w-4 h-4 mr-1" />
-                    ) : (
-                      <HiExclamationCircle className="w-4 h-4 mr-1" />
-                    )}
-                    {submissionProgress.isComplete ? "Completed" : "Incomplete"}
-                  </span>
-                </div>
-                <button
-                  onClick={() => setView("submission")}
-                  disabled={!isSubmissionEnabled}
-                  className={`w-[72%] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white ${
-                    isSubmissionEnabled
-                      ? "bg-blue-600 hover:bg-blue-700"
-                      : "bg-blue-200 cursor-not-allowed"
-                  }`}
-                >
-                  {submissionProgress.isComplete ? (
-                    <>
-                      Edit Submission Information{" "}
-                      <HiArrowRight className="ml-2 w-4 h-4" />
-                    </>
-                  ) : (
-                    <>
-                      Add Submission Information{" "}
-                      <HiArrowRight className="ml-2 w-4 h-4" />
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Step 2: Reporting for Entities */}
-              <div className="bils201box rounded-2xl p-4 w-[400px] shadow-lg">
-                <div className="flex justify-between">
-                  <div className="border rounded-full w-5 h-5 text-center text-[11px]">
-                    2
-                  </div>
-                  <CircularProgressBar percentage={reportProgress.percentage} />
-                </div>
-                <div>
-                  <p className="text-[14px] text-[#101828] font-medium">
-                    Reporting for Entities
-                  </p>
-                  <p className="text-[11px] text-[#101828] font-medium mb-2">
-                    Please fill out the Reporting for Entities.
-                  </p>
-                </div>
-                <div className="my-4">
-                  <span
-                    className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
-                      reportProgress.isComplete
-                        ? "bg-green-100 text-green-800"
-                        : "bg-orange-100 text-[#F98845]"
-                    }`}
-                  >
-                    {reportProgress.isComplete ? (
-                      <MdOutlineCheck className="w-4 h-4 mr-1" />
-                    ) : (
-                      <HiExclamationCircle className="w-4 h-4 mr-1" />
-                    )}
-                    {reportProgress.isComplete ? "Completed" : "Incomplete"}
-                  </span>
-                </div>
-                <button
-                  onClick={() => setView("report")}
-                  disabled={!isReportEnabled}
-                  className={`w-[69%] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white ${
-                    isReportEnabled
-                      ? "bg-blue-600 hover:bg-blue-700"
-                      : "bg-blue-200 cursor-not-allowed"
-                  }`}
-                >
-                  {reportProgress.isComplete ? (
-                    <>
-                      Edit Reporting for Entities{" "}
-                      <HiArrowRight className="ml-2 w-4 h-4" />
-                    </>
-                  ) : (
-                    <>
-                      Add Reporting for Entities{" "}
-                      <HiArrowRight className="ml-2 w-4 h-4" />
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Step 3: Download Report */}
-              <div className="bils201box rounded-2xl p-4 w-[400px] shadow-lg">
-                <div className="flex justify-between mb-1">
-                  <div className="border rounded-full w-5 h-5 text-center text-[11px]">
-                    3
-                  </div>
-                </div>
-                <div>
-                  <p className="text-[14px] text-[#101828] font-medium">
-                    Download Report
-                  </p>
-                  <p className="text-[11px] text-[#101828] font-medium mb-2">
-                    Report is ready for download when both steps are complete.
-                  </p>
-                </div>
-                <div className="mt-14">
-                  {" "}
-                  <button
-                    disabled={!isDownloadEnabled}
-                    className={`w-[52%] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white ${
-                      isDownloadEnabled
-                        ? "bg-blue-600 hover:bg-blue-700"
-                        : "bg-blue-200 cursor-not-allowed"
-                    }`}
-                  >
-                    <HiOutlineDownload className="mr-2 w-4 h-4" />
-                    Download Report
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="flex mx-4 gap-10 mt-10 ">
-              {/* Step 1: Submission Info */}
-              <div className="bils201box rounded-2xl p-4 w-[400px] shadow-lg">
+              <div className="bils201box rounded-2xl p-4 xl:w-[400px] lg:w-[400px] 2xl:w-[400px] 4k:w-[400px] w-full shadow-lg mb-4">
                 <div className="flex justify-between mb-4">
                   <div className="border rounded-full w-5 h-5 text-center text-[11px]">
                     1
@@ -374,7 +274,7 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
                 <button
                   onClick={() => setView("submission")}
                   disabled={!(selectedOrg && year)}
-                  className={`w-[69%] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white  ${
+                  className={`w-[220px] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white  ${
                     reportType == "Organization"
                       ? !(selectedOrg && year)
                         ? "bg-blue-200 hover:bg-blue-200 cursor-not-allowed"
@@ -392,7 +292,7 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
               </div>
 
               {/* Step 2: Reporting for Entities */}
-              <div className="bils201box rounded-2xl p-4 w-[400px] shadow-lg">
+              <div className="bils201box rounded-2xl p-4 xl:w-[400px] lg:w-[400px] 2xl:w-[400px] 4k:w-[400px] w-full shadow-lg mb-4">
                 <div className="flex justify-between mb-4">
                   <div className="border rounded-full w-5 h-5 text-center text-[11px]">
                     2
@@ -426,7 +326,7 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
                 <button
                   onClick={() => setView("report")}
                   disabled={!(selectedOrg && year)}
-                  className={`w-[69%] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white  ${
+                  className={`w-[210px] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white  ${
                     reportType == "Organization"
                       ? !(selectedOrg && year)
                         ? "bg-blue-200 hover:bg-blue-200 cursor-not-allowed"
@@ -443,22 +343,180 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
                 </button>
               </div>
             </div>
+          ) : (
+            <div className="xl:flex lg:flex md:flex 4k:flex 2xl:flex mx-4 gap-6 mt-10 mb-4 ">
+              {/* Step 1: Submission Info */}
+              <div className="bils201box rounded-2xl p-4 w-full shadow-lg mb-4">
+                <div className="h-[125px]">
+    <div className="flex justify-between">
+                  <div className="border rounded-full w-5 h-5 text-center text-[11px]">
+                    1
+                  </div>
+                  <CircularProgressBar
+                    percentage={submissionProgress.percentage}
+                  />
+                </div>
+                <div>
+                  <p className="text-[14px] text-[#101828] font-medium">
+                    Submission Information
+                  </p>
+                  <p className="text-[11px] text-[#101828] font-medium mb-2">
+                    Please fill out the submission information.
+                  </p>
+                </div>
+                <div className="my-4">
+                  <span
+                    className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
+                      submissionProgress.isComplete
+                        ? "bg-green-100 text-green-800"
+                        : "bg-orange-100 text-[#F98845]"
+                    }`}
+                  >
+                    {submissionProgress.isComplete ? (
+                      <MdOutlineCheck className="w-4 h-4 mr-1" />
+                    ) : (
+                      <HiExclamationCircle className="w-4 h-4 mr-1" />
+                    )}
+                    {submissionProgress.isComplete ? "Completed" : "Incomplete"}
+                  </span>
+                </div>
+                </div>
+            
+
+                <button
+                  onClick={() => setView("submission")}
+                  disabled={!isSubmissionEnabled}
+                  className={`w-[220px] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white ${
+                    isSubmissionEnabled
+                      ? "bg-blue-600 hover:bg-blue-700"
+                      : "bg-blue-200 cursor-not-allowed"
+                  }`}
+                >
+                  {submissionProgress.isComplete ? (
+                    <>
+                      Edit Submission Information{" "}
+                      <HiArrowRight className="ml-2 w-4 h-4" />
+                    </>
+                  ) : (
+                    <>
+                      Add Submission Information{" "}
+                      <HiArrowRight className="ml-2 w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Step 2: Reporting for Entities */}
+              <div className="bils201box rounded-2xl p-4 w-full shadow-lg mb-4">
+                  <div className="h-[125px]">
+                <div className="flex justify-between">
+                  <div className="border rounded-full w-5 h-5 text-center text-[11px]">
+                    2
+                  </div>
+                  <CircularProgressBar percentage={reportProgress.percentage} />
+                </div>
+                <div>
+                  <p className="text-[14px] text-[#101828] font-medium">
+                    Reporting for Entities
+                  </p>
+                  <p className="text-[11px] text-[#101828] font-medium mb-2">
+                    Please fill out the Reporting for Entities.
+                  </p>
+                </div>
+                <div className="my-4">
+                  <span
+                    className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
+                      reportProgress.isComplete
+                        ? "bg-green-100 text-green-800"
+                        : "bg-orange-100 text-[#F98845]"
+                    }`}
+                  >
+                    {reportProgress.isComplete ? (
+                      <MdOutlineCheck className="w-4 h-4 mr-1" />
+                    ) : (
+                      <HiExclamationCircle className="w-4 h-4 mr-1" />
+                    )}
+                    {reportProgress.isComplete ? "Completed" : "Incomplete"}
+                  </span>
+                </div>
+                </div>
+                <button
+                  onClick={() => setView("report")}
+                  disabled={!isReportEnabled}
+                  className={`w-[210px] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white ${
+                    isReportEnabled
+                      ? "bg-blue-600 hover:bg-blue-700"
+                      : "bg-blue-200 cursor-not-allowed"
+                  }`}
+                >
+                  {reportProgress.isComplete ? (
+                    <>
+                      Edit Reporting for Entities{" "}
+                      <HiArrowRight className="ml-2 w-4 h-4" />
+                    </>
+                  ) : (
+                    <>
+                      Add Reporting for Entities{" "}
+                      <HiArrowRight className="ml-2 w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Step 3: Download Report */}
+              <div className="bils201box rounded-2xl p-4 w-full shadow-lg mb-4">
+                  <div className="h-[125px]">
+                <div className="flex justify-between mb-1">
+                  <div className="border rounded-full w-5 h-5 text-center text-[11px]">
+                    3
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[14px] text-[#101828] font-medium">
+                    Annual report
+                  </p>
+                  <p className="text-[11px] text-[#101828] font-medium mb-2">
+                    Annual Report is ready for download when first two steps are complete
+                  </p>
+                </div>
+                </div>
+           
+                  <button
+                    disabled={!isDownloadEnabled}
+                    onClick={handleDownload}
+                    className={`w-[52%] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white ${
+                      isDownloadEnabled
+                        ? "bg-blue-600 hover:bg-blue-700"
+                        : "bg-blue-200 cursor-not-allowed"
+                    }`}
+                  >
+                    <HiOutlineDownload className="mr-2 w-4 h-4" />
+                    Download Report
+                  </button>
+                </div>
+              </div>
+          
           )}
         </>
       )}
 
       {/* Forms */}
       {view === "submission" && (
-        <div className="mt-6 mx-4">
+        <div className="mt-6 xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 ">
           <Identifyinginformation
             handleTabClick={handleTabClick}
             setView={setView}
+            setMobileopen={setMobileopen}
           />
         </div>
       )}
       {view === "report" && (
-        <div className="mt-6 mx-4">
-          <Annualreport handleTabClick={handleTabClick} setView={setView} />
+        <div className="mt-6 xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4">
+          <Annualreport
+            handleTabClick={handleTabClick}
+            setView={setView}
+            setMobileopen={setMobileopen}
+          />
         </div>
       )}
 
