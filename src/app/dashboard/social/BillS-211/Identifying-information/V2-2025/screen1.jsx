@@ -380,7 +380,7 @@ const Screenone = ({
                 className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                 htmlFor="username"
               >
-                4. Financial reporting year*
+                4. Financial year covered by report*
               </label>
               <div className="flex">
                 <div className="xl:w-[37%]  lg:w-[37%]  2xl:w-[37%]  md:w-[37%]  2k:w-[37%]  4k:w-[37%] w-[50%] ">

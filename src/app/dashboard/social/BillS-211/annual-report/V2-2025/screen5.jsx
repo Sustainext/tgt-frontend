@@ -396,6 +396,7 @@ const Screenfive = ({
     enablePasteHTMLFilter: false,
     askBeforePasteHTML: false,
     askBeforePasteFromWord: false,
+     limitChars: 3000, 
     style: {
       fontSize: "14px",
       color: "#667085",

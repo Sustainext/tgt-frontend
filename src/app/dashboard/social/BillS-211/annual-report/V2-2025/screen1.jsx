@@ -259,7 +259,7 @@ const Screenone = ({
               className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
               htmlFor="username"
             >
-              3. Which of the following accurately describes the entity’s
+              1. Which of the following accurately describes the entity’s
               structure?*
             </label>
             <div className="relative mb-1">

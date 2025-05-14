@@ -39,8 +39,8 @@ const Screensix = ({
         toast.error("Oops, something went wrong");
       }
     } catch (error) {
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong");
+      // console.error("API call failed:", error);
+      // toast.error("Oops, something went wrong");
     } finally {
       LoaderClose();
     }
@@ -453,7 +453,7 @@ const Screensix = ({
               <input
                 type="text"
                 placeholder="Enter a description..."
-                className="w-full border border-gray-400 text-xs text-neutral-600 pl-2 py-3 rounded-md focus:outline-none"
+                className="w-[73%] border border-gray-400 text-xs text-neutral-600 pl-2 py-3 rounded-md focus:outline-none"
                 value={reportingentity}
                 onChange={handleReportingentity}
               />
