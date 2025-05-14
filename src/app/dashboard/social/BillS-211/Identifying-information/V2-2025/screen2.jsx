@@ -32,6 +32,7 @@ const Screentwo = ({
     enablePasteHTMLFilter: false,
     askBeforePasteHTML: false,
     askBeforePasteFromWord: false,
+     limitChars: 3000, 
     style: {
       fontSize: "14px",
       color: "#667085",
@@ -412,12 +413,12 @@ const Screentwo = ({
                 </div>
               </>
             )}
-            <div className="mb-5">
+            <div className="mb-5 w-[78%]">
               <label
                 className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                 htmlFor="username"
               >
-                6. For entities only: Business number(s) (if applicable):
+                6. For entities only: Business number(s) (if applicable, provide the business number of the entity completing this questionnaire)
               </label>
               <div className="relative mb-1 flex">
                 <input

@@ -73,17 +73,17 @@ const Screenseven = ({
       }
     } catch (error) {
       LoaderClose();
-      console.error("API call failed:", error);
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      // console.error("API call failed:", error);
+      // toast.error("Oops, something went wrong", {
+      //   position: "top-right",
+      //   autoClose: 1000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "colored",
+      // });
     } finally {
       LoaderClose();
     }
