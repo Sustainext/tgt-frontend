@@ -18,7 +18,7 @@ const Screenone = ({
 }) => {
   const [error, setError] = useState({});
   const { open } = GlobalState();
-  const [reportname, setReportname] = useState("Select Entity");
+  const [reportname, setReportname] = useState("An entity");
   const [reportingentity, setReportingentit] = useState("");
   const [reportingdateform, setReportingdateform] = useState("");
   const [reportingdateto, setReportingdateto] = useState("");
@@ -77,7 +77,7 @@ const Screenone = ({
       }
     }
 
-    setReportname("Select Entity");
+    setReportname("An entity");
     setReportingentit("");
     setReportingdateform("");
     setReportingdateto("");
@@ -86,7 +86,7 @@ const Screenone = ({
   const handleReportname = (event) => {
     const value = event.target.value;
     setReportname(value);
-    if (value !== "Select Entity") {
+    if (value !== "An entity") {
       setError((prev) => ({ ...prev, reportname: "" }));
     }
   };
@@ -205,6 +205,7 @@ const Screenone = ({
         year: year,
         status: "completed",
       };
+      // console.log(sendData,"test sendData")
       const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/submission-information/${screenId}/`,
         sendData
@@ -255,7 +256,7 @@ const Screenone = ({
   const continueToNextStep = () => {
     let newErrors = {};
 
-    if (reportname === "" || reportname === "Select Entity") {
+    if (reportname === "" ) {
       newErrors.reportname = "Please select an entity.";
     }
 
@@ -299,16 +300,17 @@ const Screenone = ({
                   className={`xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%] w-full rounded-md  text-[12px] py-3 px-2 text-neutral-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 border-gray-400 border `}
                   value={reportname}
                   onChange={handleReportname}
+                  disabled
                 >
-                  <option className="text-sm" value="Select Entity">
+                  {/* <option className="text-sm" value="Select Entity">
                     Select Entity
-                  </option>
-                  <option className="text-sm" value="An entity">
+                  </option> */}
+                  <option className="text-sm" value="An entity" >
                     An entity
                   </option>
-                  <option className="text-sm" value="A government institution" disabled>
+                  {/* <option className="text-sm" value="A government institution" disabled>
                     A government institution
-                  </option>
+                  </option> */}
                   {/* Add more options here as needed */}
                 </select>
               </div>
