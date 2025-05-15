@@ -170,15 +170,22 @@ export const updateAllSelectedActivities = createAsyncThunk(
       );
       
       // Then, trigger the climate calculation
-      // We use unwrap() to ensure errors are properly caught and handled
       try {
+        // We use unwrap() to ensure errors are properly caught and handled
         await dispatch(calculateEmissionsForOptimise(scenarioId)).unwrap();
-        console.log("Climate result calculation completed successfully");
+        console.log("Climatiq result calculation completed successfully");
       } catch (climateError) {
-        console.error("Climate calculation failed:", climateError);
-        // We'll still return the activities response even if climate calc fails
+        console.error("Climatiq calculation failed:", climateError);
+        // Instead of ignoring the error, we reject with a clear error message
+        return rejectWithValue({
+          message: "Failed to calculate emissions. Please try again.",
+          details: climateError.message || "Unknown Climatiq calculation error",
+          originalError: climateError,
+          type: "CLIMATIQ_CALCULATION_ERROR" // This helps identify the specific error type
+        });
       }
       
+      // Only return the successful response if both steps complete successfully
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -204,7 +211,7 @@ const initialState = {
   currentScenario: null,
   metricsData: {}, // This will contain all metrics data including weightages
   selectedActivities: [],
-  currentStep: 1,
+  currentStep: 4,
   // Emission data state
   emissionData: {
     activities: [],

@@ -362,7 +362,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-[1200px] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all mb-8 max-h-[115vh] flex flex-col">
+              <Dialog.Panel className="w-full max-w-[1200px] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all mb-8 max-h-[105vh] flex flex-col">
                 {/* Header section with scenario details */}
                 <div className="p-6 pb-4">
                   <Dialog.Title className="text-2xl font-medium text-gray-900 mb-3">
