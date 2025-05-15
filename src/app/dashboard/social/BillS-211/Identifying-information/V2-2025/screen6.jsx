@@ -385,7 +385,7 @@ const Screensix = ({
   return (
     <>
       <div className="mt-2">
-        <div className="mx-2 xl:mx-4 h-[32rem] overflow-y-auto">
+        <div className="mx-2 xl:mx-4 h-[32rem] overflow-y-auto scrollable-content">
           <label className="block text-gray-700 text-[14px] font-[500] mb-2">
             10. For entities only: In which of the following sectors or
             industries does the entity operate? Select all that apply. *

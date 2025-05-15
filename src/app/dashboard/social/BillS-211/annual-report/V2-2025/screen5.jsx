@@ -44,7 +44,7 @@ const Screenfive = ({
       }
     } catch (error) {
       console.error("API call failed:", error);
-      toast.error("Oops, something went wrong");
+      // toast.error("Oops, something went wrong");
     } finally {
       LoaderClose();
     }

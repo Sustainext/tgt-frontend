@@ -226,7 +226,7 @@ const SelectMaterialityTopic = ({
         </div>
 
         <div>
-          <div className="xl:flex justify-between">
+          <div className="xl:flex lg:flex 2xl:flex 4k:flex justify-between">
             <div>
               <p className="text-[#344054] text-[22px] font-bold pt-4 pb-2 ml-6">
                 {stepHeading[currentStep].title}
@@ -263,7 +263,7 @@ const SelectMaterialityTopic = ({
                 ))}
               </div>
             </div>
-            <div className="shadow-lg p-3 bg-white xl:w-[50%] mx-5 rounded-lg mt-10">
+            <div className="shadow-lg p-3 bg-white xl:w-[50%] lg:w-[50%] 2xl:w-[50%] 4k:w-[50%]  mx-5 rounded-lg mt-10">
               <div className="flex  mb-4">
                 <div className="w-[50%]">
                   <p className="text-[14px] text-black font-[400] px-2 pt-2">

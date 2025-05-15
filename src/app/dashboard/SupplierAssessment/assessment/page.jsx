@@ -49,17 +49,17 @@ const Assessment = ({ setActiveTab }) => {
   return (
     <> 
       <div className="xl:p-4 min-h-screen">
-        <div className="xl:flex justify-between items-center mb-6">
+        <div className="xl:flex lg:flex 2xl:flex 4k:flex justify-between items-center mb-6">
           <h1 className="text-[20px] font-semibold text-[#101828] mb-4">
             Assessments
           </h1>
-          <div className="relative xl:flex gap-4">
+          <div className="relative xl:flex lg:flex 2xl:flex 4k:flex gap-4">
             <div className="w-full mb-4">
-              <FiSearch className="absolute left-3 top-[1.25rem] xl:top-[1.30rem] transform -translate-y-1/2 text-gray-400" />
+              <FiSearch className="absolute left-3 top-[1.25rem] xl:top-[1.30rem] lg:top-[1.2rem] transform -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search"
-                className="pl-10 pr-4 py-2 xl:min-w-[25vw] w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="pl-10 pr-4 py-1.5 xl:min-w-[25vw] lg:min-w-[25vw] 2xl:min-w-[25vw] 4k:min-w-[25vw] w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 // value={searchQuery}
                 // onChange={handleSearch}
               />

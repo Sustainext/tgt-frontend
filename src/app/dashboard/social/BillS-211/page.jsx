@@ -118,7 +118,7 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
       const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", "Canada_Bill_S211.xlsx");
+      link.setAttribute("download", "Canada Bill S211 Response Sheet.xlsx");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -473,10 +473,10 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
                 </div>
                 <div>
                   <p className="text-[14px] text-[#101828] font-medium">
-                    Annual report
+                    Response sheet
                   </p>
                   <p className="text-[11px] text-[#101828] font-medium mb-2">
-                    Annual Report is ready for download when first two steps are complete
+                    Response sheet is ready for download when first two steps are complete
                   </p>
                 </div>
                 </div>
@@ -484,14 +484,14 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
                   <button
                     disabled={!isDownloadEnabled}
                     onClick={handleDownload}
-                    className={`w-[52%] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white ${
+                    className={`w-[220px] inline-flex items-center px-4 py-2 border text-[12px] font-medium rounded-md text-white ${
                       isDownloadEnabled
                         ? "bg-blue-600 hover:bg-blue-700"
                         : "bg-blue-200 cursor-not-allowed"
                     }`}
                   >
                     <HiOutlineDownload className="mr-2 w-4 h-4" />
-                    Download Report
+                    Download Response sheet
                   </button>
                 </div>
               </div>

@@ -255,11 +255,26 @@ const Screenthree = ({
       setError(newErrors);
     }
   };
-  const handleKeyDown = (event) => {
-    if (["+", "-", "."].includes(event.key)) {
-      event.preventDefault();
-    }
-  };
+const handleKeyDown = (event) => {
+  // Block +, -, .
+  if (["+", "-", "."].includes(event.key)) {
+    event.preventDefault();
+    return;
+  }
+
+  // Allow control keys like Backspace, Tab, Arrow keys, etc.
+  const controlKeys = [
+    "Backspace", "Tab", "ArrowLeft", "ArrowRight", "Delete"
+  ];
+  if (controlKeys.includes(event.key)) {
+    return;
+  }
+
+  // Block further input if length is already 9
+  if (reportingbusinessnumber.length >= 9) {
+    event.preventDefault();
+  }
+};
 
   return (
     <>

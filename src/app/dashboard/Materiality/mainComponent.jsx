@@ -120,9 +120,9 @@ const MaterialityComponent = ({ open }) => {
         </div>
       </div>
 
-      <div className="flex justify-center items-center mt-5 xl:mx-4">
+      <div className="flex justify-center items-center mt-5 xl:mx-4 lg:mx-4 2xl:mx-4 4k:mx-4">
         <div className="border border-gray-200 mb-5 w-full rounded-md">
-          <div className="xl:flex lg:flex md:flex 2k:flex 4k:flex 2xl:flex justify-between items-center w-full border-b border-gray-200 pb-5">
+          <div className="xl:flex lg:flex md:flex 2k:flex 4k:flex 2xl:flex justify-between items-center w-full border-b border-gray-200 pb-5 ">
             <div>
               <p className="text-[18px] font-bold pt-5 px-5">
                 Materiality Assessments

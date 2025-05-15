@@ -168,7 +168,7 @@ export default function Home() {
                 className="h-28 w-auto"
               />
             </div>
-            <div className="bg-white shadow-lg rounded-lg p-16 max-w-md w-full my-20 mx-auto min-h-[80vh] max-h-[100vh] ">
+            <div className="bg-white shadow-lg rounded-lg p-16 max-w-md w-full my-20 mx-auto min-h-fit max-h-max ">
               <h2 className="text-left text-2xl font-extrabold text-gray-900">
                 Welcome back
               </h2>
