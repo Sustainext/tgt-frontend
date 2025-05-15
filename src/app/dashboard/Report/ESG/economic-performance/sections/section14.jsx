@@ -36,6 +36,10 @@ const Section14 = ({ section11_4_3Ref }) => {
       )
       }
 
+<p className="text-[15px] mb-2 font-semibold">
+Mechanisms to raise concerns about the organization’s business conduct and the organization’s integrity in relation to tax.
+        </p>
+
         {data["207_2b"]?.length>0?data["207_2b"].map((item, index) => (
           <div key={`207_2b_${index}`} className="mb-4">
             <p className="text-sm mb-2">{item.Q1 || "No data available"}</p>
@@ -45,17 +49,20 @@ const Section14 = ({ section11_4_3Ref }) => {
         )
       }
 
-        {data["207_2c"] && data["207_2c"].Q1 === "Yes" ? (
+<p className="text-[15px] mb-2 font-semibold">
+Assurance process for disclosures on tax 
+        </p>
+        {data["207_2c"] && data["207_2c"][0]?.Q1 === "Yes" ? (
           <div className="mb-4">
             
             <p className="text-sm mb-2">
-              {data["207_2c"].Q2 || "No data available"}
+              {data["207_2c"][0]?.Q2 || "No data available"}
             </p>
             <p className="text-sm mb-2">
-              {data["207_2c"].Q3?.text || "No data available"}
+              {data["207_2c"][0]?.Q3?.text || "No data available"}
             </p>
           </div>
-        ):<p className="text-sm mb-2">{data["207_2c"] && data["207_2c"].Q1?data["207_2c"].Q1:'No data available'}</p>}
+        ):<p className="text-sm mb-2">{data["207_2c"] && data["207_2c"][0]?.Q1?data["207_2c"][0]?.Q1:'No data available'}</p>}
       </div>
     </>
   );

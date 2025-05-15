@@ -14,6 +14,8 @@ import CryptoJS from "crypto-js";
 import axiosInstance from "../../utils/axiosMiddleware";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import { useAuth } from "../../../Context/auth";
+import { useRouter } from "next/navigation";
 
   
   const currencies =  Currency.map((item) => ({
@@ -71,6 +73,9 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 
 
 export default  function AccountSettings({setProfileVisible,backToMenu,setLoading}) {
+
+   const { logout, userDetails } = useAuth();
+   const router = useRouter()
     const [activeaccountTab, setActiveaccountTab] = useState('password');
     const [showCurrent, setShowCurrent] = useState(false);
     const [showNew, setShowNew] = useState(false);
@@ -204,6 +209,11 @@ export default  function AccountSettings({setProfileVisible,backToMenu,setLoadin
         );
         if (response.status === 200) {
           setSuccess(true);
+          setTimeout(async()=>{
+            await logout()
+          router.push("/");
+          },500)
+          
         }
         setLoading(false);
       } catch (error) {

@@ -232,10 +232,10 @@ const SustainibilityJourney = forwardRef(({ onSubmitSuccess }, ref) => {
         </h3>
         <div className="flex gap-4">
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
-            <Section1 orgName={orgName} />
-            <Section2 section10_1Ref={section10_1Ref} />
-            <Section3 section10_2Ref={section10_2Ref} />
-            <Section4 section10_3Ref={section10_3Ref} />
+            <Section1 orgName={orgName} data={data} />
+            <Section2 section10_1Ref={section10_1Ref} data={data} />
+            <Section3 section10_2Ref={section10_2Ref} data={data} />
+            <Section4 section10_3Ref={section10_3Ref} data={data} />
             <Section5 section10_3_1Ref={section10_3_1Ref} data={data} />
             <Section6 section10_3_2Ref={section10_3_2Ref} data={data} />
             <Section7 section10_3_3Ref={section10_3_3Ref} data={data} />

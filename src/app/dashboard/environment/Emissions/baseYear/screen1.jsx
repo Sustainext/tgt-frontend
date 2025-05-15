@@ -225,14 +225,16 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
       if (!row.Q4) {
         errors.Q4 = "This field is required";
       }
-      if (!row.Q5) {
-        errors.Q5 = "This field is required";
-      }
-      if (!row.Q6 || row.Q6.trim() === "") {
-        errors.Q6 = "This field is required";
-      }
-      if (!row.Q7 || row.Q7.trim() === "") {
-        errors.Q7 = "This field is required";
+      if(row.Q4==="Yes"){
+        if (!row.Q5) {
+          errors.Q5 = "This field is required";
+        }
+        if (!row.Q6 || row.Q6.trim() === "") {
+          errors.Q6 = "This field is required";
+        }
+        if (!row.Q7 || row.Q7.trim() === "") {
+          errors.Q7 = "This field is required";
+        }
       }
     });
     return errors;
@@ -359,8 +361,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validateRows(formData);
-    setValidationErrors(errors);
-  
+    setValidationErrors(errors);  
     const hasErrors = Object.keys(errors).length > 0;
     if (!hasErrors) {
       updateFormData();

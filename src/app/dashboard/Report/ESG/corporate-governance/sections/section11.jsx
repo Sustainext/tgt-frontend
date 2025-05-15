@@ -11,7 +11,7 @@ const Section11 = ({ section9_3_5Ref, data }) => {
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           9.3.5 Communication of Critical Concerns
         </h3>
-        <textarea
+        {/* <textarea
           value={
             data["2_16_a"]
               ? data["2_16_a"].critical_concerns_communication_description
@@ -19,14 +19,21 @@ const Section11 = ({ section9_3_5Ref, data }) => {
           }
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none mt-2 focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
-        />
+        /> */}
+        <p className="text-sm mb-4">
+        {
+            data["2_16_a"]
+              ? data["2_16_a"]?.critical_concerns_communication_description
+              : "No data available"
+          }
+        </p>
         <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
           Total number of critical concerns that were communicated to the
           highest governance body :
         </p>
         <p className="text-sm mb-4">
           {data["2_16_b"]
-            ? data["2_16_b"].total_critical_concerns_reported
+            ? data["2_16_b"]?.total_critical_concerns_reported
             : "No data available"}
         </p>
         <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
@@ -35,7 +42,7 @@ const Section11 = ({ section9_3_5Ref, data }) => {
         </p>
         <p className="text-sm mb-4">
           {data["2_16_b"]
-            ? data["2_16_b"].nature_of_critical_concerns_reported
+            ? data["2_16_b"]?.nature_of_critical_concerns_reported
             : "No data available"}
         </p>
       </div>
