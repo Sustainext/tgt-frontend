@@ -66,6 +66,15 @@ const MetricsGraph = ({
   // State for the absolute value in base year
   const [baseValue, setBaseValue] = useState(metricData.abs_value || "");
 
+  // State for validation errors - don't show errors initially
+  const [baseValueError, setBaseValueError] = useState(false);
+
+  // State for displaying validation error when trying to drag without baseValue
+  const [showDragError, setShowDragError] = useState(false);
+
+  // State to track if user has interacted with the component
+  const [hasInteracted, setHasInteracted] = useState(false);
+
   const [maxRange, setMaxRange] = useState(initialMaxRange);
 
   // Update data when metricData changes (from Redux)
@@ -73,6 +82,10 @@ const MetricsGraph = ({
     // Update base value if it exists in metricData
     if (metricData.abs_value !== undefined) {
       setBaseValue(metricData.abs_value);
+      // Clear error if value is valid, but only if user has interacted
+      if (hasInteracted && metricData.abs_value !== "" && !isNaN(metricData.abs_value) && parseFloat(metricData.abs_value) > 0) {
+        setBaseValueError(false);
+      }
     }
 
     // Update percentage changes if they exist
@@ -89,7 +102,7 @@ const MetricsGraph = ({
       });
       setData(newData);
     }
-  }, [metricData]);
+  }, [metricData, hasInteracted]);
 
   // Update container width on mount and resize
   useEffect(() => {
@@ -104,6 +117,17 @@ const MetricsGraph = ({
     window.addEventListener("resize", updateContainerWidth);
     return () => window.removeEventListener("resize", updateContainerWidth);
   }, []);
+
+  // Hide the drag error message after 3 seconds
+  useEffect(() => {
+    if (showDragError) {
+      const timer = setTimeout(() => {
+        setShowDragError(false);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showDragError]);
 
   // Calculate effective min negative value - dynamic unless specified for certain metrics
   const getEffectiveMinNegative = () => {
@@ -135,9 +159,25 @@ const MetricsGraph = ({
     return false;
   };
 
+  // Check if baseValue is valid for interactions
+  const isBaseValueValid = () => {
+    return baseValue !== "" && !isNaN(baseValue) && parseFloat(baseValue) > 0;
+  };
+
   // Function to handle point drag
   const handlePointDrag = (pointIndex, event) => {
-    if (disabled || baseValueError || baseValue === "") return;
+    // First check if dragging is allowed
+    if (disabled) return;
+    
+    // Mark that user has interacted with the component
+    setHasInteracted(true);
+    
+    // Validate baseValue before allowing drag
+    if (!isBaseValueValid()) {
+      setBaseValueError(true);
+      setShowDragError(true);
+      return;
+    }
 
     const year = years[pointIndex];
 
@@ -165,7 +205,7 @@ const MetricsGraph = ({
       const newValue = Math.round(initialValue + valueChange);
 
       // Check if we need to auto-adjust range
-      const rangeAdjusted = autoAdjustRange(newValue);
+      const rangeAdjusted = autoAdjustRange(Math.abs(newValue));
 
       // Apply constraints based on current max range
       const upperConstrained = Math.min(newValue, maxRange);
@@ -204,7 +244,7 @@ const MetricsGraph = ({
 
       // Create complete data object for Redux
       const completeData = {
-        abs_value: baseValue,
+        abs_value: parseFloat(baseValue),
         percentage_change: updatedPercentageChanges,
       };
 
@@ -267,7 +307,18 @@ const MetricsGraph = ({
 
   // Function to handle percentage input
   const handlePercentageChange = (index, value) => {
-    if (disabled || baseValueError || baseValue === "") return;
+    // First check if editing is allowed
+    if (disabled) return;
+    
+    // Mark that user has interacted with the component
+    setHasInteracted(true);
+    
+    // Validate baseValue before allowing changes
+    if (!isBaseValueValid()) {
+      setBaseValueError(true);
+      setShowDragError(true);
+      return;
+    }
 
     // Handle special case: if user is just typing a minus sign
     if (value === "-" && allowNegative) {
@@ -336,7 +387,7 @@ const MetricsGraph = ({
 
     // Create complete data object for Redux
     const completeData = {
-      abs_value: baseValue,
+      abs_value: parseFloat(baseValue),
       percentage_change: updatedPercentageChanges,
     };
 
@@ -344,19 +395,25 @@ const MetricsGraph = ({
     onPercentageChange(completeData);
   };
 
-  const [baseValueError, setBaseValueError] = useState(false);
-
-  //  handleBaseValueChange
+  // handleBaseValueChange
   const handleBaseValueChange = (e) => {
     if (disabled) return;
+    
+    // Mark that user has interacted with the component
+    setHasInteracted(true);
 
     const inputValue = e.target.value;
-    const value = Number(inputValue) || 0;
+    
+    // Always update the input value for better UX
+    setBaseValue(inputValue);
+    
+    // Parse the value - ensure it's a number
+    const value = parseFloat(inputValue);
 
-    setBaseValue(inputValue); // Store the raw input for better UX
-
-    // Validate input - check if it's a valid number and not empty
+    // Validate input - check if it's a valid number and not empty and greater than zero
     const isValid = inputValue !== "" && !isNaN(value) && value > 0;
+    
+    // Update error state
     setBaseValueError(!isValid);
 
     // Only send update to parent if value is valid
@@ -395,16 +452,18 @@ const MetricsGraph = ({
               value={baseValue}
               onChange={handleBaseValueChange}
               className={`w-32 text-center bg-white border-b ${
-                baseValueError ? "border-red-500" : "border-gray-300"
+                hasInteracted && baseValueError ? "border-red-500" : "border-gray-300"
               } rounded py-1 px-2 text-sm focus:outline-none focus:${
-                baseValueError ? "border-red-500" : "border-blue-500"
+                hasInteracted && baseValueError ? "border-red-500" : "border-blue-500"
               } ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
               placeholder="Enter Value *"
               disabled={disabled}
               required
             />
-            {baseValueError && (
-              <span className="text-red-500 text-xs ml-2">Absolute value for {metricName} is required</span>
+            {hasInteracted && (baseValueError || showDragError) && (
+              <span className="text-red-500 text-xs ml-2">
+                Absolute value for {metricName} is required
+              </span>
             )}
           </div>
         </div>
@@ -460,11 +519,16 @@ const MetricsGraph = ({
                   {point.data.y}%
                 </div>
                 <div className="text-gray-500 text-xs">
-                  Value: {Math.round((baseValue * (100 + point.data.y)) / 100)}
+                  Value: {isBaseValueValid() ? Math.round((parseFloat(baseValue) * (100 + point.data.y)) / 100) : "N/A"}
                 </div>
-                {!disabled && (
+                {!disabled && isBaseValueValid() && (
                   <div className="text-xs italic text-gray-500">
                     Click and drag to adjust
+                  </div>
+                )}
+                {!disabled && !isBaseValueValid() && (
+                  <div className="text-xs italic text-red-500">
+                    Enter base value first
                   </div>
                 )}
               </div>
@@ -515,7 +579,10 @@ const MetricsGraph = ({
                       key={point.id}
                       transform={`translate(${point.x},${point.y})`}
                       onMouseDown={(e) => handlePointDrag(index, e)}
-                      style={{ cursor: disabled ? "default" : "pointer" }}
+                      style={{ 
+                        cursor: disabled || !isBaseValueValid() ? "not-allowed" : "pointer",
+                        opacity: disabled || !isBaseValueValid() ? 0.7 : 1 
+                      }}
                     >
                       {/* Larger hit area */}
                       <circle
@@ -602,17 +669,28 @@ const MetricsGraph = ({
                         ? `+${data[index].y}%`
                         : `${data[index].y}%`
                     }
-                    className={`w-16 text-center border-b border-gray-300 rounded py-1 text-[11px] focus:outline-none focus:border-blue-500 ${
-                      disabled ? "opacity-60 cursor-not-allowed" : ""
+                    className={`w-16 text-center border-b ${
+                      !isBaseValueValid() ? "border-red-100" : "border-gray-300"
+                    } rounded py-1 text-[11px] focus:outline-none focus:border-blue-500 ${
+                      disabled || !isBaseValueValid() ? "opacity-60 cursor-not-allowed" : ""
                     }`}
                     onChange={(e) => {
                       // Pass the raw value to our handler function
                       const rawValue = e.target.value.replace("%", "");
                       handlePercentageChange(index, rawValue);
                     }}
-                    onFocus={(e) => {
+                                          onFocus={(e) => {
                       if (!disabled) {
-                        e.target.select();
+                        // Mark that user has interacted
+                        setHasInteracted(true);
+                        
+                        if (isBaseValueValid()) {
+                          e.target.select();
+                        } else {
+                          // Show error if base value is invalid
+                          setBaseValueError(true);
+                          setShowDragError(true);
+                        }
                       }
                     }}
                     onBlur={(e) => {
@@ -622,23 +700,26 @@ const MetricsGraph = ({
                         newData[index] = { ...newData[index], y: 0 };
                         setData(newData);
 
-                        // Create the year-wise percentage changes for Redux with complete data
-                        const percentageChanges = {};
-                        newData.forEach((item) => {
-                          percentageChanges[item.x] = item.y;
-                        });
+                        // Only update if base value is valid
+                        if (isBaseValueValid()) {
+                          // Create the year-wise percentage changes for Redux with complete data
+                          const percentageChanges = {};
+                          newData.forEach((item) => {
+                            percentageChanges[item.x] = item.y;
+                          });
 
-                        // Create complete data object
-                        const completeData = {
-                          abs_value: baseValue,
-                          percentage_change: percentageChanges,
-                        };
+                          // Create complete data object
+                          const completeData = {
+                            abs_value: parseFloat(baseValue),
+                            percentage_change: percentageChanges,
+                          };
 
-                        // Update the parent via callback with complete data
-                        onPercentageChange(completeData);
+                          // Update the parent via callback with complete data
+                          onPercentageChange(completeData);
+                        }
                       }
                     }}
-                    disabled={disabled}
+                    disabled={disabled || !isBaseValueValid()}
                   />
                 </div>
               ))}
