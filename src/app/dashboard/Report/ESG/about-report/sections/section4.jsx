@@ -30,6 +30,15 @@ const Section4 = ({ section7_3Ref, data }) => {
           <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
             7.3 External Assurance
           </h3>
+          <p className="text-sm mb-4">
+            {data["2-5-a"]
+              ? data["2-5-a"]["assurance-policy"]
+                ? data["2-5-a"]["assurance-policy"].Q1
+                  ? data["2-5-a"]["assurance-policy"].Q1
+                  : ""
+                : ""
+              : ""}
+          </p>
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
             <p className="text-[15px] text-[#344054] mb-2 mt-3">
               Add statement about external assurance
@@ -49,7 +58,16 @@ const Section4 = ({ section7_3Ref, data }) => {
             className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
             rows={4}
           />
-          <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+          <p className="text-sm mb-4">
+            {data["2-5-a"]
+              ? data["2-5-a"]["assurance-highest"]
+                ? data["2-5-a"]["assurance-highest"].Q1
+                  ? data["2-5-a"]["assurance-highest"].Q1
+                  : ""
+                : ""
+              : ""}
+          </p>
+          {/* <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             The scope of the assurance includes
           </p>
           <p className="text-[15px] text-[#344054] mb-4 font-semibold">
@@ -76,8 +94,13 @@ const Section4 = ({ section7_3Ref, data }) => {
                   : "No data available"
                 : "No data available"
               : "No data available"}
-          </p>
-          <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+          </p> */}
+          {
+            data["2-5-b"]
+            ? data["2-5-b"].Q1
+              ? data["2-5-b"].Q1 == "No"?'':(
+                <div>
+                  <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Link or reference to the external assurance reports or assurance
             statements:
           </p>
@@ -99,8 +122,12 @@ const Section4 = ({ section7_3Ref, data }) => {
                 : ""
               : ""}
           </p>
+                </div>
+              ):'':''
+          }
+          
           <p className="text-[15px] text-[#344054] mb-4 font-semibold">
-            Data that was assured and the basis of assurance:
+          Basis of Assurance:
           </p>
           <p className="text-sm mb-2">
             {data["2-5-b"]

@@ -114,7 +114,15 @@ const MaterialityTable = ({ col, value }) => {
             ))
           ) : (
             <tr className="text-[13px]">
-              <td className="border-t border-r border-gray-200 p-4 text-left">
+              {
+                col && col.length>0 && col.map((val)=>(
+                  <td className="border-t border-r border-gray-200 p-4 text-left">
+                  No Data available
+                </td>
+                ))
+              }
+             
+              {/* <td className="border-t border-r border-gray-200 p-4 text-left">
                 No Data available
               </td>
               <td className="border-t border-r border-gray-200 p-4 text-left">
@@ -122,10 +130,7 @@ const MaterialityTable = ({ col, value }) => {
               </td>
               <td className="border-t border-r border-gray-200 p-4 text-left">
                 No Data available
-              </td>
-              <td className="border-t border-r border-gray-200 p-4 text-left">
-                No Data available
-              </td>
+              </td> */}
             </tr>
           )}
         </tbody>

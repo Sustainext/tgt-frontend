@@ -10,6 +10,7 @@ import Companyoperations from "./company-operations/page";
 import StakeholderEngagement from "./stakeholder-engagement/page";
 import AboutTheReport from "./about-report/page";
 import Materiality from "./materilality/page";
+import ReferenceMateriality from "./reference-materiality/page";
 import SustainibilityJourney from "./sustainibility-journey/page";
 import CorporateGovernance from "./corporate-governance/page";
 import Community from "./community/page";
@@ -510,6 +511,7 @@ const ESGReport = () => {
                 <div>
                   <div className="mb-4">
                     <Materiality ref={materiality} />
+                    {/* <ReferenceMateriality ref={materiality} /> */}
                   </div>
                 </div>
               )}

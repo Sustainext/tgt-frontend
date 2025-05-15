@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 
 const HighestGovernanceTable=({tableData})=>{
 
-    const data=tableData["2_9_c"]?[tableData["2_9_c"]]:[]
+    const data=tableData["2_9_c"]?Object.keys(tableData["2_9_c"]).length>0?[tableData["2_9_c"]]:[]:[]
     const col=[
         "Name",
         "Executive power",

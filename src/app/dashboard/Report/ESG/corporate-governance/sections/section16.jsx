@@ -13,7 +13,7 @@ const Section16=({section9_4_2Ref,data})=>{
             <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
             9.4.2 Membership Association
             </h3>
-            <p className="text-sm mb-4">{content}</p>
+            {/* <p className="text-sm mb-4">{content}</p> */}
             {data["2_28_a"] ? (
           <div className="shadow-md rounded-md mb-4">
             <div

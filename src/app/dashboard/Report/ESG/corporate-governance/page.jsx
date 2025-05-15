@@ -262,7 +262,7 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess }, ref) => {
         <div className="flex gap-4">
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
             <Section1 orgName={orgName} />
-            <Section2
+             <Section2
               section9_1Ref={section9_1Ref}
               section9_1_1Ref={section9_1_1Ref}
               data={data}
@@ -310,7 +310,7 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess }, ref) => {
               data={data}
               orgName={orgName}
             />
-            <Section22 section9_6_3Ref={section9_6_3Ref} data={data} />
+           <Section22 section9_6_3Ref={section9_6_3Ref} data={data} />
             <Section23 section9_6_4Ref={section9_6_4Ref} data={data} />
             <Section25 section9_7Ref={section9_7Ref} data={data} />
           </div>

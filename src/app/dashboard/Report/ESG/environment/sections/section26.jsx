@@ -14,7 +14,7 @@ const Section26 = ({ section12_5_3Ref, data }) => {
           12.5.3 Management of Waste-Related Impacts
         </h3>
 
-        <p className="text-sm mb-4">
+        {/* <p className="text-sm mb-4">
           We implement measures to manage the environmental impacts of our
           waste, including proper disposal methods, recycling programs, and
           waste treatment technologies. Our waste management plan takes a
@@ -22,7 +22,7 @@ const Section26 = ({ section12_5_3Ref, data }) => {
           environmental sustainability. To minimise vehicle emissions associated
           with waste transportation, we are establishing a waste management
           plant facility right within our premises. 
-        </p>
+        </p> */}
         <p className="text-sm mb-4">
           {data["306_2"]
             ? data["306_2"].data
