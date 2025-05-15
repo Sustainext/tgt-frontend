@@ -41,7 +41,7 @@ const DataTable = ({ data, setRefresh, refresh }) => {
   return (
     <>
       <div className="mb-2 h-auto overflow-x-auto custom-scrollbar hidden xl:block md:block lg:block 4k:block 2k:block">
-        <table className="min-w-[1000px] w-full rounded-md">
+        <table className="min-w-[1000px] w-full rounded-md ">
           <thead className="gradient-background">
             <tr>
               {Col.map((item, idx) => (
