@@ -213,6 +213,7 @@ export const createScenario = async (scenarioData) => {
     // Transform data to match API requirements
     const payload = {
       name: scenarioData.name,
+      description: scenarioData.description || "", // Add the description field to the payload
       scenario_by: scenarioData.selectionType?.toLowerCase() || "organization",
       base_year: parseInt(scenarioData.baseYear),
       target_year: parseInt(scenarioData.targetYear),
@@ -241,6 +242,7 @@ export const updateScenario = async (id, scenarioData) => {
 
     // Only include fields that are present in the update data
     if (scenarioData.name) payload.name = scenarioData.name;
+    if (scenarioData.description !== undefined) payload.description = scenarioData.description; // Add the description field update
     if (scenarioData.scenario_by || scenarioData.selectionType) {
       payload.scenario_by =
         scenarioData.scenario_by ||
@@ -599,6 +601,197 @@ export const getScenarioGraphData = async (scenarioId, filters = {}) => {
   }
 };
 
+/**
+ * Fetch comparison data for multiple scenarios
+ * @param {Array} scenarios - Array of scenario objects with id and filters
+ * @returns {Promise} Promise resolving to comparison data
+ */
+export const fetchComparisonData = async (scenarios) => {
+  try {
+    const response = await apiClient.post("/optimize/comparescenarios/", {
+      scenarios
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching comparison data:", error);
+    throw error;
+  }
+};
+
+/**
+ * Prepare scenarios payload for comparison API
+ * @param {Array} scenarioIds - Array of scenario IDs
+ * @param {Object} filters - Filter settings to apply to all scenarios
+ * @param {Object} scenarioMetrics - Scenario-specific metrics from filter section
+ * @returns {Array} Formatted scenarios array for API
+ */
+export const prepareComparisonPayload = (scenarioIds, filters = {}, scenarioMetrics = {}) => {
+  return scenarioIds.map(id => {
+    // Get scenario-specific metrics if available
+    const metrics = scenarioMetrics[id] || filters.metrics;
+    const metricStr = Array.isArray(metrics) ? metrics.join(',') : metrics;
+    
+    // Handle scope values as comma-separated if they're arrays
+    const formatScope = (scope) => {
+      if (Array.isArray(scope)) {
+        return scope.filter(s => s !== "Aggregated Scope").join(',');
+      } else if (scope && scope !== "Aggregated Scope") {
+        return scope;
+      }
+      return undefined;
+    };
+    
+    return {
+      id,
+      filters: {
+        metric: metricStr,
+        scope: formatScope(filters.scope),
+        category: formatScope(filters.category),
+        sub_category: formatScope(filters.subCategory),
+        activity_id: filters.activityId || undefined,
+        activity_name: formatScope(filters.activity)
+      }
+    };
+  });
+};
+
+/**
+ * Download scenario comparison results
+ * @param {Array} scenarioIds - Array of scenario IDs to compare
+ * @param {Object} filters - Optional filters for the comparison
+ * @returns {Promise} Promise resolving to download URL or blob
+ */
+export const downloadComparisonResults = async (scenarioIds, filters = {}) => {
+  try {
+    if (!Array.isArray(scenarioIds) || scenarioIds.length === 0) {
+      throw new Error("Valid scenarioIds are required");
+    }
+    
+    // Format scope values for API
+    const formatFilter = (filter) => {
+      if (Array.isArray(filter)) {
+        return filter.filter(f => f !== "Aggregated Scope").join(',');
+      } else if (filter && filter !== "Aggregated Scope") {
+        return filter;
+      }
+      return undefined;
+    };
+    
+    // Format scenario-specific metrics if available
+    const scenarioMetrics = filters.scenarioMetrics || {};
+    let metrics = filters.metrics;
+    
+    // If we have scenario-specific metrics, use the first scenario's metrics
+    // (since download only accepts a single metrics filter)
+    if (Object.keys(scenarioMetrics).length > 0 && scenarioIds.length > 0) {
+      const firstScenarioId = scenarioIds[0];
+      if (scenarioMetrics[firstScenarioId]) {
+        metrics = scenarioMetrics[firstScenarioId];
+      }
+    }
+    
+    const metricStr = Array.isArray(metrics) ? metrics.join(',') : metrics;
+    
+    const response = await apiClient.post(
+      '/optimize/download-comparison/', 
+      {
+        scenario_ids: scenarioIds,
+        filters: {
+          metric: metricStr,
+          scope: formatFilter(filters.scope),
+          category: formatFilter(filters.category),
+          sub_category: formatFilter(filters.subCategory),
+          activity_id: filters.activityId || undefined,
+          activity_name: formatFilter(filters.activity)
+        }
+      },
+      {
+        responseType: 'blob' // Important for file downloads
+      }
+    );
+    
+    // Create a download URL from the blob
+    const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
+    
+    // Create a temporary link and trigger download
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.setAttribute('download', 'scenario-comparison.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    
+    // Clean up
+    link.parentNode.removeChild(link);
+    window.URL.revokeObjectURL(downloadUrl);
+    
+    return true;
+  } catch (error) {
+    console.error('Error downloading comparison results:', error);
+    throw error;
+  }
+};
+
+// Compare Scenarios
+/**
+ * Get all scenarios specifically for the comparison view
+ * This function is dedicated to the comparison feature and won't affect other parts
+ * @param {Object} filters - Optional filters for scenarios
+ * @returns {Promise} Promise resolving to formatted scenarios data for comparison
+ */
+export const fetchScenariosForComparison = async (filters = {}) => {
+  try {
+    // Convert filters object to URL query params
+    const queryParams = new URLSearchParams();
+    Object.keys(filters).forEach((key) => {
+      if (
+        filters[key] !== null &&
+        filters[key] !== undefined &&
+        filters[key] !== ""
+      ) {
+        // Handle arrays for multi-select filters
+        if (Array.isArray(filters[key]) && filters[key].length > 0) {
+          filters[key].forEach((value) => queryParams.append(key, value));
+        } else {
+          queryParams.append(key, filters[key]);
+        }
+      }
+    });
+
+    const response = await apiClient.get(
+      `${SCENARIO_ENDPOINT}?${queryParams.toString()}`
+    );
+    
+    // Transform API response to match expected format for comparison view
+    return transformScenarioData(response.data);
+  } catch (error) {
+    console.error("Error fetching scenarios for comparison:", error);
+    throw error;
+  }
+};
+
+/**
+ * Transform API response to match the format expected by components
+ * @param {Object|Array} data - The API response data
+ * @returns {Array} Formatted array of scenario objects
+ */
+const transformScenarioData = (data) => {
+  // Check if data is an array or needs to be extracted from a wrapper object
+  const scenarios = Array.isArray(data) ? data : data.results || [];
+  
+  return scenarios.map(scenario => ({
+    id: scenario.id,
+    name: scenario.name,
+    description: scenario.description || "",
+    baseYear: scenario.base_year || 2024,
+    targetYear: scenario.target_year || 2035,
+    scope1Emissions: scenario.scope1_emissions || 0,
+    scope2Emissions: scenario.scope2_emissions || 0,
+    scope3Emissions: scenario.scope3_emissions || 0,
+    measures: scenario.measures || [],
+    // Add any other properties needed by your components
+  }));
+};
+
 export default {
   checkEmissionDataExists,
   fetchScenarios,
@@ -618,5 +811,9 @@ export default {
   updateScenarioActivity,
   updateAllScenarioActivities,
   calculateEmissionsForOptimise,
-  getScenarioGraphData
+  getScenarioGraphData,
+  fetchComparisonData,
+  prepareComparisonPayload,
+  fetchScenariosForComparison,
+  getAuthToken
 };

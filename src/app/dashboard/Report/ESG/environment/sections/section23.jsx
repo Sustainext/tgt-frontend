@@ -140,7 +140,7 @@ const Section23 = ({ section12_4_5Ref, data }) => {
           12.4.5 Reduction in Energy consumption
         </h3>
 
-        <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
+        {/* <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
             Add statement about company’s commitment to reduce energy
             consumption
@@ -149,7 +149,7 @@ const Section23 = ({ section12_4_5Ref, data }) => {
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
             onClick={loadContent}
           >
-            {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
+           
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
             Auto Fill
           </button>
@@ -159,7 +159,7 @@ const Section23 = ({ section12_4_5Ref, data }) => {
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
-        />
+        /> */}
 
         <p className="text-[15px]  mb-2 font-semibold">
           Reduction of energy consumption
@@ -190,6 +190,32 @@ const Section23 = ({ section12_4_5Ref, data }) => {
             total2={reductionOfEnergyService.total2}
           />
         </div>
+        <p className="text-[15px]  mb-2 font-semibold">
+        Standards, methodology and assumptions used
+        </p>
+        <p className="text-sm mb-2">
+  {
+    data['302_1f'] && data['302_1f'].length > 0 
+      ? Object.entries(data['302_1f'][0])
+          .filter(([key]) => key.startsWith('textareaQ'))
+          .map(([key, value]) => (
+            <span key={key}>
+              {value}
+              <br />
+            </span>
+          ))
+      : "No data available"
+  }
+</p>
+<p className="text-[15px]  mb-2 font-semibold">
+Source of conversion factors used
+        </p>
+        <p className="text-sm mb-4">
+    {
+      data['302_1g']?data['302_1g']?.length>0?
+      data['302_1g'][0]?.Q1 || 'No data available':'No data available':'No data available'
+    }
+        </p>  
       </div>
     </>
   );

@@ -23,7 +23,7 @@ const Section4 = ({ section9_2_2Ref, data }) => {
           {data["2_11_b"]
             ? data["2_11_b"].is_chair_of_highest_governance
               ? data["2_11_b"].is_chair_of_highest_governance == "No"
-                ? data["2_11_b"].is_chair_of_highest_governance
+                ? "No"
                 : ""
               : "No data available"
             : "No data available"}

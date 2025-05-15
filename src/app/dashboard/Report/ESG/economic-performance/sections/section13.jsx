@@ -98,6 +98,10 @@ const Section13 = ({ section11_4_2Ref }) => {
         )}
       </div>
 
+      <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+      Our tax strategy is designed to support our business objectives while ensuring we meet our legal and ethical obligations.
+      </p>
+
       {/* New div to display tax jurisdictions from 207_4a */}
       <div className="shadow-md rounded-md mb-4 p-6">
         <p className="text-sm text-[#344054] mb-2">

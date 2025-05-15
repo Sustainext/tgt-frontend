@@ -269,16 +269,17 @@ const MyTask = ({ HomeActiveTab }) => {
         status: task.task_status,
         assign_to_email: task.assign_to_email,
         file_data: task.file_data,
+        unit_type: task.unit_type
       });
 
       if (task.activity) {
         const unitTypeExtractedArray = task.activity.split("-");
         const extractedUnitType =
           unitTypeExtractedArray[unitTypeExtractedArray.length - 1]?.trim();
-        setSelectedActivity({
-          ...selectedActivity,
-          unit_type: extractedUnitType,
-        });
+        // setSelectedActivity({
+        //   ...selectedActivity,
+        //   unit_type: extractedUnitType,
+        // });
       }
 
       // Only fetch activities if activity is not received and required parameters are present

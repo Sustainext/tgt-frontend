@@ -31,8 +31,8 @@ const Section2 = ({
       setEntitiesInclude(
         `<p>This report includes sustainability performance data from all entities under ${
           orgName ? orgName : "[Company Name]"
-        } operational control.</p>`
-      )
+        } operational control. This encompasses:</p>`
+      )      
     );
   };
 
@@ -145,7 +145,7 @@ const Section2 = ({
         <div className="text-sm mb-4">
           <ul className="list-disc ml-4">
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
-              We are active in the following sectors:
+             {orgName?orgName + " is":'We are'} active in the following sectors:
             </li>
             {/* <p className="mb-4">{content}</p> */}
             {data["2-6-a"] && data["2-6-a"].length > 0 ? (
@@ -213,10 +213,6 @@ const Section2 = ({
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
           2.1.2 Entities Included in the Organization's Sustainability Reporting
         </p>
-        {data["2-2-a"]?.map((item, index) => (
-          <p className="mb-2 font-normal">{item}</p>
-        ))}
-
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
             Add statement about sustainability performance data for all
@@ -240,10 +236,26 @@ const Section2 = ({
             onBlur={handleEditorChange}
           />
         </div>
-        <p className="text-[15px] text-[#344054] mb-2">
+        {data["2-2-a"]?.map((item, index) => (
+          <p className="mb-2 text-[15px]">{item}</p>
+        ))}
+        {/* 2-2-b */}
+        <p className="mb-4 text-[15px]">
+        {data["2-2-b"]?data["2-2-b"]?.answer=='Yes'?data["2-2-b"]?.explanation:'':''
+         }
+        </p>
+        
+        {/* 2-2-c */}
+        <p className="mb-4 text-[15px]">
+        {data["2-2-c"]?data["2-2-c"]?.answer=='Yes'?data["2-2-c"]?.explanation:'':''
+         }
+        </p>
+
+        
+        {/* <p className="text-[15px] text-[#344054] mb-2">
           Each entity adheres to our comprehensive sustainability framework,
           ensuring consistent ESG practices across our entire organization. 
-        </p>
+        </p> */}
       </div>
     </>
   );

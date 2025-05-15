@@ -40,24 +40,24 @@ const Section7 = ({ section9_3Ref, section9_3_1Ref, data }) => {
           {data["2_12_b"] ? data["2_12_b"].Q1 : "No data available"}
         </p>
 
-        <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
+        {/* <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
           How the highest governance body engage with stakeholders to support
           these processes:{" "}
-        </p>
+        </p> */}
         <p className="text-sm mb-4">
           {data["2_12_b"]
             ? data["2_12_b"].Q3
               ? data["2_12_b"].Q3
-              : "No data available"
-            : "No data available"}
+              : ""
+            : ""}
         </p>
 
-        <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
+        {/* <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
           How the highest governance body considers the outcomes of these
           processes:
-        </p>
+        </p> */}
         <p className="text-sm mb-4">
-          {data["2_12_b"] ? data["2_12_b"].Q4 : "No data available"}
+          {data["2_12_b"] ? data["2_12_b"].Q4 : ""}
         </p>
       </div>
     </>

@@ -10,6 +10,7 @@ import scenarioService from './service/scenarioService';
 const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
   // Form state
   const [scenarioName, setScenarioName] = useState("");
+  const [scenarioDescription, setScenarioDescription] = useState("");
   const [selectionType, setSelectionType] = useState("Organization");
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
@@ -156,6 +157,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
     // Create scenario data object
     const newScenario = {
       name: scenarioName,
+      description: scenarioDescription, // Add the description field to the payload
       selectionType: selectionType,
       baseYear: baseYear,
       targetYear: targetYear,
@@ -184,6 +186,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
 
   const resetForm = () => {
     setScenarioName("");
+    setScenarioDescription(""); // Reset the description field
     setSelectionType("Organization");
     setSelectedOrg("");
     setSelectedCorp("");
@@ -246,8 +249,8 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                     Create a new Scenario
                   </Dialog.Title>
                   <p className="mt-1 text-sm text-gray-500">
-                    Enter name for the scenario along with organization (corporate),
-                    Base year and target year.
+                    Enter name and description for the scenario along with organization (corporate),
+                    base year and target year.
                   </p>
                 </div>
 
@@ -281,6 +284,21 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                         <p className="text-red-500 text-xs mt-1">{nameValidationError}</p>
                       ) : null
                     }
+                  </div>
+
+                  {/* Scenario Description */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Enter Scenario Description
+                    </label>
+                    <textarea
+                      placeholder="Description (optional)"
+                      className="w-full rounded-md px-3 py-2 border border-gray-300 focus:border-blue-500 focus:ring-blue-500 focus:outline-none resize-y min-h-[80px]"
+                      value={scenarioDescription}
+                      onChange={(e) => setScenarioDescription(e.target.value)}
+                      rows={3}
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Provide details about this scenario, and any notes for future reference.</p>
                   </div>
 
                   {/* Selection Type Tabs - Modified for darker selected background */}

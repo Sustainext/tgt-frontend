@@ -287,10 +287,10 @@ const Section7 = ({
             {recalculatedYear && specificChanges ? (
               <>
                 The base year emissions have been recalculated in{" "}
-                {recalculatedYear} due to significant changes such as:
+                {recalculatedYear} due to significant changes such as:<br/><br/>
                 {specificChanges}
                 <br />
-                <br />
+                {/* <br /> */}
                 {context}
               </>
             ) : (
@@ -360,9 +360,9 @@ const Section7 = ({
               onBlur={handleEditorChange}
               />
             </div> */}
-          <p className="text-[14px] text-[#344054] mb-2 font-semibold">
+          {/* <p className="text-[14px] text-[#344054] mb-2 font-semibold">
             GHG Emission Intensity
-          </p>
+          </p> */}
           <div className="shadow-md rounded-md mb-4">
             <EmissionTable columns={columns} data={formattedIntensity} />
           </div>

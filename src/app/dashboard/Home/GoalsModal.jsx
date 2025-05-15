@@ -76,7 +76,7 @@ const GoalsModal = ({
     <>
       {/* <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} /> */}
       <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg w-full max-w-md relative">
+        <div className="bg-white rounded-lg w-full max-w-md relative overflow-y-scroll min-h-[20em] max-h-[100vh] scrollable-content top-6">
           {/* Close Button */}
           <button
             onClick={onClose}

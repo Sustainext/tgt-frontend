@@ -1,28 +1,20 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axiosInstance from "../../../../utils/axiosMiddleware";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose  } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
-import { GlobalState } from '../../../../../Context/page';
+import { GlobalState } from '../../../../../../Context/page';
 import { Oval } from "react-loader-spinner";
 
-const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportType }) => {
-
-  const { open } = GlobalState();
+const Screensix = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportType }) => {
+    const { open } = GlobalState();
   const [error, setError] = useState({});
   const [reportradio, setReportnradio] = useState("");
   const [reportingdescription, setReportingdescription] = useState("");
   const [loopen, setLoOpen] = useState(false);
   
-  const LoaderOpen = () => {
-    setLoOpen(true);
-  };
-  const LoaderClose = () => {
-    setLoOpen(false);
-  };
-
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("token")?.replace(/"/g, "");
@@ -37,27 +29,21 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
     },
   };
 
- 
-  const fetchBillSthree = async () => {
+  const fetchBillSsix = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
 
     try {
-      const response = await axiosInstance.get(
+     const response = await axiosInstance.get(
         `${
           process.env.BACKEND_API_URL
-        }/canadabills211/annual-report/?screen=3&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
+        }/canadabills211/annual-report/?screen=6&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
         axiosConfig
       );
 
       // If the request is successful but you specifically want to handle 404 inside here
       if (response.status === 200) {
-        setReportnradio(response.data.policies_in_place_6);
-        setReportingdescription(response.data.additional_info_policies_7);
-        if (response.data.elements_implemented_6_1 == null) {
-          setSelectedOptions([]);
-        } else {
-          setSelectedOptions(response.data.elements_implemented_6_1);
-        }
+        setReportnradio(response.data.measures_taken_loss_income_13);
+        setReportingdescription(response.data.additional_info_loss_income_14);
         LoaderClose();
       }
       else{
@@ -100,63 +86,18 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
     // };
     if(reportType=="Organization"){
       if(selectedOrg&&year){
-        fetchBillSthree();
+        fetchBillSsix();
       }
     }
     else{
       if(selectedOrg&&year&&selectedCorp){
-        fetchBillSthree();
+        fetchBillSsix();
       }
     }
     setReportnradio("");
     setReportingdescription("");
-    setSelectedOptions([])
-
     
   }, [selectedCorp,selectedOrg,year]);
-  const options = [
-    {
-      label:
-        "Embedding responsible business conduct into policies and management systems",
-      value: "1",
-    },
-    {
-      label:
-        "Identifying and assessing adverse impacts in operations, supply chains and business relationships",
-      value: "2",
-    },
-    {
-      label: "Ceasing, preventing or mitigating adverse impacts",
-      value: "3",
-    },
-    { label: "Tracking implementation and results", value: "4" },
-    { label: "Communicating how impacts are addressed", value: "5" },
-    {
-      label: "Providing for or cooperating in remediation when appropriate",
-      value: "6",
-    },
-  ];
-
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
-  const handleCheckboxChange = (event) => {
-    const value = event.target.value;
-    const newSelectedOptions = event.target.checked
-      ? [...selectedOptions, value]
-      : selectedOptions.filter((option) => option !== value);
-
-    setSelectedOptions(newSelectedOptions);
-
-    // Optionally clear the error for checkboxes when at least one option is selected
-    if (newSelectedOptions.length > 0 && error.checkboxes) {
-      setError((prevErrors) => {
-        const newErrors = { ...prevErrors };
-        delete newErrors.checkboxes;
-        return newErrors;
-      });
-    }
-  };
-
  
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
@@ -167,60 +108,59 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
     setReportingdescription(event.target.value);
    
   };
-
-  
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
+ 
   const submitForm = async () => {
-    let unewentities;
-    if (reportradio === "No") {
-      unewentities = [];
-    } else {
-      unewentities = selectedOptions;
-    }
+
     try{
       LoaderOpen();
 
       const sendData = {
-        policies_in_place_6: reportradio,
-        elements_implemented_6_1: unewentities,
-        additional_info_policies_7: reportingdescription?reportingdescription:null,
+        measures_taken_loss_income_13: reportradio,
+        additional_info_loss_income_14: reportingdescription?reportingdescription:null,
         organization_id: selectedOrg,
         corporate_id: selectedCorp?selectedCorp:null,
         year: year
       };
       const response= await axiosInstance
-    .post(
-      `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=3`,
-      sendData,
-      axiosConfig
-    )
-    if (response.status == "200") {
-      toast.success("Data added successfully", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      LoaderClose();
-      nextStep();
-    } else {
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      LoaderClose();
-    }
-    }
-    catch (error) {
+      .post(
+        `${process.env.BACKEND_API_URL}/canadabills211/annual-report/?screen=6`,
+        sendData,
+        axiosConfig
+      )
+      if (response.status == "200") {
+        console.log(response.status);
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        nextStep();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
+    }catch (error) {
       LoaderClose();
       console.error("API call failed:", error);
       toast.error("Oops, something went wrong", {
@@ -235,18 +175,12 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
       });
     }
     
-    
   };
   const continueToNextStep = () => {
     let newErrors = {};
 
     if (!reportradio) {
       newErrors.reportradio = "This field is required. Please fill it out.";
-    }
-    if (reportradio === "Yes") {
-      if (selectedOptions.length === 0) {
-        newErrors.checkboxes = "Please select at least one option.";
-      }
     }
 
     if (Object.keys(newErrors).length === 0) {
@@ -256,10 +190,10 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
       setError(newErrors);
     }
   };
-  
+
   return (
     <>
-     
+      
       <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-2 mt-2">
       <form className="xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[80%] 2k:w-[80%] 4k:w-[80%] w-[99%] text-left">
                   <div className="mb-5">
@@ -267,12 +201,14 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
                       className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
                       htmlFor="username"
                     >
-                      6.Does the entity currently have policies and due
-                      diligence processes in place related to forced labour
-                      and/or child labour?*
+                      13. Has the entity taken any measures to remediate the
+                      loss of income to the most vulnerable families that
+                      results from any measure taken to eliminate the use of
+                      forced labour or child labour in its activities and supply
+                      chains?*
                     </label>
                     <div className="relative mb-1">
-                      <div>
+                      <div className="mb-3">
                          {" "}
                         <input
                           type="radio"
@@ -287,11 +223,34 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
                           htmlFor="Yes"
                           className="text-[14px] text-gray-700"
                         >
-                          Yes
+                          Yes, we have taken substantial remediation measures
+                          and will continue to identify and address any gaps in
+                          our response.
                         </label>
                         <br />
                       </div>
-                      <div className="">
+                      <div className="mb-3">
+                         {" "}
+                        <input
+                          type="radio"
+                          id="Yesone"
+                          name="radio"
+                          value="Yesone"
+                          checked={reportradio === "Yesone"}
+                          onChange={handleReportnradio}
+                        />
+                         {" "}
+                        <label
+                          htmlFor="Yesone"
+                          className="text-[14px] text-gray-700"
+                        >
+                          Yes, we have taken some remediation measures, but
+                          there are gaps in our response that still need to be
+                          addressed.
+                        </label>
+                        <br />
+                      </div>
+                      <div className="mb-3">
                          {" "}
                         <input
                           type="radio"
@@ -306,59 +265,49 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
                           htmlFor="No"
                           className="text-[14px] text-gray-700 "
                         >
-                          No
+                          No, we have not taken any remediation measures.
+                        </label>
+                        <br />
+                      </div>
+                      <div className="mb-3">
+                         {" "}
+                        <input
+                          type="radio"
+                          id="Noone"
+                          name="radio"
+                          value="Noone"
+                          checked={reportradio === "Noone"}
+                          onChange={handleReportnradio}
+                        />
+                         {" "}
+                        <label
+                          htmlFor="Noone"
+                          className="text-[14px] text-gray-700 "
+                        >
+                          Not applicable, we have not identified any loss of
+                          income to vulnerable families resulting from measures
+                          taken to eliminate the use of forced labour or child
+                          labour in our activities and supply chains.
                         </label>
                         <br />
                       </div>
                     </div>
                     {error.reportradio && (
-                      <p className="text-red-500 ml-1 text-[12px] mt-1">{error.reportradio}</p>
+                      <p className="text-red-500  ml-1 text-[12px] mt-1">{error.reportradio}</p>
                     )}
                   </div>
 
-                  {reportradio === "Yes" && (
-                    <div className="mb-5">
-                      <label
-                        className="block text-gray-700 text-[14px] font-[500] mb-2 ml-1"
-                        htmlFor="username"
-                      >
-                        6.1 If yes, which of the following elements of the due
-                        diligence process has the entity implemented in relation
-                        to forced labour and/or child labour? Select all that
-                        apply.*
-                      </label>
-                      <div>
-                        {options.map((option, index) => (
-                          <div key={index} className="mb-2 ml-2">
-                            <label className="text-[14px] text-gray-600">
-                              <input
-                                type="checkbox"
-                                value={option.value}
-                                checked={selectedOptions.includes(option.value)}
-                                onChange={handleCheckboxChange}
-                                className="mr-3"
-                              />
-                              {option.label}
-                            </label>
-                          </div>
-                        ))}
-                        {error.checkboxes && (
-                          <div className="text-red-500 ml-1 text-[12px] mt-1">
-                            {error.checkboxes}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
                   <div className="mb-5 mt-3">
                     <label
                       className="block text-gray-700 text-[14px] font-[500] mb-2"
                       html
                       htmlFor="industryCheckbox"
                     >
-                      7. Please provide additional information on the entity’s
-                      policies and due diligence processes in relation to forced
-                      labour and child labour (if applicable).
+                      14. Please provide additional information on any measures
+                      the entity has taken to remediate the loss of income to
+                      the most vulnerable families that results from any measure
+                      taken to eliminate the use of forced labour or child
+                      labour in its activities and supply chains (if applicable).
                     </label>
                     <textarea
                       id="countriesOfOperation"
@@ -374,12 +323,12 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
                       onChange={handleReportingdescription} // Specify the number of rows to determine the initial height
                     />
                     {/* <div className="my-1">
-                      {error.reportingdescription && (
-                        <p className="text-red-500">
-                          {error.reportingdescription}
-                        </p>
-                      )}
-                    </div> */}
+                    {error.reportingdescription && (
+                      <p className="text-red-500">
+                        {error.reportingdescription}
+                      </p>
+                    )}
+                  </div> */}
                   </div>
                 </form>
                 <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full mb-5">
@@ -404,7 +353,6 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
                     </button>
                   </div>
                 </div>
-
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -422,4 +370,4 @@ const Screenthree = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,report
   );
 };
 
-export default Screenthree;
+export default Screensix;

@@ -81,11 +81,11 @@ const Section32 = ({ section12_6_2Ref }) => {
           12.6.2 Habitat Protected and Restored
         </h3>
 
-        <p className="text-sm mb-4">
+        {/* <p className="text-sm mb-4">
           We work to protect and restore habitats affected by our operations.
           This includes creating conservation areas, rehabilitating disturbed
           lands, and supporting biodiversity projects
-        </p>
+        </p> */}
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
             Add statement about company’s commitment to protect and restore

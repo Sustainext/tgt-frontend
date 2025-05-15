@@ -124,6 +124,12 @@ const Section3 = ({ section11_1_2Ref, orgName }) => {
             <Table1 values={tableData} currency={economicData.currency} />
           )}
         </div>
+
+        <p className="text-sm mb-4">
+          {
+            data['201_1a_data']?data['201_1a_data']?.length>0?data['201_1a_data'][0]?.Q1 || "No data available":'No data available':'No data available'
+          }
+        </p>
       </div>
     </>
   );

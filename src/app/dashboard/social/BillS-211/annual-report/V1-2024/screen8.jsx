@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axiosInstance from "../../../../utils/axiosMiddleware";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline, MdClose } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
-import { GlobalState } from "../../../../../Context/page";
+import { GlobalState } from "../../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
 import { MdOutlineDownload } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
@@ -17,6 +17,8 @@ const Screenend = ({
   selectedOrg,
   year,
   reportType,
+  handleTabClick,
+  setView,
 }) => {
   const { open } = GlobalState();
   const [error, setError] = useState({});
@@ -26,10 +28,10 @@ const Screenend = ({
   const [reportingentity, setReportingentit] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [isSubmitted,setIsSubmitted]= useState(false)
-  const [submitDisabled,setSubmitDisbaled]=useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitDisabled, setSubmitDisbaled] = useState(false);
 
-  console.log(isSubmitted,"check")
+  console.log(isSubmitted, "check");
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("token")?.replace(/"/g, "");
@@ -59,12 +61,12 @@ const Screenend = ({
         setReportingdescription(response.data.additional_info_assessment_18);
         setReportingentit(response.data.assessment_method_description_17_1);
         if (!response.data.assessment_method_17_1) {
-          setIsSubmitted(false)
-          setSubmitDisbaled(false)
+          setIsSubmitted(false);
+          setSubmitDisbaled(false);
           setSelectedOptions([]);
         } else {
-          setIsSubmitted(true)
-          setSubmitDisbaled(true)
+          setIsSubmitted(true);
+          setSubmitDisbaled(true);
           setSelectedOptions(response.data.assessment_method_17_1);
         }
         LoaderClose();
@@ -99,7 +101,6 @@ const Screenend = ({
     }
   };
 
-  
   useEffect(() => {
     // if (isMounted.current) {
 
@@ -157,7 +158,7 @@ const Screenend = ({
       : selectedOptions.filter((option) => option !== value);
 
     setSelectedOptions(newSelectedOptions);
-    setSubmitDisbaled(false)
+    setSubmitDisbaled(false);
 
     // Optionally clear the error for checkboxes when at least one option is selected
     if (newSelectedOptions.length > 0 && error.checkboxes) {
@@ -175,13 +176,13 @@ const Screenend = ({
 
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
-    setSubmitDisbaled(false)
+    setSubmitDisbaled(false);
     setError((prev) => ({ ...prev, reportradio: "" }));
   };
 
   const handleReportingdescription = (event) => {
     setReportingdescription(event.target.value);
-    setSubmitDisbaled(false)
+    setSubmitDisbaled(false);
   };
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -221,8 +222,8 @@ const Screenend = ({
         axiosConfig
       );
       if (response.status == "200") {
-        setIsSubmitted(true)
-        setSubmitDisbaled(true)
+        setIsSubmitted(true);
+        setSubmitDisbaled(true);
         toast.success("Data added successfully", {
           position: "top-right",
           autoClose: 3000,
@@ -234,6 +235,7 @@ const Screenend = ({
           theme: "light",
         });
         LoaderClose();
+    
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -312,14 +314,12 @@ const Screenend = ({
     LoaderOpen();
     try {
       const response = await fetch(
-        `${
-          process.env.BACKEND_API_URL
-        }/canadabills211/generate_cbill_excel/?organization=${selectedOrg}&corporate=${selectedCorp}&year=${year}`,
+        `${process.env.BACKEND_API_URL}/canadabills211/generate_cbill_excel/?organization=${selectedOrg}&corporate=${selectedCorp}&year=${year}`,
         axiosConfig
       );
       if (!response.ok) {
-        const errorResponse = await response.json(); 
-        throw new Error(errorResponse.message || 'Unknown error occurred');
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.message || "Unknown error occurred");
       }
       LoaderClose();
       const blob = await response.blob();
@@ -506,39 +506,44 @@ const Screenend = ({
           )
         } */}
 
-<div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full] mb-5">
-            <div className="flex justify-between">
+        <div className="xl:w-[80%]  lg:w-[80%]   2xl:w-[80%]   md:w-[80%]   2k:w-[80%]   4k:w-[80%]  w-full] mb-5">
+          <div className="flex justify-between">
             <div className="float-left relative flex">
-               <button
-            type="button"
-            disabled={!isSubmitted}
-            data-tooltip-id={`tooltip-$e1`}
-            data-tooltip-content="Please provide all the mandatory details to generate the Report."
-            onClick={handleDownload}
-            className={`px-2 py-2 ${!isSubmitted?'opacity-30':''} font-semibold rounded w-auto text-[13px] bg-transparent text-blue-400`}
-          >
-            {" "}
-            Download Report
-          </button>
-          <MdOutlineDownload className={`w-4 h-4 mt-2.5 ${!isSubmitted?'opacity-30':''} text-blue-400`} />
-                         
-                         {!isSubmitted && (
-                            <ReactTooltip
-                            id={`tooltip-$e1`}
-                            place="top"
-                            effect="solid"
-                            style={{
-                              width: "290px",
-                              backgroundColor: "#000",
-                              color: "white",
-                              fontSize: "12px",
-                              boxShadow: 3,
-                              borderRadius: "8px",
-                              textAlign: "left",
-                            }}
-                          ></ReactTooltip>
-                         )}
-                          
+              <button
+                type="button"
+                disabled={!isSubmitted}
+                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-content="Please provide all the mandatory details to generate the Report."
+                onClick={handleDownload}
+                className={`px-2 py-2 ${
+                  !isSubmitted ? "opacity-30" : ""
+                } font-semibold rounded w-auto text-[13px] bg-transparent text-blue-400`}
+              >
+                {" "}
+                Download Report
+              </button>
+              <MdOutlineDownload
+                className={`w-4 h-4 mt-2.5 ${
+                  !isSubmitted ? "opacity-30" : ""
+                } text-blue-400`}
+              />
+
+              {!isSubmitted && (
+                <ReactTooltip
+                  id={`tooltip-$e1`}
+                  place="top"
+                  effect="solid"
+                  style={{
+                    width: "290px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "left",
+                  }}
+                ></ReactTooltip>
+              )}
             </div>
             <div className="float-right">
               <button
@@ -547,7 +552,7 @@ const Screenend = ({
               >
                 &lt; Previous
               </button>
-  
+
               <button
                 type="button"
                 onClick={continueToNextStep}
@@ -566,10 +571,8 @@ const Screenend = ({
                 Submit
               </button>
             </div>
-            </div>
-           
           </div>
-       
+        </div>
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
