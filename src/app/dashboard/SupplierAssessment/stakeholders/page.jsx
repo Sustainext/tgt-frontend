@@ -165,8 +165,8 @@ const StakeholderPage = ({
         <div className="flex flex-col justify-start overflow-x-hidden ">
           <div className="flex justify-between items-center border-b border-gray-200 mb-2 w-full">
             <div className="w-full">
-              <div className="xl:flex justify-between text-left mb-2 ml-2 pt-1">
-                <div className="xl:flex">
+              <div className="xl:flex lg:flex 2xl:flex 4k:flex justify-between text-left mb-2 ml-2 pt-1">
+                <div className="xl:flex lg:flex 2xl:flex 4k:flex">
                   <div>
                     <p className="gradient-text text-[22px] font-bold pt-4  ml-2">
                       {groupId?.name}
@@ -197,7 +197,7 @@ const StakeholderPage = ({
         </div>
 
         <div className="p-4 min-h-screen">
-          <div className="xl:flex justify-between items-center mb-2">
+          <div className="xl:flex lg:flex 2xl:flex 4k:flex justify-between items-center mb-2">
             <h1 className="text-[20px] font-semibold text-[#101828]">
               Stakeholders List
             </h1>
@@ -226,7 +226,7 @@ const StakeholderPage = ({
             List of stakeholders in this group. Add individual stakeholders from
             + Add New Stakeholder or import to add in bulk.
           </p>
-          <div className="xl:flex justify-between gap-2">
+          <div className="xl:flex lg:flex 2xl:flex 4k:flex justify-between gap-2">
             <button
               type="button"
               onClick={() => {

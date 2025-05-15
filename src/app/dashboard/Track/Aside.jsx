@@ -75,7 +75,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
 
       {/* Mobile toggle button (put this in your header or nav) */}
       <button
-        className="xl:hidden md:hidden lg:hidden fixed top-32 left-4 z-50 bg-white p-2 shadow rounded-sm flex p-2"
+        className="xl:hidden md:hidden lg:hidden fixed top-32 left-4 z-50 bg-white  shadow rounded-sm flex p-2"
         onClick={() => setIsOpenMobile(true)}
       >
         <MdMenu className="text-2xl" />  Track

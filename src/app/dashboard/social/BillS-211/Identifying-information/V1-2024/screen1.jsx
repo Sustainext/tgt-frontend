@@ -1,14 +1,20 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axiosInstance from "../../../../utils/axiosMiddleware";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline, MdClose } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
-import { GlobalState } from "../../../../../Context/page";
+import { GlobalState } from "../../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
 
-const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => {
+const Screenone = ({
+  nextStep,
+  selectedCorp,
+  selectedOrg,
+  year,
+  reportType,
+}) => {
   const [error, setError] = useState({});
   const { open } = GlobalState();
   const [reportname, setReportname] = useState("Select Entity");
@@ -16,30 +22,15 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
   const [reportingdateform, setReportingdateform] = useState("");
   const [reportingdateto, setReportingdateto] = useState("");
   const [loopen, setLoOpen] = useState(false);
-
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
-
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-
+  console.log(selectedOrg, "test selectedOrg");
+  console.log(year, "test year");
+  console.log(selectedCorp, "test selectedCorp");
   const fetchBillSone = async () => {
     LoaderOpen(); // Assume this is to show some loading UI
 
     try {
       const response = await axiosInstance.get(
-        `${
-          process.env.BACKEND_API_URL
-        }/canadabills211/identifying-information/?screen=1&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`,
-        axiosConfig
+        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=1&corp_id=${selectedCorp}&org_id=${selectedOrg}&year=${year}`
       );
 
       if (response.status === 200) {
@@ -48,15 +39,13 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
         setReportingdateform(response.data.financial_reporting_year_from_3);
         setReportingdateto(response.data.financial_reporting_year_to_3);
         LoaderClose();
-      }
-      else if(response.status==404){
+      } else if (response.status == 404) {
         setReportname("Select Entity");
         setReportingentit("");
         setReportingdateform("");
         setReportingdateto("");
         LoaderClose();
-      }
-      else{
+      } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
@@ -68,7 +57,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
           theme: "colored",
         });
       }
-    }  catch (error) {
+    } catch (error) {
       LoaderClose();
       console.error("API call failed:", error);
       toast.error("Oops, something went wrong", {
@@ -88,31 +77,28 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
 
   useEffect(() => {
     // if (isMounted.current) {
-    
+
     //   isMounted.current = false;
     // }
     // return () => {
     //   isMounted.current = false;
     // };
-    if(reportType=="Organization"){
-      if(selectedOrg&&year){
+    if (reportType == "Organization") {
+      if (selectedOrg && year) {
+        fetchBillSone();
+      }
+    } else {
+      if (selectedOrg && year && selectedCorp) {
         fetchBillSone();
       }
     }
-    else{
-      if(selectedOrg&&year&&selectedCorp){
-        fetchBillSone();
-      }
-    }
-    
-    setReportname("Select Entity")
-    setReportingentit("")
-    setReportingdateform("")
-    setReportingdateto("")
-    
-  }, [selectedCorp,selectedOrg,year]);
 
- 
+    setReportname("Select Entity");
+    setReportingentit("");
+    setReportingdateform("");
+    setReportingdateto("");
+  }, [selectedCorp, selectedOrg, year]);
+
   const handleReportname = (event) => {
     const value = event.target.value;
     setReportname(value);
@@ -188,8 +174,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
   };
 
   const submitForm = async () => {
-
-    try{
+    try {
       LoaderOpen();
 
       const sendData = {
@@ -198,42 +183,40 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
         financial_reporting_year_from_3: reportingdateform,
         financial_reporting_year_to_3: reportingdateto,
         organization_id: selectedOrg,
-        corporate_id: selectedCorp?selectedCorp:null,
-        year: year
+        corporate_id: selectedCorp ? selectedCorp : null,
+        year: year,
       };
-      const response= await axiosInstance
-        .post(
-          `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=1`,
-          sendData,
-          axiosConfig
-        )
-        if (response.status == "200") {
-          toast.success("Data added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          nextStep();
-        } else {
-          toast.error("Oops, something went wrong", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-    }catch (error) {
+      const response = await axiosInstance.post(
+        `${process.env.BACKEND_API_URL}/canadabills211/identifying-information/?screen=1`,
+        sendData
+      );
+      if (response.status == "200") {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        nextStep();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
+    } catch (error) {
       LoaderClose();
       console.error("API call failed:", error);
       toast.error("Oops, something went wrong", {
@@ -247,7 +230,6 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
         theme: "colored",
       });
     }
-    
   };
   const continueToNextStep = () => {
     let newErrors = {};
@@ -265,7 +247,7 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
     if (!reportingdateto) {
       newErrors.reportingdateto = "Please select a date";
     }
-    if(reportingdateto<reportingdateform){
+    if (reportingdateto < reportingdateform) {
       newErrors.reportingdateto = "To date cannot be earlier than from date.";
     }
     if (Object.keys(newErrors).length === 0) {
@@ -380,7 +362,13 @@ const Screenone = ({ nextStep, selectedCorp, selectedOrg, year,reportType }) => 
                 onClick={continueToNextStep}
                 disabled={!(selectedOrg && year)}
                 className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-                 reportType=="Organization"? !(selectedOrg && year) ? "opacity-30 cursor-not-allowed" : "" : !(selectedOrg && year && selectedCorp) ? "opacity-30 cursor-not-allowed" : ""
+                  reportType == "Organization"
+                    ? !(selectedOrg && year)
+                      ? "opacity-30 cursor-not-allowed"
+                      : ""
+                    : !(selectedOrg && year && selectedCorp)
+                    ? "opacity-30 cursor-not-allowed"
+                    : ""
                 }`}
               >
                 {" "}

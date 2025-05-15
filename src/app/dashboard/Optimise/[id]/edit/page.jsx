@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FiArrowLeft, FiInfo, FiCheck } from "react-icons/fi";
-import { Tooltip } from "react-tooltip";
+import { FiArrowLeft, FiInfo, FiCheck, FiAlertTriangle } from "react-icons/fi";import { Tooltip } from "react-tooltip";
 import MetricsGraph from "./MetricsGraph";
 import WeightageInputModal from "./WeightageInputModal";
 import ActivitySelectTable from "../../ActivitySelectTable";
@@ -27,6 +26,30 @@ import {
   updateScenarioMetrics,
   updateAllSelectedActivities,
 } from "../../../../../lib/redux/features/optimiseSlice";
+
+const ErrorAlert = ({ message, onClose }) => {
+  if (!message) return null;
+  
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+        <div className="flex flex-col items-center">
+          <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 mb-4">
+            <FiAlertTriangle className="h-6 w-6 text-red-600" />
+          </div>
+          <h3 className="text-lg font-semibold mb-2 text-red-700">Error</h3>
+          <p className="text-gray-700 text-center mb-4">{message}</p>
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // Add this to your component that uses updateAllSelectedActivities
 const LoadingIndicator = () => {
@@ -141,6 +164,15 @@ const ScenarioEditor = () => {
     }
   };
 
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+const [showError, setShowError] = useState(false);
+
+const handleDismissError = () => {
+  setShowError(false);
+  setErrorMessage('');
+};
+
   // Go to next step
   const handleNext = async () => {
     if (currentStep === 1) {
@@ -149,13 +181,13 @@ const ScenarioEditor = () => {
       const anyMetricSelected = businessMetrics.some((metric) =>
         Boolean(metricsData[metric.id])
       );
-
+  
       if (anyMetricSelected) {
         setIsWeightageModalOpen(true);
       }
       return;
     }
-
+  
     if (currentStep === 2) {
       if (selectedActivities.length > 0) {
         setIsConfirmModalOpen(true);
@@ -166,6 +198,9 @@ const ScenarioEditor = () => {
       try {
         // Only make the API call if we have activities and a scenarioId
         if (selectedActivities.length > 0 && scenarioId) {
+          // Set loading state to show user something is happening
+          setIsCalculating(true);
+          
           // Dispatch the thunk to update all activities in one API call
           await dispatch(
             updateAllSelectedActivities({
@@ -173,13 +208,32 @@ const ScenarioEditor = () => {
               activities: selectedActivities,
             })
           ).unwrap();
+          
+          // If we got here, both update and Climatiq calculation were successful
+          dispatch(setCurrentStep(currentStep + 1));
+        } else {
+          // If no activities, just proceed to next step
+          dispatch(setCurrentStep(currentStep + 1));
         }
-
-        // If successful, proceed to next step
-        dispatch(setCurrentStep(currentStep + 1));
       } catch (error) {
-        console.error("Failed to save activity changes:", error);
-        // Could show an error message here
+        console.error("Failed to save activity changes or calculate emissions:", error);
+        
+        // Show appropriate error message to the user
+        let errorMessage = "Failed to save changes. Please try again.";
+        
+        // Check for specific Climatiq calculation error
+        if (error?.type === "CLIMATIQ_CALCULATION_ERROR") {
+          errorMessage = "Failed to calculate emissions. The calculation service may be experiencing issues.";
+        }
+        
+        // Display error to user (using your preferred error display method)
+        setErrorMessage(errorMessage);
+        setShowError(true);
+        
+        // Don't proceed to next step
+      } finally {
+        // Always clear loading state
+        setIsCalculating(false);
       }
     } else if (currentStep < 4) {
       dispatch(setCurrentStep(currentStep + 1));
@@ -587,6 +641,7 @@ const ScenarioEditor = () => {
       />
 
       <LoadingIndicator />
+      {showError && <ErrorAlert message={errorMessage} onClose={handleDismissError} />}
     </>
   );
 };

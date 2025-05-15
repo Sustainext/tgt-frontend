@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axiosInstance from "../../../../utils/axiosMiddleware";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineModeEditOutline,MdClose,MdDeleteOutline   } from "react-icons/md";
 import { IoSaveOutline } from "react-icons/io5";
-import { GlobalState } from '../../../../../Context/page';
+import { GlobalState } from "../../../../../../Context/page";
 import { Oval } from "react-loader-spinner";
 
 
