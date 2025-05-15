@@ -63,8 +63,9 @@ import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material
 import CustomerPrivacy from "./Customer-Privacy/Section1/page";
 import CustomerPrivacy2 from "./Customer-Privacy/Section2/page";
 import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page";
-import IdentifingInformation from "./BillS-211/Identifying-information/page";
+import Identifyinginformation from "./BillS-211/Identifying-information/page";
 import AnnualReport from "./BillS-211/annual-report/page";
+import BILLs201 from "./BillS-211/page"
 
 import {
   setHeadertext1,
@@ -90,6 +91,7 @@ const Social = () => {
   const [activeTab, setActiveTab] = useState(
     "Management of Material topic OHS"
   );
+
   const [mobileopen, setMobileopen] = useState(false);
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
@@ -148,7 +150,7 @@ const Social = () => {
       ,
       "Diversity of Employees",
     ];
-    const BillS211Tabs = ["Identifying Information", "Annual report"];
+    const BillS211Tabs = ["Data collection"];
     const energyTabs = ["Notice Period", "Collective Bargaining"];
 
     // List of tabs related to Waste
@@ -286,17 +288,32 @@ const Social = () => {
                 <EmploymentMaterialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
                 />
               )}
-              {activeTab === "Identifying Information" && (
-                <IdentifingInformation
+                  {activeTab === "Data collection" && (
+                <BILLs201
+                handleTabClick={handleTabClick}
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+       
+                  
                 />
               )}
-              {activeTab === "Annual report" && (
+              {/* {activeTab === "Identifying Information" && (
+                <Identifyinginformation
+                  handleTabClick={handleTabClick}
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                
+        
+                />
+              )} */}
+              {/* {activeTab === "Annual report" && (
                 <AnnualReport apiData={data} setMobileopen={setMobileopen} />
-              )}
+              )} */}
               {activeTab === "Employee Hires & Turnover" && (
                 <EmployeeHiresTurnover
                   apiData={data}

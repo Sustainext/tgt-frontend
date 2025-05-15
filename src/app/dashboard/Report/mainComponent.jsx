@@ -135,14 +135,42 @@ const Report = () => {
     // setshowInvestmentMessage(hasData)
   };
 
-  const handleOwnershipRatioChange = (index, value) => {
-    const newValue = Number(value);
-    if (newValue >= 0 && newValue <= 100) {
-      const newEntities = [...entities];
-      newEntities[index].ownershipRatio = newValue;
-      setEntities(newEntities);
+  // const handleOwnershipRatioChange = (index, value) => {
+  //   const newValue = Number(value);
+  //   if (newValue >= 1 && newValue <= 100) {
+  //     const newEntities = [...entities];
+  //     newEntities[index].ownershipRatio = newValue;
+  //     setEntities(newEntities);
+  //   }
+  // };
+
+  const handleOwnershipRatioChange = (index, input) => {
+    // Remove % if pasted in
+    const sanitized = input.replace('%', '');
+  
+    // Allow empty input
+    if (sanitized === '') {
+      const updatedEntities = [...entities];
+      updatedEntities[index].ownershipRatio = '';
+      setEntities(updatedEntities);
+      return;
     }
+  
+    // Allow decimals, e.g., "25", "25.5", "25."
+    if (!/^\d{0,3}(\.\d{0,2})?$/.test(sanitized)) return;
+  
+    const numericValue = Number(sanitized);
+  
+    // Reject if 0 or over 100
+    if (numericValue === 0 || numericValue > 100) return;
+  
+    const updatedEntities = [...entities];
+    updatedEntities[index].ownershipRatio = sanitized;
+    setEntities(updatedEntities);
   };
+  
+  
+  
   const handleChangeallcrop = async (event) => {
     const selectedId = event.target.value;
     setSelectedOrg(selectedId);
@@ -332,7 +360,7 @@ const Report = () => {
       .filter((entity) => entity.checked)
       .map((entity) => ({
         corporate_id: entity.id,
-        ownership_ratio: entity.ownershipRatio,
+        ownership_ratio: parseInt(entity.ownershipRatio),
       }));
     const sandData = {
       name: reportname,
@@ -487,6 +515,25 @@ const Report = () => {
     }
     if (!enddate) {
       newErrors.enddate = "Please select a date";
+    }
+
+    if (
+      reporttype === "GHG Report - Investments" &&
+      entities?.length > 0
+    ) {
+      const validCheckedEntities = entities.filter(
+        (entity) =>
+          entity.emission_data &&
+          entity.checked &&
+          entity.ownershipRatio !== "" &&
+          !isNaN(entity.ownershipRatio) &&
+          Number(entity.ownershipRatio) > 0 &&
+          Number(entity.ownershipRatio) <= 100
+      );
+  
+      if (validCheckedEntities.length === 0) {
+        newErrors.investmentEntities = "Please check and enter ownership ratio (1–100%) for at least one investment corporate with data.";
+      }
     }
 
     return newErrors;
@@ -799,7 +846,7 @@ const Report = () => {
                       />
                     </div>
                     {error.reportname && (
-                      <p className="text-red-500 ml-1">{error.reportname}</p>
+                      <p className="text-red-500 text-sm ml-1">{error.reportname}</p>
                     )}
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-4">
@@ -824,7 +871,7 @@ const Report = () => {
                           {/* <option>GRI Report: With Reference to</option> */}
                         </select>
                         {error.reporttype && (
-                          <p className="text-red-500 ml-1">
+                          <p className="text-red-500 text-sm ml-1">
                             {error.reporttype}
                           </p>
                         )}
@@ -850,7 +897,7 @@ const Report = () => {
                         </select>{" "}
                       </div>
                       {error.firstSelection && (
-                        <p className="text-red-500 ml-1">
+                        <p className="text-red-500 text-sm ml-1">
                           {error.firstSelection}
                         </p>
                       )}
@@ -882,7 +929,7 @@ const Report = () => {
                         />
                       </div>
                       {error.startdate && (
-                        <p className="text-red-500 ml-1">{error.startdate}</p>
+                        <p className="text-red-500 text-sm ml-1">{error.startdate}</p>
                       )}
                     </div>
                     <div className="xl:ml-3 w-full">
@@ -906,7 +953,7 @@ const Report = () => {
                         />
                       </div>
                       {error.enddate && (
-                        <p className="text-red-500 ml-1">{error.enddate}</p>
+                        <p className="text-red-500 text-sm ml-1">{error.enddate}</p>
                       )}
                     </div>
                   </div>
@@ -969,7 +1016,7 @@ const Report = () => {
                           opacity: 1,
                         }}
                       ></ReactTooltip>
-                                <input
+                                {/* <input
                                   type="number"
                                   placeholder="Enter Ownership Ratio %"
                                   className={`border-b p-2 rounded w-full text-[13px] ${!entity.checked?'opacity-35':''}`}
@@ -981,13 +1028,31 @@ const Report = () => {
                                       e.target.value
                                     )
                                   }
-                                />
+                                /> */}
+                                <div className="relative w-full">
+  <input
+    type="text"
+    placeholder="Enter Ownership Ratio"
+    className={`border-b p-2 rounded w-full text-[13px] pr-6 ${!entity.checked ? 'opacity-35' : ''}`}
+    disabled={!entity.checked}
+    value={entity.ownershipRatio}
+    onChange={(e) => handleOwnershipRatioChange(index, e.target.value)}
+  />
+  <span className="absolute right-2 top-2 text-[13px] text-gray-500 pointer-events-none">%</span>
+</div>
+
+
+
                               </React.Fragment>
                             ))}
                           </div>
                         </div>
                       </div>
+                      {error.investmentEntities && (
+                      <p className="text-red-500 text-sm mt-1 ml-1">{error.investmentEntities}</p>
+                    )}
                     </div>
+
                   ):(
                     <div>
                        {/* {showInvestmentMessage && (

@@ -29,10 +29,10 @@ const Section25 = ({ section13_6_8Ref, data }) => {
   ];
 
   const Tabledata1 = data["illness_analysis"]
-    ? data["illness_analysis"][
+    ? data["illness_analysis"]['data']?data["illness_analysis"]['data'][
         "rate_of_injuries_for_all_employees_100_injury_rate"
       ]?.length > 0
-      ? data["illness_analysis"][
+      ? data["illness_analysis"]['data'][
           "rate_of_injuries_for_all_employees_100_injury_rate"
         ].map((val, index) => {
           return {
@@ -61,13 +61,21 @@ const Section25 = ({ section13_6_8Ref, data }) => {
             "No data available",
           "Rate of recordable work-related injuries ": "No data available",
         },
+      ]:[
+        {
+          "Rate of fatalities as a result of work-related injury ":
+            "No data available",
+          "Rate of high-consequence work-related injuries (excluding fatalities)":
+            "No data available",
+          "Rate of recordable work-related injuries ": "No data available",
+        },
       ];
 
   const Tabledata2 = data["illness_analysis"]
-    ? data["illness_analysis"][
+    ? data["illness_analysis"]['data']?data["illness_analysis"]['data'][
         "rate_of_injuries_for_not_included_in_company_employees_100_injury_rate"
       ]?.length > 0
-      ? data["illness_analysis"][
+      ? data["illness_analysis"]['data'][
           "rate_of_injuries_for_not_included_in_company_employees_100_injury_rate"
         ].map((val, index) => {
           return {
@@ -96,13 +104,21 @@ const Section25 = ({ section13_6_8Ref, data }) => {
             "No data available",
           "Rate of recordable work-related injuries ": "No data available",
         },
+      ]: [
+        {
+          "Rate of fatalities as a result of work-related injury ":
+            "No data available",
+          "Rate of high-consequence work-related injuries (excluding fatalities)":
+            "No data available",
+          "Rate of recordable work-related injuries ": "No data available",
+        },
       ];
 
   const Tabledata5 = data["illness_analysis"]
-    ? data["illness_analysis"][
+    ? data["illness_analysis"]['data']?data["illness_analysis"]['data'][
         "rate_of_injuries_for_all_employees_500_injury_rate"
       ]?.length > 0
-      ? data["illness_analysis"][
+      ? data["illness_analysis"]['data'][
           "rate_of_injuries_for_all_employees_500_injury_rate"
         ].map((val, index) => {
           return {
@@ -131,13 +147,21 @@ const Section25 = ({ section13_6_8Ref, data }) => {
             "No data available",
           "Rate of recordable work-related injuries ": "No data available",
         },
+      ]:[
+        {
+          "Rate of fatalities as a result of work-related injury ":
+            "No data available",
+          "Rate of high-consequence work-related injuries (excluding fatalities)":
+            "No data available",
+          "Rate of recordable work-related injuries ": "No data available",
+        },
       ];
 
   const Tabledata6 = data["illness_analysis"]
-    ? data["illness_analysis"][
+    ? data["illness_analysis"]['data']?data["illness_analysis"]['data'][
         "rate_of_injuries_for_not_included_in_company_employees_500_injury_rate"
       ]?.length > 0
-      ? data["illness_analysis"][
+      ? data["illness_analysis"]['data'][
           "rate_of_injuries_for_not_included_in_company_employees_500_injury_rate"
         ].map((val, index) => {
           return {
@@ -159,6 +183,14 @@ const Section25 = ({ section13_6_8Ref, data }) => {
           },
         ]
     : [
+        {
+          "Rate of fatalities as a result of work-related injury ":
+            "No data available",
+          "Rate of high-consequence work-related injuries (excluding fatalities)":
+            "No data available",
+          "Rate of recordable work-related injuries ": "No data available",
+        },
+      ]:[
         {
           "Rate of fatalities as a result of work-related injury ":
             "No data available",

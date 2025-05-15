@@ -153,7 +153,7 @@ const SearchableDepartmentDropdown = ({ error }) => {
                 ? filteredDepartments.map((dept, index) => (
                     <div
                       key={index}
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center justify-between"
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm flex overflow-y-auto table-scrollbar h-[50px] items-center justify-between"
                       onClick={() => handleDepartmentSelect(dept.name)}
                     >
                       <span>{dept.name}</span>

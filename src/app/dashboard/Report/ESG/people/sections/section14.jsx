@@ -44,14 +44,14 @@ const Section14 = ({ section13_4_2Ref, data }) => {
           "percentage_of_employees_within_government_bodies"
         ].map((val, index) => {
           return {
-            Male: val.male,
-            Female: val.female,
-            "Non-Binary": val.nonBinary,
-            "<30 years": val.lessThan30,
-            "30-50 years": val.between30and50,
-            ">50 years": val.moreThan50,
-            "Minority group": val.minorityGroup,
-            "Vulnerable Communities": val.vulnerableCommunities,
+            Male: val.male_percentage,
+            Female: val.female_percentage,
+            "Non-Binary": val.nonBinary_percentage,
+            "<30 years": val.lessThan30_percentage,
+            "30-50 years": val.between30and50_percentage,
+            ">50 years": val.moreThan50_percentage,
+            "Minority group": val.minorityGroup_percentage,
+            "Vulnerable Communities": val.vulnerableCommunities_percentage,
           };
         })
       : [

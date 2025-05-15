@@ -65,7 +65,7 @@ export default function DashboardLayout({ children }) {
   }, []);
 
   return (
-    <section>
+    <section className="">
       <GlobalErrorHandler />
       <StoreProvider>
         {isMobile ? (
@@ -73,8 +73,11 @@ export default function DashboardLayout({ children }) {
           <div className="block mx-4">
             <div className="fixed top-0 left-0 w-full z-50 h-16">
               <MobileSidenav />
+              <div className="elfsight-widget mb-5">
+                <div className="elfsight-app-1163c096-07de-4281-9338-996a26b6eec8" data-elfsight-app-lazy></div>
+              </div>
             </div>
-            <div className="flex-1 overflow-y-auto mt-36 overflow-x-hidden scrollable-content">{children}</div>
+            <div className="flex-1 overflow-y-auto mt-32 overflow-x-hidden scrollable-content">{children}</div>
           </div>
         ) : (
           // **Desktop Version**
@@ -83,7 +86,7 @@ export default function DashboardLayout({ children }) {
               <Sidenav />
             </div>
             <div
-              className={`mx-2 w-full ${
+              className={`mx-2 w-full  ${
                 open
                   ? "xl:ml-[243px] lg:ml-[243px] 2xl:ml-[243px] md:ml-[243px] sm:ml-[0px]"
                   : "xl:ml-[74px] 2xl:ml-[74px] lg:ml-[74px] md:ml-[74px] sm:ml-[0px]"

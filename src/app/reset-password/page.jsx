@@ -188,11 +188,15 @@ let axiosConfig = {
                         {showPassword ? <FaEye /> : <FaEyeSlash />}
                       </button>
                     </div>
-                  </div>
-                </div>
-                <ReactTooltip
+                        <ReactTooltip
                   anchorId="app-title"
-                  place="right"
+                  place="top"
+                  style={{
+                    backgroundColor: '#000000',
+                    boxShadow:'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                    borderRadius: "8px",
+                    zIndex: "100",
+                  }}
                   content={
                     <PasswordChecklist
                       rules={['number', 'specialChar', 'capital', 'minLength']}
@@ -201,7 +205,7 @@ let axiosConfig = {
                       iconSize={16}
                       invalidColor="red"
                       validColor="#4BCA81"
-                      style={{ fontSize: '14px' }}
+                 style={{ fontSize: '15px'}}
                       messages={{
                         number: 'At least one number (0-9)',
                         specialChar: 'At least one special character (Eg. @#%$)',
@@ -211,6 +215,9 @@ let axiosConfig = {
                     />
                   }
                 />
+                  </div>
+                </div>
+            
                 <div>
                   <label
                     htmlFor="password2"
