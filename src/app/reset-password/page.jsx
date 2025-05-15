@@ -188,9 +188,7 @@ let axiosConfig = {
                         {showPassword ? <FaEye /> : <FaEyeSlash />}
                       </button>
                     </div>
-                  </div>
-                </div>
-                <ReactTooltip
+                        <ReactTooltip
                   anchorId="app-title"
                   place="top"
                   style={{
@@ -217,6 +215,9 @@ let axiosConfig = {
                     />
                   }
                 />
+                  </div>
+                </div>
+            
                 <div>
                   <label
                     htmlFor="password2"

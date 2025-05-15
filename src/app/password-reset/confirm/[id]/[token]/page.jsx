@@ -183,10 +183,10 @@ const PasswordReset = () => {
             <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm justify-center px-3 py-2 lg:px-3'>
               <form className='space-y-6' onSubmit={handleSetPassword}>
                 <div>
-                  <label htmlFor='password' className='block text-sm font-medium leading-6 text-gray-900'>
+                  <label  className='block text-sm font-medium leading-6 text-gray-900'>
                     Password
                   </label>
-                  <div className='relative mt-2 rounded-md shadow-sm' id='app-title'>
+                  <div className='relative mt-1 rounded-md shadow-sm' id='app-title'>
                     <input
                       id='password'
                       name='password'
@@ -222,16 +222,15 @@ const PasswordReset = () => {
                         {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
                       </button>
                     </div>
-                  </div>
-                </div>
-                <ReactTooltip
+                            <ReactTooltip
                   anchorId='app-title'
-                  place='top'
+                 place="top"
                   style={{
                     backgroundColor: '#000000',
                     boxShadow:'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                     borderRadius: "8px",
                     zIndex: "100",
+          
                   }}
                   content={
                     <PasswordChecklist
@@ -251,6 +250,10 @@ const PasswordReset = () => {
                     />
                   }
                 />
+                  </div>
+              
+                </div>
+            
                 <div>
                   <label htmlFor='password2' className='block text-sm font-medium leading-6 text-gray-900'>
                     Confirm Password
