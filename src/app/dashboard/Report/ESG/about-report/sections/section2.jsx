@@ -27,7 +27,7 @@ stakeholders informed of our progress.`
                 <>
                   {data["2-4-a"].Q1
                     ? data["2-4-a"].Q1 == "No"
-                      ? data["2-4-a"].Q1
+                      ? "There are no restatements of information from previous reporting periods."
                       : data["2-4-a"]?.Q2
                     : "No data available"}
                   {/* <br />

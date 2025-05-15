@@ -86,6 +86,14 @@ const Section4 = ({ section11_1_3Ref, orgName }) => {
             <Table1 values={tableData} currency={economicData.currency} />
           )}
         </div>
+        <p className="text-[15px] mb-2 text-[#344054] font-semibold">
+        Government’s presence in the shareholding structure
+        </p>
+        <p className="text-sm mb-4">
+          {
+            data['201_4c_government']?data['201_4c_government']?.length>0?data['201_4c_government'][0]?.Q1=="No"?"No":data['201_4c_government'][0]?.Q2 || "No data available":'No data available':'No data available'
+          }
+        </p>
       </div>
     </>
   );

@@ -9,13 +9,11 @@ const Section4 = ({ section15_1_3Ref, data }) => {
           15.1.3 Incidents of Non-Compliance
         </h3>
         <p className="text-[15px] mb-4 font-semibold">
-          Incidents of non-compliance concerning the health and safety impacts
-          of products and services
+        Total number of incidents of non-compliance with regulations and/or voluntary codes
         </p>
         <div>
           <p className="text-[15px] mb-2 font-semibold">
-            Total number of Incidents of non-compliance with regulations
-            resulting in a fine or penalty
+          Number of Incidents of non-compliance with regulations resulting in a fine or penalty: 
           </p>
           <p className="text-sm mb-4">
             {data["416_2a"]?.length > 0
@@ -25,8 +23,7 @@ const Section4 = ({ section15_1_3Ref, data }) => {
               : "No data available"}
           </p>
           <p className="text-[15px] mb-2 font-semibold">
-            Total number of Incidents of non-compliance with regulations
-            resulting in a warning
+          Number of Incidents of non-compliance with regulations resulting in a warning: 
           </p>
           <p className="text-sm mb-4">
             {data["416_2a"]?.length > 0
@@ -37,7 +34,7 @@ const Section4 = ({ section15_1_3Ref, data }) => {
           </p>
 
           <p className="text-[15px] mb-2 font-semibold">
-            Total number of Incidents of non-compliance with voluntary codes
+          Number of Incidents of non-compliance with voluntary codes: 
           </p>
           <p className="text-sm mb-4">
             {data["416_2a"]?.length > 0
@@ -47,7 +44,7 @@ const Section4 = ({ section15_1_3Ref, data }) => {
               : "No data available"}
           </p>
           <p className="text-[15px] mb-2 font-semibold">
-            Non-compliance with regulations and/or voluntary codes
+          Statement of non-compliance with regulations and/or voluntary codes
           </p>
           <p className="text-sm mb-4">
             {data["416_2b"]
@@ -60,13 +57,11 @@ const Section4 = ({ section15_1_3Ref, data }) => {
           </p>
         </div>
         <p className="text-[15px] mb-4 font-semibold">
-          Incidents of non-compliance concerning product and service information
-          and labeling
+        Incidents of non-compliance: product and service information and labelling 
         </p>
         <div>
           <p className="text-[15px] mb-2 font-semibold">
-            Total number of Incidents of non-compliance with regulations
-            resulting in a fine or penalty
+          Number of Incidents of non-compliance with regulations resulting in a fine or penalty: 
           </p>
           <p className="text-sm mb-4">
             {data["417_2a"]?.data
@@ -78,8 +73,7 @@ const Section4 = ({ section15_1_3Ref, data }) => {
               : "No data available"}
           </p>
           <p className="text-[15px] mb-2 font-semibold">
-            Total number of Incidents of non-compliance with regulations
-            resulting in a warning
+          Number of Incidents of non-compliance with regulations resulting in a warning: 
           </p>
           <p className="text-sm mb-4">
             {data["417_2a"]?.data
@@ -92,7 +86,7 @@ const Section4 = ({ section15_1_3Ref, data }) => {
           </p>
 
           <p className="text-[15px] mb-2 font-semibold">
-            Total number of Incidents of non-compliance with voluntary codes
+          Number of Incidents of non-compliance with voluntary codes: 
           </p>
           <p className="text-sm mb-4">
             {data["417_2a"]?.data
@@ -104,7 +98,7 @@ const Section4 = ({ section15_1_3Ref, data }) => {
               : "No data available"}
           </p>
           <p className="text-[15px] mb-2 font-semibold">
-            Non-compliance with regulations and/or voluntary codes
+          Statement of non-compliance with regulations and/or voluntary codes
           </p>
           <p className="text-sm mb-4">
             {data["417_2b"]

@@ -237,16 +237,19 @@ const Section2 = ({
           />
         </div>
         {data["2-2-a"]?.map((item, index) => (
-          <p className="mb-4 text-[15px] font-normal">{item}</p>
+          <p className="mb-2 text-[15px]">{item}</p>
         ))}
         {/* 2-2-b */}
-         {/* {data["2-2-a"]?.map((item, index) => (
-          <p className="mb-4 text-[15px] font-normal">{item}</p>
-        ))} */}
+        <p className="mb-4 text-[15px]">
+        {data["2-2-b"]?data["2-2-b"]?.answer=='Yes'?data["2-2-b"]?.explanation:'':''
+         }
+        </p>
+        
         {/* 2-2-c */}
-         {/* {data["2-2-a"]?.map((item, index) => (
-          <p className="mb-4 text-[15px] font-normal">{item}</p>
-        ))} */}
+        <p className="mb-4 text-[15px]">
+        {data["2-2-c"]?data["2-2-c"]?.answer=='Yes'?data["2-2-c"]?.explanation:'':''
+         }
+        </p>
 
         
         {/* <p className="text-[15px] text-[#344054] mb-2">

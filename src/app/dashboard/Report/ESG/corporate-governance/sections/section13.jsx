@@ -91,6 +91,14 @@ const Section13 = ({ section9_3_7Ref, data }) => {
             : "No data available"}
         </p>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+        Remuneration policies for members of the highest governance body and senior executives relate to their objectives and performance in relation to the management of the organization's impacts on the economy, environment, and people.
+        </p>
+        <p className="text-sm mb-4">
+          {data["2_19_b"]
+            ? data["2_19_b"]?.Q1 || "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
           Process to determine remuneration:
         </p>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">

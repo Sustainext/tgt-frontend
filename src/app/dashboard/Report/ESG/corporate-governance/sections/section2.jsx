@@ -60,8 +60,7 @@ const Section2 = ({ section9_1Ref, section9_1_1Ref, data }) => {
           rows={4}
         />
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-          Describe the governance structure, including the committees of the
-          highest governance body
+        Governance structure (including the committees of the highest governance body)
         </p>
         <p className="text-sm mb-4">
           {data["2_9_a"] ? data["2_9_a"] : "No data available"}
@@ -84,7 +83,7 @@ const Section2 = ({ section9_1Ref, section9_1_1Ref, data }) => {
                           key={colIndex}
                           className="border-t border-r border-gray-200 p-4 text-center"
                         >
-                          {cellData}
+                          {cellData || "No data available"}
                         </td>
                       ))}
                     </tr>

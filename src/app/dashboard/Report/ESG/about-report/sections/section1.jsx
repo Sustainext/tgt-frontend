@@ -65,8 +65,9 @@ stakeholders informed of our progress.`
                 <p className="mb-4 text-sm">
                 This report covers the period from {data["2-3-a"].Q1} and is part of our {data["2-3-a"].Q2} sustainability reporting cycle. 
                 We are committed to providing regular updates on our ESG performance to ensure transparency and keep our stakeholders informed of our progress. 
-                {data["2-3-b"]?.Q1=="Yes"?`The reporting period for the ${orgName ? orgName : "[Company Name]'s"} financial reporting aligns with the period for its sustainability reporting.`:data["2-3-b"]?.Q1=="No"?"The reporting period for the organization's financial reporting does not align with the period for its sustainability reporting.":''}   
-                {data['2-3-c']?`The report was published on ${data['2-3-c']}, which specifies the date of publication, and the reporting information included.`:''} 
+                {data["2-3-b"]?.Q1=="Yes"?`The reporting period for the ${orgName ? orgName : "[Company Name]'s"} financial reporting aligns with the period for its sustainability reporting.`:data["2-3-b"]?.Q1=="No"?`The reporting period for the organization's financial reporting does not align with the period for its sustainability reporting. ${data['2-3-b']?.Q2} `:''}
+
+                {data['2-3-c']?`The report was published on ${data['2-3-c']?.Q1}, which specifies the date of publication, and the reporting information included.`:''} 
                 </p>
               </div>
             ):(

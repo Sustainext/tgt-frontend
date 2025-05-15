@@ -103,11 +103,30 @@ const Section1 = ({ orgName, data }) => {
             </tr>
         </thead>
         <tbody>
+      {data?.Organisationengages?.length > 0 || data?.Stakeholdersidentified?.length > 0 ? (
+        // Find the maximum length between the two arrays to determine how many rows we need
+        Array.from({ 
+          length: Math.max(
+            data.Organisationengages?.length || 0, 
+            data.Stakeholdersidentified?.length || 0
+          ) 
+        }).map((_, index) => (
+          <tr key={index} className="text-[13px]">
+            <td className="border-t border-r border-gray-200 p-4 text-left">
+              {data.Organisationengages?.[index] || '-'}
+            </td>
+            <td className="border border-gray-200 p-4 text-left">
+              {data.Stakeholdersidentified?.[index] || '-'}
+            </td>
+          </tr>
+        ))
+      ) : (
         <tr className="text-[13px]">
           <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
           <td className="border border-gray-200 p-4 text-left">No data available</td>
-          </tr>
-        </tbody>
+        </tr>
+      )}
+    </tbody>
     </table>
 </div>
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
@@ -115,8 +134,8 @@ const Section1 = ({ orgName, data }) => {
             </li>
             <p className="mb-2">
               {data["Organisationengages"]
-                ? data["Organisationengages"]
-                : "No data available"}
+                ? data["Organisationengages"].length>0?data["Organisationengages"].join(", ")
+                : "No data available":"No data available"}
             </p>
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               Engagement with stakeholders
@@ -159,11 +178,30 @@ const Section1 = ({ orgName, data }) => {
             </tr>
         </thead>
         <tbody>
+      {data?.Organisationengages?.length > 0 || data?.Stakeholderengagement?.length > 0 ? (
+        // Find the maximum length between the two arrays to determine how many rows we need
+        Array.from({ 
+          length: Math.max(
+            data.Organisationengages?.length || 0, 
+            data.Stakeholderengagement?.length || 0
+          ) 
+        }).map((_, index) => (
+          <tr key={index} className="text-[13px]">
+            <td className="border-t border-r border-gray-200 p-4 text-left">
+              {data.Organisationengages?.[index] || '-'}
+            </td>
+            <td className="border border-gray-200 p-4 text-left">
+              {data.Stakeholderengagement?.[index] || '-'}
+            </td>
+          </tr>
+        ))
+      ) : (
         <tr className="text-[13px]">
           <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
           <td className="border border-gray-200 p-4 text-left">No data available</td>
-          </tr>
-        </tbody>
+        </tr>
+      )}
+    </tbody>
     </table>
 </div>
 <li className="text-[15px] text-[#344054] mb-2 font-semibold">

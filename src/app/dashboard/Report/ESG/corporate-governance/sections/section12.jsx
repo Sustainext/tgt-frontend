@@ -15,17 +15,20 @@ const Section12 = ({ section9_3_6Ref, data }) => {
           Processes for evaluating the performance of the highest governance
           body:
         </p>
-        <textarea
+        {/* <textarea
           value={data["2_18_a"] ? data["2_18_a"].Q1 : "No data available"}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none mt-2 focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
-        />
+        /> */}
+        <p className="text-sm mb-4">
+        {data["2_18_a"] ? data["2_18_a"]?.Q1 : "No data available"}
+        </p>
         <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
           Frequency of the evaluations:
         </p>
         <p className="text-sm mb-4">
           {data["2_18_b"]
-            ? data["2_18_b"].evaluation_frequency
+            ? data["2_18_b"]?.evaluations_independent=="No"?'No':data["2_18_b"]?.evaluation_frequency
             : "No data available"}
         </p>
         <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">

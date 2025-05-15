@@ -81,6 +81,7 @@ const Section12 = ({ section12_2_2Ref, data }) => {
         <div className="shadow-md rounded-md mb-4">
           <LeaveTable columns={col} data={Tabledata} />
         </div>
+       
       </div>
     </>
   );

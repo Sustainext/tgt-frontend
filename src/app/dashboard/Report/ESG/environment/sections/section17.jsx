@@ -338,7 +338,7 @@ const Section17 = ({ section12_3_3Ref, data }) => {
           12.3.3 Water Discharge & Management of Associated Impacts
         </h3>
 
-        <p className="text-sm mb-4">{content}</p>
+        {/* <p className="text-sm mb-4">{content}</p> */}
 
         <p className="text-[15px]  mb-2 font-semibold">
           Discharge Standard used:
