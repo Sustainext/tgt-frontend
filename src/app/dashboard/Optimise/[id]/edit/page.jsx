@@ -433,7 +433,7 @@ const handleDismissError = () => {
 
             {/* Progress Steps */}
             <div className="mb-8 max-w-lg">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-8">
                 <div
                   className={`flex items-center ${
                     currentStep >= 1 ? "text-blue-600" : "text-gray-400"
@@ -512,7 +512,7 @@ const handleDismissError = () => {
               </div>
             </div>
           </div>
-          <div className="w-2/5 px-4 sm:px-6 lg:px-8 py-8">
+          <div className="w-2/5 px-4 sm:px-6 lg:px-8 py-8 shadow-lg rounded-lg">
             {/* Scenario Details */}
             <div className="grid grid-cols-2 gap-6 mb-8">
               <div>
@@ -542,6 +542,10 @@ const handleDismissError = () => {
                 </p>
               </div>
             </div>
+            <div> <p className="text-sm text-gray-500">Description</p>
+                <p className="font-medium">
+                  {scenario?.description || ""}
+                </p></div>
           </div>
         </div>
 

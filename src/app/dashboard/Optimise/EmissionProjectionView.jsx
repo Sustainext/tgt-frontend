@@ -182,63 +182,107 @@ const EmissionProjectionView = ({ scenario = {} }) => {
   };
 
   // Handle PNG download
-  const handleDownloadPNG = () => {
-    try {
-      // Find the chart SVG element
-      const svgElement = document.querySelector(
-        ".emission-chart-container svg"
-      );
-      if (!svgElement) {
-        console.error("Could not find chart SVG element");
-        alert("Could not find chart to download. Please try again.");
-        return;
-      }
-
-      // Create a canvas for the PNG
-      const canvas = document.createElement("canvas");
-      const width = svgElement.width.baseVal.value || 1200;
-      const height = svgElement.height.baseVal.value || 600;
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext("2d");
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, width, height);
-
-      // Convert SVG to PNG
-      const svgString = new XMLSerializer().serializeToString(svgElement);
-      const img = new Image();
-      const svgBlob = new Blob([svgString], {
-        type: "image/svg+xml;charset=utf-8",
-      });
-      const url = URL.createObjectURL(svgBlob);
-
-      img.onload = () => {
-        ctx.drawImage(img, 0, 0, width, height);
-        URL.revokeObjectURL(url);
-
-        // Download the PNG
-        canvas.toBlob((blob) => {
-          const pngUrl = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.setAttribute("hidden", "");
-          a.setAttribute("href", pngUrl);
-          a.setAttribute("download", `scenario-${scenario.id}-chart.png`);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(pngUrl);
-
-          // Close dropdown after download
-          setShowDownloadOptions(false);
-        }, "image/png");
-      };
-
-      img.src = url;
-    } catch (error) {
-      console.error("Error creating PNG:", error);
-      alert("Failed to download PNG. Please try again.");
+const handleDownloadPNG = () => {
+  try {
+    // Find the chart SVG element - use a more specific selector
+    const svgElement = document.querySelector('.emission-chart-container svg');
+    
+    if (!svgElement) {
+      console.error("Could not find chart SVG element");
+      alert("Could not find chart to download. Please try again.");
+      return;
     }
-  };
+
+    // Create a copy of the SVG to manipulate without affecting the displayed one
+    const svgClone = svgElement.cloneNode(true);
+    
+    // Set explicit width and height attributes on the SVG (important for canvas sizing)
+    const svgWidth = svgElement.getBoundingClientRect().width;
+    const svgHeight = svgElement.getBoundingClientRect().height;
+    
+    svgClone.setAttribute('width', svgWidth);
+    svgClone.setAttribute('height', svgHeight);
+    
+    // Remove any clip paths which can cause rendering issues
+    Array.from(svgClone.querySelectorAll('clipPath')).forEach(clipPath => {
+      const id = clipPath.id;
+      // Remove clip-path references from elements
+      Array.from(svgClone.querySelectorAll(`[clip-path*="${id}"]`)).forEach(el => {
+        el.removeAttribute('clip-path');
+      });
+    });
+    
+    // Add white background
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('width', '100%');
+    rect.setAttribute('height', '100%');
+    rect.setAttribute('fill', 'white');
+    svgClone.insertBefore(rect, svgClone.firstChild);
+    
+    // Convert SVG to string
+    const svgString = new XMLSerializer().serializeToString(svgClone);
+    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    
+    // Create canvas with proper size
+    const canvas = document.createElement('canvas');
+    const scale = window.devicePixelRatio || 1; // For higher resolution screens
+    canvas.width = svgWidth * scale;
+    canvas.height = svgHeight * scale;
+    
+    // Set up the context with proper scaling for high DPI
+    const ctx = canvas.getContext('2d');
+    ctx.scale(scale, scale);
+    
+    // Convert to data URL first, then draw to canvas
+    const url = URL.createObjectURL(svgBlob);
+    const img = new Image();
+    
+    img.onload = () => {
+      // Draw image to canvas
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, svgWidth, svgHeight);
+      URL.revokeObjectURL(url);
+      
+      // Get file name with timestamp for uniqueness
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const fileName = `scenario-${scenario?.id || 'chart'}-${timestamp}.png`;
+      
+      // Download as PNG
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          console.error('Canvas to Blob conversion failed');
+          alert('Failed to generate PNG. Please try again.');
+          return;
+        }
+        
+        const downloadUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(downloadUrl);
+        
+        // Close dropdown after successful download
+        setShowDownloadOptions(false);
+      }, 'image/png');
+    };
+    
+    // Handle load errors
+    img.onerror = (error) => {
+      console.error('Error loading SVG for conversion:', error);
+      alert('Failed to create PNG from chart. Please try again.');
+      URL.revokeObjectURL(url);
+    };
+    
+    img.src = url;
+  } catch (error) {
+    console.error("Error creating PNG:", error);
+    alert("Failed to download PNG. Please try again.");
+  }
+};
 
   // Handle scope selection
   const handleScopeSelection = (scope) => {
@@ -746,7 +790,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
             ...newMetric,
             selected: existingMetricsMap.has(newMetric.id)
               ? existingMetricsMap.get(newMetric.id)
-              : false,
+              : true,
           }));
         })
       );
@@ -764,6 +808,24 @@ const EmissionProjectionView = ({ scenario = {} }) => {
     isSubCategoryDropdownOpen,
     isActivityDropdownOpen,
   ]);
+
+  const getScenarioDetails = () => {
+  if (!scenario) return '';
+  
+  // Check if we have organization or corporate info
+  const hasOrganization = scenario.organization_name || scenario.organization;
+  const hasCorporate = scenario.corporate_name || scenario.corporate;
+  
+  if (hasOrganization && hasCorporate) {
+    return `${scenario.organization_name || scenario.organization} / ${scenario.corporate_name || scenario.corporate}`;
+  } else if (hasOrganization) {
+    return scenario.organization_name || scenario.organization;
+  } else if (hasCorporate) {
+    return scenario.corporate_name || scenario.corporate;
+  }
+  
+  return '';
+};
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 min-h-screen">

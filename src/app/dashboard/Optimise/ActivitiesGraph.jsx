@@ -249,50 +249,50 @@ const ActivitiesGraph = ({
 
   // Function to handle activity selection for a specific year
   const handleActivityChange = (year, activityId) => {
-    console.log(
-      "[ActivitiesGraph] handleActivityChange called for year:",
-      year
+  console.log(
+    "[ActivitiesGraph] handleActivityChange called for year:",
+    year
+  );
+  const updatedActivities = {
+    ...selectedActivities,
+    [year]: activityId,
+  };
+
+  setSelectedActivities(updatedActivities);
+
+  // Create or update the changes_in_activity object
+  const changesInActivity = { ...(activity?.changes_in_activity || {}) };
+
+  if (activityId) {
+    const selectedOption = activityOptions.find(
+      (opt) => opt.id === activityId
     );
-    const updatedActivities = {
-      ...selectedActivities,
-      [year]: activityId,
-    };
-
-    setSelectedActivities(updatedActivities);
-
-    // Create or update the changes_in_activity object
-    const changesInActivity = { ...(activity?.changes_in_activity || {}) };
-
-    if (activityId) {
-      const selectedOption = activityOptions.find(
-        (opt) => opt.id === activityId
-      );
-      if (selectedOption) {
-        changesInActivity[year] = {
-          // Use the activity_id field from the selectedOption
-          activity_id: selectedOption.activity_id || selectedOption.id,
-          activity_name: selectedOption.name,
-          // Use the factor_id field from the selectedOption
-          factor_id:
-            selectedOption.factor_id ||
-            selectedOption.factorId ||
-            "default-factor-id",
-        };
-      }
-    } else {
-      // If no activity selected, remove the entry
-      delete changesInActivity[year];
+    if (selectedOption) {
+      changesInActivity[year] = {
+        // Use the activity_id field from the selectedOption
+        activity_id: selectedOption.activity_id || selectedOption.id,
+        activity_name: selectedOption.name,
+        // Use the factor_id field from the selectedOption
+        factor_id:
+          selectedOption.factor_id ||
+          selectedOption.factorId ||
+          "default-factor-id",
+      };
     }
+  } else {
+    // If no activity selected, remove the entry
+    delete changesInActivity[year];
+  }
 
     // Check if all years now have the same activity
-    const allSame =
-      Object.values(updatedActivities).every((val) => val === activityId) &&
-      Object.values(updatedActivities).every((val) => val !== null);
-    if (allSame) {
-      setCommonActivity(activityId);
-    } else {
-      setCommonActivity("");
-    }
+    // const allSame =
+    //   Object.values(updatedActivities).every((val) => val === activityId) &&
+    //   Object.values(updatedActivities).every((val) => val !== null);
+    // if (allSame) {
+    //   setCommonActivity(activityId);
+    // } else {
+    //   setCommonActivity("");
+    // }
 
     // Update the parent component
     updateActivityChange(data, changesInActivity);
@@ -315,7 +315,7 @@ const ActivitiesGraph = ({
     delete changesInActivity[year];
 
     // Clear common activity since they're no longer all the same
-    setCommonActivity("");
+    // setCommonActivity("");
 
     // Update the parent component
     updateActivityChange(data, changesInActivity);

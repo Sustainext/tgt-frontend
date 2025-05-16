@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FiX } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import { debounce } from "lodash";
 
 const WeightageInputModal = ({
   isOpen,
@@ -77,17 +78,35 @@ const WeightageInputModal = ({
 
   // State management
   const [weightages, setWeightages] = useState(getInitialWeightages);
+  // Local state for input fields that will be updated immediately without debounce
+  const [inputValues, setInputValues] = useState({});
   const [total, setTotal] = useState(1);
   const [isValid, setIsValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const inputRefs = useRef({});
+  
+  // Create a debounced function for updating weightages
+  const debouncedWeightageUpdate = useRef(
+    debounce((metric, value) => {
+      handleWeightageChange(metric, value);
+    }, 300)
+  ).current;
 
   // Reset when metrics change or modal opens or Redux state updates
   useEffect(() => {
     if (isOpen) {
       // Get the latest weightages whenever the modal opens
-      setWeightages(getInitialWeightages());
+      const initialWeightages = getInitialWeightages();
+      setWeightages(initialWeightages);
+      
+      // Initialize input values from weightages
+      const initialInputValues = {};
+      Object.keys(initialWeightages).forEach(metric => {
+        initialInputValues[metric] = initialWeightages[metric].toFixed(2);
+      });
+      setInputValues(initialInputValues);
+      
       setTotal(1);
       setIsValid(true);
       setErrorMessage("");
@@ -142,25 +161,35 @@ const WeightageInputModal = ({
 
     // Convert slider value (0-100) to weightage (0-1)
     const value = parseFloat((parseInt(e.target.value) / 100).toFixed(2));
+    
+    // Update both the input value and the weightage immediately
+    setInputValues(prev => ({
+      ...prev,
+      [metric]: value.toFixed(2)
+    }));
+    
     handleWeightageChange(metric, value);
   };
 
-  // Handle input focus to position cursor after last digit
-  const handleInputFocus = (e) => {
-    // Position cursor at the end
-    e.target.setSelectionRange(e.target.value.length, e.target.value.length);
-  };
-
   // Handle text input change
-  const handleInputChange = (metric, value) => {
-    // Allow for partial input during typing (like "0." or ".5")
-    if (value === "" || value === "." || value === "0.") {
+  const handleInputChange = (metric, e) => {
+    const inputValue = e.target.value;
+    
+    // Update the input value immediately for responsive UI
+    setInputValues(prev => ({
+      ...prev,
+      [metric]: inputValue
+    }));
+    
+    // Handle special cases during typing
+    if (inputValue === "" || inputValue === "-" || inputValue === "." || inputValue === "0." || inputValue === "-0.") {
       return;
     }
-
-    const numValue = parseFloat(value);
+    
+    // Parse the value and update weightage with debounce
+    const numValue = parseFloat(inputValue);
     if (!isNaN(numValue)) {
-      handleWeightageChange(metric, numValue);
+      debouncedWeightageUpdate(metric, numValue);
     }
   };
 
@@ -175,21 +204,26 @@ const WeightageInputModal = ({
     // Calculate equal distribution
     const equalWeight = parseFloat((1 / metricCount).toFixed(2));
     const resetWeightages = {};
+    const resetInputValues = {};
 
     // Special handling for 3 metrics to make sure they sum to exactly 1.0
     if (metricCount === 3) {
       // First metric gets 0.34, others get 0.33
       selectedValidMetrics.forEach((metric, index) => {
-        resetWeightages[metric] = index === 0 ? 0.34 : 0.33;
+        const value = index === 0 ? 0.34 : 0.33;
+        resetWeightages[metric] = value;
+        resetInputValues[metric] = value.toFixed(2);
       });
     } else {
       // Equal distribution for other cases
       selectedValidMetrics.forEach(metric => {
         resetWeightages[metric] = equalWeight;
+        resetInputValues[metric] = equalWeight.toFixed(2);
       });
     }
 
     setWeightages(resetWeightages);
+    setInputValues(resetInputValues);
   };
 
   // Handle proceed button click
@@ -212,6 +246,29 @@ const WeightageInputModal = ({
     }
   };
 
+  // Handle blur event to ensure the input shows a valid number
+  const handleInputBlur = (metric) => {
+    const currentValue = inputValues[metric];
+    
+    // If the current value is invalid, reset it to the actual weightage
+    if (currentValue === "" || isNaN(parseFloat(currentValue))) {
+      setInputValues(prev => ({
+        ...prev,
+        [metric]: (weightages[metric] || 0).toFixed(2)
+      }));
+    } else {
+      // Format the number to show two decimal places
+      const formattedValue = parseFloat(currentValue).toFixed(2);
+      setInputValues(prev => ({
+        ...prev,
+        [metric]: formattedValue
+      }));
+      
+      // Ensure the weightage is updated
+      handleWeightageChange(metric, parseFloat(currentValue));
+    }
+  };
+
   // Get the active metrics as an array - filter only valid business metrics that are selected
   const activeMetrics = validMetrics.filter(metric => selectedMetrics[metric]);
 
@@ -229,6 +286,13 @@ const WeightageInputModal = ({
 
   // Determine if we should disable sliders (single metric case)
   const disableSliders = activeMetrics.length === 1;
+
+  // Clean up debounce on unmount
+  useEffect(() => {
+    return () => {
+      debouncedWeightageUpdate.cancel();
+    };
+  }, [debouncedWeightageUpdate]);
 
   if (!isOpen) return null;
 
@@ -308,9 +372,9 @@ const WeightageInputModal = ({
                 <input
                   ref={(el) => (inputRefs.current[metric] = el)}
                   type="text"
-                  value={(weightages[metric] || 0).toFixed(2)}
-                  onChange={(e) => handleInputChange(metric, e.target.value)}
-                  onFocus={handleInputFocus}
+                  value={inputValues[metric] || "0.00"}
+                  onChange={(e) => handleInputChange(metric, e)}
+                  onBlur={() => handleInputBlur(metric)}
                   disabled={disableSliders}
                   className="w-16 p-2 border border-gray-300 rounded text-center"
                 />
