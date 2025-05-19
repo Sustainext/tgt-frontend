@@ -93,6 +93,18 @@ const Section13 = ({ section12_2_3Ref, data }) => {
         <div className="shadow-md rounded-md mb-4">
           <LeaveTable columns={col} data={Tabledata} />
         </div>
+        <p className="text-[15px]  mb-2 font-semibold">
+        Packaging material 
+        </p>
+        <p className="text-sm mb-4">
+  {
+    data['301_3a_3b'] 
+      ? data['301_3a_3b']?.length > 0 
+        ? data['301_3a_3b'].map(val => val.Datacollectionmethod).join(', ')
+        : 'No data available'
+      : 'No data available'
+  }
+</p>
       </div>
     </>
   );

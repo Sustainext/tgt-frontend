@@ -29,7 +29,7 @@ const EmissionsGapChart = ({ data }) => {
       </div>
       <div>
         <div>Year: <strong>{indexValue}</strong></div>
-        <div>Gap: <strong>{value.toLocaleString()}M kgCO₂e</strong></div>
+        <div>Gap: <strong>{value.toLocaleString()} tCO₂e</strong></div>
       </div>
     </div>
   );
@@ -88,7 +88,7 @@ const EmissionsGapChart = ({ data }) => {
             legend: 'Gap (Emissions vs Net-Zero)',
             legendPosition: 'middle',
             legendOffset: -55,
-            format: value => `${Math.round(value)}M`,
+            format: value => `${Math.round(value)}`,
             truncateTickAt: 0
           }}
           enableGridY={true}

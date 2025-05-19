@@ -67,7 +67,6 @@ const BusinessMetricsWithTooltips = ({
   };
 
   // Create debounced function for updating the Redux state locally
-  // NOTE: This is now updated to handle the new complete data structure
   const debouncedLocalUpdate = useCallback(
     debounce((metricId, updatedData) => {
       // Update local Redux state with the complete data structure
@@ -83,7 +82,6 @@ const BusinessMetricsWithTooltips = ({
   );
 
   // Throttled version for rapid changes (like dragging points on graph)
-  // NOTE: This is now updated to handle the new complete data structure
   const throttledLocalUpdate = useCallback(
     throttle((metricId, updatedData) => {
       // Update Redux with the complete data structure
@@ -101,44 +99,54 @@ const BusinessMetricsWithTooltips = ({
   // Save changes to the server - can be called manually or automatically
   const saveChangesToServer = useCallback(async () => {
     if (!scenarioId || Object.keys(pendingChanges).length === 0) return;
-    
+
     try {
       setLocalSaving(true);
-  
+
       // Build payload with all pending changes
       const payload = {};
-  
+
       // Add all changed metrics data
       Object.keys(pendingChanges).forEach((metricId) => {
         if (pendingChanges[metricId]) {
-          payload[`${metricId}_data`] = 
+          payload[`${metricId}_data`] =
             metricsDataRef.current[`${metricId}_data`] || {};
-          payload[`${metricId}_weightage`] = 
+          payload[`${metricId}_weightage`] =
             metricsDataRef.current[`${metricId}_weightage`] || 0;
         }
       });
-  
-      // Update local state first - no need for unwrap
+
+      // Update local state first
       dispatch(
         updateMetricData({
-          metricId: Object.keys(pendingChanges)[0], // Just need to pass any metricId
+          metricId: Object.keys(pendingChanges)[0], // Just need any metricId
           data: payload
         })
       );
-  
-      // Then send to API - handle as a regular promise if possible
-      const result = dispatch(
-        updateScenarioMetrics({
-          scenarioId,
-          payload,
-        })
-      );
-      
-      // Wait for the promise to resolve if it is one
-      if (result && typeof result.then === 'function') {
-        await result;
+
+      // Then dispatch API update - try to handle as a promise
+      try {
+        await dispatch(
+          updateScenarioMetrics({
+            scenarioId,
+            payload,
+          })
+        ).unwrap();
+      } catch (error) {
+        // Handle the case where unwrap() is not available or throws
+        console.warn("Using fallback Promise handling for dispatch");
+        const result = dispatch(
+          updateScenarioMetrics({
+            scenarioId,
+            payload,
+          })
+        );
+        
+        if (result && typeof result.then === 'function') {
+          await result;
+        }
       }
-  
+
       // Clear pending changes after successful save
       setPendingChanges({});
       showSaveMessage("success", "✅ Saved");
@@ -235,7 +243,6 @@ const BusinessMetricsWithTooltips = ({
       }
     }
   };
-
   // Updated to handle complete data structure from MetricsGraph
   const handleMetricDataChange = (metricId, updatedData, isRapidChange = false) => {
     // Use either throttled or debounced update based on the type of change
@@ -298,6 +305,7 @@ const BusinessMetricsWithTooltips = ({
             >
               <>
                 <FiSave size={16} />
+                {localSaving ? "Saving..." : "Save Changes"}
               </>
             </button>
           )}

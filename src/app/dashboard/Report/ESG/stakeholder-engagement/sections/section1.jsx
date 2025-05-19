@@ -24,6 +24,15 @@ const Section1 = ({ orgName, data }) => {
     dispatch(setdescription(e.target.value));
   };
 
+  const IdCol=[
+    "What are the categories of stakeholders organisation engages with",
+    "How the stakeholders are identified"
+  ]
+  const EngCol=[
+    "What are the categories of stakeholders organisation engages with",
+    "Describe the purpose of stakeholder engagement"
+  ]
+
   return (
     <>
       <div>
@@ -55,26 +64,150 @@ const Section1 = ({ orgName, data }) => {
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               Identification and Prioritization 
             </li>
-            <p className="mb-4">
+            {/* <p className="mb-4">
               {data["Stakeholdersidentified"]
                 ? data["Stakeholdersidentified"]
                 : "No data available"}
-            </p>
+            </p> */}
+            {/* table */}
+            <div
+       style={{
+        display: "block",
+        overflowX: "auto",
+        maxWidth: "100%",
+        minWidth: "100%",
+        width: "40vw",
+        maxHeight:"450px"
+      }}
+      className="rounded-md table-scrollbar shadow-md mb-4">
+    <table className="w-full border border-gray-200 rounded-md overflow-hidden">
+        <thead className="gradient-background">
+            <tr>
+                {IdCol.map((item, idx) => (
+                    <th
+                        key={idx}
+                        style={{ minWidth: "120px", textAlign: "left" }}
+                        className={`text-[12px] border-r px-4 py-4 ${
+                            idx === 0 ? 'rounded-tl-md' : '' // Top-left corner
+                        } ${
+                            idx === IdCol.length - 1 ? 'rounded-tr-md' : '' // Top-right corner
+                        } text-gray-500`}
+                    >
+                        <div className="flex ">
+                            <p className="flex ">
+                                {item}
+                            </p>
+                        </div>
+                    </th>
+                ))}
+            </tr>
+        </thead>
+        <tbody>
+      {data?.Organisationengages?.length > 0 || data?.Stakeholdersidentified?.length > 0 ? (
+        // Find the maximum length between the two arrays to determine how many rows we need
+        Array.from({ 
+          length: Math.max(
+            data.Organisationengages?.length || 0, 
+            data.Stakeholdersidentified?.length || 0
+          ) 
+        }).map((_, index) => (
+          <tr key={index} className="text-[13px]">
+            <td className="border-t border-r border-gray-200 p-4 text-left">
+              {data.Organisationengages?.[index] || '-'}
+            </td>
+            <td className="border border-gray-200 p-4 text-left">
+              {data.Stakeholdersidentified?.[index] || '-'}
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr className="text-[13px]">
+          <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
+          <td className="border border-gray-200 p-4 text-left">No data available</td>
+        </tr>
+      )}
+    </tbody>
+    </table>
+</div>
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               Stakeholder Categories 
             </li>
             <p className="mb-2">
               {data["Organisationengages"]
-                ? data["Organisationengages"]
-                : "No data available"}
+                ? data["Organisationengages"].length>0?data["Organisationengages"].join(", ")
+                : "No data available":"No data available"}
             </p>
-          </ul>
-        </div>
+            <li className="text-[15px] text-[#344054] mb-2 font-semibold">
+              Engagement with stakeholders
+            </li>
+            {/* <p className="mb-4">
+              {data["Stakeholderengagement"]
+                ? data["Stakeholderengagement"]
+                : "No data available"}
+            </p> */}
+             <div
+       style={{
+        display: "block",
+        overflowX: "auto",
+        maxWidth: "100%",
+        minWidth: "100%",
+        width: "40vw",
+        maxHeight:"450px"
+      }}
+      className="rounded-md table-scrollbar shadow-md mb-4">
+    <table className="w-full border border-gray-200 rounded-md overflow-hidden">
+        <thead className="gradient-background">
+            <tr>
+                {EngCol.map((item, idx) => (
+                    <th
+                        key={idx}
+                        style={{ minWidth: "120px", textAlign: "left" }}
+                        className={`text-[12px] border-r px-4 py-4 ${
+                            idx === 0 ? 'rounded-tl-md' : '' // Top-left corner
+                        } ${
+                            idx === IdCol.length - 1 ? 'rounded-tr-md' : '' // Top-right corner
+                        } text-gray-500`}
+                    >
+                        <div className="flex ">
+                            <p className="flex ">
+                                {item}
+                            </p>
+                        </div>
+                    </th>
+                ))}
+            </tr>
+        </thead>
+        <tbody>
+      {data?.Organisationengages?.length > 0 || data?.Stakeholderengagement?.length > 0 ? (
+        // Find the maximum length between the two arrays to determine how many rows we need
+        Array.from({ 
+          length: Math.max(
+            data.Organisationengages?.length || 0, 
+            data.Stakeholderengagement?.length || 0
+          ) 
+        }).map((_, index) => (
+          <tr key={index} className="text-[13px]">
+            <td className="border-t border-r border-gray-200 p-4 text-left">
+              {data.Organisationengages?.[index] || '-'}
+            </td>
+            <td className="border border-gray-200 p-4 text-left">
+              {data.Stakeholderengagement?.[index] || '-'}
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr className="text-[13px]">
+          <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
+          <td className="border border-gray-200 p-4 text-left">No data available</td>
+        </tr>
+      )}
+    </tbody>
+    </table>
+</div>
+<li className="text-[15px] text-[#344054] mb-2 font-semibold">
+Approach to Stakeholder engagement.
+            </li>
 
-        <div className="mb-6">
-          <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-            Approach to Stakeholder engagement.
-          </p>
           <div className="shadow-md rounded-md">
             <StakeholderTable
               tableData={
@@ -84,26 +217,22 @@ const Section1 = ({ orgName, data }) => {
               }
             />
           </div>
+          </ul>
         </div>
+
+        
 
         <div className="text-sm mb-4">
           <ul className="list-disc ml-4">
-            <li className="text-[15px] text-[#344054] mb-2 font-semibold">
+            {/* <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               We employ a variety of engagement methods tailored to the needs
               and preferences of different stakeholder groups.
-            </li>
-            <li className="text-[15px] text-[#344054] mb-2 font-semibold ml-4">
-              Engagement with stakeholders
-            </li>
-            <p className="mb-4 ml-4">
-              {data["Stakeholderengagement"]
-                ? data["Stakeholderengagement"]
-                : "No data available"}
-            </p>
-            <li className="text-[15px] text-[#344054] mb-2 font-semibold ml-4">
+            </li> */}
+           
+            <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               Stakeholder’s Feedback
             </li>
-            <p className="mb-2 ml-4">
+            <p className="mb-2">
               {data["stakeholder_feedback"]
                 ? data["stakeholder_feedback"]
                 : "No data available"}

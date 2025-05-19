@@ -21,31 +21,31 @@ const Section17=({section9_5Ref,section9_5_1Ref,data})=>{
             <p className="text-sm mb-4">{content}</p>
 
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-            Organisation's commitments to provide for or cooperate in the remediation of negative impacts that the organization identifies it has caused or contributed to:
+            Organisation's commitments to provide for or cooperate in the remediation of negative impacts that the organization identifies it has caused or contributed to:  
             </p>
             <p className="text-sm mb-4">{data["2_25_data"]?data["2_25_data"]["2_25_a"]?data["2_25_data"]["2_25_a"]:"No data available":"No data available"}</p>
         
 
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-            Description of organisation's approach to identify and address grievances, including the grievance mechanisms that the organization has established or participates in:
+            Organisation's approach to identify and address grievances: 
             </p>
             <p className="text-sm mb-4">{data["2_25_data"]?data["2_25_data"]["2_25_b"]?data["2_25_data"]["2_25_b"].Q1:"No data available":"No data available"}</p>
         
 
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-            Description of other processes by which the organization provides for or cooperates in the remediation of negative impacts that it identifies it has caused or contributed to:
+            Other processes by which the organization provides for or cooperates in the remediation of negative impacts: 
             </p>
             <p className="text-sm mb-4">{data["2_25_data"]?data["2_25_data"]["2_25_c"]?data["2_25_data"]["2_25_c"]:"No data available":"No data available"}</p>
         
 
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-            Description of how stakeholders who are the intended users of the grievance mechanisms are involved in the design, review, operation, and improvement of these mechanisms:
+            Stakeholders’ involvement in the design, review, operation, and improvement of grievance mechanisms: 
             </p>
             <p className="text-sm mb-4">{data["2_25_data"]?data["2_25_data"]["2_25_d"]?data["2_25_data"]["2_25_d"]:"No data available":"No data available"}</p>
         
 
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-            Description of how the organization tracks the effectiveness of the grievance mechanisms and other remediation processes are tracked, and report examples of their effectiveness, including stakeholder feedback.
+            Process to track the effectiveness of the grievance mechanisms and other remediation processes: 
             </p>
             <p className="text-sm mb-4">{data["2_25_data"]?data["2_25_data"]["2_25_e"]?data["2_25_data"]["2_25_e"]:"No data available":"No data available"}</p>
         

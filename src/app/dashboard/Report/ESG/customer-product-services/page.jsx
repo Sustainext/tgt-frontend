@@ -25,6 +25,7 @@ import {
   setProductInfo,
   setMarketingPractices,
   setConclusion,
+  setCustomers
 } from "../../../../../lib/redux/features/ESGSlice/screen15Slice";
 
 const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
@@ -76,6 +77,7 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
     (state) => state.screen15Slice.marketing_practices
   );
   const conclusion = useSelector((state) => state.screen15Slice.conclusion);
+  const customers = useSelector((state) => state.screen15Slice.customers);
 
   const dispatch = useDispatch();
 
@@ -129,6 +131,15 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
         type: "richTextarea",
         content: conclusion,
         field: "conclusion",
+        isSkipped: false,
+      },
+      customers: {
+        page: "screen_fifteen",
+        label: "Customers",
+        subLabel: "Add statement about customers",
+        type: "textarea",
+        content: customers,
+        field: "customers",
         isSkipped: false,
       },
     };
@@ -192,6 +203,7 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
     dispatch(setProductInfo(""));
     dispatch(setMarketingPractices(""));
     dispatch(setConclusion(""));
+    dispatch(setCustomers(""));
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fifteen/${reportid}/`;
     try {
       const response = await axiosInstance.get(url);
@@ -211,6 +223,7 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
           )
         );
         dispatch(setConclusion(response.data.conclusion?.content || ""));
+        dispatch(setCustomers(response.data.customers?.content || ""));
       }
 
       LoaderClose();

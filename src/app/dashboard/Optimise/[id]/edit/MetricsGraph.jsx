@@ -19,34 +19,35 @@ const MetricsGraph = ({
   metricName = "FTE",
   initialMaxRange = 100,
   allowNegative = true,
-  minNegativeValue = -100, 
+  minNegativeValue = null,
   rangeSteps = [100, 200, 500, 1000, 2000, 5000],
   // Added props for syncing with Redux
   metricData = {},
   onPercentageChange = () => {},
   onBaseValueChange = () => {},
+  disabled = false,
 }) => {
   // Generate years between base and target
   const years = [];
-  for (let year = baseYear+1; year <= targetYear; year++) {
+  for (let year = baseYear + 1; year <= targetYear; year++) {
     years.push(year.toString());
   }
 
   // Initialize data structure with values from metricData if available
   const initializeData = () => {
     const initialData = [];
-    
-    years.forEach(year => {
-      const percentageChange = metricData.percentage_change 
-        ? metricData.percentage_change[year] || 0 
+
+    years.forEach((year) => {
+      const percentageChange = metricData.percentage_change
+        ? metricData.percentage_change[year] || 0
         : 0;
-        
+
       initialData.push({
         x: year,
-        y: percentageChange
+        y: percentageChange,
       });
     });
-    
+
     return initialData;
   };
 
@@ -58,13 +59,22 @@ const MetricsGraph = ({
 
   // Container width calculation - will be the visible container width
   const [containerWidth, setContainerWidth] = useState(0);
-  
+
   // State for the growth data
   const [data, setData] = useState(initializeData);
-  
+
   // State for the absolute value in base year
   const [baseValue, setBaseValue] = useState(metricData.abs_value || "");
-  
+
+  // State for validation errors - don't show errors initially
+  const [baseValueError, setBaseValueError] = useState(false);
+
+  // State for displaying validation error when trying to drag without baseValue
+  const [showDragError, setShowDragError] = useState(false);
+
+  // State to track if user has interacted with the component
+  const [hasInteracted, setHasInteracted] = useState(false);
+
   const [maxRange, setMaxRange] = useState(initialMaxRange);
 
   // Update data when metricData changes (from Redux)
@@ -72,8 +82,12 @@ const MetricsGraph = ({
     // Update base value if it exists in metricData
     if (metricData.abs_value !== undefined) {
       setBaseValue(metricData.abs_value);
+      // Clear error if value is valid, but only if user has interacted
+      if (hasInteracted && metricData.abs_value !== "" && !isNaN(metricData.abs_value) && parseFloat(metricData.abs_value) > 0) {
+        setBaseValueError(false);
+      }
     }
-    
+
     // Update percentage changes if they exist
     if (metricData.percentage_change) {
       const newData = [...data];
@@ -82,13 +96,13 @@ const MetricsGraph = ({
         if (percentageChange !== undefined) {
           newData[index] = {
             ...newData[index],
-            y: percentageChange
+            y: percentageChange,
           };
         }
       });
       setData(newData);
     }
-  }, [metricData]);
+  }, [metricData, hasInteracted]);
 
   // Update container width on mount and resize
   useEffect(() => {
@@ -103,16 +117,27 @@ const MetricsGraph = ({
     window.addEventListener("resize", updateContainerWidth);
     return () => window.removeEventListener("resize", updateContainerWidth);
   }, []);
-  
+
+  // Hide the drag error message after 3 seconds
+  useEffect(() => {
+    if (showDragError) {
+      const timer = setTimeout(() => {
+        setShowDragError(false);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showDragError]);
+
   // Calculate effective min negative value - dynamic unless specified for certain metrics
   const getEffectiveMinNegative = () => {
     // For FTE, always keep it at -100 regardless of the positive range
     if (metricName === "fte") {
       return -100;
     }
-    
-    // For others, mirror the positive range (i.e., -maxRange) unless specified
-    return minNegativeValue || -maxRange;
+
+    // For others, mirror the positive range (i.e., -maxRange) unless specifically provided
+    return minNegativeValue !== null ? minNegativeValue : -maxRange;
   };
 
   // Function to auto-adjust range based on values
@@ -124,18 +149,36 @@ const MetricsGraph = ({
       if (currentIndex !== -1 && currentIndex < rangeSteps.length - 1) {
         // Get the next range step
         const nextRange = rangeSteps[currentIndex + 1];
-        
+
         // Set the new max range
         setMaxRange(nextRange);
-        
+
         return true;
       }
     }
     return false;
   };
 
+  // Check if baseValue is valid for interactions
+  const isBaseValueValid = () => {
+    return baseValue !== "" && !isNaN(baseValue) && parseFloat(baseValue) > 0;
+  };
+
   // Function to handle point drag
   const handlePointDrag = (pointIndex, event) => {
+    // First check if dragging is allowed
+    if (disabled) return;
+    
+    // Mark that user has interacted with the component
+    setHasInteracted(true);
+    
+    // Validate baseValue before allowing drag
+    if (!isBaseValueValid()) {
+      setBaseValueError(true);
+      setShowDragError(true);
+      return;
+    }
+
     const year = years[pointIndex];
 
     // Capture initial mouse position and point value
@@ -162,21 +205,27 @@ const MetricsGraph = ({
       const newValue = Math.round(initialValue + valueChange);
 
       // Check if we need to auto-adjust range
-      const rangeAdjusted = autoAdjustRange(newValue);
+      const rangeAdjusted = autoAdjustRange(Math.abs(newValue));
 
       // Apply constraints based on current max range
       const upperConstrained = Math.min(newValue, maxRange);
-      
-      // Apply negative constraint based on allowNegative and minNegativeValue
+
+      // Apply negative constraint based on allowNegative and getEffectiveMinNegative()
       let finalValue;
       if (!allowNegative) {
         finalValue = Math.max(upperConstrained, 0);
       } else {
         // Get the current effective min negative value
         const effectiveMin = getEffectiveMinNegative();
-        
-        // Apply the constraint
-        finalValue = Math.max(upperConstrained, effectiveMin);
+
+        // Apply the constraint - Important: Only restrict FTE values, let others go below -100%
+        if (metricName === "fte") {
+          finalValue = Math.max(upperConstrained, effectiveMin);
+        } else {
+          // For other metrics, adjust range but don't enforce the -100% limit
+          // Instead, we'll just enforce the current negative range limit (which can auto-scale)
+          finalValue = Math.max(upperConstrained, -maxRange);
+        }
       }
 
       // Update state
@@ -186,19 +235,19 @@ const MetricsGraph = ({
         y: finalValue,
       };
       setData(updatedData);
-      
+
       // Create complete object with both abs_value and percentage_change
       const updatedPercentageChanges = {};
       updatedData.forEach((item) => {
         updatedPercentageChanges[item.x] = item.y;
       });
-      
+
       // Create complete data object for Redux
       const completeData = {
-        abs_value: baseValue,
-        percentage_change: updatedPercentageChanges
+        abs_value: parseFloat(baseValue),
+        percentage_change: updatedPercentageChanges,
       };
-      
+
       // Update the parent via callback with complete data object
       onPercentageChange(completeData);
     };
@@ -258,6 +307,19 @@ const MetricsGraph = ({
 
   // Function to handle percentage input
   const handlePercentageChange = (index, value) => {
+    // First check if editing is allowed
+    if (disabled) return;
+    
+    // Mark that user has interacted with the component
+    setHasInteracted(true);
+    
+    // Validate baseValue before allowing changes
+    if (!isBaseValueValid()) {
+      setBaseValueError(true);
+      setShowDragError(true);
+      return;
+    }
+
     // Handle special case: if user is just typing a minus sign
     if (value === "-" && allowNegative) {
       const newData = [...data];
@@ -270,80 +332,110 @@ const MetricsGraph = ({
 
     // Check if we have a negative sign stored
     const isNegativeIntent = data[index].y === "-";
-    
+
     // Strip non-numeric characters except the leading minus
     let processedValue = value.replace(/[^0-9\-]/g, "");
-    
+
     // If there's a negative intent and user is now typing numbers
     if (isNegativeIntent && /^\d+$/.test(processedValue)) {
       // Apply the stored negative sign
       processedValue = "-" + processedValue;
     }
-    
+
     // Parse the value as an integer
     let numValue = parseInt(processedValue, 10);
-    
+
     // Check if the value is valid
     if (isNaN(numValue)) {
       return; // Keep the current value if invalid
     }
-    
+
     // Apply constraints based on allowNegative, minNegativeValue, and maxRange
     numValue = Math.min(numValue, maxRange);
-    
+
     if (!allowNegative) {
       numValue = Math.max(numValue, 0);
     } else {
-      // Get the current effective min negative value
-      const effectiveMin = getEffectiveMinNegative();
-      
-      // Apply the constraint
-      numValue = Math.max(numValue, effectiveMin);
+      // Apply different constraints based on the metric type
+      if (metricName === "fte") {
+        // FTE is strictly limited to -100%
+        numValue = Math.max(numValue, -100);
+      } else {
+        // Other metrics can go below -100%, but are constrained by the current maxRange
+        numValue = Math.max(numValue, -maxRange);
+
+        // Auto-adjust range if needed for large negative values
+        if (numValue < -maxRange) {
+          autoAdjustRange(Math.abs(numValue));
+        }
+      }
     }
-    
+
     // Update the data
     const newData = [...data];
     newData[index] = { ...newData[index], y: numValue };
     setData(newData);
-    
-    // Check if range needs to be adjusted
-    autoAdjustRange(numValue);
-    
+
+    // Check if range needs to be adjusted for positive values
+    autoAdjustRange(Math.abs(numValue));
+
     // Create complete object with both abs_value and percentage_change
     const updatedPercentageChanges = {};
     newData.forEach((item) => {
       updatedPercentageChanges[item.x] = item.y;
     });
-    
+
     // Create complete data object for Redux
     const completeData = {
-      abs_value: baseValue,
-      percentage_change: updatedPercentageChanges
+      abs_value: parseFloat(baseValue),
+      percentage_change: updatedPercentageChanges,
     };
-    
+
     // Update the parent via callback with complete data object
     onPercentageChange(completeData);
   };
 
-  // Handle base value changes
+  // handleBaseValueChange
   const handleBaseValueChange = (e) => {
-    const value = Number(e.target.value) || 0;
-    setBaseValue(value);
+    if (disabled) return;
     
-    // Create complete data object with current percentage changes
-    const percentageChanges = {};
-    data.forEach((item) => {
-      percentageChanges[item.x] = item.y;
-    });
+    // Mark that user has interacted with the component
+    setHasInteracted(true);
+
+    const inputValue = e.target.value;
     
-    // Send complete data object to parent
-    const completeData = {
-      abs_value: value,
-      percentage_change: percentageChanges
-    };
+    // Always update the input value for better UX
+    setBaseValue(inputValue);
     
-    onBaseValueChange(completeData);
+    // Parse the value - ensure it's a number
+    const value = parseFloat(inputValue);
+
+    // Validate input - check if it's a valid number and not empty and greater than zero
+    const isValid = inputValue !== "" && !isNaN(value) && value > 0;
+    
+    // Update error state
+    setBaseValueError(!isValid);
+
+    // Only send update to parent if value is valid
+    if (isValid) {
+      // Create complete data object with current percentage changes
+      const percentageChanges = {};
+      data.forEach((item) => {
+        percentageChanges[item.x] = item.y;
+      });
+
+      // Send complete data object to parent
+      const completeData = {
+        abs_value: value,
+        percentage_change: percentageChanges,
+      };
+
+      onBaseValueChange(completeData);
+    }
   };
+
+  // Calculate the effective min negative value for chart display
+  const chartMinValue = getEffectiveMinNegative();
 
   return (
     <div className="bg-white rounded-lg pl-2 overflow-auto">
@@ -359,9 +451,20 @@ const MetricsGraph = ({
               type="text"
               value={baseValue}
               onChange={handleBaseValueChange}
-              className="w-32 text-center bg-white border-b border-gray-300 rounded py-1 px-2 text-sm focus:outline-none focus:border-blue-500"
-              placeholder="Enter Value"
+              className={`w-32 text-center bg-white border-b ${
+                hasInteracted && baseValueError ? "border-red-500" : "border-gray-300"
+              } rounded py-1 px-2 text-sm focus:outline-none focus:${
+                hasInteracted && baseValueError ? "border-red-500" : "border-blue-500"
+              } ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+              placeholder="Enter Value *"
+              disabled={disabled}
+              required
             />
+            {hasInteracted && (baseValueError || showDragError) && (
+              <span className="text-red-500 text-xs ml-2">
+                Absolute value for {metricName} is required
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -375,22 +478,19 @@ const MetricsGraph = ({
         <div style={{ width: `${dynamicWidth}px`, height: "100%" }}>
           <ResponsiveLine
             data={chartData}
-            margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
+            margin={{ top: 20, right: 20, bottom: 60, left: 60 }} // Increased bottom margin to prevent overlap
             xScale={{
               type: "point",
-              padding: 0.5, 
+              padding: 0.5,
             }}
             yScale={{
               type: "linear",
-              min: allowNegative ? getEffectiveMinNegative() : 0,
+              min: allowNegative ? chartMinValue : 0,
               max: maxRange,
               stacked: false,
               reverse: false,
             }}
             curve="monotoneX"
-            axisBottom={{
-              enabled: false, // Disable the built-in axis as we'll create our own with inputs
-            }}
             axisLeft={{
               tickSize: 5,
               tickPadding: 20,
@@ -419,11 +519,18 @@ const MetricsGraph = ({
                   {point.data.y}%
                 </div>
                 <div className="text-gray-500 text-xs">
-                  Value: {Math.round((baseValue * (100 + point.data.y)) / 100)}
+                  Value: {isBaseValueValid() ? Math.round((parseFloat(baseValue) * (100 + point.data.y)) / 100) : "N/A"}
                 </div>
-                <div className="text-xs italic text-gray-500">
-                  Click and drag to adjust
-                </div>
+                {!disabled && isBaseValueValid() && (
+                  <div className="text-xs italic text-gray-500">
+                    Click and drag to adjust
+                  </div>
+                )}
+                {!disabled && !isBaseValueValid() && (
+                  <div className="text-xs italic text-red-500">
+                    Enter base value first
+                  </div>
+                )}
               </div>
             )}
             markers={[
@@ -472,7 +579,10 @@ const MetricsGraph = ({
                       key={point.id}
                       transform={`translate(${point.x},${point.y})`}
                       onMouseDown={(e) => handlePointDrag(index, e)}
-                      style={{ cursor: "pointer" }}
+                      style={{ 
+                        cursor: disabled || !isBaseValueValid() ? "not-allowed" : "pointer",
+                        opacity: disabled || !isBaseValueValid() ? 0.7 : 1 
+                      }}
                     >
                       {/* Larger hit area */}
                       <circle
@@ -505,9 +615,9 @@ const MetricsGraph = ({
                         filter="url(#circleShadow)"
                       />
 
-                      {/* Value label */}
+                      {/* Value label - Moving negative labels up instead of down to prevent overlap */}
                       <text
-                        y={point.data.y >= 0 ? -15 : 20}
+                        y={-15} // Always place labels above the point to avoid overlap with x-axis
                         textAnchor="middle"
                         style={{
                           fontSize: "12px",
@@ -531,7 +641,8 @@ const MetricsGraph = ({
       {/* Percentage change in consumption - Synchronized with chart scrolling */}
       <div
         ref={percentageScrollRef}
-        className="mb-6 ml-2 -mt-2 pl-6 relative overflow-x-hidden"
+        className="mb-6 ml-2 pl-6 relative overflow-x-auto scrollable-content"
+        style={{ marginTop: "10px" }} /* Added additional space */
       >
         <div className="flex justify-between items-center">
           <div className="flex-none w-12 text-[11px] font-medium text-gray-500 relative -left-6">
@@ -558,38 +669,57 @@ const MetricsGraph = ({
                         ? `+${data[index].y}%`
                         : `${data[index].y}%`
                     }
-                    className="w-16 text-center border-b border-gray-300 rounded py-1 text-[11px] focus:outline-none focus:border-blue-500"
+                    className={`w-16 text-center border-b ${
+                      !isBaseValueValid() ? "border-red-100" : "border-gray-300"
+                    } rounded py-1 text-[11px] focus:outline-none focus:border-blue-500 ${
+                      disabled || !isBaseValueValid() ? "opacity-60 cursor-not-allowed" : ""
+                    }`}
                     onChange={(e) => {
                       // Pass the raw value to our handler function
                       const rawValue = e.target.value.replace("%", "");
                       handlePercentageChange(index, rawValue);
                     }}
-                    onFocus={(e) => {
-                        e.target.select();
-                      }}
+                                          onFocus={(e) => {
+                      if (!disabled) {
+                        // Mark that user has interacted
+                        setHasInteracted(true);
+                        
+                        if (isBaseValueValid()) {
+                          e.target.select();
+                        } else {
+                          // Show error if base value is invalid
+                          setBaseValueError(true);
+                          setShowDragError(true);
+                        }
+                      }
+                    }}
                     onBlur={(e) => {
                       // On blur, ensure we don't leave a bare minus sign
                       if (data[index].y === "-") {
                         const newData = [...data];
                         newData[index] = { ...newData[index], y: 0 };
                         setData(newData);
-                        
-                        // Create the year-wise percentage changes for Redux with complete data
-                        const percentageChanges = {};
-                        newData.forEach((item) => {
-                          percentageChanges[item.x] = item.y;
-                        });
-                        
-                        // Create complete data object
-                        const completeData = {
-                          abs_value: baseValue,
-                          percentage_change: percentageChanges
-                        };
-                        
-                        // Update the parent via callback with complete data
-                        onPercentageChange(completeData);
+
+                        // Only update if base value is valid
+                        if (isBaseValueValid()) {
+                          // Create the year-wise percentage changes for Redux with complete data
+                          const percentageChanges = {};
+                          newData.forEach((item) => {
+                            percentageChanges[item.x] = item.y;
+                          });
+
+                          // Create complete data object
+                          const completeData = {
+                            abs_value: parseFloat(baseValue),
+                            percentage_change: percentageChanges,
+                          };
+
+                          // Update the parent via callback with complete data
+                          onPercentageChange(completeData);
+                        }
                       }
                     }}
+                    disabled={disabled || !isBaseValueValid()}
                   />
                 </div>
               ))}

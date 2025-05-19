@@ -18,7 +18,7 @@ stakeholders informed of our progress.`
     <>
       <div>
         <div id="setion7_1_1" ref={section7_1_1Ref}>
-          <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
+          <h3 className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
             7.1.1 Restatement of Information
           </h3>
           <p className="mb-4 text-sm">
@@ -27,7 +27,7 @@ stakeholders informed of our progress.`
                 <>
                   {data["2-4-a"].Q1
                     ? data["2-4-a"].Q1 == "No"
-                      ? data["2-4-a"].Q1
+                      ? "There are no restatements of information from previous reporting periods."
                       : data["2-4-a"]?.Q2
                     : "No data available"}
                   {/* <br />
