@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect, use } from "react";
-import Sidebar from "./sidebar";
+import Bills211Sidebar from "./sidebar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -15,7 +15,11 @@ import { useDispatch } from "react-redux";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import Aboutthereport from "./about-the-report/page";
 import Organizationprofilestructure from "./organization-profile-structure/page";
-const Bills201Report = () => {
+import Businessactivities from "./business-activities/page"
+import Supplychains from "./supply-chains/page"
+import Policiesdiligence from "./policies-diligence-processes/page"
+import Risksforcedchildlabour from "./risks-forced-child-labour/page"
+const Bills211Report = () => {
   const router = useRouter();
   const [isOpenMobile, setIsOpenMobile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -229,7 +233,7 @@ const Bills201Report = () => {
   return (
     <>
       <div className="flex">
-        <Sidebar
+        <Bills211Sidebar
           activeStep={activeStep}
           setActiveStep={setActiveStep}
           isOpenMobile={isOpenMobile}
@@ -472,7 +476,27 @@ const Bills201Report = () => {
                   <Organizationprofilestructure ref={OrgProfileStructureRef} />
                 </div>
               )}
-            </div>
+                  {activeStep === 3 && (
+                <div>
+                  <Businessactivities ref={BusinessActivities} />
+                </div>
+              )}
+                   {activeStep === 4 && (
+                <div>
+                  <Supplychains ref={Supplychains} />
+                </div>
+              )} 
+                   {activeStep === 5 && (
+                <div>
+                  <Policiesdiligence ref={PoliciesDiligenceProcesses} />
+                </div>
+              )} 
+                   {activeStep === 6 && (
+                <div>
+                  <Risksforcedchildlabour ref={RisksofForced} />
+                </div>
+              )}  
+            </div> 
           </div>
         </div>
       </div>
@@ -498,4 +522,4 @@ const Bills201Report = () => {
   );
 };
 
-export default Bills201Report;
+export default Bills211Report;

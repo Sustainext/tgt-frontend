@@ -67,7 +67,7 @@ const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile }) => {
 };
 
 // Main Sidebar Component
-const Bills201Sidebar = ({
+const Bills211Sidebar = ({
   activeStep,
   setActiveStep,
   setIsOpenMobile,
@@ -122,4 +122,4 @@ const Bills201Sidebar = ({
   );
 };
 
-export default Bills201Sidebar;
+export default Bills211Sidebar;

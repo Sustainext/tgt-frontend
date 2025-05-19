@@ -17,20 +17,20 @@ const Businessactivities = ({ orgName, data }) => {
 const loadContent = () => {
   dispatch(
     setBusinessactivities(
-      `<p>[Company Name – P1-Q2] has a presence in [number] location(s) worldwide. The entity employs approximately [number] employees globally, including [number] in Canada and [number] outside Canada. It does not control or own any other entities [or specify subsidiaries and their functions].</p>
-
-<p>The organizational structure includes the following key departments: [list key departments such as operations, sales, R&D, logistics, corporate affairs, sustainability, etc.].</p>
-
-<p>[Company Name – P1-Q2] is a member of [list relevant industry associations, partnerships, or coalitions], which support its commitment to [sustainability, ethical sourcing, innovation, etc.].</p>
-
-<p>Its core business activities include:</p>
-<ul>
-  <li>Providing consumer electronics and home appliances</li>
-  <li>Delivering logistics and supply chain management services</li>
-  <li>Supplying after-sales technical support and repair services</li>
+     `<p style="margin-bottom: 8px;">Its core business activities include:</p>
+<ul style="list-style-type: disc; padding-left: 40px; margin-bottom: 16px;">
+  <li style="margin-bottom: 5px;">Providing consumer electronics and home appliances</li>
+  <li style="margin-bottom: 5px;">Delivering logistics and supply chain management services</li>
+  <li style="margin-bottom: 5px;">Supplying after-sales technical support and repair services</li>
 </ul>
 
-<p>The company operates in Canada, the United States, and the United Kingdom, and sources products from China, Bangladesh, and Indonesia, with an annual import volume of approximately $75 million CAD in electronic components, finished goods, and packaging materials. It complies with all relevant trade and regulatory requirements, ensuring responsible and ethical sourcing.</p>`
+<p>
+The company operates in Canada, the United States, and the United Kingdom, and sources
+products from China, Bangladesh, and Indonesia, with an annual import volume of
+approximately $75 million CAD in electronic components, finished goods, and packaging
+materials. It complies with all relevant trade and regulatory requirements, ensuring responsible
+and ethical sourcing.
+</p>`
     )
   );
 };
@@ -96,27 +96,10 @@ const loadContent = () => {
       </div>
       <div>
         <p className="text-[15px] text-[#344054] mb-2 mt-3">
-          [Company Name – P1-Q2] is a Corporation headquartered in [headquarters
-          location – P1-Q11], operating in the following industry/sector(s):
+         ABC is engaged in Producing goods (includes manufacturing, extracting, growing and processing), in Canada, Producing goods (includes manufacturing, extracting, growing and processing), outside Canada, Importing into Canada goods produced outside Canada, Controlling an entity engaged in producing goods, in Canada, Controlling an entity engaged in producing goods, outside Canada and Controlling an entity engaged in importing into Canada
+goods produced outside Canada
         </p>
-        <div className="">
-          <ul className="list-disc pl-12">
-            <li className="text-[14px] text-[#344054] mb-2">Construction</li>
-            <li className="text-[14px] text-[#344054] mb-2">
-              Heavy and civil engineering construction
-            </li>
-            <li className="text-[14px] text-[#344054] mb-2">
-              Specialty trade contractors
-            </li>
-          </ul>
-        </div>
-
-        <p className="text-[15px] text-[#344054] mb-2 mt-3">
-          The entity is listed on a stock exchange in Canada, has a place of
-          business in Canada, does business in Canada and has generated at least
-          $40 million in revenue for at least one of its two most recent
-          financial years.
-        </p>
+    
       </div>
       <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">
         <p className="text-[15px] text-[#344054] mb-4 mt-3 w-[85%]">

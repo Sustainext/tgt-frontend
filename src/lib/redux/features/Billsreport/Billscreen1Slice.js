@@ -6,6 +6,9 @@ const BillScreen1Slice = createSlice({
     about_the_Report: "",
     organization_profile_structure: "",
     business_activities: "",
+    Supply_chains:"",
+    policies_diligence_processes:"",
+    risks_forced_child_labour:"",
     error: null,
   },
   reducers: {
@@ -18,6 +21,15 @@ const BillScreen1Slice = createSlice({
     setBusinessactivities: (state, action) => {
       state.business_activities = action.payload;
     },
+    setSupplychains: (state, action) => {
+      state.Supply_chains = action.payload;
+    },
+      setPoliciesdiligence: (state, action) => {
+      state.policies_diligence_processes = action.payload;
+    },
+      setRisksforcedchildlabour: (state, action) => {
+      state.risks_forced_child_labour = action.payload;
+    },
   },
 });
 
@@ -25,6 +37,9 @@ export const {
   setAboutTheReport,
   setOrganizationprofilestructure,
   setBusinessactivities,
+  setSupplychains,
+  setPoliciesdiligence,
+  setRisksforcedchildlabour,
 } = BillScreen1Slice.actions;
 
 export default BillScreen1Slice.reducer;
