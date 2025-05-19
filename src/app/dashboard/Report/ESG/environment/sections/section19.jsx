@@ -20,7 +20,7 @@ const Section19 = ({ section12_4Ref, section12_4_1Ref, data }) => {
 
         {data["3-3cde_12-4-1"] && data["3-3cde_12-4-1"].length > 0 ? (
           data["3-3cde_12-4-1"].map((val, index) => (
-            <div key={index}>
+            <div key={index} className="">
               <p className="text-sm mb-2">
                 {val.GRI33cd ? val.GRI33cd : "No data available"}
               </p>
