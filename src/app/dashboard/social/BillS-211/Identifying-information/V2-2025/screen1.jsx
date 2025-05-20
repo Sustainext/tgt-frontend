@@ -270,7 +270,7 @@ const Screenone = ({
       newErrors.reportingdateto = "Please select a date";
     }
     if (!reportingyear) {
-      newErrors.reportingdateto = "Please select reporting year";
+      newErrors.reportingyear = "Please select reporting year";
     }
     if (reportingdateto < reportingdateform) {
       newErrors.reportingdateto = "To date cannot be earlier than from date.";

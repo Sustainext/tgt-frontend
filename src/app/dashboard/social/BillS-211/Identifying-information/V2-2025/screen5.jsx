@@ -13,7 +13,7 @@ const Screenfive = ({
   selectedOrg,
   year,
   reportType,
-  status
+  status,
 }) => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [reportingentity, setReportingentit] = useState("");
@@ -88,9 +88,21 @@ const Screenfive = ({
   const continueToNextStep = () => {
     const errors = {};
 
+    // Check if any main option is selected
     if (Object.keys(selectedOptions).length === 0) {
-      errors.checkboxes = "Please select at least one option.";
+    errors.checkboxes = "Please select at least one option.";
+  }
+
+  // Per-category subcategory validation
+  optionsTwo.forEach((option) => {
+    if (
+      selectedOptions.hasOwnProperty(option.value) &&
+      option.subcategories &&
+      selectedOptions[option.value].length === 0
+    ) {
+      errors[option.value] = `Please select at least one sub-option under "${option.label}".`;
     }
+  });
 
     if (Object.keys(errors).length === 0) {
       setError({});
@@ -99,10 +111,11 @@ const Screenfive = ({
       setError(errors);
     }
   };
+
   const stepsubmitForm = async () => {
     const stepscreenId = 6;
-     const stepdata = status[5].status
-      const newStatus = stepdata === "completed" ? "completed" : "in_progress";
+    const stepdata = status[5].status;
+    const newStatus = stepdata === "completed" ? "completed" : "in_progress";
     try {
       const sendData = {
         organization: selectedOrg,
@@ -204,37 +217,47 @@ const Screenfive = ({
               </div>
 
               {option.subcategories && (
-                <div
-                  className={`ml-6 mt-1 gap-2 mb-2 ${
-                    selectedOptions.hasOwnProperty(option.value)
-                      ? ""
-                      : "opacity-50 pointer-events-none"
-                  }`}
-                >
-                  {option.subcategories.map((sub, idx) => (
-                    <label
-                      key={idx}
-                      className="flex items-center text-[13px] text-gray-600 mb-2"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={
-                          selectedOptions[option.value]?.includes(sub) || false
-                        }
-                        onChange={(e) =>
-                          handleSubcategoryChange(
-                            option.value,
-                            sub,
-                            e.target.checked
-                          )
-                        }
-                        disabled={!selectedOptions.hasOwnProperty(option.value)}
-                        className="mr-2"
-                      />
-                      {sub}
-                    </label>
-                  ))}
-                </div>
+                <>
+                  <div
+                    className={`ml-6 mt-1 gap-2 mb-2 ${
+                      selectedOptions.hasOwnProperty(option.value)
+                        ? ""
+                        : "opacity-50 pointer-events-none"
+                    }`}
+                  >
+                    {option.subcategories.map((sub, idx) => (
+                      <label
+                        key={idx}
+                        className="flex items-center text-[13px] text-gray-600 mb-2"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={
+                            selectedOptions[option.value]?.includes(sub) ||
+                            false
+                          }
+                          onChange={(e) =>
+                            handleSubcategoryChange(
+                              option.value,
+                              sub,
+                              e.target.checked
+                            )
+                          }
+                          disabled={
+                            !selectedOptions.hasOwnProperty(option.value)
+                          }
+                          className="mr-2"
+                        />
+                        {sub}
+                      </label>
+                    ))}
+                  </div>
+                  {error[option.value] && (
+                    <div className="text-red-500 text-[12px]">
+                      {error[option.value]}
+                    </div>
+                  )}
+                </>
               )}
             </div>
           ))}
@@ -245,38 +268,38 @@ const Screenfive = ({
             </div>
           )}
         </div>
-         <div className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%]  w-full mb-5">
-        <div className="flex justify-end mt-5 mx-4">
-          <button
-            className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
-            onClick={prevStep}
-          >
-            &lt; Previous
-          </button>
+        <div className="xl:w-[78%] lg:w-[78%] 2xl:w-[78%] md:w-[78%] 2k:w-[78%] 4k:w-[78%]  w-full mb-5">
+          <div className="flex justify-end mt-5 mx-4">
+            <button
+              className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
+              onClick={prevStep}
+            >
+              &lt; Previous
+            </button>
 
-          <button
-            type="button"
-            onClick={continueToNextStep}
-            disabled={
-              !(
-                selectedOrg &&
-                year &&
-                (reportType === "Organization" || selectedCorp)
-              )
-            }
-            className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
-              !(
-                selectedOrg &&
-                year &&
-                (reportType === "Organization" || selectedCorp)
-              )
-                ? "opacity-30 cursor-not-allowed"
-                : ""
-            }`}
-          >
-            Next &gt;
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={continueToNextStep}
+              disabled={
+                !(
+                  selectedOrg &&
+                  year &&
+                  (reportType === "Organization" || selectedCorp)
+                )
+              }
+              className={`px-3 py-1.5 font-semibold rounded ml-2 w-[80px] text-[12px] bg-blue-500 text-white ${
+                !(
+                  selectedOrg &&
+                  year &&
+                  (reportType === "Organization" || selectedCorp)
+                )
+                  ? "opacity-30 cursor-not-allowed"
+                  : ""
+              }`}
+            >
+              Next &gt;
+            </button>
+          </div>
         </div>
       </div>
 
