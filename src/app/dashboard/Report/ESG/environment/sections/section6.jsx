@@ -15,7 +15,7 @@ import dynamic from "next/dynamic";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section6 = ({ section12_1_4Ref, data }) => {
+const Section6 = ({ section12_1_4Ref, data,reportType }) => {
   const biogenicStatement = useSelector(
     (state) => state.screen12Slice.biogenic_c02_emissions_305_3c
   );
@@ -215,7 +215,7 @@ const Section6 = ({ section12_1_4Ref, data }) => {
     <>
       <div id="section12_1_4" ref={section12_1_4Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          12.1.4 Scope 3 GHG Emissions
+        {reportType=='GRI Report: In accordance With'?'12.1.4':'12.1.3'} Scope 3 GHG Emissions
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

@@ -1,11 +1,12 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import STARSVG from "../../../../../../../public/star.svg";
+import LeaveTable from "../tables/leaveTable";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmployeeSkillUpgradePrograms } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section17 = ({ section13_5_2Ref, data }) => {
+const Section17 = ({ section13_5_2Ref, data, reportType }) => {
   const content = useSelector(
     (state) => state.screen13Slice.employee_skill_upgrade_programs
   );
@@ -22,11 +23,102 @@ const Section17 = ({ section13_5_2Ref, data }) => {
     dispatch(setEmployeeSkillUpgradePrograms(e.target.value));
   };
 
+  const col = [
+    "Categories",
+    "Average training hours per employee category",
+    "Average training hours of male employee in category",
+    "Average training hours of female employee in category",
+    "Average training hours of non-binary employee in category",
+  ];
+
+  const Tabledata = data["404_social_analyse"]
+    ? data["404_social_analyse"][
+        "average_hours_of_training_provided_to_employees_per_category"
+      ].length > 0
+      ? data["404_social_analyse"][
+          "average_hours_of_training_provided_to_employees_per_category"
+        ].map((val, index) => {
+          return {
+            Categories: val.category,
+            "Average training hours per employee category":
+              val.avg_training_hrs_per_employee,
+            "Average training hours of male employee in category":
+              val.avg_training_hrs_male_employee,
+            "Average training hours of female employee in category":
+              val.avg_training_hrs_female_employee,
+            "Average training hours of non-binary employee in category":
+              val.avg_training_hrs_other_employee,
+          };
+        })
+      : [
+          {
+            Categories: "No data available",
+            "Average training hours per employee category": "No data available",
+            "Average training hours of male employee in category":
+              "No data available",
+            "Average training hours of female employee in category":
+              "No data available",
+            "Average training hours of non-binary employee in category":
+              "No data available",
+          },
+        ]
+    : [
+        {
+          Categories: "No data available",
+          "Average training hours per employee category": "No data available",
+          "Average training hours of male employee in category":
+            "No data available",
+          "Average training hours of female employee in category":
+            "No data available",
+          "Average training hours of non-binary employee in category":
+            "No data available",
+        },
+      ];
+
+  const col2 = [
+    "Security Personnel (in organisation)",
+    "Security Personnel (from third-party organisation)",
+  ];
+
+  const Tabledata2 = data["analysis_security_personnel"]
+    ? data["analysis_security_personnel"]["security_personnel"]
+      ? data["analysis_security_personnel"]["security_personnel"].length > 0
+        ? data["analysis_security_personnel"]["security_personnel"]?.map(
+            (val, index) => {
+              return {
+                "Security Personnel (in organisation)": val.sp_in_org + "%",
+                "Security Personnel (from third-party organisation)":
+                  val.sp_3rd_org + "%",
+              };
+            }
+          )
+        : [
+            {
+              "Security Personnel (in organisation)": "No data available",
+              "Security Personnel (from third-party organisation)":
+                "No data available",
+            },
+          ]
+      : [
+          {
+            "Security Personnel (in organisation)": "No data available",
+            "Security Personnel (from third-party organisation)":
+              "No data available",
+          },
+        ]
+    : [
+        {
+          "Security Personnel (in organisation)": "No data available",
+          "Security Personnel (from third-party organisation)":
+            "No data available",
+        },
+      ];
+
   return (
     <>
       <div id="section13_5_2" ref={section13_5_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.5.2 Programs for Upgrading Employee Skills and Transition
+        {reportType=='GRI Report: In accordance With'?'13.5.2':'13.5.1'}   Programs for Upgrading Employee Skills and Transition
           Assistance Programs 
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
@@ -58,28 +150,28 @@ const Section17 = ({ section13_5_2Ref, data }) => {
             data["404_2a_2b_collect"][0].Q1 ? (
               data["404_2a_2b_collect"][0].Q1 == "Yes" ? (
                 <div>
-                  <p className="text-[15px]  mb-2 font-semibold">
+                  {/* <p className="text-[15px]  mb-2 font-semibold">
                     Type of program and its scope
-                  </p>
+                  </p> */}
                   <p className="text-sm mb-4">
                     {data["404_2a_2b_collect"][0].Q2
                       ? data["404_2a_2b_collect"][0].Q2
                       : "No data available"}
                   </p>
-                  <p className="text-[15px]  mb-2 font-semibold">
+                  {/* <p className="text-[15px]  mb-2 font-semibold">
                     Describe the programs provided to facilitate continued
                     employability
-                  </p>
+                  </p> */}
                   <p className="text-sm mb-4">
                     {data["404_2a_2b_collect"][0].Q3
                       ? data["404_2a_2b_collect"][0].Q3
                       : "No data available"}
                   </p>
 
-                  <p className="text-[15px]  mb-2 font-semibold">
+                  {/* <p className="text-[15px]  mb-2 font-semibold">
                     Describe assistance programs to manage career endings
                     resulting from retirement or termination
-                  </p>
+                  </p> */}
                   <p className="text-sm mb-4">
                     {data["404_2a_2b_collect"][0].Q4
                       ? data["404_2a_2b_collect"][0].Q4
@@ -98,6 +190,93 @@ const Section17 = ({ section13_5_2Ref, data }) => {
         ) : (
           <p className="text-sm mb-4">No data available</p>
         )}
+
+
+{/* <p className="text-[15px]  mb-2 font-semibold">
+          Training requirements apply to third party organisations
+        </p>
+        <p className="text-sm mb-4">
+          {data["410-1b-training_requirements"]
+            ? data["410-1b-training_requirements"].data
+              ? data["410-1b-training_requirements"].data.length > 0
+                ? data["410-1b-training_requirements"].data[0].Q1
+                  ? data["410-1b-training_requirements"].data[0].Q1
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p> */}
+        <p className="text-[15px]  mb-2 font-semibold">
+          Average training hours per employee:
+        </p>
+        <p className="text-sm mb-4">
+          {data["404_social_analyse"]
+            ? data["404_social_analyse"][
+                "average_hours_of_training_provided_to_employees"
+              ]
+              ? data["404_social_analyse"][
+                  "average_hours_of_training_provided_to_employees"
+                ].length > 0
+                ? data["404_social_analyse"][
+                    "average_hours_of_training_provided_to_employees"
+                  ].map((val) => val.average_training_hours_per_employee)
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-[15px]  mb-2 font-semibold">
+          Average training hours per female employee:
+        </p>
+        <p className="text-sm mb-4">
+          {data["404_social_analyse"]
+            ? data["404_social_analyse"][
+                "average_hours_of_training_provided_to_employees"
+              ]
+              ? data["404_social_analyse"][
+                  "average_hours_of_training_provided_to_employees"
+                ].length > 0
+                ? data["404_social_analyse"][
+                    "average_hours_of_training_provided_to_employees"
+                  ].map((val) => val.average_training_hours_per_female_employee)
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-[15px]  mb-2 font-semibold">
+          Average training hours per male employee:
+        </p>
+        <p className="text-sm mb-4">
+          {data["404_social_analyse"]
+            ? data["404_social_analyse"][
+                "average_hours_of_training_provided_to_employees"
+              ]
+              ? data["404_social_analyse"][
+                  "average_hours_of_training_provided_to_employees"
+                ].length > 0
+                ? data["404_social_analyse"][
+                    "average_hours_of_training_provided_to_employees"
+                  ].map((val) => val.average_training_hours_per_male_employee)
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+
+        <p className="text-[15px]  mb-2 font-semibold">
+          Average hours of training provided to employees by category
+        </p>
+        <div className="shadow-md mb-4 rounded-md">
+          <LeaveTable columns={col} data={Tabledata} />
+        </div>
+
+        <p className="text-[15px]  mb-1 font-semibold">
+          Security personnel trained in human rights policies or procedures
+        </p>
+        <p className="text-[14px]  mb-2">
+          Percentage of security personnel who have received formal training
+        </p>
+        <div className="shadow-md mb-4 rounded-md">
+          <LeaveTable columns={col2} data={Tabledata2} />
+        </div>
       </div>
     </>
   );

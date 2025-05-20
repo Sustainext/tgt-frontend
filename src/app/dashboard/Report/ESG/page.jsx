@@ -27,6 +27,7 @@ import OmissionPopup from "./content-index/modals/omissionPopup";
 import ReportCreatedPopup from "./content-index/modals/reportCreatedPopup";
 import MainValidationPopup from "./validation-modals/mainModal";
 import axiosInstance, { patch } from "../../../utils/axiosMiddleware";
+import ReferenceMaterialTopic from "./referenceMaterialTopic/page";
 import {
   setHeadertext1,
   setHeadertext2,
@@ -250,18 +251,29 @@ const ESGReport = () => {
     }
   }, []);
 
+
   return (
     <>
       <div className="flex">
-        {activeStep == 16 ? (
+        {activeStep == 17? (
           <></>
         ) : (
-          <Sidebar
+          <div>
+            {
+              activeStep===16 && reportType==='GRI Report: In accordance With'?(
+                <></>
+              ):(
+                <Sidebar
             activeStep={activeStep}
             setActiveStep={setActiveStep}
             isOpenMobile={isOpenMobile}
             setIsOpenMobile={setIsOpenMobile}
+            reportType={reportType}
           />
+              )
+            }
+          </div>
+          
         )}
 
         <div className="w-full mb-5">
@@ -313,7 +325,7 @@ const ESGReport = () => {
               <div className="hidden md:block lg:block xl:block">
               <div className="float-right mr-2 flex items-center justify-center">
                 <div className="flex items-center justify-center">
-                  {activeStep == 16 ? (
+                  {activeStep == 17 ? (
                     <></>
                   ) : (
                     <button
@@ -330,7 +342,7 @@ const ESGReport = () => {
                     </button>
                   )}
 
-                  {activeStep == 16 ? (
+                  {(activeStep == 16 && reportType==='GRI Report: In accordance With') || activeStep==17 ? (
                     <div>
                       {isOmissionSubmitted ? (
                         <button
@@ -369,14 +381,30 @@ const ESGReport = () => {
                           Next &gt;
                         </button>
                       ) : (
-                        <button
-                          onClick={() => {
-                            handleNextStep("last");
-                          }}
-                          className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Save & Fill Content Index
-                        </button>
+                        <div>
+                          {reportType==='GRI Report: With Reference to' && activeStep===15 ?(
+                            <button
+                            className={`bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
+                            onClick={() => {
+                              handleNextStep("next");
+                            }} // Call the form submit and next step handler
+                            // disabled={activeStep === 15}
+                          >
+                            Next &gt;
+                          </button>
+                          ):(
+                            <button
+                            onClick={() => {
+                              handleNextStep("last");
+                            }}
+                            className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                          >
+                            Save & Fill Content Index
+                          </button>
+                          )}
+                         
+                        </div>
+                        
                       )}
                     </div>
                   )}
@@ -510,74 +538,93 @@ const ESGReport = () => {
               {activeStep === 8 && (
                 <div>
                   <div className="mb-4">
-                    <Materiality ref={materiality} />
-                    {/* <ReferenceMateriality ref={materiality} /> */}
+                    {reportType=='GRI Report: With Reference to'?(
+                      <ReferenceMateriality ref={materiality} />
+                    ):(
+                      <Materiality ref={materiality} />
+                    )}
+                   
+                    
                   </div>
                 </div>
               )}
               {activeStep === 9 && (
                 <div>
                   <div className="mb-4">
-                    <CorporateGovernance ref={corporateGovernance} />
+                    <CorporateGovernance ref={corporateGovernance} reportType={reportType} />
                   </div>
                 </div>
               )}
               {activeStep === 10 && (
                 <div>
                   <div className="mb-4">
-                    <SustainibilityJourney ref={sustainabilityJourney} />
+                    <SustainibilityJourney ref={sustainabilityJourney} reportType={reportType} />
                   </div>
                 </div>
               )}
               {activeStep === 11 && (
                 <div>
                   <div className="mb-4">
-                    <EconomicPerformance ref={economicperformance} />
+                    <EconomicPerformance ref={economicperformance} reportType={reportType} />
                   </div>
                 </div>
               )}
               {activeStep === 12 && (
                 <div>
                   <div className="mb-4">
-                    <Environment ref={environment} />
+                    <Environment ref={environment} reportType={reportType} />
                   </div>
                 </div>
               )}
               {activeStep === 13 && (
                 <div>
                   <div className="mb-4">
-                    <People ref={people} />
+                    <People ref={people} reportType={reportType} />
                   </div>
                 </div>
               )}
               {activeStep === 14 && (
                 <div>
                   <div className="mb-4">
-                    <Community ref={community} />
+                    <Community ref={community} reportType={reportType} />
                   </div>
                 </div>
               )}
               {activeStep === 15 && (
                 <div>
                   <div className="mb-4">
-                    <CustomerProductService ref={customers} />
+                    <CustomerProductService ref={customers} reportType={reportType} />
                   </div>
                 </div>
               )}
-              {activeStep === 16 && (
+              {activeStep >=16 && (
                 <div>
-                  <div className="mb-4">
-                    <ContentIndex
-                      reportName={reportName}
-                      setActiveStep={setActiveStep}
-                      isOmissionSubmitted={isOmissionSubmitted}
-                      isOmissionModalOpen={isModalOpen}
-                      setIsOmissionModalOpen={setIsModalOpen}
-                      isCreateReportModalOpen={isCreateReportModalOpen}
-                      setIsCreateReportModalOpen={setIsCreateReportModalOpen}
-                      setIsOmissionSubmitted={setIsOmissionSubmitted}
-                    />
+                  {reportType=='GRI Report: With Reference to' && activeStep===16?(
+                    <div>
+                      <ReferenceMaterialTopic />
+                    </div>
+                  ):(
+                    <div className="mb-4">
+                      {
+                        reportType=='GRI Report: With Reference to' && activeStep===17?(
+                          <div></div>
+                        ):(
+                          <ContentIndex
+                          reportName={reportName}
+                          setActiveStep={setActiveStep}
+                          isOmissionSubmitted={isOmissionSubmitted}
+                          isOmissionModalOpen={isModalOpen}
+                          setIsOmissionModalOpen={setIsModalOpen}
+                          isCreateReportModalOpen={isCreateReportModalOpen}
+                          setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+                          setIsOmissionSubmitted={setIsOmissionSubmitted}
+                        />
+                        )
+                      }
+                   
                   </div>
+                  )}
+                  
                 </div>
               )}
             </div>

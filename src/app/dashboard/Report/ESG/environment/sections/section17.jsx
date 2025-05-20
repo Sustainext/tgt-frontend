@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import WaterTable from "../tables/waterTable";
 
-const Section17 = ({ section12_3_3Ref, data }) => {
+const Section17 = ({ section12_3_3Ref, data,reportType }) => {
   const [content, setContent] = useState(
     `We manage water discharge to minimize its impact on local ecosystems. This includes treating wastewater to meet regulatory standards and monitoring the quality of discharged water. Following are the standards used:`
   );
@@ -335,7 +335,7 @@ const Section17 = ({ section12_3_3Ref, data }) => {
     <>
       <div id="section12_3_3" ref={section12_3_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          12.3.3 Water Discharge & Management of Associated Impacts
+        {reportType=='GRI Report: In accordance With'?'12.3.3':'12.3.2'} Water Discharge & Management of Associated Impacts
         </h3>
 
         {/* <p className="text-sm mb-4">{content}</p> */}

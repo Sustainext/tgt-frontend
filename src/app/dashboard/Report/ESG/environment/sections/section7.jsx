@@ -19,6 +19,7 @@ const Section7 = ({
   section12_1_6Ref,
   section12_1_7Ref,
   data,
+  reportType
 }) => {
   const consolidation =
     data && data["emission_collect"]
@@ -247,7 +248,7 @@ const Section7 = ({
       <div>
         <div id="section12_1_5" ref={section12_1_5Ref}>
           <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-            12.1.5 Base Year
+          {reportType=='GRI Report: In accordance With'?'12.1.5':'12.1.4'} Base Year
           </h3>
           <p className="text-sm mb-4">
             {baseYear && rationale ? (
@@ -301,7 +302,7 @@ const Section7 = ({
 
         <div id="section12_1_6" ref={section12_1_6Ref}>
           <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-            12.1.6 Consolidation Approach
+          {reportType=='GRI Report: In accordance With'?'12.1.6':'12.1.5'}  Consolidation Approach
           </h3>
 
           <div className="flex justify-between">
@@ -329,7 +330,7 @@ const Section7 = ({
 
         <div id="section12_1_7" ref={section12_1_7Ref}>
           <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-            12.1.7 GHG Emission Intensity
+          {reportType=='GRI Report: In accordance With'?'12.1.7':'12.1.6'}  GHG Emission Intensity
           </h3>
 
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

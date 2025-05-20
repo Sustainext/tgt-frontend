@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setWorkforceHireRetentionStatement } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section3 = ({ section13_1_2Ref, data }) => {
+const Section3 = ({ section13_1_2Ref, data,reportType }) => {
   const content = useSelector(
     (state) => state.screen13Slice.workforce_hire_retention_statement
   );
@@ -219,7 +219,7 @@ const Section3 = ({ section13_1_2Ref, data }) => {
     <>
       <div id="section13_1_2" ref={section13_1_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.1.2 Employee Hire, Turnover
+        {reportType=='GRI Report: In accordance With'?'13.1.2':'13.1.1'}   Employee Hire, Turnover
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">

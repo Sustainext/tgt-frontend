@@ -72,7 +72,7 @@ import {
   setBiogenicCO2305,
 } from "../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
+const Environment = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const [activeSection, setActiveSection] = useState("section12_1");
 
   const section12_1Ref = useRef(null);
@@ -658,55 +658,59 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
             <Section1 orgName={orgName} />
             <Section2 section12_1Ref={{ section12_1Ref }} data={data} />
-            <Section3 section12_1_1Ref={section12_1_1Ref} data={data} />
-            <Section4 section12_1_2Ref={section12_1_2Ref} data={data} />
-            <Section5 section12_1_3Ref={section12_1_3Ref} data={data} />
-            <Section6 section12_1_4Ref={section12_1_4Ref} data={data} />
+          {reportType=='GRI Report: In accordance With' && <Section3 section12_1_1Ref={section12_1_1Ref} data={data} /> }  
+            <Section4 section12_1_2Ref={section12_1_2Ref} data={data} reportType={reportType} />
+            <Section5 section12_1_3Ref={section12_1_3Ref} data={data} reportType={reportType} />
+            <Section6 section12_1_4Ref={section12_1_4Ref} data={data} reportType={reportType} />
             <Section7
               section12_1_5Ref={section12_1_5Ref}
               section12_1_6Ref={section12_1_6Ref}
               section12_1_7Ref={section12_1_7Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section8 section12_1_8Ref={section12_1_8Ref} data={data} />
-            <Section9 section12_1_9Ref={section12_1_9Ref} data={data} />
-            <Section10 section12_2Ref={section12_2Ref} data={data} />
-            <Section11 section12_2_1Ref={section12_2_1Ref} data={data} />
-            <Section12 section12_2_2Ref={section12_2_2Ref} data={data} />
-            <Section13 section12_2_3Ref={section12_2_3Ref} data={data} />
-            <Section14 section12_3Ref={section12_3Ref} data={data} />
-            <Section15 section12_3_1Ref={section12_3_1Ref} data={data} />
-            <Section16 section12_3_2Ref={section12_3_2Ref} data={data} />
-            <Section17 section12_3_3Ref={section12_3_3Ref} data={data} />
-            <Section18 section12_3_4Ref={section12_3_4Ref} data={data} />
+            <Section8 section12_1_8Ref={section12_1_8Ref} data={data} reportType={reportType} />
+            <Section9 section12_1_9Ref={section12_1_9Ref} data={data} reportType={reportType} />
+            <Section10 section12_2Ref={section12_2Ref} data={data} reportType={reportType} />
+           {reportType=='GRI Report: In accordance With' && <Section11 section12_2_1Ref={section12_2_1Ref} data={data} reportType={reportType} />} 
+            <Section12 section12_2_2Ref={section12_2_2Ref} data={data} reportType={reportType} />
+            <Section13 section12_2_3Ref={section12_2_3Ref} data={data} reportType={reportType} />
+            <Section14 section12_3Ref={section12_3Ref} data={data} reportType={reportType} />
+          {reportType=='GRI Report: In accordance With' &&  <Section15 section12_3_1Ref={section12_3_1Ref} data={data} reportType={reportType} />} 
+            <Section16 section12_3_2Ref={section12_3_2Ref} data={data} reportType={reportType} />
+            <Section17 section12_3_3Ref={section12_3_3Ref} data={data} reportType={reportType} />
+            <Section18 section12_3_4Ref={section12_3_4Ref} data={data} reportType={reportType} />
             <Section19
               section12_4_1Ref={section12_4_1Ref}
               section12_4Ref={section12_4Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section20 section12_4_2Ref={section12_4_2Ref} data={data} />
-            <Section21 section12_4_3Ref={section12_4_3Ref} data={data} />
-            <Section22 section12_4_4Ref={section12_4_4Ref} data={data} />
-            <Section23 section12_4_5Ref={section12_4_5Ref} data={data} />
+            <Section20 section12_4_2Ref={section12_4_2Ref} data={data} reportType={reportType} />
+            <Section21 section12_4_3Ref={section12_4_3Ref} data={data} reportType={reportType} />
+            <Section22 section12_4_4Ref={section12_4_4Ref} data={data} reportType={reportType} />
+            <Section23 section12_4_5Ref={section12_4_5Ref} data={data} reportType={reportType}/>
             <Section24
               section12_5_1Ref={section12_5_1Ref}
               section12_5Ref={section12_5Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section25 section12_5_2Ref={section12_5_2Ref} data={data} />
-            <Section26 section12_5_3Ref={section12_5_3Ref} data={data} />
-            <Section27 section12_5_4Ref={section12_5_4Ref} data={data} />
-            <Section28 section12_5_5Ref={section12_5_5Ref} data={data} />
+            <Section25 section12_5_2Ref={section12_5_2Ref} data={data} reportType={reportType} />
+            <Section26 section12_5_3Ref={section12_5_3Ref} data={data} reportType={reportType} />
+            <Section27 section12_5_4Ref={section12_5_4Ref} data={data} reportType={reportType} />
+            <Section28 section12_5_5Ref={section12_5_5Ref} data={data} reportType={reportType} />
             <Section29
               section12_5_6Ref={section12_5_6Ref}
               orgName={orgName}
               data={data}
+              reportType={reportType}
             />
-            <Section30 section12_6Ref={section12_6Ref} data={data} />
-            <Section31 section12_6_1Ref={section12_6_1Ref} data={data} />
-            <Section32 section12_6_2Ref={section12_6_2Ref} data={data} />
-            <Section33 section12_7Ref={section12_7Ref} data={data} />
-            <Section34 section12_7_1Ref={section12_7_1Ref} data={data} />
+            <Section30 section12_6Ref={section12_6Ref} data={data} reportType={reportType} />
+          {reportType=='GRI Report: In accordance With' && <Section31 section12_6_1Ref={section12_6_1Ref} data={data} reportType={reportType} />}
+            <Section32 section12_6_2Ref={section12_6_2Ref} data={data} reportType={reportType} />
+            <Section33 section12_7Ref={section12_7Ref} data={data} reportType={reportType} />
+          {reportType=='GRI Report: In accordance With' &&  <Section34 section12_7_1Ref={section12_7_1Ref} data={data} reportType={reportType} />}
           </div>
           {/* page sidebar */}
 
@@ -725,22 +729,29 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               12.1. Emissions
             </p>
+            {
+              reportType=='GRI Report: In accordance With'?(
+                <p
+                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                  activeSection === "section12_1_1" ? "text-blue-400" : ""
+                }`}
+                onClick={() => scrollToSection(section12_1_1Ref, "section12_1_1")}
+              >
+                12.1.1. Management of Material Topics
+              </p>
+              ):(
+                <div></div>
+              )
+            }
 
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_1_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_1_1Ref, "section12_1_1")}
-            >
-              12.1.1. Management of Material Topics
-            </p>
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section12_1_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section12_1_2Ref, "section12_1_2")}
             >
-              12.1.2. Scope 1 GHG Emissions
+            {reportType=='GRI Report: In accordance With'?'12.1.2.':'12.1.1.'}  Scope 1 GHG Emissions
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -748,7 +759,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_1_3Ref, "section12_1_3")}
             >
-              12.1.3. Scope 2 GHG Emissions
+            {reportType=='GRI Report: In accordance With'?'12.1.3.':'12.1.2.'}  Scope 2 GHG Emissions
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -756,7 +767,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_1_4Ref, "section12_1_4")}
             >
-              12.1.4. Scope 3 GHG Emissions
+             {reportType=='GRI Report: In accordance With'?'12.1.4.':'12.1.3.'} Scope 3 GHG Emissions
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -764,7 +775,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_1_5Ref, "section12_1_5")}
             >
-              12.1.5. Base Year
+             {reportType=='GRI Report: In accordance With'?'12.1.5.':'12.1.4.'} Base Year
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -772,7 +783,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_1_6Ref, "section12_1_6")}
             >
-              12.1.6. Consolidation Approach
+            {reportType=='GRI Report: In accordance With'?'12.1.6.':'12.1.5.'}  Consolidation Approach
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -780,7 +791,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_1_7Ref, "section12_1_7")}
             >
-              12.1.7. GHG emission intensity
+            {reportType=='GRI Report: In accordance With'?'12.1.7.':'12.1.6.'} GHG emission intensity
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -788,7 +799,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_1_8Ref, "section12_1_8")}
             >
-              12.1.8. Reduction in GHG emissions 
+            {reportType=='GRI Report: In accordance With'?'12.1.8.':'12.1.7.'}  Reduction in GHG emissions 
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -796,7 +807,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_1_9Ref, "section12_1_9")}
             >
-              12.1.9. Ozone depleting substances
+             {reportType=='GRI Report: In accordance With'?'12.1.9.':'12.1.8.'}  Ozone depleting substances
             </p>
 
             <p
@@ -807,21 +818,26 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               12.2. Materials
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_2_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_2_1Ref, "section12_2_1")}
-            >
-              12.2.1. Management of Material Topics
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+                <p
+                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                  activeSection === "section12_2_1" ? "text-blue-400" : ""
+                }`}
+                onClick={() => scrollToSection(section12_2_1Ref, "section12_2_1")}
+              >
+                12.2.1. Management of Material Topics
+              </p>
+            ):(
+              <div></div>
+            )}
+            
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section12_2_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section12_2_2Ref, "section12_2_2")}
             >
-              12.2.2. Recycled input materials used
+            {reportType=='GRI Report: In accordance With'?'12.2.2.':'12.2.1.'}   Recycled input materials used
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -829,7 +845,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_2_3Ref, "section12_2_3")}
             >
-              12.2.3 Reclaimed products and their packaging materials
+            {reportType=='GRI Report: In accordance With'?'12.2.3.':'12.2.2.'} Reclaimed products and their packaging materials
             </p>
 
             <p
@@ -840,21 +856,26 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               12.3. Water
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_3_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_3_1Ref, "section12_3_1")}
-            >
-              12.3.1. Management of Material Topic
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+                <p
+                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                  activeSection === "section12_3_1" ? "text-blue-400" : ""
+                }`}
+                onClick={() => scrollToSection(section12_3_1Ref, "section12_3_1")}
+              >
+                12.3.1. Management of Material Topic
+              </p>
+            ):(
+              <div></div>
+            )} 
+            
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section12_3_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section12_3_2Ref, "section12_3_2")}
             >
-              12.3.2. Water withdrawal
+             {reportType=='GRI Report: In accordance With'?'12.3.2.':'12.3.1.'}  Water withdrawal
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -862,7 +883,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_3_3Ref, "section12_3_3")}
             >
-              12.3.3. Water discharge & management of associated impact
+            {reportType=='GRI Report: In accordance With'?'12.3.3.':'12.3.2.'}   Water discharge & management of associated impact
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -870,7 +891,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_3_4Ref, "section12_3_4")}
             >
-              12.3.4. Water Consumption
+            {reportType=='GRI Report: In accordance With'?'12.3.4.':'12.3.3.'}  Water Consumption
             </p>
 
             <p
@@ -881,7 +902,8 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               12.4. Energy
             </p>
-            <p
+            {reportType=='GRI Report: In accordance With'?(
+              <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section12_4_1" ? "text-blue-400" : ""
               }`}
@@ -889,13 +911,17 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               12.4.1. Management of Material Topics
             </p>
+            ):(
+              <div></div>
+            )}
+            
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section12_4_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section12_4_2Ref, "section12_4_2")}
             >
-              12.4.2 Energy consumption within the organisation
+            {reportType=='GRI Report: In accordance With'?'12.4.2':'12.4.1'}   Energy consumption within the organisation
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -903,7 +929,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_4_3Ref, "section12_4_3")}
             >
-              12.4.3 Energy consumption outside of the organisation
+            {reportType=='GRI Report: In accordance With'?'12.4.3':'12.4.2'}  Energy consumption outside of the organisation
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -911,7 +937,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_4_4Ref, "section12_4_4")}
             >
-              12.4.4. Energy intensity
+            {reportType=='GRI Report: In accordance With'?'12.4.4':'12.4.3'}  Energy intensity
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -919,7 +945,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_4_5Ref, "section12_4_5")}
             >
-              12.4.5. Reduction in energy consumption 
+            {reportType=='GRI Report: In accordance With'?'12.4.5':'12.4.4'} Reduction in energy consumption 
             </p>
 
             <p
@@ -930,7 +956,8 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               12.5. Waste
             </p>
-            <p
+            {reportType=='GRI Report: In accordance With'?(
+              <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section12_5_1" ? "text-blue-400" : ""
               }`}
@@ -938,13 +965,17 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               12.5.1. Management of Material Topics
             </p>
+            ):(
+              <div></div>
+            )}
+            
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section12_5_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section12_5_2Ref, "section12_5_2")}
             >
-              12.5.2. Waste generation and impacts
+            {reportType=='GRI Report: In accordance With'?'12.5.2.':'12.5.1.'}   Waste generation and impacts
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -952,7 +983,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_5_3Ref, "section12_5_3")}
             >
-              12.5.3. Management of waste related impacts
+            {reportType=='GRI Report: In accordance With'?'12.5.3.':'12.5.2.'} Management of waste related impacts
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -960,7 +991,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_5_4Ref, "section12_5_4")}
             >
-              12.5.4. Waste disposed
+            {reportType=='GRI Report: In accordance With'?'12.5.4.':'12.5.3.'}  Waste disposed
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -968,7 +999,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_5_5Ref, "section12_5_5")}
             >
-              12.5.5. Waste diverted from disposal
+            {reportType=='GRI Report: In accordance With'?'12.5.5.':'12.5.4.'}  Waste diverted from disposal
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -976,7 +1007,7 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section12_5_6Ref, "section12_5_6")}
             >
-              12.5.6. Significant Spills
+            {reportType=='GRI Report: In accordance With'?'12.5.6.':'12.5.5.'}  Significant Spills
             </p>
 
             <p
@@ -987,21 +1018,26 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               12.6. Biodiversity
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_6_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_6_1Ref, "section12_6_1")}
-            >
-              12.6.1. Management of Material Topic
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+                 <p
+                 className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                   activeSection === "section12_6_1" ? "text-blue-400" : ""
+                 }`}
+                 onClick={() => scrollToSection(section12_6_1Ref, "section12_6_1")}
+               >
+                 12.6.1. Management of Material Topic
+               </p>
+            ):( 
+              <div></div>
+            )}  
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section12_6_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section12_6_2Ref, "section12_6_2")}
             >
-              12.6.2. Habitat protected and restored
+             {reportType=='GRI Report: In accordance With'?'12.6.2.':'12.6.1.'}  Habitat protected and restored
             </p>
 
             <p
@@ -1012,14 +1048,19 @@ const Environment = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               12.7. Air Quality 
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_7_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_7_1Ref, "section12_7_1")}
-            >
-              12.7.1. Management of Material Topics
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+               <p
+               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                 activeSection === "section12_7_1" ? "text-blue-400" : ""
+               }`}
+               onClick={() => scrollToSection(section12_7_1Ref, "section12_7_1")}
+             >
+               12.7.1. Management of Material Topics
+             </p>
+            ):(
+              <div></div>
+            )}
+           
           </div>
         </div>
       </div>

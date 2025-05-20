@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useMemo } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import CustomTableWidget8 from "../../../../shared/widgets/Table/tableWidget8";
@@ -296,6 +296,16 @@ console.log(formData,"test fromdata");
     setFormData(newFormData);
   };
 
+  const customWidgets = useMemo(() => ({
+    ...widgets,
+    TableWidget: (props) => (
+      <CustomTableWidget8
+        {...props}
+        locationdata={locationdata}
+      />
+    ),
+  }), [widgets, locationdata]);
+
   return (
     <>
      <div
@@ -353,15 +363,7 @@ console.log(formData,"test fromdata");
             formContext={{
               onRemove: handleRemoveCommittee,
             }}
-            widgets={{
-              ...widgets,
-              TableWidget: (props) => (
-                <CustomTableWidget8
-                  {...props}
-                  locationdata={locationdata}
-                />
-              ),
-            }}
+            widgets={customWidgets}
           />
           </div>
         ) : (

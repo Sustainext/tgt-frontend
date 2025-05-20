@@ -189,7 +189,8 @@ else{
                 item.end_date,
                 item.organization_country,
                 item.name,
-                item.created_at
+                item.created_at,
+                item.report_type
               );
             } else {
               handleSetdata(
@@ -200,7 +201,8 @@ else{
                 item.organization_country,
                 item.name,
                 item.report_by,
-                item.corporate_name
+                item.corporate_name,
+                item.report_type
               );
             }
           }}
@@ -301,7 +303,8 @@ else{
     organization_country,
     name,
     report_by,
-    corporate_name
+    corporate_name,
+    report_type
   ) => {
     const newdata = {
       id: id,
@@ -318,6 +321,7 @@ else{
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
     window.localStorage.setItem("reportby", report_by);
+    window.localStorage.setItem("reportType",report_type)
     if (report_by == "Corporate") {
       if (corporate_name == undefined) {
         window.localStorage.setItem("reportorgname", organization_name);
@@ -340,7 +344,8 @@ else{
     enddate,
     organization_country,
     name,
-    created_at
+    created_at,
+    report_type
   ) => {
     const newdata = {
       id: id,
@@ -356,7 +361,7 @@ else{
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
     window.localStorage.setItem("reportCreatedOn", created_at);
-
+    window.localStorage.setItem("reportType", report_type);
     // sessionStorage.setItem('reportData',newdata);
     router.push("/dashboard/Report/ESG");
 

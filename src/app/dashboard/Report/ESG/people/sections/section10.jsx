@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setForcedLaborPosition } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section10 = ({ section13_2_3Ref, data }) => {
+const Section10 = ({ section13_2_3Ref, data,reportType }) => {
   const content = useSelector(
     (state) => state.screen13Slice.forced_labor_position
   );
@@ -100,7 +100,7 @@ const Section10 = ({ section13_2_3Ref, data }) => {
     <>
       <div id="section13_2_3" ref={section13_2_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.2.3 Forced or Compulsory Labour
+        {reportType=='GRI Report: In accordance With'?'13.2.3':'13.2.2'} Forced or Compulsory Labour
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

@@ -28,14 +28,13 @@ function MyResponsivePie({ exdata }) {
           color: `hsl(${Math.random() * 360}, 70%, 50%)` // Random color for each scope
         };
       }
-      console.log("hi data");
     });
     return acc;
   }, {});
   
   // Convert the aggregated object back into an array for @nivo/pie
   const dataForPieChart = Object.values(aggregatedDataByScope);
-  console.log("hi data",dataForPieChart);
+ 
   // The rest of your component that renders the pie chart...
   return (
     <>
