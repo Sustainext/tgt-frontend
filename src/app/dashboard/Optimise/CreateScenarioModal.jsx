@@ -367,7 +367,14 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                       placeholder="Description (optional)"
                       className="w-full rounded-md px-3 py-2 border border-gray-300 focus:border-blue-500 focus:ring-blue-500 focus:outline-none resize-y min-h-[80px]"
                       value={scenarioDescription}
-                      onChange={(e) => setScenarioDescription(e.target.value)}
+                      onChange={(e) => {
+                        // Limit input to 512 characters
+                        const input = e.target.value;
+                        if (input.length <= 512) {
+                          setScenarioDescription(input);
+                        }
+                      }}
+                      maxLength={512}
                       rows={3}
                     />
                     <p className="text-xs text-gray-500 mt-1">
@@ -584,7 +591,9 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                     disabled={
                       isLoading ||
                       validationError ||
-                      !selectedOrg || !baseYear || !targetYear ||
+                      !selectedOrg ||
+                      !baseYear ||
+                      !targetYear ||
                       (selectionType === "Corporate" && !selectedCorp)
                     }
                   >
