@@ -98,24 +98,37 @@ const Screenfive = ({
   const handleReportingdescription = (value) => {
     setReportingdescription(value);
   };
-  const continueToNextStep = () => {
-    const errors = {};
+const continueToNextStep = () => {
+  const errors = {};
 
-    if (Object.keys(selectedOptions).length === 0) {
-      errors.checkboxes = "Please select at least one option.";
-    }
+  // Global check for no selection at all
+  if (Object.keys(selectedOptions).length === 0) {
+    errors.checkboxes = "Please select at least one option.";
+  }
 
-    if (selectedOptions["other"] && !reportingentity) {
-      errors.reportingentity = "Please enter a description";
+  // Per-category subcategory validation
+  optionsTwo.forEach((option) => {
+    if (
+      selectedOptions.hasOwnProperty(option.value) &&
+      option.subcategories &&
+      selectedOptions[option.value].length === 0
+    ) {
+      errors[option.value] = `Please select at least one sub-option under "${option.label}".`;
     }
+  });
 
-    if (Object.keys(errors).length === 0) {
-      setError({});
-      submitForm();
-    } else {
-      setError(errors);
-    }
-  };
+  // 'Other' field validation
+  if (selectedOptions["other"] && !reportingentity) {
+    errors.reportingentity = "Please enter a description";
+  }
+
+  if (Object.keys(errors).length === 0) {
+    setError({});
+    submitForm();
+  } else {
+    setError(errors);
+  }
+};
   const stepsubmitForm = async () => {
     const stepscreenId = 6;
     const stepdata = status[5].status;
@@ -466,7 +479,8 @@ const Screenfive = ({
                 </label>
               </div>
 
-              {option.subcategories && (
+                {option.subcategories && (
+                <>
                 <div
                   className={`ml-6 mt-1 gap-2 mb-2 ${
                     selectedOptions.hasOwnProperty(option.value)
@@ -498,6 +512,12 @@ const Screenfive = ({
                     </label>
                   ))}
                 </div>
+                   {error[option.value] && (
+                    <div className="text-red-500 text-[12px]">
+                      {error[option.value]}
+                    </div>
+                  )}
+                  </>
               )}
             </div>
           ))}
