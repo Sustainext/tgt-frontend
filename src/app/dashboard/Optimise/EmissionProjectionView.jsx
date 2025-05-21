@@ -147,7 +147,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
               activity.category || "",
               activity.sub_category || "",
               activity.activity_name || "",
-              activity.value || "0",
+              activity.co2e,
               "tCO2e",
             ];
 
