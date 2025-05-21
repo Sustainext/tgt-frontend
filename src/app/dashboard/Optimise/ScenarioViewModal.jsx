@@ -608,7 +608,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
               activity.category || "",
               activity.sub_category || "",
               activity.activity_name || "",
-              activity.value || "0",
+              activity.co2e || "0",
               "tCO2e"
             ];
             

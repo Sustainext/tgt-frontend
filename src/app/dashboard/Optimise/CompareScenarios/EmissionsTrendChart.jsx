@@ -1,4 +1,4 @@
-// Updated EmissionsTrendChart.jsx with improved tooltip
+// Updated EmissionsTrendChart.jsx with improved tooltip and spacing
 import React from "react";
 import { ResponsiveLine } from '@nivo/line';
 
@@ -41,11 +41,13 @@ const EmissionsTrendChart = ({ data, selectedScope }) => {
   };
 
   return (
-    <div className="mb-12">
-      <div className="bg-white p-4 rounded-lg border border-gray-100" style={{ height: 400 }}>
+    <div className="mb-12 w-full">
+      {/* Increased height to accommodate the legend at the top */}
+      <div className="bg-white p-4 rounded-lg border border-gray-100 w-full" style={{ height: 460 }}>
         <ResponsiveLine
           data={data}
-          margin={{ top: 40, right: 140, bottom: 50, left: 60 }}
+          // Increased top margin to make room for legend
+          margin={{ top: 80, right: 60, bottom: 50, left: 60 }}
           xScale={{ type: 'point' }}
           yScale={{ 
             type: 'linear', 
@@ -90,19 +92,21 @@ const EmissionsTrendChart = ({ data, selectedScope }) => {
           enableSlices="x"
           legends={[
             {
-              anchor: 'bottom-right',
-              direction: 'column',
+              anchor: 'top',
+              direction: 'row',
               justify: false,
-              translateX: 100,
-              translateY: 0,
-              itemsSpacing: 0,
+              translateX: 0,
+              translateY: -40, // Position closer to chart
+              itemsSpacing: 20, // Increased spacing between items
               itemDirection: 'left-to-right',
-              itemWidth: 80,
+              itemWidth: 180, // Increased width for labels
+              itemsSpacing: 20,
               itemHeight: 20,
               itemOpacity: 0.75,
               symbolSize: 12,
               symbolShape: 'circle',
               symbolBorderColor: 'rgba(0, 0, 0, .5)',
+              truncate: true,
               effects: [
                 {
                   on: 'hover',
