@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FiDownload, FiInfo, FiChevronDown, FiX } from "react-icons/fi";
 import EmissionProjectionGraph from "./EmissionProjectionGraph";
 import { fetchScenarioGraphData } from "../../../lib/redux/features/optimiseSlice";
+import { debounce } from "lodash";
 
 const EmissionProjectionView = ({ scenario = {} }) => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
   );
   const [targetYearError, setTargetYearError] = useState(null);
   const [includeNetZero, setIncludeNetZero] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   // Timeout ref for debounced validation
   const targetYearTimeoutRef = useRef(null);
@@ -68,6 +70,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
   const activityRef = useRef(null);
   const metricsRef = useRef(null);
   const downloadButtonRef = useRef(null);
+  const downloadOptionsRef = useRef(null);
 
   // Determine if child dropdowns should be disabled
   // If a parent is set to "Aggregated Scope", all children should be disabled
@@ -114,7 +117,12 @@ const EmissionProjectionView = ({ scenario = {} }) => {
   };
 
   // Handle CSV download
-  const handleDownloadCSV = () => {
+  const handleDownloadCSV = (e) => {
+    // Stop propagation to prevent dropdown from closing immediately
+    e.stopPropagation();
+    console.log("Download CSV invoked !");
+    
+    setIsDownloading(true);
     try {
       // Create CSV header row
       const headers = [
@@ -139,7 +147,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
               activity.category || "",
               activity.sub_category || "",
               activity.activity_name || "",
-              activity.value || "0",
+              activity.co2e,
               "tCO2e",
             ];
 
@@ -178,67 +186,176 @@ const EmissionProjectionView = ({ scenario = {} }) => {
     } catch (error) {
       console.error("Error creating CSV:", error);
       alert("Failed to download CSV. Please try again.");
+    } finally {
+      setIsDownloading(false);
     }
   };
 
   // Handle PNG download
-  const handleDownloadPNG = () => {
-    try {
-      // Find the chart SVG element
-      const svgElement = document.querySelector(
-        ".emission-chart-container svg"
-      );
-      if (!svgElement) {
-        console.error("Could not find chart SVG element");
-        alert("Could not find chart to download. Please try again.");
-        return;
-      }
-
-      // Create a canvas for the PNG
-      const canvas = document.createElement("canvas");
-      const width = svgElement.width.baseVal.value || 1200;
-      const height = svgElement.height.baseVal.value || 600;
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext("2d");
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, width, height);
-
-      // Convert SVG to PNG
-      const svgString = new XMLSerializer().serializeToString(svgElement);
-      const img = new Image();
-      const svgBlob = new Blob([svgString], {
-        type: "image/svg+xml;charset=utf-8",
-      });
-      const url = URL.createObjectURL(svgBlob);
-
-      img.onload = () => {
-        ctx.drawImage(img, 0, 0, width, height);
-        URL.revokeObjectURL(url);
-
-        // Download the PNG
-        canvas.toBlob((blob) => {
-          const pngUrl = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.setAttribute("hidden", "");
-          a.setAttribute("href", pngUrl);
-          a.setAttribute("download", `scenario-${scenario.id}-chart.png`);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(pngUrl);
-
-          // Close dropdown after download
-          setShowDownloadOptions(false);
-        }, "image/png");
-      };
-
-      img.src = url;
-    } catch (error) {
-      console.error("Error creating PNG:", error);
-      alert("Failed to download PNG. Please try again.");
+  const handleDownloadPNG = (e) => {
+  // Stop propagation to prevent dropdown from closing immediately
+  e.stopPropagation();
+  console.log("Download PNG invoked !");
+  
+  setIsDownloading(true);
+  try {
+    // Find the chart SVG element
+    const svgElement = document.querySelector(".emission-chart-container svg");
+    
+    if (!svgElement) {
+      console.error("Could not find chart SVG element");
+      alert("Could not find chart to download. Please try again.");
+      setIsDownloading(false);
+      return;
     }
-  };
+
+    // Create a copy of the SVG to manipulate without affecting the displayed one
+    const svgClone = svgElement.cloneNode(true);
+    
+    // Get the original dimensions
+    const originalWidth = svgElement.getBoundingClientRect().width;
+    const originalHeight = svgElement.getBoundingClientRect().height;
+    
+    // Add padding (in pixels) to all sides
+    const paddingLeft = 80;
+    const paddingRight = 80;
+    const paddingTop = 80;
+    const paddingBottom = 120; // Increased bottom padding to make room for the scenario label
+    
+    const newWidth = originalWidth + paddingLeft + paddingRight;
+    const newHeight = originalHeight + paddingTop + paddingBottom;
+    
+    // Set expanded dimensions
+    svgClone.setAttribute("width", newWidth);
+    svgClone.setAttribute("height", newHeight);
+    
+    // Create a padding group that will offset everything
+    const paddingGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    paddingGroup.setAttribute("transform", `translate(${paddingLeft}, ${paddingTop})`);
+    
+    // Move all original children to the padding group
+    while (svgClone.firstChild) {
+      paddingGroup.appendChild(svgClone.firstChild);
+    }
+    
+    // Add white background as the first element
+    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect.setAttribute("width", newWidth);
+    rect.setAttribute("height", newHeight);
+    rect.setAttribute("fill", "white");
+    svgClone.appendChild(rect);
+    
+    // Add the padding group after the background
+    svgClone.appendChild(paddingGroup);
+    
+    // Find and modify any existing x-axis labels to ensure they're visible
+    const xAxisLabels = svgClone.querySelectorAll('g.xAxis text, text[class*="axis-bottom"]');
+    xAxisLabels.forEach(label => {
+      // Ensure x-axis labels are visible and not overlapped
+      label.setAttribute('dy', '1em'); // Move x-axis labels down a bit
+    });
+    
+    // Add a thin horizontal line to separate the chart from the info text
+    const separator = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    separator.setAttribute("x1", paddingLeft);
+    separator.setAttribute("y1", newHeight - paddingBottom/2);
+    separator.setAttribute("x2", newWidth - paddingRight);
+    separator.setAttribute("y2", newHeight - paddingBottom/2);
+    separator.setAttribute("stroke", "#eaeaea");
+    separator.setAttribute("stroke-width", "1");
+    svgClone.appendChild(separator);
+    
+    // Add title at the bottom (in the expanded area)
+    const titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    titleText.setAttribute("x", newWidth / 2);
+    titleText.setAttribute("y", newHeight - paddingBottom/2 + 30); // Position below the separator
+    titleText.setAttribute("text-anchor", "middle");
+    titleText.setAttribute("font-family", "Arial, sans-serif");
+    titleText.setAttribute("font-size", "14px");
+    titleText.setAttribute("font-weight", "bold");
+    titleText.setAttribute("fill", "#555");
+    titleText.textContent = scenario?.name || 'Emission Projection';
+    svgClone.appendChild(titleText);
+    
+    // Add generation info below the title
+    const infoText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    infoText.setAttribute("x", newWidth / 2);
+    infoText.setAttribute("y", newHeight - paddingBottom/2 + 55); // Position below the title
+    infoText.setAttribute("text-anchor", "middle");
+    infoText.setAttribute("font-family", "Arial, sans-serif");
+    infoText.setAttribute("font-size", "12px");
+    infoText.setAttribute("fill", "#777");
+    infoText.textContent = `Generated on ${new Date().toLocaleDateString()}`;
+    svgClone.appendChild(infoText);
+    
+    // Convert SVG to string
+    const svgString = new XMLSerializer().serializeToString(svgClone);
+    const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+    
+    // Create canvas with proper size
+    const canvas = document.createElement("canvas");
+    const scale = window.devicePixelRatio || 1; // For higher resolution screens
+    canvas.width = newWidth * scale;
+    canvas.height = newHeight * scale;
+    
+    // Set up the context with proper scaling for high DPI
+    const ctx = canvas.getContext("2d");
+    ctx.scale(scale, scale);
+    
+    // Convert to data URL first, then draw to canvas
+    const url = URL.createObjectURL(svgBlob);
+    const img = new Image();
+    
+    img.onload = () => {
+      // Draw image to canvas
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, newWidth, newHeight);
+      URL.revokeObjectURL(url);
+      
+      // Get file name with timestamp for uniqueness
+      const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+      const fileName = `scenario-${scenario?.id || 'chart'}-${timestamp}.png`;
+      
+      // Download as PNG
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          console.error("Canvas to Blob conversion failed");
+          alert("Failed to generate PNG. Please try again.");
+          setIsDownloading(false);
+          return;
+        }
+        
+        const downloadUrl = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = downloadUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(downloadUrl);
+        
+        // Close dropdown after successful download
+        setShowDownloadOptions(false);
+        setIsDownloading(false);
+      }, "image/png", 1.0); // Use 1.0 quality for best image
+    };
+    
+    // Handle load errors
+    img.onerror = (error) => {
+      console.error("Error loading SVG for conversion:", error);
+      alert("Failed to create PNG from chart. Please try again.");
+      URL.revokeObjectURL(url);
+      setIsDownloading(false);
+    };
+    
+    img.src = url;
+  } catch (error) {
+    console.error("Error creating PNG:", error);
+    alert("Failed to download PNG. Please try again.");
+    setIsDownloading(false);
+  }
+};
 
   // Handle scope selection
   const handleScopeSelection = (scope) => {
@@ -452,7 +569,9 @@ const EmissionProjectionView = ({ scenario = {} }) => {
       }
       if (
         downloadButtonRef.current &&
-        !downloadButtonRef.current.contains(event.target)
+        downloadOptionsRef.current &&
+        !downloadButtonRef.current.contains(event.target) &&
+        !downloadOptionsRef.current.contains(event.target)
       ) {
         setShowDownloadOptions(false);
       }
@@ -746,7 +865,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
             ...newMetric,
             selected: existingMetricsMap.has(newMetric.id)
               ? existingMetricsMap.get(newMetric.id)
-              : false,
+              : true,
           }));
         })
       );
@@ -764,6 +883,26 @@ const EmissionProjectionView = ({ scenario = {} }) => {
     isSubCategoryDropdownOpen,
     isActivityDropdownOpen,
   ]);
+
+  const getScenarioDetails = () => {
+    if (!scenario) return "";
+
+    // Check if we have organization or corporate info
+    const hasOrganization = scenario.organization_name || scenario.organization;
+    const hasCorporate = scenario.corporate_name || scenario.corporate;
+
+    if (hasOrganization && hasCorporate) {
+      return `${scenario.organization_name || scenario.organization} / ${
+        scenario.corporate_name || scenario.corporate
+      }`;
+    } else if (hasOrganization) {
+      return scenario.organization_name || scenario.organization;
+    } else if (hasCorporate) {
+      return scenario.corporate_name || scenario.corporate;
+    }
+
+    return "";
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 min-h-screen">
@@ -1011,7 +1150,7 @@ const EmissionProjectionView = ({ scenario = {} }) => {
               </button>
 
               {isActivityDropdownOpen && !isActivityDropdownDisabled && (
-                <div className="absolute top-full left-0 mt-1 w-60 bg-white border border-gray-200 rounded shadow-md z-10">
+                <div className="absolute top-full -left-14 mt-1 w-[300px] bg-white border border-gray-200 rounded shadow-md z-10">
                   <div className="py-1 max-h-60 overflow-y-auto">
                     {activityOptions.map((activity) => (
                       <div
@@ -1162,30 +1301,32 @@ const EmissionProjectionView = ({ scenario = {} }) => {
         <div className="flex justify-between items-center mb-4 pt-8">
           <h3 className="text-base font-bold text-gray-900 flex items-center">
             <span>
-              Predicted Trend of chosen Business Metrics over Years for
+              Predicted Trend for chosen Business Metrics over Years for
               {selectedScopes.includes("Aggregated Scope")
                 ? " (Aggregated Scopes)"
                 : ` (${selectedScopes.join(", ")})`}
             </span>
           </h3>
-          <div className="relative">
+          <div className="relative" ref={downloadButtonRef}>
             <button
-              ref={downloadButtonRef}
               onClick={handleDownloadResults}
-              disabled={!graphData || loading}
+              disabled={!graphData || loading || isDownloading}
               className={`inline-flex items-center px-3 py-2 border ${
-                !graphData || loading
+                !graphData || loading || isDownloading
                   ? "border-gray-200 text-gray-400 cursor-not-allowed"
                   : "border-gray-300 shadow-sm text-gray-700 hover:bg-gray-50"
               } rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
             >
-              Download
-              <FiDownload className="ml-2 h-4 w-4" />
+              {isDownloading ? "Preparing..." : "Download"}
+              {!isDownloading && <FiDownload className="ml-2 h-4 w-4" />}
             </button>
 
             {/* Download options dropdown */}
-            {showDownloadOptions && !loading && graphData && (
-              <div className="absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded shadow-md z-20">
+            {showDownloadOptions && !loading && !isDownloading && graphData && (
+              <div 
+                ref={downloadOptionsRef}
+                className="absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded shadow-md z-20"
+              >
                 <div className="py-1">
                   <button
                     onClick={handleDownloadCSV}
