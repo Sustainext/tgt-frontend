@@ -24,11 +24,6 @@ import Waterstorage from "./Water-effluents/water-storage/water-storage";
 import NewSupplier from "./supplier-environmental-assessment/new-supplier/page";
 import NegativeEnvironmentImpact from "./supplier-environmental-assessment/negative-environmental-impact/page";
 import Materialtopic from "../Management-Material-topic/page";
-import EnergyMaterialtopic from "./energy/Management-Material-topic/page";
-import WasteMaterialtopic from "./Waste/Management-Material-topic/page";
-import MaterialsMaterialtopic from "./Materials/Management-Material-topic/page";
-import WaterMaterialtopic from "./Water-effluents/Management-Material-topic/page";
-import SupplierMaterialtopic from "./supplier-environmental-assessment/Management-Material-topic/page";
 import SignificantSpills from "./Waste/significant-spills/page";
 import ConsolidationApproach from "./Emissions/consolidationApproach/page";
 import Standards from "./Emissions/standards/page";
@@ -43,7 +38,6 @@ import {
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
 import Standardsmethodology from "./energy/standards-methodology/standards-methodology";
-import MaterialTopicAirQuality from "./AirQuality/Management-of-material-topic/page";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMaterialityData } from "../../../lib/redux/features/materialitySlice";
 import { f_setSectionName } from "../../../lib/redux/features/FileInfoSlice";
@@ -52,8 +46,6 @@ import NitrogenOxide from "./AirQuality/NitrogenOxide/page";
 import StandardMethodology from "./AirQuality/StandardMethodology/page";
 import ODSImportExport from "./AirQuality/ODS-Import-Export/page";
 import EmissionsODS from "./AirQuality/Emissions-ODS/page";
-import MaterialTopicPackagingMaterial from "./PackageingMaterial/Management-Material-topic/page";
-import MaterialTopicBioDiversity from "./BioDiversity/Management-of-material-topic/page";
 import AccessProfitSharing from "./BioDiversity/AccessandProfitSharing/page";
 import {
   fetchLocations,
@@ -399,10 +391,7 @@ const environment = () => {
                   headingname={"Packaging Material"}
                   Envdata={"EnvPackagingMaterial"}
                 />
-                // <MaterialTopicPackagingMaterial
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+         
               )}
               {activeTab ===
                 "Reclaimed products and their packaging materials" && (
@@ -424,10 +413,7 @@ const environment = () => {
                   headingname={"Biodiversity"}
                   Envdata={"EnvBioDiversityLandUse"}
                 />
-                // <MaterialTopicBioDiversity
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+           
               )}
               {activeTab === "Biodiversity Policies" && (
                 <BioDiversityPolicies
@@ -466,10 +452,7 @@ const environment = () => {
                   headingname={"Water and effluents"}
                   Envdata={"EnvWaterEffluent"}
                 />
-                // <WaterMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+          
               )}
               {activeTab === "Interaction with water as shared resource" && (
                 <Watersharedresource
@@ -509,10 +492,7 @@ const environment = () => {
                   headingname={"Supplier Environmental Assessment"}
                   Envdata={"EnvSupplyChainSustainability"}
                 />
-                // <SupplierMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+           
               )}
               {activeTab ===
                 "New suppliers that were screened using environmental criteria" && (
@@ -536,10 +516,7 @@ const environment = () => {
                   headingname={"Air Quality & other emissions"}
                   Envdata={"EnvAirQuality"}
                 />
-                // <MaterialTopicAirQuality
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+            
               )}
               {activeTab === "Nitrogen Oxides" && (
                 <NitrogenOxide apiData={data} setMobileopen={setMobileopen} />

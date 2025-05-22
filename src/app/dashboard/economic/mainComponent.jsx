@@ -23,13 +23,6 @@ import Confirmedincidents from "./anti-corruption/confirmed-incidents/page";
 import Communicationtraining from "./anti-corruption/communication-training/page";
 import Climaterelated from "./risks-opportunities/climate-related/page";
 import Climaterelatedrisks from "./risks-opportunities/climate-related-risks/page";
-import EconomicperformanceMaterialtopic from "./economic-performance/Management-Material-topic/page";
-import RiskMaterialtopic from "./risks-opportunities/Management-Material-topic/page";
-import MarketpresenceMaterialtopic from "./economic-governance/Management-Material-topic/page";
-import IndirecteconomicimpactsMaterialtopic from "./indirect-economic-impacts/Management-Material-topic/page";
-import AnticorruptionMaterialtopic from "./anti-corruption/Management-Material-topic/page";
-import TaxMaterialtopic from "./tax/Management-Material-topic/page";
-import PoliticalInfluenceMaterialtopic from "./Lobbying-Political-Influence/Management-Material-topic/page";
 import PoliticalInvolvement from "./Lobbying-Political-Influence/Political-Involvement/page";
 import {
   setHeadertext1,
@@ -213,10 +206,7 @@ const Economic = () => {
                   Envdata={"GovEconomicPerformance"}
                   topheading={"Economic"}
                 />
-                // <EconomicperformanceMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+               
               )}
               {activeTab ===
                 "Direct economic value generated & distributed" && (
@@ -246,10 +236,7 @@ const Economic = () => {
                   Envdata={"ClimateRisksAndOpportunities"}
                   topheading={"Economic"}
                 />
-                // <RiskMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+           
               )}
               {activeTab === "Financial Implications due to climate change" && (
                 <Financialimplications
@@ -280,10 +267,7 @@ const Economic = () => {
                   Envdata={"GovGovernance"}
                   topheading={"Economic"}
                 />
-                // <MarketpresenceMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+             
               )}
               {/* {activeTab ===
               "Ratios of Standard Entry level wage by gender compared to local minimum wage" && (
@@ -311,10 +295,7 @@ const Economic = () => {
                   Envdata={"GovEconomicImpact"}
                   topheading={"Economic"}
                 />
-                // <IndirecteconomicimpactsMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+           
               )}
               {activeTab ===
                 "Infrastructure investments and services supported" && (
@@ -349,10 +330,7 @@ const Economic = () => {
                   Envdata={"GovCorruption"}
                   topheading={"Economic"}
                 />
-                // <AnticorruptionMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+           
               )}
               {activeTab ===
                 "Operations assessed for risks related to corruption" && (
@@ -396,10 +374,7 @@ const Economic = () => {
                   Envdata={"GovTaxTransparency"}
                   topheading={"Economic"}
                 />
-                // <TaxMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+          
               )}
               {activeTab === "Approach to tax" && (
                 <Approachtotax apiData={data} setMobileopen={setMobileopen} />
@@ -434,10 +409,7 @@ const Economic = () => {
                   Envdata={"GovPolicy"}
                   topheading={"Economic"}
                 />
-                // <PoliticalInfluenceMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+           
               )}
               {activeTab === "Political Contribution" && (
                 <PoliticalInvolvement

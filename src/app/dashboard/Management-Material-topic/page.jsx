@@ -386,7 +386,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         togglestatus={togglestatus}
         view_path={view_path}
       />
-      <h2>new mmt</h2>
+      {/* <h2>new mmt</h2> */}
     </>
   );
 };

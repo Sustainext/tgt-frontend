@@ -5,11 +5,8 @@ import Parentalleave from "./Employment/Parental-Leave/page";
 import Benefits from "./Employment/Benefits/page";
 import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page";
 import Definedbenefit from "./Employment/defined-benefit/page";
-import EmploymentMaterialtopic from "./Employment/Management-Material-topic/page";
-import LaborManagementMaterialtopic from "./Labor-Management/Management-Material-topic/page";
 import Noticeperiod from "./Labor-Management/Notice-Period/page";
 import CollectiveBargaining from "./Labor-Management/Collective-Bargaining/page";
-import OHSMaterialtopic from "./OHS/Management-Material-topic/page";
 import Ohsmanagment from "./OHS/ohs-management/page";
 import Riskassessment from "./OHS/risk-assessment/page";
 import WorkersRight from "./OHS/Workers-Right/page";
@@ -25,46 +22,35 @@ import Injuries from "./OHS/Injuries/page";
 import Illhealth from "./OHS/ill-health/page";
 import InjuriesHazards from "./OHS/Injuries-Hazards/page";
 import IllhealthHazard from "./OHS/Illhealth-Hazard/page";
-import TrainingMaterialtopic from "./Training/Management-Material-topic/page";
 import Traininghours from "./Training/Training-hours/page";
 import Skillupgrade from "./Training/skill-upgrade/page";
 import Performancedevelopment from "./Training/Performance-development/page";
-import DiversityInclusionMaterialtopic from "./Diversity-Inclusion/Management-Material-topic/page";
 import DiversityBoard from "./Diversity-Inclusion/Diversity-Board/Section1/page";
 import Diversityemploy from "./Diversity-Inclusion/Diversity-Board/Section2/page";
 import Salaryratio from "./Diversity-Inclusion/Salary-ratio/page";
-import NonDiscriminationMaterialtopic from "./Non-Discrimination/Management-Material-topic/page";
 import IncidentsofDiscrimination from "./Non-Discrimination/Incidents-of-Discrimination/page";
-import HumanRightsMaterialtopic from "./Human-Rights/Management-Material-topic/page";
 import CommunityEngagement from "./Human-Rights/Community-Engagement/page";
 import ImpactonCommunity from "./Human-Rights/Impact-on-Community/page";
 import IndigenousPeople from "./Human-Rights/Indigenous-People/page";
 import Securitypersonnel from "./Human-Rights/security-personnel/Section1/page";
 import Securitypersonnel2 from "./Human-Rights/security-personnel/Section2/page";
-import ChildForcedLabourMaterialtopic from "./Child-Forced-Labour/Management-Material-topic/page";
 import Childlabour from "./Child-Forced-Labour/child-labour/page";
 import Forcedorcompulsorylabour from "./Child-Forced-Labour/forced-or-compulsory-labour/page";
-import SupplierMaterialtopic from "./Supplier-social-assessment/Management-Material-topic/page";
 import Suppliersscreened from "./Supplier-social-assessment/Impacts-actions-taken/page";
 import Impactsactionstaken from "./Supplier-social-assessment/Suppliers-screened/page";
 import SoicalProcurementPractices from "./Supplier-social-assessment/procurement-practices/page";
-import HealthSafetyMaterialtopic from "./Customer-Health-Safety/Management-Material-topic/page";
 import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page";
 import Compliance from "./Customer-Health-Safety/Compliance/Section1/page";
 import ProductsService from "./Customer-Health-Safety/Products-Service/Section2/page";
-import MarketingLabelingMaterialtopic from "./Marketing-Labeling/Management-Material-topic/page";
 import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/Section1/page";
 import ProductServicelabelling2 from "./Marketing-Labeling/Product-Service-labelling/Section2/page";
 import NoncomplianceincidentsLabelling from "./Marketing-Labeling/Non-compliance-incidents-Labelling/page";
 import StatementnoncomplianceLabeling from "./Marketing-Labeling/Statement-non-compliance-Labeling/page";
 import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance-incidents-Marketing/page";
 import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page";
-import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material-topic/page";
 import CustomerPrivacy from "./Customer-Privacy/Section1/page";
 import CustomerPrivacy2 from "./Customer-Privacy/Section2/page";
 import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page";
-import Identifyinginformation from "./BillS-211/Identifying-information/page";
-import AnnualReport from "./BillS-211/annual-report/page";
 import BILLs201 from "./BillS-211/page";
 import Materialtopic from "../Management-Material-topic/page";
 import {
@@ -293,11 +279,7 @@ const Social = () => {
                   Envdata={"SocEmployment"}
                   topheading={"Social"}
                 />
-                // <EmploymentMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                //   setActiveTab={setActiveTab}
-                // />
+           
               )}
               {activeTab === "Data collection" && (
                 <BILLs201
@@ -349,10 +331,7 @@ const Social = () => {
                   Envdata={"SocLabourManagement"}
                   topheading={"Social"}
                 />
-                // <LaborManagementMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+           
               )}
               {activeTab === "Notice Period" && (
                 <Noticeperiod apiData={data} setMobileopen={setMobileopen} />
@@ -374,10 +353,7 @@ const Social = () => {
                   Envdata={"SocHealthSafety"}
                   topheading={"Social"}
                 />
-                // <OHSMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+            
               )}
               {activeTab === "OHS Management" && (
                 <Ohsmanagment apiData={data} setMobileopen={setMobileopen} />
@@ -447,10 +423,7 @@ const Social = () => {
                   Envdata={"SocHumanCapitalDevelopment"}
                   topheading={"Social"}
                 />
-                // <TrainingMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+          
               )}
               {activeTab === "Training hours" && (
                 <Traininghours apiData={data} setMobileopen={setMobileopen} />
@@ -478,10 +451,7 @@ const Social = () => {
                   Envdata={"SocDiversityEqualOpp"}
                   topheading={"Social"}
                 />
-                // <DiversityInclusionMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+       
               )}
               {activeTab === "Diversity of the Board" && (
                 <DiversityBoard apiData={data} setMobileopen={setMobileopen} />
@@ -507,10 +477,7 @@ const Social = () => {
                   Envdata={"SocNonDiscrimination"}
                   topheading={"Social"}
                 />
-                // <NonDiscriminationMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+        
               )}
               {activeTab === "Incidents of Discrimination" && (
                 <IncidentsofDiscrimination
@@ -530,10 +497,7 @@ const Social = () => {
                   Envdata={"SocCommunityRelation"}
                   topheading={"Social"}
                 />
-                // <HumanRightsMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+          
               )}
               {activeTab === "Community Engagement" && (
                 <CommunityEngagement
@@ -578,10 +542,7 @@ const Social = () => {
                   Envdata={"SocChildLabour"}
                   topheading={"Social"}
                 />
-                // <ChildForcedLabourMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+           
               )}
               {activeTab === "Child Labour" && (
                 <Childlabour apiData={data} setMobileopen={setMobileopen} />
@@ -605,10 +566,7 @@ const Social = () => {
                   Envdata={"SocSupplyChainLabour"}
                   topheading={"Social"}
                 />
-                // <SupplierMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+           
               )}
               {activeTab === "Suppliers Screened" && (
                 <Impactsactionstaken
@@ -640,10 +598,7 @@ const Social = () => {
                   Envdata={"SocProductSafetyQuality"}
                   topheading={"Social"}
                 />
-                // <HealthSafetyMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+         
               )}
               {activeTab === "Product/Service Safety" && (
                 <ProductServiceSafety
@@ -669,10 +624,7 @@ const Social = () => {
                   Envdata={"SocMarketingLabeling"}
                   topheading={"Social"}
                 />
-                // <MarketingLabelingMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+           
               )}
               {activeTab === "Product/Service labelling" && (
                 <ProductServicelabelling
@@ -723,10 +675,7 @@ const Social = () => {
                   Envdata={"SocPrivacyDataSecurity"}
                   topheading={"Social"}
                 />
-                // <CustomerPrivacyMaterialtopic
-                //   apiData={data}
-                //   setMobileopen={setMobileopen}
-                // />
+         
               )}
               {activeTab === "Customer Privacy" && (
                 <CustomerPrivacy apiData={data} setMobileopen={setMobileopen} />
