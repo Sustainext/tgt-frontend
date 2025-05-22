@@ -362,7 +362,15 @@ const MainValidationPopup = ({
                       isAnyFieldFilled ? "opacity-30 cursor-not-allowed" : ""
                     }`}
                     disabled={isAnyFieldFilled}
-                    onClick={()=>{setActiveStep(16) ;setIsModalOpen(false)}}
+                    onClick={()=>{
+                      if(reportType==='GRI Report: In accordance With'){
+                        setActiveStep(16)
+                      }
+                      else{
+                        setActiveStep(17)
+                      }
+                      setIsModalOpen(false)
+                    }}
                   >
                     Leave Blank and Proceed
                   </button>

@@ -190,7 +190,8 @@ else{
                 item.organization_country,
                 item.name,
                 item.created_at,
-                item.report_type
+                item.report_type,
+                item.corporate_name,
               );
             } else {
               handleSetdata(
@@ -322,15 +323,18 @@ else{
     window.localStorage.setItem("organizationcountry", organization_country);
     window.localStorage.setItem("reportby", report_by);
     window.localStorage.setItem("reportType",report_type)
-    if (report_by == "Corporate") {
-      if (corporate_name == undefined) {
+    window.localStorage.setItem("reportCorpName", corporate_name?corporate_name:'');
         window.localStorage.setItem("reportorgname", organization_name);
-      } else {
-        window.localStorage.setItem("reportorgname", corporate_name);
-      }
-    } else {
-      window.localStorage.setItem("reportorgname", organization_name);
-    }
+    // if (report_by == "Corporate") {
+    //   if (corporate_name == undefined) {
+    //     window.localStorage.setItem("reportorgname", organization_name);
+    //   } else {
+    //     window.localStorage.setItem("reportCorpName", corporate_name);
+    //     window.localStorage.setItem("reportorgname", organization_name);
+    //   }
+    // } else {
+    //   window.localStorage.setItem("reportorgname", organization_name);
+    // }
     // sessionStorage.setItem('reportData',newdata);
     router.push("/dashboard/Report/GHG/Ghgtemplates");
 
@@ -345,7 +349,8 @@ else{
     organization_country,
     name,
     created_at,
-    report_type
+    report_type,
+    corporate_name
   ) => {
     const newdata = {
       id: id,
@@ -363,6 +368,10 @@ else{
     window.localStorage.setItem("reportCreatedOn", created_at);
     window.localStorage.setItem("reportType", report_type);
     // sessionStorage.setItem('reportData',newdata);
+    // if (corporate_name !== undefined){
+    // }
+    window.localStorage.setItem("reportCorpName", corporate_name?corporate_name:'');
+
     router.push("/dashboard/Report/ESG");
 
     window.localStorage.setItem("reportname", name);

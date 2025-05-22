@@ -28,6 +28,7 @@ import ReportCreatedPopup from "./content-index/modals/reportCreatedPopup";
 import MainValidationPopup from "./validation-modals/mainModal";
 import axiosInstance, { patch } from "../../../utils/axiosMiddleware";
 import ReferenceMaterialTopic from "./referenceMaterialTopic/page";
+import RefereceContentIndex from './referenceContentIndex/page'
 import {
   setHeadertext1,
   setHeadertext2,
@@ -52,6 +53,7 @@ const ESGReport = () => {
   const [reportType, setReportType] = useState("");
   const [reportCreatedOn, setCreatedOn] = useState("");
   const [orgName, setOrgName] = useState("");
+  const [corpName,setCorpName]=useState("")
   const [missing_fields, setMissingFields] = useState([]);
   const messageFromCeoRef = useRef(); // Use useRef to store a reference to submitForm
   const aboutTheCompany = useRef();
@@ -240,6 +242,7 @@ const ESGReport = () => {
   useEffect(() => {
     setCreatedOn(localStorage.getItem("reportCreatedOn"));
     setOrgName(localStorage.getItem("reportorgname"));
+    setCorpName(localStorage.getItem('reportCorpName'))
     setUsername(localStorage.getItem("userName"));
     setuserEmail(localStorage.getItem("userEmail"));
     setfromDate(localStorage.getItem("reportstartdate"));
@@ -305,17 +308,39 @@ const ESGReport = () => {
                           >
                             <MdKeyboardArrowRight className="h-6 w-6 text-black" />
                           </button>
-
-                          <p className="gradient-text text-[22px] font-bold pt-3 pb-3">
+                        <div>
+                        <p className="gradient-text text-[22px] font-bold pt-3">
                             {reportName}
                           </p>
+                          <p className="mt-2 text-[#667085] text-[13px]">
+                      Organization
+                       {corpName ? " / Corporate" : ""}:{" "}
+                      {orgName}{" "}
+                      {corpName?' / ':''}
+                      {corpName}{" "}
+                      {/* {groupId?.corporate?.length > 0
+                        ? "/ " + groupId?.corporate.join(", ")
+                        : ""} */}
+                    </p>
+                        </div>
+                         
                         </div>
                       </div>
                          {/* desktop section */}
                       <div className="hidden xl:block lg:block">
-                        <p className="gradient-text text-[22px] font-bold pt-3 pb-3 ml-3">
+                        <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
                           {reportName}
                         </p>
+                        <p className="mt-2 text-[#667085] text-[13px] ml-3">
+                      Organization
+                       {corpName ? " / Corporate" : ""}:{" "}
+                      {orgName}{" "}
+                      {corpName?' / ':''}
+                      {corpName}{" "}
+                      {/* {groupId?.corporate?.length > 0
+                        ? "/ " + groupId?.corporate.join(", ")
+                        : ""} */}
+                    </p>
                       </div>
                     </div>
                   </div>
@@ -330,7 +355,7 @@ const ESGReport = () => {
                   ) : (
                     <button
                       style={{
-                        display: activeStep === 1 ? "none" : "inline-block",
+                        display: (activeStep === 1) || (activeStep === 16 && reportType==='GRI Report: In accordance With') ? "none" : "inline-block",
                       }}
                       className={`${
                         activeStep === 1 ? "" : "text-gray-500"
@@ -344,6 +369,9 @@ const ESGReport = () => {
 
                   {(activeStep == 16 && reportType==='GRI Report: In accordance With') || activeStep==17 ? (
                     <div>
+                      {
+                        reportType==='GRI Report: In accordance With'?(
+                          <div>
                       {isOmissionSubmitted ? (
                         <button
                           onClick={() => {
@@ -364,6 +392,21 @@ const ESGReport = () => {
                         </button>
                       )}
                     </div>
+                        ):(
+                          <div>
+                         <button
+                              onClick={() => {
+                                setIsCreateReportModalOpen(true);
+                              }}
+                              className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                            >
+                              Save and Create Report {">"}
+                            </button>
+                        </div>
+                        )
+                      }
+                    </div>
+                    
                   ) : (
                     <div>
                       {activeStep < 15 ? (
@@ -607,7 +650,17 @@ const ESGReport = () => {
                     <div className="mb-4">
                       {
                         reportType=='GRI Report: With Reference to' && activeStep===17?(
-                          <div></div>
+                          <RefereceContentIndex
+                          reportName={reportName}
+                          setActiveStep={setActiveStep}
+                          isOmissionSubmitted={isOmissionSubmitted}
+                          isOmissionModalOpen={isModalOpen}
+                          setIsOmissionModalOpen={setIsModalOpen}
+                          isCreateReportModalOpen={isCreateReportModalOpen}
+                          setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+                          setIsOmissionSubmitted={setIsOmissionSubmitted}
+                          
+                          />
                         ):(
                           <ContentIndex
                           reportName={reportName}
