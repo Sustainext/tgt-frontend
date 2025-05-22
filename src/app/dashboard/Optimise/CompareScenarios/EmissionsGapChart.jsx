@@ -57,9 +57,6 @@ const EmissionsGapChart = ({ data }) => {
 
   return (
     <div className="mt-12 w-full">
-      <h3 className="text-base font-bold text-gray-900 mb-4">
-        Emissions Gap vs Net-Zero Pathway
-      </h3>
       <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm w-full" style={{ height: 460 }}> {/* Increased height for top legend */}
         <ResponsiveBar
           data={data}
