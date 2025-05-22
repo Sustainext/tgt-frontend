@@ -122,9 +122,9 @@ const Section30 = ({ section13_7_2Ref, orgName, data }) => {
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
         />
-        <p className="text-[15px]  mb-2 font-semibold">
+        {/* <p className="text-[15px]  mb-2 font-semibold">
           Measures taken by the organization
-        </p>
+        </p> */}
         {data["407_1b"] ? (
           data["407_1b"].length > 0 ? (
             <p className="text-sm mb-4">

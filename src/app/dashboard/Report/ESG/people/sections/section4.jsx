@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import BenefitsTable from "../tables/benifitsTable";
 import axiosInstance from "../../../../../utils/axiosMiddleware";
 
-const Section4 = ({ section13_1_3Ref, data }) => {
+const Section4 = ({ section13_1_3Ref, data,reportType }) => {
   const [locationdata, setLocationdata] = useState([]);
   const selectedCorp = data?.["corporate_id"] ? data["corporate_id"] : "";
   const selectedOrg = data?.["organisation_id"] ? data["organisation_id"] : "";
@@ -60,21 +60,18 @@ const Section4 = ({ section13_1_3Ref, data }) => {
     <>
       <div id="section13_1_3" ref={section13_1_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.1.3 Employee Benefits and Health Services
+        {reportType=='GRI Report: In accordance With'?'13.1.3':'13.1.2'}  13.1.3 Employee Benefits and Health Services
         </h3>
-        <p className="text-[15px] mb-2 font-semibold">
-          Significant locations of operation
+        <p className="text-[#344054] text-sm mb-4">
+        We offer comprehensive benefits and health services to support the well-being of our employees, including medical insurance, wellness programs, and mental health resources.
         </p>
+        {/* <p className="text-[15px] mb-2 font-semibold">
+          Significant locations of operation
+        </p> */}
         <p className="text-sm mb-4">
           {data["401-2b-significant_loc"]?.data?.[0]?.Q1 || "No data available"}
         </p>
-        <p className="text-[15px] mb-2 font-semibold">
-          Minimum number of weeks’ notice
-        </p>
-        <p className="text-sm mb-4">
-          {data["402_1a_minimum_number_of_weeks"]?.data?.[0]?.Q1 ||
-            "No data available"}
-        </p>
+       
         <p className="text-[15px] mb-2 font-semibold">
           Benefits provided to full-time employees by location
         </p>
@@ -93,6 +90,13 @@ const Section4 = ({ section13_1_3Ref, data }) => {
         <div className="shadow-md rounded-md mb-4">
           <BenefitsTable locationdata={locationdata} data={temporaryData} />
         </div>
+        <p className="text-[15px] mb-2 font-semibold">
+        Standard notice periods for all employees provided before any significant operational changes:
+        </p>
+        <p className="text-sm mb-4">
+          {data["402_1a_minimum_number_of_weeks"]?.data?.[0]?.Q1 ||
+            "No data available"}
+        </p>
       </div>
     </>
   );

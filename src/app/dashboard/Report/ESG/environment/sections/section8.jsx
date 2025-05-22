@@ -9,7 +9,7 @@ import { setGHGEmissionReductionEfforts } from "../../../../../../lib/redux/feat
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section8 = ({ section12_1_8Ref, data }) => {
+const Section8 = ({ section12_1_8Ref, data,reportType }) => {
   const content = useSelector(
     (state) => state.screen12Slice.ghg_emission_reduction_efforts
   );
@@ -165,7 +165,7 @@ const Section8 = ({ section12_1_8Ref, data }) => {
     <>
       <div id="section12_1_8" ref={section12_1_8Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          12.1.8 Reduction in GHG Emissions
+        {reportType=='GRI Report: In accordance With'?'12.1.8':'12.1.7'}  Reduction in GHG Emissions
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

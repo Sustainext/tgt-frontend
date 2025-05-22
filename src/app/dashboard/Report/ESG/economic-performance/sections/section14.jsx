@@ -7,14 +7,14 @@ const stripHTML = (htmlString) => {
   return tempDiv.textContent || tempDiv.innerText || "";
 };
 
-const Section14 = ({ section11_4_3Ref }) => {
+const Section14 = ({ section11_4_3Ref,reportType }) => {
   const data = useSelector((state) => state.screen11Slice.getdata);
 
   return (
     <>
       <div id="section11_4_3" ref={section11_4_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          11.4.3. Tax Governance and Risk Management
+        {reportType=='GRI Report: In accordance With'?'11.4.3':'11.4.2'} Tax Governance and Risk Management
         </h3>
 
         <p className="text-[15px] mb-2 font-semibold">

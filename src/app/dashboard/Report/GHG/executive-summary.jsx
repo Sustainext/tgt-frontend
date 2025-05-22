@@ -25,7 +25,7 @@ function Executivesummary({
       } else if (scope.scope_name.toLowerCase() === "scope-2" && corporate.corporate_type === "Regular") {
         totalScope2 += parseFloat(scope.total_co2e);
         uint2 = scope.co2e_unit;
-      } else if (scope.scope_name.toLowerCase() === "scope-3" && corporate.corporate_type === "Regular") {
+      } else if (scope.scope_name.toLowerCase() === "scope-3") {
         totalScope3 += parseFloat(scope.total_co2e);
         uint3 = scope.co2e_unit;
       }

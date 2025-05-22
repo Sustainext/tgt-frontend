@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setOHSPolicies } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section21 = ({ section13_6_4Ref, data }) => {
+const Section21 = ({ section13_6_4Ref, data, reportType }) => {
   const content = useSelector((state) => state.screen13Slice.ohs_policies);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -65,7 +65,7 @@ const Section21 = ({ section13_6_4Ref, data }) => {
     <>
       <div id="section13_6_4" ref={section13_6_4Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.6.4 Worker Participation, Consultation, and Communication on OHS
+        {reportType=='GRI Report: In accordance With'?'13.6.4':'13.6.3'} Worker Participation, Consultation, and Communication on OHS
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
@@ -87,7 +87,7 @@ const Section21 = ({ section13_6_4Ref, data }) => {
           rows={4}
         />
 
-        <p className="text-sm mb-2">
+        {/* <p className="text-sm mb-2">
           {data["403-4a-ohs_system_1"]
             ? data["403-4a-ohs_system_1"].data
               ? data["403-4a-ohs_system_1"].data.length > 0
@@ -97,7 +97,7 @@ const Section21 = ({ section13_6_4Ref, data }) => {
                 : "No data available"
               : "No data available"
             : "No data available"}
-        </p>
+        </p> */}
         <p className="text-sm mb-2">
           {data["403-4a-ohs_system_2"]
             ? data["403-4a-ohs_system_2"].data

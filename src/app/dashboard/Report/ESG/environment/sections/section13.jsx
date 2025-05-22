@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setReclamationRecyclingProcess } from "../../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Section13 = ({ section12_2_3Ref, data }) => {
+const Section13 = ({ section12_2_3Ref, data,reportType }) => {
   const content = useSelector(
     (state) => state.screen12Slice.reclamation_recycling_process
   );
@@ -64,7 +64,7 @@ const Section13 = ({ section12_2_3Ref, data }) => {
     <>
       <div id="section12_2_3" ref={section12_2_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          12.2.3 Reclaimed Products and Their Packaging Materials
+        {reportType=='GRI Report: In accordance With'?'12.2.3':'12.2.2'}  Reclaimed Products and Their Packaging Materials
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

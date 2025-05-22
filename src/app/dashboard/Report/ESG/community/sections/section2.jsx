@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setViolationOfRights } from "../../../../../../lib/redux/features/ESGSlice/screen14Slice";
 
 
-const Section2 = ({ section14_1_1Ref,section14_1_2Ref, data,orgName }) => {
+const Section2 = ({ section14_1_1Ref,section14_1_2Ref, data,orgName,reportType }) => {
 
   
   const violation_rights = useSelector(
@@ -26,30 +26,35 @@ const Section2 = ({ section14_1_1Ref,section14_1_2Ref, data,orgName }) => {
   };
   return (
     <>
-      <div ref={section14_1_1Ref} id="section14_1_1">
-        <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          14.1.1 Management of material topic
-        </h3>
-        {data["3_c_d_e_in_material_topics"] &&
-        data["3_c_d_e_in_material_topics"].length > 0 ? (
-          data["3_c_d_e_in_material_topics"].map((val, index) => (
-            <div key={index}>
-              <p className="text-sm mb-2">
-                {val.GRI33cd ? val.GRI33cd : "No data available"}
-              </p>
-              <p className="text-sm mb-4">
-                {val.GRI33e ? val.GRI33e : "No data available"}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p className="text-sm mb-4">No data available</p>
-        )}
-      </div>
+    {reportType=='GRI Report: In accordance With'?(
+       <div ref={section14_1_1Ref} id="section14_1_1">
+       <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
+         14.1.1 Management of material topic
+       </h3>
+       {data["3_c_d_e_in_material_topics"] &&
+       data["3_c_d_e_in_material_topics"].length > 0 ? (
+         data["3_c_d_e_in_material_topics"].map((val, index) => (
+           <div key={index}>
+             <p className="text-sm mb-2">
+               {val.GRI33cd ? val.GRI33cd : "No data available"}
+             </p>
+             <p className="text-sm mb-4">
+               {val.GRI33e ? val.GRI33e : "No data available"}
+             </p>
+           </div>
+         ))
+       ) : (
+         <p className="text-sm mb-4">No data available</p>
+       )}
+     </div>
+    ):(
+      <div></div>
+    )}
+     
 
       <div ref={section14_1_2Ref} id="section14_1_2">
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          14.1.2 Incidents of Violation of Rights of Indigenous People
+        {reportType=='GRI Report: In accordance With'?'14.1.2':'14.1.1'}   Incidents of Violation of Rights of Indigenous People
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
             <p className="text-[15px] text-[#344054] mb-2 mt-3">
