@@ -34,7 +34,7 @@ import ConsolidationApproach from "./Emissions/consolidationApproach/page";
 import Standards from "./Emissions/standards/page";
 import EmissionIntensity from "./Emissions/emission-Intensity/page";
 import Emissionreductioninitiativesnew from "./Emissions/emission-reduction-initiatives/page";
-import BioDiversityPolicies from './BioDiversity/BioDiversityPolicies/page'
+import BioDiversityPolicies from "./BioDiversity/BioDiversityPolicies/page";
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -53,7 +53,7 @@ import StandardMethodology from "./AirQuality/StandardMethodology/page";
 import ODSImportExport from "./AirQuality/ODS-Import-Export/page";
 import EmissionsODS from "./AirQuality/Emissions-ODS/page";
 import MaterialTopicPackagingMaterial from "./PackageingMaterial/Management-Material-topic/page";
-import MaterialTopicBioDiversity from './BioDiversity/Management-of-material-topic/page'
+import MaterialTopicBioDiversity from "./BioDiversity/Management-of-material-topic/page";
 import AccessProfitSharing from "./BioDiversity/AccessandProfitSharing/page";
 import {
   fetchLocations,
@@ -198,11 +198,9 @@ const environment = () => {
       dispatch(setHeadertext2("Water and effluents"));
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Supplier Environmental Assessment"));
-    }
-    else if (bioDiversityTab.includes(activeTab)) {
+    } else if (bioDiversityTab.includes(activeTab)) {
       dispatch(setHeadertext2("Biodiversity"));
-    }
-    else if (airQualityTab.includes(activeTab)) {
+    } else if (airQualityTab.includes(activeTab)) {
       dispatch(setHeadertext2("Air Quality"));
     } else if (materialnewTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Management of Material Topic"));
@@ -247,7 +245,14 @@ const environment = () => {
             >
               {/* Emissions start */}
               {activeTab === "Management of Material topic emission" && (
-                <Materialtopic apiData={data} setMobileopen={setMobileopen} view_path={"gri_collect_emission_management_material_topic"} headingname={"Emission"} Envdata={"EnvGhgEmission"} />
+                <Materialtopic
+                  apiData={data}
+                  topheading={"Environment"}
+                  setMobileopen={setMobileopen}
+                  view_path={"gri_collect_emission_management_material_topic"}
+                  headingname={"Emission"}
+                  Envdata={"EnvGhgEmission"}
+                />
               )}
               {activeTab === "GHG Emissions" && (
                 <Emission apiData={data} setMobileopen={setMobileopen} />
@@ -280,6 +285,7 @@ const environment = () => {
               {activeTab === "Management of Material topic energy" && (
                 <Materialtopic
                   apiData={data}
+                  topheading={"Environment"}
                   setMobileopen={setMobileopen}
                   view_path={"gri_collect_energy_management_material_topic"}
                   headingname={"Energy"}
@@ -322,13 +328,14 @@ const environment = () => {
 
               {/* waste start */}
               {activeTab === "Management of Material topic waste" && (
-                    <Materialtopic
-                    apiData={data}
-                    setMobileopen={setMobileopen}
-                    view_path={"gri_collect_waste_management_material_topic"}
-                    headingname={"Waste"}
-                    Envdata={"EnvWasteManagement"}
-                  />
+                <Materialtopic
+                  apiData={data}
+                  topheading={"Environment"}
+                  setMobileopen={setMobileopen}
+                  view_path={"gri_collect_waste_management_material_topic"}
+                  headingname={"Waste"}
+                  Envdata={"EnvWasteManagement"}
+                />
               )}
               {activeTab === "Significant waste related impact" && (
                 <Significantwaste
@@ -365,14 +372,14 @@ const environment = () => {
 
               {/* Materials  start */}
               {activeTab === "Management of Material topic Materials" && (
-                    <Materialtopic
-                    apiData={data}
-                    setMobileopen={setMobileopen}
-                    view_path={"gri_collect_materials_management_material_topic"}
-                    headingname={"Material Use and Efficiency"}
-                    Envdata={"EnvRawMaterialSourcing"}
-                  />
-             
+                <Materialtopic
+                  apiData={data}
+                  topheading={"Environment"}
+                  setMobileopen={setMobileopen}
+                  view_path={"gri_collect_materials_management_material_topic"}
+                  headingname={"Material Use and Efficiency"}
+                  Envdata={"EnvRawMaterialSourcing"}
+                />
               )}
               {activeTab === "Materials used by weight or volume" && (
                 <Weightvolume apiData={data} setMobileopen={setMobileopen} />
@@ -382,10 +389,13 @@ const environment = () => {
               )}
               {activeTab ===
                 "Management of Material topic Packaging Materials" && (
-                  <Materialtopic
+                <Materialtopic
                   apiData={data}
+                  topheading={"Environment"}
                   setMobileopen={setMobileopen}
-                  view_path={"gri-environment-packaging-material-management-of-material-topic"}
+                  view_path={
+                    "gri-environment-packaging-material-management-of-material-topic"
+                  }
                   headingname={"Packaging Material"}
                   Envdata={"EnvPackagingMaterial"}
                 />
@@ -403,12 +413,14 @@ const environment = () => {
               )}
 
               {/* Bio diversity */}
-              {activeTab ===
-                "Management of Material topic Bio diversity" && (
-                  <Materialtopic
+              {activeTab === "Management of Material topic Bio diversity" && (
+                <Materialtopic
                   apiData={data}
+                  topheading={"Environment"}
                   setMobileopen={setMobileopen}
-                  view_path={"gri-environment-biodiversity-management-of-material-topic"}
+                  view_path={
+                    "gri-environment-biodiversity-management-of-material-topic"
+                  }
                   headingname={"Biodiversity"}
                   Envdata={"EnvBioDiversityLandUse"}
                 />
@@ -417,45 +429,43 @@ const environment = () => {
                 //   setMobileopen={setMobileopen}
                 // />
               )}
-              {activeTab ===
-                "Biodiversity Policies" && (
+              {activeTab === "Biodiversity Policies" && (
                 <BioDiversityPolicies
                   apiData={data}
                   setMobileopen={setMobileopen}
                 />
               )}
-              {activeTab ===
-                "Access and benefit-sharing" && (
+              {activeTab === "Access and benefit-sharing" && (
                 <AccessProfitSharing
                   apiData={data}
                   setMobileopen={setMobileopen}
                 />
               )}
-              {
-                activeTab==="Synergies, Trade-offs & Stakeholder Engagement" &&(
-                  <StakeholderEngagement
+              {activeTab ===
+                "Synergies, Trade-offs & Stakeholder Engagement" && (
+                <StakeholderEngagement
                   apiData={data}
                   setMobileopen={setMobileopen}
                 />
-                )
-              }
-              {
-                activeTab==="Management of biodiversity impacts" &&(
-                  <ManagementOfBiodiversityImpact
+              )}
+              {activeTab === "Management of biodiversity impacts" && (
+                <ManagementOfBiodiversityImpact
                   apiData={data}
                   setMobileopen={setMobileopen}
                 />
-                )
-              }
+              )}
               {/* Water start */}
               {activeTab === "Management of Material topic Water" && (
-                   <Materialtopic
-                   apiData={data}
-                   setMobileopen={setMobileopen}
-                   view_path={"gri_collect_water_and_effluents_management_material_topic"}
-                   headingname={"Water and effluents"}
-                   Envdata={"EnvWaterEffluent"}
-                 />
+                <Materialtopic
+                  apiData={data}
+                  topheading={"Environment"}
+                  setMobileopen={setMobileopen}
+                  view_path={
+                    "gri_collect_water_and_effluents_management_material_topic"
+                  }
+                  headingname={"Water and effluents"}
+                  Envdata={"EnvWaterEffluent"}
+                />
                 // <WaterMaterialtopic
                 //   apiData={data}
                 //   setMobileopen={setMobileopen}
@@ -489,13 +499,16 @@ const environment = () => {
               )}
               {/* Supplier start */}
               {activeTab === "Management of Material topic Supplier" && (
-                   <Materialtopic
-                   apiData={data}
-                   setMobileopen={setMobileopen}
-                   view_path={"gri_collect_supplier_environmental_assessment_management_material_topic"}
-                   headingname={"Supplier Environmental Assessment"}
-                   Envdata={"EnvSupplyChainSustainability"}
-                 />
+                <Materialtopic
+                  apiData={data}
+                  topheading={"Environment"}
+                  setMobileopen={setMobileopen}
+                  view_path={
+                    "gri_collect_supplier_environmental_assessment_management_material_topic"
+                  }
+                  headingname={"Supplier Environmental Assessment"}
+                  Envdata={"EnvSupplyChainSustainability"}
+                />
                 // <SupplierMaterialtopic
                 //   apiData={data}
                 //   setMobileopen={setMobileopen}
@@ -513,13 +526,16 @@ const environment = () => {
                 />
               )}
               {activeTab === "Management of Material topic air quality" && (
-                     <Materialtopic
-                     apiData={data}
-                     setMobileopen={setMobileopen}
-                     view_path={"gri-environment-air-quality-management_of_material_topic"}
-                     headingname={"Air Quality & other emissions"}
-                     Envdata={"EnvAirQuality"}
-                   />
+                <Materialtopic
+                  apiData={data}
+                  topheading={"Environment"}
+                  setMobileopen={setMobileopen}
+                  view_path={
+                    "gri-environment-air-quality-management_of_material_topic"
+                  }
+                  headingname={"Air Quality & other emissions"}
+                  Envdata={"EnvAirQuality"}
+                />
                 // <MaterialTopicAirQuality
                 //   apiData={data}
                 //   setMobileopen={setMobileopen}

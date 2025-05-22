@@ -37,7 +37,7 @@ import {
   setHeaderdisplay,
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalState } from "@/Context/page";
 import {
   fetchMaterialityData,
@@ -49,7 +49,7 @@ import {
   setStartDate,
   setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
-
+import Materialtopic from "../Management-Material-topic/page";
 
 const Economic = () => {
   const { open } = GlobalState();
@@ -59,21 +59,27 @@ const Economic = () => {
   const [mobileopen, setMobileopen] = useState(false);
 
   const dispatch = useDispatch();
-  const { corporate_id, organization_id, start_date, end_date, data,materiality_year, loading, error } = useSelector(
-    (state) => state.materialitySlice
-  );
-  
+  const {
+    corporate_id,
+    organization_id,
+    start_date,
+    end_date,
+    data,
+    materiality_year,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
 
-  const loadMaterialityDashboard=()=>{
-   dispatch(
+  const loadMaterialityDashboard = () => {
+    dispatch(
       fetchMaterialityData({
         corporate: corporate_id,
         organization: organization_id,
-        start_date:materiality_year?`${materiality_year}-01-01`:'',
-        end_date:materiality_year?`${materiality_year}-12-31`:'',
+        start_date: materiality_year ? `${materiality_year}-01-01` : "",
+        end_date: materiality_year ? `${materiality_year}-12-31` : "",
       })
     );
-  }
+  };
 
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
@@ -82,7 +88,7 @@ const Economic = () => {
   };
 
   useEffect(() => {
-    loadMaterialityDashboard()
+    loadMaterialityDashboard();
   }, [dispatch]);
 
   useEffect(() => {
@@ -150,7 +156,7 @@ const Economic = () => {
       dispatch(setHeadertext2("Anti Corruption"));
     } else if (materialnewTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Management of Material Topic"));
-    }  else if (TaxTabs.includes(activeTab)) {
+    } else if (TaxTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Tax Transparency"));
     } else if (PoliticalTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Lobbying and Political Influence"));
@@ -164,139 +170,283 @@ const Economic = () => {
 
   return (
     <>
-           <div className="w-full">
-             <div className="block xl:flex lg:flex md:block 2xl:flex 4k:flex">
-               <div className=" hidden xl:block lg:block md:hidden 2xl:block 4k:block">
-                 <Aside
-                   activeTab={activeTab}
-                   handleTabClick={handleTabClick}
-                   apiData={data} 
-                   setMobileopen={setMobileopen}
-                 />
-               </div>
-               {mobileopen ? (
-                 <div className="block xl:hidden lg:hidden md:block 2xl:hidden 4k:hidden">
-                   <div>
-                     <Aside
-                       activeTab={activeTab}
-                       handleTabClick={handleTabClick}
-                       apiData={data} 
-                       setMobileopen={setMobileopen}
-                     />
-                   </div>
-                 </div>
-               ) : (
-          <div
-          className={`${
-            open
-              ? "sm:w-[87vw]  md:w-[120vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
-              : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
-          }`}
-          >
-            {/* Emissions start */}
-            {activeTab ===
-              "Management of Material topic Economic Performance" && (
-              <EconomicperformanceMaterialtopic apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab === "Direct economic value generated & distributed" && (
-              <Directeconomic apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {/* {activeTab ===
+      <div className="w-full">
+        <div className="block xl:flex lg:flex md:block 2xl:flex 4k:flex">
+          <div className=" hidden xl:block lg:block md:hidden 2xl:block 4k:block">
+            <Aside
+              activeTab={activeTab}
+              handleTabClick={handleTabClick}
+              apiData={data}
+              setMobileopen={setMobileopen}
+            />
+          </div>
+          {mobileopen ? (
+            <div className="block xl:hidden lg:hidden md:block 2xl:hidden 4k:hidden">
+              <div>
+                <Aside
+                  activeTab={activeTab}
+                  handleTabClick={handleTabClick}
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              </div>
+            </div>
+          ) : (
+            <div
+              className={`${
+                open
+                  ? "sm:w-[87vw]  md:w-[120vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
+                  : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
+              }`}
+            >
+              {/* Emissions start */}
+              {activeTab ===
+                "Management of Material topic Economic Performance" && (
+                <Materialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_economic_performance_management_material_topic"
+                  }
+                  headingname={"Economic Performance"}
+                  Envdata={"GovEconomicPerformance"}
+                  topheading={"Economic"}
+                />
+                // <EconomicperformanceMaterialtopic
+                //   apiData={data}
+                //   setMobileopen={setMobileopen}
+                // />
+              )}
+              {activeTab ===
+                "Direct economic value generated & distributed" && (
+                <Directeconomic apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {/* {activeTab ===
               "Defined benefit plan obligations and other retirement plans" && (
               <Definedbenefit />
             )} */}
-            {activeTab === "Financial assistance received from government" && (
-              <Financialassistance apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {/* Energy start */}
-            {activeTab === "Management of Material topic risks" && (
-              <RiskMaterialtopic apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab === "Financial Implications due to climate change" && (
-              <Financialimplications apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab === "Climate related Risks" && <Climaterelatedrisks apiData={data} setMobileopen={setMobileopen} />}
-            {activeTab === "Climate Related Opportunities" && (
-              <Climaterelated apiData={data} setMobileopen={setMobileopen} />
-            )}
+              {activeTab ===
+                "Financial assistance received from government" && (
+                <Financialassistance
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {/* Energy start */}
+              {activeTab === "Management of Material topic risks" && (
+                <Materialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_risks_and_opportunities_management_material_topic"
+                  }
+                  headingname={"Climate Risks and Opportunities"}
+                  Envdata={"ClimateRisksAndOpportunities"}
+                  topheading={"Economic"}
+                />
+                // <RiskMaterialtopic
+                //   apiData={data}
+                //   setMobileopen={setMobileopen}
+                // />
+              )}
+              {activeTab === "Financial Implications due to climate change" && (
+                <Financialimplications
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Climate related Risks" && (
+                <Climaterelatedrisks
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Climate Related Opportunities" && (
+                <Climaterelated apiData={data} setMobileopen={setMobileopen} />
+              )}
 
-            {/* waste start */}
-            {activeTab === "Management of Material topic Market" && (
-              <MarketpresenceMaterialtopic apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {/* {activeTab ===
+              {/* waste start */}
+              {activeTab === "Management of Material topic Market" && (
+                <Materialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_economic_governance_management_material_topic"
+                  }
+                  headingname={"Economic Governance"}
+                  Envdata={"GovGovernance"}
+                  topheading={"Economic"}
+                />
+                // <MarketpresenceMaterialtopic
+                //   apiData={data}
+                //   setMobileopen={setMobileopen}
+                // />
+              )}
+              {/* {activeTab ===
               "Ratios of Standard Entry level wage by gender compared to local minimum wage" && (
               <Ratiosstandard />
             )} */}
-            {activeTab ===
-              "Proportion of senior management hired from the local community" && (
-              <PortionOfSeniorManagement apiData={data} setMobileopen={setMobileopen} />
-            )}
+              {activeTab ===
+                "Proportion of senior management hired from the local community" && (
+                <PortionOfSeniorManagement
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
 
-            {/* Materials  start */}
-            {activeTab === "Management of Material topic Indirect Economic" && (
-              <IndirecteconomicimpactsMaterialtopic apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab ===
-              "Infrastructure investments and services supported" && (
-              <Infrastructureinvestmentsservices apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab === "Significant indirect economic impacts" && (
-              <Significantindirecteconomic apiData={data} setMobileopen={setMobileopen} />
-            )}
+              {/* Materials  start */}
+              {activeTab ===
+                "Management of Material topic Indirect Economic" && (
+                <Materialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_indirect_economic_impacts_management_material_topic"
+                  }
+                  headingname={"Economic Impacts"}
+                  Envdata={"GovEconomicImpact"}
+                  topheading={"Economic"}
+                />
+                // <IndirecteconomicimpactsMaterialtopic
+                //   apiData={data}
+                //   setMobileopen={setMobileopen}
+                // />
+              )}
+              {activeTab ===
+                "Infrastructure investments and services supported" && (
+                <Infrastructureinvestmentsservices
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Significant indirect economic impacts" && (
+                <Significantindirecteconomic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
 
-            {/* Water start */}
-            {/* 
+              {/* Water start */}
+              {/* 
             {activeTab === "Proportion of spending on local suppliers" && (
               <ProcurementPractices />
             )} */}
 
-            {/* Supplier start */}
-            {activeTab === "Management of Material topic Anti" && (
-              <AnticorruptionMaterialtopic apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab ===
-              "Operations assessed for risks related to corruption" && (
-              <Operationsassessed apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab ===
-              "Communication and training about anti-corruption policies and procedures" && (
-              <Communicationtraining apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab ===
-              "Confirmed incidents of corruption and actions taken" && (
-              <Confirmedincidents apiData={data} setMobileopen={setMobileopen} />
-            )}
+              {/* Supplier start */}
+              {activeTab === "Management of Material topic Anti" && (
+                <Materialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_anti_corruption_management_material_topic"
+                  }
+                  headingname={"Anti Corruption"}
+                  Envdata={"GovCorruption"}
+                  topheading={"Economic"}
+                />
+                // <AnticorruptionMaterialtopic
+                //   apiData={data}
+                //   setMobileopen={setMobileopen}
+                // />
+              )}
+              {activeTab ===
+                "Operations assessed for risks related to corruption" && (
+                <Operationsassessed
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Communication and training about anti-corruption policies and procedures" && (
+                <Communicationtraining
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab ===
+                "Confirmed incidents of corruption and actions taken" && (
+                <Confirmedincidents
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
 
-            {activeTab === "Public legal cases regarding corruption" && (
-              <Publiclegal apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab === "Anti Competitive Behavior" && (
-              <Anticompetitivebehavior apiData={data} setMobileopen={setMobileopen} />
-            )}
+              {activeTab === "Public legal cases regarding corruption" && (
+                <Publiclegal apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Anti Competitive Behavior" && (
+                <Anticompetitivebehavior
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
 
-            {activeTab === "Management of Material topic Tax" && (
-              <TaxMaterialtopic apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab === "Approach to tax" && <Approachtotax apiData={data} setMobileopen={setMobileopen} />}
-            {activeTab === "Tax governance, control, and risk management" && (
-              <Taxgovernance apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab ===
-              "Stakeholder engagement and management of concerns related to tax" && (
-              <Stakeholderengagement apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab === "Country-by-country reporting" && (
-              <Countrybycountryreporting apiData={data} setMobileopen={setMobileopen} />
-            )}
+              {activeTab === "Management of Material topic Tax" && (
+                <Materialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={"gri_collect_tax_management_material_topic"}
+                  headingname={"Tax Transparency"}
+                  Envdata={"GovTaxTransparency"}
+                  topheading={"Economic"}
+                />
+                // <TaxMaterialtopic
+                //   apiData={data}
+                //   setMobileopen={setMobileopen}
+                // />
+              )}
+              {activeTab === "Approach to tax" && (
+                <Approachtotax apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Tax governance, control, and risk management" && (
+                <Taxgovernance apiData={data} setMobileopen={setMobileopen} />
+              )}
+              {activeTab ===
+                "Stakeholder engagement and management of concerns related to tax" && (
+                <Stakeholderengagement
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Country-by-country reporting" && (
+                <Countrybycountryreporting
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
 
-            {activeTab ===
-              "Management of Material topic Political Influence" && (
-              <PoliticalInfluenceMaterialtopic apiData={data} setMobileopen={setMobileopen} />
-            )}
-            {activeTab === "Political Contribution" && <PoliticalInvolvement apiData={data} setMobileopen={setMobileopen} />}
-          </div>
-                )}
+              {activeTab ===
+                "Management of Material topic Political Influence" && (
+                <Materialtopic
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_lobbying_political_influence_management_material_topic"
+                  }
+                  headingname={"Lobbying and Political Influence"}
+                  Envdata={"GovPolicy"}
+                  topheading={"Economic"}
+                />
+                // <PoliticalInfluenceMaterialtopic
+                //   apiData={data}
+                //   setMobileopen={setMobileopen}
+                // />
+              )}
+              {activeTab === "Political Contribution" && (
+                <PoliticalInvolvement
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

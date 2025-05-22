@@ -15,10 +15,17 @@ import { useDispatch } from "react-redux";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import Aboutthereport from "./about-the-report/page";
 import Organizationprofilestructure from "./organization-profile-structure/page";
-import Businessactivities from "./business-activities/page"
-import Supplychains from "./supply-chains/page"
-import Policiesdiligence from "./policies-diligence-processes/page"
-import Risksforcedchildlabour from "./risks-forced-child-labour/page"
+import Businessactivities from "./business-activities/page";
+import Supplychains from "./supply-chains/page";
+import Policiesdiligence from "./policies-diligence-processes/page";
+import Risksforcedchildlabour from "./risks-forced-child-labour/page";
+import Reduceforcedchildlabour from "./reduce-forced-child-labour/page";
+import Remediationmeasures from "./remediation-measures/page";
+import Remediationlossincome from "./remediation-loss-income/page";
+import Trainingforcedchildlabour from "./training-forced-child-labour/page";
+import Assessingeffectiveness from "./assessing-effectiveness/page";
+import Attestation from "./attestation/page";
+
 const Bills211Report = () => {
   const router = useRouter();
   const [isOpenMobile, setIsOpenMobile] = useState(false);
@@ -48,7 +55,7 @@ const Bills211Report = () => {
   const RemediationIncome = useRef();
   const Trainingforcedlabourandchildlabour = useRef();
   const AssessingEffectiveness = useRef();
-  const Attestation = useRef();
+  const Attestations = useRef();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -68,7 +75,7 @@ const Bills211Report = () => {
     9: RemediationIncome,
     10: Trainingforcedlabourandchildlabour,
     11: AssessingEffectiveness,
-    12: Attestation,
+    12: Attestations,
   };
 
   // const  missing_fields=[
@@ -249,7 +256,7 @@ const Bills211Report = () => {
                     <div>
                       <button
                         onClick={() => {
-                          if (activeStep > 10) {
+                          if (activeStep > 12) {
                             router.push("/dashboard/Report");
                           } else {
                             handleNextStep("back");
@@ -291,100 +298,36 @@ const Bills211Report = () => {
               <div className="hidden md:block lg:block xl:block">
                 <div className="float-right mr-2 flex items-center justify-center">
                   <div className="flex items-center justify-center">
-                    {activeStep == 16 ? (
-                      <></>
-                    ) : (
+                    {/* Previous button */}
+                    {activeStep > 1 && (
                       <button
-                        style={{
-                          display: activeStep === 1 ? "none" : "inline-block",
-                        }}
-                        className={`${
-                          activeStep === 1 ? "" : "text-gray-500"
-                        } px-3 py-1.5 rounded font-semibold w-[120px]`}
+                        className="text-gray-500 px-3 py-1.5 rounded font-semibold w-[120px]"
                         onClick={handlePreviousStep}
-                        disabled={activeStep === 1}
                       >
                         &lt; Previous
                       </button>
                     )}
-                    {activeStep == 11 ? (
-                      <div>
-                        <button
-                          onClick={() => {
-                            setIsCreateReportModalOpen(true);
-                          }}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Save and Create Report {">"}
-                        </button>
-                      </div>
+
+                    {/* Next or Save button */}
+                    {activeStep === 12 ? (
+                      <button
+                        onClick={() => {
+                          setIsCreateReportModalOpen(true);
+                        }}
+                        className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
+                      >
+                        Save and Create Report &gt;
+                      </button>
                     ) : (
-                      <div>
-                        <button
-                          className={`${
-                            activeStep === 15
-                              ? "bg-gray-300"
-                              : "bg-blue-500 text-white"
-                          } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                          onClick={() => {
-                            handleNextStep("next");
-                          }} // Call the form submit and next step handler
-                          disabled={activeStep === 15}
-                        >
-                          Next &gt;
-                        </button>
-                      </div>
+                      <button
+                        className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
+                        onClick={() => {
+                          handleNextStep("next");
+                        }}
+                      >
+                        Next &gt;
+                      </button>
                     )}
-                    {/* {activeStep == 11 ? (
-                    <div>
-                      {isOmissionSubmitted ? (
-                        <button
-                          onClick={() => {
-                            setIsCreateReportModalOpen(true);
-                          }}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Save and Create Report {">"}
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => {
-                            setIsModalOpen(true);
-                          }}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Add Reasons for Omission {">"}
-                        </button>
-                      )}
-                    </div>
-                  ) : (
-                    <div>
-                      {activeStep < 15 ? (
-                        <button
-                          className={`${
-                            activeStep === 15
-                              ? "bg-gray-300"
-                              : "bg-blue-500 text-white"
-                          } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                          onClick={() => {
-                            handleNextStep("next");
-                          }} // Call the form submit and next step handler
-                          disabled={activeStep === 15}
-                        >
-                          Next &gt;
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => {
-                            handleNextStep("last");
-                          }}
-                          className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Save & Fill Content Index
-                        </button>
-                      )}
-                    </div>
-                  )} */}
                   </div>
                 </div>
               </div>
@@ -467,36 +410,68 @@ const Bills211Report = () => {
           <div className="xl:mx-3 md:mx-3 lg:mx-3 4k:mx-3 2k:mx-3 2xl:mx-3 my-2">
             <div>
               {activeStep === 1 && (
-                <div>
+                <div className="w-[85%]">
                   <Aboutthereport ref={AbouttheReport} />
                 </div>
               )}
               {activeStep === 2 && (
-                <div>
+                <div className="w-[85%]">
                   <Organizationprofilestructure ref={OrgProfileStructureRef} />
                 </div>
               )}
-                  {activeStep === 3 && (
-                <div>
+              {activeStep === 3 && (
+                <div className="w-[85%]">
                   <Businessactivities ref={BusinessActivities} />
                 </div>
               )}
-                   {activeStep === 4 && (
-                <div>
+              {activeStep === 4 && (
+                <div className="w-[85%]">
                   <Supplychains ref={Supplychains} />
                 </div>
-              )} 
-                   {activeStep === 5 && (
-                <div>
+              )}
+              {activeStep === 5 && (
+                <div className="w-[85%]">
                   <Policiesdiligence ref={PoliciesDiligenceProcesses} />
                 </div>
-              )} 
-                   {activeStep === 6 && (
-                <div>
+              )}
+              {activeStep === 6 && (
+                <div className="w-[85%]">
                   <Risksforcedchildlabour ref={RisksofForced} />
                 </div>
+              )}
+              {activeStep === 7 && (
+                <div className="w-[85%]">
+                  <Reduceforcedchildlabour ref={forcedlabourandchildlabour} />
+                </div>
+              )}
+              {activeStep === 8 && (
+                <div className="w-[85%]">
+                  <Remediationmeasures ref={RemediationMeasures} />
+                </div>
+              )}
+              {activeStep === 9 && (
+                <div className="w-[85%]">
+                  <Remediationlossincome ref={RemediationIncome} />
+                </div>
+              )}
+              {activeStep === 10 && (
+                <div className="w-[85%]">
+                  <Trainingforcedchildlabour
+                    ref={Trainingforcedlabourandchildlabour}
+                  />
+                </div>
+              )}
+              {activeStep === 11 && (
+                <div className="w-[85%]">
+                  <Assessingeffectiveness ref={AssessingEffectiveness} />
+                </div>
+              )} 
+                 {activeStep === 12 && (
+                <div className="w-[85%]">
+                  <Attestation ref={Attestations} />
+                </div>
               )}  
-            </div> 
+            </div>
           </div>
         </div>
       </div>

@@ -6,9 +6,12 @@ const BillScreen1Slice = createSlice({
     about_the_Report: "",
     organization_profile_structure: "",
     business_activities: "",
-    Supply_chains:"",
-    policies_diligence_processes:"",
-    risks_forced_child_labour:"",
+    Supply_chains: "",
+    policies_diligence_processes: "",
+    risks_forced_child_labour: "",
+    reduce_forced_child_labour: "",
+    remediation_loss_income: "",
+    training_forced_child_labour:"",
     error: null,
   },
   reducers: {
@@ -24,11 +27,20 @@ const BillScreen1Slice = createSlice({
     setSupplychains: (state, action) => {
       state.Supply_chains = action.payload;
     },
-      setPoliciesdiligence: (state, action) => {
+    setPoliciesdiligence: (state, action) => {
       state.policies_diligence_processes = action.payload;
     },
-      setRisksforcedchildlabour: (state, action) => {
+    setRisksforcedchildlabour: (state, action) => {
       state.risks_forced_child_labour = action.payload;
+    },
+    setReduceforcedchildlabour: (state, action) => {
+      state.reduce_forced_child_labour = action.payload;
+    },
+    setRemediationlossincome: (state, action) => {
+      state.remediation_loss_income = action.payload;
+    },
+      setTrainingforcedchildlabour: (state, action) => {
+      state.training_forced_child_labour = action.payload;
     },
   },
 });
@@ -40,6 +52,9 @@ export const {
   setSupplychains,
   setPoliciesdiligence,
   setRisksforcedchildlabour,
+  setReduceforcedchildlabour,
+  setRemediationlossincome,
+  setTrainingforcedchildlabour,
 } = BillScreen1Slice.actions;
 
 export default BillScreen1Slice.reducer;

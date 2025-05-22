@@ -262,13 +262,11 @@ const Screenfour = ({
         newErrors.checkboxes = "Please select at least one option.";
       }
     }
-    if (selectedOptions.includes("other")) {
-      // If it's an array and "other" is one of the options
-      if (!reportingentity) {
-        // Check if reportingentity is not filled out
-        newErrors.reportingentity = "Please enter a description";
-      }
-    }
+    // if (selectedOptions.includes("other")) {
+    //   if (!reportingentity) {
+    //     newErrors.reportingentity = "Please enter a description";
+    //   }
+    // }
 
     if (Object.keys(newErrors).length === 0) {
       setError({});
@@ -378,11 +376,11 @@ const Screenfour = ({
                         value={reportingentity}
                         onChange={handleReportingentity}
                       ></input>
-                      {error.reportingentity && (
+                      {/* {error.reportingentity && (
                         <div className="text-red-500 ml-1 text-[12px]">
                           {error.reportingentity}
                         </div>
-                      )}
+                      )} */}
                     </div>
                   )}
                 </div>
