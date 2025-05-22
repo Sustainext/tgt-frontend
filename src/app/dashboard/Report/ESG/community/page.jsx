@@ -13,7 +13,7 @@ import { setCommunityEngagementStatement,
   setCSRStatement} from "../../../../../lib/redux/features/ESGSlice/screen14Slice"
 
 
-const Community = forwardRef(({ onSubmitSuccess }, ref) => {
+const Community = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const [activeSection, setActiveSection] = useState("section14_1");
   const section14_1Ref = useRef(null);
   const section14_1_1Ref = useRef(null);
@@ -164,7 +164,7 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
         <div className="flex gap-4">
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
             <Section1 section14_1Ref={section14_1Ref} data={data}/>
-            <Section2  section14_1_1Ref={section14_1_1Ref} section14_1_2Ref={section14_1_2Ref} data={data} orgName={orgName} />
+            <Section2  section14_1_1Ref={section14_1_1Ref} section14_1_2Ref={section14_1_2Ref} data={data} orgName={orgName} reportType={reportType} />
             <Section3 section14_2Ref={section14_2Ref} data={data} />
         
       
@@ -183,23 +183,30 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section14_1Ref, "section14_1")}
             >
-              14.1.  Management of material topics
+              14.1.  Community Engagement
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section14_1_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section14_1_1Ref, "section14_1_1")}
-            >
-             14.1.1  Management of material topic
-            </p>
+            {
+              reportType=='GRI Report: In accordance With'?(
+                <p
+                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                  activeSection === "section14_1_1" ? "text-blue-400" : ""
+                }`}
+                onClick={() => scrollToSection(section14_1_1Ref, "section14_1_1")}
+              >
+               14.1.1  Management of material topic
+              </p>
+              ):(
+                <div></div>
+              )
+            }
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section14_1_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section14_1_2Ref, "section14_1_2")}
             >
-             14.1.2  Incidents of Violation of Rights of Indigenous People
+            {reportType=='GRI Report: In accordance With'?'14.1.2':'14.1.1'}   Incidents of Violation of Rights of Indigenous People
             </p>
             <p
               className={`text-[12px] mb-2 cursor-pointer ${

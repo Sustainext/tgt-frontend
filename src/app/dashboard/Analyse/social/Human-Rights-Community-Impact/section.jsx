@@ -21,7 +21,7 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
     setOperationsWithLocalCommunity([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_human_rights_and_community_impact_analysis??corporate=${selectedCorp}&organisation=${selectedOrg}&location=${selectedLocation}&start=${dateRange.start}&end=${dateRange.end}`
+        `/sustainapp/get_human_rights_and_community_impact_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&location=${selectedLocation}&start=${dateRange.start}&end=${dateRange.end}`
       );
       setOperationsWithLocalCommunity(response.data.community_engagement);
       setSecuritypersonnel(response.data.security_personnel);

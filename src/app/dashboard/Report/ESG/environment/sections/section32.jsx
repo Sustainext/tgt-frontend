@@ -8,7 +8,7 @@ import { setHabitatProtectionRestorationCommitment } from "../../../../../../lib
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section32 = ({ section12_6_2Ref }) => {
+const Section32 = ({ section12_6_2Ref,reportType }) => {
   const content = useSelector(
     (state) => state.screen12Slice.habitat_protection_restoration_commitment
   );
@@ -78,7 +78,7 @@ const Section32 = ({ section12_6_2Ref }) => {
     <>
       <div id="section12_6_2" ref={section12_6_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          12.6.2 Habitat Protected and Restored
+        {reportType=='GRI Report: In accordance With'?'12.6.2':'12.6.1'} Habitat Protected and Restored
         </h3>
 
         {/* <p className="text-sm mb-4">

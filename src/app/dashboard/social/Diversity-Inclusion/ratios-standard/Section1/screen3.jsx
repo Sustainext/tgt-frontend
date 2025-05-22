@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useMemo } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
@@ -205,6 +205,13 @@ const Screen3 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     updateFormData();
   };
 
+  const customWidgets = useMemo(() => ({
+          ...widgets,
+          GRI2021combinWidhet: (props) => (
+            <GRI2021combinWidhet {...props} locationdata={locationdata} />
+          ),
+        }), [widgets, locationdata]);
+
   return (
     <>
      <div
@@ -259,12 +266,7 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
               formData={formData}
               onChange={handleChange}
               validator={validator}
-              widgets={{
-                ...widgets,
-                GRI2021combinWidhet: (props) => (
-                  <GRI2021combinWidhet {...props} locationdata={locationdata} />
-                ),
-              }}
+              widgets={customWidgets}
             />
           </div>
         ) : (

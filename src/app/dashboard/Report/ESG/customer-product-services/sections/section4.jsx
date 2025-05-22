@@ -1,12 +1,12 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section4 = ({ section15_1_3Ref, data }) => {
+const Section4 = ({ section15_1_3Ref, data,reportType }) => {
   return (
     <>
       <div id="setion15_1_3" ref={section15_1_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          15.1.3 Incidents of Non-Compliance
+        {reportType=='GRI Report: In accordance With'?'15.1.3':'15.1.2'}  Incidents of Non-Compliance
         </h3>
         <p className="text-[15px] mb-4 font-semibold">
         Total number of incidents of non-compliance with regulations and/or voluntary codes

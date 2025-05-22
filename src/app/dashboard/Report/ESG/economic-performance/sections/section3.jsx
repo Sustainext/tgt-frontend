@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setIntroductionto } from "../../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
-const Section3 = ({ section11_1_2Ref, orgName }) => {
+const Section3 = ({ section11_1_2Ref, orgName,reportType }) => {
   const content = useSelector(
     (state) => state.screen11Slice.introduction_to_economic_value_creation
   );
@@ -98,7 +98,7 @@ const Section3 = ({ section11_1_2Ref, orgName }) => {
     <>
       <div id="section11_1_2" ref={section11_1_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          11.1.2 Economic Value Creation
+        {reportType=='GRI Report: In accordance With'?'11.1.2':'11.1.1'}  Economic Value Creation
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

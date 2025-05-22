@@ -2,14 +2,14 @@
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const Section7 = ({ section11_2_2Ref}) => {
+const Section7 = ({ section11_2_2Ref,reportType}) => {
   const data = useSelector((state) => state.screen11Slice.getdata);
 
   return (
     <>
       <div id="section11_2_2" ref={section11_2_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          11.2.2 Indirect Economic Impacts
+         {reportType=='GRI Report: In accordance With'?'11.2.2':'11.2.1'}  Indirect Economic Impacts
         </h3>
 
         {/* Mapping over 203_2a */}
