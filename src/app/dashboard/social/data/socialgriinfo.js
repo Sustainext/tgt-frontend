@@ -24,7 +24,6 @@ export const Socialdata = [
               <li className="text-[11px] text-[#727272]">Over 50 years old.</li>
             </ul>
           </div>
-      
         </div>
       </>,
     ],
@@ -63,7 +62,6 @@ export const Socialdata = [
               and monitor equality and non‑discrimination on the basis of sex.
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -121,7 +119,6 @@ export const Socialdata = [
               employment or training.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -164,7 +161,6 @@ export const Socialdata = [
               international human rights law.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -200,7 +196,6 @@ export const Socialdata = [
               programs.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -245,7 +240,6 @@ export const Socialdata = [
               Neonatal mortality rate.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -294,7 +288,6 @@ export const Socialdata = [
               previous 12 months, by age and place of occurrence.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -341,7 +334,6 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -365,7 +357,6 @@ export const Socialdata = [
               the prior reporting periods.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -416,7 +407,6 @@ export const Socialdata = [
               age and location.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -461,11 +451,10 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-     
         </div>
       </>,
     ],
-     link: "https://sdgs.un.org/goals/goal8",
+    link: "https://sdgs.un.org/goals/goal8",
   },
   //   Child Labour //
   {
@@ -507,7 +496,6 @@ export const Socialdata = [
               work.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -556,7 +544,6 @@ export const Socialdata = [
               previous 12 months, by age and place of occurrence.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -597,7 +584,6 @@ export const Socialdata = [
               labour, by sex and age.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -656,7 +642,6 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -695,7 +680,6 @@ export const Socialdata = [
               for further guidance
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -744,7 +728,6 @@ export const Socialdata = [
               previous 12 months, by age and place of occurrence.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -817,7 +800,6 @@ export const Socialdata = [
               identification and registering.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -876,7 +858,6 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -919,7 +900,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -966,7 +946,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -1017,7 +996,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-         
         </div>
       </>,
     ],
@@ -1064,7 +1042,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -1118,7 +1095,6 @@ export const Socialdata = [
               other favorable or unfavorable treatment
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -1165,7 +1141,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-    
         </div>
       </>,
     ],
@@ -1256,7 +1231,6 @@ export const Socialdata = [
               such committees.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -1303,7 +1277,6 @@ export const Socialdata = [
               legislation, by sex and migrant statu
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -1330,7 +1303,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div >
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Ensure responsive, inclusive, participatory and representative
@@ -1351,7 +1324,6 @@ export const Socialdata = [
               and responsive, by sex, age, disability and population group.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -1403,7 +1375,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -1450,7 +1421,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -1562,7 +1532,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-        
         </div>
       </>,
     ],
@@ -1678,7 +1647,6 @@ export const Socialdata = [
               health as a share of total household expenditure or income.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -1711,7 +1679,6 @@ export const Socialdata = [
               business relationships.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -1758,7 +1725,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -1833,7 +1799,6 @@ export const Socialdata = [
               sole or shared control), and location, among others.
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -1880,7 +1845,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -2149,7 +2113,6 @@ export const Socialdata = [
               if needed.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -2210,7 +2173,6 @@ export const Socialdata = [
               Mortality rate attributed to unintentional poisoning.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -2257,7 +2219,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -2316,7 +2277,6 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2461,7 +2421,6 @@ export const Socialdata = [
               information.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -2555,7 +2514,6 @@ export const Socialdata = [
               Mortality rate attributed to unintentional poisoning.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2602,7 +2560,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2661,7 +2618,6 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -2741,7 +2697,6 @@ export const Socialdata = [
               supported in their transition from work to retirement.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -2797,7 +2752,6 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -2837,7 +2791,6 @@ export const Socialdata = [
               agreements, as well as via ongoing collaboration with suppliers.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2882,7 +2835,6 @@ export const Socialdata = [
               impacts in the supply chain
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -2923,7 +2875,6 @@ export const Socialdata = [
               certain segments of the governance bodies or employees.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -2979,7 +2930,6 @@ export const Socialdata = [
               (b) local governments.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3005,7 +2955,6 @@ export const Socialdata = [
               employee category bygender.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -3048,7 +2997,6 @@ export const Socialdata = [
               international human rights law.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3099,7 +3047,6 @@ export const Socialdata = [
               number of employees in category
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3166,7 +3113,6 @@ export const Socialdata = [
               indicators on this list that can be disaggregated.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3207,7 +3153,6 @@ export const Socialdata = [
               approaches skills enhancement.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -3251,7 +3196,6 @@ export const Socialdata = [
               circumstances that led to the incident no longer exist.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3290,7 +3234,6 @@ export const Socialdata = [
               guidance.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -3324,7 +3267,6 @@ export const Socialdata = [
               monitoring programs, or grievance mechanisms.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -3374,7 +3316,6 @@ export const Socialdata = [
               indigenous status.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3450,7 +3391,6 @@ export const Socialdata = [
               groups are avoided, minimized, mitigated or compensated
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -3499,7 +3439,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -3549,7 +3488,6 @@ export const Socialdata = [
               tenure.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -3595,7 +3533,6 @@ export const Socialdata = [
               circumvent such legislation.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3644,7 +3581,6 @@ export const Socialdata = [
               previous 12 months
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3671,7 +3607,6 @@ export const Socialdata = [
               exist at a regional level.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -3726,7 +3661,6 @@ export const Socialdata = [
               services.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3781,7 +3715,6 @@ export const Socialdata = [
               services.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3834,7 +3767,6 @@ export const Socialdata = [
               resolution mechanism, by type of mechanism.
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -3877,7 +3809,6 @@ export const Socialdata = [
               to collect data by lawful means, and to be transparent.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -3950,7 +3881,6 @@ export const Socialdata = [
               information.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3981,7 +3911,6 @@ export const Socialdata = [
               customers to make informed purchasing choices.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -4027,7 +3956,6 @@ export const Socialdata = [
               education; and (d) student assessment.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -4067,7 +3995,6 @@ export const Socialdata = [
               reporting period or not.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -4107,7 +4034,6 @@ export const Socialdata = [
               reporting period or not.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -4138,7 +4064,6 @@ export const Socialdata = [
               body.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -4169,7 +4094,6 @@ export const Socialdata = [
               is reported under Disclosure 2-5 in this Standard.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -4195,7 +4119,6 @@ export const Socialdata = [
               statements or equivalent documents.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -4241,7 +4164,6 @@ export const Socialdata = [
               public services
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -4269,7 +4191,6 @@ export const Socialdata = [
               in this Standard for more information.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -4339,7 +4260,6 @@ export const Socialdata = [
               employees.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -4548,7 +4468,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-         
         </div>
       </>,
     ],
@@ -4564,46 +4483,45 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div> 
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-9-c
+          <div>
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-9-c
+              </div>
+              The organization can describe the composition of the highest
+              governance body and its committees by additional indicators of
+              diversity, such as age, ancestry and ethnic origin, citizenship,
+              creed, disability, or any other indicators of diversity that are
+              relevant for reporting.
             </div>
-            The organization can describe the composition of the highest
-            governance body and its committees by additional indicators of
-            diversity, such as age, ancestry and ethnic origin, citizenship,
-            creed, disability, or any other indicators of diversity that are
-            relevant for reporting.
-          </div>
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-9-c-ii
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-9-c-ii
+              </div>
+              ‘Independence’ refers to conditions that enable the members of the
+              highest governance body to exercise independent judgment free from
+              any external influence or conflicts of interest. See reference
+              [20] in the Bibliography for more information on independence
+              criteria for governance bodies.
             </div>
-            ‘Independence’ refers to conditions that enable the members of the
-            highest governance body to exercise independent judgment free from
-            any external influence or conflicts of interest. See reference [20]
-            in the Bibliography for more information on independence criteria
-            for governance bodies.
-          </div>
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-9-c-iv
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-9-c-iv
+              </div>
+              A position or commitment held by a highest governance body member
+              is significant when the time and attention it demands compromises
+              the member’s ability to perform its duties in the organization.
+              Significant positions can include cross-board memberships.
             </div>
-            A position or commitment held by a highest governance body member is
-            significant when the time and attention it demands compromises the
-            member’s ability to perform its duties in the organization.
-            Significant positions can include cross-board memberships.
-          </div>
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-9-c-vii
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-9-c-vii
+              </div>
+              Competencies relevant to the impacts of the organization include
+              competencies relevant to impacts commonly associated with the
+              organization’s sectors, products, and geographic locations
             </div>
-            Competencies relevant to the impacts of the organization include
-            competencies relevant to impacts commonly associated with the
-            organization’s sectors, products, and geographic locations
           </div>
-          </div>
-         
         </div>
       </>,
     ],
@@ -4619,27 +4537,26 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div> 
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-10-b-iii
+          <div>
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-10-b-iii
+              </div>
+              ‘Independence’ refers to conditions that enable the members of the
+              highest governance body to exercise independent judgment free from
+              any external influence or conflicts of interest. See reference
+              [20] in the Bibliography for more information on independence
+              criteria for governance bodies.
             </div>
-            ‘Independence’ refers to conditions that enable the members of the
-            highest governance body to exercise independent judgment free from
-            any external influence or conflicts of interest. See reference [20]
-            in the Bibliography for more information on independence criteria
-            for governance bodies.
-          </div>
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-10-b-iv
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-10-b-iv
+              </div>
+              Competencies relevant to the impacts of the organization include
+              competencies relevant to impacts commonly associated with the
+              organization’s sectors, products, and geographic locations.
             </div>
-            Competencies relevant to the impacts of the organization include
-            competencies relevant to impacts commonly associated with the
-            organization’s sectors, products, and geographic locations.
           </div>
-          </div>
-        
         </div>
       </>,
     ],
@@ -4674,7 +4591,6 @@ export const Socialdata = [
             competencies relevant to impacts commonly associated with the
             organization’s sectors, products, and geographic locations.
           </div>
-         
         </div>
       </>,
     ],
@@ -4694,15 +4610,15 @@ export const Socialdata = [
             Guidance
           </div>
           <div>
-          <p className="text-[11px] text-[#727272] mb-4">
-          Remuneration policies are established to ensure that the remuneration
-          arrangements help recruit, motivate, and retain the highest governance
-          body members, senior executives, and other employees. Remuneration
-          policies further support the organization’s strategy and contribution
-          to sustainable development and align with stakeholders' interests.
-          </p>
-        </div>
-         
+            <p className="text-[11px] text-[#727272] mb-4">
+              Remuneration policies are established to ensure that the
+              remuneration arrangements help recruit, motivate, and retain the
+              highest governance body members, senior executives, and other
+              employees. Remuneration policies further support the
+              organization’s strategy and contribution to sustainable
+              development and align with stakeholders' interests.
+            </p>
+          </div>
         </div>
       </>,
     ],
@@ -4761,7 +4677,6 @@ export const Socialdata = [
             excluding the highest-paid individual)
             <br />
           </div>
-        
         </div>
       </>,
     ],
@@ -4805,7 +4720,6 @@ export const Socialdata = [
             regarding its contribution to sustainable development for the next
             year and the coming three to five years.
           </div>
-        
         </div>
       </>,
     ],
@@ -4825,43 +4739,43 @@ export const Socialdata = [
             Guidance
           </div>
           <div>
-          <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
-            This disclosure gives insight into how the organization embeds its
-            policy commitments for responsible business conduct, including the
-            commitment to respect human rights, throughout its activities and
-            business relationships. This ensures that people at all levels act
-            responsibly and with awareness of and respect for human rights.
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              This disclosure gives insight into how the organization embeds its
+              policy commitments for responsible business conduct, including the
+              commitment to respect human rights, throughout its activities and
+              business relationships. This ensures that people at all levels act
+              responsibly and with awareness of and respect for human rights.
+            </div>
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+              Guidance to 2-24-a-i
+            </div>
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              Examples of different levels within an organization include the
+              highest governance body, senior executives, and operational
+              levels.
+              <br />
+              <br />
+              The organization can report:
+              <br />• the most senior level with oversight of, or accountability
+              for, the implementation of the policy commitments;
+              <br />
+              <br />• the functions in the organization with day-to-day
+              responsibility for implementing each of the policy commitments
+              (e.g., human resources with the responsibility for implementing
+              the commitment to respect the rights of workers), including:
+              <br />- their reporting lines to senior decision-making levels;
+              <br />- the reason for allocating the responsibility to them;
+              <br />
+              <br />• whether responsible business conduct is formally discussed
+              at meetings of the highest governance body or senior executives
+              and, if so, which topics are discussed;
+              <br />
+              <br />• whether there are other formal or systematic means for
+              discussions about responsible business conduct between different
+              levels or functions in the organization (e.g., a crossfunctional
+              working group).
+            </div>
           </div>
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
-            Guidance to 2-24-a-i
-          </div>
-          <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
-            Examples of different levels within an organization include the
-            highest governance body, senior executives, and operational levels.
-            <br />
-            <br />
-            The organization can report:
-            <br />• the most senior level with oversight of, or accountability
-            for, the implementation of the policy commitments;
-            <br />
-            <br />• the functions in the organization with day-to-day
-            responsibility for implementing each of the policy commitments
-            (e.g., human resources with the responsibility for implementing the
-            commitment to respect the rights of workers), including:
-            <br />- their reporting lines to senior decision-making levels;
-            <br />- the reason for allocating the responsibility to them;
-            <br />
-            <br />• whether responsible business conduct is formally discussed
-            at meetings of the highest governance body or senior executives and,
-            if so, which topics are discussed;
-            <br />
-            <br />• whether there are other formal or systematic means for
-            discussions about responsible business conduct between different
-            levels or functions in the organization (e.g., a crossfunctional
-            working group).
-          </div>
-          </div>
-         
         </div>
       </>,
     ],
@@ -4881,66 +4795,66 @@ export const Socialdata = [
             Guidance
           </div>
           <div>
-          <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
-            This disclosure covers the organization’s mechanisms for individuals
-            to seek advice and raise concerns about responsible business conduct
-            in the organization's operations and business relationships.
-            Examples of these mechanisms include confidential interviews during
-            site visits, escalation processes (to raise issues through
-            management levels), hotlines, mechanisms to report non-compliance
-            with laws and regulations, and whistleblowing mechanisms.
-            <br />
-            <br />
-            These mechanisms enable individuals to raise concerns about
-            wrongdoing or breaches of the law in the organization’s operations
-            or business relationships, regardless of whether the individuals
-            themselves are harmed or not. They are distinct from grievance
-            mechanisms, which enable stakeholders to raise concerns about, and
-            seek remedy / remediation for, the organization’s potential and
-            actual negative impacts on them. Grievance mechanisms are reported
-            under Disclosure 2-25 in this Standard.
-            <br />
-            <br />
-            If the organization’s grievance mechanisms and its mechanisms for
-            seeking advice and raising concerns about responsible business
-            conduct operate in a similar way, the organization can provide a
-            single description of how these mechanisms operate and explain which
-            mechanisms the description covers.
-            <br />
-            <br />
-            The organization can report:
-            <br />• who the intended users of the mechanisms are;
-            <br />• how the mechanisms operate and which level or function in
-            the organization is assigned responsibility for them;
-            <br />• whether the mechanisms are operated independently of the
-            organization (e.g., by a third party);
-            <br />• the process through which concerns are investigated;
-            <br />• whether requests for advice and concerns raised are treated
-            confidentially;
-            <br />• whether the mechanisms can be used anonymously.
-            <br />
-            <br />
-            Additionally, the organization can report information about the
-            effectiveness of the mechanisms, including:
-            <br />• whether and how the intended users are informed about the
-            mechanisms and trained on how to use them;
-            <br />• the accessibility of the mechanisms, such as the number of
-            hours per day or days per week they are available, and their
-            availability in different languages;
-            <br />• how the organization seeks to ensure it respects users’
-            human rights and protects them against reprisals (i.e.,
-            non-retaliation for raising concerns);
-            <br />• how satisfied users are with the mechanisms and with the
-            resulting outcomes;
-            <br />• the number and types of requests for advice received during
-            the reporting period, and the percentage of requests that were
-            answered;
-            <br />• the number and types of concerns raised during the reporting
-            period, and the percentage of concerns that were addressed and
-            resolved or found to be unsubstantiated.
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              This disclosure covers the organization’s mechanisms for
+              individuals to seek advice and raise concerns about responsible
+              business conduct in the organization's operations and business
+              relationships. Examples of these mechanisms include confidential
+              interviews during site visits, escalation processes (to raise
+              issues through management levels), hotlines, mechanisms to report
+              non-compliance with laws and regulations, and whistleblowing
+              mechanisms.
+              <br />
+              <br />
+              These mechanisms enable individuals to raise concerns about
+              wrongdoing or breaches of the law in the organization’s operations
+              or business relationships, regardless of whether the individuals
+              themselves are harmed or not. They are distinct from grievance
+              mechanisms, which enable stakeholders to raise concerns about, and
+              seek remedy / remediation for, the organization’s potential and
+              actual negative impacts on them. Grievance mechanisms are reported
+              under Disclosure 2-25 in this Standard.
+              <br />
+              <br />
+              If the organization’s grievance mechanisms and its mechanisms for
+              seeking advice and raising concerns about responsible business
+              conduct operate in a similar way, the organization can provide a
+              single description of how these mechanisms operate and explain
+              which mechanisms the description covers.
+              <br />
+              <br />
+              The organization can report:
+              <br />• who the intended users of the mechanisms are;
+              <br />• how the mechanisms operate and which level or function in
+              the organization is assigned responsibility for them;
+              <br />• whether the mechanisms are operated independently of the
+              organization (e.g., by a third party);
+              <br />• the process through which concerns are investigated;
+              <br />• whether requests for advice and concerns raised are
+              treated confidentially;
+              <br />• whether the mechanisms can be used anonymously.
+              <br />
+              <br />
+              Additionally, the organization can report information about the
+              effectiveness of the mechanisms, including:
+              <br />• whether and how the intended users are informed about the
+              mechanisms and trained on how to use them;
+              <br />• the accessibility of the mechanisms, such as the number of
+              hours per day or days per week they are available, and their
+              availability in different languages;
+              <br />• how the organization seeks to ensure it respects users’
+              human rights and protects them against reprisals (i.e.,
+              non-retaliation for raising concerns);
+              <br />• how satisfied users are with the mechanisms and with the
+              resulting outcomes;
+              <br />• the number and types of requests for advice received
+              during the reporting period, and the percentage of requests that
+              were answered;
+              <br />• the number and types of concerns raised during the
+              reporting period, and the percentage of concerns that were
+              addressed and resolved or found to be unsubstantiated.
+            </div>
           </div>
-          </div>
-         
         </div>
       </>,
     ],
@@ -5178,7 +5092,6 @@ export const Socialdata = [
               </p>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -5234,7 +5147,6 @@ export const Socialdata = [
               organization’s impacts.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -5291,7 +5203,6 @@ export const Socialdata = [
               not controlled by the parent entity.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -5328,7 +5239,6 @@ export const Socialdata = [
               as its financial reporting, where this is possible.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -5410,7 +5320,6 @@ export const Socialdata = [
               requirement.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -5466,7 +5375,6 @@ export const Socialdata = [
               organization’s sustainability reporting.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -5642,7 +5550,6 @@ export const Socialdata = [
               or changes in the location of its suppliers.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -5761,7 +5668,6 @@ export const Socialdata = [
               fact is sufficient to comply with the requirement.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -5811,7 +5717,6 @@ export const Socialdata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -5876,7 +5781,6 @@ export const Socialdata = [
               with the requirement.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -5980,7 +5884,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-         
         </div>
       </>,
     ],
@@ -6008,7 +5911,6 @@ export const Socialdata = [
               association that is critical to the organization’s own activities.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -6141,7 +6043,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -6236,7 +6137,6 @@ export const Socialdata = [
               of this fact is sufficient to comply with this requirement.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -6272,7 +6172,6 @@ export const Socialdata = [
               contribution to the economy
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -6332,7 +6231,6 @@ export const Socialdata = [
               CO2 emission per unit of value added
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -6374,7 +6272,6 @@ export const Socialdata = [
               transport, by sex, age and persons with disabilities
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -6470,7 +6367,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-         
         </div>
       </>,
     ],
@@ -6537,7 +6433,6 @@ export const Socialdata = [
               tenure.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -6584,7 +6479,6 @@ export const Socialdata = [
               1,000 women in that age group
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -6656,7 +6550,6 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -6699,7 +6592,6 @@ export const Socialdata = [
               and sex
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -6732,7 +6624,6 @@ export const Socialdata = [
               economy, and maintain community relations.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -6781,7 +6672,6 @@ export const Socialdata = [
               ability to understand local needs.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -6999,7 +6889,6 @@ export const Socialdata = [
               local economies.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7050,7 +6939,6 @@ export const Socialdata = [
               Annual growth rate of real GDP per employed person.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -7128,7 +7016,6 @@ export const Socialdata = [
               Researchers (in full-time equivalent) per million inhabitants
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -7219,7 +7106,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-        
         </div>
       </>,
     ],
@@ -7270,7 +7156,6 @@ export const Socialdata = [
               risk reduction strategies
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7338,7 +7223,6 @@ export const Socialdata = [
               strategic planning on the part of the employer.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7377,7 +7261,6 @@ export const Socialdata = [
               Bibliography.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7419,7 +7302,6 @@ export const Socialdata = [
               policies and procedures to combat corruption.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7456,7 +7338,6 @@ export const Socialdata = [
               customers, and clients.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -7495,7 +7376,6 @@ export const Socialdata = [
               the organization as well as punitive measures.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7592,7 +7472,6 @@ export const Socialdata = [
               conduct.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -7647,7 +7526,6 @@ export const Socialdata = [
               newborns, work-injury victims and the poor and the vulnerable
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7689,7 +7567,6 @@ export const Socialdata = [
               Redistributive impact of fiscal policy
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -7748,7 +7625,6 @@ export const Socialdata = [
               of total GDP
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -7900,7 +7776,6 @@ export const Socialdata = [
               documents.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -7998,7 +7873,6 @@ export const Socialdata = [
               its risks and impacts.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -8213,7 +8087,6 @@ export const Socialdata = [
               jurisdictions where the tax was paid.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -8222,27 +8095,39 @@ export const Socialdata = [
   {
     category: ["132"],
     header: [
-      <h5 className="text-sky-600 text-[17px] font-bold">GRI 202: Market Presence 2016</h5>,
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 202: Market Presence 2016
+      </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 202-1 Ratios of standard entry level wage
-          by gender compared to local minimum wage
-
+            Disclosure 202-1 Ratios of standard entry level wage by gender
+            compared to local minimum wage
           </p>
           <div>
-            <p className="text-[13px] text-[#222222] mb-2">
-            Background:
-            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Background:</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            This disclosure applies to those organizations in which a substantial portion of their employees, and workers (excluding employees) performing the organization’s activities, are compensated in a manner or scale that is closely linked to laws or regulations on minimum wage. Providing wages above the minimum wage can help contribute to the economic well-being of workers performing the organization’s activities. The impacts of wage levels are immediate, and they directly affect individuals, organizations, countries and economies. The distribution of wages is crucial for eliminating inequalities, such as wage gap differences between women and men, or nationals and migrants. Also, entry level wages paid compared to local minimum wages show the competitiveness of an organization’s wages and provide information relevant for assessing the effect of wages on the local labor market. Comparing this information by gender can also be a measure of an organization’s approach to equal opportunity in the workplace.
+              This disclosure applies to those organizations in which a
+              substantial portion of their employees, and workers (excluding
+              employees) performing the organization’s activities, are
+              compensated in a manner or scale that is closely linked to laws or
+              regulations on minimum wage. Providing wages above the minimum
+              wage can help contribute to the economic well-being of workers
+              performing the organization’s activities. The impacts of wage
+              levels are immediate, and they directly affect individuals,
+              organizations, countries and economies. The distribution of wages
+              is crucial for eliminating inequalities, such as wage gap
+              differences between women and men, or nationals and migrants.
+              Also, entry level wages paid compared to local minimum wages show
+              the competitiveness of an organization’s wages and provide
+              information relevant for assessing the effect of wages on the
+              local labor market. Comparing this information by gender can also
+              be a measure of an organization’s approach to equal opportunity in
+              the workplace.
             </p>
-
-           
           </div>
-         
         </div>
       </>,
     ],
@@ -8285,9 +8170,7 @@ export const Socialdata = [
               Proportion of men, women and children of all ages living in
               poverty in all its dimensions according to national definitions
             </p>
-           
           </div>
-      
         </div>
       </>,
     ],
@@ -8313,8 +8196,6 @@ export const Socialdata = [
             Sustainable Development Goal 5: Gender equality
           </p>
           <div>
-        
-          
             <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Recognize and value unpaid care and domestic work through the
@@ -8329,7 +8210,6 @@ export const Socialdata = [
               age and location.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -8375,10 +8255,7 @@ export const Socialdata = [
             <p className="text-[11px] text-[#727272] mb-2">
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
-           
-         
           </div>
-         
         </div>
       </>,
     ],
@@ -8388,28 +8265,30 @@ export const Socialdata = [
     category: ["136"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-      GRI 205: Anti-corruption 2016
+        GRI 205: Anti-corruption 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 205-2 Communication and training about anti-corruption policies and procedures
+            Disclosure 205-2 Communication and training about anti-corruption
+            policies and procedures
           </p>
           <div>
             <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.
+              In the context of this GRI Standard, the term ‘business partners’
+              includes, among others, suppliers, agents, lobbyists and other
+              intermediaries, joint venture and consortia partners, governments,
+              customers, and clients.
             </p>
-            <p className="text-[13px] text-[#222222] mb-4">
-            Background:
-            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Communication and training build the internal and external awareness and the necessary capacity to combat corruption.
+              Communication and training build the internal and external
+              awareness and the necessary capacity to combat corruption.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -8419,43 +8298,44 @@ export const Socialdata = [
     category: ["137"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-        GRI 308: Supplier Environmental
-        Assessment 2016
+        GRI 308: Supplier Environmental Assessment 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 308-1 New suppliers that were screened
-          using environmental criteria
+            Disclosure 308-1 New suppliers that were screened using
+            environmental criteria
           </p>
           <div>
             {/* <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p> */}
             <p className="text-[11px] text-[#727272] mb-2">
-            Environmental criteria can include the topics covered in other GRI Topic Standards (e.g., GRI
-
+              Environmental criteria can include the topics covered in other GRI
+              Topic Standards (e.g., GRI
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions 2016)
+              302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305:
+              Emissions 2016)
             </p>
             <p className="text-[11px] text-black mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            This disclosure informs stakeholders about the percentage of suppliers selected or contracted subject to due diligence processes for environmental impacts.
-
+              This disclosure informs stakeholders about the percentage of
+              suppliers selected or contracted subject to due diligence
+              processes for environmental impacts.
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            An organization is expected to initiate due diligence as early as possible in the development of a new relationship with a supplier.
-
+              An organization is expected to initiate due diligence as early as
+              possible in the development of a new relationship with a supplier.
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Impacts may be prevented or mitigated at the stage of structuring contracts or other agreements,
-as well as via ongoing collaboration with suppliers.
+              Impacts may be prevented or mitigated at the stage of structuring
+              contracts or other agreements, as well as via ongoing
+              collaboration with suppliers.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -8465,44 +8345,121 @@ as well as via ongoing collaboration with suppliers.
     category: ["138"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-      GRI 308: Supplier Environmental
-      Assessment 2016
+        GRI 308: Supplier Environmental Assessment 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 308-2 Negative environmental impacts in
-the supply chain and actions taken
+            Disclosure 308-2 Negative environmental impacts in the supply chain
+            and actions taken
           </p>
           <div>
-            <p className="text-[11px] text-black mb-2">
-            Guidance :
+            <p className="text-[11px] text-black mb-2">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Negative impacts include those that are either caused or
+              contributed to by an organization, or that are directly linked to
+              its operations, products, or services by its relationship with a
+              supplier. Assessments for environmental impacts can include the
+              topics covered in other GRI Topic Standards (e.g., GRI 302: Energy
+              2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions 2016).
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Negative impacts include those that are either caused or contributed to by an organization, or that are directly linked to its operations, products, or services by its relationship with a supplier. Assessments for environmental impacts can include the topics covered in other GRI Topic Standards (e.g., GRI 302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions
-2016).
-
-            </p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            Assessments can be made against agreed performance expectations that are set and communicated to the suppliers prior to the assessment. Assessments can be informed by audits, contractual reviews, two-way engagement, and complaint and grievance mechanisms.
-
+              Assessments can be made against agreed performance expectations
+              that are set and communicated to the suppliers prior to the
+              assessment. Assessments can be informed by audits, contractual
+              reviews, two-way engagement, and complaint and grievance
+              mechanisms.
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Improvements can include changing an organization’s procurement practices, the adjustment of performance expectations, capacity building, training, and changes to processes
+              Improvements can include changing an organization’s procurement
+              practices, the adjustment of performance expectations, capacity
+              building, training, and changes to processes
             </p>
             <p className="text-[11px] text-black mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            This disclosure informs stakeholders about an organization’s awareness of significant actual
-            and potential negative environmental impacts in the supply chain.
+              This disclosure informs stakeholders about an organization’s
+              awareness of significant actual and potential negative
+              environmental impacts in the supply chain.
             </p>
-            
           </div>
-        
         </div>
       </>,
     ],
     link: "https://www.globalreporting.org/pdf.ashx?id=12532",
+  },
+  {
+    category: ["139"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">Bill S-211</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Overview of the reporting process
+          </p>
+          <div>
+            <p className="text-[11px] text-black mb-2">1. Prepare a report</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Entities should review the reporting requirements outlined in this
+              guidance to respond to each of the Act's requirements. Refer to
+              the list of questions in the online questionnaire to determine
+              what information is required and what internal consultations may
+              be necessary to develop their annual report.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              2. Approval and attestation
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Once an entity completes a report that meets the requirements
+              outlined in this guidance, it must obtain approval of the report
+              by the appropriate governing body or bodies of the entity or
+              entities. The annual PDF report submitted to Public Safety Canada
+              must also include a signed attestation of approval. See an example
+              of attestation language that an entity may include in their
+              report.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              3. Complete online questionnaire
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              To submit their annual report, entities must complete the online
+              questionnaire. The questionnaire collects information that
+              responds to the Act's reporting requirements and is the mechanism
+              for submitting an annual report to Public Safety Canada. Entities
+              must ensure that their responses to the questionnaire are accurate
+              and that the information is consistent with their annual report..
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              4. Upload approved report to online questionnaire
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              At the end of the questionnaire, entities must upload their annual
+              report in PDF format, and select “submit”. Entities will receive a
+              confirmation email following submission and will have the option
+              to download a copy of their responses to the questionnaire.
+              Entities that opt to submit their report in both Canadian official
+              languages can upload two separate PDF files at the end of the
+              questionnaire.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              5. Publish report to entity's website
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              On providing a report to Public Safety Canada, entities must
+              publish their report in a prominent place on their website.
+              Reports submitted to Public Safety Canada will also be made
+              publicly available in a searchable online catalogue. Only the PDF
+              reports and select information submitted through the online
+              questionnaire will be published on the Public Safety Canada
+              website.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.publicsafety.gc.ca/cnt/cntrng-crm/frcd-lbr-cndn-spply-chns/prpr-rprt-en.aspx",
   },
 ];
