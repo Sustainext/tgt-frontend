@@ -147,7 +147,7 @@ const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate, id }) 
       {isExpanded && (
         <div className="p-4 border-t border-gray-200">
           {/* Additional activity details */}
-          <div className="grid grid-cols-2 gap-4 mb-4 text-sm ml-3">
+          {/* <div className="grid grid-cols-2 gap-4 mb-4 text-sm ml-3">
             <div>
               <span className="text-gray-500">Activity ID:</span> {activityId}
             </div>
@@ -160,23 +160,7 @@ const ExpandableActivityItem = ({ activity, scenarioId, onActivityUpdate, id }) 
             <div>
               <span className="text-gray-500">CO2e Total:</span> {Number(co2eTotal).toFixed(2)}
             </div>
-            
-            {/* Show activity change status */}
-            {/* {localActivity.percentage_change && (
-              <div className="col-span-2">
-                <span className="text-gray-500">Activity Change:</span> 
-                <span className="ml-2 text-green-600">Enabled for {activityChangeYearCount} years</span>
-              </div>
-            )} */}
-            
-            {/* Show changes in activity status */}
-            {/* {changesInActivityYearCount > 0 && (
-              <div className="col-span-2">
-                <span className="text-gray-500">Activity Replacements:</span> 
-                <span className="ml-2 text-green-600">{changesInActivityYearCount} years with activity changes</span>
-              </div>
-            )} */}
-          </div>
+          </div> */}
           
           {/* Activities graph for this activity */}
           <div className="min-h-80 p-2">

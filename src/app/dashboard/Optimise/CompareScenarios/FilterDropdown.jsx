@@ -1,19 +1,7 @@
-// FilterDropdown.jsx
+// UpdatedFilterDropdown.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { FiChevronDown, FiCheck } from "react-icons/fi";
 
-/**
- * Reusable dropdown component for filters
- * 
- * @param {Object} props Component props
- * @param {string} props.label Label text for the dropdown
- * @param {Array|string} props.selected Currently selected value(s)
- * @param {Function} props.setSelected Callback for selection changes
- * @param {Array} props.options Available options
- * @param {boolean} props.multiSelect Whether multiple selection is allowed
- * @param {boolean} props.disabled Whether the dropdown is disabled
- * @param {string} props.defaultLabel Label to show when "Aggregated Scope" is selected
- */
 const FilterDropdown = ({ 
   label, 
   selected, 
@@ -81,51 +69,65 @@ const FilterDropdown = ({
     }
   };
   
+  // Determine the width class for the dropdown
+  const getDropdownWidthClass = () => {
+    return label === 'Activity:' ? 'w-[380px]' : 'w-56';
+  };
+  
   return (
     <div className="flex items-center" ref={dropdownRef}>
       <span className={`text-gray-600 font-medium mr-1 ${disabled ? 'opacity-50' : ''}`}>
         {label}
       </span>
       <div className="relative">
-        <button
-          onClick={() => !disabled && setIsOpen(!isOpen)}
-          className={`flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none ${
-            disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-          }`}
-          aria-haspopup="listbox"
-          aria-expanded={isOpen}
-          disabled={disabled}
-        >
-          <span className="truncate max-w-[140px]">{getDisplayLabel()}</span>
-          <FiChevronDown 
-            className={`ml-1 h-4 w-4 text-gray-500 transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
-          />
-        </button>
+        {/* Fixed width container for the button to prevent shifting */}
+        <div className={`${label === 'Activity:' ? 'w-[200px]' : 'w-[140px]'}`}>
+          <button
+            onClick={() => !disabled && setIsOpen(!isOpen)}
+            className={`flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none ${
+              disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+            } w-full justify-between`}
+            aria-haspopup="listbox"
+            aria-expanded={isOpen}
+            disabled={disabled}
+          >
+            <span className="truncate">{getDisplayLabel()}</span>
+            <FiChevronDown 
+              className={`ml-1 h-4 w-4 text-gray-500 transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+            />
+          </button>
+        </div>
         
         {isOpen && !disabled && (
-          <div 
-            className="absolute top-full left-0 mt-1 w-56 bg-white border border-gray-200 rounded shadow-md z-10"
+          <div
+            className={`absolute top-full ${
+              label === 'Activity:' ? 'right-0' : 'left-0'
+            } ${getDropdownWidthClass()} mt-1 bg-white border border-gray-200 rounded shadow-md z-10`}
             role="listbox"
           >
             <div className="py-1 max-h-60 overflow-y-auto">
               {options.map((option) => (
-                <div 
-                  key={option} 
-                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                <div
+                  key={option}
+                  className="flex items-start px-4 py-2 hover:bg-gray-100 cursor-pointer"
                   onClick={() => handleSelection(option)}
                   role="option"
                   aria-selected={selectedArray.includes(option)}
                 >
-                  <div className={`flex items-center justify-center w-4 h-4 mr-2 rounded border ${
-                    selectedArray.includes(option) 
-                      ? 'bg-blue-500 border-blue-500 text-white' 
-                      : 'border-gray-300'
-                  }`}>
-                    {selectedArray.includes(option) && <FiCheck className="w-3 h-3" />}
+                  <div className="flex-shrink-0 pt-0.5">
+                    <div className={`flex items-center justify-center w-5 h-5 rounded border ${
+                      selectedArray.includes(option)
+                        ? 'bg-blue-500 border-blue-500 text-white'
+                        : 'border-gray-300'
+                    }`}>
+                      {selectedArray.includes(option) && <FiCheck className="w-3 h-3" />}
+                    </div>
                   </div>
-                  <label className="block text-sm text-gray-900 cursor-pointer">
-                    {option === "Aggregated Scope" ? defaultLabel : option}
-                  </label>
+                  <div className="ml-3 flex-1">
+                    <div className="text-sm text-gray-900 cursor-pointer break-words">
+                      {option === "Aggregated Scope" ? defaultLabel : option}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

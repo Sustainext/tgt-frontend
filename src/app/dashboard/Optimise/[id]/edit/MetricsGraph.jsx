@@ -445,7 +445,7 @@ const MetricsGraph = ({
         <div className="flex items-center rounded-lg">
           <div className="flex items-center mr-4">
             <span className="text-sm font-medium text-gray-700 mr-2">
-              Enter Absolute Value for the base year*
+              Enter the {metricName} value for the base year* (absolute Value)
             </span>
             <input
               type="text"
