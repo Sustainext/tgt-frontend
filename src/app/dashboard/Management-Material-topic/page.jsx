@@ -13,7 +13,7 @@ import Screen1 from "./Screen1";
 import { useSelector } from "react-redux";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-const Materialtopic = ({ apiData, setMobileopen, view_path,headingname,Envdata }) => {
+const Materialtopic = ({ apiData, setMobileopen, view_path,headingname,Envdata,topheading }) => {
   const {
     corporate_id,
     organization_id,
@@ -83,7 +83,7 @@ const Materialtopic = ({ apiData, setMobileopen, view_path,headingname,Envdata }
           <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
             <div className="w-full">
               <div className="text-left mb-4 ml-3 pt-5">
-                <p className="text-[11px]">Environment</p>
+                <p className="text-[11px]">{topheading}</p>
                 <div className="flex h-[28px]">
                   <div className="h-[28px]">
                     <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
@@ -201,7 +201,7 @@ const Materialtopic = ({ apiData, setMobileopen, view_path,headingname,Envdata }
           >
             <div className="text-left mb-2 ml-3 pt-0 flex justify-between">
               <div className="">
-                <p className="text-[11px]">Environment</p>
+                <p className="text-[11px]">{topheading}</p>
                 <div className="flex h-[28px]">
                   <div className="h-[28px]">
                     <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
@@ -386,6 +386,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         togglestatus={togglestatus}
         view_path={view_path}
       />
+      {/* <h2>new mmt</h2> */}
     </>
   );
 };
