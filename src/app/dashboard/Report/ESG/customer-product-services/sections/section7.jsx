@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setMarketingPractices } from "../../../../../../lib/redux/features/ESGSlice/screen15Slice";
 
-const Section7 = ({ section15_2_2Ref, data }) => {
+const Section7 = ({ section15_2_2Ref, data,reportType }) => {
   const marketing_practices = useSelector(
     (state) => state.screen15Slice.marketing_practices
   );
@@ -25,7 +25,7 @@ const Section7 = ({ section15_2_2Ref, data }) => {
     <>
       <div id="setion15_2_2" ref={section15_2_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          15.2 2.Marketing
+        {reportType=='GRI Report: In accordance With'?'15.2.2':'15.2.1'}  Marketing
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
@@ -46,7 +46,7 @@ const Section7 = ({ section15_2_2Ref, data }) => {
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
         />
-        <p className="text-sm mb-4">
+        {/* <p className="text-sm mb-4">
           {data["417_3b"]
             ? data["417_3b"].length > 0
               ? data["417_3b"][0].Q1
@@ -54,8 +54,11 @@ const Section7 = ({ section15_2_2Ref, data }) => {
                 : "No data available"
               : "No data available"
             : "No data available"}
-        </p>
+        </p> */}
 
+<p className="text-[15px] mb-2 text-[#344054]">
+Incidents of non-compliance with regulations and/or voluntary codes concerning marketing communications
+</p>
         <div className="text-sm mb-4">
           <ul className="list-disc ml-4">
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">

@@ -324,9 +324,9 @@ const Sidenav = () => {
 
   return (
     <>
-      <div className="fixed z-[100]">
+      <div className="fixed z-[100]  h-[calc(140vh-64px)]">
         <div
-          className={`bg-[#0a0528]  pt-[1.25rem] pb-11 ${
+          className={`bg-[#0a0528]  pt-[1.25rem] pb-11 h-[calc(140vh-64px)] ${
             open ? "w-[15rem]" : "w-[4.5rem]"
           } duration-300 relative`}
         >

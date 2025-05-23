@@ -41,7 +41,7 @@ const DataTable = ({ data, setRefresh, refresh }) => {
   return (
     <>
       <div className="mb-2 h-auto overflow-x-auto custom-scrollbar hidden xl:block md:block lg:block 4k:block 2k:block">
-        <table className="min-w-[1000px] w-full rounded-md">
+        <table className="min-w-[1000px] w-full rounded-md ">
           <thead className="gradient-background">
             <tr>
               {Col.map((item, idx) => (
@@ -49,7 +49,7 @@ const DataTable = ({ data, setRefresh, refresh }) => {
                   key={idx}
                   className="text-[12px] px-3 py-3 w-auto text-left"
                 >
-                  <div className="flex w-[144px] xl:w-[160px]">
+                  <div className="flex">
                     <p className=" text-gray-500 ">{item}</p>
                   </div>
                 </th>
@@ -175,7 +175,7 @@ const DataTable = ({ data, setRefresh, refresh }) => {
     className="text-[12px] px-3 py-3 w-auto text-center"
   >
     <div
-      className={`flex w-[144px] xl:w-[160px] ${
+      className={`flex  ${
         item === "ESG Topics" ? "justify-center mr-1" : ""
       }`}
     >

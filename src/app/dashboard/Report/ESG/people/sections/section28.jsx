@@ -91,6 +91,9 @@ const Section28 = ({ section13_7Ref, data }) => {
               : "No data available"
             : "No data available"}
         </p>
+        <p className="text-[15px]  mb-2 font-semibold">
+        Percentage of total employees covered by collective bargaining agreements
+        </p>
         <div className="rounded-md mb-4 shadow-md">
           <LeaveTable columns={col2} data={Tabledata2} />
         </div>

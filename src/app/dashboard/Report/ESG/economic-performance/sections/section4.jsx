@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setFinancialassistanc } from "../../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
-const Section4 = ({ section11_1_3Ref, orgName }) => {
+const Section4 = ({ section11_1_3Ref, orgName,reportType }) => {
   const content = useSelector(
     (state) => state.screen11Slice.financial_assistance_from_government
   );
@@ -59,7 +59,7 @@ const Section4 = ({ section11_1_3Ref, orgName }) => {
     <>
       <div id="section11_1_3" ref={section11_1_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          11.1.3 Financial Assistance Received from Government
+        {reportType=='GRI Report: In accordance With'?'11.1.3':'11.1.2'} Financial Assistance Received from Government
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
@@ -86,6 +86,14 @@ const Section4 = ({ section11_1_3Ref, orgName }) => {
             <Table1 values={tableData} currency={economicData.currency} />
           )}
         </div>
+        <p className="text-[15px] mb-2 text-[#344054] font-semibold">
+        Government’s presence in the shareholding structure
+        </p>
+        <p className="text-sm mb-4">
+          {
+            data['201_4c_government']?data['201_4c_government']?.length>0?data['201_4c_government'][0]?.Q1=="No"?"No":data['201_4c_government'][0]?.Q2 || "No data available":'No data available':'No data available'
+          }
+        </p>
       </div>
     </>
   );

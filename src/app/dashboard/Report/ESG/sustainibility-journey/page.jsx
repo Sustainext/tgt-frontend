@@ -25,7 +25,7 @@ import {
   setSupplyChainSustainability,
 } from "../../../../../lib/redux/features/ESGSlice/screen10Slice";
 
-const SustainibilityJourney = forwardRef(({ onSubmitSuccess }, ref) => {
+const SustainibilityJourney = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const [activeSection, setActiveSection] = useState("section10_1");
 
   const section10_1Ref = useRef(null);
@@ -47,6 +47,10 @@ const SustainibilityJourney = forwardRef(({ onSubmitSuccess }, ref) => {
       behavior: "smooth",
     });
   };
+
+  const referenceHeading={
+
+  }
 
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
@@ -232,13 +236,13 @@ const SustainibilityJourney = forwardRef(({ onSubmitSuccess }, ref) => {
         </h3>
         <div className="flex gap-4">
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
-            <Section1 orgName={orgName} />
-            <Section2 section10_1Ref={section10_1Ref} />
-            <Section3 section10_2Ref={section10_2Ref} />
-            <Section4 section10_3Ref={section10_3Ref} />
-            <Section5 section10_3_1Ref={section10_3_1Ref} data={data} />
-            <Section6 section10_3_2Ref={section10_3_2Ref} data={data} />
-            <Section7 section10_3_3Ref={section10_3_3Ref} data={data} />
+            <Section1 orgName={orgName} data={data} />
+            <Section2 section10_1Ref={section10_1Ref} data={data} />
+            <Section3 section10_2Ref={section10_2Ref} data={data} />
+            <Section4 section10_3Ref={section10_3Ref} data={data} />
+           { reportType=='GRI Report: In accordance With' && <Section5 section10_3_1Ref={section10_3_1Ref} data={data} /> } 
+            <Section6 section10_3_2Ref={section10_3_2Ref} data={data} reportType={reportType} />
+            <Section7 section10_3_3Ref={section10_3_3Ref} data={data} reportType={reportType} />
           </div>
           {/* page sidebar */}
 
@@ -272,21 +276,24 @@ const SustainibilityJourney = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               10.3 Supply Chain Sustainability
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section10_3_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section10_3_1Ref, "section10_3_1")}
-            >
-              10.3.1. Management of material topic 
-            </p>
+            { reportType=='GRI Report: In accordance With' && 
+             <p
+             className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+               activeSection === "section10_3_1" ? "text-blue-400" : ""
+             }`}
+             onClick={() => scrollToSection(section10_3_1Ref, "section10_3_1")}
+           >
+             10.3.1. Management of material topic 
+           </p>
+            }
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section10_3_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section10_3_2Ref, "section10_3_2")}
             >
-              10.3.2. Local Suppliers
+             { reportType=='GRI Report: In accordance With'?'10.3.2.':'10.3.1.'}  Local Suppliers
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -294,7 +301,7 @@ const SustainibilityJourney = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section10_3_3Ref, "section10_3_3")}
             >
-              10.3.3. Negative environmental & social impacts in the supply
+             { reportType=='GRI Report: In accordance With'?'10.3.3.':'10.3.2.'} Negative environmental & social impacts in the supply
               chain
             </p>
           </div>

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section19 = ({ section12_4Ref, section12_4_1Ref, data }) => {
+const Section19 = ({ section12_4Ref, section12_4_1Ref, data,reportType }) => {
   const [content, setContent] = useState(
     `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam minus, voluptates obcaecati velit fuga tempore laudantium consequuntur illo`
   );
@@ -13,14 +13,15 @@ const Section19 = ({ section12_4Ref, section12_4_1Ref, data }) => {
           12.4 Energy
         </h3>
       </div>
-      <div id="section12_4_1" ref={section12_4_1Ref}>
+      {reportType=='GRI Report: In accordance With'?(
+        <div id="section12_4_1" ref={section12_4_1Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           12.4.1 Management of Material Topic
         </h3>
 
         {data["3-3cde_12-4-1"] && data["3-3cde_12-4-1"].length > 0 ? (
           data["3-3cde_12-4-1"].map((val, index) => (
-            <div key={index}>
+            <div key={index} className="">
               <p className="text-sm mb-2">
                 {val.GRI33cd ? val.GRI33cd : "No data available"}
               </p>
@@ -33,6 +34,10 @@ const Section19 = ({ section12_4Ref, section12_4_1Ref, data }) => {
           <p className="text-sm mb-4">No data available</p>
         )}
       </div>
+      ):(
+        <div></div>
+      )}
+      
     </>
   );
 };

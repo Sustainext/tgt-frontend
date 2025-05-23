@@ -40,7 +40,7 @@ const DataTable = ({ data, setRefresh, refresh }) => {
                   key={idx}
                   className="text-[12px] px-3 py-3 w-auto text-left"
                 >
-                  <div className="flex w-[144px] xl:w-[160px]">
+                  <div className="flex ">
                     <p className=" text-gray-500 ">{item}</p>
                   </div>
                 </th>

@@ -91,7 +91,7 @@ const CreateAssessmentModal = ({ isModalOpen, setIsModalOpen,setActiveTab }) => 
     <>
       {isModalOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-[#00000080] z-50 xl:mt-12">
-          <div className="relative bg-white p-6 rounded-lg shadow-lg xl:w-[30%] md:w-[50%] lg:w-[30%] 2xl:w-[30%] 4k:w-[30%] 2k:w-[30%]  max-w-3xl">
+          <div className="relative bg-white p-6 rounded-lg shadow-lg xl:w-[30%] md:w-[50%] lg:w-[30%] 2xl:w-[30%] 4k:w-[30%] 2k:w-[30%]  max-w-3xl min-h-[80vh] max-h-[100vh] overflow-y-auto scrollable-content ">
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
               <div className={`flex ${currentStep == 2 || 3 ? "gap-4" : ""}`}>

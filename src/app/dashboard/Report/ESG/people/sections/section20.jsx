@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section20 = ({ section13_6_3Ref, data }) => {
+const Section20 = ({ section13_6_3Ref, data,reportType }) => {
   const [content, setContent] = useState(
     `We provide access to occupational health services that support the physical and mental well-being of our employees. This includes medical check-ups, health screenings, and counseling services.`
   );
@@ -10,7 +10,7 @@ const Section20 = ({ section13_6_3Ref, data }) => {
     <>
       <div id="section13_6_3" ref={section13_6_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.6.3 Occupational Health Services
+        {reportType=='GRI Report: In accordance With'?'13.6.3':'13.6.2'}  Occupational Health Services
         </h3>
 
         <p className="text-sm mb-4">

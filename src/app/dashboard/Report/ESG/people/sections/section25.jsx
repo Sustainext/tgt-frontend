@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setWorkRelatedHealthInjuries } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section25 = ({ section13_6_8Ref, data }) => {
+const Section25 = ({ section13_6_8Ref, data, reportType }) => {
   const content = useSelector(
     (state) => state.screen13Slice.work_related_health_injuries
   );
@@ -294,7 +294,7 @@ const Section25 = ({ section13_6_8Ref, data }) => {
     <>
       <div id="section13_6_8" ref={section13_6_8Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.6.8 Work-Related Ill-Health & Injuries
+        {reportType=='GRI Report: In accordance With'?'13.6.8':'13.6.7'} Work-Related Ill-Health & Injuries
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
@@ -445,6 +445,59 @@ const Section25 = ({ section13_6_8Ref, data }) => {
             : "No data available"}
         </p>
 
+       
+
+        <p className="text-[15px]  mb-2 font-semibold">
+          Rate of injuries: Per 100 employees
+        </p>
+        <div className="rounded-md mb-4 shadow-md">
+          <LeaveTable columns={col1} data={Tabledata1} />
+        </div>
+        <p className="text-[15px]  mb-2 font-semibold">
+          Rate of injuries: Per 100 workers 
+        </p>
+        <p className="text-[15px]  mb-2">
+          For all workers who are not employees but whose work and/or workplace
+          is controlled by the organization
+        </p>
+        <div className="rounded-md mb-4 shadow-md">
+          <LeaveTable columns={col1} data={Tabledata2} />
+        </div>
+
+        <p className="text-[15px]  mb-2 font-semibold">
+          Rate of injuries: Per 500 employees
+        </p>
+        <div className="rounded-md mb-4 shadow-md">
+          <LeaveTable columns={col1} data={Tabledata5} />
+        </div>
+        <p className="text-[15px]  mb-2 font-semibold">
+          Rate of injuries: Per 500 workers
+        </p>
+        <p className="text-[15px]  mb-2">
+          For all workers who are not employees but whose work and/or workplace
+          is controlled by the organization
+        </p>
+        <div className="rounded-md mb-4 shadow-md">
+          <LeaveTable columns={col1} data={Tabledata6} />
+        </div>
+
+        <p className="text-[15px]  mb-2 font-semibold">
+          Health for all employees
+        </p>
+        <div className="rounded-md mb-4 shadow-md">
+          <LeaveTable columns={col3} data={Tabledata3} />
+        </div>
+
+        <p className="text-[15px]  mb-2 font-semibold">
+          Health for workers who are not employees but whose work and workplace
+          is controlled by the organization 
+        </p>
+        <div className="rounded-md mb-4 shadow-md">
+          <LeaveTable columns={col4} data={Tabledata4} />
+        </div>
+        <p className="text-[15px]  mb-2 font-semibold">
+          Ill Health
+        </p>
         <p className="text-[15px]  mb-2 font-semibold">
           Work-related hazards that pose a risk of ill health
         </p>
@@ -558,55 +611,6 @@ const Section25 = ({ section13_6_8Ref, data }) => {
               : "No data available"
             : "No data available"}
         </p>
-
-        <p className="text-[15px]  mb-2 font-semibold">
-          Rate of injuries: Per 100 employees
-        </p>
-        <div className="rounded-md mb-4 shadow-md">
-          <LeaveTable columns={col1} data={Tabledata1} />
-        </div>
-        <p className="text-[15px]  mb-2 font-semibold">
-          Rate of injuries: Per 100 workers 
-        </p>
-        <p className="text-[15px]  mb-2">
-          For all workers who are not employees but whose work and/or workplace
-          is controlled by the organization
-        </p>
-        <div className="rounded-md mb-4 shadow-md">
-          <LeaveTable columns={col1} data={Tabledata2} />
-        </div>
-
-        <p className="text-[15px]  mb-2 font-semibold">
-          Rate of injuries: Per 500 employees
-        </p>
-        <div className="rounded-md mb-4 shadow-md">
-          <LeaveTable columns={col1} data={Tabledata5} />
-        </div>
-        <p className="text-[15px]  mb-2 font-semibold">
-          Rate of injuries: Per 500 workers
-        </p>
-        <p className="text-[15px]  mb-2">
-          For all workers who are not employees but whose work and/or workplace
-          is controlled by the organization
-        </p>
-        <div className="rounded-md mb-4 shadow-md">
-          <LeaveTable columns={col1} data={Tabledata6} />
-        </div>
-
-        <p className="text-[15px]  mb-2 font-semibold">
-          Health for all employees
-        </p>
-        <div className="rounded-md mb-4 shadow-md">
-          <LeaveTable columns={col3} data={Tabledata3} />
-        </div>
-
-        <p className="text-[15px]  mb-2 font-semibold">
-          Health for workers who are not employees but whose work and workplace
-          is controlled by the organization 
-        </p>
-        <div className="rounded-md mb-4 shadow-md">
-          <LeaveTable columns={col4} data={Tabledata4} />
-        </div>
       </div>
     </>
   );

@@ -13,12 +13,12 @@ const Section30 = ({ section12_6Ref }) => {
           12.6 Biodiversity
         </h3>
 
-        <p className="text-sm mb-4">
+        {/* <p className="text-sm mb-4">
           We are committed to protecting and enhancing biodiversity in the areas
           where we operate. Our biodiversity management includes assessing
           potential impacts, implementing mitigation measures, and promoting
           conservation efforts.
-        </p>
+        </p> */}
       </div>
     </>
   );

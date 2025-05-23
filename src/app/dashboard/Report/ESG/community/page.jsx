@@ -9,14 +9,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Oval } from "react-loader-spinner";
 import { setCommunityEngagementStatement,
-  setImpactAssessment,
+  setImpactAssessment,setViolationOfRights,
   setCSRStatement} from "../../../../../lib/redux/features/ESGSlice/screen14Slice"
 
 
-const Community = forwardRef(({ onSubmitSuccess }, ref) => {
+const Community = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const [activeSection, setActiveSection] = useState("section14_1");
   const section14_1Ref = useRef(null);
   const section14_1_1Ref = useRef(null);
+  const section14_1_2Ref = useRef(null);
   const section14_2Ref = useRef(null);
 
 
@@ -41,6 +42,7 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
   const community_engagement_statement = useSelector((state) => state.screen14Slice.community_engagement_statement);
   const impact_assessment = useSelector((state) => state.screen14Slice.impact_assessment);
   const csr_statement = useSelector((state) => state.screen14Slice.csr_statement);
+  const violation_rights = useSelector((state) => state.screen14Slice.violation_rights);
 
   const dispatch = useDispatch()
 
@@ -61,6 +63,7 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
        "community_engagement": {"page":"screen_fourteen","label":"14.1 Community Engagement","subLabel":"Add statement about company’s community engagement","type":"textarea","content":community_engagement_statement,"field":"community_engagement","isSkipped":false} ,
     "impact_assessment": {"page":"screen_fourteen","label":"Impact Assessment","subLabel":"","type":"textarea","content":impact_assessment,"field":"impact_assessment","isSkipped":false},
     "csr_policies": {"page":"screen_fourteen","label":"14.2 CSR","subLabel":"Add statement about company’s Corporate Social Responsibility policies","type":"richTextarea","content":csr_statement,"field":"csr_policies","isSkipped":false},
+    "violation_rights": {"page":"screen_fourteen","label":"14.1.2 Incidents of Violation of Rights of Indigenous People","subLabel":"Add statement about company’s policy on violation of rights of indigenous people","type":"textarea","content":violation_rights,"field":"violation_rights","isSkipped":false},
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fourteen/${reportid}/`;
@@ -123,6 +126,7 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
       dispatch(setCommunityEngagementStatement(''));
       dispatch(setImpactAssessment(''));
       dispatch(setCSRStatement(''));
+      dispatch(setViolationOfRights(''));
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fourteen/${reportid}/`;
       try {
           const response = await axiosInstance.get(url);
@@ -131,6 +135,7 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
             dispatch(setCommunityEngagementStatement(response.data.community_engagement?.content || ""));
             dispatch(setImpactAssessment(response.data.impact_assessment?.content || ""));
             dispatch(setCSRStatement(response.data.csr_policies?.content || ""));
+            dispatch(setViolationOfRights(response.data.violation_rights?.content || ""));
             
           }
           
@@ -159,7 +164,7 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
         <div className="flex gap-4">
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
             <Section1 section14_1Ref={section14_1Ref} data={data}/>
-            <Section2  section14_1_1Ref={section14_1_1Ref} data={data} />
+            <Section2  section14_1_1Ref={section14_1_1Ref} section14_1_2Ref={section14_1_2Ref} data={data} orgName={orgName} reportType={reportType} />
             <Section3 section14_2Ref={section14_2Ref} data={data} />
         
       
@@ -178,15 +183,30 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section14_1Ref, "section14_1")}
             >
-              14.1.  Management of material topics
+              14.1.  Community Engagement
             </p>
+            {
+              reportType=='GRI Report: In accordance With'?(
+                <p
+                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                  activeSection === "section14_1_1" ? "text-blue-400" : ""
+                }`}
+                onClick={() => scrollToSection(section14_1_1Ref, "section14_1_1")}
+              >
+               14.1.1  Management of material topic
+              </p>
+              ):(
+                <div></div>
+              )
+            }
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section14_1_1" ? "text-blue-400" : ""
+                activeSection === "section14_1_2" ? "text-blue-400" : ""
               }`}
-              onClick={() => scrollToSection(section14_1_1Ref, "section14_1_1")}
+              onClick={() => scrollToSection(section14_1_2Ref, "section14_1_2")}
             >
-             14.1.1  Management of material topic
+            {reportType=='GRI Report: In accordance With'?'14.1.2':'14.1.1'}   Incidents of Violation of Rights of Indigenous People
             </p>
             <p
               className={`text-[12px] mb-2 cursor-pointer ${

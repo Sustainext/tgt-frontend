@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FiArrowLeft, FiInfo, FiCheck } from "react-icons/fi";
+import { FiArrowLeft, FiInfo, FiCheck, FiAlertTriangle } from "react-icons/fi";
 import { Tooltip } from "react-tooltip";
 import MetricsGraph from "./MetricsGraph";
 import WeightageInputModal from "./WeightageInputModal";
@@ -28,22 +28,47 @@ import {
   updateAllSelectedActivities,
 } from "../../../../../lib/redux/features/optimiseSlice";
 
+const ErrorAlert = ({ message, onClose }) => {
+  if (!message) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+        <div className="flex flex-col items-center">
+          <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 mb-4">
+            <FiAlertTriangle className="h-6 w-6 text-red-600" />
+          </div>
+          <h3 className="text-lg font-semibold mb-2 text-red-700">Error</h3>
+          <p className="text-gray-700 text-center mb-4">{message}</p>
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Add this to your component that uses updateAllSelectedActivities
 const LoadingIndicator = () => {
-  const loading = useSelector(state => state.optimise?.loading);
+  const loading = useSelector((state) => state.optimise?.loading);
   const isLoading = loading?.activities || loading?.climateCalculation;
-  const isCalculatingClimate = !loading?.activities && loading?.climateCalculation;
-  
+  const isCalculatingClimate =
+    !loading?.activities && loading?.climateCalculation;
+
   if (!isLoading) return null;
-  
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-xl max-w-md">
         <div className="flex flex-col items-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
           <h3 className="text-lg font-semibold mb-2">
-            {isCalculatingClimate 
-              ? "Calculating Climate Impact..." 
+            {isCalculatingClimate
+              ? "Calculating Climate Impact..."
               : "Updating Activities..."}
           </h3>
           <p className="text-gray-600 text-center">
@@ -141,20 +166,53 @@ const ScenarioEditor = () => {
     }
   };
 
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showError, setShowError] = useState(false);
+
+  const handleDismissError = () => {
+    setShowError(false);
+    setErrorMessage("");
+  };
+
   // Go to next step
   const handleNext = async () => {
     if (currentStep === 1) {
-      // Check if at least one metric is selected before opening weightage modal
-      const metricsData = optimiseState.metricsData || {};
-      const anyMetricSelected = businessMetrics.some((metric) =>
-        Boolean(metricsData[metric.id])
-      );
-
-      if (anyMetricSelected) {
+    // Check if at least one metric is selected before opening weightage modal
+    const metricsData = optimiseState.metricsData || {};
+    
+    // Get all selected metrics
+    const selectedMetricIds = businessMetrics
+      .filter(metric => Boolean(metricsData[metric.id]))
+      .map(metric => metric.id);
+    
+    // Check if there are any selected metrics
+    if (selectedMetricIds.length > 0) {
+      // Check if all selected metrics have abs_value filled in
+      const allHaveAbsValues = selectedMetricIds.every(metricId => {
+        const metricDataKey = `${metricId}_data`;
+        const metricData = metricsData[metricDataKey] || {};
+        
+        // Check if abs_value exists and is not empty
+        return metricData.abs_value !== undefined && 
+               metricData.abs_value !== null && 
+               metricData.abs_value !== "";
+      });
+      
+      if (allHaveAbsValues) {
         setIsWeightageModalOpen(true);
+      } else {
+        // Show error message about missing absolute values
+        setErrorMessage("Please enter absolute values for all selected metrics before proceeding.");
+        setShowError(true);
       }
-      return;
+    } else {
+      // No metrics selected
+      setErrorMessage("Please select at least one business metric before proceeding.");
+      setShowError(true);
     }
+    return;
+  }
 
     if (currentStep === 2) {
       if (selectedActivities.length > 0) {
@@ -166,6 +224,9 @@ const ScenarioEditor = () => {
       try {
         // Only make the API call if we have activities and a scenarioId
         if (selectedActivities.length > 0 && scenarioId) {
+          // Set loading state to show user something is happening
+          setIsCalculating(true);
+
           // Dispatch the thunk to update all activities in one API call
           await dispatch(
             updateAllSelectedActivities({
@@ -173,13 +234,36 @@ const ScenarioEditor = () => {
               activities: selectedActivities,
             })
           ).unwrap();
+
+          // If we got here, both update and Climatiq calculation were successful
+          dispatch(setCurrentStep(currentStep + 1));
+        } else {
+          // If no activities, just proceed to next step
+          dispatch(setCurrentStep(currentStep + 1));
+        }
+      } catch (error) {
+        console.error(
+          "Failed to save activity changes or calculate emissions:",
+          error
+        );
+
+        // Show appropriate error message to the user
+        let errorMessage = "Failed to save changes. Please try again.";
+
+        // Check for specific Climatiq calculation error
+        if (error?.type === "CLIMATIQ_CALCULATION_ERROR") {
+          errorMessage =
+            "Failed to calculate emissions. The calculation service may be experiencing issues.";
         }
 
-        // If successful, proceed to next step
-        dispatch(setCurrentStep(currentStep + 1));
-      } catch (error) {
-        console.error("Failed to save activity changes:", error);
-        // Could show an error message here
+        // Display error to user (using your preferred error display method)
+        setErrorMessage(errorMessage);
+        setShowError(true);
+
+        // Don't proceed to next step
+      } finally {
+        // Always clear loading state
+        setIsCalculating(false);
       }
     } else if (currentStep < 4) {
       dispatch(setCurrentStep(currentStep + 1));
@@ -315,7 +399,7 @@ const ScenarioEditor = () => {
         </div>
 
         {/* Header */}
-        <div className="mx-8 my-8 flex justify-between items-center gap-[5rem]">
+        <div className="mx-12 my-8 flex justify-between items-center gap-[5rem]">
           <div className="w-3/5">
             {currentStep === 1 && (
               <div>
@@ -379,7 +463,7 @@ const ScenarioEditor = () => {
 
             {/* Progress Steps */}
             <div className="mb-8 max-w-lg">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-8">
                 <div
                   className={`flex items-center ${
                     currentStep >= 1 ? "text-blue-600" : "text-gray-400"
@@ -458,7 +542,7 @@ const ScenarioEditor = () => {
               </div>
             </div>
           </div>
-          <div className="w-2/5 px-4 sm:px-6 lg:px-8 py-8">
+          <div className="w-2/5 px-4 sm:px-6 lg:px-8 py-8 shadow-lg rounded-lg">
             {/* Scenario Details */}
             <div className="grid grid-cols-2 gap-6 mb-8">
               <div>
@@ -486,6 +570,29 @@ const ScenarioEditor = () => {
                 <p className="font-medium">
                   {scenario?.target_year || scenario?.targetYear || ""}
                 </p>
+              </div>
+            </div>
+
+            {/* Description with truncation and tooltip */}
+            <div>
+              <p className="text-sm text-gray-500 mb-1">Description</p>
+              <div className="relative group">
+                <p className="font-medium line-clamp-3 overflow-hidden text-ellipsis w-full break-words">
+                  {scenario?.description || ""}
+                </p>
+
+                {/* Only show tooltip container if description length exceeds what can be shown */}
+                {scenario?.description && scenario.description.length > 150 && (
+                  <div className="absolute z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-300 bottom-full left-0 mb-2 max-w-xs bg-gray-800 text-white text-sm rounded-md shadow-lg p-3 pointer-events-none">
+                    <p className="break-words">
+                      {/* Limit to 512 characters */}
+                      {scenario.description.length > 512
+                        ? `${scenario.description.substring(0, 512)}...`
+                        : scenario.description}
+                    </p>
+                    <div className="absolute left-4 bottom-[-6px] w-3 h-3 bg-gray-800 transform rotate-45"></div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -587,6 +694,9 @@ const ScenarioEditor = () => {
       />
 
       <LoadingIndicator />
+      {showError && (
+        <ErrorAlert message={errorMessage} onClose={handleDismissError} />
+      )}
     </>
   );
 };

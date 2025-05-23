@@ -42,9 +42,8 @@ import {
   setPolicyPublic,
 } from "../../../../../lib/redux/features/ESGSlice/screen9Slice";
 
-const CorporateGovernance = forwardRef(({ onSubmitSuccess }, ref) => {
+const CorporateGovernance = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const [activeSection, setActiveSection] = useState("section9_1");
-
   const section9_1Ref = useRef(null);
   const section9_2Ref = useRef(null);
   const section9_3Ref = useRef(null);
@@ -262,7 +261,7 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess }, ref) => {
         <div className="flex gap-4">
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
             <Section1 orgName={orgName} />
-            <Section2
+             <Section2
               section9_1Ref={section9_1Ref}
               section9_1_1Ref={section9_1_1Ref}
               data={data}
@@ -274,7 +273,7 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess }, ref) => {
             />
             <Section4 section9_2_2Ref={section9_2_2Ref} data={data} />
             <Section5 section9_2_3Ref={section9_2_3Ref} data={data} />
-            <Section6 section9_2_4Ref={section9_2_4Ref} data={data} />
+           {reportType=='GRI Report: In accordance With' &&  <Section6 section9_2_4Ref={section9_2_4Ref} data={data} />}
             <Section7
               section9_3_1Ref={section9_3_1Ref}
               section9_3Ref={section9_3Ref}
@@ -310,7 +309,7 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess }, ref) => {
               data={data}
               orgName={orgName}
             />
-            <Section22 section9_6_3Ref={section9_6_3Ref} data={data} />
+           <Section22 section9_6_3Ref={section9_6_3Ref} data={data} />
             <Section23 section9_6_4Ref={section9_6_4Ref} data={data} />
             <Section25 section9_7Ref={section9_7Ref} data={data} />
           </div>
@@ -377,7 +376,8 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess }, ref) => {
               9.2.3 Senior management hired from local community
             </p>
 
-            <p
+            {
+           reportType=='GRI Report: In accordance With'   &&  <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section9_2_4" ? "text-blue-400" : ""
               }`}
@@ -385,6 +385,8 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               9.2.4 Management of material topic
             </p>
+            }
+                
 
             <p
               className={`text-[12px] mb-2 cursor-pointer ${

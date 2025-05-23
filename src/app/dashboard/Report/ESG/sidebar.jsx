@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MdKeyboardArrowLeft, MdMenu } from "react-icons/md";
 
 // Sidebar content
-const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile }) => {
+const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile,reportType }) => {
   const sections = [
     "Message from Our Leadership",
     "About the Company & Operations",
@@ -20,6 +20,7 @@ const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile }) => {
     "People",
     "Community",
     "Customers, products & services",
+    reportType==='GRI Report: With Reference to'?'Management of Material Topic':''
   ];
 
   return (
@@ -66,17 +67,18 @@ const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile }) => {
 };
 
 // Main Sidebar Component
-const ESGSidebar = ({ activeStep, setActiveStep,setIsOpenMobile,isOpenMobile }) => {
+const ESGSidebar = ({ activeStep, setActiveStep,setIsOpenMobile,isOpenMobile,reportType }) => {
 
 
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="m-3 ml-2 border border-r-2 border-b-2 shadow-lg rounded-lg h-auto hidden xl:block lg:block">
+      <div className="m-3 ml-2 border border-r-2 border-b-2 shadow-lg rounded-lg h-full hidden xl:block lg:block">
         <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
           <ESGSidebarContent
             activeStep={activeStep}
             setActiveStep={setActiveStep}
+            reportType={reportType}
           />
         </div>
       </div>
@@ -112,6 +114,7 @@ const ESGSidebar = ({ activeStep, setActiveStep,setIsOpenMobile,isOpenMobile }) 
             activeStep={activeStep}
             setActiveStep={setActiveStep}
             closeMobile={() => setIsOpenMobile(false)}
+            reportType={reportType}
           />
         </div>
       </div>

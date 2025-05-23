@@ -9,6 +9,7 @@ const Screen15Slice = createSlice({
     product_info_labelling:'',
     marketing_practices:'',
     conclusion:'',
+    customers:'',
     error: null
   },
   reducers: {
@@ -22,6 +23,9 @@ const Screen15Slice = createSlice({
     setMarketingPractices: (state, action) => {
         state.marketing_practices = action.payload;
     },
+    setCustomers: (state, action) => {
+      state.customers = action.payload;
+  },
     setConclusion: (state, action) => {
         state.conclusion = action.payload;
     },
@@ -34,6 +38,7 @@ export const {
     setProductInfo,
     setMarketingPractices,
     setConclusion,
+    setCustomers
 } = Screen15Slice.actions;
 
 export default Screen15Slice.reducer;

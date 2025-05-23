@@ -127,6 +127,7 @@ export default function SettingsPanel({
     // </div>
 
     <div className="min-h-screen h-full md:flex md:justify-center md:items-center md:px-6 md:py-6 md:mt-12">
+       {/* <div className="bg-white h-full rounded-md shadow-md w-full md:w-[900px]  xl:h-[120dvh] lg:h-[120dvh] md:h-[120dvh] flex flex-col md:flex-row my-4"> */}
     <div className="bg-white h-full rounded-md shadow-md w-full md:w-[900px] md:h-[700px] flex flex-col md:flex-row">
       {/* Desktop Sidebar */}
       {!isMobileView && (

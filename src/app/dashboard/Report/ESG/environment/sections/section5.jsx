@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setScopeTwoEmission } from "../../../../../../lib/redux/features/ESGSlice/screen12Slice";
 import ScopeTable from "../tables/scopeTable";
 
-const Section5 = ({ section12_1_3Ref, data }) => {
+const Section5 = ({ section12_1_3Ref, data,reportType }) => {
   const content = useSelector(
     (state) => state.screen12Slice.scope_two_emissions
   );
@@ -34,7 +34,7 @@ const Section5 = ({ section12_1_3Ref, data }) => {
     <>
       <div id="section12_1_3" ref={section12_1_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          12.1.3 Scope 2 GHG Emissions
+        {reportType=='GRI Report: In accordance With'?'12.1.3':'12.1.2'} Scope 2 GHG Emissions
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

@@ -8,12 +8,16 @@ const Screen14Slice = createSlice({
     community_engagement_statement:'',
     impact_assessment:'',
     csr_statement:'',
+    violation_rights:'',
     error: null
   },
   reducers: {
 
     setCommunityEngagementStatement: (state, action) => {
       state.community_engagement_statement = action.payload;
+    },
+    setViolationOfRights: (state, action) => {
+      state.violation_rights = action.payload;
     },
     setImpactAssessment: (state, action) => {
         state.impact_assessment = action.payload;
@@ -27,7 +31,8 @@ const Screen14Slice = createSlice({
 export const {
     setCommunityEngagementStatement,
     setImpactAssessment,
-    setCSRStatement
+    setCSRStatement,
+    setViolationOfRights
 } = Screen14Slice.actions;
 
 export default Screen14Slice.reducer;

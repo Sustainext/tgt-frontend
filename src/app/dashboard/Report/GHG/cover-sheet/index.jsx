@@ -35,8 +35,8 @@ function CoverSheet({
 
     if (selectedFile.type !== "image/png") {
       errorMessages = "Only PNG images are allowed.";
-    } else if (selectedFile.size > 1048576) {
-      errorMessages = "Maximum file size allowed is 1MB";
+    } else if (selectedFile.size > 2097152) {
+      errorMessages = "Maximum file size allowed is 2MB";
     } else {
       const reader = new FileReader();
 

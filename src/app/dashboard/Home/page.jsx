@@ -1,12 +1,12 @@
 "use client";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 // import MyGoals from "./MyGoals";
 // import MyTasks from "./TasksNew/MyTask";
 // import Preferences from "./Preferences/page";
 // import { ToastContainer } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 import MobileLayout from "./MobileLayout";
-import DesktopLayout from "./DesktopLayout"
+import DesktopLayout from "./DesktopLayout";
 const HomeDashboard = ({ setActiveTab }) => {
   const [mobileTab, setMobileTab] = useState("tasks"); // Default active tab
   const [isMobile, setIsMobile] = useState(false);
@@ -22,15 +22,13 @@ const HomeDashboard = ({ setActiveTab }) => {
   }, []);
   return (
     <>
-       {isMobile ? (
+      {isMobile ? (
         // Mobile version of ToastContainer with specific styles
-        <MobileLayout setActiveTab={setActiveTab}/>
+        <MobileLayout setActiveTab={setActiveTab} />
       ) : (
         // Desktop version of ToastContainer with different styles
-        <DesktopLayout setActiveTab={setActiveTab}/>
+        <DesktopLayout setActiveTab={setActiveTab} />
       )}
-
- 
     </>
   );
 };

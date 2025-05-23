@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useMemo } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
@@ -226,6 +226,16 @@ const Screen5 = ({
     console.log("Form data:", formData);
   };
   console.log("Location data: locationdata", locationdata);
+
+   const customWidgets = useMemo(() => ({
+      ...widgets,
+      LocationDropdownTableGrid: (props) => (
+        <LocationDropdownTableGrid
+          {...props}
+          locationdata={locationdata}
+        />
+      ),
+    }), [widgets, locationdata]);
   return (
     <>
       <div
@@ -284,15 +294,7 @@ const Screen5 = ({
                 locationtooltip:
                   "Specify the name of the locations where the organisations's employees have received training on anti-corruption.",
               }}
-              widgets={{
-                ...widgets,
-                LocationDropdownTableGrid: (props) => (
-                  <LocationDropdownTableGrid
-                    {...props}
-                    locationdata={locationdata}
-                  />
-                ),
-              }}
+              widgets={customWidgets}
             />
           </div>
         ) : (

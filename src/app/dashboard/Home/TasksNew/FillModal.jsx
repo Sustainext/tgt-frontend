@@ -22,29 +22,33 @@ const FillModal = ({
   isBeforeToday,
   validateDecimalPlaces,
 }) => {
-  const [locationName,setLocationName] = useState('')
-  useEffect(() => {
-      const fetchLocationName = async () => {
-        if (taskassigndata?.location) {
-          try {
-            const name = await getLocationName(taskassigndata.location);
-            console.log('name of location', name);
-            
-            setLocationName(name);
-          } catch (error) {
-            console.error("Error fetching location name:", error);
-            setLocationName(taskassigndata.location);
-          }
-        }
-      };
-  
-      fetchLocationName();
-    }, [taskassigndata.location]);
+  const [locationName, setLocationName] = useState('');
+  // Extract unit_type from activity name or use the one from taskassigndata
+  const effectiveUnitType = selectedActivity?.unit_type || 
+    (taskassigndata.unit_type);
 
-    if (!isOpen || !taskassigndata) return null;
+  useEffect(() => {
+    const fetchLocationName = async () => {
+      if (taskassigndata?.location) {
+        try {
+          const name = await getLocationName(taskassigndata.location);
+          console.log('name of location', name);
+          
+          setLocationName(name);
+        } catch (error) {
+          console.error("Error fetching location name:", error);
+          setLocationName(taskassigndata.location);
+        }
+      }
+    };
+
+    fetchLocationName();
+  }, [taskassigndata.location]);
+
+  if (!isOpen || !taskassigndata) return null;
 
   return (
-    <div className="fixed inset-0 xl:top-10  z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 xl:top-10 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-4 rounded-lg shadow-lg w-[375px] h-[600px] overflow-y-auto table-scrollbar">
         <div className="mb-4">
           <div className="flex justify-between">
@@ -150,7 +154,7 @@ const FillModal = ({
           )}
 
           <div className="space-y-3">
-            {selectedActivity?.unit_type?.includes("Over") ? (
+            {effectiveUnitType?.includes("Over") ? (
               <>
                 <div>
                   <h5 className="text-sm mb-0.5">Quantity 1</h5>
@@ -177,7 +181,7 @@ const FillModal = ({
                         {unitTypes
                           .filter(
                             (unit) =>
-                              unit.unit_type === selectedActivity.unit_type
+                              unit.unit_type === effectiveUnitType
                           )
                           .map((unit) => {
                             const unitValues = Object.values(unit.units);
@@ -223,7 +227,7 @@ const FillModal = ({
                         {unitTypes
                           .filter(
                             (unit) =>
-                              unit.unit_type === selectedActivity.unit_type
+                              unit.unit_type === effectiveUnitType
                           )
                           .map((unit) => {
                             const unitValues = Object.values(unit.units);
@@ -270,7 +274,7 @@ const FillModal = ({
                       {unitTypes
                         .filter(
                           (unit) =>
-                            unit.unit_type === selectedActivity.unit_type
+                            unit.unit_type === effectiveUnitType
                         )
                         .reduce((acc, unit) => {
                           return [...acc, ...Object.values(unit.units).flat()];

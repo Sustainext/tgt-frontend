@@ -67,7 +67,6 @@ const BusinessMetricsWithTooltips = ({
   };
 
   // Create debounced function for updating the Redux state locally
-  // NOTE: This is now updated to handle the new complete data structure
   const debouncedLocalUpdate = useCallback(
     debounce((metricId, updatedData) => {
       // Update local Redux state with the complete data structure
@@ -83,7 +82,6 @@ const BusinessMetricsWithTooltips = ({
   );
 
   // Throttled version for rapid changes (like dragging points on graph)
-  // NOTE: This is now updated to handle the new complete data structure
   const throttledLocalUpdate = useCallback(
     throttle((metricId, updatedData) => {
       // Update Redux with the complete data structure
@@ -99,34 +97,62 @@ const BusinessMetricsWithTooltips = ({
   );
 
   // Save changes to the server - can be called manually or automatically
-  const saveChangesToServer = useCallback(async () => {
-    if (!scenarioId || Object.keys(pendingChanges).length === 0) return;
+const saveChangesToServer = useCallback(async () => {
+  if (!scenarioId || Object.keys(pendingChanges).length === 0) return;
+
+  try {
+    // First, validate that all selected metrics have abs_value
+    const validMetricIds = ["fte", "area", "production_volume", "revenue"];
+    const selectedMetrics = validMetricIds.filter(id => Boolean(metricsDataRef.current[id]));
     
+    // Check if any selected metric is missing abs_value
+    const missingAbsValue = selectedMetrics.some(metricId => {
+      const metricData = metricsDataRef.current[`${metricId}_data`] || {};
+      return metricData.abs_value === undefined || 
+             metricData.abs_value === null || 
+             metricData.abs_value === "";
+    });
+    
+    // If any selected metric is missing abs_value, show error and don't save
+    if (missingAbsValue) {
+      showSaveMessage("error", "Please enter absolute values for all selected metrics");
+      return;
+    }
+    
+    setLocalSaving(true);
+
+    // Build payload with all pending changes
+    const payload = {};
+
+    // Add all changed metrics data
+    Object.keys(pendingChanges).forEach((metricId) => {
+      if (pendingChanges[metricId]) {
+        payload[`${metricId}_data`] =
+          metricsDataRef.current[`${metricId}_data`] || {};
+        payload[`${metricId}_weightage`] =
+          metricsDataRef.current[`${metricId}_weightage`] || 0;
+      }
+    });
+
+    // Update local state first
+    dispatch(
+      updateMetricData({
+        metricId: Object.keys(pendingChanges)[0], // Just need any metricId
+        data: payload
+      })
+    );
+
+    // Then dispatch API update - try to handle as a promise
     try {
-      setLocalSaving(true);
-  
-      // Build payload with all pending changes
-      const payload = {};
-  
-      // Add all changed metrics data
-      Object.keys(pendingChanges).forEach((metricId) => {
-        if (pendingChanges[metricId]) {
-          payload[`${metricId}_data`] = 
-            metricsDataRef.current[`${metricId}_data`] || {};
-          payload[`${metricId}_weightage`] = 
-            metricsDataRef.current[`${metricId}_weightage`] || 0;
-        }
-      });
-  
-      // Update local state first - no need for unwrap
-      dispatch(
-        updateMetricData({
-          metricId: Object.keys(pendingChanges)[0], // Just need to pass any metricId
-          data: payload
+      await dispatch(
+        updateScenarioMetrics({
+          scenarioId,
+          payload,
         })
-      );
-  
-      // Then send to API - handle as a regular promise if possible
+      ).unwrap();
+    } catch (error) {
+      // Handle the case where unwrap() is not available or throws
+      console.warn("Using fallback Promise handling for dispatch");
       const result = dispatch(
         updateScenarioMetrics({
           scenarioId,
@@ -134,21 +160,21 @@ const BusinessMetricsWithTooltips = ({
         })
       );
       
-      // Wait for the promise to resolve if it is one
       if (result && typeof result.then === 'function') {
         await result;
       }
-  
-      // Clear pending changes after successful save
-      setPendingChanges({});
-      showSaveMessage("success", "✅ Saved");
-    } catch (error) {
-      console.error("Error saving changes:", error);
-      showSaveMessage("error", "Failed to save changes");
-    } finally {
-      setLocalSaving(false);
     }
-  }, [dispatch, scenarioId, pendingChanges]);
+
+    // Clear pending changes after successful save
+    setPendingChanges({});
+    showSaveMessage("success", "✅ Saved");
+  } catch (error) {
+    console.error("Error saving changes:", error);
+    showSaveMessage("error", "Failed to save changes");
+  } finally {
+    setLocalSaving(false);
+  }
+}, [dispatch, scenarioId, pendingChanges]);
 
   // Auto-save changes after a longer delay if there are pending changes
   useEffect(() => {
@@ -237,14 +263,20 @@ const BusinessMetricsWithTooltips = ({
   };
 
   // Updated to handle complete data structure from MetricsGraph
-  const handleMetricDataChange = (metricId, updatedData, isRapidChange = false) => {
-    // Use either throttled or debounced update based on the type of change
-    if (isRapidChange) {
-      throttledLocalUpdate(metricId, updatedData);
-    } else {
-      debouncedLocalUpdate(metricId, updatedData);
-    }
-  };
+const handleMetricDataChange = (metricId, updatedData, isRapidChange = false) => {
+  // Check if this is a selected metric before proceeding
+  if (!isMetricSelected(metricId)) {
+    console.warn(`Metric ${metricId} is not selected, ignoring data change`);
+    return;
+  }
+  
+  // Use either throttled or debounced update based on the type of change
+  if (isRapidChange) {
+    throttledLocalUpdate(metricId, updatedData);
+  } else {
+    debouncedLocalUpdate(metricId, updatedData);
+  }
+};
 
   // Check if a metric is selected
   const isMetricSelected = (metricId) => {
@@ -298,6 +330,7 @@ const BusinessMetricsWithTooltips = ({
             >
               <>
                 <FiSave size={16} />
+                {localSaving ? "Saving..." : "Save Changes"}
               </>
             </button>
           )}

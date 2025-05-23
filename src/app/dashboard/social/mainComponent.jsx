@@ -5,11 +5,8 @@ import Parentalleave from "./Employment/Parental-Leave/page";
 import Benefits from "./Employment/Benefits/page";
 import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page";
 import Definedbenefit from "./Employment/defined-benefit/page";
-import EmploymentMaterialtopic from "./Employment/Management-Material-topic/page";
-import LaborManagementMaterialtopic from "./Labor-Management/Management-Material-topic/page";
 import Noticeperiod from "./Labor-Management/Notice-Period/page";
 import CollectiveBargaining from "./Labor-Management/Collective-Bargaining/page";
-import OHSMaterialtopic from "./OHS/Management-Material-topic/page";
 import Ohsmanagment from "./OHS/ohs-management/page";
 import Riskassessment from "./OHS/risk-assessment/page";
 import WorkersRight from "./OHS/Workers-Right/page";
@@ -25,47 +22,37 @@ import Injuries from "./OHS/Injuries/page";
 import Illhealth from "./OHS/ill-health/page";
 import InjuriesHazards from "./OHS/Injuries-Hazards/page";
 import IllhealthHazard from "./OHS/Illhealth-Hazard/page";
-import TrainingMaterialtopic from "./Training/Management-Material-topic/page";
 import Traininghours from "./Training/Training-hours/page";
 import Skillupgrade from "./Training/skill-upgrade/page";
 import Performancedevelopment from "./Training/Performance-development/page";
-import DiversityInclusionMaterialtopic from "./Diversity-Inclusion/Management-Material-topic/page";
 import DiversityBoard from "./Diversity-Inclusion/Diversity-Board/Section1/page";
 import Diversityemploy from "./Diversity-Inclusion/Diversity-Board/Section2/page";
 import Salaryratio from "./Diversity-Inclusion/Salary-ratio/page";
-import NonDiscriminationMaterialtopic from "./Non-Discrimination/Management-Material-topic/page";
 import IncidentsofDiscrimination from "./Non-Discrimination/Incidents-of-Discrimination/page";
-import HumanRightsMaterialtopic from "./Human-Rights/Management-Material-topic/page";
 import CommunityEngagement from "./Human-Rights/Community-Engagement/page";
 import ImpactonCommunity from "./Human-Rights/Impact-on-Community/page";
 import IndigenousPeople from "./Human-Rights/Indigenous-People/page";
 import Securitypersonnel from "./Human-Rights/security-personnel/Section1/page";
 import Securitypersonnel2 from "./Human-Rights/security-personnel/Section2/page";
-import ChildForcedLabourMaterialtopic from "./Child-Forced-Labour/Management-Material-topic/page";
 import Childlabour from "./Child-Forced-Labour/child-labour/page";
 import Forcedorcompulsorylabour from "./Child-Forced-Labour/forced-or-compulsory-labour/page";
-import SupplierMaterialtopic from "./Supplier-social-assessment/Management-Material-topic/page";
 import Suppliersscreened from "./Supplier-social-assessment/Impacts-actions-taken/page";
 import Impactsactionstaken from "./Supplier-social-assessment/Suppliers-screened/page";
 import SoicalProcurementPractices from "./Supplier-social-assessment/procurement-practices/page";
-import HealthSafetyMaterialtopic from "./Customer-Health-Safety/Management-Material-topic/page";
 import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page";
 import Compliance from "./Customer-Health-Safety/Compliance/Section1/page";
 import ProductsService from "./Customer-Health-Safety/Products-Service/Section2/page";
-import MarketingLabelingMaterialtopic from "./Marketing-Labeling/Management-Material-topic/page";
 import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/Section1/page";
 import ProductServicelabelling2 from "./Marketing-Labeling/Product-Service-labelling/Section2/page";
 import NoncomplianceincidentsLabelling from "./Marketing-Labeling/Non-compliance-incidents-Labelling/page";
 import StatementnoncomplianceLabeling from "./Marketing-Labeling/Statement-non-compliance-Labeling/page";
 import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance-incidents-Marketing/page";
 import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page";
-import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material-topic/page";
 import CustomerPrivacy from "./Customer-Privacy/Section1/page";
 import CustomerPrivacy2 from "./Customer-Privacy/Section2/page";
 import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page";
-import IdentifingInformation from "./BillS-211/Identifying-information/page";
-import AnnualReport from "./BillS-211/annual-report/page";
-
+import BILLs201 from "./BillS-211/page";
+import Materialtopic from "../Management-Material-topic/page";
 import {
   setHeadertext1,
   setHeadertext2,
@@ -90,11 +77,11 @@ const Social = () => {
   const [activeTab, setActiveTab] = useState(
     "Management of Material topic OHS"
   );
+
   const [mobileopen, setMobileopen] = useState(false);
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-    
   };
 
   const dispatch = useDispatch();
@@ -148,7 +135,7 @@ const Social = () => {
       ,
       "Diversity of Employees",
     ];
-    const BillS211Tabs = ["Identifying Information", "Annual report"];
+    const BillS211Tabs = ["Data collection"];
     const energyTabs = ["Notice Period", "Collective Bargaining"];
 
     // List of tabs related to Waste
@@ -275,28 +262,46 @@ const Social = () => {
             </div>
           ) : (
             <div
-            className={`${
-              open
-                ? "sm:w-[87vw]  md:w-[120vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
-                : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
-            }`}
+              className={`${
+                open
+                  ? "sm:w-[87vw]  md:w-[120vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
+                  : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
+              }`}
             >
               {/* Emissions start */}
               {activeTab === "Management of Material topic Employment" && (
-                <EmploymentMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={"gri_collect_employment_management_material_topic"}
+                  headingname={"Employment"}
+                  Envdata={"SocEmployment"}
+                  topheading={"Social"}
                 />
+           
               )}
-              {activeTab === "Identifying Information" && (
-                <IdentifingInformation
+              {activeTab === "Data collection" && (
+                <BILLs201
+                  handleTabClick={handleTabClick}
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
                 />
               )}
-              {activeTab === "Annual report" && (
+              {/* {activeTab === "Identifying Information" && (
+                <Identifyinginformation
+                  handleTabClick={handleTabClick}
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                
+        
+                />
+              )} */}
+              {/* {activeTab === "Annual report" && (
                 <AnnualReport apiData={data} setMobileopen={setMobileopen} />
-              )}
+              )} */}
               {activeTab === "Employee Hires & Turnover" && (
                 <EmployeeHiresTurnover
                   apiData={data}
@@ -317,10 +322,16 @@ const Social = () => {
               )}
               {activeTab ===
                 "Management of Material topic Labor Management" && (
-                <LaborManagementMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={"gri_collect_labor_management_material_topic"}
+                  headingname={"Labor Management"}
+                  Envdata={"SocLabourManagement"}
+                  topheading={"Social"}
                 />
+           
               )}
               {activeTab === "Notice Period" && (
                 <Noticeperiod apiData={data} setMobileopen={setMobileopen} />
@@ -333,10 +344,16 @@ const Social = () => {
               )}
 
               {activeTab === "Management of Material topic OHS" && (
-                <OHSMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={"gri_collect_ohs_management_material_topic"}
+                  headingname={"Occupational Health and Safety"}
+                  Envdata={"SocHealthSafety"}
+                  topheading={"Social"}
                 />
+            
               )}
               {activeTab === "OHS Management" && (
                 <Ohsmanagment apiData={data} setMobileopen={setMobileopen} />
@@ -395,10 +412,18 @@ const Social = () => {
 
               {activeTab ===
                 "Management of Material topic Training and Development" && (
-                <TrainingMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_training_and_development_management_material_topic"
+                  }
+                  headingname={"Training and Development"}
+                  Envdata={"SocHumanCapitalDevelopment"}
+                  topheading={"Social"}
                 />
+          
               )}
               {activeTab === "Training hours" && (
                 <Traininghours apiData={data} setMobileopen={setMobileopen} />
@@ -415,10 +440,18 @@ const Social = () => {
 
               {activeTab ===
                 "Management of Material topic Diversity & Equal Opportunity" && (
-                <DiversityInclusionMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_diversity_equal_opportunity_management_material_topic"
+                  }
+                  headingname={"Diversity & Equal Opportunity"}
+                  Envdata={"SocDiversityEqualOpp"}
+                  topheading={"Social"}
                 />
+       
               )}
               {activeTab === "Diversity of the Board" && (
                 <DiversityBoard apiData={data} setMobileopen={setMobileopen} />
@@ -433,10 +466,18 @@ const Social = () => {
 
               {activeTab ===
                 "Management of Material topic Non Discrimination" && (
-                <NonDiscriminationMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_non_discrimination_management_material_topic"
+                  }
+                  headingname={"Non-discrimination"}
+                  Envdata={"SocNonDiscrimination"}
+                  topheading={"Social"}
                 />
+        
               )}
               {activeTab === "Incidents of Discrimination" && (
                 <IncidentsofDiscrimination
@@ -445,10 +486,18 @@ const Social = () => {
                 />
               )}
               {activeTab === "Management of Material topic Human Rights" && (
-                <HumanRightsMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_human_rights_management_material_topic"
+                  }
+                  headingname={"Human Rights and Community Impact"}
+                  Envdata={"SocCommunityRelation"}
+                  topheading={"Social"}
                 />
+          
               )}
               {activeTab === "Community Engagement" && (
                 <CommunityEngagement
@@ -482,10 +531,18 @@ const Social = () => {
               )}
 
               {activeTab === "Management of Material topic Labour" && (
-                <ChildForcedLabourMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_child_labor_management_material_topic"
+                  }
+                  headingname={"Child and Forced Labour"}
+                  Envdata={"SocChildLabour"}
+                  topheading={"Social"}
                 />
+           
               )}
               {activeTab === "Child Labour" && (
                 <Childlabour apiData={data} setMobileopen={setMobileopen} />
@@ -498,10 +555,18 @@ const Social = () => {
               )}
 
               {activeTab === "Management of Material topic Supply" && (
-                <SupplierMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_supply_chain_management_material_topic"
+                  }
+                  headingname={"Supply Chain Labor Standards"}
+                  Envdata={"SocSupplyChainLabour"}
+                  topheading={"Social"}
                 />
+           
               )}
               {activeTab === "Suppliers Screened" && (
                 <Impactsactionstaken
@@ -522,10 +587,18 @@ const Social = () => {
                 />
               )}
               {activeTab === "Management of Material topic Safety" && (
-                <HealthSafetyMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_product_safety_management_material_topic"
+                  }
+                  headingname={"Product Safety & Quality"}
+                  Envdata={"SocProductSafetyQuality"}
+                  topheading={"Social"}
                 />
+         
               )}
               {activeTab === "Product/Service Safety" && (
                 <ProductServiceSafety
@@ -540,10 +613,18 @@ const Social = () => {
                 <ProductsService apiData={data} setMobileopen={setMobileopen} />
               )}
               {activeTab === "Management of Material topic Marketing" && (
-                <MarketingLabelingMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_marketing_and_labeling_management_material_topic"
+                  }
+                  headingname={"Marketing and labeling"}
+                  Envdata={"SocMarketingLabeling"}
+                  topheading={"Social"}
                 />
+           
               )}
               {activeTab === "Product/Service labelling" && (
                 <ProductServicelabelling
@@ -583,10 +664,18 @@ const Social = () => {
                 />
               )}
               {activeTab === "Management of Material topic Privacy" && (
-                <CustomerPrivacyMaterialtopic
+                <Materialtopic
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                  view_path={
+                    "gri_collect_customer_privacy_management_material_topic"
+                  }
+                  headingname={"Customer Privacy & Data Security"}
+                  Envdata={"SocPrivacyDataSecurity"}
+                  topheading={"Social"}
                 />
+         
               )}
               {activeTab === "Customer Privacy" && (
                 <CustomerPrivacy apiData={data} setMobileopen={setMobileopen} />

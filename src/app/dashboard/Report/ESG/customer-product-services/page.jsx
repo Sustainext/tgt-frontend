@@ -25,9 +25,10 @@ import {
   setProductInfo,
   setMarketingPractices,
   setConclusion,
+  setCustomers
 } from "../../../../../lib/redux/features/ESGSlice/screen15Slice";
 
-const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
+const CustomerProductService = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const [activeSection, setActiveSection] = useState("section15_1");
 
   const section15_1Ref = useRef(null);
@@ -76,6 +77,7 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
     (state) => state.screen15Slice.marketing_practices
   );
   const conclusion = useSelector((state) => state.screen15Slice.conclusion);
+  const customers = useSelector((state) => state.screen15Slice.customers);
 
   const dispatch = useDispatch();
 
@@ -129,6 +131,15 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
         type: "richTextarea",
         content: conclusion,
         field: "conclusion",
+        isSkipped: false,
+      },
+      customers: {
+        page: "screen_fifteen",
+        label: "Customers",
+        subLabel: "Add statement about customers",
+        type: "textarea",
+        content: customers,
+        field: "customers",
         isSkipped: false,
       },
     };
@@ -192,6 +203,7 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
     dispatch(setProductInfo(""));
     dispatch(setMarketingPractices(""));
     dispatch(setConclusion(""));
+    dispatch(setCustomers(""));
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fifteen/${reportid}/`;
     try {
       const response = await axiosInstance.get(url);
@@ -211,6 +223,7 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
           )
         );
         dispatch(setConclusion(response.data.conclusion?.content || ""));
+        dispatch(setCustomers(response.data.customers?.content || ""));
       }
 
       LoaderClose();
@@ -237,18 +250,21 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
         <div className="flex gap-4">
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
             <Section1 section15_1Ref={section15_1Ref} data={data} />
-            <Section2 section15_1_1Ref={section15_1_1Ref} data={data} />
-            <Section3 section15_1_2Ref={section15_1_2Ref} data={data} />
-            <Section4 section15_1_3Ref={section15_1_3Ref} data={data} />
-            <Section5 section15_2Ref={section15_2Ref} data={data} />
-            <Section6 section15_2_1Ref={section15_2_1Ref} data={data} />
-            <Section7 section15_2_2Ref={section15_2_2Ref} data={data} />
-            <Section8 section15_3Ref={section15_3Ref} data={data} />
-            <Section9
+            {reportType=='GRI Report: In accordance With' && <Section2 section15_1_1Ref={section15_1_1Ref} data={data} /> }  
+            <Section3 section15_1_2Ref={section15_1_2Ref} data={data} reportType={reportType} />
+            <Section4 section15_1_3Ref={section15_1_3Ref} data={data} reportType={reportType} />
+            <Section5 section15_2Ref={section15_2Ref} data={data} reportType={reportType} />
+            {reportType=='GRI Report: In accordance With' && <Section6 section15_2_1Ref={section15_2_1Ref} data={data} /> } 
+            
+            <Section7 section15_2_2Ref={section15_2_2Ref} data={data} reportType={reportType} />
+            <Section8 section15_3Ref={section15_3Ref} data={data} reportType={reportType}/>
+            {reportType=='GRI Report: In accordance With' && <Section9
               section15_3_1Ref={section15_3_1Ref}
               orgName={orgName}
               data={data}
-            />
+            /> } 
+           
+            
           </div>
           {/* page sidebar */}
 
@@ -266,21 +282,26 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               15.1. Products and services 
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section15_1_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section15_1_1Ref, "section15_1_1")}
-            >
-              15.1.1. Management of material topic
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+               <p
+               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                 activeSection === "section15_1_1" ? "text-blue-400" : ""
+               }`}
+               onClick={() => scrollToSection(section15_1_1Ref, "section15_1_1")}
+             >
+               15.1.1. Management of material topic
+             </p>
+            ):(
+              <div></div>
+            )}
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section15_1_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section15_1_2Ref, "section15_1_2")}
             >
-              15.1.2. Health and safety impacts of product and service
+             {reportType=='GRI Report: In accordance With'?'15.1.2.':'15.1.1.'}  Health and safety impacts of product and service
               categories
             </p>
             <p
@@ -289,7 +310,7 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section15_1_3Ref, "section15_1_3")}
             >
-              15.1.3. Incidents of non-compliance
+            {reportType=='GRI Report: In accordance With'?'15.1.3.':'15.1.2.'}  Incidents of non-compliance
             </p>
             <p
               className={`text-[12px] mb-2 cursor-pointer ${
@@ -299,21 +320,26 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               15.2. Product and service information and labelling
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section15_2_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section15_2_1Ref, "section15_2_1")}
-            >
-              15.2.1. Management of material topic
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+               <p
+               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                 activeSection === "section15_2_1" ? "text-blue-400" : ""
+               }`}
+               onClick={() => scrollToSection(section15_2_1Ref, "section15_2_1")}
+             >
+               15.2.1. Management of material topic
+             </p>
+            ):(
+              <div></div>
+            )}
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section15_2_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section15_2_2Ref, "section15_2_2")}
             >
-              15.2.2. Marketing
+             {reportType=='GRI Report: In accordance With'?'15.2.2.':'15.2.1.'} Marketing
             </p>
             <p
               className={`text-[12px] mb-2 cursor-pointer ${
@@ -323,14 +349,19 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               15.3. Customers 
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section15_3_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section15_3_1Ref, "section15_3_1")}
-            >
-              15.3.1. Management of material topic
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+               <p
+               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                 activeSection === "section15_3_1" ? "text-blue-400" : ""
+               }`}
+               onClick={() => scrollToSection(section15_3_1Ref, "section15_3_1")}
+             >
+               15.3.1. Management of material topic
+             </p>
+            ):(
+              <div></div>
+            )}
+           
           </div>
         </div>
       </div>

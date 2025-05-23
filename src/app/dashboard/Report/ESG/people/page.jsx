@@ -67,7 +67,7 @@ import {
   setSecurityPersonnelExternalTraining,
 } from "../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const People = forwardRef(({ onSubmitSuccess }, ref) => {
+const People = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const [activeSection, setActiveSection] = useState("section13_1");
 
   const section13_1Ref = useRef(null);
@@ -600,65 +600,73 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               section13_1Ref={section13_1Ref}
               section13_1_1Ref={section13_1_1Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section3 section13_1_2Ref={section13_1_2Ref} data={data} />
-            <Section4 section13_1_3Ref={section13_1_3Ref} data={data} />
-            <Section5 section13_1_4Ref={section13_1_4Ref} data={data} />
-            <Section6 section13_1_5Ref={section13_1_5Ref} data={data} />
-            <Section7 section13_1_6Ref={section13_1_6Ref} data={data} />
+            <Section3 section13_1_2Ref={section13_1_2Ref} data={data} reportType={reportType} />
+            <Section4 section13_1_3Ref={section13_1_3Ref} data={data} reportType={reportType} />
+            <Section5 section13_1_4Ref={section13_1_4Ref} data={data} reportType={reportType} />
+            <Section6 section13_1_5Ref={section13_1_5Ref} data={data} reportType={reportType} />
+            <Section7 section13_1_6Ref={section13_1_6Ref} data={data} reportType={reportType}/>
             <Section8
               section13_2_1Ref={section13_2_1Ref}
               section13_2Ref={section13_2Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section9 section13_2_2Ref={section13_2_2Ref} data={data} />
-            <Section10 section13_2_3Ref={section13_2_3Ref} data={data} />
-            <Section11 section13_3Ref={section13_3Ref} data={data} />
-            <Section12 section13_3_1Ref={section13_3_1Ref} data={data} />
+            <Section9 section13_2_2Ref={section13_2_2Ref} data={data} reportType={reportType} />
+            <Section10 section13_2_3Ref={section13_2_3Ref} data={data} reportType={reportType} />
+            <Section11 section13_3Ref={section13_3Ref} data={data} reportType={reportType} />
+            {reportType=='GRI Report: In accordance With' &&   <Section12 section13_3_1Ref={section13_3_1Ref} data={data} reportType={reportType} />}
             <Section13
               section13_4Ref={section13_4Ref}
               section13_4_1Ref={section13_4_1Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section14 section13_4_2Ref={section13_4_2Ref} data={data} />
-            <Section15 section13_4_3Ref={section13_4_3Ref} data={data} />
+            <Section14 section13_4_2Ref={section13_4_2Ref} data={data} reportType={reportType} />
+            <Section15 section13_4_3Ref={section13_4_3Ref} data={data} reportType={reportType} />
             <Section16
               section13_5Ref={section13_5Ref}
               section13_5_1Ref={section13_5_1Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section17 section13_5_2Ref={section13_5_2Ref} data={data} />
+            <Section17 section13_5_2Ref={section13_5_2Ref} data={data} reportType={reportType} />
             <Section18
               section13_6Ref={section13_6Ref}
               section13_6_1Ref={section13_6_1Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section19 section13_6_2Ref={section13_6_2Ref} data={data} />
-            <Section20 section13_6_3Ref={section13_6_3Ref} data={data} />
-            <Section21 section13_6_4Ref={section13_6_4Ref} data={data} />
-            <Section22 section13_6_5Ref={section13_6_5Ref} data={data} />
-            <Section23 section13_6_6Ref={section13_6_6Ref} data={data} />
-            <Section24 section13_6_7Ref={section13_6_7Ref} data={data} />
-            <Section25 section13_6_8Ref={section13_6_8Ref} data={data} />
-            <Section26 section13_6_9Ref={section13_6_9Ref} data={data} />
-            <Section27 section13_6_10Ref={section13_6_10Ref} data={data} />
-            <Section28 section13_7Ref={section13_7Ref} data={data} />
-            <Section29 section13_7_1Ref={section13_7_1Ref} data={data} />
+            <Section19 section13_6_2Ref={section13_6_2Ref} data={data} reportType={reportType} />
+            <Section20 section13_6_3Ref={section13_6_3Ref} data={data} reportType={reportType}/>
+            <Section21 section13_6_4Ref={section13_6_4Ref} data={data} reportType={reportType} />
+            <Section22 section13_6_5Ref={section13_6_5Ref} data={data} reportType={reportType} />
+            <Section23 section13_6_6Ref={section13_6_6Ref} data={data} reportType={reportType} />
+            <Section24 section13_6_7Ref={section13_6_7Ref} data={data} reportType={reportType} />
+            <Section25 section13_6_8Ref={section13_6_8Ref} data={data} reportType={reportType} />
+            <Section26 section13_6_9Ref={section13_6_9Ref} data={data} reportType={reportType} />
+            <Section27 section13_6_10Ref={section13_6_10Ref} data={data} reportType={reportType} />
+            <Section28 section13_7Ref={section13_7Ref} data={data} reportType={reportType} />
+            <Section29 section13_7_1Ref={section13_7_1Ref} data={data} reportType={reportType} />
             <Section30
               section13_7_2Ref={section13_7_2Ref}
               data={data}
               orgName={orgName}
+              reportType={reportType}
             />
-            <Section31 section13_8Ref={section13_8Ref} data={data} />
-            <Section32
+            <Section31 section13_8Ref={section13_8Ref} data={data} reportType={reportType} />
+            {reportType=='GRI Report: In accordance With' &&  <Section32
               section13_8_1Ref={section13_8_1Ref}
               data={data}
               orgName={orgName}
-            />
+              reportType={reportType}
+            />}
             <Section33
               section13_8_2Ref={section13_8_2Ref}
               data={data}
               orgName={orgName}
+              reportType={reportType}
             />
           </div>
           {/* page sidebar */}
@@ -678,22 +686,27 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               13.1. Employees
             </p>
+            {reportType=='GRI Report: In accordance With'?(
+               <p
+               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                 activeSection === "section13_1_1" ? "text-blue-400" : ""
+               }`}
+               onClick={() => scrollToSection(section13_1_1Ref, "section13_1_1")}
+             >
+               13.1.1. Management of Material Topics
+             </p>
+            ):(
+              <div></div>
+            )}
 
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_1_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_1_1Ref, "section13_1_1")}
-            >
-              13.1.1. Management of Material Topics
-            </p>
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section13_1_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section13_1_2Ref, "section13_1_2")}
             >
-              13.1.2. Employee hire, turnover
+            {reportType=='GRI Report: In accordance With'?'13.1.2.':'13.1.1.'}   Employee hire, turnover
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -701,7 +714,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_1_3Ref, "section13_1_3")}
             >
-              13.1.3. Employee benefits and health services
+            {reportType=='GRI Report: In accordance With'?'13.1.3.':'13.1.2.'}  Employee benefits and health services
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -709,7 +722,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_1_4Ref, "section13_1_4")}
             >
-              13.1.4. Personal leaves
+            {reportType=='GRI Report: In accordance With'?'13.1.4.':'13.1.3.'}  Personal leaves
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -717,7 +730,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_1_5Ref, "section13_1_5")}
             >
-              13.1.5. Standard wages
+            {reportType=='GRI Report: In accordance With'?'13.1.5.':'13.1.4.'} Standard wages
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -725,7 +738,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_1_6Ref, "section13_1_6")}
             >
-              13.1.6. Performance and career development reviews of employees
+            {reportType=='GRI Report: In accordance With'?'13.1.6.':'13.1.5.'} Performance and career development reviews of employees
             </p>
 
             <p
@@ -736,21 +749,26 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               13.2. Labour Management
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_2_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_2_1Ref, "section13_2_1")}
-            >
-              13.2.1. Management of Material Topics
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+               <p
+               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                 activeSection === "section13_2_1" ? "text-blue-400" : ""
+               }`}
+               onClick={() => scrollToSection(section13_2_1Ref, "section13_2_1")}
+             >
+               13.2.1. Management of Material Topics
+             </p>
+            ):(
+              <div></div>
+            )}
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section13_2_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section13_2_2Ref, "section13_2_2")}
             >
-              13.2.2. Workers who are not employees
+            {reportType=='GRI Report: In accordance With'?'13.2.2.':'13.2.1.'}   Workers who are not employees
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -758,7 +776,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_2_3Ref, "section13_2_3")}
             >
-              13.2.3. Forced or compulsory labour
+            {reportType=='GRI Report: In accordance With'?'13.2.3.':'13.2.2.'}  Forced or compulsory labour
             </p>
 
             <p
@@ -769,14 +787,19 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               13.3. Incidents of child labour
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_3_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_3_1Ref, "section13_3_1")}
-            >
-              13.3.1. Management of Material Topic
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+               <p
+               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                 activeSection === "section13_3_1" ? "text-blue-400" : ""
+               }`}
+               onClick={() => scrollToSection(section13_3_1Ref, "section13_3_1")}
+             >
+               13.3.1. Management of Material Topic
+             </p>
+            ):(
+              <div></div>
+            )}
+           
 
             <p
               className={`text-[12px] mb-2 cursor-pointer ${
@@ -786,21 +809,28 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               13.4. Diversity, Inclusion
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_4_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_4_1Ref, "section13_4_1")}
-            >
-              13.4.1. Management of Material Topics
-            </p>
+            {
+              reportType=='GRI Report: In accordance With'?(
+                <p
+                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                  activeSection === "section13_4_1" ? "text-blue-400" : ""
+                }`}
+                onClick={() => scrollToSection(section13_4_1Ref, "section13_4_1")}
+              >
+                13.4.1. Management of Material Topics
+              </p>
+              ):(
+                <div></div>
+              )
+            }
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section13_4_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section13_4_2Ref, "section13_4_2")}
             >
-              13.4.2. Diversity of governance bodies and employees
+            {reportType=='GRI Report: In accordance With'?'13.4.2.':'13.4.1.'}   Diversity of governance bodies and employees
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -808,7 +838,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_4_3Ref, "section13_4_3")}
             >
-              13.4.3. Remuneration
+            {reportType=='GRI Report: In accordance With'?'13.4.3.':'13.4.2.'}  Remuneration
             </p>
 
             <p
@@ -819,21 +849,26 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               13.5. Training & education
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_5_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_5_1Ref, "section13_5_1")}
-            >
-              13.5.1. Management of Material Topics
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+                <p
+                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                  activeSection === "section13_5_1" ? "text-blue-400" : ""
+                }`}
+                onClick={() => scrollToSection(section13_5_1Ref, "section13_5_1")}
+              >
+                13.5.1. Management of Material Topics
+              </p>
+            ):(
+                <div></div>
+            )}
+            
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section13_5_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section13_5_2Ref, "section13_5_2")}
             >
-              13.5.2. Programs for upgrading employee skills and transition
+            {reportType=='GRI Report: In accordance With'?'13.5.2.':'13.5.1.'}   Programs for upgrading employee skills and transition
               assistance programs
             </p>
 
@@ -845,21 +880,26 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               13.6. Occupational Health and Safety
             </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_6_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_6_1Ref, "section13_6_1")}
-            >
-              13.6.1. Management of Material Topic
-            </p>
+            {reportType=='GRI Report: In accordance With'?(
+                 <p
+                 className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                   activeSection === "section13_6_1" ? "text-blue-400" : ""
+                 }`}
+                 onClick={() => scrollToSection(section13_6_1Ref, "section13_6_1")}
+               >
+                 13.6.1. Management of Material Topic
+               </p>
+            ):(
+                <div></div>
+            )}
+           
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section13_6_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section13_6_2Ref, "section13_6_2")}
             >
-              13.6.2. OHS management system
+            {reportType=='GRI Report: In accordance With'?'13.6.2.':'13.6.1.'}   OHS management system
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -867,7 +907,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_6_3Ref, "section13_6_3")}
             >
-              13.6.3. Occupational health sevices
+            {reportType=='GRI Report: In accordance With'?'13.6.3.':'13.6.2.'} Occupational health sevices
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -875,7 +915,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_6_4Ref, "section13_6_4")}
             >
-              13.6.4. Worker participation, consultation, and communication on
+            {reportType=='GRI Report: In accordance With'?'13.6.4.':'13.6.3.'}   Worker participation, consultation, and communication on
               OHS
             </p>
             <p
@@ -884,7 +924,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_6_5Ref, "section13_6_5")}
             >
-              13.6.5. Promotion of worker health
+            {reportType=='GRI Report: In accordance With'?'13.6.5.':'13.6.4.'} Promotion of worker health
             </p>
 
             <p
@@ -893,7 +933,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_6_6Ref, "section13_6_6")}
             >
-              13.6.6. Prevention and mitigation of OHS impacts
+            {reportType=='GRI Report: In accordance With'?'13.6.6.':'13.6.5.'}  Prevention and mitigation of OHS impacts
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -901,7 +941,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_6_7Ref, "section13_6_7")}
             >
-              13.6.7. Hazard, risk identification and investigation
+            {reportType=='GRI Report: In accordance With'?'13.6.7.':'13.6.6.'}  Hazard, risk identification and investigation
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -909,7 +949,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_6_8Ref, "section13_6_8")}
             >
-              13.6.8. Worked related ill-health & injuries
+            {reportType=='GRI Report: In accordance With'?'13.6.8.':'13.6.7.'}  Worked related ill-health & injuries
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -917,7 +957,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section13_6_9Ref, "section13_6_9")}
             >
-              13.6.9. Safety training
+            {reportType=='GRI Report: In accordance With'?'13.6.9.':'13.6.8.'}  Safety training
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -927,7 +967,7 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
                 scrollToSection(section13_6_10Ref, "section13_6_10")
               }
             >
-              13.6.10. Workers covered by OHS management system
+            {reportType=='GRI Report: In accordance With'?'13.6.10.':'13.6.9.'}  Workers covered by OHS management system
             </p>
 
             <p
@@ -959,7 +999,8 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               13.8. Incidents of violation/discrimination
             </p>
-            <p
+            {reportType=='GRI Report: In accordance With'?(
+              <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section13_8_1" ? "text-blue-400" : ""
               }`}
@@ -967,14 +1008,18 @@ const People = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               13.8.1. Management of material topic
             </p>
-            <p
+            ):(
+              <div></div>
+            )}
+            
+            {/* <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === "section13_8_2" ? "text-blue-400" : ""
               }`}
               onClick={() => scrollToSection(section13_8_2Ref, "section13_8_2")}
             >
               13.8.2. Incidents of violation of rights of indigenous people
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { FiX, FiDownload, FiChevronDown } from "react-icons/fi";
-import EmissionProjectionGraph from "./EmissionProjectionGraph";
+import { FiX, FiDownload, FiInfo, FiChevronDown } from "react-icons/fi";
+import EmissionsProjectionGraph from "./EmissionProjectionGraph";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchScenarioGraphData } from "../../../lib/redux/features/optimiseSlice";
 
@@ -18,7 +18,12 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
   const [baseYear, setBaseYear] = useState(2024);
   const [mainTargetYear, setMainTargetYear] = useState(2030);
   const [extendedTargetYear, setExtendedTargetYear] = useState(2030);
+  const [extendedTargetYearInput, setExtendedTargetYearInput] = useState('2030');
+  const [targetYearError, setTargetYearError] = useState(null);
   const [includeNetZero, setIncludeNetZero] = useState(false);
+  
+  // Timeout ref for debounced validation
+  const targetYearTimeoutRef = useRef(null);
   
   // Dropdown selections - arrays for multiselect
   const [selectedScopes, setSelectedScopes] = useState(["Aggregated Scope"]);
@@ -26,8 +31,8 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
   const [selectedSubCategories, setSelectedSubCategories] = useState(["Aggregated Scope"]);
   const [selectedActivities, setSelectedActivities] = useState(["Aggregated Scope"]);
 
-  // Dropdown options
-  const [scopeOptions] = useState(["Aggregated Scope", "Scope-1", "Scope-2", "Scope-3"]);
+  // Dropdown options - will be populated from API data
+  const [scopeOptions, setScopeOptions] = useState(["Aggregated Scope"]);
   const [categoryOptions, setCategoryOptions] = useState(["Aggregated Scope"]);
   const [subCategoryOptions, setSubCategoryOptions] = useState(["Aggregated Scope"]);
   const [activityOptions, setActivityOptions] = useState(["Aggregated Scope"]);
@@ -45,6 +50,13 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
   const subCategoryRef = useRef(null);
   const activityRef = useRef(null);
   const metricsRef = useRef(null);
+  const downloadButtonRef = useRef(null);
+
+  // Determine if child dropdowns should be disabled
+  // If a parent is set to "Aggregated Scope", all children should be disabled
+  const isCategoryDropdownDisabled = selectedScopes.includes("Aggregated Scope");
+  const isSubCategoryDropdownDisabled = isCategoryDropdownDisabled || selectedCategories.includes("Aggregated Scope");
+  const isActivityDropdownDisabled = isSubCategoryDropdownDisabled || selectedSubCategories.includes("Aggregated Scope");
 
   // Business metrics filter state
   const [businessMetrics, setBusinessMetrics] = useState([
@@ -54,10 +66,8 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
     { id: "revenue", name: "Revenue", selected: false },
   ]);
 
-  // Determine if child dropdowns should be disabled
-  const isCategoryDropdownDisabled = selectedScopes.includes("Aggregated Scope");
-  const isSubCategoryDropdownDisabled = isCategoryDropdownDisabled || selectedCategories.includes("Aggregated Scope");
-  const isActivityDropdownDisabled = isSubCategoryDropdownDisabled || selectedSubCategories.includes("Aggregated Scope");
+  // State to control download options dropdown
+  const [showDownloadOptions, setShowDownloadOptions] = useState(false);
 
   // Extract values from props in useEffect instead of directly in render
   useEffect(() => {
@@ -68,8 +78,107 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
       setBaseYear(newBaseYear);
       setMainTargetYear(newMainTargetYear);
       setExtendedTargetYear(newMainTargetYear);
+      setExtendedTargetYearInput(newMainTargetYear.toString());
     }
   }, [scenarioData]);
+
+  // Handle target year input with validation
+  const handleTargetYearInputChange = (e) => {
+    const value = e.target.value;
+    setExtendedTargetYearInput(value);
+
+    // Clear any existing timeout
+    if (targetYearTimeoutRef.current) {
+      clearTimeout(targetYearTimeoutRef.current);
+    }
+
+    // Set a timeout for validation after typing stops
+    targetYearTimeoutRef.current = setTimeout(() => {
+      validateAndUpdateTargetYear(value);
+    }, 500);
+  };
+
+  // Validate and update the target year
+  const validateAndUpdateTargetYear = (value) => {
+    // Clear previous errors
+    setTargetYearError(null);
+
+    // Convert to number
+    const numValue = parseInt(value, 10);
+
+    // Validate if it's a number
+    if (isNaN(numValue)) {
+      setTargetYearError("Please enter a valid year");
+      return;
+    }
+
+    // Validate range
+    if (numValue < baseYear) {
+      setTargetYearError(`Cannot be earlier than base year (${baseYear})`);
+      return;
+    }
+
+    if (numValue > 2050) {
+      setTargetYearError("Year cannot exceed 2050");
+      return;
+    }
+
+    // Update the actual value if validation passes
+    setExtendedTargetYear(numValue);
+  };
+
+  // Helper function to extract business metrics from graph data
+  const extractBusinessMetricsFromData = (graphData) => {
+    if (!graphData) return [];
+
+    // Set to collect unique metrics
+    const uniqueMetrics = new Set();
+
+    // Format metric name for display
+    const formatMetricName = (metric) => {
+      return metric
+        .split("_")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    };
+
+    // Check metrics in totals if available
+    if (graphData.totals) {
+      Object.values(graphData.totals).forEach((yearData) => {
+        Object.keys(yearData).forEach((key) => {
+          if (
+            ["fte", "area", "production_volume", "revenue", "employees"].includes(key)
+          ) {
+            uniqueMetrics.add(key);
+          }
+        });
+      });
+    }
+
+    // Check metrics in yearly_data
+    if (graphData.yearly_data) {
+      Object.values(graphData.yearly_data).forEach((activities) => {
+        if (Array.isArray(activities)) {
+          activities.forEach((activity) => {
+            Object.keys(activity).forEach((key) => {
+              if (
+                ["fte", "area", "production_volume", "revenue", "employees"].includes(key)
+              ) {
+                uniqueMetrics.add(key);
+              }
+            });
+          });
+        }
+      });
+    }
+
+    // Convert to array of objects
+    return Array.from(uniqueMetrics).map((metric) => ({
+      id: metric,
+      name: formatMetricName(metric),
+      selected: false,
+    }));
+  };
 
   // Handle outside clicks to close dropdowns
   useEffect(() => {
@@ -89,65 +198,22 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
       if (metricsRef.current && !metricsRef.current.contains(event.target)) {
         setIsMetricsDropdownOpen(false);
       }
+      if (downloadButtonRef.current && !downloadButtonRef.current.contains(event.target)) {
+        setShowDownloadOptions(false);
+      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      
+      // Clear any existing timeouts
+      if (targetYearTimeoutRef.current) {
+        clearTimeout(targetYearTimeoutRef.current);
+      }
     };
   }, []);
   
-  // Fetch graph data when filters change or modal opens
-  useEffect(() => {
-    if (!isOpen || !scenarioData?.id) return;
-
-    // Build filter object for API call
-    const filters = {};
-    
-    // Only add scopes if not using aggregated
-    if (!selectedScopes.includes("Aggregated Scope")) {
-      filters.scope = selectedScopes.map(scope => scope)
-    }
-    // Only add categories if not using aggregated
-    if (!selectedCategories.includes("Aggregated Scope")) {
-      filters.category = selectedCategories;
-    }
-    
-    // Only add subcategories if not using aggregated
-    if (!selectedSubCategories.includes("Aggregated Scope")) {
-      filters.sub_category = selectedSubCategories;
-    }
-    
-    // Only add activities if not using aggregated
-    if (!selectedActivities.includes("Aggregated Scope")) {
-      filters.activity = selectedActivities;
-    }
-    
-    // Add business metrics
-    filters.metrics = businessMetrics
-      .filter(m => m.selected)
-      .map(m => m.id)
-      .join(',');
-    
-    // Fetch the graph data
-    dispatch(fetchScenarioGraphData({ 
-      scenarioId: scenarioData.id, 
-      filters 
-    }));
-  }, [
-    isOpen,
-    dispatch, 
-    scenarioData?.id, 
-    selectedScopes, 
-    selectedCategories, 
-    selectedSubCategories, 
-    selectedActivities,
-    includeNetZero,
-    extendedTargetYear,
-    mainTargetYear,
-    businessMetrics
-  ]);
-
   // Handle scope selection with enhanced parent-child dependencies
   const handleScopeSelection = (scope) => {
     if (scope === "Aggregated Scope") {
@@ -211,10 +277,16 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
       } else {
         // Just update categories
         setSelectedCategories(newSelectedCategories);
+        // Reset subcategories since category relationship changed
+        setSelectedSubCategories(["Aggregated Scope"]);
+        setSelectedActivities(["Aggregated Scope"]);
       }
     } else {
       // Adding another category
       setSelectedCategories([...selectedCategories, category]);
+      // Reset subcategories to avoid mismatches
+      setSelectedSubCategories(["Aggregated Scope"]);
+      setSelectedActivities(["Aggregated Scope"]);
     }
   };
 
@@ -243,10 +315,14 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
       } else {
         // Just update subcategories
         setSelectedSubCategories(newSelectedSubCategories);
+        // Reset activities since the subcategory relationship changed
+        setSelectedActivities(["Aggregated Scope"]);
       }
     } else {
       // Adding another subcategory
       setSelectedSubCategories([...selectedSubCategories, subCategory]);
+      // Reset activities when a new subcategory is added
+      setSelectedActivities(["Aggregated Scope"]);
     }
   };
 
@@ -261,9 +337,11 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
     } else if (selectedActivities.includes("Aggregated Scope")) {
       setSelectedActivities([activity]);
     } else if (selectedActivities.includes(activity)) {
-      // Prevent removing the last activity
-      if (selectedActivities.length > 1) {
-        setSelectedActivities(selectedActivities.filter((a) => a !== activity));
+      const newSelectedActivities = selectedActivities.filter((a) => a !== activity);
+      if (newSelectedActivities.length === 0) {
+        setSelectedActivities(["Aggregated Scope"]);
+      } else {
+        setSelectedActivities(newSelectedActivities);
       }
     } else {
       setSelectedActivities([...selectedActivities, activity]);
@@ -289,47 +367,337 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
   // Get the currently selected metrics
   const selectedMetrics = businessMetrics.filter((metric) => metric.selected);
 
-  // Handle downloading results
-  const handleDownloadResults = () => {
-    if (!graphData) return;
-    
-    // Create a JSON blob and download it
-    const dataStr = JSON.stringify(graphData, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.setAttribute('hidden', '');
-    a.setAttribute('href', url);
-    a.setAttribute('download', `scenario-${scenarioData.id}-projection.json`);
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
   // Update available options based on API data
   useEffect(() => {
     if (graphData && graphData.yearly_data) {
-      // Extract unique categories, subcategories, and activities from the data
-      const categories = new Set(["Aggregated Scope"]);
-      const subCategories = new Set(["Aggregated Scope"]);
-      const activities = new Set(["Aggregated Scope"]);
+      // Extract unique values for each filter type
+      const uniqueScopes = new Set(["Aggregated Scope"]);
+      const uniqueCategories = new Set(["Aggregated Scope"]);
+      const uniqueSubCategories = new Set(["Aggregated Scope"]);
+      const uniqueActivities = new Set(["Aggregated Scope"]);
       
-      // Iterate through each year's data
-      Object.values(graphData.yearly_data).forEach(yearData => {
-        yearData.forEach(item => {
-          if (item.category) categories.add(item.category);
-          if (item.sub_category) subCategories.add(item.sub_category);
-          if (item.activity_name) activities.add(item.activity_name);
+      // Go through each year's data
+      Object.values(graphData.yearly_data).forEach((yearActivities) => {
+        yearActivities.forEach((activity) => {
+          // Add values to their respective sets
+          if (activity.scope) uniqueScopes.add(activity.scope);
+          if (activity.category) uniqueCategories.add(activity.category);
+          if (activity.sub_category) uniqueSubCategories.add(activity.sub_category);
+          if (activity.activity_name) uniqueActivities.add(activity.activity_name);
         });
       });
       
-      // Update the options with the extracted values
-      setCategoryOptions(Array.from(categories));
-      setSubCategoryOptions(Array.from(subCategories));
-      setActivityOptions(Array.from(activities));
+      // Prepare all the options before any state updates
+      let scopeOptionsToSet = Array.from(uniqueScopes);
+      let categoryOptionsToSet = Array.from(uniqueCategories);
+      let subCategoryOptionsToSet = Array.from(uniqueSubCategories);
+      let activityOptionsToSet = Array.from(uniqueActivities);
+      
+      // Filter category options based on selected scopes
+      if (!selectedScopes.includes("Aggregated Scope")) {
+        const filteredCategories = new Set(["Aggregated Scope"]);
+        
+        Object.values(graphData.yearly_data).forEach((yearActivities) => {
+          yearActivities.forEach((activity) => {
+            if (selectedScopes.includes(activity.scope) && activity.category) {
+              filteredCategories.add(activity.category);
+            }
+          });
+        });
+        
+        categoryOptionsToSet = Array.from(filteredCategories);
+      }
+      
+      // Filter subcategory options based on selected categories
+      if (!selectedCategories.includes("Aggregated Scope")) {
+        const filteredSubCategories = new Set(["Aggregated Scope"]);
+        
+        Object.values(graphData.yearly_data).forEach((yearActivities) => {
+          yearActivities.forEach((activity) => {
+            const matchesScope = selectedScopes.includes("Aggregated Scope") || 
+                                selectedScopes.includes(activity.scope);
+                                
+            const matchesCategory = selectedCategories.includes(activity.category);
+            
+            if (matchesScope && matchesCategory && activity.sub_category) {
+              filteredSubCategories.add(activity.sub_category);
+            }
+          });
+        });
+        
+        subCategoryOptionsToSet = Array.from(filteredSubCategories);
+      }
+      
+      // Filter activity options based on selected subcategories
+      if (!selectedSubCategories.includes("Aggregated Scope")) {
+        const filteredActivities = new Set(["Aggregated Scope"]);
+        
+        Object.values(graphData.yearly_data).forEach((yearActivities) => {
+          yearActivities.forEach((activity) => {
+            const matchesScope = selectedScopes.includes("Aggregated Scope") || 
+                                selectedScopes.includes(activity.scope);
+                                
+            const matchesCategory = selectedCategories.includes("Aggregated Scope") || 
+                                  selectedCategories.includes(activity.category);
+                                  
+            const matchesSubCategory = selectedSubCategories.includes(activity.sub_category);
+            
+            if (matchesScope && matchesCategory && matchesSubCategory && activity.activity_name) {
+              filteredActivities.add(activity.activity_name);
+            }
+          });
+        });
+        
+        activityOptionsToSet = Array.from(filteredActivities);
+      }
+      
+      // Update the options if not in dropdown interactions
+      // Batch all state updates to minimize re-renders
+      const stateUpdates = [];
+      
+      if (!isScopeDropdownOpen) {
+        stateUpdates.push(() => setScopeOptions(scopeOptionsToSet));
+      }
+      
+      if (!isCategoryDropdownOpen) {
+        stateUpdates.push(() => setCategoryOptions(categoryOptionsToSet));
+      }
+      
+      if (!isSubCategoryDropdownOpen) {
+        stateUpdates.push(() => setSubCategoryOptions(subCategoryOptionsToSet));
+      }
+      
+      if (!isActivityDropdownOpen) {
+        stateUpdates.push(() => setActivityOptions(activityOptionsToSet));
+      }
+      
+      // Extract and update business metrics
+      const availableMetrics = extractBusinessMetricsFromData(graphData);
+      if (availableMetrics.length > 0) {
+        stateUpdates.push(() => 
+          setBusinessMetrics((prevMetrics) => {
+            // Skip update if metrics are the same (prevents unnecessary re-renders)
+            if (prevMetrics.length === availableMetrics.length && 
+                prevMetrics.every((m) => availableMetrics.some((am) => am.id === m.id))) {
+              // Just preserve selections
+              const existingMetricsMap = new Map(
+                prevMetrics.map((m) => [m.id, m.selected])
+              );
+              
+              const noChangeNeeded = availableMetrics.every(
+                (newMetric) => 
+                  existingMetricsMap.has(newMetric.id) && 
+                  prevMetrics.find((m) => m.id === newMetric.id)?.name === newMetric.name
+              );
+              
+              if (noChangeNeeded) {
+                return prevMetrics;
+              }
+            }
+            
+            // Create a map of existing metrics for quick lookup
+            const existingMetricsMap = new Map(
+              prevMetrics.map((m) => [m.id, m.selected])
+            );
+            
+            // Preserve selection state for metrics that already exist
+            return availableMetrics.map((newMetric) => ({
+              ...newMetric,
+              selected: existingMetricsMap.has(newMetric.id)
+                ? existingMetricsMap.get(newMetric.id)
+                : false,
+            }));
+          })
+        );
+      }
+      
+      // Apply all state updates
+      stateUpdates.forEach((updateFn) => updateFn());
     }
-  }, [graphData]);
+  }, [
+    graphData, 
+    selectedScopes, 
+    selectedCategories, 
+    selectedSubCategories,
+    isScopeDropdownOpen,
+    isCategoryDropdownOpen,
+    isSubCategoryDropdownOpen,
+    isActivityDropdownOpen
+  ]);
+
+  // Fetch graph data when filters change or modal opens
+  useEffect(() => {
+    if (!isOpen || !scenarioData?.id) return;
+
+    // Build filter object for API call
+    const filters = {};
+    
+    // Only add scopes if not using aggregated
+    if (!selectedScopes.includes("Aggregated Scope")) {
+      filters.scope = selectedScopes;
+    }
+    
+    // Only add categories if not using aggregated
+    if (!selectedCategories.includes("Aggregated Scope")) {
+      filters.category = selectedCategories;
+    }
+    
+    // Only add subcategories if not using aggregated
+    if (!selectedSubCategories.includes("Aggregated Scope")) {
+      filters.sub_category = selectedSubCategories;
+    }
+    
+    // Only add activities if not using aggregated
+    if (!selectedActivities.includes("Aggregated Scope")) {
+      filters.activity = selectedActivities;
+    }
+    
+    // Add net zero parameter
+    filters.include_net_zero = includeNetZero;
+    
+    // Add target year parameters
+    filters.target_year = extendedTargetYear;
+    filters.main_target_year = mainTargetYear;
+    
+    // Add business metrics
+    filters.metrics = businessMetrics
+      .filter(m => m.selected)
+      .map(m => m.id)
+      .join(',');
+    
+    // Fetch the graph data
+    dispatch(fetchScenarioGraphData({ 
+      scenarioId: scenarioData.id, 
+      filters 
+    }));
+  }, [
+    isOpen,
+    dispatch, 
+    scenarioData?.id, 
+    selectedScopes, 
+    selectedCategories, 
+    selectedSubCategories, 
+    selectedActivities,
+    includeNetZero,
+    extendedTargetYear,
+    mainTargetYear,
+    businessMetrics
+  ]);
+
+  // Handle downloading results
+  const handleDownloadResults = () => {
+    if (!graphData) return;
+    setShowDownloadOptions(!showDownloadOptions);
+  };
+
+  // Handle CSV download
+  const handleDownloadCSV = () => {
+    try {
+      // Create CSV header row
+      const headers = ["Year", "Scope", "Category", "Sub_Category", "Activity", "Emissions_Value", "Unit"];
+      let csvContent = headers.join(",") + "\n";
+      
+      // Extract data from graphData
+      if (graphData.yearly_data) {
+        Object.entries(graphData.yearly_data).forEach(([year, activities]) => {
+          activities.forEach(activity => {
+            // Create a row for each activity
+            const row = [
+              year,
+              activity.scope || "",
+              activity.category || "",
+              activity.sub_category || "",
+              activity.activity_name || "",
+              activity.co2e || "0",
+              "tCO2e"
+            ];
+            
+            // Add the row to CSV content, properly escaped
+            csvContent += row.map(cell => {
+              // Escape cells with commas or quotes
+              if (typeof cell === 'string' && (cell.includes(',') || cell.includes('"'))) {
+                return `"${cell.replace(/"/g, '""')}"`;
+              }
+              return cell;
+            }).join(",") + "\n";
+          });
+        });
+      }
+      
+      // Create and download the CSV file
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.setAttribute("hidden", "");
+      a.setAttribute("href", url);
+      a.setAttribute("download", `scenario-${scenarioData.id}-data.csv`);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      // Close dropdown after download
+      setShowDownloadOptions(false);
+    } catch (error) {
+      console.error("Error creating CSV:", error);
+      alert("Failed to download CSV. Please try again.");
+    }
+  };
+
+  // Handle PNG download
+  const handleDownloadPNG = () => {
+    try {
+      // Find the chart SVG element
+      const svgElement = document.querySelector('.emission-chart-container svg');
+      if (!svgElement) {
+        console.error("Could not find chart SVG element");
+        alert("Could not find chart to download. Please try again.");
+        return;
+      }
+      
+      // Create a canvas for the PNG
+      const canvas = document.createElement('canvas');
+      const width = svgElement.width.baseVal.value || 1200;
+      const height = svgElement.height.baseVal.value || 600;
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, width, height);
+      
+      // Convert SVG to PNG
+      const svgString = new XMLSerializer().serializeToString(svgElement);
+      const img = new Image();
+      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+      
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, width, height);
+        URL.revokeObjectURL(url);
+        
+        // Download the PNG
+        canvas.toBlob((blob) => {
+          const pngUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.setAttribute("hidden", "");
+          a.setAttribute("href", pngUrl);
+          a.setAttribute("download", `scenario-${scenarioData.id}-chart.png`);
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(pngUrl);
+          
+          // Close dropdown after download
+          setShowDownloadOptions(false);
+        }, 'image/png');
+      };
+      
+      img.src = url;
+    } catch (error) {
+      console.error("Error creating PNG:", error);
+      alert("Failed to download PNG. Please try again.");
+    }
+  };
 
   // If there's no scenarioData or it's not open, don't render anything
   if (!scenarioData || !isOpen) {
@@ -362,7 +730,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-[1200px] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all mb-8 max-h-[115vh] flex flex-col">
+              <Dialog.Panel className="w-full max-w-[1200px] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all mb-8 max-h-[105vh] flex flex-col">
                 {/* Header section with scenario details */}
                 <div className="p-6 pb-4">
                   <Dialog.Title className="text-2xl font-medium text-gray-900 mb-3">
@@ -419,10 +787,12 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                             onClick={() => setScopeDropdownOpen(!isScopeDropdownOpen)}
                             className="flex items-center text-gray-800 hover:text-gray-900 font-medium focus:outline-none"
                           >
-                            <span>
+                            <span className="max-w-[150px] truncate">
                               {selectedScopes.includes("Aggregated Scope")
                                 ? "Aggregated Scope"
-                                : selectedScopes.join(", ")}
+                                : selectedScopes.length === 1
+                                ? selectedScopes[0]
+                                : `${selectedScopes.length} selected`}
                             </span>
                             <FiChevronDown className="ml-1 h-4 w-4 text-gray-500" />
                           </button>
@@ -442,7 +812,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                                       onChange={() => {}}
                                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                     />
-                                    <label className="ml-2 block text-sm text-gray-900">
+                                    <label className="ml-2 block text-sm text-gray-900 truncate">
                                       {scope}
                                     </label>
                                   </div>
@@ -451,9 +821,16 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                               <div className="border-t border-gray-200 px-4 py-2">
                                 <button
                                   className="text-sm text-blue-600 hover:text-blue-800"
-                                  onClick={() => setScopeDropdownOpen(false)}
+                                  onClick={() => {
+                                    // Reset to Aggregated Scope and close dropdown
+                                    setSelectedScopes(["Aggregated Scope"]);
+                                    setSelectedCategories(["Aggregated Scope"]);
+                                    setSelectedSubCategories(["Aggregated Scope"]);
+                                    setSelectedActivities(["Aggregated Scope"]);
+                                    setScopeDropdownOpen(false);
+                                  }}
                                 >
-                                  Done
+                                  Reset
                                 </button>
                               </div>
                             </div>
@@ -468,19 +845,31 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                         </span>
                         <div className="relative">
                           <button
-                            onClick={() => !isCategoryDropdownDisabled && setCategoryDropdownOpen(!isCategoryDropdownOpen)}
+                            onClick={() =>
+                              setCategoryDropdownOpen(
+                                !isCategoryDropdownDisabled && !isCategoryDropdownOpen
+                              )
+                            }
                             className={`flex items-center font-medium focus:outline-none ${
-                              isCategoryDropdownDisabled 
-                                ? "text-gray-400 cursor-not-allowed" 
+                              isCategoryDropdownDisabled
+                                ? "text-gray-400 cursor-not-allowed"
                                 : "text-gray-800 hover:text-gray-900 cursor-pointer"
                             }`}
                           >
-                            <span>
+                            <span className="max-w-[150px] truncate">
                               {selectedCategories.includes("Aggregated Scope")
                                 ? "Aggregated Scope"
-                                : selectedCategories.join(", ")}
+                                : selectedCategories.length === 1
+                                ? selectedCategories[0]
+                                : `${selectedCategories.length} selected`}
                             </span>
-                            <FiChevronDown className={`ml-1 h-4 w-4 ${isCategoryDropdownDisabled ? "text-gray-300" : "text-gray-500"}`} />
+                            <FiChevronDown
+                              className={`ml-1 h-4 w-4 ${
+                                isCategoryDropdownDisabled
+                                  ? "text-gray-300"
+                                  : "text-gray-500"
+                              }`}
+                            />
                           </button>
 
                           {isCategoryDropdownOpen && !isCategoryDropdownDisabled && (
@@ -498,7 +887,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                                       onChange={() => {}}
                                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                     />
-                                    <label className="ml-2 block text-sm text-gray-900">
+                                    <label className="ml-2 block text-sm text-gray-900 truncate">
                                       {category}
                                     </label>
                                   </div>
@@ -507,9 +896,15 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                               <div className="border-t border-gray-200 px-4 py-2">
                                 <button
                                   className="text-sm text-blue-600 hover:text-blue-800"
-                                  onClick={() => setCategoryDropdownOpen(false)}
+                                  onClick={() => {
+                                    // Reset to Aggregated Scope and close dropdown
+                                    setSelectedCategories(["Aggregated Scope"]);
+                                    setSelectedSubCategories(["Aggregated Scope"]);
+                                    setSelectedActivities(["Aggregated Scope"]);
+                                    setCategoryDropdownOpen(false);
+                                  }}
                                 >
-                                  Done
+                                  Reset
                                 </button>
                               </div>
                             </div>
@@ -524,19 +919,31 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                         </span>
                         <div className="relative">
                           <button
-                            onClick={() => !isSubCategoryDropdownDisabled && setSubCategoryDropdownOpen(!isSubCategoryDropdownOpen)}
+                            onClick={() =>
+                              setSubCategoryDropdownOpen(
+                                !isSubCategoryDropdownDisabled && !isSubCategoryDropdownOpen
+                              )
+                            }
                             className={`flex items-center font-medium focus:outline-none ${
-                              isSubCategoryDropdownDisabled 
-                                ? "text-gray-400 cursor-not-allowed" 
+                              isSubCategoryDropdownDisabled
+                                ? "text-gray-400 cursor-not-allowed"
                                 : "text-gray-800 hover:text-gray-900 cursor-pointer"
                             }`}
                           >
-                            <span>
+                            <span className="max-w-[150px] truncate">
                               {selectedSubCategories.includes("Aggregated Scope")
                                 ? "Aggregated Scope"
-                                : selectedSubCategories.join(", ")}
+                                : selectedSubCategories.length === 1
+                                ? selectedSubCategories[0]
+                                : `${selectedSubCategories.length} selected`}
                             </span>
-                            <FiChevronDown className={`ml-1 h-4 w-4 ${isSubCategoryDropdownDisabled ? "text-gray-300" : "text-gray-500"}`} />
+                            <FiChevronDown
+                              className={`ml-1 h-4 w-4 ${
+                                isSubCategoryDropdownDisabled
+                                  ? "text-gray-300"
+                                  : "text-gray-500"
+                              }`}
+                            />
                           </button>
 
                           {isSubCategoryDropdownOpen && !isSubCategoryDropdownDisabled && (
@@ -563,9 +970,14 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                               <div className="border-t border-gray-200 px-4 py-2">
                                 <button
                                   className="text-sm text-blue-600 hover:text-blue-800"
-                                  onClick={() => setSubCategoryDropdownOpen(false)}
+                                  onClick={() => {
+                                    // Reset to Aggregated Scope and close dropdown
+                                    setSelectedSubCategories(["Aggregated Scope"]);
+                                    setSelectedActivities(["Aggregated Scope"]);
+                                    setSubCategoryDropdownOpen(false);
+                                  }}
                                 >
-                                  Done
+                                  Reset
                                 </button>
                               </div>
                             </div>
@@ -580,19 +992,31 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                         </span>
                         <div className="relative">
                           <button
-                            onClick={() => !isActivityDropdownDisabled && setActivityDropdownOpen(!isActivityDropdownOpen)}
+                            onClick={() =>
+                              setActivityDropdownOpen(
+                                !isActivityDropdownDisabled && !isActivityDropdownOpen
+                              )
+                            }
                             className={`flex items-center font-medium focus:outline-none ${
-                              isActivityDropdownDisabled 
-                                ? "text-gray-400 cursor-not-allowed" 
+                              isActivityDropdownDisabled
+                                ? "text-gray-400 cursor-not-allowed"
                                 : "text-gray-800 hover:text-gray-900 cursor-pointer"
                             }`}
                           >
-                            <span>
+                            <span className="max-w-[150px] truncate">
                               {selectedActivities.includes("Aggregated Scope")
                                 ? "Aggregated Scope"
-                                : selectedActivities.join(", ")}
+                                : selectedActivities.length === 1
+                                ? selectedActivities[0]
+                                : `${selectedActivities.length} selected`}
                             </span>
-                            <FiChevronDown className={`ml-1 h-4 w-4 ${isActivityDropdownDisabled ? "text-gray-300" : "text-gray-500"}`} />
+                            <FiChevronDown
+                              className={`ml-1 h-4 w-4 ${
+                                isActivityDropdownDisabled
+                                  ? "text-gray-300"
+                                  : "text-gray-500"
+                              }`}
+                            />
                           </button>
 
                           {isActivityDropdownOpen && !isActivityDropdownDisabled && (
@@ -619,9 +1043,13 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                               <div className="border-t border-gray-200 px-4 py-2">
                                 <button
                                   className="text-sm text-blue-600 hover:text-blue-800"
-                                  onClick={() => setActivityDropdownOpen(false)}
+                                  onClick={() => {
+                                    // Reset to Aggregated Scope and close dropdown
+                                    setSelectedActivities(["Aggregated Scope"]);
+                                    setActivityDropdownOpen(false);
+                                  }}
                                 >
-                                  Done
+                                  Reset
                                 </button>
                               </div>
                             </div>
@@ -703,22 +1131,37 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                         </label>
                       </div>
 
-                      <div className="flex items-center gap-2 ml-4">
-                        <label
-                          htmlFor="target-year"
-                          className="text-sm text-gray-700 whitespace-nowrap"
-                        >
-                          Target Year:
-                        </label>
-                        <input
-                          id="target-year"
-                          type="number"
-                          min={baseYear}
-                          max={2050}
-                          value={extendedTargetYear}
-                          onChange={(e) => setExtendedTargetYear(parseInt(e.target.value))}
-                          className="w-24 rounded-md border border-gray-300 py-1 px-2 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-blue-500 text-sm"
-                        />
+                      <div className="flex flex-col items-start gap-1 ml-4">
+                        <div className="flex items-center gap-2">
+                          <label
+                            htmlFor="target-year"
+                            className="text-sm text-gray-700 whitespace-nowrap"
+                          >
+                            Target Year:
+                          </label>
+                          <input
+                            id="target-year"
+                            type="number"
+                            min={baseYear}
+                            max={2050}
+                            value={extendedTargetYearInput}
+                            onChange={handleTargetYearInputChange}
+                            onBlur={() => {
+                              // Validate on blur to ensure validation happens
+                              // even if the user doesn't type for a while
+                              if (targetYearTimeoutRef.current) {
+                                clearTimeout(targetYearTimeoutRef.current);
+                              }
+                              validateAndUpdateTargetYear(extendedTargetYearInput);
+                            }}
+                            className={`w-24 rounded-md border ${
+                              targetYearError ? "border-red-500" : "border-gray-300"
+                            } py-1 px-2 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-blue-500 text-sm`}
+                          />
+                        </div>
+                        {targetYearError && (
+                          <p className="text-xs text-red-500 mt-1">{targetYearError}</p>
+                        )}
                       </div>
                     </div>
 
@@ -727,26 +1170,48 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                       <div className="flex justify-between items-center mb-4">
                         <h3 className="text-base font-semibold text-gray-900">
                           Predicted Trend of chosen Business Metrics over Years
-                          for {selectedScopes.includes("Aggregated Scope")
-                               ? " (Aggregated Scopes)"
+                          for {selectedScopes.includes("Aggregated Scope") 
+                               ? " (Aggregated Scopes)" 
                                : ` (${selectedScopes.join(", ")})`}
                         </h3>
-                        <button
-                          onClick={handleDownloadResults}
-                          disabled={!graphData || loading}
-                          className={`inline-flex items-center px-3 py-2 border ${
-                            !graphData || loading
-                              ? "border-gray-200 text-gray-400 cursor-not-allowed" 
-                              : "border-gray-300 shadow-sm text-gray-700 hover:bg-gray-50"
-                          } rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
-                        >
-                          Download result
-                          <FiDownload className="ml-2 h-4 w-4" />
-                        </button>
+                        <div className="relative" ref={downloadButtonRef}>
+                          <button
+                            onClick={handleDownloadResults}
+                            disabled={!graphData || loading}
+                            className={`inline-flex items-center px-3 py-2 border ${
+                              !graphData || loading 
+                                ? "border-gray-200 text-gray-400 cursor-not-allowed" 
+                                : "border-gray-300 shadow-sm text-gray-700 hover:bg-gray-50"
+                            } rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+                          >
+                            Download
+                            <FiDownload className="ml-2 h-4 w-4" />
+                          </button>
+
+                          {/* Download options dropdown */}
+                          {showDownloadOptions && !loading && graphData && (
+                            <div className="absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded shadow-md z-20">
+                              <div className="py-1">
+                                <button
+                                  onClick={handleDownloadCSV}
+                                  className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
+                                >
+                                  Download as CSV
+                                </button>
+                                <button
+                                  onClick={handleDownloadPNG}
+                                  className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
+                                >
+                                  Download as PNG
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
 
-                      {/* Graph container with loading, error, and no data states */}
-                      <div className="border border-gray-200 rounded-lg overflow-hidden relative">
+                      {/* Chart container with loading, error, and no data states */}
+                      <div className="border border-gray-200 rounded-lg overflow-hidden emission-chart-container relative">
                         {/* Loading state */}
                         {loading && (
                           <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-10">
@@ -809,7 +1274,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                         
                         {/* Graph component */}
                         {!loading && !error && graphData && Object.keys(graphData).length > 0 && (
-                          <EmissionProjectionGraph
+                          <EmissionsProjectionGraph
                             scenario={scenarioData}
                             graphData={graphData}
                             includeNetZero={includeNetZero}
@@ -818,7 +1283,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                             mainTargetYear={mainTargetYear}
                             selectedScope={selectedScopes.includes("Aggregated Scope") 
                               ? "scope1" 
-                              : selectedScopes[0]}
+                              : selectedScopes[0]?.toLowerCase().replace(/[- ]/g, "")}
                             selectedBusinessMetrics={businessMetrics
                               .filter(m => m.selected)
                               .map(m => m.id)}

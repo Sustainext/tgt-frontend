@@ -1,4 +1,4 @@
-// EmissionsGapChart.jsx
+// Updated EmissionsGapChart with legends at top and full width
 import React from "react";
 import { ResponsiveBar } from '@nivo/bar';
 
@@ -29,7 +29,7 @@ const EmissionsGapChart = ({ data }) => {
       </div>
       <div>
         <div>Year: <strong>{indexValue}</strong></div>
-        <div>Gap: <strong>{value.toLocaleString()}M kgCO₂e</strong></div>
+        <div>Gap: <strong>{value.toLocaleString()} tCO₂e</strong></div>
       </div>
     </div>
   );
@@ -38,6 +38,11 @@ const EmissionsGapChart = ({ data }) => {
   const chartKeys = data[0] 
     ? Object.keys(data[0])
         .filter(key => key !== 'year' && key.includes('Gap'))
+        .map(key => ({
+          id: key,
+          // Create shorter display names for legend
+          label: key.replace(' Gap', '')
+        }))
     : [];
 
   // Generate custom colors that look better than the default scheme
@@ -51,16 +56,13 @@ const EmissionsGapChart = ({ data }) => {
   ];
 
   return (
-    <div className="mt-12">
-      <h3 className="text-base font-bold text-gray-900 mb-4">
-        Emissions Gap vs Net-Zero Pathway
-      </h3>
-      <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm" style={{ height: 400 }}>
+    <div className="mt-12 w-full">
+      <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm w-full" style={{ height: 460 }}> {/* Increased height for top legend */}
         <ResponsiveBar
           data={data}
-          keys={chartKeys}
+          keys={chartKeys.map(k => k.id)} // Use the original keys for the chart
           indexBy="year"
-          margin={{ top: 40, right: 130, bottom: 50, left: 60 }}
+          margin={{ top: 80, right: 20, bottom: 50, left: 60 }} 
           padding={0.2}
           innerPadding={3}
           groupMode="grouped"
@@ -88,7 +90,7 @@ const EmissionsGapChart = ({ data }) => {
             legend: 'Gap (Emissions vs Net-Zero)',
             legendPosition: 'middle',
             legendOffset: -55,
-            format: value => `${Math.round(value)}M`,
+            format: value => `${Math.round(value)}`,
             truncateTickAt: 0
           }}
           enableGridY={true}
@@ -101,19 +103,25 @@ const EmissionsGapChart = ({ data }) => {
           legends={[
             {
               dataFrom: 'keys',
-              anchor: 'bottom-right',
-              direction: 'column',
+              anchor: 'top', // Position at the top center
+              direction: 'row', // Display in a row
               justify: false,
-              translateX: 120,
-              translateY: 0,
-              itemsSpacing: 8,
-              itemWidth: 100,
+              translateX: 0,
+              translateY: -50, // Move up from the top of the chart
+              itemsSpacing: 20, // Increased spacing between items
+              itemWidth: 100, // Adjusted width for items in a row
               itemHeight: 20,
               itemDirection: 'left-to-right',
               itemOpacity: 0.85,
               symbolSize: 12,
               symbolShape: 'square',
               symbolBorderColor: 'rgba(0, 0, 0, .5)',
+              // Use custom data mapping to display shorter legend labels
+              data: chartKeys.map((k, i) => ({
+                id: k.id,
+                label: k.label, // Use the shorter display name
+                color: customColors[i % customColors.length]
+              })),
               effects: [
                 {
                   on: 'hover',
