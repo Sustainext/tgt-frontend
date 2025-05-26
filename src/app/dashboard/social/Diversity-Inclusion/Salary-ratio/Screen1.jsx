@@ -164,7 +164,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-console.log(formData,"test fromdata");
+console.log(formData,"test fromdata screen 1");
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -249,11 +249,11 @@ console.log(formData,"test fromdata");
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData(initialFormData);
+    // setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
-      console.log("API called successfully:", response.data);
+      console.log("API called successfully screen 1:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
@@ -269,7 +269,7 @@ console.log(formData,"test fromdata");
          loadFormData();
          facthloctiondata();
        } else if (togglestatus === "Corporate" && !selectedCorp) {
-         setFormData(initialFormData);
+        //  setFormData(initialFormData);
          setRemoteSchema({});
          setRemoteUiSchema({});
        } else {

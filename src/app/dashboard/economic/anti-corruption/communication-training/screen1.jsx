@@ -188,18 +188,38 @@ const Screen1 = ({
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData([
+          {
+            Q1: [
+              {
+                RegionName: "",
+                Totalnumberanticorruption: "",
+                Totalnumberbodymembers: "",
+              },
+            ],
+          },
+        ]);
 
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
-      console.log("API called successfully:", response.data);
+      console.log("API called successfully screen1:", response.data);
 
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData([
+          {
+            Q1: [
+              {
+                RegionName: "",
+                Totalnumberanticorruption: "",
+                Totalnumberbodymembers: "",
+              },
+            ],
+          },
+        ]);
     } finally {
       LoaderClose();
     }

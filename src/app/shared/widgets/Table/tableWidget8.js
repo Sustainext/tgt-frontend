@@ -135,6 +135,11 @@ const CustomTableWidget8 = ({
     return () => debouncedSyncWithParent.cancel(); // Cleanup on unmount
   }, [localData]);
 
+useEffect(() => {
+    if (Array.isArray(value)) {
+      setLocalData(value);
+    }
+  }, [value]);
 
   const customStyles = {
     control: (provided) => ({
