@@ -164,7 +164,7 @@ const DisclosureTable = ({ data }) => {
                     className="px-4 py-4"
                     data-tooltip-id={
                       row?.is_filled === false
-                        ? `tooltip-${rowIndex}`
+                        ? `tooltip-${row.key}`
                         : undefined
                     }
                     data-tooltip-html={
@@ -196,7 +196,7 @@ const DisclosureTable = ({ data }) => {
                   <td className="px-4 py-4">{row.gri_sector_no}</td>
                   {!row?.is_filled && (
                     <ReactTooltip
-                      id={`tooltip-${rowIndex}`}
+                      id={`tooltip-${row.key}`}
                       place="top"
                       effect="solid"
                       style={{

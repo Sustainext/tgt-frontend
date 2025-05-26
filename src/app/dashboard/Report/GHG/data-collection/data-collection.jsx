@@ -460,10 +460,10 @@ cleanHTML: true,
            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg">
              <thead>
                <tr className="border-s-slate-200">
-                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700  tracking-wider">
                    SCOPE
                  </th>
-                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700  tracking-wider text-center">
                    EMISSIONS (tCO2e)
                  </th>
                  
