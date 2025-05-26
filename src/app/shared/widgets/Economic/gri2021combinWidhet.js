@@ -63,7 +63,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
   const [currencyValue, setCurrencyValue] = useState(value.currencyValue || "");
   const [wages, setWages] = useState(value.wages || {});
   const [error, setError] = useState(""); // Error state for duplicate locations
-
+console.log("locations data",locations);
   // Debounce the onChange handler to prevent too many updates
   const debouncedOnChange = useDebounce((formData) => {
     onChange(formData);
