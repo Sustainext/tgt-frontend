@@ -49,19 +49,28 @@ const Section24 = ({ section13_6_7Ref, data,reportType }) => {
       ? data["403-2d"]["data"].map((val) => ({
           "Description of Incident ":
             val.Descriptionincident || "No data available",
-          "Incident Reporting Personnel ": val.Incidentreporting
+          "Incident Reporting Personnel ": 
+          Array.isArray(
+            val.Incidentreporting
+          )
             ? val.Incidentreporting.join(", ") +
               (val.Incidentreporting_others
                 ? `, ${val.Incidentreporting_others}`
                 : "")
             : "No data available",
-          "Investigation team ": val.Investigationteam
+          "Investigation team ": 
+          Array.isArray(
+            val.Investigationteam
+          )
             ? val.Investigationteam.join(", ") +
               (val.Investigationteam_others
                 ? `, ${val.Investigationteam_others}`
                 : "")
             : "No data available",
-          "Investigation Methods": val.InvestigationMethods
+          "Investigation Methods": 
+          Array.isArray(
+            val.InvestigationMethods
+          )
             ? val.InvestigationMethods.join(", ") +
               (val.InvestigationMethods_others
                 ? `, ${val.InvestigationMethods_others}`
@@ -69,7 +78,10 @@ const Section24 = ({ section13_6_7Ref, data,reportType }) => {
             : "No data available",
           "Hazard Identification & Risk Assessment":
             val.HazardIdentification || "No data available",
-          "Corrective Actions": val.CorrectiveActions
+          "Corrective Actions": 
+          Array.isArray(
+            val.CorrectiveActions
+          )
             ? val.CorrectiveActions.join(", ") +
               (val.CorrectiveActions_others
                 ? `, ${val.CorrectiveActions_others}`
