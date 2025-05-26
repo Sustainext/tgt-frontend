@@ -250,7 +250,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData(initialFormData);
+    // setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -270,7 +270,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
         loadFormData();
         facthloctiondata();
       } else if (togglestatus === "Corporate" && !selectedCorp) {
-        setFormData(initialFormData);
+        // setFormData(initialFormData);
         setRemoteSchema({});
         setRemoteUiSchema({});
       } else {
