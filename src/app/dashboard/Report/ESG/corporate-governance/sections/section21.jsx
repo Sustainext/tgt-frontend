@@ -216,6 +216,8 @@ Level of approval: Policy commitments
 <div className="shadow-md rounded-md mb-4">
         <LeaveTable col={col} tableData={tableData}/>
 </div>
+<p className="text-sm mb-4">{data["2_23_e"]?data["2_23_e"] || "No data available":"No data available"}</p>
+<p className="text-sm mb-4">{data["2_23_f"]?data["2_23_f"] || "No data available":"No data available"}</p>
 </div>
         </>
     )
