@@ -9,6 +9,7 @@ import {
 import Section1 from "./sections/section1";
 import Section2 from "./sections/section2";
 import Section3 from "./sections/section3";
+import Section4 from "./sections/section4";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +22,8 @@ import {
   setSupplyChain,
 } from "../../../../../lib/redux/features/ESGSlice/screen2Slice";
 
-const Companyoperations = forwardRef(({ onSubmitSuccess }, ref) => {
+const Companyoperations = forwardRef(({ onSubmitSuccess,subsections }, ref) => {
+  console.log(subsections,"see")
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const orgName =
@@ -53,35 +55,7 @@ const Companyoperations = forwardRef(({ onSubmitSuccess }, ref) => {
     submitForm,
   }));
 
-  //   useEffect(() => {
-  //     const handleScroll = () => {
-  //         const sections = [
-  //             { id: 'section2_1', ref: section2_1Ref },
-  //             { id: 'section2_1_1', ref: section2_1_1Ref },
-  //             { id: 'section2_1_2', ref: section2_1_2Ref },
-  //             { id: 'section2_2', ref: section2_2Ref }
-  //         ];
-
-  //         const threshold = 250;
-
-  //         for (const section of sections) {
-  //             const element = section.ref.current;
-  //             if (element) {
-  //                 const rect = element.getBoundingClientRect();
-  //                 if (rect.top <= window.innerHeight && rect.bottom >= 0) {
-  //                     setActiveSection(section.id);
-  //                     break;
-  //                 }
-  //             }
-  //         }
-
-  //     };
-
-  //     window.addEventListener("scroll", handleScroll, { passive: true });
-
-  //     return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-
+ 
   const scrollToSection = (sectionRef, sectionId) => {
     setActiveSection(sectionId);
 
@@ -94,48 +68,7 @@ const Companyoperations = forwardRef(({ onSubmitSuccess }, ref) => {
     });
   };
 
-  // useEffect(() => {
-  //   console.log("hhh")
-  //   const handleScroll = () => {
-  //     const sections = [
-  //       { id: 'section2_1', ref: section2_1Ref },
-  //       { id: 'section2_1_1', ref: section2_1_1Ref },
-  //       { id: 'section2_1_2', ref: section2_1_2Ref },
-  //       { id: 'section2_2', ref: section2_2Ref }
-  //     ];
-
-  //     let foundActiveSection = false;
-
-  //     for (const section of sections) {
-  //       const element = section.ref.current;
-  //       if (element) {
-  //         console.log(element,"ppp")
-  //         const rect = element.getBoundingClientRect();
-  //         // Check if the section is at least partially visible in the viewport
-  //         if (rect.top < window.innerHeight * 0.6 && rect.bottom >= window.innerHeight * 0.2) {
-  //           setActiveSection(section.id);
-  //           foundActiveSection = true;
-  //           break; // Stop checking other sections once the active section is found
-  //         }
-  //       }
-  //     }
-
-  //     // If no section is active, reset to an empty state or the first section as default
-  //     // if (!foundActiveSection) {
-  //     //   setActiveSection(''); // or set it to a default section id if needed
-  //     // }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll, { passive: true });
-
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-
-  // const scrollToSection = (ref,id) => {
-  //   const section = document.getElementById(id);
-  //   section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  // };
-
+  
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -294,10 +227,15 @@ const Companyoperations = forwardRef(({ onSubmitSuccess }, ref) => {
               orgName={orgName}
               section2_1Ref={section2_1Ref}
               section2_1_1Ref={section2_1_1Ref}
-              section2_1_2Ref={section2_1_2Ref}
+             
               data={screenTwoData}
             />
             <Section3
+              orgName={orgName}
+              section2_1_2Ref={section2_1_2Ref}
+              data={screenTwoData}
+            />
+            <Section4
               orgName={orgName}
               section2_2Ref={section2_2Ref}
               data={screenTwoData}
