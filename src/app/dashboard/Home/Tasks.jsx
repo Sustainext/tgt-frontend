@@ -20,6 +20,8 @@ import { MdFilterList } from "react-icons/md";
 import { useSelector } from "react-redux";
 import DateRangePicker from "@/app/shared/components/DateRangeWithType";
 import ReviewTasksModal from "./ReviewTasksModal";
+import "react-tooltip/dist/react-tooltip.css";
+import { ToastContainer, toast } from "react-toastify";
 
 const TasksPage = () => {
   const [showFilePreview, setShowFilePreview] = useState(false);
@@ -33,6 +35,7 @@ const TasksPage = () => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTasks, setSelectedTasks] = useState([]);
+  
   //Assignee filter
   const [users, setUsers] = useState(
     useSelector((state) => state.emissions.users.data)
@@ -41,19 +44,36 @@ const TasksPage = () => {
   const [selectedAssignees, setSelectedAssignees] = useState([]);
   const [assigneeSearchQuery, setAssigneeSearchQuery] = useState("");
   const assigneeFilterRef = useRef(null);
+  
   //Status filter
   const [isStatusFilterOpen, setIsStatusFilterOpen] = useState(false);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
   const statusFilterRef = useRef(null);
+  
   //Date range filter
   const [isDateRangePickerOpen, setIsDateRangePickerOpen] = useState(false);
-  const [selectedDateRange, setSelectedDateRange] = useState({
-    start: null,
-    end: null,
-  });
+  const dateRangeRef = useRef(null);
+  
+  const getDefaultDateRange = () => {
+    const end = new Date();
+    const start = new Date();
+    start.setDate(start.getDate() - 30);
+
+    return {
+      start: start.toISOString().split("T")[0],
+      end: end.toISOString().split("T")[0],
+    };
+  };
+
+  // Replace your state initialization
+  const [selectedDateRange, setSelectedDateRange] = useState(
+    getDefaultDateRange()
+  );
   const [dateFilterType, setDateFilterType] = useState("assigned");
+  
   // Review Tasks
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  
   const openReviewModal = () => {
     if (selectedTasks.length === 0) {
       toast.error("Please select tasks to review", {
@@ -105,9 +125,9 @@ const TasksPage = () => {
     });
   };
 
-  // Status Filter Modal
+  // Fixed Status Filter Modal
   const StatusFilterModal = () => {
-    const handleStatusSelection = (statusId) => {
+    const handleStatusToggle = (statusId) => {
       setSelectedStatuses((prev) => {
         if (prev.includes(statusId)) {
           return prev.filter((id) => id !== statusId);
@@ -116,12 +136,30 @@ const TasksPage = () => {
       });
     };
 
+    const handleClearFilters = () => {
+      setSelectedStatuses([]);
+    };
+
+    const handleClose = () => {
+      setIsStatusFilterOpen(false);
+    };
+
     return (
-      <div className="absolute z-10 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
-        <div className="p-4">
-          <h3 className="text-sm font-medium text-gray-900 mb-3">
-            Filter by Status
-          </h3>
+      <div 
+        className="absolute z-50 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200"
+      >
+        <div className="p-4" onClick={(e) => e.stopPropagation()}>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-sm font-medium text-gray-900">
+              Filter by Status
+            </h3>
+            <button
+              onClick={handleClose}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              <FiX className="w-4 h-4" />
+            </button>
+          </div>
           <div className="space-y-2 max-h-60 overflow-y-auto">
             {[
               { id: "not_started", label: "Not Started" },
@@ -130,14 +168,16 @@ const TasksPage = () => {
               { id: "approved", label: "Approved" },
               { id: "reject", label: "Rejected" },
             ].map((status) => (
-              <label
+              <div
                 key={status.id}
                 className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
+                onClick={() => handleStatusToggle(status.id)}
               >
                 <input
                   type="checkbox"
                   checked={selectedStatuses.includes(status.id)}
-                  onChange={() => handleStatusSelection(status.id)}
+                  onChange={() => handleStatusToggle(status.id)}
+                  onClick={(e) => e.stopPropagation()}
                   className="w-4 h-4 text-blue-600 rounded border-gray-300"
                 />
                 <div className="flex-1 min-w-0">
@@ -145,39 +185,254 @@ const TasksPage = () => {
                     {status.label}
                   </div>
                 </div>
-              </label>
+              </div>
             ))}
+          </div>
+          
+          {/* Action buttons */}
+          <div className="flex justify-center items-center mt-4 pt-3 border-t border-gray-200">
+            <button
+              onClick={handleClearFilters}
+              className="text-sm text-gray-500 hover:text-gray-700"
+            >
+              Clear all
+            </button>
           </div>
         </div>
       </div>
     );
   };
 
+  // Fixed Assignee Filter Modal
+  const AssigneeFilterModal = () => {
+    const handleAssigneeToggle = (userId) => {
+      setSelectedAssignees((prev) => {
+        if (prev.includes(userId)) {
+          return prev.filter((id) => id !== userId);
+        }
+        return [...prev, userId];
+      });
+    };
+
+    const handleClearFilters = () => {
+      setSelectedAssignees([]);
+      setAssigneeSearchQuery("");
+    };
+
+    const handleSearchChange = (e) => {
+      setAssigneeSearchQuery(e.target.value);
+    };
+
+    const handleClose = () => {
+      setIsAssigneeFilterOpen(false);
+    };
+
+    return (
+      <div 
+        className="absolute z-50 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200"
+      >
+        <div className="p-4" onClick={(e) => e.stopPropagation()}>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-sm font-medium text-gray-900">
+              Filter by Assignee
+            </h3>
+            <button
+              onClick={handleClose}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              <FiX className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Search input */}
+          <div className="relative mb-3">
+            <input
+              type="text"
+              placeholder="Search assignees..."
+              className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-md"
+              value={assigneeSearchQuery}
+              onChange={handleSearchChange}
+            />
+            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          </div>
+
+          {/* Assignee list */}
+          <div className="space-y-2 max-h-60 overflow-y-auto">
+            {users
+              .filter(
+                (user) =>
+                  user.username
+                    .toLowerCase()
+                    .includes(assigneeSearchQuery.toLowerCase()) ||
+                  user.email
+                    .toLowerCase()
+                    .includes(assigneeSearchQuery.toLowerCase())
+              )
+              .map((user) => (
+                <div
+                  key={user.id}
+                  className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
+                  onClick={() => handleAssigneeToggle(user.id)}
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedAssignees.includes(user.id)}
+                    onChange={() => handleAssigneeToggle(user.id)}
+                    onClick={(e) => e.stopPropagation()}
+                    className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium text-gray-900 truncate">
+                      {user.name}
+                    </div>
+                    <div className="text-sm text-gray-500 truncate">
+                      {user.email}
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+          
+          {/* Action buttons */}
+          <div className="flex justify-center items-center mt-4 pt-3 border-t border-gray-200">
+            <button
+              onClick={handleClearFilters}
+              className="text-sm text-gray-500 hover:text-gray-700"
+            >
+              Clear all
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+const DateRangeModal = () => {
+  const handleDateRangeApply = (data) => {
+    // Validate date range
+    if (!data.start || !data.end) {
+      toast.error("Please select both start and end dates", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
+
+    const startDate = new Date(data.start);
+    const endDate = new Date(data.end);
+    
+    if (startDate > endDate) {
+      toast.error("Start date cannot be after end date", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
+
+    console.log("DateRangePicker data:", data);
+    const newDateRange = { start: data.start, end: data.end };
+    setSelectedDateRange(newDateRange);
+    setDateFilterType(data.type || dateFilterType);
+    setIsDateRangePickerOpen(false);
+  };
+
+  const handleClose = () => {
+    setIsDateRangePickerOpen(false);
+  };
+
+  // Handle date filter type change
+  const handleDateFilterTypeChange = (newType) => {
+    setDateFilterType(newType);
+  };
+
+  // Prevent all event bubbling from this modal
+  const handleModalClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+  };
+
+  return (
+    <div 
+      className="absolute top-full mt-2 z-50 bg-white border border-gray-200 shadow-md rounded-lg"
+      onClick={handleModalClick}
+      onMouseDown={handleModalClick}
+      onMouseUp={handleModalClick}
+    >
+      <div 
+        onClick={handleModalClick}
+        onMouseDown={handleModalClick}
+        onMouseUp={handleModalClick}
+      >
+        <div className="flex justify-between items-center p-3 border-b border-gray-200">
+          <h3 className="text-sm font-medium text-gray-900">
+            Select Date Range
+          </h3>
+          <button
+            onClick={handleClose}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            <FiX className="w-4 h-4" />
+          </button>
+        </div>
+        <div 
+          onClick={handleModalClick}
+          onMouseDown={handleModalClick}
+          onMouseUp={handleModalClick}
+        >
+          <DateRangePicker
+            startDate={selectedDateRange.start}
+            endDate={selectedDateRange.end}
+            onDateChange={handleDateRangeApply}
+            dateFilterType={dateFilterType}
+            onDateFilterTypeChange={handleDateFilterTypeChange}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
   useEffect(() => {
     fetchUsers();
 
-    // Add click outside handler
-    const handleClickOutside = (event) => {
+    // Add click outside handler only for date range picker
+    const handleDateRangeClickOutside = (event) => {
       if (
-        assigneeFilterRef.current &&
-        !assigneeFilterRef.current.contains(event.target)
+        dateRangeRef.current &&
+        !dateRangeRef.current.contains(event.target) &&
+        isDateRangePickerOpen
       ) {
-        setIsAssigneeFilterOpen(false);
-      }
-      if (
-        statusFilterRef.current &&
-        !statusFilterRef.current.contains(event.target)
-      ) {
-        setIsStatusFilterOpen(false);
+        setIsDateRangePickerOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (isDateRangePickerOpen) {
+      document.addEventListener("mousedown", handleDateRangeClickOutside);
+    }
 
-  // Handle assignee selection
-  const handleAssigneeSelection = (userId) => {
+    return () => {
+      document.removeEventListener("mousedown", handleDateRangeClickOutside);
+    };
+  }, [isDateRangePickerOpen]);
+
+  // Handle assignee selection (for backward compatibility)
+  const handleAssigneeSelection = (userId, event) => {
+    if (event) {
+      event.stopPropagation();
+    }
     setSelectedAssignees((prev) => {
       if (prev.includes(userId)) {
         return prev.filter((id) => id !== userId);
@@ -205,12 +460,30 @@ const TasksPage = () => {
     }
   };
 
+  // Add date range validation
+  const validateDateRange = () => {
+    if (!selectedDateRange.start || !selectedDateRange.end) {
+      toast.warning("No date range selected. Using default last 30 days.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return false;
+    }
+    return true;
+  };
+
   const fetchTasks = async (
     searchQuery = "",
     tab = "for_review",
     page = 1,
     dateFilterType = "assigned",
-    dateFilterValue = {}
+    dateFilterValue = selectedDateRange
   ) => {
     setIsLoading(true);
     try {
@@ -219,18 +492,21 @@ const TasksPage = () => {
       const statusFilter =
         selectedStatuses.length > 0 ? selectedStatuses.join(",") : "";
 
-      // Date filters
+      // Date filters - use the passed dateFilterValue or current selectedDateRange
+      const dateRange = dateFilterValue || selectedDateRange;
       let dateFilters = "";
-      if (selectedDateRange?.start && selectedDateRange?.end) {
-        console.log("selectedDateRange:", selectedDateRange);
+      if (dateRange?.start && dateRange?.end) {
+        console.log("Using dateRange:", dateRange);
 
         if (dateFilterType === "due") {
-          dateFilters = `&deadline_start=${selectedDateRange.start}&deadline_end=${selectedDateRange.end}`;
+          dateFilters = `&deadline_start=${dateRange.start}&deadline_end=${dateRange.end}`;
         } else if (dateFilterType === "assigned") {
-          dateFilters = `&start_date=${selectedDateRange.start}&end_date=${selectedDateRange.end}`;
-        } else {
-          dateFilters = "";
+          dateFilters = `&start_date=${dateRange.start}&end_date=${dateRange.end}`;
         }
+      } else {
+        // Use default date range if none selected
+        const defaultRange = getDefaultDateRange();
+        dateFilters = `&start_date=${defaultRange.start}&end_date=${defaultRange.end}`;
       }
 
       const response = await axiosInstance.get(
@@ -241,6 +517,16 @@ const TasksPage = () => {
       setTasks(response.data.results || []);
     } catch (error) {
       console.error("Error fetching tasks:", error);
+      toast.error("Failed to fetch tasks", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -256,6 +542,8 @@ const TasksPage = () => {
     );
   }, [
     activeTab,
+    currentPage,
+    itemsPerPage,
     selectedAssignees,
     selectedStatuses,
     selectedDateRange,
@@ -284,6 +572,10 @@ const TasksPage = () => {
           } else if (dateFilterType === "assigned") {
             dateFilters = `&start_date=${selectedDateRange.start}&end_date=${selectedDateRange.end}`;
           }
+        } else {
+          // Use default date range if none selected
+          const defaultRange = getDefaultDateRange();
+          dateFilters = `&start_date=${defaultRange.start}&end_date=${defaultRange.end}`;
         }
 
         const response = await axiosInstance.get(
@@ -383,665 +675,621 @@ const TasksPage = () => {
     }
   };
 
+  const formatDateRangeDisplay = (startDate, endDate, filterType) => {
+    if (!startDate || !endDate) return "No date range selected";
+
+    const today = new Date().toISOString().split("T")[0];
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Check if end date is today
+    if (endDate === today) {
+      const diffTime = Math.abs(end - start);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return `Last ${diffDays} days (${filterType})`;
+    }
+
+    // Otherwise show the full date range
+    return `${startDate} - ${endDate} (${filterType})`;
+  };
+
   return (
-    <div className="xl:p-4 p-1">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Tasks</h1>
-          <p className="text-gray-500">List of tasks</p>
-        </div>
-        <div className="relative">
-          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search"
-            className="pl-10 pr-4 py-2 min-w-[25vw] border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-        </div>
-      </div>
+    <>
+      <ToastContainer style={{ fontSize: "12px" }} />
 
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-3 md:space-y-0">
-        {/* Tab Buttons */}
-        <div className="bg-white rounded-md shadow-sm border border-gray-300 overflow-x-auto flex md:inline-flex w-full md:w-auto">
-          {[
-            { id: "upcoming", label: "Upcoming" },
-            { id: "overdue", label: "Overdue" },
-            { id: "completed", label: "Completed" },
-            { id: "for_review", label: "For Review" },
-          ].map((tab, index, array) => (
-            <button
-              key={tab.id}
-              className={`px-4 py-2 text-sm whitespace-nowrap transition-colors ${
-                index !== array.length - 1 ? "border-r" : ""
-              } border-gray-300 ${
-                activeTab === tab.id
-                  ? "bg-[#f8f9fb] text-gray-800"
-                  : "text-gray-600 hover:bg-gray-100"
-              }`}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Review Button */}
-        {activeTab === "for_review" && (
-          <div className="md:ml-8 md:self-end">
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-70 w-full md:w-auto"
-              disabled={selectedTasks.length === 0}
-              onClick={openReviewModal}
-            >
-              Review Tasks ({selectedTasks.length})
-            </button>
+      <div className="xl:p-4 p-1">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900">Tasks</h1>
+            <p className="text-gray-500">List of tasks</p>
           </div>
-        )}
-      </div>
-
-      {/* Filter Tags */}
-      <div className="xl:flex items-center gap-4 mb-6">
-        <div className="xl:flex items-center gap-2 relative w-full">
-          <button
-            className="inline-flex items-center gap-2 text-gray-600 px-3 py-2 mb-2"
-            onClick={() => setIsDateRangePickerOpen(!isDateRangePickerOpen)}
-          >
-            <FaCalendarAlt className="w-4 h-4" />
-            <span>Set Date Range</span>
-            <FiChevronDown className="w-4 h-4" />
-          </button>
-
-          {/* DateRangePicker */}
-          {isDateRangePickerOpen && (
-            <div className="absolute top-full mt-2 z-10 mb-2 bg-white border border-gray-200 shadow-md rounded-lg">
-              <DateRangePicker
-                startDate={selectedDateRange.start}
-                endDate={selectedDateRange.end}
-                onDateChange={(data) => {
-                  setSelectedDateRange({ start: data.start, end: data.end });
-                  setDateFilterType(data.type); // Assigned or Due
-                  setIsDateRangePickerOpen(false);
-                }}
-              />
-            </div>
-          )}
-
-          {/* Selected Date Range */}
-          {selectedDateRange.start && selectedDateRange.end && (
-            <div className="inline-flex w-full items-center gap-2 mb-2 bg-blue-50 rounded-lg px-3 py-2 xl:ml-2 text-blue-500 font-semibold">
-              <span>
-                {`${selectedDateRange.start} - ${selectedDateRange.end} (${dateFilterType})`}
-              </span>
-              <button
-                className="text-gray-400 hover:text-gray-600"
-                onClick={() => setSelectedDateRange({ start: null, end: null })}
-              >
-                ×
-              </button>
-            </div>
-          )}
-
-          {selectedAssignees.length > 0 && (
-            <div className="inline-flex w-full items-center gap-2 mb-2 bg-blue-50 rounded-lg px-3 py-2">
-              <span className="text-gray-600">Assignee:</span>
-              <span className="text-blue-500 font-semibold">
-                {selectedAssignees.length} Selected
-              </span>
-              <button
-                className="text-gray-400 hover:text-gray-600"
-                onClick={() => setSelectedAssignees([])}
-              >
-                ×
-              </button>
-            </div>
-          )}
-
-          {selectedStatuses.length > 0 && (
-            <div className="inline-flex w-full items-center gap-2 mb-2 bg-blue-50 rounded-lg px-3 py-2">
-              <span className="text-gray-600">Status:</span>
-              <span className="text-blue-500 font-semibold">
-                {selectedStatuses
-                  .map((status) => getStatusLabel(status))
-                  .join(", ")}
-              </span>
-              <button
-                className="text-gray-400 hover:text-gray-600"
-                onClick={() => setSelectedStatuses([])}
-              >
-                ×
-              </button>
-            </div>
-          )}
+          <div className="relative">
+            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search"
+              className="pl-10 pr-4 py-2 min-w-[25vw] border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchQuery}
+              onChange={handleSearch}
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Modified Table Header */}
-      {/* desktop version */}
-      <div className=" xl:block hidden">
-        <div className="bg-white rounded-lg flex flex-col h-[calc(100vh-280px)]">
-          <div className="grid grid-cols-9 gap-4 px-6 py-4 border-b border-gray-200 text-sm font-medium text-gray-500">
-            <div className="col-span-3 flex items-center gap-4">
-              <input
-                type="checkbox"
-                checked={selectedTasks.length === tasks.length}
-                onChange={handleSelectAllVisible}
-                className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${
-                  activeTab === "for_review" ? "" : "opacity-0"
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-3 md:space-y-0">
+          {/* Tab Buttons */}
+          <div className="bg-white rounded-md shadow-sm border border-gray-300 overflow-x-auto flex md:inline-flex w-full md:w-auto">
+            {[
+              { id: "upcoming", label: "Upcoming" },
+              { id: "overdue", label: "Overdue" },
+              { id: "completed", label: "Completed" },
+              { id: "for_review", label: "For Review" },
+            ].map((tab, index, array) => (
+              <button
+                key={tab.id}
+                className={`px-4 py-2 text-sm whitespace-nowrap transition-colors ${
+                  index !== array.length - 1 ? "border-r" : ""
+                } border-gray-300 ${
+                  activeTab === tab.id
+                    ? "bg-[#f8f9fb] text-gray-800"
+                    : "text-gray-600 hover:bg-gray-100"
                 }`}
-                disabled={activeTab !== "for_review"}
-              />
-              <div
-                className="col-span-3 flex items-center gap-2 cursor-pointer"
-                onClick={() => handleSort("task_name")}
+                onClick={() => setActiveTab(tab.id)}
               >
-                Tasks
-                {sortColumn === "task_name" &&
-                  (sortOrder === "asc" ? (
-                    <FiChevronUp />
-                  ) : sortOrder === "desc" ? (
-                    <FiChevronDown />
-                  ) : (
-                    <LuChevronsUpDown />
-                  ))}
-              </div>
-            </div>
-            <div className="col-span-1 relative" ref={statusFilterRef}>
-              <div className="flex items-center gap-2">
-                Status
-                <button
-                  onClick={() => setIsStatusFilterOpen(!isStatusFilterOpen)}
-                  className="hover:bg-gray-100 p-1 rounded"
-                >
-                  <MdFilterList className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Status Filter Popover */}
-              {isStatusFilterOpen && <StatusFilterModal />}
-            </div>
-            <div className="col-span-2 relative" ref={assigneeFilterRef}>
-              <div className="flex items-center gap-2">
-                Assignee
-                <button
-                  onClick={() => setIsAssigneeFilterOpen(!isAssigneeFilterOpen)}
-                  className="hover:bg-gray-100 p-1 rounded"
-                >
-                  <MdFilterList className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Assignee Filter Popover */}
-              {isAssigneeFilterOpen && (
-                <div className="absolute z-10 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
-                  <div className="p-4">
-                    <h3 className="text-sm font-medium text-gray-900 mb-3">
-                      Filter by Assignee
-                    </h3>
-
-                    {/* Search input */}
-                    <div className="relative mb-3">
-                      <input
-                        type="text"
-                        placeholder="Search assignees..."
-                        className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-md"
-                        value={assigneeSearchQuery}
-                        onChange={(e) => setAssigneeSearchQuery(e.target.value)}
-                      />
-                      <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    </div>
-
-                    {/* Assignee list */}
-                    <div className="space-y-2 max-h-60 overflow-y-auto">
-                      {users
-                        .filter(
-                          (user) =>
-                            user.username
-                              .toLowerCase()
-                              .includes(assigneeSearchQuery.toLowerCase()) ||
-                            user.email
-                              .toLowerCase()
-                              .includes(assigneeSearchQuery.toLowerCase())
-                        )
-                        .map((user) => (
-                          <label
-                            key={user.id}
-                            className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={selectedAssignees.includes(user.id)}
-                              onChange={() => handleAssigneeSelection(user.id)}
-                              className="w-4 h-4 text-blue-600 rounded border-gray-300"
-                            />
-                            <div className="flex-1 min-w-0">
-                              <div className="text-sm font-medium text-gray-900 truncate">
-                                {user.name}
-                              </div>
-                              <div className="text-sm text-gray-500 truncate">
-                                {user.email}
-                              </div>
-                            </div>
-                          </label>
-                        ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            {/* Assigned On Sorting */}
-            <div
-              className="col-span-1 flex items-center gap-2 cursor-pointer"
-              onClick={() => handleSort("created_at")}
-            >
-              Assigned on
-              {sortColumn === "created_at" &&
-                (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
-            </div>
-
-            {/* Due Date Sorting */}
-            <div
-              className="col-span-1 flex items-center gap-2 cursor-pointer"
-              onClick={() => handleSort("deadline")}
-            >
-              Due Date
-              {sortColumn === "deadline" &&
-                (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
-            </div>
-            <div className="col-span-1">Attachment</div>
-          </div>
-
-          {/* Modified Table Body */}
-          <div className="divide-y divide-gray-200 overflow-y-auto flex-1">
-            {tasks.map((task) => (
-              <div
-                key={task.id}
-                className="grid grid-cols-9 gap-4 px-6 py-4 hover:bg-gray-50"
-              >
-                <div className="col-span-3 flex items-center gap-4">
-                  <input
-                    type="checkbox"
-                    checked={selectedTasks.includes(task.id)}
-                    onChange={() => handleRowSelection(task.id)}
-                    className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${
-                      activeTab === "for_review" ? "" : "opacity-0"
-                    }`}
-                    disabled={activeTab !== "for_review"}
-                  />
-                  <span
-                    className="text-blue-600 truncate cursor-pointer w-[30vw]"
-                    onClick={() => handleTaskClick(task)}
-                  >
-                    {task.task_name}
-                  </span>
-                </div>
-                <div className="col-span-1 flex items-center space-x-2">
-                  <span
-                    className={`h-2 w-2 rounded-full ${getStatusBadgeClasses(
-                      task.task_status
-                    )}`}
-                  />
-                  <span className="text-gray-900 font-semibold">
-                    {getStatusLabel(task.task_status)}
-                  </span>
-                </div>
-                <div className="col-span-2">
-                  <div className="text-gray-900 font-semibold">
-                    {task.assign_to_user_name}
-                  </div>
-                  <div className="text-gray-500 text-sm">
-                    {task.assign_to_email}
-                  </div>
-                </div>
-                <div className="col-span-1 text-gray-500">
-                  <Moment format="DD/MM/YYYY">{task.assigned_date}</Moment>
-                </div>
-                <div className="col-span-1 text-gray-500">
-                  <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
-                </div>
-                <div
-                  className={`col-span-1 ${
-                    task.file_data?.name ? "text-blue-500" : "text-gray-400"
-                  } flex items-start justify-start gap-1`}
-                >
-                  <span>
-                    {task.file_data?.name && (
-                      <MdFilePresent className="text-2xl text-green-500" />
-                    )}
-                  </span>{" "}
-                  <span>{task.file_data?.name || "No attachment"}</span>
-                </div>
-              </div>
+                {tab.label}
+              </button>
             ))}
           </div>
+
+          {/* Review Button */}
+          {activeTab === "for_review" && (
+            <div className="md:ml-8 md:self-end">
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-70 w-full md:w-auto"
+                disabled={selectedTasks.length === 0}
+                onClick={openReviewModal}
+              >
+                Review Tasks ({selectedTasks.length})
+              </button>
+            </div>
+          )}
         </div>
-      </div>
 
-      <div className="overflow-x-auto xl:hidden">
-        <table className="min-w-full table-fixed">
-          <thead>
-            <tr className="text-sm font-medium text-gray-500 border-b border-gray-200 bg-gray-50">
-              <th className="w-1/4 px-4 py-3 text-left">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={selectedTasks.length === tasks.length}
-                    onChange={handleSelectAllVisible}
-                    className={`w-4 h-4 text-blue-600 border-gray-300 rounded ${
-                      activeTab === "for_review" ? "" : "opacity-0"
-                    }`}
-                    disabled={activeTab !== "for_review"}
-                  />
-                  <span
-                    onClick={() => handleSort("task_name")}
-                    className="cursor-pointer flex items-center gap-1"
-                  >
-                    Tasks
-                    {sortColumn === "task_name" &&
-                      (sortOrder === "asc" ? (
-                        <FiChevronUp />
-                      ) : sortOrder === "desc" ? (
-                        <FiChevronDown />
-                      ) : (
-                        <LuChevronsUpDown />
-                      ))}
-                  </span>
-                </div>
-              </th>
+        {/* Filter Tags */}
+        <div className="flex flex-wrap items-center gap-4 mb-6">
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Date Range Picker */}
+            <div className="relative" ref={dateRangeRef}>
+              <button
+                className="inline-flex items-center gap-2 text-gray-600 px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsDateRangePickerOpen(!isDateRangePickerOpen);
+                }}
+              >
+                <FaCalendarAlt className="w-4 h-4" />
+                <span>Set Date Range</span>
+                <FiChevronDown className="w-4 h-4" />
+              </button>
 
-              <th className="w-1/6 px-4 py-3 text-left">
-                <div className="relative" ref={statusFilterRef}>
-                  <div className="flex items-center gap-2">
-                    Status
-                    <button
-                      onClick={() => setIsStatusFilterOpen(!isStatusFilterOpen)}
-                      className="hover:bg-gray-100 p-1 rounded"
-                    >
-                      <MdFilterList className="w-4 h-4" />
-                    </button>
-                  </div>
-                  {isStatusFilterOpen && (
-                    <div className="absolute z-10 mt-2 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
-                      <StatusFilterModal />
-                    </div>
+              {/* DateRangePicker */}
+              {isDateRangePickerOpen && <DateRangeModal />}
+            </div>
+
+            {/* Selected Date Range */}
+            {selectedDateRange.start && selectedDateRange.end && (
+              <div className="inline-flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2 text-blue-500 font-semibold">
+                <span>
+                  {formatDateRangeDisplay(
+                    selectedDateRange.start,
+                    selectedDateRange.end,
+                    dateFilterType
                   )}
-                </div>
-              </th>
+                </span>
+                <button
+                  className="text-gray-400 hover:text-gray-600"
+                  onClick={() => {
+                    const defaultRange = getDefaultDateRange();
+                    setSelectedDateRange(defaultRange);
+                    toast.info("Reset to default date range (last 30 days)", {
+                      position: "top-right",
+                      autoClose: 2000,
+                    });
+                  }}
+                >
+                  ×
+                </button>
+              </div>
+            )}
 
-              <th className="w-1/4 px-4 py-3 text-left" ref={assigneeFilterRef}>
+            {selectedAssignees.length > 0 && (
+              <div className="inline-flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
+                <span className="text-gray-600">Assignee:</span>
+                <span className="text-blue-500 font-semibold">
+                  {selectedAssignees.length} Selected
+                </span>
+                <button
+                  className="text-gray-400 hover:text-gray-600"
+                  onClick={() => setSelectedAssignees([])}
+                >
+                  ×
+                </button>
+              </div>
+            )}
+
+            {selectedStatuses.length > 0 && (
+              <div className="inline-flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
+                <span className="text-gray-600">Status:</span>
+                <span className="text-blue-500 font-semibold">
+                  {selectedStatuses
+                    .map((status) => getStatusLabel(status))
+                    .join(", ")}
+                </span>
+                <button
+                  className="text-gray-400 hover:text-gray-600"
+                  onClick={() => setSelectedStatuses([])}
+                >
+                  ×
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Modified Table Header */}
+        {/* desktop version */}
+        <div className=" xl:block hidden">
+          <div className="bg-white rounded-lg flex flex-col h-[calc(100vh-280px)]">
+            <div className="grid grid-cols-9 gap-4 px-6 py-4 border-b border-gray-200 text-sm font-medium text-gray-500">
+              <div className="col-span-3 flex items-center gap-4">
+                <input
+                  type="checkbox"
+                  checked={selectedTasks.length === tasks.length && tasks.length > 0}
+                  onChange={handleSelectAllVisible}
+                  className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${
+                    activeTab === "for_review" ? "" : "opacity-0"
+                  }`}
+                  disabled={activeTab !== "for_review"}
+                />
+                <div
+                  className="col-span-3 flex items-center gap-2 cursor-pointer"
+                  onClick={() => handleSort("task_name")}
+                >
+                  Tasks
+                  {sortColumn === "task_name" &&
+                    (sortOrder === "asc" ? (
+                      <FiChevronUp />
+                    ) : sortOrder === "desc" ? (
+                      <FiChevronDown />
+                    ) : (
+                      <LuChevronsUpDown />
+                    ))}
+                </div>
+              </div>
+              <div className="col-span-1 relative" ref={statusFilterRef}>
                 <div className="flex items-center gap-2">
-                  Assignee
+                  Status
                   <button
-                    onClick={() =>
-                      setIsAssigneeFilterOpen(!isAssigneeFilterOpen)
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsStatusFilterOpen(!isStatusFilterOpen);
+                    }}
                     className="hover:bg-gray-100 p-1 rounded"
                   >
                     <MdFilterList className="w-4 h-4" />
                   </button>
                 </div>
-                {isAssigneeFilterOpen && (
-                  <div className="absolute z-10 mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
-                    <div className="p-4">
-                      <h3 className="text-sm font-medium text-gray-900 mb-3">
-                        Filter by Assignee
-                      </h3>
-                      <div className="relative mb-3">
-                        <input
-                          type="text"
-                          placeholder="Search assignees..."
-                          className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-md"
-                          value={assigneeSearchQuery}
-                          onChange={(e) =>
-                            setAssigneeSearchQuery(e.target.value)
-                          }
-                        />
-                        <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      </div>
-                      <div className="space-y-2 max-h-60 overflow-y-auto">
-                        {users
-                          .filter(
-                            (user) =>
-                              user.username
-                                .toLowerCase()
-                                .includes(assigneeSearchQuery.toLowerCase()) ||
-                              user.email
-                                .toLowerCase()
-                                .includes(assigneeSearchQuery.toLowerCase())
-                          )
-                          .map((user) => (
-                            <label
-                              key={user.id}
-                              className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={selectedAssignees.includes(user.id)}
-                                onChange={() =>
-                                  handleAssigneeSelection(user.id)
-                                }
-                                className="w-4 h-4 text-blue-600 border-gray-300 rounded"
-                              />
-                              <div className="flex-1 min-w-0">
-                                <div className="text-sm font-medium text-gray-900 truncate">
-                                  {user.name}
-                                </div>
-                                <div className="text-sm text-gray-500 truncate">
-                                  {user.email}
-                                </div>
-                              </div>
-                            </label>
-                          ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </th>
 
-              <th
-                className="w-1/6 px-4 py-3 text-left cursor-pointer"
+                {/* Status Filter Popover */}
+                {isStatusFilterOpen && <StatusFilterModal />}
+              </div>
+              <div className="col-span-2 relative" ref={assigneeFilterRef}>
+                <div className="flex items-center gap-2">
+                  Assignee
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsAssigneeFilterOpen(!isAssigneeFilterOpen);
+                    }}
+                    className="hover:bg-gray-100 p-1 rounded"
+                  >
+                    <MdFilterList className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Assignee Filter Popover */}
+                {isAssigneeFilterOpen && <AssigneeFilterModal />}
+              </div>
+              {/* Assigned On Sorting */}
+              <div
+                className="col-span-1 flex items-center gap-2 cursor-pointer"
                 onClick={() => handleSort("created_at")}
               >
                 Assigned on
                 {sortColumn === "created_at" &&
                   (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
-              </th>
+              </div>
 
-              <th
-                className="w-1/6 px-4 py-3 text-left cursor-pointer"
+              {/* Due Date Sorting */}
+              <div
+                className="col-span-1 flex items-center gap-2 cursor-pointer"
                 onClick={() => handleSort("deadline")}
               >
                 Due Date
                 {sortColumn === "deadline" &&
                   (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
-              </th>
+              </div>
+              <div className="col-span-1">Attachment</div>
+            </div>
 
-              <th className="w-1/6 px-4 py-3 text-left">Attachment</th>
-            </tr>
-          </thead>
+            {/* Modified Table Body */}
+            <div className="divide-y divide-gray-200 overflow-y-auto flex-1">
+              {isLoading ? (
+                <div className="flex justify-center items-center py-8">
+                  <Oval height={40} width={40} color="#0000FF" secondaryColor="#ddd" />
+                </div>
+              ) : tasks.length === 0 ? (
+                <div className="flex justify-center items-center py-8 text-gray-500">
+                  No tasks found
+                </div>
+              ) : (
+                tasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className="grid grid-cols-9 gap-4 px-6 py-4 hover:bg-gray-50"
+                  >
+                    <div className="col-span-3 flex items-center gap-4">
+                      <input
+                        type="checkbox"
+                        checked={selectedTasks.includes(task.id)}
+                        onChange={() => handleRowSelection(task.id)}
+                        className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${
+                          activeTab === "for_review" ? "" : "opacity-0"
+                        }`}
+                        disabled={activeTab !== "for_review"}
+                      />
+                      <span
+                        className="text-blue-600 truncate cursor-pointer w-[30vw]"
+                        onClick={() => handleTaskClick(task)}
+                      >
+                        {task.task_name}
+                      </span>
+                    </div>
+                    <div className="col-span-1 flex items-center space-x-2">
+                      <span
+                        className={`h-2 w-2 rounded-full ${getStatusBadgeClasses(
+                          task.task_status
+                        )}`}
+                      />
+                      <span className="text-gray-900 font-semibold">
+                        {getStatusLabel(task.task_status)}
+                      </span>
+                    </div>
+                    <div className="col-span-2">
+                      <div className="text-gray-900 font-semibold">
+                        {task.assign_to_user_name}
+                      </div>
+                      <div className="text-gray-500 text-sm">
+                        {task.assign_to_email}
+                      </div>
+                    </div>
+                    <div className="col-span-1 text-gray-500">
+                      <Moment format="DD/MM/YYYY">{task.assigned_date}</Moment>
+                    </div>
+                    <div className="col-span-1 text-gray-500">
+                      <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
+                    </div>
+                    <div
+                      className={`col-span-1 ${
+                        task.file_data?.name ? "text-blue-500" : "text-gray-400"
+                      } flex items-start justify-start gap-1`}
+                    >
+                      <span>
+                        {task.file_data?.name && (
+                          <MdFilePresent className="text-2xl text-green-500" />
+                        )}
+                      </span>{" "}
+                      <span>{task.file_data?.name || "No attachment"}</span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
 
-          <tbody className="divide-y divide-gray-200">
-            {tasks.map((task) => (
-              <tr key={task.id} className="hover:bg-gray-50">
-                <td className="px-4 py-4">
-                  <div className="flex items-center gap-3">
+        {/* Mobile Table */}
+        <div className="overflow-x-auto xl:hidden">
+          <table className="min-w-full table-fixed">
+            <thead>
+              <tr className="text-sm font-medium text-gray-500 border-b border-gray-200 bg-gray-50">
+                <th className="w-1/4 px-4 py-3 text-left">
+                  <div className="flex items-center space-x-2">
                     <input
                       type="checkbox"
-                      checked={selectedTasks.includes(task.id)}
-                      onChange={() => handleRowSelection(task.id)}
+                      checked={selectedTasks.length === tasks.length && tasks.length > 0}
+                      onChange={handleSelectAllVisible}
                       className={`w-4 h-4 text-blue-600 border-gray-300 rounded ${
                         activeTab === "for_review" ? "" : "opacity-0"
                       }`}
                       disabled={activeTab !== "for_review"}
                     />
                     <span
-                      className="text-blue-600 truncate cursor-pointer text-[12px]"
-                      onClick={() => handleTaskClick(task)}
+                      onClick={() => handleSort("task_name")}
+                      className="cursor-pointer flex items-center gap-1"
                     >
-                      {task.task_name}
+                      Tasks
+                      {sortColumn === "task_name" &&
+                        (sortOrder === "asc" ? (
+                          <FiChevronUp />
+                        ) : sortOrder === "desc" ? (
+                          <FiChevronDown />
+                        ) : (
+                          <LuChevronsUpDown />
+                        ))}
                     </span>
                   </div>
-                </td>
+                </th>
 
-                <td className="px-4 py-4">
-                  <div className="flex items-center space-x-2">
-                    <span
-                      className={`h-2 w-2 rounded-full ${getStatusBadgeClasses(
-                        task.task_status
-                      )}`}
-                    />
-                    <span className="text-gray-900 font-semibold text-[12px]">
-                      {getStatusLabel(task.task_status)}
-                    </span>
+                <th className="w-1/6 px-4 py-3 text-left">
+                  <div className="relative" ref={statusFilterRef}>
+                    <div className="flex items-center gap-2">
+                      Status
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setIsStatusFilterOpen(!isStatusFilterOpen);
+                        }}
+                        className="hover:bg-gray-100 p-1 rounded"
+                      >
+                        <MdFilterList className="w-4 h-4" />
+                      </button>
+                    </div>
+                    {isStatusFilterOpen && <StatusFilterModal />}
                   </div>
-                </td>
+                </th>
 
-                <td className="px-4 py-4">
-                  <div className="text-gray-900 font-semibold text-[12px]">
-                    {task.assign_to_user_name}
+                <th
+                  className="w-1/4 px-4 py-3 text-left"
+                  ref={assigneeFilterRef}
+                >
+                  <div className="flex items-center gap-2">
+                    Assignee
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsAssigneeFilterOpen(!isAssigneeFilterOpen);
+                      }}
+                      className="hover:bg-gray-100 p-1 rounded"
+                    >
+                      <MdFilterList className="w-4 h-4" />
+                    </button>
                   </div>
-                  <div className="text-gray-500 text-[12px]">
-                    {task.assign_to_email}
-                  </div>
-                </td>
+                  {isAssigneeFilterOpen && <AssigneeFilterModal />}
+                </th>
 
-                <td className="px-4 py-4 text-gray-500 text-[12px]">
-                  <Moment format="DD/MM/YYYY">{task.assigned_date}</Moment>
-                </td>
+                <th
+                  className="w-1/6 px-4 py-3 text-left cursor-pointer"
+                  onClick={() => handleSort("created_at")}
+                >
+                  Assigned on
+                  {sortColumn === "created_at" &&
+                    (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
+                </th>
 
-                <td className="px-4 py-4 text-gray-500 text-[12px]">
-                  <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
-                </td>
+                <th
+                  className="w-1/6 px-4 py-3 text-left cursor-pointer"
+                  onClick={() => handleSort("deadline")}
+                >
+                  Due Date
+                  {sortColumn === "deadline" &&
+                    (sortOrder === "asc" ? <FiChevronUp /> : <FiChevronDown />)}
+                </th>
 
-                <td className="px-4 py-4 flex items-center gap-2 text-[12px]">
-                  {task.file_data?.name ? (
-                    <>
-                      <MdFilePresent className="text-2xl text-green-500" />
-                      <span className="text-blue-500 truncate">
-                        {task.file_data.name}
-                      </span>
-                    </>
-                  ) : (
-                    <span className="text-gray-400">No attachment</span>
-                  )}
-                </td>
+                <th className="w-1/6 px-4 py-3 text-left">Attachment</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-center gap-6 mt-4">
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-            className="p-2 rounded-md border border-gray-200 disabled:opacity-50"
-          >
-            <FiChevronLeft />
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              className={`px-3 py-1 rounded-md ${
-                currentPage === page
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-500 hover:bg-gray-50"
-              }`}
-            >
-              {page}
-            </button>
-          ))}
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-            className="p-2 rounded-md border border-gray-200 disabled:opacity-50"
-          >
-            <FiChevronRight />
-          </button>
-        </div>
-        <select
-          value={itemsPerPage}
-          onChange={(e) => {
-            setItemsPerPage(Number(e.target.value));
-            setCurrentPage(1);
-          }}
-          className="border border-gray-200 rounded-md py-1 px-2"
-        >
-          <option value="10">10 per page</option>
-          <option value="20">20 per page</option>
-          <option value="30">30 per page</option>
-        </select>
-      </div>
-
-      {/* Task Details Modal */}
-      <TaskDetailsModal
-        isOpen={isDetailsModalOpen}
-        onClose={() => setIsDetailsModalOpen(false)}
-        task={selectedTask}
-        setShowFilePreview={setShowFilePreview}
-      />
-
-      {isReviewModalOpen && (
-        <ReviewTasksModal
-          tasks={tasks.filter((task) => selectedTasks.includes(task.id))}
-          onClose={() => setIsReviewModalOpen(false)}
-          fetchTasks={fetchTasks}
-          handleTaskAction={handleTaskAction}
-          setSelectedTasks={setSelectedTasks}
-          users={users}
-        />
-      )}
-
-      {/* File Preview Modal */}
-      {showFilePreview && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-[1000]">
-          <div className="bg-white w-[60vw] h-[105vh] rounded-lg shadow-lg flex flex-col">
-            {/* Header */}
-            <div className="p-4 border-b flex justify-between items-center">
-              <h3 className="text-lg font-medium text-gray-900 truncate">
-                {selectedTask.file_data.name}
-              </h3>
-              <button
-                onClick={() => setShowFilePreview(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <FiX size={24} />
-              </button>
-            </div>
-
-            {/* File Preview Content */}
-            <div className="flex-1 p-4 bg-gray-50 flex items-center justify-center">
-              {selectedTask.file_data.type?.startsWith("image/") ||
-              selectedTask.file_data.type === "application/pdf" ? (
-                <iframe
-                  src={selectedTask.file_data.url}
-                  title="File Preview"
-                  className="w-full h-full rounded border border-gray-200"
-                />
+            <tbody className="divide-y divide-gray-200">
+              {isLoading ? (
+                <tr>
+                  <td colSpan="6" className="text-center py-8">
+                    <Oval height={40} width={40} color="#0000FF" secondaryColor="#ddd" />
+                  </td>
+                </tr>
+              ) : tasks.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="text-center py-8 text-gray-500">
+                    No tasks found
+                  </td>
+                </tr>
               ) : (
-                <div className="flex flex-col items-center justify-center h-full">
-                  <p className="text-gray-600 mb-4">
-                    Preview not available for this file type
-                  </p>
-                  <a
-                    href={selectedTask.file_data.url}
-                    download
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                  >
-                    Download File
-                  </a>
-                </div>
+                tasks.map((task) => (
+                  <tr key={task.id} className="hover:bg-gray-50">
+                    <td className="px-4 py-4">
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={selectedTasks.includes(task.id)}
+                          onChange={() => handleRowSelection(task.id)}
+                          className={`w-4 h-4 text-blue-600 border-gray-300 rounded ${
+                            activeTab === "for_review" ? "" : "opacity-0"
+                          }`}
+                          disabled={activeTab !== "for_review"}
+                        />
+                        <span
+                          className="text-blue-600 truncate cursor-pointer text-[12px]"
+                          onClick={() => handleTaskClick(task)}
+                        >
+                          {task.task_name}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td className="px-4 py-4">
+                      <div className="flex items-center space-x-2">
+                        <span
+                          className={`h-2 w-2 rounded-full ${getStatusBadgeClasses(
+                            task.task_status
+                          )}`}
+                        />
+                        <span className="text-gray-900 font-semibold text-[12px]">
+                          {getStatusLabel(task.task_status)}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td className="px-4 py-4">
+                      <div className="text-gray-900 font-semibold text-[12px]">
+                        {task.assign_to_user_name}
+                      </div>
+                      <div className="text-gray-500 text-[12px]">
+                        {task.assign_to_email}
+                      </div>
+                    </td>
+
+                    <td className="px-4 py-4 text-gray-500 text-[12px]">
+                      <Moment format="DD/MM/YYYY">{task.assigned_date}</Moment>
+                    </td>
+
+                    <td className="px-4 py-4 text-gray-500 text-[12px]">
+                      <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
+                    </td>
+
+                    <td className="px-4 py-4 flex items-center gap-2 text-[12px]">
+                      {task.file_data?.name ? (
+                        <>
+                          <MdFilePresent className="text-2xl text-green-500" />
+                          <span className="text-blue-500 truncate">
+                            {task.file_data.name}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-gray-400">No attachment</span>
+                      )}
+                    </td>
+                  </tr>
+                ))
               )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex items-center justify-center gap-6 mt-4">
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="p-2 rounded-md border border-gray-200 disabled:opacity-50"
+            >
+              <FiChevronLeft />
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`px-3 py-1 rounded-md ${
+                  currentPage === page
+                    ? "bg-blue-500 text-white"
+                    : "text-gray-500 hover:bg-gray-50"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="p-2 rounded-md border border-gray-200 disabled:opacity-50"
+            >
+              <FiChevronRight />
+            </button>
+          </div>
+          <select
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(Number(e.target.value));
+              setCurrentPage(1);
+            }}
+            className="border border-gray-200 rounded-md py-1 px-2"
+          >
+            <option value="10">10 per page</option>
+            <option value="20">20 per page</option>
+            <option value="30">30 per page</option>
+          </select>
+        </div>
+
+        {/* Task Details Modal */}
+        <TaskDetailsModal
+          isOpen={isDetailsModalOpen}
+          onClose={() => setIsDetailsModalOpen(false)}
+          task={selectedTask}
+          setShowFilePreview={setShowFilePreview}
+        />
+
+        {isReviewModalOpen && (
+          <ReviewTasksModal
+            tasks={tasks.filter((task) => selectedTasks.includes(task.id))}
+            onClose={() => setIsReviewModalOpen(false)}
+            fetchTasks={fetchTasks}
+            handleTaskAction={handleTaskAction}
+            setSelectedTasks={setSelectedTasks}
+            users={users}
+          />
+        )}
+
+        {/* File Preview Modal */}
+        {showFilePreview && selectedTask?.file_data && (
+          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-[1000]">
+            <div className="bg-white w-[60vw] h-[105vh] rounded-lg shadow-lg flex flex-col">
+              {/* Header */}
+              <div className="p-4 border-b flex justify-between items-center">
+                <h3 className="text-lg font-medium text-gray-900 truncate">
+                  {selectedTask.file_data.name}
+                </h3>
+                <button
+                  onClick={() => setShowFilePreview(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <FiX size={24} />
+                </button>
+              </div>
+
+              {/* File Preview Content */}
+              <div className="flex-1 p-4 bg-gray-50 flex items-center justify-center">
+                {selectedTask.file_data.type?.startsWith("image/") ||
+                selectedTask.file_data.type === "application/pdf" ? (
+                  <iframe
+                    src={selectedTask.file_data.url}
+                    title="File Preview"
+                    className="w-full h-full rounded border border-gray-200"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <p className="text-gray-600 mb-4">
+                      Preview not available for this file type
+                    </p>
+                    <a
+                      href={selectedTask.file_data.url}
+                      download
+                      className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                    >
+                      Download File
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

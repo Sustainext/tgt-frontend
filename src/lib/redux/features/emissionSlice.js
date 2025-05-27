@@ -217,7 +217,13 @@ const formatTaskData = (task, commonData) => ({
   subcategory: task.Emission.Subcategory,
   activity: task.Emission.Activity || "",
   activity_id: task.Emission.activity_id || "",
+  act_id: task.Emission.act_id || "",
+  factor: task.Emission.Factor || "",
   unit_type: task.Emission.unit_type || "",
+  value1: task.Emission.Quantity || task.Emission.quantity1 || "",
+  value2: task.Emission.Quantity2 || task.Emission.quantity2 || "",
+  unit1: task.Emission.Unit || task.Emission.unit1 || "",
+  unit2: task.Emission.Unit2 || task.Emission.unit2 || "",
   task_name: `${commonData.locationName}-${commonData.month}-${
     task.Emission.Activity || task.Emission.Subcategory
   }`,

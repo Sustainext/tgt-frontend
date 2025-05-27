@@ -14,91 +14,138 @@ import {
 } from "date-fns";
 import { FiFilter } from "react-icons/fi";
 
-const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
-  const [startMonth, setStartMonth] = useState(new Date()); // Left calendar
-  const [endMonth, setEndMonth] = useState(addMonths(new Date(), 1)); // Right calendar
-  const [hoveredDate, setHoveredDate] = useState(null); // Highlight range on hover
-  const [filterType, setFilterType] = useState("assigned"); // Assigned or Due Date
+const DateRangePicker = ({
+  startDate,
+  endDate,
+  onDateChange,
+  dateFilterType,
+  onDateFilterTypeChange,
+}) => {
+  const [startMonth, setStartMonth] = useState(new Date());
+  const [endMonth, setEndMonth] = useState(addMonths(new Date(), 1));
+  const [hoveredDate, setHoveredDate] = useState(null);
+  const [filterType, setFilterType] = useState(dateFilterType || "assigned");
   const [range, setRange] = useState({
     start: startDate ? new Date(startDate) : null,
     end: endDate ? new Date(endDate) : null,
   });
 
-  const datePickerRef = useRef(null); // Reference for click outside handling
+  const datePickerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-  // Close picker when clicking outside
+
+  useEffect(() => {
+    setRange({
+      start: startDate ? new Date(startDate) : null,
+      end: endDate ? new Date(endDate) : null,
+    });
+  }, [startDate, endDate]);
+
+  useEffect(() => {
+    if (dateFilterType && dateFilterType !== filterType) {
+      setFilterType(dateFilterType);
+    }
+  }, [dateFilterType]);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
         datePickerRef.current &&
         !datePickerRef.current.contains(event.target)
       ) {
-        onDateChange({
-          type: filterType,
-          start: range.start ? format(range.start, "yyyy-MM-dd") : null,
-          end: range.end ? format(range.end, "yyyy-MM-dd") : null,
-        });
+        if (range.start && range.end) {
+          onDateChange({
+            type: filterType,
+            start: format(range.start, "yyyy-MM-dd"),
+            end: format(range.end, "yyyy-MM-dd"),
+          });
+        }
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [filterType, range, onDateChange]);
 
-  // Utility to strip time from a date
   const stripTime = (date) => {
     const strippedDate = new Date(date);
     strippedDate.setHours(0, 0, 0, 0);
     return strippedDate;
   };
 
-  // Handle date selection
   const handleDateClick = (day) => {
     const strippedDate = stripTime(day);
 
     if (!range.start || (range.start && range.end)) {
       setRange({ start: strippedDate, end: null });
     } else {
-      setRange((prevRange) => {
-        const newRange = { ...prevRange, end: strippedDate };
-        onDateChange({
-          type: filterType,
-          start: format(stripTime(prevRange.start), "yyyy-MM-dd"),
-          end: format(strippedDate, "yyyy-MM-dd"),
-        });
-        return newRange;
+      const newStart = range.start;
+      const newEnd = strippedDate;
+      const finalStart = newStart <= newEnd ? newStart : newEnd;
+      const finalEnd = newStart <= newEnd ? newEnd : newStart;
+
+      setRange({ start: finalStart, end: finalEnd });
+
+      onDateChange({
+        type: filterType,
+        start: format(finalStart, "yyyy-MM-dd"),
+        end: format(finalEnd, "yyyy-MM-dd"),
       });
     }
   };
 
-  // Render calendar header with month/year controls
+  const handleFilterTypeChange = (e) => {
+    const selectedType = e.target.value;
+    console.log("Selected filter type:", selectedType);
+    setFilterType(selectedType);
+
+    if (onDateFilterTypeChange) {
+      onDateFilterTypeChange(selectedType);
+    }
+
+    if (range.start && range.end) {
+      onDateChange({
+        type: selectedType,
+        start: format(range.start, "yyyy-MM-dd"),
+        end: format(range.end, "yyyy-MM-dd"),
+      });
+    }
+  };
+
+  const handleClear = () => {
+    setRange({ start: null, end: null });
+    onDateChange({
+      type: filterType,
+      start: null,
+      end: null,
+    });
+  };
+
   const renderHeader = (month, setMonth) => (
     <div className="flex justify-between items-center mb-2">
       <button
         onClick={() => setMonth(subMonths(month, 1))}
         className="px-2 py-1 hover:bg-gray-100 rounded"
+        type="button"
       >
         &lt;
       </button>
-      <span className="font-semibold text-sm">
-        {format(month, "MMMM yyyy")}
-      </span>
+      <span className="font-semibold text-sm">{format(month, "MMMM yyyy")}</span>
       <button
         onClick={() => setMonth(addMonths(month, 1))}
         className="px-2 py-1 hover:bg-gray-100 rounded"
+        type="button"
       >
         &gt;
       </button>
     </div>
   );
 
-  // Render days of the week (Mon, Tue, etc.)
   const renderDays = () => {
     const days = [];
     let startDate = startOfWeek(new Date());
@@ -112,7 +159,6 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     return <div className="grid grid-cols-7 gap-2 mb-2">{days}</div>;
   };
 
-  // Render calendar cells for a month
   const renderCells = (month) => {
     const monthStart = startOfMonth(month);
     const monthEnd = endOfMonth(month);
@@ -131,13 +177,14 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
           range.end &&
           isWithinInterval(day, { start: range.start, end: range.end });
         const isStartOrEnd =
-          isSameDay(day, range.start) || isSameDay(day, range.end);
+          (range.start && isSameDay(day, range.start)) ||
+          (range.end && isSameDay(day, range.end));
 
         days.push(
           <div
-            key={day}
+            key={day.toString()}
             onClick={() => handleDateClick(cloneDay)}
-            className={`p-2 text-sm text-center rounded-md cursor-pointer ${
+            className={`p-2 text-sm text-center rounded-md cursor-pointer transition-colors ${
               !isSameMonth(day, monthStart)
                 ? "text-gray-400"
                 : isStartOrEnd
@@ -153,7 +200,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
         day = addDays(day, 1);
       }
       rows.push(
-        <div key={day} className="grid grid-cols-7 gap-2">
+        <div key={day.toString()} className="grid grid-cols-7 gap-2">
           {days}
         </div>
       );
@@ -166,7 +213,6 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     <>
       <div className="relative w-[40vw] hidden xl:block" ref={datePickerRef}>
         <div className="absolute z-10 mt-2 p-4 bg-white border shadow-md rounded-md w-full">
-          {/* Header */}
           <div className="flex items-center justify-between pb-2">
             <div className="flex items-center gap-1">
               <FiFilter className="text-blue-500" />
@@ -174,31 +220,30 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
             </div>
           </div>
 
-          {/* Filter Type Selection */}
+          {/* ✅ Fixed radio buttons */}
           <div className="flex justify-between items-center text-sm mb-8 mt-2 text-gray-700">
-            <label className="flex items-center gap-2">
+            <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
                 name="filterType"
                 value="assigned"
                 checked={filterType === "assigned"}
-                onChange={() => setFilterType("assigned")}
+                onChange={handleFilterTypeChange}
               />
-              Filter tasks by Assigned Date
+              <span>Filter tasks by Assigned Date</span>
             </label>
-            <label className="flex items-center gap-2 mr-12">
+            <label className="flex items-center gap-2 mr-12 cursor-pointer">
               <input
                 type="radio"
                 name="filterType"
                 value="due"
                 checked={filterType === "due"}
-                onChange={() => setFilterType("due")}
+                onChange={handleFilterTypeChange}
               />
-              Filter tasks by Due Date
+              <span>Filter tasks by Due Date</span>
             </label>
           </div>
 
-          {/* Calendar Grids */}
           <div className="grid grid-cols-2 gap-4 border-b border-gray-200 pb-4">
             <div>
               {renderHeader(startMonth, setStartMonth)}
@@ -212,7 +257,6 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
             </div>
           </div>
 
-          {/* Buttons */}
           <div className="flex justify-between items-center mt-4">
             <div>
               {range.start && range.end ? (
@@ -226,40 +270,27 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
                   </span>
                 </span>
               ) : (
-                "No date selected"
+                <span className="text-sm text-gray-500">No date selected</span>
               )}
             </div>
             <div className="flex space-x-2">
               <button
-                className="px-4 py-2 bg-gray-200 text-sm text-gray-800 rounded-md hover:bg-gray-300"
-                onClick={() => setRange({ start: null, end: null })}
+                type="button"
+                className="px-4 py-2 bg-gray-200 text-sm text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
+                onClick={handleClear}
               >
-                Cancel
-              </button>
-              <button
-                className="px-4 py-2 bg-blue-500 text-sm text-white rounded-md hover:bg-blue-600"
-                onClick={() =>
-                  onDateChange({
-                    type: filterType,
-                    start: range.start
-                      ? format(range.start, "yyyy-MM-dd")
-                      : null,
-                    end: range.end ? format(range.end, "yyyy-MM-dd") : null,
-                  })
-                }
-              >
-                Apply
+                Clear
               </button>
             </div>
           </div>
         </div>
       </div>
-      {/* mobile verison */}
+
+      {/* Mobile Version (also fixed) */}
       <div className="xl:hidden md:hidden lg:hidden block">
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center  ">
-          <div className="relative w-[120vw]" ref={datePickerRef}>
-            <div className=" z-10 mt-8 p-4 bg-white border shadow-md rounded-md w-full">
-              {/* Header */}
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
+          <div className="relative w-[95vw] max-w-md" ref={datePickerRef}>
+            <div className="z-10 mt-8 p-4 bg-white border shadow-md rounded-md w-full">
               <div className="flex items-center justify-between pb-2">
                 <div className="flex items-center gap-1">
                   <FiFilter className="text-blue-500" />
@@ -267,47 +298,44 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
                 </div>
               </div>
 
-              {/* Filter Type Selection */}
-              <div className="flex justify-between items-center text-sm mb-8 mt-2 text-gray-700">
-                <label className="flex items-center gap-2">
+              <div className="space-y-2 text-sm mb-6 mt-2 text-gray-700">
+                <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
                     name="filterType"
                     value="assigned"
                     checked={filterType === "assigned"}
-                    onChange={() => setFilterType("assigned")}
+                    onChange={handleFilterTypeChange}
                   />
-                  Filter tasks by Assigned Date
+                  <span>Filter tasks by Assigned Date</span>
                 </label>
-                <label className="flex items-center gap-2 mr-12">
+                <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
                     name="filterType"
                     value="due"
                     checked={filterType === "due"}
-                    onChange={() => setFilterType("due")}
+                    onChange={handleFilterTypeChange}
                   />
-                  Filter tasks by Due Date
+                  <span>Filter tasks by Due Date</span>
                 </label>
               </div>
 
-              {/* Calendar Grids */}
-              <div className="grid grid-cols-1 xl:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 border-b border-gray-200 pb-4">
+              <div className="space-y-4 border-b border-gray-200 pb-4">
                 <div>
                   {renderHeader(startMonth, setStartMonth)}
                   {renderDays()}
                   {renderCells(startMonth)}
                 </div>
-                <div className="border-l border-gray-300 pl-4">
+                <div>
                   {renderHeader(endMonth, setEndMonth)}
                   {renderDays()}
                   {renderCells(endMonth)}
                 </div>
               </div>
 
-              {/* Buttons */}
-              <div className="flex justify-between items-center mt-4">
-                <div>
+              <div className="flex flex-col gap-3 mt-4">
+                <div className="text-center">
                   {range.start && range.end ? (
                     <span className="text-sm text-gray-600">
                       <span className="bg-white border border-gray-200 rounded-md p-2">
@@ -319,29 +347,16 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
                       </span>
                     </span>
                   ) : (
-                    "No date selected"
+                    <span className="text-sm text-gray-500">No date selected</span>
                   )}
                 </div>
                 <div className="flex space-x-2">
                   <button
-                    className="px-4 py-2 bg-gray-200 text-sm text-gray-800 rounded-md hover:bg-gray-300"
-                    onClick={() => setRange({ start: null, end: null })}
+                    type="button"
+                    className="flex-1 px-4 py-2 bg-gray-200 text-sm text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
+                    onClick={handleClear}
                   >
-                    Cancel
-                  </button>
-                  <button
-                    className="px-4 py-2 bg-blue-500 text-sm text-white rounded-md hover:bg-blue-600"
-                    onClick={() =>
-                      onDateChange({
-                        type: filterType,
-                        start: range.start
-                          ? format(range.start, "yyyy-MM-dd")
-                          : null,
-                        end: range.end ? format(range.end, "yyyy-MM-dd") : null,
-                      })
-                    }
-                  >
-                    Apply
+                    Clear
                   </button>
                 </div>
               </div>

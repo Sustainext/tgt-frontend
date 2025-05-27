@@ -177,7 +177,9 @@ const MyTask = ({ HomeActiveTab }) => {
             ...foundActivity,
             unit_type: type,
             units: matchingUnitType.units,
-            activity_id: foundActivity.id, // Use id directly from the found activity
+            activity_id: foundActivity.id,
+            act_id: foundActivity.id,
+            factor: foundActivity.factor,
           });
         }
       }
@@ -761,12 +763,16 @@ const MyTask = ({ HomeActiveTab }) => {
 
           // Use for loop to find the activity_id (more reliable than find())
           let foundActivityId = null;
+          let foundFactorId = null;
+          let foundFactor = null;
           for (let i = 0; i < activitiesList.length; i++) {
             const act = activitiesList[i];
             const fullActivityName = `${act.name} - (${act.source}) - ${act.unit_type}`;
 
             if (fullActivityName === activityName) {
               foundActivityId = act.activity_id;
+              foundFactorId = act.id;
+              foundFactor = act.factor;
               break;
             }
           }
@@ -778,6 +784,8 @@ const MyTask = ({ HomeActiveTab }) => {
               .split("-")
               [activityName.split("-").length - 1].trim(),
             activity_id: foundActivityId,
+            foundFactorId: act.id,
+            foundFactor: act.factor,
           });
         }}
         onTaskDataChange={(changes) => {
