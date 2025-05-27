@@ -382,6 +382,20 @@ const Section17 = ({ section12_3_3Ref, data,reportType }) => {
               : "No data available"
             : "No data available"}
         </p>
+        <p className="text-[15px]  mb-2 font-semibold">
+        Sector specific standards: 
+        </p>
+        <p className="text-sm mb-4">
+          {data["303-2a-management_water_discharge"]
+            ? data["303-2a-management_water_discharge"].data
+              ? data["303-2a-management_water_discharge"].data.length > 0
+                ? data["303-2a-management_water_discharge"].data[0].Q4
+                  ? data["303-2a-management_water_discharge"].data[0].Q4
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
 
         <p className="text-[15px]  mb-2 font-semibold">
           Total Water Discharge by Location

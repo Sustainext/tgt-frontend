@@ -64,7 +64,7 @@ const Section5 = ({ section15_2Ref, data }) => {
                   <p className="text-sm mb-4">No</p>
                 ) : (
                   <div>
-                    <p className="text-[15px] mb-2 font-semibold">
+                    <p className="text-[14px] mb-2 font-semibold">
                       Source of Components
                     </p>
                     <p className="text-sm mb-2">
@@ -72,7 +72,7 @@ const Section5 = ({ section15_2Ref, data }) => {
                         ? data["417_1a"].data[0].Q2
                         : "No data available"}
                     </p>
-                    <p className="text-[15px] mb-2 font-semibold">
+                    <p className="text-[14px] mb-2 font-semibold">
                       Substances that might produce an environmental or social
                       impact
                     </p>
@@ -81,7 +81,7 @@ const Section5 = ({ section15_2Ref, data }) => {
                         ? data["417_1a"].data[0].Q3
                         : "No data available"}
                     </p>
-                    <p className="text-[15px] mb-2 font-semibold">
+                    <p className="text-[14px] mb-2 font-semibold">
                       Safe use of the product or service
                     </p>
                     <p className="text-sm mb-2">
@@ -89,12 +89,20 @@ const Section5 = ({ section15_2Ref, data }) => {
                         ? data["417_1a"].data[0].Q4
                         : "No data available"}
                     </p>
-                    <p className="text-[15px] mb-2 font-semibold">
+                    <p className="text-[14px] mb-2 font-semibold">
                       Disposal of the product
                     </p>
-                    <p className="text-sm mb-4">
+                    <p className="text-sm mb-2">
                       {data["417_1a"].data[0].Q5
                         ? data["417_1a"].data[0].Q5
+                        : "No data available"}
+                    </p>
+                    <p className="text-[14px] mb-2 font-semibold">
+                     Other
+                    </p>
+                    <p className="text-sm mb-4">
+                      {data["417_1a"].data[0].Q6
+                        ? data["417_1a"].data[0].Q6
                         : "No data available"}
                     </p>
                   </div>
