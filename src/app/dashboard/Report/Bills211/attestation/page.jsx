@@ -78,7 +78,7 @@ const Attestation = ({ orgName, data }) => {
     <>
       <div>
         <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          Attestation
+          Approval and Attestation
         </h3>
       </div>
       <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">

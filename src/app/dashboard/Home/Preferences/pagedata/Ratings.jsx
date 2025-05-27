@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axiosInstance, { put } from '../../../../utils/axiosMiddleware';
 import { useRouter } from 'next/navigation';
 import { Oval } from 'react-loader-spinner';
-
+import { FaCheck } from "react-icons/fa";
 const Ratings = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
@@ -141,18 +141,29 @@ const Ratings = () => {
                   />
                 </div>
                 <div className='h-10'><p className='text-sm text-center'>{item.name}</p></div>
-                <div
-                  className={`absolute right-3 bottom-2 rounded-full border border-gray-300 ${selectedItems.includes(item.id) ? 'bg-white border-[#53ff1a]' : 'bg-white'} transition-all w-5 h-5`}
-                >
-                  <CiCircleCheck
-                    style={{
-                      color: selectedItems.includes(item.id) ? '#00cc44' : '#999999',
-                      marginTop: "-3px",
-                      marginLeft: "-2px",
-                      fontSize: "24px"
-                    }}
-                  />
-                </div>
+              <div
+                    className={`absolute right-3 rounded-full border ${
+                      selectedItems.includes(item.id)
+                        ? "bg-green-500 border-green-500 "
+                        : "bg-white border-zinc-500"
+                    } transition-all w-5 h-5 flex items-center justify-center`}
+                  >
+                    {selectedItems.includes(item.id) ? (
+                      <FaCheck
+                        style={{
+                          color: "#fff",
+                          fontSize: "12px",
+                        }}
+                      />
+                    ) : (
+                      <FaCheck
+                        style={{
+                          color: "#999999",
+                          fontSize: "12px",
+                        }}
+                      />
+                    )}
+                  </div>
               </div>
             </div>
           ))}
