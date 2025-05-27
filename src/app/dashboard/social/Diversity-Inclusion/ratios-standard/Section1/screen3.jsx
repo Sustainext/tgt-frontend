@@ -149,6 +149,7 @@ const Screen3 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     // }
   };
   const facthloctiondata = async () => {
+    setLocationdata();
     const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
     try {
       const response = await axiosInstance.get(url);
