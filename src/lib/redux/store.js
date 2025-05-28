@@ -27,7 +27,9 @@ import materialitySliceReducer from "./features/materialitySlice";
 import FileInfoSliceReducer from "./features/FileInfoSlice";
 import optimiseSliceReduceer from "./features/optimiseSlice";
 import Bills201 from "./features/Bills201";
-import BillScreen1Slice from "./features/Billsreport/Billscreen1Slice"
+import BillScreen1Slice from "./features/Billsreport/Billscreen1Slice";
+import reportBuilderReducer from './features/reportBuilderSlice';
+
 const rootReducer = combineReducers({
   counter: counterReducer,
   emissions: emissionReducer,
@@ -55,6 +57,7 @@ const rootReducer = combineReducers({
   optimise: optimiseSliceReduceer,
   bils201filter: Bills201,
   BillScreen1About: BillScreen1Slice,
+  reportBuilder: reportBuilderReducer,
 });
 
 export const makeStore = () => {

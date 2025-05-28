@@ -1,22 +1,34 @@
 'use client';
 
 import { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import { MdKeyboardArrowLeft } from "react-icons/md";
-// import SectionSelectorModal from "./SectionSelectorModal";
-import SectionSelector from "./SectionSelector"; 
-import SectionEditorModal from './sectionEditorModal'
 
+// Redux selectors and actions
+import {
+  selectEnabledSections,
+  selectSubsections,
+  selectSelectedSubsections,
+  selectCurrentReportPage,
+  setSectionEditorOpen,
+  selectIsSectionEditorOpen,
+  setCurrentReportPage,
+} from '../../../../../lib/redux/features/reportBuilderSlice';
+
+import SectionEditorModal from './sectionEditorModal';
 
 const ESGSidebarContent = ({
-  activeStep,
-  setActiveStep,
   closeMobile,
-  sections,
   onEditClick
 }) => {
-  const enabledSections = sections
-    .filter(section => section.enabled)
-    .sort((a, b) => a.order - b.order);
+  const dispatch = useDispatch();
+  const enabledSections = useSelector(selectEnabledSections);
+  const currentReportPage = useSelector(selectCurrentReportPage);
+
+  const handleSectionClick = (sectionIndex) => {
+    dispatch(setCurrentReportPage(sectionIndex));
+    if (closeMobile) closeMobile();
+  };
 
   return (
     <div className="font-medium">
@@ -42,21 +54,17 @@ const ESGSidebarContent = ({
       {/* Section List */}
       <div className="mb-3">
         {enabledSections.map((section, index) => {
-          const step = index + 1;
           return (
             <p
               key={section.id}
-              className={`text-[13px] text-[#727272] cursor-pointer my-1 ${
-                activeStep === step
-                  ? "bg-[#007eef0d] p-2 px-5"
-                  : "bg-transparent p-2 px-5"
+              className={`text-[13px] text-[#727272] cursor-pointer my-1 transition-colors ${
+                currentReportPage === index
+                  ? "bg-[#007eef0d] p-2 px-5 border-r-2 border-blue-500"
+                  : "bg-transparent p-2 px-5 hover:bg-gray-50"
               }`}
-              onClick={() => {
-                setActiveStep(step);
-                if (closeMobile) closeMobile();
-              }}
+              onClick={() => handleSectionClick(index)}
             >
-              {section.title}
+              {index + 1}. {section.title}
             </p>
           );
         })}
@@ -66,16 +74,19 @@ const ESGSidebarContent = ({
 };
 
 const ESGSidebar = ({
-  activeStep,
-  setActiveStep,
-  setIsOpenMobile,
-  isOpenMobile,
-  sections,
-  selectedSubsections,
-  setSections,
-  onSectionUpdate, // callback to update main config
+  setIsOpenMobile = () => {},
+  isOpenMobile = false,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const isSectionEditorOpen = useSelector(selectIsSectionEditorOpen);
+
+  const handleEditClick = () => {
+    dispatch(setSectionEditorOpen(true));
+  };
+
+  const handleCloseModal = () => {
+    dispatch(setSectionEditorOpen(false));
+  };
 
   return (
     <>
@@ -83,10 +94,7 @@ const ESGSidebar = ({
       <div className="m-3 ml-2 border border-r-2 border-b-2 shadow-lg rounded-lg h-full hidden xl:block lg:block">
         <div className="flex items-start py-4 h-screen rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
           <ESGSidebarContent
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-            sections={sections}
-            onEditClick={() => setIsModalOpen(true)}
+            onEditClick={handleEditClick}
           />
         </div>
       </div>
@@ -107,76 +115,17 @@ const ESGSidebar = ({
       >
         <div className="p-4">
           <ESGSidebarContent
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
             closeMobile={() => setIsOpenMobile(false)}
-            sections={sections}
-            onEditClick={() => setIsModalOpen(true)}
+            onEditClick={handleEditClick}
           />
         </div>
       </div>
 
       {/* Modal for editing section/subsection */}
-      {isModalOpen && (
-        // <SectionSelectorModal
-        //   initialSections={sections}
-        //   onClose={() => setIsModalOpen(false)}
-        //   onSave={(updated) => {
-        //     onSectionUpdate(updated);
-        //     setIsModalOpen(false);
-        //   }}
-        // />
-        <div className="fixed inset-0 flex justify-center items-center bg-[#00000080] z-50">
-          <div className="relative bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-3xl">
-           
-            <div className="flex justify-between items-center drop-shadow-lg w-full">
-              <div className="flex">
-                <h2 className="text-black text-[18px] font-bold">
-                Edit Section Selection
-                </h2>
-              </div>
-              <button
-                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
-               onClick={()=>{setIsModalOpen(false)}}
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="overflow-y-auto table-scrollbar max-h-[500px] w-full mt-5">
-           {/* <SectionSelector
-        //   ref={sectionSelectorRef}
-          sections={sections}
-          setSections={setSections}
-            // onNext={(selected) => {
-            //   setSections(selected);
-            //   console.log(selected,"look at it")
-            //   localStorage.setItem('report_sections', JSON.stringify(selected));
-            // }}
-            // onNext={handleNextStep}
-          /> */}
-          <SectionEditorModal
-    allSections={sections}
-    subsectionOptions={selectedSubsections}
-    setSections={setSections}
-    onClose={() => setIsModalOpen(false)}
-  />
-           </div>
-            </div>
-            </div>
-       
+      {isSectionEditorOpen && (
+        <SectionEditorModal
+          onClose={handleCloseModal}
+        />
       )}
     </>
   );

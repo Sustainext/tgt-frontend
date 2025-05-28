@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import {
   DndContext,
   closestCenter,
@@ -10,13 +11,25 @@ import {
 } from "@dnd-kit/core";
 import {
   SortableContext,
-  arrayMove,
   useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 import { RxDragHandleDots2 } from "react-icons/rx";
+
+// Redux selectors and actions
+import {
+  selectSections,
+  selectEnabledSections,
+  selectDisabledSections,
+  selectSubsections,
+  selectSelectedSubsections,
+  setSections,
+  moveSectionBetweenContainers,
+  reorderSections,
+  setSectionEditorOpen,
+} from '../../../../../lib/redux/features/reportBuilderSlice';
 
 function DraggableItem({ id, children, isEnabled }) {
   const {
@@ -48,13 +61,16 @@ function DraggableItem({ id, children, isEnabled }) {
   );
 }
 
-const SectionEditorModal = ({
-  allSections,
-  subsectionOptions,
-  setSections,
-  onClose,
-}) => {
+const SectionEditorModal = ({ onClose }) => {
+  const dispatch = useDispatch();
   const sensors = useSensors(useSensor(PointerSensor));
+  
+  // Redux state
+  const allSections = useSelector(selectSections);
+  const subsections = useSelector(selectSubsections);
+  const selectedSubsections = useSelector(selectSelectedSubsections);
+  
+  // Local state
   const [localSections, setLocalSections] = useState([...allSections]);
   const [expandedSections, setExpandedSections] = useState({});
   const [activeItem, setActiveItem] = useState(null);
@@ -83,20 +99,12 @@ const SectionEditorModal = ({
 
     // If dropping in the same container, just reorder
     if (activeSection.enabled === overSection.enabled) {
-      const list = localSections.filter((s) => s.enabled === activeSection.enabled);
-      const oldIndex = list.findIndex((s) => s.id === active.id);
-      const newIndex = list.findIndex((s) => s.id === over.id);
+      const oldIndex = localSections.findIndex((s) => s.id === active.id);
+      const newIndex = localSections.findIndex((s) => s.id === over.id);
       
       const newSections = [...localSections];
-      const [removed] = newSections.splice(
-        newSections.findIndex((s) => s.id === active.id),
-        1
-      );
-      newSections.splice(
-        newSections.findIndex((s) => s.id === over.id),
-        0,
-        removed
-      );
+      const [removed] = newSections.splice(oldIndex, 1);
+      newSections.splice(newIndex, 0, removed);
 
       setLocalSections(
         newSections.map((s, i) => ({
@@ -121,24 +129,14 @@ const SectionEditorModal = ({
     setActiveItem(null);
   };
 
-  const toggleSectionEnable = (id, enable) => {
-    setLocalSections((prev) =>
-      prev.map((s) =>
-        s.id === id
-          ? { ...s, enabled: enable, order: enable ? prev.filter(item => item.enabled).length + 1 : null }
-          : s
-      )
-    );
-  };
-
   const leftSections = localSections.filter((s) => s.enabled);
   const rightSections = localSections.filter((s) => !s.enabled);
 
   const renderSectionItem = (section, isEnabled) => {
     const isExpanded = expandedSections[section.id];
-    const subs = subsectionOptions[section.id] || [];
+    const sectionSubsections = subsections[section.id] || [];
+    const sectionSelectedSubsections = selectedSubsections[section.id] || [];
     const isActive = activeItem === section.id;
-
 
     return (
       <DraggableItem key={section.id} id={section.id} isEnabled={isEnabled}>
@@ -152,7 +150,7 @@ const SectionEditorModal = ({
                 {section.title}
               </p>
             </div>
-            {subs.length > 0 && (
+            {sectionSubsections.length > 0 && (
               <button
                 onClick={() => toggleDropdown(section.id)}
                 className="text-gray-500"
@@ -166,21 +164,25 @@ const SectionEditorModal = ({
             )}
           </div>
 
-          {isExpanded && subs.length > 0 && (
+          {isExpanded && sectionSubsections.length > 0 && (
             <div className="pl-4 mt-2">
-              {subs.map((sub) => (
-                <label
-                  key={sub.id}
-                  className="flex gap-2 items-center text-xs mb-1"
-                >
-                  <input
-                    type="checkbox"
-                    checked={sub.checked}
-                    onChange={() => {}}
-                  />
-                  {sub}
-                </label>
-              ))}
+              {sectionSubsections.map((subsection) => {
+                const isChecked = sectionSelectedSubsections.includes(subsection.id);
+                return (
+                  <label
+                    key={subsection.id}
+                    className="flex gap-2 items-center text-xs mb-1"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={isChecked}
+                      onChange={() => {}}
+                      disabled
+                    />
+                    {subsection.label}
+                  </label>
+                );
+              })}
             </div>
           )}
         </div>
@@ -194,14 +196,18 @@ const SectionEditorModal = ({
     const section = localSections.find((s) => s.id === activeItem);
     return (
       <div className="border rounded p-3 bg-white shadow-lg w-full">
-        <p className="font-medium text-sm">{section.title}</p>
+        <p className="font-medium text-sm">{section?.title}</p>
       </div>
     );
   };
 
   const handleUpdate = () => {
-    setSections(localSections);
+    dispatch(setSections(localSections));
     onClose();
+  };
+
+  const handleClose = () => {
+    dispatch(setSectionEditorOpen(false));
   };
 
   return (
@@ -209,7 +215,7 @@ const SectionEditorModal = ({
       <div className="bg-white rounded-lg p-6 w-[95%] max-w-[1200px] shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Edit Section Selection</h2>
-          <button onClick={onClose} className="text-xl text-gray-500">
+          <button onClick={handleClose} className="text-xl text-gray-500">
             &times;
           </button>
         </div>
@@ -258,7 +264,7 @@ const SectionEditorModal = ({
 
         <div className="flex justify-end mt-6">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="px-4 py-2 rounded border mr-3 hover:bg-gray-100"
           >
             Cancel

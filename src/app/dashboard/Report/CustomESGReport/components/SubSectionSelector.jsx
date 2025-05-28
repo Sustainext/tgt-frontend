@@ -1,96 +1,81 @@
 'use client';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectEnabledSections,
+  selectSubsections,
+  selectSelectedSubsections,
+  setSelectedSubsections,
+  updateSelectedSubsections,
+} from '../../../../../lib/redux/features/reportBuilderSlice';
 
-import { useState } from 'react';
+export default function SubsectionSelector({ onBack, onNext }) {
+  const dispatch = useDispatch();
+  const enabledSections = useSelector(selectEnabledSections);
+  const subsections = useSelector(selectSubsections);
+  const selectedSubsections = useSelector(selectSelectedSubsections);
 
-const subsectionOptions = {
-  about_company: [
-    { id: 'business_model', label: 'Business Model and Impact',
-      children: [
-        { id: 'value_chain', label: 'Activities, Value Chain and Business Relationships' },
-        { id: 'excluded_entities', label: 'Entities Included in the Organization’s Sustainability Reporting' },
-       ]
-     },
-     { id: 'supply_chain', label: 'Supply Chain' },
-  ],
-  materiality: [
-    { id: 'list_of_materials', label: 'List of material topics' },
-    { id: 'topic_changes', label: 'Changes in the list of material topics' },
-    { id: 'materiality_process', label: 'Materiality assessment – Process' },
-    { id: 'management_strategy', label: 'Management of material topic' },
-  ],
-  community: [
-    {
-      id: 'community_management',
-      label: 'Management of material topic',
-      children: [
-        { id: 'violation_rights', label: 'Incidents of Violation of Rights of Indigenous People' }
-      ]
-    },
-    { id: 'csr', label: 'CSR' },
-  ],
-  customers: [
-    {
-      id: 'products_services',
-      label: 'Products and services',
-      children: [
-        { id: 'safety_impact', label: 'Health and safety impacts of product and service categories' },
-        { id: 'non_compliance', label: 'Incidents of non-compliance' }
-      ]
-    },
-    {
-      id: 'product_labeling',
-      label: 'Product and service information & labeling',
-      children: [
-        { id: 'label_management', label: 'Management of material topic' }
-      ]
-    },
-  ],
-};
+  // Initialize selected subsections when component mounts or enabled sections change
+  // useEffect(() => {
+  //   const shouldInitialize = enabledSections.some(section => 
+  //     !selectedSubsections[section.id] || selectedSubsections[section.id].length === 0
+  //   );
 
-export default function SubsectionSelector({ sections, onNext, onBack }) {
-  const enabledSections = sections.filter((s) => s.enabled);
-  const [selectedSubs, setSelectedSubs] = useState(() => {
-    const init = {};
-    enabledSections.forEach((section) => {
-      const available = subsectionOptions[section.id] || [];
-      const collectIds = (subs) => subs.flatMap((s) => [s.id, ...(s.children ? collectIds(s.children) : [])]);
-      init[section.id] = collectIds(available);
-    });
-    return init;
-  });
+  //   if (shouldInitialize) {
+  //     const initialSelections = { ...selectedSubsections };
+      
+  //     enabledSections.forEach((section) => {
+  //       if (!initialSelections[section.id]) {
+  //         const sectionSubsections = subsections[section.id] || [];
+  //         const collectIds = (subs) => 
+  //           subs.flatMap((s) => [
+  //             s.enabled ? s.id : null, 
+  //             ...(s.children ? collectIds(s.children) : [])
+  //           ]).filter(Boolean);
+          
+  //         initialSelections[section.id] = collectIds(sectionSubsections);
+  //       }
+  //     });
+      
+  //     dispatch(setSelectedSubsections(initialSelections));
+  //   }
+  // }, [enabledSections, subsections, selectedSubsections, dispatch]);
 
-  const toggleSub = (sectionId, subId) => {
-    setSelectedSubs((prev) => {
-      const current = prev[sectionId] || [];
-      const updated = current.includes(subId)
-        ? current.filter((id) => id !== subId)
-        : [...current, subId];
-      return {
-        ...prev,
-        [sectionId]: updated,
-      };
-    });
+  const toggleSubsection = (sectionId, subsectionId) => {
+    const currentSelections = selectedSubsections[sectionId] || [];
+    const updatedSelections = currentSelections.includes(subsectionId)
+      ? currentSelections.filter(id => id !== subsectionId)
+      : [...currentSelections, subsectionId];
+    
+    dispatch(updateSelectedSubsections({ 
+      sectionId, 
+      subsectionIds: updatedSelections 
+    }));
   };
 
-  const renderSubsection = (sectionId, sub, level = 0) => {
-    const isChecked = selectedSubs[sectionId]?.includes(sub.id) || false;
+  const renderSubsection = (sectionId, subsection, level = 0) => {
+    const currentSelections = selectedSubsections[sectionId] || [];
+    const isChecked = currentSelections.includes(subsection.id);
 
     return (
-      <div key={sub.id} className={`pl-${level * 4} mb-2`}>
-        <label className="flex items-center space-x-2">
+      <div key={subsection.id} className={`${level > 0 ? `pl-${level * 4}` : ''} mb-2`}>
+        <label className="flex items-center space-x-2 cursor-pointer">
           <input
             type="checkbox"
             checked={isChecked}
-            onChange={() => toggleSub(sectionId, sub.id)}
-            className="w-4 h-4 accent-green-600"
+            onChange={() => toggleSubsection(sectionId, subsection.id)}
+            className="w-4 h-4 accent-green-600 cursor-pointer"
           />
-          <span className={`text-[14px] ${sub.children ? 'font-medium' : ''} text-[#2E0B34]`}>
-            {sub.label}
+          <span className={`text-[14px] ${subsection.children ? 'font-medium' : ''} text-[#2E0B34]`}>
+            {subsection.label}
           </span>
         </label>
-        {sub.children && (
+        
+        {subsection.children && subsection.children.length > 0 && (
           <div className="mt-1">
-            {sub.children.map((child) => renderSubsection(sectionId, child, level + 1))}
+            {subsection.children.map((child) => 
+              renderSubsection(sectionId, child, level + 1)
+            )}
           </div>
         )}
       </div>
@@ -98,41 +83,86 @@ export default function SubsectionSelector({ sections, onNext, onBack }) {
   };
 
   const handleProceed = () => {
-    onNext(selectedSubs);
+    // Check if at least one subsection is selected across all sections
+    const hasSelections = Object.values(selectedSubsections).some(
+      selections => selections && selections.length > 0
+    );
+    
+    if (hasSelections) {
+      onNext();
+    } else {
+      alert('Please select at least one subsection to proceed.');
+    }
+  };
+
+  const renderSectionSubsections = (section, index) => {
+    const sectionSubsections = subsections[section.id] || [];
+    
+    if (sectionSubsections.length === 0) {
+      return (
+        <div key={section.id} className='border-b border-gray-200 pb-4'>
+          <h3 className="mb-2 font-medium text-[#2E0B34] text-[16px]">
+            {index + 1}. {section.title}
+          </h3>
+          <p className="text-sm text-gray-500 italic">
+            No subsections available for this section.
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div key={section.id} className='border-b border-gray-200 pb-4'>
+        <h3 className="mb-2 font-medium text-[#2E0B34] text-[16px]">
+          {index + 1}. {section.title}
+        </h3>
+        <div className='mb-4'>
+          {sectionSubsections.map((subsection) => 
+            renderSubsection(section.id, subsection, 0)
+          )}
+        </div>
+      </div>
+    );
   };
 
   return (
     <div>
-      <div className="space-y-8 border border-gray-400 p-6 rounded-md">
-        {enabledSections.map((section, idx) => {
-          const subs = subsectionOptions[section.id] || [];
-          return (
-            <div key={section.id} className='border-b border-gray-200'>
-              <h3 className="mb-2 font-medium text-[#2E0B34] text-[16px]">
-                {idx + 1}. {section.title}
-              </h3>
-              <div className='mb-4'>
-                {subs.map((sub) => renderSubsection(section.id, sub))}
-              </div>
-            </div>
-          );
-        })}
+      <div className="space-y-6 border border-gray-400 p-6 rounded-md">
+        {enabledSections.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-gray-500">No sections enabled. Please go back and select sections first.</p>
+          </div>
+        ) : (
+          enabledSections.map((section, idx) => 
+            renderSectionSubsections(section, idx)
+          )
+        )}
       </div>
 
       <div className="mt-8 flex justify-between">
         <button
           onClick={onBack}
-          className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+          className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition-colors"
         >
           ← Back
         </button>
         <button
           onClick={handleProceed}
-          className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          disabled={enabledSections.length === 0}
         >
           Proceed to Report →
         </button>
       </div>
+
+      {/* Debug information - remove in production */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="mt-4 p-3 bg-gray-100 rounded text-xs">
+          <strong>Debug Info:</strong>
+          <div>Enabled Sections: {enabledSections.map(s => s.id).join(', ')}</div>
+          <div>Selected Subsections: {JSON.stringify(selectedSubsections, null, 2)}</div>
+        </div>
+      )}
     </div>
   );
 }
