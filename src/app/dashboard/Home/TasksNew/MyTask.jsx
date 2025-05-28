@@ -786,8 +786,8 @@ const MyTask = ({ HomeActiveTab }) => {
               .split("-")
               [activityName.split("-").length - 1].trim(),
             activity_id: foundActivityId,
-            foundFactorId: act.id,
-            foundFactor: act.factor,
+            foundFactorId: foundFactorId,
+            foundFactor: foundFactor,
           });
         }}
         onTaskDataChange={(changes) => {
