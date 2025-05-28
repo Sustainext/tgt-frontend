@@ -792,6 +792,7 @@ const DateRangeModal = () => {
                   onClick={() => {
                     const defaultRange = getDefaultDateRange();
                     setSelectedDateRange(defaultRange);
+                    setDateFilterType("assigned");
                     toast.info("Reset to default date range (last 30 days)", {
                       position: "top-right",
                       autoClose: 2000,
