@@ -214,7 +214,7 @@ const ReviewTaskModal = ({
 
             {/* Quantities */}
             <div className="mb-3">
-              {taskassigndata.unit_type.includes("Over") ? (
+              {taskassigndata.unit_type?.includes("Over") ? (
                 <>
                   <div className="flex gap-4 mb-4">
                     <div className="flex-1">
