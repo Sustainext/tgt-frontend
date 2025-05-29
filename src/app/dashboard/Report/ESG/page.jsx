@@ -70,6 +70,7 @@ const ESGReport = () => {
   const economicperformance = useRef();
   const people = useRef();
   const customers = useRef();
+  const referenceManagementOfMaterialTopic=useRef()
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setHeadertext1(""));
@@ -92,6 +93,7 @@ const ESGReport = () => {
     11: economicperformance,
     13: people,
     15: customers,
+    16:referenceManagementOfMaterialTopic
   };
 
   // const  missing_fields=[
@@ -644,7 +646,7 @@ const ESGReport = () => {
                 <div>
                   {reportType=='GRI Report: With Reference to' && activeStep===16?(
                     <div>
-                      <ReferenceMaterialTopic />
+                      <ReferenceMaterialTopic ref={referenceManagementOfMaterialTopic} />
                     </div>
                   ):(
                     <div className="mb-4">

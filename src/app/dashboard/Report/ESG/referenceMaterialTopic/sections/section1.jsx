@@ -87,11 +87,18 @@ Sustainability is embedded in our corporate strategy, and we are dedicated to co
   const handleEditorChange = (value) => {
     dispatch(setConclusion(value));
   };
+
+  const combinedTopics = [
+    ...(data?.environment_topic_responses || []),
+    ...(data?.social_topic_responses || []),
+    ...(data?.governance_topic_responses || [])
+  ];
+  
     return (
         <>
         <div id="section16" ref={section16Ref}>
         <div className="shadow-md rounded-md mb-6">
-            <ManagementOfMaterialTopicTable col={col} data={[]} />
+            <ManagementOfMaterialTopicTable col={col} data={combinedTopics} />
         </div>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
