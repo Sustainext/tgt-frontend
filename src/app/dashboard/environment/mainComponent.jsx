@@ -177,7 +177,7 @@ const environment = () => {
 
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Emission"));
+      dispatch(setHeadertext2("Emissions"));
     } else if (energyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Energy"));
     } else if (wasteTabs.includes(activeTab)) {

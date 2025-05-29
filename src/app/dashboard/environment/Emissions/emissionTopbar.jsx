@@ -22,7 +22,7 @@ const EmissionTopBar = ({ toggleDrawer, apiData, sdgData, griData, brsr,setMobil
             <div className="flex h-[28px]">
               <div className="h-[28px]">
                 <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Emission
+                  Emissions
                 </p>
               </div>
               {materialityEnvData &&
@@ -108,7 +108,7 @@ const EmissionTopBar = ({ toggleDrawer, apiData, sdgData, griData, brsr,setMobil
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Emission
+                  Emissions
                   </p>
                 </div>
                 {materialityEnvData &&
