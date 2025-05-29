@@ -50,6 +50,8 @@ const Report = () => {
   const [selectedOrgName, setSelectedOrgName] = useState("");
   const [selectedCorpName, setSelectedCorpName] = useState("");
   const [showInvestmentMessage, setshowInvestmentMessage] = useState(false);
+  const [corpName,setCorpName]=useState('')
+  const [orgName,setOrgName]=useState('')
   const [selectedYear, setSelectedYear] = useState("");
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
@@ -57,6 +59,7 @@ const Report = () => {
     }
     return "";
   };
+
   const token = getAuthToken();
 
   let axiosConfig = {
@@ -258,6 +261,8 @@ const Report = () => {
     // Update the state with the new selection
     const selectedId = event.target.value;
     setSelectedOrg(selectedId);
+    const selected = organisations.find((org) => org.id == selectedId);
+    setOrgName(selected?.name || "");
 
     // Perform the API call with the selected ID
     try {
@@ -424,10 +429,23 @@ const Report = () => {
           setFirstSelection();
 
           window.localStorage.setItem("reportid", response.data.id);
-          window.localStorage.setItem(
-            "reportorgname",
-            response.data.organization_name
-          );
+          if(response.data.report_by=='Organization'){
+            window.localStorage.setItem(
+              "reportorgname",
+              response.data.organization_name
+            );
+          }
+          else if (response.data.report_by=='Corporate'){
+            window.localStorage.setItem(
+              "reportCorpName",
+              response.data.organization_name
+            );
+            window.localStorage.setItem(
+              "reportorgname",
+              orgName
+            );
+          }
+         
           window.localStorage.setItem(
             "reportstartdate",
             response.data.start_date
@@ -442,6 +460,8 @@ const Report = () => {
             response.data.organization_country
           );
           window.localStorage.setItem("reportType", reporttype);
+          window.localStorage.setItem('reportby',firstSelection)
+          window.localStorage.setItem('reportCorpName',corpName)
           if (
             reporttype == "GRI Report: In accordance With" ||
             reporttype == "GRI Report: With Reference to"
@@ -668,7 +688,13 @@ const Report = () => {
                 <select
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                   value={selectedCorp}
-                  onChange={(e) => setSelectedCorp(e.target.value)}
+                  // onChange={(e) => setSelectedCorp(e.target.value)}
+                  onChange={(e) => {
+                    const selectedId = e.target.value;
+                    const selected = corporates.find((corp) => corp.id == selectedId);
+                    setSelectedCorp(selectedId);
+                    setCorpName(selected?.name || "");
+                  }}
                 >
                   <option value="">--Select Corporate--- </option>
                   {corporates?.map((corp) => (
