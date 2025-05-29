@@ -893,7 +893,7 @@ const OrganizationTreePage = () => {
   return (
     <>
     <ToastContainer position="top-right" autoClose={3000} />
-    <div className="w-full p-8 rounded-lg hidden xl:block">
+    <div className="w-full p-8 rounded-lg hidden xl:block lg:block 2xl:block 3xl:block 4k:block 2k:block">
       <div className="text-[22px] font-medium font-['Manrope'] leading-relaxed gradient-text pb-6">
         Organization Structure
       </div>
