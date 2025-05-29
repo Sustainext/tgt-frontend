@@ -3,7 +3,53 @@ import { useState, useRef, useEffect } from "react";
 
 import dynamic from "next/dynamic";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
-
+  const config = {
+    enter: "BR", // Or customize behavior on Enter key
+    cleanHTML: true,
+    enablePasteHTMLFilter: false,
+    askBeforePasteHTML: false,
+    askBeforePasteFromWord: false,
+    style: {
+      fontSize: "14px",
+      color: "#667085",
+    },
+    allowResizeY: false,
+    defaultActionOnPaste: "insert_clear_html",
+    toolbarSticky: false,
+    toolbar: true,
+    buttons: [
+      "bold",
+      "italic",
+      "underline",
+      "strikeThrough",
+      "align",
+      "outdent",
+      "indent",
+      "ul",
+      "ol",
+      "paragraph",
+      "link",
+      "table",
+      "undo",
+      "redo",
+      "hr",
+      "fontsize",
+      "selectall",
+    ],
+    removeButtons: [
+      "fullsize",
+      "preview",
+      "source",
+      "print",
+      "about",
+      "find",
+      "changeMode",
+      "paintFormat",
+      "image",
+      "brush",
+      "font",
+    ],
+  };
 const Assessingeffectiveness = ({ orgName, data }) => {
   return (
     <>
@@ -32,16 +78,26 @@ const Assessingeffectiveness = ({ orgName, data }) => {
           </ul>
         </div>
 
-        <p className="text-[15px] text-[#344054] mb-2 mt-3">
-          ABC also benchmarks its practices against industry standards and
-          collaborates with external partners to continuously improve its
-          approach. Controlled entities within the organization are required to
-          follow the same monitoring framework and report their results as part
-          of ABC’s centralized compliance review process. These ongoing efforts
-          help ensure that ABC’s activities and supply chains remain aligned
-          with its ethical sourcing commitments and obligations under Bill
-          S-211.
+        <p className="text-[15px] text-[#344054] mb-2">
+          Add additional information on policies and procedures in place to
+          assess its effectiveness in ensuring that forced labour and child
+          labour are not being used in its activities and supply chains and Add
+          a statement if no such policies and procedures are in place
         </p>
+        <p className="text-[15px] text-[#344054] mb-4 ">
+          Note: If an entity controls other entities, it must also describe how
+          these controlled entities assess their effectiveness in ensuring that
+          forced labour and child labour are not being used in their activities
+          and supply chains
+        </p>
+      </div>
+         <div className="mb-4">
+        <JoditEditor
+          // value={content}
+          config={config}
+          tabIndex={1}
+          // onBlur={handleEditorChange}
+        />
       </div>
     </>
   );

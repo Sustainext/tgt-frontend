@@ -909,7 +909,7 @@ const OrganizationTreePage = () => {
       </div>
       <OrgTree data={orgData} />
     </div>
-    <div className="block xl:hidden">
+    <div className="block xl:hidden lg:hidden 2xl:hidden 3xl:hidden 4k:hidden 2k:hidden">
     <OrgTreeMobile data={orgData} />
     </div>
     </>
