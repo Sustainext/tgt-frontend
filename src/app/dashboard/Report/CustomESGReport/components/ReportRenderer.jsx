@@ -17,28 +17,28 @@ import {
 } from '../../../../../lib/redux/features/reportBuilderSlice';
 
 // Import your section components
-import AboutCompany from '../../ESG/company-operations/page';
+import Companyoperations from '../../ESG/company-operations/page';
 // import Materiality from '../reportComponenet/materiality';
 import MessageCEO from '../../ESG/message-from-ceo/page';
 // import MissionVision from './sections/MissionVision';
 
-// Component mapping - you'll need to update this with your actual components
+// Component mapping - Updated to properly handle props
 const sectionComponents = {
-  about_company: () => <AboutCompany/>, // Replace with actual AboutCompany component
-  message_ceo: () => <MessageCEO/>, // Replace with actual MessageCEO component
-  mission_vision: () => <div>Mission Vision Component</div>, // Replace with actual MissionVision component
-  sustainability: () => <div>Sustainability Roadmap Component</div>,
-  awards: () => <div>Awards Component</div>,
-  stakeholder: () => <div>Stakeholder Engagement Component</div>,
-  about_report: () => <div>About Report Component</div>,
-  governance: () => <div>Corporate Governance Component</div>,
-  journey: () => <div>Sustainability Journey Component</div>,
-  economic: () => <div>Economic Performance Component</div>,
-  environment: () => <div>Environment Component</div>,
-  people: () => <div>People Component</div>,
-  community: () => <div>Community Component</div>,
-  customers: () => <div>Customers Component</div>,
-  materiality: () => <div>Materiality Component</div>, // Replace with actual Materiality component
+  about_company: (props) => <Companyoperations {...props} />,
+  message_ceo: (props) => <MessageCEO {...props} />,
+  mission_vision: (props) => <div>Mission Vision Component</div>,
+  sustainability: (props) => <div>Sustainability Roadmap Component</div>,
+  awards: (props) => <div>Awards Component</div>,
+  stakeholder: (props) => <div>Stakeholder Engagement Component</div>,
+  about_report: (props) => <div>About Report Component</div>,
+  governance: (props) => <div>Corporate Governance Component</div>,
+  journey: (props) => <div>Sustainability Journey Component</div>,
+  economic: (props) => <div>Economic Performance Component</div>,
+  environment: (props) => <div>Environment Component</div>,
+  people: (props) => <div>People Component</div>,
+  community: (props) => <div>Community Component</div>,
+  customers: (props) => <div>Customers Component</div>,
+  materiality: (props) => <div>Materiality Component</div>,
   // Add all other component mappings
 };
 
@@ -94,23 +94,22 @@ const ReportRenderer = ({ onBack }) => {
 
     const sectionSubsections = selectedSubsections[currentSection.id] || [];
     
+    // Calculate section order based on position in enabled sections
+    const sectionOrder = currentReportPage + 1;
+    
     return (
       <div className="mb-8">
-        <div className="border-b-2 border-gray-200 mb-6 pb-4">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            {currentReportPage + 1}. {currentSection.title}
-          </h1>
-          <div className="text-sm text-gray-500">
-            Page {currentReportPage + 1} of {enabledSections.length}
-          </div>
-        </div>
-        
         <div className="min-h-[400px]">
-          <SectionComponent 
-            subsections={sectionSubsections}
-            sectionId={currentSection.id}
-            sectionTitle={currentSection.title}
-          />
+          {SectionComponent({
+            subsections: sectionSubsections,
+            sectionId: currentSection.id,
+            sectionTitle: currentSection.title,
+            sectionOrder: sectionOrder,
+            onSubmitSuccess: (success) => {
+              console.log('Section submitted:', success);
+              // Handle submission success if needed
+            }
+          })}
         </div>
       </div>
     );
@@ -136,7 +135,7 @@ const ReportRenderer = ({ onBack }) => {
   }
 
   return (
-    <div className="w-full max-w-none mx-auto p-6">
+    <div className="w-full max-w-none mx-auto">
       {/* Report Header */}
       <div className="mb-8 text-center border-b-4 border-blue-600 pb-6">
         <h1 className="text-4xl font-bold text-gray-800 mb-2">
