@@ -151,7 +151,7 @@ human rights commitments
             impacts
           </li>
           <li className="text-[14px] text-[#344054] mb-2">
-            Tracking implementation and resultsts
+            Tracking implementation and Results
           </li>
         </ul>
       </div>
