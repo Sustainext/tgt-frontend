@@ -49,19 +49,28 @@ const Section24 = ({ section13_6_7Ref, data,reportType }) => {
       ? data["403-2d"]["data"].map((val) => ({
           "Description of Incident ":
             val.Descriptionincident || "No data available",
-          "Incident Reporting Personnel ": val.Incidentreporting
+          "Incident Reporting Personnel ": 
+          Array.isArray(
+            val.Incidentreporting
+          )
             ? val.Incidentreporting.join(", ") +
               (val.Incidentreporting_others
                 ? `, ${val.Incidentreporting_others}`
                 : "")
             : "No data available",
-          "Investigation team ": val.Investigationteam
+          "Investigation team ": 
+          Array.isArray(
+            val.Investigationteam
+          )
             ? val.Investigationteam.join(", ") +
               (val.Investigationteam_others
                 ? `, ${val.Investigationteam_others}`
                 : "")
             : "No data available",
-          "Investigation Methods": val.InvestigationMethods
+          "Investigation Methods": 
+          Array.isArray(
+            val.InvestigationMethods
+          )
             ? val.InvestigationMethods.join(", ") +
               (val.InvestigationMethods_others
                 ? `, ${val.InvestigationMethods_others}`
@@ -69,7 +78,10 @@ const Section24 = ({ section13_6_7Ref, data,reportType }) => {
             : "No data available",
           "Hazard Identification & Risk Assessment":
             val.HazardIdentification || "No data available",
-          "Corrective Actions": val.CorrectiveActions
+          "Corrective Actions": 
+          Array.isArray(
+            val.CorrectiveActions
+          )
             ? val.CorrectiveActions.join(", ") +
               (val.CorrectiveActions_others
                 ? `, ${val.CorrectiveActions_others}`
@@ -121,19 +133,28 @@ const Section24 = ({ section13_6_7Ref, data,reportType }) => {
   const Tabledata2 = data["403-2b-hazard_reporting"]
     ? data["403-2b-hazard_reporting"].length > 0
       ? data["403-2b-hazard_reporting"].map((val) => ({
-          "Reporting channels ": val.Reportingchannels
+          "Reporting channels ": 
+          Array.isArray(
+            val.Reportingchannels
+          )
             ? val.Reportingchannels.join(", ") +
               (val.Reportingchannels_others
                 ? `, ${val.Reportingchannels_others}`
                 : "")
             : "No data available",
-          "Reporting Processes ": val.ReportingProcesses
+          "Reporting Processes ": 
+          Array.isArray(
+            val.ReportingProcesses
+          )
             ? val.ReportingProcesses.join(", ") +
               (val.ReportingProcesses_others
                 ? `, ${val.ReportingProcesses_others}`
                 : "")
             : "No data available",
-          "Reporting encouragement ": val.Reportingencouragement
+          "Reporting encouragement ": 
+          Array.isArray(
+            val.Reportingencouragement
+          )
             ? val.Reportingencouragement.join(", ") +
               (val.Reportingencouragement_others
                 ? `, ${val.Reportingencouragement_others}`
@@ -141,7 +162,10 @@ const Section24 = ({ section13_6_7Ref, data,reportType }) => {
             : "No data available",
           "Reprisal Protection Measures ":
             val.ReprisalProtection || "No data available",
-          "Feedback and Communication": val.FeedbackCommunication
+          "Feedback and Communication": 
+          Array.isArray(
+            val.FeedbackCommunication
+          )
             ? val.FeedbackCommunication.join(", ") +
               (val.FeedbackCommunication_others
                 ? `, ${val.FeedbackCommunication_others}`
@@ -227,7 +251,10 @@ const Section24 = ({ section13_6_7Ref, data,reportType }) => {
       ? data["403-2c-worker_right"]["data"].map((val) => ({
           "Right to refuse unsafe work": val.Rightrefuse || "No data available",
           "Policy and Process": val.PolicyProcess || "No data available",
-          "Protection from Reprisals ": val.Protectionreprisals
+          "Protection from Reprisals ": 
+          Array.isArray(
+            val.Protectionreprisals
+          )
             ? val.Protectionreprisals.join(", ") +
               (val.Protectionreprisals_others
                 ? ` (${val.Protectionreprisals_others})`
@@ -282,19 +309,27 @@ const Section24 = ({ section13_6_7Ref, data,reportType }) => {
               }`
             : "No data available",
           "Non-Routine Hazard Identification & Risk Assessment":
+          Array.isArray(
             val.NonRoutineHazard
+          ) 
               ? val.NonRoutineHazard.join(", ") +
                 (val.NonRoutineHazard_others
                   ? ` (${val.NonRoutineHazard_others})`
                   : "")
               : "No data available",
-          "Process for hazard identification": val.Processforhazard
+          "Process for hazard identification": 
+          Array.isArray(
+            val.Processforhazard
+          ) 
             ? val.Processforhazard.join(", ") +
               (val.Processforhazard_others
                 ? `, ${val.Processforhazard_others}`
                 : "")
             : "No data available",
-          "Hierarchy of controls": val.Hierarchycontrols
+          "Hierarchy of controls": 
+          Array.isArray(
+            val.Hierarchycontrols
+          ) 
             ? val.Hierarchycontrols.join(", ") +
               (val.Hierarchycontrols_others
                 ? `, ${val.Hierarchycontrols_others}`
@@ -304,7 +339,10 @@ const Section24 = ({ section13_6_7Ref, data,reportType }) => {
           "List of legal requirements": val.Listlegal || "No data available",
           "List of Standards/Guidelines":
             val.ListStandards || "No data available",
-          "Vulnerable Workers": val.VulnerableWorkers
+          "Vulnerable Workers": 
+          Array.isArray(
+            val.VulnerableWorkers
+          ) 
             ? val.VulnerableWorkers.join(", ") +
               (val.VulnerableWorkers_others
                 ? `, ${val.VulnerableWorkers_others}`
