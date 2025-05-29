@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axiosInstance, { put } from "../../../../utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
 import { Oval } from "react-loader-spinner";
-
+import { FaCheck } from "react-icons/fa";
 const SDGCards = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
@@ -131,15 +131,19 @@ const SDGCards = () => {
         <div className="grid grid-cols-2 xl:grid-cols-6  lg:grid-cols-6  md:grid-cols-6  2k:grid-cols-6  4k:grid-cols-6 gap-6 m-6">
           {data &&
             data.map((item) => (
-              <div key={item.id} onClick={() => toggleSelect(item.id)}>
+              <div
+                key={item.id}
+                onClick={() => toggleSelect(item.id)}
+                className="h-[180px] w-[180px]"
+              >
                 <div className={`relative`}>
                   <img
                     src={`${item.Image}`}
                     alt="cover"
-                    className="h-36 w-36 transition-all"
+                    className="h-[180px] w-[180px] transition-all"
                   />
                   <div
-                    className={`absolute top-0 left-0 w-36 h-36 text-[#2AE4FF] opacity-0 transition duration-500 hover:opacity-100 cursor-pointer p-4
+                    className={`absolute top-0 left-0 h-[180px] w-[180px]  text-[#2AE4FF] opacity-0 transition duration-500 hover:opacity-100 cursor-pointer p-4
                 ${selectedItems.includes(item.id) ? "" : ""}
                 ${item.id === 1 ? "bg-[#e5243b]" : ""}
                 ${item.id === 2 ? "bg-[#dda63a]" : ""}
@@ -171,22 +175,27 @@ const SDGCards = () => {
                     </div>
                   </div>
                   <div
-                    className={`absolute right-24  rounded-full border border-gray-300 ${
+                    className={`absolute  right-[5px] bottom-3 rounded-full border ${
                       selectedItems.includes(item.id)
-                        ? "bg-white border-[#53ff1a]"
-                        : "bg-white"
-                    } transition-all w-5 h-5 -mt-5 mr-1`}
+                        ? "bg-green-500 border-green-500"
+                        : "bg-white border-zinc-500"
+                    } transition-all w-5 h-5 flex items-center justify-center`}
                   >
-                    <CiCircleCheck
-                      style={{
-                        color: selectedItems.includes(item.id)
-                          ? "#00cc44"
-                          : "#999999",
-                        marginTop: "-3px",
-                        marginLeft: "-2px",
-                        fontSize: "24px",
-                      }}
-                    />
+                    {selectedItems.includes(item.id) ? (
+                      <FaCheck
+                        style={{
+                          color: "#fff",
+                          fontSize: "12px",
+                        }}
+                      />
+                    ) : (
+                      <FaCheck
+                        style={{
+                          color: "#999999",
+                          fontSize: "12px",
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -194,10 +203,20 @@ const SDGCards = () => {
         </div>
       </div>
       {data && data.length > 0 ? (
-      <button className="xl:px-4 py-2 font-bold text-white xl:w-[10%] lg:w-[10%] md:w-[10%] 2xl:w-[10%] 2k:w-[10%] 4k:w-[10%] w-[20%] mb-2 text-center rounded-md mr-6 bg-blue-500 bg-opacity-100 shadow-md hover:shadow-lg active:shadow-none float-right" onClick={submitForm}>Save</button>
-    ) : (
-      <button className="xl:px-4 py-2  text-gray-400 xl:w-[10%] lg:w-[10%] md:w-[10%] 2xl:w-[10%] 2k:w-[10%] 4k:w-[10%]  w-[20%] mb-2  text-center rounded-md mr-6 bg-gray-300 bg-opacity-100 shadow-md hover:shadow-lg active:shadow-none float-right" disabled>Save</button>
-    )}
+        <button
+          className="xl:px-4 py-2 font-bold text-white xl:w-[10%] lg:w-[10%] md:w-[10%] 2xl:w-[10%] 2k:w-[10%] 4k:w-[10%] w-[20%] mb-2 text-center rounded-md mr-6 bg-blue-500 bg-opacity-100 shadow-md hover:shadow-lg active:shadow-none float-right"
+          onClick={submitForm}
+        >
+          Save
+        </button>
+      ) : (
+        <button
+          className="xl:px-4 py-2  text-gray-400 xl:w-[10%] lg:w-[10%] md:w-[10%] 2xl:w-[10%] 2k:w-[10%] 4k:w-[10%]  w-[20%] mb-2  text-center rounded-md mr-6 bg-gray-300 bg-opacity-100 shadow-md hover:shadow-lg active:shadow-none float-right"
+          disabled
+        >
+          Save
+        </button>
+      )}
 
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

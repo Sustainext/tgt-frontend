@@ -16,7 +16,7 @@ const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile }) => {
     "8.Remediation of Loss of Income",
     "9.Training on Forced Labour and Child Labour",
     "10.Assessing Effectiveness ",
-    "Attestation",
+    "Approval and Attestation",
   ];
 
   return (
