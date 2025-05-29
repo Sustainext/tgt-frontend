@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useMemo } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
@@ -188,18 +188,38 @@ const Screen1 = ({
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData([
+          {
+            Q1: [
+              {
+                RegionName: "",
+                Totalnumberanticorruption: "",
+                Totalnumberbodymembers: "",
+              },
+            ],
+          },
+        ]);
 
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
-      console.log("API called successfully:", response.data);
+      console.log("API called successfully screen1:", response.data);
 
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData([
+          {
+            Q1: [
+              {
+                RegionName: "",
+                Totalnumberanticorruption: "",
+                Totalnumberbodymembers: "",
+              },
+            ],
+          },
+        ]);
     } finally {
       LoaderClose();
     }
@@ -242,6 +262,16 @@ const Screen1 = ({
     console.log("Form data:", formData);
   };
   console.log("Location data: locationdata", locationdata);
+
+  const customWidgets = useMemo(() => ({
+            ...widgets,
+            LoctiondropdwonTable: (props) => (
+              <LoctiondropdwonTable
+                {...props}
+                locationdata={locationdata}
+              />
+            ),
+          }), [widgets, locationdata]);
   return (
     <>
      <div
@@ -297,15 +327,7 @@ const Screen1 = ({
               formData={formData}
               onChange={handleChange}
               validator={validator}
-              widgets={{
-                ...widgets,
-                LoctiondropdwonTable: (props) => (
-                  <LoctiondropdwonTable
-                    {...props}
-                    locationdata={locationdata}
-                  />
-                ),
-              }}
+              widgets={customWidgets}
             />
           </div>
         ) : (

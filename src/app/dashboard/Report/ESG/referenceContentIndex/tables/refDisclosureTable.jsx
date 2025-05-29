@@ -3,16 +3,16 @@ import { useState, useRef, useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-const DisclosureTable = ({ data }) => {
+const RefDisclosureTable = ({ data }) => {
   const columns = [
-    { header: "GRI Standards and Other resources", subHeaders: [] },
+    { header: "GRI Standards", subHeaders: [] },
     { header: "Disclosure", subHeaders: [] },
     { header: "Location", subHeaders: [] },
-    {
-      header: "Omission",
-      subHeaders: ["Req omitted", "Reason", "Explanation"],
-    },
-    { header: "GRI Sector Standard Ref no", subHeaders: [] }, // No sub-headers
+    // {
+    //   header: "Omission",
+    //   subHeaders: ["Req omitted", "Reason", "Explanation"],
+    // },
+    // { header: "GRI Sector Standard Ref no", subHeaders: [] }, // No sub-headers
   ];
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -156,29 +156,27 @@ const DisclosureTable = ({ data }) => {
               {data?.map((row, rowIndex) => (
                 <tr
                   key={row.key}
-                  className={`text-[13px] relative ${
-                    row?.is_filled === false ? "text-red-600" : "text-[#667085]"
-                  }`}
+                  className={`text-[13px] relative text-[#667085]`}
                 >
                   <td
                     className="px-4 py-4"
-                    data-tooltip-id={
-                      row?.is_filled === false
-                        ? `tooltip-${row.key}`
-                        : undefined
-                    }
-                    data-tooltip-html={
-                      row?.is_filled === false
-                        ? "Disclosure not filled. Provide reason for omission or fill in the data"
-                        : ""
-                    }
+                    // data-tooltip-id={
+                    //   row?.is_filled === false
+                    //     ? `tooltip-${rowIndex}`
+                    //     : undefined
+                    // }
+                    // data-tooltip-html={
+                    //   row?.is_filled === false
+                    //     ? "Disclosure not filled. Provide reason for omission or fill in the data"
+                    //     : ""
+                    // }
                   >
                     {row.title}
                   </td>
                   <td className="px-4 py-4">{row.page}</td>
 
                   {/* Omission details */}
-                  {row.omission.map((omissionItem, index) => (
+                  {/* {row.omission.map((omissionItem, index) => (
                     <>
                       <td className="px-4 py-4">{omissionItem.req_omitted}</td>
                       <td className="px-4 py-4">
@@ -196,7 +194,7 @@ const DisclosureTable = ({ data }) => {
                   <td className="px-4 py-4">{row.gri_sector_no}</td>
                   {!row?.is_filled && (
                     <ReactTooltip
-                      id={`tooltip-${row.key}`}
+                      id={`tooltip-${rowIndex}`}
                       place="top"
                       effect="solid"
                       style={{
@@ -208,7 +206,7 @@ const DisclosureTable = ({ data }) => {
                         borderRadius: "8px",
                       }}
                     />
-                  )}
+                  )} */}
                 </tr>
               ))}
             </tbody>
@@ -220,29 +218,26 @@ const DisclosureTable = ({ data }) => {
           {currentItems?.map((row, mobrowIndex) => (
             <div
               key={row.key}
-              className={`bg-white shadow-lg rounded-lg p-4 mb-4   ${
-                row?.is_filled === false ? "border-2 border-red-600" : ""
-              }`}
+              className={`bg-white shadow-lg rounded-lg p-4 mb-4`}
             >
               <div className="flex justify-between ">
                 <span
-                  className={`font-semibold text-sm ${
-                    row?.is_filled === false ? "text-red-600" : "text-[#667085]"
-                  }`}
+                  className={`font-semibold text-sm text-[#667085]
+                  `}
                   // Add the tooltip only to the title
-                  data-tooltip-id={
-                    row?.is_filled === false
-                      ? `tooltip-${mobrowIndex}`
-                      : undefined
-                  }
-                  data-tooltip-html={
-                    row?.is_filled === false
-                      ? `Disclosure not filled. Provide reason for omission or fill in the data`
-                      : ""
-                  }
+                //   data-tooltip-id={
+                //     row?.is_filled === false
+                //       ? `tooltip-${mobrowIndex}`
+                //       : undefined
+                //   }
+                //   data-tooltip-html={
+                //     row?.is_filled === false
+                //       ? `Disclosure not filled. Provide reason for omission or fill in the data`
+                //       : ""
+                //   }
                 >
                   {row.title}
-                  <ReactTooltip
+                  {/* <ReactTooltip
                     key={mobrowIndex}
                     id={`tooltip-${mobrowIndex}`}
                     place="top"
@@ -255,12 +250,12 @@ const DisclosureTable = ({ data }) => {
                       boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
                       borderRadius: "8px",
                     }}
-                  />
+                  /> */}
                 </span>
                 {/* <span className="text-sm text-gray-500">{row.page}</span> */}
               </div>
 
-              {row.omission.map((omissionItem, index) => (
+              {/* {row.omission.map((omissionItem, index) => (
                 <div key={index} className="mt-2">
                   <div className="text-sm flex mb-2 relative">
                     <strong>Req omitted:</strong>
@@ -314,7 +309,7 @@ const DisclosureTable = ({ data }) => {
                 >
                   {row.gri_sector_no}
                 </p>
-              </div>
+              </div> */}
             </div>
           ))}
 
@@ -348,4 +343,4 @@ const DisclosureTable = ({ data }) => {
   );
 };
 
-export default DisclosureTable;
+export default RefDisclosureTable;

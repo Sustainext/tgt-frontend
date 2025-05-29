@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useMemo } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import CommoninputWidget from "../../../../../shared/widgets/Input/commoninputWidget";
@@ -333,6 +333,16 @@ const Screen1 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
     console.log("Form data:", formData);
   };
   console.log("Location data: locationdata", locationdata);
+
+  const customWidgets = useMemo(() => ({
+        ...widgets,
+        LoctiondropdwonTable: (props) => (
+          <LoctiondropdwonTable
+            {...props}
+            locationdata={locationdata}
+          />
+        ),
+      }), [widgets, locationdata]);
   return (
     <>
       <div
@@ -386,15 +396,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
               formData={formData}
               onChange={handleChange}
               validator={validator}
-              widgets={{
-                ...widgets,
-                LoctiondropdwonTable: (props) => (
-                  <LoctiondropdwonTable
-                    {...props}
-                    locationdata={locationdata}
-                  />
-                ),
-              }}
+              widgets={customWidgets}
             />
           </div>
         ) : (

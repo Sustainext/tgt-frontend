@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setRemunerationPractices } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section15 = ({ section13_4_3Ref, data }) => {
+const Section15 = ({ section13_4_3Ref, data, reportType }) => {
   const content = useSelector(
     (state) => state.screen13Slice.remuneration_practices
   );
@@ -129,7 +129,7 @@ const Section15 = ({ section13_4_3Ref, data }) => {
     <>
       <div id="section13_4_3" ref={section13_4_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.4.3 Remuneration
+        {reportType=='GRI Report: In accordance With'?'13.4.3':'13.4.2'}  Remuneration
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

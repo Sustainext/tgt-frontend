@@ -52,8 +52,10 @@ function Ghgtemplates() {
   const [selectedImage, setSelectedImage] = useState();
   const isMounted = useRef(true);
   const [isOpenmobile, setIsOpenmobile] = useState(false);
-  const reportreportorgname =
+  const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+    const corpName =
+    typeof window !== "undefined" ? localStorage.getItem("reportCorpName") : "";
   const reportname =
     typeof window !== "undefined" ? localStorage.getItem("reportname") : "";
   const reportstartdateStr =
@@ -110,8 +112,20 @@ function Ghgtemplates() {
     setLocationdata(response.data.data);
     setSouresdata(response.data.data);
     const corporatesData = response.data.data;
+    // const total = corporatesData.reduce((acc, corporate) => {
+    //   const scopesTotal = corporate.scopes.reduce((scopeAcc, scope) => {
+    //     const totalCo2e = parseFloat(scope.total_co2e);
+    //     return scopeAcc + totalCo2e;
+    //   }, 0);
+    //   return acc + scopesTotal;
+    // }, 0);
+    // const roundedTotal = parseFloat(total.toFixed(2));
     const total = corporatesData.reduce((acc, corporate) => {
       const scopesTotal = corporate.scopes.reduce((scopeAcc, scope) => {
+        // Skip Scope-3 if corporate_type is "Investment"
+        if (corporate.corporate_type === "Investment" && scope.scope_name === "Scope-3") {
+          return scopeAcc; // Skip adding Scope-3
+        }
         const totalCo2e = parseFloat(scope.total_co2e);
         return scopeAcc + totalCo2e;
       }, 0);
@@ -601,9 +615,20 @@ function Ghgtemplates() {
                       <MdKeyboardArrowRight className="h-6 w-6 text-black" />
                     </button>
                   )}
-                  <h1 className="text-lg text-left  ml-2 mb-2">
-                    <p>Carbon Accounting Report</p>
+                  <h1 className="text-lg text-left mb-2">
+                    <p className="ml-3">Carbon Accounting Report</p>
+                    <p className="text-[#667085] text-[13px] ml-3">
+                      Organization
+                       {corpName ? " / Corporate" : ""}:{" "}
+                      {orgName}{" "}
+                      {corpName?' / ':''}
+                      {corpName}{" "}
+                      {/* {groupId?.corporate?.length > 0
+                        ? "/ " + groupId?.corporate.join(", ")
+                        : ""} */}
+                    </p>
                   </h1>
+                  
                 </div>
               </div>
               <div>
@@ -997,9 +1022,20 @@ function Ghgtemplates() {
           <div className="w-full mb-5">
             <div className="flex justify-between shadow-md border-gray-100 mt-4 py-2">
               <div className="flex items-center justify-center">
-                <h1 className="text-lg text-left  ml-2">
-                  <p>Carbon Accounting Report</p>
+                <h1 className="text-lg text-left">
+                  <p className="ml-3">Carbon Accounting Report</p>
+                  <p className="text-[#667085] text-[13px] ml-3">
+                      Organization
+                       {corpName ? " / Corporate" : ""}:{" "}
+                      {orgName}{" "}
+                      {corpName?' / ':''}
+                      {corpName}{" "}
+                      {/* {groupId?.corporate?.length > 0
+                        ? "/ " + groupId?.corporate.join(", ")
+                        : ""} */}
+                    </p>
                 </h1>
+                
               </div>
               <div className="float-right mr-2 flex items-center justify-center ">
                 <div className="flex items-center justify-center">

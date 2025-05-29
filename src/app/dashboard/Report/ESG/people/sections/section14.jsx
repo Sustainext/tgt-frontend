@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmployeeDiversityPosition } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section14 = ({ section13_4_2Ref, data }) => {
+const Section14 = ({ section13_4_2Ref, data,reportType }) => {
   const content = useSelector(
     (state) => state.screen13Slice.employee_diversity_position
   );
@@ -158,7 +158,7 @@ const Section14 = ({ section13_4_2Ref, data }) => {
     <>
       <div id="section13_4_2" ref={section13_4_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.4.2 Diversity of Governance Bodies and Employees
+        {reportType=='GRI Report: In accordance With'?'13.4.2':'13.4.1'}   Diversity of Governance Bodies and Employees
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

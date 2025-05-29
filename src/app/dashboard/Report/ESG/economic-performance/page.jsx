@@ -39,7 +39,7 @@ import {
   setgetdata,
 } from "../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
-const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
+const EconomicPerformance = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const [data, setData] = useState("");
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
@@ -264,53 +264,60 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
         </h3>
         <div className="flex gap-4">
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
-            <Section1 orgName={orgName} data={data} />
+            <Section1 orgName={orgName} data={data} reportType={reportType}  />
             <Section2
               data={data}
               section11_1Ref={section11_1Ref}
               section11_1_1Ref={section11_1_1Ref}
+              reportType={reportType}
             />
             <Section3
               section11_1_2Ref={section11_1_2Ref}
               orgName={orgName}
               data={data}
+              reportType={reportType}
             />
             <Section4
               section11_1_3Ref={section11_1_3Ref}
               orgName={orgName}
               data={data}
+              reportType={reportType}
             />
-            <Section5 section11_2Ref={section11_2Ref} data={data} />
-            <Section6 section11_2_1Ref={section11_2_1Ref} data={data} />
-            <Section7 section11_2_2Ref={section11_2_2Ref} data={data} />
+            <Section5 section11_2Ref={section11_2Ref} data={data} reportType={reportType} />
+            {reportType=='GRI Report: In accordance With' && <Section6 section11_2_1Ref={section11_2_1Ref} data={data} /> }   
+            <Section7 section11_2_2Ref={section11_2_2Ref} data={data} reportType={reportType} />
             <Section8
               section11_3Ref={section11_3Ref}
               section11_3_1Ref={section11_3_1Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section9 section11_3_2Ref={section11_3_2Ref} data={data} />
-            <Section10 section11_3_3Ref={section11_3_3Ref} data={data} />
-            <Section11 section11_3_4Ref={section11_3_4Ref} data={data} />
+            <Section9 section11_3_2Ref={section11_3_2Ref} data={data} reportType={reportType} />
+            <Section10 section11_3_3Ref={section11_3_3Ref} data={data} reportType={reportType} />
+            <Section11 section11_3_4Ref={section11_3_4Ref} data={data} reportType={reportType} />
             <Section12
               section11_4Ref={section11_4Ref}
               section11_4_1Ref={section11_4_1Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section13 section11_4_2Ref={section11_4_2Ref} data={data} />
-            <Section14 section11_4_3Ref={section11_4_3Ref} data={data} />
-            <Section15 section11_4_4Ref={section11_4_4Ref} data={data} />
+            <Section13 section11_4_2Ref={section11_4_2Ref} data={data} reportType={reportType} />
+            <Section14 section11_4_3Ref={section11_4_3Ref} data={data} reportType={reportType} />
+            <Section15 section11_4_4Ref={section11_4_4Ref} data={data} reportType={reportType} />
             <Section16
               section11_5Ref={section11_5Ref}
               section11_5_1Ref={section11_5_1Ref}
               data={data}
+              reportType={reportType}
             />
-            <Section17 section11_5_2Ref={section11_5_2Ref} data={data} />
-            <Section18 section11_5_3Ref={section11_5_3Ref} data={data} />
-            <Section19 section11_5_4Ref={section11_5_4Ref} data={data} />
+            <Section17 section11_5_2Ref={section11_5_2Ref} data={data} reportType={reportType} />
+            <Section18 section11_5_3Ref={section11_5_3Ref} data={data} reportType={reportType} />
+            <Section19 section11_5_4Ref={section11_5_4Ref} data={data} reportType={reportType} />
             <Section20
               section11_6Ref={section11_6Ref}
               section11_6_1Ref={section11_6_1Ref}
               data={data}
+              reportType={reportType}
             />
           </div>
           {/* page sidebar */}
@@ -331,14 +338,18 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               11.1 Highlights
             </p>
 
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_1_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_1_1Ref, "section11_1_1")}
-            >
-              11.1.1. Management of Material Topics
-            </p>
+            {reportType=='GRI Report: In accordance With'&&
+               <p
+               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                 activeSection === "section11_1_1" ? "text-blue-400" : ""
+               }`}
+               onClick={() => scrollToSection(section11_1_1Ref, "section11_1_1")}
+             >
+               11.1.1. Management of Material Topics
+             </p>
+            }
+
+           
 
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -346,7 +357,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_1_2Ref, "section11_1_2")}
             >
-              11.1.2. Economic value creation
+             {reportType=='GRI Report: In accordance With'?'11.1.2.':'11.1.1.'}  Economic value creation
             </p>
 
             <p
@@ -355,7 +366,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_1_3Ref, "section11_1_3")}
             >
-              11.1.3. Financial assistance received from government
+             {reportType=='GRI Report: In accordance With'?'11.1.3.':'11.1.2.'}  Financial assistance received from government
             </p>
 
             <p
@@ -367,14 +378,18 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               11.2. Infrastructure investment and services supported
             </p>
 
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_2_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_2_1Ref, "section11_2_1")}
-            >
-              11.2.1. Management of Material Topics
-            </p>
+                {
+                  reportType=='GRI Report: In accordance With'&&
+                  <p
+                  className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                    activeSection === "section11_2_1" ? "text-blue-400" : ""
+                  }`}
+                  onClick={() => scrollToSection(section11_2_1Ref, "section11_2_1")}
+                >
+                  11.2.1. Management of Material Topics
+                </p>
+                }
+           
 
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -382,7 +397,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_2_2Ref, "section11_2_2")}
             >
-              11.2.2. Indirect economic impacts
+            {reportType=='GRI Report: In accordance With'?'11.2.2.':'11.2.1.'}  Indirect economic impacts
             </p>
 
             <p
@@ -395,14 +410,18 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               opportunities
             </p>
 
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_3_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_3_1Ref, "section11_3_1")}
-            >
-              11.3.1. Management of Material Topics
-            </p>
+                {
+                   reportType=='GRI Report: In accordance With'&&
+                   <p
+                   className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                     activeSection === "section11_3_1" ? "text-blue-400" : ""
+                   }`}
+                   onClick={() => scrollToSection(section11_3_1Ref, "section11_3_1")}
+                 >
+                   11.3.1. Management of Material Topics
+                 </p>
+                }
+           
 
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -410,7 +429,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_3_2Ref, "section11_3_2")}
             >
-              11.3.2. Climate Financial Implications
+            {reportType=='GRI Report: In accordance With'?'11.3.2.':'11.3.1.'}  Climate-related Financial Implications
             </p>
 
             <p
@@ -419,7 +438,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_3_3Ref, "section11_3_3")}
             >
-              11.3.3. Climate-related Risks
+           {reportType=='GRI Report: In accordance With'?'11.3.2.1':'11.3.1.1'}  Climate-related Risks
             </p>
 
             <p
@@ -428,7 +447,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_3_4Ref, "section11_3_4")}
             >
-              11.3.4. Climate-related Opportunities
+             {reportType=='GRI Report: In accordance With'?'11.3.2.2':'11.3.1.2'} Climate-related Opportunities
             </p>
 
             <p
@@ -439,15 +458,18 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               11.4. Tax
             </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_4_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_4_1Ref, "section11_4_1")}
-            >
-              11.4.1. Management of material topic
-            </p>
+                {
+                  reportType=='GRI Report: In accordance With' && 
+                  <p
+                  className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                    activeSection === "section11_4_1" ? "text-blue-400" : ""
+                  }`}
+                  onClick={() => scrollToSection(section11_4_1Ref, "section11_4_1")}
+                >
+                  11.4.1. Management of material topic
+                </p>
+                }
+           
 
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -455,7 +477,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_4_2Ref, "section11_4_2")}
             >
-              11.4.2. Approach to tax
+             {reportType=='GRI Report: In accordance With'?'11.4.2.':'11.4.1.'}  Approach to tax
             </p>
 
             <p
@@ -464,7 +486,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_4_3Ref, "section11_4_3")}
             >
-              11.4.3. Tax governance and risk management
+             {reportType=='GRI Report: In accordance With'?'11.4.3.':'11.4.2.'}  Tax governance and risk management
             </p>
 
             <p
@@ -473,7 +495,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_4_4Ref, "section11_4_4")}
             >
-              11.4.4. Stakeholder engagement and management of concerns related
+             {reportType=='GRI Report: In accordance With'?'11.4.4.':'11.4.3.'}  Stakeholder engagement and management of concerns related
               to tax
             </p>
 
@@ -486,14 +508,18 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               11.5. Anti-corruption
             </p>
 
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_5_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_5_1Ref, "section11_5_1")}
-            >
-              11.5.1. Management of material topic
-            </p>
+            {reportType=='GRI Report: In accordance With' && 
+             <p
+             className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+               activeSection === "section11_5_1" ? "text-blue-400" : ""
+             }`}
+             onClick={() => scrollToSection(section11_5_1Ref, "section11_5_1")}
+           >
+             11.5.1. Management of material topic
+           </p>
+            }
+
+           
 
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
@@ -501,7 +527,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_5_2Ref, "section11_5_2")}
             >
-              11.5.2. Operations assessed for risks related to anti-corruption
+             {reportType=='GRI Report: In accordance With'?'11.5.2.':'11.5.1.'} Operations assessed for risks related to anti-corruption
             </p>
 
             <p
@@ -510,7 +536,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_5_3Ref, "section11_5_3")}
             >
-              11.5.3. Incidents of anti-corruption
+             {reportType=='GRI Report: In accordance With'?'11.5.3.':'11.5.2.'}  Incidents of anti-corruption
             </p>
 
             <p
@@ -519,7 +545,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               }`}
               onClick={() => scrollToSection(section11_5_4Ref, "section11_5_4")}
             >
-              11.5.4. Training on anti-corruption
+            {reportType=='GRI Report: In accordance With'?'11.5.4.':'11.5.3.'}  Training on anti-corruption
             </p>
 
             <p
@@ -530,15 +556,18 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
             >
               11.6. Political contribution
             </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_6_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_6_1Ref, "section11_6_1")}
-            >
-              11.6.1. Management of Material Topic
-            </p>
+                {
+                  reportType=='GRI Report: In accordance With' &&
+                  <p
+                  className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                    activeSection === "section11_6_1" ? "text-blue-400" : ""
+                  }`}
+                  onClick={() => scrollToSection(section11_6_1Ref, "section11_6_1")}
+                >
+                  11.6.1. Management of Material Topic
+                </p>
+                }
+           
           </div>
         </div>
       </div>

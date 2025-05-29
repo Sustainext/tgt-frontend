@@ -9,7 +9,7 @@ import { setSignificantSpills } from "../../../../../../lib/redux/features/ESGSl
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section29 = ({ section12_5_6Ref, orgName, data }) => {
+const Section29 = ({ section12_5_6Ref, orgName, data, reportType }) => {
   const content = useSelector(
     (state) => state.screen12Slice.significant_spills
   );
@@ -221,7 +221,7 @@ const Section29 = ({ section12_5_6Ref, orgName, data }) => {
     <>
       <div id="section12_5_6" ref={section12_5_6Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          12.5.6 Significant Spills
+        {reportType=='GRI Report: In accordance With'?'12.5.6':'12.5.5'}  Significant Spills
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

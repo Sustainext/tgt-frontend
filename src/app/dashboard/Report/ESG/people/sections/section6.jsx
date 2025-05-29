@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setStandardWage } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section6 = ({ section13_1_5Ref, data }) => {
+const Section6 = ({ section13_1_5Ref, data, reportType }) => {
   const content = useSelector((state) => state.screen13Slice.standard_wage);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -121,7 +121,7 @@ const Section6 = ({ section13_1_5Ref, data }) => {
     <>
       <div id="section13_1_5" ref={section13_1_5Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.1.5 Standard Wage
+        {reportType=='GRI Report: In accordance With'?'13.1.5':'13.1.4'}  Standard Wage
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
@@ -152,19 +152,6 @@ const Section6 = ({ section13_1_5Ref, data }) => {
               : "No data available"
             : "No data available"}
         </p>
-        <p className="text-[15px] text-[#344054] font-semibold mb-2">
-          If minimum wages vary across locations, this report references the
-          minimum wage of
-        </p>
-        <p className="text-sm mb-2">
-          {data["202_1c"]
-            ? data["202_1c"].length > 0
-              ? data["202_1c"][0].Currency
-                ? data["202_1c"][0].Currency
-                : "No data available"
-              : "No data available"
-            : "No data available"}
-        </p>
         <p className="text-sm mb-4">
           {data["202_1d"]
             ? data["202_1d"].length > 0
@@ -174,6 +161,28 @@ const Section6 = ({ section13_1_5Ref, data }) => {
               : "No data available"
             : "No data available"}
         </p>
+        <p className="text-[15px] text-[#344054] font-semibold mb-2">
+        Minimum Wage used as Reference Due to Regional Variations Within the Organization
+        </p>
+        <p className="text-sm mb-2">
+  {data["202_1c"] && data["202_1c"].length > 0
+    ? data["202_1c"][0]?.Locationofoperation?.locations
+      ? data["202_1c"][0].Locationofoperation.locations
+          .map(location => location.value)
+          .join(", ") || "No data available"
+      : "No data available"
+    : "No data available"}
+</p>
+        <p className="text-sm mb-2">
+          {data["202_1c"]
+            ? data["202_1c"].length > 0
+              ? data["202_1c"][0].Currency
+                ? data["202_1c"][0].Currency
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+       
         <p className="text-[15px]  mb-2 font-semibold">
           Ratio of the entry-level wage to the minimum wage by gender at
           significant locations of operation
@@ -181,6 +190,11 @@ const Section6 = ({ section13_1_5Ref, data }) => {
         <div className="shadow-md rounded-md mb-4">
           <LeaveTable columns={table1Columns} data={table1Data} />
         </div>
+
+        <p className="text-[15px]  mb-2 font-semibold">
+                      Local minimum wage is absent or variable at significant
+                      locations of operation, by gender: 
+                    </p>
         {data["202_1c"] ? (
           data["202_1c"].length > 0 ? (
             data["202_1c"][0].Locationofoperation ? (
@@ -188,16 +202,13 @@ const Section6 = ({ section13_1_5Ref, data }) => {
                 data["202_1c"][0].Locationofoperation.radioValue ==
                 "Variable" ? (
                   <div>
-                    <p className="text-[15px]  mb-2 font-semibold">
-                      Local minimum wage is absent or variable at significant
-                      locations of operation, by gender: 
-                    </p>
+                    
                     <div className="shadow-md rounded-md mb-4">
                       <LeaveTable columns={table2Columns} data={table2Data} />
                     </div>
                   </div>
                 ) : (
-                  <div></div>
+                  <div className="text-sm mb-4">No data available</div>
                 )
               ) : (
                 ""

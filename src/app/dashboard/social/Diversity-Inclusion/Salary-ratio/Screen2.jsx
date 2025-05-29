@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useMemo } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import CustomTableWidget8 from "../../../../shared/widgets/Table/tableWidget8";
@@ -250,7 +250,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData(initialFormData);
+    // setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -270,7 +270,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
         loadFormData();
         facthloctiondata();
       } else if (togglestatus === "Corporate" && !selectedCorp) {
-        setFormData(initialFormData);
+        // setFormData(initialFormData);
         setRemoteSchema({});
         setRemoteUiSchema({});
       } else {
@@ -296,6 +296,13 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
     const newFormData = formData.filter((_, i) => i !== index);
     setFormData(newFormData);
   };
+
+  const customWidgets = useMemo(() => ({
+      ...widgets,
+      TableWidget: (props) => (
+        <CustomTableWidget8 {...props} locationdata={locationdata} />
+      ),
+    }), [widgets, locationdata]);
 
   return (
     <>
@@ -353,12 +360,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
               formContext={{
                 onRemove: handleRemoveCommittee,
               }}
-              widgets={{
-                ...widgets,
-                TableWidget: (props) => (
-                  <CustomTableWidget8 {...props} locationdata={locationdata} />
-                ),
-              }}
+              widgets={customWidgets}
             />
           </div>
         ) : (

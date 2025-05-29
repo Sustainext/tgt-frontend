@@ -868,7 +868,7 @@ const Report = () => {
                           <option>GHG Accounting Report</option>
                           <option>GHG Report - Investments</option>
                           <option>GRI Report: In accordance With</option>
-                          {/* <option>GRI Report: With Reference to</option> */}
+                          <option>GRI Report: With Reference to</option>
                         </select>
                         {error.reporttype && (
                           <p className="text-red-500 text-sm ml-1">

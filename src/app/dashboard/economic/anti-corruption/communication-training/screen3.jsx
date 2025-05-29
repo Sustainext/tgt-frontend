@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useMemo } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
@@ -254,6 +254,16 @@ const Screen3 = ({
     updateFormData();
   };
 
+   const customWidgets = useMemo(() => ({
+                ...widgets,
+                LocationDropdownTableGrid: (props) => (
+                  <LocationDropdownTableGrid
+                    {...props}
+                    locationdata={locationdata}
+                  />
+                ),
+              }), [widgets, locationdata]);
+
   return (
     <>
       <div
@@ -314,15 +324,7 @@ and procedures have been communicated to, broken down by type of business partne
                 locationtooltip:
                   "Specify the name of the locations where the organization’s anti-corruption policies and procedures have been communicated to the business partners.",
               }}
-              widgets={{
-                ...widgets,
-                LocationDropdownTableGrid: (props) => (
-                  <LocationDropdownTableGrid
-                    {...props}
-                    locationdata={locationdata}
-                  />
-                ),
-              }}
+              widgets={customWidgets}
             />
           </div>
         ) : (

@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import WasteTable from "../tables/waterTable";
 import WasteTable2 from "../tables/wasteTable";
 
-const Section27 = ({ section12_5_4Ref, data }) => {
+const Section27 = ({ section12_5_4Ref, data,reportType }) => {
   const [content, setContent] = useState(
     `We set targets for reducing energy consumption and implement various initiatives, such as upgrading equipment, improving insulation, and optimizing processes to achieve these goals.`
   );
@@ -161,7 +161,7 @@ const Section27 = ({ section12_5_4Ref, data }) => {
     <>
       <div id="section12_5_4" ref={section12_5_4Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          12.5.4 Waste Disposed
+        {reportType=='GRI Report: In accordance With'?'12.5.4':'12.5.3'} Waste Disposed
         </h3>
 
         <p className="text-sm mb-4">

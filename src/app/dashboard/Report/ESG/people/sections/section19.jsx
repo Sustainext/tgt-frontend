@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section19 = ({ section13_6_2Ref, data }) => {
+const Section19 = ({ section13_6_2Ref, data,reportType }) => {
   const [content, setContent] = useState(
     `Our Occupational Health and Safety (OHS) management system is designed to prevent workplace injuries and illnesses. It includes policies, procedures, and practices that ensure a safe working environment. `
   );
@@ -10,9 +10,14 @@ const Section19 = ({ section13_6_2Ref, data }) => {
     <>
       <div id="section13_6_2" ref={section13_6_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.6.2 OHS Management System
+        {reportType=='GRI Report: In accordance With'?'13.6.2':'13.6.1'}   OHS Management System
         </h3>
 
+       
+        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+          Reasons for implementing Occupational Health & Safety Management
+          System
+        </p>
         <p className="text-sm mb-2">
           {data["403-1a-ohs_management_system"]
             ? data["403-1a-ohs_management_system"].data
@@ -23,10 +28,6 @@ const Section19 = ({ section13_6_2Ref, data }) => {
                 : "No data available"
               : "No data available"
             : "No data available"}
-        </p>
-        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-          Reasons for implementing Occupational Health & Safety Management
-          System
         </p>
         <p className="text-sm mb-2">
           {Array.isArray(

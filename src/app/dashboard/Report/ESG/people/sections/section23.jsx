@@ -1,14 +1,14 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section23 = ({ section13_6_6Ref, data }) => {
+const Section23 = ({ section13_6_6Ref, data, reportType }) => {
   const [content, setContent] = useState(``);
 
   return (
     <>
       <div id="section13_6_6" ref={section13_6_6Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.6.6 Prevention and Mitigation of OHS Impacts
+        {reportType=='GRI Report: In accordance With'?'13.6.6':'13.6.5'}  Prevention and Mitigation of OHS Impacts
         </h3>
 
         <p className="text-[15px]  mb-2 font-semibold">
@@ -18,8 +18,8 @@ const Section23 = ({ section13_6_6Ref, data }) => {
           {data["403-7a-negative_occupational"]
             ? data["403-7a-negative_occupational"].data
               ? data["403-7a-negative_occupational"].data.length > 0
-                ? data["403-7a-negative_occupational"].data[0].Q1
-                  ? data["403-7a-negative_occupational"].data[0].Q1
+                ? data["403-7a-negative_occupational"].data[0].Q2
+                  ? data["403-7a-negative_occupational"].data[0].Q2 || "No data available"
                   : "No data available"
                 : "No data available"
               : "No data available"

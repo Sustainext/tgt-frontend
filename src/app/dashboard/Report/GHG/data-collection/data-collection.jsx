@@ -10,7 +10,8 @@ function Datacollection({
   setExcludedsources,
 }) {
 
-  const orgname = localStorage.getItem("reportorgname");
+  const orgname = typeof window !== 'undefined' ?localStorage.getItem("reportorgname"):'';
+  const reportType = typeof window !== 'undefined' ? localStorage.getItem("reportType") : '';
   const sourcesData = souresdata.filter((corporate) => corporate.corporate_type !== "Investment").flatMap((corporate) => corporate.sources || []); // Flatten sources if nested
   const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
   // Filter sources by scope
@@ -373,66 +374,7 @@ cleanHTML: true,
             </p>
           </div>
 
-          {/* new section */}
-          {/* <div className="box rounded-lg p-4 mb-5">
-            <h4 className="text-left">
-              <b>Details of investements</b>
-            </h4>
-            <p className="text-left mb-2">
-            Entity name
-            </p>
-            <p className="text-left mb-4">
-            Owner ship ratio
-            </p>
-            <p className="text-left mb-2">Table 7: Scope 1 & Scope 2</p>
-            <div className="overflow-x-auto custom-scrollbar">
-            <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg ">
-              <thead className="border-s-slate-200 mb-5">
-                <tr className="border-s-slate-200">
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider ">
-                    Scope 3 - Activity
-                  </th>
-                  <th className="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Consumption {display}
-                  </th>
-                  <th className="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Greenhouse Gas Emissions {display}{" "}
-                    <p className="normal-case">(tCO2e)</p>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {scope3 &&
-                  scope3.map((data, index) => (
-                    <tr key={index}>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
-                      {data.category_name.includes('Investment')?data.category_name + " - " +data.source_name:data.source_name + " - " +data.category_name}
-                      
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                        {data.activity_data && (
-                          <>
-                            {data.activity_data.activity_value}{" "}
-                            {data.activity_data.activity_unit}
-                          </>
-                        )}
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                        {data.total_co2e}
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-            </div>
-            <p className="text-left mb-2 mt-4 wordsping">
-              The total Scope 3 emissions from {orgname} were {totalthree} tCO2e
-              for FY {display}
-            </p>
-          </div> */}
-
-
-          {/* end new section */}
+         
           <div className="box rounded-lg p-4 mb-5">
             <h4 className="text-left">
               <b>Other indirect GHG Emission: Scope 3</b>
@@ -488,6 +430,71 @@ cleanHTML: true,
               for FY {display}
             </p>
           </div>
+
+           {/* new section */}
+
+{reportType=='GHG Report - Investments'?(
+   <div className="box rounded-lg p-4 mb-5">
+   <h4 className="text-left mb-4">
+     <b>Details of investments</b>
+   </h4>
+   
+   {/* Filter investment corporates only */}
+   {souresdata
+     .filter(corporate => corporate.corporate_type === "Investment")
+     .map((investment, index) => (
+       <div key={index} className="mb-6">
+         {/* Corporate name and ownership ratio */}
+         <div className="mb-4">
+           <p className="text-left font-medium mb-2">
+             Entity name: {investment.corporate_name}
+           </p>
+           <p className="text-left font-medium">
+             Ownership ratio: {investment.ownership_ratio}%
+           </p>
+         </div>
+ 
+         {/* Scope 1 & 2 table */}
+         <p className="text-left mb-2">Table {index + 1}: Scope 1 & Scope 2</p>
+         <div className="overflow-x-auto custom-scrollbar">
+           <table className="min-w-[828px] w-full leading-normal border border-slate-200 rounded-lg">
+             <thead>
+               <tr className="border-s-slate-200">
+                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700  tracking-wider">
+                   SCOPE
+                 </th>
+                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700  tracking-wider text-center">
+                   EMISSIONS (tCO2e)
+                 </th>
+                 
+               </tr>
+             </thead>
+             <tbody>
+               {investment.scopes
+                 .filter(scope => scope.scope_name === "Scope-1" || scope.scope_name === "Scope-2")
+                 .map((scope, scopeIndex) => (
+                   <tr key={scopeIndex}>
+                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
+                       {scope.scope_name}
+                     </td>
+                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                       {(scope.total_co2e / 1000).toFixed(2)} {/* Convert kg to tCO2e */}
+                     </td>
+                   </tr>
+                 ))}
+             </tbody>
+           </table>
+         </div>
+       </div>
+     ))}
+ </div>
+):(
+<div></div>
+)}
+          
+
+
+          {/* end new section */}
           <div className="box rounded-lg p-4 mb-5">
             <h4 className="text-left">
               <b>Reducing uncertainties </b>

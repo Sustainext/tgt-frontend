@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setEnergyIntensityTracking } from "../../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Section22 = ({ section12_4_4Ref, data }) => {
+const Section22 = ({ section12_4_4Ref, data, reportType }) => {
   // const content = useSelector(
   //   (state) => state.screen12Slice.energy_intensity_tracking
   // );
@@ -71,7 +71,7 @@ const Section22 = ({ section12_4_4Ref, data }) => {
     <>
       <div id="section12_4_4" ref={section12_4_4Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          12.4.4 Energy Intensity
+        {reportType=='GRI Report: In accordance With'?'12.4.4':'12.4.3'} Energy Intensity
         </h3>
 
         {/* <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
