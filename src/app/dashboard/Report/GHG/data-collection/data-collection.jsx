@@ -478,7 +478,7 @@ cleanHTML: true,
                        {scope.scope_name}
                      </td>
                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                       {(scope.total_co2e / 1000).toFixed(2)} {/* Convert kg to tCO2e */}
+                       {(scope.total_co2e).toFixed(2)}
                      </td>
                    </tr>
                  ))}

@@ -60,7 +60,7 @@ const Section4 = ({ section13_1_3Ref, data,reportType }) => {
     <>
       <div id="section13_1_3" ref={section13_1_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'13.1.3':'13.1.2'}  13.1.3 Employee Benefits and Health Services
+        {reportType=='GRI Report: In accordance With'?'13.1.3':'13.1.2'} Employee Benefits and Health Services
         </h3>
         <p className="text-[#344054] text-sm mb-4">
         We offer comprehensive benefits and health services to support the well-being of our employees, including medical insurance, wellness programs, and mental health resources.

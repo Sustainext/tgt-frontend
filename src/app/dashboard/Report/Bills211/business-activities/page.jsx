@@ -91,7 +91,7 @@ and ethical sourcing.
     <>
       <div>
         <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          1.Organization Profile and Structure
+          2.Business Activities
         </h3>
       </div>
       <div>
@@ -103,9 +103,8 @@ goods produced outside Canada
       </div>
       <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">
         <p className="text-[15px] text-[#344054] mb-4 mt-3 w-[85%]">
-          Add additional information about the Organization Structure including
-          Control of other entities, including what the controlled entities do
-          and where they are located (If applicable)
+       Add additional information about the Business Activities (If required)  
+Note: Entities should describe the activities of any entities under their control but are only required to report on the activities of subsidiaries that are entities with reporting obligations under the Act
         </p>
         <button
           className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex h-[35px]"

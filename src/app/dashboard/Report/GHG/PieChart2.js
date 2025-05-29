@@ -41,7 +41,7 @@ function MyResponsivesouresdata({ souresdata }) {
   let investmentTotal = 0;
   souresdata.forEach((corporate) => {
     corporate.sources.forEach((source) => {
-      if (source.category_name === "Investment") {
+      if (source.category_name === "Investments") {
         // Sum up all Investment category emissions
         const co2e = parseFloat(source.total_co2e);
         investmentTotal += isNaN(co2e) ? 0 : co2e;
@@ -71,8 +71,8 @@ function MyResponsivesouresdata({ souresdata }) {
 
   if (investmentTotal > 0) {
     sourcesDataForChart.push({
-      id: "Investment",
-      label: "Investment",
+      id: "Investments",
+      label: "Investments",
       value: parseFloat(investmentTotal.toFixed(2)),
       color: `hsl(${Math.random() * 360}, 70%, 50%)`,
     });
