@@ -517,24 +517,50 @@ const Report = () => {
       newErrors.enddate = "Please select a date";
     }
 
+    // if (
+    //   reporttype === "GHG Report - Investments" &&
+    //   entities?.length > 0
+    // ) {
+    //   const validCheckedEntities = entities.filter(
+    //     (entity) =>
+    //       entity.emission_data &&
+    //       entity.checked &&
+    //       entity.ownershipRatio !== "" &&
+    //       !isNaN(entity.ownershipRatio) &&
+    //       Number(entity.ownershipRatio) > 0 &&
+    //       Number(entity.ownershipRatio) <= 100
+    //   );
+  
+    //   if (validCheckedEntities.length === 0) {
+    //     newErrors.investmentEntities = "Please check and enter ownership ratio (1–100%) for at least one investment corporate with data.";
+    //   }
+    // }
     if (
       reporttype === "GHG Report - Investments" &&
       entities?.length > 0
     ) {
-      const validCheckedEntities = entities.filter(
-        (entity) =>
-          entity.emission_data &&
-          entity.checked &&
-          entity.ownershipRatio !== "" &&
-          !isNaN(entity.ownershipRatio) &&
-          Number(entity.ownershipRatio) > 0 &&
-          Number(entity.ownershipRatio) <= 100
-      );
-  
-      if (validCheckedEntities.length === 0) {
-        newErrors.investmentEntities = "Please check and enter ownership ratio (1–100%) for at least one investment corporate with data.";
+      const checkedEntities = entities.filter(entity => entity.checked);
+      
+      if (checkedEntities.length === 0) {
+        newErrors.investmentEntities = "Please select at least one investment corporate.";
+      } else {
+        const allCheckedHaveValidOwnership = checkedEntities.every(
+          entity =>
+            entity.emission_data &&
+            entity.ownershipRatio !== "" &&
+            !isNaN(entity.ownershipRatio) &&
+            Number(entity.ownershipRatio) > 0 &&
+            Number(entity.ownershipRatio) <= 100
+        );
+    
+        if (!allCheckedHaveValidOwnership) {
+          newErrors.investmentEntities = checkedEntities.length === 1
+            ? "Please enter a valid ownership ratio (1–100%) for the selected corporate with data."
+            : "Please enter valid ownership ratios (1–100%) for all selected corporates with data.";
+        }
       }
     }
+    
 
     return newErrors;
   };
@@ -652,6 +678,7 @@ const Report = () => {
   const handleOpenModal = () => {
     setIsModalOpen(true);
     setMassgeshow(false);
+    window.localStorage.setItem("reportCorpName", '');
     setIsMenuOpen(false);
   };
 

@@ -64,7 +64,7 @@ const Section7 = ({ section9_3Ref, section9_3_1Ref, data }) => {
          Role of the highest governance body in reviewing the effectiveness of the organization's processes
         </p>
         <p className="text-sm mb-4">
-          {data["2_12_c"] ? data["2_12_c"] : "No data available"}
+          {data["2_12_c"] ? data["2_12_c"]?.Q1 || "No data available" : "No data available"}
         </p>
       </div>
     </>

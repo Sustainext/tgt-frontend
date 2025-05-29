@@ -133,21 +133,50 @@ function Ghgtemplates() {
     }, 0);
     const roundedTotal = parseFloat(total.toFixed(2));
     setTotalContributionScope(roundedTotal);
+    const corporates = response.data.data;
     const sourcesData = response.data.data.flatMap(
       (corporate) => corporate.sources
     );
+    // if (sourcesData.length > 0) {
+    //   const maxContribution = Math.max(
+    //     ...sourcesData.map((source) => parseFloat(source.contribution_source))
+    //   );
+    //   const highestSources = sourcesData.filter(
+    //     (source) => parseFloat(source.contribution_source) === maxContribution
+    //   );
+    //   const highestSourceNames = highestSources
+    //     .map((source) => source.source_name)
+    //     .join(", ");
+    //   setHighestContributionSource(highestSourceNames);
+    // }
     if (sourcesData.length > 0) {
       const maxContribution = Math.max(
         ...sourcesData.map((source) => parseFloat(source.contribution_source))
       );
+    
       const highestSources = sourcesData.filter(
         (source) => parseFloat(source.contribution_source) === maxContribution
       );
-      const highestSourceNames = highestSources
-        .map((source) => source.source_name)
-        .join(", ");
+    
+      const highestSourceNames = highestSources.map((source) => {
+        // Find the matching corporate by source_name
+        const matchingCorporate = corporates.find(
+          (corp) =>
+            corp.corporate_name === source.source_name &&
+            corp.sources.some((s) => s.source_name === source.source_name)
+        );
+    
+        // Add " (Investments)" if it's an Investment corporate
+        if (matchingCorporate?.corporate_type === "Investment") {
+          return `Investments`;
+        } else {
+          return source.source_name;
+        }
+      }).join(", ");
+    
       setHighestContributionSource(highestSourceNames);
     }
+    
     LoaderClose();
   };
 
