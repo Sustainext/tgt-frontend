@@ -707,6 +707,7 @@ const Report = () => {
     setIsModalOpen(true);
     setMassgeshow(false);
     window.localStorage.setItem("reportCorpName", '');
+    window.localStorage.setItem("reportby", '');
     setIsMenuOpen(false);
   };
 
