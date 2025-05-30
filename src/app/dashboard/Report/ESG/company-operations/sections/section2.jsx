@@ -16,6 +16,9 @@ const Section2 = ({
   section2_1Ref,
   orgName,
   data,
+  sectionNumber = "2.1.1",
+  sectionTitle = "Activities, Value Chain, and Other Business Relationships",
+  sectionOrder = 2,
 }) => {
   const [content, setContent] = useState(
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut at ipsum molestias dicta blanditiis harum laborum saepe expedita"
@@ -31,7 +34,7 @@ const Section2 = ({
         `<p>This report includes sustainability performance data from all entities under ${
           orgName ? orgName : "[Company Name]"
         } operational control. This encompasses:</p>`
-      )      
+      )
     );
   };
 
@@ -106,12 +109,12 @@ const Section2 = ({
     <>
       <div className="mb-2" id="setion2_1" ref={section2_1Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          2.1 Business Model and Impact 
+          {sectionOrder}.1 Business Model and Impact
         </h3>
       </div>
       <div className="mb-2" id="setion2_1_1" ref={section2_1_1Ref}>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-          2.1.1 Activities, Value Chain, and Other Business Relationships
+          {sectionNumber} {sectionTitle}
         </p>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
@@ -144,7 +147,8 @@ const Section2 = ({
         <div className="text-sm mb-4">
           <ul className="list-disc ml-4">
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
-             {orgName?orgName + " is":'We are'} active in the following sectors:
+              {orgName ? orgName + " is" : "We are"} active in the following
+              sectors:
             </li>
             {/* <p className="mb-4">{content}</p> */}
             {data["2-6-a"] && data["2-6-a"].length > 0 ? (
@@ -208,7 +212,6 @@ const Section2 = ({
           </ul>
         </div>
       </div>
-    
     </>
   );
 };

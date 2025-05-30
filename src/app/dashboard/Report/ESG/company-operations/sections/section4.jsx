@@ -8,7 +8,12 @@ import { setSupplyChain } from "../../../../../../lib/redux/features/ESGSlice/sc
 import dynamic from "next/dynamic";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section4 = ({ section2_2Ref, orgName }) => {
+const Section4 = ({
+  section2_2Ref,
+  orgName,
+  sectionNumber = "2.2",
+  sectionTitle = "Supply Chain",
+}) => {
   const content = useSelector(
     (state) => state.screen2Slice.supply_chain_description
   );
@@ -77,7 +82,7 @@ const Section4 = ({ section2_2Ref, orgName }) => {
     <>
       <div id="setion2_2" ref={section2_2Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          2.2 Supply Chain
+          {sectionNumber} {sectionTitle}
         </h3>
       </div>
       <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

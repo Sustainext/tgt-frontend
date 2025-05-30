@@ -11,76 +11,82 @@ import {
 import dynamic from "next/dynamic";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section3 = ({  section2_1_2Ref, orgName,data }) => {
- const dispatch = useDispatch();
-   const content3 = useSelector((state) => state.screen2Slice.entities_included);
-   const loadContent = () => {
-     dispatch(
-       setEntitiesInclude(
-         `<p>This report includes sustainability performance data from all entities under ${
-           orgName ? orgName : "[Company Name]"
-         } operational control. This encompasses:</p>`
-       )      
-     );
-   };
- 
-   const config = {
-     enter: "BR", // Or customize behavior on Enter key
-     cleanHTML: true,
-     enablePasteHTMLFilter: false,
-     askBeforePasteHTML: false,
-     askBeforePasteFromWord: false,
-     style: {
-       fontSize: "14px",
-       color: "#667085",
-     },
-     allowResizeY: false,
-     defaultActionOnPaste: "insert_clear_html",
-     toolbarSticky: false,
-     toolbar: true,
-     buttons: [
-       "bold",
-       "italic",
-       "underline",
-       "strikeThrough",
-       "align",
-       "outdent",
-       "indent",
-       "ul",
-       "ol",
-       "paragraph",
-       "link",
-       "table",
-       "undo",
-       "redo",
-       "hr",
-       "fontsize",
-       "selectall",
-     ],
-     // Remove buttons from the extra buttons list
-     removeButtons: [
-       "fullsize",
-       "preview",
-       "source",
-       "print",
-       "about",
-       "find",
-       "changeMode",
-       "paintFormat",
-       "image",
-       "brush",
-       "font",
-     ],
-   };
- 
-   const handleEditorChange = (value) => {
-     dispatch(setEntitiesInclude(value));
-   };
+const Section3 = ({
+  section2_1_2Ref,
+  orgName,
+  data,
+  sectionNumber = "2.1.2",
+  sectionTitle = "Entities Included in the Organization's Sustainability Reporting",
+}) => {
+  const dispatch = useDispatch();
+  const content3 = useSelector((state) => state.screen2Slice.entities_included);
+  const loadContent = () => {
+    dispatch(
+      setEntitiesInclude(
+        `<p>This report includes sustainability performance data from all entities under ${
+          orgName ? orgName : "[Company Name]"
+        } operational control. This encompasses:</p>`
+      )
+    );
+  };
+
+  const config = {
+    enter: "BR", // Or customize behavior on Enter key
+    cleanHTML: true,
+    enablePasteHTMLFilter: false,
+    askBeforePasteHTML: false,
+    askBeforePasteFromWord: false,
+    style: {
+      fontSize: "14px",
+      color: "#667085",
+    },
+    allowResizeY: false,
+    defaultActionOnPaste: "insert_clear_html",
+    toolbarSticky: false,
+    toolbar: true,
+    buttons: [
+      "bold",
+      "italic",
+      "underline",
+      "strikeThrough",
+      "align",
+      "outdent",
+      "indent",
+      "ul",
+      "ol",
+      "paragraph",
+      "link",
+      "table",
+      "undo",
+      "redo",
+      "hr",
+      "fontsize",
+      "selectall",
+    ],
+    // Remove buttons from the extra buttons list
+    removeButtons: [
+      "fullsize",
+      "preview",
+      "source",
+      "print",
+      "about",
+      "find",
+      "changeMode",
+      "paintFormat",
+      "image",
+      "brush",
+      "font",
+    ],
+  };
+
+  const handleEditorChange = (value) => {
+    dispatch(setEntitiesInclude(value));
+  };
   return (
     <>
-        <div className="mb-2" id="setion2_1_2" ref={section2_1_2Ref}>
+      <div className="mb-2" id="setion2_1_2" ref={section2_1_2Ref}>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-          2.1.2 Entities Included in the Organization's Sustainability Reporting
+          {sectionNumber} {sectionTitle}
         </p>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
@@ -110,17 +116,22 @@ const Section3 = ({  section2_1_2Ref, orgName,data }) => {
         ))}
         {/* 2-2-b */}
         <p className="mb-4 text-[15px]">
-        {data["2-2-b"]?data["2-2-b"]?.answer=='Yes'?data["2-2-b"]?.explanation:'':''
-         }
-        </p>
-        
-        {/* 2-2-c */}
-        <p className="mb-4 text-[15px]">
-        {data["2-2-c"]?data["2-2-c"]?.answer=='Yes'?data["2-2-c"]?.explanation:'':''
-         }
+          {data["2-2-b"]
+            ? data["2-2-b"]?.answer == "Yes"
+              ? data["2-2-b"]?.explanation
+              : ""
+            : ""}
         </p>
 
-        
+        {/* 2-2-c */}
+        <p className="mb-4 text-[15px]">
+          {data["2-2-c"]
+            ? data["2-2-c"]?.answer == "Yes"
+              ? data["2-2-c"]?.explanation
+              : ""
+            : ""}
+        </p>
+
         {/* <p className="text-[15px] text-[#344054] mb-2">
           Each entity adheres to our comprehensive sustainability framework,
           ensuring consistent ESG practices across our entire organization. 

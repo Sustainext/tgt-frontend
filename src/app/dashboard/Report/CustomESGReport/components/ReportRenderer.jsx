@@ -18,6 +18,20 @@ import {
 
 // Import your section components
 import Companyoperations from '../../ESG/company-operations/page';
+import MissionVision from '../../ESG/mission-vision/page';
+import Sustainability from '../../ESG/sustainibility-roadmap/page'
+import Awards from '../../ESG/awards-recognition/page'
+import StakeHolder from '../../ESG/stakeholder-engagement/page'
+import AboutReport from '../../ESG/about-report/page'
+import Governance from '../../ESG/corporate-governance/page'
+import Journey from '../../ESG/sustainibility-journey/page'
+import Economic from '../../ESG/economic-performance/page'
+import Environment from '../../ESG/environment/page'
+import People from '../../ESG/people/page'
+import Community from '../../ESG/community/page'
+import Customers from '../../ESG/customer-product-services/page'
+import Materiality from '../../ESG/materilality/page'
+
 // import Materiality from '../reportComponenet/materiality';
 import MessageCEO from '../../ESG/message-from-ceo/page';
 // import MissionVision from './sections/MissionVision';
@@ -26,19 +40,19 @@ import MessageCEO from '../../ESG/message-from-ceo/page';
 const sectionComponents = {
   about_company: (props) => <Companyoperations {...props} />,
   message_ceo: (props) => <MessageCEO {...props} />,
-  mission_vision: (props) => <div>Mission Vision Component</div>,
-  sustainability: (props) => <div>Sustainability Roadmap Component</div>,
-  awards: (props) => <div>Awards Component</div>,
-  stakeholder: (props) => <div>Stakeholder Engagement Component</div>,
-  about_report: (props) => <div>About Report Component</div>,
-  governance: (props) => <div>Corporate Governance Component</div>,
-  journey: (props) => <div>Sustainability Journey Component</div>,
-  economic: (props) => <div>Economic Performance Component</div>,
-  environment: (props) => <div>Environment Component</div>,
-  people: (props) => <div>People Component</div>,
-  community: (props) => <div>Community Component</div>,
-  customers: (props) => <div>Customers Component</div>,
-  materiality: (props) => <div>Materiality Component</div>,
+  mission_vision: (props) => <MissionVision {...props} />,
+  sustainability: (props) => <Sustainability {...props} />,
+  awards: (props) => <Awards {...props} />,
+  stakeholder: (props) => <StakeHolder {...props} />,
+  about_report: (props) => <AboutReport {...props} />,
+  governance: (props) => <Governance {...props} />,
+  journey: (props) => <Journey {...props} />,
+  economic: (props) => <Economic {...props} />,
+  environment: (props) => <Environment {...props} />,
+  people: (props) => <People {...props} />,
+  community: (props) => <Community {...props} />,
+  customers: (props) => <Customers {...props} />,
+  materiality: (props) => <Materiality {...props} />,
   // Add all other component mappings
 };
 
@@ -137,14 +151,14 @@ const ReportRenderer = ({ onBack }) => {
   return (
     <div className="w-full max-w-none mx-auto">
       {/* Report Header */}
-      <div className="mb-8 text-center border-b-4 border-blue-600 pb-6">
+      {/* <div className="mb-8 text-center border-b-4 border-blue-600 pb-6">
         <h1 className="text-4xl font-bold text-gray-800 mb-2">
           Sustainability Report
         </h1>
         <p className="text-lg text-gray-600">
           Generated Report - {new Date().getFullYear()}
         </p>
-      </div>
+      </div> */}
 
       {/* Current Section Content */}
       <div className="min-h-[500px]">
