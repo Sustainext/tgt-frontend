@@ -1,8 +1,14 @@
 "use client";
-import { useState, useRef, useEffect, use } from "react";
-import Sidebar from "./sidebar";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+
+// Import components
 import MissionVission from "./mission-vision/page";
 import AwardsRecognition from "./awards-recognition/page";
 import SustainibilityRoadmap from "./sustainibility-roadmap/page";
@@ -20,24 +26,55 @@ import People from "./people/page";
 import MessageFromCEO from "./message-from-ceo/page";
 import ContentIndex from "./content-index/page";
 import Environment from "./environment/page";
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
-import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import ReferenceMaterialTopic from "./referenceMaterialTopic/page";
+import RefereceContentIndex from './referenceContentIndex/page';
+
+// Import modals
 import OmissionPopup from "./content-index/modals/omissionPopup";
 import ReportCreatedPopup from "./content-index/modals/reportCreatedPopup";
 import MainValidationPopup from "./validation-modals/mainModal";
-import axiosInstance, { patch } from "../../../utils/axiosMiddleware";
-import ReferenceMaterialTopic from "./referenceMaterialTopic/page";
-import RefereceContentIndex from './referenceContentIndex/page'
+
+// Import Redux actions and selectors
+import {
+  selectSections,
+  selectSubsections,
+  selectSelectedSubsections,
+  setSections,
+  setSelectedSubsections,
+  selectCurrentReportPage,
+  selectCurrentReportSection,
+  selectCanGoToNextPage,
+  selectCanGoToPreviousPage,
+  nextReportPage,
+  previousReportPage,
+  setCurrentReportPage,
+} from "../../../../lib/redux/features/reportBuilderSlice";
+
 import {
   setHeadertext1,
   setHeadertext2,
   setHeaderdisplay,
 } from "../../../../lib/redux/features/topheaderSlice";
-import { useDispatch } from "react-redux";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+
+import axiosInstance from "../../../utils/axiosMiddleware";
+
+// Custom ESG Sidebar
+import UnifiedESGSidebar from "../CustomESGReport/components/sidebar";
+
 const ESGReport = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  
+  // Redux state
+  const allSections = useSelector(selectSections);
+  const allSubsections = useSelector(selectSubsections);
+  const selectedSubsections = useSelector(selectSelectedSubsections);
+  const currentReportPage = useSelector(selectCurrentReportPage);
+  const currentSection = useSelector(selectCurrentReportSection);
+  const canGoToNext = useSelector(selectCanGoToNextPage);
+  const canGoToPrevious = useSelector(selectCanGoToPreviousPage);
+
+  // Local state
   const [isOpenMobile, setIsOpenMobile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateReportModalOpen, setIsCreateReportModalOpen] = useState(false);
@@ -53,9 +90,11 @@ const ESGReport = () => {
   const [reportType, setReportType] = useState("");
   const [reportCreatedOn, setCreatedOn] = useState("");
   const [orgName, setOrgName] = useState("");
-  const [corpName,setCorpName]=useState("")
+  const [corpName, setCorpName] = useState("");
   const [missing_fields, setMissingFields] = useState([]);
-  const messageFromCeoRef = useRef(); // Use useRef to store a reference to submitForm
+
+  // Refs for form submission
+  const messageFromCeoRef = useRef();
   const aboutTheCompany = useRef();
   const missionVision = useRef();
   const sustainibilityRoadmap = useRef();
@@ -70,12 +109,7 @@ const ESGReport = () => {
   const economicperformance = useRef();
   const people = useRef();
   const customers = useRef();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(setHeadertext1(""));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2("ESG Report"));
-  }, [dispatch]);
+
   const stepRefs = {
     1: messageFromCeoRef,
     2: aboutTheCompany,
@@ -94,49 +128,139 @@ const ESGReport = () => {
     15: customers,
   };
 
-  // const  missing_fields=[
-  //   {
-  //     page: "screen_fourteen",
-  //     label: "14.1 Community Engagement",
-  //     subLabel: "Add statement about company’s community engagement",
-  //     type:'textarea'
-  //   },
-  //   {
-  //     page: "screen_fourteen",
-  //     label: "14.2 Impact Assessment",
-  //     subLabel: "",
-  //     type:'richTextarea'
-  //   },
-  //   {
-  //     page: "screen_fourteen",
-  //     label: "14.3 CSR",
-  //     subLabel:
-  //       "Add statement about company’s Corporate Social Responsibility policies",
-  //       type:'richTextarea'
-  //   },
-  //   {
-  //     page: "screen_fifteen",
-  //     label: "15.1 Environmental Impact",
-  //     subLabel:
-  //       "Add statement about company’s responsibility to minimize the environmental impact",
-  //        type:'textarea'
-  //   },
-  //   {
-  //     page: "screen_fifteen",
-  //     label: "15.2 Emissions Strategy",
-  //     subLabel: "Add statement about company’s strategy to reduce emission",
-  //      type:'textarea'
-  //   },
-  //   {
-  //     page: "screen_fifteen",
-  //     label: "15.3 Scope 1 GHG Emissions",
-  //     subLabel: "Add statement about company’s scope 1 emissions",
-  //      type:'richTextarea'
-  //   },
-  // ]
+  // State to track if initialization has been done
+  const [isInitialized, setIsInitialized] = useState(false);
 
+  // Initialize Redux state based on report type
+  useEffect(() => {
+    const initializeReportState = () => {
+      if (reportType === 'Custom ESG Report') {
+        // For custom reports, load from localStorage if available
+        // const savedSections = JSON.parse(localStorage.getItem('report_sections') || '[]');
+        // const savedSubsections = JSON.parse(localStorage.getItem('report_subsections') || '{}');
+        const savedSections = [];
+        const savedSubsections = [];
+        
+        if (savedSections.length > 0) {
+          dispatch(setSections(savedSections));
+        }
+        if (Object.keys(savedSubsections).length > 0) {
+          dispatch(setSelectedSubsections(savedSubsections));
+        }
+      } else {
+        // For non-custom reports, enable all sections and select all subsections
+        const enabledSections = allSections.map(section => ({
+          ...section,
+          enabled: true
+        }));
+        
+        // Default subsection selections for all sections
+        const defaultSubsections = {};
+        Object.keys(allSubsections).forEach(sectionId => {
+          const sectionSubsections = allSubsections[sectionId] || [];
+          const collectIds = (subs) => 
+            subs.flatMap((s) => [
+              s.id,
+              ...(s.children ? collectIds(s.children) : [])
+            ]);
+          defaultSubsections[sectionId] = collectIds(sectionSubsections);
+        });
+        
+        dispatch(setSections(enabledSections));
+        dispatch(setSelectedSubsections(defaultSubsections));
+      }
+      setIsInitialized(true);
+    };
+
+    if (reportType && !isInitialized) {
+      initializeReportState();
+    }
+  }, [reportType, isInitialized, dispatch]);
+
+  // Get sections and subsections to display based on report type
+  const sectionsToDisplay = useMemo(() => {
+    if (reportType === 'Custom ESG Report') {
+      return allSections.filter(section => section.enabled);
+    } else {
+      return allSections;
+    }
+  }, [reportType, allSections]);
+
+  const subsectionsToDisplay = useMemo(() => {
+    if (reportType === 'Custom ESG Report') {
+      return selectedSubsections;
+    } else {
+      // Return all subsections for non-custom reports
+      const allSelectedSubsections = {};
+      Object.keys(allSubsections).forEach(sectionId => {
+        const sectionSubsections = allSubsections[sectionId] || [];
+        const collectIds = (subs) => 
+          subs.flatMap((s) => [
+            s.id,
+            ...(s.children ? collectIds(s.children) : [])
+          ]);
+        allSelectedSubsections[sectionId] = collectIds(sectionSubsections);
+      });
+      return allSelectedSubsections;
+    }
+  }, [reportType, selectedSubsections, allSubsections]);
+
+  // Component mapping for custom reports
+  const sectionComponents = {
+    message_ceo: MessageFromCEO,
+    about_company: Companyoperations,
+    mission_vision: MissionVission,
+    sustainability: SustainibilityRoadmap,
+    awards: AwardsRecognition,
+    stakeholder: StakeholderEngagement,
+    about_report: AboutTheReport,
+    governance: CorporateGovernance,
+    journey: SustainibilityJourney,
+    economic: EconomicPerformance,
+    environment: Environment,
+    people: People,
+    community: Community,
+    customers: CustomerProductService,
+    materiality: Materiality,
+  };
+
+  // Initialize component state
+  useEffect(() => {
+    dispatch(setHeadertext1(""));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2("ESG Report"));
+  }, [dispatch]);
+
+  useEffect(() => {
+    setCreatedOn(localStorage.getItem("reportCreatedOn"));
+    setOrgName(localStorage.getItem("reportorgname"));
+    setCorpName(localStorage.getItem('reportCorpName'));
+    setUsername(localStorage.getItem("userName"));
+    setuserEmail(localStorage.getItem("userEmail"));
+    setfromDate(localStorage.getItem("reportstartdate"));
+    settoDate(localStorage.getItem("reportenddate"));
+    setReportid(localStorage.getItem("reportid"));
+    setReportType(localStorage.getItem("reportType") || "");
+    if (localStorage.getItem("reportname")) {
+      setReportName(localStorage.getItem("reportname"));
+    }
+  }, []);
+
+  // Custom report navigation handlers
+  const handleCustomNextStep = () => {
+    if (canGoToNext) {
+      dispatch(nextReportPage());
+    }
+  };
+
+  const handleCustomPreviousStep = () => {
+    if (canGoToPrevious) {
+      dispatch(previousReportPage());
+    }
+  };
+
+  // Original report navigation handlers
   const loadMissingFields = async () => {
-    // LoaderOpen();
     const url = `${process.env.BACKEND_API_URL}/esg_report/get_field_validation/${reportid}/`;
     try {
       const response = await axiosInstance.get(url);
@@ -148,11 +272,8 @@ const ESGReport = () => {
           setActiveStep((prev) => prev + 1);
         }
       }
-
-      // LoaderClose();
     } catch (error) {
       console.error("API call failed:", error);
-      // LoaderClose();
     }
   };
 
@@ -164,14 +285,13 @@ const ESGReport = () => {
         const isSubmitted = await currentRef.submitForm(type);
         return isSubmitted;
       }
-      return true; // Proceed to next step if no form reference exists
+      return true;
     };
 
     const showDraftSavedToast = () => {
       toast.success(
         <p style={{ margin: 0, fontSize: "13.5px", lineHeight: "1.4" }}>
-          The data filled in the report has been saved as draft and can be
-          accessed from the report module
+          The data filled in the report has been saved as draft and can be accessed from the report module
         </p>,
         {
           position: "top-right",
@@ -184,34 +304,6 @@ const ESGReport = () => {
           theme: "light",
         }
       );
-      // toast.success(
-      //   <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-      //     <IoCheckmarkDoneCircle style={{ marginRight: '10px', color: 'green',fontSize:'50px' }} />
-      //     <div>
-      //     <strong style={{ display: 'block', marginBottom: '4px', fontSize: '16px' }}> {/* Main heading */}
-      //     Data Saved
-      //  </strong>
-      //  <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.4' }}> {/* Paragraph aligned below heading */}
-      //  The data filled in the report has been saved as draft and can be accessed from the report module
-      //  </p>
-      //   </div>
-      //   </div>, {
-      //     position: "top-right",
-      //     autoClose: 3000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "light",
-      //     style: {
-      //       borderRadius: '8px',
-      //       border: '1px solid #E5E5E5',
-      //       boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-      //       width:'320px',
-      //     },
-      //     icon: false,
-      // });
     };
 
     if (type === "next") {
@@ -239,44 +331,117 @@ const ESGReport = () => {
     setActiveStep((prev) => prev - 1);
   };
 
-  useEffect(() => {
-    setCreatedOn(localStorage.getItem("reportCreatedOn"));
-    setOrgName(localStorage.getItem("reportorgname"));
-    setCorpName(localStorage.getItem('reportCorpName'))
-    setUsername(localStorage.getItem("userName"));
-    setuserEmail(localStorage.getItem("userEmail"));
-    setfromDate(localStorage.getItem("reportstartdate"));
-    settoDate(localStorage.getItem("reportenddate"));
-    setReportid(localStorage.getItem("reportid"));
-    setReportType(localStorage.getItem("reportType"));
-    if (localStorage.getItem("reportname")) {
-      setReportName(localStorage.getItem("reportname"));
+  // Render custom report section
+  const renderCustomReportSection = () => {
+    if (!currentSection) {
+      return (
+        <div className="text-center py-8">
+          <p className="text-gray-500">No section available</p>
+        </div>
+      );
     }
-  }, []);
 
+    const SectionComponent = sectionComponents[currentSection.id];
+    
+    if (!SectionComponent) {
+      return (
+        <div className="p-4 border border-red-300 rounded mb-4">
+          <h2 className="text-lg font-bold text-red-600">
+            Component Missing: {currentSection.title}
+          </h2>
+          <p className="text-sm text-gray-600">
+            Please add the component for "{currentSection.id}" to the sectionComponents mapping.
+          </p>
+        </div>
+      );
+    }
+
+    const sectionSubsections = subsectionsToDisplay[currentSection.id] || [];
+    const sectionOrder = currentReportPage + 1;
+    
+    return (
+      <div className="min-h-[400px]">
+        <SectionComponent
+          ref={stepRefs[sectionOrder]}
+          subsections={sectionSubsections}
+          sectionId={currentSection.id}
+          sectionTitle={currentSection.title}
+          sectionOrder={sectionOrder}
+          onSubmitSuccess={(success) => {
+            console.log('Section submitted:', success);
+          }}
+        />
+      </div>
+    );
+  };
+
+  // Render original report sections
+  const renderOriginalReportSections = () => {
+    return (
+      <>
+        {activeStep === 1 && <MessageFromCEO ref={messageFromCeoRef} />}
+        {activeStep === 2 && <Companyoperations ref={aboutTheCompany} />}
+        {activeStep === 3 && <MissionVission ref={missionVision} />}
+        {activeStep === 4 && <SustainibilityRoadmap ref={sustainibilityRoadmap} />}
+        {activeStep === 5 && <AwardsRecognition ref={awardAlliances} />}
+        {activeStep === 6 && <StakeholderEngagement ref={stakeholderEngagement} />}
+        {activeStep === 7 && <AboutTheReport ref={aboutReport} />}
+        {activeStep === 8 && (
+          reportType === 'GRI Report: With Reference to' ? 
+            <ReferenceMateriality ref={materiality} /> : 
+            <Materiality ref={materiality} />
+        )}
+        {activeStep === 9 && <CorporateGovernance ref={corporateGovernance} reportType={reportType} />}
+        {activeStep === 10 && <SustainibilityJourney ref={sustainabilityJourney} reportType={reportType} />}
+        {activeStep === 11 && <EconomicPerformance ref={economicperformance} reportType={reportType} />}
+        {activeStep === 12 && <Environment ref={environment} reportType={reportType} />}
+        {activeStep === 13 && <People ref={people} reportType={reportType} />}
+        {activeStep === 14 && <Community ref={community} reportType={reportType} />}
+        {activeStep === 15 && <CustomerProductService ref={customers} reportType={reportType} />}
+        {activeStep >= 16 && (
+          reportType === 'GRI Report: With Reference to' && activeStep === 16 ? 
+            <ReferenceMaterialTopic /> : 
+            (reportType === 'GRI Report: With Reference to' && activeStep === 17 ? 
+              <RefereceContentIndex
+                reportName={reportName}
+                setActiveStep={setActiveStep}
+                isOmissionSubmitted={isOmissionSubmitted}
+                isOmissionModalOpen={isModalOpen}
+                setIsOmissionModalOpen={setIsModalOpen}
+                isCreateReportModalOpen={isCreateReportModalOpen}
+                setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+                setIsOmissionSubmitted={setIsOmissionSubmitted}
+              /> : 
+              <ContentIndex
+                reportName={reportName}
+                setActiveStep={setActiveStep}
+                isOmissionSubmitted={isOmissionSubmitted}
+                isOmissionModalOpen={isModalOpen}
+                setIsOmissionModalOpen={setIsModalOpen}
+                isCreateReportModalOpen={isCreateReportModalOpen}
+                setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+                setIsOmissionSubmitted={setIsOmissionSubmitted}
+              />)
+        )}
+      </>
+    );
+  };
+
+  const isCustomReport = reportType === 'Custom ESG Report';
+  const shouldShowSidebar = !isCustomReport || (isCustomReport && activeStep < 17);
 
   return (
     <>
       <div className="flex">
-        {activeStep == 17? (
-          <></>
-        ) : (
-          <div>
-            {
-              activeStep===16 && reportType==='GRI Report: In accordance With'?(
-                <></>
-              ):(
-                <Sidebar
+        {shouldShowSidebar && (
+          <UnifiedESGSidebar
+            setIsOpenMobile={setIsOpenMobile}
+            isOpenMobile={isOpenMobile}
+            reportType={reportType}
+            allSections={allSections}
             activeStep={activeStep}
             setActiveStep={setActiveStep}
-            isOpenMobile={isOpenMobile}
-            setIsOpenMobile={setIsOpenMobile}
-            reportType={reportType}
           />
-              )
-            }
-          </div>
-          
         )}
 
         <div className="w-full mb-5">
@@ -288,7 +453,7 @@ const ESGReport = () => {
                     <div>
                       <button
                         onClick={() => {
-                          if (activeStep > 15) {
+                          if (isCustomReport || activeStep > 15) {
                             router.push("/dashboard/Report");
                           } else {
                             handleNextStep("back");
@@ -299,7 +464,8 @@ const ESGReport = () => {
                         <FaArrowLeftLong className="w-3 h-3 mt-1" />
                         Back to Reports
                       </button>
-                        {/* mobile section */}
+
+                      {/* Mobile section */}
                       <div className="xl:hidden lg:hidden">
                         <div className="flex gap-2">
                           <button
@@ -308,169 +474,157 @@ const ESGReport = () => {
                           >
                             <MdKeyboardArrowRight className="h-6 w-6 text-black" />
                           </button>
-                        <div>
-                        <p className="gradient-text text-[22px] font-bold pt-3">
-                            {reportName}
-                          </p>
-                          <p className="mt-2 text-[#667085] text-[13px]">
-                      Organization
-                       {corpName ? " / Corporate" : ""}:{" "}
-                      {orgName}{" "}
-                      {corpName?' / ':''}
-                      {corpName}{" "}
-                      {/* {groupId?.corporate?.length > 0
-                        ? "/ " + groupId?.corporate.join(", ")
-                        : ""} */}
-                    </p>
-                        </div>
-                         
+                          <div>
+                            <p className="gradient-text text-[22px] font-bold pt-3">
+                              {reportName}
+                            </p>
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Organization{corpName ? " / Corporate" : ""}:{" "}
+                              {orgName}{" "}{corpName ? ' / ' : ''}{corpName}{" "}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                         {/* desktop section */}
+
+                      {/* Desktop section */}
                       <div className="hidden xl:block lg:block">
                         <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
                           {reportName}
                         </p>
                         <p className="mt-2 text-[#667085] text-[13px] ml-3">
-                      Organization
-                       {corpName ? " / Corporate" : ""}:{" "}
-                      {orgName}{" "}
-                      {corpName?' / ':''}
-                      {corpName}{" "}
-                      {/* {groupId?.corporate?.length > 0
-                        ? "/ " + groupId?.corporate.join(", ")
-                        : ""} */}
-                    </p>
+                          Organization{corpName ? " / Corporate" : ""}:{" "}
+                          {orgName}{" "}{corpName ? ' / ' : ''}{corpName}{" "}
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-                   {/* desktop section */}
-              <div className="hidden md:block lg:block xl:block">
-              <div className="float-right mr-2 flex items-center justify-center">
-                <div className="flex items-center justify-center">
-                  {activeStep == 17 ? (
-                    <></>
-                  ) : (
-                    <button
-                      style={{
-                        display: (activeStep === 1) || (activeStep === 16 && reportType==='GRI Report: In accordance With') ? "none" : "inline-block",
-                      }}
-                      className={`${
-                        activeStep === 1 ? "" : "text-gray-500"
-                      } px-3 py-1.5 rounded font-semibold w-[120px]`}
-                      onClick={handlePreviousStep}
-                      disabled={activeStep === 1}
-                    >
-                      &lt; Previous
-                    </button>
-                  )}
 
-                  {(activeStep == 16 && reportType==='GRI Report: In accordance With') || activeStep==17 ? (
-                    <div>
-                      {
-                        reportType==='GRI Report: In accordance With'?(
-                          <div>
-                      {isOmissionSubmitted ? (
+              {/* Desktop navigation */}
+              <div className="hidden md:block lg:block xl:block">
+                <div className="float-right mr-2 flex items-center justify-center">
+                  <div className="flex items-center justify-center">
+                    {isCustomReport ? (
+                      // Custom report navigation
+                      <>
                         <button
-                          onClick={() => {
-                            setIsCreateReportModalOpen(true);
-                          }}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                          onClick={handleCustomPreviousStep}
+                          disabled={!canGoToPrevious}
+                          className={`px-3 py-1.5 rounded font-semibold w-[120px] ${
+                            canGoToPrevious ? "text-gray-500" : "text-gray-300"
+                          }`}
+                          style={{ display: !canGoToPrevious ? "none" : "inline-block" }}
                         >
-                          Save and Create Report {">"}
+                          &lt; Previous
                         </button>
-                      ) : (
                         <button
-                          onClick={() => {
-                            setIsModalOpen(true);
-                          }}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Add Reasons for Omission {">"}
-                        </button>
-                      )}
-                    </div>
-                        ):(
-                          <div>
-                         <button
-                              onClick={() => {
-                                setIsCreateReportModalOpen(true);
-                              }}
-                              className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                            >
-                              Save and Create Report {">"}
-                            </button>
-                        </div>
-                        )
-                      }
-                    </div>
-                    
-                  ) : (
-                    <div>
-                      {activeStep < 15 ? (
-                        <button
-                          className={`${
-                            activeStep === 15
-                              ? "bg-gray-300"
-                              : "bg-blue-500 text-white"
-                          } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                          onClick={() => {
-                            handleNextStep("next");
-                          }} // Call the form submit and next step handler
-                          disabled={activeStep === 15}
+                          onClick={handleCustomNextStep}
+                          disabled={!canGoToNext}
+                          className={`px-3 py-1.5 rounded ml-2 font-semibold w-[100px] ${
+                            canGoToNext ? "bg-blue-500 text-white" : "bg-gray-300"
+                          }`}
                         >
                           Next &gt;
                         </button>
-                      ) : (
-                        <div>
-                          {reportType==='GRI Report: With Reference to' && activeStep===15 ?(
-                            <button
-                            className={`bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                            onClick={() => {
-                              handleNextStep("next");
-                            }} // Call the form submit and next step handler
-                            // disabled={activeStep === 15}
-                          >
-                            Next &gt;
-                          </button>
-                          ):(
-                            <button
-                            onClick={() => {
-                              handleNextStep("last");
+                      </>
+                    ) : (
+                      // Original report navigation
+                      <>
+                        {activeStep !== 17 && (
+                          <button
+                            style={{
+                              display: (activeStep === 1) || (activeStep === 16 && reportType === 'GRI Report: In accordance With') ? "none" : "inline-block",
                             }}
-                            className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                            className={`${activeStep === 1 ? "" : "text-gray-500"} px-3 py-1.5 rounded font-semibold w-[120px]`}
+                            onClick={handlePreviousStep}
+                            disabled={activeStep === 1}
                           >
-                            Save & Fill Content Index
+                            &lt; Previous
                           </button>
-                          )}
-                         
-                        </div>
-                        
-                      )}
-                    </div>
-                  )}
+                        )}
+
+                        {(activeStep === 16 && reportType === 'GRI Report: In accordance With') || activeStep === 17 ? (
+                          <div>
+                            {reportType === 'GRI Report: In accordance With' ? (
+                              <div>
+                                {isOmissionSubmitted ? (
+                                  <button
+                                    onClick={() => setIsCreateReportModalOpen(true)}
+                                    className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                                  >
+                                    Save and Create Report {">"}
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={() => setIsModalOpen(true)}
+                                    className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                                  >
+                                    Add Reasons for Omission {">"}
+                                  </button>
+                                )}
+                              </div>
+                            ) : (
+                              <div>
+                                <button
+                                  onClick={() => setIsCreateReportModalOpen(true)}
+                                  className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                                >
+                                  Save and Create Report {">"}
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div>
+                            {activeStep < 15 ? (
+                              <button
+                                className={`${
+                                  activeStep === 15 ? "bg-gray-300" : "bg-blue-500 text-white"
+                                } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
+                                onClick={() => handleNextStep("next")}
+                                disabled={activeStep === 15}
+                              >
+                                Next &gt;
+                              </button>
+                            ) : (
+                              <div>
+                                {reportType === 'GRI Report: With Reference to' && activeStep === 15 ? (
+                                  <button
+                                    className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
+                                    onClick={() => handleNextStep("next")}
+                                  >
+                                    Next &gt;
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={() => handleNextStep("last")}
+                                    className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                                  >
+                                    Save & Fill Content Index
+                                  </button>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
-              </div>
-             
             </div>
           </div>
-              {/* mobile section */}
-          <div className="block md:hidden lg:hidden  xl:hidden mb-2 h-[43px]">
+
+          {/* Mobile navigation */}
+          {!isCustomReport && (
+            <div className="block md:hidden lg:hidden xl:hidden mb-2 h-[43px]">
               <div className="float-right mr-2 flex items-center justify-center mb-2">
                 <div className="flex items-center justify-center">
-                  {activeStep == 16 ? (
-                    <></>
-                  ) : (
+                  {activeStep !== 16 && (
                     <button
-                      style={{
-                        display: activeStep === 1 ? "none" : "inline-block",
-                      }}
-                      className={`${
-                        activeStep === 1 ? "" : "text-gray-500"
-                      } px-3 py-1.5 rounded font-semibold`}
+                      style={{ display: activeStep === 1 ? "none" : "inline-block" }}
+                      className={`${activeStep === 1 ? "" : "text-gray-500"} px-3 py-1.5 rounded font-semibold`}
                       onClick={handlePreviousStep}
                       disabled={activeStep === 1}
                     >
@@ -478,22 +632,18 @@ const ESGReport = () => {
                     </button>
                   )}
 
-                  {activeStep == 16 ? (
+                  {activeStep === 16 ? (
                     <div>
                       {isOmissionSubmitted ? (
                         <button
-                          onClick={() => {
-                            setIsCreateReportModalOpen(true);
-                          }}
+                          onClick={() => setIsCreateReportModalOpen(true)}
                           className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                         >
                           Save and Create Report {">"}
                         </button>
                       ) : (
                         <button
-                          onClick={() => {
-                            setIsModalOpen(true);
-                          }}
+                          onClick={() => setIsModalOpen(true)}
                           className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                         >
                           Add Reasons for Omission {">"}
@@ -505,22 +655,16 @@ const ESGReport = () => {
                       {activeStep < 15 ? (
                         <button
                           className={`${
-                            activeStep === 15
-                              ? "bg-gray-300"
-                              : "bg-blue-500 text-white"
+                            activeStep === 15 ? "bg-gray-300" : "bg-blue-500 text-white"
                           } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                          onClick={() => {
-                            handleNextStep("next");
-                          }} // Call the form submit and next step handler
+                          onClick={() => handleNextStep("next")}
                           disabled={activeStep === 15}
                         >
                           Next &gt;
                         </button>
                       ) : (
                         <button
-                          onClick={() => {
-                            handleNextStep("last");
-                          }}
+                          onClick={() => handleNextStep("last")}
                           className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                         >
                           Save & Fill Content Index
@@ -530,161 +674,26 @@ const ESGReport = () => {
                   )}
                 </div>
               </div>
-              </div>
+            </div>
+          )}
+
           <div className="xl:mx-3 md:mx-3 lg:mx-3 4k:mx-3 2k:mx-3 2xl:mx-3 my-2">
             <div>
-              {activeStep === 1 && (
-                <div>
-                  <MessageFromCEO ref={messageFromCeoRef} />
-                </div>
-              )}
-              {activeStep === 2 && (
-                <div>
-                  <Companyoperations ref={aboutTheCompany} />
-                </div>
-              )}
-              {activeStep === 3 && (
-                <div>
-                  <div className="mb-4">
-                    <MissionVission ref={missionVision} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 4 && (
-                <div>
-                  <div className="mb-4">
-                    <SustainibilityRoadmap ref={sustainibilityRoadmap} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 5 && (
-                <div>
-                  <div className="mb-4">
-                    <AwardsRecognition ref={awardAlliances} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 6 && (
-                <div>
-                  <div className="mb-4">
-                    <StakeholderEngagement ref={stakeholderEngagement} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 7 && (
-                <div>
-                  <div className="mb-4">
-                    <AboutTheReport ref={aboutReport} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 8 && (
-                <div>
-                  <div className="mb-4">
-                    {reportType=='GRI Report: With Reference to'?(
-                      <ReferenceMateriality ref={materiality} />
-                    ):(
-                      <Materiality ref={materiality} />
-                    )}
-                   
-                    
-                  </div>
-                </div>
-              )}
-              {activeStep === 9 && (
-                <div>
-                  <div className="mb-4">
-                    <CorporateGovernance ref={corporateGovernance} reportType={reportType} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 10 && (
-                <div>
-                  <div className="mb-4">
-                    <SustainibilityJourney ref={sustainabilityJourney} reportType={reportType} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 11 && (
-                <div>
-                  <div className="mb-4">
-                    <EconomicPerformance ref={economicperformance} reportType={reportType} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 12 && (
-                <div>
-                  <div className="mb-4">
-                    <Environment ref={environment} reportType={reportType} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 13 && (
-                <div>
-                  <div className="mb-4">
-                    <People ref={people} reportType={reportType} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 14 && (
-                <div>
-                  <div className="mb-4">
-                    <Community ref={community} reportType={reportType} />
-                  </div>
-                </div>
-              )}
-              {activeStep === 15 && (
-                <div>
-                  <div className="mb-4">
-                    <CustomerProductService ref={customers} reportType={reportType} />
-                  </div>
-                </div>
-              )}
-              {activeStep >=16 && (
-                <div>
-                  {reportType=='GRI Report: With Reference to' && activeStep===16?(
-                    <div>
-                      <ReferenceMaterialTopic />
-                    </div>
-                  ):(
-                    <div className="mb-4">
-                      {
-                        reportType=='GRI Report: With Reference to' && activeStep===17?(
-                          <RefereceContentIndex
-                          reportName={reportName}
-                          setActiveStep={setActiveStep}
-                          isOmissionSubmitted={isOmissionSubmitted}
-                          isOmissionModalOpen={isModalOpen}
-                          setIsOmissionModalOpen={setIsModalOpen}
-                          isCreateReportModalOpen={isCreateReportModalOpen}
-                          setIsCreateReportModalOpen={setIsCreateReportModalOpen}
-                          setIsOmissionSubmitted={setIsOmissionSubmitted}
-                          
-                          />
-                        ):(
-                          <ContentIndex
-                          reportName={reportName}
-                          setActiveStep={setActiveStep}
-                          isOmissionSubmitted={isOmissionSubmitted}
-                          isOmissionModalOpen={isModalOpen}
-                          setIsOmissionModalOpen={setIsModalOpen}
-                          isCreateReportModalOpen={isCreateReportModalOpen}
-                          setIsCreateReportModalOpen={setIsCreateReportModalOpen}
-                          setIsOmissionSubmitted={setIsOmissionSubmitted}
-                        />
-                        )
-                      }
-                   
-                  </div>
-                  )}
-                  
-                </div>
+              {isCustomReport ? (
+                // Render custom report sections
+                renderCustomReportSection()
+              ) : (
+                // Render original report sections
+                renderOriginalReportSections()
               )}
             </div>
           </div>
         </div>
       </div>
 
+      {/* Mobile overlay is handled by UnifiedESGSidebar */}
+
+      {/* Modals */}
       <MainValidationPopup
         isModalOpen={IsValidationModalOpen}
         setActiveStep={setActiveStep}

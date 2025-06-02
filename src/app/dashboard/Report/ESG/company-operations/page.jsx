@@ -23,15 +23,20 @@ import {
   setSupplyChain,
 } from "../../../../../lib/redux/features/ESGSlice/screen2Slice";
 
-const Companyoperations = forwardRef(({ onSubmitSuccess, subsections, sectionOrder = 2 }, ref) => {
+const Companyoperations = forwardRef(({ 
+  onSubmitSuccess, 
+  subsections = [], 
+  sectionOrder = 2,
+  sectionId,
+  sectionTitle 
+}, ref) => {
   console.log("CompanyOperations received subsections:", subsections);
   console.log("CompanyOperations received sectionOrder:", sectionOrder);
   
-  // Handle both array and object formats for subsections
-  const processedSubsections = Array.isArray(subsections) ? subsections : (subsections || []);
-  
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const reportType = 
+    typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   
@@ -84,16 +89,29 @@ const Companyoperations = forwardRef(({ onSubmitSuccess, subsections, sectionOrd
     }
   };
 
+  // For non-custom reports, show all subsections
+  const getSubsectionsToShow = () => {
+    if (reportType === 'Custom ESG Report') {
+      // Use provided subsections for custom reports
+      return Array.isArray(subsections) ? subsections : [];
+    } else {
+      // Show all available subsections for non-custom reports
+      return ['business_model', 'value_chain', 'excluded_entities', 'supply_chain'];
+    }
+  };
+
+  const subsectionsToShow = getSubsectionsToShow();
+
   // Filter and organize selected subsections
   const getSelectedSubsections = () => {
-    console.log("Processing subsections:", processedSubsections);
+    console.log("Processing subsections:", subsectionsToShow);
     
-    if (!processedSubsections || processedSubsections.length === 0) {
+    if (!subsectionsToShow || subsectionsToShow.length === 0) {
       console.log("No subsections found");
       return [];
     }
     
-    const result = processedSubsections
+    const result = subsectionsToShow
       .filter(subId => {
         const exists = subsectionMapping[subId];
         console.log(`Subsection ${subId} exists in mapping:`, !!exists);
@@ -154,7 +172,7 @@ const Companyoperations = forwardRef(({ onSubmitSuccess, subsections, sectionOrd
     // Only submit data for selected subsections
     const data = {};
     
-    if (processedSubsections.includes('business_model')) {
+    if (subsectionsToShow.includes('business_model')) {
       data.about_the_company = {
         page: "screen_two",
         label: `${sectionOrder}. About the company and operations`,
@@ -166,7 +184,7 @@ const Companyoperations = forwardRef(({ onSubmitSuccess, subsections, sectionOrd
       };
     }
 
-    if (processedSubsections.includes('value_chain')) {
+    if (subsectionsToShow.includes('value_chain')) {
       data.business_relations = {
         page: "screen_two",
         label: `${sectionOrder}.1.1 Activities, Value Chain, and Other Business Relationships`,
@@ -178,7 +196,7 @@ const Companyoperations = forwardRef(({ onSubmitSuccess, subsections, sectionOrd
       };
     }
 
-    if (processedSubsections.includes('excluded_entities')) {
+    if (subsectionsToShow.includes('excluded_entities')) {
       data.entities_included = {
         page: "screen_two",
         label: `${sectionOrder}.1.2 Entities Included in the Organization's Sustainability Reporting`,
@@ -190,7 +208,7 @@ const Companyoperations = forwardRef(({ onSubmitSuccess, subsections, sectionOrd
       };
     }
 
-    if (processedSubsections.includes('supply_chain')) {
+    if (subsectionsToShow.includes('supply_chain')) {
       data.supply_chain_description = {
         page: "screen_two",
         label: `${sectionOrder}.2 Supply Chain`,
@@ -363,26 +381,21 @@ const Companyoperations = forwardRef(({ onSubmitSuccess, subsections, sectionOrd
 
   console.log("Final check - selectedSubsections:", selectedSubsections);
 
-  // if (!selectedSubsections || selectedSubsections.length === 0) {
-  //   return (
-  //     <div className="mx-2 p-2">
-  //       <div>
-  //         <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-  //           {sectionOrder}. About the company and operations
-  //         </h3>
-  //       </div>
-  //       <div className="p-4 border border-yellow-300 bg-yellow-50 rounded">
-  //         <p className="text-yellow-800 font-medium">No subsections selected for this section.</p>
-  //         <p className="text-yellow-600 text-sm mt-2">
-  //           Available subsections: {Object.keys(subsectionMapping).join(', ')}
-  //         </p>
-  //         <p className="text-yellow-600 text-sm">
-  //           Received subsections: {JSON.stringify(processedSubsections)}
-  //         </p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  // Don't render anything if no subsections are selected (for custom reports)
+  if (reportType === 'Custom ESG Report' && selectedSubsections.length === 0) {
+    return (
+      <div className="mx-2 p-2">
+        <div>
+          <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+            {sectionOrder}. About the company and operations
+          </h3>
+        </div>
+        <div className="text-center py-8">
+          <p className="text-gray-500">No subsections selected for this section.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -397,68 +410,70 @@ const Companyoperations = forwardRef(({ onSubmitSuccess, subsections, sectionOrd
             {selectedSubsections.map(section => renderSection(section))}
           </div>
 
-          {/* Page sidebar */}
-          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              {sectionOrder}. About the company and operations
-            </p>
-            
-            {selectedSubsections.map((section, index) => {
-              let displayTitle = section.title;
-              let sectionNum = section.sectionNumber;
+          {/* Page sidebar - only show if there are subsections */}
+          {selectedSubsections.length > 0 && (
+            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
+              <p className="text-[11px] text-[#727272] mb-2 uppercase">
+                {sectionOrder}. About the company and operations
+              </p>
+              
+              {selectedSubsections.map((section, index) => {
+                let displayTitle = section.title;
+                let sectionNum = section.sectionNumber;
 
-              // Handle special cases for nested sections
-              if (section.id === 'value_chain') {
-                displayTitle = `${sectionOrder}.1 Business Model and Impact`;
-                return (
-                  <div key={section.id}>
+                // Handle special cases for nested sections
+                if (section.id === 'value_chain') {
+                  displayTitle = `${sectionOrder}.1 Business Model and Impact`;
+                  return (
+                    <div key={section.id}>
+                      <p
+                        className={`text-[12px] mb-2 cursor-pointer ${
+                          activeSection === section.id ? "text-blue-400" : ""
+                        }`}
+                        onClick={() => scrollToSection(section.id)}
+                      >
+                        {displayTitle}
+                      </p>
+                      <p
+                        className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                          activeSection === section.id ? "text-blue-400" : ""
+                        }`}
+                        onClick={() => scrollToSection(section.id)}
+                      >
+                        {sectionOrder}.1.1 Activities, Value Chain, and Other Business Relationships
+                      </p>
+                    </div>
+                  );
+                } else if (section.id === 'excluded_entities') {
+                  return (
                     <p
-                      className={`text-[12px] mb-2 cursor-pointer ${
-                        activeSection === section.id ? "text-blue-400" : ""
-                      }`}
-                      onClick={() => scrollToSection(section.id)}
-                    >
-                      {displayTitle}
-                    </p>
-                    <p
+                      key={section.id}
                       className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                         activeSection === section.id ? "text-blue-400" : ""
                       }`}
                       onClick={() => scrollToSection(section.id)}
                     >
-                      {sectionOrder}.1.1 Activities, Value Chain, and Other Business Relationships
+                      {sectionOrder}.1.2 Entities Included in the Organization's Sustainability Reporting
                     </p>
-                  </div>
-                );
-              } else if (section.id === 'excluded_entities') {
+                  );
+                } else if (section.id === 'supply_chain') {
+                  displayTitle = `${sectionOrder}.2 ${section.title}`;
+                }
+
                 return (
                   <p
                     key={section.id}
-                    className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                    className={`text-[12px] mb-2 cursor-pointer ${
                       activeSection === section.id ? "text-blue-400" : ""
                     }`}
                     onClick={() => scrollToSection(section.id)}
                   >
-                    {sectionOrder}.1.2 Entities Included in the Organization's Sustainability Reporting
+                    {section.id !== 'excluded_entities' ? displayTitle : section.subTitle}
                   </p>
                 );
-              } else if (section.id === 'supply_chain') {
-                displayTitle = `${sectionOrder}.2 ${section.title}`;
-              }
-
-              return (
-                <p
-                  key={section.id}
-                  className={`text-[12px] mb-2 cursor-pointer ${
-                    activeSection === section.id ? "text-blue-400" : ""
-                  }`}
-                  onClick={() => scrollToSection(section.id)}
-                >
-                  {section.id !== 'excluded_entities' ? displayTitle : section.subTitle}
-                </p>
-              );
-            })}
-          </div>
+              })}
+            </div>
+          )}
         </div>
       </div>
       {loopen && (
@@ -476,5 +491,7 @@ const Companyoperations = forwardRef(({ onSubmitSuccess, subsections, sectionOrd
     </>
   );
 });
+
+Companyoperations.displayName = 'Companyoperations';
 
 export default Companyoperations;
