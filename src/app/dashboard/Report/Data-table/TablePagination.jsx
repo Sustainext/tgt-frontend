@@ -68,7 +68,8 @@ else{
   const ActionMenu = ({ item }) => {
     const isGRIReport =
       item.report_type === "GRI Report: In accordance With" ||
-      item.report_type === "GRI Report: With Reference to";
+      item.report_type === "GRI Report: With Reference to" ||
+      item.report_type == "Custom ESG Report"
     return (
       <div   className={`absolute bg-white shadow-lg rounded-lg py-2 w-[211px] z-10 right-8 ${
         menuDirection === "up" ? "bottom-full mb-2" : " top-full mt-2"

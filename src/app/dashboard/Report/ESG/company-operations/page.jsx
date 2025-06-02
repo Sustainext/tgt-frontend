@@ -363,26 +363,26 @@ const Companyoperations = forwardRef(({ onSubmitSuccess, subsections, sectionOrd
 
   console.log("Final check - selectedSubsections:", selectedSubsections);
 
-  if (!selectedSubsections || selectedSubsections.length === 0) {
-    return (
-      <div className="mx-2 p-2">
-        <div>
-          <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-            {sectionOrder}. About the company and operations
-          </h3>
-        </div>
-        <div className="p-4 border border-yellow-300 bg-yellow-50 rounded">
-          <p className="text-yellow-800 font-medium">No subsections selected for this section.</p>
-          <p className="text-yellow-600 text-sm mt-2">
-            Available subsections: {Object.keys(subsectionMapping).join(', ')}
-          </p>
-          <p className="text-yellow-600 text-sm">
-            Received subsections: {JSON.stringify(processedSubsections)}
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // if (!selectedSubsections || selectedSubsections.length === 0) {
+  //   return (
+  //     <div className="mx-2 p-2">
+  //       <div>
+  //         <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+  //           {sectionOrder}. About the company and operations
+  //         </h3>
+  //       </div>
+  //       <div className="p-4 border border-yellow-300 bg-yellow-50 rounded">
+  //         <p className="text-yellow-800 font-medium">No subsections selected for this section.</p>
+  //         <p className="text-yellow-600 text-sm mt-2">
+  //           Available subsections: {Object.keys(subsectionMapping).join(', ')}
+  //         </p>
+  //         <p className="text-yellow-600 text-sm">
+  //           Received subsections: {JSON.stringify(processedSubsections)}
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>

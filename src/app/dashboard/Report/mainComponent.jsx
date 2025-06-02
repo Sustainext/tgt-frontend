@@ -416,7 +416,8 @@ const Report = () => {
           window.localStorage.setItem("reportType", reporttype);
           if (
             reporttype == "GRI Report: In accordance With" ||
-            reporttype == "GRI Report: With Reference to"
+            reporttype == "GRI Report: With Reference to" || 
+            reporttype == "Custom ESG Report"
           ) {
             router.push("/dashboard/Report/ESG");
           } else {

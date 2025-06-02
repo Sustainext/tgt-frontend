@@ -3,109 +3,109 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // Default sections - keeping original IDs for compatibility but mapping to camelCase internally
 const defaultSections = [
-  { 
-    id: 'about_company', 
-    title: 'About the Company & Operations', 
-    mandatory: true,
+  {
+    id: 'message_ceo',
+    title: 'Message From Our Leadership',
+    mandatory: false,
     enabled: true,
     order: 1
   },
-  { 
-    id: 'message_ceo', 
-    title: 'Message From Our Leadership', 
-    mandatory: true,
+    {
+    id: 'about_company',
+    title: 'About the Company & Operations',
+    mandatory: false,
     enabled: true,
     order: 2
   },
-  { 
-    id: 'mission_vision', 
-    title: 'Mission, Vision, Value', 
-    mandatory: true,
+  {
+    id: 'mission_vision',
+    title: 'Mission, Vision, Value',
+    mandatory: false,
     enabled: true,
     order: 3
   },
-  { 
-    id: 'sustainability', 
-    title: 'Sustainability Roadmap', 
-    mandatory: true,
+  {
+    id: 'sustainability',
+    title: 'Sustainability Roadmap',
+    mandatory: false,
     enabled: true,
     order: 4
   },
-  { 
-    id: 'awards', 
-    title: 'Awards & Alliances', 
-    mandatory: true,
+  {
+    id: 'awards',
+    title: 'Awards & Alliances',
+    mandatory: false,
     enabled: true,
     order: 5
   },
-  { 
-    id: 'stakeholder', 
-    title: 'Stakeholder Engagement', 
-    mandatory: true,
+  {
+    id: 'stakeholder',
+    title: 'Stakeholder Engagement',
+    mandatory: false,
     enabled: true,
     order: 6
   },
-  { 
-    id: 'about_report', 
-    title: 'About the Report', 
+  {
+    id: 'about_report',
+    title: 'About the Report',
     mandatory: false,
-    enabled: false,
+    enabled: true,
     order: 7
   },
-  { 
-    id: 'governance', 
-    title: 'Corporate Governance', 
+  {
+    id: 'governance',
+    title: 'Corporate Governance',
     mandatory: false,
-    enabled: false,
+    enabled: true,
     order: 8
   },
-  { 
-    id: 'journey', 
-    title: 'Sustainability Journey', 
+  {
+    id: 'journey',
+    title: 'Sustainability Journey',
     mandatory: false,
-    enabled: false,
+    enabled: true,
     order: 9
   },
-  { 
-    id: 'economic', 
-    title: 'Economic Performance', 
+  {
+    id: 'economic',
+    title: 'Economic Performance',
     mandatory: false,
-    enabled: false,
+    enabled: true,
     order: 10
   },
-  { 
-    id: 'environment', 
-    title: 'Environment', 
+  {
+    id: 'environment',
+    title: 'Environment',
     mandatory: false,
-    enabled: false,
+    enabled: true,
     order: 11
   },
-  { 
-    id: 'people', 
-    title: 'People', 
+  {
+    id: 'people',
+    title: 'People',
     mandatory: false,
-    enabled: false,
+    enabled: true,
     order: 12
   },
-  { 
-    id: 'community', 
-    title: 'Community', 
+  {
+    id: 'community',
+    title: 'Community',
     mandatory: false,
-    enabled: false,
+    enabled: true,
     order: 13
   },
-  { 
-    id: 'customers', 
-    title: 'Customers, Products & Services', 
+  {
+    id: 'customers',
+    title: 'Customers, Products & Services',
     mandatory: false,
-    enabled: false,
+    enabled: true,
     order: 14
   },
-  { 
-    id: 'materiality', 
-    title: 'Materiality', 
+  {
+    id: 'materiality',
+    title: 'Materiality',
     mandatory: false,
-    enabled: false,
+    enabled: true,
     order: 15
   },
 ];
