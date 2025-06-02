@@ -44,15 +44,15 @@ export default function ReportBuilderPage() {
 
   console.log(selectedSubsections, "look");
 
-  useEffect(() => {
-    const savedSections = JSON.parse(localStorage.getItem('report_sections') || '[]');
-    const savedSubsections = JSON.parse(localStorage.getItem('report_subsections') || '{}');
-    const savedReportType = localStorage.getItem('reportType') || 'Custom ESG Report';
+  // useEffect(() => {
+  //   const savedSections = JSON.parse(localStorage.getItem('report_sections') || '[]');
+  //   const savedSubsections = JSON.parse(localStorage.getItem('report_subsections') || '{}');
+  //   const savedReportType = localStorage.getItem('reportType') || 'Custom ESG Report';
 
-    if (savedSections.length > 0) setSections(savedSections);
-    if (Object.keys(savedSubsections).length > 0) setSelectedSubsections(savedSubsections);
-    setReportType(savedReportType);
-  }, []);
+  //   if (savedSections.length > 0) setSections(savedSections);
+  //   if (Object.keys(savedSubsections).length > 0) setSelectedSubsections(savedSubsections);
+  //   setReportType(savedReportType);
+  // }, []);
 
   const handleNextStep = (selectedSections) => {
     localStorage.setItem('report_sections', JSON.stringify(selectedSections));

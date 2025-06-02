@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { MdKeyboardArrowLeft } from "react-icons/md";
@@ -6,6 +7,8 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 // Redux selectors and actions
 import {
   selectEnabledSections,
+  selectSubsections,
+  selectSelectedSubsections,
   selectCurrentReportPage,
   setSectionEditorOpen,
   selectIsSectionEditorOpen,
@@ -14,74 +17,29 @@ import {
 
 import SectionEditorModal from './sectionEditorModal';
 
-// Sidebar content component
 const ESGSidebarContent = ({
   closeMobile,
   onEditClick,
   reportType,
-  allSections = [],
-  activeStep,
-  setActiveStep
+  allSections // Pass all sections for non-custom reports
 }) => {
   const dispatch = useDispatch();
   const enabledSections = useSelector(selectEnabledSections);
   const currentReportPage = useSelector(selectCurrentReportPage);
   
-  // Determine sections to show based on report type
-  const sectionsToShow = reportType === 'Custom ESG Report' ? enabledSections : allSections;
+  // Use all sections if not custom report, otherwise use enabled sections
+  const sectionsToShow = reportType !== 'Custom ESG Report' ? allSections : enabledSections;
   const showEditButton = reportType === 'Custom ESG Report';
-  const isCustomReport = reportType === 'Custom ESG Report';
-
-  // Get the original section names with proper titles
-  const getOriginalSections = () => {
-    const baseNames = [
-      "Message from Our Leadership",
-      "About the Company & Operations",
-      "Mission, Vision, Value", 
-      "Sustainability Roadmap",
-      "Awards & Alliances",
-      "Stakeholder Engagement",
-      "About the Report",
-      "Materiality",
-      "Corporate Governance",
-      "Sustainability Journey",
-      "Economic Performance",
-      "Environment",
-      "People",
-      "Community",
-      "Customers, products & services"
-    ];
-
-    if (reportType === 'GRI Report: With Reference to') {
-      baseNames.push('Management of Material Topic');
-    }
-
-    return baseNames.filter(Boolean);
-  };
-
-  const originalSectionNames = getOriginalSections();
 
   const handleSectionClick = (sectionIndex) => {
-    if (isCustomReport) {
-      dispatch(setCurrentReportPage(sectionIndex));
-    } else {
-      setActiveStep(sectionIndex + 1);
-    }
+    dispatch(setCurrentReportPage(sectionIndex));
     if (closeMobile) closeMobile();
-  };
-
-  const getCurrentActiveIndex = () => {
-    if (isCustomReport) {
-      return currentReportPage;
-    } else {
-      return activeStep - 1;
-    }
   };
 
   return (
     <div className="font-medium">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4 px-2 xl:hidden lg:hidden">
+      <div className="flex items-center justify-between px-2 xl:hidden lg:hidden">
         <span className="text-[16px] font-[600] text-[#727272]">Report Module</span>
         <button onClick={closeMobile} className="text-gray-700">
           <MdKeyboardArrowLeft className="h-6 w-6" />
@@ -103,13 +61,12 @@ const ESGSidebarContent = ({
 
       {/* Section List */}
       <div className="mb-3">
-        {isCustomReport ? (
-          // Custom report sections
-          sectionsToShow.map((section, index) => (
+        {sectionsToShow.map((section, index) => {
+          return (
             <p
               key={section.id}
               className={`text-[13px] text-[#727272] cursor-pointer my-1 transition-colors ${
-                getCurrentActiveIndex() === index
+                currentReportPage === index
                   ? "bg-[#007eef0d] p-2 px-5 border-r-2 border-blue-500"
                   : "bg-transparent p-2 px-5 hover:bg-gray-50"
               }`}
@@ -117,36 +74,18 @@ const ESGSidebarContent = ({
             >
               {index + 1}. {section.title}
             </p>
-          ))
-        ) : (
-          // Original report sections
-          originalSectionNames.map((sectionName, index) => (
-            <p
-              key={index}
-              className={`text-[13px] text-[#727272] cursor-pointer my-1 ${
-                getCurrentActiveIndex() === index
-                  ? "bg-[#007eef0d] p-2 px-5"
-                  : "bg-transparent p-2 px-5"
-              }`}
-              onClick={() => handleSectionClick(index)}
-            >
-              {sectionName}
-            </p>
-          ))
-        )}
+          );
+        })}
       </div>
     </div>
   );
 };
 
-// Main Sidebar Component
-const UnifiedESGSidebar = ({
+const ESGSidebar = ({
   setIsOpenMobile = () => {},
   isOpenMobile = false,
-  reportType = 'Custom ESG Report',
-  allSections = [],
-  activeStep,
-  setActiveStep
+  reportType = 'Custom ESG Report', // Add reportType prop
+  allSections = [] // Add allSections prop for non-custom reports
 }) => {
   const dispatch = useDispatch();
   const isSectionEditorOpen = useSelector(selectIsSectionEditorOpen);
@@ -165,14 +104,12 @@ const UnifiedESGSidebar = ({
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="m-3 ml-2 border border-r-2 border-b-2 shadow-lg rounded-lg h-full hidden xl:block lg:block">
-        <div className="flex items-start py-4 h-screen rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
+      <div className="shadow-lg rounded-lg h-full hidden xl:block lg:block">
+        <div className="flex items-start h-screen rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
           <ESGSidebarContent
             onEditClick={handleEditClick}
             reportType={reportType}
             allSections={allSections}
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
           />
         </div>
       </div>
@@ -197,18 +134,18 @@ const UnifiedESGSidebar = ({
             onEditClick={handleEditClick}
             reportType={reportType}
             allSections={allSections}
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
           />
         </div>
       </div>
 
       {/* Modal for editing section/subsection - only show for custom reports */}
       {isSectionEditorOpen && showEditModal && (
-        <SectionEditorModal onClose={handleCloseModal} />
+        <SectionEditorModal
+          onClose={handleCloseModal}
+        />
       )}
     </>
   );
 };
 
-export default UnifiedESGSidebar;
+export default ESGSidebar;
