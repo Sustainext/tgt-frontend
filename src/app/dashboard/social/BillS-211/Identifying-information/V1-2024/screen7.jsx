@@ -170,6 +170,8 @@ const Screenseven = ({
           theme: "light",
         });
         LoaderClose();
+        handleTabClick("Data collection");
+        setView("home");
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
