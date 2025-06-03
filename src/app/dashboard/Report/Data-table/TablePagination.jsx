@@ -336,7 +336,12 @@ else{
     //   window.localStorage.setItem("reportorgname", organization_name);
     // }
     // sessionStorage.setItem('reportData',newdata);
+    if (report_type === "canada_bill_s211_v2") {
+    router.push("/dashboard/Report/Bills211");
+  } else {
     router.push("/dashboard/Report/GHG/Ghgtemplates");
+  }
+   
 
     window.localStorage.setItem("reportname", name);
   };

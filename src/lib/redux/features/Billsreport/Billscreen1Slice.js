@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const BillScreen1Slice = createSlice({
   name: "Bills Report",
   initialState: {
+    report_id: "",
     about_the_Report: "",
     organization_profile_structure: "",
     business_activities: "",
@@ -12,9 +13,13 @@ const BillScreen1Slice = createSlice({
     reduce_forced_child_labour: "",
     remediation_loss_income: "",
     training_forced_child_labour:"",
+   remediation_measures:"",
     error: null,
   },
   reducers: {
+      setReportid: (state, action) => {
+      state.report_id = action.payload;
+    },
     setAboutTheReport: (state, action) => {
       state.about_the_Report = action.payload;
     },
@@ -42,10 +47,14 @@ const BillScreen1Slice = createSlice({
       setTrainingforcedchildlabour: (state, action) => {
       state.training_forced_child_labour = action.payload;
     },
+        setRemediationmeasures: (state, action) => {
+      state.remediation_measures = action.payload;
+    },
   },
 });
 
 export const {
+  setReportid,
   setAboutTheReport,
   setOrganizationprofilestructure,
   setBusinessactivities,
@@ -55,6 +64,7 @@ export const {
   setReduceforcedchildlabour,
   setRemediationlossincome,
   setTrainingforcedchildlabour,
+  setRemediationmeasures,
 } = BillScreen1Slice.actions;
 
 export default BillScreen1Slice.reducer;
