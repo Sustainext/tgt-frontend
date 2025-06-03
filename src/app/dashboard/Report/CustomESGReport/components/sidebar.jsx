@@ -13,6 +13,8 @@ import {
   setSectionEditorOpen,
   selectIsSectionEditorOpen,
   setCurrentReportPage,
+  selectSectionsToShow,
+  setCurrentReportPageForReportType,
 } from '../../../../../lib/redux/features/reportBuilderSlice';
 
 import SectionEditorModal from './sectionEditorModal';
@@ -24,11 +26,10 @@ const ESGSidebarContent = ({
   allSections // Pass all sections for non-custom reports
 }) => {
   const dispatch = useDispatch();
-  const enabledSections = useSelector(selectEnabledSections);
   const currentReportPage = useSelector(selectCurrentReportPage);
   
-  // Use all sections if not custom report, otherwise use enabled sections
-  const sectionsToShow = reportType !== 'Custom ESG Report' ? allSections : enabledSections;
+  // Use the new selector to get sections to show
+  const sectionsToShow = reportType !== 'Custom ESG Report' ? allSections : useSelector(selectEnabledSections);
   const showEditButton = reportType === 'Custom ESG Report';
 
   const handleSectionClick = (sectionIndex) => {
@@ -39,7 +40,7 @@ const ESGSidebarContent = ({
   return (
     <div className="font-medium">
       {/* Header */}
-      <div className="flex items-center justify-between px-2 xl:hidden lg:hidden">
+      <div className="flex items-center justify-between mb-4 px-2 xl:hidden lg:hidden">
         <span className="text-[16px] font-[600] text-[#727272]">Report Module</span>
         <button onClick={closeMobile} className="text-gray-700">
           <MdKeyboardArrowLeft className="h-6 w-6" />
@@ -62,11 +63,13 @@ const ESGSidebarContent = ({
       {/* Section List */}
       <div className="mb-3">
         {sectionsToShow.map((section, index) => {
+          const isActive = currentReportPage === index;
+          
           return (
             <p
               key={section.id}
               className={`text-[13px] text-[#727272] cursor-pointer my-1 transition-colors ${
-                currentReportPage === index
+                isActive
                   ? "bg-[#007eef0d] p-2 px-5 border-r-2 border-blue-500"
                   : "bg-transparent p-2 px-5 hover:bg-gray-50"
               }`}
@@ -105,7 +108,7 @@ const ESGSidebar = ({
     <>
       {/* Desktop Sidebar */}
       <div className="shadow-lg rounded-lg h-full hidden xl:block lg:block">
-        <div className="flex items-start h-screen rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
+        <div className="flex items-start py-4 h-screen rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
           <ESGSidebarContent
             onEditClick={handleEditClick}
             reportType={reportType}

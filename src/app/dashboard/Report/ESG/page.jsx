@@ -44,12 +44,11 @@ import {
   setSections,
   setSelectedSubsections,
   selectCurrentReportPage,
-  selectCurrentReportSection,
-  selectCanGoToNextPage,
-  selectCanGoToPreviousPage,
   nextReportPage,
   previousReportPage,
   setCurrentReportPage,
+  selectSectionsForReportType,
+  initializeForNonCustomReport,
 } from "../../../../lib/redux/features/reportBuilderSlice";
 
 import {
@@ -67,10 +66,24 @@ const ESGReport = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // Redux state
-  const allSections = useSelector(selectSections);
-  const allSubsections = useSelector(selectSubsections);
-  const selectedSubsections = useSelector(selectSelectedSubsections);
+  // Default sections definition (move this up before it's used)
+  const defaultSections = [
+    { id: 'message_ceo', title: 'Message From Our Leadership', mandatory: false, enabled: true, order: 1 },
+    { id: 'about_company', title: 'About the Company & Operations', mandatory: false, enabled: true, order: 2 },
+    { id: 'mission_vision', title: 'Mission, Vision, Value', mandatory: false, enabled: true, order: 3 },
+    { id: 'sustainability', title: 'Sustainability Roadmap', mandatory: false, enabled: true, order: 4 },
+    { id: 'awards', title: 'Awards & Alliances', mandatory: false, enabled: true, order: 5 },
+    { id: 'stakeholder', title: 'Stakeholder Engagement', mandatory: false, enabled: true, order: 6 },
+    { id: 'about_report', title: 'About the Report', mandatory: false, enabled: true, order: 7 },
+    { id: 'governance', title: 'Corporate Governance', mandatory: false, enabled: true, order: 8 },
+    { id: 'journey', title: 'Sustainability Journey', mandatory: false, enabled: true, order: 9 },
+    { id: 'economic', title: 'Economic Performance', mandatory: false, enabled: true, order: 10 },
+    { id: 'environment', title: 'Environment', mandatory: false, enabled: true, order: 11 },
+    { id: 'people', title: 'People', mandatory: false, enabled: true, order: 12 },
+    { id: 'community', title: 'Community', mandatory: false, enabled: true, order: 13 },
+    { id: 'customers', title: 'Customers, Products & Services', mandatory: false, enabled: true, order: 14 },
+    { id: 'materiality', title: 'Materiality', mandatory: false, enabled: true, order: 15 },
+  ];
 
   // Local state
   const [isOpenMobile, setIsOpenMobile] = useState(false);
@@ -78,7 +91,6 @@ const ESGReport = () => {
   const [isCreateReportModalOpen, setIsCreateReportModalOpen] = useState(false);
   const [isOmissionSubmitted, setIsOmissionSubmitted] = useState(true);
   const [IsValidationModalOpen, setIsValidationModalOpen] = useState(false);
-  const [activeStep, setActiveStep] = useState(1);
   const [reportName, setReportName] = useState("Report");
   const [userName, setUsername] = useState("");
   const [userEmail, setuserEmail] = useState("");
@@ -91,39 +103,32 @@ const ESGReport = () => {
   const [corpName, setCorpName] = useState("");
   const [missing_fields, setMissingFields] = useState([]);
 
-  // Refs for form submission
-  const messageFromCeoRef = useRef();
-  const aboutTheCompany = useRef();
-  const missionVision = useRef();
-  const sustainibilityRoadmap = useRef();
-  const awardAlliances = useRef();
-  const stakeholderEngagement = useRef();
-  const aboutReport = useRef();
-  const materiality = useRef();
-  const corporateGovernance = useRef();
-  const sustainabilityJourney = useRef();
-  const environment = useRef();
-  const community = useRef();
-  const economicperformance = useRef();
-  const people = useRef();
-  const customers = useRef();
+    // Redux state for navigation
+  const allSections = useSelector(selectSections);
+  const allSubsections = useSelector(selectSubsections);
+  const selectedSubsections = useSelector(selectSelectedSubsections);
+  const currentReportPage = useSelector(selectCurrentReportPage);
 
-  const stepRefs = {
-    1: messageFromCeoRef,
-    2: aboutTheCompany,
-    3: missionVision,
-    4: sustainibilityRoadmap,
-    5: awardAlliances,
-    6: stakeholderEngagement,
-    7: aboutReport,
-    8: materiality,
-    9: corporateGovernance,
-    10: sustainabilityJourney,
-    12: environment,
-    14: community,
-    11: economicperformance,
-    13: people,
-    15: customers,
+  // Get sections based on report type - this ensures default order for non-custom reports
+  const sectionsToUse = useSelector(selectSectionsForReportType(reportType || "", defaultSections));
+
+  // Refs for form submission - mapped to section IDs
+  const sectionRefs = {
+    message_ceo: useRef(),
+    about_company: useRef(),
+    mission_vision: useRef(),
+    sustainability: useRef(),
+    awards: useRef(),
+    stakeholder: useRef(),
+    about_report: useRef(),
+    materiality: useRef(),
+    governance: useRef(),
+    journey: useRef(),
+    environment: useRef(),
+    community: useRef(),
+    economic: useRef(),
+    people: useRef(),
+    customers: useRef(),
   };
 
   // State to track if initialization has been done
@@ -132,27 +137,9 @@ const ESGReport = () => {
   // Initialize Redux state based on report type
   useEffect(() => {
     const initializeReportState = () => {
-      if (reportType === "Custom ESG Report") {
-        // For custom reports, load from localStorage if available
-        // const savedSections = JSON.parse(
-        //   localStorage.getItem("report_sections") || "[]"
-        // );
-        // const savedSubsections = JSON.parse(
-        //   localStorage.getItem("report_subsections") || "{}"
-        // );
-
-        // if (savedSections.length > 0) {
-        //   dispatch(setSections(savedSections));
-        // }
-        // if (Object.keys(savedSubsections).length > 0) {
-        //   dispatch(setSelectedSubsections(savedSubsections));
-        // }
-      } else {
-        // For non-custom reports, enable all sections and select all subsections
-        const enabledSections = allSections.map((section) => ({
-          ...section,
-          enabled: true,
-        }));
+      if (reportType !== "Custom ESG Report" && reportType) {
+        // For non-custom reports, always reset to default order and enable all sections
+        dispatch(initializeForNonCustomReport(defaultSections));
 
         // Default subsection selections for all sections
         const defaultSubsections = {};
@@ -166,7 +153,6 @@ const ESGReport = () => {
           defaultSubsections[sectionId] = collectIds(sectionSubsections);
         });
 
-        dispatch(setSections(enabledSections));
         dispatch(setSelectedSubsections(defaultSubsections));
       }
       setIsInitialized(true);
@@ -175,29 +161,16 @@ const ESGReport = () => {
     if (reportType && !isInitialized) {
       initializeReportState();
     }
-  }, [reportType, isInitialized, dispatch]);
+  }, [reportType, isInitialized, dispatch, allSubsections]);
 
-  // Get sections and subsections to display (only for non-custom reports)
-  const sectionsToDisplay = useMemo(() => {
-    return allSections;
-  }, [allSections]);
+  // Get current section based on Redux navigation
+  const currentSection = useMemo(() => {
+    return sectionsToUse[currentReportPage] || null;
+  }, [sectionsToUse, currentReportPage]);
 
-  const subsectionsToDisplay = useMemo(() => {
-    // Return all subsections for non-custom reports
-    const allSelectedSubsections = {};
-    Object.keys(allSubsections).forEach((sectionId) => {
-      const sectionSubsections = allSubsections[sectionId] || [];
-      const collectIds = (subs) =>
-        subs.flatMap((s) => [
-          s.id,
-          ...(s.children ? collectIds(s.children) : []),
-        ]);
-      allSelectedSubsections[sectionId] = collectIds(sectionSubsections);
-    });
-    return allSelectedSubsections;
-  }, [allSubsections]);
-
-  // Remove custom report component mapping since it's handled elsewhere
+  // Navigation helpers
+  const canGoToNext = currentReportPage < sectionsToUse.length - 1;
+  const canGoToPrevious = currentReportPage > 0;
 
   // Initialize component state
   useEffect(() => {
@@ -231,7 +204,7 @@ const ESGReport = () => {
     return <ReportBuilderPage />;
   }
 
-  // Original report navigation handlers
+  // Original report navigation handlers updated for Redux
   const loadMissingFields = async () => {
     const url = `${process.env.BACKEND_API_URL}/esg_report/get_field_validation/${reportid}/`;
     try {
@@ -241,7 +214,7 @@ const ESGReport = () => {
           setMissingFields(response.data);
           setIsValidationModalOpen(true);
         } else {
-          setActiveStep((prev) => prev + 1);
+          dispatch(nextReportPage());
         }
       }
     } catch (error) {
@@ -250,7 +223,7 @@ const ESGReport = () => {
   };
 
   const handleNextStep = async (type) => {
-    const currentRef = stepRefs[activeStep]?.current;
+    const currentRef = sectionRefs[currentSection?.id]?.current;
 
     const submitAndProceed = async () => {
       if (currentRef) {
@@ -282,7 +255,7 @@ const ESGReport = () => {
     if (type === "next") {
       const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
-        setActiveStep((prev) => prev + 1);
+        dispatch(nextReportPage());
       }
     } else if (type === "last") {
       const isSubmitted = await submitAndProceed();
@@ -301,97 +274,106 @@ const ESGReport = () => {
   };
 
   const handlePreviousStep = () => {
-    setActiveStep((prev) => prev - 1);
+    dispatch(previousReportPage());
   };
 
-  // Remove custom report section rendering since it's handled by ReportBuilderPage
+  // Component mapping for sections
+  const renderSectionComponent = () => {
+    if (!currentSection) return null;
 
-  // Render original report sections
-  const renderOriginalReportSections = () => {
-    return (
-      <>
-        {activeStep === 1 && <MessageFromCEO ref={messageFromCeoRef} />}
-        {activeStep === 2 && <Companyoperations ref={aboutTheCompany} />}
-        {activeStep === 3 && <MissionVission ref={missionVision} />}
-        {activeStep === 4 && (
-          <SustainibilityRoadmap ref={sustainibilityRoadmap} />
-        )}
-        {activeStep === 5 && <AwardsRecognition ref={awardAlliances} />}
-        {activeStep === 6 && (
-          <StakeholderEngagement ref={stakeholderEngagement} />
-        )}
-        {activeStep === 7 && <AboutTheReport ref={aboutReport} />}
-        {activeStep === 8 &&
-          (reportType === "GRI Report: With Reference to" ? (
-            <ReferenceMateriality ref={materiality} />
-          ) : (
-            <Materiality ref={materiality} />
-          ))}
-        {activeStep === 9 && (
-          <CorporateGovernance
-            ref={corporateGovernance}
-            reportType={reportType}
-          />
-        )}
-        {activeStep === 10 && (
-          <SustainibilityJourney
-            ref={sustainabilityJourney}
-            reportType={reportType}
-          />
-        )}
-        {activeStep === 11 && (
-          <EconomicPerformance
-            ref={economicperformance}
-            reportType={reportType}
-          />
-        )}
-        {activeStep === 12 && (
-          <Environment ref={environment} reportType={reportType} />
-        )}
-        {activeStep === 13 && <People ref={people} reportType={reportType} />}
-        {activeStep === 14 && (
-          <Community ref={community} reportType={reportType} />
-        )}
-        {activeStep === 15 && (
-          <CustomerProductService ref={customers} reportType={reportType} />
-        )}
-        {activeStep >= 16 &&
-          (reportType === "GRI Report: With Reference to" &&
-          activeStep === 16 ? (
-            <ReferenceMaterialTopic />
-          ) : reportType === "GRI Report: With Reference to" &&
-            activeStep === 17 ? (
-            <RefereceContentIndex
-              reportName={reportName}
-              setActiveStep={setActiveStep}
-              isOmissionSubmitted={isOmissionSubmitted}
-              isOmissionModalOpen={isModalOpen}
-              setIsOmissionModalOpen={setIsModalOpen}
-              isCreateReportModalOpen={isCreateReportModalOpen}
-              setIsCreateReportModalOpen={setIsCreateReportModalOpen}
-              setIsOmissionSubmitted={setIsOmissionSubmitted}
-            />
-          ) : (
-            <ContentIndex
-              reportName={reportName}
-              setActiveStep={setActiveStep}
-              isOmissionSubmitted={isOmissionSubmitted}
-              isOmissionModalOpen={isModalOpen}
-              setIsOmissionModalOpen={setIsModalOpen}
-              isCreateReportModalOpen={isCreateReportModalOpen}
-              setIsCreateReportModalOpen={setIsCreateReportModalOpen}
-              setIsOmissionSubmitted={setIsOmissionSubmitted}
-            />
-          ))}
-      </>
-    );
+    const sectionOrder = currentReportPage + 1;
+    const sectionSubsections = selectedSubsections[currentSection.id] || [];
+
+    const commonProps = {
+      subsections: sectionSubsections,
+      sectionOrder,
+      sectionId: currentSection.id,
+      sectionTitle: currentSection.title,
+      reportType,
+    };
+
+    switch (currentSection.id) {
+      case 'message_ceo':
+        return <MessageFromCEO ref={sectionRefs.message_ceo} {...commonProps} />;
+      case 'about_company':
+        return <Companyoperations ref={sectionRefs.about_company} {...commonProps} />;
+      case 'mission_vision':
+        return <MissionVission ref={sectionRefs.mission_vision} {...commonProps} />;
+      case 'sustainability':
+        return <SustainibilityRoadmap ref={sectionRefs.sustainability} {...commonProps} />;
+      case 'awards':
+        return <AwardsRecognition ref={sectionRefs.awards} {...commonProps} />;
+      case 'stakeholder':
+        return <StakeholderEngagement ref={sectionRefs.stakeholder} {...commonProps} />;
+      case 'about_report':
+        return <AboutTheReport ref={sectionRefs.about_report} {...commonProps} />;
+      case 'materiality':
+        return reportType === "GRI Report: With Reference to" ? (
+          <ReferenceMateriality ref={sectionRefs.materiality} {...commonProps} />
+        ) : (
+          <Materiality ref={sectionRefs.materiality} {...commonProps} />
+        );
+      case 'governance':
+        return <CorporateGovernance ref={sectionRefs.governance} {...commonProps} />;
+      case 'journey':
+        return <SustainibilityJourney ref={sectionRefs.journey} {...commonProps} />;
+      case 'economic':
+        return <EconomicPerformance ref={sectionRefs.economic} {...commonProps} />;
+      case 'environment':
+        return <Environment ref={sectionRefs.environment} {...commonProps} />;
+      case 'people':
+        return <People ref={sectionRefs.people} {...commonProps} />;
+      case 'community':
+        return <Community ref={sectionRefs.community} {...commonProps} />;
+      case 'customers':
+        return <CustomerProductService ref={sectionRefs.customers} {...commonProps} />;
+      default:
+        return null;
+    }
   };
 
-  const isCustomReport = false; // This component only handles non-custom reports
-  const shouldShowSidebar = !(
-    activeStep === 17 ||
-    (activeStep === 16 && reportType === "GRI Report: In accordance With")
-  );
+  // Special handling for content index and other final steps
+  const isInContentIndexPhase = currentReportPage >= sectionsToUse.length;
+  const shouldShowSidebar = !isInContentIndexPhase;
+
+  // Render content index or section component
+  const renderMainContent = () => {
+    if (isInContentIndexPhase) {
+      const contentIndexStep = currentReportPage - sectionsToUse.length + 16;
+      
+      if (reportType === "GRI Report: With Reference to" && contentIndexStep === 16) {
+        return <ReferenceMaterialTopic />;
+      } else if (reportType === "GRI Report: With Reference to" && contentIndexStep === 17) {
+        return (
+          <RefereceContentIndex
+            reportName={reportName}
+            setActiveStep={(step) => dispatch(setCurrentReportPage(step - 1))}
+            isOmissionSubmitted={isOmissionSubmitted}
+            isOmissionModalOpen={isModalOpen}
+            setIsOmissionModalOpen={setIsModalOpen}
+            isCreateReportModalOpen={isCreateReportModalOpen}
+            setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+            setIsOmissionSubmitted={setIsOmissionSubmitted}
+          />
+        );
+      } else {
+        return (
+          <ContentIndex
+            reportName={reportName}
+            setActiveStep={(step) => dispatch(setCurrentReportPage(step - 1))}
+            isOmissionSubmitted={isOmissionSubmitted}
+            isOmissionModalOpen={isModalOpen}
+            setIsOmissionModalOpen={setIsModalOpen}
+            isCreateReportModalOpen={isCreateReportModalOpen}
+            setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+            setIsOmissionSubmitted={setIsOmissionSubmitted}
+          />
+        );
+      }
+    }
+
+    return renderSectionComponent();
+  };
 
   return (
     <>
@@ -403,9 +385,7 @@ const ESGReport = () => {
                 setIsOpenMobile={setIsOpenMobile}
                 isOpenMobile={isOpenMobile}
                 reportType={reportType}
-                allSections={allSections}
-                activeStep={activeStep}
-                setActiveStep={setActiveStep}
+                allSections={sectionsToUse}
               />
             </div>
           </div>
@@ -420,7 +400,7 @@ const ESGReport = () => {
                     <div>
                       <button
                         onClick={() => {
-                          if (activeStep > 15) {
+                          if (isInContentIndexPhase) {
                             router.push("/dashboard/Report");
                           } else {
                             handleNextStep("back");
@@ -474,30 +454,40 @@ const ESGReport = () => {
               <div className="hidden md:block lg:block xl:block">
                 <div className="float-right mr-2 flex items-center justify-center">
                   <div className="flex items-center justify-center">
-                    {/* Original report navigation only */}
-                    {activeStep !== 17 && (
-                      <button
-                        style={{
-                          display:
-                            activeStep === 1 ||
-                            (activeStep === 16 &&
-                              reportType === "GRI Report: In accordance With")
-                              ? "none"
-                              : "inline-block",
-                        }}
-                        className={`${
-                          activeStep === 1 ? "" : "text-gray-500"
-                        } px-3 py-1.5 rounded font-semibold w-[120px]`}
-                        onClick={handlePreviousStep}
-                        disabled={activeStep === 1}
-                      >
-                        &lt; Previous
-                      </button>
+                    {/* Show navigation for sections */}
+                    {!isInContentIndexPhase && (
+                      <>
+                        <button
+                          style={{
+                            display: !canGoToPrevious ? "none" : "inline-block",
+                          }}
+                          className="text-gray-500 px-3 py-1.5 rounded font-semibold w-[120px]"
+                          onClick={handlePreviousStep}
+                          disabled={!canGoToPrevious}
+                        >
+                          &lt; Previous
+                        </button>
+
+                        {canGoToNext ? (
+                          <button
+                            className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
+                            onClick={() => handleNextStep("next")}
+                          >
+                            Next &gt;
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleNextStep("last")}
+                            className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                          >
+                            Save & Fill Content Index
+                          </button>
+                        )}
+                      </>
                     )}
 
-                    {(activeStep === 16 &&
-                      reportType === "GRI Report: In accordance With") ||
-                    activeStep === 17 ? (
+                    {/* Content index navigation */}
+                    {isInContentIndexPhase && (
                       <div>
                         {reportType === "GRI Report: In accordance With" ? (
                           <div>
@@ -528,41 +518,6 @@ const ESGReport = () => {
                           </div>
                         )}
                       </div>
-                    ) : (
-                      <div>
-                        {activeStep < 15 ? (
-                          <button
-                            className={`${
-                              activeStep === 15
-                                ? "bg-gray-300"
-                                : "bg-blue-500 text-white"
-                            } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                            onClick={() => handleNextStep("next")}
-                            disabled={activeStep === 15}
-                          >
-                            Next &gt;
-                          </button>
-                        ) : (
-                          <div>
-                            {reportType === "GRI Report: With Reference to" &&
-                            activeStep === 15 ? (
-                              <button
-                                className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
-                                onClick={() => handleNextStep("next")}
-                              >
-                                Next &gt;
-                              </button>
-                            ) : (
-                              <button
-                                onClick={() => handleNextStep("last")}
-                                className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                              >
-                                Save & Fill Content Index
-                              </button>
-                            )}
-                          </div>
-                        )}
-                      </div>
                     )}
                   </div>
                 </div>
@@ -570,26 +525,36 @@ const ESGReport = () => {
             </div>
           </div>
 
-          {/* Mobile navigation for non-custom reports only */}
+          {/* Mobile navigation */}
           <div className="block md:hidden lg:hidden xl:hidden mb-2 h-[43px]">
             <div className="float-right mr-2 flex items-center justify-center mb-2">
               <div className="flex items-center justify-center">
-                {activeStep !== 16 && (
+                {!isInContentIndexPhase && canGoToPrevious && (
                   <button
-                    style={{
-                      display: activeStep === 1 ? "none" : "inline-block",
-                    }}
-                    className={`${
-                      activeStep === 1 ? "" : "text-gray-500"
-                    } px-3 py-1.5 rounded font-semibold`}
+                    className="text-gray-500 px-3 py-1.5 rounded font-semibold"
                     onClick={handlePreviousStep}
-                    disabled={activeStep === 1}
                   >
                     &lt; Previous
                   </button>
                 )}
 
-                {activeStep === 16 ? (
+                {!isInContentIndexPhase && canGoToNext ? (
+                  <button
+                    className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
+                    onClick={() => handleNextStep("next")}
+                  >
+                    Next &gt;
+                  </button>
+                ) : !isInContentIndexPhase ? (
+                  <button
+                    onClick={() => handleNextStep("last")}
+                    className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                  >
+                    Save & Fill Content Index
+                  </button>
+                ) : null}
+
+                {isInContentIndexPhase && (
                   <div>
                     {isOmissionSubmitted ? (
                       <button
@@ -607,29 +572,6 @@ const ESGReport = () => {
                       </button>
                     )}
                   </div>
-                ) : (
-                  <div>
-                    {activeStep < 15 ? (
-                      <button
-                        className={`${
-                          activeStep === 15
-                            ? "bg-gray-300"
-                            : "bg-blue-500 text-white"
-                        } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                        onClick={() => handleNextStep("next")}
-                        disabled={activeStep === 15}
-                      >
-                        Next &gt;
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => handleNextStep("last")}
-                        className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                      >
-                        Save & Fill Content Index
-                      </button>
-                    )}
-                  </div>
                 )}
               </div>
             </div>
@@ -637,8 +579,7 @@ const ESGReport = () => {
 
           <div className="xl:mx-3 md:mx-3 lg:mx-3 4k:mx-3 2k:mx-3 2xl:mx-3 my-2">
             <div>
-              {/* Render original report sections only */}
-              {renderOriginalReportSections()}
+              {renderMainContent()}
             </div>
           </div>
         </div>
@@ -659,9 +600,7 @@ const ESGReport = () => {
                 setIsOpenMobile={setIsOpenMobile}
                 isOpenMobile={true}
                 reportType={reportType}
-                allSections={allSections}
-                activeStep={activeStep}
-                setActiveStep={setActiveStep}
+                allSections={sectionsToUse}
               />
             </div>
           </div>
@@ -671,7 +610,7 @@ const ESGReport = () => {
       {/* Modals */}
       <MainValidationPopup
         isModalOpen={IsValidationModalOpen}
-        setActiveStep={setActiveStep}
+        setActiveStep={(step) => dispatch(setCurrentReportPage(step - 1))}
         missing_fields={missing_fields}
         setIsModalOpen={setIsValidationModalOpen}
         reportName={reportName}
@@ -689,4 +628,5 @@ const ESGReport = () => {
     </>
   );
 };
+
 export default ESGReport;

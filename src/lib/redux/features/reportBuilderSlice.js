@@ -757,4 +757,45 @@ export const selectCanProceedToNextStep = (state) => {
   }
 };
 
+// New selector to get sections in default order for non-custom reports
+export const selectSectionsForReportType = (reportType, defaultSections = []) => (state) => {
+  if (reportType === 'Custom ESG Report') {
+    // For custom reports, use the modified/reordered sections from Redux
+    return state.reportBuilder.sections.filter(s => s.enabled).sort((a, b) => a.order - b.order);
+  } else {
+    // For non-custom reports, always use default sections in default order
+    return defaultSections.map((section, index) => ({
+      ...section,
+      enabled: true,
+      order: index + 1
+    }));
+  }
+};
+
+// Updated selector for current display section that respects report type
+export const selectCurrentDisplaySectionForReportType = (reportType, defaultSections = []) => (state) => {
+  const sectionsToUse = reportType === 'Custom ESG Report' 
+    ? state.reportBuilder.sections.filter(s => s.enabled).sort((a, b) => a.order - b.order)
+    : defaultSections.map((section, index) => ({
+        ...section,
+        enabled: true,
+        order: index + 1
+      }));
+      
+  return sectionsToUse[state.reportBuilder.currentReportPage] || null;
+};
+
+// Action to reset sections to default order for non-custom reports
+export const initializeForNonCustomReport = (defaultSections) => (dispatch) => {
+  // Reset to default sections in default order
+  const defaultOrderedSections = defaultSections.map((section, index) => ({
+    ...section,
+    enabled: true,
+    order: index + 1
+  }));
+  
+  dispatch(setSections(defaultOrderedSections));
+  dispatch(setCurrentReportPage(0));
+};
+
 export default reportBuilderSlice.reducer;

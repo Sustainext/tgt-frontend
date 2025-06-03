@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  createRef,
   forwardRef,
   useImperativeHandle,
   useEffect,
@@ -10,8 +11,8 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-import Screen1 from "./sections/section1";
-import Screen2 from "./sections/section2";
+import Section1 from "./sections/section1";
+import Section2 from "./sections/section2";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setMessage,
@@ -21,25 +22,125 @@ import {
   setSignatureimage,
 } from "../../../../../lib/redux/features/ESGSlice/screen1Slice";
 import { Oval } from "react-loader-spinner";
-const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
+
+const MessageFromCeo = forwardRef(({ 
+  onSubmitSuccess, 
+  subsections = [], 
+  sectionOrder = 1,
+  sectionId,
+  sectionTitle 
+}, ref) => {
+  console.log("MessageFromCEO received subsections:", subsections);
+  console.log("MessageFromCEO received sectionOrder:", sectionOrder);
+
   const [loopen, setLoOpen] = useState(false);
   const [selectedCEOfile, setSelectedCEOFile] = useState("");
   const [selectedSignfile, setSelectedSignFile] = useState("");
+  const [activeSection, setActiveSection] = useState("");
+  
+  // Dynamic refs based on subsections
+  const sectionRefs = useRef({});
+  
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const reportType = 
+    typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
   const orgname =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  
   const apiCalledRef = useRef(false);
+  
   const content = useSelector((state) => state.screen1Slice.message);
-  const imageceo = useSelector((state) => state.screen1Slice.message_image); // Assuming imageceo is a File object
+  const imageceo = useSelector((state) => state.screen1Slice.message_image);
   const companyName = useSelector((state) => state.screen1Slice.company_name);
   const ceoname = useSelector((state) => state.screen1Slice.ceo_name);
-  const imagesing = useSelector((state) => state.screen1Slice.signature_image); // Assuming signature image is a file too
+  const imagesing = useSelector((state) => state.screen1Slice.signature_image);
   const dispatch = useDispatch();
+
+  // Map subsection IDs to their corresponding components and data
+  const subsectionMapping = {
+    chief_executive_message: {
+      component: Section1,
+      title: "Chief Executive Message",
+      subSections: []
+    },
+    board_message: {
+      component: Section2,
+      title: "Board Message",
+      subSections: []
+    }
+  };
+
+  // For non-custom reports, show all subsections
+  const getSubsectionsToShow = () => {
+    if (reportType === 'Custom ESG Report') {
+      // Use provided subsections for custom reports
+      return Array.isArray(subsections) ? subsections : [];
+    } else {
+      // Show all available subsections for non-custom reports
+      return ['chief_executive_message', 'board_message'];
+    }
+  };
+
+  const subsectionsToShow = getSubsectionsToShow();
+
+  // Filter and organize selected subsections
+  const getSelectedSubsections = () => {
+    console.log("Processing subsections:", subsectionsToShow);
+    
+    if (!subsectionsToShow || subsectionsToShow.length === 0) {
+      console.log("No subsections found");
+      return [];
+    }
+    
+    const result = subsectionsToShow
+      .filter(subId => {
+        const exists = subsectionMapping[subId];
+        console.log(`Subsection ${subId} exists in mapping:`, !!exists);
+        return exists;
+      })
+      .map((subId, index) => {
+        const mapped = {
+          id: subId,
+          ...subsectionMapping[subId],
+          order: index + 1,
+          sectionNumber: `${sectionOrder}.${index + 1}`
+        };
+        console.log(`Mapped subsection:`, mapped);
+        return mapped;
+      });
+    
+    console.log("Final selected subsections:", result);
+    return result;
+  };
+
+  const selectedSubsections = getSelectedSubsections();
+
+  // Set initial active section
+  useEffect(() => {
+    if (selectedSubsections.length > 0 && !activeSection) {
+      setActiveSection(selectedSubsections[0].id);
+    }
+  }, [selectedSubsections, activeSection]);
+
   // Expose submitForm using the ref
   useImperativeHandle(ref, () => ({
     submitForm,
   }));
+
+  const scrollToSection = (sectionId) => {
+    setActiveSection(sectionId);
+    const sectionRef = sectionRefs.current[sectionId];
+    
+    if (sectionRef?.current) {
+      const elementTop = sectionRef.current.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elementTop - 250,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -47,52 +148,61 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
   const submitForm = async (type) => {
     LoaderOpen();
     localStorage.setItem("reportorgname", companyName);
+    
     const formData = new FormData();
-    formData.append(
-      "message",
-      JSON.stringify({
-        page: "screen_one",
-        label: "1. Message from CEO",
-        subLabel: "Add message from CEO",
-        type: "richTextarea",
-        content: content,
-        field: "message",
-        isSkipped: false,
-      })
-    );
-    formData.append("message_image", imageceo); // If imageceo is a file, this will work
-    formData.append(
-      "ceo_name",
-      JSON.stringify({
-        page: "screen_one",
-        label: "CEO’s Name",
-        subLabel: "Add CEO's name",
-        type: "input",
-        content: ceoname,
-        field: "ceo_name",
-        isSkipped: false,
-      })
-    );
-    formData.append("company_name", companyName);
-    formData.append("signature_image", imagesing);
-    formData.append(
-      "signature_image_name",
-      selectedSignfile ? selectedSignfile.name : ""
-    );
-    formData.append(
-      "message_image_name",
-      selectedCEOfile ? selectedCEOfile.name : ""
-    );
+    
+    // Only submit data for selected subsections
+    if (subsectionsToShow.includes('chief_executive_message')) {
+      formData.append(
+        "message",
+        JSON.stringify({
+          page: "screen_one",
+          label: `${sectionOrder}. Message from CEO`,
+          subLabel: "Add message from CEO",
+          type: "richTextarea",
+          content: content,
+          field: "message",
+          isSkipped: false,
+        })
+      );
+      formData.append("message_image", imageceo);
+      formData.append(
+        "message_image_name",
+        selectedCEOfile ? selectedCEOfile.name : ""
+      );
+    }
+
+    if (subsectionsToShow.includes('board_message')) {
+      formData.append(
+        "ceo_name",
+        JSON.stringify({
+          page: "screen_one",
+          label: "CEO's Name",
+          subLabel: "Add CEO's name",
+          type: "input",
+          content: ceoname,
+          field: "ceo_name",
+          isSkipped: false,
+        })
+      );
+      formData.append("company_name", companyName);
+      formData.append("signature_image", imagesing);
+      formData.append(
+        "signature_image_name",
+        selectedSignfile ? selectedSignfile.name : ""
+      );
+    }
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_one/${reportid}/`;
 
     try {
       const response = await axiosInstance.put(url, formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Ensure multipart request
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -110,7 +220,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
           });
         }
         if (onSubmitSuccess) {
-          onSubmitSuccess(true); // Notify the parent of successful submission
+          onSubmitSuccess(true);
         }
         LoaderClose();
         return true;
@@ -140,7 +250,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
         progress: undefined,
         theme: "colored",
       });
-      return false; // Indicate failure
+      return false;
     }
   };
 
@@ -151,6 +261,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
     dispatch(setCeoname(""));
     dispatch(setCompanyname(orgname));
     dispatch(setSignatureimage());
+    
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_one/${reportid}/`;
     try {
       const response = await axiosInstance.get(url);
@@ -175,42 +286,109 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
   };
 
   useEffect(() => {
-    // Ensure API is only called once
     if (!apiCalledRef.current && reportid) {
-      apiCalledRef.current = true; // Set the flag to true to prevent future calls
-      loadFormData(); // Call the API only once
+      apiCalledRef.current = true;
+      loadFormData();
     }
   }, [reportid]);
 
-  return (
-    <>
-      <div className="mx-2 p-2">
-        <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          1. Message from CEO
-        </h3>
-        <div className="flex gap-4">
-          <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
-            <Screen1
-              orgName={orgname}
+  // Create refs for each selected subsection
+  useEffect(() => {
+    selectedSubsections.forEach(section => {
+      if (!sectionRefs.current[section.id]) {
+        sectionRefs.current[section.id] = createRef();
+      }
+    });
+  }, [selectedSubsections]);
+
+  const renderSection = (section) => {
+    const SectionComponent = section.component;
+    const ref = sectionRefs.current[section.id] || createRef();
+    sectionRefs.current[section.id] = ref;
+
+    const commonProps = {
+      orgName: orgname,
+      sectionNumber: section.sectionNumber,
+      sectionOrder
+    };
+
+    switch (section.id) {
+      case 'chief_executive_message':
+        return (
+          <div key={section.id} ref={ref}>
+            <SectionComponent 
+              {...commonProps}
               selectedfile={selectedCEOfile}
               setSelectedFile={setSelectedCEOFile}
             />
-            <Screen2
-              orgName={orgname}
+          </div>
+        );
+      case 'board_message':
+        return (
+          <div key={section.id} ref={ref}>
+            <SectionComponent 
+              {...commonProps}
               selectedfile={selectedSignfile}
               setSelectedFile={setSelectedSignFile}
             />
           </div>
-          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36  md:fixed 
-  md:top-[19rem]
-  md:right-4  hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              1. Message from CEO
-            </p>
-            <p className="text-[12px] text-blue-400 mb-2">
-              1. Message from CEO
-            </p>
+        );
+      default:
+        return null;
+    }
+  };
+
+  console.log("Final check - selectedSubsections:", selectedSubsections);
+
+  // Don't render anything if no subsections are selected (for custom reports)
+  if (reportType === 'Custom ESG Report' && selectedSubsections.length === 0) {
+    return (
+      <div className="mx-2 p-2">
+        <div>
+          <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+            {sectionOrder}. Message from CEO
+          </h3>
+        </div>
+        <div className="text-center py-8">
+          <p className="text-gray-500">No subsections selected for this section.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="mx-2 p-2">
+        <div>
+          <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+            {sectionOrder}. Message from CEO
+          </h3>
+        </div>
+        <div className="flex gap-4">
+          <div className="xl:w-[80%] md:w-[75%] lg:w-[80%] 2k:w-[80%] 4k:w-[80%] 2xl:w-[80%] w-full">
+            {selectedSubsections.map(section => renderSection(section))}
           </div>
+
+          {/* Page sidebar - only show if there are subsections */}
+          {selectedSubsections.length > 0 && (
+            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
+              <p className="text-[11px] text-[#727272] mb-2 uppercase">
+                {sectionOrder}. Message from CEO
+              </p>
+              
+              {selectedSubsections.map((section, index) => (
+                <p
+                  key={section.id}
+                  className={`text-[12px] mb-2 cursor-pointer ${
+                    activeSection === section.id ? "text-blue-400" : ""
+                  }`}
+                  onClick={() => scrollToSection(section.id)}
+                >
+                  {section.sectionNumber} {section.title}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       {loopen && (
@@ -228,5 +406,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
     </>
   );
 });
+
+MessageFromCeo.displayName = 'MessageFromCeo';
 
 export default MessageFromCeo;
