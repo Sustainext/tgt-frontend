@@ -79,7 +79,7 @@ const Bills211Report = () => {
         }
       } else if (type === "back") {
         router.push("/dashboard/Report");
-      } else {
+      }  else {
         toast.success("Data saved as draft.", {
           position: "top-right",
           autoClose: 3000,
@@ -92,7 +92,10 @@ const Bills211Report = () => {
     setShowSuccessModal(false);
     router.push("/dashboard/Report");
   };
+  const handleprev = () => {
+  setActiveStep((prev) => prev - 1);
 
+  };
   const handleDownload = () => {
     toast.info("Download started...");
     // Simulate file download, or call your actual file download API
@@ -159,7 +162,7 @@ const Bills211Report = () => {
             <div className="flex gap-2">
               {activeStep > 1 && (
                 <button
-                  onClick={() => handleNextStep("back")}
+                  onClick={handleprev}
                   className="px-4  text-sm text-gray-600  rounded"
                 >
                   &lt; Previous
