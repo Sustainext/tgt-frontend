@@ -14,6 +14,9 @@ const BillScreen1Slice = createSlice({
     remediation_loss_income: "",
     training_forced_child_labour:"",
    remediation_measures:"",
+   assessing_effectiveness:"",
+   approval_attestation_part1:"",
+     approval_attestation_part2:"",
     error: null,
   },
   reducers: {
@@ -50,6 +53,15 @@ const BillScreen1Slice = createSlice({
         setRemediationmeasures: (state, action) => {
       state.remediation_measures = action.payload;
     },
+        setAssessingeffectiveness: (state, action) => {
+      state.assessing_effectiveness = action.payload;
+    },
+        setApprovalattestationpart1: (state, action) => {
+      state.approval_attestation_part1 = action.payload;
+    },
+       setApprovalattestationpart2: (state, action) => {
+      state.approval_attestation_part2 = action.payload;
+    },
   },
 });
 
@@ -65,6 +77,9 @@ export const {
   setRemediationlossincome,
   setTrainingforcedchildlabour,
   setRemediationmeasures,
+  setAssessingeffectiveness,
+  setApprovalattestationpart1,
+  setApprovalattestationpart2,
 } = BillScreen1Slice.actions;
 
 export default BillScreen1Slice.reducer;
