@@ -1,18 +1,18 @@
 "use client";
-import { useState, useRef, useEffect, use } from "react";
-import Bills211Sidebar from "./sidebar";
+import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
-import axiosInstance, { patch } from "../../../utils/axiosMiddleware";
 import {
   setHeadertext1,
   setHeadertext2,
   setHeaderdisplay,
 } from "../../../../lib/redux/features/topheaderSlice";
-import { useDispatch } from "react-redux";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { setReportid } from "../../../../lib/redux/features/Billsreport/Billscreen1Slice";
+
+import Bills211Sidebar from "./sidebar";
 import Aboutthereport from "./about-the-report/page";
 import Organizationprofilestructure from "./organization-profile-structure/page";
 import Businessactivities from "./business-activities/page";
@@ -25,217 +25,111 @@ import Remediationlossincome from "./remediation-loss-income/page";
 import Trainingforcedchildlabour from "./training-forced-child-labour/page";
 import Assessingeffectiveness from "./assessing-effectiveness/page";
 import Attestation from "./attestation/page";
+import SuccessModal from "./successmodal"; // adjust path as needed
 
 const Bills211Report = () => {
   const router = useRouter();
-  const [isOpenMobile, setIsOpenMobile] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isCreateReportModalOpen, setIsCreateReportModalOpen] = useState(false);
-  const [isOmissionSubmitted, setIsOmissionSubmitted] = useState(true);
-  const [IsValidationModalOpen, setIsValidationModalOpen] = useState(false);
-  const [activeStep, setActiveStep] = useState(1);
-  const [reportName, setReportName] = useState("Report");
-  const [userName, setUsername] = useState("");
-  const [userEmail, setuserEmail] = useState("");
-  const [fromDate, setfromDate] = useState("");
-  const [toDate, settoDate] = useState("");
-  const [reportid, setReportid] = useState("");
-  const [reportType, setReportType] = useState("");
-  const [reportCreatedOn, setCreatedOn] = useState("");
-  const [orgName, setOrgName] = useState("");
-  const [missing_fields, setMissingFields] = useState([]);
-  const AbouttheReport = useRef();
-  const OrgProfileStructureRef = useRef(); // Use useRef to store a reference to submitForm
-  const BusinessActivities = useRef();
-  const SupplyChains = useRef();
-  const PoliciesDiligenceProcesses = useRef();
-  const RisksofForced = useRef();
-  const forcedlabourandchildlabour = useRef();
-  const RemediationMeasures = useRef();
-  const RemediationIncome = useRef();
-  const Trainingforcedlabourandchildlabour = useRef();
-  const AssessingEffectiveness = useRef();
-  const Attestations = useRef();
-
   const dispatch = useDispatch();
+
+  const [activeStep, setActiveStep] = useState(1);
+  const [isOpenMobile, setIsOpenMobile] = useState(false);
+  const [reportname, setReportName] = useState("");
+  const [reportId, setReportId] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setReportId(localStorage.getItem("reportid"));
+      dispatch(setReportid(localStorage.getItem("reportid")));
+      setReportName(localStorage.getItem("reportname") || "");
+    }
+  }, []);
+
+  const refs = {
+    1: useRef(),
+    2: useRef(),
+    3: useRef(),
+    4: useRef(),
+    5: useRef(),
+    6: useRef(),
+    7: useRef(),
+    8: useRef(),
+    9: useRef(),
+    10: useRef(),
+    11: useRef(),
+    12: useRef(),
+  };
+
   useEffect(() => {
     dispatch(setHeadertext1(""));
     dispatch(setHeaderdisplay("none"));
     dispatch(setHeadertext2("Bill S-211 Report"));
   }, [dispatch]);
-  const stepRefs = {
-    1: AbouttheReport,
-    2: OrgProfileStructureRef,
-    3: BusinessActivities,
-    4: SupplyChains,
-    5: PoliciesDiligenceProcesses,
-    6: RisksofForced,
-    7: forcedlabourandchildlabour,
-    8: RemediationMeasures,
-    9: RemediationIncome,
-    10: Trainingforcedlabourandchildlabour,
-    11: AssessingEffectiveness,
-    12: Attestations,
-  };
 
-  // const  missing_fields=[
-  //   {
-  //     page: "screen_fourteen",
-  //     label: "14.1 Community Engagement",
-  //     subLabel: "Add statement about company’s community engagement",
-  //     type:'textarea'
-  //   },
-  //   {
-  //     page: "screen_fourteen",
-  //     label: "14.2 Impact Assessment",
-  //     subLabel: "",
-  //     type:'richTextarea'
-  //   },
-  //   {
-  //     page: "screen_fourteen",
-  //     label: "14.3 CSR",
-  //     subLabel:
-  //       "Add statement about company’s Corporate Social Responsibility policies",
-  //       type:'richTextarea'
-  //   },
-  //   {
-  //     page: "screen_fifteen",
-  //     label: "15.1 Environmental Impact",
-  //     subLabel:
-  //       "Add statement about company’s responsibility to minimize the environmental impact",
-  //        type:'textarea'
-  //   },
-  //   {
-  //     page: "screen_fifteen",
-  //     label: "15.2 Emissions Strategy",
-  //     subLabel: "Add statement about company’s strategy to reduce emission",
-  //      type:'textarea'
-  //   },
-  //   {
-  //     page: "screen_fifteen",
-  //     label: "15.3 Scope 1 GHG Emissions",
-  //     subLabel: "Add statement about company’s scope 1 emissions",
-  //      type:'richTextarea'
-  //   },
-  // ]
+  const handleNextStep = async (type = "next") => {
+    const currentRef = refs[activeStep]?.current;
+    const isSubmitted = currentRef ? await currentRef.submitForm(type) : true;
 
-  const loadMissingFields = async () => {
-    // LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/esg_report/get_field_validation/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.status == 200) {
-        if (response.data.length > 0) {
-          setMissingFields(response.data);
-          setIsValidationModalOpen(true);
+    if (isSubmitted) {
+      if (type === "next") {
+        if (activeStep === 12) {
+          setShowSuccessModal(true); // Show modal after final submission
         } else {
           setActiveStep((prev) => prev + 1);
         }
-      }
-
-      // LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      // LoaderClose();
-    }
-  };
-
-  const handleNextStep = async (type) => {
-    const currentRef = stepRefs[activeStep]?.current;
-
-    const submitAndProceed = async () => {
-      if (currentRef) {
-        const isSubmitted = await currentRef.submitForm(type);
-        return isSubmitted;
-      }
-      return true; // Proceed to next step if no form reference exists
-    };
-
-    const showDraftSavedToast = () => {
-      toast.success(
-        <p style={{ margin: 0, fontSize: "13.5px", lineHeight: "1.4" }}>
-          The data filled in the report has been saved as draft and can be
-          accessed from the report module
-        </p>,
-        {
+      } else if (type === "back") {
+        router.push("/dashboard/Report");
+      } else {
+        toast.success("Data saved as draft.", {
           position: "top-right",
-          autoClose: 4000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        }
-      );
-      // toast.success(
-      //   <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-      //     <IoCheckmarkDoneCircle style={{ marginRight: '10px', color: 'green',fontSize:'50px' }} />
-      //     <div>
-      //     <strong style={{ display: 'block', marginBottom: '4px', fontSize: '16px' }}> {/* Main heading */}
-      //     Data Saved
-      //  </strong>
-      //  <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.4' }}> {/* Paragraph aligned below heading */}
-      //  The data filled in the report has been saved as draft and can be accessed from the report module
-      //  </p>
-      //   </div>
-      //   </div>, {
-      //     position: "top-right",
-      //     autoClose: 3000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "light",
-      //     style: {
-      //       borderRadius: '8px',
-      //       border: '1px solid #E5E5E5',
-      //       boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-      //       width:'320px',
-      //     },
-      //     icon: false,
-      // });
-    };
-
-    if (type === "next") {
-      const isSubmitted = await submitAndProceed();
-      if (isSubmitted) {
-        setActiveStep((prev) => prev + 1);
-      }
-    } else if (type === "last") {
-      const isSubmitted = await submitAndProceed();
-      if (isSubmitted) {
-        loadMissingFields();
-      }
-    } else {
-      const isSubmitted = await submitAndProceed();
-      if (isSubmitted) {
-        showDraftSavedToast();
-        setTimeout(() => {
-          router.push("/dashboard/Report");
-        }, 4000);
+          autoClose: 3000,
+        });
       }
     }
   };
 
-  const handlePreviousStep = () => {
-    setActiveStep((prev) => prev - 1);
+  const handleExit = () => {
+    setShowSuccessModal(false);
+    router.push("/dashboard/Report");
   };
 
-  useEffect(() => {
-    setCreatedOn(localStorage.getItem("reportCreatedOn"));
-    setOrgName(localStorage.getItem("reportorgname"));
-    setUsername(localStorage.getItem("userName"));
-    setuserEmail(localStorage.getItem("userEmail"));
-    setfromDate(localStorage.getItem("reportstartdate"));
-    settoDate(localStorage.getItem("reportenddate"));
-    setReportid(localStorage.getItem("reportid"));
-    setReportType(localStorage.getItem("reportType"));
-    if (localStorage.getItem("reportname")) {
-      setReportName(localStorage.getItem("reportname"));
+  const handleDownload = () => {
+    toast.info("Download started...");
+    // Simulate file download, or call your actual file download API
+  };
+
+  const renderStepComponent = () => {
+    const sharedProps = { ref: refs[activeStep], reportId };
+
+    switch (activeStep) {
+      case 1:
+        return <Aboutthereport {...sharedProps} />;
+      case 2:
+        return <Organizationprofilestructure {...sharedProps} />;
+      case 3:
+        return <Businessactivities {...sharedProps} />;
+      case 4:
+        return <Supplychains {...sharedProps} />;
+      case 5:
+        return <Policiesdiligence {...sharedProps} />;
+      case 6:
+        return <Risksforcedchildlabour {...sharedProps} />;
+      case 7:
+        return <Reduceforcedchildlabour {...sharedProps} />;
+      case 8:
+        return <Remediationmeasures {...sharedProps} />;
+      case 9:
+        return <Remediationlossincome {...sharedProps} />;
+      case 10:
+        return <Trainingforcedchildlabour {...sharedProps} />;
+      case 11:
+        return <Assessingeffectiveness {...sharedProps} />;
+      case 12:
+        return <Attestation {...sharedProps} />;
+      default:
+        return null;
     }
-  }, []);
+  };
 
   return (
     <>
@@ -247,250 +141,48 @@ const Bills211Report = () => {
           setIsOpenMobile={setIsOpenMobile}
         />
 
-        <div className="w-full mb-5">
-          <div className="flex flex-col justify-start overflow-x-hidden">
-            <div className="flex justify-between items-center border-b border-gray-200 mb-3 w-full">
-              <div className="w-[70%]">
-                <div className="text-left mb-3 ml-3 pt-3">
-                  <div className="flex">
-                    <div>
-                      <button
-                        onClick={() => {
-                          if (activeStep > 12) {
-                            router.push("/dashboard/Report");
-                          } else {
-                            handleNextStep("back");
-                          }
-                        }}
-                        className="text-[12px] text-[#667085] flex gap-2 ml-3"
-                      >
-                        <FaArrowLeftLong className="w-3 h-3 mt-1" />
-                        Back to Reports
-                      </button>
-
-                      <div className="xl:hidden lg:hidden">
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => setIsOpenMobile(true)}
-                            className="text-gray-700"
-                          >
-                            <MdKeyboardArrowRight className="h-6 w-6 text-black" />
-                          </button>
-
-                          <p className="gradient-text text-[22px] font-bold pt-3 pb-3">
-                            {/* {reportName}  */}
-                            Report Name
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="hidden xl:block lg:block">
-                        <p className="gradient-text text-[22px] font-bold pt-3 pb-3 ml-3">
-                          {/* {reportName} */}
-                          Report Name
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="hidden md:block lg:block xl:block">
-                <div className="float-right mr-2 flex items-center justify-center">
-                  <div className="flex items-center justify-center">
-                    {/* Previous button */}
-                    {activeStep > 1 && (
-                      <button
-                        className="text-gray-500 px-3 py-1.5 rounded font-semibold w-[120px]"
-                        onClick={handlePreviousStep}
-                      >
-                        &lt; Previous
-                      </button>
-                    )}
-
-                    {/* Next or Save button */}
-                    {activeStep === 12 ? (
-                      <button
-                        onClick={() => {
-                          setIsCreateReportModalOpen(true);
-                        }}
-                        className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
-                      >
-                        Save and Create Report &gt;
-                      </button>
-                    ) : (
-                      <button
-                        className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
-                        onClick={() => {
-                          handleNextStep("next");
-                        }}
-                      >
-                        Next &gt;
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* <div className="block md:hidden lg:hidden  xl:hidden mb-2 h-[43px]">
-              <div className="float-right mr-2 flex items-center justify-center mb-2">
-                <div className="flex items-center justify-center">
-                  {activeStep == 16 ? (
-                    <></>
-                  ) : (
-                    <button
-                      style={{
-                        display: activeStep === 1 ? "none" : "inline-block",
-                      }}
-                      className={`${
-                        activeStep === 1 ? "" : "text-gray-500"
-                      } px-3 py-1.5 rounded font-semibold`}
-                      onClick={handlePreviousStep}
-                      disabled={activeStep === 1}
-                    >
-                      &lt; Previous
-                    </button>
-                  )}
-
-                  {activeStep == 16 ? (
-                    <div>
-                      {isOmissionSubmitted ? (
-                        <button
-                          onClick={() => {
-                            setIsCreateReportModalOpen(true);
-                          }}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Save and Create Report {">"}
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => {
-                            setIsModalOpen(true);
-                          }}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Add Reasons for Omission {">"}
-                        </button>
-                      )}
-                    </div>
-                  ) : (
-                    <div>
-                      {activeStep < 15 ? (
-                        <button
-                          className={`${
-                            activeStep === 15
-                              ? "bg-gray-300"
-                              : "bg-blue-500 text-white"
-                          } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                          onClick={() => {
-                            handleNextStep("next");
-                          }} // Call the form submit and next step handler
-                          disabled={activeStep === 15}
-                        >
-                          Next &gt;
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => {
-                            handleNextStep("last");
-                          }}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Save & Fill Content Index
-                        </button>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-              </div> */}
-          <div className="xl:mx-3 md:mx-3 lg:mx-3 4k:mx-3 2k:mx-3 2xl:mx-3 my-2">
+        <div className="w-full px-5">
+          <div className="flex justify-between items-center border-b py-4">
             <div>
-              {activeStep === 1 && (
-                <div className="w-[85%]">
-                  <Aboutthereport ref={AbouttheReport} />
-                </div>
+              <button
+                onClick={() => handleNextStep("back")}
+                className="text-sm text-gray-600 flex"
+              >
+                <FaArrowLeftLong className="w-3 h-3 mt-1 mr-1" /> Back to
+                Reports
+              </button>
+              <h2 className="text-xl font-semibold mt-2 gradient-text">
+                {reportname}
+              </h2>
+            </div>
+
+            <div className="flex gap-2">
+              {activeStep > 1 && (
+                <button
+                  onClick={() => handleNextStep("back")}
+                  className="px-4  text-sm text-gray-600  rounded"
+                >
+                  &lt; Previous
+                </button>
               )}
-              {activeStep === 2 && (
-                <div className="w-[85%]">
-                  <Organizationprofilestructure ref={OrgProfileStructureRef} />
-                </div>
-              )}
-              {activeStep === 3 && (
-                <div className="w-[85%]">
-                  <Businessactivities ref={BusinessActivities} />
-                </div>
-              )}
-              {activeStep === 4 && (
-                <div className="w-[85%]">
-                  <Supplychains ref={Supplychains} />
-                </div>
-              )}
-              {activeStep === 5 && (
-                <div className="w-[85%]">
-                  <Policiesdiligence ref={PoliciesDiligenceProcesses} />
-                </div>
-              )}
-              {activeStep === 6 && (
-                <div className="w-[85%]">
-                  <Risksforcedchildlabour ref={RisksofForced} />
-                </div>
-              )}
-              {activeStep === 7 && (
-                <div className="w-[85%]">
-                  <Reduceforcedchildlabour ref={forcedlabourandchildlabour} />
-                </div>
-              )}
-              {activeStep === 8 && (
-                <div className="w-[85%]">
-                  <Remediationmeasures ref={RemediationMeasures} />
-                </div>
-              )}
-              {activeStep === 9 && (
-                <div className="w-[85%]">
-                  <Remediationlossincome ref={RemediationIncome} />
-                </div>
-              )}
-              {activeStep === 10 && (
-                <div className="w-[85%]">
-                  <Trainingforcedchildlabour
-                    ref={Trainingforcedlabourandchildlabour}
-                  />
-                </div>
-              )}
-              {activeStep === 11 && (
-                <div className="w-[85%]">
-                  <Assessingeffectiveness ref={AssessingEffectiveness} />
-                </div>
-              )} 
-                 {activeStep === 12 && (
-                <div className="w-[85%]">
-                  <Attestation ref={Attestations} />
-                </div>
-              )}  
+              <button
+                onClick={() => handleNextStep("next")}
+                className="px-4 py-2 text-sm text-white bg-[#007EEF] rounded-md"
+              >
+                {activeStep === 12 ? "Save and Create Report >" : "Next >"}
+              </button>
             </div>
           </div>
+
+          <div className="my-5 w-[90%]">{renderStepComponent()}</div>
         </div>
       </div>
 
-      {/* <MainValidationPopup
-        isModalOpen={IsValidationModalOpen}
-        setActiveStep={setActiveStep}
-        missing_fields={missing_fields}
-        setIsModalOpen={setIsValidationModalOpen}
-        reportName={reportName}
-        email={userEmail}
-        createdBy={userName}
-        reportid={reportid}
-        fromDate={fromDate}
-        toDate={toDate}
-        orgName={orgName}
-        reportType={reportType}
-        reportCreatedOn={reportCreatedOn}
-      /> */}
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={handleExit}
+        onDownload={handleDownload}
+      />
 
       <ToastContainer />
     </>
