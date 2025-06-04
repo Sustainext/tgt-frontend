@@ -164,7 +164,7 @@ const Policiesdiligence = forwardRef(({ orgName, data, reportId }, ref) => {
 
         // ✅ Check for status 200 and show toast
         if (response.status === 200) {
-          toast.success("About the Report saved successfully!", {
+          toast.success("Data saved successfully!", {
             position: "top-right",
             autoClose: 3000,
             pauseOnHover: true,

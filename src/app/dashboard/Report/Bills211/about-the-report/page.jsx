@@ -20,13 +20,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { BlobServiceClient } from "@azure/storage-blob";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Aboutthereport = forwardRef(({ orgName, data,reportId }, ref) => {
+const Aboutthereport = forwardRef(({reportId }, ref) => {
   const [loopen, setLoOpen] = useState(false);
   const [p1q2, setP1q2] = useState("");
   const isMounted = useRef(true);
   const [imageviw, setImageview] = useState("");
   const [selectedfile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
+  console.log(reportId,"test reportId");
   // const reportId = useSelector(
   //   (state) => state.BillScreen1About.report_id
   // );
@@ -97,6 +98,60 @@ const Aboutthereport = forwardRef(({ orgName, data,reportId }, ref) => {
       "font",
     ],
   };
+  const fetchDatareport = async () => {
+    try {
+      dispatch(setAboutTheReport(""));
+      setSelectedFile(null);
+      setImageview("");
+      LoaderOpen();
+
+      const response = await axiosInstance.get(
+        "/canada_bill_s211/v2/get-report-data",
+        {
+          params: {
+            report: reportId,
+            screen: 1,
+          },
+        }
+      );
+
+      const reportData = response?.data?.report_data?.about_the_report;
+      if (reportData) {
+        // Use the existing filled content from API
+        dispatch(setAboutTheReport(reportData));
+        setP1q2(reportData);
+        setImageview(response.data.report_data.company_logo);
+        setSelectedFile({ name: response.data.report_data.file_name });
+      } else {
+        // Use default template if no data found
+        const companyName =
+          response?.data?.part_1_screen1_q2 || "[Company Name – P1-Q2]";
+        const year = response?.data?.part_1_screen1_q3 || "[Year – P1-Q3]";
+        const date_from =
+          response?.data?.part_1_screen1_form_q4 || "[Start Date – Q4]";
+        const date_to =
+          response?.data?.part_1_screen1_to_q4 || "[End Date – Q4]";
+        const formattedFromDate = moment(date_from).format("MMMM D, YYYY");
+        const formattedToDate = moment(date_to).format("MMMM D, YYYY");
+
+        const filledContent = `<p>This report is prepared in compliance with the Fighting Against Forced Labour and Child Labour in Supply Chains Act (Bill S-211). It provides transparency on ${companyName} structure, activities, and supply chains, as well as its policies and due diligence measures to prevent the use of forced labour and child labour. The report outlines identified risks, remediation measures, training initiatives, and assessment processes to ensure responsible business practices. This report corresponds to the ${year} reporting year, covering the financial year from ${formattedFromDate} to ${formattedToDate}.</p>`;
+
+        setP1q2(filledContent);
+        setImageview(response.data.report_data.company_logo);
+        setSelectedFile({ name: response.data.report_data.file_name });
+      }
+    } catch (error) {
+      console.error("Error fetching report data:", error);
+    } finally {
+      LoaderClose();
+    }
+  };
+
+useEffect(() => {
+  if (reportId) {
+    fetchDatareport();
+  }
+}, [reportId]);
 
   const uploadFileToAzure = async (file, newFileName) => {
     // Read file content as ArrayBuffer
@@ -220,72 +275,11 @@ const Aboutthereport = forwardRef(({ orgName, data,reportId }, ref) => {
     dispatch(setAboutTheReport(value));
     setP1q2(value);
   };
-  const fetchDatareport = async () => {
-    try {
-      dispatch(setAboutTheReport(""));
-      setSelectedFile(null);
-      setImageview("");
-      LoaderOpen();
 
-      const response = await axiosInstance.get(
-        "/canada_bill_s211/v2/get-report-data",
-        {
-          params: {
-            report: reportId,
-            screen: 1,
-          },
-        }
-      );
-
-      const reportData = response?.data?.report_data?.about_the_report;
-      if (reportData) {
-        // Use the existing filled content from API
-        dispatch(setAboutTheReport(reportData));
-        setP1q2(reportData);
-        setImageview(response.data.report_data.company_logo);
-        setSelectedFile({ name: response.data.report_data.file_name });
-      } else {
-        // Use default template if no data found
-        const companyName =
-          response?.data?.part_1_screen1_q2 || "[Company Name – P1-Q2]";
-        const year = response?.data?.part_1_screen1_q3 || "[Year – P1-Q3]";
-        const date_from =
-          response?.data?.part_1_screen1_form_q4 || "[Start Date – Q4]";
-        const date_to =
-          response?.data?.part_1_screen1_to_q4 || "[End Date – Q4]";
-        const formattedFromDate = moment(date_from).format("MMMM D, YYYY");
-        const formattedToDate = moment(date_to).format("MMMM D, YYYY");
-
-        const filledContent = `<p>This report is prepared in compliance with the Fighting Against Forced Labour and Child Labour in Supply Chains Act (Bill S-211). It provides transparency on ${companyName} structure, activities, and supply chains, as well as its policies and due diligence measures to prevent the use of forced labour and child labour. The report outlines identified risks, remediation measures, training initiatives, and assessment processes to ensure responsible business practices. This report corresponds to the ${year} reporting year, covering the financial year from ${formattedFromDate} to ${formattedToDate}.</p>`;
-
-        setP1q2(filledContent);
-        setImageview(response.data.report_data.company_logo);
-        setSelectedFile({ name: response.data.report_data.file_name });
-      }
-    } catch (error) {
-      console.error("Error fetching report data:", error);
-    } finally {
-      LoaderClose();
-    }
-  };
-
-  useEffect(() => {
-    if (isMounted.current) {
-      fetchDatareport();
-      isMounted.current = false;
-    }
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
   useImperativeHandle(ref, () => ({
     async submitForm(type) {
       try {
-        if (!p1q2 || p1q2.trim() === "") {
-          console.warn("Content is empty.");
-          return false;
-        }
-
+    
         const payload = {
           report: reportId,
           screen: 1,
@@ -303,7 +297,7 @@ const Aboutthereport = forwardRef(({ orgName, data,reportId }, ref) => {
 
         // ✅ Check for status 200 and show toast
         if (response.status === 200) {
-          toast.success("About the Report saved successfully!", {
+          toast.success("Data saved successfully!", {
             position: "top-right",
             autoClose: 3000,
             pauseOnHover: true,

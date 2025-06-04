@@ -73,7 +73,61 @@ else{
       <div   className={`absolute bg-white shadow-lg rounded-lg py-2 w-[211px] z-10 right-8 ${
         menuDirection === "up" ? "bottom-full mb-2" : " top-full mt-2"
       }`}>
-        <button
+
+        {item.report_type === "canada_bill_s211_v2" ? (
+  <>
+    <button
+      className="flex items-center p-2 w-full text-left text-[#d1d5db] cursor-not-allowed"
+      disabled
+    >
+      <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
+      Download Report PDF
+    </button>
+
+    <button
+      className="flex items-center p-2 w-full text-left text-[#d1d5db] cursor-not-allowed"
+      disabled
+    >
+      <BsFileEarmarkWord className="mr-2 w-4 h-4" />
+      Download Report Word
+    </button>
+  </>
+) : (
+  <>
+    <button
+      className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+      onClick={() => {
+        if (isGRIReport) {
+          handleDownloadESGpdf(item.id, item.name, false);
+        } else {
+          handleDownloadpdf(item.id, item.name);
+        }
+      }}
+    >
+      {loadingByIdpdf[item.id] ? (
+        <Oval height={20} width={20} color="#00BFFF" />
+      ) : (
+        <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
+      )}
+      Download Report PDF
+    </button>
+
+    <button
+      className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+      onClick={() => {
+        if (!isGRIReport) handleDownloaddocx(item.id, item.name);
+      }}
+    >
+      {loadingById[item.id] ? (
+        <Oval height={20} width={20} color="#00BFFF" />
+      ) : (
+        <BsFileEarmarkWord className="mr-2 w-4 h-4" />
+      )}
+      Download Report Word
+    </button>
+  </>
+)}
+        {/* <button
           className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
           onClick={() => {
             if (isGRIReport) {
@@ -123,7 +177,7 @@ else{
             <BsFileEarmarkWord className="mr-2 w-4 h-4" />
           )}
           Download Report Word
-        </button>
+        </button> */}
 
         {/* Conditional Rendering for Additional GRI Options */}
         {isGRIReport && (
