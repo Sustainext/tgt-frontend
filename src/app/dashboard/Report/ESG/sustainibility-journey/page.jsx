@@ -25,7 +25,7 @@ import {
   setSupplyChainSustainability,
 } from "../../../../../lib/redux/features/ESGSlice/screen10Slice";
 
-const SustainibilityJourney = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
+const SustainibilityJourney = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
   const [activeSection, setActiveSection] = useState("section10_1");
 
   const section10_1Ref = useRef(null);
@@ -48,10 +48,7 @@ const SustainibilityJourney = forwardRef(({ onSubmitSuccess,reportType }, ref) =
     });
   };
 
-  const referenceHeading={
-
-  }
-
+  const [initialData, setInitialData] = useState({});
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const reportid =
@@ -85,8 +82,19 @@ const SustainibilityJourney = forwardRef(({ onSubmitSuccess,reportType }, ref) =
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const currentData={
+    company_sustainability_statement,
+    approach_for_sustainability,
+    sustainability_goals,
+    approach_to_supply_chain_sustainability
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       company_sustainability_statement: {
         page: "screen_ten",
@@ -190,6 +198,13 @@ const SustainibilityJourney = forwardRef(({ onSubmitSuccess,reportType }, ref) =
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
+
         setData(response.data);
         dispatch(
           setCompanyStatement(

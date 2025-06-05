@@ -23,12 +23,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Oval } from "react-loader-spinner";
 import { setMission } from "../../../../../lib/redux/features/ESGSlice/screen3Slice";
 
-const MissionVission = forwardRef(({ onSubmitSuccess }, ref) => {
+const MissionVission = forwardRef(({ onSubmitSuccess,hasChanges }, ref) => {
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const apiCalledRef = useRef(false);
+  const [initialData, setInitialData] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const mission = useSelector((state) => state.screen3Slice.mission);
   const dispatch = useDispatch();
@@ -43,8 +44,16 @@ const MissionVission = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const currentData={
+    mission
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       mission: {
         page: "screen_three",
@@ -117,6 +126,12 @@ const MissionVission = forwardRef(({ onSubmitSuccess }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         dispatch(setMission(response.data.mission?.content || ""));
       }
 
