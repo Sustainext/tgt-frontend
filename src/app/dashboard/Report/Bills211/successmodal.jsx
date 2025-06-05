@@ -1,22 +1,28 @@
 // components/SuccessModal.jsx
-import { FaCheckCircle, FaExternalLinkAlt, FaDownload } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 import { IoMdExit } from "react-icons/io";
 import { FiDownload } from "react-icons/fi";
-const SuccessModal = ({ isOpen, onClose, onDownload }) => {
+import { ImSpinner2 } from "react-icons/im"; // spinner icon
+
+const SuccessModal = ({ isOpen, onClose, onDownload, isDownloading }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md ">
-        <div className="flex  mb-4">
-        <div >
-          <FaCheckCircle className="text-green-500 text-2xl mt-0.5" />
+      <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md">
+        <div className="flex mb-4">
+          <div>
+            <FaCheckCircle className="text-green-500 text-2xl mt-0.5" />
+          </div>
+          <div className="ml-2">
+            <h2 className="text-[16px] font-semibold text-gray-900">
+              Report has been created.
+            </h2>
+            <p className="text-gray-500 mb-4 text-[14px]">
+              To proceed, select an option from below.
+            </p>
+          </div>
         </div>
-        <div className="ml-2">
-    <h2 className="text-[16px] font-semibold text-gray-900">Report A has been created.</h2>
-        <p className="text-gray-500 mb-4 text-[14px]">To proceed, select an option from below.</p>
-        </div>
-    </div>
 
         <div className="flex justify-center gap-4">
           <button
@@ -26,12 +32,27 @@ const SuccessModal = ({ isOpen, onClose, onDownload }) => {
             <IoMdExit />
             Exit to Report Module
           </button>
+
           <button
             onClick={onDownload}
-            className="flex items-center gap-2 px-4 py-2 bg-[#007EEF] rounded-md text-white  text-sm opacity-35"
+            disabled={isDownloading}
+            className={`flex items-center gap-2 px-4 py-2 rounded-md text-white text-sm ${
+              isDownloading
+                ? "bg-[#007EEF] opacity-60 cursor-not-allowed"
+                : "bg-[#007EEF]"
+            }`}
           >
-            <FiDownload />
-            Download Report
+            {isDownloading ? (
+              <>
+                <ImSpinner2 className="animate-spin" />
+                Downloading...
+              </>
+            ) : (
+              <>
+                <FiDownload />
+                Download Report
+              </>
+            )}
           </button>
         </div>
       </div>
