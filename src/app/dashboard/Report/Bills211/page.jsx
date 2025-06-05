@@ -26,7 +26,7 @@ import Trainingforcedchildlabour from "./training-forced-child-labour/page";
 import Assessingeffectiveness from "./assessing-effectiveness/page";
 import Attestation from "./attestation/page";
 import SuccessModal from "./successmodal"; // adjust path as needed
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const Bills211Report = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const Bills211Report = () => {
   const [reportname, setReportName] = useState("");
   const [reportId, setReportId] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-
+  const [isDownloading, setIsDownloading] = useState(false);
   useEffect(() => {
     if (typeof window !== "undefined") {
       setReportId(localStorage.getItem("reportid"));
@@ -79,7 +79,7 @@ const Bills211Report = () => {
         }
       } else if (type === "back") {
         router.push("/dashboard/Report");
-      }  else {
+      } else {
         toast.success("Data saved as draft.", {
           position: "top-right",
           autoClose: 3000,
@@ -93,13 +93,49 @@ const Bills211Report = () => {
     router.push("/dashboard/Report");
   };
   const handleprev = () => {
-  setActiveStep((prev) => prev - 1);
+    setActiveStep((prev) => prev - 1);
+  };
+   const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/get-report-pdf/${reportId}/?download=true`,
+        axiosConfig
+      );
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
 
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${reportname}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // toast.success("Download complete", { position: "top-right" });
+    } catch (error) {
+      // toast.error("Failed to download report", { position: "top-right" });
+      console.error("Error downloading file:", error);
+    } finally {
+      setIsDownloading(false);
+    }
   };
-  const handleDownload = () => {
-    toast.info("Download started...");
-    // Simulate file download, or call your actual file download API
-  };
+  // const handleDownload = () => {
+  //   toast.info("Download started...");
+  //   // Simulate file download, or call your actual file download API
+  // };
 
   const renderStepComponent = () => {
     const sharedProps = { ref: refs[activeStep], reportId };
@@ -185,6 +221,7 @@ const Bills211Report = () => {
         isOpen={showSuccessModal}
         onClose={handleExit}
         onDownload={handleDownload}
+        isDownloading={isDownloading}
       />
 
       <ToastContainer />

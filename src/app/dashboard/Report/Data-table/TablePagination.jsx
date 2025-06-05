@@ -77,8 +77,10 @@ else{
         {item.report_type === "canada_bill_s211_v2" ? (
   <>
     <button
-      className="flex items-center p-2 w-full text-left text-[#d1d5db] cursor-not-allowed"
-      disabled
+      className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+    onClick={() => {handleBills211Downloadpdf(item.id, item.name);
+        }
+      }
     >
       <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
       Download Report PDF
@@ -690,6 +692,32 @@ else{
     }
   };
 
+  const handleBills211Downloadpdf = async (id, name) => {
+    // Set loading to true for the specific item
+    setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
+
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/get-report-pdf/${id}/?download=true`,
+        axiosConfig
+      );
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${name}.pdf`); // Setting the file name dynamically
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+    } finally {
+      // Set loading to false for the specific item
+      setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+      setIsMenuOpen(false);
+    }
+  };
   const handleDownloadpdf = async (id, name) => {
     // Set loading to true for the specific item
     setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
