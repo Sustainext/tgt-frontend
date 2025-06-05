@@ -263,7 +263,7 @@ const DashboardHeader = () => {
 
           {text1 !== "" && (
             <>
-              <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold">
+              <span className="text-[#222222] hover:text-[#222222]">
                 {text1}
               </span>
               <span className="text-[#222222] mx-1">&gt;</span>
