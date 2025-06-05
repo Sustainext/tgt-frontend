@@ -14,7 +14,7 @@ import axiosInstance, { patch } from "../../../../utils/axiosMiddleware";
 import {
   selectEnabledSections,
   selectSections,
-} from "../../../../lib/redux/features/reportBuilderSlice";
+} from "../../../../../lib/redux/features/reportBuilderSlice";
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 

@@ -29,6 +29,7 @@ import optimiseSliceReduceer from "./features/optimiseSlice";
 import Bills201 from "./features/Bills201";
 import BillScreen1Slice from "./features/Billsreport/Billscreen1Slice";
 import reportBuilderReducer from './features/reportBuilderSlice';
+import reportCreationReducer from './features/reportCreationSlice'
 
 const rootReducer = combineReducers({
   counter: counterReducer,
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
   bils201filter: Bills201,
   BillScreen1About: BillScreen1Slice,
   reportBuilder: reportBuilderReducer,
+  reportCreation: reportCreationReducer,
 });
 
 export const makeStore = () => {
