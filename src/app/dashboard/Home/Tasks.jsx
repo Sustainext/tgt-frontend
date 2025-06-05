@@ -178,7 +178,7 @@ const TasksPage = () => {
                   checked={selectedStatuses.includes(status.id)}
                   onChange={() => handleStatusToggle(status.id)}
                   onClick={(e) => e.stopPropagation()}
-                  className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                  className="w-4 h-4 green-checkbox rounded border-gray-300"
                 />
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-medium text-gray-900 truncate">
@@ -279,7 +279,7 @@ const TasksPage = () => {
                     checked={selectedAssignees.includes(user.id)}
                     onChange={() => handleAssigneeToggle(user.id)}
                     onClick={(e) => e.stopPropagation()}
-                    className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                    className="w-4 h-4 green-checkbox rounded border-gray-300"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium text-gray-900 truncate">
@@ -848,7 +848,7 @@ const DateRangeModal = () => {
                   type="checkbox"
                   checked={selectedTasks.length === tasks.length && tasks.length > 0}
                   onChange={handleSelectAllVisible}
-                  className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${
+                  className={`w-4 h-4 green-checkbox rounded border-gray-300 ${
                     activeTab === "for_review" ? "" : "opacity-0"
                   }`}
                   disabled={activeTab !== "for_review"}
@@ -947,7 +947,7 @@ const DateRangeModal = () => {
                         type="checkbox"
                         checked={selectedTasks.includes(task.id)}
                         onChange={() => handleRowSelection(task.id)}
-                        className={`w-4 h-4 text-blue-600 rounded border-gray-300 ${
+                        className={`w-4 h-4 green-checkbox rounded border-gray-300 ${
                           activeTab === "for_review" ? "" : "opacity-0"
                         }`}
                         disabled={activeTab !== "for_review"}
@@ -1013,7 +1013,7 @@ const DateRangeModal = () => {
                       type="checkbox"
                       checked={selectedTasks.length === tasks.length && tasks.length > 0}
                       onChange={handleSelectAllVisible}
-                      className={`w-4 h-4 text-blue-600 border-gray-300 rounded ${
+                      className={`w-4 h-4 green-checkbox border-gray-300 rounded ${
                         activeTab === "for_review" ? "" : "opacity-0"
                       }`}
                       disabled={activeTab !== "for_review"}
@@ -1118,7 +1118,7 @@ const DateRangeModal = () => {
                           type="checkbox"
                           checked={selectedTasks.includes(task.id)}
                           onChange={() => handleRowSelection(task.id)}
-                          className={`w-4 h-4 text-blue-600 border-gray-300 rounded ${
+                          className={`w-4 h-4 green-checkbox border-gray-300 rounded ${
                             activeTab === "for_review" ? "" : "opacity-0"
                           }`}
                           disabled={activeTab !== "for_review"}

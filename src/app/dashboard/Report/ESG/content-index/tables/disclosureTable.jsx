@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
@@ -17,14 +17,34 @@ const DisclosureTable = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
+  // Helper function to recursively extract all items from deeply nested sections
+  const extractItems = (data) => {
+    let items = [];
+
+    data.forEach((entry) => {
+      if (entry.items) {
+        items = items.concat(entry.items);
+      }
+      if (entry.sections) {
+        entry.sections.forEach((section) => {
+          items = items.concat(extractItems([section])); // recursive call
+        });
+      }
+    });
+
+    return items;
+  };
+
+  const allItems = extractItems(data ? data : []);
+
   // Calculate index for slicing data based on currentPage
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = allItems?.slice(indexOfFirstItem, indexOfLastItem);
 
   // Handle page change
   const handleNextPage = () => {
-    if (currentPage < Math.ceil(data?.length / itemsPerPage)) {
+    if (currentPage < Math.ceil(allItems?.length / itemsPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -34,65 +54,6 @@ const DisclosureTable = ({ data }) => {
       setCurrentPage(currentPage - 1);
     }
   };
-  //   const dataRows = [
-  //     {
-  //       key: "2-1",
-  //       title: "2-1 Organizational details",
-  //       page: "Page 4",
-  //       omission: [
-  //         {
-  //           req_omitted: "",
-  //           reason: "",
-  //           explanation: ""
-  //         }
-  //       ],
-  //       gri_sector_no: "",
-  //       highlight: false,
-  //     },
-  //     {
-  //       key: "2-2",
-  //       title: "2-2 Entities included in the organization’s sustainability reporting",
-  //       page: "Page 5",
-  //       omission: [
-  //         {
-  //           req_omitted: "",
-  //           reason: "",
-  //           explanation: ""
-  //         }
-  //       ],
-  //       gri_sector_no: "",
-  //       highlight: false,
-  //     },
-  //     {
-  //       key: "2-8",
-  //       title: "2-8 Workers who are not employees",
-  //       page: "Page 8",
-  //       omission: [
-  //         {
-  //           req_omitted: "Certain data omitted",
-  //           reason: "Data unavailable",
-  //           explanation: "Will be included in next reporting period"
-  //         }
-  //       ],
-  //       gri_sector_no: "2-8",
-  //       highlight: true,
-  //     },
-  //     {
-  //       key: "2-9",
-  //       title: "2-9 Governance structure and composition",
-  //       page: "2-9",
-  //       omission: [
-  //         {
-  //           req_omitted: "Structure details",
-  //           reason: "Confidentiality",
-  //           explanation: "Limited to internal stakeholders"
-  //         }
-  //       ],
-  //       gri_sector_no: "2-9",
-  //       highlight: true,
-  //     },
-  //     // Add additional rows as needed
-  //   ];
 
   return (
     <>
@@ -131,8 +92,8 @@ const DisclosureTable = ({ data }) => {
               </tr>
             </thead>
 
-            <tbody className="bg-white divide-y divide-gray-200">
-              {/* Header row for General Disclosure */}
+            {/* <tbody className="bg-white divide-y divide-gray-200">
+             
               <tr className="bg-[#F1F7FF]">
                 <td
                   colSpan="7"
@@ -142,7 +103,7 @@ const DisclosureTable = ({ data }) => {
                 </td>
               </tr>
 
-              {/* Row title for the disclosure */}
+             
               <tr className="text-[13px]">
                 <td
                   rowSpan={data.length + 1}
@@ -152,7 +113,7 @@ const DisclosureTable = ({ data }) => {
                 </td>
               </tr>
 
-              {/* Map through dataRows */}
+             
               {data?.map((row, rowIndex) => (
                 <tr
                   key={row.key}
@@ -177,7 +138,7 @@ const DisclosureTable = ({ data }) => {
                   </td>
                   <td className="px-4 py-4">{row.page}</td>
 
-                  {/* Omission details */}
+                 
                   {row.omission.map((omissionItem, index) => (
                     <>
                       <td className="px-4 py-4">{omissionItem.req_omitted}</td>
@@ -210,6 +171,180 @@ const DisclosureTable = ({ data }) => {
                     />
                   )}
                 </tr>
+              ))}
+            </tbody> */}
+            <tbody className="bg-white divide-y divide-gray-200">
+              {data.map((group, groupIndex) => (
+                <React.Fragment key={groupIndex}>
+                  {/* Heading 1 */}
+                  <tr className="bg-[#F1F7FF]">
+                    <td
+                      colSpan="8"
+                      className="px-4 py-2 font-semibold text-[15px] text-[#0F6CBD]"
+                    >
+                      {group.heading1}
+                    </td>
+                  </tr>
+
+                  {/* Flat structure */}
+                  {group.items?.map((row, rowIndex) => (
+                    <tr
+                      key={row.key}
+                      className={`text-[13px] relative ${
+                        row?.is_filled === false
+                          ? "text-red-600"
+                          : "text-[#667085]"
+                      }`}
+                    >
+                      {/* Only render heading1 once using rowSpan */}
+                      {rowIndex === 0 && (
+                        <td
+                          rowSpan={group.items.length}
+                          className="px-4 py-4 font-medium align-middle border-r border-gray-200"
+                        >
+                          {group.heading1}
+                        </td>
+                      )}
+
+                      {/* Disclosure title with tooltip if not filled */}
+                      <td
+                        className="px-4 py-4"
+                        data-tooltip-id={
+                          row?.is_filled === false
+                            ? `tooltip-${row.key}`
+                            : undefined
+                        }
+                        data-tooltip-content={
+                          row?.is_filled === false
+                            ? "Disclosure not filled. Provide reason for omission or fill in the data"
+                            : undefined
+                        }
+                      >
+                        {row.title}
+                        {row?.is_filled === false && (
+                          <ReactTooltip
+                            id={`tooltip-${row.key}`}
+                            place="top"
+                            effect="solid"
+                            className="!max-w-xs !text-xs"
+                            style={{
+                              backgroundColor: "#000",
+                              color: "#fff",
+                              fontSize: "12px",
+                              borderRadius: "6px",
+                              padding: "8px",
+                            }}
+                          />
+                        )}
+                      </td>
+
+                      <td className="px-4 py-4">{row.page_number}</td>
+                      <td className="px-4 py-4">
+                        {row.omission?.[0]?.req_omitted}
+                      </td>
+                      <td className="px-4 py-4">
+                        {row.omission?.[0]?.reason || row?.is_filled
+                          ? row.omission?.[0]?.reason
+                          : "Add in next step"}
+                      </td>
+                      <td className="px-4 py-4">
+                        {row.omission?.[0]?.explanation || row?.is_filled
+                          ? row.omission?.[0]?.explanation
+                          : "Add in next step"}
+                      </td>
+                      <td className="px-4 py-4">{row.gri_sector_no}</td>
+                    </tr>
+                  ))}
+
+                  {/* Nested structure with heading3 rowspan */}
+                  {group.sections?.map((section, sectionIndex) => (
+                    <React.Fragment key={sectionIndex}>
+                      {/* Heading 2 */}
+                      <tr className="bg-[#F9FAFB]">
+                        <td
+                          colSpan="8"
+                          className="px-4 py-2 font-semibold text-[13px] text-[#344054]"
+                        >
+                          {section.heading2}
+                        </td>
+                      </tr>
+
+                      {section.sections?.map((subsection, subIndex) => (
+                        <React.Fragment key={subIndex}>
+                          {subsection.items.map((row, rowIndex) => (
+                            <tr
+                              key={row.key}
+                              className={`text-[13px] relative ${
+                                row?.is_filled === false
+                                  ? "text-red-600"
+                                  : "text-[#667085]"
+                              }`}
+                            >
+                              {/* Only render heading3 once per group using rowSpan */}
+                              {rowIndex === 0 && (
+                                <td
+                                  rowSpan={subsection.items.length}
+                                  className="px-4 py-4 font-medium text-[#667085] align-middle border-r border-gray-200"
+                                >
+                                  {subsection.heading3}
+                                </td>
+                              )}
+
+                              {/* Disclosure title with tooltip */}
+                              <td
+                                className="px-4 py-4"
+                                data-tooltip-id={
+                                  row?.is_filled === false
+                                    ? `tooltip-${row.key}`
+                                    : undefined
+                                }
+                                data-tooltip-content={
+                                  row?.is_filled === false
+                                    ? "Disclosure not filled. Provide reason for omission or fill in the data"
+                                    : undefined
+                                }
+                              >
+                                {row.title}
+                                {row?.is_filled === false && (
+                                  <ReactTooltip
+                                    id={`tooltip-${row.key}`}
+                                    place="top"
+                                    effect="solid"
+                                    className="!max-w-xs !text-xs"
+                                    style={{
+                                      backgroundColor: "#000",
+                                      color: "#fff",
+                                      fontSize: "12px",
+                                      borderRadius: "6px",
+                                      padding: "8px",
+                                    }}
+                                  />
+                                )}
+                              </td>
+
+                              <td className="px-4 py-4">{row.page_number}</td>
+                              <td className="px-4 py-4">
+                                {row.omission?.[0]?.req_omitted}
+                              </td>
+                              <td className="px-4 py-4">
+                                {row.omission?.[0]?.reason || row?.is_filled
+                                  ? row.omission?.[0]?.reason
+                                  : "Add in next step"}
+                              </td>
+                              <td className="px-4 py-4">
+                                {row.omission?.[0]?.explanation ||
+                                row?.is_filled
+                                  ? row.omission?.[0]?.explanation
+                                  : "Add in next step"}
+                              </td>
+                              <td className="px-4 py-4">{row.gri_sector_no}</td>
+                            </tr>
+                          ))}
+                        </React.Fragment>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                </React.Fragment>
               ))}
             </tbody>
           </table>
@@ -257,7 +392,6 @@ const DisclosureTable = ({ data }) => {
                     }}
                   />
                 </span>
-                {/* <span className="text-sm text-gray-500">{row.page}</span> */}
               </div>
 
               {row.omission.map((omissionItem, index) => (
@@ -271,7 +405,7 @@ const DisclosureTable = ({ data }) => {
                           : "text-[#667085]"
                       }`}
                     >
-                      {omissionItem.req_omitted || "Add in next step"}
+                      {omissionItem.req_omitted}
                     </p>
                   </div>
                   <div className="text-sm flex mb-2 relative">
@@ -318,7 +452,6 @@ const DisclosureTable = ({ data }) => {
             </div>
           ))}
 
-          {/* Pagination Controls */}
           <div className="flex justify-between items-center mt-4">
             <button
               onClick={handlePrevPage}
@@ -328,21 +461,19 @@ const DisclosureTable = ({ data }) => {
               Previous
             </button>
             <span className="text-sm text-gray-600">
-              Page {currentPage} of {Math.ceil(data?.length / itemsPerPage)}
+              Page {currentPage} of {Math.ceil(allItems?.length / itemsPerPage)}
             </span>
             <button
               onClick={handleNextPage}
-              disabled={currentPage === Math.ceil(data?.length / itemsPerPage)}
+              disabled={
+                currentPage === Math.ceil(allItems?.length / itemsPerPage)
+              }
               className="bg-blue-500 text-white px-4 py-2 rounded-md"
             >
               Next
             </button>
           </div>
-
-          {/* ReactTooltips */}
         </div>
-
-        {/* Tooltips */}
       </div>
     </>
   );

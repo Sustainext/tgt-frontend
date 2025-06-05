@@ -270,7 +270,7 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
             </label>
             <input
               type="checkbox"
-              className=""
+              className="green-checkbox"
               value={permissions_checkbox}
               checked={permissions_checkbox}
               onChange={handleOverrideChange}
