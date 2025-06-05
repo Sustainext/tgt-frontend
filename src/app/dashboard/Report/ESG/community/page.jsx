@@ -13,8 +13,9 @@ import { setCommunityEngagementStatement,
   setCSRStatement} from "../../../../../lib/redux/features/ESGSlice/screen14Slice"
 
 
-const Community = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
+const Community = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
   const [activeSection, setActiveSection] = useState("section14_1");
+  const [initialData, setInitialData] = useState({});
   const section14_1Ref = useRef(null);
   const section14_1_1Ref = useRef(null);
   const section14_1_2Ref = useRef(null);
@@ -57,8 +58,18 @@ const Community = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
     const LoaderClose = () => {
       setLoOpen(false);
     };
+    const currentData={
+      community_engagement:community_engagement_statement,
+      impact_assessment,
+      csr_policies:csr_statement,
+      violation_rights
+    }
   const submitForm = async (type) => {
       LoaderOpen();
+      if (!hasChanges(initialData, currentData)) {
+        LoaderClose();
+        return false;
+      }
       const data={
        "community_engagement": {"page":"screen_fourteen","label":"14.1 Community Engagement","subLabel":"Add statement about company’s community engagement","type":"textarea","content":community_engagement_statement,"field":"community_engagement","isSkipped":false} ,
     "impact_assessment": {"page":"screen_fourteen","label":"Impact Assessment","subLabel":"","type":"textarea","content":impact_assessment,"field":"impact_assessment","isSkipped":false},
@@ -131,6 +142,12 @@ const Community = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
       try {
           const response = await axiosInstance.get(url);
           if(response.data){
+            const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
             setData(response.data)
             dispatch(setCommunityEngagementStatement(response.data.community_engagement?.content || ""));
             dispatch(setImpactAssessment(response.data.impact_assessment?.content || ""));

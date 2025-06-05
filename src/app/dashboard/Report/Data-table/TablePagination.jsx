@@ -73,7 +73,63 @@ else{
       <div   className={`absolute bg-white shadow-lg rounded-lg py-2 w-[211px] z-10 right-8 ${
         menuDirection === "up" ? "bottom-full mb-2" : " top-full mt-2"
       }`}>
-        <button
+
+        {item.report_type === "canada_bill_s211_v2" ? (
+  <>
+    <button
+      className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+    onClick={() => {handleBills211Downloadpdf(item.id, item.name);
+        }
+      }
+    >
+      <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
+      Download Report PDF
+    </button>
+
+    <button
+      className="flex items-center p-2 w-full text-left text-[#d1d5db] cursor-not-allowed"
+      disabled
+    >
+      <BsFileEarmarkWord className="mr-2 w-4 h-4" />
+      Download Report Word
+    </button>
+  </>
+) : (
+  <>
+    <button
+      className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+      onClick={() => {
+        if (isGRIReport) {
+          handleDownloadESGpdf(item.id, item.name, false);
+        } else {
+          handleDownloadpdf(item.id, item.name);
+        }
+      }}
+    >
+      {loadingByIdpdf[item.id] ? (
+        <Oval height={20} width={20} color="#00BFFF" />
+      ) : (
+        <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
+      )}
+      Download Report PDF
+    </button>
+
+    <button
+      className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+      onClick={() => {
+        if (!isGRIReport) handleDownloaddocx(item.id, item.name);
+      }}
+    >
+      {loadingById[item.id] ? (
+        <Oval height={20} width={20} color="#00BFFF" />
+      ) : (
+        <BsFileEarmarkWord className="mr-2 w-4 h-4" />
+      )}
+      Download Report Word
+    </button>
+  </>
+)}
+        {/* <button
           className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
           onClick={() => {
             if (isGRIReport) {
@@ -123,7 +179,7 @@ else{
             <BsFileEarmarkWord className="mr-2 w-4 h-4" />
           )}
           Download Report Word
-        </button>
+        </button> */}
 
         {/* Conditional Rendering for Additional GRI Options */}
         {isGRIReport && (
@@ -336,7 +392,12 @@ else{
     //   window.localStorage.setItem("reportorgname", organization_name);
     // }
     // sessionStorage.setItem('reportData',newdata);
+    if (report_type === "canada_bill_s211_v2") {
+    router.push("/dashboard/Report/Bills211");
+  } else {
     router.push("/dashboard/Report/GHG/Ghgtemplates");
+  }
+   
 
     window.localStorage.setItem("reportname", name);
   };
@@ -631,6 +692,32 @@ else{
     }
   };
 
+  const handleBills211Downloadpdf = async (id, name) => {
+    // Set loading to true for the specific item
+    setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
+
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/canada_bill_s211/v2/get-report-pdf/${id}/?download=true`,
+        axiosConfig
+      );
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${name}.pdf`); // Setting the file name dynamically
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+    } finally {
+      // Set loading to false for the specific item
+      setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+      setIsMenuOpen(false);
+    }
+  };
   const handleDownloadpdf = async (id, name) => {
     // Set loading to true for the specific item
     setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));

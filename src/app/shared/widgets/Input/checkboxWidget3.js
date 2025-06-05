@@ -106,7 +106,7 @@ const CheckboxWidget3 = ({
               checked={inputState.selected.includes(option.value)}
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className="form-checkbox h-3 w-3"
+              className="form-checkbox h-3 w-3 green-checkbox"
             />
             {option.label}
           </label>
@@ -120,7 +120,7 @@ const CheckboxWidget3 = ({
           checked={inputState.selected.includes(otherOptionValue)}
           autoFocus={autofocus && options.enumOptions.length === 0}
           onChange={handleChange}
-          className="form-checkbox h-3 w-3"
+          className="form-checkbox h-3 w-3 green-checkbox"
         />
         Other, please specify
       </label>

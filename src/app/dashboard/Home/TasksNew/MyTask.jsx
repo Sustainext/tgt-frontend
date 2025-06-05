@@ -655,9 +655,24 @@ const MyTask = ({ HomeActiveTab }) => {
   const SubmitFilledData = async (e) => {
     e.preventDefault();
 
-    const { value1, unit1 } = taskassigndata;
+    const { value1, unit1, value2, unit2, unit_type } = taskassigndata;
 
     if (!value1 || !unit1) {
+      toast.error("Data cannot be empty", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+    
+    // Only check value2 and unit2 if unit_type contains 'Over'
+    if (unit_type && unit_type.includes('Over') && (!value2 || !unit2)) {
       toast.error("Data cannot be empty", {
         position: "top-right",
         autoClose: 3000,

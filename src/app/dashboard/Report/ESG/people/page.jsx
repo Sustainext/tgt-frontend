@@ -67,9 +67,9 @@ import {
   setSecurityPersonnelExternalTraining,
 } from "../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const People = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
+const People = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
   const [activeSection, setActiveSection] = useState("section13_1");
-
+  const [initialData, setInitialData] = useState({});
   const section13_1Ref = useRef(null);
   const section13_2Ref = useRef(null);
   const section13_3Ref = useRef(null);
@@ -187,8 +187,35 @@ const People = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const currentData = {
+    employee_policies_statement,
+    workforce_hire_retention_statement,
+    parental_leaves,
+    standard_wage,
+    performance_review_process,
+    forced_labor_position,
+    child_labor_position,
+    employee_diversity_position,
+    employee_skill_upgrade_programs,
+    remuneration_practices,
+    ohs_policies,
+    hazard_risk_assessment,
+    work_related_health_injuries,
+    safety_training,
+    ohs_management_system,
+    freedom_of_association_views,
+    violation_discrimination_policy,
+    indigenous_rights_policy,
+    security_personnel_external_training,
+    security_personnel_internal_training,
+  };
+  
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       employee_policies_statement: {
         page: "screen_thirteen",
@@ -468,6 +495,13 @@ const People = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
+
         setData(response.data);
         dispatch(
           setEmployeePoliciesStatement(

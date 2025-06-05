@@ -249,8 +249,8 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
                                 disclosure.disclosure_id
                               )
                             }
-                            className={`form-checkbox h-3 w-3 accent-[#008000]  ${
-                              disclosure.can_edit ? "cursor-pointer" : ""
+                            className={`form-checkbox h-[17px] w-[16px] ${
+                              disclosure.can_edit ? "cursor-pointer green-checkbox" : "accent-[#008000]"
                             }`}
                             data-tooltip-html={
                               !disclosure.can_edit
@@ -314,8 +314,8 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
                             disclosure.disclosure_id
                           )
                         }
-                        className={`form-checkbox h-3 w-3 accent-[#008000] ${
-                          disclosure.can_edit ? "cursor-pointer" : ""
+                        className={`form-checkbox  h-[17px] w-[16px] ${
+                          disclosure.can_edit ? "cursor-pointer green-checkbox" : "accent-[#008000]"
                         }`}
                         data-tooltip-html={
                           !disclosure.can_edit

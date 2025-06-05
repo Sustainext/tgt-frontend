@@ -23,10 +23,11 @@ import { setdescription } from "../../../../../lib/redux/features/ESGSlice/scree
 
 import Screen1 from "./sections/section1";
 
-const SustainibilityRoadmap = forwardRef(({ onSubmitSuccess }, ref) => {
+const SustainibilityRoadmap = forwardRef(({ onSubmitSuccess,hasChanges }, ref) => {
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const apiCalledRef = useRef(false);
+  const [initialData, setInitialData] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const description = useSelector((state) => state.screen4Slice.description);
   const dispatch = useDispatch();
@@ -41,8 +42,15 @@ const SustainibilityRoadmap = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const currentData={
+    description
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       description: {
         page: "screen_four",
@@ -115,6 +123,12 @@ const SustainibilityRoadmap = forwardRef(({ onSubmitSuccess }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         dispatch(setdescription(response.data.description.content));
       }
 

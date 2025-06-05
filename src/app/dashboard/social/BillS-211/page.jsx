@@ -181,7 +181,7 @@ const BILLs201 = ({ setMobileopen, handleTabClick }) => {
                   <div className="flex">
                     <div>
                       <button
-                        className=" text-[#FF0000] bg-white border border-zinc-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                        className=" text-white bg-[#FF0000] border border-zinc-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                         onClick={() => toggleDrawer("139")}
                       >
                         Bill S-211

@@ -21,7 +21,7 @@ import {
   setExternalAssurance,
 } from "../../../../../lib/redux/features/ESGSlice/screen7Slice";
 
-const AboutTheReport = forwardRef(({ onSubmitSuccess }, ref) => {
+const AboutTheReport = forwardRef(({ onSubmitSuccess,hasChanges }, ref) => {
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const reportid =
@@ -29,6 +29,7 @@ const AboutTheReport = forwardRef(({ onSubmitSuccess }, ref) => {
   const apiCalledRef = useRef(false);
   const [data, setData] = useState("");
   const [loopen, setLoOpen] = useState(false);
+  const [initialData, setInitialData] = useState({});
   const description = useSelector((state) => state.screen7Slice.aboutReport);
   const framework_description = useSelector(
     (state) => state.screen7Slice.framework
@@ -37,6 +38,11 @@ const AboutTheReport = forwardRef(({ onSubmitSuccess }, ref) => {
     (state) => state.screen7Slice.externalAssurance
   );
   const dispatch = useDispatch();
+  const currentData = {
+    description,
+    framework_description,
+    external_assurance,
+  };
 
   useImperativeHandle(ref, () => ({
     submitForm,
@@ -49,8 +55,13 @@ const AboutTheReport = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       description: {
         page: "screen_seven",
@@ -134,6 +145,7 @@ const AboutTheReport = forwardRef(({ onSubmitSuccess }, ref) => {
     }
   };
 
+
   const loadFormData = async () => {
     LoaderOpen();
     dispatch(setAboutReport(""));
@@ -143,6 +155,12 @@ const AboutTheReport = forwardRef(({ onSubmitSuccess }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(setAboutReport(response.data.description?.content || ""));
         dispatch(

@@ -72,8 +72,9 @@ import {
   setBiogenicCO2305,
 } from "../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Environment = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
+const Environment = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
   const [activeSection, setActiveSection] = useState("section12_1");
+  const [initialData, setInitialData] = useState({});
 
   const section12_1Ref = useRef(null);
   const section12_2Ref = useRef(null);
@@ -215,8 +216,39 @@ const Environment = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const currentData={
+  environmental_responsibility_statement,
+  emissions,
+  scope_one_emissions,
+  scope_two_emissions,
+  scope_three_emissions,
+  ghg_emission_intensity_tracking,
+  ghg_emission_reduction_efforts,
+  ozone_depleting_substance_elimination,
+  material_management_strategy,
+  recycling_process,
+  reclamation_recycling_process,
+  water_withdrawal_tracking,
+  water_consumption_goals,
+  energy_consumption_within_organization,
+  energy_consumption_outside_organization,
+  energy_intensity_tracking,
+  energy_consumption_reduction_commitment,
+  significant_spills,
+  habitat_protection_restoration_commitment,
+  air_quality_protection_commitment,
+  biogenic_c02_emissions_305_3c,
+  biogenic_c02_emissions,
+  consolidation,
+  base_year
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       environmental_responsibility_statement: {
         page: "screen_twelve",
@@ -529,6 +561,12 @@ const Environment = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(
           setEnvironmentStatement(
