@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo, memo, useCallback } from "react";
 import {
   FiX,
   FiSearch,
@@ -22,6 +22,216 @@ import DateRangePicker from "@/app/shared/components/DateRangeWithType";
 import ReviewTasksModal from "./ReviewTasksModal";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
+
+// Move StatusFilterModal outside and memoize it
+const StatusFilterModal = memo(({ 
+  selectedStatuses, 
+  setSelectedStatuses, 
+  setIsStatusFilterOpen 
+}) => {
+  const handleStatusToggle = useCallback((statusId) => {
+    setSelectedStatuses((prev) => {
+      if (prev.includes(statusId)) {
+        return prev.filter((id) => id !== statusId);
+      }
+      return [...prev, statusId];
+    });
+  }, [setSelectedStatuses]);
+
+  const handleClearFilters = useCallback(() => {
+    setSelectedStatuses([]);
+  }, [setSelectedStatuses]);
+
+  const handleClose = useCallback(() => {
+    setIsStatusFilterOpen(false);
+  }, [setIsStatusFilterOpen]);
+
+  const statusOptions = useMemo(() => [
+    { id: "not_started", label: "Not Started" },
+    { id: "in_progress", label: "In Progress" },
+    { id: "completed", label: "Completed" },
+    { id: "approved", label: "Approved" },
+    { id: "reject", label: "Rejected" },
+  ], []);
+
+  return (
+    <div className="absolute z-50 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
+      <div className="p-4" onClick={(e) => e.stopPropagation()}>
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-sm font-medium text-gray-900">
+            Filter by Status
+          </h3>
+          <button
+            onClick={handleClose}
+            className="text-gray-400 hover:text-gray-600"
+            type="button"
+          >
+            <FiX className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="space-y-2 max-h-60 overflow-y-auto">
+          {statusOptions.map((status) => (
+            <div
+              key={status.id}
+              className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
+              onClick={() => handleStatusToggle(status.id)}
+            >
+              <input
+                type="checkbox"
+                checked={selectedStatuses.includes(status.id)}
+                onChange={() => handleStatusToggle(status.id)}
+                onClick={(e) => e.stopPropagation()}
+                className="w-4 h-4 text-blue-600 rounded border-gray-300"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-medium text-gray-900 truncate">
+                  {status.label}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="flex justify-center items-center mt-4 pt-3 border-t border-gray-200">
+          <button
+            onClick={handleClearFilters}
+            className="text-sm text-gray-500 hover:text-gray-700"
+            type="button"
+          >
+            Clear all
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+StatusFilterModal.displayName = 'StatusFilterModal';
+
+// Move AssigneeFilterModal outside and memoize it
+const AssigneeFilterModal = memo(({ 
+  users,
+  selectedAssignees, 
+  setSelectedAssignees, 
+  assigneeSearchQuery,
+  setAssigneeSearchQuery,
+  setIsAssigneeFilterOpen 
+}) => {
+  const handleAssigneeToggle = useCallback((userId) => {
+    setSelectedAssignees((prev) => {
+      if (prev.includes(userId)) {
+        return prev.filter((id) => id !== userId);
+      }
+      return [...prev, userId];
+    });
+  }, [setSelectedAssignees]);
+
+  const handleClearFilters = useCallback(() => {
+    setSelectedAssignees([]);
+    setAssigneeSearchQuery("");
+  }, [setSelectedAssignees, setAssigneeSearchQuery]);
+
+  const handleSearchChange = useCallback((e) => {
+    setAssigneeSearchQuery(e.target.value);
+  }, [setAssigneeSearchQuery]);
+
+  const handleClose = useCallback(() => {
+    setIsAssigneeFilterOpen(false);
+  }, [setIsAssigneeFilterOpen]);
+
+  // Memoize the filtered users to prevent unnecessary recalculations
+  const filteredUsers = useMemo(() => {
+    if (!users || !Array.isArray(users)) return [];
+    
+    return users.filter((user) => {
+      const searchQuery = assigneeSearchQuery.toLowerCase();
+      const username = user.username?.toLowerCase() || '';
+      const email = user.email?.toLowerCase() || '';
+      const name = user.name?.toLowerCase() || '';
+      
+      return username.includes(searchQuery) || 
+             email.includes(searchQuery) || 
+             name.includes(searchQuery);
+    });
+  }, [users, assigneeSearchQuery]);
+
+  return (
+    <div className="absolute z-50 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200">
+      <div className="p-4" onClick={(e) => e.stopPropagation()}>
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-sm font-medium text-gray-900">
+            Filter by Assignee
+          </h3>
+          <button
+            onClick={handleClose}
+            className="text-gray-400 hover:text-gray-600"
+            type="button"
+          >
+            <FiX className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Search input */}
+        <div className="relative mb-3">
+          <input
+            type="text"
+            placeholder="Search assignees..."
+            className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            value={assigneeSearchQuery}
+            onChange={handleSearchChange}
+            autoComplete="off"
+          />
+          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+        </div>
+
+        {/* Assignee list */}
+        <div className="space-y-2 max-h-60 overflow-y-auto">
+          {filteredUsers.length > 0 ? (
+            filteredUsers.map((user) => (
+              <div
+                key={user.id}
+                className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
+                onClick={() => handleAssigneeToggle(user.id)}
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedAssignees.includes(user.id)}
+                  onChange={() => handleAssigneeToggle(user.id)}
+                  onClick={(e) => e.stopPropagation()}
+                  className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-gray-900 truncate">
+                    {user.name || user.username}
+                  </div>
+                  <div className="text-sm text-gray-500 truncate">
+                    {user.email}
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-sm text-gray-500 text-center py-4">
+              {assigneeSearchQuery ? 'No users found' : 'No users available'}
+            </div>
+          )}
+        </div>
+        
+        <div className="flex justify-center items-center mt-4 pt-3 border-t border-gray-200">
+          <button
+            onClick={handleClearFilters}
+            className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200"
+            type="button"
+          >
+            Clear all
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+AssigneeFilterModal.displayName = 'AssigneeFilterModal';
 
 const TasksPage = () => {
   const [showFilePreview, setShowFilePreview] = useState(false);
@@ -123,188 +333,6 @@ const TasksPage = () => {
       setTasks(sortedTasks);
       return newOrder;
     });
-  };
-
-  // Fixed Status Filter Modal
-  const StatusFilterModal = () => {
-    const handleStatusToggle = (statusId) => {
-      setSelectedStatuses((prev) => {
-        if (prev.includes(statusId)) {
-          return prev.filter((id) => id !== statusId);
-        }
-        return [...prev, statusId];
-      });
-    };
-
-    const handleClearFilters = () => {
-      setSelectedStatuses([]);
-    };
-
-    const handleClose = () => {
-      setIsStatusFilterOpen(false);
-    };
-
-    return (
-      <div 
-        className="absolute z-50 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200"
-      >
-        <div className="p-4" onClick={(e) => e.stopPropagation()}>
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-sm font-medium text-gray-900">
-              Filter by Status
-            </h3>
-            <button
-              onClick={handleClose}
-              className="text-gray-400 hover:text-gray-600"
-            >
-              <FiX className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="space-y-2 max-h-60 overflow-y-auto">
-            {[
-              { id: "not_started", label: "Not Started" },
-              { id: "in_progress", label: "In Progress" },
-              { id: "completed", label: "Completed" },
-              { id: "approved", label: "Approved" },
-              { id: "reject", label: "Rejected" },
-            ].map((status) => (
-              <div
-                key={status.id}
-                className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
-                onClick={() => handleStatusToggle(status.id)}
-              >
-                <input
-                  type="checkbox"
-                  checked={selectedStatuses.includes(status.id)}
-                  onChange={() => handleStatusToggle(status.id)}
-                  onClick={(e) => e.stopPropagation()}
-                  className="w-4 h-4 text-blue-600 rounded border-gray-300"
-                />
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-900 truncate">
-                    {status.label}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Action buttons */}
-          <div className="flex justify-center items-center mt-4 pt-3 border-t border-gray-200">
-            <button
-              onClick={handleClearFilters}
-              className="text-sm text-gray-500 hover:text-gray-700"
-            >
-              Clear all
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  // Fixed Assignee Filter Modal
-  const AssigneeFilterModal = () => {
-    const handleAssigneeToggle = (userId) => {
-      setSelectedAssignees((prev) => {
-        if (prev.includes(userId)) {
-          return prev.filter((id) => id !== userId);
-        }
-        return [...prev, userId];
-      });
-    };
-
-    const handleClearFilters = () => {
-      setSelectedAssignees([]);
-      setAssigneeSearchQuery("");
-    };
-
-    const handleSearchChange = (e) => {
-      setAssigneeSearchQuery(e.target.value);
-    };
-
-    const handleClose = () => {
-      setIsAssigneeFilterOpen(false);
-    };
-
-    return (
-      <div 
-        className="absolute z-50 top-full mt-2 right-0 bg-white rounded-lg shadow-lg w-72 border border-gray-200"
-      >
-        <div className="p-4" onClick={(e) => e.stopPropagation()}>
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-sm font-medium text-gray-900">
-              Filter by Assignee
-            </h3>
-            <button
-              onClick={handleClose}
-              className="text-gray-400 hover:text-gray-600"
-            >
-              <FiX className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Search input */}
-          <div className="relative mb-3">
-            <input
-              type="text"
-              placeholder="Search assignees..."
-              className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-md"
-              value={assigneeSearchQuery}
-              onChange={handleSearchChange}
-            />
-            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-          </div>
-
-          {/* Assignee list */}
-          <div className="space-y-2 max-h-60 overflow-y-auto">
-            {users
-              .filter(
-                (user) =>
-                  user.username
-                    .toLowerCase()
-                    .includes(assigneeSearchQuery.toLowerCase()) ||
-                  user.email
-                    .toLowerCase()
-                    .includes(assigneeSearchQuery.toLowerCase())
-              )
-              .map((user) => (
-                <div
-                  key={user.id}
-                  className="flex items-center gap-3 py-2 px-1 hover:bg-gray-50 rounded cursor-pointer"
-                  onClick={() => handleAssigneeToggle(user.id)}
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedAssignees.includes(user.id)}
-                    onChange={() => handleAssigneeToggle(user.id)}
-                    onClick={(e) => e.stopPropagation()}
-                    className="w-4 h-4 text-blue-600 rounded border-gray-300"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-gray-900 truncate">
-                      {user.name}
-                    </div>
-                    <div className="text-sm text-gray-500 truncate">
-                      {user.email}
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-          
-          {/* Action buttons */}
-          <div className="flex justify-center items-center mt-4 pt-3 border-t border-gray-200">
-            <button
-              onClick={handleClearFilters}
-              className="text-sm text-gray-500 hover:text-gray-700"
-            >
-              Clear all
-            </button>
-          </div>
-        </div>
-      </div>
-    );
   };
 
 const DateRangeModal = () => {
@@ -884,7 +912,13 @@ const DateRangeModal = () => {
                 </div>
 
                 {/* Status Filter Popover */}
-                {isStatusFilterOpen && <StatusFilterModal />}
+                {isStatusFilterOpen && (
+                  <StatusFilterModal 
+                    selectedStatuses={selectedStatuses}
+                    setSelectedStatuses={setSelectedStatuses}
+                    setIsStatusFilterOpen={setIsStatusFilterOpen}
+                  />
+                )}
               </div>
               <div className="col-span-2 relative" ref={assigneeFilterRef}>
                 <div className="flex items-center gap-2">
@@ -902,7 +936,16 @@ const DateRangeModal = () => {
                 </div>
 
                 {/* Assignee Filter Popover */}
-                {isAssigneeFilterOpen && <AssigneeFilterModal />}
+                {isAssigneeFilterOpen && (
+                  <AssigneeFilterModal 
+                    users={users}
+                    selectedAssignees={selectedAssignees}
+                    setSelectedAssignees={setSelectedAssignees}
+                    assigneeSearchQuery={assigneeSearchQuery}
+                    setAssigneeSearchQuery={setAssigneeSearchQuery}
+                    setIsAssigneeFilterOpen={setIsAssigneeFilterOpen}
+                  />
+                )}
               </div>
               {/* Assigned On Sorting */}
               <div
@@ -1050,7 +1093,13 @@ const DateRangeModal = () => {
                         <MdFilterList className="w-4 h-4" />
                       </button>
                     </div>
-                    {isStatusFilterOpen && <StatusFilterModal />}
+                    {isStatusFilterOpen && (
+                      <StatusFilterModal 
+                        selectedStatuses={selectedStatuses}
+                        setSelectedStatuses={setSelectedStatuses}
+                        setIsStatusFilterOpen={setIsStatusFilterOpen}
+                      />
+                    )}
                   </div>
                 </th>
 
@@ -1071,7 +1120,16 @@ const DateRangeModal = () => {
                       <MdFilterList className="w-4 h-4" />
                     </button>
                   </div>
-                  {isAssigneeFilterOpen && <AssigneeFilterModal />}
+                  {isAssigneeFilterOpen && (
+                    <AssigneeFilterModal 
+                      users={users}
+                      selectedAssignees={selectedAssignees}
+                      setSelectedAssignees={setSelectedAssignees}
+                      assigneeSearchQuery={assigneeSearchQuery}
+                      setAssigneeSearchQuery={setAssigneeSearchQuery}
+                      setIsAssigneeFilterOpen={setIsAssigneeFilterOpen}
+                    />
+                  )}
                 </th>
 
                 <th
