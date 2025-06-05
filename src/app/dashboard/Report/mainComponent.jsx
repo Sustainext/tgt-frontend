@@ -377,7 +377,7 @@ const Report = () => {
       const response = await post(`/sustainapp/report_create/`, submitData);
       console.log('response for creating report',response)
 
-      if (response.status === "200") {
+      if (response.status === 200) {
         toast.success("Report has been added successfully", {
           position: "top-right",
           autoClose: 3000,
