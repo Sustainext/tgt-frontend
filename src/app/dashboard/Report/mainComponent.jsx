@@ -375,7 +375,7 @@ const Report = () => {
 
     try {
       const response = await post(`/sustainapp/report_create/`, submitData);
-      console.log('response for creating report',response)
+      console.log("response for creating report", response);
 
       if (response.status === 200) {
         toast.success("Report has been added successfully", {
@@ -1007,90 +1007,94 @@ const Report = () => {
                   )} */}
 
                   {/* New Toggle Options */}
-                  <div className="border border-gray-300 p-4 rounded-lg space-y-4 flex justify-between items-center">
-                    {/* Include Management of Material Topics */}
-                    <div className="flex items-start gap-3">
-                      <div className="flex items-center h-5">
-                        <label className="relative inline-flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={includeMaterialTopics}
-                            onChange={(e) =>
-                              dispatch(
-                                setIncludeMaterialTopics(e.target.checked)
-                              )
-                            }
-                            className="sr-only"
-                          />
-                          <div
-                            className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${
-                              includeMaterialTopics
-                                ? "bg-green-500"
-                                : "bg-gray-300"
-                            }`}
-                          >
+                  {reportType === "Custom ESG Report" && (
+                    <div className="border border-gray-300 p-4 rounded-lg space-y-4">
+                      {/* Include Management of Material Topics */}
+                      <div className="flex items-start gap-3">
+                        <div className="flex items-center pt-0.5">
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={includeMaterialTopics}
+                              onChange={(e) =>
+                                dispatch(
+                                  setIncludeMaterialTopics(e.target.checked)
+                                )
+                              }
+                              className="sr-only"
+                            />
                             <div
-                              className={`w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-200 ease-in-out ${
+                              className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${
                                 includeMaterialTopics
-                                  ? "translate-x-5"
-                                  : "translate-x-0"
-                              } mt-0.5 ml-0.5`}
-                            ></div>
-                          </div>
-                        </label>
+                                  ? "bg-green-500"
+                                  : "bg-gray-300"
+                              }`}
+                            >
+                              <div
+                                className={`w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-200 ease-in-out ${
+                                  includeMaterialTopics
+                                    ? "translate-x-5"
+                                    : "translate-x-0"
+                                } mt-0.5 ml-0.5`}
+                              ></div>
+                            </div>
+                          </label>
+                        </div>
+                        <div className="flex-1">
+                          <label className="text-sm font-medium text-gray-900 block leading-6">
+                            Include Management of Material Topics
+                          </label>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Checking this option will include the disclosures on
+                            management of material topics for all selected
+                            sections.
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <label className="text-sm font-medium text-gray-900">
-                          Include Management of Material Topics
-                        </label>
-                        <p className="text-sm text-gray-600">
-                          Checking this option will include the disclosures on
-                          management of material topics for all selected
-                          sections.
-                        </p>
-                      </div>
-                    </div>
 
-                    {/* Include Content Index */}
-                    <div className="flex items-start gap-3">
-                      <div className="flex items-center h-5">
-                        <label className="relative inline-flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={includeContentIndex}
-                            onChange={(e) =>
-                              dispatch(setIncludeContentIndex(e.target.checked))
-                            }
-                            className="sr-only"
-                          />
-                          <div
-                            className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${
-                              includeContentIndex
-                                ? "bg-green-500"
-                                : "bg-gray-300"
-                            }`}
-                          >
+                      {/* Include Content Index */}
+                      <div className="flex items-start gap-3">
+                        <div className="flex items-center pt-0.5">
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={includeContentIndex}
+                              onChange={(e) =>
+                                dispatch(
+                                  setIncludeContentIndex(e.target.checked)
+                                )
+                              }
+                              className="sr-only"
+                            />
                             <div
-                              className={`w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-200 ease-in-out ${
+                              className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${
                                 includeContentIndex
-                                  ? "translate-x-5"
-                                  : "translate-x-0"
-                              } mt-0.5 ml-0.5`}
-                            ></div>
-                          </div>
-                        </label>
-                      </div>
-                      <div className="flex-1">
-                        <label className="text-sm font-medium text-gray-900">
-                          Include Content Index
-                        </label>
-                        <p className="text-sm text-gray-600">
-                          Checking this option will add a GRI content index at
-                          the end of the report
-                        </p>
+                                  ? "bg-green-500"
+                                  : "bg-gray-300"
+                              }`}
+                            >
+                              <div
+                                className={`w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-200 ease-in-out ${
+                                  includeContentIndex
+                                    ? "translate-x-5"
+                                    : "translate-x-0"
+                                } mt-0.5 ml-0.5`}
+                              ></div>
+                            </div>
+                          </label>
+                        </div>
+                        <div className="flex-1">
+                          <label className="text-sm font-medium text-gray-900 block leading-6">
+                            Include Content Index
+                          </label>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Checking this option will add a GRI content index at
+                            the end of the report
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Submit Button */}
                   <div className="flex justify-center pb-4">

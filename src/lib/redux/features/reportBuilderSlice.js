@@ -7,105 +7,105 @@ const defaultSections = [
     id: 'message_ceo',
     title: 'Message From Our Leadership',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 1
   },
     {
     id: 'about_company',
     title: 'About the Company & Operations',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 2
   },
   {
     id: 'mission_vision',
     title: 'Mission, Vision, Value',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 3
   },
   {
     id: 'sustainability',
     title: 'Sustainability Roadmap',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 4
   },
   {
     id: 'awards',
     title: 'Awards & Alliances',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 5
   },
   {
     id: 'stakeholder',
     title: 'Stakeholder Engagement',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 6
   },
   {
     id: 'about_report',
     title: 'About the Report',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 7
   },
   {
     id: 'governance',
     title: 'Corporate Governance',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 8
   },
   {
     id: 'journey',
     title: 'Sustainability Journey',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 9
   },
   {
     id: 'economic',
     title: 'Economic Performance',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 10
   },
   {
     id: 'environment',
     title: 'Environment',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 11
   },
   {
     id: 'people',
     title: 'People',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 12
   },
   {
     id: 'community',
     title: 'Community',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 13
   },
   {
     id: 'customers',
     title: 'Customers, Products & Services',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 14
   },
   {
     id: 'materiality',
     title: 'Materiality',
     mandatory: false,
-    enabled: true,
+    enabled: false,
     order: 15
   },
 ];

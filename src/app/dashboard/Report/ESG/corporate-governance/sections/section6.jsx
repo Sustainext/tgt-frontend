@@ -1,7 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import useSelector from "react-redux";
 
 const Section6 = ({ section9_2_4Ref, data }) => {
+  const shouldRender = useSelector(state=> state.reportCreation.includeMaterialTopics)
+
+  if(!shouldRender) return;
   return (
     <>
       <div id="section9_2_4" ref={section9_2_4Ref}>

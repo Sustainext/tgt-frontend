@@ -63,21 +63,6 @@ const ReportRenderer = ({ onBack }) => {
   const componentMapping = useSelector(selectComponentMapping);
   const currentReportPage = useSelector(selectCurrentReportPage);
   const currentSection = useSelector(selectCurrentReportSection);
-  const canGoToNext = useSelector(selectCanGoToNextPage);
-  const canGoToPrevious = useSelector(selectCanGoToPreviousPage);
-
-  // Initialize report navigation when component mounts
-  // useEffect(() => {
-  //   dispatch(initializeReportNavigation());
-  // }, [dispatch, enabledSections]);
-
-  const handleNextPage = () => {
-    dispatch(nextReportPage());
-  };
-
-  const handlePreviousPage = () => {
-    dispatch(previousReportPage());
-  };
 
   console.log('Enabled Sections:', enabledSections);
   console.log('Selected Subsections:', selectedSubsections);
@@ -150,23 +135,8 @@ const ReportRenderer = ({ onBack }) => {
 
   return (
     <div className="w-full max-w-none mx-auto">
-      {/* Report Header */}
-      {/* <div className="mb-8 text-center border-b-4 border-blue-600 pb-6">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">
-          Sustainability Report
-        </h1>
-        <p className="text-lg text-gray-600">
-          Generated Report - {new Date().getFullYear()}
-        </p>
-      </div> */}
-
-      {/* Current Section Content */}
-      <div className="min-h-[500px]">
-        {renderCurrentSection()}
-      </div>
-
-      {/* Navigation Controls */}
-      <div className="flex justify-between items-center mt-8 pt-6 border-t-2 border-gray-200">
+          {/* Navigation Controls */}
+      {/* <div className="flex justify-between items-center mt-8 pt-6 border-t-2 border-gray-200">
         <button
           onClick={handlePreviousPage}
           disabled={!canGoToPrevious}
@@ -212,6 +182,11 @@ const ReportRenderer = ({ onBack }) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>
+      </div> */}
+
+      {/* Current Section Content */}
+      <div className="min-h-[500px]">
+        {renderCurrentSection()}
       </div>
 
       {/* Report Footer */}
