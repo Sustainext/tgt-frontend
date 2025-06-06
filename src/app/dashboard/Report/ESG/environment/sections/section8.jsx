@@ -262,21 +262,25 @@ const Section8 = ({ section12_1_8Ref, data,reportType }) => {
           Assumptions Considered
         </p>
         {data["emission_collect"] &&
-        data["emission_collect"]["consolidation_assumption_considered"] &&
-        data["emission_collect"]["consolidation_assumption_considered"].length >
-          0 ? (
-          data["emission_collect"]["consolidation_assumption_considered"].map(
-            (val, index) => (
-              <div key={index}>
-                <p className="text-sm mb-4">
-                  {val.Q1 ? val.Q1 : "No data available"}
-                </p>
-              </div>
-            )
-          )
-        ) : (
-          <p className="text-sm mb-4">No data available</p>
-        )}
+data["emission_collect"]["consolidation_assumption_considered"] &&
+data["emission_collect"]["consolidation_assumption_considered"].length > 0 ? (
+  data["emission_collect"]["consolidation_assumption_considered"].map(
+    (val, index) => {
+      const plainText = val.Q1
+        ? val.Q1.replace(/<[^>]+>/g, '') // Remove HTML tags
+        : "No data available";
+
+      return (
+        <div key={index}>
+          <p className="text-sm mb-4">{plainText}</p>
+        </div>
+      );
+    }
+  )
+) : (
+  <p className="text-sm mb-4">No data available</p>
+)}
+
       </div>
     </>
   );
