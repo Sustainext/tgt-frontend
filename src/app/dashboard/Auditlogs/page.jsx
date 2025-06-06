@@ -338,7 +338,7 @@ const AuditLogs = () => {
                         <label className="flex items-center text-gray-600">
                           <input
                             type="checkbox"
-                            className="form-checkbox h-4 w-4"
+                            className="form-checkbox h-4 w-4 green-checkbox"
                             checked={statusFilter[status]}
                             onChange={() => handleCheckboxChange(status)}
                           />
@@ -364,7 +364,7 @@ const AuditLogs = () => {
                         <label className="flex items-center text-gray-600">
                           <input
                             type="checkbox"
-                            className="form-checkbox h-4 w-4"
+                            className="form-checkbox h-4 w-4 green-checkbox"
                             checked={statusFilter2[status]}
                             onChange={() => handleCheckboxChange2(status)}
                           />
@@ -399,7 +399,7 @@ const AuditLogs = () => {
                         <label className="flex items-center text-gray-600">
                           <input
                             type="checkbox"
-                            className="form-checkbox h-4 w-4"
+                            className="form-checkbox h-4 w-4 green-checkbox"
                             checked={statusFilter3[status]}
                             onChange={() => handleCheckboxChange3(status)}
                           />

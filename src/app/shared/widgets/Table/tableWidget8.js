@@ -27,9 +27,10 @@ const CustomOptionnew = ({ children, ...props }) => {
     >
       <input
         type="checkbox"
+        className='green-checkbox'
         checked={isSelected}
         readOnly
-        style={{ marginRight: "8px", accentColor: "#16a34a" }}
+        style={{flexShrink:0,marginRight:'8px'}}
       />
 
       {children}

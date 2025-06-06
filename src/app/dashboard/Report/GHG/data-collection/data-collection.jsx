@@ -12,13 +12,13 @@ function Datacollection({
 
   const orgname = typeof window !== 'undefined' ?localStorage.getItem("reportorgname"):'';
   const reportType = typeof window !== 'undefined' ? localStorage.getItem("reportType") : '';
-  const sourcesData = souresdata.filter((corporate) => corporate.corporate_type !== "Investment").flatMap((corporate) => corporate.sources || []); // Flatten sources if nested
+  const sourcesData = souresdata?.filter((corporate) => corporate.corporate_type !== "Investment").flatMap((corporate) => corporate.sources || []); // Flatten sources if nested
   const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
   // Filter sources by scope
-  const sourcesData3=souresdata.flatMap((corporate) => corporate.sources || []);
-  const scope1 = sourcesData.filter((source) => source.scope_name === "Scope-1");
-  const scope2 = sourcesData.filter((source) => source.scope_name === "Scope-2");
-  const scope3 = sourcesData3.filter((source) => source.scope_name === "Scope-3");
+  const sourcesData3=souresdata?.flatMap((corporate) => corporate.sources || []);
+  const scope1 = sourcesData?.filter((source) => source.scope_name === "Scope-1");
+  const scope2 = sourcesData?.filter((source) => source.scope_name === "Scope-2");
+  const scope3 = sourcesData3?.filter((source) => source.scope_name === "Scope-3");
 
   // Calculate total CO2e emissions for each scope
   const calculateTotalEmissions = (scope) => {

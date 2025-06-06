@@ -324,7 +324,7 @@ const CreateAssessmentModal = ({ isModalOpen, setIsModalOpen,setActiveTab }) => 
                               type="checkbox"
                               checked={stakeholderGroups.includes(option)}
                               onChange={() => handleOptionClick(option)}
-                              className="h-4 w-4 accent-blue-500 mr-2"
+                              className="h-4 w-4 green-checkbox mr-2"
                             />
                             <span className="text-sm text-gray-700">
                               {option}

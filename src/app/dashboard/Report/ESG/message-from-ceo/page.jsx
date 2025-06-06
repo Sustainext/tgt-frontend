@@ -25,6 +25,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
   const [loopen, setLoOpen] = useState(false);
   const [selectedCEOfile, setSelectedCEOFile] = useState("");
   const [selectedSignfile, setSelectedSignFile] = useState("");
+  const [initialData, setInitialData] = useState({});
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const orgname =
@@ -47,8 +48,33 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const currentData = {
+    message: content,
+    ceo_name: ceoname,
+    company_name: companyName,
+    message_image_name: selectedCEOfile?.name || "",
+    signature_image_name: selectedSignfile?.name || "",
+  };
+  const hasChanges = (initialData, currentData) => {
+    if (!initialData || !currentData) return false;
+  
+    const isTextChanged =
+      initialData.message !== currentData.message ||
+      initialData.ceo_name !== currentData.ceo_name ||
+      initialData.company_name !== currentData.company_name ||
+      initialData.message_image_name !== currentData.message_image_name||
+      initialData.signature_image_name !== currentData.signature_image_name;
+  
+    return isTextChanged
+  };
+  
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     localStorage.setItem("reportorgname", companyName);
     const formData = new FormData();
     formData.append(
@@ -155,6 +181,20 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+//       const flatData = {};
+// Object.keys(response.data).forEach((key) => {
+//   flatData[key] = response.data[key]?.content || response.data[key] || "";
+// });
+// setInitialData(flatData);
+const flatData = {
+  message: response.data.message?.content || "",
+  ceo_name: response.data.ceo_name?.content || "",
+  company_name: response.data.company_name || "",
+  message_image_name: response.data.message_image_name || "",
+  signature_image_name: response.data.signature_image_name || "",
+};
+setInitialData(flatData);
+
         dispatch(setMessage(response.data.message?.content || ""));
         dispatch(setMessageimage(response.data.message_image));
         dispatch(setCompanyname(response.data.company_name));

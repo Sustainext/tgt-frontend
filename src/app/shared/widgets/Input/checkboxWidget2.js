@@ -100,7 +100,7 @@ const CheckboxWidget2 = ({
               checked={selectedValues.includes(option.value.label)} // Check if the value is in the array
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className="form-checkbox h-3 w-3 accent-[#008000]"
+              className="form-checkbox h-3 w-3 green-checkbox"
             />
             {option.value.value}
           </label>

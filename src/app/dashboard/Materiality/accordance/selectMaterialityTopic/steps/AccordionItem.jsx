@@ -40,7 +40,7 @@ const AccordionItem = ({ title, tooltipId, tooltipContent, checked, onCheck, chi
             checked={checked}
             name={name}
             onChange={onCheck}
-            className="h-3.5 w-3.5 accent-[#008000]"
+            className="h-3.5 w-3.5 green-checkbox"
           />
           {open ? (
             <MdKeyboardArrowUp className="text-[20px]" />

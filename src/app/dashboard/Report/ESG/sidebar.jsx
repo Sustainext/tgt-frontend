@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MdKeyboardArrowLeft, MdMenu } from "react-icons/md";
 
 // Sidebar content
-const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile,reportType }) => {
+const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile,reportType,handleNextStep }) => {
   const sections = [
     "Message from Our Leadership",
     "About the Company & Operations",
@@ -53,7 +53,8 @@ const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile,reportType }
                   : "bg-transparent p-2 px-5"
               }`}
               onClick={() => {
-                setActiveStep(step);
+                handleNextStep('toggle')//put call previous screen ki no changes to
+                setActiveStep(step);// get call current screen ki
                 if (closeMobile) closeMobile(); // Close on mobile tap
               }}
             >
@@ -67,7 +68,7 @@ const ESGSidebarContent = ({ activeStep, setActiveStep, closeMobile,reportType }
 };
 
 // Main Sidebar Component
-const ESGSidebar = ({ activeStep, setActiveStep,setIsOpenMobile,isOpenMobile,reportType }) => {
+const ESGSidebar = ({ activeStep, setActiveStep,setIsOpenMobile,isOpenMobile,reportType,handleNextStep }) => {
 
 
   return (
@@ -79,6 +80,7 @@ const ESGSidebar = ({ activeStep, setActiveStep,setIsOpenMobile,isOpenMobile,rep
             activeStep={activeStep}
             setActiveStep={setActiveStep}
             reportType={reportType}
+            handleNextStep={handleNextStep}
           />
         </div>
       </div>
@@ -115,6 +117,7 @@ const ESGSidebar = ({ activeStep, setActiveStep,setIsOpenMobile,isOpenMobile,rep
             setActiveStep={setActiveStep}
             closeMobile={() => setIsOpenMobile(false)}
             reportType={reportType}
+            handleNextStep={handleNextStep}
           />
         </div>
       </div>

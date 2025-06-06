@@ -21,19 +21,12 @@ const Section2 = ({ section8_1_1Ref, data }) => {
         categories.forEach((category) => {
           if (response[category]) {
             response[category].forEach((topic) => {
-              const { name: materialTopic, disclosure } = topic;
+              const { name: materialTopic } = topic;
 
-              disclosure.forEach((disc) => {
-                if (disc.show_on_table) {
-                  const { name: disclosureName, relevent_sdg } = disc;
-                  rows.push({
-                    "ESG Pillar":
-                      category.charAt(0).toUpperCase() + category.slice(1),
-                    "Material Topic": materialTopic,
-                    // "GRI disclosure number": disclosureName,
-                    // "Linked UN SDG": relevent_sdg || [],
-                  });
-                }
+              rows.push({
+                "ESG Pillar":
+                  category.charAt(0).toUpperCase() + category.slice(1),
+                "Material Topic": materialTopic,
               });
             });
           }

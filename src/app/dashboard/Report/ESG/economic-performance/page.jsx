@@ -39,8 +39,9 @@ import {
   setgetdata,
 } from "../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
-const EconomicPerformance = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
+const EconomicPerformance = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
   const [data, setData] = useState("");
+  const [initialData, setInitialData] = useState({});
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const orgName =
@@ -98,8 +99,19 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess,reportType }, ref) => 
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const currentData={
+    company_economic_performance_statement,
+    introduction_to_economic_value_creation,
+    financial_assistance_from_government,
+    infrastructure_investement
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       company_economic_performance_statement: {
         page: "screen_eleven",
@@ -205,6 +217,12 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess,reportType }, ref) => 
       const response = await axiosInstance.get(url);
       if (response.data) {
         console.error("API response data11", response.data);
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(setgetdata(response.data));
         dispatch(
