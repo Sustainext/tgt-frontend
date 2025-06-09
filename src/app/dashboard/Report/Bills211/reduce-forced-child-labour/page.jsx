@@ -212,12 +212,17 @@ const stripHtml = (html) => {
           <p className="text-[15px] text-[#344054] mb-2 mt-3">{stripHtml(p2q4)}</p>
         </div>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">
+           <div>
+                    <p className="text-[15px] text-[#344054] mb-2 mt-3">
+            Add additional information about the Steps taken to prevent and reduce risks of forced labour and child labour including details on mapping supply chains and details about the Supplier Risk Assessment conducted (If available) and Add a statement if no such steps were taken 
+</p>
           <p className="text-[15px] text-[#344054] mb-4">
             Note: If an entity controls other entities, it must also describe
             the steps that these controlled entities have taken to identify,
             assess and manage potential forced labour or child labour risks in
             their activities and supply chains
           </p>
+          </div>
         </div>
 
         <div className="mb-4">
