@@ -22,7 +22,7 @@ const PermissionToggle = ({ label, description, enabled, onChange, disabled }) =
           type="checkbox"
           checked={isChecked}
           onChange={handleToggle}
-          className="sr-only green-checkbox" // Hide the default checkbox visually
+          className="sr-only" // Hide the default checkbox visually
           disabled={disabled}
         />
         {/* Slider */}
