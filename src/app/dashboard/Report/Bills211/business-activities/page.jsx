@@ -203,17 +203,24 @@ The company operates in [list key regions/countries] and sources products from [
       </div>
       <div>
         <p className="text-[15px] text-[#344054] mb-2 mt-3">
-          {companyname} is engaged in {p2q2}
+          {companyname} is engaged in{" "}
+          {Array.isArray(p2q2) ? p2q2.join(", ") : p2q2}
         </p>
       </div>
       <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">
-        <p className="text-[15px] text-[#344054] mb-4 mt-3 w-[85%]">
-          Add additional information about the Business Activities (If required)
-          Note: Entities should describe the activities of any entities under
-          their control but are only required to report on the activities of
-          subsidiaries that are entities with reporting obligations under the
-          Act
-        </p>
+       <div className="w-[85%]">
+          <p className="text-[15px] text-[#344054]  mt-3">
+            Add additional information about the Business Activities (If
+            required)
+          </p>
+          <p className="text-[15px] text-[#344054] mb-4">
+            Note: Entities should describe the activities of any entities under
+            their control but are only required to report on the activities of
+            subsidiaries that are entities with reporting obligations under the
+            Act
+          </p>
+        </div>
+
         <button
           className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex h-[35px]"
           onClick={loadContent}

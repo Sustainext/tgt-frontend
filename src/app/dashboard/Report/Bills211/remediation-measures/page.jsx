@@ -127,10 +127,7 @@ const Remediationmeasures = forwardRef(({ orgName, data, reportId }, ref) => {
   useImperativeHandle(ref, () => ({
     async submitForm(type) {
       try {
-        if (!p1q2 || p1q2.trim() === "") {
-          console.warn("Content is empty.");
-          return false;
-        }
+    
 
         const payload = {
           report: reportId,
@@ -210,10 +207,7 @@ const Remediationmeasures = forwardRef(({ orgName, data, reportId }, ref) => {
       </div>
       <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">
         <p className="text-[15px] text-[#344054] mb-4 mt-3">
-          Note: If an entity controls other entities, it must also describe the
-          steps that these controlled entities have taken to identify, assess
-          and manage potential forced labour or child labour risks in their
-          activities and supply chains
+         Note: If an entity controls other entities, it must also describe the remediation measures that these controlled entities have taken, if applicable 
         </p>
       </div>
 
