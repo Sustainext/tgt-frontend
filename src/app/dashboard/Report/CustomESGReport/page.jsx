@@ -130,9 +130,9 @@ export default function ReportBuilderPage() {
                           Organization JairajOrg
                         </p>
                         {/* Display report type */}
-                        <p className="mt-1 text-[#667085] text-[11px] ml-3">
+                        {/* <p className="mt-1 text-[#667085] text-[11px] ml-3">
                           Report Type: {reportType}
-                        </p>
+                        </p> */}
                       </div>
                     </div>
                   </div>

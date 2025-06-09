@@ -12,8 +12,8 @@ const initialState = {
   endDate: '',
   
   // New toggle fields
-  includeMaterialTopics: true,
-  includeContentIndex: true,
+  includeMaterialTopics: false,
+  includeContentIndex: false,
   
   // Investment corporate fields
   investmentCorporates: [],

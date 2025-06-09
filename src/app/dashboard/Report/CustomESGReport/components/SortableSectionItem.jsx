@@ -40,7 +40,7 @@ export default function SortableSectionItem({
             type="checkbox"
             checked={enabled}
             onChange={onToggle}
-            className="w-4 h-4 accent-green-600 cursor-pointer"
+            className="w-4 h-4 green-checkbox cursor-pointer"
           />
         <p className="text-sm font-medium">
           {order}. {title}
