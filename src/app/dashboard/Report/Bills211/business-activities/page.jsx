@@ -209,7 +209,7 @@ The company operates in [list key regions/countries] and sources products from [
       </div>
       <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">
         <div className="w-[85%]">
-          <p className="text-[15px] text-[#344054]  mt-3 ">
+          <p className="text-[15px] text-[#344054]  mt-3">
             Add additional information about the Business Activities (If
             required)
           </p>
