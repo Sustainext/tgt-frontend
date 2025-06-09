@@ -234,7 +234,7 @@ const Environment = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) 
   energy_consumption_within_organization,
   energy_consumption_outside_organization,
   energy_intensity_tracking,
-  energy_consumption_reduction_commitment,
+  // energy_consumption_reduction_commitment,
   significant_spills,
   habitat_protection_restoration_commitment,
   air_quality_protection_commitment,
@@ -399,16 +399,16 @@ const Environment = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) 
         field: "energy_intensity_tracking",
         isSkipped: false,
       },
-      energy_consumption_reduction_commitment: {
-        page: "screen_twelve",
-        label: "12.4.5 Reduction in Energy consumption",
-        subLabel:
-          "Add statement about company’s commitment to reduce energy consumption",
-        type: "textarea",
-        content: energy_consumption_reduction_commitment,
-        field: "energy_consumption_reduction_commitment",
-        isSkipped: false,
-      },
+      // energy_consumption_reduction_commitment: {
+      //   page: "screen_twelve",
+      //   label: "12.4.5 Reduction in Energy consumption",
+      //   subLabel:
+      //     "Add statement about company’s commitment to reduce energy consumption",
+      //   type: "textarea",
+      //   content: energy_consumption_reduction_commitment,
+      //   field: "energy_consumption_reduction_commitment",
+      //   isSkipped: false,
+      // },
       significant_spills: {
         page: "screen_twelve",
         label: "12.5.6 Significant Spills",
