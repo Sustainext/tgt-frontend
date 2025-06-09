@@ -213,6 +213,7 @@ The company operates in [list key regions/countries] and sources products from [
             Add additional information about the Business Activities (If
             required)
           </p>
+        
           <p className="text-[15px] text-[#344054] mb-4">
             Note: Entities should describe the activities of any entities under
             their control but are only required to report on the activities of
