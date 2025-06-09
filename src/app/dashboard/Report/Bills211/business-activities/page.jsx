@@ -208,12 +208,12 @@ The company operates in [list key regions/countries] and sources products from [
         </p>
       </div>
       <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">
-        <div>
-          <p className="text-[15px] text-[#344054]  mt-3 w-[85%]">
+        <div className="w-[85%]">
+          <p className="text-[15px] text-[#344054]  mt-3 ">
             Add additional information about the Business Activities (If
             required)
           </p>
-          <p className="text-[15px] text-[#344054] mb-4 w-[85%]">
+          <p className="text-[15px] text-[#344054] mb-4">
             Note: Entities should describe the activities of any entities under
             their control but are only required to report on the activities of
             subsidiaries that are entities with reporting obligations under the
