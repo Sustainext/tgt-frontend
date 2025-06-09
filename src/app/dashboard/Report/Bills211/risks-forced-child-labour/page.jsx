@@ -161,10 +161,7 @@ p1q2
     useImperativeHandle(ref, () => ({
       async submitForm(type) {
         try {
-          if (!p1q2 || p1q2.trim() === "") {
-            console.warn("Content is empty.");
-            return false;
-          }
+        
 
           const payload = {
             report: reportId,
@@ -211,7 +208,12 @@ p1q2
       dispatch(setRisksforcedchildlabour(value));
       setP1q2(value);
     };
-
+const stripHtml = (html) => {
+  if (typeof html === "string") {
+    return html.replace(/<[^>]+>/g, "");
+  }
+  return "";
+};
     return (
       <>
         <div>
@@ -293,7 +295,7 @@ p1q2
           </div>
         </div>
         <div>
-          <p className="text-[15px] text-[#344054] mb-4  w-[85%]">{p2q8}</p>
+        <p className="text-[15px] text-[#344054] mb-4 w-[85%]">{stripHtml(p2q8)}</p>
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

@@ -164,7 +164,7 @@ const Organizationprofilestructure = forwardRef(({ orgName, data,reportId }, ref
 
         const filledContent = `<p>${companyName} has a presence in [number] location(s) worldwide. The entity employs approximately [number] employees globally, including [number] in Canada and [number] outside Canada. It does not control or own any other entities [or specify subsidiaries and their functions]. </p>
 <p>The organizational structure includes the following key departments: [list key departments such as operations, sales, R&D, logistics, corporate affairs, sustainability, etc.].</p> 
-<p>${companyName} is a member of [list relevant industry associations, partnerships, or coalitions], which support its commitment to [sustainability, ethical sourcing, innovation, etc.].Shape </p>
+<p>${companyName} is a member of [list relevant industry associations, partnerships, or coalitions], which support its commitment to [sustainability, ethical sourcing, innovation, etc.] </p>
        
           </p>`;
 
@@ -244,7 +244,7 @@ const Organizationprofilestructure = forwardRef(({ orgName, data,reportId }, ref
       </div>
       <div>
         <p className="text-[15px] text-[#344054] mb-2 mt-3">
-          {companyname} is a Corporation headquartered in {p1q11} Canada,
+          {companyname} is a Corporation headquartered in {p1q11}, Canada,
           operating in the following industry/sector(s):
         </p>
         <div className="">
