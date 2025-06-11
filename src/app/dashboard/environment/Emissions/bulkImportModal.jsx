@@ -9,7 +9,8 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const BulkImportModal = ({ isOpen, onClose, setIsModalOpen }) => {
+
+const BulkImportModal = ({ isOpen, onClose, setIsModalOpen, showToast }) => {
   const [isFileUploaded, setIsFileUploaded] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -33,6 +34,11 @@ const BulkImportModal = ({ isOpen, onClose, setIsModalOpen }) => {
     setSelectedFile(null);
     setIsFileUploaded(false);
     setIsModalOpen(false);
+    showToast(
+      "Import cancelled",
+      "Import action has been cancelled.",
+      "linear-gradient(to right, #F98845, #00AEEF)"
+    );
   };
   const handleDownload = async () => {
     setIsDownloading(true);
@@ -120,18 +126,14 @@ const BulkImportModal = ({ isOpen, onClose, setIsModalOpen }) => {
       );
 
       if (response.status === 200) {
-        const message = response.data?.message || "Data imported successfully";
+        console.log("test reposr");
+        const msg = response.data?.message;
 
-        toast.success(message, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        showToast(
+          msg?.header || "Import Successful",
+          msg?.body || "Data has been imported successfully.",
+          msg?.gradient || "linear-gradient(to right, #F98845, #6ADF23)"
+        );
 
         setUploadResult(null);
         setTempId(null);

@@ -41,7 +41,7 @@ const ResultModal = ({ result, modleClose, onConfirm, errorFileBase64 }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
       <div className="bg-white rounded-lg shadow-lg w-[460px] max-w-full px-6 py-6 relative">
         <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
           {isSuccess ? (
@@ -53,8 +53,8 @@ const ResultModal = ({ result, modleClose, onConfirm, errorFileBase64 }) => {
         </h2>
 
         <p
-          className={`text-sm text-gray-600 mb-6 ${
-            !isSuccess ? "border-b border-gray-200 pb-4" : ""
+          className={`text-sm text-gray-600 ${
+            !isSuccess ? " pb-4" : ""
           }`}
         >
           {isSuccess
@@ -62,7 +62,7 @@ const ResultModal = ({ result, modleClose, onConfirm, errorFileBase64 }) => {
             : "Some rows could not be imported due to errors. Please review the log for details."}
         </p>
 
-        <div className="text-sm mb-4 space-y-2">
+        <div className="text-sm mb-4 space-y-2 py-5 border-y border-gray-200">
           {!isSuccess && (
             <p className="text-gray-700 mb-4">
               Total Entries: <span className=" text-gray-500">{total}</span>
@@ -74,7 +74,7 @@ const ResultModal = ({ result, modleClose, onConfirm, errorFileBase64 }) => {
             <span className="text-gray-500">{success} entries</span>
           </p>
           {!isSuccess && (
-            <p className=" text-gray-700 flex mb-2 ">
+            <p className=" text-gray-700 flex ">
               <MdClose className="text-[#D91F11] text-[19px] mr-2" />
               Failed to Import:{" "}
               <span className=" text-gray-500">{failed} entries</span>
@@ -86,7 +86,7 @@ const ResultModal = ({ result, modleClose, onConfirm, errorFileBase64 }) => {
           <button
             onClick={handleDownload}
             disabled={isDownloading}
-            className={`flex items-center  py-2 rounded-md text-[#007EEF] text-sm ${
+            className={`flex items-center  py-2 rounded-md text-[#007EEF] text-sm mb-4 ${
               isDownloading
                 ? "cursor-not-allowed opacity-60"
                 : "hover:underline"
@@ -108,7 +108,11 @@ const ResultModal = ({ result, modleClose, onConfirm, errorFileBase64 }) => {
             )}
           </button>
         )}
-
+     {!isSuccess && (
+            <p className="text-[#727272] mb-4 text-[12px]">
+              Do you still wish to update the table with the imported entries?
+            </p>
+          )}
         <div className="flex justify-end gap-2 mt-6">
           <button
             onClick={modleClose}
