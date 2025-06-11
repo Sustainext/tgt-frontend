@@ -30,7 +30,7 @@ export default function SortableSectionItem({
     <div
       ref={setNodeRef}
       style={style}
-      className="bg-white shadow-sm border border-gray-100 flex items-center justify-between px-4 py-5"
+      className="bg-white shadow-sm border rounded-md border-gray-100 flex items-center justify-between px-4 py-5"
     >
       <div className="flex items-center gap-4">
         <div {...attributes} {...listeners} className="cursor-grab text-gray-400">

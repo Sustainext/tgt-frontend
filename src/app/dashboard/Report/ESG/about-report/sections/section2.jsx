@@ -4,7 +4,11 @@ import dynamic from "next/dynamic";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section2 = ({ section7_1_1Ref, data }) => {
+const Section2 = ({ section7_1_1Ref, data,
+  sectionNumber = "7.1.1",
+  sectionTitle = 'Restatement of Information',
+  sectionOrder = 7,
+ }) => {
   const [content, setContent] = useState(
     `This ESG report, prepared in accordance with the Global Reporting Initiative (GRI) standards, provides a comprehensive overview of [Company Name]'s environmental, social, and governance (ESG) performance for the reporting period [Year]. It reflects our commitment to transparency, accountability, and continuous improvement in our sustainability practices. `
   );
@@ -19,7 +23,7 @@ stakeholders informed of our progress.`
       <div>
         <div id="setion7_1_1" ref={section7_1_1Ref}>
           <h3 className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
-            7.1.1 Restatement of Information
+           {sectionNumber} {sectionTitle}
           </h3>
           <p className="mb-4 text-sm">
             {data && data["2-4-a"] ? (

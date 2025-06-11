@@ -23,6 +23,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import FilterComponent from './FilterComponent'
+import {initializeForCustomReport,resetToDefaults} from '../../../../lib/redux/features/reportBuilderSlice'
+import { useDispatch } from "react-redux";
 
 import axiosInstance, { del } from "@/app/utils/axiosMiddleware";
 
@@ -35,6 +37,7 @@ const TableWithPagination = ({
   setIsMenuOpen,
   setData
 }) => {
+  const dispatch=useDispatch()
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
   const [totalPages, setTotalPages] = useState(0);
@@ -372,7 +375,10 @@ else{
     // if (corporate_name !== undefined){
     // }
     window.localStorage.setItem("reportCorpName", corporate_name?corporate_name:'');
-
+    if(report_type==='Custom ESG Report'){
+      // dispatch(initializeForCustomReport());
+      dispatch(resetToDefaults())
+    }
     router.push("/dashboard/Report/ESG");
 
     window.localStorage.setItem("reportname", name);

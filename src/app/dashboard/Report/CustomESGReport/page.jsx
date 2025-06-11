@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SectionSelector from './components/SectionSelector';
 import SubsectionSelector from './components/SubSectionSelector';
@@ -16,43 +16,49 @@ import "react-toastify/dist/ReactToastify.css";
 // Redux imports
 import {
   selectEnabledSections,
+  selectSections,
   selectCurrentReportPage,
   selectCanGoToNextPage,
   selectCanGoToPreviousPage,
   nextReportPage,
   previousReportPage,
+  selectSectionsForReportType,
 } from '../../../../lib/redux/features/reportBuilderSlice';
 
 const defaultSections = [
-  { id: 'about_company', title: 'About the Company & Operations', mandatory: true },
-  { id: 'message_ceo', title: 'Message From Our Leadership', mandatory: true },
-  { id: 'mission_vision', title: 'Mission, Vision, Value', mandatory: true },
-  { id: 'sustainability', title: 'Sustainability Roadmap', mandatory: true },
-  { id: 'awards', title: 'Awards & Alliances', mandatory: true },
-  { id: 'stakeholder', title: 'Stakeholder Engagement', mandatory: true },
-  { id: 'about_report', title: 'About the Report', mandatory: false },
-  { id: 'governance', title: 'Corporate Governance', mandatory: false },
-  { id: 'journey', title: 'Sustainability Journey', mandatory: false },
-  { id: 'economic', title: 'Economic Performance', mandatory: false },
-  { id: 'environment', title: 'Environment', mandatory: false },
-  { id: 'people', title: 'People', mandatory: false },
-  { id: 'community', title: 'Community', mandatory: false },
-  { id: 'customers', title: 'Customers, Products & Services', mandatory: false },
-  { id: 'materiality', title: 'Materiality', mandatory: false },
+  { id: 'message_ceo', title: 'Message From Our Leadership', mandatory: false, enabled: true, order: 1 },
+  { id: 'about_company', title: 'About the Company & Operations', mandatory: false, enabled: true, order: 2 },
+  { id: 'mission_vision', title: 'Mission, Vision, Value', mandatory: false, enabled: true, order: 3 },
+  { id: 'sustainability', title: 'Sustainability Roadmap', mandatory: false, enabled: true, order: 4 },
+  { id: 'awards', title: 'Awards & Alliances', mandatory: false, enabled: true, order: 5 },
+  { id: 'stakeholder', title: 'Stakeholder Engagement', mandatory: false, enabled: true, order: 6 },
+  { id: 'about_report', title: 'About the Report', mandatory: false, enabled: true, order: 7 },
+  { id: 'materiality', title: 'Materiality', mandatory: false, enabled: true, order: 8 },
+  { id: 'governance', title: 'Corporate Governance', mandatory: false, enabled: true, order: 9 },
+  { id: 'journey', title: 'Sustainability Journey', mandatory: false, enabled: true, order: 10 },
+  { id: 'economic', title: 'Economic Performance', mandatory: false, enabled: true, order: 11 },
+  { id: 'environment', title: 'Environment', mandatory: false, enabled: true, order: 12 },
+  { id: 'people', title: 'People', mandatory: false, enabled: true, order: 13 },
+  { id: 'community', title: 'Community', mandatory: false, enabled: true, order: 14 },
+  { id: 'customers', title: 'Customers, Products & Services', mandatory: false, enabled: true, order: 15 },
 ];
+
 
 export default function ReportBuilderPage() {
   const router = useRouter();
   const dispatch = useDispatch();
   const sectionSelectorRef = useRef();
+  const subsectionSelectorRef = useRef();
+
   
   const [step, setStep] = useState(0);
-  const [sections, setSections] = useState(
-    defaultSections.map((s, index) => ({
-      ...s,
-      order: index + 1,
-    }))
-  );
+  // const [sections, setSections] = useState(
+  //   defaultSections.map((s, index) => ({
+  //     ...s,
+  //     order: index + 1,
+  //   }))
+  // );
+    const sections = useSelector(selectSections);
   const [selectedSubsections, setSelectedSubsections] = useState({});
   const [isOpenMobile, setIsOpenMobile] = useState(false);
   
@@ -67,68 +73,118 @@ export default function ReportBuilderPage() {
   const [reportName, setReportName] = useState('');
   const [orgName, setOrgName] = useState('');
 
-  console.log(selectedSubsections, "look");
 
-  // useEffect(() => {
-  //   const savedSections = JSON.parse(localStorage.getItem('report_sections') || '[]');
-  //   const savedSubsections = JSON.parse(localStorage.getItem('report_subsections') || '{}');
-  //   const savedReportType = localStorage.getItem('reportType') || 'Custom ESG Report';
-  //   const savedReportName = localStorage.getItem('reportname') || 'Modular Report Name';
-  //   const savedOrgName = localStorage.getItem('reportorgname') || 'JairajOrg';
+  useEffect(() => {
+    // const savedSections = JSON.parse(localStorage.getItem('report_sections') || '[]');
+    // const savedSubsections = JSON.parse(localStorage.getItem('report_subsections') || '{}');
+    const savedReportType = localStorage.getItem('reportType') || 'Custom ESG Report';
+    const savedReportName = localStorage.getItem('reportname') || 'Modular Report Name';
+    const savedOrgName = localStorage.getItem('reportorgname') || 'JairajOrg';
 
-  //   if (savedSections.length > 0) setSections(savedSections);
-  //   if (Object.keys(savedSubsections).length > 0) setSelectedSubsections(savedSubsections);
-  //   setReportType(savedReportType);
-  //   setReportName(savedReportName);
-  //   setOrgName(savedOrgName);
-  // }, []);
+    // if (savedSections.length > 0) setSections(savedSections);
+    // if (Object.keys(savedSubsections).length > 0) setSelectedSubsections(savedSubsections);
+    setReportType(savedReportType);
+    setReportName(savedReportName);
+    setOrgName(savedOrgName);
+  }, []);
 
-  const handleNextStep = (selectedSections) => {
-    localStorage.setItem('report_sections', JSON.stringify(selectedSections));
+  const handleNextStep = () => {
+    localStorage.setItem('report_sections', JSON.stringify(sections));
     setStep(1);
   };
 
+   // Get sections based on report type - this ensures default order for non-custom reports
+   const sectionsToUse = useSelector(selectSectionsForReportType(reportType || "", defaultSections)); 
   // Import refs for form submission
-  const sectionRefs = useRef({
-    message_ceo: React.createRef(),
-    about_company: React.createRef(),
-    mission_vision: React.createRef(),
-    sustainability: React.createRef(),
-    awards: React.createRef(),
-    stakeholder: React.createRef(),
-    about_report: React.createRef(),
-    materiality: React.createRef(),
-    governance: React.createRef(),
-    journey: React.createRef(),
-    environment: React.createRef(),
-    community: React.createRef(),
-    economic: React.createRef(),
-    people: React.createRef(),
-    customers: React.createRef(),
-  });
+  const sectionRefs = {
+    message_ceo: useRef(),
+    about_company: useRef(),
+    mission_vision: useRef(),
+    sustainability: useRef(),
+    awards: useRef(),
+    stakeholder: useRef(),
+    about_report: useRef(),
+    materiality: useRef(),
+    governance: useRef(),
+    journey: useRef(),
+    environment: useRef(),
+    community: useRef(),
+    economic: useRef(),
+    people: useRef(),
+    customers: useRef(),
+  };
+  const currentSection = useMemo(() => {
+      return sectionsToUse[currentReportPage] || null;
+    }, [sectionsToUse, currentReportPage]);
+ 
+  
 
   // Navigation handlers for report renderer (step 2)
-  const handleReportNext = async () => {
-    const currentSectionId = enabledSections[currentReportPage]?.id;
-    const currentRef = sectionRefs.current[currentSectionId]?.current;
+  const handleReportNext = async (type) => {
+    const currentRef = sectionRefs[currentSection?.id]?.current;
+    const submitAndProceed = async () => {
+      if (currentRef) {
+        const isSubmitted = await currentRef.submitForm(type);
+        return isSubmitted;
+      }
+      return true;
+    };
 
-    if (currentRef) {
-      const isSubmitted = await currentRef.submitForm("next");
+    const showDraftSavedToast = () => {
+      toast.success(
+        <p style={{ margin: 0, fontSize: "13.5px", lineHeight: "1.4" }}>
+          The data filled in the report has been saved as draft and can be
+          accessed from the report module
+        </p>,
+        {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+    };
+
+    if (type === "next") {
+      const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
         dispatch(nextReportPage());
       }
+    } else if (type === "last") {
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
+        // loadMissingFields();
+        return
+      }
     } else {
-      dispatch(nextReportPage());
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
+        showDraftSavedToast();
+        setTimeout(() => {
+          router.push("/dashboard/Report");
+        }, 4000);
+      }
     }
+
+    // if (currentRef) {
+    //   const isSubmitted = await currentRef.submitForm("next");
+    //   if (isSubmitted) {
+    //     dispatch(nextReportPage());
+    //   }
+    // } else {
+    //   dispatch(nextReportPage());
+    // }
   };
 
   const handleReportPrevious = async () => {
-    const currentSectionId = enabledSections[currentReportPage]?.id;
-    const currentRef = sectionRefs.current[currentSectionId]?.current;
-
-    if (currentRef) {
-      await currentRef.submitForm("back");
-    }
+    // const currentRef = sectionRefs[currentSection?.id]?.current;
+    // if (currentRef) {
+    //   await currentRef.submitForm("back");
+    // }
     dispatch(previousReportPage());
   };
 
@@ -204,7 +260,6 @@ export default function ReportBuilderPage() {
       return (
         <button
           onClick={() => {
-            console.log('clicked')
             sectionSelectorRef.current?.handleSubmit();
           }}
           className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
@@ -214,7 +269,26 @@ export default function ReportBuilderPage() {
       );
     } else if (step === 1) {
       // Step 1: Subsection selection - no navigation buttons in header
-      return null;
+      return (
+        <div className='flex'>
+           <button
+       
+        className="text-gray-500 px-3 py-1.5 rounded cursor-pointer font-semibold w-[100px]"
+        onClick={()=>{setStep(0)}}
+      >
+        &lt; Back
+      </button>
+      <button
+  className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+  onClick={() => {
+    subsectionSelectorRef.current?.handleProceed();
+  }}
+>
+  Proceed to Report {' ->'}
+</button>
+        </div>
+       
+      );
     } else if (step === 2) {
       // Step 2: Report renderer - show navigation like regular ESG report
       return (
@@ -233,7 +307,7 @@ export default function ReportBuilderPage() {
           {canGoToNext ? (
             <button
               className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
-              onClick={handleReportNext}
+              onClick={()=>{handleReportNext('next')}}
             >
               Next &gt;
             </button>
@@ -271,7 +345,7 @@ export default function ReportBuilderPage() {
               {canGoToNext ? (
                 <button
                   className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
-                  onClick={handleReportNext}
+                  onClick={()=>{handleReportNext('next')}}
                 >
                   Next &gt;
                 </button>
@@ -291,7 +365,6 @@ export default function ReportBuilderPage() {
     return null;
   };
 
-  console.log(sections, "llok");
 
   return (
     <>
@@ -301,7 +374,7 @@ export default function ReportBuilderPage() {
         ) : (
           <Sidebar
             sections={displaySections}
-            setSections={setSections}
+            // setSections={setSections}
             selectedSubsections={displaySubsections}
             reportType={reportType} // Pass reportType
             allSections={defaultSections} // Pass all sections for non-custom reports
@@ -316,7 +389,7 @@ export default function ReportBuilderPage() {
                     <div>
                       <button
                         onClick={() => {
-                          router.push("/dashboard/Report");
+                          handleReportNext('back')
                         }}
                         className="text-[12px] text-[#667085] flex gap-2 ml-3"
                       >
@@ -427,8 +500,8 @@ export default function ReportBuilderPage() {
               <div className='p-6 pt-4'>
                 <SectionSelector
                   ref={sectionSelectorRef}
-                  sections={sections}
-                  setSections={setSections}
+                  // sections={sections}
+                  // setSections={setSections}
                   onNext={handleNextStep}
                 />
               </div>
@@ -437,7 +510,7 @@ export default function ReportBuilderPage() {
             {/* Subsection Selection - only for custom reports */}
             {reportType === 'Custom ESG Report' && step === 1 && (
               <div className='p-6 pt-4'>
-                <SubsectionSelector
+                {/* <SubsectionSelector
                   sections={sections}
                   onBack={() => setStep(0)}
                   onNext={(subsections) => {
@@ -445,7 +518,17 @@ export default function ReportBuilderPage() {
                     localStorage.setItem('report_subsections', JSON.stringify(subsections));
                     setStep(2);
                   }}
-                />
+                /> */}
+                <SubsectionSelector
+  ref={subsectionSelectorRef}
+  sections={sections}
+  onBack={() => setStep(0)}
+  onNext={(subsections) => {
+    setSelectedSubsections(subsections);
+    localStorage.setItem('report_subsections', JSON.stringify(subsections));
+    setStep(2);
+  }}
+/>
               </div>
             )}
 
@@ -454,7 +537,7 @@ export default function ReportBuilderPage() {
               <ReportRenderer
                 sections={displaySections}
                 selectedSubsections={displaySubsections}
-                sectionRefs={sectionRefs.current}
+                sectionRefs={sectionRefs}
                 onBack={() => setStep(2)}
               />
             )}

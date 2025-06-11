@@ -68,21 +68,21 @@ const ESGReport = () => {
 
   // Default sections definition (move this up before it's used)
   const defaultSections = [
-    { id: 'message_ceo', title: 'Message From Our Leadership', mandatory: false, enabled: true, order: 1 },
-    { id: 'about_company', title: 'About the Company & Operations', mandatory: false, enabled: true, order: 2 },
-    { id: 'mission_vision', title: 'Mission, Vision, Value', mandatory: false, enabled: true, order: 3 },
-    { id: 'sustainability', title: 'Sustainability Roadmap', mandatory: false, enabled: true, order: 4 },
-    { id: 'awards', title: 'Awards & Alliances', mandatory: false, enabled: true, order: 5 },
-    { id: 'stakeholder', title: 'Stakeholder Engagement', mandatory: false, enabled: true, order: 6 },
-    { id: 'about_report', title: 'About the Report', mandatory: false, enabled: true, order: 7 },
-    { id: 'governance', title: 'Corporate Governance', mandatory: false, enabled: true, order: 8 },
-    { id: 'journey', title: 'Sustainability Journey', mandatory: false, enabled: true, order: 9 },
-    { id: 'economic', title: 'Economic Performance', mandatory: false, enabled: true, order: 10 },
-    { id: 'environment', title: 'Environment', mandatory: false, enabled: true, order: 11 },
-    { id: 'people', title: 'People', mandatory: false, enabled: true, order: 12 },
-    { id: 'community', title: 'Community', mandatory: false, enabled: true, order: 13 },
-    { id: 'customers', title: 'Customers, Products & Services', mandatory: false, enabled: true, order: 14 },
-    { id: 'materiality', title: 'Materiality', mandatory: false, enabled: true, order: 15 },
+    { id: 'message_ceo', title: 'Message From Our Leadership', mandatory: false, enabled: false, order: 1 },
+    { id: 'about_company', title: 'About the Company & Operations', mandatory: false, enabled: false, order: 2 },
+    { id: 'mission_vision', title: 'Mission, Vision, Value', mandatory: false, enabled: false, order: 3 },
+    { id: 'sustainability', title: 'Sustainability Roadmap', mandatory: false, enabled: false, order: 4 },
+    { id: 'awards', title: 'Awards & Alliances', mandatory: false, enabled: false, order: 5 },
+    { id: 'stakeholder', title: 'Stakeholder Engagement', mandatory: false, enabled: false, order: 6 },
+    { id: 'about_report', title: 'About the Report', mandatory: false, enabled: false, order: 7 },
+    { id: 'materiality', title: 'Materiality', mandatory: false, enabled: false, order: 8 },
+    { id: 'governance', title: 'Corporate Governance', mandatory: false, enabled: false, order: 9 },
+    { id: 'journey', title: 'Sustainability Journey', mandatory: false, enabled: false, order: 10 },
+    { id: 'economic', title: 'Economic Performance', mandatory: false, enabled: false, order: 11 },
+    { id: 'environment', title: 'Environment', mandatory: false, enabled: false, order: 12 },
+    { id: 'people', title: 'People', mandatory: false, enabled: false, order: 13 },
+    { id: 'community', title: 'Community', mandatory: false, enabled: false, order: 14 },
+    { id: 'customers', title: 'Customers, Products & Services', mandatory: false, enabled: false, order: 15 },
   ];
 
   // Local state
@@ -277,6 +277,8 @@ const ESGReport = () => {
     dispatch(previousReportPage());
   };
 
+ 
+
   // Component mapping for sections
   const renderSectionComponent = () => {
     if (!currentSection) return null;
@@ -379,16 +381,17 @@ const ESGReport = () => {
     <>
       <div className="flex">
         {shouldShowSidebar && (
-          <div className="m-3 ml-2 border border-r-2 border-b-2 shadow-lg rounded-lg h-full hidden xl:block lg:block">
-            <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
-              <UnifiedESGSidebar
-                setIsOpenMobile={setIsOpenMobile}
-                isOpenMobile={isOpenMobile}
-                reportType={reportType}
-                allSections={sectionsToUse}
-              />
-            </div>
-          </div>
+          // <div className="m-3 ml-2 border border-r-2 border-b-2 rounded-lg h-full hidden xl:block lg:block">
+          //   <div className="flex items-start py-4 h-full  rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
+             
+          //   </div>
+          // </div>
+          <UnifiedESGSidebar
+          setIsOpenMobile={setIsOpenMobile}
+          isOpenMobile={isOpenMobile}
+          reportType={reportType}
+          allSections={sectionsToUse}
+        />
         )}
 
         <div className="w-full mb-5">

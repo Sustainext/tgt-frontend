@@ -169,11 +169,11 @@ const Section2 = ({
   return (
     <>
       <div className="mb-6">
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h4 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
             {sectionNumber} Board Message
           </h4>
-        </div>
+        </div> */}
 
         <div>
           <p className="text-[15px] text-[#344054] mb-2">

@@ -12,7 +12,7 @@ import { Oval } from "react-loader-spinner";
 import {setdescription} from "../../../../../lib/redux/features/ESGSlice/screen5Slice"
 
 
-const AwardsRecognition=forwardRef(({ onSubmitSuccess }, ref) =>{
+const AwardsRecognition=forwardRef(({ onSubmitSuccess,sectionOrder=5 }, ref) =>{
 
     const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
     const apiCalledRef = useRef(false);
@@ -33,7 +33,7 @@ const AwardsRecognition=forwardRef(({ onSubmitSuccess }, ref) =>{
     const submitForm = async (type) => {
         LoaderOpen();
         const data={
-          "description":{"page":"screen_five","label":"5. Awards & Recognition","subLabel":"","type":"richTextarea","content":description,"field":"description","isSkipped":false},
+          "description":{"page":"screen_five","label":`${sectionOrder}. Awards & Recognition`,"subLabel":"","type":"richTextarea","content":description,"field":"description","isSkipped":false},
         }
     
         const url = `${process.env.BACKEND_API_URL}/esg_report/screen_five/${reportid}/`;
@@ -120,7 +120,7 @@ const AwardsRecognition=forwardRef(({ onSubmitSuccess }, ref) =>{
         <>
         <div className="mx-2 p-2">
             <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-                5. Awards & Recognition
+                {sectionOrder}. Awards & Recognition
             </h3>
             <div className="flex gap-4">
             <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
@@ -129,10 +129,10 @@ const AwardsRecognition=forwardRef(({ onSubmitSuccess }, ref) =>{
             {/* page sidebar */}
             <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky  w-[20%] md:w-[25%] lg:w-[20%] hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
                 <p className="text-[11px] text-[#727272] mb-2 uppercase">
-               5. Awards & Recognition
+               {sectionOrder}. Awards & Recognition
                 </p>
                 <p className="text-[12px] text-blue-400 mb-2">
-               1. Awards & Recognition
+               {sectionOrder}.1 Awards & Recognition
                 </p>
             </div>
             </div>

@@ -14,7 +14,7 @@ const Section1 = ({
   orgName, 
   selectedfile, 
   setSelectedFile,
-  sectionNumber = "1.1",
+  sectionNumber = "1",
   sectionOrder = 1
 }) => {
   const content = useSelector(state => state.screen1Slice.message);
@@ -221,11 +221,11 @@ const Section1 = ({
   return (
     <>
       <div className="mb-6">
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h4 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-            {sectionNumber} Chief Executive Message
+            {sectionNumber} Message from CEO
           </h4>
-        </div>
+        </div> */}
 
         <div>
           <p className="text-[15px] text-[#344054] mb-2">Upload CEO's Image:</p>

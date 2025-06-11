@@ -30,6 +30,8 @@ const SectionSelector = forwardRef(({ onNext }, ref) => {
   const dispatch = useDispatch();
   const sections = useSelector(selectSections);
 
+  console.log(sections,"see the defualt sections")
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -59,6 +61,7 @@ const SectionSelector = forwardRef(({ onNext }, ref) => {
   const handleSubmit = () => {
     const enabledSections = sections.filter(s => s.enabled);
     if (enabledSections.length > 0) {
+      console.log(sections,"see the selected sections")
       onNext();
     } else {
       alert('Please select at least one section to proceed.');

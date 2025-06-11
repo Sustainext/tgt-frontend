@@ -37,26 +37,46 @@ import MessageCEO from '../../ESG/message-from-ceo/page';
 // import MissionVision from './sections/MissionVision';
 
 // Component mapping - Updated to properly handle props
+// const sectionComponents = {
+//   about_company: (props) => <Companyoperations {...props} />,
+//   message_ceo: (props) => <MessageCEO {...props} />,
+//   mission_vision: (props) => <MissionVision {...props} />,
+//   sustainability: (props) => <Sustainability {...props} />,
+//   awards: (props) => <Awards {...props} />,
+//   stakeholder: (props) => <StakeHolder {...props} />,
+//   about_report: (props) => <AboutReport {...props} />,
+//   governance: (props) => <Governance {...props} />,
+//   journey: (props) => <Journey {...props} />,
+//   economic: (props) => <Economic {...props} />,
+//   environment: (props) => <Environment {...props} />,
+//   people: (props) => <People {...props} />,
+//   community: (props) => <Community {...props} />,
+//   customers: (props) => <Customers {...props} />,
+//   materiality: (props) => <Materiality {...props} />,
+//   // Add all other component mappings
+// };
 const sectionComponents = {
-  about_company: (props) => <Companyoperations {...props} />,
-  message_ceo: (props) => <MessageCEO {...props} />,
-  mission_vision: (props) => <MissionVision {...props} />,
-  sustainability: (props) => <Sustainability {...props} />,
-  awards: (props) => <Awards {...props} />,
-  stakeholder: (props) => <StakeHolder {...props} />,
-  about_report: (props) => <AboutReport {...props} />,
-  governance: (props) => <Governance {...props} />,
-  journey: (props) => <Journey {...props} />,
-  economic: (props) => <Economic {...props} />,
-  environment: (props) => <Environment {...props} />,
-  people: (props) => <People {...props} />,
-  community: (props) => <Community {...props} />,
-  customers: (props) => <Customers {...props} />,
-  materiality: (props) => <Materiality {...props} />,
+  about_company: Companyoperations,
+  message_ceo: MessageCEO,
+  mission_vision: MissionVision,
+  sustainability: Sustainability,
+  awards: Awards,
+  stakeholder: StakeHolder,
+  about_report: AboutReport,
+  governance: Governance,
+  journey: Journey,
+  economic: Economic,
+  environment: Environment,
+  people: People,
+  community: Community,
+  customers: Customers,
+  materiality: Materiality,
   // Add all other component mappings
 };
 
-const ReportRenderer = ({ onBack }) => {
+
+const ReportRenderer = ({ onBack,sectionRefs }) => {
+  console.log(sectionRefs,"see all the section ref")
   const dispatch = useDispatch();
   const enabledSections = useSelector(selectEnabledSections);
   const selectedSubsections = useSelector(selectSelectedSubsections);
@@ -99,7 +119,7 @@ const ReportRenderer = ({ onBack }) => {
     return (
       <div className="mb-8">
         <div className="min-h-[400px]">
-          {SectionComponent({
+          {/* {SectionComponent({
             subsections: sectionSubsections,
             sectionId: currentSection.id,
             sectionTitle: currentSection.title,
@@ -108,7 +128,17 @@ const ReportRenderer = ({ onBack }) => {
               console.log('Section submitted:', success);
               // Handle submission success if needed
             }
-          })}
+          })} */}
+           <SectionComponent
+      ref={sectionRefs[currentSection?.id]}
+      subsections={sectionSubsections}
+      sectionId={currentSection?.id}
+      sectionTitle={currentSection?.title}
+      sectionOrder={sectionOrder}
+      onSubmitSuccess={(success) => {
+        console.log('Section submitted:', success);
+      }}
+    />
         </div>
       </div>
     );
@@ -189,17 +219,17 @@ const ReportRenderer = ({ onBack }) => {
         {renderCurrentSection()}
       </div>
 
-      {/* Report Footer */}
+      {/* Report Footer
       <div className="mt-8 pt-4 border-t border-gray-200 text-center">
         <p className="text-sm text-gray-500">
           Report generated on {new Date().toLocaleDateString()} | 
           Contains {enabledSections.length} sections | 
           Current section: {currentSection?.title || 'N/A'}
         </p>
-      </div>
+      </div> */}
 
       {/* Debug Information (remove in production) */}
-      {process.env.NODE_ENV === 'development' && (
+      {/* {process.env.NODE_ENV === 'development' && (
         <div className="mt-8 p-4 bg-gray-100 rounded">
           <h3 className="font-bold mb-2">Debug Information:</h3>
           <pre className="text-xs overflow-auto">
@@ -211,7 +241,7 @@ const ReportRenderer = ({ onBack }) => {
             }, null, 2)}
           </pre>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

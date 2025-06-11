@@ -49,7 +49,7 @@ const ESGSidebarContent = ({
 
       {/* Desktop Header with Edit */}
       <div className="hidden xl:flex justify-between items-center px-4 py-2 text-[#727272] font-bold">
-        <span className="text-[16px] font-[600]">Report Module</span>
+        <span className="text-[16px] font-[600] p-2">Report Module</span>
         {showEditButton && (
           <button
             onClick={onEditClick}
@@ -107,9 +107,9 @@ const ESGSidebar = ({
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="shadow-lg rounded-lg h-full hidden xl:block lg:block">
-        <div className="flex items-start py-4 h-screen rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
-          <ESGSidebarContent
+      <div className="m-3 ml-2 border border-r-2 border-b-2 shadow-lg rounded-lg hidden xl:block lg:block">
+        <div className="flex items-start py-4 min-h-screen rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
+        <ESGSidebarContent
             onEditClick={handleEditClick}
             reportType={reportType}
             allSections={allSections}

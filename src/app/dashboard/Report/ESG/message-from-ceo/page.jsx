@@ -30,8 +30,38 @@ const MessageFromCeo = forwardRef(({
   sectionId,
   sectionTitle 
 }, ref) => {
+
+  console.log(ref,"see the message from ceo ref")
   console.log("MessageFromCEO received subsections:", subsections);
   console.log("MessageFromCEO received sectionOrder:", sectionOrder);
+  const CombinedSection = ({ 
+    orgName, 
+    sectionNumber, 
+    sectionOrder, 
+    selectedCEOfile, 
+    setSelectedCEOFile, 
+    selectedSignfile, 
+    setSelectedSignFile 
+  }) => {
+    return (
+      <>
+        <Section1
+          orgName={orgName}
+          sectionNumber={sectionNumber}
+          sectionOrder={sectionOrder}
+          selectedfile={selectedCEOfile}
+          setSelectedFile={setSelectedCEOFile}
+        />
+        <Section2
+          orgName={orgName}
+          sectionNumber={sectionNumber}
+          sectionOrder={sectionOrder}
+          selectedfile={selectedSignfile}
+          setSelectedFile={setSelectedSignFile}
+        />
+      </>
+    );
+  };
 
   const [loopen, setLoOpen] = useState(false);
   const [selectedCEOfile, setSelectedCEOFile] = useState("");
@@ -60,15 +90,15 @@ const MessageFromCeo = forwardRef(({
   // Map subsection IDs to their corresponding components and data
   const subsectionMapping = {
     chief_executive_message: {
-      component: Section1,
-      title: "Chief Executive Message",
+      component: CombinedSection,
+      title: "Message from CEO",
       subSections: []
     },
-    board_message: {
-      component: Section2,
-      title: "Board Message",
-      subSections: []
-    }
+    // board_message: {
+    //   component: Section2,
+    //   title: "Board Message",
+    //   subSections: []
+    // }
   };
 
   // For non-custom reports, show all subsections
@@ -78,7 +108,7 @@ const MessageFromCeo = forwardRef(({
       return Array.isArray(subsections) ? subsections : [];
     } else {
       // Show all available subsections for non-custom reports
-      return ['chief_executive_message', 'board_message'];
+      return ['chief_executive_message'];
     }
   };
 
@@ -174,9 +204,6 @@ const MessageFromCeo = forwardRef(({
         "message_image_name",
         selectedCEOfile ? selectedCEOfile.name : ""
       );
-    }
-
-    if (subsectionsToShow.includes('board_message')) {
       formData.append(
         "ceo_name",
         JSON.stringify({
@@ -195,6 +222,20 @@ const MessageFromCeo = forwardRef(({
         "signature_image_name",
         selectedSignfile ? selectedSignfile.name : ""
       );
+    }
+    else{
+      LoaderClose();
+      toast.error("No,subsection selected", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return false;
     }
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_one/${reportid}/`;
@@ -301,43 +342,58 @@ const MessageFromCeo = forwardRef(({
     });
   }, [selectedSubsections]);
 
+  // const renderSection = (section) => {
+  //   const SectionComponent = section.component;
+  //   const ref = sectionRefs.current[section.id] || createRef();
+  //   sectionRefs.current[section.id] = ref;
+
+  //   const commonProps = {
+  //     orgName: orgname,
+  //     sectionNumber: section.sectionNumber,
+  //     sectionOrder
+  //   };
+
+  //   switch (section.id) {
+  //     case 'chief_executive_message':
+  //       return (
+  //         <div key={section.id} ref={ref}>
+  //           <SectionComponent 
+  //             {...commonProps}
+  //             selectedfile={selectedCEOfile}
+  //             setSelectedFile={setSelectedCEOFile}
+  //           />
+  //           <SectionComponent 
+  //             {...commonProps}
+  //             selectedfile={selectedSignfile}
+  //             setSelectedFile={setSelectedSignFile}
+  //           />
+  //         </div>
+  //       );
+  //     default:
+  //       return null;
+  //   }
+  // };
+
   const renderSection = (section) => {
     const SectionComponent = section.component;
     const ref = sectionRefs.current[section.id] || createRef();
     sectionRefs.current[section.id] = ref;
-
-    const commonProps = {
-      orgName: orgname,
-      sectionNumber: section.sectionNumber,
-      sectionOrder
-    };
-
-    switch (section.id) {
-      case 'chief_executive_message':
-        return (
-          <div key={section.id} ref={ref}>
-            <SectionComponent 
-              {...commonProps}
-              selectedfile={selectedCEOfile}
-              setSelectedFile={setSelectedCEOFile}
-            />
-          </div>
-        );
-      case 'board_message':
-        return (
-          <div key={section.id} ref={ref}>
-            <SectionComponent 
-              {...commonProps}
-              selectedfile={selectedSignfile}
-              setSelectedFile={setSelectedSignFile}
-            />
-          </div>
-        );
-      default:
-        return null;
-    }
+  
+    return (
+      <div key={section.id} ref={ref}>
+        <SectionComponent
+          orgName={orgname}
+          sectionNumber={section.sectionNumber}
+          sectionOrder={sectionOrder}
+          selectedCEOfile={selectedCEOfile}
+          setSelectedCEOFile={setSelectedCEOFile}
+          selectedSignfile={selectedSignfile}
+          setSelectedSignFile={setSelectedSignFile}
+        />
+      </div>
+    );
   };
-
+  
   console.log("Final check - selectedSubsections:", selectedSubsections);
 
   // Don't render anything if no subsections are selected (for custom reports)
