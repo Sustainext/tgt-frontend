@@ -194,7 +194,7 @@ const People = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
     standard_wage,
     performance_review_process,
     forced_labor_position,
-    child_labor_position,
+    // child_labor_position,
     employee_diversity_position,
     employee_skill_upgrade_programs,
     remuneration_practices,
@@ -205,9 +205,9 @@ const People = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
     ohs_management_system,
     freedom_of_association_views,
     violation_discrimination_policy,
-    indigenous_rights_policy,
-    security_personnel_external_training,
-    security_personnel_internal_training,
+    // indigenous_rights_policy,
+    // security_personnel_external_training,
+    // security_personnel_internal_training,
   };
   
   const submitForm = async (type) => {
@@ -274,15 +274,15 @@ const People = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
         field: "forced_labor_position",
         isSkipped: false,
       },
-      child_labor_position: {
-        page: "screen_thirteen",
-        label: "13.3 Incidents of Child Labour",
-        subLabel: "Add statement about company’s position on child labor",
-        type: "textarea",
-        content: child_labor_position,
-        field: "child_labor_position",
-        isSkipped: false,
-      },
+      // child_labor_position: {
+      //   page: "screen_thirteen",
+      //   label: "13.3 Incidents of Child Labour",
+      //   subLabel: "Add statement about company’s position on child labor",
+      //   type: "textarea",
+      //   content: child_labor_position,
+      //   field: "child_labor_position",
+      //   isSkipped: false,
+      // },
       employee_diversity_position: {
         page: "screen_thirteen",
         label: "13.4.2 Diversity of Governance Bodies and Employees",
@@ -383,36 +383,36 @@ const People = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
         field: "violation_discrimination_policy",
         isSkipped: false,
       },
-      indigenous_rights_policy: {
-        page: "screen_thirteen",
-        label: "13.8.2 Incidents of Violation of Rights of Indigenous People",
-        subLabel:
-          "Add statement about company’s policy on violation of rights of indigenous people",
-        type: "textarea",
-        content: indigenous_rights_policy,
-        field: "indigenous_rights_policy",
-        isSkipped: false,
-      },
-      security_personnel_external_training: {
-        page: "screen_thirteen",
-        label:
-          "Percentage of security personnel who have received formal training from third-party organisation",
-        subLabel: "",
-        type: "textarea",
-        content: security_personnel_external_training,
-        field: "security_personnel_external_training",
-        isSkipped: false,
-      },
-      security_personnel_internal_training: {
-        page: "screen_thirteen",
-        label:
-          "Percentage of security personnel who have received formal training in the organisation",
-        subLabel: "",
-        type: "textarea",
-        content: security_personnel_internal_training,
-        field: "security_personnel_internal_training",
-        isSkipped: false,
-      },
+      // indigenous_rights_policy: {
+      //   page: "screen_thirteen",
+      //   label: "13.8.2 Incidents of Violation of Rights of Indigenous People",
+      //   subLabel:
+      //     "Add statement about company’s policy on violation of rights of indigenous people",
+      //   type: "textarea",
+      //   content: indigenous_rights_policy,
+      //   field: "indigenous_rights_policy",
+      //   isSkipped: false,
+      // },
+      // security_personnel_external_training: {
+      //   page: "screen_thirteen",
+      //   label:
+      //     "Percentage of security personnel who have received formal training from third-party organisation",
+      //   subLabel: "",
+      //   type: "textarea",
+      //   content: security_personnel_external_training,
+      //   field: "security_personnel_external_training",
+      //   isSkipped: false,
+      // },
+      // security_personnel_internal_training: {
+      //   page: "screen_thirteen",
+      //   label:
+      //     "Percentage of security personnel who have received formal training in the organisation",
+      //   subLabel: "",
+      //   type: "textarea",
+      //   content: security_personnel_internal_training,
+      //   field: "security_personnel_internal_training",
+      //   isSkipped: false,
+      // },
     };
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_thirteen/${reportid}/`;

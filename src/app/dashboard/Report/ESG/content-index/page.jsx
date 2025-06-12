@@ -22,6 +22,7 @@ const ContentIndex = ({
   isOmissionModalOpen,
   isCreateReportModalOpen,
   setIsCreateReportModalOpen,
+  reportType
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const orgName =
@@ -306,6 +307,7 @@ const ContentIndex = ({
         reportName={reportName}
         isCreateReportModalOpen={isCreateReportModalOpen}
         setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+        reportType={reportType}
       />
     </>
   );

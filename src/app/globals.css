@@ -464,7 +464,52 @@ input[type='number']::-webkit-outer-spin-button {
   display: none !important;
 }
 
+.green-checkbox-small{
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 14px;
+  height: 13px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+.green-checkbox-small::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #42CC71, #28C1A2);
+  border-radius: 0px;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
 
+.green-checkbox-small::after {
+  content: '\2714';
+  font-size: 10px;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.green-checkbox-small:checked::before,
+.green-checkbox-small:checked::after {
+  opacity: 1;
+}
+
+.green-checkbox-small:checked {
+  border-color: #42CC71;
+}
 
 .green-checkbox {
   appearance: none;
@@ -488,7 +533,7 @@ input[type='number']::-webkit-outer-spin-button {
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, #42CC71, #28C1A2);
-  border-radius: 2px;
+  border-radius: 1px;
   opacity: 0;
   transition: all 0.3s ease;
 }

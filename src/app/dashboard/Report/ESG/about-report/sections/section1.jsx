@@ -109,12 +109,12 @@ stakeholders informed of our progress.`
             Point of Contact:
           </p>
           <p className="mb-4 text-sm">
-            {data && data["2-3d"] ? (
-              typeof data["2-3d"] === "object" ? (
+            {data && data["2-3-d"] ? (
+              typeof data["2-3-d"] === "object" ? (
                 <div>
                   <p className="mb-2">For further information regarding this report or our sustainability initiatives, please contact:</p>
                    <pre style={{ fontFamily: "inherit" }}>
-                  {data["2-3d"].Q1 ? data["2-3d"].Q1 : "No Data available"}
+                  {data["2-3-d"].Q1 ? data["2-3-d"].Q1 : "No Data available"}
                 </pre>
                 </div>
                

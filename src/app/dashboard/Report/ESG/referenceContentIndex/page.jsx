@@ -22,6 +22,7 @@ const ReferenceContentIndex = ({
   isOmissionModalOpen,
   isCreateReportModalOpen,
   setIsCreateReportModalOpen,
+  reportType
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const orgName =
@@ -237,6 +238,7 @@ const ReferenceContentIndex = ({
         reportName={reportName}
         isCreateReportModalOpen={isCreateReportModalOpen}
         setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+        reportType={reportType}
       />
     </>
   );

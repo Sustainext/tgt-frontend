@@ -372,7 +372,7 @@ const Screenone = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                             value={option.label}
                             checked={selectedOptions.includes(option.label)}
                             onChange={handleCheckboxChange}
-                            className="mr-3 pt-1"
+                            className="mr-3 pt-1 green-checkbox-small"
                           />
                           {option.label}
                         </label>

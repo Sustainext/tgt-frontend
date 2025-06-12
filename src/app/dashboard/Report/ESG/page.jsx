@@ -778,6 +778,7 @@ const ESGReport = () => {
                           isCreateReportModalOpen={isCreateReportModalOpen}
                           setIsCreateReportModalOpen={setIsCreateReportModalOpen}
                           setIsOmissionSubmitted={setIsOmissionSubmitted}
+                          reportType={reportType}
                           
                           />
                         ):(
@@ -790,6 +791,7 @@ const ESGReport = () => {
                           isCreateReportModalOpen={isCreateReportModalOpen}
                           setIsCreateReportModalOpen={setIsCreateReportModalOpen}
                           setIsOmissionSubmitted={setIsOmissionSubmitted}
+                          reportType={reportType}
                         />
                         )
                       }

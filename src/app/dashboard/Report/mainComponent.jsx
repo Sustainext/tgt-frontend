@@ -512,7 +512,7 @@ const Report = () => {
           // setErrorMessage(responseData.message.data);
         } else {
           const errorMessage =
-            responseData?.message?.data || "An unexpected error occurred";
+            responseData?.message || "An unexpected error occurred";
           toast.error(errorMessage, {
             position: "top-right",
             autoClose: 5000,
