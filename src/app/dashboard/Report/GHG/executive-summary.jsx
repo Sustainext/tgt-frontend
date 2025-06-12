@@ -42,6 +42,7 @@ function Executivesummary({
   const reportstartdateStr = localStorage.getItem("reportstartdate");
   const reportenddateStr = localStorage.getItem("reportenddate");
   const reportby = typeof window !== 'undefined' ? localStorage.getItem("reportby") : '';
+  const report_type = typeof window !== 'undefined' ? localStorage.getItem("reportType") : '';
   return (
     <>
       <div className="xl:px-3">
@@ -118,7 +119,7 @@ function Executivesummary({
             </div>
           )}
 
-        {reportby==='Corporate'?(
+        {reportby==='Corporate' && report_type==='GHG Report - Investments'?(
           <div></div>
         ):(
           <div className="mb-5">
