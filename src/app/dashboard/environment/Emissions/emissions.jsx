@@ -54,7 +54,7 @@ const Emissions = ({ open, apiData, setMobileopen }) => {
     setData(newData);
   }, [category]);
 
-  const showToast = (header, body, gradient, duration = 50000) => {
+  const showToast = (header, body, gradient, duration = 5000) => {
     const id = Date.now();
     setToastQueue((prev) => [...prev, { id, header, body, gradient }]);
 
