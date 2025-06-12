@@ -19,6 +19,7 @@ import {
 } from "react-icons/md";
 import EmissionTopBar from "./emissionTopbar";
 import BulkImportModal from "./bulkImportModal";
+import ToastMessage from "../../../shared/components/Toast";
 const Emissions = ({ open, apiData, setMobileopen }) => {
   const dispatch = useDispatch();
   const { location, year, month } = useSelector((state) => state.emissions);
@@ -31,7 +32,8 @@ const Emissions = ({ open, apiData, setMobileopen }) => {
   const [category, setCategory] = useState("");
   const [data, setData] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log(isModalOpen,"set isModalOpen");
+  const [toastQueue, setToastQueue] = useState([]);
+  console.log(isModalOpen, "set isModalOpen");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -52,6 +54,14 @@ const Emissions = ({ open, apiData, setMobileopen }) => {
     setData(newData);
   }, [category]);
 
+  const showToast = (header, body, gradient, duration = 3000) => {
+    const id = Date.now();
+    setToastQueue((prev) => [...prev, { id, header, body, gradient }]);
+
+    setTimeout(() => {
+      setToastQueue((prev) => prev.filter((toast) => toast.id !== id));
+    }, duration);
+  };
   const griData = [
     {
       tagName: "GRI 305 - 1",
@@ -199,7 +209,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             setLocationname={setLocationname}
           />
 
-          {/* <div className="mb-4">
+          <div className="mb-4">
             <button
               onClick={() => setIsModalOpen(true)}
               className="flex bg-transparent text-[#007EEF] text-[13px] ml-6"
@@ -218,8 +228,9 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
               setIsModalOpen={setIsModalOpen}
+              showToast={showToast}
             />
-          </div> */}
+          </div>
           <Emissionsnbody
             open={open}
             location={location}
@@ -232,6 +243,18 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
           />
         </>
       </EmissionsProvider>
+   <div className="fixed top-36 lg:top-20 xl:top-20 2xl:top-20 2k:top-20 4k:top-20 right-4 z-[9999] space-y-3">
+        {toastQueue.map((toast) => (
+          <ToastMessage
+            key={toast.id}
+            message={{ header: toast.header, body: toast.body }}
+            gradient={toast.gradient}
+            onClose={() =>
+              setToastQueue((prev) => prev.filter((t) => t.id !== toast.id))
+            }
+          />
+        ))}
+      </div>
     </>
   );
 };

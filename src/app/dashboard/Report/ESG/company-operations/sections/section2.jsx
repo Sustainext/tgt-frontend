@@ -208,6 +208,9 @@ const Section2 = ({
             </li>
           </ul>
         </div>
+        <p className="mb-4 text-sm font-normal">
+            {data && data["2-6-d"] || "No data available"}
+        </p>
       </div>
       <div className="mb-2" id="setion2_1_2" ref={section2_1_2Ref}>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">

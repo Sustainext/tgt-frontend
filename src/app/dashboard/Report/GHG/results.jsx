@@ -13,9 +13,9 @@ function Results({ exdata, totalContributionScope, souresdata, locatiodata }) {
   // Loop through each corporate's scopes to sum up the emissions by scope
   exdata.forEach((corporate) => {
     corporate.scopes.forEach((scope) => {
-      if (scope.scope_name === "Scope-1") {
+      if (scope.scope_name === "Scope-1" && corporate.corporate_type === "Regular") {
         totalScope1 += parseFloat(scope.total_co2e);
-      } else if (scope.scope_name === "Scope-2") {
+      } else if (scope.scope_name === "Scope-2" && corporate.corporate_type === "Regular") {
         totalScope2 += parseFloat(scope.total_co2e);
       } else if (scope.scope_name === "Scope-3") {
         totalScope3 += parseFloat(scope.total_co2e);

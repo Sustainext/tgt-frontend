@@ -392,7 +392,7 @@ const Screentwo = ({
                         value={option.label}
                         checked={selectedOptions.includes(option.label)}
                         onChange={handleCheckboxChange}
-                        className="mr-3 pt-1"
+                        className="mr-3  green-checkbox-small"
                       />
                       {option.label}
                     </label>
