@@ -17,23 +17,21 @@ import {
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { Oval } from "react-loader-spinner";
 import dynamic from "next/dynamic";
-import moment from "moment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BlobServiceClient } from "@azure/storage-blob";
+
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
   const [loopen, setLoOpen] = useState(false);
   const [part1, setPart1] = useState("");
   const [part2, setPart2] = useState("");
-  const isMounted = useRef(true);
   const [imageviw, setImageview] = useState("");
   const [selectedfile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
-  // const reportId = useSelector(
-  //   (state) => state.BillScreen1About.report_id
-  // );
+  const isMounted = useRef(true);
+
   const content = useSelector(
     (state) => state.BillScreen1About.approval_attestation_part1
   );
@@ -44,23 +42,37 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
   const text2 = useSelector((state) => state.header.headertext2);
   const middlename = useSelector((state) => state.header.middlename);
   const dispatch = useDispatch();
-  console.log(selectedfile, "test selectedfile");
-  const LoaderOpen = () => {
-    setLoOpen(true);
-  };
 
-  const LoaderClose = () => {
-    setLoOpen(false);
-  };
+  const LoaderOpen = () => setLoOpen(true);
+  const LoaderClose = () => setLoOpen(false);
 
   const loadContent = () => {
-    dispatch(setApprovalattestationpart1(part1));
+    const defaultPart1 = `<p style="margin-bottom: 8px;">
+      I attest that the information in this report is true, accurate, and complete in all material respects for the purposes of the Act, for the reporting year stated above.
+    </p>
+    <p>I have the authority to bind ${orgName || "[Company Name]"}</p>`;
+
+    dispatch(setApprovalattestationpart1(defaultPart1));
+    setPart1(defaultPart1);
   };
+
   const loadContent2 = () => {
-    dispatch(setApprovalattestationpart2(part2));
+    const defaultPart2 = `<p style="margin-bottom: 8px;">
+      This report was approved by ${
+        orgName || "[Company Name]"
+      } Board of Directors on [date] and is signed by:
+    </p>
+    <p>[Name]</p>
+    <p>[Title/Designation]</p>
+    <p>${orgName || "[Company Name]"}</p>
+    <p>[Date]</p>`;
+
+    dispatch(setApprovalattestationpart2(defaultPart2));
+    setPart2(defaultPart2);
   };
+
   const config = {
-    enter: "BR", // Or customize behavior on Enter key
+    enter: "BR",
     cleanHTML: true,
     enablePasteHTMLFilter: false,
     askBeforePasteHTML: false,
@@ -108,11 +120,8 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
   };
 
   const uploadFileToAzure = async (file, newFileName) => {
-    // Read file content as ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
     const blob = new Blob([arrayBuffer]);
-
-    // Azure Storage configuration
     const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
     const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
     const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
@@ -120,110 +129,44 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
     const blobServiceClient = new BlobServiceClient(
       `https://${accountName}.blob.core.windows.net?${sasToken}`
     );
-
     const containerClient = blobServiceClient.getContainerClient(containerName);
     const blobName = newFileName || file.name;
     const blobClient = containerClient.getBlockBlobClient(blobName);
 
     try {
-      // Upload the blob to Azure Blob Storage
-      const uploadOptions = {
-        blobHTTPHeaders: {
-          blobContentType: file.type,
-        },
-      };
-
-      await blobClient.uploadData(blob, uploadOptions);
-      const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
-      return url;
+      await blobClient.uploadData(blob, {
+        blobHTTPHeaders: { blobContentType: file.type },
+      });
+      return `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
     } catch (error) {
-      LoginlogDetails("Failed", "Uploaded");
-      console.error("Error uploading file:", error.message);
+      console.error("Azure upload error:", error.message);
       return null;
     }
   };
-  const handleImageChange = async (e) => {
-    const selectedFile = e.target.files[0];
-    setSelectedFile(e.target.files[0]);
 
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
     let errorMessages = "";
 
-    if (!selectedFile) {
-      return;
-    }
-
-    if (selectedFile.type !== "image/png") {
+    if (!file) return;
+    if (file.type !== "image/png") {
       errorMessages = "Only PNG images are allowed.";
-    } else if (selectedFile.size > 1048576) {
+    } else if (file.size > 1048576) {
       errorMessages = "Maximum file size allowed is 1MB";
     } else {
-      const newFileName = selectedFile.name;
-
-      try {
-        // Upload the file to Azure Blob Storage
-        const url = await uploadFileToAzure(selectedFile, newFileName);
-
-        if (url) {
-          setTimeout(() => {
-            LoginlogDetails("Success", "Uploaded");
-          }, 500);
-          setImageview(url);
-        } else {
-          errorMessages = "Failed to upload image to Azure.";
-        }
-      } catch (error) {
-        LoginlogDetails("Failed", "Uploaded");
-        console.error("Error uploading image:", error);
-        errorMessages = "An error occurred while uploading the image.";
-      }
+      const url = await uploadFileToAzure(file, file.name);
+      if (url) setImageview(url);
+      else errorMessages = "Failed to upload image.";
     }
 
     setError(errorMessages);
   };
+
   const handleFileCancel = () => {
     setSelectedFile(null);
     setImageview("");
     setError("");
-    setTimeout(() => {
-      LoginlogDetails("Success", "Deleted");
-    }, 500);
-  };
-  const getIPAddress = async () => {
-    try {
-      const response = await fetch("https://api.ipify.org?format=json");
-      const data = await response.json();
-      return data.ip;
-    } catch (error) {
-      console.error("Error fetching IP address:", error);
-      return null;
-    }
-  };
-  const LoginlogDetails = async (status, actionType) => {
-    const backendUrl = process.env.BACKEND_API_URL;
-    const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
-
-    try {
-      const ipAddress = await getIPAddress();
-
-      const data = {
-        event_type: "Report",
-        event_details: "File",
-        action_type: actionType,
-        status: status,
-        user_email: useremail,
-        user_role: roles,
-        ip_address: ipAddress,
-        logs: `${text1} > ${middlename} > ${text2}`,
-      };
-
-      const response = await axiosInstance.post(userDetailsUrl, data);
-
-      return response.data;
-    } catch (error) {
-      console.error("Error logging login details:", error);
-
-      return null;
-    }
   };
 
   const fetchDatareport = async () => {
@@ -237,47 +180,31 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
       const response = await axiosInstance.get(
         "/canada_bill_s211/v2/get-report-data",
         {
-          params: {
-            report: reportId,
-            screen: 12,
-          },
+          params: { report: reportId, screen: 12 },
         }
       );
-      setImageview(response.data.report_data.company_logo);
-      setSelectedFile({ name: response.data.report_data.file_name });
+
+      setImageview(response.data.report_data.company_logo || "");
+      if (response.data.report_data.file_name) {
+        setSelectedFile({ name: response.data.report_data.file_name });
+      }
+
       const reportData =
         response?.data?.report_data?.approval_attestation_part1;
       const reportData2 =
         response?.data?.report_data?.approval_attestation_part2;
-      const companyName =
-        response?.data?.part_1_screen1_q2 || "[Company Name – P1-Q2]";
 
-      // Handle Part 1
       if (reportData) {
         dispatch(setApprovalattestationpart1(reportData));
         setPart1(reportData);
-      } else {
-        const defaultPart1 = `<p style="margin-bottom: 8px;">I attest that the information in this report is true, accurate, and complete in all material respects for the purposes of the Act, for the reporting year stated above.</p> 
-  <p>I have the authority to bind ${companyName}.</p>`;
-        dispatch(setApprovalattestationpart1(defaultPart1));
-        setPart1(defaultPart1);
       }
 
-      // Handle Part 2
       if (reportData2) {
         dispatch(setApprovalattestationpart2(reportData2));
         setPart2(reportData2);
-      } else {
-        const defaultPart2 = `<p style="margin-bottom: 8px;">This report was approved by ${companyName} Board of Directors on [date] and is signed by:</p>
-  <p>[Name]</p>
-  <p>[Title/Designation]</p>
-  <p>${companyName}</p>
-  <p>[Date]</p>`;
-        dispatch(setApprovalattestationpart2(defaultPart2));
-        setPart2(defaultPart2);
       }
     } catch (error) {
-      console.error("Error fetching report data:", error);
+      console.error("Error fetching attestation data:", error);
     } finally {
       LoaderClose();
     }
@@ -288,21 +215,13 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
       fetchDatareport();
       isMounted.current = false;
     }
-    return () => {
-      isMounted.current = false;
-    };
   }, []);
+
   useImperativeHandle(ref, () => ({
-    async submitForm(type) {
+    async submitForm() {
+      if (!part1?.trim() || !part2?.trim()) return false;
+
       try {
-        if (!part1 || part1.trim() === "") {
-          console.warn("Content is empty.");
-          return false;
-        }
-        if (!part2 || part2.trim() === "") {
-          console.warn("Content is empty.");
-          return false;
-        }
         const payload = {
           report: reportId,
           screen: 12,
@@ -310,7 +229,7 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
             approval_attestation_part1: part1,
             approval_attestation_part2: part2,
             company_logo: imageviw || "",
-            file_name: selectedfile.name || "",
+            file_name: selectedfile?.name || "",
           },
         };
 
@@ -319,38 +238,29 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
           payload
         );
 
-        // ✅ Check for status 200 and show toast
         if (response.status === 200) {
           toast.success("Data saved successfully!", {
             position: "top-right",
             autoClose: 3000,
-            pauseOnHover: true,
-            closeOnClick: true,
             theme: "light",
           });
+          return true;
         }
-
-        return true;
       } catch (error) {
-        console.error("Error submitting About the Report:", error);
-
-        // Optional: error toast
-        toast.error("Failed to save About the Report.", {
+        console.error("Submission error:", error);
+        toast.error("Failed to save the data.", {
           position: "top-right",
           autoClose: 3000,
-          pauseOnHover: true,
-          closeOnClick: true,
           theme: "light",
         });
-
-        return false;
       }
+      return false;
     },
   }));
+
   const fileInputRef = useRef(null);
-  const handleButtonClick = () => {
-    fileInputRef.current.click();
-  };
+  const handleButtonClick = () => fileInputRef.current.click();
+
   const handleEditorChange = (value) => {
     dispatch(setApprovalattestationpart1(value));
     setPart1(value);
@@ -359,19 +269,19 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
     dispatch(setApprovalattestationpart2(value));
     setPart2(value);
   };
+
   return (
     <>
-      <div>
-        <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          Approval and Attestation
-        </h3>
-      </div>
-      <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center ">
+      <h3 className="text-[22px] text-[#344054] mb-4 font-semibold">
+        Approval and Attestation
+      </h3>
+
+      {/* Part 1 */}
+      <div className="flex justify-between items-center">
         <div className="w-[85%]">
           <p className="text-[15px] text-[#344054] mb-4 mt-3">
             Add a statement confirming that the approving member has the legal
-            authority to bind the entity should also be included in the
-            attestation
+            authority to bind the entity.
           </p>
         </div>
         <button
@@ -383,26 +293,24 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
         </button>
       </div>
 
-      <div className="mb-4">
-        <JoditEditor
-          value={content}
-          config={config}
-          tabIndex={1}
-          onBlur={handleEditorChange}
-        />
-      </div>
-      <div className={`${imageviw ? "block" : "flex"} gap-4 mb-4`}>
+      <JoditEditor
+        value={content}
+        config={config}
+        tabIndex={1}
+        onBlur={handleEditorChange}
+      />
+
+      {/* Signature */}
+      <div className={`${imageviw ? "block" : "flex"} gap-4 mb-4 mt-3`}>
         <p className="text-[15px] text-[#344054] mb-2">Signature:</p>
-        {imageviw && imageviw !== "undefined" && (
-          <div className="mb-4">
-            <img
-              src={imageviw}
-              alt="logo"
-              className="w-[150px] h-[150px] object-cover rounded-md"
-            />
-          </div>
+        {imageviw && (
+          <img
+            src={imageviw}
+            alt="logo"
+            className="w-[150px] h-[150px] object-cover rounded-md mb-4"
+          />
         )}
-        <div className="flex ">
+        <div className="flex">
           <input
             type="file"
             ref={fileInputRef}
@@ -410,40 +318,35 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
             style={{ display: "none" }}
             accept="image/png"
           />
-          {selectedfile && selectedfile.name ? (
-            <label className="flex">
-              <div className="flex items-center text-center mt-2 relative">
-                <div className="truncate text-sky-600 text-sm flex text-center">
-                  <MdFilePresent className="w-6 h-6 mr-2 text-green-500" />
-                  {selectedfile.name}
-                </div>
-                <div className="absolute right-[-15px] top-[-2px]">
-                  <MdCancel
-                    className="w-4 h-4 text-gray-500 cursor-pointer"
-                    onClick={handleFileCancel}
-                  />
-                </div>
+          {selectedfile?.name ? (
+            <div className="flex items-center mt-2 relative">
+              <div className="truncate text-sky-600 text-sm flex">
+                <MdFilePresent className="w-6 h-6 mr-2 text-green-500" />
+                {selectedfile.name}
               </div>
-            </label>
+              <MdCancel
+                className="w-4 h-4 text-gray-500 cursor-pointer absolute right-[-15px] top-[-2px]"
+                onClick={handleFileCancel}
+              />
+            </div>
           ) : (
             <button
               onClick={handleButtonClick}
-              className="flex bg-transparent  text-center text-[#007EEF] text-[15px] rounded-md ml-2"
+              className="flex text-[#007EEF] text-[15px] rounded-md ml-2"
             >
-              <p>
-                <MdOutlineFileUpload
-                  className="mt-1"
-                  style={{ fontSize: "16px" }}
-                />
-              </p>
+              <MdOutlineFileUpload
+                className="mt-1"
+                style={{ fontSize: "16px" }}
+              />
               <p className="ml-2">Upload Image</p>
             </button>
           )}
         </div>
-
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
       </div>
-      <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">
+
+      {/* Part 2 */}
+      <div className="flex justify-between items-center">
         <div className="w-[85%]">
           <p className="text-[15px] text-[#344054] mb-4 mt-3">
             Note: In the case of a report submitted on behalf of a single
@@ -472,14 +375,13 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
         </button>
       </div>
 
-      <div className="mb-4">
-        <JoditEditor
-          value={content2}
-          config={config}
-          tabIndex={1}
-          onBlur={handleEditorChange2}
-        />
-      </div>
+      <JoditEditor
+        value={content2}
+        config={config}
+        tabIndex={1}
+        onBlur={handleEditorChange2}
+      />
+
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
@@ -487,8 +389,6 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
             width={50}
             color="#00BFFF"
             secondaryColor="#f3f3f3"
-            strokeWidth={2}
-            strokeWidthSecondary={2}
           />
         </div>
       )}

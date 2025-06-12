@@ -129,11 +129,6 @@ const Reduceforcedchildlabour = forwardRef(
     useImperativeHandle(ref, () => ({
       async submitForm(type) {
         try {
-          if (!p1q2 || p1q2.trim() === "") {
-            console.warn("Content is empty.");
-            return false;
-          }
-
           const payload = {
             report: reportId,
             screen: 7,
@@ -180,7 +175,12 @@ const Reduceforcedchildlabour = forwardRef(
       dispatch(setReduceforcedchildlabour(value));
       setP1q2(value);
     };
-
+    const stripHtml = (html) => {
+      if (typeof html === "string") {
+        return html.replace(/<[^>]+>/g, "");
+      }
+      return "";
+    };
     return (
       <>
         <div>
@@ -207,15 +207,26 @@ const Reduceforcedchildlabour = forwardRef(
             </ul>
           </div>
 
-          <p className="text-[15px] text-[#344054] mb-2 mt-3">{p2q4}</p>
+          <p className="text-[15px] text-[#344054] mb-2 mt-3">
+            {stripHtml(p2q4)}
+          </p>
         </div>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">
-          <p className="text-[15px] text-[#344054] mb-4 mt-3">
-            Note: If an entity controls other entities, it must also describe
-            the steps that these controlled entities have taken to identify,
-            assess and manage potential forced labour or child labour risks in
-            their activities and supply chains
-          </p>
+          <div>
+            <p className="text-[15px] text-[#344054] mb-2 mt-3">
+              Add additional information about the Steps taken to prevent and
+              reduce risks of forced labour and child labour including details
+              on mapping supply chains and details about the Supplier Risk
+              Assessment conducted (If available) and Add a statement if no such
+              steps were taken
+            </p>
+            <p className="text-[15px] text-[#344054] mb-4">
+              Note: If an entity controls other entities, it must also describe
+              the steps that these controlled entities have taken to identify,
+              assess and manage potential forced labour or child labour risks in
+              their activities and supply chains
+            </p>
+          </div>
         </div>
 
         <div className="mb-4">

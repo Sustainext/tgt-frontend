@@ -145,11 +145,7 @@ In [year], ${companyName} worked with approximately [number] suppliers in Canada
   useImperativeHandle(ref, () => ({
     async submitForm(type) {
       try {
-        if (!p1q2 || p1q2.trim() === "") {
-          console.warn("Content is empty.");
-          return false;
-        }
-
+  
         const payload = {
           report: reportId,
           screen: 4,
