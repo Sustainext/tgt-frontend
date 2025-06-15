@@ -1,7 +1,12 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section5 = ({ section9_2_3Ref, data }) => {
+const Section5 = ({ section9_2_3Ref, data,
+  sectionNumber = "9.2.3",
+  sectionTitle = 'Senior Management Hired from Local Community',
+  sectionOrder = 9,
+
+ }) => {
   const [content, setContent] = useState(
     `Our Board of Directors comprises a diverse group of experienced professionals who bring a broad range of expertise and perspectives. The Board is structured to provide balanced oversight and strategic guidance, with committees dedicated to specific areas such as audit, risk management, and sustainability. `
   );
@@ -9,7 +14,7 @@ const Section5 = ({ section9_2_3Ref, data }) => {
     <>
       <div id="section9_2_3" ref={section9_2_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          9.2.3 Senior Management Hired from Local Community
+          {sectionNumber} {sectionTitle}
         </h3>
 
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">

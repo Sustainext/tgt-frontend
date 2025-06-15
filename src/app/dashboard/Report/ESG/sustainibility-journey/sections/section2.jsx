@@ -10,7 +10,11 @@ import {
   setSupplyChainSustainability,
 } from "../../../../../../lib/redux/features/ESGSlice/screen10Slice";
 
-const Section2 = ({ section10_1Ref }) => {
+const Section2 = ({ section10_1Ref,
+  sectionNumber = "10.1",
+  sectionTitle = ' Management approach for sustainability/ESG topics',
+  sectionOrder = 10,
+ }) => {
   const approach_for_sustainability = useSelector(
     (state) => state.screen10Slice.approach_for_sustainability
   );
@@ -30,7 +34,7 @@ const Section2 = ({ section10_1Ref }) => {
     <>
       <div ref={section10_1Ref} id="section10_1">
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          10.1 Management approach for sustainability/ESG topics  
+          {sectionNumber}{sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">

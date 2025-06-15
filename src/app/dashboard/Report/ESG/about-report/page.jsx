@@ -25,7 +25,7 @@ import {
 const AboutTheReport = forwardRef(({
   onSubmitSuccess,
   subsections = [],
-  sectionOrder = 2,
+  sectionOrder = 7,
   sectionId,
   sectionTitle,
 },
@@ -195,9 +195,7 @@ ref) => {
     }
   }, [selectedSubsections, activeSection]);
 
-  useImperativeHandle(ref, () => ({
-    submitForm,
-  }));
+ 
 
   const scrollToSection = (sectionId) => {
     setActiveSection(sectionId);

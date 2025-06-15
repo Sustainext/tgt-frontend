@@ -23,7 +23,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import FilterComponent from './FilterComponent'
-import {initializeForCustomReport,resetToDefaults} from '../../../../lib/redux/features/reportBuilderSlice'
+import {initializeForCustomReport,resetToDefaults,fetchReportBuilderData} from '../../../../lib/redux/features/reportBuilderSlice'
 import { useDispatch } from "react-redux";
 
 import axiosInstance, { del } from "@/app/utils/axiosMiddleware";
@@ -371,6 +371,7 @@ else{
     window.localStorage.setItem("organizationcountry", organization_country);
     window.localStorage.setItem("reportCreatedOn", created_at);
     window.localStorage.setItem("reportType", report_type);
+    window.localStorage.setItem("reportname", name);
     // sessionStorage.setItem('reportData',newdata);
     // if (corporate_name !== undefined){
     // }
@@ -378,10 +379,11 @@ else{
     if(report_type==='Custom ESG Report'){
       // dispatch(initializeForCustomReport());
       dispatch(resetToDefaults())
+      dispatch(fetchReportBuilderData(id));
     }
     router.push("/dashboard/Report/ESG");
 
-    window.localStorage.setItem("reportname", name);
+   
   };
 
   useEffect(() => {

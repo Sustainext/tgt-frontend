@@ -1,5 +1,82 @@
 // store/slices/reportBuilderSlice.js
 import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axiosInstance from '../../../app/utils/axiosMiddleware';
+import { setIncludeMaterialTopics, setIncludeContentIndex } from './reportCreationSlice';
+
+
+export const fetchReportBuilderData = createAsyncThunk(
+  'reportBuilder/fetchReportBuilderData',
+  async (reportId, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/esg_report/custom_esg_report/${reportId}/`);
+
+      const data = response.data.data;
+
+      // Proper dispatch calls
+      dispatch(setIncludeMaterialTopics(data.include_management_material_topics));
+      dispatch(setIncludeContentIndex(data.include_content_index));
+
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+
+export const updateReportBuilderData = createAsyncThunk(
+  'reportBuilder/updateReportBuilderData',
+  async (reportId, { getState, rejectWithValue }) => {
+    try {
+      const state = getState().reportBuilder;
+      const { sections, subsections, selectedSubsections } = state;
+
+      // 1. Build `section` array
+      const section = sections.map(s => ({
+        id: s.id,
+        title: s.title,
+        order: s.order,
+        enabled: s.enabled,
+        mandatory: s.mandatory,
+      }));
+
+      // 2. Build `sub_section` object
+      const sub_section = {};
+
+      for (const [sectionId, subs] of Object.entries(subsections)) {
+        const selected = selectedSubsections[sectionId] || [];
+
+        const mapSubs = (items) =>
+          items.map(item => {
+            const isEnabled = selected.includes(item.id.trim());
+            return {
+              id: item.id.trim(),
+              label: item.label,
+              enabled: isEnabled,
+              children: item.children ? mapSubs(item.children) : undefined
+            };
+          });
+
+        sub_section[sectionId] = mapSubs(subs);
+      }
+
+      // 3. Send PATCH
+      const payload = { section, sub_section };
+
+      const response = await axiosInstance.patch(
+        `/esg_report/custom_esg_report/${reportId}/`,
+        payload
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 
 // Default sections - keeping original IDs for compatibility but mapping to camelCase internally
 const defaultSections = [
@@ -197,7 +274,7 @@ message_ceo: [
   ],
   materiality: [
     { 
-      id: 'materiality_assessment ', 
+      id: 'materiality_assessment', 
       label: 'Materiality Assessment',
       enabled: false,
       children: [
@@ -830,6 +907,8 @@ const initialState = {
   
   // Component mapping
   componentMapping: sectionComponentMapping,
+
+  skipSelectionPage:false,
   
   // Report navigation - NEW
   currentReportPage: 0, // Index of currently viewed section in report
@@ -851,6 +930,10 @@ const reportBuilderSlice = createSlice({
     // Step management
     setCurrentStep: (state, action) => {
       state.currentStep = action.payload;
+    },
+
+    setskipSelectionPage: (state, action) => {
+      state.skipSelectionPage = action.payload;
     },
     
     nextStep: (state) => {
@@ -966,7 +1049,9 @@ const reportBuilderSlice = createSlice({
       state.subsections = defaultSubsections;
       state.selectedSubsections = {};
       state.currentStep = 0;
+      state.currentReportPage=0;
       state.error = null;
+      state.skipSelectionPage=false
     },
     
     // Modal management
@@ -1028,6 +1113,65 @@ const reportBuilderSlice = createSlice({
       if (step !== undefined) state.currentStep = step;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchReportBuilderData.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchReportBuilderData.fulfilled, (state, action) => {
+        const { section, sub_section,skip_first_page } = action.payload;
+        console.log(section,sub_section,skip_first_page,"see the api response")
+
+        state.skipSelectionPage=skip_first_page;
+        // 1. Update sections
+        state.sections = (section || []).map((s, i) => ({
+          id: s.id,
+          title: s.title,
+          enabled: s.enabled,
+          mandatory: s.mandatory,
+          order: s.order ?? i + 1,
+        }));
+  
+        // 2. Update subsections
+        state.subsections = sub_section || {};
+  
+        // 3. Build selectedSubsections based on enabled state
+        const selectedSubsections = {};
+  
+        for (const [sectionId, subs] of Object.entries(sub_section || {})) {
+          const sectionEnabled = section.find(s => s.id === sectionId)?.enabled;
+          if (!sectionEnabled) continue;
+  
+          const enabledIds = [];
+  
+          const scan = (items) => {
+            for (const item of items) {
+              if (item.enabled) {
+                enabledIds.push(item.id.trim()); // remove trailing spaces
+              }
+              if (item.children) {
+                scan(item.children);
+              }
+            }
+          };
+  
+          scan(subs);
+          if (enabledIds.length > 0) {
+            selectedSubsections[sectionId] = enabledIds;
+          }
+        }
+  
+        state.selectedSubsections = selectedSubsections;
+        state.isLoading = false;
+      })
+      .addCase(fetchReportBuilderData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || 'Failed to load ESG report data.';
+      });
+  }
+  
+  
 });
 
 export const {
@@ -1035,6 +1179,7 @@ export const {
   setCurrentStep,
   nextStep,
   previousStep,
+  setskipSelectionPage,
   
   // Section management
   setSections,
@@ -1089,6 +1234,7 @@ export const selectSelectedSubsections = (state) => state.reportBuilder.selected
 export const selectComponentMapping = (state) => state.reportBuilder.componentMapping;
 export const selectIsSectionEditorOpen = (state) => state.reportBuilder.isSectionEditorOpen;
 export const selectIsSubsectionEditorOpen = (state) => state.reportBuilder.isSubsectionEditorOpen;
+export const selectSkipSelectionPage =(state) => state.reportBuilder.skipSelectionPage
 export const selectIsLoading = (state) => state.reportBuilder.isLoading;
 export const selectError = (state) => state.reportBuilder.error;
 

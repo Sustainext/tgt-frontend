@@ -23,6 +23,9 @@ import {
   nextReportPage,
   previousReportPage,
   selectSectionsForReportType,
+  fetchReportBuilderData,
+  selectSkipSelectionPage,
+  updateReportBuilderData
 } from '../../../../lib/redux/features/reportBuilderSlice';
 
 const defaultSections = [
@@ -58,9 +61,23 @@ export default function ReportBuilderPage() {
   //     order: index + 1,
   //   }))
   // );
+  const reportid =
+  typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
     const sections = useSelector(selectSections);
   const [selectedSubsections, setSelectedSubsections] = useState({});
   const [isOpenMobile, setIsOpenMobile] = useState(false);
+  const skipSelectionPage=useSelector(selectSkipSelectionPage)
+
+  // console.log(skipSelectionPage,step,'see page skip')
+
+  useEffect(() => {
+    if (reportid) {
+      dispatch(fetchReportBuilderData(reportid));
+      if(skipSelectionPage){
+        setStep(2)
+      }
+    }
+  }, [dispatch, reportid,skipSelectionPage]); 
   
   // Redux selectors for navigation
   const enabledSections = useSelector(selectEnabledSections);
@@ -525,8 +542,16 @@ export default function ReportBuilderPage() {
   onBack={() => setStep(0)}
   onNext={(subsections) => {
     setSelectedSubsections(subsections);
-    localStorage.setItem('report_subsections', JSON.stringify(subsections));
+    dispatch(updateReportBuilderData(reportid))
+  .unwrap()
+  .then(() => {
+    toast.success('Report updated successfully!');
     setStep(2);
+  })
+  .catch(err => {
+    toast.error(`Failed to update report: ${err}`);
+  });
+
   }}
 />
               </div>

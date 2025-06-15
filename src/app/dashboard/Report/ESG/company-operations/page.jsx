@@ -109,6 +109,8 @@ const Companyoperations = forwardRef(
         subSections: [],
       },
     };
+
+    
     const getSubsectionsToShow = () => {
       if (reportType === "Custom ESG Report") {
         const userSelected = Array.isArray(subsections) ? subsections : [];
@@ -134,6 +136,7 @@ const Companyoperations = forwardRef(
     };
 
     const subsectionsToShow = getSubsectionsToShow();
+    console.log(subsections,subsectionsToShow,"from screen 2")
 
     // Filter and organize selected subsections
     const getSelectedSubsections = () => {

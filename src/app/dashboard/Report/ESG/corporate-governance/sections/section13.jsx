@@ -8,7 +8,11 @@ import {
   setPolicyPublic,
 } from "../../../../../../lib/redux/features/ESGSlice/screen9Slice";
 
-const Section13 = ({ section9_3_7Ref, data }) => {
+const Section13 = ({ section9_3_7Ref, data,
+  sectionNumber = "9.3.7",
+  sectionTitle = 'Remuneration Policies & Process to Determine Remuneration',
+  sectionOrder = 9,
+ }) => {
   const remuneration_policies = useSelector(
     (state) => state.screen9Slice.remuneration_policies
   );
@@ -28,7 +32,7 @@ const Section13 = ({ section9_3_7Ref, data }) => {
     <>
       <div id="section9_3_7" ref={section9_3_7Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          9.3.7 Remuneration Policies & Process to Determine Remuneration
+          {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

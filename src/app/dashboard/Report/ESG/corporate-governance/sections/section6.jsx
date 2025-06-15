@@ -1,16 +1,19 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import useSelector from "react-redux";
+import {useSelector} from "react-redux";
 
-const Section6 = ({ section9_2_4Ref, data }) => {
-  const shouldRender = useSelector(state=> state.reportCreation.includeMaterialTopics)
+const Section6 = ({ section9_2_4Ref, data,reportType,
+  sectionNumber = "9.2.4",
+  sectionTitle = 'Management of Material topic',
+ }) => {
+  const shouldRender = useSelector((state)=> state.reportCreation.includeMaterialTopics) || reportType==='GRI Report: In accordance With'
 
-  if(!shouldRender) return;
+  if(!shouldRender) return (<></>);
   return (
     <>
       <div id="section9_2_4" ref={section9_2_4Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          9.2.4 Management of Material topic
+          {sectionNumber} {sectionTitle}
         </h3>
         {data["3_c_d_e_in_material_topics"] &&
         data["3_c_d_e_in_material_topics"].length > 0 ? (

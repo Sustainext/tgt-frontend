@@ -21,6 +21,8 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import { IoMdSwap } from "react-icons/io";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import WalkthroughModal from "./walkThroughModal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   selectSections,
@@ -29,6 +31,13 @@ import {
   setSections,
   setSectionEditorOpen,
   updateSelectedSubsections,
+
+
+  selectCurrentReportPage,
+  setCurrentReportPage,
+  initializeReportNavigation,
+  selectCurrentDisplaySectionForReportType,
+  updateReportBuilderData
 } from "../../../../../lib/redux/features/reportBuilderSlice";
 
 // Draggable Item
@@ -72,6 +81,12 @@ const SectionEditorModal = () => {
   const dispatch = useDispatch();
   const sensors = useSensors(useSensor(PointerSensor));
 
+  const reportid =
+  typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const currentPageIndex = useSelector(selectCurrentReportPage);
+const currentDisplaySection = useSelector(selectCurrentDisplaySectionForReportType("Custom ESG Report"));
+
+
   const allSections = useSelector(selectSections);
   const subsections = useSelector(selectSubsections);
   const selectedSubsections = useSelector(selectSelectedSubsections);
@@ -86,26 +101,76 @@ const SectionEditorModal = () => {
     setExpandedSections((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const toggleSubsection = (sectionId, subsectionId) => {
-    const current = localSelectedSubsections[sectionId] || [];
-    const updated = current.includes(subsectionId)
-      ? current.filter((id) => id !== subsectionId)
-      : [...current, subsectionId];
+  // const toggleSubsection = (sectionId, subsectionId) => {
+  //   const current = localSelectedSubsections[sectionId] || [];
+  //   const updated = current.includes(subsectionId)
+  //     ? current.filter((id) => id !== subsectionId)
+  //     : [...current, subsectionId];
 
+  //   setLocalSelectedSubsections((prev) => ({
+  //     ...prev,
+  //     [sectionId]: updated,
+  //   }));
+  // };
+
+
+  const toggleSubsection = (sectionId, subsectionId) => {
+    const sectionSubs = subsections[sectionId] || [];
+    const subsection = sectionSubs.find(s => s.id === subsectionId);
+    const current = localSelectedSubsections[sectionId] || [];
+  
+    let updated = [];
+    if (current.includes(subsectionId)) {
+      // Uncheck - also remove children if any
+      updated = current.filter(id => id !== subsectionId && !subsection?.children?.some(child => child.id === id));
+    } else {
+      // Check - just add
+      updated = [...current, subsectionId];
+    }
+  
     setLocalSelectedSubsections((prev) => ({
       ...prev,
       [sectionId]: updated,
     }));
   };
-
+  
   const toggleNestedSubsection = (sectionId, parentId, childId) => {
     toggleSubsection(sectionId, childId);
   };
 
+  // const renderSubsection = (sectionId, subsection, level = 0, parentId = null) => {
+  //   const selected = localSelectedSubsections[sectionId] || [];
+  //   const isChecked = selected.includes(subsection.id);
+
+  //   return (
+  //     <div key={subsection.id} className={`ml-${level * 4}`}>
+  //       <label className="flex items-center gap-2 text-sm mb-1">
+  //         <input
+  //           type="checkbox"
+  //           checked={isChecked}
+  //           onChange={() =>
+  //             parentId
+  //               ? toggleNestedSubsection(sectionId, parentId, subsection.id)
+  //               : toggleSubsection(sectionId, subsection.id)
+  //           }
+  //           className="w-3 h-3 green-checkbox-small"
+  //         />
+  //         <span>{subsection.label}</span>
+  //       </label>
+  //       {subsection.children &&
+  //         subsection.children.map((child) =>
+  //           renderSubsection(sectionId, child, level + 1, subsection.id)
+  //         )}
+  //     </div>
+  //   );
+  // };
+
+  
   const renderSubsection = (sectionId, subsection, level = 0, parentId = null) => {
     const selected = localSelectedSubsections[sectionId] || [];
     const isChecked = selected.includes(subsection.id);
-
+    const isParentChecked = !parentId || selected.includes(parentId);
+  
     return (
       <div key={subsection.id} className={`ml-${level * 4}`}>
         <label className="flex items-center gap-2 text-sm mb-1">
@@ -117,9 +182,10 @@ const SectionEditorModal = () => {
                 ? toggleNestedSubsection(sectionId, parentId, subsection.id)
                 : toggleSubsection(sectionId, subsection.id)
             }
-            className="w-3 h-3 accent-blue-600"
+            className="w-3 h-3 green-checkbox-small"
+            disabled={parentId && !isParentChecked}
           />
-          <span>{subsection.label}</span>
+          <span className={parentId && !isParentChecked ? "text-gray-400" : ""}>{subsection.label}</span>
         </label>
         {subsection.children &&
           subsection.children.map((child) =>
@@ -128,7 +194,7 @@ const SectionEditorModal = () => {
       </div>
     );
   };
-
+  
   const handleDragStart = (event) => setActiveItem(event.active.id);
 
   const handleDragEnd = (event) => {
@@ -166,13 +232,44 @@ const SectionEditorModal = () => {
     }
   };
 
+  // const handleUpdate = () => {
+  //   dispatch(setSections(localSections));
+  //   Object.entries(localSelectedSubsections).forEach(([sectionId, ids]) => {
+  //     dispatch(updateSelectedSubsections({ sectionId, subsectionIds: ids }));
+  //   });
+  //   dispatch(setSectionEditorOpen(false));
+  // };
+
   const handleUpdate = () => {
+    const enabledSections = localSections.filter(s => s.enabled);
+    const errors = enabledSections.filter(s => !(localSelectedSubsections[s.id]?.length > 0)).map(s => s.title);
+    if (errors.length > 0) {
+      alert(`Please select at least one subsection for:\n- ${errors.join("\n- ")}`);
+      return;
+    }
+  
     dispatch(setSections(localSections));
     Object.entries(localSelectedSubsections).forEach(([sectionId, ids]) => {
-      dispatch(updateSelectedSubsections({ sectionId, subsectionIds: ids }));
+    dispatch(updateSelectedSubsections({ sectionId, subsectionIds: ids }));
     });
-    dispatch(setSectionEditorOpen(false));
+  
+    // Sync report page if current section was removed or moved
+    const currentId = currentDisplaySection?.id;
+    const newEnabledOrder = localSections.filter(s => s.enabled).sort((a, b) => a.order - b.order);
+    const newIndex = newEnabledOrder.findIndex(s => s.id === currentId);
+    dispatch(setCurrentReportPage(newIndex >= 0 ? newIndex : 0));
+     dispatch(updateReportBuilderData(reportid))
+      .unwrap()
+      .then(() => {
+        toast.success('Report updated successfully!');
+        dispatch(setSectionEditorOpen(false));
+      })
+      .catch(err => {
+        toast.error(`Failed to update report: ${err}`);
+      });
   };
+  
+  
 
   const handleClose = () => dispatch(setSectionEditorOpen(false));
 

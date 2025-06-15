@@ -76,7 +76,7 @@ const sectionComponents = {
 
 
 const ReportRenderer = ({ onBack,sectionRefs }) => {
-  console.log(sectionRefs,"see all the section ref")
+  // console.log(sectionRefs,"see all the section ref")
   const dispatch = useDispatch();
   const enabledSections = useSelector(selectEnabledSections);
   const selectedSubsections = useSelector(selectSelectedSubsections);
@@ -84,8 +84,8 @@ const ReportRenderer = ({ onBack,sectionRefs }) => {
   const currentReportPage = useSelector(selectCurrentReportPage);
   const currentSection = useSelector(selectCurrentReportSection);
 
-  console.log('Enabled Sections:', enabledSections);
-  console.log('Selected Subsections:', selectedSubsections);
+  // console.log('Enabled Sections:', enabledSections);
+  // console.log('Selected Subsections:', selectedSubsections);
 
   const renderCurrentSection = () => {
     if (!currentSection) {

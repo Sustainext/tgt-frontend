@@ -95,7 +95,7 @@ const Report = () => {
   const includeMaterialTopics = useSelector(selectIncludeMaterialTopics);
   const includeContentIndex = useSelector(selectIncludeContentIndex);
 
-
+console.log(includeMaterialTopics,includeContentIndex,"check this redux state")
 
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
@@ -408,19 +408,40 @@ const Report = () => {
         corporate_id: entity.id,
         ownership_ratio: parseInt(entity.ownershipRatio),
       }));
-    const sandData = {
-      name: reportname,
-      report_type: reporttype,
-      report_by: firstSelection,
-      start_date: startdate,
-      end_date: enddate,
-      organization: selectedOrg,
-      corporate: selectedCorp,
-      investment_corporates: selectedEntities,
-      assessment_id:assessment_id?assessment_id:null
-    };
 
-    await post(`/sustainapp/report_create/`, sandData)
+      
+      let sendData={}
+    if(reporttype==='Custom ESG Report'){
+       sendData = {
+        name: reportname,
+        report_type: reporttype,
+        report_by: firstSelection,
+        start_date: startdate,
+        end_date: enddate,
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        investment_corporates: selectedEntities,
+        assessment_id:assessment_id?assessment_id:null,
+        include_management_material_topics: includeMaterialTopics,
+        include_content_index:includeContentIndex
+      };
+    }  
+    else{
+       sendData = {
+        name: reportname,
+        report_type: reporttype,
+        report_by: firstSelection,
+        start_date: startdate,
+        end_date: enddate,
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        investment_corporates: selectedEntities,
+        assessment_id:assessment_id?assessment_id:null
+      };
+    }
+    
+
+    await post(`/sustainapp/report_create/`, sendData)
       .then((response) => {
         if (response.status == "200") {
           toast.success("Report has been added successfully", {
@@ -462,7 +483,8 @@ const Report = () => {
           window.localStorage.setItem("reportType", reporttype);
           if (
             reporttype == "GRI Report: In accordance With" ||
-            reporttype == "GRI Report: With Reference to"
+            reporttype == "GRI Report: With Reference to" ||
+            reporttype === 'Custom ESG Report'
           ) {
             router.push("/dashboard/Report/ESG");
           } else {
@@ -699,6 +721,12 @@ const Report = () => {
     setIsModalOpen(true);
     setMassgeshow(false);
     setIsMenuOpen(false);
+    dispatch(
+      setIncludeMaterialTopics(false)
+    )
+    dispatch(
+      setIncludeContentIndex(false)
+    )
   };
 
   const handleCloseModal = () => {
@@ -715,6 +743,12 @@ const Report = () => {
     setError({});
     setReportExist(false)
     setEntities([])
+    dispatch(
+      setIncludeMaterialTopics(false)
+    )
+    dispatch(
+      setIncludeContentIndex(false)
+    )
     // setshowInvestmentMessage(false)
   };
 
