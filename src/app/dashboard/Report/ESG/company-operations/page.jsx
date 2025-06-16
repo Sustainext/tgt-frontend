@@ -34,9 +34,7 @@ const Companyoperations = forwardRef(
     },
     ref
   ) => {
-    console.log("CompanyOperations received subsections:", subsections);
-    console.log("CompanyOperations received sectionOrder:", sectionOrder);
-
+   
     const reportid =
       typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
     const reportType =
@@ -69,10 +67,6 @@ const Companyoperations = forwardRef(
     );
     const dispatch = useDispatch();
     const groupedSubsections = [
-      // {
-      //   id: 'business_model',
-      //   title: 'About the Company'
-      // },
       {
         groupId: "reporting_period",
         title: "Business Model and Impact",
@@ -136,8 +130,7 @@ const Companyoperations = forwardRef(
     };
 
     const subsectionsToShow = getSubsectionsToShow();
-    console.log(subsections,subsectionsToShow,"from screen 2")
-
+  
     // Filter and organize selected subsections
     const getSelectedSubsections = () => {
       console.log("Processing subsections:", subsectionsToShow);

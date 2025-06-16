@@ -37,7 +37,7 @@ const Section2 = ({ section9_1Ref, section9_1_1Ref, data,
     <>
       <div id="section9_1" ref={section9_1Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          {sectionNumber}.1 Board of Directors 
+          {sectionOrder}.1 Board of Directors 
         </h3>
       </div>
       <div id="section9_1_1" ref={section9_1_1Ref}>

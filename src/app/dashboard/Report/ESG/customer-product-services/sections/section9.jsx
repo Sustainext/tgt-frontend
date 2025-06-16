@@ -8,7 +8,12 @@ import { setConclusion } from "../../../../../../lib/redux/features/ESGSlice/scr
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section9 = ({ section15_3_1Ref, orgName, data }) => {
+const Section9 = ({ section15_3_1Ref, orgName, data, reportType,
+  sectionNumber = '15.3.1',
+  sectionTitle = 'Management of material topic',
+  sectionOrder = 15,
+ }) => {
+  const shouldRender = useSelector((state)=> state.reportCreation.includeMaterialTopics)
   const conclusion = useSelector((state) => state.screen15Slice.conclusion);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -76,9 +81,11 @@ Sustainability is embedded in our corporate strategy, and we are dedicated to co
   };
   return (
     <>
-      <div id="setion15_3_1" ref={section15_3_1Ref}>
+     {
+      reportType=='GRI Report: In accordance With' || (reportType==='Custom ESG Report' && shouldRender)?(
+        <div id="setion15_3_1" ref={section15_3_1Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          15.3.1 Management of material topic
+          {sectionNumber} {sectionTitle}
         </h3>
         {data["3-3cde_15-3-1"] && data["3-3cde_15-3-1"].length > 0 ? (
           data["3-3cde_15-3-1"].map((val, index) => (
@@ -124,6 +131,10 @@ Sustainability is embedded in our corporate strategy, and we are dedicated to co
           />
         </div>
       </div>
+      ):(
+        <div></div>
+      )
+     }
     </>
   );
 };

@@ -5,7 +5,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setMarketingPractices } from "../../../../../../lib/redux/features/ESGSlice/screen15Slice";
 
-const Section7 = ({ section15_2_2Ref, data,reportType }) => {
+const Section7 = ({ section15_2_2Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With'?'15.2.2':'15.2.1',
+  sectionTitle = 'Marketing',
+  sectionOrder = 15,
+ }) => {
   const marketing_practices = useSelector(
     (state) => state.screen15Slice.marketing_practices
   );
@@ -25,7 +29,7 @@ const Section7 = ({ section15_2_2Ref, data,reportType }) => {
     <>
       <div id="setion15_2_2" ref={section15_2_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'15.2.2':'15.2.1'}  Marketing
+        {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

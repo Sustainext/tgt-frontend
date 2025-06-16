@@ -222,6 +222,16 @@ const ESGReport = () => {
     }
   };
 
+  const hasChanges = (initial = {}, current = {}) => {
+    const keys = new Set([...Object.keys(initial), ...Object.keys(current)]);
+    for (const key of keys) {
+      if ((initial[key] || "").trim() !== (current[key] || "").trim()) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const handleNextStep = async (type) => {
     const currentRef = sectionRefs[currentSection?.id]?.current;
 
@@ -292,6 +302,7 @@ const ESGReport = () => {
       sectionId: currentSection.id,
       sectionTitle: currentSection.title,
       reportType,
+      hasChanges
     };
 
     switch (currentSection.id) {
@@ -391,6 +402,7 @@ const ESGReport = () => {
           isOpenMobile={isOpenMobile}
           reportType={reportType}
           allSections={sectionsToUse}
+          submitData={handleNextStep}
         />
         )}
 

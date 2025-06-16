@@ -1,7 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section3 = ({ section15_1_2Ref, data,reportType }) => {
+const Section3 = ({ section15_1_2Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With'?'15.1.2':'15.1.1',
+  sectionTitle = 'Health and Safety Impacts of Product and Service Categories',
+  sectionOrder = 15,
+ }) => {
 
   const col=[
     "Organisation/Corporation",
@@ -11,7 +15,7 @@ const Section3 = ({ section15_1_2Ref, data,reportType }) => {
     <>
       <div id="setion15_1_2" ref={section15_1_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-       {reportType=='GRI Report: In accordance With'?'15.1.2':'15.1.1'}   Health and Safety Impacts of Product and Service Categories
+        {sectionNumber} {sectionTitle}
         </h3>
         {data["416_1a"] ? (
           data["416_1a"].length > 0 ? (

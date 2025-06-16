@@ -88,7 +88,8 @@ const ESGSidebar = ({
   setIsOpenMobile = () => {},
   isOpenMobile = false,
   reportType = 'Custom ESG Report', // Add reportType prop
-  allSections = [] // Add allSections prop for non-custom reports
+  allSections = [], // Add allSections prop for non-custom reports
+  submitData
 }) => {
   const dispatch = useDispatch();
   const isSectionEditorOpen = useSelector(selectIsSectionEditorOpen);

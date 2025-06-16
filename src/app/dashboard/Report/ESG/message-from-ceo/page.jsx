@@ -28,12 +28,10 @@ const MessageFromCeo = forwardRef(({
   subsections = [], 
   sectionOrder = 1,
   sectionId,
-  sectionTitle 
+  sectionTitle,
+  hasChanges 
 }, ref) => {
 
-  console.log(ref,"see the message from ceo ref")
-  console.log("MessageFromCEO received subsections:", subsections);
-  console.log("MessageFromCEO received sectionOrder:", sectionOrder);
   const CombinedSection = ({ 
     orgName, 
     sectionNumber, 

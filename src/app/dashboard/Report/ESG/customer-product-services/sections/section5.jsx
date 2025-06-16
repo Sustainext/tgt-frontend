@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductInfo } from "../../../../../../lib/redux/features/ESGSlice/screen15Slice";
 
-const Section5 = ({ section15_2Ref, data }) => {
+const Section5 = ({ section15_2Ref, data,
+  sectionNumber = 15.2,
+  sectionTitle = 'Product and Service Information and Labelling',
+  sectionOrder = 15,
+ }) => {
   const product_info_labelling = useSelector(
     (state) => state.screen15Slice.product_info_labelling
   );
@@ -31,7 +35,7 @@ const Section5 = ({ section15_2Ref, data }) => {
     <>
       <div id="setion15_2" ref={section15_2Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          15.2 Product and Service Information and Labelling
+         {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

@@ -206,9 +206,7 @@ export default function ReportBuilderPage() {
   };
 
   const handleCompleteReport = async () => {
-    const currentSectionId = enabledSections[currentReportPage]?.id;
-    const currentRef = sectionRefs.current[currentSectionId]?.current;
-
+    const currentRef = sectionRefs[currentSection?.id]?.current;
     if (currentRef) {
       const isSubmitted = await currentRef.submitForm("last");
       if (isSubmitted) {
@@ -395,6 +393,7 @@ export default function ReportBuilderPage() {
             selectedSubsections={displaySubsections}
             reportType={reportType} // Pass reportType
             allSections={defaultSections} // Pass all sections for non-custom reports
+            submitData={handleReportNext}
           />
         )}
         <div className='w-full mb-5'>

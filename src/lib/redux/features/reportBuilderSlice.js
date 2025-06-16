@@ -204,7 +204,7 @@ message_ceo: [
       children: [
         { 
           id: 'value_chain', 
-          label: 'Activities, Value Chain and Business Relationships',
+          label: 'Activities, Value Chain, and Other Business Relationships',
           enabled: false
         },
         { 
