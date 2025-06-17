@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { MdDiversity2, MdKeyboardArrowDown, MdClose} from "react-icons/md";
 
 import { GiWoodPile } from "react-icons/gi";
-
+import Cookies from "js-cookie";
 const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
   const [isEmission, setEmisssion] = useState(false);
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
@@ -16,9 +16,10 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
   const [isTax, setTax] = useState(false);
   const [Political, setPolitical] = useState(false);
   const [ManagingConcerns, setManagingConcerns] = useState(false);
+    const [tcfd, setTcfd] = useState(false);
   const materialityEnvData =
     apiData && apiData.governance ? apiData.governance : {};
-
+const frameworkId = Cookies.get("selected_framework_id");
   const toggleEmission = () => {
     setEmisssion(!isEmission);
     setWasteVisible(false);
@@ -112,8 +113,8 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
     setIsLegal(false);
     setManagingConcerns(!ManagingConcerns);
   };
-  const togglePolitical = () => {
-    setPolitical(!Political);
+  const toggleTcfd = () => {
+    setTcfd(!tcfd);
     setTax(false);
     setWasteVisible(false);
     setMaterialsVisible(false);
@@ -142,6 +143,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
       setIsSupplierVisible(false);
     }
   }, [activeTab]);
+
   const toggleSidebar = () => {
     setMobileopen(false);
   };
@@ -159,6 +161,60 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               <MdClose onClick={toggleSidebar} className="text-3xl" />
             </div>
           </button>
+          {frameworkId === "6" && (
+             <div>
+            <button
+              className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
+                activeTab === "TCFD Disclosure Selection"
+                  ? "text-[#007EEF]"
+                  : "bg-white text-[#727272] "
+              }`}
+              onClick={toggleTcfd}
+            >
+              <div className="w-[20%]">
+                <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+              </div>
+              <div className="w-[50%] text-left flex items-center ">
+                <span className="indent-0 text-[13px]">TCFD reporting Information</span>
+              </div>
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    tcfd && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {/* Energy section content */}
+            {tcfd && (
+              <>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  <div>
+                    <p className="text-[12px]  ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4  text-gray-400">
+                      Topic disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "TCFD Disclosure Selection"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("TCFD Disclosure Selection")}
+                    >
+                      TCFD Disclosure Selection
+                    </p>
+                  </div>
+           
+             
+                </div>
+              </>
+            )}
+          </div>
+          )}
           <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${

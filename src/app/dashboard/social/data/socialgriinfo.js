@@ -1,4 +1,7 @@
 import { MdChevronRight } from "react-icons/md";
+import Cookies from "js-cookie";
+const tcfd = Cookies.get("tcfd_sector");
+const tcfdsector = tcfd ? JSON.parse(tcfd) : [];
 export const Socialdata = [
   //Employee Hires & Turnover//
   {
@@ -8461,5 +8464,941 @@ export const Socialdata = [
       </>,
     ],
     link: "https://www.publicsafety.gc.ca/cnt/cntrng-crm/frcd-lbr-cndn-spply-chns/prpr-rprt-en.aspx",
+  },
+  {
+    category: ["140"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Board's oversight of climate related issues screen - Governance
+        [TCFD-GOV-A]
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              In describing the board’s oversight of climate-related issues,
+              organizations should consider including a discussion of the
+              following:
+            </p>
+            <ul className="list-disc ml-6  mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Processes and frequency by which the board and/or board
+                committees (e.g., audit, risk, or other committees) are informed
+                about climate-related issues
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Whether the board and/or board committees consider
+                climate-related issues when reviewing and guiding strategy,
+                major plans of action, risk management policies, annual budgets,
+                and business plans as well as setting the organization’s
+                performance objectives, monitoring implementation and
+                performance, and overseeing major capital expenditures,
+                acquisitions, and divestitures; and
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                How the board monitors and oversees progress against goals and
+                targets for addressing climate-related issues.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["141"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Management’s role in assessing and managing climate related issues
+        screen - Governance [TCFD-GOV-B]
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              In describing management’s role related to the assessment and
+              management of climate related issues, organizations should
+              consider including the following information:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Whether the organization has assigned climate-related
+                responsibilities to management-level positions or committees;
+                and, if so, whether such management positions or committees
+                report to the board or a committee of the board and whether
+                those responsibilities include assessing and/or managing
+                climate-related issues;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                A description of the associated organizational structure(s)
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Processes by which management is informed about climate-related
+                issues and
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                How management (through specific positions and/or management
+                committees) monitors climate-related issues.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["142"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Risk Identification & Assessment screen - Risk Management (TCFD-RM-A)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsector === "asset_management" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Managers
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset managers should describe, where appropriate, engagement
+                activity with investee companies to encourage better disclosure
+                and practices related to climate-related risks in order to
+                improve data availability and asset managers’ ability to assess
+                climate-related risks.
+              </p>
+              <p>
+                Asset managers should also describe how they identify and assess
+                material climate related risks for each product or investment
+                strategy. This might include a description of the resources and
+                tools used in the process.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe, where appropriate, engagement
+                activity with investee companies to encourage better disclosure
+                and practices related to climate-related risks to improve data
+                availability and asset owners’ ability to assess climate-related
+                risks.
+              </p>
+              <p>
+                In addition to WACI, asset owners should consider providing
+                other carbon footprinting metrics they believe are useful for
+                decision-making.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Insurance companies should describe the processes for
+                identifying and assessing climate-related risks on re-/insurance
+                portfolios by geography, business division, or product segments,
+                including the following risks:
+              </p>
+              <ul className="list-disc ml-6  mb-4">
+                <li className="text-[11px] text-[#727272]">
+                  Physical risks from changing frequencies and intensities of
+                  weather-related perils;
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  Transition risks resulting from a reduction in insurable
+                  interest due to a decline in value, changing energy costs, or
+                  implementation of carbon regulation; and Liability risks that
+                  could intensify due to a possible increase in litigation.
+                </li>
+              </ul>
+            </div>
+          )}
+          {tcfdsector === "banking" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Banks
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should consider characterizing their climate-related risks
+                in the context of traditional banking industry risk categories
+                such as credit risk, market risk, liquidity risk, and
+                operational risk.
+              </p>
+            </div>
+          )}
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should describe their risk management processes for
+              identifying and assessing climate-related risks. An important
+              aspect of this description is how organizations determine the
+              relative significance of climate-related risks in relation to
+              other risks.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations should describe whether they consider existing and
+              emerging regulatory requirements related to climate change (e.g.,
+              limits on emissions) as well as other relevant factors considered.
+              Organizations should also consider disclosing the following:
+            </p>
+            <ul className="list-disc ml-6  mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Processes for assessing the potential size and scope of
+                identified climate-related risks and
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Definitions of risk terminology used or references to existing
+                risk classification frameworks used
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["143"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate Risk Management screen - Risk Management (TCFD-RM-B)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsector === "asset_management" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Managers
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset managers should describe how they manage material
+                climate-related risks for each product or investment strategy.
+              </p>
+              <p>
+                Asset managers should also describe how they identify and assess
+                material climate related risks for each product or investment
+                strategy. This might include a description of the resources and
+                tools used in the process.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe how they consider the positioning
+                of their total portfolio with respect to the transition to a
+                low-carbon energy supply, production, and use. This could
+                include explaining how asset owners actively manage their
+                portfolios’ positioning in relation to this transition"
+              </p>
+              <p>
+                In addition to WACI, asset owners should consider providing
+                other carbon footprinting metrics they believe are useful for
+                decision-making.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe how they consider the positioning
+                of their total portfolio with respect to the transition to a
+                low-carbon energy supply, production, and use. This could
+                include explaining how asset owners actively manage their
+                portfolios’ positioning in relation to this transition
+              </p>
+            </div>
+          )}
+
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should describe their processes for managing
+              climate-related risks, including how they make decisions to
+              mitigate, transfer, accept, or control those risks. In addition,
+              organizations should describe their processes for prioritizing
+              climate-related risks, including how materiality determinations
+              are made within their organizations. In describing their processes
+              for managing climate-related risks, organizations should address
+              the risks included in Tables A1.1 and A1.2 (pp. 75–76), as
+              appropriate.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["144"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate Risk Integration screen - Risk Management (TCFD-RM-C)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should describe how their processes for identifying,
+              assessing, and managing climate-related risks are integrated into
+              their overall risk management
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["145"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate related risks and opportunities screen - Strategy (TCFD-STG-A)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsector === "banking" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Banks
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should describe significant concentrations of credit
+                exposure to carbon-related assets. Additionally, banks should
+                consider disclosing their climate-related risks (transition and
+                physical) in their lending and other financial intermediary
+                business activities.
+              </p>
+            </div>
+          )}
+
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should provide the following information:
+            </p>
+            <ul className="list-disc ml-6  mb-4">
+              <li className="text-[11px] text-[#727272]">
+                A description of what they consider to be the relevant short-,
+                medium-, and long term time horizons, taking into consideration
+                the useful life of the organization’s assets or infrastructure
+                and the fact that climate-related issues often manifest
+                themselves over the medium and longer terms;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                A description of the specific climate-related issues potentially
+                arising in each time horizon (short, medium, and long term) that
+                could have a material financial impact on the organization; and
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                A description of the process(es) used to determine which risks
+                and opportunities could have a material financial impact on the
+                organization.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should consider providing a description of their
+              risks and opportunities by sector and/or geography, as
+              appropriate.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["146"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Impact of Climate related Issues on Business screen - Strategy
+        (TCFD-STG-B)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsector === "non_financial" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Non-Financial Group
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Organizations should consider discussing how climate-related
+                risks and opportunities are integrated into their current
+                decision-making and strategy formulation, including planning
+                assumptions and objectives around climate change mitigation,
+                adaptation, or opportunities such as:
+              </p>
+              <ul className="list-disc ml-6 mb-4">
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Research and development (R&D) and adoption of new
+                  technology.
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Existing and committed future activities such as
+                  investments, restructuring, writedowns, or impairment of
+                  assets.
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Critical planning assumptions around legacy assets, for
+                  example, strategies to lower carbon-, energy-, and/or
+                  water-intensive operations.
+                </li>
+                <li className="text-[11px] text-[#727272]">
+                  ‒ How GHG emissions, energy, and water and other physical risk
+                  exposures, if applicable, are considered in capital planning
+                  and allocation; this could include a discussion of major
+                  acquisitions and divestments, joint-ventures, and investments
+                  in technology, innovation, and new business areas in light of
+                  changing climaterelated risks and opportunities.
+                </li>
+                <li className="text-[11px] text-[#727272]">
+                  ‒ The organization’s flexibility in positioning/repositioning
+                  capital to address emerging climate-related risks and
+                  opportunities
+                </li>
+              </ul>
+            </div>
+          )}
+          {tcfdsector === "asset_management" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Managers
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset managers should describe how climate-related risks and
+                opportunities are factored into relevant products or investment
+                strategies.
+              </p>
+              <p>
+                Asset managers should also describe how each product or
+                investment strategy might be affected by the transition to a
+                low-carbon economy.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe how climate-related risks and
+                opportunities are factored into relevant investment strategies.
+                This could be described from the perspective of the total fund
+                or investment strategy or individual investment strategies for
+                various asset classes.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Insurance companies should describe the potential impacts of
+                climate-related risks and opportunities as well as provide
+                supporting quantitative information where available, on their
+                core businesses, products, and services, including: Information
+                at the business division, sector, or geography levels; How the
+                potential impacts influence client or broker selection; and
+                Whether specific climate-related products or competencies are
+                under development, such as insurance of green infrastructure,
+                specialty climate-related risk advisory services, and
+                climate-related client engagement
+              </p>
+            </div>
+          )}
+
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Building on recommended disclosure (a), organizations should
+              discuss how identified climate-related issues have affected their
+              businesses, strategy, and financial planning.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations should consider including the impact on their
+              businesses, strategy, and financial planning in the following
+              areas:
+            </p>
+            <ul className="list-disc ml-6  mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Products and services
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Supply chain and/or value chain
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Adaptation and mitigation activities
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Investment in research and development
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Operations (including types of operations and location of
+                facilities)
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Acquisitions or divestments
+              </li>
+              <li className="text-[11px] text-[#727272]">Access to capital</li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations should describe how climate-related issues serve as
+              an input to their financial planning process, the time period(s)
+              used, and how these risks and opportunities are prioritized.
+              Organizations’ disclosures should reflect a holistic picture of
+              the interdependencies among the factors that affect their ability
+              to create value over time.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations should describe the impact of climate-related issues
+              on their financial performance (e.g., revenues, costs) and
+              financial position (e.g., assets, liabilities). If climate-related
+              scenarios were used to inform the organization’s strategy and
+              financial planning, such scenarios should be described.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations that have made GHG emissions reduction commitments,
+              operate in jurisdictions that have made such commitments, or have
+              agreed to meet investor expectations regarding GHG emissions
+              reductions should describe their plans for transitioning to a
+              low-carbon economy, which could include GHG emissions targets and
+              specific activities intended to reduce GHG emissions in their
+              operations and value chain or to otherwise support the transition.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["147"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Resilience of the Organisation's Strategy screen - Strategy (TCFD-STG-C)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsector === "non_financial" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Non-Financial Groups
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Organizations with more than one billion U.S. dollar equivalent
+                (USDE) in annual revenue should consider conducting more robust
+                scenario analysis to assess the resilience of their strategies
+                against a range of climate-related scenarios, including a 2°C or
+                lower scenario and, where relevant to the organization,
+                scenarios consistent with increased physical climate-related
+                risks. Organizations should consider discussing the implications
+                of different policy assumptions, macro-economic trends, energy
+                pathways, and technology assumptions used in publicly available
+                climate-related scenarios to assess the resilience of their
+                strategies. For the climate-related scenarios used,
+                organizations should consider providing information on the
+                following factors to allow investors and others to understand
+                how conclusions were drawn from scenario analysis:
+              </p>
+              <ul className="list-disc ml-6 mb-4">
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Critical input parameters, assumptions, and analytical
+                  choices for the climaterelated scenarios used, particularly as
+                  they relate to key areas such as policy assumptions, energy
+                  deployment pathways, technology pathways, and related timing
+                  assumptions.
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Existing and committed future activities such as
+                  investments, restructuring, writedowns, or impairment of
+                  assets.
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Potential qualitative or quantitative financial implications
+                  of the climate-related scenarios, if any
+                </li>
+              </ul>
+            </div>
+          )}
+
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners that perform scenario analysis should consider
+                providing a discussion of how climate-related scenarios are
+                used, such as to inform investments in specific assets.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                nsurance companies that perform climate-related scenario
+                analysis on their underwriting activities should provide the
+                following information:
+              </p>
+              <ul className="list-disc ml-6 mb-4">
+                <li className="text-[11px] text-[#727272]">
+                  Description of the climate-related scenarios used, including
+                  the critical input parameters, assumptions and considerations,
+                  and analytical choices. In addition to a 2°C scenario,
+                  insurance companies with substantial exposure to
+                  weather-related
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  Perils should consider using a greater than 2°C scenario to
+                  account for physical effects of climate change and Time frames
+                  used for the climate-related scenarios, including short-,
+                  medium-, and long-term milestones.
+                </li>
+              </ul>
+            </div>
+          )}
+
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should describe how resilient their strategies are
+              to climate-related risks and opportunities, taking into
+              consideration a transition to a low-carbon economy consistent with
+              a 2°C or lower scenario and, where relevant to the organization,
+              scenarios consistent with increased physical climate-related
+              risks.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations should consider discussing:
+            </p>
+            <ul className="list-disc ml-6  mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Where they believe their strategies may be affected by
+                climate-related risks and opportunities;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                How their strategies might change to address such potential
+                risks and opportunities;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The potential impact of climate-related issues on financial
+                performance (e.g., revenues, costs) and financial position
+                (e.g., assets, liabilities); and
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The climate-related scenarios and associated time horizon(s)
+                considered.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Refer to Section D in the Task Force’s report for information on
+              applying scenarios to forward-looking analysis.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["148"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate Related Metrics screen - Metrics and Targets [TCFD-M&T-A]
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsector === "non_financial" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Non-Financial Groups
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                For all relevant metrics, organizations should consider
+                providing historical trends and forward-looking projections (by
+                relevant country and/or jurisdiction, business line, or asset
+                type). Organizations should also consider disclosing metrics
+                that support their scenario analysis and strategic planning
+                process and that are used to monitor the organization’s business
+                environment from a strategic and risk management perspective.
+                Organizations should consider providing key metrics related to
+                GHG emissions, energy, water and other physical risk exposures,
+                land use, and, if relevant, investments in climate adaptation
+                and mitigation that address potential financial aspects of
+                shifting demand, expenditures, asset valuation, and cost of
+                financing.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_management" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Managers
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe metrics used to assess
+                climate-related risks and opportunities in each fund or
+                investment strategy. Where relevant, asset owners should also
+                describe how these metrics have changed over time. Where
+                appropriate, asset owners should provide metrics considered in
+                investment decisions and monitoring. Asset owners should
+                describe the extent to which assets they own and their funds and
+                investment strategies, where relevant, are aligned with a well
+                below 2°C scenario, using whichever approach or metrics best
+                suit their organizational context or capabilities. Asset owners
+                should also indicate which asset classes are included.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe metrics used to assess
+                climate-related risks and opportunities in each fund or
+                investment strategy. Where relevant, asset owners should also
+                describe how these metrics have changed over time. Where
+                appropriate, asset owners should provide metrics considered in
+                investment decisions and monitoring. Asset owners should
+                describe the extent to which assets they own and their funds and
+                investment strategies, where relevant, are aligned with a well
+                below 2°C scenario, using whichever approach or metrics best
+                suit their organizational context or capabilities. Asset owners
+                should also indicate which asset classes are included.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Supplemental Guidance for Insurance Companies Insurance
+                companies should provide aggregated risk exposure to
+                weather-related catastrophes of their property business (i.e.,
+                annual aggregated expected losses from weather-related
+                catastrophes) by relevant jurisdiction. Insurance companies
+                should describe the extent to which their insurance underwriting
+                activities, where relevant, are aligned with a well below 2°C
+                scenario, using whichever approach or metrics best suit their
+                organizational context or capabilities. Insurance companies
+                should also indicate which insurance underwriting ac
+              </p>
+            </div>
+          )}
+          {tcfdsector === "banking" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Banks
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should provide the metrics used to assess the impact of
+                (transition and physical) climate-related risks on their lending
+                and other financial intermediary business activities in the
+                short, medium, and long term. Metrics provided may relate to
+                credit exposure, equity and debt holdings, or trading positions,
+                broken down by:
+              </p>
+              <ul className="list-disc ml-6  mb-4">
+                <li className="text-[11px] text-[#727272]">Industry</li>
+
+                <li className="text-[11px] text-[#727272]">Geography</li>
+                <li className="text-[11px] text-[#727272]">
+                  Credit quality (e.g., investment grade or non-investment
+                  grade, internal rating system)
+                </li>
+                <li className="text-[11px] text-[#727272]">Average tenor</li>
+              </ul>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should also provide the amount and percentage of
+                carbon-related assets relative to total assets as well as the
+                amount of lending and other financing connected with
+                climate-related opportunities.
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should describe the extent to which their lending and
+                other financial intermediary business activities, where
+                relevant, are aligned with a well below 2°C scenario, using
+                whichever approach or metrics best suit their organizational
+                context or capabilities.
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should also indicate which financial intermediary business
+                activities (e.g., loans to specific sectors or industries) are
+                included.
+              </p>
+            </div>
+          )}
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should provide the key metrics used to measure and
+              manage climate related risks and opportunities, as well as metrics
+              consistent with the cross-industry, climate-related metric
+              categories described. Organizations should consider including
+              metrics on climate-related risks associated with water, energy,
+              land use, and waste management where relevant and applicable.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Where climate-related issues are material, organizations should
+              consider describing whether and how related performance metrics
+              are incorporated into remuneration policies.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Where relevant, organizations should provide their internal carbon
+              prices as well as climate-related opportunity metrics such as
+              revenue from products and services designed for a low-carbon
+              economy.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Metrics should be provided for historical periods to allow for
+              trend analysis. Where appropriate, organizations should consider
+              providing forward-looking metrics for the cross-industry,
+              climate-related metric categories consistent with their business
+              or strategic planning time horizons. In addition, where not
+              apparent, organizations should provide a description of the
+              methodologies used to calculate or estimate climate-related
+              metrics.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["149"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate Related Targets screen - Metrics and Targets [TCFD-M&T-C]
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should provide the key metrics used to measure and
+              manage climaterelated risks and opportunities, as well as metrics
+              consistent with the cross-industry, climate-related metric
+              categories described. Organizations should consider including
+              metrics on climate-related risks associated with water, energy,
+              land use, and waste management where relevant and applicable.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Where climate-related issues are material, organizations should
+              consider describing whether and how related performance metrics
+              are incorporated into remuneration policies.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Where relevant, organizations should provide their internal carbon
+              prices as well as climate-related opportunity metrics such as
+              revenue from products and services designed for a low-carbon
+              economy.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Metrics should be provided for historical periods to allow for
+              trend analysis. Where appropriate, organizations should consider
+              providing forward-looking metrics for the cross-industry,
+              climate-related metric categories consistent with their business
+              or strategic planning time horizons. In addition, where not
+              apparent, organizations should provide a description of the
+              methodologies used to calculate or estimate climate-related
+              metrics.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
   },
 ];

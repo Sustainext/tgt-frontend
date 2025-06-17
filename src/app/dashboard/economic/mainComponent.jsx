@@ -43,14 +43,20 @@ import {
   setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
 import Materialtopic from "../Management-Material-topic/page";
-
+import Resiliencestrategy from "./risks-opportunities/resilience-strategy/page";
+import Climatebusiness from "./risks-opportunities/climate-business/page";
+import Climaterelatedtargets from "./risks-opportunities/climate-related-targets/page";
+import Climaterelatedmetrics from "./risks-opportunities/climate-related-metrics/page"
+import Cookies from "js-cookie";
 const Economic = () => {
   const { open } = GlobalState();
   const [activeTab, setActiveTab] = useState(
     "Management of Material topic Economic Performance"
   );
   const [mobileopen, setMobileopen] = useState(false);
-
+  const frameworkId = Cookies.get("selected_framework_id");
+  const disclosures = Cookies.get("selected_disclosures");
+  const parsedDisclosures = disclosures ? JSON.parse(disclosures) : [];
   const dispatch = useDispatch();
   const {
     corporate_id,
@@ -104,6 +110,10 @@ const Economic = () => {
       "Financial Implications due to climate change",
       "Climate related Risks",
       "Climate Related Opportunities",
+      "Tcfd-cs1",
+      "Tcfd-cs2",
+      "Tcfd-cs3",
+      "Tcfd-cs4",
     ];
 
     // List of tabs related to Waste
@@ -171,6 +181,8 @@ const Economic = () => {
               handleTabClick={handleTabClick}
               apiData={data}
               setMobileopen={setMobileopen}
+              frameworkId={frameworkId}
+              disclosures={parsedDisclosures}
             />
           </div>
           {mobileopen ? (
@@ -181,6 +193,8 @@ const Economic = () => {
                   handleTabClick={handleTabClick}
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  frameworkId={frameworkId}
+                  disclosures={parsedDisclosures}
                 />
               </div>
             </div>
@@ -206,7 +220,6 @@ const Economic = () => {
                   Envdata={"GovEconomicPerformance"}
                   topheading={"Economic"}
                 />
-               
               )}
               {activeTab ===
                 "Direct economic value generated & distributed" && (
@@ -236,7 +249,6 @@ const Economic = () => {
                   Envdata={"ClimateRisksAndOpportunities"}
                   topheading={"Economic"}
                 />
-           
               )}
               {activeTab === "Financial Implications due to climate change" && (
                 <Financialimplications
@@ -248,10 +260,17 @@ const Economic = () => {
                 <Climaterelatedrisks
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  frameworkId={frameworkId}
+                  disclosures={parsedDisclosures}
                 />
               )}
               {activeTab === "Climate Related Opportunities" && (
-                <Climaterelated apiData={data} setMobileopen={setMobileopen} />
+                <Climaterelated
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  frameworkId={frameworkId}
+                  disclosures={parsedDisclosures}
+                />
               )}
 
               {/* waste start */}
@@ -267,7 +286,6 @@ const Economic = () => {
                   Envdata={"GovGovernance"}
                   topheading={"Economic"}
                 />
-             
               )}
               {/* {activeTab ===
               "Ratios of Standard Entry level wage by gender compared to local minimum wage" && (
@@ -295,7 +313,6 @@ const Economic = () => {
                   Envdata={"GovEconomicImpact"}
                   topheading={"Economic"}
                 />
-           
               )}
               {activeTab ===
                 "Infrastructure investments and services supported" && (
@@ -330,7 +347,6 @@ const Economic = () => {
                   Envdata={"GovCorruption"}
                   topheading={"Economic"}
                 />
-           
               )}
               {activeTab ===
                 "Operations assessed for risks related to corruption" && (
@@ -374,7 +390,6 @@ const Economic = () => {
                   Envdata={"GovTaxTransparency"}
                   topheading={"Economic"}
                 />
-          
               )}
               {activeTab === "Approach to tax" && (
                 <Approachtotax apiData={data} setMobileopen={setMobileopen} />
@@ -409,7 +424,6 @@ const Economic = () => {
                   Envdata={"GovPolicy"}
                   topheading={"Economic"}
                 />
-           
               )}
               {activeTab === "Political Contribution" && (
                 <PoliticalInvolvement
@@ -417,7 +431,29 @@ const Economic = () => {
                   setMobileopen={setMobileopen}
                 />
               )}
-            </div>
+              {activeTab === "Tcfd-cs1" && (
+                <Climatebusiness apiData={data} setMobileopen={setMobileopen} setActiveTab={setActiveTab} />
+              )}
+              {activeTab === "Tcfd-cs2" && (
+                <Resiliencestrategy
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+                  {activeTab === "Tcfd-cs3" && (
+                <Climaterelatedmetrics
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                   setActiveTab={setActiveTab}
+                />
+              )}
+              {activeTab === "Tcfd-cs4" && (
+                <Climaterelatedtargets
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+            </div> 
           )}
         </div>
       </div>

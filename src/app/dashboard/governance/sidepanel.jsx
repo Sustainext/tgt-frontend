@@ -1,11 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {  MdOutlineDiversity1, MdKeyboardArrowDown, MdClose} from "react-icons/md";
-
+import {
+  MdOutlineDiversity1,
+  MdKeyboardArrowDown,
+  MdClose,
+} from "react-icons/md";
 import { GiWoodPile } from "react-icons/gi";
 
-const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
+const Aside = ({
+  activeTab,
+  handleTabClick,
+  apiData,
+  setMobileopen,
+  frameworkId,
+  disclosures,
+}) => {
   const [isEmission, setEmisssion] = useState(false);
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
   const [isWasteVisible, setWasteVisible] = useState(false);
@@ -16,6 +26,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
   const [isTax, setTax] = useState(false);
   const [Political, setPolitical] = useState(false);
   const [ManagingConcerns, setManagingConcerns] = useState(false);
+  const [tcfd, setTcfd] = useState(false);
   const materialityEnvData =
     apiData && apiData.governance ? apiData.governance : {};
 
@@ -59,8 +70,8 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
     setIsLegal(false);
     setTax(false);
   };
-  const toggleWaterVisible = () => {
-    setWaterVisible(!isWaterVisible);
+  const toggleTcfd = () => {
+    setTcfd(!tcfd);
     setEnergySectionVisible(false);
     setWasteVisible(false);
     setMaterialsVisible(false);
@@ -171,7 +182,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleEmission}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left flex items-center ">
                 <span className="indent-0 text-[13px]">Board Info</span>
@@ -267,7 +278,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleEnergySectionVisibility}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
@@ -286,10 +297,28 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               </div>
             </button>
 
-            {/* Energy section content */}
             {isEnergySectionVisible && (
               <>
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {frameworkId === "6" &&
+                    disclosures?.Governance?.disclosures?.some(
+                      (d) => d.id === 1 && d.selected === true
+                    ) && (
+                      <div>
+                        <p
+                          className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Tcfd-s1"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() => handleTabClick("Tcfd-s1")}
+                        >
+                          Board's oversight of climate-related risks and
+                          opportunities
+                        </p>
+                      </div>
+                    )}
+
                   <div>
                     <p className="text-[12px]  ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4  text-gray-400">
                       Topic disclosure
@@ -349,7 +378,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleWasteVisible}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Governance</span>
@@ -370,6 +399,25 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
             {isWasteVisible && (
               <>
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {frameworkId === "6" &&
+                    disclosures?.Governance?.disclosures?.some(
+                      (d) => d.id === 2 && d.selected === true
+                    ) && (
+                      <div>
+                        <p
+                          className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Tcfd-s2"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() => handleTabClick("Tcfd-s2")}
+                        >
+                          Management’s role in assessing and managing climate
+                          related risks and opportunities
+                        </p>
+                      </div>
+                    )}
+
                   <div>
                     <p className="text-[12px]  ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4  text-gray-400">
                       Topic disclosure
@@ -421,7 +469,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleMaterialsVisible}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
@@ -526,7 +574,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleSupplierSectionVisibility}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
@@ -571,7 +619,110 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               </>
             )}
           </div>
+          {frameworkId === "6" &&
+            disclosures?.["Risk Management"]?.disclosures?.some(
+              (d) =>
+                (d.id === 6 && d.selected === true) ||
+                (d.id === 7 && d.selected === true) ||
+                (d.id === 8 && d.selected === true)
+            ) && (
+              <div>
+                <button
+                  className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
+                    activeTab === "Tcfd-s3" ||
+                    activeTab === "Tcfd-s4" ||
+                    activeTab === "Tcfd-s5"
+                      ? "text-[#007EEF]"
+                      : "bg-white text-[#727272] "
+                  }`}
+                  onClick={toggleTcfd}
+                >
+                  <div className="w-[20%]">
+                    <MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                  </div>
+                  <div className="w-[50%] text-left ">
+                    <span className="indent-0 text-[13px]">
+                      Risk Management
+                    </span>
+                  </div>
 
+                  <div className="inset-y-0  flex items-center pointer-events-none w-[15%] justify-end">
+                    {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+                </span> */}
+                    <MdKeyboardArrowDown
+                      className={`text-lg text-neutral-500 ${
+                        Political && "rotate-180"
+                      }`}
+                    />
+                  </div>
+                </button>
+
+                {/* Energy section content */}
+                {tcfd && (
+                  <>
+                    <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                      {/* <div>
+                    <p className="text-[12px]  ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4  text-gray-400">
+                      Topic disclosure
+                    </p>
+                  </div> */}
+                      {frameworkId === "6" &&
+                        disclosures?.["Risk Management"]?.disclosures?.some(
+                          (d) => d.id === 6 && d.selected === true
+                        ) && (
+                          <div>
+                            <p
+                              className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                                activeTab === "Tcfd-s3"
+                                  ? "text-blue-400"
+                                  : "bg-transparent text-[#727272]"
+                              }`}
+                              onClick={() => handleTabClick("Tcfd-s3")}
+                            >
+                              Risk Identification & Assessment
+                            </p>
+                          </div>
+                        )}
+                      {frameworkId === "6" &&
+                        disclosures?.["Risk Management"]?.disclosures?.some(
+                          (d) => d.id === 7 && d.selected === true
+                        ) && (
+                          <div>
+                            <p
+                              className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                                activeTab === "Tcfd-s4"
+                                  ? "text-blue-400"
+                                  : "bg-transparent text-[#727272]"
+                              }`}
+                              onClick={() => handleTabClick("Tcfd-s4")}
+                            >
+                              Climate Risk Management
+                            </p>
+                          </div>
+                        )}
+                      {frameworkId === "6" &&
+                        disclosures?.["Risk Management"]?.disclosures?.some(
+                          (d) => d.id === 8 && d.selected === true
+                        ) && (
+                          <div>
+                            <p
+                              className={`flex  text-start ml-16 xl:ml-4 md:xl:ml-4 lg:ml-4 2xl:ml-4 4k:ml-4 2k:ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                                activeTab === "Tcfd-s5"
+                                  ? "text-blue-400"
+                                  : "bg-transparent text-[#727272]"
+                              }`}
+                              onClick={() => handleTabClick("Tcfd-s5")}
+                            >
+                              Climate Risk Integration
+                            </p>
+                          </div>
+                        )}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
@@ -583,7 +734,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleTax}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Policy</span>
@@ -648,7 +799,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={togglePolitical}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Remediation</span>
@@ -701,7 +852,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
               onClick={toggleManagingConcerns}
             >
               <div className="w-[20%]">
-                < MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
+                <MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Managing Concerns</span>

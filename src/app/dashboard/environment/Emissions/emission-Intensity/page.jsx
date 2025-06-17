@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import EmissionTopBar from "../emissionTopbar";
 import EmissionIntensitybody from "./emission-Intensity-body";
 
-const EmissionIntensity = ({ apiData,setMobileopen }) => {
+const EmissionIntensity = ({ apiData,setMobileopen,frameworkId,disclosures }) => {
   const {
     corporate_id,
     organization_id,
@@ -88,7 +88,28 @@ const EmissionIntensity = ({ apiData,setMobileopen }) => {
       bgColor: "bg-[#40AE49]",
     },
   ];
+const tcfd = [];
+  const tcfdtag = [];
+if (
+  frameworkId === "6" &&
+  disclosures?.["Metrics & Targets"]?.disclosures
+) {
+  const govDisclosures = disclosures["Metrics & Targets"].disclosures;
 
+  const hasMTA = govDisclosures.some((d) => d.id === 9 && d.selected);
+
+  if (hasMTA) {
+    tcfd.push({
+      tagName: "TCFD-M&T-B",
+      toggle: "59",
+      id: "tooltip-$tcfd1",
+      content: "TCFD-METRICS AND TARGETS-C Disclosure",
+    });
+      tcfdtag.push({
+        tagName: "TCFD-M&T-B",
+      });
+  }
+}
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
@@ -98,6 +119,7 @@ const EmissionIntensity = ({ apiData,setMobileopen }) => {
           apiData={apiData}
           sdgData={sdgData}
           griData={griData}
+          tcfd={tcfd}
           setMobileopen={setMobileopen}
         />
 
@@ -163,7 +185,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
 
                 {/* Footer (Learn more link) */}
-                <div className="pt-2 pb-4 ml-4">
+                <div className="pt-2 pb-6 ml-4">
                   <a
                     className="text-[14px] text-[#2196F3] pt-1 inline-flex"
                     href={program.link}
@@ -191,6 +213,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         selectedCorp={selectedCorp}
         year={year}
         togglestatus={togglestatus}
+        tcfdtag={tcfdtag}
       />
     </>
   );

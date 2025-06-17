@@ -1,11 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {MdOutlineGroups2,MdKeyboardArrowDown,MdClose} from "react-icons/md";
+import { MdOutlineGroups2, MdKeyboardArrowDown, MdClose } from "react-icons/md";
 
 import { GiWoodPile } from "react-icons/gi";
 
-const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
+const Aside = ({
+  activeTab,
+  handleTabClick,
+  apiData,
+  setMobileopen,
+  frameworkId,
+  disclosures,
+}) => {
   const [isEmission, setEmisssion] = useState(false);
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
   const [isWasteVisible, setWasteVisible] = useState(false);
@@ -14,9 +21,10 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
   const [isSupplierVisible, setIsSupplierVisible] = useState(false);
   const [isLegal, setIsLegal] = useState(false);
   const [isTax, setTax] = useState(false);
-  const [Political, setPolitical]  = useState(false);
+  const [Political, setPolitical] = useState(false);
 
-  const materialityEnvData=apiData&&apiData.governance?apiData.governance:{}
+  const materialityEnvData =
+    apiData && apiData.governance ? apiData.governance : {};
 
   const toggleEmission = () => {
     setEmisssion(!isEmission);
@@ -100,7 +108,7 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
     setIsLegal(false);
   };
   const togglePolitical = () => {
-    setPolitical(!Political)
+    setPolitical(!Political);
     setTax(false);
     setWasteVisible(false);
     setMaterialsVisible(false);
@@ -134,18 +142,18 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
   };
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md h-full">
-    <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[43%] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
-      <div className="flex flex-col w-full font-medium">
-        <button className="flex justify-between items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
-          <div>
-            {" "}
-            <span className="text-[16px] font-extrabold">Economic</span>
-          </div>
+      <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[43%] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
+        <div className="flex flex-col w-full font-medium">
+          <button className="flex justify-between items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
+            <div>
+              {" "}
+              <span className="text-[16px] font-extrabold">Economic</span>
+            </div>
 
-          <div className=" float-end block xl:hidden md:block lg:hidden 2xl:hidden 4k:hidden">
-            <MdClose onClick={toggleSidebar} className="text-3xl" />
-          </div>
-        </button>
+            <div className=" float-end block xl:hidden md:block lg:hidden 2xl:hidden 4k:hidden">
+              <MdClose onClick={toggleSidebar} className="text-3xl" />
+            </div>
+          </button>
           <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
@@ -166,14 +174,14 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                   Economic Performance
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.GovEconomicPerformance?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.GovEconomicPerformance?.is_material_topic ? (
                 <div className="w-[15%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[15%] ml-5"></span>
               )}
 
@@ -191,36 +199,38 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
             {/* Energy section content */}
             {isEmission && (
               <>
-                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  {materialityEnvData&&materialityEnvData.GovEconomicPerformance?.is_material_topic?(
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.GovEconomicPerformance
+                    ?.is_material_topic ? (
+                    <div>
                       <div>
-                        <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Management of Material topic Economic Performance"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Management of Material topic Economic Performance"
-                        )
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
                       </div>
-                  ):(
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Economic Performance"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Economic Performance"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
                     <div></div>
                   )}
-                  
+
                   <div>
                     <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -290,6 +300,10 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                 activeTab === "Financial Implications due to climate change" ||
                 activeTab === "Climate related Risks" ||
                 activeTab === "Climate Related Opportunities" ||
+                activeTab === "Tcfd-cs1" ||
+                activeTab === "Tcfd-cs2" ||
+                activeTab === "Tcfd-cs3" ||
+                activeTab === "Tcfd-cs4" ||
                 activeTab === "Management of Material topic risks"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
@@ -301,17 +315,18 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">
-                Climate Risks and Opportunities
+                  Climate Risks and Opportunities
                 </span>
               </div>
-              {materialityEnvData&&materialityEnvData.ClimateRisksAndOpportunities?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.ClimateRisksAndOpportunities
+                ?.is_material_topic ? (
                 <div className="w-[15%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[15%] ml-5"></span>
               )}
 
@@ -329,33 +344,35 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
             {/* Energy section content */}
             {isEnergySectionVisible && (
               <>
-                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  {materialityEnvData&&materialityEnvData.ClimateRisksAndOpportunities?.is_material_topic?(
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.ClimateRisksAndOpportunities
+                    ?.is_material_topic ? (
+                    <div>
                       <div>
-                         <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic risks"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic risks")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
                       </div>
-                  ):(
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic risks"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick("Management of Material topic risks")
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
                     <div></div>
                   )}
-                 
+
                   <div>
                     <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -387,7 +404,7 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                       }`}
                       onClick={() => handleTabClick("Climate related Risks")}
                     >
-                     Climate Related Risks
+                      Climate Related Risks
                     </p>
                   </div>
                   <div>
@@ -404,6 +421,74 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                       Climate Related Opportunities
                     </p>
                   </div>
+                  {frameworkId === "6" &&
+                    disclosures?.Strategy?.disclosures?.some(
+                      (d) => d.id === 4 && d.selected === true
+                    ) && (
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Tcfd-cs1"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272] "
+                          }`}
+                          onClick={() => handleTabClick("Tcfd-cs1")}
+                        >
+                          Impact of Climate Related Issues on Business
+                        </p>
+                      </div>
+                    )}
+                  {frameworkId === "6" &&
+                    disclosures?.Strategy?.disclosures?.some(
+                      (d) => d.id === 5 && d.selected === true
+                    ) && (
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Tcfd-cs2"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272] "
+                          }`}
+                          onClick={() => handleTabClick("Tcfd-cs2")}
+                        >
+                          Resilience of the Organisation's Strategy
+                        </p>
+                      </div>
+                    )}
+                  {frameworkId === "6" &&
+                    disclosures?.["Metrics & Targets"]?.disclosures?.some(
+                      (d) => d.id === 9 && d.selected === true
+                    ) && (
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Tcfd-cs3"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272] "
+                          }`}
+                          onClick={() => handleTabClick("Tcfd-cs3")}
+                        >
+                          Climate Related Metrics
+                        </p>
+                      </div>
+                    )}
+                  {frameworkId === "6" &&
+                    disclosures?.["Metrics & Targets"]?.disclosures?.some(
+                      (d) => d.id === 11 && d.selected === true
+                    ) && (
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Tcfd-cs4"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272] "
+                          }`}
+                          onClick={() => handleTabClick("Tcfd-cs4")}
+                        >
+                          Climate Related Targets
+                        </p>
+                      </div>
+                    )}
                 </div>
               </>
             )}
@@ -424,16 +509,18 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
-                <span className="indent-0 text-[13px]">Economic Governance</span>
+                <span className="indent-0 text-[13px]">
+                  Economic Governance
+                </span>
               </div>
-              {materialityEnvData&&materialityEnvData.GovGovernance?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.GovGovernance?.is_material_topic ? (
                 <div className="w-[15%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[15%] ml-5"></span>
               )}
 
@@ -451,39 +538,42 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
 
             {isWasteVisible && (
               <>
-                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  {materialityEnvData&&materialityEnvData.GovGovernance?.is_material_topic?(
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.GovGovernance?.is_material_topic ? (
                     <div>
-                       <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Market"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Market")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic Market"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Market"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
                     </div>
-                  ):(
+                  ) : (
                     <div></div>
                   )}
-                 
+
                   <div>
                     <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
-                 
+
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
@@ -525,18 +615,16 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                 <MdOutlineGroups2 className="w-5 h-5 mr-2" />
               </div>
               <div className="w-[50%] text-left ">
-                <span className="indent-0 text-[13px]">
-                Economic Impacts
-                </span>
+                <span className="indent-0 text-[13px]">Economic Impacts</span>
               </div>
-              {materialityEnvData&&materialityEnvData.GovEconomicImpact?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.GovEconomicImpact?.is_material_topic ? (
                 <div className="w-[15%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[15%] ml-5"></span>
               )}
 
@@ -554,36 +642,37 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
 
             {isMaterialsVisible && (
               <>
-                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  {materialityEnvData&&materialityEnvData.GovEconomicImpact?.is_material_topic?(
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.GovEconomicImpact?.is_material_topic ? (
                     <div>
                       <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Management of Material topic Indirect Economic"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Management of Material topic Indirect Economic"
-                        )
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Indirect Economic"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Indirect Economic"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
                     </div>
-                  ):(
+                  ) : (
                     <div></div>
                   )}
-                  
+
                   <div>
                     <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -618,7 +707,7 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                         handleTabClick("Significant indirect economic impacts")
                       }
                     >
-                    Indirect Economic Impacts
+                      Indirect Economic Impacts
                     </p>
                   </div>
                 </div>
@@ -692,29 +781,29 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                 activeTab ===
                   "Operations assessed for risks related to corruption" ||
                 activeTab === "Management of Material topic Anti" ||
-                activeTab === "Public legal cases regarding corruption"||
+                activeTab === "Public legal cases regarding corruption" ||
                 activeTab ===
                   "Confirmed incidents of corruption and actions taken" ||
-                      activeTab === "Anti Competitive Behavior"
+                activeTab === "Anti Competitive Behavior"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
               }`}
               onClick={toggleSupplierSectionVisibility}
             >
-             <div className="w-[20%]">
+              <div className="w-[20%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Anti Corruption</span>
               </div>
-              {materialityEnvData&&materialityEnvData.GovCorruption?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.GovCorruption?.is_material_topic ? (
                 <div className="w-[15%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[15%] ml-5"></span>
               )}
 
@@ -733,33 +822,34 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
             {/* Energy section content */}
             {isSupplierVisible && (
               <>
-                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  {materialityEnvData&&materialityEnvData.GovCorruption?.is_material_topic?(
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.GovCorruption?.is_material_topic ? (
+                    <div>
                       <div>
-                         <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Anti"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Anti")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
                       </div>
-                  ):(
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic Anti"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick("Management of Material topic Anti")
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
                     <div></div>
                   )}
-                 
+
                   <div>
                     <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -779,7 +869,7 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                         )
                       }
                     >
-                     Risks related to Corruption
+                      Risks related to Corruption
                     </p>
                   </div>
                   <div>
@@ -813,7 +903,7 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                         )
                       }
                     >
-                     Incidents of Corruption
+                      Incidents of Corruption
                     </p>
                   </div>
                   <div>
@@ -843,7 +933,7 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                         handleTabClick("Anti Competitive Behavior")
                       }
                     >
-                     Legal Actions
+                      Legal Actions
                     </p>
                   </div>
                 </div>
@@ -922,20 +1012,20 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
               }`}
               onClick={toggleTax}
             >
-             <div className="w-[20%]">
+              <div className="w-[20%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2" />
               </div>
               <div className="w-[50%] text-left ">
                 <span className="indent-0 text-[13px]">Tax Transparency</span>
               </div>
-              {materialityEnvData&&materialityEnvData.GovTaxTransparency?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.GovTaxTransparency?.is_material_topic ? (
                 <div className="w-[15%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[15%] ml-5"></span>
               )}
 
@@ -954,33 +1044,34 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
             {/* Energy section content */}
             {isTax && (
               <>
-                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  {materialityEnvData&&materialityEnvData.GovTaxTransparency?.is_material_topic?(
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.GovTaxTransparency?.is_material_topic ? (
                     <div>
-                       <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Tax"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Tax")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab === "Management of Material topic Tax"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick("Management of Material topic Tax")
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
                     </div>
-                  ):(
+                  ) : (
                     <div></div>
                   )}
-                 
+
                   <div>
                     <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -1029,7 +1120,7 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                         )
                       }
                     >
-                    Stakeholder Engagement
+                      Stakeholder Engagement
                     </p>
                   </div>
                   <div>
@@ -1054,27 +1145,28 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
                 activeTab === "Political Contribution" ||
-                activeTab === "Management of Material topic Political Influence" 
-            
+                activeTab === "Management of Material topic Political Influence"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
               }`}
               onClick={togglePolitical}
             >
-             <div className="w-[20%]">
+              <div className="w-[20%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
-                <span className="indent-0 text-[13px]">Lobbying and Political Influence</span>
+                <span className="indent-0 text-[13px]">
+                  Lobbying and Political Influence
+                </span>
               </div>
-              {materialityEnvData&&materialityEnvData.GovPolicy?.is_material_topic?(
+              {materialityEnvData &&
+              materialityEnvData.GovPolicy?.is_material_topic ? (
                 <div className="w-[15%] ml-5">
-                   <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
-                  M
-          </span>
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
                 </div>
-                 
-              ):(
+              ) : (
                 <span className="w-[15%] ml-5"></span>
               )}
 
@@ -1093,33 +1185,37 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
             {/* Energy section content */}
             {Political && (
               <>
-                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                  {materialityEnvData&&materialityEnvData.GovPolicy?.is_material_topic?(
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {materialityEnvData &&
+                  materialityEnvData.GovPolicy?.is_material_topic ? (
+                    <div>
                       <div>
-                        <div>
-                    <p className="text-[12px]  ml-4  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Political Influence"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Political Influence")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
                       </div>
-                  ):(
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Political Influence"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() =>
+                            handleTabClick(
+                              "Management of Material topic Political Influence"
+                            )
+                          }
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
                     <div></div>
                   )}
-                  
+
                   <div>
                     <p className="text-[12px]  ml-4  text-gray-400">
                       Topic disclosure
@@ -1137,7 +1233,6 @@ const Aside = ({ activeTab, handleTabClick,apiData,setMobileopen }) => {
                       Political Contribution
                     </p>
                   </div>
-                 
                 </div>
               </>
             )}
