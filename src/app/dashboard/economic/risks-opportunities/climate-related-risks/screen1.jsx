@@ -20,6 +20,7 @@ const view_path = "gri-economic-climate_related_risks-202-2a-physical_risk";
 const client_id = 1;
 const user_id = 1;
 
+
 const schema = {
   type: "array",
   items: {
@@ -39,6 +40,11 @@ const schema = {
           "Heatwaves",
           "Others (please specify)",
         ],
+      },
+      SeverityofRisk: {
+        type: "string",
+        title: "Severity of Risk",
+        enum: ["Acute", "chronic"],
       },
       PotentialImpact: {
         type: "string",
@@ -66,6 +72,10 @@ const schema = {
         type: "string",
         title: "Financial Effect",
         enum: ["Very High", "High", "Moderate", "Low", "Very Low"],
+      },
+      ProcessDescription: {
+        type: "string",
+        title: "Process Description",
       },
       FinancialImplications: {
         type: "string",
@@ -125,6 +135,13 @@ const uiSchema = {
         tooltipdisplay: "block",
       },
       {
+        key: "SeverityofRisk",
+        title: "Severity of Risk",
+        tooltip:
+          "Indicate the severity of the selected risk.",
+        tooltipdisplay: "block",
+      },
+      {
         key: "PotentialImpact",
         title: "Potential Impact",
         tooltip:
@@ -150,6 +167,13 @@ const uiSchema = {
         title: "Financial Effect",
         tooltip:
           "Indicate the estimated magnitude of the financial impact of the chosen risk",
+        tooltipdisplay: "block",
+      },
+      {
+        key: "ProcessDescription",
+        title: "Process Description",
+        tooltip:
+          "Provide a description of the process(es) used to determine financial impact on the organization based on the mentioned risk.",
         tooltipdisplay: "block",
       },
       {
@@ -198,11 +222,14 @@ const uiSchema = {
     ],
   },
 };
+
 const Screen1 = ({
   selectedOrg,
   selectedCorp,
   selectedLocation,
   year,
+  tcfdtag,
+  frameworkId,
   togglestatus,
 }) => {
   const [formData, setFormData] = useState([{}]);
@@ -210,7 +237,7 @@ const Screen1 = ({
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-
+console.log(frameworkId,"frameworkId test");
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -419,14 +446,30 @@ const Screen1 = ({
               ></ReactTooltip>
             </h2>
           </div>
-
-          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
-            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+          <div className="w-full xl:w-[20%] lg:w-[20%] md:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] mb-4">
+            <div
+              className={`flex flex-wrap gap-2 items-center ${
+                tcfdtag.length === 0 ? "justify-end" : "justify-end"
+              }`}
+            >
+              {/* Static GRI tag */}
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
                   GRI 201-2a
                 </div>
               </div>
+
+              {/* Dynamic TCFD tags */}
+              {tcfdtag.map((item, index) => (
+                <div
+                  key={index}
+                  className="w-[110px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center"
+                >
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
+                    {item.tagName}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -441,6 +484,7 @@ const Screen1 = ({
             formContext={{
               colhadding: "Risk Category",
               colname: "Physical Risk",
+              frameworkId,
               view: 1,
             }}
           />

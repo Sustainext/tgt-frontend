@@ -284,7 +284,7 @@ useEffect(() => {
           report: reportId,
           screen: 1,
           data: {
-            about_the_report: p1q2,
+            about_the_report: content,
             company_logo: imageviw || "",
             file_name: selectedfile.name || "",
           },

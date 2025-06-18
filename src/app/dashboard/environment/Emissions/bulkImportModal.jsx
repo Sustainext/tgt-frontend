@@ -110,6 +110,17 @@ const BulkImportModal = ({ isOpen, onClose, setIsModalOpen, showToast }) => {
       LoaderClose();
       setIsResultModalOpen(true);
     } catch (error) {
+      const massge = error.response?.data?.message
+        toast.error(massge, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       console.error("Unexpected error:", error);
       LoaderClose();
     }

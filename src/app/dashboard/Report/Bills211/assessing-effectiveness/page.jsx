@@ -134,7 +134,7 @@ const Assessingeffectiveness = forwardRef(
             report: reportId,
             screen: 11,
             data: {
-              assessing_effectiveness: p1q2,
+              assessing_effectiveness: content,
             },
           };
 

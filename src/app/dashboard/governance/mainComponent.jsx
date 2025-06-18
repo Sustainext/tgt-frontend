@@ -29,11 +29,27 @@ import {
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalState } from "@/Context/page";
-
+import Tcfdboardoversight from "./Board-Involvement-Sustainability/Tcfd-board-oversight/page";
+import Tcfdmanagementrole from "./Governances/Tcfd-management-role/page";
+import RiskdentificationAssessment from "./RiskManagement/Risk-dentification-Assessment/page";
+import ClimateRiskManagement from "./RiskManagement/Climate-Risk-Management/page";
+import ClimateRiskIntegration from "./RiskManagement/Climate-Risk-Integration/page";
+import Cookies from "js-cookie";
 const Governance = () => {
   const { open } = GlobalState();
-  const [activeTab, setActiveTab] = useState("Structure");
+
   const [mobileopen, setMobileopen] = useState(false);
+  const frameworkId = Cookies.get("selected_framework_id");
+  const disclosures = Cookies.get("selected_disclosures");
+  const parsedDisclosures = disclosures ? JSON.parse(disclosures) : [];
+  const activestap = useSelector((state) => state.Tcfd.activesection);
+ 
+      const [activeTab, setActiveTab] = useState("Structure");
+        useEffect(() => {
+    if (activestap) {
+      setActiveTab(activestap);
+    }
+  }, [activestap]);
   const dispatch = useDispatch();
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
@@ -51,9 +67,10 @@ const Governance = () => {
       "Management of Impact",
       "Delegation of Responsibility",
       "Sustainability Reporting",
+      "Tcfd-s1",
     ];
 
-    const wasteTabs = ["Conflict of Interest", "Critical Concerns"];
+    const wasteTabs = ["Conflict of Interest", "Critical Concerns",  "Tcfd-s2"];
 
     const materialTabs = [
       "Sustainability Knowledge",
@@ -68,6 +85,7 @@ const Governance = () => {
     const TaxTabs = ["Process"];
     const PoliticalTabs = ["Advice & Concerns"];
     const PolicyTabs = ["Policy Commitments", "Implementing Commitments"];
+     const RiskTabs = ["Tcfd-s3", "Tcfd-s4","Tcfd-s5"];
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Board Info"));
@@ -85,6 +103,8 @@ const Governance = () => {
       dispatch(setHeadertext2("Advice & Concerns"));
     } else if (PolicyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Policy"));
+    } else if (RiskTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Risk Management"));
     } else {
       dispatch(setHeadertext2(`${activeTab}`));
     }
@@ -102,6 +122,8 @@ const Governance = () => {
               activeTab={activeTab}
               handleTabClick={handleTabClick}
               setMobileopen={setMobileopen}
+              frameworkId={frameworkId}
+              disclosures={parsedDisclosures}
             />
           </div>
           {mobileopen ? (
@@ -111,20 +133,26 @@ const Governance = () => {
                   activeTab={activeTab}
                   handleTabClick={handleTabClick}
                   setMobileopen={setMobileopen}
+                  frameworkId={frameworkId}
+                  disclosures={parsedDisclosures}
                 />
               </div>
             </div>
           ) : (
             <div
-            className={`${
-              open
-                ? "sm:w-[87vw]  md:w-[120vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
-                : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
-            }`}
+              className={`${
+                open
+                  ? "sm:w-[87vw]  md:w-[120vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
+                  : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
+              }`}
             >
               {/* Emissions start */}
               {activeTab === "Structure" && (
-                <BoardInfo setMobileopen={setMobileopen} />
+                <BoardInfo
+                  setMobileopen={setMobileopen}
+                  frameworkId={frameworkId}
+                  disclosures={parsedDisclosures}
+                />
               )}
               {activeTab === "Nomination and Selection" && (
                 <NominationAndSelection setMobileopen={setMobileopen} />
@@ -134,6 +162,9 @@ const Governance = () => {
                 <ChairOfBoard setMobileopen={setMobileopen} />
               )}
               {/* Energy start */}
+              {activeTab === "Tcfd-s1" && (
+                <Tcfdboardoversight setMobileopen={setMobileopen} />
+              )}
               {activeTab === "Management of Impact" && (
                 <ManagementImpact setMobileopen={setMobileopen} />
               )}
@@ -143,6 +174,10 @@ const Governance = () => {
               {activeTab === "Sustainability Reporting" && (
                 <SustainabilityReporting setMobileopen={setMobileopen} />
               )}
+              {activeTab === "Tcfd-s2" && (
+                <Tcfdmanagementrole setMobileopen={setMobileopen} />
+              )}
+
               {activeTab === "Conflict of Interest" && (
                 <ConflictInterest setMobileopen={setMobileopen} />
               )}
@@ -186,6 +221,15 @@ const Governance = () => {
               )}
               {activeTab === "Advice & Concerns" && (
                 <ManagingConcerns setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Tcfd-s3" && (
+                <RiskdentificationAssessment setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Tcfd-s4" && (
+                <ClimateRiskManagement setMobileopen={setMobileopen} />
+              )}
+              {activeTab === "Tcfd-s5" && (
+                <ClimateRiskIntegration setMobileopen={setMobileopen} />
               )}
             </div>
           )}
