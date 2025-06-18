@@ -188,18 +188,29 @@ const Screen1 = ({
       LoaderClose();
     }
   };
-
-  useEffect(() => {
-    if (selectedOrg && year && togglestatus) {
-      loadFormData();
-      loadFormData2();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();
+        loadFormData2();         // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
       }
+    } else {
+        loadFormData();
+        loadFormData2();           // Organization tab: always try to load
     }
-  }, [selectedOrg, year, selectedCorp, togglestatus]);
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -232,7 +243,7 @@ const Screen1 = ({
     }),
     [widgets, riskdata, formData]
   );
-
+console.log(togglestatus,"set Corporate")
   return (
     <>
       <div
@@ -331,8 +342,8 @@ const Screen1 = ({
         riskdata?.opportunities_data?.length > 0 ? (
           <>
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
