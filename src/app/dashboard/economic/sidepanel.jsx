@@ -298,7 +298,7 @@ const Aside = ({
                 }`}
                 onClick={() => setOpenSection((prev) => (prev === section.key ? null : section.key))}
               >
-                <div className="w-[20%]">{section.icon}</div>
+                <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">{section.icon}</div>
                 <div className="w-[50%] text-left">
                   <span className="indent-0 text-[13px]">{section.label}</span>
                 </div>

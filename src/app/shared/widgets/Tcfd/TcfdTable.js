@@ -168,10 +168,23 @@ const updatedMultiSelectStyle = {
   }),
 };
   return (
-    <table className="w-full border border-gray-300 text-sm mb-6">
+     <div
+      style={{
+        display: "block",
+        overflowX: "auto",
+        maxWidth: "100%",
+        minWidth: "100%",
+        width: "90vw",
+      }}
+      className="mb-2 pb-2 table-scrollbar"
+    >
+        <table
+        className="rounded-md border border-gray-300 w-full"
+        style={{ borderCollapse: "separate", borderSpacing: 0 }}
+      >
       <thead>
         <tr className="text-[12px] text-gray-800">
-          <th className="p-2 border w-1/3 font-medium relative">
+          <th className="p-2 border w-[30vw] font-medium relative text-left py-4">
             Climate-related risks/opportunities
             <MdInfoOutline
               data-tooltip-id="tooltip-risks"
@@ -190,10 +203,11 @@ const updatedMultiSelectStyle = {
                 boxShadow: 3,
                 borderRadius: "8px",
                 textAlign: "left",
+                zIndex:"100"
               }}
             />
           </th>
-          <th className="p-2 border w-1/3 font-medium relative">
+          <th className="p-2 border w-[30vw] font-medium relative py-4 text-left">
             Business Areas Affected
             <MdInfoOutline
               data-tooltip-id="tooltip-areas"
@@ -212,10 +226,11 @@ const updatedMultiSelectStyle = {
                 boxShadow: 3,
                 borderRadius: "8px",
                 textAlign: "left",
+                zIndex:"100"
               }}
             />
           </th>
-          <th className="p-2 border w-1/3 font-medium relative">
+          <th className="p-2 border w-[30vw] font-medium relative py-4 text-left">
             Impact
             <MdInfoOutline
               data-tooltip-id="tooltip-impact"
@@ -234,6 +249,7 @@ const updatedMultiSelectStyle = {
                 boxShadow: 3,
                 borderRadius: "8px",
                 textAlign: "left",
+                zIndex:"100"
               }}
             />
           </th>
@@ -243,8 +259,8 @@ const updatedMultiSelectStyle = {
       <tbody>
         {tableData.map((row, i) => (
           <tr key={i}>
-            <td className="border p-2 text-[11px]">{row.label}</td>
-            <td className="border p-2 text-[11px]">
+            <td className="border py-2 text-[12px] pl-4">{row.label}</td>
+            <td className="border p-2 text-[12px]">
               <div className=" pb-1">
                 <Select
                   isMulti
@@ -256,7 +272,7 @@ const updatedMultiSelectStyle = {
                   onChange={(selected) => handleMultiChange(i, selected)}
                   closeMenuOnSelect={false}
                   hideSelectedOptions={false}
-                  className="text-[12px] w-full"
+                  className="text-[12px]"
                       styles={updatedMultiSelectStyle}
                       placeholder="Select options"
                   components={{
@@ -268,17 +284,17 @@ const updatedMultiSelectStyle = {
               {row.selectedOptions?.includes("Others (please specify)") && (
                 <input
                   type="text"
-                  className="mt-2 w-full p-1 border-b text-[11px]"
+                  className="mt-2 w-full p-1 border-b text-[12px]"
                   value={row.otherText}
                   onChange={(e) => handleOtherTextChange(i, e.target.value)}
                   placeholder="Please specify"
                 />
               )}
             </td>
-            <td className="border p-2 text-[11px]">
+            <td className="border p-2 text-[12px]">
               <input
                 type="text"
-                className="w-full p-1 border-b rounded text-[11px]"
+                className=" p-1 border-b rounded text-[12px] w-[30vw] focus:outline-none"
                 value={row.impact}
                 onChange={(e) => handleImpactChange(i, e.target.value)}
                 placeholder="Enter impact"
@@ -288,6 +304,7 @@ const updatedMultiSelectStyle = {
         ))}
       </tbody>
     </table>
+    </div>
   );
 };
 
