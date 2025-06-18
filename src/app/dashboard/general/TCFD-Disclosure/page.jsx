@@ -328,7 +328,7 @@ const TCFD = ({ setMobileopen }) => {
                       </h3>
                     </div>
 
-                    <ul className="space-y-1 text-sm px-4">
+                   <ul className="space-y-1 text-sm px-4 pb-4">
                       {latestDisclosures?.selected_disclosures?.Governance?.disclosures?.some(
                         (d) => d.id === 1 || (d.id === 2 && d.selected === true)
                       ) && (
@@ -441,7 +441,7 @@ const TCFD = ({ setMobileopen }) => {
                       </h3>
                     </div>
 
-                    <ul className="space-y-1 text-sm px-4">
+                   <ul className="space-y-1 text-sm px-4 pb-4">
                       {latestDisclosures?.selected_disclosures?.Strategy?.disclosures?.some(
                         (d) => d.id === 3 && d.selected === true
                       ) && (
@@ -593,7 +593,7 @@ const TCFD = ({ setMobileopen }) => {
                       </h3>
                     </div>
 
-                    <ul className="space-y-1 text-sm px-4">
+                   <ul className="space-y-1 text-sm px-4 pb-4">
                       {latestDisclosures?.selected_disclosures?.[
                         "Risk Management"
                       ]?.disclosures?.some(
@@ -711,7 +711,7 @@ const TCFD = ({ setMobileopen }) => {
                       </h3>
                     </div>
 
-                    <ul className="space-y-1 text-sm px-4">
+                    <ul className="space-y-1 text-sm px-4 pb-4">
                       {latestDisclosures?.selected_disclosures?.[
                         "Metrics & Targets"
                       ]?.disclosures?.some(

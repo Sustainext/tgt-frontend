@@ -433,7 +433,7 @@ TcfdMetrics: (props) => {
                           <p className="text-blue-500 text-sm font-semibold flex flex-wrap">
                             Collect &gt; Economic &gt;&nbsp;
                             <span
-                              onClick={() => setActiveTab("Climate related Risks")}
+                              onClick={() => setActiveTab("Climate Related Opportunities")}
                               className="underline cursor-pointer text-blue-600 hover:text-blue-800"
                             >
                               Climate related risks

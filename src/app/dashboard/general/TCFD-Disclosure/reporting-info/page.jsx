@@ -4,10 +4,12 @@ import Fillterorgcorp from "../../../../fillter/fillter-org-corp";
 import { MdChevronLeft } from "react-icons/md";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { Oval } from "react-loader-spinner";
-
+import { useSelector } from "react-redux";
 const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
+    const selectedOrgnew = useSelector((state) => state.Tcfd.Organization);
+    const selectedCorpnew = useSelector((state) => state.Tcfd.Corporate);
+  const [selectedOrg, setSelectedOrg] = useState(selectedOrgnew);
+  const [selectedCorp, setSelectedCorp] = useState(selectedCorpnew);
   const [sectorType, setSectorType] = useState("");
   const [selectedSector, setSelectedSector] = useState("");
   const [fromDate, setFromDate] = useState("");
@@ -31,7 +33,6 @@ const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
 
   const validate = () => {
     const newErrors = {};
-    if (!selectedOrg) newErrors.selectedOrg = "Organization is required";
     if (!sectorType) newErrors.sectorType = "Sector type is required";
     if (sectorType === "financial" && !selectedSector)
       newErrors.selectedSector = "Sector is required";
@@ -128,19 +129,13 @@ const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
       </div>
 
       <div className="px-4">
-        <Fillterorgcorp
-          selectedOrg={selectedOrg}
-          setSelectedOrg={(value) => {
-            setSelectedOrg(value);
-            clearError("selectedOrg");
-          }}
-          selectedCorp={selectedCorp}
-          setSelectedCorp={(value) => {
-            setSelectedCorp(value);
-            // If needed: clearError("selectedCorp");
-          }}
-          setToggleStatus={setToggleStatus}
-        />
+           <Fillterorgcorp
+                 selectedOrg={selectedOrg}
+                 setSelectedOrg={setSelectedOrg}
+                 selectedCorp={selectedCorp}
+                 setSelectedCorp={setSelectedCorp}
+                 setToggleStatus={setToggleStatus}
+               />
 
         <div className="px-4 shadow-md rounded-md py-4 mt-6">
           <p className="text-[15px] text-gray-700 font-[500] mb-4">
