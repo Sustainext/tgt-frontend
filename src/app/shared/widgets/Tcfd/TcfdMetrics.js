@@ -189,6 +189,7 @@ const TcfdMetrics = ({ formData = [], onChange, formContext, uiSchema }) => {
             onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
             className="border px-2 py-1 rounded w-full min-w-[250px] text-[12px]"
             disabled={isDisabled}
+            placeholder="Enter data"
           />
         );
 
@@ -198,7 +199,7 @@ const TcfdMetrics = ({ formData = [], onChange, formContext, uiSchema }) => {
             <select
               value={value}
               onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-              className="border px-2 py-1 rounded w-full text-[12px]"
+              className="border-b focus:outline-none px-2 py-1 rounded w-full text-[12px]"
             >
               <option value="">Select</option>
               {col.option?.map((opt, i) => (
@@ -211,7 +212,7 @@ const TcfdMetrics = ({ formData = [], onChange, formContext, uiSchema }) => {
               <input
                 type="text"
                 placeholder="Please specify"
-                className="border px-2 py-1 rounded w-full text-[12px]"
+                className="border-b focus:outline-none px-2 py-1 rounded w-full text-[12px]"
                 value={otherValue}
                 onChange={(e) =>
                   handleFieldChange(rowIndex, otherKey, e.target.value)
@@ -252,7 +253,7 @@ const TcfdMetrics = ({ formData = [], onChange, formContext, uiSchema }) => {
               <input
                 type="text"
                 placeholder="Please specify"
-                className="border px-2 py-1 rounded w-full text-[12px]"
+                className="border-b focus:outline-none px-2 py-1 rounded w-full text-[12px]"
                 value={otherValue}
                 onChange={(e) =>
                   handleFieldChange(rowIndex, otherKey, e.target.value)
@@ -269,8 +270,9 @@ const TcfdMetrics = ({ formData = [], onChange, formContext, uiSchema }) => {
             type="text"
             value={value}
             onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-            className="border px-2 py-1 rounded w-full min-w-[250px] text-[12px]"
+            className="border-b focus:outline-none px-2 py-1 rounded w-full min-w-[250px] text-[12px]"
             disabled={isDisabled}
+             placeholder="Enter data"
           />
         );
     }
@@ -301,7 +303,7 @@ const TcfdMetrics = ({ formData = [], onChange, formContext, uiSchema }) => {
                 }`}
               >
                 <div
-                  className={`flex items-center ${
+                  className={`flex items-center relative ${
                     index === 0 ? " justify-start" : "justify-center"
                   } gap-1`}
                 >

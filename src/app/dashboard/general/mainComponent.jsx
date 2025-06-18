@@ -110,7 +110,7 @@ const General = () => {
                   : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
               }`}
             >
-              {activeTab === "TCFD Disclosure Selection" && <TCFD />}
+              {activeTab === "TCFD Disclosure Selection" && <TCFD setMobileopen={setMobileopen}/>}
 
               {activeTab === "Org Details" && (
                 <OrgDetails setMobileopen={setMobileopen} />

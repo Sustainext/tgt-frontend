@@ -71,7 +71,7 @@ const Disclosureselection = ({ showToast, setView, fetchTcfdStatus }) => {
     }
 
     setFormError("");
-
+setSaving(true)
     try {
       const response = await axiosInstance.put(
         `${process.env.BACKEND_API_URL}/tcfd_framework/selected-disclosures/`,
@@ -92,13 +92,16 @@ const Disclosureselection = ({ showToast, setView, fetchTcfdStatus }) => {
         );
         setView("home");
         fetchTcfdStatus();
+        setSaving(false)
         // Optionally reload disclosures if needed:
         // loadFormData();
       }
     } catch (error) {
       console.error("Error saving disclosures:", error);
+        setSaving(false)
     } finally {
       setLoading(false);
+        setSaving(false)
     }
   };
 
@@ -196,7 +199,7 @@ const Disclosureselection = ({ showToast, setView, fetchTcfdStatus }) => {
           onClick={handleSave}
           disabled={saving}
           className={`px-6 py-2 rounded text-white font-medium ${
-            saving ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+            saving ? "bg-blue-500 opacity-30" : "bg-blue-500 hover:bg-blue-500"
           }`}
         >
           {saving ? "Saving..." : "Save"}

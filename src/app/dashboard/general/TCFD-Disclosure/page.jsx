@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { MdOutlineCheck, MdInfoOutline } from "react-icons/md";
+import { MdOutlineCheck, MdInfoOutline,MdKeyboardArrowDown } from "react-icons/md";
 import { HiArrowRight, HiExclamationCircle } from "react-icons/hi";
 import ReportingInfo from "./reporting-info/page";
 import Disclosureselection from "./disclosure-selection/page";
@@ -162,20 +162,33 @@ const TCFD = ({ setMobileopen }) => {
       LoaderClose();
     }
   };
-
+  const toggleSidebar = () => {
+      setMobileopen(true);
+    };
   return (
     <>
       {view === "home" && (
         <>
           <div className="flex flex-col justify-start overflow-x-hidden">
             <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-              <div className="w-full">
+              <div className="w-full hidden xl:block lg:block md:hidden 2xl:block 4k:block">
                 <div className="text-left mb-2 ml-3 pt-5">
                   <p className="text-[11px]">General</p>
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
                     Task Force on Climate-related Financial Disclosures
                   </p>
                 </div>
+              </div>
+                 <div className="w-full xl:hidden lg:hidden md:hidden  2xl:hidden 4k:hidden flex" onClick={toggleSidebar}>
+                <div className="text-left mb-2 ml-3 pt-5">
+                  <p className="text-[11px]">General</p>
+                  <p className="gradient-text text-[22px] font-bold h-[48px] pt-1">
+                    Task Force on Climate-related Financial Disclosures
+                  </p>
+                </div>
+                  <div className="flex items-center me-5">
+                                    <MdKeyboardArrowDown className={`text-2xl float-end `} />
+                                  </div>
               </div>
             </div>
 
@@ -206,7 +219,7 @@ const TCFD = ({ setMobileopen }) => {
           </div>
 
           {/* Step Boxes */}
-          <div className="flex mx-4 gap-6 mt-10 mb-4 ">
+          <div className="xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex mx-4 gap-6 mt-10 mb-4 ">
             {/* Step 1: Reporting Info */}
             <div className="bils201box rounded-2xl p-6 w-full xl:w-[450px] shadow-lg mb-4">
               <div className="h-[128px]">
@@ -318,7 +331,7 @@ const TCFD = ({ setMobileopen }) => {
                 Click on any of the disclosures to go to the TCFD Data
                 Collection Screens
               </p>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 2xl:grid-cols-2 4k:grid-cols-2 2k:grid-cols-2 grid-cols-1 gap-2">
                 {latestDisclosures?.selected_disclosures?.Governance
                   ?.disclosures && (
                   <div className="mb-6 border rounded-md  shadow-sm">

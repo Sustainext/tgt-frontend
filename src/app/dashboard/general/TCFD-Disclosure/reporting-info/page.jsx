@@ -117,7 +117,7 @@ const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
   return (
     <>
       <div className="flex justify-between items-center border-b border-gray-200 mb-5 px-4 pt-4">
-        <h2 className="text-[22px] font-bold gradient-text mb-2">
+        <h2 className="text-[22px] font-bold gradient-text mb-2 h-[28px]">
           TCFD Reporting Information
         </h2>
         <button className="bg-transparent text-gray-900 text-sm border border-gray-300 rounded-md flex items-center py-1 px-3 mb-2"
@@ -260,10 +260,10 @@ const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
             <button
               onClick={handleSave}
               disabled={!fromDate}
-              className={`px-6 py-2 rounded text-white ${
+              className={`px-6 py-2 rounded-md text-white ${
                 fromDate
-                  ? "bg-blue-600 hover:bg-blue-700"
-                  : "bg-gray-300 cursor-not-allowed"
+                  ? "bg-blue-500 hover:bg-blue-500"
+                  : "bg-blue-500 opacity-30 cursor-not-allowed"
               }`}
             >
               Save

@@ -191,7 +191,7 @@ const Aside = ({
                   setOpenSection((prev) => (prev === section.key ? null : section.key))
                 }
               >
-                <div className="w-[20%]">
+                <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                   <MdOutlineDiversity1 className="w-[16px] h-[16px] mr-2 mt-0.5" />
                 </div>
                 <div className="w-[50%] text-left flex items-center">
@@ -209,14 +209,14 @@ const Aside = ({
               {openSection === section.key && (
                 <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   <div>
-                    <p className="text-[12px] ml-16 xl:ml-4 text-gray-400">
+                    <p className="text-[12px] ml-4 text-gray-400">
                       Topic disclosure
                     </p>
                   </div>
                   {section.tabs.map((tab) => (
                     <div key={tab.key}>
                       <p
-                        className={`flex text-start ml-16 xl:ml-4 px-2 py-2 focus:outline-none w-full text-[12px] cursor-pointer ${
+                        className={`flex text-start ml-4 px-2 py-2 focus:outline-none w-full text-[12px] cursor-pointer ${
                           activeTab === tab.key
                             ? "text-blue-400"
                             : "bg-transparent text-[#727272]"
