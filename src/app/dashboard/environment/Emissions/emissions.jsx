@@ -20,7 +20,7 @@ import {
 import EmissionTopBar from "./emissionTopbar";
 import BulkImportModal from "./bulkImportModal";
 import ToastMessage from "../../../shared/components/Toast";
-const Emissions = ({ open, apiData, setMobileopen }) => {
+const Emissions = ({ open, apiData, setMobileopen,frameworkId,disclosures }) => {
   const dispatch = useDispatch();
   const { location, year, month } = useSelector((state) => state.emissions);
   const countryCode = useSelector((state) => state.emissions.countryCode);
@@ -128,6 +128,25 @@ const Emissions = ({ open, apiData, setMobileopen }) => {
       bgColor: "bg-[#40AE49]",
     },
   ];
+const tcfd = [];
+
+if (
+  frameworkId === "6" &&
+  disclosures?.["Metrics & Targets"]?.disclosures
+) {
+  const govDisclosures = disclosures["Metrics & Targets"].disclosures;
+
+  const hasMTA = govDisclosures.some((d) => d.id === 9 && d.selected);
+
+  if (hasMTA) {
+    tcfd.push({
+      tagName: "TCFD-M&T-B",
+      toggle: "59",
+      id: "tooltip-$tcfd1",
+      content: "TCFD-METRICS AND TARGETS-C Disclosure",
+    });
+  }
+}
 
   return (
     <>
@@ -141,6 +160,7 @@ const Emissions = ({ open, apiData, setMobileopen }) => {
               sdgData={sdgData}
               griData={griData}
               brsr={brsr}
+              tcfd={tcfd}
               setMobileopen={setMobileopen}
             />
             <div
@@ -243,7 +263,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
           />
         </>
       </EmissionsProvider>
-   <div className="fixed top-36 lg:top-20 xl:top-20 2xl:top-20 2k:top-20 4k:top-20 right-4 z-[9999] space-y-3">
+      <div className="fixed top-36 lg:top-20 xl:top-20 2xl:top-20 2k:top-20 4k:top-20 right-4 z-[9999] space-y-3">
         {toastQueue.map((toast) => (
           <ToastMessage
             key={toast.id}

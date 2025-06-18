@@ -147,7 +147,7 @@ const Trainingforcedchildlabour = forwardRef(
             report: reportId,
             screen: 10,
             data: {
-              training_forced_child_labour: p1q2,
+              training_forced_child_labour: content,
             },
           };
 

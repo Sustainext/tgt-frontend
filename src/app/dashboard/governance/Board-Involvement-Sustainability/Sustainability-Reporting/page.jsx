@@ -56,7 +56,7 @@ const SustainabilityReporting = ({setMobileopen}) => {
                   // sdgData={sdgData}
                   griData={griData}
                   // brsr={brsr}
-                  title={"Sustainability Reporting"}
+                  title={"Board Involvement in Sustainability"}
                   setMobileopen={setMobileopen}
                 />
         {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">

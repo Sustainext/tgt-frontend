@@ -10,7 +10,12 @@ import EconomicHeader5 from "../../EconomicHeader5";
 import EconomicTopBar from "../../economicTopBar.jsx";
 
 import Screen1 from "./screen1";
-const Climaterelated = ({ apiData,setMobileopen }) => {
+const Climaterelated = ({
+  apiData,
+  setMobileopen,
+  frameworkId,
+  disclosures,
+}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -40,15 +45,15 @@ const Climaterelated = ({ apiData,setMobileopen }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData = [
+  const griData = [
     {
       tagName: "GRI 201 - 2",
       toggle: "118",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
-
+  ];
+  const sdgData = [
     {
       tagName: "SDG 13",
       toggle: "119",
@@ -56,7 +61,26 @@ const Climaterelated = ({ apiData,setMobileopen }) => {
       bgColor: "bg-[#48773C]",
     },
   ];
+  const tcfd = [];
+  const tcfdtag = [];
 
+  if (frameworkId === "6" && disclosures?.Strategy?.disclosures) {
+    const govDisclosures = disclosures.Strategy.disclosures;
+
+    const hasSTGA = govDisclosures.some((d) => d.id === 3 && d.selected);
+
+    if (hasSTGA) {
+      tcfd.push({
+        tagName: "TCFD-STG-A",
+        toggle: "145",
+        id: "tooltip-$tcfd1",
+        content: "TCFD-Strategy-A Disclosure",
+      });
+      tcfdtag.push({
+        tagName: "TCFD-STG-A",
+      });
+    }
+  }
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
@@ -64,6 +88,8 @@ const Climaterelated = ({ apiData,setMobileopen }) => {
         <EconomicTopBar
           toggleDrawer={toggleDrawer}
           sdgData={sdgData}
+          griData={griData}
+          tcfd={tcfd}
           apiData={apiData}
           title={"Climate Risks and Opportunities"}
           topic={"ClimateRisksAndOpportunities"}
@@ -108,7 +134,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
               <div key={index}>
                 {/* Header */}
                 <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
-                  <div className="ml-2 h-[38px]">{program.header}</div>
+                  <div
+                    className={`ml-2 ${
+                      program.category.includes("145") ? "h-[75px]" : "h-[38px]"
+                    }`}
+                  >
+                    {program.header}
+                  </div>
                   <div className="ml-2 float-right ">
                     <h5
                       className="text-[#727272] text-[17px] font-bold cursor-pointer"
@@ -119,16 +151,15 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-            
-                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
-                <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
-                  {program.data}
-                </div>
+                <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
+                  <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                    {program.data}
+                  </div>
                 </div>
                 <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
-                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
-                  {program.data}
-                </div>
+                  <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                    {program.data}
+                  </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -162,6 +193,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         selectedLocation={selectedLocation}
         togglestatus={togglestatus}
+        tcfdtag={tcfdtag}
       />
     </>
   );

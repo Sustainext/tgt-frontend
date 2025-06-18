@@ -248,6 +248,10 @@ export function AuthProvider({ children }) {
       Cookies.remove("token");
       Cookies.remove("permissions");
       Cookies.remove("isAdmin");
+      Cookies.remove("selected_framework_id");
+      Cookies.remove("selected_disclosures");
+      Cookies.remove("tcfd_sector");
+      Cookies.remove("tcfd_sector_type");
       localStorage.clear();
     } catch (error) {
       console.error("Logout error:", error);

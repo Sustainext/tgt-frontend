@@ -150,7 +150,7 @@ In [year], ${companyName} worked with approximately [number] suppliers in Canada
           report: reportId,
           screen: 4,
           data: {
-            Supply_chains: p1q2,
+            Supply_chains: content,
           },
         };
 
