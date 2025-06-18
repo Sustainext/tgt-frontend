@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState,useMemo } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
@@ -23,7 +23,8 @@ const ESGSidebarContent = ({
   closeMobile,
   onEditClick,
   reportType,
-  allSections // Pass all sections for non-custom reports
+  allSections, // Pass all sections for non-custom reports
+  submitData
 }) => {
   const dispatch = useDispatch();
   const currentReportPage = useSelector(selectCurrentReportPage);
@@ -32,7 +33,20 @@ const ESGSidebarContent = ({
   const sectionsToShow = reportType !== 'Custom ESG Report' ? allSections : useSelector(selectEnabledSections);
   const showEditButton = reportType === 'Custom ESG Report';
 
+  const filteredSections = useMemo(() => {
+    if (reportType === 'GRI Report: In accordance With') {
+      return sectionsToShow.filter(
+        (section) => section.id !== 'reference_management_of_material_topic'
+      );
+    }
+    return sectionsToShow;
+  }, [reportType, sectionsToShow]);
+
+ 
+
+
   const handleSectionClick = (sectionIndex) => {
+    submitData('toggle')
     dispatch(setCurrentReportPage(sectionIndex));
     if (closeMobile) closeMobile();
   };
@@ -62,7 +76,7 @@ const ESGSidebarContent = ({
 
       {/* Section List */}
       <div className="mb-3">
-        {sectionsToShow.map((section, index) => {
+        {filteredSections.map((section, index) => {
           const isActive = currentReportPage === index;
           
           return (
@@ -97,6 +111,7 @@ const ESGSidebar = ({
 
   const handleEditClick = () => {
     if (showEditModal) {
+      submitData('toggle')
       dispatch(setSectionEditorOpen(true));
     }
   };
@@ -114,6 +129,7 @@ const ESGSidebar = ({
             onEditClick={handleEditClick}
             reportType={reportType}
             allSections={allSections}
+            submitData={submitData}
           />
         </div>
       </div>

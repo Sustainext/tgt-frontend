@@ -31,6 +31,7 @@ const Companyoperations = forwardRef(
       sectionOrder = 2,
       sectionId,
       sectionTitle,
+      hasChanges
     },
     ref
   ) => {
@@ -49,6 +50,7 @@ const Companyoperations = forwardRef(
     const [loopen, setLoOpen] = useState(false);
     const apiCalledRef = useRef(false);
     const [isScrolling, setIsScrolling] = useState(false);
+    const [initialData, setInitialData] = useState({});
 
     // Dynamic refs based on subsections
     const sectionRefs = useRef({});
@@ -70,7 +72,7 @@ const Companyoperations = forwardRef(
       {
         groupId: "reporting_period",
         title: "Business Model and Impact",
-        children: [{ id: "value_chain" }, { id: "excluded_entities" }],
+        children: [{ id: "value_chain" }, { id: "entities_included" }],
       },
       {
         id: "supply_chain",
@@ -90,7 +92,7 @@ const Companyoperations = forwardRef(
         subTitle: "Activities, Value Chain, and Other Business Relationships",
         subSections: [],
       },
-      excluded_entities: {
+      entities_included: {
         component: Section3,
         title: "Business Model and Impact",
         subTitle:
@@ -113,7 +115,7 @@ const Companyoperations = forwardRef(
         const defaultOrder = [
           "business_model",
           "value_chain",
-          "excluded_entities",
+          "entities_included",
           "supply_chain",
         ];
 
@@ -123,7 +125,7 @@ const Companyoperations = forwardRef(
         return [
           "business_model",
           "value_chain",
-          "excluded_entities",
+          "entities_included",
           "supply_chain",
         ];
       }
@@ -209,7 +211,7 @@ const Companyoperations = forwardRef(
     //     return Array.isArray(subsections) ? subsections : [];
     //   } else {
     //     // Show all available subsections for non-custom reports
-    //     return ['business_model', 'value_chain', 'excluded_entities', 'supply_chain'];
+    //     return ['business_model', 'value_chain', 'entities_included', 'supply_chain'];
     //   }
     // };
 
@@ -246,8 +248,26 @@ const Companyoperations = forwardRef(
       setLoOpen(false);
     };
 
+    const dynamicSectionNumberMap = numberedSubsections.reduce((acc, item) => {
+      acc[item.id] = item.sectionNumber;
+      return acc;
+    }, {});
+
+    const currentData={
+      about_the_company,
+      business_relations,
+      entities_included,
+      supply_chain_description
+    }
+    
+
     const submitForm = async (type) => {
       LoaderOpen();
+
+      if (!hasChanges(initialData, currentData)) {
+        LoaderClose();
+        return false;
+      }
 
       // Only submit data for selected subsections
       const data = {};
@@ -263,11 +283,12 @@ const Companyoperations = forwardRef(
           isSkipped: false,
         };
       }
-
+      
       if (subsectionsToShow.includes("value_chain")) {
+        const sectionNumber = dynamicSectionNumberMap["value_chain"];
         data.business_relations = {
           page: "screen_two",
-          label: `${sectionOrder}.1.1 Activities, Value Chain, and Other Business Relationships`,
+          label: `${sectionNumber} Activities, Value Chain, and Other Business Relationships`,
           subLabel: "Add Introduction about company's domain",
           type: "richTextarea",
           content: business_relations,
@@ -275,11 +296,12 @@ const Companyoperations = forwardRef(
           isSkipped: false,
         };
       }
-
-      if (subsectionsToShow.includes("excluded_entities")) {
+      
+      if (subsectionsToShow.includes("entities_included")) {
+        const sectionNumber = dynamicSectionNumberMap["entities_included"];
         data.entities_included = {
           page: "screen_two",
-          label: `${sectionOrder}.1.2 Entities Included in the Organization's Sustainability Reporting`,
+          label: `${sectionNumber} Entities Included in the Organization's Sustainability Reporting`,
           subLabel:
             "Add statement about sustainability performance data for all entities",
           type: "richTextarea",
@@ -288,11 +310,12 @@ const Companyoperations = forwardRef(
           isSkipped: false,
         };
       }
-
+      
       if (subsectionsToShow.includes("supply_chain")) {
+        const sectionNumber = dynamicSectionNumberMap["supply_chain"];
         data.supply_chain_description = {
           page: "screen_two",
-          label: `${sectionOrder}.2 Supply Chain`,
+          label: `${sectionNumber} Supply Chain`,
           subLabel: "Add statement about company's supply chain process",
           type: "richTextarea",
           content: supply_chain_description,
@@ -300,6 +323,7 @@ const Companyoperations = forwardRef(
           isSkipped: false,
         };
       }
+      
 
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_two/${reportid}/`;
       try {
@@ -364,6 +388,12 @@ const Companyoperations = forwardRef(
       try {
         const response = await axiosInstance.get(url);
         if (response.data) {
+          const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
           setScreentwoData(response.data);
           dispatch(
             setAboutTheCompany(response.data.about_the_company?.content || "")
@@ -403,73 +433,7 @@ const Companyoperations = forwardRef(
       });
     }, [selectedSubsections]);
 
-    // const renderSection = (section) => {
-    //   const SectionComponent = section.component;
-    //   const ref = sectionRefs.current[section.id] || createRef();
-    //   sectionRefs.current[section.id] = ref;
-
-    //   const commonProps = {
-    //     orgName,
-    //     data: screenTwoData,
-    //     sectionNumber: section.sectionNumber,
-    //     sectionOrder
-    //   };
-
-    //   switch (section.id) {
-    //     case 'business_model':
-    //       return (
-    //         <div key={section.id} ref={ref}>
-    //           <SectionComponent {...commonProps} />
-    //         </div>
-    //       );
-    //     case 'value_chain':
-    //       return (
-    //         <div key={section.id} ref={ref}>
-    //           <div className="mb-2">
-    //             {/* <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-    //               {sectionOrder}.1 {section.title}
-    //             </h3> */}
-    //           </div>
-    //           <SectionComponent
-    //             {...commonProps}
-    //             section2_1Ref={ref}
-    //             section2_1_1Ref={ref}
-    //             sectionTitle={section.subTitle}
-    //             sectionNumber={`${sectionOrder}.1.1`}
-    //           />
-    //         </div>
-    //       );
-    //     case 'excluded_entities':
-    //       return (
-    //         <div key={section.id} ref={ref}>
-    //           <SectionComponent
-    //             {...commonProps}
-    //             section2_1_2Ref={ref}
-    //             sectionTitle={section.subTitle}
-    //             sectionNumber={`${sectionOrder}.1.2`}
-    //           />
-    //         </div>
-    //       );
-    //     case 'supply_chain':
-    //       return (
-    //         <div key={section.id} ref={ref}>
-    //           <div>
-    //             {/* <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-    //               {sectionOrder}.2 {section.title}
-    //             </h3> */}
-    //           </div>
-    //           <SectionComponent
-    //             {...commonProps}
-    //             section2_2Ref={ref}
-    //             sectionNumber={`${sectionOrder}.2`}
-    //           />
-    //         </div>
-    //       );
-    //     default:
-    //       return null;
-    //   }
-    // };
-
+  
     const renderSection = (section) => {
       const SectionComponent = subsectionMapping[section.id]?.component;
       const ref = sectionRefs.current[section.id] || createRef();
@@ -566,7 +530,7 @@ const Companyoperations = forwardRef(
                             "Activities, Value Chain, and Other Business Relationships",
                         },
                         {
-                          id: "excluded_entities",
+                          id: "entities_included",
                           label:
                             "Entities Included in the Organization's Sustainability Reporting",
                         },

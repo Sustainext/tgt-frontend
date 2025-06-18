@@ -29,7 +29,6 @@ const MessageFromCeo = forwardRef(({
   sectionOrder = 1,
   sectionId,
   sectionTitle,
-  hasChanges 
 }, ref) => {
 
   const CombinedSection = ({ 
@@ -84,6 +83,7 @@ const MessageFromCeo = forwardRef(({
   const ceoname = useSelector((state) => state.screen1Slice.ceo_name);
   const imagesing = useSelector((state) => state.screen1Slice.signature_image);
   const dispatch = useDispatch();
+  const [initialData, setInitialData] = useState({});
 
   // Map subsection IDs to their corresponding components and data
   const subsectionMapping = {
@@ -177,8 +177,33 @@ const MessageFromCeo = forwardRef(({
     setLoOpen(false);
   };
 
+  const currentData = {
+    message: content,
+    ceo_name: ceoname,
+    company_name: companyName,
+    message_image_name: selectedCEOfile?.name || "",
+    signature_image_name: selectedSignfile?.name || "",
+  };
+
+  const hasChanges = (initialData, currentData) => {
+    if (!initialData || !currentData) return false;
+  
+    const isTextChanged =
+      initialData.message !== currentData.message ||
+      initialData.ceo_name !== currentData.ceo_name ||
+      initialData.company_name !== currentData.company_name ||
+      initialData.message_image_name !== currentData.message_image_name||
+      initialData.signature_image_name !== currentData.signature_image_name;
+  
+    return isTextChanged
+  };
+
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     localStorage.setItem("reportorgname", companyName);
     
     const formData = new FormData();
@@ -206,7 +231,7 @@ const MessageFromCeo = forwardRef(({
         "ceo_name",
         JSON.stringify({
           page: "screen_one",
-          label: "CEO's Name",
+          label: `${sectionOrder}.1 CEO's Name`,
           subLabel: "Add CEO's name",
           type: "input",
           content: ceoname,
@@ -305,6 +330,14 @@ const MessageFromCeo = forwardRef(({
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {
+          message: response.data.message?.content || "",
+          ceo_name: response.data.ceo_name?.content || "",
+          company_name: response.data.company_name || "",
+          message_image_name: response.data.message_image_name || "",
+          signature_image_name: response.data.signature_image_name || "",
+        };
+        setInitialData(flatData);
         dispatch(setMessage(response.data.message?.content || ""));
         dispatch(setMessageimage(response.data.message_image));
         dispatch(setCompanyname(response.data.company_name));
@@ -352,7 +385,7 @@ const MessageFromCeo = forwardRef(({
   //   };
 
   //   switch (section.id) {
-  //     case 'chief_executive_message':
+  //     case 'message':
   //       return (
   //         <div key={section.id} ref={ref}>
   //           <SectionComponent 

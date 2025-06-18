@@ -49,8 +49,9 @@ const CorporateGovernance = forwardRef(({
   sectionOrder = 9,
   sectionId,
   sectionTitle,
+  hasChanges
 }, ref) => {
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState("board_of_directors");
  
 
   const orgName =
@@ -60,6 +61,7 @@ const CorporateGovernance = forwardRef(({
     const reportType =
     typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
   const apiCalledRef = useRef(false);
+  const [initialData, setInitialData] = useState({});
   const [data, setData] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const statement = useSelector((state) => state.screen9Slice.statement);
@@ -142,7 +144,15 @@ const CorporateGovernance = forwardRef(({
     
   const subsectionMapping = {
     board_of_directors: {
-      component: '',
+      component: ({section9_1Ref,data, sectionNumber = "9.1", sectionTitle = "Board of Directors", sectionOrder = 9})=>{
+        return(
+          <div id="section9_1" ref={section9_1Ref}>
+        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+         {sectionNumber} {sectionTitle}
+        </h3>
+      </div>
+        )
+      },
       title: "Board of Directors",
       subSections: [],
     },
@@ -152,7 +162,15 @@ const CorporateGovernance = forwardRef(({
       subSections: [],
     },
     general_governance:{
-      component: '',
+      component: ({section9_2Ref,data, sectionNumber = "9.2", sectionTitle = "General Governance", sectionOrder = 9})=>{
+        return(
+          <div id="section9_2" ref={section9_2Ref}>
+        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+         {sectionNumber} {sectionTitle}
+        </h3>
+      </div>
+        )
+      },
       title: "General Governance",
       subSections: [],
     },
@@ -177,7 +195,15 @@ const CorporateGovernance = forwardRef(({
       subSections: [],
     },
     board_responsibility_evaluation_remuneration:{
-      component: '',
+      component: ({section9_3Ref,data, sectionNumber = "9.3", sectionTitle = "Responsibility, Evaluation, and Remuneration of the Board", sectionOrder = 9})=>{
+        return (
+          <div id="section9_3" ref={section9_3Ref}>
+          <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+            {sectionNumber} {sectionTitle}
+          </h3>
+        </div>
+        )
+      },
       title: "Responsibility, Evaluation, and Remuneration of the Board ",
       subSections: [],
     },
@@ -222,7 +248,15 @@ const CorporateGovernance = forwardRef(({
       subSections: [],
     },
     strategy:{
-      component: '',
+      component: ({section9_4Ref,data, sectionNumber = "9.4", sectionTitle = "Strategy", sectionOrder = 9})=>{
+        return(
+          <div id="section9_4" ref={section9_4Ref}>
+        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+        {sectionNumber} {sectionTitle}
+            </h3>
+        </div>
+        )
+      },
       title: "Strategy",
       subSections: [],
     },
@@ -237,7 +271,17 @@ const CorporateGovernance = forwardRef(({
       subSections: [],
     },
     risk_management:{
-      component: '',
+      component: ({section9_5Ref,data, sectionNumber = "9.5", sectionTitle = "Risk Management", sectionOrder = 9})=>{
+        return(
+          <div id="section9_5" ref={section9_5Ref}>
+          <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+         {sectionNumber} {sectionTitle}
+              </h3>
+              
+          
+          </div>
+        )
+      },
       title: "Risk Management",
       subSections: [],
     },
@@ -283,8 +327,6 @@ const CorporateGovernance = forwardRef(({
     },
   };
   
-
-  console.log(subsections,"see the sub sections")
   
       const getSubsectionsToShow = () => {
         if (reportType === "Custom ESG Report") {
@@ -361,8 +403,7 @@ const CorporateGovernance = forwardRef(({
     
       const subsectionsToShow = getSubsectionsToShow();
 
-      console.log(subsectionsToShow,"see the subsection to show")
-    
+  
       // Filter and organize selected subsections
       const getSelectedSubsections = () => {
         console.log("Processing subsections:", subsectionsToShow);
@@ -517,8 +558,22 @@ const CorporateGovernance = forwardRef(({
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const dynamicSectionNumberMap = numberedSubsections.reduce((acc, item) => {
+    acc[item.id] = item.sectionNumber;
+    return acc;
+  }, {});
+  const currentData={
+    statement,
+    board_gov_statement,
+    remuneration_policies,
+    policy_not_public_reason
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data={}
     data.statement= {
       page: "screen_nine",
@@ -530,6 +585,7 @@ const CorporateGovernance = forwardRef(({
       isSkipped: false,
     }
     if(subsectionsToShow.includes("governance_structure_composition")){
+      const sectionNumber = dynamicSectionNumberMap["governance_structure_composition"];
       data. board_gov_statement= {
         page: "screen_nine",
         label: `${sectionNumber} Governance structure and composition`,
@@ -541,6 +597,7 @@ const CorporateGovernance = forwardRef(({
       }
     }
     if(subsectionsToShow.includes("remuneration_policies_process")){
+      const sectionNumber = dynamicSectionNumberMap["remuneration_policies_process"];
       data.remuneration_policies= {
         page: "screen_nine",
         label:
@@ -553,10 +610,11 @@ const CorporateGovernance = forwardRef(({
       }
     }
     if(subsectionsToShow.includes("embedding_policy_commitment")){
+      const sectionNumber = dynamicSectionNumberMap["embedding_policy_commitment"];
       data. policy_not_public_reason= {
         page: "screen_nine",
-        label: `${sectionNumber} Reason why policy is not publicly available`,
-        subLabel: "Add statement about company’s sustainability policies",
+        label: `${sectionNumber} Embedding Policy Commitment`,
+        subLabel: "Add statement about embedding policy commitment",
         type: "textarea",
         content: policy_not_public_reason,
         field: "policy_not_public_reason",
@@ -628,6 +686,12 @@ const CorporateGovernance = forwardRef(({
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(setStatement(response.data.statement?.content || ""));
         dispatch(setBoardGov(response.data.board_gov_statement?.content || ""));
@@ -719,7 +783,7 @@ const CorporateGovernance = forwardRef(({
 
   
 
-  console.log(selectedSubsections,"check screen 9")
+  
 return (
       <>
         <div className="mx-2 p-2">
@@ -909,7 +973,9 @@ return (
                         <div key={item.groupId} className="mb-2">
                           {/* Show the parent title (group) */}
                           <p
-                            className="text-[12px] mb-2 font-medium text-gray-600 cursor-pointer"
+                            className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                              activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                            }`}
                             onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
                           >
                             {sectionOrder}.{currentGroupIndex} {item.title}

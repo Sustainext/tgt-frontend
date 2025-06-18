@@ -9,7 +9,8 @@ import { MdOutlineReplay, MdDone } from "react-icons/md";
 import { GoChevronRight } from "react-icons/go";
 import dynamic from 'next/dynamic';
 import axiosInstance, { patch } from "../../../../utils/axiosMiddleware";
-
+import {handleNext} from '../../../../../lib/redux/features/reportBuilderSlice'
+import { useDispatch } from "react-redux";
 // Import Redux selectors
 import {
   selectEnabledSections,
@@ -41,6 +42,7 @@ const MainValidationPopup = ({
   const [selectedPage, setSelectedPage] = useState(null);
   const [fieldValues, setFieldValues] = useState({});
   const [statement, setStatement] = useState('');
+  const dispatch=useDispatch()
 
   // Get section data from Redux for custom reports
   const enabledSections = useSelector(selectEnabledSections);
@@ -313,11 +315,11 @@ const MainValidationPopup = ({
                         here below. Click on the fill now button if you wish to add
                         any data before proceeding to Content Index section.
                       </p>
-                      {reportType === 'Custom ESG Report' && (
+                      {/* {reportType === 'Custom ESG Report' && (
                         <p className="text-[#667085] text-[12px] mt-1 italic">
                           Section numbers are based on your custom section selection.
                         </p>
-                      )}
+                      )} */}
                     </div>
 
                     <div className="flex justify-between">
@@ -442,11 +444,12 @@ const MainValidationPopup = ({
                         }`}
                         disabled={isAnyFieldFilled}
                         onClick={() => {
-                          if (reportType === 'GRI Report: In accordance With') {
-                            setActiveStep(16);
-                          } else {
-                            setActiveStep(17);
-                          }
+                          dispatch(handleNext());
+                          // if (reportType === 'GRI Report: In accordance With') {
+                          //   setActiveStep(16);
+                          // } else {
+                          //   setActiveStep(17);
+                          // }
                           setIsModalOpen(false);
                         }}
                       >
@@ -460,7 +463,7 @@ const MainValidationPopup = ({
                         }`}
                         disabled={!isAnyFieldFilled}
                         onClick={() => {
-                          setActiveStep(16);
+                          dispatch(handleNext());
                           setIsModalOpen(false);
                         }}
                       >
@@ -469,7 +472,7 @@ const MainValidationPopup = ({
                     </div>
 
                     {/* Debug information - remove in production */}
-                    {process.env.NODE_ENV === 'development' && debugInfo && (
+                    {/* {process.env.NODE_ENV === 'development' && debugInfo && (
                       <div className="mt-2 p-2 bg-gray-100 rounded text-xs">
                         <details>
                           <summary className="cursor-pointer font-bold">Debug Info</summary>
@@ -478,7 +481,7 @@ const MainValidationPopup = ({
                           </pre>
                         </details>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

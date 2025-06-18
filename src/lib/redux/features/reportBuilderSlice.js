@@ -31,6 +31,7 @@ export const updateReportBuilderData = createAsyncThunk(
   async (reportId, { getState, rejectWithValue }) => {
     try {
       const state = getState().reportBuilder;
+      console.log(state,"lll section state")
       const { sections, subsections, selectedSubsections } = state;
 
       // 1. Build `section` array
@@ -40,6 +41,8 @@ export const updateReportBuilderData = createAsyncThunk(
         order: s.order,
         enabled: s.enabled,
         mandatory: s.mandatory,
+        field:s.field,
+        screen:s.screen
       }));
 
       // 2. Build `sub_section` object
@@ -55,6 +58,7 @@ export const updateReportBuilderData = createAsyncThunk(
               id: item.id.trim(),
               label: item.label,
               enabled: isEnabled,
+              field: item.field,
               children: item.children ? mapSubs(item.children) : undefined
             };
           });
@@ -77,6 +81,17 @@ export const updateReportBuilderData = createAsyncThunk(
   }
 );
 
+function reorderSectionsByEnabledState(sections) {
+  const enabled = sections.filter(s => s.enabled).sort((a, b) => a.order - b.order);
+  const disabled = sections.filter(s => !s.enabled).sort((a, b) => a.order - b.order);
+
+  const combined = [...enabled, ...disabled];
+
+  return combined.map((section, index) => ({
+    ...section,
+    order: index + 1,
+  }));
+}
 
 // Default sections - keeping original IDs for compatibility but mapping to camelCase internally
 const defaultSections = [
@@ -85,131 +100,162 @@ const defaultSections = [
     title: 'Message From Our Leadership',
     mandatory: false,
     enabled: false,
-    order: 1
+    field:['message'],
+    order: 1,
+    screen: "screen_one"
   },
     {
     id: 'about_company',
     title: 'About the Company & Operations',
     mandatory: false,
     enabled: false,
-    order: 2
+    field:['about_the_company'],
+    order: 2,
+    screen: "screen_two"
   },
   {
     id: 'mission_vision',
     title: 'Mission, Vision, Value',
     mandatory: false,
     enabled: false,
-    order: 3
+    field:['mission'],
+    order: 3,
+    screen: "screen_three"
   },
   {
     id: 'sustainability',
     title: 'Sustainability Roadmap',
     mandatory: false,
     enabled: false,
-    order: 4
+    field:['description'],
+    order: 4,
+    screen: "screen_four"
   },
   {
     id: 'awards',
     title: 'Awards & Alliances',
     mandatory: false,
     enabled: false,
-    order: 5
+    field:['description'],
+    order: 5,
+    screen: "screen_five"
   },
   {
     id: 'stakeholder',
     title: 'Stakeholder Engagement',
     mandatory: false,
     enabled: false,
-    order: 6
+    field:['description'],
+    order: 6,
+    screen: "screen_six"
   },
   {
     id: 'about_report',
     title: 'About the Report',
     mandatory: false,
     enabled: false,
-    order: 7
+    field:['description'],
+    order: 7,
+    screen: "screen_seven"
   },
   {
     id: 'materiality',
     title: 'Materiality',
     mandatory: false,
     enabled: false,
-    order: 8
+    order: 8,
+    screen: "screen_eight"
   },
   {
     id: 'governance',
     title: 'Corporate Governance',
     mandatory: false,
     enabled: false,
-    order: 9
+    field:['statement'],
+    order: 9,
+    screen: "screen_nine"
   },
   {
     id: 'journey',
     title: 'Sustainability Journey',
     mandatory: false,
     enabled: false,
-    order: 10
+    field:['company_sustainability_statement'],
+    order: 10,
+    screen: "screen_ten"
   },
   {
     id: 'economic',
     title: 'Economic Performance',
     mandatory: false,
     enabled: false,
-    order: 11
+    field:['company_economic_performance_statement'],
+    order: 11,
+    screen: "screen_eleven"
   },
   {
     id: 'environment',
     title: 'Environment',
     mandatory: false,
     enabled: false,
-    order: 12
+    field:['environmental_responsibility_statement'],
+    order: 12,
+    screen: "screen_twelve"
   },
   {
     id: 'people',
     title: 'People',
     mandatory: false,
     enabled: false,
-    order: 13
+    field:['employee_policies_statement'],
+    order: 13,
+    screen: "screen_thirteen"
   },
   {
     id: 'community',
     title: 'Community',
     mandatory: false,
     enabled: false,
-    order: 14
+    order: 14,
+    screen: "screen_fourteen"
   },
   {
     id: 'customers',
     title: 'Customers, Products & Services',
     mandatory: false,
     enabled: false,
-    order: 15
+    field:['conclusion'],
+    order: 15,
+    screen: "screen_fifteen"
   }
 ];
 
 // Default subsections - using original snake_case IDs for compatibility
 const defaultSubsections = {
-message_ceo: [
-        { 
-          id: 'chief_executive_message', 
-          label: ' Message from CEO',
-          enabled: false
-        },
-],  
+  message_ceo: [
+    { 
+      id: 'chief_executive_message', 
+      label: 'Message From CEO',
+      field:['ceo_name'],
+      enabled: false
+    },
+  ],  
   about_company: [
     { 
       id: 'business_model', 
-      label: 'Business Model and Impact',
+      label: 'Business Model And Impact',
       enabled: false,
       children: [
         { 
           id: 'value_chain', 
-          label: 'Activities, Value Chain, and Other Business Relationships',
+          label: 'Activities, Value Chain, And Other Business Relationships',
+          field:['business_relations'],
           enabled: false
         },
         { 
-          id: 'excluded_entities', 
-          label: 'Entities Included in the Organization\'s Sustainability Reporting',
+          id: 'entities_included', 
+          label: 'Entities Included In The Organization\'s Sustainability Reporting',
+          field:['entities_included'],
           enabled: false
         },
       ]
@@ -217,13 +263,14 @@ message_ceo: [
     { 
       id: 'supply_chain', 
       label: 'Supply Chain',
+      field:['supply_chain_description'],
       enabled: false
     },
   ],
   mission_vision: [
     { 
       id: 'mission_vision', 
-      label: 'Mission, Vision, and Values',
+      label: 'Mission, Vision, And Values',
       enabled: false
     }
   ],
@@ -236,27 +283,27 @@ message_ceo: [
   ],
   awards: [
     { 
-      id: ' awards_and_recognition', 
-      label: ' Awards & Recognition',
+      id: 'awards_and_recognition', 
+      label: 'Awards & Recognition',
       enabled: false
     },
   ],
   stakeholder: [
     { 
       id: 'approach_to_stakeholder_engagement', 
-      label: 'Approach to stakeholder engagement',
+      label: 'Approach To Stakeholder Engagement',
       enabled: false
     },
   ],
   about_report: [
     { 
       id: 'reporting_period', 
-      label: 'Reporting period, frequency and point of contact',
+      label: 'Reporting Period, Frequency And Point Of Contact',
       enabled: false,
       children: [
         { 
           id: 'restatement_information', 
-          label: 'Restatement of information',
+          label: 'Restatement Of Information',
           enabled: false
         }
       ]
@@ -264,11 +311,13 @@ message_ceo: [
     { 
       id: 'frameworks', 
       label: 'Frameworks',
+      field:['framework_description'],
       enabled: false
     },
     { 
       id: 'external_assurance', 
       label: 'External Assurance',
+      field:['external_assurance'],
       enabled: false
     },
   ],
@@ -276,26 +325,27 @@ message_ceo: [
     { 
       id: 'materiality_assessment', 
       label: 'Materiality Assessment',
+      field:['statement'],
       enabled: false,
       children: [
         { 
           id: 'list_of_material_topic', 
-          label: 'List of material topics',
+          label: 'List Of Material Topics',
           enabled: false
         },
         { 
             id: 'topic_changes', 
-            label: 'Changes in the list of material topics',
+            label: 'Changes In The List Of Material Topics',
             enabled: false
           },
           { 
             id: 'materiality_process', 
-            label: 'Materiality assessment – Process',
+            label: 'Materiality Assessment – Process',
             enabled: false
           },
           { 
             id: 'management_of_material_topic', 
-            label: 'Management of material topic',
+            label: 'Management Of Material Topic',
             enabled: false
           },
       ]
@@ -305,12 +355,13 @@ message_ceo: [
   governance: [
     {
       id: 'board_of_directors',
-      label: 'Board of Directors',
+      label: 'Board Of Directors',
       enabled: false,
       children: [
         {
           id: 'governance_structure_composition',
-          label: 'Governance structure and composition',
+          label: 'Governance Structure And Composition',
+          field:['board_gov_statement'],
           enabled: false
         }
       ]
@@ -322,69 +373,70 @@ message_ceo: [
       children: [
         {
           id: 'nomination_selection',
-          label: 'Nomination, selection of the highest governance body',
+          label: 'Nomination, Selection Of The Highest Governance Body',
           enabled: false
         },
         {
           id: 'chair_highest_governance_body',
-          label: 'Chair of the highest governance body',
+          label: 'Chair Of The Highest Governance Body',
           enabled: false
         },
         {
           id: 'senior_management_local',
-          label: 'Senior management hired from local community',
+          label: 'Senior Management Hired From Local Community',
           enabled: false
         },
         {
           id: 'management_of_material_topic',
-          label: 'Management of material topic',
+          label: 'Management Of Material Topic',
           enabled: false
         }
       ]
     },
     {
       id: 'board_responsibility_evaluation_remuneration',
-      label: 'Responsibility, Evaluation and Remuneration of the Board',
+      label: 'Responsibility, Evaluation And Remuneration Of The Board',
       enabled: false,
       children: [
         {
           id: 'role_highest_governance_body',
-          label: 'Role of the highest governance body',
+          label: 'Role Of The Highest Governance Body',
           enabled: false
         },
         {
           id: 'collective_knowledge',
-          label: 'Collective knowledge of the highest governance body',
+          label: 'Collective Knowledge Of The Highest Governance Body',
           enabled: false
         },
         {
           id: 'sustainability_reporting_role',
-          label: 'Role of the highest governance body in sustainability reporting',
+          label: 'Role Of The Highest Governance Body In Sustainability Reporting',
           enabled: false
         },
         {
           id: 'delegation_of_responsibility',
-          label: 'Delegation of responsibility for managing impacts',
+          label: 'Delegation Of Responsibility For Managing Impacts',
           enabled: false
         },
         {
           id: 'communication_critical_concerns',
-          label: 'Communication of critical concerns',
+          label: 'Communication Of Critical Concerns',
           enabled: false
         },
         {
           id: 'performance_evaluation',
-          label: 'Evaluation of the performance of the highest governance body',
+          label: 'Evaluation Of The Performance Of The Highest Governance Body',
           enabled: false
         },
         {
           id: 'remuneration_policies_process',
-          label: 'Remuneration policies & process to determine remuneration',
+          label: 'Remuneration Policies & Process To Determine Remuneration',
+          field:['remuneration_policies'],
           enabled: false
         },
         {
           id: 'annual_compensation_ratio',
-          label: 'Annual compensation ratio',
+          label: 'Annual Compensation Ratio',
           enabled: false
         }
       ]
@@ -396,12 +448,12 @@ message_ceo: [
       children: [
         {
           id: 'sustainable_strategy_statement',
-          label: 'Statement on sustainable development strategy',
+          label: 'Statement On Sustainable Development Strategy',
           enabled: false
         },
         {
           id: 'membership_association',
-          label: 'Membership association',
+          label: 'Membership Association',
           enabled: false
         }
       ]
@@ -413,12 +465,12 @@ message_ceo: [
       children: [
         {
           id: 'remediation_negative_impacts',
-          label: 'Remediation of negative impacts',
+          label: 'Remediation Of Negative Impacts',
           enabled: false
         },
         {
           id: 'advice_mechanism',
-          label: 'Mechanism for seeking advice and raising concerns',
+          label: 'Mechanism For Seeking Advice And Raising Concerns',
           enabled: false
         },
         {
@@ -435,46 +487,50 @@ message_ceo: [
       children: [
         {
           id: 'embedding_policy_commitment',
-          label: 'Embedding policy commitment',
+          label: 'Embedding Policy Commitment',
+          field:['policy_not_public_reason'],
           enabled: false
         },
         {
           id: 'anti_trust_behavior',
-          label: 'Anti-trust, anti-competitive behavior, monopoly practices',
+          label: 'Anti-Trust, Anti-Competitive Behavior, Monopoly Practices',
           enabled: false
         },
         {
           id: 'retirement_benefits',
-          label: 'Defined benefit plan obligations and other retirement plans',
+          label: 'Defined Benefit Plan Obligations And Other Retirement Plans',
           enabled: false
         }
       ]
     },
     {
       id: 'conflict_of_interest',
-      label: 'Conflict of interest',
+      label: 'Conflict Of Interest',
       enabled: false
     }
   ],  
   journey: [
     {
       id: 'sustainability_management_approach',
-      label: 'Management approach for sustainability/ESG topics',
+      label: 'Management Approach For Sustainability/ESG Topics',
+      field:['approach_for_sustainability'],
       enabled: false
     },
     {
       id: 'company_sustainability',
-      label: "Company's Sustainability",
+      label: "Company's Sustainability Goals",
+      field:['sustainability_goals'],
       enabled: false
     },
     {
       id: 'supply_chain_sustainability',
       label: 'Supply Chain Sustainability',
+      field:['approach_to_supply_chain_sustainability'],
       enabled: false,
       children: [
         {
           id: 'supply_chain_material_topic_management',
-          label: 'Management of material topic',
+          label: 'Management Of Material Topic',
           enabled: false
         },
         {
@@ -484,7 +540,7 @@ message_ceo: [
         },
         {
           id: 'negative_impacts_in_supply_chain',
-          label: 'Negative environmental & social impacts in the supply chain',
+          label: 'Negative Environmental & Social Impacts In The Supply Chain',
           enabled: false
         }
       ]
@@ -498,61 +554,64 @@ message_ceo: [
       children: [
         {
           id: 'highlights_material_topic_management',
-          label: 'Management of Material Topics',
+          label: 'Management Of Material Topics',
           enabled: false
         },
         {
           id: 'economic_value_creation',
-          label: 'Economic value creation',
+          label: 'Economic Value Creation',
+          field:['introduction_to_economic_value_creation'],
           enabled: false
         },
         {
           id: 'financial_assistance_government',
-          label: 'Financial assistance received from government',
+          label: 'Financial Assistance Received From Government',
+          field:['financial_assistance_from_government'],
           enabled: false
         }
       ]
     },
     {
       id: 'infrastructure_investment',
-      label: 'Infrastructure investment and services supported',
+      label: 'Infrastructure Investment And Services Supported',
+      field:['infrastructure_investement'],
       enabled: false,
       children: [
         {
           id: 'infrastructure_material_topic_management',
-          label: 'Management of Material Topics',
+          label: 'Management Of Material Topics',
           enabled: false
         },
         {
           id: 'indirect_economic_impacts',
-          label: 'Indirect economic impacts',
+          label: 'Indirect Economic Impacts',
           enabled: false
         }
       ]
     },
     {
       id: 'climate_financials',
-      label: 'Climate-related financial implications, risks and opportunities',
+      label: 'Climate-Related Financial Implications, Risks And Opportunities',
       enabled: false,
       children: [
         {
           id: 'climate_material_topic_management',
-          label: 'Management of Material Topics',
+          label: 'Management Of Material Topics',
           enabled: false
         },
         {
           id: 'climate_financial_implications',
-          label: 'Climate-related Financial Implications',
+          label: 'Climate-Related Financial Implications',
           enabled: false,
           children: [
             {
               id: 'climate_related_risks',
-              label: 'Climate-related Risks',
+              label: 'Climate-Related Risks',
               enabled: false
             },
             {
               id: 'climate_related_opportunities',
-              label: 'Climate-related Opportunities',
+              label: 'Climate-Related Opportunities',
               enabled: false
             }
           ]
@@ -566,61 +625,61 @@ message_ceo: [
       children: [
         {
           id: 'tax_material_topic_management',
-          label: 'Management of material topic',
+          label: 'Management Of Material Topic',
           enabled: false
         },
         {
           id: 'approach_to_tax',
-          label: 'Approach to tax',
+          label: 'Approach To Tax',
           enabled: false
         },
         {
           id: 'tax_governance_risk',
-          label: 'Tax governance and risk management',
+          label: 'Tax Governance And Risk Management',
           enabled: false
         },
         {
           id: 'tax_stakeholder_engagement',
-          label: 'Stakeholder engagement and management of concerns related to tax',
+          label: 'Stakeholder Engagement And Management Of Concerns Related To Tax',
           enabled: false
         }
       ]
     },
     {
       id: 'anti_corruption',
-      label: 'Anti-corruption',
+      label: 'Anti-Corruption',
       enabled: false,
       children: [
         {
           id: 'anti_corruption_material_topic_management',
-          label: 'Management of material topic',
+          label: 'Management Of Material Topic',
           enabled: false
         },
         {
           id: 'risk_assessment_anti_corruption',
-          label: 'Operations assessed for risks related to anti-corruption',
+          label: 'Operations Assessed For Risks Related To Anti-Corruption',
           enabled: false
         },
         {
           id: 'incidents_anti_corruption',
-          label: 'Incidents of anti-corruption',
+          label: 'Incidents Of Anti-Corruption',
           enabled: false
         },
         {
           id: 'training_anti_corruption',
-          label: 'Training on anti-corruption',
+          label: 'Training On Anti-Corruption',
           enabled: false
         }
       ]
     },
     {
       id: 'political_contribution',
-      label: 'Political contribution',
+      label: 'Political Contribution',
       enabled: false,
       children: [
         {
           id: 'political_contribution_material_topic_management',
-          label: 'Management of Material Topic',
+          label: 'Management Of Material Topic',
           enabled: false
         }
       ]
@@ -630,27 +689,29 @@ message_ceo: [
     {
       id: 'emissions',
       label: 'Emissions',
+      field:['emissions'],
       enabled: false,
       children: [
-        { id: 'emissions_material_topic_management', label: 'Management of Material Topics', enabled: false },
-        { id: 'scope_1_ghg_emissions', label: 'Scope 1 GHG Emissions', enabled: false },
-        { id: 'scope_2_ghg_emissions', label: 'Scope 2 GHG Emissions', enabled: false },
-        { id: 'scope_3_ghg_emissions', label: 'Scope 3 GHG Emissions', enabled: false },
-        { id: 'base_year', label: 'Base Year', enabled: false },
-        { id: 'consolidation_approach', label: 'Consolidation Approach', enabled: false },
-        { id: 'ghg_emission_intensity', label: 'GHG emission intensity', enabled: false },
-        { id: 'reduction_in_ghg_emissions', label: 'Reduction in GHG emissions', enabled: false },
-        { id: 'ozone_depleting_substances', label: 'Ozone depleting substances', enabled: false }
+        { id: 'emissions_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'scope_1_ghg_emissions', label: 'Scope 1 GHG Emissions',field:['scope_one_emissions','biogenic_c02_emissions'], enabled: false },
+        { id: 'scope_2_ghg_emissions', label: 'Scope 2 GHG Emissions',field:['scope_two_emissions'], enabled: false },
+        { id: 'scope_3_ghg_emissions', label: 'Scope 3 GHG Emissions',field:['scope_three_emissions','biogenic_c02_emissions_305_3c'], enabled: false },
+        { id: 'base_year', label: 'Base Year',field:['base_year'], enabled: false },
+        { id: 'consolidation_approach', label: 'Consolidation Approach',field:['consolidation'], enabled: false },
+        { id: 'ghg_emission_intensity', label: 'GHG Emission Intensity',field:['ghg_emission_intensity_tracking'], enabled: false },
+        { id: 'reduction_in_ghg_emissions', label: 'Reduction In GHG Emissions',field:['ghg_emission_reduction_efforts'], enabled: false },
+        { id: 'ozone_depleting_substances', label: 'Ozone Depleting Substances',field:['ozone_depleting_substance_elimination'], enabled: false }
       ]
     },
     {
       id: 'materials',
       label: 'Materials',
+      field:['material_management_strategy'],
       enabled: false,
       children: [
-        { id: 'materials_material_topic_management', label: 'Management of Material Topics', enabled: false },
-        { id: 'recycled_input_materials', label: 'Recycled input materials used', enabled: false },
-        { id: 'reclaimed_products_packaging', label: 'Reclaimed products and their packaging materials', enabled: false }
+        { id: 'materials_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'recycled_input_materials', label: 'Recycled Input Materials Used',field:['recycling_process'], enabled: false },
+        { id: 'reclaimed_products_packaging', label: 'Reclaimed Products And Their Packaging Materials',field:['reclamation_recycling_process'], enabled: false }
       ]
     },
     {
@@ -658,10 +719,10 @@ message_ceo: [
       label: 'Water',
       enabled: false,
       children: [
-        { id: 'water_material_topic_management', label: 'Management of Material Topic', enabled: false },
-        { id: 'water_withdrawal', label: 'Water withdrawal', enabled: false },
-        { id: 'water_discharge_impact', label: 'Water discharge & management of associated impact', enabled: false },
-        { id: 'water_consumption', label: 'Water Consumption', enabled: false }
+        { id: 'water_material_topic_management', label: 'Management Of Material Topic', enabled: false },
+        { id: 'water_withdrawal', label: 'Water Withdrawal',field:['water_withdrawal_tracking'], enabled: false },
+        { id: 'water_discharge_impact', label: 'Water Discharge & Management Of Associated Impact', enabled: false },
+        { id: 'water_consumption', label: 'Water Consumption',field:['water_consumption_goals'], enabled: false }
       ]
     },
     {
@@ -669,11 +730,11 @@ message_ceo: [
       label: 'Energy',
       enabled: false,
       children: [
-        { id: 'energy_material_topic_management', label: 'Management of Material Topics', enabled: false },
-        { id: 'energy_consumption_within', label: 'Energy consumption within the organisation', enabled: false },
-        { id: 'energy_consumption_outside', label: 'Energy consumption outside of the organisation', enabled: false },
-        { id: 'energy_intensity', label: 'Energy intensity', enabled: false },
-        { id: 'energy_reduction', label: 'Reduction in energy consumption', enabled: false }
+        { id: 'energy_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'energy_consumption_within', label: 'Energy Consumption Within The Organisation',field:['energy_consumption_within_organization'], enabled: false },
+        { id: 'energy_consumption_outside', label: 'Energy Consumption Outside Of The Organisation',field:['energy_consumption_outside_organization'], enabled: false },
+        { id: 'energy_intensity', label: 'Energy Intensity', enabled: false },
+        { id: 'energy_reduction', label: 'Reduction In Energy Consumption', enabled: false }
       ]
     },
     {
@@ -681,12 +742,12 @@ message_ceo: [
       label: 'Waste',
       enabled: false,
       children: [
-        { id: 'waste_material_topic_management', label: 'Management of Material Topics', enabled: false },
-        { id: 'waste_generation_impacts', label: 'Waste generation and impacts', enabled: false },
-        { id: 'waste_impact_management', label: 'Management of waste related impacts', enabled: false },
-        { id: 'waste_disposed', label: 'Waste disposed', enabled: false },
-        { id: 'waste_diverted', label: 'Waste diverted from disposal', enabled: false },
-        { id: 'significant_spills', label: 'Significant Spills', enabled: false }
+        { id: 'waste_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'waste_generation_impacts', label: 'Waste Generation And Impacts', enabled: false },
+        { id: 'waste_impact_management', label: 'Management Of Waste Related Impacts', enabled: false },
+        { id: 'waste_disposed', label: 'Waste Disposed', enabled: false },
+        { id: 'waste_diverted', label: 'Waste Diverted From Disposal', enabled: false },
+        { id: 'significant_spills', label: 'Significant Spills',field:['significant_spills'], enabled: false }
       ]
     },
     {
@@ -694,16 +755,17 @@ message_ceo: [
       label: 'Biodiversity',
       enabled: false,
       children: [
-        { id: 'biodiversity_material_topic_management', label: 'Management of Material Topic', enabled: false },
-        { id: 'habitat_protected_restored', label: 'Habitat protected and restored', enabled: false }
+        { id: 'biodiversity_material_topic_management', label: 'Management Of Material Topic', enabled: false },
+        { id: 'habitat_protected_restored', label: 'Habitat Protected And Restored',field:['habitat_protection_restoration_commitment'], enabled: false }
       ]
     },
     {
       id: 'air_quality',
       label: 'Air Quality',
+      field:['air_quality_protection_commitment'],
       enabled: false,
       children: [
-        { id: 'air_quality_material_topic_management', label: 'Management of Material Topics', enabled: false }
+        { id: 'air_quality_material_topic_management', label: 'Management Of Material Topics', enabled: false }
       ]
     }
   ],  
@@ -713,12 +775,12 @@ message_ceo: [
       label: 'Employees',
       enabled: false,
       children: [
-        { id: 'employees_material_topic_management', label: 'Management of Material Topics', enabled: false },
-        { id: 'employee_hiring_turnover', label: 'Employee hire, turnover', enabled: false },
-        { id: 'employee_benefits_health', label: 'Employee benefits and health services', enabled: false },
-        { id: 'personal_leaves', label: 'Personal leaves', enabled: false },
-        { id: 'standard_wages', label: 'Standard wages', enabled: false },
-        { id: 'career_development_reviews', label: 'Performance and career development reviews of employees', enabled: false }
+        { id: 'employees_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'employee_hiring_turnover', label: 'Employee Hire, Turnover',field:['workforce_hire_retention_statement'], enabled: false },
+        { id: 'employee_benefits_health', label: 'Employee Benefits And Health Services', enabled: false },
+        { id: 'parental_leaves', label: 'Parental Leaves',field:['parental_leaves'], enabled: false },
+        { id: 'standard_wages', label: 'Standard Wage', field:['standard_wage'], enabled: false },
+        { id: 'career_development_reviews', label: 'Performance And Career Development Reviews Of Employees',field:['performance_review_process'], enabled: false }
       ]
     },
     {
@@ -726,17 +788,17 @@ message_ceo: [
       label: 'Labour Management',
       enabled: false,
       children: [
-        { id: 'labour_material_topic_management', label: 'Management of Material Topics', enabled: false },
-        { id: 'non_employee_workers', label: 'Workers who are not employees', enabled: false },
-        { id: 'forced_labour', label: 'Forced or compulsory labour', enabled: false }
+        { id: 'labour_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'non_employee_workers', label: 'Workers Who Are Not Employees', enabled: false },
+        { id: 'forced_labour', label: 'Forced Or Compulsory Labour',field:['forced_labor_position'], enabled: false }
       ]
     },
     {
       id: 'child_labour',
-      label: 'Incidents of child labour',
+      label: 'Incidents Of Child Labour',
       enabled: false,
       children: [
-        { id: 'child_labour_material_topic_management', label: 'Management of Material Topic', enabled: false }
+        { id: 'child_labour_material_topic_management', label: 'Management Of Material Topic', enabled: false }
       ]
     },
     {
@@ -744,35 +806,35 @@ message_ceo: [
       label: 'Diversity, Inclusion',
       enabled: false,
       children: [
-        { id: 'diversity_material_topic_management', label: 'Management of Material Topics', enabled: false },
-        { id: 'diversity_governance_employees', label: 'Diversity of governance bodies and employees', enabled: false },
-        { id: 'diversity_remuneration', label: 'Remuneration', enabled: false }
+        { id: 'diversity_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'diversity_governance_employees', label: 'Diversity Of Governance Bodies And Employees',field:['employee_diversity_position'], enabled: false },
+        { id: 'diversity_remuneration', label: 'Remuneration',field:['remuneration_practices'], enabled: false }
       ]
     },
     {
       id: 'training_education',
-      label: 'Training & education',
+      label: 'Training & Education',
       enabled: false,
       children: [
-        { id: 'training_material_topic_management', label: 'Management of Material Topics', enabled: false },
-        { id: 'training_programs_upgrading_skills', label: 'Programs for upgrading employee skills and transition assistance programs', enabled: false }
+        { id: 'training_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'training_programs_upgrading_skills', label: 'Programs For Upgrading Employee Skills And Transition Assistance Programs',field:['employee_skill_upgrade_programs'], enabled: false }
       ]
     },
     {
       id: 'occupational_health_safety',
-      label: 'Occupational Health and Safety',
+      label: 'Occupational Health And Safety',
       enabled: false,
       children: [
-        { id: 'ohs_material_topic_management', label: 'Management of Material Topic', enabled: false },
-        { id: 'ohs_management_system', label: 'OHS management system', enabled: false },
-        { id: 'occupational_health_services', label: 'Occupational health services', enabled: false },
-        { id: 'worker_ohs_participation', label: 'Worker participation, consultation, and communication on OHS', enabled: false },
-        { id: 'promotion_worker_health', label: 'Promotion of worker health', enabled: false },
-        { id: 'ohs_impact_prevention', label: 'Prevention and mitigation of OHS impacts', enabled: false },
-        { id: 'hazard_risk_identification', label: 'Hazard, risk identification and investigation', enabled: false },
-        { id: 'work_related_illness_injuries', label: 'Work-related ill-health & injuries', enabled: false },
-        { id: 'safety_training', label: 'Safety training', enabled: false },
-        { id: 'workers_covered_ohs', label: 'Workers covered by OHS management system', enabled: false }
+        { id: 'ohs_material_topic_management', label: 'Management Of Material Topic', enabled: false },
+        { id: 'ohs_management_system', label: 'OHS Management System', enabled: false },
+        { id: 'occupational_health_services', label: 'Occupational Health Services', enabled: false },
+        { id: 'worker_ohs_participation', label: 'Worker Participation, Consultation, And Communication On OHS',field:['ohs_policies'], enabled: false },
+        { id: 'promotion_worker_health', label: 'Promotion Of Worker Health', enabled: false },
+        { id: 'ohs_impact_prevention', label: 'Prevention And Mitigation Of OHS Impacts', enabled: false },
+        { id: 'hazard_risk_identification', label: 'Hazard, Risk Identification And Investigation',field:['hazard_risk_assessment'], enabled: false },
+        { id: 'work_related_illness_injuries', label: 'Work-Related Ill-Health & Injuries',field:['work_related_health_injuries'], enabled: false },
+        { id: 'safety_training', label: 'Safety Training',field:['safety_training'], enabled: false },
+        { id: 'workers_covered_ohs', label: 'Workers Covered By OHS Management System',field:['ohs_management_system'], enabled: false }
       ]
     },
     {
@@ -780,15 +842,16 @@ message_ceo: [
       label: 'Collective Bargaining',
       enabled: false,
       children: [
-        { id: 'freedom_of_association_risks', label: 'Operations and suppliers in which the right to freedom of association and collective bargaining may be at risk', enabled: false }
+        { id: 'freedom_of_association_risks', label: 'Operations And Suppliers In Which The Right To Freedom Of Association And Collective Bargaining May Be At Risk',field:['freedom_of_association_views'], enabled: false }
       ]
     },
     {
       id: 'violations_discrimination',
-      label: 'Incidents of violation/discrimination',
+      label: 'Incidents Of Violation/Discrimination',
+      field:['violation_discrimination_policy'],
       enabled: false,
       children: [
-        { id: 'violations_material_topic_management', label: 'Management of material topic', enabled: false }
+        { id: 'violations_material_topic_management', label: 'Management Of Material Topic', enabled: false }
       ]
     }
   ],  
@@ -796,16 +859,18 @@ message_ceo: [
     {
       id: 'community_engagement',
       label: 'Community Engagement',
+      field:['community_engagement','impact_assessment'],
       enabled: false,
       children: [
         {
           id: 'community_engagement_material_topic_management',
-          label: 'Management of material topic',
+          label: 'Management Of Material Topic',
           enabled: false
         },
         {
           id: 'violation_rights_indigenous_people',
-          label: 'Incidents of Violation of Rights of Indigenous People',
+          label: 'Incidents Of Violation Of Rights Of Indigenous People',
+          field:['violation_rights'],
           enabled: false
         }
       ]
@@ -813,45 +878,49 @@ message_ceo: [
     {
       id: 'csr',
       label: 'CSR',
+      field:['csr_policies'],
       enabled: false
     }
   ],
   customers: [
     {
       id: 'products_services',
-      label: 'Products and Services',
+      label: 'Products And Services',
+      field:['commitment_statement'],
       enabled: false,
       children: [
         {
           id: 'products_services_material_topic_management',
-          label: 'Management of material topic',
+          label: 'Management Of Material Topic',
           enabled: false
         },
         {
           id: 'safety_impact',
-          label: 'Health and safety impacts of product and service categories',
+          label: 'Health And Safety Impacts Of Product And Service Categories',
           enabled: false
         },
         {
           id: 'non_compliance',
-          label: 'Incidents of non-compliance',
+          label: 'Incidents Of Non-Compliance',
           enabled: false
         }
       ]
     },
     {
       id: 'product_labeling',
-      label: 'Product and Service Information & Labelling',
+      label: 'Product And Service Information & Labelling',
+      field:['product_info_labelling'],
       enabled: false,
       children: [
         {
           id: 'product_labeling_material_topic_management',
-          label: 'Management of material topic',
+          label: 'Management Of Material Topic',
           enabled: false
         },
         {
           id: 'marketing',
           label: 'Marketing',
+          field:['marketing_practices'],
           enabled: false
         }
       ]
@@ -859,17 +928,17 @@ message_ceo: [
     {
       id: 'customers',
       label: 'Customers',
+      field:['customers'],
       enabled: false,
       children: [
         {
           id: 'customers_material_topic_management',
-          label: 'Management of material topic',
+          label: 'Management Of Material Topic',
           enabled: false
         }
       ]
     }
   ]
-  
 };
 
 // Component mapping for sections - using original IDs
@@ -947,6 +1016,25 @@ const reportBuilderSlice = createSlice({
         state.currentStep -= 1;
       }
     },
+
+    updateEnabledSectionOrder: (state) => {
+      // Sort: enabled first, then disabled
+      const sorted = [...state.sections].sort((a, b) => {
+        if (a.enabled === b.enabled) {
+          return a.order - b.order; // preserve existing order within each group
+        }
+        return a.enabled ? -1 : 1; // enabled sections come first
+      });
+    
+      // Reassign order
+      sorted.forEach((section, index) => {
+        section.order = index + 1;
+      });
+    
+      state.sections = sorted;
+    },
+    
+    
     
     // Section management (Level 1)
     setSections: (state, action) => {
@@ -958,6 +1046,7 @@ const reportBuilderSlice = createSlice({
       const section = state.sections.find(s => s.id === sectionId);
       if (section && !section.mandatory) {
         section.enabled = !section.enabled;
+        state.sections = reorderSectionsByEnabledState(state.sections);
       }
     },
     
@@ -1092,6 +1181,12 @@ const reportBuilderSlice = createSlice({
         state.currentReportPage += 1;
       }
     },
+
+    handleNext:(state)=>{
+      if (state.currentReportPage > 0) {
+        state.currentReportPage += 1;
+      }
+    },
     
     previousReportPage: (state) => {
       if (state.currentReportPage > 0) {
@@ -1121,7 +1216,7 @@ const reportBuilderSlice = createSlice({
       })
       .addCase(fetchReportBuilderData.fulfilled, (state, action) => {
         const { section, sub_section,skip_first_page } = action.payload;
-        console.log(section,sub_section,skip_first_page,"see the api response")
+       
 
         state.skipSelectionPage=skip_first_page;
         // 1. Update sections
@@ -1130,7 +1225,9 @@ const reportBuilderSlice = createSlice({
           title: s.title,
           enabled: s.enabled,
           mandatory: s.mandatory,
-          order: s.order ?? i + 1,
+          order: s.order,
+          field:s.field,
+          screen:s.screen
         }));
   
         // 2. Update subsections
@@ -1199,6 +1296,7 @@ export const {
   // Report navigation - NEW
   setCurrentReportPage,
   nextReportPage,
+  handleNext,
   previousReportPage,
   initializeReportNavigation,
   
@@ -1219,6 +1317,8 @@ export const {
   
   // Local storage sync
   loadFromLocalStorage,
+
+  updateEnabledSectionOrder
 } = reportBuilderSlice.actions;
 
 // Selectors

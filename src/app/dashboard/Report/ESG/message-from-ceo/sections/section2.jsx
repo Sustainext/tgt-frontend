@@ -33,6 +33,11 @@ const Section2 = ({
     ? JSON.parse(localStorage.getItem("textcustomrole")) || '' 
     : '';
 
+  const [localCeoName, setLocalCeoName] = useState(ceoname);
+  const [localCompanyName, setLocalCompanyName] = useState(companyName);
+
+const handleCeoBlur = () => dispatch(setCeoname(localCeoName));
+const handleCompanyBlur = () => dispatch(setCompanyname(localCompanyName));
   const handleCompanyname = (e) => {
     dispatch(setCompanyname(e.target.value));
   };
@@ -43,7 +48,6 @@ const Section2 = ({
 
   const uploadFileToAzure = async (file, newFileName) => {
     // Read file content as ArrayBuffer
-    console.log(file, " is the file object");
     const arrayBuffer = await file.arrayBuffer();
     const blob = new Blob([arrayBuffer]);
 
@@ -233,17 +237,21 @@ const Section2 = ({
             type="text"
             placeholder="Enter CEO's Name"
             className="border border-gray-300 height-[44px] px-2 py-3 rounded-md text-[13px] w-full bg-white shadow-sm mb-4"
-            value={ceoname}
-            onChange={handleCeoname}
+            value={localCeoName}
+            // onChange={handleCeoname}
+            onChange={(e) => setLocalCeoName(e.target.value)}
+            onBlur={handleCeoBlur}
           />
           
           <p className="text-[15px] text-[#344054] mb-2">Company Name</p>
           <input
-            onChange={handleCompanyname}
+            // onChange={handleCompanyname}
             type="text"
             placeholder="Enter Company Name"
             className="border border-gray-300 height-[44px] px-2 py-3 rounded-md text-[13px] w-full bg-white shadow-sm"
-            value={companyName}
+            value={localCompanyName}
+            onChange={(e) => setLocalCompanyName(e.target.value)}
+            onBlur={handleCompanyBlur}
           />
         </div>
       </div>

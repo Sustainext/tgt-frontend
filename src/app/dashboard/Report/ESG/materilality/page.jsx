@@ -25,6 +25,7 @@ const Materiality = forwardRef(({
   sectionOrder = 8,
   sectionId,
   sectionTitle,
+  hasChanges
 }, ref) => {
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
@@ -32,12 +33,13 @@ const Materiality = forwardRef(({
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
     const reportType =
     typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+    const [initialData, setInitialData] = useState({});
   const apiCalledRef = useRef(false);
   const [loopen, setLoOpen] = useState(false);
   const [data, setData] = useState("");
   const description = useSelector((state) => state.screen8Slice.description);
   const dispatch = useDispatch();
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState("materiality_assessment");
 
   const groupedSubsections = [
       {
@@ -220,8 +222,15 @@ const Materiality = forwardRef(({
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const currentData = {
+    statement: description,
+  };
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data={};
     if(subsectionsToShow.includes("materiality_assessment")){
       data.statement={
@@ -297,6 +306,12 @@ const Materiality = forwardRef(({
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(setdescription(response.data.statement?.content || ""));
       }
@@ -582,7 +597,9 @@ const Materiality = forwardRef(({
                         <div key={item.groupId} className="mb-2">
                           {/* Show the parent title (group) */}
                           <p
-                            className="text-[12px] mb-2 font-medium text-gray-600 cursor-pointer"
+                             className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                              activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                            }`}
                             onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
                           >
                             {sectionOrder}.{currentGroupIndex} {item.title}

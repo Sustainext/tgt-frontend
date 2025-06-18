@@ -134,7 +134,7 @@ const Section1 = ({
 
   const config = {
     enter: "BR", // Or customize behavior on Enter key
-    cleanHTML: true,
+  cleanHTML: true,
     enablePasteHTMLFilter: false, 
     askBeforePasteHTML: false, 
     askBeforePasteFromWord: false,
@@ -167,6 +167,7 @@ const Section1 = ({
     ],
     removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode', 'paintFormat', 'image', 'brush', 'font'],
   };
+
 
   const handleEditorChange = (value) => {
     dispatch(setMessage(value));

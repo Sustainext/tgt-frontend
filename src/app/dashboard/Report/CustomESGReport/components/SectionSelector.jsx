@@ -22,6 +22,7 @@ import {
   selectSections,
   toggleSectionEnabled,
   reorderSections,
+  updateEnabledSectionOrder
 } from '../../../../../lib/redux/features/reportBuilderSlice';
 
 import SortableSectionItem from './SortableSectionItem';
@@ -29,6 +30,7 @@ import SortableSectionItem from './SortableSectionItem';
 const SectionSelector = forwardRef(({ onNext }, ref) => {
   const dispatch = useDispatch();
   const sections = useSelector(selectSections);
+  const orderedSections = [...sections].sort((a, b) => a.order - b.order);
 
   console.log(sections,"see the defualt sections")
 
@@ -59,7 +61,9 @@ const SectionSelector = forwardRef(({ onNext }, ref) => {
   }));
 
   const handleSubmit = () => {
+    dispatch(updateEnabledSectionOrder());
     const enabledSections = sections.filter(s => s.enabled);
+    console.log(enabledSections,"see the enabled sections")
     if (enabledSections.length > 0) {
       console.log(sections,"see the selected sections")
       onNext();
@@ -80,12 +84,12 @@ const SectionSelector = forwardRef(({ onNext }, ref) => {
           strategy={verticalListSortingStrategy}
         >
           <div className="border border-gray-300 rounded-md">
-            {sections?.map((section, index) => (
+            {orderedSections?.map((section, index) => (
               <SortableSectionItem
                 key={section.id}
                 id={section.id}
                 title={section.title}
-                order={index + 1}
+                order={section.order}
                 enabled={section.enabled}
                 mandatory={section.mandatory}
                 onToggle={() => handleToggleSection(section.id)}

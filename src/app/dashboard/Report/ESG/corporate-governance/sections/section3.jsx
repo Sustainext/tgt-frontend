@@ -32,11 +32,7 @@ const Section3 = ({ section9_2Ref, section9_2_1Ref, data,
 
   return (
     <>
-      <div id="section9_2" ref={section9_2Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          {sectionOrder}.2 General Governance
-        </h3>
-      </div>
+      
       <div id="section9_2_1" ref={section9_2_1Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           {sectionNumber} {sectionTitle}

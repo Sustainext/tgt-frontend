@@ -23,7 +23,7 @@ import Section1 from "./sections/section1";
 import { useDispatch, useSelector } from "react-redux";
 import { setdescription } from "../../../../../lib/redux/features/ESGSlice/screen6Slice";
 
-const StakeholderEngagement = forwardRef(({ onSubmitSuccess,sectionOrder=6 }, ref) => {
+const StakeholderEngagement = forwardRef(({ onSubmitSuccess,sectionOrder=6,hasChanges }, ref) => {
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const reportid =
@@ -33,6 +33,7 @@ const StakeholderEngagement = forwardRef(({ onSubmitSuccess,sectionOrder=6 }, re
   const [data, setData] = useState("");
   const description = useSelector((state) => state.screen6Slice.description);
   const dispatch = useDispatch();
+  const [initialData, setInitialData] = useState({});
   useImperativeHandle(ref, () => ({
     submitForm,
   }));
@@ -44,8 +45,15 @@ const StakeholderEngagement = forwardRef(({ onSubmitSuccess,sectionOrder=6 }, re
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const currentData={
+    description
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       description: {
         page: "screen_six",
@@ -118,6 +126,12 @@ const StakeholderEngagement = forwardRef(({ onSubmitSuccess,sectionOrder=6 }, re
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+        Object.keys(response.data).forEach((key) => {
+          flatData[key] = response.data[key]?.content || "";
+        });
+      
+        setInitialData(flatData);
         setData(response.data);
         dispatch(setdescription(response.data.description?.content || ""));
       }

@@ -28,6 +28,7 @@ const AboutTheReport = forwardRef(({
   sectionOrder = 7,
   sectionId,
   sectionTitle,
+  hasChanges
 },
 ref) => {
   const orgName =
@@ -40,6 +41,7 @@ ref) => {
   const [data, setData] = useState("");
   const [activeSection, setActiveSection] = useState("");
   const [loopen, setLoOpen] = useState(false);
+  const [initialData, setInitialData] = useState({});
   const description = useSelector((state) => state.screen7Slice.aboutReport);
   const framework_description = useSelector(
     (state) => state.screen7Slice.framework
@@ -224,9 +226,18 @@ ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const currentData = {
+    description,
+    framework_description,
+    external_assurance,
+  };
 
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     let data={}
     if(subsectionsToShow.includes("reporting_period")){
       data.description= {
@@ -324,6 +335,12 @@ ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(setAboutReport(response.data.description?.content || ""));
         dispatch(

@@ -75,7 +75,7 @@ const sectionComponents = {
 };
 
 
-const ReportRenderer = ({ onBack,sectionRefs }) => {
+const ReportRenderer = ({ onBack,sectionRefs,hasChanges }) => {
   // console.log(sectionRefs,"see all the section ref")
   const dispatch = useDispatch();
   const enabledSections = useSelector(selectEnabledSections);
@@ -138,6 +138,7 @@ const ReportRenderer = ({ onBack,sectionRefs }) => {
       onSubmitSuccess={(success) => {
         console.log('Section submitted:', success);
       }}
+      hasChanges={hasChanges}
     />
         </div>
       </div>

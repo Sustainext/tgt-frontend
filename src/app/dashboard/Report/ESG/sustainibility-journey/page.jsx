@@ -29,11 +29,12 @@ import {
 const SustainibilityJourney = forwardRef(({
   onSubmitSuccess,
   subsections = [],
-  sectionOrder = 8,
+  sectionOrder = 10,
   sectionId,
   sectionTitle,
+  hasChanges
 }, ref) => {
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState("sustainability_management_approach");
 
  
   const orgName =
@@ -43,6 +44,7 @@ const SustainibilityJourney = forwardRef(({
     const reportType =
     typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
   const apiCalledRef = useRef(false);
+  const [initialData, setInitialData] = useState({});
   const [data, setData] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const company_sustainability_statement = useSelector(
@@ -277,9 +279,22 @@ const SustainibilityJourney = forwardRef(({
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const dynamicSectionNumberMap = numberedSubsections.reduce((acc, item) => {
+    acc[item.id] = item.sectionNumber;
+    return acc;
+  }, {});
+  const currentData={
+    company_sustainability_statement,
+    approach_for_sustainability,
+    sustainability_goals,
+    approach_to_supply_chain_sustainability
+  }
   const submitForm = async (type) => {
     LoaderOpen();
-
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data={};
     data.company_sustainability_statement= {
       page: "screen_ten",
@@ -291,9 +306,10 @@ const SustainibilityJourney = forwardRef(({
       isSkipped: false,
     }
     if(subsectionsToShow.includes("sustainability_management_approach")){
+      const sectionNumber = dynamicSectionNumberMap["sustainability_management_approach"];
       data.approach_for_sustainability={
         page: "screen_ten",
-        label: `${sectionOrder}.1 Management approach for sustainability/ESG topics`,
+        label: `${sectionNumber} Management approach for sustainability/ESG topics`,
         subLabel: "Add statement about company’s approach for sustainability",
         type: "textarea",
         content: approach_for_sustainability,
@@ -302,9 +318,10 @@ const SustainibilityJourney = forwardRef(({
       }
     }
     if(subsectionsToShow.includes("company_sustainability")){
+      const sectionNumber = dynamicSectionNumberMap["company_sustainability"];
       data.sustainability_goals= {
         page: "screen_ten",
-        label: `${sectionOrder}.2 Company’s Sustainability Goals`,
+        label: `${sectionNumber} Company’s Sustainability Goals`,
         subLabel: "Add statement about company’s sustainability goals",
         type: "textarea",
         content: sustainability_goals,
@@ -313,9 +330,10 @@ const SustainibilityJourney = forwardRef(({
       }
     }
     if(subsectionsToShow.includes("supply_chain_sustainability")){
+      const sectionNumber = dynamicSectionNumberMap["supply_chain_sustainability"];
       data.approach_to_supply_chain_sustainability={
         page: "screen_ten",
-        label: `${sectionOrder}.3 Supply Chain Sustainability`,
+        label: `${sectionNumber} Supply Chain Sustainability`,
         subLabel:
           "Add statement about company’s approach to supply chain sustainability",
         type: "textarea",
@@ -389,6 +407,12 @@ const SustainibilityJourney = forwardRef(({
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+        Object.keys(response.data).forEach((key) => {
+          flatData[key] = response.data[key]?.content || "";
+        });
+      
+        setInitialData(flatData);
         setData(response.data);
         dispatch(
           setCompanyStatement(
@@ -665,8 +689,8 @@ const renderSection = (section) => {
                       elements.push(
                         <p
                           key={item.groupId}
-                          className={`text-[12px] mb-2 font-medium text-gray-600 cursor-pointer ${
-                            activeSection === item.groupId ? "text-blue-400" : ""
+                          className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                            activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
                           }`}
                           onClick={() => scrollToSection(item.groupId)}
                         >

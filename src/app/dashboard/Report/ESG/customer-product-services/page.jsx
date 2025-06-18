@@ -16,6 +16,7 @@ import Section6 from "./sections/section6";
 import Section7 from "./sections/section7";
 import Section8 from "./sections/section8";
 import Section9 from "./sections/section9";
+import Section10 from "./sections/section10";
 import axiosInstance, { patch } from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -35,8 +36,9 @@ const CustomerProductService = forwardRef(({
   sectionOrder = 15,
   sectionId,
   sectionTitle,
+  hasChanges
 }, ref) => {
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState("products_services");
 
  
 
@@ -47,6 +49,7 @@ const CustomerProductService = forwardRef(({
     const reportType =
   typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
   const apiCalledRef = useRef(false);
+  const [initialData, setInitialData] = useState({});
   const [data, setData] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const commitment_statement = useSelector(
@@ -306,10 +309,26 @@ const CustomerProductService = forwardRef(({
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const dynamicSectionNumberMap = numberedSubsections.reduce((acc, item) => {
+    acc[item.id] = item.sectionNumber;
+    return acc;
+  }, {});
+  const currentData={
+    commitment_statement,
+    product_info_labelling,
+    marketing_practices,
+    conclusion,
+    customers
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data={};
     if(subsectionsToShow.includes("products_services")){
+      const sectionNumber = dynamicSectionNumberMap["products_services"];
       data.commitment_statement={
         page: "screen_fifteen",
         label: `${sectionNumber} Products and Services`,
@@ -322,6 +341,7 @@ const CustomerProductService = forwardRef(({
       }
     }
     if(subsectionsToShow.includes("product_labeling")){
+      const sectionNumber = dynamicSectionNumberMap["product_labeling"];
       data. product_info_labelling= {
         page: "screen_fifteen",
         label: `${sectionNumber} Product and Service Information and Labelling`,
@@ -334,6 +354,7 @@ const CustomerProductService = forwardRef(({
       }
     }
     if(subsectionsToShow.includes("marketing")){
+      const sectionNumber = dynamicSectionNumberMap["marketing"];
       data.marketing_practices= {
         page: "screen_fifteen",
         label: `${sectionNumber} Marketing`,
@@ -345,6 +366,7 @@ const CustomerProductService = forwardRef(({
       }
     }
     if(subsectionsToShow.includes("customers")){
+      const sectionNumber = dynamicSectionNumberMap["customers"];
       data.customers={
         page: "screen_fifteen",
         label: `${sectionNumber} Customers`,
@@ -431,6 +453,12 @@ const CustomerProductService = forwardRef(({
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+        Object.keys(response.data).forEach((key) => {
+          flatData[key] = response.data[key]?.content || "";
+        });
+      
+        setInitialData(flatData);
         setData(response.data);
         dispatch(
           setCommitmentStatement(
@@ -684,6 +712,14 @@ const CustomerProductService = forwardRef(({
                 </div>
               )} */}
             {numberedSubsections.map((section) => renderSection(section))}
+           {reportType!=='GRI Report: With Reference to	' && (
+             <Section10
+             orgName={orgName}
+             data={data}
+             sectionOrder={sectionOrder}
+             sectionNumber={null} // Not numbered
+           />
+           )}
           </div>
 
           {/* Page sidebar - only show if there are subsections */}
@@ -762,7 +798,9 @@ const CustomerProductService = forwardRef(({
                       <div key={item.groupId} className="mb-2">
                         {/* Show the parent title (group) */}
                         <p
-                          className="text-[12px] mb-2 font-medium text-gray-600 cursor-pointer"
+                          className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                            activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                          }`}
                           onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
                         >
                           {sectionOrder}.{currentGroupIndex} {item.title}

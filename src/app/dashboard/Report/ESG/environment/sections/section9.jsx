@@ -10,7 +10,11 @@ import { setOzoneDepletingSubstanceElimination } from "../../../../../../lib/red
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section9 = ({ section12_1_9Ref, data, reportType }) => {
+const Section9 = ({ section12_1_9Ref, data, reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.1.9':'12.1.8',
+  sectionTitle = 'Ozone Depleting Substances',
+  sectionOrder = 12,
+ }) => {
   const content = useSelector(
     (state) => state.screen12Slice.ozone_depleting_substance_elimination
   );
@@ -208,7 +212,7 @@ const Section9 = ({ section12_1_9Ref, data, reportType }) => {
     <>
       <div id="section12_1_9" ref={section12_1_9Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'12.1.9':'12.1.8'} Ozone Depleting Substances
+        {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

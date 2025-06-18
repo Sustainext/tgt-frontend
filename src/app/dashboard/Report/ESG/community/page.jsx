@@ -20,14 +20,16 @@ const Community = forwardRef(({
   sectionOrder = 14,
   sectionId,
   sectionTitle,
+  hasChanges
 }, ref) => {
 
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState("community_engagement");
   const orgName = typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const reportType =
   typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
   const apiCalledRef = useRef(false);
+  const [initialData, setInitialData] = useState({});
   const [data,setData]=useState("")
   const [loopen, setLoOpen] = useState(false);
   const community_engagement_statement = useSelector((state) => state.screen14Slice.community_engagement_statement);
@@ -224,18 +226,37 @@ const Community = forwardRef(({
     const LoaderClose = () => {
       setLoOpen(false);
     };
+
+    const dynamicSectionNumberMap = numberedSubsections.reduce((acc, item) => {
+      acc[item.id] = item.sectionNumber;
+      return acc;
+    }, {});
+  
+    const currentData={
+      community_engagement:community_engagement_statement,
+      impact_assessment,
+      csr_policies:csr_statement,
+      violation_rights
+    }
   const submitForm = async (type) => {
       LoaderOpen();
+      if (!hasChanges(initialData, currentData)) {
+        LoaderClose();
+        return false;
+      }
       const data={}
       if(subsectionsToShow.includes("community_engagement")){
-        data.community_engagement= {"page":"screen_fourteen","label":`${sectionOrder}.1 Community Engagement`,"subLabel":"Add statement about company’s community engagement","type":"textarea","content":community_engagement_statement,"field":"community_engagement","isSkipped":false} ,
+        const sectionNumber = dynamicSectionNumberMap["community_engagement"];
+        data.community_engagement= {"page":"screen_fourteen","label":`${sectionNumber} Community Engagement`,"subLabel":"Add statement about company’s community engagement","type":"textarea","content":community_engagement_statement,"field":"community_engagement","isSkipped":false} ,
         data.impact_assessment= {"page":"screen_fourteen","label":"Impact Assessment","subLabel":"","type":"textarea","content":impact_assessment,"field":"impact_assessment","isSkipped":false}
       }
       if(subsectionsToShow.includes("violation_rights_indigenous_people")){
-        data.violation_rights= {"page":"screen_fourteen","label":`${sectionOrder}.1.2 Incidents of Violation of Rights of Indigenous People`,"subLabel":"Add statement about company’s policy on violation of rights of indigenous people","type":"textarea","content":violation_rights,"field":"violation_rights","isSkipped":false}
+        const sectionNumber = dynamicSectionNumberMap["violation_rights_indigenous_people"];
+        data.violation_rights= {"page":"screen_fourteen","label":`${sectionNumber} Incidents of Violation of Rights of Indigenous People`,"subLabel":"Add statement about company’s policy on violation of rights of indigenous people","type":"textarea","content":violation_rights,"field":"violation_rights","isSkipped":false}
       }
       if(subsectionsToShow.includes("csr")){
-        data.csr_policies= {"page":"screen_fourteen","label":`${sectionOrder}.2 CSR`,"subLabel":"Add statement about company’s Corporate Social Responsibility policies","type":"richTextarea","content":csr_statement,"field":"csr_policies","isSkipped":false}
+        const sectionNumber = dynamicSectionNumberMap["csr"];
+        data.csr_policies= {"page":"screen_fourteen","label":`${sectionNumber}`,"subLabel":"Add statement about company’s Corporate Social Responsibility policies","type":"richTextarea","content":csr_statement,"field":"csr_policies","isSkipped":false}
       }
      
   
@@ -304,6 +325,12 @@ const Community = forwardRef(({
       try {
           const response = await axiosInstance.get(url);
           if(response.data){
+            const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
             setData(response.data)
             dispatch(setCommunityEngagementStatement(response.data.community_engagement?.content || ""));
             dispatch(setImpactAssessment(response.data.impact_assessment?.content || ""));
@@ -543,7 +570,9 @@ const renderSection = (section) => {
                       <div key={item.groupId} className="mb-2">
                         {/* Show the parent title (group) */}
                         <p
-                          className="text-[12px] mb-2 font-medium text-gray-600 cursor-pointer"
+                          className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                            activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                          }`}
                           onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
                         >
                           {sectionOrder}.{currentGroupIndex} {item.title}

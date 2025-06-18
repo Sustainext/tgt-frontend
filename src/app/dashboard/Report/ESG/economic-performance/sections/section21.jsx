@@ -1,25 +1,24 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const Section13 = ({ section13_4Ref, section13_4_1Ref, data,reportType,
-  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.4.1':'',
-  sectionTitle = "Management of material topics", 
-  sectionOrder = 13
+const Section21 = ({ section11_6_1Ref,reportType,
+    sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.6.1':'',
+    sectionTitle = 'Management of Material Topic',
+    sectionOrder = 11,
  }) => {
+  const data = useSelector((state) => state.screen11Slice.getdata);
   const shouldRender = useSelector((state)=> state.reportCreation.includeMaterialTopics)
 
   return (
     <>
-    
-    {reportType=='GRI Report: In accordance With' || (shouldRender && reportType==='Custom ESG Report')?(
-         <div id="section13_4_1" ref={section13_4_1Ref}>
+      {reportType=='GRI Report: In accordance With' || (shouldRender && reportType==='Custom ESG Report')?(
+         <div id="section11_6_1" ref={section11_6_1Ref}>
          <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           {sectionNumber} {sectionTitle}
          </h3>
  
-         {data["3-3cde_13-4-1"] && data["3-3cde_13-4-1"].length > 0 ? (
-           data["3-3cde_13-4-1"].map((val, index) => (
+         {data["3-3cde_11-6-1"] && data["3-3cde_11-6-1"].length > 0 ? (
+           data["3-3cde_11-6-1"].map((val, index) => (
              <div key={index}>
                <p className="text-sm mb-2">
                  {val.GRI33cd ? val.GRI33cd : "No data available"}
@@ -36,9 +35,11 @@ const Section13 = ({ section13_4Ref, section13_4_1Ref, data,reportType,
       ):(
         <div></div>
       )}
-    
+
+
+     
     </>
   );
 };
 
-export default Section13;
+export default Section21;

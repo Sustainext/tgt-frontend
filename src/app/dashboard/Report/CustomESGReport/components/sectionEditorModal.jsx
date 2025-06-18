@@ -81,6 +81,10 @@ const SectionEditorModal = () => {
   const dispatch = useDispatch();
   const sensors = useSensors(useSensor(PointerSensor));
 
+   const sections = useSelector(selectSections);
+
+   console.log(sections,"see the updated one bro")
+
   const reportid =
   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const currentPageIndex = useSelector(selectCurrentReportPage);
@@ -197,40 +201,40 @@ const currentDisplaySection = useSelector(selectCurrentDisplaySectionForReportTy
   
   const handleDragStart = (event) => setActiveItem(event.active.id);
 
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    setActiveItem(null);
-    if (!over || active.id === over.id) return;
+  // const handleDragEnd = (event) => {
+  //   const { active, over } = event;
+  //   setActiveItem(null);
+  //   if (!over || active.id === over.id) return;
 
-    const sourceSection = localSections.find((s) => s.id === active.id);
-    const targetSection = localSections.find((s) => s.id === over.id);
+  //   const sourceSection = localSections.find((s) => s.id === active.id);
+  //   const targetSection = localSections.find((s) => s.id === over.id);
 
-    const updated = [...localSections];
+  //   const updated = [...localSections];
 
-    if (targetSection && sourceSection.enabled === targetSection.enabled) {
-      const sourceList = updated.filter((s) => s.enabled === sourceSection.enabled);
-      const oldIndex = sourceList.findIndex((s) => s.id === active.id);
-      const newIndex = sourceList.findIndex((s) => s.id === over.id);
-      const reordered = [...sourceList];
-      const [moved] = reordered.splice(oldIndex, 1);
-      reordered.splice(newIndex, 0, moved);
+  //   if (targetSection && sourceSection.enabled === targetSection.enabled) {
+  //     const sourceList = updated.filter((s) => s.enabled === sourceSection.enabled);
+  //     const oldIndex = sourceList.findIndex((s) => s.id === active.id);
+  //     const newIndex = sourceList.findIndex((s) => s.id === over.id);
+  //     const reordered = [...sourceList];
+  //     const [moved] = reordered.splice(oldIndex, 1);
+  //     reordered.splice(newIndex, 0, moved);
 
-      let idx = 0;
-      setLocalSections(
-        updated.map((s) =>
-          s.enabled !== sourceSection.enabled
-            ? s
-            : { ...reordered[idx++], order: s.enabled ? idx : null }
-        )
-      );
-    } else {
-      setLocalSections(
-        updated.map((s) =>
-          s.id === active.id ? { ...s, enabled: targetSection?.enabled ?? false } : s
-        )
-      );
-    }
-  };
+  //     let idx = 0;
+  //     setLocalSections(
+  //       updated.map((s) =>
+  //         s.enabled !== sourceSection.enabled
+  //           ? s
+  //           : { ...reordered[idx++], order: s.enabled ? idx : null }
+  //       )
+  //     );
+  //   } else {
+  //     setLocalSections(
+  //       updated.map((s) =>
+  //         s.id === active.id ? { ...s, enabled: targetSection?.enabled ?? false } : s
+  //       )
+  //     );
+  //   }
+  // };
 
   // const handleUpdate = () => {
   //   dispatch(setSections(localSections));
@@ -240,6 +244,59 @@ const currentDisplaySection = useSelector(selectCurrentDisplaySectionForReportTy
   //   dispatch(setSectionEditorOpen(false));
   // };
 
+  
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    setActiveItem(null);
+    if (!over || active.id === over.id) return;
+  
+    const updated = [...localSections];
+    const sourceIndex = updated.findIndex((s) => s.id === active.id);
+    const targetIndex = updated.findIndex((s) => s.id === over.id);
+  
+    const source = updated[sourceIndex];
+    const target = updated[targetIndex];
+  
+    // If moving between enabled/disabled
+    if (source.enabled !== target.enabled) {
+      updated[sourceIndex] = { ...source, enabled: target.enabled };
+    }
+  
+    // Reorder only within same list
+    const enabledList = updated.filter((s) => s.enabled);
+    const disabledList = updated.filter((s) => !s.enabled);
+  
+    const reorder = (list, draggedId, targetId) => {
+      const oldIndex = list.findIndex((s) => s.id === draggedId);
+      const newIndex = list.findIndex((s) => s.id === targetId);
+      const reordered = [...list];
+      const [moved] = reordered.splice(oldIndex, 1);
+      reordered.splice(newIndex, 0, moved);
+      return reordered;
+    };
+  
+    let newEnabledList = enabledList;
+    if (source.enabled && target.enabled) {
+      newEnabledList = reorder(enabledList, active.id, over.id);
+    }
+  
+    // Re-assign order
+    const finalList = [
+      ...newEnabledList.map((s, i) => ({ ...s, order: i + 1, enabled: true })),
+      ...disabledList.map((s) => ({ ...s, order: null, enabled: false }))
+    ];
+  
+    setLocalSections(finalList);
+    // If section was disabled, remove its subsections
+const disabledIds = finalList.filter(s => !s.enabled).map(s => s.id);
+const cleanedSubsections = { ...localSelectedSubsections };
+disabledIds.forEach(id => {
+  delete cleanedSubsections[id];
+});
+setLocalSelectedSubsections(cleanedSubsections);
+
+  };
+  
   const handleUpdate = () => {
     const enabledSections = localSections.filter(s => s.enabled);
     const errors = enabledSections.filter(s => !(localSelectedSubsections[s.id]?.length > 0)).map(s => s.title);

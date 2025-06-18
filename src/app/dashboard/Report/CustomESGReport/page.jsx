@@ -47,7 +47,7 @@ const defaultSections = [
 ];
 
 
-export default function ReportBuilderPage() {
+export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
   const router = useRouter();
   const dispatch = useDispatch();
   const sectionSelectorRef = useRef();
@@ -168,22 +168,31 @@ export default function ReportBuilderPage() {
 
     if (type === "next") {
       const isSubmitted = await submitAndProceed();
-      if (isSubmitted) {
-        dispatch(nextReportPage());
-      }
+      dispatch(nextReportPage());
+      // if (isSubmitted) {
+       
+      // }
     } else if (type === "last") {
       const isSubmitted = await submitAndProceed();
-      if (isSubmitted) {
-        // loadMissingFields();
-        return
-      }
-    } else {
+      loadMissingFields()
+      // if (isSubmitted) {
+      //   // loadMissingFields();
+      //   return
+      // }
+    }else if(type === "back") {
       const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
         showDraftSavedToast();
-        setTimeout(() => {
-          router.push("/dashboard/Report");
-        }, 4000);
+      }
+      setTimeout(() => {
+        router.push("/dashboard/Report");
+      }, 1000);
+    } 
+    
+    else {
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
+        showDraftSavedToast();
       }
     }
 
@@ -328,7 +337,7 @@ export default function ReportBuilderPage() {
             </button>
           ) : (
             <button
-              onClick={handleCompleteReport}
+              onClick={()=>{handleReportNext('last')}}
               className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
             >
               Complete Report
@@ -366,7 +375,7 @@ export default function ReportBuilderPage() {
                 </button>
               ) : (
                 <button
-                  onClick={handleCompleteReport}
+                onClick={()=>{handleReportNext('last')}}
                   className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                 >
                   Complete Report
@@ -563,6 +572,7 @@ export default function ReportBuilderPage() {
                 selectedSubsections={displaySubsections}
                 sectionRefs={sectionRefs}
                 onBack={() => setStep(2)}
+                hasChanges={hasChanges}
               />
             )}
           </div>

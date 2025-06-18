@@ -11,13 +11,7 @@ const Section17=({section9_5Ref,section9_5_1Ref,data,
     )
     return (
         <>
-        <div id="section9_5" ref={section9_5Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-        {sectionOrder}.5. Risk Management
-            </h3>
-            
-        
-        </div>
+       
         <div id="section9_5_1" ref={section9_5_1Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
            {sectionNumber} {sectionTitle}

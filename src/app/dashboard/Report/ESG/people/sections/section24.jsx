@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setHazardRiskAssessment } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section24 = ({ section13_6_7Ref, data,reportType }) => {
+const Section24 = ({ section13_6_7Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.6.7':'13.6.6',
+  sectionTitle = "Hazard, Risk Identification and Investigation", 
+  sectionOrder = 13
+ }) => {
   const content = useSelector(
     (state) => state.screen13Slice.hazard_risk_assessment
   );
@@ -382,7 +386,7 @@ const Section24 = ({ section13_6_7Ref, data,reportType }) => {
     <>
       <div id="section13_6_7" ref={section13_6_7Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'13.6.7':'13.6.6'}  Hazard, Risk Identification and Investigation
+        {sectionNumber} {sectionTitle} 
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

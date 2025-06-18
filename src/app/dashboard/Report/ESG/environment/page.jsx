@@ -3,6 +3,7 @@ import {
   forwardRef,
   useImperativeHandle,
   useState,
+  createRef,
   useRef,
   useEffect,
 } from "react";
@@ -40,6 +41,8 @@ import Section31 from "./sections/section31";
 import Section32 from "./sections/section32";
 import Section33 from "./sections/section33";
 import Section34 from "./sections/section34";
+import Section35 from "./sections/section35";
+import Section36 from "./sections/section36";
 import axiosInstance, { patch } from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -72,65 +75,25 @@ import {
   setBiogenicCO2305,
 } from "../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Environment = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
-  const [activeSection, setActiveSection] = useState("section12_1");
+const Environment = forwardRef(( {
+  onSubmitSuccess,
+  subsections = [],
+  sectionOrder = 12,
+  sectionId,
+  sectionTitle,
+  hasChanges,
+}, ref) => {
+  const [activeSection, setActiveSection] = useState("emissions");
+  const [initialData, setInitialData] = useState({});
 
-  const section12_1Ref = useRef(null);
-  const section12_2Ref = useRef(null);
-  const section12_3Ref = useRef(null);
-  const section12_4Ref = useRef(null);
-  const section12_5Ref = useRef(null);
-  const section12_6Ref = useRef(null);
-  const section12_7Ref = useRef(null);
-  const section12_8Ref = useRef(null);
-  const section12_1_1Ref = useRef(null);
-  const section12_1_2Ref = useRef(null);
-  const section12_1_3Ref = useRef(null);
-  const section12_1_4Ref = useRef(null);
-  const section12_1_5Ref = useRef(null);
-  const section12_1_6Ref = useRef(null);
-  const section12_1_7Ref = useRef(null);
-  const section12_1_8Ref = useRef(null);
-  const section12_1_9Ref = useRef(null);
-  const section12_2_1Ref = useRef(null);
-  const section12_2_2Ref = useRef(null);
-  const section12_2_3Ref = useRef(null);
-  const section12_3_1Ref = useRef(null);
-  const section12_3_2Ref = useRef(null);
-  const section12_3_3Ref = useRef(null);
-  const section12_3_4Ref = useRef(null);
-  const section12_4_1Ref = useRef(null);
-  const section12_4_2Ref = useRef(null);
-  const section12_4_3Ref = useRef(null);
-  const section12_4_4Ref = useRef(null);
-  const section12_4_5Ref = useRef(null);
-  const section12_5_1Ref = useRef(null);
-  const section12_5_2Ref = useRef(null);
-  const section12_5_3Ref = useRef(null);
-  const section12_5_4Ref = useRef(null);
-  const section12_5_5Ref = useRef(null);
-  const section12_5_6Ref = useRef(null);
-  const section12_6_1Ref = useRef(null);
-  const section12_6_2Ref = useRef(null);
-  const section12_7_1Ref = useRef(null);
-
-  const scrollToSection = (sectionRef, sectionId) => {
-    setActiveSection(sectionId);
-
-    const elementTop =
-      sectionRef.current?.getBoundingClientRect().top + window.scrollY;
-
-    // Scroll smoothly to the section, ensuring it scrolls up as well
-    window.scrollTo({
-      top: elementTop - 100, // Adjust 100 to the height of any sticky header
-      behavior: "smooth",
-    });
-  };
+ 
 
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const reportType =
+    typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
   const apiCalledRef = useRef(false);
   const [data, setData] = useState("");
   const [loopen, setLoOpen] = useState(false);
@@ -204,6 +167,499 @@ const Environment = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const base_year = useSelector((state) => state.screen12Slice.base_year);
   const dispatch = useDispatch();
 
+      const groupedSubsections = [
+        {
+          groupId: "emissions",
+          title: "Emissions",
+          children: [
+            { id: "emissions_material_topic_management", label: "Management Of Material Topics" },
+            { id: "scope_1_ghg_emissions", label: "Scope 1 GHG Emissions" },
+            { id: "scope_2_ghg_emissions", label: "Scope 2 GHG Emissions" },
+            { id: "scope_3_ghg_emissions", label: "Scope 3 GHG Emissions" },
+            { id: "base_year", label: "Base Year" },
+            { id: "consolidation_approach", label: "Consolidation Approach" },
+            { id: "ghg_emission_intensity", label: "GHG Emission Intensity" },
+            { id: "reduction_in_ghg_emissions", label: "Reduction In GHG Emissions" },
+            { id: "ozone_depleting_substances", label: "Ozone Depleting Substances" }
+          ]
+        },
+        {
+          groupId: "materials",
+          title: "Materials",
+          children: [
+            { id: "materials_material_topic_management", label: "Management Of Material Topics" },
+            { id: "recycled_input_materials", label: "Recycled Input Materials Used" },
+            { id: "reclaimed_products_packaging", label: "Reclaimed Products And Their Packaging Materials" }
+          ]
+        },
+        {
+          groupId: "water",
+          title: "Water",
+          children: [
+            { id: "water_material_topic_management", label: "Management Of Material Topic" },
+            { id: "water_withdrawal", label: "Water Withdrawal" },
+            { id: "water_discharge_impact", label: "Water Discharge & Management Of Associated Impact" },
+            { id: "water_consumption", label: "Water Consumption" }
+          ]
+        },
+        {
+          groupId: "energy",
+          title: "Energy",
+          children: [
+            { id: "energy_material_topic_management", label: "Management Of Material Topics" },
+            { id: "energy_consumption_within", label: "Energy Consumption Within The Organisation" },
+            { id: "energy_consumption_outside", label: "Energy Consumption Outside Of The Organisation" },
+            { id: "energy_intensity", label: "Energy Intensity" },
+            { id: "energy_reduction", label: "Reduction In Energy Consumption" }
+          ]
+        },
+        {
+          groupId: "waste",
+          title: "Waste",
+          children: [
+            { id: "waste_material_topic_management", label: "Management Of Material Topics" },
+            { id: "waste_generation_impacts", label: "Waste Generation And Impacts" },
+            { id: "waste_impact_management", label: "Management Of Waste Related Impacts" },
+            { id: "waste_disposed", label: "Waste Disposed" },
+            { id: "waste_diverted", label: "Waste Diverted From Disposal" },
+            { id: "significant_spills", label: "Significant Spills" }
+          ]
+        },
+        {
+          groupId: "biodiversity",
+          title: "Biodiversity",
+          children: [
+            { id: "biodiversity_material_topic_management", label: "Management Of Material Topic" },
+            { id: "habitat_protected_restored", label: "Habitat Protected And Restored" }
+          ]
+        },
+        {
+          groupId: "air_quality",
+          title: "Air Quality",
+          children: [
+            { id: "air_quality_material_topic_management", label: "Management Of Material Topics" }
+          ]
+        }
+      ];
+      
+      
+  
+      const subsectionMapping = {
+        // Emissions
+        emissions: {
+          component: Section2,
+          title: "Emissions",
+          subSections: [],
+        },
+        emissions_material_topic_management: {
+          component: Section3,
+          title: "Management Of Material Topics",
+          subSections: [],
+        },
+        scope_1_ghg_emissions: {
+          component: Section4,
+          title: "Scope 1 GHG Emissions",
+          subSections: [],
+        },
+        scope_2_ghg_emissions: {
+          component: Section5,
+          title: "Scope 2 GHG Emissions",
+          subSections: [],
+        },
+        scope_3_ghg_emissions: {
+          component: Section6,
+          title: "Scope 3 GHG Emissions",
+          subSections: [],
+        },
+        base_year: {
+          component: Section7,
+          title: "Base Year",
+          subSections: [],
+        },
+        consolidation_approach: {
+          component: Section35,
+          title: "Consolidation Approach",
+          subSections: [],
+        },
+        ghg_emission_intensity: {
+          component: Section36,
+          title: "GHG Emission Intensity",
+          subSections: [],
+        },
+        reduction_in_ghg_emissions: {
+          component: Section8,
+          title: "Reduction In GHG Emissions",
+          subSections: [],
+        },
+        ozone_depleting_substances: {
+          component: Section9,
+          title: "Ozone Depleting Substances",
+          subSections: [],
+        },
+      
+        // Materials
+        materials: {
+          component: Section10,
+          title: "Materials",
+          subSections: [],
+        },
+        materials_material_topic_management: {
+          component: Section11,
+          title: "Management Of Material Topics",
+          subSections: [],
+        },
+        recycled_input_materials: {
+          component: Section12,
+          title: "Recycled Input Materials Used",
+          subSections: [],
+        },
+        reclaimed_products_packaging: {
+          component: Section13,
+          title: "Reclaimed Products And Their Packaging Materials",
+          subSections: [],
+        },
+      
+        // Water
+        water: {
+          component:Section14,
+          title: "Water",
+          subSections: [],
+        },
+        water_material_topic_management: {
+          component: Section15,
+          title: "Management Of Material Topic",
+          subSections: [],
+        },
+        water_withdrawal: {
+          component: Section16,
+          title: "Water Withdrawal",
+          subSections: [],
+        },
+        water_discharge_impact: {
+          component: Section17,
+          title: "Water Discharge & Management Of Associated Impact",
+          subSections: [],
+        },
+        water_consumption: {
+          component: Section18,
+          title: "Water Consumption",
+          subSections: [],
+        },
+      
+        // Energy
+        energy: {
+          component: ({ section12_4Ref, sectionNumber = "12.4", sectionTitle = "Energy", sectionOrder = 12 }) => {
+            return (
+              <div id="section12_4" ref={section12_4Ref}>
+                <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+                  {sectionNumber} {sectionTitle}
+                </h3>
+              </div>
+            );
+          },
+          title: "Energy",
+          subSections: [],
+        },
+        energy_material_topic_management: {
+          component: Section19,
+          title: "Management Of Material Topics",
+          subSections: [],
+        },
+        energy_consumption_within: {
+          component: Section20,
+          title: "Energy Consumption Within The Organisation",
+          subSections: [],
+        },
+        energy_consumption_outside: {
+          component: Section21,
+          title: "Energy Consumption Outside Of The Organisation",
+          subSections: [],
+        },
+        energy_intensity: {
+          component: Section22,
+          title: "Energy Intensity",
+          subSections: [],
+        },
+        energy_reduction: {
+          component: Section23,
+          title: "Reduction In Energy Consumption",
+          subSections: [],
+        },
+      
+        // Waste
+        waste: {
+          component: ({ section12_5Ref, sectionNumber = "12.5", sectionTitle = "Waste", sectionOrder = 12 }) => {
+            return (
+              <div id="section12_5" ref={section12_5Ref}>
+                <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+                  {sectionNumber} {sectionTitle}
+                </h3>
+              </div>
+            );
+          },
+          title: "Waste",
+          subSections: [],
+        },
+        waste_material_topic_management: {
+          component: Section24,
+          title: "Management Of Material Topics",
+          subSections: [],
+        },
+        waste_generation_impacts: {
+          component: Section25,
+          title: "Waste Generation And Impacts",
+          subSections: [],
+        },
+        waste_impact_management: {
+          component: Section26,
+          title: "Management Of Waste Related Impacts",
+          subSections: [],
+        },
+        waste_disposed: {
+          component: Section27,
+          title: "Waste Disposed",
+          subSections: [],
+        },
+        waste_diverted: {
+          component: Section28,
+          title: "Waste Diverted From Disposal",
+          subSections: [],
+        },
+        significant_spills: {
+          component: Section29,
+          title: "Significant Spills",
+          subSections: [],
+        },
+      
+        // Biodiversity
+        biodiversity: {
+          component: Section30,
+          title: "Biodiversity",
+          subSections: [],
+        },
+        biodiversity_material_topic_management: {
+          component: Section31,
+          title: "Management Of Material Topic",
+          subSections: [],
+        },
+        habitat_protected_restored: {
+          component: Section32,
+          title: "Habitat Protected And Restored",
+          subSections: [],
+        },
+      
+        // Air Quality
+        air_quality: {
+          component: Section33,
+          title: "Air Quality",
+          subSections: [],
+        },
+        air_quality_material_topic_management: {
+          component: Section34,
+          title: "Management Of Material Topics",
+          subSections: [],
+        }
+      };
+      
+      
+      const getSubsectionsToShow = () => {
+        if (reportType === "Custom ESG Report") {
+          const userSelected = Array.isArray(subsections) ? subsections : [];
+  
+          // Get default order
+          const defaultOrder = [
+            "emissions",
+            "emissions_material_topic_management",
+            "scope_1_ghg_emissions",
+            "scope_2_ghg_emissions",
+            "scope_3_ghg_emissions",
+            "base_year",
+            "consolidation_approach",
+            "ghg_emission_intensity",
+            "reduction_in_ghg_emissions",
+            "ozone_depleting_substances",
+            "materials",
+            "materials_material_topic_management",
+            "recycled_input_materials",
+            "reclaimed_products_packaging",
+            "water",
+            "water_material_topic_management",
+            "water_withdrawal",
+            "water_discharge_impact",
+            "water_consumption",
+            "energy",
+            "energy_material_topic_management",
+            "energy_consumption_within",
+            "energy_consumption_outside",
+            "energy_intensity",
+            "energy_reduction",
+            "waste",
+            "waste_material_topic_management",
+            "waste_generation_impacts",
+            "waste_impact_management",
+            "waste_disposed",
+            "waste_diverted",
+            "significant_spills",
+            "biodiversity",
+            "biodiversity_material_topic_management",
+            "habitat_protected_restored",
+            "air_quality",
+            "air_quality_material_topic_management"
+          ]
+          
+  
+          // Return sorted list based on fixed order
+          return defaultOrder.filter((id) => userSelected.includes(id));
+        } else {
+          [
+            "emissions",
+            "emissions_material_topic_management",
+            "scope_1_ghg_emissions",
+            "scope_2_ghg_emissions",
+            "scope_3_ghg_emissions",
+            "base_year",
+            "consolidation_approach",
+            "ghg_emission_intensity",
+            "reduction_in_ghg_emissions",
+            "ozone_depleting_substances",
+            "materials",
+            "materials_material_topic_management",
+            "recycled_input_materials",
+            "reclaimed_products_packaging",
+            "water",
+            "water_material_topic_management",
+            "water_withdrawal",
+            "water_discharge_impact",
+            "water_consumption",
+            "energy",
+            "energy_material_topic_management",
+            "energy_consumption_within",
+            "energy_consumption_outside",
+            "energy_intensity",
+            "energy_reduction",
+            "waste",
+            "waste_material_topic_management",
+            "waste_generation_impacts",
+            "waste_impact_management",
+            "waste_disposed",
+            "waste_diverted",
+            "significant_spills",
+            "biodiversity",
+            "biodiversity_material_topic_management",
+            "habitat_protected_restored",
+            "air_quality",
+            "air_quality_material_topic_management"
+          ];
+        }
+      };
+  
+      const subsectionsToShow = getSubsectionsToShow();
+  
+      // Filter and organize selected subsections
+      const getSelectedSubsections = () => {
+        console.log("Processing subsections:", subsectionsToShow);
+  
+        if (!subsectionsToShow || subsectionsToShow.length === 0) {
+          console.log("No subsections found");
+          return [];
+        }
+  
+        const result = subsectionsToShow
+          .filter((subId) => {
+            const exists = subsectionMapping[subId];
+            console.log(`Subsection ${subId} exists in mapping:`, !!exists);
+            return exists;
+          })
+          .map((subId, index) => {
+            const mapped = {
+              id: subId,
+              ...subsectionMapping[subId],
+              order: index + 1,
+              sectionNumber: `${sectionOrder}.${index + 1}`,
+            };
+            console.log(`Mapped subsection:`, mapped);
+            return mapped;
+          });
+  
+        console.log("Final selected subsections:", result);
+        return result;
+      };
+      const selectedSubsections = getSelectedSubsections();
+  
+      const getDynamicSectionMap = () => {
+        let groupIndex = 1;
+        const dynamicMap = [];
+      
+        groupedSubsections.forEach((group) => {
+          if (group.children) {
+            const parentSelected = selectedSubsections.some((s) => s.id === group.groupId);
+            const visibleChildren = group.children.filter((child) =>
+              selectedSubsections.some((s) => s.id === child.id)
+            );
+      
+            // Render the parent (if selected)
+            if (parentSelected) {
+              dynamicMap.push({
+                id: group.groupId,
+                sectionNumber: `${sectionOrder}.${groupIndex}`,
+                groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+              });
+            }
+      
+            // Render children (if any selected)
+            if (visibleChildren.length > 0) {
+              let childIndex = 1;
+              visibleChildren.forEach((child) => {
+                dynamicMap.push({
+                  id: child.id,
+                  sectionNumber: `${sectionOrder}.${groupIndex}.${childIndex++}`,
+                  groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+                });
+              });
+            }
+      
+            // Increase group index if either parent or children are rendered
+            if (parentSelected || visibleChildren.length > 0) {
+              groupIndex++;
+            }
+          } else {
+            const isVisible = selectedSubsections.some((s) => s.id === group.id);
+            if (!isVisible) return;
+      
+            dynamicMap.push({
+              id: group.id,
+              sectionNumber: `${sectionOrder}.${groupIndex++}`,
+            });
+          }
+        });
+      
+        return dynamicMap;
+      };
+  
+      const numberedSubsections = getDynamicSectionMap();
+  
+      // Set initial active section
+      useEffect(() => {
+        if (selectedSubsections.length > 0 && !activeSection) {
+          setActiveSection(selectedSubsections[0].id);
+        }
+      }, [selectedSubsections, activeSection]);
+  
+      const scrollToSection = (sectionId) => {
+        setActiveSection(sectionId);
+        const sectionRef = sectionRefs.current[sectionId];
+  
+        if (sectionRef?.current) {
+          const elementTop =
+            sectionRef.current.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementTop - 250,
+            behavior: "smooth",
+          });
+        }
+      };
+      const sectionRefs = useRef({});
+
   useImperativeHandle(ref, () => ({
     submitForm,
   }));
@@ -215,235 +671,565 @@ const Environment = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const dynamicSectionNumberMap = numberedSubsections.reduce((acc, item) => {
+    acc[item.id] = item.sectionNumber;
+    return acc;
+  }, {});
+
+  const currentData={
+  environmental_responsibility_statement,
+  emissions,
+  scope_one_emissions,
+  scope_two_emissions,
+  scope_three_emissions,
+  ghg_emission_intensity_tracking,
+  ghg_emission_reduction_efforts,
+  ozone_depleting_substance_elimination,
+  material_management_strategy,
+  recycling_process,
+  reclamation_recycling_process,
+  water_withdrawal_tracking,
+  water_consumption_goals,
+  energy_consumption_within_organization,
+  energy_consumption_outside_organization,
+  energy_intensity_tracking,
+  // energy_consumption_reduction_commitment,
+  significant_spills,
+  habitat_protection_restoration_commitment,
+  air_quality_protection_commitment,
+  biogenic_c02_emissions_305_3c,
+  biogenic_c02_emissions,
+  consolidation,
+  base_year
+  }
   const submitForm = async (type) => {
     LoaderOpen();
-    const data = {
-      environmental_responsibility_statement: {
-        page: "screen_twelve",
-        label: "12. Environment",
-        subLabel:
-          "Add statement about company’s responsibility to minimize the environmental impact",
-        type: "textarea",
-        content: environmental_responsibility_statement,
-        field: "environmental_responsibility_statement",
-        isSkipped: false,
-      },
-      emissions: {
-        page: "screen_twelve",
-        label: "12.1 Emissions",
-        subLabel: "Add statement about company’s strategy to reduce emission",
-        type: "textarea",
-        content: emissions,
-        field: "emissions",
-        isSkipped: false,
-      },
-      scope_one_emissions: {
-        page: "screen_twelve",
-        label: "12.1.2 Scope 1 GHG Emissions",
-        subLabel: "Add statement about company’s scope 1 emissions",
-        type: "textarea",
-        content: scope_one_emissions,
-        field: "scope_one_emissions",
-        isSkipped: false,
-      },
-      scope_two_emissions: {
-        page: "screen_twelve",
-        label: "12.1.3 Scope 2 GHG Emissions",
-        subLabel: "Add statement about company’s scope 2 emissions",
-        type: "textarea",
-        content: scope_two_emissions,
-        field: "scope_two_emissions",
-        isSkipped: false,
-      },
-      scope_three_emissions: {
-        page: "screen_twelve",
-        label: "12.1.4 Scope 3 GHG Emissions",
-        subLabel: "Add statement about company’s scope 3 emissions",
-        type: "textarea",
-        content: scope_three_emissions,
-        field: "scope_three_emissions",
-        isSkipped: false,
-      },
-      ghg_emission_intensity_tracking: {
-        page: "screen_twelve",
-        label: "12.1.5 GHG Emission Intensity",
-        subLabel: "Add statement about tracking of GHG emission intensity",
-        type: "richTextarea",
-        content: ghg_emission_intensity_tracking,
-        field: "ghg_emission_intensity_tracking",
-        isSkipped: false,
-      },
-      ghg_emission_reduction_efforts: {
-        page: "screen_twelve",
-        label: "12.1.6 Reduction in GHG Emissions",
-        subLabel: "Add statement about efforts to reduce GHG emission",
-        type: "richTextarea",
-        content: ghg_emission_reduction_efforts,
-        field: "ghg_emission_reduction_efforts",
-        isSkipped: false,
-      },
-      ozone_depleting_substance_elimination: {
-        page: "screen_twelve",
-        label: "12.1.7 Ozone Depleting Substances",
-        subLabel:
-          "Add statement about company’s commitment to eliminate use of ozone depleting substance",
-        type: "richTextarea",
-        content: ozone_depleting_substance_elimination,
-        field: "ozone_depleting_substance_elimination",
-        isSkipped: false,
-      },
-      material_management_strategy: {
-        page: "screen_twelve",
-        label: "12.2 Materials",
-        subLabel: "Add statement about company’s material management strategy",
-        type: "textarea",
-        content: material_management_strategy,
-        field: "material_management_strategy",
-        isSkipped: false,
-      },
-      recycling_process: {
-        page: "screen_twelve",
-        label: "12.2.2 Recycled Input Materials Used",
-        subLabel: "Add statement about company’s process for recycling",
-        type: "textarea",
-        content: recycling_process,
-        field: "recycling_process",
-        isSkipped: false,
-      },
-      reclamation_recycling_process: {
-        page: "screen_twelve",
-        label: "12.2.3 Reclaimed Products and Their Packaging Materials",
-        subLabel:
-          "Add statement about company’s reclamation and recycling process",
-        type: "textarea",
-        content: reclamation_recycling_process,
-        field: "reclamation_recycling_process",
-        isSkipped: false,
-      },
-      water_withdrawal_tracking: {
-        page: "screen_twelve",
-        label: "12.3.2 Water Withdrawal",
-        subLabel: "Add statement about company’s tracking of water withdrawal",
-        type: "textarea",
-        content: water_withdrawal_tracking,
-        field: "water_withdrawal_tracking",
-        isSkipped: false,
-      },
-      water_consumption_goals: {
-        page: "screen_twelve",
-        label: "12.3.4 Water Consumption",
-        subLabel: "Add statement about company’s water consumption goals",
-        type: "textarea",
-        content: water_consumption_goals,
-        field: "water_consumption_goals",
-        isSkipped: false,
-      },
-      energy_consumption_within_organization: {
-        page: "screen_twelve",
-        label: "12.4.2 Energy Consumption within the Organization",
-        subLabel:
-          "Add statement about company’s energy consumption within organisation",
-        type: "textarea",
-        content: energy_consumption_within_organization,
-        field: "energy_consumption_within_organization",
-        isSkipped: false,
-      },
-      energy_consumption_outside_organization: {
-        page: "screen_twelve",
-        label: "12.4.3 Energy Consumption Outside of the Organization",
-        subLabel:
-          "Add statement about company’s energy consumption outside of the organisation",
-        type: "textarea",
-        content: energy_consumption_outside_organization,
-        field: "energy_consumption_outside_organization",
-        isSkipped: false,
-      },
-      energy_intensity_tracking: {
-        page: "screen_twelve",
-        label: "12.4.4 Energy Intensity",
-        subLabel: "Add statement about tracking the Energy Intensity",
-        type: "textarea",
-        content: energy_intensity_tracking,
-        field: "energy_intensity_tracking",
-        isSkipped: false,
-      },
-      energy_consumption_reduction_commitment: {
-        page: "screen_twelve",
-        label: "12.4.5 Reduction in Energy consumption",
-        subLabel:
-          "Add statement about company’s commitment to reduce energy consumption",
-        type: "textarea",
-        content: energy_consumption_reduction_commitment,
-        field: "energy_consumption_reduction_commitment",
-        isSkipped: false,
-      },
-      significant_spills: {
-        page: "screen_twelve",
-        label: "12.5.6 Significant Spills",
-        subLabel:
-          "Add statement about company’s programs for preventing and managing significant spills",
-        type: "richTextarea",
-        content: significant_spills,
-        field: "significant_spills",
-        isSkipped: false,
-      },
-      habitat_protection_restoration_commitment: {
-        page: "screen_twelve",
-        label: "12.6.2 Habitat Protected and Restored",
-        subLabel:
-          "Add statement about company’s commitment to protect and restore habitats",
-        type: "richTextarea",
-        content: habitat_protection_restoration_commitment,
-        field: "habitat_protection_restoration_commitment",
-        isSkipped: false,
-      },
-      air_quality_protection_commitment: {
-        page: "screen_twelve",
-        label: "12.7 Air Quality",
-        subLabel:
-          "Add statement about company’s commitment to protect and maintain air quality",
-        type: "richTextarea",
-        content: air_quality_protection_commitment,
-        field: "air_quality_protection_commitment",
-        isSkipped: false,
-      },
-      biogenic_c02_emissions_305_3c: {
-        page: "screen_twelve",
-        label: "305-3-c. Biogenic CO2 emissions",
-        subLabel: "",
-        type: "richTextarea",
-        content: biogenic_c02_emissions_305_3c,
-        field: "biogenic_c02_emissions_305_3c",
-        isSkipped: false,
-      },
-      biogenic_c02_emissions: {
-        page: "screen_twelve",
-        label: "Biogenic CO2 emissions",
-        subLabel: "",
-        type: "richTextarea",
-        content: biogenic_c02_emissions,
-        field: "biogenic_c02_emissions",
-        isSkipped: false,
-      },
-      consolidation: {
-        page: "screen_twelve",
-        label: "Consolidation Approach",
-        subLabel: "Add statement about tracking of Consolidation Approach",
-        type: "textarea",
-        content: consolidation,
-        field: "consolidation",
-        isSkipped: false,
-      },
-      base_year: {
-        page: "screen_twelve",
-        label: "Base Year",
-        subLabel: "Add statement about emissions in the Base Year",
-        type: "textarea",
-        content: base_year,
-        field: "base_year",
-        isSkipped: false,
-      },
-    };
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
+    const data = {};
+
+data.environmental_responsibility_statement = {
+  page: "screen_twelve",
+  label: `${sectionOrder}. Environment`,
+  subLabel: "Add statement about company’s responsibility to minimize the environmental impact",
+  type: "textarea",
+  content: environmental_responsibility_statement,
+  field: "environmental_responsibility_statement",
+  isSkipped: false,
+};
+
+// Emissions
+if (subsectionsToShow.includes("emissions")) {
+  const sectionNumber = dynamicSectionNumberMap["emissions"];
+  data.emissions = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Emissions`,
+    subLabel: "Add statement about company’s strategy to reduce emission",
+    type: "textarea",
+    content: emissions,
+    field: "emissions",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("scope_1_ghg_emissions")) {
+  const sectionNumber = dynamicSectionNumberMap["scope_1_ghg_emissions"];
+  data.scope_one_emissions = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Scope 1 GHG Emissions`,
+    subLabel: "Add statement about company’s scope 1 emissions",
+    type: "textarea",
+    content: scope_one_emissions,
+    field: "scope_one_emissions",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("scope_2_ghg_emissions")) {
+  const sectionNumber = dynamicSectionNumberMap["scope_2_ghg_emissions"];
+  data.scope_two_emissions = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Scope 2 GHG Emissions`,
+    subLabel: "Add statement about company’s scope 2 emissions",
+    type: "textarea",
+    content: scope_two_emissions,
+    field: "scope_two_emissions",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("scope_3_ghg_emissions")) {
+  const sectionNumber = dynamicSectionNumberMap["scope_3_ghg_emissions"];
+  data.scope_three_emissions = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Scope 3 GHG Emissions`,
+    subLabel: "Add statement about company’s scope 3 emissions",
+    type: "textarea",
+    content: scope_three_emissions,
+    field: "scope_three_emissions",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("ghg_emission_intensity")) {
+  const sectionNumber = dynamicSectionNumberMap["ghg_emission_intensity"];
+  data.ghg_emission_intensity_tracking = {
+    page: "screen_twelve",
+    label: `${sectionNumber} GHG Emission Intensity`,
+    subLabel: "Add statement about tracking of GHG emission intensity",
+    type: "richTextarea",
+    content: ghg_emission_intensity_tracking,
+    field: "ghg_emission_intensity_tracking",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("reduction_in_ghg_emissions")) {
+  const sectionNumber = dynamicSectionNumberMap["reduction_in_ghg_emissions"];
+  data.ghg_emission_reduction_efforts = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Reduction in GHG Emissions`,
+    subLabel: "Add statement about efforts to reduce GHG emission",
+    type: "richTextarea",
+    content: ghg_emission_reduction_efforts,
+    field: "ghg_emission_reduction_efforts",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("ozone_depleting_substances")) {
+  const sectionNumber = dynamicSectionNumberMap["ozone_depleting_substances"];
+  data.ozone_depleting_substance_elimination = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Ozone Depleting Substances`,
+    subLabel: "Add statement about company’s commitment to eliminate use of ozone depleting substance",
+    type: "richTextarea",
+    content: ozone_depleting_substance_elimination,
+    field: "ozone_depleting_substance_elimination",
+    isSkipped: false,
+  };
+}
+if(subsectionsToShow.includes("materials")){
+  const sectionNumber = dynamicSectionNumberMap["materials"];
+  data.material_management_strategy= {
+    page: "screen_twelve",
+    label: `${sectionNumber} Materials`,
+    subLabel: "Add statement about company’s material management strategy",
+    type: "textarea",
+    content: material_management_strategy,
+    field: "material_management_strategy",
+    isSkipped: false,
+  }
+}
+if(subsectionsToShow.includes("recycled_input_materials")){
+  const sectionNumber = dynamicSectionNumberMap["recycled_input_materials"];
+  data.recycling_process= {
+    page: "screen_twelve",
+    label: `${sectionNumber} Recycled Input Materials Used`,
+    subLabel: "Add statement about company’s process for recycling",
+    type: "textarea",
+    content: recycling_process,
+    field: "recycling_process",
+    isSkipped: false,
+  }
+}
+if(subsectionsToShow.includes("reclaimed_products_packaging")){
+  const sectionNumber = dynamicSectionNumberMap["reclaimed_products_packaging"];
+  data.reclamation_recycling_process= {
+    page: "screen_twelve",
+    label: `${sectionNumber} Reclaimed Products and Their Packaging Materials`,
+    subLabel:
+      "Add statement about company’s reclamation and recycling process",
+    type: "textarea",
+    content: reclamation_recycling_process,
+    field: "reclamation_recycling_process",
+    isSkipped: false,
+  }
+}
+if (subsectionsToShow.includes("water_withdrawal")) {
+  const sectionNumber = dynamicSectionNumberMap["water_withdrawal"];
+  data.water_withdrawal_tracking = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Water Withdrawal`,
+    subLabel: "Add statement about company’s tracking of water withdrawal",
+    type: "textarea",
+    content: water_withdrawal_tracking,
+    field: "water_withdrawal_tracking",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("water_consumption")) {
+  const sectionNumber = dynamicSectionNumberMap["water_consumption"];
+  data.water_consumption_goals = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Water Consumption`,
+    subLabel: "Add statement about company’s water consumption goals",
+    type: "textarea",
+    content: water_consumption_goals,
+    field: "water_consumption_goals",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("energy_consumption_within")) {
+  const sectionNumber = dynamicSectionNumberMap["energy_consumption_within"];
+  data.energy_consumption_within_organization = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Energy Consumption within the Organization`,
+    subLabel: "Add statement about company’s energy consumption within organisation",
+    type: "textarea",
+    content: energy_consumption_within_organization,
+    field: "energy_consumption_within_organization",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("energy_consumption_outside")) {
+  const sectionNumber = dynamicSectionNumberMap["energy_consumption_outside"];
+  data.energy_consumption_outside_organization = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Energy Consumption Outside of the Organization`,
+    subLabel: "Add statement about company’s energy consumption outside of the organisation",
+    type: "textarea",
+    content: energy_consumption_outside_organization,
+    field: "energy_consumption_outside_organization",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("energy_intensity")) {
+  const sectionNumber = dynamicSectionNumberMap["energy_intensity"];
+  data.energy_intensity_tracking = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Energy Intensity`,
+    subLabel: "Add statement about tracking the Energy Intensity",
+    type: "textarea",
+    content: energy_intensity_tracking,
+    field: "energy_intensity_tracking",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("significant_spills")) {
+  const sectionNumber = dynamicSectionNumberMap["significant_spills"];
+  data.significant_spills = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Significant Spills`,
+    subLabel: "Add statement about company’s programs for preventing and managing significant spills",
+    type: "textarea",
+    content: significant_spills,
+    field: "significant_spills",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("habitat_protected_restored")) {
+  const sectionNumber = dynamicSectionNumberMap["habitat_protected_restored"];
+  data.habitat_protection_restoration_commitment = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Habitat Protected and Restored`,
+    subLabel: "Add statement about company’s commitment to protect and restore habitats",
+    type: "richTextarea",
+    content: habitat_protection_restoration_commitment,
+    field: "habitat_protection_restoration_commitment",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("air_quality")) {
+  const sectionNumber = dynamicSectionNumberMap["air_quality"];
+  data.air_quality_protection_commitment = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Air Quality`,
+    subLabel: "Add statement about company’s commitment to protect and maintain air quality",
+    type: "richTextarea",
+    content: air_quality_protection_commitment,
+    field: "air_quality_protection_commitment",
+    isSkipped: false,
+  };
+}
+
+// Biogenic Emissions
+if (subsectionsToShow.includes("scope_3_ghg_emissions")) {
+  const sectionNumber = dynamicSectionNumberMap["scope_3_ghg_emissions"];
+  data.biogenic_c02_emissions_305_3c = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Biogenic CO2 emissions (305-3-c)`,
+    subLabel: "",
+    type: "richTextarea",
+    content: biogenic_c02_emissions_305_3c,
+    field: "biogenic_c02_emissions_305_3c",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("scope_1_ghg_emissions")) {
+  const sectionNumber = dynamicSectionNumberMap["scope_1_ghg_emissions"];
+  data.biogenic_c02_emissions = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Biogenic CO2 emissions`,
+    subLabel: "",
+    type: "richTextarea",
+    content: biogenic_c02_emissions,
+    field: "biogenic_c02_emissions",
+    isSkipped: false,
+  };
+}
+
+// Consolidation
+if (subsectionsToShow.includes("consolidation_approach")) {
+  const sectionNumber = dynamicSectionNumberMap["consolidation_approach"];
+  data.consolidation = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Consolidation Approach`,
+    subLabel: "Add statement about tracking of Consolidation Approach",
+    type: "textarea",
+    content: consolidation,
+    field: "consolidation",
+    isSkipped: false,
+  };
+}
+
+if (subsectionsToShow.includes("base_year")) {
+  const sectionNumber = dynamicSectionNumberMap["base_year"];
+  data.base_year = {
+    page: "screen_twelve",
+    label: `${sectionNumber} Base Year`,
+    subLabel: "Add statement about emissions in the Base Year",
+    type: "textarea",
+    content: base_year,
+    field: "base_year",
+    isSkipped: false,
+  };
+}
+
+    // const data = {
+    //   environmental_responsibility_statement: {
+    //     page: "screen_twelve",
+    //     label: "12. Environment",
+    //     subLabel:
+    //       "Add statement about company’s responsibility to minimize the environmental impact",
+    //     type: "textarea",
+    //     content: environmental_responsibility_statement,
+    //     field: "environmental_responsibility_statement",
+    //     isSkipped: false,
+    //   },
+    //   emissions: {
+    //     page: "screen_twelve",
+    //     label: "12.1 Emissions",
+    //     subLabel: "Add statement about company’s strategy to reduce emission",
+    //     type: "textarea",
+    //     content: emissions,
+    //     field: "emissions",
+    //     isSkipped: false,
+    //   },
+    //   scope_one_emissions: {
+    //     page: "screen_twelve",
+    //     label: "12.1.2 Scope 1 GHG Emissions",
+    //     subLabel: "Add statement about company’s scope 1 emissions",
+    //     type: "textarea",
+    //     content: scope_one_emissions,
+    //     field: "scope_one_emissions",
+    //     isSkipped: false,
+    //   },
+    //   scope_two_emissions: {
+    //     page: "screen_twelve",
+    //     label: "12.1.3 Scope 2 GHG Emissions",
+    //     subLabel: "Add statement about company’s scope 2 emissions",
+    //     type: "textarea",
+    //     content: scope_two_emissions,
+    //     field: "scope_two_emissions",
+    //     isSkipped: false,
+    //   },
+    //   scope_three_emissions: {
+    //     page: "screen_twelve",
+    //     label: "12.1.4 Scope 3 GHG Emissions",
+    //     subLabel: "Add statement about company’s scope 3 emissions",
+    //     type: "textarea",
+    //     content: scope_three_emissions,
+    //     field: "scope_three_emissions",
+    //     isSkipped: false,
+    //   },
+    //   ghg_emission_intensity_tracking: {
+    //     page: "screen_twelve",
+    //     label: "12.1.5 GHG Emission Intensity",
+    //     subLabel: "Add statement about tracking of GHG emission intensity",
+    //     type: "richTextarea",
+    //     content: ghg_emission_intensity_tracking,
+    //     field: "ghg_emission_intensity_tracking",
+    //     isSkipped: false,
+    //   },
+    //   ghg_emission_reduction_efforts: {
+    //     page: "screen_twelve",
+    //     label: "12.1.6 Reduction in GHG Emissions",
+    //     subLabel: "Add statement about efforts to reduce GHG emission",
+    //     type: "richTextarea",
+    //     content: ghg_emission_reduction_efforts,
+    //     field: "ghg_emission_reduction_efforts",
+    //     isSkipped: false,
+    //   },
+    //   ozone_depleting_substance_elimination: {
+    //     page: "screen_twelve",
+    //     label: "12.1.7 Ozone Depleting Substances",
+    //     subLabel:
+    //       "Add statement about company’s commitment to eliminate use of ozone depleting substance",
+    //     type: "richTextarea",
+    //     content: ozone_depleting_substance_elimination,
+    //     field: "ozone_depleting_substance_elimination",
+    //     isSkipped: false,
+    //   },
+    //   material_management_strategy: {
+    //     page: "screen_twelve",
+    //     label: "12.2 Materials",
+    //     subLabel: "Add statement about company’s material management strategy",
+    //     type: "textarea",
+    //     content: material_management_strategy,
+    //     field: "material_management_strategy",
+    //     isSkipped: false,
+    //   },
+    //   recycling_process: {
+    //     page: "screen_twelve",
+    //     label: "12.2.2 Recycled Input Materials Used",
+    //     subLabel: "Add statement about company’s process for recycling",
+    //     type: "textarea",
+    //     content: recycling_process,
+    //     field: "recycling_process",
+    //     isSkipped: false,
+    //   },
+    //   reclamation_recycling_process: {
+    //     page: "screen_twelve",
+    //     label: "12.2.3 Reclaimed Products and Their Packaging Materials",
+    //     subLabel:
+    //       "Add statement about company’s reclamation and recycling process",
+    //     type: "textarea",
+    //     content: reclamation_recycling_process,
+    //     field: "reclamation_recycling_process",
+    //     isSkipped: false,
+    //   },
+    //   water_withdrawal_tracking: {
+    //     page: "screen_twelve",
+    //     label: "12.3.2 Water Withdrawal",
+    //     subLabel: "Add statement about company’s tracking of water withdrawal",
+    //     type: "textarea",
+    //     content: water_withdrawal_tracking,
+    //     field: "water_withdrawal_tracking",
+    //     isSkipped: false,
+    //   },
+    //   water_consumption_goals: {
+    //     page: "screen_twelve",
+    //     label: "12.3.4 Water Consumption",
+    //     subLabel: "Add statement about company’s water consumption goals",
+    //     type: "textarea",
+    //     content: water_consumption_goals,
+    //     field: "water_consumption_goals",
+    //     isSkipped: false,
+    //   },
+    //   energy_consumption_within_organization: {
+    //     page: "screen_twelve",
+    //     label: "12.4.2 Energy Consumption within the Organization",
+    //     subLabel:
+    //       "Add statement about company’s energy consumption within organisation",
+    //     type: "textarea",
+    //     content: energy_consumption_within_organization,
+    //     field: "energy_consumption_within_organization",
+    //     isSkipped: false,
+    //   },
+    //   energy_consumption_outside_organization: {
+    //     page: "screen_twelve",
+    //     label: "12.4.3 Energy Consumption Outside of the Organization",
+    //     subLabel:
+    //       "Add statement about company’s energy consumption outside of the organisation",
+    //     type: "textarea",
+    //     content: energy_consumption_outside_organization,
+    //     field: "energy_consumption_outside_organization",
+    //     isSkipped: false,
+    //   },
+    //   energy_intensity_tracking: {
+    //     page: "screen_twelve",
+    //     label: "12.4.4 Energy Intensity",
+    //     subLabel: "Add statement about tracking the Energy Intensity",
+    //     type: "textarea",
+    //     content: energy_intensity_tracking,
+    //     field: "energy_intensity_tracking",
+    //     isSkipped: false,
+    //   },
+    //   // energy_consumption_reduction_commitment: {
+    //   //   page: "screen_twelve",
+    //   //   label: "12.4.5 Reduction in Energy consumption",
+    //   //   subLabel:
+    //   //     "Add statement about company’s commitment to reduce energy consumption",
+    //   //   type: "textarea",
+    //   //   content: energy_consumption_reduction_commitment,
+    //   //   field: "energy_consumption_reduction_commitment",
+    //   //   isSkipped: false,
+    //   // },
+    //   significant_spills: {
+    //     page: "screen_twelve",
+    //     label: "12.5.6 Significant Spills",
+    //     subLabel:
+    //       "Add statement about company’s programs for preventing and managing significant spills",
+    //     type: "richTextarea",
+    //     content: significant_spills,
+    //     field: "significant_spills",
+    //     isSkipped: false,
+    //   },
+    //   habitat_protection_restoration_commitment: {
+    //     page: "screen_twelve",
+    //     label: "12.6.2 Habitat Protected and Restored",
+    //     subLabel:
+    //       "Add statement about company’s commitment to protect and restore habitats",
+    //     type: "richTextarea",
+    //     content: habitat_protection_restoration_commitment,
+    //     field: "habitat_protection_restoration_commitment",
+    //     isSkipped: false,
+    //   },
+    //   air_quality_protection_commitment: {
+    //     page: "screen_twelve",
+    //     label: "12.7 Air Quality",
+    //     subLabel:
+    //       "Add statement about company’s commitment to protect and maintain air quality",
+    //     type: "richTextarea",
+    //     content: air_quality_protection_commitment,
+    //     field: "air_quality_protection_commitment",
+    //     isSkipped: false,
+    //   },
+    //   biogenic_c02_emissions_305_3c: {
+    //     page: "screen_twelve",
+    //     label: "305-3-c. Biogenic CO2 emissions",
+    //     subLabel: "",
+    //     type: "richTextarea",
+    //     content: biogenic_c02_emissions_305_3c,
+    //     field: "biogenic_c02_emissions_305_3c",
+    //     isSkipped: false,
+    //   },
+    //   biogenic_c02_emissions: {
+    //     page: "screen_twelve",
+    //     label: "Biogenic CO2 emissions",
+    //     subLabel: "",
+    //     type: "richTextarea",
+    //     content: biogenic_c02_emissions,
+    //     field: "biogenic_c02_emissions",
+    //     isSkipped: false,
+    //   },
+    //   consolidation: {
+    //     page: "screen_twelve",
+    //     label: "Consolidation Approach",
+    //     subLabel: "Add statement about tracking of Consolidation Approach",
+    //     type: "textarea",
+    //     content: consolidation,
+    //     field: "consolidation",
+    //     isSkipped: false,
+    //   },
+    //   base_year: {
+    //     page: "screen_twelve",
+    //     label: "Base Year",
+    //     subLabel: "Add statement about emissions in the Base Year",
+    //     type: "textarea",
+    //     content: base_year,
+    //     field: "base_year",
+    //     isSkipped: false,
+    //   },
+    // };
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_twelve/${reportid}/`;
     try {
@@ -529,6 +1315,12 @@ const Environment = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(
           setEnvironmentStatement(
@@ -648,425 +1440,347 @@ const Environment = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
     }
   }, [reportid]);
 
+    useEffect(() => {
+                 selectedSubsections.forEach((section) => {
+                   if (!sectionRefs.current[section.id]) {
+                     sectionRefs.current[section.id] = createRef();
+                   }
+                 });
+               }, [selectedSubsections]);
+       
+         
+       
+          const renderSection = (section) => {
+                 const SectionComponent = subsectionMapping[section.id]?.component;
+                 const ref = sectionRefs.current[section.id] || createRef();
+                 sectionRefs.current[section.id] = ref;
+           
+                 const commonProps = {
+                   orgName,
+                   data,
+                   sectionNumber: section.sectionNumber,
+                   sectionOrder,
+                   reportType
+                 };
+           
+                 if (!SectionComponent) return null;
+           
+                 return (
+                   <div key={section.id} ref={ref}>
+                     {section.groupTitle && (
+                       <div className="mb-2">
+                         {/* <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+                         {section.groupTitle}
+                       </h3> */}
+                       </div>
+                     )}
+                     <SectionComponent {...commonProps} />
+                   </div>
+                 );
+               };
+         
+         
+               if (
+                 reportType === "Custom ESG Report" &&
+                 selectedSubsections.length === 0
+               ) {
+                 return (
+                   <div className="mx-2 p-2">
+                     <div>
+                       <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+                         {sectionOrder}. About the company and operations
+                       </h3>
+                     </div>
+                     <div className="text-center py-8">
+                       <p className="text-gray-500">
+                         No subsections selected for this section.
+                       </p>
+                     </div>
+                   </div>
+                 );
+               }
+
+  
+
   return (
     <>
       <div className="mx-2 p-2">
-        <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          12. Environment
-        </h3>
+        <div>
+          <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+            {sectionOrder}. Environment
+          </h3>
+        </div>
         <div className="flex gap-4">
-          <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
-            <Section1 orgName={orgName} />
-            <Section2 section12_1Ref={{ section12_1Ref }} data={data} />
-          {reportType=='GRI Report: In accordance With' && <Section3 section12_1_1Ref={section12_1_1Ref} data={data} /> }  
-            <Section4 section12_1_2Ref={section12_1_2Ref} data={data} reportType={reportType} />
-            <Section5 section12_1_3Ref={section12_1_3Ref} data={data} reportType={reportType} />
-            <Section6 section12_1_4Ref={section12_1_4Ref} data={data} reportType={reportType} />
-            <Section7
-              section12_1_5Ref={section12_1_5Ref}
-              section12_1_6Ref={section12_1_6Ref}
-              section12_1_7Ref={section12_1_7Ref}
-              data={data}
-              reportType={reportType}
-            />
-            <Section8 section12_1_8Ref={section12_1_8Ref} data={data} reportType={reportType} />
-            <Section9 section12_1_9Ref={section12_1_9Ref} data={data} reportType={reportType} />
-            <Section10 section12_2Ref={section12_2Ref} data={data} reportType={reportType} />
-           {reportType=='GRI Report: In accordance With' && <Section11 section12_2_1Ref={section12_2_1Ref} data={data} reportType={reportType} />} 
-            <Section12 section12_2_2Ref={section12_2_2Ref} data={data} reportType={reportType} />
-            <Section13 section12_2_3Ref={section12_2_3Ref} data={data} reportType={reportType} />
-            <Section14 section12_3Ref={section12_3Ref} data={data} reportType={reportType} />
-          {reportType=='GRI Report: In accordance With' &&  <Section15 section12_3_1Ref={section12_3_1Ref} data={data} reportType={reportType} />} 
-            <Section16 section12_3_2Ref={section12_3_2Ref} data={data} reportType={reportType} />
-            <Section17 section12_3_3Ref={section12_3_3Ref} data={data} reportType={reportType} />
-            <Section18 section12_3_4Ref={section12_3_4Ref} data={data} reportType={reportType} />
-            <Section19
-              section12_4_1Ref={section12_4_1Ref}
-              section12_4Ref={section12_4Ref}
-              data={data}
-              reportType={reportType}
-            />
-            <Section20 section12_4_2Ref={section12_4_2Ref} data={data} reportType={reportType} />
-            <Section21 section12_4_3Ref={section12_4_3Ref} data={data} reportType={reportType} />
-            <Section22 section12_4_4Ref={section12_4_4Ref} data={data} reportType={reportType} />
-            <Section23 section12_4_5Ref={section12_4_5Ref} data={data} reportType={reportType}/>
-            <Section24
-              section12_5_1Ref={section12_5_1Ref}
-              section12_5Ref={section12_5Ref}
-              data={data}
-              reportType={reportType}
-            />
-            <Section25 section12_5_2Ref={section12_5_2Ref} data={data} reportType={reportType} />
-            <Section26 section12_5_3Ref={section12_5_3Ref} data={data} reportType={reportType} />
-            <Section27 section12_5_4Ref={section12_5_4Ref} data={data} reportType={reportType} />
-            <Section28 section12_5_5Ref={section12_5_5Ref} data={data} reportType={reportType} />
-            <Section29
-              section12_5_6Ref={section12_5_6Ref}
-              orgName={orgName}
-              data={data}
-              reportType={reportType}
-            />
-            <Section30 section12_6Ref={section12_6Ref} data={data} reportType={reportType} />
-          {reportType=='GRI Report: In accordance With' && <Section31 section12_6_1Ref={section12_6_1Ref} data={data} reportType={reportType} />}
-            <Section32 section12_6_2Ref={section12_6_2Ref} data={data} reportType={reportType} />
-            <Section33 section12_7Ref={section12_7Ref} data={data} reportType={reportType} />
-          {reportType=='GRI Report: In accordance With' &&  <Section34 section12_7_1Ref={section12_7_1Ref} data={data} reportType={reportType} />}
+          <div className="xl:w-[80%] md:w-[75%] lg:w-[80%] 2k:w-[80%] 4k:w-[80%] 2xl:w-[80%] w-full">
+            {/* {selectedSubsections.map(section => renderSection(section))} */}
+            {/* {subsectionsToShow.includes("materiality_assessment") && (
+                <div ref={sectionRefs.current["materiality_assessment"] || createRef()}>
+                  <Section1
+                    orgName={orgName}
+                    data={data}
+                    sectionOrder={sectionOrder}
+                    sectionNumber={null} // Not numbered
+                  />
+                </div>
+              )} */}
+               <Section1
+                    orgName={orgName}
+                    data={data}
+                    sectionOrder={sectionOrder}
+                    sectionNumber={null} // Not numbered
+                  />
+            {numberedSubsections.map((section) => renderSection(section))}
           </div>
-          {/* page sidebar */}
 
-          <div
-            className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36  md:fixed 
-  md:top-[19rem]
-  md:right-4  hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block"
-          >
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              12. Environment
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section12_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_1Ref, "section12_1")}
-            >
-              12.1. Emissions
-            </p>
-            {
-              reportType=='GRI Report: In accordance With'?(
-                <p
-                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                  activeSection === "section12_1_1" ? "text-blue-400" : ""
-                }`}
-                onClick={() => scrollToSection(section12_1_1Ref, "section12_1_1")}
-              >
-                12.1.1. Management of Material Topics
+          {/* Page sidebar - only show if there are subsections */}
+          {selectedSubsections.length > 0 && (
+            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
+              <p className="text-[11px] text-[#727272] mb-2 uppercase">
+                {sectionOrder}. Environment
               </p>
-              ):(
-                <div></div>
-              )
-            }
 
-           
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_1_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_1_2Ref, "section12_1_2")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.1.2.':'12.1.1.'}  Scope 1 GHG Emissions
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_1_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_1_3Ref, "section12_1_3")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.1.3.':'12.1.2.'}  Scope 2 GHG Emissions
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_1_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_1_4Ref, "section12_1_4")}
-            >
-             {reportType=='GRI Report: In accordance With'?'12.1.4.':'12.1.3.'} Scope 3 GHG Emissions
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_1_5" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_1_5Ref, "section12_1_5")}
-            >
-             {reportType=='GRI Report: In accordance With'?'12.1.5.':'12.1.4.'} Base Year
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_1_6" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_1_6Ref, "section12_1_6")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.1.6.':'12.1.5.'}  Consolidation Approach
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_1_7" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_1_7Ref, "section12_1_7")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.1.7.':'12.1.6.'} GHG emission intensity
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_1_8" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_1_8Ref, "section12_1_8")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.1.8.':'12.1.7.'}  Reduction in GHG emissions 
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_1_9" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_1_9Ref, "section12_1_9")}
-            >
-             {reportType=='GRI Report: In accordance With'?'12.1.9.':'12.1.8.'}  Ozone depleting substances
-            </p>
+              {(() => {
+                let groupIndex = 1;
 
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section12_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_2Ref, "section12_2")}
-            >
-              12.2. Materials
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-                <p
-                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                  activeSection === "section12_2_1" ? "text-blue-400" : ""
-                }`}
-                onClick={() => scrollToSection(section12_2_1Ref, "section12_2_1")}
-              >
-                12.2.1. Management of Material Topics
-              </p>
-            ):(
-              <div></div>
-            )}
-            
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_2_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_2_2Ref, "section12_2_2")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.2.2.':'12.2.1.'}   Recycled input materials used
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_2_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_2_3Ref, "section12_2_3")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.2.3.':'12.2.2.'} Reclaimed products and their packaging materials
-            </p>
+                const groupedSidebar = [
+                  {
+                    groupId: "emissions",
+                    title: "Emissions",
+                    children: [
+                      {
+                        id: "emissions_material_topic_management",
+                        label: "Management Of Material Topics",
+                      },
+                      {
+                        id: "scope_1_ghg_emissions",
+                        label: "Scope 1 GHG Emissions",
+                      },
+                      {
+                        id: "scope_2_ghg_emissions",
+                        label: "Scope 2 GHG Emissions",
+                      },
+                      {
+                        id: "scope_3_ghg_emissions",
+                        label: "Scope 3 GHG Emissions",
+                      },
+                      {
+                        id: "base_year",
+                        label: "Base Year",
+                      },
+                      {
+                        id: "consolidation_approach",
+                        label: "Consolidation Approach",
+                      },
+                      {
+                        id: "ghg_emission_intensity",
+                        label: "GHG Emission Intensity",
+                      },
+                      {
+                        id: "reduction_in_ghg_emissions",
+                        label: "Reduction In GHG Emissions",
+                      },
+                      {
+                        id: "ozone_depleting_substances",
+                        label: "Ozone Depleting Substances",
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "materials",
+                    title: "Materials",
+                    children: [
+                      {
+                        id: "materials_material_topic_management",
+                        label: "Management Of Material Topics",
+                      },
+                      {
+                        id: "recycled_input_materials",
+                        label: "Recycled Input Materials Used",
+                      },
+                      {
+                        id: "reclaimed_products_packaging",
+                        label: "Reclaimed Products And Their Packaging Materials",
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "water",
+                    title: "Water",
+                    children: [
+                      {
+                        id: "water_material_topic_management",
+                        label: "Management Of Material Topic",
+                      },
+                      {
+                        id: "water_withdrawal",
+                        label: "Water Withdrawal",
+                      },
+                      {
+                        id: "water_discharge_impact",
+                        label: "Water Discharge & Management Of Associated Impact",
+                      },
+                      {
+                        id: "water_consumption",
+                        label: "Water Consumption",
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "energy",
+                    title: "Energy",
+                    children: [
+                      {
+                        id: "energy_material_topic_management",
+                        label: "Management Of Material Topics",
+                      },
+                      {
+                        id: "energy_consumption_within",
+                        label: "Energy Consumption Within The Organisation",
+                      },
+                      {
+                        id: "energy_consumption_outside",
+                        label: "Energy Consumption Outside Of The Organisation",
+                      },
+                      {
+                        id: "energy_intensity",
+                        label: "Energy Intensity",
+                      },
+                      {
+                        id: "energy_reduction",
+                        label: "Reduction In Energy Consumption",
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "waste",
+                    title: "Waste",
+                    children: [
+                      {
+                        id: "waste_material_topic_management",
+                        label: "Management Of Material Topics",
+                      },
+                      {
+                        id: "waste_generation_impacts",
+                        label: "Waste Generation And Impacts",
+                      },
+                      {
+                        id: "waste_impact_management",
+                        label: "Management Of Waste Related Impacts",
+                      },
+                      {
+                        id: "waste_disposed",
+                        label: "Waste Disposed",
+                      },
+                      {
+                        id: "waste_diverted",
+                        label: "Waste Diverted From Disposal",
+                      },
+                      {
+                        id: "significant_spills",
+                        label: "Significant Spills",
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "biodiversity",
+                    title: "Biodiversity",
+                    children: [
+                      {
+                        id: "biodiversity_material_topic_management",
+                        label: "Management Of Material Topic",
+                      },
+                      {
+                        id: "habitat_protected_restored",
+                        label: "Habitat Protected And Restored",
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "air_quality",
+                    title: "Air Quality",
+                    children: [
+                      {
+                        id: "air_quality_material_topic_management",
+                        label: "Management Of Material Topics",
+                      },
+                    ],
+                  },
+                ];
+                
+                
+                
 
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section12_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_3Ref, "section12_3")}
-            >
-              12.3. Water
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-                <p
-                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                  activeSection === "section12_3_1" ? "text-blue-400" : ""
-                }`}
-                onClick={() => scrollToSection(section12_3_1Ref, "section12_3_1")}
-              >
-                12.3.1. Management of Material Topic
-              </p>
-            ):(
-              <div></div>
-            )} 
-            
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_3_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_3_2Ref, "section12_3_2")}
-            >
-             {reportType=='GRI Report: In accordance With'?'12.3.2.':'12.3.1.'}  Water withdrawal
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_3_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_3_3Ref, "section12_3_3")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.3.3.':'12.3.2.'}   Water discharge & management of associated impact
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_3_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_3_4Ref, "section12_3_4")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.3.4.':'12.3.3.'}  Water Consumption
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section12_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_4Ref, "section12_4")}
-            >
-              12.4. Energy
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-              <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_4_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_4_1Ref, "section12_4_1")}
-            >
-              12.4.1. Management of Material Topics
-            </p>
-            ):(
-              <div></div>
-            )}
-            
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_4_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_4_2Ref, "section12_4_2")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.4.2':'12.4.1'}   Energy consumption within the organisation
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_4_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_4_3Ref, "section12_4_3")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.4.3':'12.4.2'}  Energy consumption outside of the organisation
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_4_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_4_4Ref, "section12_4_4")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.4.4':'12.4.3'}  Energy intensity
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_4_5" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_4_5Ref, "section12_4_5")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.4.5':'12.4.4'} Reduction in energy consumption 
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section12_5" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_5Ref, "section12_5")}
-            >
-              12.5. Waste
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-              <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_5_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_5_1Ref, "section12_5_1")}
-            >
-              12.5.1. Management of Material Topics
-            </p>
-            ):(
-              <div></div>
-            )}
-            
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_5_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_5_2Ref, "section12_5_2")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.5.2.':'12.5.1.'}   Waste generation and impacts
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_5_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_5_3Ref, "section12_5_3")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.5.3.':'12.5.2.'} Management of waste related impacts
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_5_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_5_4Ref, "section12_5_4")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.5.4.':'12.5.3.'}  Waste disposed
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_5_5" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_5_5Ref, "section12_5_5")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.5.5.':'12.5.4.'}  Waste diverted from disposal
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_5_6" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_5_6Ref, "section12_5_6")}
-            >
-            {reportType=='GRI Report: In accordance With'?'12.5.6.':'12.5.5.'}  Significant Spills
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section12_6" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_6Ref, "section12_6")}
-            >
-              12.6. Biodiversity
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-                 <p
-                 className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                   activeSection === "section12_6_1" ? "text-blue-400" : ""
-                 }`}
-                 onClick={() => scrollToSection(section12_6_1Ref, "section12_6_1")}
-               >
-                 12.6.1. Management of Material Topic
-               </p>
-            ):( 
-              <div></div>
-            )}  
-           
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section12_6_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_6_2Ref, "section12_6_2")}
-            >
-             {reportType=='GRI Report: In accordance With'?'12.6.2.':'12.6.1.'}  Habitat protected and restored
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section12_7" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section12_7Ref, "section12_7")}
-            >
-              12.7. Air Quality 
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-               <p
-               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                 activeSection === "section12_7_1" ? "text-blue-400" : ""
-               }`}
-               onClick={() => scrollToSection(section12_7_1Ref, "section12_7_1")}
-             >
-               12.7.1. Management of Material Topics
-             </p>
-            ):(
-              <div></div>
-            )}
-           
-          </div>
+                return groupedSidebar.map((item) => {
+                  if (item.children) {
+                    const isGroupSelected = selectedSubsections.some(
+                      (sec) => sec.id === item.groupId
+                    );
+                
+                    const visibleChildren = item.children.filter((child) =>
+                      selectedSubsections.some((sec) => sec.id === child.id)
+                    );
+                
+                    // Show group if parent OR any child is selected
+                    if (!isGroupSelected && visibleChildren.length === 0) return null;
+                
+                    const currentGroupIndex = groupIndex++;
+                    let childIndex = 1;
+                
+                    return (
+                      <div key={item.groupId} className="mb-2">
+                        {/* Show the parent title (group) */}
+                        <p
+                          className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                                activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                              }`}
+                          onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
+                        >
+                          {sectionOrder}.{currentGroupIndex} {item.title}
+                        </p>
+                
+                        {/* Render selected children */}
+                        {visibleChildren.map((child) => {
+                          const labelText =
+                            child.label?.trim() !== "" ? child.label : item.title;
+                
+                          return (
+                            <p
+                              key={child.id}
+                              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                                activeSection === child.id ? "text-blue-400" : ""
+                              }`}
+                              onClick={() => scrollToSection(child.id)}
+                            >
+                              {sectionOrder}.{currentGroupIndex}.{childIndex++} {labelText}
+                            </p>
+                          );
+                        })}
+                      </div>
+                    );
+                  } else {
+                    // Standalone item
+                    if (!selectedSubsections.some((sec) => sec.id === item.id)) return null;
+                
+                    const label = `${sectionOrder}.${groupIndex++} ${item.label}`;
+                    return (
+                      <p
+                        key={item.id}
+                        className={`text-[12px] mb-2 cursor-pointer ${
+                          activeSection === item.id ? "text-blue-400" : ""
+                        }`}
+                        onClick={() => scrollToSection(item.id)}
+                      >
+                        {label}
+                      </p>
+                    );
+                  }
+                });
+                
+              })()}
+            </div>
+          )}
         </div>
       </div>
-
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
@@ -1082,5 +1796,6 @@ const Environment = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
     </>
   );
 });
+Environment.displayName = "Environment";
 
 export default Environment;

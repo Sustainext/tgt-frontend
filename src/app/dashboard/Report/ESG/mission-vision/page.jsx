@@ -29,7 +29,8 @@ const MissionVission = forwardRef(({
   subsections = [], 
   sectionOrder = 3,
   sectionId,
-  sectionTitle 
+  sectionTitle,
+  hasChanges 
 
  }, ref) => {
   const orgName =
@@ -43,6 +44,7 @@ const MissionVission = forwardRef(({
   const mission = useSelector((state) => state.screen3Slice.mission);
   const dispatch = useDispatch();
   const [activeSection, setActiveSection] = useState("");
+  const [initialData, setInitialData] = useState({});
 
   const subsectionMapping = {
     mission_vision: {
@@ -130,8 +132,16 @@ const MissionVission = forwardRef(({
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const currentData={
+    mission
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     let data={}
     if(subsectionsToShow.includes('mission_vision')){
       
@@ -222,6 +232,12 @@ const MissionVission = forwardRef(({
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+        Object.keys(response.data).forEach((key) => {
+          flatData[key] = response.data[key]?.content || "";
+        });
+      
+        setInitialData(flatData);
         dispatch(setMission(response.data.mission?.content || ""));
       }
 
