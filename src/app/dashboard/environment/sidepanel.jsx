@@ -248,7 +248,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   }`}
                   onClick={() => setOpenSection(openSection === section.key ? null : section.key)}
                 >
-                  <div className="w-[15%]">{section.icon}</div>
+                  <div className="xl:w-[15%] lg:w-[15%] 2xl:w-[15%] 4k:w-[15%] 2k:w-[15%] md:w-[15%] w-[10%]">{section.icon}</div>
                   <div className="w-[50%] text-left ml-2">
                     <span className="indent-0">{section.label}</span>
                   </div>
@@ -266,7 +266,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                   </div>
                 </button>
                 {isOpen && (
-                  <div className="bg-white px-10 ml-5 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  <div className="bg-white px-10 ml-4 xl:px-2 md:px-2 lg:px-2 2xl:px-2 4k:px-2 2k:px-2 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                     {material && (
                       <>
                         <p className="text-[12px] ml-3 text-gray-400">
