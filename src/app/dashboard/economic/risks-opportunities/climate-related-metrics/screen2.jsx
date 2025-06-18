@@ -409,23 +409,28 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus,setActiveTab })
     }
   };
 
-  useEffect(() => {
-    if (selectedOrg && year && togglestatus) {
-      if (togglestatus === "Corporate" && selectedCorp) {
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
         loadFormData();
-        loadFormData2();
+        loadFormData2();         // <-- Only load if a corporate is picked
       } else {
-        loadFormData();
-        loadFormData2();
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
       }
-
-      toastShown.current = false;
     } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
+        loadFormData();
+        loadFormData2();           // Organization tab: always try to load
     }
-  }, [selectedOrg, year, selectedCorp, togglestatus]);
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

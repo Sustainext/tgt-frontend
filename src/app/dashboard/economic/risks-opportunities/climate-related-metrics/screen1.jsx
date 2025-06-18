@@ -359,24 +359,29 @@ const handleChange = (e) => {
       LoaderClose();
     }
   };
-
-  useEffect(() => {
-    if (selectedOrg && year && togglestatus) {
-      if (togglestatus === "Corporate" && selectedCorp) {
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
         loadFormData();
-        loadFormData2();
-      }  else {
-        loadFormData();
-        loadFormData2();
+        loadFormData2();         // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
       }
-
-      toastShown.current = false;
     } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
+        loadFormData();
+        loadFormData2();           // Organization tab: always try to load
     }
-  }, [selectedOrg, year, selectedCorp, togglestatus]);
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -433,7 +438,7 @@ TcfdMetrics: (props) => {
                           <p className="text-blue-500 text-sm font-semibold flex flex-wrap">
                             Collect &gt; Economic &gt;&nbsp;
                             <span
-                              onClick={() => setActiveTab("Climate related Risks")}
+                              onClick={() => setActiveTab("Climate Related Opportunities")}
                               className="underline cursor-pointer text-blue-600 hover:text-blue-800"
                             >
                               Climate related risks

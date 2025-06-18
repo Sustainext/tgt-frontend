@@ -171,7 +171,7 @@ const updatedMultiSelectStyle = {
     <table className="w-full border border-gray-300 text-sm mb-6">
       <thead>
         <tr className="text-[12px] text-gray-800">
-          <th className="p-2 border w-1/3 font-medium">
+          <th className="p-2 border w-1/3 font-medium relative">
             Climate-related risks/opportunities
             <MdInfoOutline
               data-tooltip-id="tooltip-risks"
@@ -193,7 +193,7 @@ const updatedMultiSelectStyle = {
               }}
             />
           </th>
-          <th className="p-2 border w-1/3 font-medium">
+          <th className="p-2 border w-1/3 font-medium relative">
             Business Areas Affected
             <MdInfoOutline
               data-tooltip-id="tooltip-areas"
@@ -215,7 +215,7 @@ const updatedMultiSelectStyle = {
               }}
             />
           </th>
-          <th className="p-2 border w-1/3 font-medium">
+          <th className="p-2 border w-1/3 font-medium relative">
             Impact
             <MdInfoOutline
               data-tooltip-id="tooltip-impact"

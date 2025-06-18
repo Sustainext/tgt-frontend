@@ -159,12 +159,15 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
 
     useEffect(() => {
       if (selectedOrg && year && togglestatus) {
-        if (togglestatus === "Corporate" && selectedCorp) {
-          loadFormData();
-        }  else {
-          loadFormData();
+        if (togglestatus === "Corporate") {
+          if (selectedCorp) {
+            loadFormData();           // <-- Only load if a corporate is picked
+          } else {
+            setFormData([{}]);        // <-- Clear the form if no corporate is picked
+          }
+        } else {
+          loadFormData();             // Organization tab: always try to load
         }
-
         toastShown.current = false;
       } else {
         if (!toastShown.current) {
@@ -172,6 +175,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
         }
       }
     }, [selectedOrg, year, selectedCorp, togglestatus]);
+    
 
   const handleSubmit = (e) => {
     e.preventDefault();

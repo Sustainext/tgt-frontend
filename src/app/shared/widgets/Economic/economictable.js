@@ -810,7 +810,7 @@ const Economictable = ({
                               handleFieldChange(rowIndex, key, e.target.value)
                             }
                             className="text-[12px] pl-2 py-2 w-full"
-                            placeholder="Enter value"
+                            placeholder="Enter"
                           />
                         )}
                         {othersInputs[rowIndex] &&

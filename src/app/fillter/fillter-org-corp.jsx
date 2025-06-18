@@ -23,7 +23,19 @@ const Fillterorgcorp = ({
     organization: "Please select Organisation",
     corporate: "Please select Corporate",
   });
-
+useEffect(() => {
+  if (selectedOrg) {
+    setErrors((prev) => ({
+      ...prev,
+      organization: "",
+    }));
+  } else {
+    setErrors((prev) => ({
+      ...prev,
+      organization: "Please select Organisation",
+    }));
+  }
+}, [selectedOrg]);
   const handleReportTypeChange = (type) => {
     setReportType(type);
     setToggleStatus(type);

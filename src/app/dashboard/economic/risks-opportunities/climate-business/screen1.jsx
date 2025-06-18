@@ -188,18 +188,29 @@ const Screen1 = ({
       LoaderClose();
     }
   };
-
-  useEffect(() => {
-    if (selectedOrg && year && togglestatus) {
-      loadFormData();
-      loadFormData2();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();
+        loadFormData2();         // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
       }
+    } else {
+        loadFormData();
+        loadFormData2();           // Organization tab: always try to load
     }
-  }, [selectedOrg, year, selectedCorp, togglestatus]);
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -232,7 +243,7 @@ const Screen1 = ({
     }),
     [widgets, riskdata, formData]
   );
-
+console.log(togglestatus,"set Corporate")
   return (
     <>
       <div
@@ -242,8 +253,8 @@ const Screen1 = ({
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        {(!riskdata?.climate_data?.length ||
-          !riskdata?.opportunities_data?.length) && (
+        {(riskdata?.climate_data?.length === 0 ||
+          riskdata?.opportunities_data?.length === 0) && (
           <div className="mt-1 mb-4">
             <div className="flex items-start p-2 border-t-2 border-[#F98845] bg-orange-50 rounded">
               <div className="flex-shrink-0">
@@ -259,26 +270,33 @@ const Screen1 = ({
                 </p>
                 <div className="mt-2 text-left flex gap-2">
                   <p className="text-[#0D024D] text-[12px]">Proceed to</p>
-                  <p className="text-blue-500 text-sm font-semibold flex flex-wrap">
+                  <div className="text-blue-500 text-sm font-semibold flex flex-wrap items-center gap-2">
                     Collect &gt; Economic &gt;&nbsp;
-                    <span
-                      onClick={() =>
-                        setActiveTab("Climate related opportunities")
-                      }
-                      className="underline cursor-pointer text-blue-600 hover:text-blue-800"
-                    >
-                      Climate related risks
-                    </span>
-                    <span
-                      onClick={() =>
-                        setActiveTab("Climate Related Opportunities")
-                      }
-                      className="underline cursor-pointer text-blue-600 hover:text-blue-800"
-                    >
-                      &gt; Climate related opportunities
-                    </span>
-                    <GoArrowRight className="font-bold mt-1 ml-2" />
-                  </p>
+                    {riskdata?.climate_data?.length === 0 && (
+                      <>
+                        <span
+                          onClick={() => setActiveTab("Climate related Risks")}
+                          className="underline cursor-pointer text-blue-600 hover:text-blue-800"
+                        >
+                          Climate related risks
+                        </span>
+                        {/* Only show & if both are missing */}
+                        {riskdata?.opportunities_data?.length === 0 && (
+                          <span className="px-1">&</span>
+                        )}
+                      </>
+                    )}
+                    {riskdata?.opportunities_data?.length === 0 && (
+                      <span
+                        onClick={() =>
+                          setActiveTab("Climate Related Opportunities")
+                        }
+                        className="underline cursor-pointer text-blue-600 hover:text-blue-800"
+                      >
+                        Climate related opportunities
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -320,12 +338,12 @@ const Screen1 = ({
           </p>
         </div>
 
-        {riskdata?.climate_data?.length > 0 ||
+        {riskdata?.climate_data?.length > 0 &&
         riskdata?.opportunities_data?.length > 0 ? (
           <>
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
