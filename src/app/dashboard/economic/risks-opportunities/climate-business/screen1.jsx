@@ -188,29 +188,28 @@ const Screen1 = ({
       LoaderClose();
     }
   };
-useEffect(() => {
-  if (selectedOrg && year && togglestatus) {
-    if (togglestatus === "Corporate") {
-      if (selectedCorp) {
-        loadFormData();
-        loadFormData2();         // <-- Only load if a corporate is picked
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate") {
+        if (selectedCorp) {
+          loadFormData();
+          loadFormData2(); // <-- Only load if a corporate is picked
+        } else {
+          setFormData([{}]);
+          setRemoteSchema({});
+          setRemoteUiSchema({}); // <-- Clear the form if no corporate is picked
+        }
       } else {
-        setFormData([{}]); 
-        setRemoteSchema({});
-        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-      }
-    } else {
         loadFormData();
-        loadFormData2();           // Organization tab: always try to load
+        loadFormData2(); // Organization tab: always try to load
+      }
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-    toastShown.current = false;
-  } else {
-    if (!toastShown.current) {
-      toastShown.current = true;
-    }
-  }
-}, [selectedOrg, year, selectedCorp, togglestatus]);
-
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -243,7 +242,7 @@ useEffect(() => {
     }),
     [widgets, riskdata, formData]
   );
-console.log(togglestatus,"set Corporate")
+  console.log(togglestatus, "set Corporate");
   return (
     <>
       <div
@@ -325,9 +324,14 @@ console.log(togglestatus,"set Corporate")
               }}
             />
           </h2>
-
-          <div className="bg-sky-700 bg-opacity-5 rounded-lg px-2 py-1 text-blue-700 text-[10px] font-semibold">
-            TCFD-STG-B
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
+                  TCFD-STG-B
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="mb-6">
