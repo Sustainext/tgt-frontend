@@ -112,7 +112,7 @@ const BoardInfo = ({ setMobileopen, frameworkId, disclosures }) => {
           toggleDrawer={toggleDrawer}
           sdgData={sdgData}
           griData={griData}
-          title={"Structure"}
+          title={"Board Info"}
           setMobileopen={setMobileopen}
           tcfd={tcfd}
         />

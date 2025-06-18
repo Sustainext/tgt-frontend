@@ -144,7 +144,7 @@ const CompositionOfHighestGovernanceBody = ({
   selectedCorp,
   year,
   togglestatus,
-  tcfdtag,
+  tcfdtag = [],
 }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -220,11 +220,7 @@ const CompositionOfHighestGovernanceBody = ({
     if (selectedOrg && year && togglestatus) {
       if (togglestatus === "Corporate" && selectedCorp) {
         loadFormData();
-      } else if (togglestatus === "Corporate" && !selectedCorp) {
-        setFormData([{}]);
-        setRemoteSchema({});
-        setRemoteUiSchema({});
-      } else {
+      }  else {
         loadFormData();
       }
 
@@ -286,17 +282,16 @@ const CompositionOfHighestGovernanceBody = ({
               tcfdtag.length === 0 ? "justify-end" : "justify-end"
               }`}
             >
-              {/* Static GRI tag */}
+         
               <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
                   GRI 2-9-c
                 </div>
               </div>
 
-              {/* Dynamic TCFD tags */}
-              {tcfdtag.map((item, index) => (
+            {tcfdtag && tcfdtag.map((item) => (
                 <div
-                  key={index}
+                  key={item.id || item.tagName}
                   className="w-[110px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center"
                 >
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">

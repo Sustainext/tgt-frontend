@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import EconomicHeader2 from "../../EconomicHeader2";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import Screen1 from "./screen1";
-
 import EconomicTopBar from "../../economicTopBar.jsx";
 const Climaterelatedtargets = ({ setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
@@ -39,6 +38,7 @@ const Climaterelatedtargets = ({ setMobileopen }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+
   const tcfd = [
     {
       tagName: "TCFD-M&T-C",

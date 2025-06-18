@@ -55,7 +55,7 @@ const DetermineRemuneration = ({ setMobileopen }) => {
           toggleDrawer={toggleDrawer}
           // sdgData={sdgData}
           griData={griData}
-          title={"Determine Remuneration"}
+          title={"Performance and Renumerationss"}
           setMobileopen={setMobileopen}
         />
         {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
