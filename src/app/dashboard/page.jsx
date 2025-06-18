@@ -75,6 +75,13 @@ const Dashboard = () => {
             expires: 7,
           }
         );
+            Cookies.set(
+          "tcfd_sector_type",
+          JSON.stringify(response.data.data.tcfd_reporting_information_sector_type),
+          {
+            expires: 7,
+          }
+        );
         setLatestDisclosures(response.data.data);
       }
     } catch (error) {

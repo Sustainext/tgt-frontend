@@ -24,6 +24,7 @@ const CustomOption = ({ children, ...props }) => {
         checked={isSelected}
         readOnly
         style={{ marginRight: "8px" }}
+        className="green-checkbox-small"
       />
       {children}
     </div>
@@ -237,8 +238,11 @@ const TcfdMetrics = ({ formData = [], onChange, formContext, uiSchema }) => {
                 const newValues = selected.map((s) => s.value);
                 handleFieldChange(rowIndex, key, newValues);
               }}
-              styles={updatedMultiSelectStyle}
               closeMenuOnSelect={false}
+              hideSelectedOptions={false}
+              className="text-[12px] w-full"
+              styles={updatedMultiSelectStyle}
+              placeholder="Select options"
               components={{
                 Option: CustomOption,
                 MultiValueContainer: CustomMultiValueContainer,

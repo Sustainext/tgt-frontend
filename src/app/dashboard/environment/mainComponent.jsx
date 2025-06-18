@@ -57,7 +57,14 @@ import Cookies from "js-cookie";
 const environment = () => {
   const { open } = GlobalState();
   const [mobileopen, setMobileopen] = useState(false);
-  const [activeTab, setActiveTab] = useState("GHG Emissions");
+ 
+    const activestap = useSelector((state) => state.Tcfd.activesection);
+ const [activeTab, setActiveTab] = useState("");
+  useEffect(() => {
+    if (activestap) {
+      setActiveTab(activestap);
+    }
+  }, [activestap]);
    const frameworkId = Cookies.get("selected_framework_id");
   const disclosures = Cookies.get("selected_disclosures");
   const parsedDisclosures = disclosures ? JSON.parse(disclosures) : [];
@@ -73,7 +80,16 @@ const environment = () => {
     loading,
     error,
   } = useSelector((state) => state.materialitySlice);
-
+   useEffect(() => {
+    // Only initialize when materiality data is loaded AND nothing is active
+    if (!activeTab && data && data.environment) {
+      if (data.environment.EnvGhgEmission?.is_material_topic) {
+        setActiveTab("Management of Material topic emission");
+      } else {
+        setActiveTab("GHG Emissions");
+      }
+    }
+  }, [activeTab, data]);
   const loadMaterialityDashboard = () => {
     dispatch(
       fetchMaterialityData({

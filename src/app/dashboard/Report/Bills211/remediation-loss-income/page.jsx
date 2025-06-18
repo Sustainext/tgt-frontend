@@ -151,7 +151,7 @@ const Remediationlossincome = forwardRef(({ orgName, data, reportId }, ref) => {
           report: reportId,
           screen: 9,
           data: {
-            remediation_loss_income: p1q2,
+            remediation_loss_income: content,
           },
         };
 

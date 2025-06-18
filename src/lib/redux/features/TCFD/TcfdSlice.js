@@ -4,7 +4,8 @@ const TcfdSlice = createSlice({
   name: "Tcfd",
   initialState: {
     Organization: "",
-    Corporate:""
+    Corporate:"",
+    activesection:"",
 
   },
   reducers: {
@@ -14,6 +15,9 @@ const TcfdSlice = createSlice({
     setCorporate: (state, action) => {
       state.Corporate = action.payload;
     },
+     setActivesection: (state, action) => {
+      state.activesection = action.payload;
+    },
    
   },
 });
@@ -21,6 +25,7 @@ const TcfdSlice = createSlice({
 export const {
   setOrganization,
   setCorporate,
+  setActivesection,
 
 } = TcfdSlice.actions;
 

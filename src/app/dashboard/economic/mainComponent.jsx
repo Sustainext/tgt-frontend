@@ -46,13 +46,21 @@ import Materialtopic from "../Management-Material-topic/page";
 import Resiliencestrategy from "./risks-opportunities/resilience-strategy/page";
 import Climatebusiness from "./risks-opportunities/climate-business/page";
 import Climaterelatedtargets from "./risks-opportunities/climate-related-targets/page";
-import Climaterelatedmetrics from "./risks-opportunities/climate-related-metrics/page"
+import Climaterelatedmetrics from "./risks-opportunities/climate-related-metrics/page";
 import Cookies from "js-cookie";
 const Economic = () => {
   const { open } = GlobalState();
+  const activestap = useSelector((state) => state.Tcfd.activesection);
   const [activeTab, setActiveTab] = useState(
-    "Management of Material topic Economic Performance"
+    ""
   );
+
+  useEffect(() => {
+    if (activestap) {
+      setActiveTab(activestap);
+    }
+  }, [activestap]);
+
   const [mobileopen, setMobileopen] = useState(false);
   const frameworkId = Cookies.get("selected_framework_id");
   const disclosures = Cookies.get("selected_disclosures");
@@ -68,7 +76,16 @@ const Economic = () => {
     loading,
     error,
   } = useSelector((state) => state.materialitySlice);
-
+   useEffect(() => {
+    // Only initialize when materiality data is loaded AND nothing is active
+    if (!activeTab && data && data.governance) {
+      if (data.governance.GovEconomicPerformance?.is_material_topic) {
+        setActiveTab("Management of Material topic Economic Performance");
+      } else {
+        setActiveTab("Direct economic value generated & distributed");
+      }
+    }
+  }, [activeTab, data]);
   const loadMaterialityDashboard = () => {
     dispatch(
       fetchMaterialityData({
@@ -178,6 +195,7 @@ const Economic = () => {
           <div className=" hidden xl:block lg:block md:hidden 2xl:block 4k:block">
             <Aside
               activeTab={activeTab}
+               setActiveTab={setActiveTab}
               handleTabClick={handleTabClick}
               apiData={data}
               setMobileopen={setMobileopen}
@@ -190,6 +208,7 @@ const Economic = () => {
               <div>
                 <Aside
                   activeTab={activeTab}
+                  setActiveTab={setActiveTab}
                   handleTabClick={handleTabClick}
                   apiData={data}
                   setMobileopen={setMobileopen}
@@ -432,7 +451,11 @@ const Economic = () => {
                 />
               )}
               {activeTab === "Tcfd-cs1" && (
-                <Climatebusiness apiData={data} setMobileopen={setMobileopen} setActiveTab={setActiveTab} />
+                <Climatebusiness
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                />
               )}
               {activeTab === "Tcfd-cs2" && (
                 <Resiliencestrategy
@@ -440,11 +463,11 @@ const Economic = () => {
                   setMobileopen={setMobileopen}
                 />
               )}
-                  {activeTab === "Tcfd-cs3" && (
+              {activeTab === "Tcfd-cs3" && (
                 <Climaterelatedmetrics
                   apiData={data}
                   setMobileopen={setMobileopen}
-                   setActiveTab={setActiveTab}
+                  setActiveTab={setActiveTab}
                 />
               )}
               {activeTab === "Tcfd-cs4" && (
@@ -453,7 +476,7 @@ const Economic = () => {
                   setMobileopen={setMobileopen}
                 />
               )}
-            </div> 
+            </div>
           )}
         </div>
       </div>

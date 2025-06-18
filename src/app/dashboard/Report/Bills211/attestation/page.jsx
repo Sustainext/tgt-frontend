@@ -219,15 +219,15 @@ const Attestation = forwardRef(({ orgName, data, reportId }, ref) => {
 
   useImperativeHandle(ref, () => ({
     async submitForm() {
-      if (!part1?.trim() || !part2?.trim()) return false;
+  
 
       try {
         const payload = {
           report: reportId,
           screen: 12,
           data: {
-            approval_attestation_part1: part1,
-            approval_attestation_part2: part2,
+            approval_attestation_part1: content,
+            approval_attestation_part2: content2,
             company_logo: imageviw || "",
             file_name: selectedfile?.name || "",
           },

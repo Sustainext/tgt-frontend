@@ -150,7 +150,7 @@ const Policiesdiligence = forwardRef(({ orgName, data, reportId }, ref) => {
           report: reportId,
           screen: 5,
           data: {
-            policies_diligence_processes: p1q2,
+            policies_diligence_processes: content,
           },
         };
 

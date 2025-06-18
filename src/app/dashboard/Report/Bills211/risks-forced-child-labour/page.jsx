@@ -167,7 +167,7 @@ p1q2
             report: reportId,
             screen: 6,
             data: {
-              risks_forced_child_labour: p1q2,
+              risks_forced_child_labour: content,
             },
           };
 

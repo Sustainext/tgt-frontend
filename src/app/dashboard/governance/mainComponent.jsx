@@ -37,12 +37,19 @@ import ClimateRiskIntegration from "./RiskManagement/Climate-Risk-Integration/pa
 import Cookies from "js-cookie";
 const Governance = () => {
   const { open } = GlobalState();
-  const [activeTab, setActiveTab] = useState("Structure");
+
   const [mobileopen, setMobileopen] = useState(false);
   const frameworkId = Cookies.get("selected_framework_id");
   const disclosures = Cookies.get("selected_disclosures");
   const parsedDisclosures = disclosures ? JSON.parse(disclosures) : [];
-
+  const activestap = useSelector((state) => state.Tcfd.activesection);
+ 
+      const [activeTab, setActiveTab] = useState("Structure");
+        useEffect(() => {
+    if (activestap) {
+      setActiveTab(activestap);
+    }
+  }, [activestap]);
   const dispatch = useDispatch();
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
@@ -60,9 +67,10 @@ const Governance = () => {
       "Management of Impact",
       "Delegation of Responsibility",
       "Sustainability Reporting",
+      "Tcfd-s1",
     ];
 
-    const wasteTabs = ["Conflict of Interest", "Critical Concerns"];
+    const wasteTabs = ["Conflict of Interest", "Critical Concerns",  "Tcfd-s2"];
 
     const materialTabs = [
       "Sustainability Knowledge",

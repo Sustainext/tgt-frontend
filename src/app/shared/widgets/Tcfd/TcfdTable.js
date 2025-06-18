@@ -23,6 +23,7 @@ const CustomOption = ({ children, ...props }) => {
         checked={isSelected}
         readOnly
         style={{ marginRight: "8px" }}
+          className='green-checkbox-small'
       />
       {children}
     </div>
@@ -61,46 +62,7 @@ const CustomMultiValueContainer = ({ children, ...props }) => {
 
   return null;
 };
-  const updatedMultiSelectStyle = {
-    control: (base) => ({
-      ...base,
-      padding: '4px 10px', // Equivalent to py-3
-      minHeight: '48px', // Ensure height matches your other elements
-      borderColor: '#d1d5db', // Matches Tailwind's gray-300 border
-      borderRadius: '0.375rem', // Matches Tailwind's rounded-md
-    }),
-    valueContainer: (base) => ({
-      ...base,
-      padding: '0', // Reset inner padding to fit the custom height
-    }),
-    menu: (provided) => ({
-      ...provided,
 
-      position: "relative",
-
-      bottom: "100%",
-
-      top: 0,
-
-      zIndex: 1000,
-    }),
-
-    menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
-      multiValue: (base) => ({
-        ...base,
-        backgroundColor: '#dbeafe', // Light blue background (Tailwind's blue-100)
-        borderRadius: '0.375rem', // Rounded corners
-      }),
-      multiValueLabel: (base) => ({
-        ...base,
-        color: '#1e40af', // Blue text (Tailwind's blue-800)
-        fontWeight: '600',
-      }),
-      multiValueRemove: (base) => ({
-        ...base,
-        color: '#6A6E70'
-      }),
-  };
 
 const TcfdTable = ({
   formData = [],
@@ -165,7 +127,46 @@ const TcfdTable = ({
     updated[i].impact = value;
     updateFormData(updated);
   };
+const updatedMultiSelectStyle = {
+  control: (base) => ({
+    ...base,
+    padding: "4px 10px", // Equivalent to py-3
+    minHeight: "48px", // Ensure height matches your other elements
+    borderColor: "#d1d5db", // Matches Tailwind's gray-300 border
+    borderRadius: "0.375rem", // Matches Tailwind's rounded-md
+  }),
+  valueContainer: (base) => ({
+    ...base,
+    padding: "0", // Reset inner padding to fit the custom height
+  }),
+  menu: (provided) => ({
+    ...provided,
 
+    position: "relative",
+
+    bottom: "100%",
+
+    top: 0,
+
+    zIndex: 1000,
+  }),
+
+  menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
+  multiValue: (base) => ({
+    ...base,
+    backgroundColor: "#dbeafe", // Light blue background (Tailwind's blue-100)
+    borderRadius: "0.375rem", // Rounded corners
+  }),
+  multiValueLabel: (base) => ({
+    ...base,
+    color: "#1e40af", // Blue text (Tailwind's blue-800)
+    fontWeight: "600",
+  }),
+  multiValueRemove: (base) => ({
+    ...base,
+    color: "#6A6E70",
+  }),
+};
   return (
     <table className="w-full border border-gray-300 text-sm mb-6">
       <thead>
@@ -244,7 +245,7 @@ const TcfdTable = ({
           <tr key={i}>
             <td className="border p-2 text-[11px]">{row.label}</td>
             <td className="border p-2 text-[11px]">
-              <div className="border-b border-gray-300 pb-1">
+              <div className=" pb-1">
                 <Select
                   isMulti
                   options={selectOptions}
@@ -253,9 +254,11 @@ const TcfdTable = ({
                     label: val,
                   }))}
                   onChange={(selected) => handleMultiChange(i, selected)}
-                   closeMenuOnSelect={false}
-                                hideSelectedOptions={false}
-                                styles={updatedMultiSelectStyle}
+                  closeMenuOnSelect={false}
+                  hideSelectedOptions={false}
+                  className="text-[12px] w-full"
+                      styles={updatedMultiSelectStyle}
+                      placeholder="Select options"
                   components={{
                     Option: CustomOption,
                     MultiValueContainer: CustomMultiValueContainer,

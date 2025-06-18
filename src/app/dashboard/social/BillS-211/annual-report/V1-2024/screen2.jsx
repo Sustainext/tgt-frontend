@@ -245,7 +245,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
                 disabled={!isChecked}
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className="mr-3 pt-1 rounded-xl green-checkbox-small"
               />
               {option.label}
             </label>
@@ -281,7 +281,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
                 disabled={!isCheckedone}
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className="mr-3 pt-1  rounded-xl green-checkbox-small"
               />
               {option.label}
             </label>
@@ -316,7 +316,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
                 disabled={!isCheckedoneone}
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className="mr-3 pt-1 rounded-xl green-checkbox-small"
               />
               {option.label}
             </label>
@@ -345,7 +345,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
 
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className="mr-3 pt-1 rounded-xl green-checkbox-small"
               />
               {option.label}
             </label>
@@ -381,7 +381,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
 
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className="mr-3 pt-1  rounded-xl green-checkbox-small"
               />
               {option.label}
             </label>
@@ -416,7 +416,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
 
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className="mr-3 pt-1 rounded-xl green-checkbox-small"
               />
               {option.label}
             </label>
@@ -670,7 +670,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                               type="checkbox"
                               checked={isChecked}
                               onChange={handleCheckboxChange("isChecked")}
-                              className="mr-3 pt-1"
+                              className="mr-3 pt-1 green-checkbox scale-90"
                             />
                             Producing goods (including manufacturing,
                             extracting, growing and processing)
@@ -683,7 +683,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                               type="checkbox"
                               checked={isCheckedone}
                               onChange={handleCheckboxChange("isCheckedone")}
-                              className="mr-3 pt-1"
+                              className="mr-3 pt-1 green-checkbox scale-90"
                             />
                             Selling goods
                           </label>
@@ -695,7 +695,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                               type="checkbox"
                               checked={isCheckedoneone}
                               onChange={handleCheckboxChange("isCheckedoneone")}
-                              className="mr-3 pt-1"
+                              className="mr-3 pt-1 green-checkbox scale-90"
                             />
                             Distributing goods
                           </label>
@@ -707,7 +707,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                               type="checkbox"
                               checked={isCheckeotherone}
                               onChange={handleCheckotherone("isCheckeotherone")}
-                              className="mr-3 pt-1"
+                              className="mr-3 pt-1 green-checkbox scale-90"
                             />
                             Importing into Canada goods produced outside Canada
                           </label>
@@ -720,7 +720,7 @@ const Screentwo = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportTy
                               onChange={handleCheckothertwo(
                                 "isCheckedothertwo"
                               )}
-                              className="mr-3 pt-1"
+                              className="mr-3 pt-1 green-checkbox scale-90"
                             />
                             Controlling an entity engaged in producing, selling
                             or distributing goods in Canada or outside Canada,

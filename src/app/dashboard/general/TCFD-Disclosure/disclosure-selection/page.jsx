@@ -159,23 +159,24 @@ const Disclosureselection = ({ showToast, setView, fetchTcfdStatus }) => {
                     </div>
                     <div className="text-[#667085]">{value.description}</div>
                   </td>
-                  <td className="px-6 py-4 text-sm">
-                    <div className="space-y-8">
-                      {value.disclosures.map((disclosure) => (
-                        <label
-                          key={disclosure.id}
-                          className="flex items-start gap-2 cursor-pointer"
-                        >
+                  <td className="px-4 py-4 text-sm relative">
+                    {value.disclosures.map((disclosure) => (
+                      <div
+                        key={disclosure.id}
+                        onClick={() => toggleSelection(disclosure.id)} // <- click anywhere
+                        className="mb-4 flex text-sm cursor-pointer w-full gap-2"
+                      >
+                        <div>
                           <input
                             type="checkbox"
                             checked={selectedIds.includes(disclosure.id)}
-                            onChange={() => toggleSelection(disclosure.id)}
-                            className="mt-1"
+                            readOnly // <- prevent React warning since we're controlling value
+                            className="mt-1 form-checkbox h-[17px] w-[16px] cursor-pointer green-checkbox"
                           />
-                          <span>{disclosure.description}</span>
-                        </label>
-                      ))}
-                    </div>
+                        </div>
+                        <div>{disclosure.description}</div>
+                      </div>
+                    ))}
                   </td>
                 </tr>
               ))}

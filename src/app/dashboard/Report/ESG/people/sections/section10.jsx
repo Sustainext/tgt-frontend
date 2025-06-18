@@ -122,7 +122,7 @@ const Section10 = ({ section13_2_3Ref, data,reportType }) => {
           rows={4}
         />
 
-        <p className="text-[15px]  mb-2 font-semibold">
+        {/* <p className="text-[15px]  mb-2 font-semibold">
           Measures taken by the organization
         </p>
         <p className="text-sm mb-4">
@@ -135,7 +135,7 @@ const Section10 = ({ section13_2_3Ref, data,reportType }) => {
                 : "No data available"
               : "No data available"
             : "No data available"}
-        </p>
+        </p> */}
 
         <p className="text-[15px]  mb-2 font-semibold">
           Operations considered to have significant risk for incidents of forced

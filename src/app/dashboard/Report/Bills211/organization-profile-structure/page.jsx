@@ -39,52 +39,49 @@ const Organizationprofilestructure = forwardRef(
       setLoOpen(false);
     };
     const isMounted = useRef(true);
-const generateEntityDescriptionFromP1Q9 = () => {
-  if (!p1q9 || typeof p1q9 !== "object") return "";
+    const generateEntityDescriptionFromP1Q9 = () => {
+      if (!p1q9 || typeof p1q9 !== "object") return "";
 
-  const SPECIAL_KEY = "Listed on a stock exchange in Canada";
+      const SPECIAL_KEY = "Listed on a stock exchange in Canada";
 
-  const selections = Object.entries(p1q9)
-    .filter(([key, value]) => Array.isArray(value) && value.length > 0)
-    .flatMap(([_, value]) => value);
+      const selections = Object.entries(p1q9)
+        .filter(([key, value]) => Array.isArray(value) && value.length > 0)
+        .flatMap(([_, value]) => value);
 
-  const hasOnlySpecialKey =
-    Object.keys(p1q9).length === 1 &&
-    p1q9.hasOwnProperty(SPECIAL_KEY) &&
-    Array.isArray(p1q9[SPECIAL_KEY]) &&
-    p1q9[SPECIAL_KEY].length === 0;
+      const hasOnlySpecialKey =
+        Object.keys(p1q9).length === 1 &&
+        p1q9.hasOwnProperty(SPECIAL_KEY) &&
+        Array.isArray(p1q9[SPECIAL_KEY]) &&
+        p1q9[SPECIAL_KEY].length === 0;
 
-  if (hasOnlySpecialKey) {
-    // Don't show anything if only this special key is selected with an empty array
-    return "";
-  }
+      if (hasOnlySpecialKey) {
+        // Don't show anything if only this special key is selected with an empty array
+        return "";
+      }
 
-  // If SPECIAL_KEY exists with empty array AND there are other real selections, include it
-  if (
-    p1q9.hasOwnProperty(SPECIAL_KEY) &&
-    Array.isArray(p1q9[SPECIAL_KEY]) &&
-    p1q9[SPECIAL_KEY].length === 0
-  ) {
-    selections.unshift(SPECIAL_KEY);
-  }
+      // If SPECIAL_KEY exists with empty array AND there are other real selections, include it
+      if (
+        p1q9.hasOwnProperty(SPECIAL_KEY) &&
+        Array.isArray(p1q9[SPECIAL_KEY]) &&
+        p1q9[SPECIAL_KEY].length === 0
+      ) {
+        selections.unshift(SPECIAL_KEY);
+      }
 
-  if (selections.length === 0) return "";
+      if (selections.length === 0) return "";
 
-  if (selections.length === 1) {
-    return `is ${selections[0].toLowerCase()}.`;
-  }
+      if (selections.length === 1) {
+        return `is ${selections[0].toLowerCase()}.`;
+      }
 
-  if (selections.length === 2) {
-    return `is ${selections[0].toLowerCase()} and ${selections[1].toLowerCase()}.`;
-  }
+      if (selections.length === 2) {
+        return `is ${selections[0].toLowerCase()} and ${selections[1].toLowerCase()}.`;
+      }
 
-  const last = selections.pop().toLowerCase();
-  const rest = selections.map((item) => item.toLowerCase()).join(", ");
-  return `is ${rest}, and ${last}.`;
-};
-
-
-
+      const last = selections.pop().toLowerCase();
+      const rest = selections.map((item) => item.toLowerCase()).join(", ");
+      return `is ${rest}, and ${last}.`;
+    };
 
     const loadContent = () => {
       dispatch(setOrganizationprofilestructure(p1q2));
@@ -208,7 +205,7 @@ const generateEntityDescriptionFromP1Q9 = () => {
             report: reportId,
             screen: 2,
             data: {
-              organization_profile_structure: p1q2,
+              organization_profile_structure: content,
             },
           };
 

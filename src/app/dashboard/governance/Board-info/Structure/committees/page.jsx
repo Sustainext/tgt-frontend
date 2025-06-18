@@ -247,7 +247,7 @@ useEffect(() => {
            <div className="w-full xl:w-[35%] lg:w-[35%] md:w-[35%] 2xl:w-[35%] 4k:w-[35%] 2k:w-[35%] mb-4">
             <div
               className={`flex flex-wrap gap-2 items-center ${
-                tcfdtag.length === 0 ? "justify-end" : ""
+              tcfdtag.length === 0 ? "justify-end" : "justify-end"
               }`}
             >
               {/* Static GRI tag */}

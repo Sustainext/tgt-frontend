@@ -2,6 +2,10 @@ import { MdChevronRight } from "react-icons/md";
 import Cookies from "js-cookie";
 const tcfd = Cookies.get("tcfd_sector");
 const tcfdsector = tcfd ? JSON.parse(tcfd) : [];
+const tcfdsectortypenew = Cookies.get("tcfd_sector_type");
+
+const tcfdsectortype = tcfdsectortypenew ? JSON.parse(tcfdsectortypenew) : [];
+
 export const Socialdata = [
   //Employee Hires & Turnover//
   {
@@ -8866,7 +8870,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          {tcfdsector === "non_financial" && (
+          {tcfdsectortype === "non_financial" && (
             <div>
               <p className="text-[11px] text-black mb-2">
                 Supplemental Guidance for Non-Financial Group
@@ -9043,7 +9047,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          {tcfdsector === "non_financial" && (
+          {tcfdsectortype === "non_financial" && (
             <div>
               <p className="text-[11px] text-black mb-2">
                 Supplemental Guidance for Non-Financial Groups
@@ -9185,7 +9189,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          {tcfdsector === "non_financial" && (
+          {tcfdsectortype === "non_financial" && (
             <div>
               <p className="text-[11px] text-black mb-2">
                 Supplemental Guidance for Non-Financial Groups
