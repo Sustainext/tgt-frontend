@@ -84,7 +84,7 @@ const PolicyCommitments = ({setMobileopen}) => {
           sdgData={sdgData}
           griData={griData}
           brsr={brsr}
-          title={" Policy Commitments"}
+          title={"Policy"}
           setMobileopen={setMobileopen}
         />
         {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">

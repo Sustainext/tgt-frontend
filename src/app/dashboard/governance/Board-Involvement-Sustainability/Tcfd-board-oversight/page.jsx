@@ -55,7 +55,7 @@ const Tcfdboardoversight = ({ setMobileopen }) => {
         <GovernancesTopBar
           toggleDrawer={toggleDrawer}
           tcfd={tcfd}
-          title={"Board's oversight of climate related risks and opportunities"}
+          title={"Board Involvement in Sustainability"}
           setMobileopen={setMobileopen}
         />
 

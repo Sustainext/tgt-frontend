@@ -63,20 +63,14 @@ const GovernanceStructure = ({
   selectedCorp,
   year,
   togglestatus,
-  tcfdtag,
+  tcfdtag = [],
 }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -86,12 +80,6 @@ const GovernanceStructure = ({
 
   const handleChange = (e) => {
     setFormData(e.formData);
-  };
-
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
   };
 
   const updateFormData = async () => {
@@ -108,7 +96,7 @@ const GovernanceStructure = ({
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axiosInstance.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -171,10 +159,6 @@ const GovernanceStructure = ({
     if (selectedOrg && year && togglestatus) {
       if (togglestatus === "Corporate" && selectedCorp) {
         loadFormData();
-      } else if (togglestatus === "Corporate" && !selectedCorp) {
-        setFormData([{}]);
-        setRemoteSchema({});
-        setRemoteUiSchema({});
       } else {
         loadFormData();
       }
@@ -234,17 +218,15 @@ const GovernanceStructure = ({
                 tcfdtag.length === 0 ? "justify-end" : "justify-end"
               }`}
             >
-              {/* Static GRI tag */}
               <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
                   GRI 2-9-a
                 </div>
               </div>
 
-              {/* Dynamic TCFD tags */}
-              {tcfdtag.map((item, index) => (
+              {(tcfdtag ?? []).map((item) => (
                 <div
-                  key={index}
+                  key={item.id || item.tagName}
                   className="w-[110px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center"
                 >
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">

@@ -55,7 +55,7 @@ const Tcfdmanagementrole = ({ setMobileopen }) => {
         <GovernancesTopBar
           toggleDrawer={toggleDrawer}
           tcfd={tcfd}
-          title={"Management’s role in assessing and managing climate related risks and opportunities"}
+          title={"Governance"}
           setMobileopen={setMobileopen}
         />
 

@@ -98,9 +98,9 @@ const Governance = () => {
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Sustainability Strategy"));
     } else if (TaxTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Process"));
+      dispatch(setHeadertext2("Remediation"));
     } else if (PoliticalTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Advice & Concerns"));
+      dispatch(setHeadertext2("Managing Concerns"));
     } else if (PolicyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Policy"));
     } else if (RiskTabs.includes(activeTab)) {

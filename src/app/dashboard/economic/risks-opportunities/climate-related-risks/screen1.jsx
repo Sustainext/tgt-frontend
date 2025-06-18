@@ -228,7 +228,7 @@ const Screen1 = ({
   selectedCorp,
   selectedLocation,
   year,
-  tcfdtag,
+  tcfdtag = [],
   frameworkId,
   togglestatus,
 }) => {
