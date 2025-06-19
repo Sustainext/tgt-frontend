@@ -82,9 +82,9 @@ const uiSchema = {
     "ui:order": ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"],
  Q1: {
       "ui:title":
-        "Does the Board and/or Board Committees consider climate-related issues when reviewing and guiding key strategic and governance decisions?",
+        "Has your organization conducted a climate-related scenario analysis to assess the resilience of its strategy?",
       "ui:tooltip":
-        "If climate-related issues are considered in the following areas: Reviewing and guiding strategy, major plans of action, risk management policies, annual budgets, and business plans as well as setting the organization’s performance objectives, monitoring implementation and performance, and overseeing major capital expenditures, acquisitions, and divestitures, etc.",
+        "Indicate whether your organization has used climate-related scenario models to test how your strategy would perform under different future climate conditions, such as a 2°C warming scenario.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
