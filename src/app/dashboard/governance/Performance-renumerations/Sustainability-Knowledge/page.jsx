@@ -54,7 +54,7 @@ const SustainabilityKnowledge = ({ setMobileopen }) => {
           toggleDrawer={toggleDrawer}
           // sdgData={sdgData}
           griData={griData}
-          title={"Sustainability Knowledge"}
+          title={"Performance and Renumerationss"}
           setMobileopen={setMobileopen}
         />
         {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">

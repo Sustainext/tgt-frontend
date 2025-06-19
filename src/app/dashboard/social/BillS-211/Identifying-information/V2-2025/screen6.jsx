@@ -431,7 +431,7 @@ const continueToNextStep = () => {
                     value={option.value}
                     checked={selectedOptions.hasOwnProperty(option.value)}
                     onChange={handleCheckboxChange}
-                    className="mr-2"
+                    className="mr-2 green-checkbox scale-90"
                   />
                   {option.label}
                 </label>
@@ -464,7 +464,7 @@ const continueToNextStep = () => {
                           )
                         }
                         disabled={!selectedOptions.hasOwnProperty(option.value)}
-                        className="mr-2"
+                        className="mr-2 green-checkbox-small"
                       />
                       {sub}
                     </label>

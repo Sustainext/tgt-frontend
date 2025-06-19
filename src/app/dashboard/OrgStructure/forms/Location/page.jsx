@@ -1336,7 +1336,7 @@ const Location = ({ heading }) => {
                     name="sameAsCorporate"
                     checked={isSameAsCorporate}
                     onChange={handleSameAsCorporateChange}
-                    className="me-2"
+                    className="me-2 green-checkbox"
                   />
                   Same as Corporate Entity
                 </label>

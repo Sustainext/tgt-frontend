@@ -79,7 +79,7 @@ const Report = () => {
         const response = await axiosInstance.get(
           `${
             process.env.BACKEND_API_URL
-          }/materiality_dashboard/get_materiality_assessment_for_report/?start_date=${startdate}&end_date=${enddate}&organization_id=${selectedOrg}&report_by=${firstSelection}&corporate_id=${
+          }/materiality_dashboard/get_materiality_assessment_for_report/?start_date=${startdate}&end_date=${enddate}&organization_id=${selectedOrg}&report_by=${firstSelection}&&approach=${reporttype=='GRI Report: With Reference to'?'reference':'accordance'}&corporate_id=${
             selectedCorp ? selectedCorp : null
           }`,
           axiosConfig
@@ -131,8 +131,10 @@ const Report = () => {
   };
 
   useEffect(() => {
-    getMaterialityAssessment();
-    getReportExist();
+    if(['GRI Report: With Reference to','GRI Report: In accordance With'].includes(reporttype)){
+      getMaterialityAssessment();
+    }   
+   getReportExist();
     setMassgeshow(false);
     setMassgename();
   }, [
@@ -513,7 +515,7 @@ const Report = () => {
           // setErrorMessage(responseData.message.data);
         } else {
           const errorMessage =
-            responseData?.message?.data || "An unexpected error occurred";
+            responseData?.message || "An unexpected error occurred";
           toast.error(errorMessage, {
             position: "top-right",
             autoClose: 5000,
@@ -1217,7 +1219,7 @@ const Report = () => {
                                         entity.emission_data
                                       )
                                     }
-                                    className="form-checkbox h-4 w-4 accent-green-600"
+                                    className="form-checkbox h-4 w-4 green-checkbox"
                                     value={entity.id}
                                   />
                                   <label

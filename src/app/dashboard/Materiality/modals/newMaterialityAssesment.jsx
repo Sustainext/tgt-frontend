@@ -574,7 +574,7 @@ const handleDateChange = (newRange) => {
                     type="radio"
                     value="accordance"
                     checked={assessmentApproach === "accordance"}
-                    className="form-radio h-4 w-4 accent-[#008000]"
+                    className="form-radio h-4 w-4 accent-green-600"
                   />
                   <label
                     htmlFor="accordance"
@@ -602,7 +602,7 @@ const handleDateChange = (newRange) => {
                     type="radio"
                     value="reference"
                     checked={assessmentApproach === "reference"}
-                    className="form-radio h-4 w-4 accent-[#008000]"
+                    className="form-radio h-4 w-4 accent-green-600"
                   />
                   <label
                     htmlFor="reference"

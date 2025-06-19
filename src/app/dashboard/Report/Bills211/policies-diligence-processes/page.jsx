@@ -144,16 +144,13 @@ const Policiesdiligence = forwardRef(({ orgName, data, reportId }, ref) => {
   useImperativeHandle(ref, () => ({
     async submitForm(type) {
       try {
-        if (!p1q2 || p1q2.trim() === "") {
-          console.warn("Content is empty.");
-          return false;
-        }
+ 
 
         const payload = {
           report: reportId,
           screen: 5,
           data: {
-            policies_diligence_processes: p1q2,
+            policies_diligence_processes: content,
           },
         };
 

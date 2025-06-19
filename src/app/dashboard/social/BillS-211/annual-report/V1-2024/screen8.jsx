@@ -420,7 +420,7 @@ const Screenend = ({
                         value={option.label}
                         checked={selectedOptions.includes(option.label)}
                         onChange={handleCheckboxChange}
-                        className="mr-3"
+                        className="mr-3 green-checkbox-small"
                       />
                       {option.label}
                     </label>

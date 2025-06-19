@@ -127,11 +127,6 @@ const Remediationmeasures = forwardRef(({ orgName, data, reportId }, ref) => {
   useImperativeHandle(ref, () => ({
     async submitForm(type) {
       try {
-        if (!p1q2 || p1q2.trim() === "") {
-          console.warn("Content is empty.");
-          return false;
-        }
-
         const payload = {
           report: reportId,
           screen: 8,
@@ -192,29 +187,33 @@ const Remediationmeasures = forwardRef(({ orgName, data, reportId }, ref) => {
           or child labour in its activities and supply chains include:
         </p>
         <div className="">
-       {p2q9 === "Yes" && p2q91?.length > 0 && (
-          <>
-          
-            <ul className="list-disc pl-6">
-              {p2q91 && p2q91.map((item, index) => (
-                <li key={index} className="text-[14px] text-[#344054] mb-2">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
+          {p2q9 === "Yes" && p2q91?.length > 0 && (
+            <>
+              <ul className="list-disc pl-6">
+                {p2q91 &&
+                  p2q91.map((item, index) => (
+                    <li key={index} className="text-[14px] text-[#344054] mb-2">
+                      {item}
+                    </li>
+                  ))}
+              </ul>
+            </>
+          )}
         </div>
-
-     
       </div>
       <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between items-center">
-        <p className="text-[15px] text-[#344054] mb-4 mt-3">
-          Note: If an entity controls other entities, it must also describe the
-          steps that these controlled entities have taken to identify, assess
-          and manage potential forced labour or child labour risks in their
-          activities and supply chains
+        <div>
+      <p className="text-[15px] text-[#344054] mb-2 mt-3">
+          Add additional information on any Remediation Measures taken, or Add a
+          statement if no such measures were taken or required
         </p>
+        <p className="text-[15px] text-[#344054] mb-4 ">
+          Note: If an entity controls other entities, it must also describe the
+          remediation measures that these controlled entities have taken, if
+          applicable
+        </p>
+        </div>
+  
       </div>
 
       <div className="mb-4">

@@ -21,7 +21,7 @@ import {
   setSupplyChain,
 } from "../../../../../lib/redux/features/ESGSlice/screen2Slice";
 
-const Companyoperations = forwardRef(({ onSubmitSuccess }, ref) => {
+const Companyoperations = forwardRef(({ onSubmitSuccess,hasChanges }, ref) => {
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const orgName =
@@ -29,6 +29,7 @@ const Companyoperations = forwardRef(({ onSubmitSuccess }, ref) => {
   const [activeSection, setActiveSection] = useState("section2_1");
   const [screenTwoData, setScreentwoData] = useState("");
   const [loopen, setLoOpen] = useState(false);
+  const [initialData, setInitialData] = useState({});
   const apiCalledRef = useRef(false);
   const [isScrolling, setIsScrolling] = useState(false);
   const section2_1Ref = useRef(null);
@@ -143,8 +144,19 @@ const Companyoperations = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const currentData={
+    about_the_company,
+    business_relations,
+    entities_included,
+    supply_chain_description
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       about_the_company: {
         page: "screen_two",
@@ -249,6 +261,12 @@ const Companyoperations = forwardRef(({ onSubmitSuccess }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setScreentwoData(response.data);
         dispatch(
           setAboutTheCompany(response.data.about_the_company?.content || "")

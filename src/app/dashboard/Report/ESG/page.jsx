@@ -137,6 +137,29 @@ const ESGReport = () => {
   //   },
   // ]
 
+  const hasChanges = (initial = {}, current = {}) => {
+    const keys = new Set([...Object.keys(initial), ...Object.keys(current)]);
+    for (const key of keys) {
+      if ((initial[key] || "").trim() !== (current[key] || "").trim()) {
+        return true;
+      }
+    }
+    return false;
+  };
+  // const hasChanges = (initial = {}, current = {}) => {
+  //   const keys = new Set([...Object.keys(initial), ...Object.keys(current)]);
+  //   for (const key of keys) {
+  //     const initialValue = String(initial[key] ?? "").trim();
+  //     const currentValue = String(current[key] ?? "").trim();
+  //     if (initialValue !== currentValue) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // };
+  
+  
+
   const loadMissingFields = async () => {
     // LoaderOpen();
     const url = `${process.env.BACKEND_API_URL}/esg_report/get_field_validation/${reportid}/`;
@@ -218,21 +241,30 @@ const ESGReport = () => {
 
     if (type === "next") {
       const isSubmitted = await submitAndProceed();
-      if (isSubmitted) {
-        setActiveStep((prev) => prev + 1);
-      }
+      setActiveStep((prev) => prev + 1);
+      // if (isSubmitted) {
+       
+      // }
     } else if (type === "last") {
       const isSubmitted = await submitAndProceed();
-      if (isSubmitted) {
-        loadMissingFields();
-      }
-    } else {
+      loadMissingFields();
+      // if (isSubmitted) {
+       
+      // }
+    } 
+    else if(type === "back") {
       const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
         showDraftSavedToast();
-        setTimeout(() => {
-          router.push("/dashboard/Report");
-        }, 4000);
+      }
+      setTimeout(() => {
+        router.push("/dashboard/Report");
+      }, 1000);
+    }
+    else {
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
+        showDraftSavedToast();
       }
     }
   };
@@ -274,6 +306,7 @@ const ESGReport = () => {
             isOpenMobile={isOpenMobile}
             setIsOpenMobile={setIsOpenMobile}
             reportType={reportType}
+            handleNextStep={handleNextStep}
           />
               )
             }
@@ -463,13 +496,13 @@ const ESGReport = () => {
           <div className="block md:hidden lg:hidden  xl:hidden mb-2 h-[43px]">
               <div className="float-right mr-2 flex items-center justify-center mb-2">
                 <div className="flex items-center justify-center">
-                  {activeStep == 16 ? (
+                  {activeStep == 17 ? (
                     <></>
                   ) : (
                     <button
-                      style={{
-                        display: activeStep === 1 ? "none" : "inline-block",
-                      }}
+                    style={{
+                      display: (activeStep === 1) || (activeStep === 16 && reportType==='GRI Report: In accordance With') ? "none" : "inline-block",
+                    }}
                       className={`${
                         activeStep === 1 ? "" : "text-gray-500"
                       } px-3 py-1.5 rounded font-semibold`}
@@ -480,7 +513,7 @@ const ESGReport = () => {
                     </button>
                   )}
 
-                  {activeStep == 16 ? (
+                  {/* {activeStep == 16 ? (
                     <div>
                       {isOmissionSubmitted ? (
                         <button
@@ -529,6 +562,90 @@ const ESGReport = () => {
                         </button>
                       )}
                     </div>
+                  )} */}
+                   {(activeStep == 16 && reportType==='GRI Report: In accordance With') || activeStep==17 ? (
+                    <div>
+                      {
+                        reportType==='GRI Report: In accordance With'?(
+                          <div>
+                      {isOmissionSubmitted ? (
+                        <button
+                          onClick={() => {
+                            setIsCreateReportModalOpen(true);
+                          }}
+                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                        >
+                          Save and Create Report {">"}
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            setIsModalOpen(true);
+                          }}
+                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                        >
+                          Add Reasons for Omission {">"}
+                        </button>
+                      )}
+                    </div>
+                        ):(
+                          <div>
+                         <button
+                              onClick={() => {
+                                setIsCreateReportModalOpen(true);
+                              }}
+                              className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                            >
+                              Save and Create Report {">"}
+                            </button>
+                        </div>
+                        )
+                      }
+                    </div>
+                    
+                  ) : (
+                    <div>
+                      {activeStep < 15 ? (
+                        <button
+                          className={`${
+                            activeStep === 15
+                              ? "bg-gray-300"
+                              : "bg-blue-500 text-white"
+                          } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
+                          onClick={() => {
+                            handleNextStep("next");
+                          }} // Call the form submit and next step handler
+                          disabled={activeStep === 15}
+                        >
+                          Next &gt;
+                        </button>
+                      ) : (
+                        <div>
+                          {reportType==='GRI Report: With Reference to' && activeStep===15 ?(
+                            <button
+                            className={`bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
+                            onClick={() => {
+                              handleNextStep("next");
+                            }} // Call the form submit and next step handler
+                            // disabled={activeStep === 15}
+                          >
+                            Next &gt;
+                          </button>
+                          ):(
+                            <button
+                            onClick={() => {
+                              handleNextStep("last");
+                            }}
+                            className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                          >
+                            Save & Fill Content Index
+                          </button>
+                          )}
+                         
+                        </div>
+                        
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
@@ -537,46 +654,46 @@ const ESGReport = () => {
             <div>
               {activeStep === 1 && (
                 <div>
-                  <MessageFromCEO ref={messageFromCeoRef} />
+                  <MessageFromCEO ref={messageFromCeoRef} hasChanges={hasChanges} />
                 </div>
               )}
               {activeStep === 2 && (
                 <div>
-                  <Companyoperations ref={aboutTheCompany} />
+                  <Companyoperations ref={aboutTheCompany} hasChanges={hasChanges} />
                 </div>
               )}
               {activeStep === 3 && (
                 <div>
                   <div className="mb-4">
-                    <MissionVission ref={missionVision} />
+                    <MissionVission ref={missionVision} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
               {activeStep === 4 && (
                 <div>
                   <div className="mb-4">
-                    <SustainibilityRoadmap ref={sustainibilityRoadmap} />
+                    <SustainibilityRoadmap ref={sustainibilityRoadmap} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
               {activeStep === 5 && (
                 <div>
                   <div className="mb-4">
-                    <AwardsRecognition ref={awardAlliances} />
+                    <AwardsRecognition ref={awardAlliances} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
               {activeStep === 6 && (
                 <div>
                   <div className="mb-4">
-                    <StakeholderEngagement ref={stakeholderEngagement} />
+                    <StakeholderEngagement ref={stakeholderEngagement} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
               {activeStep === 7 && (
                 <div>
                   <div className="mb-4">
-                    <AboutTheReport ref={aboutReport} />
+                    <AboutTheReport ref={aboutReport} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
@@ -584,9 +701,9 @@ const ESGReport = () => {
                 <div>
                   <div className="mb-4">
                     {reportType=='GRI Report: With Reference to'?(
-                      <ReferenceMateriality ref={materiality} />
+                      <ReferenceMateriality ref={materiality} hasChanges={hasChanges} />
                     ):(
-                      <Materiality ref={materiality} />
+                      <Materiality ref={materiality} hasChanges={hasChanges} />
                     )}
                    
                     
@@ -596,49 +713,49 @@ const ESGReport = () => {
               {activeStep === 9 && (
                 <div>
                   <div className="mb-4">
-                    <CorporateGovernance ref={corporateGovernance} reportType={reportType} />
+                    <CorporateGovernance ref={corporateGovernance} reportType={reportType} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
               {activeStep === 10 && (
                 <div>
                   <div className="mb-4">
-                    <SustainibilityJourney ref={sustainabilityJourney} reportType={reportType} />
+                    <SustainibilityJourney ref={sustainabilityJourney} reportType={reportType} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
               {activeStep === 11 && (
                 <div>
                   <div className="mb-4">
-                    <EconomicPerformance ref={economicperformance} reportType={reportType} />
+                    <EconomicPerformance ref={economicperformance} reportType={reportType} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
               {activeStep === 12 && (
                 <div>
                   <div className="mb-4">
-                    <Environment ref={environment} reportType={reportType} />
+                    <Environment ref={environment} reportType={reportType} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
               {activeStep === 13 && (
                 <div>
                   <div className="mb-4">
-                    <People ref={people} reportType={reportType} />
+                    <People ref={people} reportType={reportType} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
               {activeStep === 14 && (
                 <div>
                   <div className="mb-4">
-                    <Community ref={community} reportType={reportType} />
+                    <Community ref={community} reportType={reportType} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
               {activeStep === 15 && (
                 <div>
                   <div className="mb-4">
-                    <CustomerProductService ref={customers} reportType={reportType} />
+                    <CustomerProductService ref={customers} reportType={reportType} hasChanges={hasChanges} />
                   </div>
                 </div>
               )}
@@ -646,7 +763,7 @@ const ESGReport = () => {
                 <div>
                   {reportType=='GRI Report: With Reference to' && activeStep===16?(
                     <div>
-                      <ReferenceMaterialTopic ref={referenceManagementOfMaterialTopic} />
+                      <ReferenceMaterialTopic ref={referenceManagementOfMaterialTopic} hasChanges={hasChanges} />
                     </div>
                   ):(
                     <div className="mb-4">
@@ -661,6 +778,7 @@ const ESGReport = () => {
                           isCreateReportModalOpen={isCreateReportModalOpen}
                           setIsCreateReportModalOpen={setIsCreateReportModalOpen}
                           setIsOmissionSubmitted={setIsOmissionSubmitted}
+                          reportType={reportType}
                           
                           />
                         ):(
@@ -673,6 +791,7 @@ const ESGReport = () => {
                           isCreateReportModalOpen={isCreateReportModalOpen}
                           setIsCreateReportModalOpen={setIsCreateReportModalOpen}
                           setIsOmissionSubmitted={setIsOmissionSubmitted}
+                          reportType={reportType}
                         />
                         )
                       }

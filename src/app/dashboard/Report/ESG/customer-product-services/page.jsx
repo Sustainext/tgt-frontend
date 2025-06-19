@@ -28,9 +28,9 @@ import {
   setCustomers
 } from "../../../../../lib/redux/features/ESGSlice/screen15Slice";
 
-const CustomerProductService = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
+const CustomerProductService = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
   const [activeSection, setActiveSection] = useState("section15_1");
-
+  const [initialData, setInitialData] = useState({});
   const section15_1Ref = useRef(null);
   const section15_1_1Ref = useRef(null);
   const section15_1_2Ref = useRef(null);
@@ -92,8 +92,19 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess,reportType }, ref) 
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const currentData={
+    commitment_statement,
+    product_info_labelling,
+    marketing_practices,
+    conclusion,
+    customers
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       commitment_statement: {
         page: "screen_fifteen",
@@ -208,6 +219,12 @@ const CustomerProductService = forwardRef(({ onSubmitSuccess,reportType }, ref) 
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(
           setCommitmentStatement(

@@ -23,11 +23,16 @@ import {
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalState } from "@/Context/page";
-
+import TCFD from "./TCFD-Disclosure/page";
+import Cookies from "js-cookie";
 const General = () => {
   const { open } = GlobalState();
-  const [activeTab, setActiveTab] = useState("Org Details");
+  const frameworkId = Cookies.get("selected_framework_id");
+  const initialTab =
+    frameworkId === "6" ? "TCFD Disclosure Selection" : "Org Details";
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [mobileopen, setMobileopen] = useState(false);
+
   const dispatch = useDispatch();
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
@@ -68,7 +73,6 @@ const General = () => {
       dispatch(setHeadertext2("Stakeholder Engagement"));
     } else if (TaxTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Collective Bargaining Agreements"));
-   
     } else {
       dispatch(setHeadertext2(`${activeTab}`));
     }
@@ -100,12 +104,14 @@ const General = () => {
             </div>
           ) : (
             <div
-            className={`${
-              open
-                ? "sm:w-[87vw]  md:w-[120vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
-                : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
-            }`}
+              className={`${
+                open
+                  ? "sm:w-[87vw]  md:w-[120vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
+                  : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
+              }`}
             >
+              {activeTab === "TCFD Disclosure Selection" && <TCFD setMobileopen={setMobileopen}/>}
+
               {activeTab === "Org Details" && (
                 <OrgDetails setMobileopen={setMobileopen} />
               )}
@@ -116,7 +122,7 @@ const General = () => {
               {activeTab === "Report Details" && (
                 <ReportDetails setMobileopen={setMobileopen} />
               )}
-          
+
               {activeTab === "Restatement" && (
                 <Restatement setMobileopen={setMobileopen} />
               )}
@@ -130,7 +136,6 @@ const General = () => {
                 <WorkforceEmployees setMobileopen={setMobileopen} />
               )}
 
-         
               {activeTab === "Workforce-Other Workers" && (
                 <WorkforceOtherWorkers setMobileopen={setMobileopen} />
               )}
@@ -139,7 +144,6 @@ const General = () => {
                 <LawAndRegulations setMobileopen={setMobileopen} />
               )}
 
-          
               {activeTab === "Membership & Association" && (
                 <MembershipAndAssociation setMobileopen={setMobileopen} />
               )}
@@ -149,9 +153,6 @@ const General = () => {
               {activeTab === "Collective Bargaining Agreements" && (
                 <CollectiveBargainingAgreements setMobileopen={setMobileopen} />
               )}
-
-      
-              
             </div>
           )}
         </div>

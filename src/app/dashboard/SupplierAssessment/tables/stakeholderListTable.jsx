@@ -362,7 +362,7 @@ let axiosConfig = {
                   type="checkbox"
                   onChange={handleSelectAll}
                   checked={selectedRows.length === sortedData.length}
-                  className="cursor-pointer accent-green-600"
+                  className="cursor-pointer green-checkbox"
                 />
               </th>
               {columns.map((val, i) => (
@@ -436,7 +436,7 @@ let axiosConfig = {
                                       onChange={() =>
                                         handleUserSelection(user.email)
                                       }
-                                      className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                                      className="w-4 h-4 green-checkbox rounded border-gray-300"
                                     />
                                     <div className="flex-1 min-w-0">
                                       <div className="text-sm font-semibold text-gray-900 truncate">
@@ -466,7 +466,7 @@ let axiosConfig = {
                     type="checkbox"
                     checked={selectedRows.includes(row.id)}
                     onChange={() => handleSelectRow(row.id)}
-                    className="cursor-pointer accent-green-600"
+                    className="cursor-pointer green-checkbox"
                   />
                 </td>
                 <td className="px-6 py-3 text-sm text-gray-600 border-b border-gray-200">

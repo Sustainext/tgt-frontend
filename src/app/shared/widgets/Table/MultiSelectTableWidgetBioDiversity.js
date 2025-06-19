@@ -295,7 +295,7 @@ const MultiselectTableWidgetBioDiversity = ({
                                   onChange={() =>
                                     handleCheckboxChange(rowIndex, key, option)
                                   }
-                                  className="mr-2"
+                                  className="mr-2 green-checkbox"
                                 />
                                 <span className="text-[12px]">{option}</span>
                               </label>

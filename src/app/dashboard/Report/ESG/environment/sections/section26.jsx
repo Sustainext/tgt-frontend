@@ -25,27 +25,45 @@ const Section26 = ({ section12_5_3Ref, data, reportType }) => {
         </p> */}
         <p className="text-sm mb-4">
           {data["306_2"]
-            ? data["306_2"].data
-              ? data["306_2"].data[0]
-                ? data["306_2"].data[0].Q1
+            ? data["306_2"]
+              ? data["306_2"][0]
+                ? data["306_2"][0].Q1
                 : "No data available"
               : "No data available"
             : "No data available"}
         </p>
         <p className="text-sm mb-4">
           {data["306_2"]
-            ? data["306_2"].data
-              ? data["306_2"].data[0]
-                ? data["306_2"].data[0].Q2
+            ? data["306_2"]
+              ? data["306_2"][0]
+                ? data["306_2"][0].Q2
                 : "No data available"
               : "No data available"
             : "No data available"}
         </p>
         <p className="text-sm mb-4">
           {data["306_2"]
-            ? data["306_2"].data
-              ? data["306_2"].data[0]
-                ? data["306_2"].data[0].Q3
+            ? data["306_2"]
+              ? data["306_2"][0]
+                ? data["306_2"][0]?.Q3=='Yes'?'':''
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-sm mb-4">
+          {data["306_2"]
+            ? data["306_2"]
+              ? data["306_2"][0]
+                ? data["306_2"][0]?.Q3=='Yes'?data["306_2"][0]?.Q4:''
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-sm mb-4">
+          {data["306_2"]
+            ? data["306_2"]
+              ? data["306_2"][0]
+                ? data["306_2"][0].Q5
                 : "No data available"
               : "No data available"
             : "No data available"}

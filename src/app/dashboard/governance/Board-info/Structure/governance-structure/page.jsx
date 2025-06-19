@@ -63,19 +63,14 @@ const GovernanceStructure = ({
   selectedCorp,
   year,
   togglestatus,
+  tcfdtagb = [],
 }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -85,12 +80,6 @@ const GovernanceStructure = ({
 
   const handleChange = (e) => {
     setFormData(e.formData);
-  };
-
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
   };
 
   const updateFormData = async () => {
@@ -107,7 +96,7 @@ const GovernanceStructure = ({
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axiosInstance.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -170,10 +159,6 @@ const GovernanceStructure = ({
     if (selectedOrg && year && togglestatus) {
       if (togglestatus === "Corporate" && selectedCorp) {
         loadFormData();
-      } else if (togglestatus === "Corporate" && !selectedCorp) {
-        setFormData([{}]);
-        setRemoteSchema({});
-        setRemoteUiSchema({});
       } else {
         loadFormData();
       }
@@ -211,7 +196,7 @@ const GovernanceStructure = ({
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
-                id={`tooltip-$e145`}
+                id={`tooltip-$e1454`}
                 place="top"
                 effect="solid"
                 style={{
@@ -227,13 +212,28 @@ const GovernanceStructure = ({
             </h2>
           </div>
 
-          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
-            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+          <div className="w-full xl:w-[35%] lg:w-[35%] md:w-[35%] 2xl:w-[35%] 4k:w-[35%] 2k:w-[35%] mb-4">
+            <div
+              className={`flex flex-wrap gap-2 items-center ${
+                tcfdtagb.length === 0 ? "justify-end" : "justify-end"
+              }`}
+            >
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
                   GRI 2-9-a
                 </div>
               </div>
+
+              {(tcfdtagb ?? []).map((item) => (
+                <div
+                  key={item.id || item.tagName}
+                  className="w-[110px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center"
+                >
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
+                    {item.tagName}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

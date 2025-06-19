@@ -7,8 +7,10 @@ import { useState, useEffect } from "react";
 // import "react-toastify/dist/ReactToastify.css";
 import MobileLayout from "./MobileLayout";
 import DesktopLayout from "./DesktopLayout";
+
 const HomeDashboard = ({ setActiveTab }) => {
-  const [mobileTab, setMobileTab] = useState("tasks"); // Default active tab
+
+  const [mobileTab, setMobileTab] = useState("tasks"); 
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const handleResize = () => {
@@ -20,6 +22,8 @@ const HomeDashboard = ({ setActiveTab }) => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+
   return (
     <>
       {isMobile ? (

@@ -57,7 +57,7 @@ const Criticalconcerns = ({setMobileopen}) => {
           toggleDrawer={toggleDrawer}
           // sdgData={sdgData}
           griData={griData}
-          title={"Critical Concerns"}
+          title={"Governance"}
           setMobileopen={setMobileopen}
         />
         {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">

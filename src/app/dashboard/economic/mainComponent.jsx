@@ -43,14 +43,24 @@ import {
   setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
 import Materialtopic from "../Management-Material-topic/page";
-
+import Resiliencestrategy from "./risks-opportunities/resilience-strategy/page";
+import Climatebusiness from "./risks-opportunities/climate-business/page";
+import Climaterelatedtargets from "./risks-opportunities/climate-related-targets/page";
+import Climaterelatedmetrics from "./risks-opportunities/climate-related-metrics/page";
+import Cookies from "js-cookie";
 const Economic = () => {
   const { open } = GlobalState();
+  const activestap = useSelector((state) => state.Tcfd.activesection);
   const [activeTab, setActiveTab] = useState(
-    "Management of Material topic Economic Performance"
+    ""
   );
-  const [mobileopen, setMobileopen] = useState(false);
 
+
+
+  const [mobileopen, setMobileopen] = useState(false);
+  const frameworkId = Cookies.get("selected_framework_id");
+  const disclosures = Cookies.get("selected_disclosures");
+  const parsedDisclosures = disclosures ? JSON.parse(disclosures) : [];
   const dispatch = useDispatch();
   const {
     corporate_id,
@@ -74,7 +84,6 @@ const Economic = () => {
     );
   };
 
-  // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     setMobileopen(false);
@@ -84,9 +93,7 @@ const Economic = () => {
     loadMaterialityDashboard();
   }, [dispatch]);
 
-  useEffect(() => {
-    // List of tabs related to Energy\
-    const materialnewTabs = [
+ const materialnewTabs = [
       "Management of Material topic Economic Performance",
       "Management of Material topic risks",
       "Management of Material topic Market",
@@ -104,6 +111,10 @@ const Economic = () => {
       "Financial Implications due to climate change",
       "Climate related Risks",
       "Climate Related Opportunities",
+      "Tcfd-cs1",
+      "Tcfd-cs2",
+      "Tcfd-cs3",
+      "Tcfd-cs4",
     ];
 
     // List of tabs related to Waste
@@ -136,7 +147,9 @@ const Economic = () => {
       "Country-by-country reporting",
     ];
     const PoliticalTabs = ["Political Contribution"];
-    // Set the header based on the active tab category
+
+
+  useEffect(() => {
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Economic Performance"));
     } else if (energyTabs.includes(activeTab)) {
@@ -161,6 +174,29 @@ const Economic = () => {
     dispatch(setMiddlename("Economic"));
   }, [activeTab, dispatch]);
 
+useEffect(() => {
+    const allTabs = [
+      ...materialnewTabs,
+      ...emissionTabs,
+      ...energyTabs,
+      ...wasteTabs,
+      ...materialTabs,
+      ...supplierTabs,
+      ...TaxTabs,
+      ...PoliticalTabs,
+    ];
+    if (activestap && allTabs.includes(activestap)) {
+      setActiveTab(activestap);
+    } else if (data && data.governance) {
+      if (data.governance.GovEconomicPerformance?.is_material_topic) {
+        setActiveTab("Management of Material topic Economic Performance");
+      } else {
+        setActiveTab("Direct economic value generated & distributed");
+      }
+    }
+    // else: stay with previous
+  }, [activestap, data]);
+
   return (
     <>
       <div className="w-full">
@@ -168,9 +204,12 @@ const Economic = () => {
           <div className=" hidden xl:block lg:block md:hidden 2xl:block 4k:block">
             <Aside
               activeTab={activeTab}
+               setActiveTab={setActiveTab}
               handleTabClick={handleTabClick}
               apiData={data}
               setMobileopen={setMobileopen}
+              frameworkId={frameworkId}
+              disclosures={parsedDisclosures}
             />
           </div>
           {mobileopen ? (
@@ -178,9 +217,12 @@ const Economic = () => {
               <div>
                 <Aside
                   activeTab={activeTab}
+                  setActiveTab={setActiveTab}
                   handleTabClick={handleTabClick}
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  frameworkId={frameworkId}
+                  disclosures={parsedDisclosures}
                 />
               </div>
             </div>
@@ -206,7 +248,6 @@ const Economic = () => {
                   Envdata={"GovEconomicPerformance"}
                   topheading={"Economic"}
                 />
-               
               )}
               {activeTab ===
                 "Direct economic value generated & distributed" && (
@@ -236,7 +277,6 @@ const Economic = () => {
                   Envdata={"ClimateRisksAndOpportunities"}
                   topheading={"Economic"}
                 />
-           
               )}
               {activeTab === "Financial Implications due to climate change" && (
                 <Financialimplications
@@ -248,10 +288,17 @@ const Economic = () => {
                 <Climaterelatedrisks
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  frameworkId={frameworkId}
+                  disclosures={parsedDisclosures}
                 />
               )}
               {activeTab === "Climate Related Opportunities" && (
-                <Climaterelated apiData={data} setMobileopen={setMobileopen} />
+                <Climaterelated
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  frameworkId={frameworkId}
+                  disclosures={parsedDisclosures}
+                />
               )}
 
               {/* waste start */}
@@ -267,7 +314,6 @@ const Economic = () => {
                   Envdata={"GovGovernance"}
                   topheading={"Economic"}
                 />
-             
               )}
               {/* {activeTab ===
               "Ratios of Standard Entry level wage by gender compared to local minimum wage" && (
@@ -295,7 +341,6 @@ const Economic = () => {
                   Envdata={"GovEconomicImpact"}
                   topheading={"Economic"}
                 />
-           
               )}
               {activeTab ===
                 "Infrastructure investments and services supported" && (
@@ -330,7 +375,6 @@ const Economic = () => {
                   Envdata={"GovCorruption"}
                   topheading={"Economic"}
                 />
-           
               )}
               {activeTab ===
                 "Operations assessed for risks related to corruption" && (
@@ -374,7 +418,6 @@ const Economic = () => {
                   Envdata={"GovTaxTransparency"}
                   topheading={"Economic"}
                 />
-          
               )}
               {activeTab === "Approach to tax" && (
                 <Approachtotax apiData={data} setMobileopen={setMobileopen} />
@@ -409,10 +452,35 @@ const Economic = () => {
                   Envdata={"GovPolicy"}
                   topheading={"Economic"}
                 />
-           
               )}
               {activeTab === "Political Contribution" && (
                 <PoliticalInvolvement
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Tcfd-cs1" && (
+                <Climatebusiness
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                />
+              )}
+              {activeTab === "Tcfd-cs2" && (
+                <Resiliencestrategy
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+              )}
+              {activeTab === "Tcfd-cs3" && (
+                <Climaterelatedmetrics
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  setActiveTab={setActiveTab}
+                />
+              )}
+              {activeTab === "Tcfd-cs4" && (
+                <Climaterelatedtargets
                   apiData={data}
                   setMobileopen={setMobileopen}
                 />

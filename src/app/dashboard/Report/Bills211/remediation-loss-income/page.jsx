@@ -145,16 +145,13 @@ const Remediationlossincome = forwardRef(({ orgName, data, reportId }, ref) => {
   useImperativeHandle(ref, () => ({
     async submitForm(type) {
       try {
-        if (!p1q2 || p1q2.trim() === "") {
-          console.warn("Content is empty.");
-          return false;
-        }
+   
 
         const payload = {
           report: reportId,
           screen: 9,
           data: {
-            remediation_loss_income: p1q2,
+            remediation_loss_income: content,
           },
         };
 

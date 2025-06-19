@@ -361,7 +361,7 @@ const Screenone = ({
                       value={option.value}
                       checked={selectedOptions.includes(option.value)}
                       onChange={handleCheckboxChange}
-                      className="mr-3 pt-1 cursor-pointer"
+                      className="mr-3 pt-1 cursor-pointer green-checkbox-small"
                     />
                     {option.label}
                   </label>

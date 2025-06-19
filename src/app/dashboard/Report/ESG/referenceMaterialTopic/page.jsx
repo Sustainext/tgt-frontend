@@ -16,7 +16,7 @@ import {
   setConclusion,
 } from "../../../../../lib/redux/features/ESGSlice/screen15Slice";
 
-const ReferenceMaterialTopic =forwardRef(({ onSubmitSuccess,reportType }, ref) => {
+const ReferenceMaterialTopic =forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
     const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const reportid =
@@ -26,6 +26,7 @@ const ReferenceMaterialTopic =forwardRef(({ onSubmitSuccess,reportType }, ref) =
   const section16Ref = useRef(null);
   const [data, setData] = useState("");
   const [loopen, setLoOpen] = useState(false);
+  const [initialData, setInitialData] = useState({});
   
   const conclusion = useSelector((state) => state.screen15Slice.conclusion);
   
@@ -42,8 +43,16 @@ const ReferenceMaterialTopic =forwardRef(({ onSubmitSuccess,reportType }, ref) =
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const currentData={
+    conclusion
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       conclusion: {
         page: "screen_fifteen",
@@ -116,6 +125,12 @@ const ReferenceMaterialTopic =forwardRef(({ onSubmitSuccess,reportType }, ref) =
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(setConclusion(response.data.conclusion?.content || ""));
         }

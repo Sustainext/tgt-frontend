@@ -22,6 +22,7 @@ const ContentIndex = ({
   isOmissionModalOpen,
   isCreateReportModalOpen,
   setIsCreateReportModalOpen,
+  reportType
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const orgName =
@@ -73,11 +74,41 @@ const ContentIndex = ({
       const response = await axiosInstance.get(url);
       if (response.data) {
         setData(response.data);
-        response.data.map((val) => {
-          if (!val.is_filled) {
-            setIsOmissionSubmitted(false);
+        // response.data.map((val) => {
+        //   if (!val.is_filled) {
+        //     setIsOmissionSubmitted(false);
+        //   }
+        // });
+        let hasUnfilled = false;
+
+        response.data.forEach((section) => {
+          if (section.items) {
+            section.items.forEach((item) => {
+              if (!item.is_filled) {
+                hasUnfilled = true;
+              }
+            });
+          }
+
+          if (section.sections) {
+            section.sections.forEach((subSection) => {
+              if (subSection.sections) {
+                subSection.sections.forEach((deepSection) => {
+                  if (deepSection.items) {
+                    deepSection.items.forEach((item) => {
+                      if (!item.is_filled) {
+                        hasUnfilled = true;
+                      }
+                    });
+                  }
+                });
+              }
+            });
           }
         });
+
+        setIsOmissionSubmitted(!hasUnfilled);
+
         const respons2 = await axiosInstance.get(statementUrl);
         if (respons2.data.statement_of_use) {
           setStatement(respons2.data.statement_of_use);
@@ -97,27 +128,63 @@ const ContentIndex = ({
     }
   }, [reportid, isOmissionSubmitted]);
 
-  const updateOmissionData = (updatedData) => {
-    setData((prevData) =>
-      prevData.map((row) => {
-        const updatedRow = updatedData.find(
-          (item) => item.disclosure === row.title
-        );
-        if (updatedRow) {
+  // const updateOmissionData = (updatedData) => {
+  //   setData((prevData) =>
+  //     prevData.map((row) => {
+  //       const updatedRow = updatedData.find(
+  //         (item) => item.disclosure === row.title
+  //       );
+  //       if (updatedRow) {
+  //         return {
+  //           ...row,
+  //           omission: [
+  //             {
+  //               req_omitted: updatedRow.reqOmitted,
+  //               reason: updatedRow.reason,
+  //               explanation: updatedRow.explanation,
+  //             },
+  //           ],
+  //         };
+  //       }
+  //       return row;
+  //     })
+  //   );
+  // };
+
+  const updateOmissionData = (updatedFlatData) => {
+    const updatedMap = new Map(updatedFlatData.map((item) => [item.key, item]));
+
+    setData((prevData) => {
+      return prevData.map((group) => {
+        if (group.items) {
           return {
-            ...row,
-            omission: [
-              {
-                req_omitted: updatedRow.reqOmitted,
-                reason: updatedRow.reason,
-                explanation: updatedRow.explanation,
-              },
-            ],
+            ...group,
+            items: group.items.map((item) => {
+              const updated = updatedMap.get(item.key);
+              return updated ? { ...item, ...updated } : item;
+            }),
           };
         }
-        return row;
-      })
-    );
+
+        if (group.sections) {
+          return {
+            ...group,
+            sections: group.sections.map((section) => ({
+              ...section,
+              sections: section.sections.map((subsection) => ({
+                ...subsection,
+                items: subsection.items.map((item) => {
+                  const updated = updatedMap.get(item.key);
+                  return updated ? { ...item, ...updated } : item;
+                }),
+              })),
+            })),
+          };
+        }
+
+        return group;
+      });
+    });
   };
 
   return (
@@ -240,6 +307,7 @@ const ContentIndex = ({
         reportName={reportName}
         isCreateReportModalOpen={isCreateReportModalOpen}
         setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+        reportType={reportType}
       />
     </>
   );

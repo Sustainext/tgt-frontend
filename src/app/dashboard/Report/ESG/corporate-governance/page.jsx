@@ -42,8 +42,9 @@ import {
   setPolicyPublic,
 } from "../../../../../lib/redux/features/ESGSlice/screen9Slice";
 
-const CorporateGovernance = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
+const CorporateGovernance = forwardRef(({ onSubmitSuccess,reportType,hasChanges }, ref) => {
   const [activeSection, setActiveSection] = useState("section9_1");
+  const [initialData, setInitialData] = useState({});
   const section9_1Ref = useRef(null);
   const section9_2Ref = useRef(null);
   const section9_3Ref = useRef(null);
@@ -119,8 +120,19 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess,reportType }, ref) => 
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const currentData={
+    statement,
+    board_gov_statement,
+    remuneration_policies,
+    policy_not_public_reason
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       statement: {
         page: "screen_nine",
@@ -224,6 +236,12 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess,reportType }, ref) => 
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(setStatement(response.data.statement?.content || ""));
         dispatch(setBoardGov(response.data.board_gov_statement?.content || ""));

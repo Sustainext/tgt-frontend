@@ -33,6 +33,7 @@ const ReportCreatedPopup = ({
   statement,
   userName,
   userEmail,
+  reportType
 }) => {
   const [isNotifyModalOpen, setIsNotifyModalOpen] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -129,11 +130,19 @@ const ReportCreatedPopup = ({
     }
   };
   const handleDownloadExcel = async (id, name) => {
+    let url;
+    if(reportType && reportType=='GRI Report: With Reference to'){
+       url=`${process.env.BACKEND_API_URL}/esg_report/content_index_reference_excel/${id}/?download=true`
+    }
+    else{
+       url=`${process.env.BACKEND_API_URL}/esg_report/content_index_excel/${id}/?download=true`
+    }
+   
     setIsCIXLDownloading(true);
 
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/esg_report/content_index_excel/${id}/?download=true`,
+        url,
         axiosConfig
       );
 

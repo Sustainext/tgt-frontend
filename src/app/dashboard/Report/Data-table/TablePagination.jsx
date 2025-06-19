@@ -115,7 +115,7 @@ else{
     </button>
 
     <button
-      className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+      className={`flex items-center p-2 w-full text-left ${isGRIReport?'text-[#d1d5db] cursor-not-allowed':'text-[#344054] gradient-sky-blue'}`}
       onClick={() => {
         if (!isGRIReport) handleDownloaddocx(item.id, item.name);
       }}
@@ -208,7 +208,7 @@ else{
               className={
                 "flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"
               }
-              onClick={() => handleDownloadExcel(item.id, item.name)}
+              onClick={() => handleDownloadExcel(item.id, item.name,item.report_type)}
             >
               {isCIXLDownloading ? (
                 <Oval
@@ -652,12 +652,19 @@ else{
       });
     }
   };
-  const handleDownloadExcel = async (id, name) => {
+  const handleDownloadExcel = async (id, name,report_type) => {
     setIsCIXLDownloading(true);
+    let url=''
+    if(report_type && report_type=='GRI Report: With Reference to'){
+      url=`${process.env.BACKEND_API_URL}/esg_report/content_index_reference_excel/${id}/?download=true`
+    }
+    else{
+      url=`${process.env.BACKEND_API_URL}/esg_report/content_index_excel/${id}/?download=true`
+    }
 
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/esg_report/content_index_excel/${id}/?download=true`,
+        url,
         axiosConfig
       );
 

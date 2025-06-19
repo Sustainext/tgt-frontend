@@ -306,8 +306,8 @@ const Section16 = ({ section12_3_2Ref, data,reportType }) => {
             columns={column3}
             data={data3}
             consumption="Total water withdrawal"
-            unit={waterWithdrawlBySource.unit}
-            total={waterWithdrawlBySource.total}
+            unit={waterWithdrawlByLocation.unit}
+            total={waterWithdrawlByLocation.total}
           />
         </div>
 
