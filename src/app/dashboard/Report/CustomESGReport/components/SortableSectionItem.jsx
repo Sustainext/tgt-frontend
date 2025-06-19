@@ -12,7 +12,7 @@ export default function SortableSectionItem({
   enabled,
   mandatory,
   onToggle,
-  subLabel='Dummy text to check the alignment of this section'
+  subLabel=''
 }) {
   const {
     attributes,

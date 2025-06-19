@@ -8,6 +8,8 @@ import {
   setSelectedSubsections,
   updateSelectedSubsections,
 } from '../../../../../lib/redux/features/reportBuilderSlice';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SubsectionSelector = forwardRef(({ onBack, onNext }, ref) => {
   const dispatch = useDispatch();
@@ -168,7 +170,17 @@ const SubsectionSelector = forwardRef(({ onBack, onNext }, ref) => {
     });
   
     if (!hasAllSectionsValid) {
-      alert('Please select at least one subsection in each selected section to proceed.');
+      toast.warn('Please select at least one subsection in each selected section to proceed.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+      // alert('');
       return;
     }
   

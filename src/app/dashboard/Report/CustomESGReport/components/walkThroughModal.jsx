@@ -8,13 +8,13 @@ const walkthroughSteps = [
     id: 1,
     title: "Drag sections between tables",
     description: "Drag and drop desired sections between available and selected section table to add or remove it from the report.",
-    image: '/walkThroughOne.PNG',
+    image: 'https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/walkThroughOne.PNG',
   },
   {
     id: 2,
     title: "Select Sub-sections",
     description: "Select checkboxes from the dropdown to select or deselect sub sections.",
-    image: '/walkThroughTwo.PNG',
+    image: 'https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/walkThroughTwo.PNG',
   },
 ];
 

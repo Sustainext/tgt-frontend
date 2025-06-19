@@ -23,6 +23,7 @@ const MainValidationPopup = ({
   reportid,
   reportType,
   isModalOpen,
+  setIsDownloadReportModalOpen,
   setActiveStep,
   setIsModalOpen,
   reportName,
@@ -47,6 +48,7 @@ const MainValidationPopup = ({
   // Get section data from Redux for custom reports
   const enabledSections = useSelector(selectEnabledSections);
   const allSections = useSelector(selectSections);
+  const isContentIndexSelected = useSelector((state)=> state.reportCreation.includeContentIndex)
 
   useEffect(() => {
     setFieldStatuses({});
@@ -444,12 +446,18 @@ const MainValidationPopup = ({
                         }`}
                         disabled={isAnyFieldFilled}
                         onClick={() => {
-                          dispatch(handleNext());
+                          if(isContentIndexSelected){
+                            dispatch(handleNext());
                           // if (reportType === 'GRI Report: In accordance With') {
                           //   setActiveStep(16);
                           // } else {
                           //   setActiveStep(17);
                           // }
+                         
+                          }
+                          else{
+                            setIsDownloadReportModalOpen(true)
+                          }
                           setIsModalOpen(false);
                         }}
                       >
@@ -463,7 +471,12 @@ const MainValidationPopup = ({
                         }`}
                         disabled={!isAnyFieldFilled}
                         onClick={() => {
-                          dispatch(handleNext());
+                          if(isContentIndexSelected){
+                            dispatch(handleNext());
+                          }
+                          else{
+                            setIsDownloadReportModalOpen(true)
+                          }
                           setIsModalOpen(false);
                         }}
                       >

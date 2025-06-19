@@ -95,7 +95,7 @@ const Report = () => {
   const includeMaterialTopics = useSelector(selectIncludeMaterialTopics);
   const includeContentIndex = useSelector(selectIncludeContentIndex);
 
-console.log(includeMaterialTopics,includeContentIndex,"check this redux state")
+
 
   const getAuthToken = () => {
     if (typeof window !== "undefined") {

@@ -3,6 +3,7 @@
 import { useState,useMemo } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import { MdOutlineEdit } from "react-icons/md";
 
 // Redux selectors and actions
 import {
@@ -54,25 +55,44 @@ const ESGSidebarContent = ({
   return (
     <div className="font-medium">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4 px-2 xl:hidden lg:hidden">
-        <span className="text-[16px] font-[600] text-[#727272]">Report Module</span>
-        <button onClick={closeMobile} className="text-gray-700">
-          <MdKeyboardArrowLeft className="h-6 w-6" />
-        </button>
-      </div>
-
-      {/* Desktop Header with Edit */}
-      <div className="hidden xl:flex justify-between items-center px-4 py-2 text-[#727272] font-bold">
-        <span className="text-[16px] font-[600] p-2">Report Module</span>
-        {showEditButton && (
+      <div className="xl:hidden lg:hidden">
+      {showEditButton && (
+        <div className="flex justify-between items-start">
           <button
             onClick={onEditClick}
-            className="text-[12px] px-2 py-1 border border-gray-300 rounded hover:bg-gray-100"
+            className="text-[12px] flex gap-2 mx-2 text-[#556A7D] px-1 mb-3 pb-3 w-[80%] text-left py-1 border-b-2 border-gray-200"
           >
-            Edit
+            Edit Report Template <MdOutlineEdit className="w-4 h-4"/>
+          </button>
+           <button onClick={closeMobile} className="text-gray-700">
+           <MdKeyboardArrowLeft className="h-6 w-6" />
+         </button>
+        </div>
+          
+        )}
+      <div className="flex items-center justify-between mb-4 px-2">
+        <span className="text-[16px] font-[600] text-[#727272] p-1">Report Module</span>
+       
+      </div>
+      </div>
+     
+
+      {/* Desktop Header with Edit */}
+      <div className="hidden xl:block">
+      {showEditButton && (
+          <button
+            onClick={onEditClick}
+            className="text-[12px] flex gap-2 mx-5 text-[#556A7D] px-1 mb-1 pb-2 w-[80%] text-left py-1 border-b-2 border-gray-200"
+          >
+            Edit Report Template <MdOutlineEdit className="w-4 h-4"/>
           </button>
         )}
+      <div className="justify-between items-center px-4 py-2 text-[#727272] font-bold">
+        <span className="text-[16px] font-[600] p-1">Report Module</span>
+        
       </div>
+      </div>
+     
 
       {/* Section List */}
       <div className="mb-3">
@@ -113,6 +133,7 @@ const ESGSidebar = ({
     if (showEditModal) {
       submitData('toggle')
       dispatch(setSectionEditorOpen(true));
+      setIsOpenMobile(false)
     }
   };
 
@@ -154,6 +175,7 @@ const ESGSidebar = ({
             onEditClick={handleEditClick}
             reportType={reportType}
             allSections={allSections}
+            submitData={submitData}
           />
         </div>
       </div>

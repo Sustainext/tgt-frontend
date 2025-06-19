@@ -143,6 +143,10 @@ const reportCreationSlice = createSlice({
         delete state.errors.investmentEntities;
       }
     },
+    resetToggleToDefaults: (state) => {
+      state.includeContentIndex = false;
+      state.includeMaterialTopics = false;
+    },
     
     setSelectedAssessmentId: (state, action) => {
       state.selectedAssessmentId = action.payload;
@@ -192,6 +196,7 @@ export const {
   setInvestmentCorporates,
   toggleInvestmentCorporate,
   setOwnershipRatio,
+  resetToggleToDefaults,
   setSelectedAssessmentId,
   setOrganizations,
   setCorporates,

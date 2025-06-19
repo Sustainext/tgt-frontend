@@ -60,7 +60,7 @@ function DraggableItem({ id, children }) {
   return (
     <div ref={setNodeRef} style={style} className={`relative ${isDragging ? "z-10" : ""}`}>
       <div
-        className="absolute left-0 mt-[22px] -translate-y-1/2 cursor-move"
+        className="absolute left-0 mt-[22px] -translate-y-1/2 cursor-grab"
         {...attributes}
         {...listeners}
       >
@@ -177,7 +177,7 @@ const currentDisplaySection = useSelector(selectCurrentDisplaySectionForReportTy
   
     return (
       <div key={subsection.id} className={`ml-${level * 4}`}>
-        <label className="flex items-center gap-2 text-sm mb-1">
+        <label className="flex items-center gap-2 text-sm mb-1 cursor-pointer">
           <input
             type="checkbox"
             checked={isChecked}
@@ -349,9 +349,9 @@ setLocalSelectedSubsections(cleanedSubsections);
 
     return (
       <DraggableItem key={section.id} id={section.id}>
-        <div className="rounded p-3 mb-2 bg-white border-b border-gray-200">
+        <div className="rounded p-3 mb-2 bg-white border-b border-gray-200 cursor-pointer" onClick={() => toggleDropdown(section.id)}>
           <div className="flex justify-between items-center">
-            <p className="text-[#344054] text-sm pl-4 cursor-pointer" onClick={() => toggleDropdown(section.id)}>
+            <p className="text-[#344054] text-sm pl-4">
               {section.title}
             </p>
             {items.length > 0 && (

@@ -24,6 +24,8 @@ import {
   reorderSections,
   updateEnabledSectionOrder
 } from '../../../../../lib/redux/features/reportBuilderSlice';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import SortableSectionItem from './SortableSectionItem';
 
@@ -65,7 +67,16 @@ const SectionSelector = forwardRef(({ onNext }, ref) => {
     if (enabledSections.length > 0) {
       onNext();
     } else {
-      alert('Please select at least one section to proceed.');
+      toast.warn('Please select at least one section to proceed.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 

@@ -12,6 +12,10 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import Sidebar from './components/sidebar';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Oval } from "react-loader-spinner";
+
+
+
 
 // Redux imports
 import {
@@ -29,29 +33,162 @@ import {
 } from '../../../../lib/redux/features/reportBuilderSlice';
 
 const defaultSections = [
-  { id: 'message_ceo', title: 'Message From Our Leadership', mandatory: false, enabled: true, order: 1 },
-  { id: 'about_company', title: 'About the Company & Operations', mandatory: false, enabled: true, order: 2 },
-  { id: 'mission_vision', title: 'Mission, Vision, Value', mandatory: false, enabled: true, order: 3 },
-  { id: 'sustainability', title: 'Sustainability Roadmap', mandatory: false, enabled: true, order: 4 },
-  { id: 'awards', title: 'Awards & Alliances', mandatory: false, enabled: true, order: 5 },
-  { id: 'stakeholder', title: 'Stakeholder Engagement', mandatory: false, enabled: true, order: 6 },
-  { id: 'about_report', title: 'About the Report', mandatory: false, enabled: true, order: 7 },
-  { id: 'materiality', title: 'Materiality', mandatory: false, enabled: true, order: 8 },
-  { id: 'governance', title: 'Corporate Governance', mandatory: false, enabled: true, order: 9 },
-  { id: 'journey', title: 'Sustainability Journey', mandatory: false, enabled: true, order: 10 },
-  { id: 'economic', title: 'Economic Performance', mandatory: false, enabled: true, order: 11 },
-  { id: 'environment', title: 'Environment', mandatory: false, enabled: true, order: 12 },
-  { id: 'people', title: 'People', mandatory: false, enabled: true, order: 13 },
-  { id: 'community', title: 'Community', mandatory: false, enabled: true, order: 14 },
-  { id: 'customers', title: 'Customers, Products & Services', mandatory: false, enabled: true, order: 15 },
+  {
+    id: 'message_ceo',
+    title: 'Message From Our Leadership',
+    subLabel:'Share any message from the leadership team.',
+    mandatory: false,
+    enabled: false,
+    field:['message'],
+    order: 1,
+    screen: "screen_one"
+  },
+    {
+    id: 'about_company',
+    title: 'About the Company & Operations',
+    subLabel:'An overview about the company like who we are, what we do, and how the operations are aligned with the sustainability goals.',
+    mandatory: false,
+    enabled: false,
+    field:['about_the_company'],
+    order: 2,
+    screen: "screen_two"
+  },
+  {
+    id: 'mission_vision',
+    title: 'Mission, Vision, Value',
+    subLabel:'Share the core principles that guide  company’s purpose and future aspirations.',
+    mandatory: false,
+    enabled: false,
+    field:['mission'],
+    order: 3,
+    screen: "screen_three"
+  },
+  {
+    id: 'sustainability',
+    title: 'Sustainability Roadmap',
+    subLabel:'Share companies step-by-step guide journey toward sustainability, outlining the goals, milestones, and the progress.',
+    mandatory: false,
+    enabled: false,
+    field:['description'],
+    order: 4,
+    screen: "screen_four"
+  },
+  {
+    id: 'awards',
+    title: 'Awards & Alliances',
+    subLabel:'Showcase  any recognitions or awards earned.',
+    mandatory: false,
+    enabled: false,
+    field:['description'],
+    order: 5,
+    screen: "screen_five"
+  },
+  {
+    id: 'stakeholder',
+    title: 'Stakeholder Engagement',
+    subLabel:'Overview of how company collaborates with key stakeholders.',
+    mandatory: false,
+    enabled: false,
+    field:['description'],
+    order: 6,
+    screen: "screen_six"
+  },
+  {
+    id: 'about_report',
+    title: 'About the Report',
+    subLabel:'A brief explanation of the purpose, scope, and methodology behind this report.',
+    mandatory: false,
+    enabled: false,
+    field:['description'],
+    order: 7,
+    screen: "screen_seven"
+  },
+  {
+    id: 'materiality',
+    title: 'Materiality',
+    subLabel:'A brief explanation of the most relevant topics for an organization to report on.',
+    mandatory: false,
+    enabled: false,
+    order: 8,
+    screen: "screen_eight"
+  },
+  {
+    id: 'governance',
+    title: 'Corporate Governance',
+    subLabel:"A brief explanation on company's system of rules, practices, and processes that direct and manage its operations.",
+    mandatory: false,
+    enabled: false,
+    field:['statement'],
+    order: 9,
+    screen: "screen_nine"
+  },
+  {
+    id: 'journey',
+    title: 'Sustainability Journey',
+    subLabel:'A brief explanation of the ongoing path toward sustainability, highlighting key achievements and challenges',
+    mandatory: false,
+    enabled: false,
+    field:['company_sustainability_statement'],
+    order: 10,
+    screen: "screen_ten"
+  },
+  {
+    id: 'economic',
+    title: 'Economic Performance',
+    subLabel:"A brief explanation of the organization's economic performance like Economic value generated and distributed (EVG&D), Defined benefit plan obligations, Financial assistance from governments, and Financial implications of climate change.",
+    mandatory: false,
+    enabled: false,
+    field:['company_economic_performance_statement'],
+    order: 11,
+    screen: "screen_eleven"
+  },
+  {
+    id: 'environment',
+    title: 'Environment',
+    subLabel:"A brief explanation on the organization's environmental issues, such as emissions, effluents, waste, material use, energy, water, and biodiversity.",
+    mandatory: false,
+    enabled: false,
+    field:['environmental_responsibility_statement'],
+    order: 12,
+    screen: "screen_twelve"
+  },
+  {
+    id: 'people',
+    title: 'People',
+    subLabel:"A brief explanation on organizations employees, labour management and other benefits and training for the welfare of the people within the organization and community.",
+    mandatory: false,
+    enabled: false,
+    field:['employee_policies_statement'],
+    order: 13,
+    screen: "screen_thirteen"
+  },
+  {
+    id: 'community',
+    title: 'Community',
+    subLabel:'Details on how the organization engages and collaborates with the community to promote sustainability.',
+    mandatory: false,
+    enabled: false,
+    order: 14,
+    screen: "screen_fourteen"
+  },
+  {
+    id: 'customers',
+    title: 'Customers, Products & Services',
+    subLabel:'A brief explanation of the quality and standard of the companies products and services.',
+    mandatory: false,
+    enabled: false,
+    field:['conclusion'],
+    order: 15,
+    screen: "screen_fifteen"
+  }
 ];
-
 
 export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
   const router = useRouter();
   const dispatch = useDispatch();
   const sectionSelectorRef = useRef();
   const subsectionSelectorRef = useRef();
+  
 
   
   const [step, setStep] = useState(0);
@@ -67,6 +204,8 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
   const [selectedSubsections, setSelectedSubsections] = useState({});
   const [isOpenMobile, setIsOpenMobile] = useState(false);
   const skipSelectionPage=useSelector(selectSkipSelectionPage)
+  const [loopen, setLoOpen] = useState(false);
+ 
 
   // console.log(skipSelectionPage,step,'see page skip')
 
@@ -78,6 +217,13 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
       }
     }
   }, [dispatch, reportid,skipSelectionPage]); 
+
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
   
   // Redux selectors for navigation
   const enabledSections = useSelector(selectEnabledSections);
@@ -390,13 +536,13 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
           )}
   
           {step === 2 && (
-            <>
+            <div className='flex justify-end px-4 w-full'>
               {canGoToPrevious && (
                 <button
                   className="text-gray-500 px-4 py-2 rounded font-semibold hover:bg-gray-100 transition"
                   onClick={handleReportPrevious}
                 >
-                  ← Previous
+                  {"<"} Previous
                 </button>
               )}
               {canGoToNext ? (
@@ -404,7 +550,7 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
                   className="rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   onClick={() => handleReportNext("next")}
                 >
-                  Next →
+                  Next {">"}
                 </button>
               ) : (
                 <button
@@ -414,7 +560,7 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
                   Complete Report
                 </button>
               )}
-            </>
+            </div>
           )}
         </div>
       </div>
@@ -436,6 +582,8 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
             reportType={reportType} // Pass reportType
             allSections={defaultSections} // Pass all sections for non-custom reports
             submitData={handleReportNext}
+            setIsOpenMobile={setIsOpenMobile}
+            isOpenMobile={isOpenMobile}
           />
         )}
         <div className='w-full mb-5'>
@@ -604,15 +752,18 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
   sections={sections}
   onBack={() => setStep(0)}
   onNext={(subsections) => {
+    LoaderOpen()
     setSelectedSubsections(subsections);
     dispatch(updateReportBuilderData(reportid))
   .unwrap()
   .then(() => {
+    LoaderClose()
     toast.success('Report updated successfully!');
     setStep(2);
   })
   .catch(err => {
-    toast.error(`Failed to update report: ${err}`);
+    LoaderClose()
+    toast.error(`Failed to update report`);
   });
 
   }}
@@ -635,36 +786,46 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
       </div>
 
       {/* Mobile overlay for sidebar - only show in step 2 */}
-      {step === 2 && isOpenMobile && (
-        <>
-          <div
-            className="fixed inset-0 bg-black bg-opacity-30 z-40"
-            onClick={() => setIsOpenMobile(false)}
-          />
-          <div
-            className={`fixed top-[7rem] left-0 h-full z-50 bg-white shadow-lg transform transition-transform duration-300 ease-in-out translate-x-0 w-72`}
-          >
-            <div className="p-4">
-              {/* Add mobile sidebar content here if needed */}
-              <div className="font-medium">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[16px] font-[600] text-[#727272]">
-                    Report Module
-                  </span>
-                  <button
-                    onClick={() => setIsOpenMobile(false)}
-                    className="text-gray-700"
-                  >
-                    ×
-                  </button>
-                </div>
+
+{/* {isOpenMobile && step === 2 && (
+          <>
+            <div
+              className="fixed inset-0 bg-black bg-opacity-30 z-40"
+              onClick={() => setIsOpenMobile(false)}
+            />
+            <div
+              className={`fixed top-[7rem] left-0 h-full z-50 bg-white shadow-lg transform transition-transform duration-300 ease-in-out translate-x-0 w-72`}
+            >
+              <div className="p-4">
+              <Sidebar
+         sections={displaySections}
+         // setSections={setSections}
+         selectedSubsections={displaySubsections}
+         reportType={reportType} // Pass reportType
+         allSections={defaultSections} // Pass all sections for non-custom reports
+         submitData={handleReportNext}
+        onClose={() => setIsOpenMobile(false)} // Optional close handler
+      />
               </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )} */}
 
-      <ToastContainer />
+
+      {loopen && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                <Oval
+                  height={50}
+                  width={50}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              </div>
+            )}
+
+      {/* <ToastContainer /> */}
     </>
   );
 }

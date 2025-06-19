@@ -24,6 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import FilterComponent from './FilterComponent'
 import {initializeForCustomReport,resetToDefaults,fetchReportBuilderData} from '../../../../lib/redux/features/reportBuilderSlice'
+import {resetToggleToDefaults} from '../../../../lib/redux/features/reportCreationSlice'
 import { useDispatch } from "react-redux";
 
 import axiosInstance, { del } from "@/app/utils/axiosMiddleware";
@@ -379,6 +380,7 @@ else{
     if(report_type==='Custom ESG Report'){
       // dispatch(initializeForCustomReport());
       dispatch(resetToDefaults())
+      dispatch(resetToggleToDefaults())
       dispatch(fetchReportBuilderData(id));
     }
     router.push("/dashboard/Report/ESG");

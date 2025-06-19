@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import DownloadReportPopup from '../CustomESGReport/components/downloadReportPop';
 
 // Import components
 import MissionVission from "./mission-vision/page";
@@ -82,6 +83,7 @@ const ESGReport = () => {
    const [orgName, setOrgName] = useState("");
    const [corpName, setCorpName] = useState("");
    const [missing_fields, setMissingFields] = useState([]);
+   const [isDownloadReportModalOpen,setIsDownloadReportModalOpen]=useState(false)
 
 
    
@@ -91,6 +93,7 @@ const ESGReport = () => {
    const allSubsections = useSelector(selectSubsections);
    const selectedSubsections = useSelector(selectSelectedSubsections);
    const currentReportPage = useSelector(selectCurrentReportPage);
+   const isContentIndexSelected = useSelector((state)=> state.reportCreation.includeContentIndex)
 
   // Default sections definition (move this up before it's used)
   // const defaultSections = [
@@ -575,7 +578,195 @@ const ESGReport = () => {
                  <ReportBuilderPage loadMissingFields={loadMissingFields} hasChanges={hasChanges} />
               </div>
             ):(
-              <ContentIndex
+              <div className="w-full mb-5">
+              <div className="flex flex-col justify-start overflow-x-hidden">
+                <div className="flex justify-between items-center border-b border-gray-200 mb-3 w-full">
+                  <div className="w-[70%]">
+                    <div className="text-left mb-3 ml-3 pt-3">
+                      <div className="flex">
+                        <div>
+                          <button
+                            onClick={() => {
+                              if (isInContentIndexPhase) {
+                                router.push("/dashboard/Report");
+                              } else {
+                                handleNextStep("back");
+                              }
+                            }}
+                            className="text-[12px] text-[#667085] flex gap-2 ml-3"
+                          >
+                            <FaArrowLeftLong className="w-3 h-3 mt-1" />
+                            Back to Reports
+                          </button>
+    
+                          {/* Mobile section */}
+                          <div className="xl:hidden lg:hidden">
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => setIsOpenMobile(true)}
+                                className="text-gray-700"
+                              >
+                                <MdKeyboardArrowRight className="h-6 w-6 text-black" />
+                              </button>
+                              <div>
+                                <p className="gradient-text text-[22px] font-bold pt-3">
+                                  {reportName?reportName:''}
+                                </p>
+                                <p className="mt-2 text-[#667085] text-[13px]">
+                                  Organization{corpName ? " / Corporate" : ""}:{" "}
+                                  {orgName} {corpName ? " / " : ""}
+                                  {corpName}{" "}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+    
+                          {/* Desktop section */}
+                          <div className="hidden xl:block lg:block">
+                            <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
+                            {reportName?reportName:''}
+                            </p>
+                            <p className="mt-2 text-[#667085] text-[13px] ml-3">
+                              Organization{corpName ? " / Corporate" : ""}:{" "}
+                              {orgName} {corpName ? " / " : ""}
+                              {corpName}{" "}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    
+                  {/* Desktop navigation */}
+                  <div className="hidden md:block lg:block xl:block">
+                    <div className="float-right mr-2 flex items-center justify-center">
+                      <div className="flex items-center justify-center">
+                        {/* Show navigation for sections */}
+                        {!isInContentIndexPhase && (
+                          <>
+                            <button
+                              style={{
+                                display: !canGoToPrevious ? "none" : "inline-block",
+                              }}
+                              className="text-gray-500 px-3 py-1.5 rounded font-semibold w-[120px]"
+                              onClick={handlePreviousStep}
+                              disabled={!canGoToPrevious}
+                            >
+                              &lt; Previous
+                            </button>
+    
+                            {canGoToNext ? (
+                              <button
+                                className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
+                                onClick={() => handleNextStep("next")}
+                              >
+                                Next &gt;
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => handleNextStep("last")}
+                                className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                              >
+                                Save & Fill Content Index
+                              </button>
+                            )}
+                          </>
+                        )}
+    
+                        {/* Content index navigation */}
+                        {isInContentIndexPhase && (
+                          <div>
+                            {reportType === "GRI Report: In accordance With" || reportType==='Custom ESG Report' ? (
+                              <div>
+                                {isOmissionSubmitted ? (
+                                  <button
+                                    onClick={() => setIsCreateReportModalOpen(true)}
+                                    className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                                  >
+                                    Save and Create Report {">"}
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={() => setIsModalOpen(true)}
+                                    className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                                  >
+                                    Add Reasons for Omission {">"}
+                                  </button>
+                                )}
+                              </div>
+                            ) : (
+                              <div>
+                                <button
+                                  onClick={() => setIsCreateReportModalOpen(true)}
+                                  className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                                >
+                                  Save and Create Report {">"}
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              {/* Mobile navigation */}
+              <div className="block md:hidden lg:hidden xl:hidden mb-2 h-[43px]">
+                <div className="float-right mr-2 flex items-center justify-center mb-2">
+                  <div className="flex items-center justify-center">
+                    {!isInContentIndexPhase && canGoToPrevious && (
+                      <button
+                        className="text-gray-500 px-3 py-1.5 rounded font-semibold"
+                        onClick={handlePreviousStep}
+                      >
+                        &lt; Previous
+                      </button>
+                    )}
+    
+                    {!isInContentIndexPhase && canGoToNext ? (
+                      <button
+                        className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
+                        onClick={() => handleNextStep("next")}
+                      >
+                        Next &gt;
+                      </button>
+                    ) : !isInContentIndexPhase ? (
+                      <button
+                        onClick={() => handleNextStep("last")}
+                        className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                      >
+                        Save & Fill Content Index
+                      </button>
+                    ) : null}
+    
+                    {isInContentIndexPhase && (
+                      <div>
+                        {isOmissionSubmitted ? (
+                          <button
+                            onClick={() => setIsCreateReportModalOpen(true)}
+                            className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                          >
+                            Save and Create Report {">"}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                          >
+                            Add Reasons for Omission {">"}
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+    
+              <div className="xl:mx-3 md:mx-3 lg:mx-3 4k:mx-3 2k:mx-3 2xl:mx-3 my-2">
+                <div>
+                <ContentIndex
                 reportName={reportName}
                 setActiveStep={(step) => dispatch(setCurrentReportPage(step - 1))}
                 isOmissionSubmitted={isOmissionSubmitted}
@@ -585,6 +776,10 @@ const ESGReport = () => {
                 setIsCreateReportModalOpen={setIsCreateReportModalOpen}
                 setIsOmissionSubmitted={setIsOmissionSubmitted}
               />
+                </div>
+              </div>
+            </div>
+             
             )
           }
   </div>
@@ -801,7 +996,7 @@ const ESGReport = () => {
         </div>
   
         {/* Mobile overlay for sidebar */}
-        {isOpenMobile && (
+        {/* {isOpenMobile && (
           <>
             <div
               className="fixed inset-0 bg-black bg-opacity-30 z-40"
@@ -816,11 +1011,12 @@ const ESGReport = () => {
                   isOpenMobile={true}
                   reportType={reportType}
                   allSections={sectionsToUse}
+                  submitData={handleNextStep}
                 />
               </div>
             </div>
           </>
-        )}
+        )} */}
         </div>
       )
     }
@@ -830,6 +1026,7 @@ const ESGReport = () => {
       {/* Modals */}
       <MainValidationPopup
         isModalOpen={IsValidationModalOpen}
+        setIsDownloadReportModalOpen={setIsDownloadReportModalOpen}
         setActiveStep={(step) => dispatch(setCurrentReportPage(step - 1))}
         missing_fields={missing_fields}
         setIsModalOpen={setIsValidationModalOpen}
@@ -843,6 +1040,10 @@ const ESGReport = () => {
         reportType={reportType}
         reportCreatedOn={reportCreatedOn}
       />
+{
+  !isContentIndexSelected && isDownloadReportModalOpen && <DownloadReportPopup isDownloadReportModalOpen={isDownloadReportModalOpen} reportName={reportName} />
+}
+
     </>
   );
 };
