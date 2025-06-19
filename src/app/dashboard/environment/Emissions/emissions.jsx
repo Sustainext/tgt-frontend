@@ -143,7 +143,7 @@ if (
       tagName: "TCFD-M&T-B",
       toggle: "59",
       id: "tooltip-$tcfd1",
-      content: "TCFD-METRICS AND TARGETS-C Disclosure",
+      content: "TCFD-Metrics and Targets-B Disclosure",
     });
   }
 }

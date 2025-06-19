@@ -278,9 +278,7 @@ const CompositionOfHighestGovernanceBody = ({
           </div>
           <div className="w-full xl:w-[35%] lg:w-[35%] md:w-[35%] 2xl:w-[35%] 4k:w-[35%] 2k:w-[35%] mb-4">
             <div
-              className={`flex flex-wrap gap-2 items-center ${
-              tcfdtag.length === 0 ? "justify-end" : "justify-end"
-              }`}
+              className={`flex flex-wrap gap-2 items-center justify-end `}
             >
          
               <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center">
@@ -289,16 +287,7 @@ const CompositionOfHighestGovernanceBody = ({
                 </div>
               </div>
 
-            {tcfdtag && tcfdtag.map((item) => (
-                <div
-                  key={item.id || item.tagName}
-                  className="w-[110px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center"
-                >
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
-                    {item.tagName}
-                  </div>
-                </div>
-              ))}
+         
             </div>
           </div>
         </div>

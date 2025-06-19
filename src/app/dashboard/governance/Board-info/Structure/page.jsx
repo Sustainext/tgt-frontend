@@ -71,8 +71,8 @@ const BoardInfo = ({ setMobileopen, frameworkId, disclosures }) => {
     },
   ];
   const tcfd = [];
-  const tcfdtag = [];
-
+  const tcfdtaga = [];
+  const tcfdtagb = [];
   if (frameworkId === "6" && disclosures?.Governance?.disclosures) {
     const govDisclosures = disclosures.Governance.disclosures;
 
@@ -84,9 +84,9 @@ const BoardInfo = ({ setMobileopen, frameworkId, disclosures }) => {
         tagName: "TCFD-GOV-A",
         toggle: "140",
         id: "tooltip-$tcfd1",
-        content: "TCFD-GOVERNANCE-A Disclosure",
+        content: "TCFD-Governance-A Disclosure",
       });
-      tcfdtag.push({
+      tcfdtaga.push({
         tagName: "TCFD-GOV-A",
       });
     }
@@ -96,9 +96,9 @@ const BoardInfo = ({ setMobileopen, frameworkId, disclosures }) => {
         tagName: "TCFD-GOV-B",
         toggle: "141",
         id: "tooltip-$tcfd2",
-        content: "TCFD-GOVERNANCE-B Disclosure",
+        content: "TCFD-Governance-B Disclosure",
       });
-      tcfdtag.push({
+      tcfdtagb.push({
         tagName: "TCFD-GOV-B",
       });
     }
@@ -255,7 +255,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         togglestatus={togglestatus}
-        tcfdtag={tcfdtag}
+        tcfdtagb={tcfdtagb}
       />
       <CommitteeOfHighestGovernanceBody
         selectedOrg={selectedOrg}
@@ -263,7 +263,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         togglestatus={togglestatus}
-        tcfdtag={tcfdtag}
+        tcfdtaga={tcfdtaga}
       />
       <CompositionOfHighestGovernanceBody
         selectedOrg={selectedOrg}
@@ -271,7 +271,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         togglestatus={togglestatus}
-        tcfdtag={tcfdtag}
+    
       />
     </>
   );

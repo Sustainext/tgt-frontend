@@ -43,21 +43,14 @@ const Governance = () => {
   const disclosures = Cookies.get("selected_disclosures");
   const parsedDisclosures = disclosures ? JSON.parse(disclosures) : [];
   const activestap = useSelector((state) => state.Tcfd.activesection);
- 
-      const [activeTab, setActiveTab] = useState("Structure");
-        useEffect(() => {
-    if (activestap) {
-      setActiveTab(activestap);
-    }
-  }, [activestap]);
+  const [activeTab, setActiveTab] = useState("");
+
   const dispatch = useDispatch();
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     setMobileopen(false);
   };
-
-  useEffect(() => {
     const emissionTabs = [
       "Structure",
       "Nomination and Selection",
@@ -69,9 +62,7 @@ const Governance = () => {
       "Sustainability Reporting",
       "Tcfd-s1",
     ];
-
-    const wasteTabs = ["Conflict of Interest", "Critical Concerns",  "Tcfd-s2"];
-
+    const wasteTabs = ["Conflict of Interest", "Critical Concerns", "Tcfd-s2"];
     const materialTabs = [
       "Sustainability Knowledge",
       "Performance Evaluations",
@@ -79,14 +70,12 @@ const Governance = () => {
       "Determine Remuneration",
       "Compensation Ratio",
     ];
-
     const supplierTabs = ["Sustainability Strategy"];
-
     const TaxTabs = ["Process"];
     const PoliticalTabs = ["Advice & Concerns"];
     const PolicyTabs = ["Policy Commitments", "Implementing Commitments"];
-     const RiskTabs = ["Tcfd-s3", "Tcfd-s4","Tcfd-s5"];
-    // Set the header based on the active tab category
+    const RiskTabs = ["Tcfd-s3", "Tcfd-s4", "Tcfd-s5"];
+  useEffect(() => {
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Board Info"));
     } else if (energyTabs.includes(activeTab)) {
@@ -112,7 +101,26 @@ const Governance = () => {
     dispatch(setHeaderdisplay("block"));
     dispatch(setMiddlename("Governance"));
   }, [activeTab, dispatch]);
+  
+const allTabNames = [
+  ...emissionTabs,
+  ...energyTabs,
+  ...wasteTabs,
+  ...materialTabs,
+  ...supplierTabs,
+  ...TaxTabs,
+  ...PoliticalTabs,
+  ...PolicyTabs,
+  ...RiskTabs
+];
 
+useEffect(() => {
+  if (activestap && allTabNames.includes(activestap)) {
+    setActiveTab(activestap);
+  } else {
+    setActiveTab("Structure");
+  }
+}, [activestap]);
   return (
     <>
       <div className="w-full">
