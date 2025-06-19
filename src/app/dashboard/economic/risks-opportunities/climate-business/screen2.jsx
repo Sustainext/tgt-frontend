@@ -18,7 +18,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-governance-management_of_impact-2-12-b-due_diligence";
+const view_path = "economic-climate-risks-and-opportunities-impact-of-climate-related-issues-on-business-screen2";
 const client_id = 1;
 const user_id = 1;
 
@@ -227,15 +227,15 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
       >
         <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500] relative">
               GHG Emissions Reduction Commitments
               <MdInfoOutline
-                data-tooltip-id={`tooltip-employees`}
+                data-tooltip-id={`tooltip-er1`}
                 data-tooltip-content="This section documents data corresponding to the GHG emissions reduction commitments of the organisation."
                 className="mt-1.5 ml-2 text-[15px] w-[10%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
               />
               <ReactTooltip
-                id={`tooltip-employees`}
+                id={`tooltip-er1`}
                 place="top"
                 effect="solid"
                 style={{

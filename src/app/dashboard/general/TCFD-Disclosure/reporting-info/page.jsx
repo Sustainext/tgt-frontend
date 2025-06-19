@@ -5,9 +5,9 @@ import { MdChevronLeft } from "react-icons/md";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { Oval } from "react-loader-spinner";
 import { useSelector } from "react-redux";
-const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
-    const selectedOrgnew = useSelector((state) => state.Tcfd.Organization);
-    const selectedCorpnew = useSelector((state) => state.Tcfd.Corporate);
+const ReportingInfo = ({ showToast, setView, fetchTcfdStatus }) => {
+  const selectedOrgnew = useSelector((state) => state.Tcfd.Organization);
+  const selectedCorpnew = useSelector((state) => state.Tcfd.Corporate);
   const [selectedOrg, setSelectedOrg] = useState(selectedOrgnew);
   const [selectedCorp, setSelectedCorp] = useState(selectedCorpnew);
   const [sectorType, setSectorType] = useState("");
@@ -25,10 +25,10 @@ const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const Back = () =>{
+  const Back = () => {
     setView("home");
     fetchTcfdStatus();
-  }
+  };
   const clearError = (field) => setErrors((prev) => ({ ...prev, [field]: "" }));
 
   const validate = () => {
@@ -38,6 +38,10 @@ const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
       newErrors.selectedSector = "Sector is required";
     if (!fromDate) newErrors.fromDate = "From date is required";
     if (!toDate) newErrors.toDate = "To date is required";
+    if (fromDate && toDate && fromDate > toDate) {
+      newErrors.fromDate = "From date cannot be greater than To date";
+      newErrors.toDate = "To date cannot be less than From date";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -105,8 +109,8 @@ const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
           msg?.body || "Data has been imported successfully.",
           msg?.gradient || "linear-gradient(to right, #F98845, #6ADF23)"
         );
-   setView("home");
-    fetchTcfdStatus();
+        setView("home");
+        fetchTcfdStatus();
       }
     } catch (err) {
       console.error("Error saving data", err);
@@ -120,8 +124,9 @@ const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
         <h2 className="text-[22px] font-bold gradient-text mb-2 h-[28px]">
           TCFD Reporting Information
         </h2>
-        <button className="bg-transparent text-gray-900 text-sm border border-gray-300 rounded-md flex items-center py-1 px-3 mb-2"
-        onClick={Back}
+        <button
+          className="bg-transparent text-gray-900 text-sm border border-gray-300 rounded-md flex items-center py-1 px-3 mb-2"
+          onClick={Back}
         >
           <MdChevronLeft className="text-xl mr-1" />
           Back
@@ -129,13 +134,13 @@ const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
       </div>
 
       <div className="px-4">
-           <Fillterorgcorp
-                 selectedOrg={selectedOrg}
-                 setSelectedOrg={setSelectedOrg}
-                 selectedCorp={selectedCorp}
-                 setSelectedCorp={setSelectedCorp}
-                 setToggleStatus={setToggleStatus}
-               />
+        <Fillterorgcorp
+          selectedOrg={selectedOrg}
+          setSelectedOrg={setSelectedOrg}
+          selectedCorp={selectedCorp}
+          setSelectedCorp={setSelectedCorp}
+          setToggleStatus={setToggleStatus}
+        />
 
         <div className="px-4 shadow-md rounded-md py-4 mt-6">
           <p className="text-[15px] text-gray-700 font-[500] mb-4">
@@ -169,12 +174,12 @@ const ReportingInfo = ({ showToast,setView,fetchTcfdStatus }) => {
                   checked={sectorType === "non_financial"}
                   onChange={(e) => {
                     const selected = e.target.value;
-  setSectorType(selected);
+                    setSectorType(selected);
                     clearError("sectorType");
                     if (selected === "non_financial") {
                       setSelectedSector("");
                       setFromDate("");
-                       setToDate("");
+                      setToDate("");
                     }
                   }}
                 />

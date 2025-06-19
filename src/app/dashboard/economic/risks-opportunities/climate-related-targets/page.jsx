@@ -44,7 +44,7 @@ const Climaterelatedtargets = ({ setMobileopen }) => {
       tagName: "TCFD-M&T-C",
       toggle: "149",
       id: "tooltip-$tcfd1",
-      content: "TCFD-METRICS AND TARGETS-C Disclosure",
+      content: "TCFD-Metrics and Targets-C Disclosure",
     },
   ];
 

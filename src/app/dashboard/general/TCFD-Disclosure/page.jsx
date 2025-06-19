@@ -763,7 +763,7 @@ const TCFD = ({ setMobileopen }) => {
                       {latestDisclosures?.selected_disclosures?.[
                         "Metrics & Targets"
                       ]?.disclosures?.some(
-                        (d) => d.id === 11 && d.selected === true
+                        (d) => d.id === 10 && d.selected === true
                       ) && (
                         <li
                           className="flex items-center gap-2 cursor-pointer mb-2"
@@ -801,7 +801,7 @@ const TCFD = ({ setMobileopen }) => {
                       {latestDisclosures?.selected_disclosures?.[
                         "Metrics & Targets"
                       ]?.disclosures?.some(
-                        (d) => d.id === 11 && d.selected === true
+                        (d) => d.id === 10 && d.selected === true
                       ) && (
                         <li
                           className="flex items-center gap-2 cursor-pointer mb-2"
