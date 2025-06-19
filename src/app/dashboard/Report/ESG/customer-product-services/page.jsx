@@ -42,12 +42,23 @@ const CustomerProductService = forwardRef(({
 
  
 
-  const orgName =
-    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
-  const reportid =
-    typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
-    const reportType =
-  typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+  // const orgName =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  // const reportid =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  //   const reportType =
+  // typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+  const [reportid, setReportid] = useState("");
+  const [reportType, setReportType] = useState("");
+  const [orgName, setOrgname] = useState("");
+  
+  // Update after mount on client only
+  useEffect(() => {
+    setReportid(localStorage.getItem("reportid") || "");
+    setReportType(localStorage.getItem("reportType") || "");
+    setOrgname(localStorage.getItem("reportorgname") || "");
+  }, []);
+  
   const apiCalledRef = useRef(false);
   const [initialData, setInitialData] = useState({});
   const [data, setData] = useState("");

@@ -15,7 +15,7 @@ const SubsectionSelector = forwardRef(({ onBack, onNext }, ref) => {
   const subsections = useSelector(selectSubsections);
   const selectedSubsections = useSelector(selectSelectedSubsections);
 
-  console.log(enabledSections,subsections,selectedSubsections,"see the sub sections")
+ 
 
   useImperativeHandle(ref, () => ({
     handleProceed,

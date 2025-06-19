@@ -89,6 +89,8 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
   const [reportType, setReportType] = useState('Custom ESG Report');
   const [reportName, setReportName] = useState('');
   const [orgName, setOrgName] = useState('');
+  const [corpName, setCorpName] = useState('');
+  const [reportingPeriod,setReportingPeriod]=useState('')
 
 
   useEffect(() => {
@@ -96,13 +98,15 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
     // const savedSubsections = JSON.parse(localStorage.getItem('report_subsections') || '{}');
     const savedReportType = localStorage.getItem('reportType') || 'Custom ESG Report';
     const savedReportName = localStorage.getItem('reportname') || 'Modular Report Name';
-    const savedOrgName = localStorage.getItem('reportorgname') || 'JairajOrg';
+    const savedOrgName = localStorage.getItem('reportorgname') || '';
 
     // if (savedSections.length > 0) setSections(savedSections);
     // if (Object.keys(savedSubsections).length > 0) setSelectedSubsections(savedSubsections);
     setReportType(savedReportType);
     setReportName(savedReportName);
     setOrgName(savedOrgName);
+    setCorpName(localStorage.getItem('reportCorpName') || '')
+    setReportingPeriod(localStorage.getItem('reportstartdate') +" to "+ localStorage.getItem('reportenddate'))
   }, []);
 
   const handleNextStep = () => {
@@ -352,42 +356,71 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
 
   // Helper function to render mobile navigation
   const renderMobileNavigation = () => {
-    if (step === 2) {
-      return (
-        <div className="block md:hidden lg:hidden xl:hidden mb-2 h-[43px]">
-          <div className="float-right mr-2 flex items-center justify-center mb-2">
-            <div className="flex items-center justify-center">
+    return (
+      <div className="block md:hidden lg:hidden xl:hidden mb-4 px-4">
+        <div className="flex items-center gap-2">
+          {step === 0 && (
+            <div className="flex justify-end px-4 w-full">
+            <button
+              onClick={() => {
+                sectionSelectorRef.current?.handleSubmit();
+              }}
+              className="w-auto rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Confirm Modules & Proceed →
+            </button>
+          </div>
+          )}
+  
+          {step === 1 && (
+            <div className="flex justify-end px-4 w-full">
+              <button
+                onClick={() => setStep(0)}
+                className="text-gray-500 px-4 py-2 rounded font-semibold hover:bg-gray-100 transition"
+              >
+                {"<"} Back
+              </button>
+              <button
+                onClick={() => subsectionSelectorRef.current?.handleProceed()}
+                className="rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Proceed to Report →
+              </button>
+            </div>
+          )}
+  
+          {step === 2 && (
+            <>
               {canGoToPrevious && (
                 <button
-                  className="text-gray-500 px-3 py-1.5 rounded font-semibold"
+                  className="text-gray-500 px-4 py-2 rounded font-semibold hover:bg-gray-100 transition"
                   onClick={handleReportPrevious}
                 >
-                  &lt; Previous
+                  ← Previous
                 </button>
               )}
-
               {canGoToNext ? (
                 <button
-                  className="bg-blue-500 text-white px-3 py-1.5 rounded ml-2 font-semibold w-[100px]"
-                  onClick={()=>{handleReportNext('next')}}
+                  className="rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  onClick={() => handleReportNext("next")}
                 >
-                  Next &gt;
+                  Next →
                 </button>
               ) : (
                 <button
-                onClick={()=>{handleReportNext('last')}}
-                  className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                  onClick={() => handleReportNext("last")}
+                  className="rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Complete Report
                 </button>
               )}
-            </div>
-          </div>
+            </>
+          )}
         </div>
-      );
-    }
-    return null;
+      </div>
+    );
   };
+  
 
 
   return (
@@ -437,13 +470,24 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
                             <p className="gradient-text text-[22px] font-bold pt-3">
                               {reportName}
                             </p>
+                            <div className='w-full flex gap-3'>
                             <p className="mt-2 text-[#667085] text-[13px]">
                               Organization: {orgName}
                             </p>
-                            {/* Display report type */}
-                            <p className="mt-1 text-[#667085] text-[11px]">
-                              Report Type: {reportType}
+                            {
+                              corpName &&  <p className="mt-2 text-[#667085] text-[13px]">
+                              Corporate: {corpName}
                             </p>
+                            }
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Reporting Year: {reportingPeriod}
+                            </p>
+                            </div>
+                            
+                            {/* Display report type */}
+                            {/* <p className="mt-1 text-[#667085] text-[11px]">
+                              Report Type: {reportType}
+                            </p> */}
                           </div>
                         </div>
                       </div>
@@ -453,9 +497,20 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
                         <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
                           {reportName}
                         </p>
-                        <p className="mt-2 text-[#667085] text-[13px] ml-3">
-                          Organization: {orgName}
-                        </p>
+                        <div className='w-full flex gap-3 ml-3'>
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Organization: {orgName}
+                            </p>
+                            {
+                              corpName &&  <p className="mt-2 text-[#667085] text-[13px]">
+                              Corporate: {corpName}
+                            </p>
+                            }
+                           
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Reporting Year: {reportingPeriod}
+                            </p>
+                            </div>
                         {/* Display report type */}
                         {/* <p className="mt-1 text-[#667085] text-[11px] ml-3">
                           Report Type: {reportType}
@@ -480,20 +535,20 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
           {/* Mobile Navigation */}
           {renderMobileNavigation()}
 
-          <div className="max-w-auto mx-4">
+          <div className="max-w-auto mx-2 lg:mx-4">
             {/* Only show step indicators and selection for custom reports */}
             {reportType === 'Custom ESG Report' && [0, 1].includes(step) && (
               <div className='px-6 pt-4'>
-                <h2 className="text-2xl font-semibold mb-4">Report Contents Overview</h2>
+                <h2 className="text-2xl font-semibold mb-4">{step === 0?'Customize Report':'Select Sub-sections'}</h2>
                 <p className="text-sm text-gray-600 mb-6">
-                  {step === 0 ? 'Select and rearrange the sections that are required in the report.' : 'Select submodules for the selected topic.'}
+                  {step === 0 ? 'The following shows the contents of the report. Select the sections that you would like to include in the report and rearrange them in the desired order. To proceed to next step, select at least one section.' : 'For each of the selected sections, choose the sub-sections which should appear in the report. Relevant data from the Collect module will be included.'}
                 </p>
               </div>
             )}
 
             {/* Step indicator - only for custom reports */}
             {reportType === 'Custom ESG Report' && [0, 1].includes(step) && (
-              <div className="relative flex px-6 items-center justify-between mt-5 mb-5 w-1/3">
+              <div className="relative flex px-6 items-center justify-between mt-5 mb-5 w-[70%] lg:w-1/3">
                 {[1, 2].map((val, index) => (
                   <React.Fragment key={index}>
                     <div
@@ -566,7 +621,7 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
             )}
 
             {/* Report Renderer - always show for step 2, or immediately for non-custom reports */}
-            {(step === 2 || reportType !== 'Custom ESG Report') && (
+            {(step === 2) && (
               <ReportRenderer
                 sections={displaySections}
                 selectedSubsections={displaySubsections}

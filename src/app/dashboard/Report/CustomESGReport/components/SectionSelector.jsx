@@ -32,7 +32,6 @@ const SectionSelector = forwardRef(({ onNext }, ref) => {
   const sections = useSelector(selectSections);
   const orderedSections = [...sections].sort((a, b) => a.order - b.order);
 
-  console.log(sections,"see the defualt sections")
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -63,9 +62,7 @@ const SectionSelector = forwardRef(({ onNext }, ref) => {
   const handleSubmit = () => {
     dispatch(updateEnabledSectionOrder());
     const enabledSections = sections.filter(s => s.enabled);
-    console.log(enabledSections,"see the enabled sections")
     if (enabledSections.length > 0) {
-      console.log(sections,"see the selected sections")
       onNext();
     } else {
       alert('Please select at least one section to proceed.');
@@ -92,6 +89,7 @@ const SectionSelector = forwardRef(({ onNext }, ref) => {
                 order={section.order}
                 enabled={section.enabled}
                 mandatory={section.mandatory}
+                subLabel={section.subLabel}
                 onToggle={() => handleToggleSection(section.id)}
               />
             ))}

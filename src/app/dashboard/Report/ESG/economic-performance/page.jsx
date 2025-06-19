@@ -55,14 +55,25 @@ const EconomicPerformance = forwardRef(
   ) => {
     const [data, setData] = useState("");
     const [initialData, setInitialData] = useState({});
-    const reportid =
-      typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
-    const orgName =
-      typeof window !== "undefined"
-        ? localStorage.getItem("reportorgname")
-        : "";
-    const reportType =
-      typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+    // const reportid =
+    //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+    // const orgName =
+    //   typeof window !== "undefined"
+    //     ? localStorage.getItem("reportorgname")
+    //     : "";
+    // const reportType =
+    //   typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+    const [reportid, setReportid] = useState("");
+    const [reportType, setReportType] = useState("");
+    const [orgName, setOrgname] = useState("");
+    
+    // Update after mount on client only
+    useEffect(() => {
+      setReportid(localStorage.getItem("reportid") || "");
+      setReportType(localStorage.getItem("reportType") || "");
+      setOrgname(localStorage.getItem("reportorgname") || "");
+    }, []);
+    
     const company_economic_performance_statement = useSelector(
       (state) => state.screen11Slice.company_economic_performance_statement
     );

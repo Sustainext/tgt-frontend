@@ -31,15 +31,26 @@ const AboutTheReport = forwardRef(({
   hasChanges
 },
 ref) => {
-  const orgName =
-    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
-  const reportid =
-    typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
-    const reportType =
-      typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+  // const orgName =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  // const reportid =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  //   const reportType =
+  //     typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+  const [reportid, setReportid] = useState("");
+const [reportType, setReportType] = useState("");
+const [orgName, setOrgname] = useState("");
+
+// Update after mount on client only
+useEffect(() => {
+  setReportid(localStorage.getItem("reportid") || "");
+  setReportType(localStorage.getItem("reportType") || "");
+  setOrgname(localStorage.getItem("reportorgname") || "");
+}, []);
+
   const apiCalledRef = useRef(false);
   const [data, setData] = useState("");
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState("reporting_period");
   const [loopen, setLoOpen] = useState(false);
   const [initialData, setInitialData] = useState({});
   const description = useSelector((state) => state.screen7Slice.aboutReport);
@@ -226,6 +237,12 @@ ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const dynamicSectionNumberMap = numberedSubsections.reduce((acc, item) => {
+    acc[item.id] = item.sectionNumber;
+    return acc;
+  }, {});
+
   const currentData = {
     description,
     framework_description,
@@ -240,9 +257,10 @@ ref) => {
     }
     let data={}
     if(subsectionsToShow.includes("reporting_period")){
+      const sectionNumber = dynamicSectionNumberMap["reporting_period"];
       data.description= {
         page: "screen_seven",
-        label: `${sectionOrder}. About the Report`,
+        label: `${sectionNumber} About the Report`,
         subLabel: "Add statement about the report",
         type: "textarea",
         content: description,
@@ -251,9 +269,10 @@ ref) => {
       }
     }
     if(subsectionsToShow.includes("frameworks")){
+      const sectionNumber = dynamicSectionNumberMap["frameworks"];
       data.framework_description= {
         page: "screen_seven",
-        label: `${sectionOrder}.2 Frameworks`,
+        label: `${sectionNumber} Frameworks`,
         subLabel: "Add statement about framework used in report",
         type: "textarea",
         content: framework_description,
@@ -262,9 +281,10 @@ ref) => {
       }
     }
     if(subsectionsToShow.includes("external_assurance")){
+      const sectionNumber = dynamicSectionNumberMap["external_assurance"];
       data.external_assurance= {
         page: "screen_seven",
-        label: `${sectionOrder}.3 External Assurance`,
+        label: `${sectionNumber} External Assurance`,
         subLabel: "Add statement about external assurance",
         type: "textarea",
         content: external_assurance,
@@ -581,7 +601,9 @@ ref) => {
                       <div key={item.groupId} className="mb-2">
                         {/* Show the parent title (group) */}
                         <p
-                          className="text-[12px] mb-2 font-medium text-gray-600 cursor-pointer"
+                          className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                            activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                          }`}
                           onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
                         >
                           {sectionOrder}.{currentGroupIndex} {item.title}

@@ -107,11 +107,7 @@ const Section2 = ({
   };
   return (
     <>
-      <div className="mb-2" id="setion2_1" ref={section2_1Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          {sectionOrder}.1 Business Model and Impact
-        </h3>
-      </div>
+      
       <div className="mb-2" id="setion2_1_1" ref={section2_1_1Ref}>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
           {sectionNumber} {sectionTitle}

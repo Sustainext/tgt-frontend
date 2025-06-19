@@ -36,16 +36,27 @@ const Companyoperations = forwardRef(
     ref
   ) => {
    
-    const reportid =
-      typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
-    const reportType =
-      typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
-    const orgName =
-      typeof window !== "undefined"
-        ? localStorage.getItem("reportorgname")
-        : "";
+    // const reportid =
+    //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+    // const reportType =
+    //   typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+    // const orgName =
+    //   typeof window !== "undefined"
+    //     ? localStorage.getItem("reportorgname")
+    //     : "";
 
-    const [activeSection, setActiveSection] = useState("");
+    const [reportid, setReportid] = useState("");
+const [reportType, setReportType] = useState("");
+const [orgName, setOrgname] = useState("");
+
+// Update after mount on client only
+useEffect(() => {
+  setReportid(localStorage.getItem("reportid") || "");
+  setReportType(localStorage.getItem("reportType") || "");
+  setOrgname(localStorage.getItem("reportorgname") || "");
+}, []);
+
+    const [activeSection, setActiveSection] = useState("business_model");
     const [screenTwoData, setScreentwoData] = useState("");
     const [loopen, setLoOpen] = useState(false);
     const apiCalledRef = useRef(false);
@@ -70,7 +81,7 @@ const Companyoperations = forwardRef(
     const dispatch = useDispatch();
     const groupedSubsections = [
       {
-        groupId: "reporting_period",
+        groupId: "business_model",
         title: "Business Model and Impact",
         children: [{ id: "value_chain" }, { id: "entities_included" }],
       },
@@ -82,21 +93,29 @@ const Companyoperations = forwardRef(
 
     const subsectionMapping = {
       business_model: {
-        component: Section1,
-        // title: "About the Company",
+        component: ({section2_1Ref,sectionNumber='2.1',sectionTitle='Business Model and Impact'})=>{
+          return(
+            <div className="mb-2" id="setion2_1" ref={section2_1Ref}>
+        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+            {sectionNumber} {sectionTitle}
+        </h3>
+      </div>
+          )
+        },
+        title: "Business Model and Impact",
         subSections: [],
       },
       value_chain: {
         component: Section2,
-        title: "Business Model and Impact",
-        subTitle: "Activities, Value Chain, and Other Business Relationships",
+        title: "Activities, Value Chain, and Other Business Relationships",
+        subTitle: "",
         subSections: [],
       },
       entities_included: {
         component: Section3,
-        title: "Business Model and Impact",
+        title: "Entities Included in the Organization's Sustainability Reporting",
         subTitle:
-          "Entities Included in the Organization's Sustainability Reporting",
+          "",
         subSections: [],
       },
       supply_chain: {
@@ -165,40 +184,54 @@ const Companyoperations = forwardRef(
     const selectedSubsections = getSelectedSubsections();
 
     const getDynamicSectionMap = () => {
-      let groupIndex = 1;
-      const dynamicMap = [];
-
-      groupedSubsections.forEach((group) => {
-        if (group.children) {
-          const visibleChildren = group.children.filter((child) =>
-            selectedSubsections.some((s) => s.id === child.id)
-          );
-
-          if (visibleChildren.length === 0) return;
-
-          let childIndex = 1;
-          visibleChildren.forEach((child) => {
-            dynamicMap.push({
-              id: child.id,
-              sectionNumber: `${sectionOrder}.${groupIndex}.${childIndex++}`,
-              groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
-            });
-          });
-
-          groupIndex++;
-        } else {
-          const isVisible = selectedSubsections.some((s) => s.id === group.id);
-          if (!isVisible) return;
-
-          dynamicMap.push({
-            id: group.id,
-            sectionNumber: `${sectionOrder}.${groupIndex++}`,
-          });
-        }
-      });
-
-      return dynamicMap;
-    };
+           let groupIndex = 1;
+           const dynamicMap = [];
+         
+           groupedSubsections.forEach((group) => {
+             if (group.children) {
+               const parentSelected = selectedSubsections.some((s) => s.id === group.groupId);
+               const visibleChildren = group.children.filter((child) =>
+                 selectedSubsections.some((s) => s.id === child.id)
+               );
+         
+               // Render the parent (if selected)
+               if (parentSelected) {
+                 dynamicMap.push({
+                   id: group.groupId,
+                   sectionNumber: `${sectionOrder}.${groupIndex}`,
+                   groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+                 });
+               }
+         
+               // Render children (if any selected)
+               if (visibleChildren.length > 0) {
+                 let childIndex = 1;
+                 visibleChildren.forEach((child) => {
+                   dynamicMap.push({
+                     id: child.id,
+                     sectionNumber: `${sectionOrder}.${groupIndex}.${childIndex++}`,
+                     groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+                   });
+                 });
+               }
+         
+               // Increase group index if either parent or children are rendered
+               if (parentSelected || visibleChildren.length > 0) {
+                 groupIndex++;
+               }
+             } else {
+               const isVisible = selectedSubsections.some((s) => s.id === group.id);
+               if (!isVisible) return;
+         
+               dynamicMap.push({
+                 id: group.id,
+                 sectionNumber: `${sectionOrder}.${groupIndex++}`,
+               });
+             }
+           });
+         
+           return dynamicMap;
+         };
 
     const numberedSubsections = getDynamicSectionMap();
 
@@ -434,35 +467,36 @@ const Companyoperations = forwardRef(
     }, [selectedSubsections]);
 
   
-    const renderSection = (section) => {
-      const SectionComponent = subsectionMapping[section.id]?.component;
-      const ref = sectionRefs.current[section.id] || createRef();
-      sectionRefs.current[section.id] = ref;
+     const renderSection = (section) => {
+                 const SectionComponent = subsectionMapping[section.id]?.component;
+                 const ref = sectionRefs.current[section.id] || createRef();
+                 sectionRefs.current[section.id] = ref;
+           
+                 const commonProps = {
+                   orgName,
+                   data:screenTwoData,
+                   sectionNumber: section.sectionNumber,
+                   sectionOrder,
+                   reportType
+                 };
+           
+                 if (!SectionComponent) return null;
+           
+                 return (
+                   <div key={section.id} ref={ref}>
+                     {section.groupTitle && (
+                       <div className="mb-2">
+                         {/* <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+                         {section.groupTitle}
+                       </h3> */}
+                       </div>
+                     )}
+                     <SectionComponent {...commonProps} />
+                   </div>
+                 );
+               };
 
-      const commonProps = {
-        orgName,
-        data: screenTwoData,
-        sectionNumber: section.sectionNumber,
-        sectionOrder,
-      };
-
-      if (!SectionComponent) return null;
-
-      return (
-        <div key={section.id} ref={ref}>
-          {section.groupTitle && (
-            <div className="mb-2">
-              {/* <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-              {section.groupTitle}
-            </h3> */}
-            </div>
-          )}
-          <SectionComponent {...commonProps} />
-        </div>
-      );
-    };
-
-    console.log("Final check - selectedSubsections:", selectedSubsections);
+    
 
     // Don't render anything if no subsections are selected (for custom reports)
     if (
@@ -496,16 +530,17 @@ const Companyoperations = forwardRef(
           <div className="flex gap-4">
             <div className="xl:w-[80%] md:w-[75%] lg:w-[80%] 2k:w-[80%] 4k:w-[80%] 2xl:w-[80%] w-full">
               {/* {selectedSubsections.map(section => renderSection(section))} */}
-              {subsectionMapping.business_model && (
+              {/* {subsectionMapping.business_model && (
                 <div ref={sectionRefs.current["business_model"] || createRef()}>
-                  <Section1
+                  
+                </div>
+              )} */}
+              <Section1
                     orgName={orgName}
                     data={screenTwoData}
                     sectionOrder={sectionOrder}
                     sectionNumber={null} // Not numbered
                   />
-                </div>
-              )}
               {numberedSubsections.map((section) => renderSection(section))}
             </div>
 
@@ -556,7 +591,12 @@ const Companyoperations = forwardRef(
 
                       return (
                         <div key={item.groupId} className="mb-2">
-                          <p className="text-[12px] mb-2 font-medium text-gray-600">
+                          <p 
+                          className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                            activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                          }`}
+                          onClick={() => scrollToSection(item.groupId)}
+                          >
                             {sectionOrder}.{currentGroupIndex} {item.title}
                           </p>
                           {visibleChildren.map((child) => {

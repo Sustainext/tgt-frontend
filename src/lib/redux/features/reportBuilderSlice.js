@@ -31,7 +31,6 @@ export const updateReportBuilderData = createAsyncThunk(
   async (reportId, { getState, rejectWithValue }) => {
     try {
       const state = getState().reportBuilder;
-      console.log(state,"lll section state")
       const { sections, subsections, selectedSubsections } = state;
 
       // 1. Build `section` array
@@ -42,7 +41,8 @@ export const updateReportBuilderData = createAsyncThunk(
         enabled: s.enabled,
         mandatory: s.mandatory,
         field:s.field,
-        screen:s.screen
+        screen:s.screen,
+        subLabel:s.subLabel
       }));
 
       // 2. Build `sub_section` object
@@ -98,6 +98,7 @@ const defaultSections = [
   {
     id: 'message_ceo',
     title: 'Message From Our Leadership',
+    subLabel:'Share any message from the leadership team.',
     mandatory: false,
     enabled: false,
     field:['message'],
@@ -107,6 +108,7 @@ const defaultSections = [
     {
     id: 'about_company',
     title: 'About the Company & Operations',
+    subLabel:'An overview about the company like who we are, what we do, and how the operations are aligned with the sustainability goals.',
     mandatory: false,
     enabled: false,
     field:['about_the_company'],
@@ -116,6 +118,7 @@ const defaultSections = [
   {
     id: 'mission_vision',
     title: 'Mission, Vision, Value',
+    subLabel:'Share the core principles that guide  company’s purpose and future aspirations.',
     mandatory: false,
     enabled: false,
     field:['mission'],
@@ -125,6 +128,7 @@ const defaultSections = [
   {
     id: 'sustainability',
     title: 'Sustainability Roadmap',
+    subLabel:'Share companies step-by-step guide journey toward sustainability, outlining the goals, milestones, and the progress.',
     mandatory: false,
     enabled: false,
     field:['description'],
@@ -134,6 +138,7 @@ const defaultSections = [
   {
     id: 'awards',
     title: 'Awards & Alliances',
+    subLabel:'Showcase  any recognitions or awards earned.',
     mandatory: false,
     enabled: false,
     field:['description'],
@@ -143,6 +148,7 @@ const defaultSections = [
   {
     id: 'stakeholder',
     title: 'Stakeholder Engagement',
+    subLabel:'Overview of how company collaborates with key stakeholders.',
     mandatory: false,
     enabled: false,
     field:['description'],
@@ -152,6 +158,7 @@ const defaultSections = [
   {
     id: 'about_report',
     title: 'About the Report',
+    subLabel:'A brief explanation of the purpose, scope, and methodology behind this report.',
     mandatory: false,
     enabled: false,
     field:['description'],
@@ -161,6 +168,7 @@ const defaultSections = [
   {
     id: 'materiality',
     title: 'Materiality',
+    subLabel:'A brief explanation of the most relevant topics for an organization to report on.',
     mandatory: false,
     enabled: false,
     order: 8,
@@ -169,6 +177,7 @@ const defaultSections = [
   {
     id: 'governance',
     title: 'Corporate Governance',
+    subLabel:"A brief explanation on company's system of rules, practices, and processes that direct and manage its operations.",
     mandatory: false,
     enabled: false,
     field:['statement'],
@@ -178,6 +187,7 @@ const defaultSections = [
   {
     id: 'journey',
     title: 'Sustainability Journey',
+    subLabel:'A brief explanation of the ongoing path toward sustainability, highlighting key achievements and challenges',
     mandatory: false,
     enabled: false,
     field:['company_sustainability_statement'],
@@ -187,6 +197,7 @@ const defaultSections = [
   {
     id: 'economic',
     title: 'Economic Performance',
+    subLabel:"A brief explanation of the organization's economic performance like Economic value generated and distributed (EVG&D), Defined benefit plan obligations, Financial assistance from governments, and Financial implications of climate change.",
     mandatory: false,
     enabled: false,
     field:['company_economic_performance_statement'],
@@ -196,6 +207,7 @@ const defaultSections = [
   {
     id: 'environment',
     title: 'Environment',
+    subLabel:"A brief explanation on the organization's environmental issues, such as emissions, effluents, waste, material use, energy, water, and biodiversity.",
     mandatory: false,
     enabled: false,
     field:['environmental_responsibility_statement'],
@@ -205,6 +217,7 @@ const defaultSections = [
   {
     id: 'people',
     title: 'People',
+    subLabel:"A brief explanation on organizations employees, labour management and other benefits and training for the welfare of the people within the organization and community.",
     mandatory: false,
     enabled: false,
     field:['employee_policies_statement'],
@@ -214,6 +227,7 @@ const defaultSections = [
   {
     id: 'community',
     title: 'Community',
+    subLabel:'Details on how the organization engages and collaborates with the community to promote sustainability.',
     mandatory: false,
     enabled: false,
     order: 14,
@@ -222,6 +236,7 @@ const defaultSections = [
   {
     id: 'customers',
     title: 'Customers, Products & Services',
+    subLabel:'A brief explanation of the quality and standard of the companies products and services.',
     mandatory: false,
     enabled: false,
     field:['conclusion'],
@@ -1019,6 +1034,7 @@ const reportBuilderSlice = createSlice({
 
     updateEnabledSectionOrder: (state) => {
       // Sort: enabled first, then disabled
+      state.sections = reorderSectionsByEnabledState(state.sections);
       const sorted = [...state.sections].sort((a, b) => {
         if (a.enabled === b.enabled) {
           return a.order - b.order; // preserve existing order within each group
@@ -1046,7 +1062,6 @@ const reportBuilderSlice = createSlice({
       const section = state.sections.find(s => s.id === sectionId);
       if (section && !section.mandatory) {
         section.enabled = !section.enabled;
-        state.sections = reorderSectionsByEnabledState(state.sections);
       }
     },
     
@@ -1227,7 +1242,8 @@ const reportBuilderSlice = createSlice({
           mandatory: s.mandatory,
           order: s.order,
           field:s.field,
-          screen:s.screen
+          screen:s.screen,
+          subLabel:s.subLabel
         }));
   
         // 2. Update subsections

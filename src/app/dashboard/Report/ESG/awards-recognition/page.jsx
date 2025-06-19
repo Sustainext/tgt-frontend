@@ -14,7 +14,18 @@ import {setdescription} from "../../../../../lib/redux/features/ESGSlice/screen5
 
 const AwardsRecognition=forwardRef(({ onSubmitSuccess,sectionOrder=5,hasChanges }, ref) =>{
 
-    const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+    // const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+    const [reportid, setReportid] = useState("");
+const [reportType, setReportType] = useState("");
+const [orgName, setOrgname] = useState("");
+
+// Update after mount on client only
+useEffect(() => {
+  setReportid(localStorage.getItem("reportid") || "");
+  setReportType(localStorage.getItem("reportType") || "");
+  setOrgname(localStorage.getItem("reportorgname") || "");
+}, []);
+
     const apiCalledRef = useRef(false);
     const [loopen, setLoOpen] = useState(false);
     const description = useSelector((state) => state.screen5Slice.description);

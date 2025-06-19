@@ -54,6 +54,8 @@ const ContentIndex = ({
       fromDate ? fromDate : "start date"
     } to ${toDate ? toDate : "end date"}.`
   );
+
+  console.log(isModalOpen,"check the state")
   const handleChange = (e) => {
     setStatement(e.target.value);
   };

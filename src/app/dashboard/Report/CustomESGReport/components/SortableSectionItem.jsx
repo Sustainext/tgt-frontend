@@ -12,6 +12,7 @@ export default function SortableSectionItem({
   enabled,
   mandatory,
   onToggle,
+  subLabel='Dummy text to check the alignment of this section'
 }) {
   const {
     attributes,
@@ -32,19 +33,25 @@ export default function SortableSectionItem({
       style={style}
       className="bg-white shadow-sm border rounded-md border-gray-100 flex items-center justify-between px-4 py-5"
     >
-      <div className="flex items-center gap-4">
-        <div {...attributes} {...listeners} className="cursor-grab text-gray-400">
+      <div className="flex items-start gap-4">
+        <div {...attributes} {...listeners} className="cursor-grab text-gray-400 mt-1">
           <FaGripVertical />
         </div>
         <input
             type="checkbox"
             checked={enabled}
             onChange={onToggle}
-            className="w-4 h-4 green-checkbox cursor-pointer"
+            className="w-4 h-4 green-checkbox cursor-pointer mt-1"
           />
+        <div>
         <p className="text-sm font-medium">
           {order}. {title}
         </p>
+        <p className="text-sm font-normal mt-1 ml-3.5 text-[#667085]">
+          {subLabel}
+        </p>
+          </div>  
+       
       </div>
 
       
