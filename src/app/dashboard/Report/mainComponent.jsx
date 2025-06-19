@@ -471,7 +471,10 @@ const Report = () => {
             router.push("/dashboard/Report/ESG");
           } else if (reporttype == "canada_bill_s211_v2") {
             router.push("/dashboard/Report/Bills211");
-          } else {
+          } else if (reporttype == "TCFD") {
+            router.push("/dashboard/Report/TCFD");
+          }
+           else {
             router.push("/dashboard/Report/GHG/Ghgtemplates");
           }
 
@@ -998,6 +1001,7 @@ const Report = () => {
                           <option value="canada_bill_s211_v2">
                             Bill S-211
                           </option>
+                          <option value="TCFD">TCFD</option>
                         </select>
                         {error.reporttype && (
                           <p className="text-red-500 text-sm ml-1">

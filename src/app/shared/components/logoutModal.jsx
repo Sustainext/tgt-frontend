@@ -27,7 +27,7 @@ const LogoutPopup = ({ isModalOpen, setIsModalOpen,handleLogout }) => {
 
               <div className="p-4">
                   <p className="text-[14px] text-[#667085] font-[400]">
-                       
+                  Are you sure you want to logout from the platform?
                   </p>
                   <div className="block md:flex md:gap-2 justify-between mt-5">
                   <button

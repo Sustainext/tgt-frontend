@@ -20,7 +20,6 @@ const view_path = "gri-economic-climate_related_risks-202-2a-physical_risk";
 const client_id = 1;
 const user_id = 1;
 
-
 const schema = {
   type: "array",
   items: {
@@ -73,10 +72,7 @@ const schema = {
         title: "Financial Effect",
         enum: ["Very High", "High", "Moderate", "Low", "Very Low"],
       },
-      ProcessDescription: {
-        type: "string",
-        title: "Process Description",
-      },
+
       FinancialImplications: {
         type: "string",
         title: "Financial Implications",
@@ -88,6 +84,10 @@ const schema = {
           "Decreased sales revenue",
           "Others (please specify)",
         ],
+      },
+      ProcessDescription: {
+        type: "string",
+        title: "Process Description",
       },
       ManagementMethods: {
         type: "string",
@@ -137,8 +137,7 @@ const uiSchema = {
       {
         key: "SeverityofRisk",
         title: "Severity of Risk",
-        tooltip:
-          "Indicate the severity of the selected risk.",
+        tooltip: "Indicate the severity of the selected risk.",
         tooltipdisplay: "block",
       },
       {
@@ -169,18 +168,19 @@ const uiSchema = {
           "Indicate the estimated magnitude of the financial impact of the chosen risk",
         tooltipdisplay: "block",
       },
-      {
-        key: "ProcessDescription",
-        title: "Process Description",
-        tooltip:
-          "Provide a description of the process(es) used to determine financial impact on the organization based on the mentioned risk.",
-        tooltipdisplay: "block",
-      },
+
       {
         key: "FinancialImplications",
         title: "Financial Implications",
         tooltip:
           "Please describe the specific financial consequences that may result from the chosen risk.",
+        tooltipdisplay: "block",
+      },
+      {
+        key: "ProcessDescription",
+        title: "Process Description",
+        tooltip:
+          "Provide a description of the process(es) used to determine financial impact on the organization based on the mentioned risk.",
         tooltipdisplay: "block",
       },
       {
@@ -237,7 +237,7 @@ const Screen1 = ({
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-console.log(frameworkId,"frameworkId test");
+  console.log(frameworkId, "frameworkId test");
   const LoaderOpen = () => {
     setLoOpen(true);
   };

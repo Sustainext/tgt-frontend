@@ -55,11 +55,7 @@ const Economic = () => {
     ""
   );
 
-  useEffect(() => {
-    if (activestap) {
-      setActiveTab(activestap);
-    }
-  }, [activestap]);
+
 
   const [mobileopen, setMobileopen] = useState(false);
   const frameworkId = Cookies.get("selected_framework_id");
@@ -76,16 +72,7 @@ const Economic = () => {
     loading,
     error,
   } = useSelector((state) => state.materialitySlice);
-   useEffect(() => {
-    // Only initialize when materiality data is loaded AND nothing is active
-    if (!activeTab && data && data.governance) {
-      if (data.governance.GovEconomicPerformance?.is_material_topic) {
-        setActiveTab("Management of Material topic Economic Performance");
-      } else {
-        setActiveTab("Direct economic value generated & distributed");
-      }
-    }
-  }, [activeTab, data]);
+
   const loadMaterialityDashboard = () => {
     dispatch(
       fetchMaterialityData({
@@ -97,7 +84,6 @@ const Economic = () => {
     );
   };
 
-  // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     setMobileopen(false);
@@ -107,9 +93,7 @@ const Economic = () => {
     loadMaterialityDashboard();
   }, [dispatch]);
 
-  useEffect(() => {
-    // List of tabs related to Energy\
-    const materialnewTabs = [
+ const materialnewTabs = [
       "Management of Material topic Economic Performance",
       "Management of Material topic risks",
       "Management of Material topic Market",
@@ -163,7 +147,9 @@ const Economic = () => {
       "Country-by-country reporting",
     ];
     const PoliticalTabs = ["Political Contribution"];
-    // Set the header based on the active tab category
+
+
+  useEffect(() => {
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Economic Performance"));
     } else if (energyTabs.includes(activeTab)) {
@@ -187,6 +173,29 @@ const Economic = () => {
     dispatch(setHeaderdisplay("block"));
     dispatch(setMiddlename("Economic"));
   }, [activeTab, dispatch]);
+
+useEffect(() => {
+    const allTabs = [
+      ...materialnewTabs,
+      ...emissionTabs,
+      ...energyTabs,
+      ...wasteTabs,
+      ...materialTabs,
+      ...supplierTabs,
+      ...TaxTabs,
+      ...PoliticalTabs,
+    ];
+    if (activestap && allTabs.includes(activestap)) {
+      setActiveTab(activestap);
+    } else if (data && data.governance) {
+      if (data.governance.GovEconomicPerformance?.is_material_topic) {
+        setActiveTab("Management of Material topic Economic Performance");
+      } else {
+        setActiveTab("Direct economic value generated & distributed");
+      }
+    }
+    // else: stay with previous
+  }, [activestap, data]);
 
   return (
     <>

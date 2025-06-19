@@ -68,7 +68,7 @@ const CommitteeOfHighestGovernanceBody = ({
   selectedCorp,
   year,
   togglestatus,
-  tcfdtag = [],
+  tcfdtaga = [],
 }) => {
   const [formData, setFormData] = useState([
     {
@@ -239,7 +239,7 @@ useEffect(() => {
            <div className="w-full xl:w-[35%] lg:w-[35%] md:w-[35%] 2xl:w-[35%] 4k:w-[35%] 2k:w-[35%] mb-4">
             <div
               className={`flex flex-wrap gap-2 items-center ${
-              tcfdtag.length === 0 ? "justify-end" : "justify-end"
+              tcfdtaga.length === 0 ? "justify-end" : "justify-end"
               }`}
             >
            
@@ -250,7 +250,7 @@ useEffect(() => {
               </div>
 
            
-              {tcfdtag && tcfdtag.map((item) => (
+                  {(tcfdtaga ?? []).map((item) => (
                 <div
                   key={item.id || item.tagName}
                   className="w-[110px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center"

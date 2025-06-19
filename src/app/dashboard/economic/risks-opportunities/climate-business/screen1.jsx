@@ -66,7 +66,7 @@ const uiSchema = {
       "ui:title":
         "Describe how climate-related risks and opportunities are prioritized in financial planning.",
       "ui:tooltip":
-        "Describe how climate-related issues serve as an input to financial planning process...",
+        "Describe how climate-related issues serve as an input to financial planning process, the time period(s) used, and how these risks and opportunities are prioritized. ",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -76,7 +76,7 @@ const uiSchema = {
       "ui:title":
         "What impacts have climate-related issues had on your financial planning?",
       "ui:tooltip":
-        "Explain the impact of the identified climate-related risks and opportunities...",
+        "Explain the impact of the identified climate-related risks and opportunities on the organisation's financial performance (e.g., revenues, costs) and financial position (e.g., assets, liabilities).If climate-related scenarios were used to inform the organization’s strategy and financial planning, such scenarios should be described.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -302,16 +302,16 @@ const Screen1 = ({
           </div>
         )}
 
-        <div className="mb-2 flex justify-between items-start">
+        <div className="mb-2 flex justify-between items-start relative">
           <h2 className="flex text-[15px] text-neutral-950 font-[500]">
             General Business Impact
             <MdInfoOutline
-              data-tooltip-id={`tooltip-employees`}
+              data-tooltip-id={`tooltip-as1`}
               data-tooltip-content="This section documents data corresponding to how identified climate-related issues have affected their businesses, strategy, and financial planning. "
               className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
-              id={`tooltip-employees`}
+              id={`tooltip-as1`}
               place="top"
               effect="solid"
               style={{
