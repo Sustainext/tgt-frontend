@@ -67,6 +67,7 @@ function Ghgtemplates() {
 
   const reportId =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const reportType= typeof window !== "undefined" ? localStorage.getItem("reportType") : ""; 
   const reportstartdate = reportstartdateStr
     ? new Date(reportstartdateStr)
     : null;
@@ -645,7 +646,7 @@ function Ghgtemplates() {
                     </button>
                   )}
                   <h1 className="text-lg text-left mb-2">
-                    <p className="ml-3">Carbon Accounting Report</p>
+                    <p className="ml-3">{reportType=='GHG Report - Investments'?'Investments - Carbon Accounting Report':'Carbon Accounting Report'}</p>
                     <p className="text-[#667085] text-[13px] ml-3">
                       Organization
                        {corpName ? " / Corporate" : ""}:{" "}
@@ -1052,7 +1053,7 @@ function Ghgtemplates() {
             <div className="flex justify-between shadow-md border-gray-100 mt-4 py-2">
               <div className="flex items-center justify-center">
                 <h1 className="text-lg text-left">
-                  <p className="ml-3">Carbon Accounting Report</p>
+                  <p className="ml-3">{reportType=='GHG Report - Investments'?'Investments - Carbon Accounting Report':'Carbon Accounting Report'}</p>
                   <p className="text-[#667085] text-[13px] ml-3">
                       Organization
                        {corpName ? " / Corporate" : ""}:{" "}
