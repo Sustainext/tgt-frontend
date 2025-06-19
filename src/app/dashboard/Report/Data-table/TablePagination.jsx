@@ -380,7 +380,7 @@ else{
     window.localStorage.setItem("reportby", report_by);
     window.localStorage.setItem("reportType",report_type)
     window.localStorage.setItem("reportCorpName", corporate_name?corporate_name:'');
-        window.localStorage.setItem("reportorgname", organization_name);
+    window.localStorage.setItem("reportorgname", organization_name);
     // if (report_by == "Corporate") {
     //   if (corporate_name == undefined) {
     //     window.localStorage.setItem("reportorgname", organization_name);
@@ -394,7 +394,10 @@ else{
     // sessionStorage.setItem('reportData',newdata);
     if (report_type === "canada_bill_s211_v2") {
     router.push("/dashboard/Report/Bills211");
-  } else {
+  } else if (report_type === "TCFD") {
+    router.push("/dashboard/Report/TCFD");
+  }
+   else {
     router.push("/dashboard/Report/GHG/Ghgtemplates");
   }
    
