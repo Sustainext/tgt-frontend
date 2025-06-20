@@ -44,7 +44,7 @@ const Tcfdboardoversight = ({ setMobileopen }) => {
       tagName: "TCFD-GOV-A",
       toggle: "140",
       id: "tooltip-$tcfd1",
-      content: "CFD-GOVERNANCE-A Disclosure",
+      content: "TCFD-Governance-A Disclosur",
     },
   ];
 

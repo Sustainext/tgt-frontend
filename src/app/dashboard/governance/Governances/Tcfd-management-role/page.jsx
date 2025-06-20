@@ -44,7 +44,7 @@ const Tcfdmanagementrole = ({ setMobileopen }) => {
       tagName: "TCFD-GOV-B",
       toggle: "141",
       id: "tooltip-$tcfd1",
-      content: "TCFD-GOVERNANCE-B Disclosure",
+      content: "TCFD-Governance-B Disclosure",
     },
   ];
 
