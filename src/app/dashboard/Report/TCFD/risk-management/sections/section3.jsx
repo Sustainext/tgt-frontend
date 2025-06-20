@@ -32,7 +32,7 @@ const Section3 = ({ section6_3Ref, data, orgName }) => {
             </p>
             
             <div className="text-sm text-gray-700">
-              {data.risk_integration || "Risk integration process details will be displayed here based on API response when 'Yes' option is selected."}
+              {data?.risk_integration || "Risk integration process details will be displayed here based on API response when 'Yes' option is selected."}
             </div>
           </div>
         </div>

@@ -153,13 +153,16 @@ const loadFormData = async () => {
       console.log("response.data.data", response.data.data);
       console.log("response.data.data.report_data", response.data.data.report_data);
       
-      setData(response.data.data.report_data);
+      setData(response.data.data.report_data || {}); // Add fallback to empty object
       dispatch(setBoardOversight(response.data.data.report_data?.board_oversight?.content || ""));
-      dispatch(setManagementRole(response.data.data.report_data.management_role?.content || ""));
+      dispatch(setManagementRole(response.data.data.report_data?.management_role?.content || ""));
+    } else {
+      setData({}); // Set empty object if no data
     }
     LoaderClose();
   } catch (error) {
     console.error("API call failed:", error);
+    setData({}); // Set empty object on error
     LoaderClose();
   }
 };

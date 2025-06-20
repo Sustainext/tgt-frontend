@@ -83,7 +83,7 @@ const Section1 = ({ section6_1Ref, data, orgName }) => {
             </p>
             <div className="border-b border-blue-200 my-2"></div>
             <div className="text-sm text-gray-700">
-              {data.identification_approach || "Climate risk identification and assessment process details will be displayed here based on API response."}
+              {data?.identification_approach || "Climate risk identification and assessment process details will be displayed here based on API response."}
             </div>
           </div>
 
@@ -93,7 +93,7 @@ const Section1 = ({ section6_1Ref, data, orgName }) => {
             </p>
             <div className="border-b border-blue-200 my-2"></div>
             <div className="text-sm text-gray-700">
-              {data.risk_significance || "Risk significance determination process details will be displayed here based on API response."}
+              {data?.risk_significance || "Risk significance determination process details will be displayed here based on API response."}
             </div>
           </div>
 
@@ -118,7 +118,7 @@ const Section1 = ({ section6_1Ref, data, orgName }) => {
             </div>
             
             <div className="text-sm text-gray-700">
-              {data.regulatory_considerations || "Regulatory considerations details will be displayed here if applicable."}
+              {data?.regulatory_considerations || "Regulatory considerations details will be displayed here if applicable."}
             </div>
           </div>
 
@@ -133,7 +133,7 @@ const Section1 = ({ section6_1Ref, data, orgName }) => {
               </p>
               <div className="border-b border-blue-200 my-2"></div>
               <div className="text-sm text-gray-700">
-                {data.risk_scope_assessment || "Risk size and scope assessment process details will be displayed here based on API response."}
+                {data?.risk_scope_assessment || "Risk size and scope assessment process details will be displayed here based on API response."}
               </div>
             </div>
           </div>
