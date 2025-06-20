@@ -62,7 +62,7 @@ const ManagingConcerns = ({ setMobileopen }) => {
           sdgData={sdgData}
           griData={griData}
           // brsr={brsr}
-          title={"Advice & Concerns"}
+          title={"Managing Concerns"}
           setMobileopen={setMobileopen}
         />
         {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">

@@ -153,9 +153,9 @@ const Section25 = ({ section12_5_2Ref, data, reportType,
         </p>
         <p className="text-sm mb-4">
           {data["306_1ab"]
-            ? data["306_1ab"].data
-              ? data["306_1ab"].data[0]
-                ? data["306_1ab"].data[0].Q1
+            ? data["306_1ab"]
+              ? data["306_1ab"][0]
+                ? data["306_1ab"][0].Q1
                 : "No data available"
               : "No data available"
             : "No data available"}
@@ -166,9 +166,9 @@ const Section25 = ({ section12_5_2Ref, data, reportType,
         </p>
         <p className="text-sm mb-4">
           {data["306_1ab"]
-            ? data["306_1ab"].data
-              ? data["306_1ab"].data[0]
-                ? data["306_1ab"].data[0].Q2
+            ? data["306_1ab"]
+              ? data["306_1ab"][0]
+                ? data["306_1ab"][0].Q2
                 : "No data available"
               : "No data available"
             : "No data available"}

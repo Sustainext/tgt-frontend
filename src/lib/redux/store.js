@@ -31,6 +31,7 @@ import BillScreen1Slice from "./features/Billsreport/Billscreen1Slice";
 import reportBuilderReducer from './features/reportBuilderSlice';
 import reportCreationReducer from './features/reportCreationSlice'
 
+import TcfdSlice from "./features/TCFD/TcfdSlice"
 const rootReducer = combineReducers({
   counter: counterReducer,
   emissions: emissionReducer,
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
   optimise: optimiseSliceReduceer,
   bils201filter: Bills201,
   BillScreen1About: BillScreen1Slice,
+  Tcfd:TcfdSlice,
   reportBuilder: reportBuilderReducer,
   reportCreation: reportCreationReducer,
 });

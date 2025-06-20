@@ -357,6 +357,17 @@ const Section25 = ({ section13_6_8Ref, data, reportType,
               : "No data available"
             : "No data available"}
         </p>
+        <p className="text-sm mb-4">
+          {data["403_9c_9d"]
+            ? data["403_9c_9d"].data
+              ? data["403_9c_9d"].data.length > 0
+                ? data["403_9c_9d"].data[0].Q4
+                  ? data["403_9c_9d"].data[0].Q4
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
 
         <p className="text-[15px]  mb-2 font-semibold">
           Number of Hours Worked
@@ -486,6 +497,10 @@ const Section25 = ({ section13_6_8Ref, data, reportType,
         </div>
 
         <p className="text-[15px]  mb-2 font-semibold">
+          Ill Health
+        </p>
+
+        <p className="text-[15px]  mb-2 font-semibold">
           Health for all employees
         </p>
         <div className="rounded-md mb-4 shadow-md">
@@ -499,9 +514,7 @@ const Section25 = ({ section13_6_8Ref, data, reportType,
         <div className="rounded-md mb-4 shadow-md">
           <LeaveTable columns={col4} data={Tabledata4} />
         </div>
-        <p className="text-[15px]  mb-2 font-semibold">
-          Ill Health
-        </p>
+        
         <p className="text-[15px]  mb-2 font-semibold">
           Work-related hazards that pose a risk of ill health
         </p>

@@ -438,6 +438,13 @@ const ESGReport = () => {
       const isSubmitted = await submitAndProceed();
       loadMissingFields();
       // if (isSubmitted) {
+       
+      // }
+    } 
+    else if(type === "back") {
+      const isSubmitted = await submitAndProceed();
+      loadMissingFields();
+      // if (isSubmitted) {
         
       // }
     } else if(type === "back") {

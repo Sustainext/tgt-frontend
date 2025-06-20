@@ -11,6 +11,7 @@ const EconomicTopBar = ({
   topic,
   brsr,
   griData,
+  tcfd,
   setMobileopen,
 }) => {
   const materialityEnvData =
@@ -55,6 +56,33 @@ const EconomicTopBar = ({
                     >
                       {val.tagName}
                     </button>
+                  </div>
+                ))}
+              {tcfd &&
+                tcfd.map((val) => (
+                  <div className=" relative">
+                    <button
+                      data-tooltip-id={val.id}
+                      data-tooltip-content={val.content}
+                      className="text-cyan-500 bg-slate-200 rounded-full text-[11px] w-[95px] h-[22px] ml-2 text-center pt-0.5"
+                      onClick={() => toggleDrawer(val.toggle)}
+                    >
+                      {val.tagName}
+                    </button>
+                    <ReactTooltip
+                      id={val.id}
+                      place="bottom"
+                      effect="solid"
+                      style={{
+                        width: "290px",
+                        backgroundColor: "#000",
+                        color: "white",
+                        fontSize: "12px",
+                        boxShadow: 3,
+                        borderRadius: "8px",
+                        textAlign: "center",
+                      }}
+                    ></ReactTooltip>
                   </div>
                 ))}
               {brsr &&
@@ -146,6 +174,33 @@ const EconomicTopBar = ({
                     </button>
                   </div>
                 ))}
+                {tcfd &&
+              tcfd.map((val) => (
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={val.id}
+                    data-tooltip-content={val.content}
+                    className="text-cyan-500 bg-slate-200 rounded-full text-[11px] w-[95px] h-[22px] ml-2 text-center pt-0.5"
+                      onClick={() => toggleDrawer(val.toggle)}
+                  >
+                    {val.tagName}
+                  </button>
+                  <ReactTooltip
+                    id={val.id}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+              ))}
               {brsr &&
                 brsr.map((val) => (
                   <div className=" relative">
@@ -239,6 +294,33 @@ const EconomicTopBar = ({
                     </button>
                   </div>
                 ))}
+                {tcfd &&
+              tcfd.map((val) => (
+                <div className=" relative">
+                  <button
+                    data-tooltip-id={val.id}
+                    data-tooltip-content={val.content}
+                    className="text-cyan-500 bg-slate-200 rounded-full text-[11px] w-[95px] h-[22px] ml-2 text-center pt-0.5"
+                      onClick={() => toggleDrawer(val.toggle)}
+                  >
+                    {val.tagName}
+                  </button>
+                  <ReactTooltip
+                    id={val.id}
+                    place="bottom"
+                    effect="solid"
+                    style={{
+                      width: "290px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  ></ReactTooltip>
+                </div>
+              ))}
               {brsr &&
                 brsr.map((val) => (
                   <div className=" relative">

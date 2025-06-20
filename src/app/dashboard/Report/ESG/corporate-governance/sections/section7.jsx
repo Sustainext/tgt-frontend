@@ -30,12 +30,12 @@ const Section7 = ({ section9_3Ref, section9_3_1Ref, data,
           <p className="text-sm mb-4">No data available</p>
         )}
 
-        <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
+        {/* <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
           Role of the highest governance body and of senior executives in
           overseeing the organization's due diligence and other processes to
           identify and manage the organization's impact on the economy,
           environment and people:
-        </p>
+        </p> */}
         <p className="text-sm mb-4">
           {data["2_12_b"] ? data["2_12_b"].Q1 : "No data available"}
         </p>
@@ -58,6 +58,13 @@ const Section7 = ({ section9_3Ref, section9_3_1Ref, data,
         </p> */}
         <p className="text-sm mb-4">
           {data["2_12_b"] ? data["2_12_b"].Q4 : ""}
+        </p>
+
+        <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
+         Role of the highest governance body in reviewing the effectiveness of the organization's processes
+        </p>
+        <p className="text-sm mb-4">
+          {data["2_12_c"] ? data["2_12_c"]?.Q1 || "No data available" : "No data available"}
         </p>
       </div>
     </>

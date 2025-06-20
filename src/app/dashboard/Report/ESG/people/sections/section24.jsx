@@ -458,6 +458,9 @@ const Section24 = ({ section13_6_7Ref, data,reportType,
             Results Utilization and Improvement:
             </p>
             <p className="text-sm mb-4">{data["403-2b-quality_assurance"]?data["403-2b-quality_assurance"].data?data["403-2b-quality_assurance"].data.length>0?data["403-2b-quality_assurance"].data[0].Q3?data["403-2b-quality_assurance"].data[0].Q3:"No data available":"No data available":"No data available":"No data available"}</p> */}
+          <p className="text-[15px]  mb-2 font-semibold">
+          Processes for Hazard Identification, Risk Assessment, and Control
+        </p>
 
         <div className="rounded-md mb-4 shadow-md">
           <LeaveTable columns={col5} data={Tabledata5} />

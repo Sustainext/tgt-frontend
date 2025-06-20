@@ -340,7 +340,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                                 value={option.value}
                                 checked={selectedOptions.includes(option.value)}
                                 onChange={handleCheckboxChange}
-                                className="mr-3 custom-checkbox"
+                                className="mr-3 green-checkbox-small"
                               />
                               {option.label}
                             </label>

@@ -11,7 +11,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GovernancesTopBar from "../../governancesTopBar";
-const BoardInfo = ({ setMobileopen }) => {
+const BoardInfo = ({ setMobileopen, frameworkId, disclosures }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [year, setYear] = useState();
   const [data, setData] = useState([]);
@@ -70,6 +70,40 @@ const BoardInfo = ({ setMobileopen }) => {
       bgColor: "bg-[#00558A]",
     },
   ];
+  const tcfd = [];
+  const tcfdtaga = [];
+  const tcfdtagb = [];
+  if (frameworkId === "6" && disclosures?.Governance?.disclosures) {
+    const govDisclosures = disclosures.Governance.disclosures;
+
+    const hasGovA = govDisclosures.some((d) => d.id === 1 && d.selected);
+    const hasGovB = govDisclosures.some((d) => d.id === 2 && d.selected);
+
+    if (hasGovA) {
+      tcfd.push({
+        tagName: "TCFD-GOV-A",
+        toggle: "140",
+        id: "tooltip-$tcfd1",
+        content: "TCFD-Governance-A Disclosure",
+      });
+      tcfdtaga.push({
+        tagName: "TCFD-GOV-A",
+      });
+    }
+
+    if (hasGovB) {
+      tcfd.push({
+        tagName: "TCFD-GOV-B",
+        toggle: "141",
+        id: "tooltip-$tcfd2",
+        content: "TCFD-Governance-B Disclosure",
+      });
+      tcfdtagb.push({
+        tagName: "TCFD-GOV-B",
+      });
+    }
+  }
+
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
@@ -78,8 +112,9 @@ const BoardInfo = ({ setMobileopen }) => {
           toggleDrawer={toggleDrawer}
           sdgData={sdgData}
           griData={griData}
-          title={"Structure"}
+          title={"Board Info"}
           setMobileopen={setMobileopen}
+          tcfd={tcfd}
         />
         {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
@@ -156,7 +191,18 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
               <div key={index}>
                 {/* Header */}
                 <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
-                  <div className="ml-2 h-[38px]">{program.header}</div>
+                  <div
+                    className={`ml-2 ${
+                      program.category.includes("140")
+                        ? "h-[65px]"
+                        : program.category.includes("141")
+                        ? "h-[90px]"
+                        : "h-[38px]"
+                    }`}
+                  >
+                    {program.header}
+                  </div>
+
                   <div className="ml-2 float-right ">
                     <h5
                       className="text-[#727272] text-[17px] font-bold cursor-pointer"
@@ -209,6 +255,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         togglestatus={togglestatus}
+        tcfdtagb={tcfdtagb}
       />
       <CommitteeOfHighestGovernanceBody
         selectedOrg={selectedOrg}
@@ -216,6 +263,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         togglestatus={togglestatus}
+        tcfdtaga={tcfdtaga}
       />
       <CompositionOfHighestGovernanceBody
         selectedOrg={selectedOrg}
@@ -223,6 +271,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         togglestatus={togglestatus}
+    
       />
     </>
   );

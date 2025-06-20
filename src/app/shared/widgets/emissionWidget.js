@@ -1936,7 +1936,13 @@ const EmissionWidget = React.memo(
             subcategory: value.Subcategory,
             activity: value.Activity,
             activity_id: value.activity_id,
+            act_id: value.act_id,
+            factor: value.factor,
             unit_type: value.unit_type,
+            quantity1: value.Quantity,
+            quantity2: value.Quantity2,
+            unit1: value.Unit,
+            unit2: value.Unit2,
             countryCode,
             rowId: rowId,
           }}

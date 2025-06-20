@@ -207,6 +207,9 @@ const Section2 = ({
             </li>
           </ul>
         </div>
+        <p className="mb-4 text-sm font-normal">
+            {data && data["2-6-d"] || "No data available"}
+        </p>
       </div>
     </>
   );

@@ -41,6 +41,7 @@ const StakeholderEngagement = forwardRef(({ onSubmitSuccess,sectionOrder=6,hasCh
   
   const apiCalledRef = useRef(false);
   const [loopen, setLoOpen] = useState(false);
+  const [initialData, setInitialData] = useState({});
   const [data, setData] = useState("");
   const description = useSelector((state) => state.screen6Slice.description);
   const dispatch = useDispatch();
@@ -61,6 +62,10 @@ const StakeholderEngagement = forwardRef(({ onSubmitSuccess,sectionOrder=6,hasCh
   }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     if (!hasChanges(initialData, currentData)) {
       LoaderClose();
       return false;

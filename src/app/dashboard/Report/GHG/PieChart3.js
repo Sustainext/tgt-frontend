@@ -33,11 +33,17 @@ function MyResponsiveloction({ locatiodata }) {
     color: `hsl(${Math.random() * 360}, 70%, 50%)` // Random color for each location
   }));
 
+
   return (
     <>
-      <h3 className="text-left mb-2 p-3 mt-3">
+    {
+      transformedData.length>0 && (
+        <h3 className="text-left mb-2 p-3 mt-3">
         <b>Emissions by location</b>
       </h3>
+      )
+    }
+     
 
       <ResponsivePie
         data={transformedData}

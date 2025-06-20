@@ -53,12 +53,18 @@ import {
 } from "../../../lib/redux/features/emissionSlice";
 import StakeholderEngagement from "./BioDiversity/StakeholderEngagement/page";
 import ManagementOfBiodiversityImpact from "./BioDiversity/ManagementOfBioDiversityImpact/page";
-
+import { setActivesection } from "../../../lib/redux/features/TCFD/TcfdSlice";
+import Cookies from "js-cookie";
 const environment = () => {
   const { open } = GlobalState();
   const [mobileopen, setMobileopen] = useState(false);
-  const [activeTab, setActiveTab] = useState("GHG Emissions");
 
+  const activestap = useSelector((state) => state.Tcfd.activesection);
+  const [activeTab, setActiveTab] = useState("");
+
+  const frameworkId = Cookies.get("selected_framework_id");
+  const disclosures = Cookies.get("selected_disclosures");
+  const parsedDisclosures = disclosures ? JSON.parse(disclosures) : [];
   const dispatch = useDispatch();
 
   const {
@@ -71,6 +77,8 @@ const environment = () => {
     loading,
     error,
   } = useSelector((state) => state.materialitySlice);
+
+
 
   const loadMaterialityDashboard = () => {
     dispatch(
@@ -88,6 +96,7 @@ const environment = () => {
     setActiveTab(tab);
     dispatch(f_setSectionName(tab));
     setMobileopen(false);
+      dispatch(setActivesection(""));
   };
 
   useEffect(() => {
@@ -95,10 +104,7 @@ const environment = () => {
     dispatch(fetchLocations());
     dispatch(fetchUsers());
   }, [dispatch]);
-
-  useEffect(() => {
-    // List of tabs related to Energy\
-    const materialnewTabs = [
+const materialnewTabs = [
       "Management of Material topic emission",
       "Management of Material topic Supplier",
       "Management of Material topic Water",
@@ -174,10 +180,10 @@ const environment = () => {
       "Synergies, Trade-offs & Stakeholder Engagement",
       "Access and benefit-sharing",
     ];
-
-    // Set the header based on the active tab category
+  useEffect(() => {
+ 
     if (emissionTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Emission"));
+      dispatch(setHeadertext2("Emissions"));
     } else if (energyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Energy"));
     } else if (wasteTabs.includes(activeTab)) {
@@ -204,6 +210,35 @@ const environment = () => {
     dispatch(setMiddlename("Environment"));
   }, [activeTab, dispatch]);
 
+useEffect(() => {
+  const allTabNames = [
+    ...materialnewTabs,
+    ...emissionTabs,
+    ...energyTabs,
+    ...wasteTabs,
+    ...materialTabs,
+    ...waterTabs,
+    ...supplierTabs,
+    ...packagingMaterialTabs,
+    ...airQualityTab,
+    ...bioDiversityTab,
+  ];
+  
+  if (activestap && allTabNames.includes(activestap)) {
+    setActiveTab(activestap);
+    return;
+  }
+
+  // Don't override if user already picked a tab!
+  if (!activeTab && data && data.environment) {
+    if (data.environment.EnvGhgEmission?.is_material_topic) {
+     setActiveTab("Management of Material topic emission");
+    } else {
+      setActiveTab("GHG Emissions");
+    }
+  }
+ 
+}, [activestap, data]);
   return (
     <>
       <div className="w-full">
@@ -247,7 +282,12 @@ const environment = () => {
                 />
               )}
               {activeTab === "GHG Emissions" && (
-                <Emission apiData={data} setMobileopen={setMobileopen} />
+                <Emission
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                  frameworkId={frameworkId}
+                  disclosures={parsedDisclosures}
+                />
               )}
               {activeTab === "Base Year" && (
                 <BaseYear apiData={data} setMobileopen={setMobileopen} />
@@ -265,6 +305,8 @@ const environment = () => {
                 <EmissionIntensity
                   apiData={data}
                   setMobileopen={setMobileopen}
+                  frameworkId={frameworkId}
+                  disclosures={parsedDisclosures}
                 />
               )}
               {activeTab === "EmissionReductionInitiatives" && (
@@ -391,7 +433,6 @@ const environment = () => {
                   headingname={"Packaging Material"}
                   Envdata={"EnvPackagingMaterial"}
                 />
-         
               )}
               {activeTab ===
                 "Reclaimed products and their packaging materials" && (
@@ -413,7 +454,6 @@ const environment = () => {
                   headingname={"Biodiversity"}
                   Envdata={"EnvBioDiversityLandUse"}
                 />
-           
               )}
               {activeTab === "Biodiversity Policies" && (
                 <BioDiversityPolicies
@@ -452,7 +492,6 @@ const environment = () => {
                   headingname={"Water and effluents"}
                   Envdata={"EnvWaterEffluent"}
                 />
-          
               )}
               {activeTab === "Interaction with water as shared resource" && (
                 <Watersharedresource
@@ -492,7 +531,6 @@ const environment = () => {
                   headingname={"Supplier Environmental Assessment"}
                   Envdata={"EnvSupplyChainSustainability"}
                 />
-           
               )}
               {activeTab ===
                 "New suppliers that were screened using environmental criteria" && (
@@ -516,7 +554,6 @@ const environment = () => {
                   headingname={"Air Quality & other emissions"}
                   Envdata={"EnvAirQuality"}
                 />
-            
               )}
               {activeTab === "Nitrogen Oxides" && (
                 <NitrogenOxide apiData={data} setMobileopen={setMobileopen} />

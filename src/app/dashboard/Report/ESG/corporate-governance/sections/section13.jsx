@@ -102,7 +102,7 @@ const Section13 = ({ section9_3_7Ref, data,
             ? data["2_19_b"]?.Q1 || "No data available"
             : "No data available"}
         </p>
-        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+        <p className="text-[16px] text-[#344054] mb-2 font-bold">
           Process to determine remuneration:
         </p>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">

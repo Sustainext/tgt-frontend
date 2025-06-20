@@ -53,7 +53,7 @@ const BenefitSection = ({
             type="checkbox"
             checked={isSelected}
             onChange={onToggleSelect}
-            className="form-checkbox text-blue-500 w-4 h-4"
+            className="form-checkbox green-checkbox w-4 h-4"
           />
           {isOpen && editable ? (
             <input

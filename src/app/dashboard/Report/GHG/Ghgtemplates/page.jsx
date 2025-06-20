@@ -67,6 +67,7 @@ function Ghgtemplates() {
 
   const reportId =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const reportType= typeof window !== "undefined" ? localStorage.getItem("reportType") : ""; 
   const reportstartdate = reportstartdateStr
     ? new Date(reportstartdateStr)
     : null;
@@ -133,21 +134,50 @@ function Ghgtemplates() {
     }, 0);
     const roundedTotal = parseFloat(total.toFixed(2));
     setTotalContributionScope(roundedTotal);
+    const corporates = response.data.data;
     const sourcesData = response.data.data.flatMap(
       (corporate) => corporate.sources
     );
+    // if (sourcesData.length > 0) {
+    //   const maxContribution = Math.max(
+    //     ...sourcesData.map((source) => parseFloat(source.contribution_source))
+    //   );
+    //   const highestSources = sourcesData.filter(
+    //     (source) => parseFloat(source.contribution_source) === maxContribution
+    //   );
+    //   const highestSourceNames = highestSources
+    //     .map((source) => source.source_name)
+    //     .join(", ");
+    //   setHighestContributionSource(highestSourceNames);
+    // }
     if (sourcesData.length > 0) {
       const maxContribution = Math.max(
         ...sourcesData.map((source) => parseFloat(source.contribution_source))
       );
+    
       const highestSources = sourcesData.filter(
         (source) => parseFloat(source.contribution_source) === maxContribution
       );
-      const highestSourceNames = highestSources
-        .map((source) => source.source_name)
-        .join(", ");
+    
+      const highestSourceNames = highestSources.map((source) => {
+        // Find the matching corporate by source_name
+        const matchingCorporate = corporates.find(
+          (corp) =>
+            corp.corporate_name === source.source_name &&
+            corp.sources.some((s) => s.source_name === source.source_name)
+        );
+    
+        // Add " (Investments)" if it's an Investment corporate
+        if (matchingCorporate?.corporate_type === "Investment") {
+          return `Investments`;
+        } else {
+          return source.source_name;
+        }
+      }).join(", ");
+    
       setHighestContributionSource(highestSourceNames);
     }
+    
     LoaderClose();
   };
 
@@ -616,7 +646,7 @@ function Ghgtemplates() {
                     </button>
                   )}
                   <h1 className="text-lg text-left mb-2">
-                    <p className="ml-3">Carbon Accounting Report</p>
+                    <p className="ml-3">{reportType=='GHG Report - Investments'?'Investments - Carbon Accounting Report':'Carbon Accounting Report'}</p>
                     <p className="text-[#667085] text-[13px] ml-3">
                       Organization
                        {corpName ? " / Corporate" : ""}:{" "}
@@ -1023,7 +1053,7 @@ function Ghgtemplates() {
             <div className="flex justify-between shadow-md border-gray-100 mt-4 py-2">
               <div className="flex items-center justify-center">
                 <h1 className="text-lg text-left">
-                  <p className="ml-3">Carbon Accounting Report</p>
+                  <p className="ml-3">{reportType=='GHG Report - Investments'?'Investments - Carbon Accounting Report':'Carbon Accounting Report'}</p>
                   <p className="text-[#667085] text-[13px] ml-3">
                       Organization
                        {corpName ? " / Corporate" : ""}:{" "}

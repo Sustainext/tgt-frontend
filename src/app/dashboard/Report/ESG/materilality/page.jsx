@@ -47,6 +47,8 @@ useEffect(() => {
     const [initialData, setInitialData] = useState({});
   const apiCalledRef = useRef(false);
   const [loopen, setLoOpen] = useState(false);
+  const [initialData, setInitialData] = useState({});
+
   const [data, setData] = useState("");
   const description = useSelector((state) => state.screen8Slice.description);
   const dispatch = useDispatch();

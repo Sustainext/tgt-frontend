@@ -273,25 +273,26 @@ const Managementwasteimpact = ({ selectedOrg, year, selectedCorp,togglestatus })
     console.log("Form data is changed -", formData);
   }, [formData]);
 
-  useEffect(() => {
-    if (selectedOrg && year && togglestatus) {
-      if (togglestatus === "Corporate" && selectedCorp) {
-        loadFormData();
-      } else if (togglestatus === "Corporate" && !selectedCorp) {
-        setFormData([{}]);
-        setRemoteSchema({});
-        setRemoteUiSchema({});
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
       } else {
-        loadFormData();
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
       }
-
-      toastShown.current = false;
     } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
+      loadFormData();             // Organization tab: always try to load
     }
-  }, [selectedOrg, year, selectedCorp, togglestatus]);
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   // Add validation state
   const [validationErrors, setValidationErrors] = useState([]);

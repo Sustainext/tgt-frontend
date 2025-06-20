@@ -38,9 +38,11 @@ function Executivesummary({
   const percentScope2 = (totalScope2 / overallTotal) * 100;
   const percentScope3 = (totalScope3 / overallTotal) * 100;
   const orgname = localStorage.getItem("reportorgname");
+  const corpName = localStorage.getItem("reportCorpName");
   const reportstartdateStr = localStorage.getItem("reportstartdate");
   const reportenddateStr = localStorage.getItem("reportenddate");
   const reportby = typeof window !== 'undefined' ? localStorage.getItem("reportby") : '';
+  const report_type = typeof window !== 'undefined' ? localStorage.getItem("reportType") : '';
   return (
     <>
       <div className="xl:px-3">
@@ -52,7 +54,7 @@ function Executivesummary({
         <div className="box rounded-lg p-4">
           <p className="text-left mb-4 wordsping">
             This report details the Greenhouse Gas Emissions (GHG) accounting
-            for the {reportby} <span>{orgname}</span>. The total GHG
+            for the {reportby} <span>{reportby==='Corporate'?corpName:orgname}</span>. The total GHG
             emissions for the reporting period{" "}
             <Moment format="DD-MMM-YYYY">{reportstartdateStr}</Moment> to{" "}
             <Moment format="DD-MMM-YYYY">{reportenddateStr}</Moment> were found
@@ -62,7 +64,7 @@ function Executivesummary({
           {exdata.length > 1 && ( // Conditional rendering based on the number of corporations
             <div className="mb-5">
               <h2 className="text-lg font-semibold my-4">
-                Table 1 : {orgname} GHG emissions by scope
+                Table 1 : {reportby==='Corporate'?corpName:orgname} GHG emissions by scope
               </h2>
               <table className="min-w-full leading-normal border border-slate-200 rounded-lg">
                 <thead className="border-s-slate-200">
@@ -117,6 +119,9 @@ function Executivesummary({
             </div>
           )}
 
+        {reportby==='Corporate' && report_type==='GHG Report - Investments'?(
+          <div></div>
+        ):(
           <div className="mb-5">
             {regularCorporateData &&
               regularCorporateData.map((corporate, corpIndex) => (
@@ -159,6 +164,9 @@ function Executivesummary({
                 )
               ))}
           </div>
+        )}
+      
+          
         </div>
       </div>
     </>

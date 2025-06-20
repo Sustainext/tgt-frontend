@@ -24,6 +24,7 @@ const ReferenceContentIndex = ({
   isCreateReportModalOpen,
   setIsCreateReportModalOpen,
   reportType
+  reportType
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch=useDispatch()

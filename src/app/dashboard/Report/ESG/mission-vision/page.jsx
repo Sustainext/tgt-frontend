@@ -51,6 +51,7 @@ useEffect(() => {
 }, []);
 
   const apiCalledRef = useRef(false);
+  const [initialData, setInitialData] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const mission = useSelector((state) => state.screen3Slice.mission);
   const dispatch = useDispatch();
