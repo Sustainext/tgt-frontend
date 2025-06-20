@@ -16,7 +16,7 @@ import {
 } from "date-fns";
 import { AiOutlineCalendar } from "react-icons/ai";
 
-const DateRangePickerEmission = ({ startDate, endDate, onDateChange }) => {
+const DateRangePickerEmission = ({ startDate, endDate, onDateChange,dateRangeValidation }) => {
   const [startMonth, setStartMonth] = useState(new Date());
   const [endMonth, setEndMonth] = useState(addMonths(new Date(), 1));
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -24,14 +24,14 @@ const DateRangePickerEmission = ({ startDate, endDate, onDateChange }) => {
   const [showMonthDropdown, setShowMonthDropdown] = useState(false);
   const [showYearDropdown, setShowYearDropdown] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [position, setPosition] = useState("bottom"); // Add a state for position
+  const [position, setPosition] = useState("bottom");
+   const [error, setError] = useState(""); // Add a state for position
   const dateInputRef = useRef(null);
   const [range, setRange] = useState({
     start: startDate ? new Date(startDate) : null,
     end: endDate ? new Date(endDate) : null,
   });
 
-  // Handle click outside the date picker
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -57,23 +57,42 @@ const DateRangePickerEmission = ({ startDate, endDate, onDateChange }) => {
   };
 
   // Handle date click
-  const handleDateClick = (day) => {
-    const strippedDate = stripTime(day);
+const handleDateClick = (day) => {
+  const strippedDate = stripTime(day);
 
-    if (!range.start || (range.start && range.end)) {
-      setRange({ start: strippedDate, end: null });
-    } else {
-      setRange((prevRange) => {
-        const newRange = { ...prevRange, end: strippedDate };
-        onDateChange({
-          start: format(stripTime(prevRange.start), "yyyy-MM-dd"),
-          end: format(strippedDate, "yyyy-MM-dd"),
-        });
-        return newRange;
+  if (!range.start || (range.start && range.end)) {
+    setRange({ start: strippedDate, end: null });
+    setError("");
+  } else {
+    const newStart = range.start;
+    const newEnd = strippedDate;
+
+    let isValid = true;
+    if (dateRangeValidation) {
+      const startDateObj = new Date(newStart);
+      const endDateObj = new Date(newEnd);
+      const diffInYears = (endDateObj - startDateObj) / (1000 * 60 * 60 * 24 * 365);
+
+      if (diffInYears < 1) {
+        setError("The difference between start date and end date must be at least 1 year.");
+        isValid = false;
+      } else {
+        setError("");
+      }
+    }
+
+    if (isValid) {
+      setRange({ start: newStart, end: newEnd });
+      onDateChange({
+        start: format(stripTime(newStart), "yyyy-MM-dd"),
+        end: format(stripTime(newEnd), "yyyy-MM-dd"),
       });
       setShowDatePicker(false);
+    } else {
+      setRange({ start: newStart, end: null }); // reset for new pick
     }
-  };
+  }
+};
 
   // Handle month change
   const handleMonthChange = (setMonth, newMonth) => {
@@ -299,6 +318,7 @@ const DateRangePickerEmission = ({ startDate, endDate, onDateChange }) => {
           onClick={toggleDatePicker}
         />
       </div>
+    
       {showDatePicker && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center  z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-xl p-2">
@@ -331,7 +351,11 @@ const DateRangePickerEmission = ({ startDate, endDate, onDateChange }) => {
             >
               Apply
             </button>
+    
           </div>
+                      {error && (
+          <p className="text-red-500 text-[12px] mt-2">{error}</p>
+        )}
         </div>
         </div>
         </div>

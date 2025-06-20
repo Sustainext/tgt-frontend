@@ -134,9 +134,8 @@ const uiSchema = {
         key: "BaseYear",
         title: "Base Year",
         tooltip: "Select the base year for the target.",
-        startDate: { type: "string", format: "date" },
-        endDate: { type: "string", format: "date" },
-        layouttype: "daterange",
+
+        layouttype: "baseyer",
       },
       {
         key: "BaselineValue",
@@ -146,11 +145,10 @@ const uiSchema = {
       },
       {
         key: "TargetTimeFrame",
-        title: "Target Time Frame",
+        title: "Target Year",
         tooltip: "Select the timeframe to achieve the specified target.",
-        startDate: { type: "string", format: "date" },
-        endDate: { type: "string", format: "date" },
-        layouttype: "daterange",
+ 
+        layouttype: "targetyear",
       },
       {
         key: "TargetValue",
@@ -295,14 +293,14 @@ const Screen1 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   if (selectedOrg && year && togglestatus) {
     if (togglestatus === "Corporate") {
       if (selectedCorp) {
-        loadFormData();           // <-- Only load if a corporate is picked
+        loadFormData();           
       } else {
         setFormData([{}]); 
         setRemoteSchema({});
-        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+        setRemoteUiSchema({});       
       }
     } else {
-      loadFormData();             // Organization tab: always try to load
+      loadFormData();             
     }
     toastShown.current = false;
   } else {
