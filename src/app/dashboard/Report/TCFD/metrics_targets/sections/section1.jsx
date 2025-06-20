@@ -248,14 +248,6 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
             ]}
           />
 
-          {/* Scope-Related Metrics Table */}
-          <MetricsTable
-            title="Metrics used to assess climate-related opportunities"
-            data={
-              data?.scopeRelatedMetrics || mockMetricsData?.scopeRelatedMetrics
-            }
-            columns={["Scope", "Emissions", "Unit", "Percentage of Total"]}
-          />
 
           {/* Additional sections */}
           <div className="mb-6">

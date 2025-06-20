@@ -50,9 +50,17 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
     ],
   };
 
+  const loadSectionAutoFillContent = () => {
+    const autoFillContent = `<p>We manage our emissions through a comprehensive strategy that includes setting reduction targets, implementing energy-efficient technologies, and monitoring our progress</p>`;
+    dispatch(setScope1Emissions(autoFillContent));
+    if (editorRef2.current) {
+      editorRef2.current.value = autoFillContent;
+    }
+  };
+
   // Auto-fill functions for each section
   const loadScope1AutoFillContent = () => {
-    const autoFillContent = `<p>Our Scope 1 emissions primarily result from direct combustion in owned or controlled sources, including company vehicles, on-site fuel combustion, and process emissions. ${orgName || '[Company Name]'} follows the GHG Protocol Corporate Accounting and Reporting Standard for calculation and reporting of these emissions, ensuring accurate measurement and transparent disclosure of our direct greenhouse gas impacts.</p>`;
+    const autoFillContent = `<p>Scope 1 emissions are direct greenhouse gas (GHG) emissions from our operations, such as fuel combustion on-site. We measure and report these emissions annually, striving to reduce them through process optimization and cleaner technologies. </p>`;
     dispatch(setScope1Emissions(autoFillContent));
     if (editorRef2.current) {
       editorRef2.current.value = autoFillContent;
@@ -60,7 +68,7 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
   };
 
   const loadScope2AutoFillContent = () => {
-    const autoFillContent = `<p>Scope 2 emissions are indirect greenhouse gas emissions from the consumption of purchased electricity, steam, heating, and cooling. ${orgName || '[Company Name]'} follows the GHG Protocol Corporate Accounting and Reporting Standard for calculation and reporting of these emissions, ensuring accurate measurement and transparent disclosure of our indirect energy-related greenhouse gas impacts.</p>`;
+    const autoFillContent = `<p>Scope 2 emissions are indirect GHG emissions from the consumption of purchased electricity, heat, or steam. We aim to reduce Scope 2 emissions by increasing our use of renewable energy and improving energy efficiency. .</p>`;
     dispatch(setScope2Emissions(autoFillContent));
     if (editorRef4.current) {
       editorRef4.current.value = autoFillContent;
@@ -68,7 +76,7 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
   };
 
   const loadScope3AutoFillContent = () => {
-    const autoFillContent = `<p>Scope 3 emissions include all other indirect emissions that occur in ${orgName || '[Company Name]'}'s value chain, including both upstream and downstream activities. This encompasses emissions from purchased goods and services, business travel, employee commuting, waste disposal, and product use. ${orgName || '[Company Name]'} follows the GHG Protocol Corporate Value Chain (Scope 3) Accounting and Reporting Standard for calculation and reporting of these emissions.</p>`;
+    const autoFillContent = `<p>Scope 3 emissions include all other indirect emissions in our value chain, such as those from suppliers and product use. We collaborate with suppliers to reduce these emissions and support initiatives that encourage sustainable practices throughout our supply chain.</p>`;
     dispatch(setScope3Emissions(autoFillContent));
     if (editorRef6.current) {
       editorRef6.current.value = autoFillContent;
@@ -263,11 +271,11 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
 
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
             <p className="text-[15px] text-[#667085] mb-2 mt-0">
-              Add details about the organization's GHG emissions and methodology.
+              Add statement about company’s strategy to reduce GHG emissions
             </p>
             <button
               className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-              onClick={loadScope1AutoFillContent}
+              onClick={loadSectionAutoFillContent}
             >
               <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
               Auto Fill
@@ -278,7 +286,7 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
             <JoditEditor
               ref={editorRef1}
               value={metricsTargets.scope1Emissions}
-              config={{...config, placeholder: "Add details about the organization's GHG emissions and methodology."}}
+              config={{...config, placeholder: "Add statement about company’s strategy to reduce GHG emissions"}}
               tabIndex={1}
               onBlur={handleScope1EditorChange}
               onChange={handleScope1EditorChange}
@@ -437,17 +445,6 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
             </button>
           </div>
 
-          <div className="mb-6">
-            <JoditEditor
-              ref={editorRef8}
-              value={metricsTargets.ghgByScope}
-              config={{...config, placeholder: "Add statement about company's GHG emissions breakdown by scope"}}
-              tabIndex={8}
-              onBlur={handleGhgByScopeChange}
-              onChange={handleGhgByScopeChange}
-            />
-          </div>
-
           <ScopeTable
             title="GHG Emissions by Scope"
             data={data?.emissionsByScope || mockByScopeData}
@@ -470,17 +467,6 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
               <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
               Auto Fill
             </button>
-          </div>
-
-          <div className="mb-6">
-            <JoditEditor
-              ref={editorRef9}
-              value={metricsTargets.ghgBySource}
-              config={{...config, placeholder: "Add statement about company's GHG emissions breakdown by source"}}
-              tabIndex={9}
-              onBlur={handleGhgBySourceChange}
-              onChange={handleGhgBySourceChange}
-            />
           </div>
 
           <ScopeTable
@@ -506,17 +492,6 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
               <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
               Auto Fill
             </button>
-          </div>
-
-          <div className="mb-6">
-            <JoditEditor
-              ref={editorRef11}
-              value={metricsTargets.ghgByLocation}
-              config={{...config, placeholder: "Add statement about company's GHG emissions breakdown by geographic location"}}
-              tabIndex={11}
-              onBlur={handleGhgByLocationChange}
-              onChange={handleGhgByLocationChange}
-            />
           </div>
 
           <ScopeTable
@@ -560,6 +535,16 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
             columns={["Intensity Metric", "Value", "Unit"]}
           />
 
+          <div className="mb-6">
+            <JoditEditor
+              ref={editorRef7}
+              value={metricsTargets.ghgIntensity}
+              config={{...config, placeholder: "Add sector-specific (e.g., financial or non-financial) information relevant to the ‘metrics & targets ‘ disclosures, in line with TCFD sector guidance (if applicable). "}}
+              tabIndex={7}
+              onBlur={handleGhgIntensityChange}
+              onChange={handleGhgIntensityChange}
+            />
+          </div>
         </div>
       </div>
     </>
