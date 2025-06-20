@@ -154,7 +154,7 @@ const loadFormData = async () => {
       console.log("response.data.data.report_data", response.data.data.report_data);
       
       setData(response.data.data.report_data);
-      dispatch(setBoardOversight(response.data.data.report_data.board_oversight?.content || ""));
+      dispatch(setBoardOversight(response.data.data.report_data?.board_oversight?.content || ""));
       dispatch(setManagementRole(response.data.data.report_data.management_role?.content || ""));
     }
     LoaderClose();
