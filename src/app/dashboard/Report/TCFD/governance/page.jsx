@@ -51,69 +51,65 @@ const Governance = forwardRef(({ onSubmitSuccess }, ref) => {
     setLoOpen(false);
   };
 
-  const submitForm = async (type) => {
-    LoaderOpen();
-    
-    const data = {
-      board_oversight: {
-        page: "governance",
-        label: "4. Governance",
-        subLabel: "Board's Oversight of Climate-Related Risks and Opportunities",
-        type: "textarea",
-        content: governance.boardOversight,
-        field: "board_oversight",
-        isSkipped: false,
+const submitForm = async (type) => {
+  LoaderOpen();
+
+  const formData = new FormData();
+  formData.append('report', reportid);
+  formData.append('screen_name', 'governance');
+  
+  const dataPayload = {
+    board_oversight: {
+      page: "governance",
+      label: "4. Governance",
+      subLabel: "Board's Oversight of Climate-Related Risks and Opportunities",
+      type: "textarea",
+      content: governance.boardOversight,
+      field: "board_oversight",
+      isSkipped: false,
+    },
+    management_role: {
+      page: "governance",
+      label: "4.2 Management's role in assessing and managing climate related risks and opportunities",
+      subLabel: "Management Role",
+      type: "textarea",
+      content: governance.managementRole,
+      field: "management_role",
+      isSkipped: false,
+    },
+  };
+  
+  formData.append('data', JSON.stringify(dataPayload));
+
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
+
+  try {
+    const response = await axiosInstance.put(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-      management_role: {
-        page: "governance",
-        label: "4.2 Management's role in assessing and managing climate related risks and opportunities",
-        subLabel: "Management Role",
-        type: "textarea",
-        content: governance.managementRole,
-        field: "management_role",
-        isSkipped: false,
-      },
-    };
+    });
 
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/governance/${reportid}/`;
-    try {
-      const response = await axiosInstance.put(url, data);
-
-      if (response.status === 200) {
-        if (type === "next") {
-          toast.success("Data added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-
-        if (onSubmitSuccess) {
-          onSubmitSuccess(true);
-        }
-        LoaderClose();
-        return true;
-      } else {
-        toast.error("Oops, something went wrong", {
+    if (response.status === 200) {
+      if (type === "next") {
+        toast.success("Data added successfully", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
         });
-        LoaderClose();
-        return false;
       }
-    } catch (error) {
+
+      if (onSubmitSuccess) {
+        onSubmitSuccess(true);
+      }
       LoaderClose();
+      return true;
+    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -124,29 +120,49 @@ const Governance = forwardRef(({ onSubmitSuccess }, ref) => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
       return false;
     }
-  };
+  } catch (error) {
+    LoaderClose();
+    toast.error("Oops, something went wrong", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    return false;
+  }
+};
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    dispatch(setBoardOversight(""));
-    dispatch(setManagementRole(""));
+const loadFormData = async () => {
+  LoaderOpen();
+  dispatch(setBoardOversight(""));
+  dispatch(setManagementRole(""));
+  
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/governance/`;
+  try {
+    const response = await axiosInstance.get(url);
     
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/governance/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.data) {
-        setData(response.data);
-        dispatch(setBoardOversight(response.data.board_oversight?.content || ""));
-        dispatch(setManagementRole(response.data.management_role?.content || ""));
-      }
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      LoaderClose();
+    if (response.data && response.data.data) {
+      console.log("response.data", response.data);
+      console.log("response.data.data", response.data.data);
+      console.log("response.data.data.report_data", response.data.data.report_data);
+      
+      setData(response.data.data.report_data);
+      dispatch(setBoardOversight(response.data.data.report_data.board_oversight?.content || ""));
+      dispatch(setManagementRole(response.data.data.report_data.management_role?.content || ""));
     }
-  };
+    LoaderClose();
+  } catch (error) {
+    console.error("API call failed:", error);
+    LoaderClose();
+  }
+};
 
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {

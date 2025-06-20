@@ -143,24 +143,24 @@ const TCFDReport = () => {
     };
 
     if (type === "next") {
-    //   const isSubmitted = await submitAndProceed();
+      // const isSubmitted = await submitAndProceed();
       if (true) {
         setCurrentPage(prev => prev + 1);
       }
     } else if (type === "last") {
-      const isSubmitted = await submitAndProceed();
+      // const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
         // Handle final submission
         toast.success("Report completed successfully!");
       }
     } else {
-      const isSubmitted = await submitAndProceed();
-      if (isSubmitted) {
-        showDraftSavedToast();
-        setTimeout(() => {
-          router.push("/dashboard/Report");
-        }, 4000);
-      }
+      // const isSubmitted = await submitAndProceed();
+      // if (isSubmitted) {
+      //   showDraftSavedToast();
+      //   setTimeout(() => {
+      //     router.push("/dashboard/Report");
+      //   }, 4000);
+      // }
     }
   };
 
@@ -202,10 +202,10 @@ const TCFDReport = () => {
         return <RiskManagement ref={sectionRefs.risk_management} {...commonProps} />;
       case 'metrics_targets':
         return <MetricsTargets ref={sectionRefs.metrics_targets} {...commonProps} />;
-      // case 'tcfd_content_index':
-      //   return <TCFDContentIndex ref={sectionRefs.tcfd_content_index} {...commonProps} />;
-      // case 'annexure':
-      //   return <Annexure ref={sectionRefs.annexure} {...commonProps} />;
+      case 'tcfd_content_index':
+        return <TCFDContentIndex ref={sectionRefs.tcfd_content_index} {...commonProps} />;
+      case 'annexure':
+        return <Annexure ref={sectionRefs.annexure} {...commonProps} />;
       default:
         return (
           <div className="p-8 text-center">
