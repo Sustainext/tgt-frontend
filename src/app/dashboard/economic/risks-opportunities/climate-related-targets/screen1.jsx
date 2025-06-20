@@ -155,7 +155,7 @@ const uiSchema = {
       {
         key: "TargetValue",
         title: "Target Value",
-        tooltip: "Select the timeframe to achieve the specified target.",
+        tooltip: "Specify the target metric value.",
         layouttype: "input",
       },
       {
