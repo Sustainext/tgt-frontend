@@ -123,7 +123,7 @@ const Section1 = ({ section4_1Ref, data, orgName }) => {
               Board Committees Informed on Climate Related Issues
             </h4>
             <div className="bg-gray-50 p-3 rounded border text-sm text-blue-600">
-              {data["2-9-b"]?.committees || mockData["2-9-b"].committees}
+              {data["2-9-b"]?.committees || mockData["2-9-b"].committees || ''}
             </div>
           </div>
 
@@ -132,7 +132,7 @@ const Section1 = ({ section4_1Ref, data, orgName }) => {
               Oversight of Climate-Related Risks and Opportunities
             </h4>
             <div className="bg-gray-50 p-3 rounded border text-sm text-blue-600">
-              {data["TCFD-GOV-A"]?.oversight || mockData["TCFD-GOV-A"].oversight}
+              {data["TCFD-GOV-A"]?.oversight || mockData["TCFD-GOV-A"].oversight || ''}
             </div>
           </div>
 
@@ -141,7 +141,7 @@ const Section1 = ({ section4_1Ref, data, orgName }) => {
               Processes for Informing the Board on Climate-Related Issues
             </h4>
             <div className="bg-gray-50 p-3 rounded border text-sm text-blue-600">
-              {data["TCFD-GOV-A"]?.processes || mockData["TCFD-GOV-A"].processes}
+              {data["TCFD-GOV-A"]?.processes || mockData["TCFD-GOV-A"].processes || ''}
             </div>
           </div>
 
