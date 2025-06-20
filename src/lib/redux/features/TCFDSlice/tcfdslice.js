@@ -54,6 +54,11 @@ const initialState = {
     scope1Emissions: '',
     scope2Emissions: '',
     scope3Emissions: '',
+    ghgIntensity: '',
+    ghgByScope: '',
+    ghgBySource: '',
+    ghgByBusiness: '',
+    ghgByLocation: '',
     climateTargets: '',
     sectorInfo: '',
   },
@@ -159,6 +164,21 @@ const tcfdSlice = createSlice({
     setScope3Emissions: (state, action) => {
       state.metricsTargets.scope3Emissions = action.payload;
     },
+    setGhgIntensity: (state, action) => {
+      state.metricsTargets.ghgIntensity = action.payload;
+    },
+    setGhgByScope: (state, action) => {
+      state.metricsTargets.ghgByScope = action.payload;
+    },
+    setGhgBySource: (state, action) => {
+      state.metricsTargets.ghgBySource = action.payload;
+    },
+    setGhgByBusiness: (state, action) => {
+      state.metricsTargets.ghgByBusiness = action.payload;
+    },
+    setGhgByLocation: (state, action) => {
+      state.metricsTargets.ghgByLocation = action.payload;
+    },
     setClimateTargets: (state, action) => {
       state.metricsTargets.climateTargets = action.payload;
     },
@@ -245,6 +265,11 @@ export const {
   setScope1Emissions,
   setScope2Emissions,
   setScope3Emissions,
+  setGhgIntensity,
+  setGhgByScope,
+  setGhgBySource,
+  setGhgByBusiness,
+  setGhgByLocation,
   setClimateTargets,
   setSectorInfo,
   
@@ -271,7 +296,19 @@ export const selectAboutCompany = (state) => state.tcfdReport?.aboutCompany || {
 export const selectGovernance = (state) => state.tcfdReport?.governance || { boardOversight: '', managementRole: '', governanceStructure: '', skillsCompetencies: '' };
 export const selectStrategy = (state) => state.tcfdReport?.strategy || { climateRisksOpportunities: '', impactOnBusiness: '', resilienceOfStrategy: '', scenarioAnalysis: '' };
 export const selectRiskManagement = (state) => state.tcfdReport?.riskManagement || { identificationProcess: '', assessmentProcess: '', managementProcess: '', integrationIntoOverall: '' };
-export const selectMetricsTargets = (state) => state.tcfdReport?.metricsTargets || { climateMetrics: '', scope1Emissions: '', scope2Emissions: '', scope3Emissions: '', climateTargets: '' };
+export const selectMetricsTargets = (state) => state.tcfdReport?.metricsTargets || { 
+  climateMetrics: '', 
+  scope1Emissions: '', 
+  scope2Emissions: '', 
+  scope3Emissions: '', 
+  ghgIntensity: '',
+  ghgByScope: '',
+  ghgBySource: '',
+  ghgByBusiness: '',
+  ghgByLocation: '',
+  climateTargets: '',
+  sectorInfo: ''
+};
 export const selectCurrentSection = (state) => state.tcfdReport?.currentSection || 0;
 export const selectIsLoading = (state) => state.tcfdReport?.isLoading || false;
 export const selectError = (state) => state.tcfdReport?.error || null;

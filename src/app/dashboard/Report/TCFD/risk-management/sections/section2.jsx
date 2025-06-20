@@ -26,7 +26,7 @@ const Section2 = ({ section6_2Ref, data, orgName }) => {
             </p>
             <div className="border-b border-blue-200 my-2"></div>
             <div className="text-sm text-gray-700">
-              {data.risk_prioritization || "Risk prioritization process details will be displayed here based on API response."}
+              {data?.risk_prioritization || "Risk prioritization process details will be displayed here based on API response."}
             </div>
           </div>
 
@@ -37,7 +37,7 @@ const Section2 = ({ section6_2Ref, data, orgName }) => {
             </p>
             <div className="border-b border-blue-200 my-2"></div>
             <div className="text-sm text-gray-700">
-              {data.risk_management_process || "Risk management process details will be displayed here based on API response."}
+              {data?.risk_management_process || "Risk management process details will be displayed here based on API response."}
             </div>
           </div>
         </div>

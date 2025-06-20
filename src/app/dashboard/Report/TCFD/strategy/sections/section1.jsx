@@ -109,7 +109,7 @@ const RiskTable = ({ title, riskData }) => (
             </tr>
           </thead>
           <tbody>
-            {riskData.map((risk, index) => (
+            {riskData?.map((risk, index) => (
               <tr key={index} className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors">
                 <td className="border-r border-gray-200 p-4 text-gray-700">
                   {risk.riskCategory || 'Data'}
@@ -202,9 +202,9 @@ const RiskTable = ({ title, riskData }) => (
             </p>
           </div>
 
-          <RiskTable title="Physical Risks" riskData={data.physicalRisks || mockRiskData.physical} />
-          <RiskTable title="Transition Risks" riskData={data.transitionRisks || mockRiskData.transition} />
-          <RiskTable title="Other Risks" riskData={data.otherRisks || mockRiskData.other} />
+          <RiskTable title="Physical Risks" riskData={data?.physicalRisks || []} />
+          <RiskTable title="Transition Risks" riskData={data?.transitionRisks || []} />
+          <RiskTable title="Other Risks" riskData={data?.otherRisks || []} />
 
           <div className="mb-6 text-sm leading-relaxed py-4 rounded">
             <p className="mb-2">

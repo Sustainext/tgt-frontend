@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import STARSVG from "../../../../../../../public/star.svg";
 import {
-  setClimateRisksOpportunities,
+  setImpactOnBusiness,
   selectStrategy,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
@@ -78,7 +78,7 @@ const BusinessImpactTable = ({ title, data, columns }) => (
             </tr>
           </thead>
           <tbody>
-            {data.map((row, index) => (
+            {data?.map((row, index) => (
               <tr key={index} className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors">
                 {Object.values(row).map((value, cellIndex) => (
                   <td 
@@ -143,13 +143,13 @@ const BusinessImpactTable = ({ title, data, columns }) => (
 
           <BusinessImpactTable 
             title="Climate-Related Risk Impact"
-            data={data.climateRelatedRiskImpact || mockBusinessImpact.climateRelatedRiskImpact}
+            data={data?.climateRelatedRiskImpact || mockBusinessImpact.climateRelatedRiskImpact}
             columns={["Climate-Related Risk/Opportunity", "Business Areas Affected", "Impact"]}
           />
 
           <BusinessImpactTable 
             title="Business Areas Affected"
-            data={data.businessAreasAffected || mockBusinessImpact.businessAreasAffected}
+            data={data?.businessAreasAffected || mockBusinessImpact.businessAreasAffected}
             columns={["Business Areas", "Type of Risks", "Impact"]}
           />
 
