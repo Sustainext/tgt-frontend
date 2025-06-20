@@ -160,57 +160,60 @@ const People = forwardRef(({
 
   const dispatch = useDispatch();
 
+  const isWithReference = reportType === "GRI Report: With Reference to";
+
+
   const groupedSubsections = [
     {
       groupId: "employees",
       title: "Employees",
       children: [
-        { id: "employees_material_topic_management", label: "Management Of Material Topics" },
+        !isWithReference && { id: "employees_material_topic_management", label: "Management Of Material Topics" },
         { id: "employee_hiring_turnover", label: "Employee Hire, Turnover" },
         { id: "employee_benefits_health", label: "Employee Benefits And Health Services" },
         { id: "parental_leaves", label: "Parental Leaves" },
         { id: "standard_wages", label: "Standard Wage" },
-        { id: "career_development_reviews", label: "Performance And Career Development Reviews Of Employees" }
-      ]
+        { id: "career_development_reviews", label: "Performance And Career Development Reviews Of Employees" },
+      ].filter(Boolean),
     },
     {
       groupId: "labour_management",
       title: "Labour Management",
       children: [
-        { id: "labour_material_topic_management", label: "Management Of Material Topics" },
+        !isWithReference && { id: "labour_material_topic_management", label: "Management Of Material Topics" },
         { id: "non_employee_workers", label: "Workers Who Are Not Employees" },
-        { id: "forced_labour", label: "Forced Or Compulsory Labour" }
-      ]
+        { id: "forced_labour", label: "Forced Or Compulsory Labour" },
+      ].filter(Boolean),
     },
     {
       groupId: "child_labour",
       title: "Incidents Of Child Labour",
       children: [
-        { id: "child_labour_material_topic_management", label: "Management Of Material Topic" }
-      ]
+        !isWithReference && { id: "child_labour_material_topic_management", label: "Management Of Material Topic" },
+      ].filter(Boolean),
     },
     {
       groupId: "diversity_inclusion",
       title: "Diversity, Inclusion",
       children: [
-        { id: "diversity_material_topic_management", label: "Management Of Material Topics" },
+        !isWithReference && { id: "diversity_material_topic_management", label: "Management Of Material Topics" },
         { id: "diversity_governance_employees", label: "Diversity Of Governance Bodies And Employees" },
-        { id: "diversity_remuneration", label: "Remuneration" }
-      ]
+        { id: "diversity_remuneration", label: "Remuneration" },
+      ].filter(Boolean),
     },
     {
       groupId: "training_education",
       title: "Training & Education",
       children: [
-        { id: "training_material_topic_management", label: "Management Of Material Topics" },
-        { id: "training_programs_upgrading_skills", label: "Programs For Upgrading Employee Skills And Transition Assistance Programs" }
-      ]
+        !isWithReference && { id: "training_material_topic_management", label: "Management Of Material Topics" },
+        { id: "training_programs_upgrading_skills", label: "Programs For Upgrading Employee Skills And Transition Assistance Programs" },
+      ].filter(Boolean),
     },
     {
       groupId: "occupational_health_safety",
       title: "Occupational Health And Safety",
       children: [
-        { id: "ohs_material_topic_management", label: "Management Of Material Topic" },
+        !isWithReference && { id: "ohs_material_topic_management", label: "Management Of Material Topic" },
         { id: "ohs_management_system", label: "OHS Management System" },
         { id: "occupational_health_services", label: "Occupational Health Services" },
         { id: "worker_ohs_participation", label: "Worker Participation, Consultation, And Communication On OHS" },
@@ -219,24 +222,25 @@ const People = forwardRef(({
         { id: "hazard_risk_identification", label: "Hazard, Risk Identification And Investigation" },
         { id: "work_related_illness_injuries", label: "Work-Related Ill-Health & Injuries" },
         { id: "safety_training", label: "Safety Training" },
-        { id: "workers_covered_ohs", label: "Workers Covered By OHS Management System" }
-      ]
+        { id: "workers_covered_ohs", label: "Workers Covered By OHS Management System" },
+      ].filter(Boolean),
     },
     {
       groupId: "collective_bargaining",
       title: "Collective Bargaining",
       children: [
-        { id: "freedom_of_association_risks", label: "Operations And Suppliers In Which The Right To Freedom Of Association And Collective Bargaining May Be At Risk" }
+        { id: "freedom_of_association_risks", label: "Operations And Suppliers In Which The Right To Freedom Of Association And Collective Bargaining May Be At Risk" },
       ]
     },
     {
       groupId: "violations_discrimination",
       title: "Incidents Of Violation/Discrimination",
       children: [
-        { id: "violations_material_topic_management", label: "Management Of Material Topic" }
-      ]
+        !isWithReference && { id: "violations_material_topic_management", label: "Management Of Material Topic" },
+      ].filter(Boolean),
     }
   ];
+  
   
   
   
@@ -244,23 +248,25 @@ const People = forwardRef(({
   const subsectionMapping = {
     // Employees
     employees: {
-      component: ({section13_1Ref, sectionNumber = "13.1", sectionTitle = "Employees", sectionOrder = 13})=>{
-       return (
-        <div id="section13_1" ref={section13_1Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          {sectionNumber} {sectionTitle}
-        </h3>
-      </div>
-       )
+      component: ({ section13_1Ref, sectionNumber = "13.1", sectionTitle = "Employees", sectionOrder = 13 }) => {
+        return (
+          <div id="section13_1" ref={section13_1Ref}>
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionNumber} {sectionTitle}
+            </h3>
+          </div>
+        );
       },
       title: "Employees",
       subSections: [],
     },
-    employees_material_topic_management: {
-      component: Section2,
-      title: "Management Of Material Topics",
-      subSections: [],
-    },
+    ...(!isWithReference && {
+      employees_material_topic_management: {
+        component: Section2,
+        title: "Management Of Material Topics",
+        subSections: [],
+      }
+    }),
     employee_hiring_turnover: {
       component: Section3,
       title: "Employee Hire, Turnover",
@@ -289,38 +295,28 @@ const People = forwardRef(({
   
     // Labour Management
     labour_management: {
-      component: ({section13_2Ref,data, sectionNumber = "13.2", sectionTitle = "Labour Management", sectionOrder = 13})=>{
-       return(
-        <div id="section13_2" ref={section13_2Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          {sectionNumber} {sectionTitle}
-        </h3>
-
-        {/* <p className="text-[15px]  mb-2 font-semibold">
-          Measures taken by the organization
-        </p> */}
-        <p className="text-sm mb-4">
-          {data["409-1b"]
-            ? data["409-1b"].data
-              ? data["409-1b"].data.length > 0
-                ? data["409-1b"].data[0].Q1
-                  ? data["409-1b"].data[0].Q1
-                  : "No data available"
-                : "No data available"
-              : "No data available"
-            : "No data available"}
-        </p>
-      </div>
-       )
+      component: ({ section13_2Ref, data, sectionNumber = "13.2", sectionTitle = "Labour Management", sectionOrder = 13 }) => {
+        return (
+          <div id="section13_2" ref={section13_2Ref}>
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionNumber} {sectionTitle}
+            </h3>
+            <p className="text-sm mb-4">
+              {data?.["409-1b"]?.data?.[0]?.Q1 || "No data available"}
+            </p>
+          </div>
+        );
       },
       title: "Labour Management",
       subSections: [],
     },
-    labour_material_topic_management: {
-      component: Section8,
-      title: "Management Of Material Topics",
-      subSections: [],
-    },
+    ...(!isWithReference && {
+      labour_material_topic_management: {
+        component: Section8,
+        title: "Management Of Material Topics",
+        subSections: [],
+      }
+    }),
     non_employee_workers: {
       component: Section9,
       title: "Workers Who Are Not Employees",
@@ -338,46 +334,41 @@ const People = forwardRef(({
       title: "Incidents Of Child Labour",
       subSections: [],
     },
-    child_labour_material_topic_management: {
-      component: Section12,
-      title: "Management Of Material Topic",
-      subSections: [],
-    },
+    ...(!isWithReference && {
+      child_labour_material_topic_management: {
+        component: Section12,
+        title: "Management Of Material Topic",
+        subSections: [],
+      }
+    }),
   
     // Diversity & Inclusion
     diversity_inclusion: {
-      component: ({section13_4Ref,data, sectionNumber = "13.4", sectionTitle = "Diversity, Inclusion", sectionOrder = 13})=>{
-        return(
+      component: ({ section13_4Ref, data, sectionNumber = "13.4", sectionTitle = "Diversity, Inclusion", sectionOrder = 13 }) => {
+        return (
           <div id="section13_4" ref={section13_4Ref}>
-          <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-           {sectionNumber} {sectionTitle}
-          </h3>
-  
-          <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-            Significant Locations of Operation
-          </p>
-          <p className="text-sm mb-4">
-            {data["405-2b-significant_locations"]
-              ? data["405-2b-significant_locations"].data
-                ? data["405-2b-significant_locations"].data.length > 0
-                  ? data["405-2b-significant_locations"].data[0].Q1
-                    ? data["405-2b-significant_locations"].data[0].Q1
-                    : "No data available"
-                  : "No data available"
-                : "No data available"
-              : "No data available"}
-          </p>
-        </div>
-        )
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionNumber} {sectionTitle}
+            </h3>
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+              Significant Locations of Operation
+            </p>
+            <p className="text-sm mb-4">
+              {data?.["405-2b-significant_locations"]?.data?.[0]?.Q1 || "No data available"}
+            </p>
+          </div>
+        );
       },
       title: "Diversity, Inclusion",
       subSections: [],
     },
-    diversity_material_topic_management: {
-      component: Section13,
-      title: "Management Of Material Topics",
-      subSections: [],
-    },
+    ...(!isWithReference && {
+      diversity_material_topic_management: {
+        component: Section13,
+        title: "Management Of Material Topics",
+        subSections: [],
+      }
+    }),
     diversity_governance_employees: {
       component: Section14,
       title: "Diversity Of Governance Bodies And Employees",
@@ -391,23 +382,25 @@ const People = forwardRef(({
   
     // Training & Education
     training_education: {
-      component: ({section13_5Ref,data, sectionNumber = "13.5", sectionTitle = "Training & Education", sectionOrder = 13})=>{
-        return(
+      component: ({ section13_5Ref, data, sectionNumber = "13.5", sectionTitle = "Training & Education", sectionOrder = 13 }) => {
+        return (
           <div id="section13_5" ref={section13_5Ref}>
-          <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-           {sectionNumber} {sectionTitle}
-          </h3>
-        </div>
-        )
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionNumber} {sectionTitle}
+            </h3>
+          </div>
+        );
       },
       title: "Training & Education",
       subSections: [],
     },
-    training_material_topic_management: {
-      component: Section16,
-      title: "Management Of Material Topics",
-      subSections: [],
-    },
+    ...(!isWithReference && {
+      training_material_topic_management: {
+        component: Section16,
+        title: "Management Of Material Topics",
+        subSections: [],
+      }
+    }),
     training_programs_upgrading_skills: {
       component: Section17,
       title: "Programs For Upgrading Employee Skills And Transition Assistance Programs",
@@ -416,23 +409,25 @@ const People = forwardRef(({
   
     // Occupational Health & Safety
     occupational_health_safety: {
-      component: ({section13_6Ref,data, sectionNumber = "13.6", sectionTitle = "Occupational Health and Safety", sectionOrder = 13})=>{
+      component: ({ section13_6Ref, data, sectionNumber = "13.6", sectionTitle = "Occupational Health and Safety", sectionOrder = 13 }) => {
         return (
           <div id="section13_6" ref={section13_6Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          {sectionNumber} {sectionTitle}
-        </h3>
-      </div>
-        )
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionNumber} {sectionTitle}
+            </h3>
+          </div>
+        );
       },
       title: "Occupational Health And Safety",
       subSections: [],
     },
-    ohs_material_topic_management: {
-      component: Section18,
-      title: "Management Of Material Topic",
-      subSections: [],
-    },
+    ...(!isWithReference && {
+      ohs_material_topic_management: {
+        component: Section18,
+        title: "Management Of Material Topic",
+        subSections: [],
+      }
+    }),
     ohs_management_system: {
       component: Section19,
       title: "OHS Management System",
@@ -497,15 +492,18 @@ const People = forwardRef(({
       title: "Incidents Of Violation/Discrimination",
       subSections: [],
     },
-    violations_material_topic_management: {
-      component: Section32,
-      title: "Management Of Material Topic",
-      subSections: [],
-    }
+    ...(!isWithReference && {
+      violations_material_topic_management: {
+        component: Section32,
+        title: "Management Of Material Topic",
+        subSections: [],
+      }
+    }),
   };
   
   
   
+  //console.log(subsections,"subsections")
   const getSubsectionsToShow = () => {
     if (reportType === "Custom ESG Report") {
       const userSelected = Array.isArray(subsections) ? subsections : [];
@@ -554,7 +552,7 @@ const People = forwardRef(({
       // Return sorted list based on fixed order
       return defaultOrder.filter((id) => userSelected.includes(id));
     } else {
-      [
+     return [
         "employees",
         "employees_material_topic_management",
         "employee_hiring_turnover",
@@ -598,17 +596,17 @@ const People = forwardRef(({
 
   // Filter and organize selected subsections
   const getSelectedSubsections = () => {
-    console.log("Processing subsections:", subsectionsToShow);
+    //console.log("Processing subsections:", subsectionsToShow);
 
     if (!subsectionsToShow || subsectionsToShow.length === 0) {
-      console.log("No subsections found");
+      //console.log("No subsections found");
       return [];
     }
 
     const result = subsectionsToShow
       .filter((subId) => {
         const exists = subsectionMapping[subId];
-        console.log(`Subsection ${subId} exists in mapping:`, !!exists);
+        //console.log(`Subsection ${subId} exists in mapping:`, !!exists);
         return exists;
       })
       .map((subId, index) => {
@@ -618,14 +616,16 @@ const People = forwardRef(({
           order: index + 1,
           sectionNumber: `${sectionOrder}.${index + 1}`,
         };
-        console.log(`Mapped subsection:`, mapped);
+        //console.log(`Mapped subsection:`, mapped);
         return mapped;
       });
 
-    console.log("Final selected subsections:", result);
+    //console.log("Final selected subsections:", result);
     return result;
   };
   const selectedSubsections = getSelectedSubsections();
+
+  //console.log(selectedSubsections,"selectedSubsections")
 
   const getDynamicSectionMap = () => {
     let groupIndex = 1;
@@ -678,6 +678,7 @@ const People = forwardRef(({
   };
 
   const numberedSubsections = getDynamicSectionMap();
+  //console.log(numberedSubsections,"see the sections of screen 13")
 
   // Set initial active section
   useEffect(() => {
@@ -1229,7 +1230,7 @@ if (subsectionsToShow.includes("violations_discrimination")) {
               
                         {/* Page sidebar - only show if there are subsections */}
                         {selectedSubsections.length > 0 && (
-                          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
+                          <div className={`p-4 border border-r-2 border-b-2 shadow-lg rounded-lg ${selectedSubsections.length < 13 ? 'h-[500px]' : 'h-fit'} top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block`}>
                             <p className="text-[11px] text-[#727272] mb-2 uppercase">
                               {sectionOrder}. People
                             </p>

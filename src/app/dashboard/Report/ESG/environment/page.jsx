@@ -178,80 +178,83 @@ const Environment = forwardRef(( {
   const base_year = useSelector((state) => state.screen12Slice.base_year);
   const dispatch = useDispatch();
 
-      const groupedSubsections = [
-        {
-          groupId: "emissions",
-          title: "Emissions",
-          children: [
-            { id: "emissions_material_topic_management", label: "Management Of Material Topics" },
-            { id: "scope_1_ghg_emissions", label: "Scope 1 GHG Emissions" },
-            { id: "scope_2_ghg_emissions", label: "Scope 2 GHG Emissions" },
-            { id: "scope_3_ghg_emissions", label: "Scope 3 GHG Emissions" },
-            { id: "base_year", label: "Base Year" },
-            { id: "consolidation_approach", label: "Consolidation Approach" },
-            { id: "ghg_emission_intensity", label: "GHG Emission Intensity" },
-            { id: "reduction_in_ghg_emissions", label: "Reduction In GHG Emissions" },
-            { id: "ozone_depleting_substances", label: "Ozone Depleting Substances" }
-          ]
-        },
-        {
-          groupId: "materials",
-          title: "Materials",
-          children: [
-            { id: "materials_material_topic_management", label: "Management Of Material Topics" },
-            { id: "recycled_input_materials", label: "Recycled Input Materials Used" },
-            { id: "reclaimed_products_packaging", label: "Reclaimed Products And Their Packaging Materials" }
-          ]
-        },
-        {
-          groupId: "water",
-          title: "Water",
-          children: [
-            { id: "water_material_topic_management", label: "Management Of Material Topic" },
-            { id: "water_withdrawal", label: "Water Withdrawal" },
-            { id: "water_discharge_impact", label: "Water Discharge & Management Of Associated Impact" },
-            { id: "water_consumption", label: "Water Consumption" }
-          ]
-        },
-        {
-          groupId: "energy",
-          title: "Energy",
-          children: [
-            { id: "energy_material_topic_management", label: "Management Of Material Topics" },
-            { id: "energy_consumption_within", label: "Energy Consumption Within The Organisation" },
-            { id: "energy_consumption_outside", label: "Energy Consumption Outside Of The Organisation" },
-            { id: "energy_intensity", label: "Energy Intensity" },
-            { id: "energy_reduction", label: "Reduction In Energy Consumption" }
-          ]
-        },
-        {
-          groupId: "waste",
-          title: "Waste",
-          children: [
-            { id: "waste_material_topic_management", label: "Management Of Material Topics" },
-            { id: "waste_generation_impacts", label: "Waste Generation And Impacts" },
-            { id: "waste_impact_management", label: "Management Of Waste Related Impacts" },
-            { id: "waste_disposed", label: "Waste Disposed" },
-            { id: "waste_diverted", label: "Waste Diverted From Disposal" },
-            { id: "significant_spills", label: "Significant Spills" }
-          ]
-        },
-        {
-          groupId: "biodiversity",
-          title: "Biodiversity",
-          children: [
-            { id: "biodiversity_material_topic_management", label: "Management Of Material Topic" },
-            { id: "habitat_protected_restored", label: "Habitat Protected And Restored" }
-          ]
-        },
-        {
-          groupId: "air_quality",
-          title: "Air Quality",
-          children: [
-            { id: "air_quality_material_topic_management", label: "Management Of Material Topics" }
-          ]
-        }
-      ];
+  const isWithReference = reportType === "GRI Report: With Reference to";
+
+  const groupedSubsections = [
+    {
+      groupId: "emissions",
+      title: "Emissions",
+      children: [
+        !isWithReference && { id: "emissions_material_topic_management", label: "Management Of Material Topics" },
+        { id: "scope_1_ghg_emissions", label: "Scope 1 GHG Emissions" },
+        { id: "scope_2_ghg_emissions", label: "Scope 2 GHG Emissions" },
+        { id: "scope_3_ghg_emissions", label: "Scope 3 GHG Emissions" },
+        { id: "base_year", label: "Base Year" },
+        { id: "consolidation_approach", label: "Consolidation Approach" },
+        { id: "ghg_emission_intensity", label: "GHG Emission Intensity" },
+        { id: "reduction_in_ghg_emissions", label: "Reduction In GHG Emissions" },
+        { id: "ozone_depleting_substances", label: "Ozone Depleting Substances" }
+      ].filter(Boolean),
+    },
+    {
+      groupId: "materials",
+      title: "Materials",
+      children: [
+        !isWithReference && { id: "materials_material_topic_management", label: "Management Of Material Topics" },
+        { id: "recycled_input_materials", label: "Recycled Input Materials Used" },
+        { id: "reclaimed_products_packaging", label: "Reclaimed Products And Their Packaging Materials" }
+      ].filter(Boolean),
+    },
+    {
+      groupId: "water",
+      title: "Water",
+      children: [
+        !isWithReference && { id: "water_material_topic_management", label: "Management Of Material Topic" },
+        { id: "water_withdrawal", label: "Water Withdrawal" },
+        { id: "water_discharge_impact", label: "Water Discharge & Management Of Associated Impact" },
+        { id: "water_consumption", label: "Water Consumption" }
+      ].filter(Boolean),
+    },
+    {
+      groupId: "energy",
+      title: "Energy",
+      children: [
+        !isWithReference && { id: "energy_material_topic_management", label: "Management Of Material Topics" },
+        { id: "energy_consumption_within", label: "Energy Consumption Within The Organisation" },
+        { id: "energy_consumption_outside", label: "Energy Consumption Outside Of The Organisation" },
+        { id: "energy_intensity", label: "Energy Intensity" },
+        { id: "energy_reduction", label: "Reduction In Energy Consumption" }
+      ].filter(Boolean),
+    },
+    {
+      groupId: "waste",
+      title: "Waste",
+      children: [
+        !isWithReference && { id: "waste_material_topic_management", label: "Management Of Material Topics" },
+        { id: "waste_generation_impacts", label: "Waste Generation And Impacts" },
+        { id: "waste_impact_management", label: "Management Of Waste Related Impacts" },
+        { id: "waste_disposed", label: "Waste Disposed" },
+        { id: "waste_diverted", label: "Waste Diverted From Disposal" },
+        { id: "significant_spills", label: "Significant Spills" }
+      ].filter(Boolean),
+    },
+    {
+      groupId: "biodiversity",
+      title: "Biodiversity",
+      children: [
+        !isWithReference && { id: "biodiversity_material_topic_management", label: "Management Of Material Topic" },
+        { id: "habitat_protected_restored", label: "Habitat Protected And Restored" }
+      ].filter(Boolean),
+    },
+    {
+      groupId: "air_quality",
+      title: "Air Quality",
+      children: [
+        !isWithReference && { id: "air_quality_material_topic_management", label: "Management Of Material Topics" }
+      ].filter(Boolean),
+    }
+  ];
+  
       
       
   
@@ -262,11 +265,13 @@ const Environment = forwardRef(( {
           title: "Emissions",
           subSections: [],
         },
-        emissions_material_topic_management: {
-          component: Section3,
-          title: "Management Of Material Topics",
-          subSections: [],
-        },
+        ...(!isWithReference && {
+          emissions_material_topic_management: {
+            component: Section3,
+            title: "Management Of Material Topics",
+            subSections: [],
+          }
+        }),
         scope_1_ghg_emissions: {
           component: Section4,
           title: "Scope 1 GHG Emissions",
@@ -314,11 +319,13 @@ const Environment = forwardRef(( {
           title: "Materials",
           subSections: [],
         },
-        materials_material_topic_management: {
-          component: Section11,
-          title: "Management Of Material Topics",
-          subSections: [],
-        },
+        ...(!isWithReference && {
+          materials_material_topic_management: {
+            component: Section11,
+            title: "Management Of Material Topics",
+            subSections: [],
+          }
+        }),
         recycled_input_materials: {
           component: Section12,
           title: "Recycled Input Materials Used",
@@ -332,15 +339,17 @@ const Environment = forwardRef(( {
       
         // Water
         water: {
-          component:Section14,
+          component: Section14,
           title: "Water",
           subSections: [],
         },
-        water_material_topic_management: {
-          component: Section15,
-          title: "Management Of Material Topic",
-          subSections: [],
-        },
+        ...(!isWithReference && {
+          water_material_topic_management: {
+            component: Section15,
+            title: "Management Of Material Topic",
+            subSections: [],
+          }
+        }),
         water_withdrawal: {
           component: Section16,
           title: "Water Withdrawal",
@@ -371,11 +380,13 @@ const Environment = forwardRef(( {
           title: "Energy",
           subSections: [],
         },
-        energy_material_topic_management: {
-          component: Section19,
-          title: "Management Of Material Topics",
-          subSections: [],
-        },
+        ...(!isWithReference && {
+          energy_material_topic_management: {
+            component: Section19,
+            title: "Management Of Material Topics",
+            subSections: [],
+          }
+        }),
         energy_consumption_within: {
           component: Section20,
           title: "Energy Consumption Within The Organisation",
@@ -411,11 +422,13 @@ const Environment = forwardRef(( {
           title: "Waste",
           subSections: [],
         },
-        waste_material_topic_management: {
-          component: Section24,
-          title: "Management Of Material Topics",
-          subSections: [],
-        },
+        ...(!isWithReference && {
+          waste_material_topic_management: {
+            component: Section24,
+            title: "Management Of Material Topics",
+            subSections: [],
+          }
+        }),
         waste_generation_impacts: {
           component: Section25,
           title: "Waste Generation And Impacts",
@@ -448,11 +461,13 @@ const Environment = forwardRef(( {
           title: "Biodiversity",
           subSections: [],
         },
-        biodiversity_material_topic_management: {
-          component: Section31,
-          title: "Management Of Material Topic",
-          subSections: [],
-        },
+        ...(!isWithReference && {
+          biodiversity_material_topic_management: {
+            component: Section31,
+            title: "Management Of Material Topic",
+            subSections: [],
+          }
+        }),
         habitat_protected_restored: {
           component: Section32,
           title: "Habitat Protected And Restored",
@@ -465,12 +480,15 @@ const Environment = forwardRef(( {
           title: "Air Quality",
           subSections: [],
         },
-        air_quality_material_topic_management: {
-          component: Section34,
-          title: "Management Of Material Topics",
-          subSections: [],
-        }
+        ...(!isWithReference && {
+          air_quality_material_topic_management: {
+            component: Section34,
+            title: "Management Of Material Topics",
+            subSections: [],
+          }
+        }),
       };
+      
       
       
       const getSubsectionsToShow = () => {
@@ -522,7 +540,7 @@ const Environment = forwardRef(( {
           // Return sorted list based on fixed order
           return defaultOrder.filter((id) => userSelected.includes(id));
         } else {
-          [
+          return [
             "emissions",
             "emissions_material_topic_management",
             "scope_1_ghg_emissions",
@@ -568,17 +586,17 @@ const Environment = forwardRef(( {
   
       // Filter and organize selected subsections
       const getSelectedSubsections = () => {
-        console.log("Processing subsections:", subsectionsToShow);
+        //console.log("Processing subsections:", subsectionsToShow);
   
         if (!subsectionsToShow || subsectionsToShow.length === 0) {
-          console.log("No subsections found");
+          //console.log("No subsections found");
           return [];
         }
   
         const result = subsectionsToShow
           .filter((subId) => {
             const exists = subsectionMapping[subId];
-            console.log(`Subsection ${subId} exists in mapping:`, !!exists);
+            //console.log(`Subsection ${subId} exists in mapping:`, !!exists);
             return exists;
           })
           .map((subId, index) => {
@@ -588,11 +606,11 @@ const Environment = forwardRef(( {
               order: index + 1,
               sectionNumber: `${sectionOrder}.${index + 1}`,
             };
-            console.log(`Mapped subsection:`, mapped);
+            //console.log(`Mapped subsection:`, mapped);
             return mapped;
           });
   
-        console.log("Final selected subsections:", result);
+        //console.log("Final selected subsections:", result);
         return result;
       };
       const selectedSubsections = getSelectedSubsections();
@@ -1545,7 +1563,7 @@ if (subsectionsToShow.includes("base_year")) {
 
           {/* Page sidebar - only show if there are subsections */}
           {selectedSubsections.length > 0 && (
-            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
+             <div className={`p-4 border border-r-2 border-b-2 shadow-lg rounded-lg ${selectedSubsections.length < 10 ? 'h-[500px]' : 'h-fit'} top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block`}>
               <p className="text-[11px] text-[#727272] mb-2 uppercase">
                 {sectionOrder}. Environment
               </p>

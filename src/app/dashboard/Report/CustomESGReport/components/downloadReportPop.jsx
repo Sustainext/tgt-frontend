@@ -285,10 +285,10 @@ const DownloadReportPopup = ({
                   Exit to Report Module
                 </button>
                 <button
-                  className="w-auto h-full py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2"
-                  onClick={() => {
-                    handleDownloadpdf(reportid, reportname, false);
-                  }}
+                  className="w-auto h-full py-2 opacity-30 cursor-not-allowed px-3 bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2"
+                //   onClick={() => {
+                //     handleDownloadpdf(reportid, reportname, false);
+                //   }}
                 >
                   {isDownloading ? (
                     <div className="mt-0.5">

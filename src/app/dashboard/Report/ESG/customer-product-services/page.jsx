@@ -77,93 +77,104 @@ const CustomerProductService = forwardRef(({
 
   const dispatch = useDispatch();
 
-  const groupedSubsections = [
-    {
-      groupId: "products_services",
-      title: "Products and Services",
-      children: [
-        {
-          id: 'products_services_material_topic_management',
-        },
-        {
-          id: 'safety_impact',
-        },
-        {
-          id: 'non_compliance',
-        }
-      ],
-    },
-    {
-      groupId: "product_labeling",
-      title: "Product and Service Information & Labelling",
-      children: [
-        {
-          id: 'product_labeling_material_topic_management',
-        },
-        {
-          id: 'marketing',
-        }
-      ],
-    },
-    {
-      groupId: "customers",
-      title: "Customers",
-      children: [
-        {
-          id: 'customers_material_topic_management',
-        }
-      ],
-    }
-  ];
-  
-  
-  const subsectionMapping = {
-    products_services: {
-      component: Section1,
-      title: "Products and Services",
-      subSections: [],
-    },
+  const isWithReference = reportType === 'GRI Report: With Reference to';
+
+// Dynamically build groupedSubsections
+const groupedSubsections = [
+  {
+    groupId: "products_services",
+    title: "Products and Services",
+    children: [
+      !isWithReference && {
+        id: 'products_services_material_topic_management',
+      },
+      {
+        id: 'safety_impact',
+      },
+      {
+        id: 'non_compliance',
+      }
+    ].filter(Boolean), // remove false values
+  },
+  {
+    groupId: "product_labeling",
+    title: "Product and Service Information & Labelling",
+    children: [
+      !isWithReference && {
+        id: 'product_labeling_material_topic_management',
+      },
+      {
+        id: 'marketing',
+      }
+    ].filter(Boolean),
+  },
+  {
+    groupId: "customers",
+    title: "Customers",
+    children: [
+      !isWithReference && {
+        id: 'customers_material_topic_management',
+      }
+    ].filter(Boolean),
+  }
+];
+
+// Dynamically build subsectionMapping
+const subsectionMapping = {
+  products_services: {
+    component: Section1,
+    title: "Products and Services",
+    subSections: [],
+  },
+  ...(!isWithReference && {
     products_services_material_topic_management: {
       component: Section2,
       title: "Management of material topic",
       subSections: [],
     },
-    safety_impact: {
-      component: Section3,
-      title: "Health and safety impacts of product and service categories",
-      subSections: [],
-    },
-    non_compliance: {
-      component: Section4,
-      title: "Incidents of non-compliance",
-      subSections: [],
-    },
-    product_labeling: {
-      component: Section5,
-      title: "Product and Service Information & Labelling",
-      subSections: [],
-    },
+  }),
+  safety_impact: {
+    component: Section3,
+    title: "Health and safety impacts of product and service categories",
+    subSections: [],
+  },
+  non_compliance: {
+    component: Section4,
+    title: "Incidents of non-compliance",
+    subSections: [],
+  },
+  product_labeling: {
+    component: Section5,
+    title: "Product and Service Information & Labelling",
+    subSections: [],
+  },
+  ...(!isWithReference && {
     product_labeling_material_topic_management: {
       component: Section6,
       title: "Management of material topic",
       subSections: [],
     },
-    marketing: {
-      component: Section7,
-      title: "Marketing",
-      subSections: [],
-    },
-    customers: {
-      component: Section8,
-      title: "Customers",
-      subSections: [],
-    },
+  }),
+  marketing: {
+    component: Section7,
+    title: "Marketing",
+    subSections: [],
+  },
+  customers: {
+    component: Section8,
+    title: "Customers",
+    subSections: [],
+  },
+  ...(!isWithReference && {
     customers_material_topic_management: {
       component: Section9,
       title: "Management of material topic",
       subSections: [],
-    }
-  };
+    },
+  }),
+};
+
+
   
     const getSubsectionsToShow = () => {
       if (reportType === "Custom ESG Report") {
@@ -516,6 +527,7 @@ const CustomerProductService = forwardRef(({
       const SectionComponent = subsectionMapping[section.id]?.component;
       const ref = sectionRefs.current[section.id] || createRef();
       sectionRefs.current[section.id] = ref;
+      console.log(section.sectionNumber,"See the sections")
   
       const commonProps = {
         orgName,
@@ -723,7 +735,7 @@ const CustomerProductService = forwardRef(({
                 </div>
               )} */}
             {numberedSubsections.map((section) => renderSection(section))}
-           {reportType!=='GRI Report: With Reference to	' && (
+           {reportType!=='GRI Report: With Reference to' && (
              <Section10
              orgName={orgName}
              data={data}

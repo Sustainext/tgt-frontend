@@ -87,7 +87,7 @@ useEffect(() => {
   );
 
   const dispatch = useDispatch();
-
+  const isWithReference = reportType === "GRI Report: With Reference to";
   const groupedSubsections = [
     {
       groupId: "board_of_directors",
@@ -103,8 +103,8 @@ useEffect(() => {
         { id: "nomination_selection" },
         { id: "chair_highest_governance_body" },
         { id: "senior_management_local" },
-        { id: "management_of_material_topic" },
-      ],
+        !isWithReference &&{ id: "management_of_material_topic" },
+      ].filter(Boolean),
     },
     {
       groupId: "board_responsibility_evaluation_remuneration",
@@ -200,11 +200,11 @@ useEffect(() => {
       title: "Senior management hired from local community",
       subSections: [],
     },
-    management_of_material_topic: {
+    ...(!isWithReference && { management_of_material_topic: {
       component: Section6,
       title: "Management of material topic",
       subSections: [],
-    },
+    }}),
     board_responsibility_evaluation_remuneration:{
       component: ({section9_3Ref,data, sectionNumber = "9.3", sectionTitle = "Responsibility, Evaluation, and Remuneration of the Board", sectionOrder = 9})=>{
         return (
@@ -827,7 +827,7 @@ return (
   
             {/* Page sidebar - only show if there are subsections */}
             {selectedSubsections.length > 0 && (
-              <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
+              <div className={`p-4 border border-r-2 border-b-2 shadow-lg rounded-lg ${selectedSubsections.length < 5 ? 'h-[500px]' : 'h-fit'} top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block`}>
                 <p className="text-[11px] text-[#727272] mb-2 uppercase">
                   {sectionOrder}. Corporate Governance 
                 </p>

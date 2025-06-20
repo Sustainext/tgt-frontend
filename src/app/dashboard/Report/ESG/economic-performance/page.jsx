@@ -93,12 +93,14 @@ const EconomicPerformance = forwardRef(
     const [loopen, setLoOpen] = useState(false);
     const dispatch = useDispatch();
 
+    const isWithReference = reportType === "GRI Report: With Reference to";
+
     const groupedSubsections = [
       {
         groupId: "economic_highlights",
         title: "Highlights",
         children: [
-          {
+          !isWithReference && {
             id: "highlights_material_topic_management",
             label: "Management Of Material Topics",
           },
@@ -110,13 +112,13 @@ const EconomicPerformance = forwardRef(
             id: "financial_assistance_government",
             label: "Financial Assistance Received From Government",
           },
-        ],
+        ].filter(Boolean),
       },
       {
         groupId: "infrastructure_investment",
         title: "Infrastructure Investment And Services Supported",
         children: [
-          {
+          !isWithReference && {
             id: "infrastructure_material_topic_management",
             label: "Management Of Material Topics",
           },
@@ -124,13 +126,13 @@ const EconomicPerformance = forwardRef(
             id: "indirect_economic_impacts",
             label: "Indirect Economic Impacts",
           },
-        ],
+        ].filter(Boolean),
       },
       {
         groupId: "climate_financials",
         title: "Climate-Related Financial Implications, Risks And Opportunities",
         children: [
-          {
+          !isWithReference && {
             id: "climate_material_topic_management",
             label: "Management Of Material Topics",
           },
@@ -148,13 +150,13 @@ const EconomicPerformance = forwardRef(
               },
             ],
           },
-        ],
+        ].filter(Boolean),
       },
       {
         groupId: "tax",
         title: "Tax",
         children: [
-          {
+          !isWithReference && {
             id: "tax_material_topic_management",
             label: "Management Of Material Topic",
           },
@@ -170,13 +172,13 @@ const EconomicPerformance = forwardRef(
             id: "tax_stakeholder_engagement",
             label: "Stakeholder Engagement And Management Of Concerns Related To Tax",
           },
-        ],
+        ].filter(Boolean),
       },
       {
         groupId: "anti_corruption",
         title: "Anti-Corruption",
         children: [
-          {
+          !isWithReference && {
             id: "anti_corruption_material_topic_management",
             label: "Management Of Material Topic",
           },
@@ -192,19 +194,20 @@ const EconomicPerformance = forwardRef(
             id: "training_anti_corruption",
             label: "Training On Anti-Corruption",
           },
-        ],
+        ].filter(Boolean),
       },
       {
         groupId: "political_contribution",
         title: "Political Contribution",
         children: [
-          {
+          !isWithReference && {
             id: "political_contribution_material_topic_management",
             label: "Management Of Material Topic",
           },
-        ],
+        ].filter(Boolean),
       },
     ];
+    
     
 
     const subsectionMapping = {
@@ -224,11 +227,13 @@ const EconomicPerformance = forwardRef(
         title: "Highlights",
         subSections: [],
       },
-      highlights_material_topic_management: {
-        component: Section2,
-        title: "Management Of Material Topics",
-        subSections: [],
-      },
+      ...(!isWithReference && {
+        highlights_material_topic_management: {
+          component: Section2,
+          title: "Management Of Material Topics",
+          subSections: [],
+        }
+      }),
       economic_value_creation: {
         component: Section3,
         title: "Economic Value Creation",
@@ -246,11 +251,11 @@ const EconomicPerformance = forwardRef(
         title: "Infrastructure Investment And Services Supported",
         subSections: [],
       },
-      infrastructure_material_topic_management: {
+      ...(!isWithReference && { infrastructure_material_topic_management: {
         component: Section6,
         title: "Management Of Material Topics",
         subSections: [],
-      },
+      }}),
       indirect_economic_impacts: {
         component: Section7,
         title: "Indirect Economic Impacts",
@@ -273,11 +278,11 @@ const EconomicPerformance = forwardRef(
         title: "Climate-Related Financial Implications, Risks And Opportunities",
         subSections: [],
       },
-      climate_material_topic_management: {
+      ...(!isWithReference && { climate_material_topic_management: {
         component: Section8,
         title: "Management Of Material Topics",
         subSections: [],
-      },
+      }}),
       climate_financial_implications: {
         component: Section9,
         title: "Climate-Related Financial Implications",
@@ -310,11 +315,11 @@ const EconomicPerformance = forwardRef(
         title: "Tax",
         subSections: [],
       },
-      tax_material_topic_management: {
+      ...(!isWithReference && { tax_material_topic_management: {
         component: Section12,
         title: "Management Of Material Topic",
         subSections: [],
-      },
+      }}),
       approach_to_tax: {
         component: Section13,
         title: "Approach To Tax",
@@ -347,11 +352,11 @@ const EconomicPerformance = forwardRef(
         title: "Anti-Corruption",
         subSections: [],
       },
-      anti_corruption_material_topic_management: {
+      ...(!isWithReference && { anti_corruption_material_topic_management: {
         component: Section16,
         title: "Management Of Material Topic",
         subSections: [],
-      },
+      }}),
       risk_assessment_anti_corruption: {
         component: Section17,
         title: "Operations Assessed For Risks Related To Anti-Corruption",
@@ -374,11 +379,11 @@ const EconomicPerformance = forwardRef(
         title: "Political Contribution",
         subSections: [],
       },
-      political_contribution_material_topic_management: {
+      ...(!isWithReference && { political_contribution_material_topic_management: {
         component: Section21,
         title: "Management Of Material Topic",
         subSections: [],
-      },
+      }}),
     };
     
     const getSubsectionsToShow = () => {
@@ -835,7 +840,7 @@ const EconomicPerformance = forwardRef(
 
           {/* Page sidebar - only show if there are subsections */}
           {selectedSubsections.length > 0 && (
-            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
+             <div className={`p-4 border border-r-2 border-b-2 shadow-lg rounded-lg ${selectedSubsections.length < 5 ? 'h-[500px]' : 'h-fit'} top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block`}>
               <p className="text-[11px] text-[#727272] mb-2 uppercase">
                 {sectionOrder}. Economic Performance 
               </p>

@@ -73,6 +73,7 @@ useEffect(() => {
 
   const dispatch = useDispatch();
 
+  const isWithReference = reportType === "GRI Report: With Reference to";
 
   const groupedSubsections = [
     
@@ -88,7 +89,7 @@ useEffect(() => {
       groupId: "supply_chain_sustainability",
       title: "Supply Chain Sustainability",
       children: [ 
-        {
+        !isWithReference &&{
           id: 'supply_chain_material_topic_management',
           label: 'Management of material topic',
         },
@@ -100,7 +101,7 @@ useEffect(() => {
           id: 'negative_impacts_in_supply_chain',
           label: 'Negative environmental & social impacts in the supply chain',
         }  
-      ],
+      ].filter(Boolean),
     }
   ];
 
@@ -121,11 +122,11 @@ useEffect(() => {
       title: "Supply Chain Sustainability",
       subSections: [],
     },
-    supply_chain_material_topic_management: {
+    ...(!isWithReference && {supply_chain_material_topic_management: {
       component: Section5,
       title: "Management of material topic",
       subSections: [],
-    },
+    }}),
     local_suppliers: {
       component: Section6,
       title: "Local Suppliers",

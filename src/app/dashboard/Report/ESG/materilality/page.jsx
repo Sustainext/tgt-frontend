@@ -44,7 +44,6 @@ useEffect(() => {
   setOrgname(localStorage.getItem("reportorgname") || "");
 }, []);
 
-    const [initialData, setInitialData] = useState({});
   const apiCalledRef = useRef(false);
   const [loopen, setLoOpen] = useState(false);
   const [initialData, setInitialData] = useState({});

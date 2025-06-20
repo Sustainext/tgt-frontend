@@ -84,6 +84,7 @@ const ESGReport = () => {
    const [corpName, setCorpName] = useState("");
    const [missing_fields, setMissingFields] = useState([]);
    const [isDownloadReportModalOpen,setIsDownloadReportModalOpen]=useState(false)
+    const [reportingPeriod,setReportingPeriod]=useState('')
 
 
    
@@ -295,7 +296,7 @@ const ESGReport = () => {
     economic: useRef(),
     people: useRef(),
     customers: useRef(),
-   reference_management:useRef()
+    reference_management_of_material_topic:useRef()
   };
 
   // State to track if initialization has been done
@@ -358,6 +359,7 @@ const ESGReport = () => {
       setReportid(localStorage.getItem('reportid') || '');
       setReportType(localStorage.getItem('reportType') || '');
       setReportName(localStorage.getItem('reportname') || '');
+      setReportingPeriod(localStorage.getItem('reportstartdate') +" to "+ localStorage.getItem('reportenddate'))
     }
   }, []);
 
@@ -375,6 +377,7 @@ const ESGReport = () => {
       }
     } catch (error) {
       console.error("API call failed:", error);
+      toast.error('Opps! Something went wrong')
     }
   };
   const hasChanges = (initial = {}, current = {}) => {
@@ -400,7 +403,6 @@ const ESGReport = () => {
  
   const handleNextStep = async (type) => {
     const currentRef = sectionRefs[currentSection?.id]?.current;
-
     const submitAndProceed = async () => {
       if (currentRef) {
         const isSubmitted = await currentRef.submitForm(type);
@@ -441,13 +443,7 @@ const ESGReport = () => {
        
       // }
     } 
-    else if(type === "back") {
-      const isSubmitted = await submitAndProceed();
-      loadMissingFields();
-      // if (isSubmitted) {
-        
-      // }
-    } else if(type === "back") {
+   else if(type === "back") {
       const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
         showDraftSavedToast();
@@ -522,7 +518,7 @@ const ESGReport = () => {
       case 'customers':
         return <CustomerProductService ref={sectionRefs.customers} {...commonProps} />;  
       case 'reference_management_of_material_topic':
-        return <ReferenceMaterialTopic ref={sectionRefs.reference_management} {...commonProps}/>  
+        return <ReferenceMaterialTopic ref={sectionRefs.reference_management_of_material_topic} {...commonProps}/>  
       default:
         return null;
     }
@@ -619,11 +615,24 @@ const ESGReport = () => {
                                 <p className="gradient-text text-[22px] font-bold pt-3">
                                   {reportName?reportName:''}
                                 </p>
-                                <p className="mt-2 text-[#667085] text-[13px]">
+                                {/* <p className="mt-2 text-[#667085] text-[13px]">
                                   Organization{corpName ? " / Corporate" : ""}:{" "}
                                   {orgName} {corpName ? " / " : ""}
                                   {corpName}{" "}
-                                </p>
+                                </p> */}
+                                 <div className='w-full flex gap-3'>
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Organization: {orgName}
+                            </p>
+                            {
+                              corpName &&  <p className="mt-2 text-[#667085] text-[13px]">
+                              Corporate: {corpName}
+                            </p>
+                            }
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Reporting Year: {reportingPeriod}
+                            </p>
+                            </div>
                               </div>
                             </div>
                           </div>
@@ -633,11 +642,24 @@ const ESGReport = () => {
                             <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
                             {reportName?reportName:''}
                             </p>
-                            <p className="mt-2 text-[#667085] text-[13px] ml-3">
+                            {/* <p className="mt-2 text-[#667085] text-[13px] ml-3">
                               Organization{corpName ? " / Corporate" : ""}:{" "}
                               {orgName} {corpName ? " / " : ""}
                               {corpName}{" "}
+                            </p> */}
+                             <div className='w-full flex gap-3 ml-3'>
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Organization: {orgName}
                             </p>
+                            {
+                              corpName &&  <p className="mt-2 text-[#667085] text-[13px]">
+                              Corporate: {corpName}
+                            </p>
+                            }
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Reporting Year: {reportingPeriod}
+                            </p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -842,11 +864,24 @@ const ESGReport = () => {
                               <p className="gradient-text text-[22px] font-bold pt-3">
                                 {reportName?reportName:''}
                               </p>
-                              <p className="mt-2 text-[#667085] text-[13px]">
+                              {/* <p className="mt-2 text-[#667085] text-[13px]">
                                 Organization{corpName ? " / Corporate" : ""}:{" "}
                                 {orgName} {corpName ? " / " : ""}
                                 {corpName}{" "}
-                              </p>
+                              </p> */}
+                               <div className='w-full flex gap-3'>
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Organization: {orgName}
+                            </p>
+                            {
+                              corpName &&  <p className="mt-2 text-[#667085] text-[13px]">
+                              Corporate: {corpName}
+                            </p>
+                            }
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Reporting Year: {reportingPeriod}
+                            </p>
+                            </div>
                             </div>
                           </div>
                         </div>
@@ -856,11 +891,24 @@ const ESGReport = () => {
                           <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
                           {reportName?reportName:''}
                           </p>
-                          <p className="mt-2 text-[#667085] text-[13px] ml-3">
+                          {/* <p className="mt-2 text-[#667085] text-[13px] ml-3">
                             Organization{corpName ? " / Corporate" : ""}:{" "}
                             {orgName} {corpName ? " / " : ""}
                             {corpName}{" "}
-                          </p>
+                          </p> */}
+                           <div className='w-full flex gap-3 ml-3'>
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Organization: {orgName}
+                            </p>
+                            {
+                              corpName &&  <p className="mt-2 text-[#667085] text-[13px]">
+                              Corporate: {corpName}
+                            </p>
+                            }
+                            <p className="mt-2 text-[#667085] text-[13px]">
+                              Reporting Year: {reportingPeriod}
+                            </p>
+                            </div>
                         </div>
                       </div>
                     </div>

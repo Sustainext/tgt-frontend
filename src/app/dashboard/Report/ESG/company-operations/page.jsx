@@ -305,7 +305,7 @@ useEffect(() => {
       // Only submit data for selected subsections
       const data = {};
 
-      if (subsectionsToShow.includes("business_model")) {
+      // if (subsectionsToShow.includes("business_model")) {
         data.about_the_company = {
           page: "screen_two",
           label: `${sectionOrder}. About the company and operations`,
@@ -315,7 +315,7 @@ useEffect(() => {
           field: "about_the_company",
           isSkipped: false,
         };
-      }
+      // }
       
       if (subsectionsToShow.includes("value_chain")) {
         const sectionNumber = dynamicSectionNumberMap["value_chain"];
@@ -556,7 +556,7 @@ useEffect(() => {
 
                   const groupedSidebar = [
                     {
-                      groupId: "business_model_group",
+                      groupId: "business_model",
                       title: "Business Model and Impact",
                       children: [
                         {
@@ -577,57 +577,58 @@ useEffect(() => {
                     },
                   ];
 
-                  return groupedSidebar.map((item, i) => {
+                  return groupedSidebar.map((item) => {
                     if (item.children) {
-                      // Filter only selected children
+                      const isGroupSelected = selectedSubsections.some(
+                        (sec) => sec.id === item.groupId
+                      );
+                  
                       const visibleChildren = item.children.filter((child) =>
                         selectedSubsections.some((sec) => sec.id === child.id)
                       );
-
-                      if (visibleChildren.length === 0) return null;
-
+                  
+                      // Show group if parent OR any child is selected
+                      if (!isGroupSelected && visibleChildren.length === 0) return null;
+                  
                       const currentGroupIndex = groupIndex++;
                       let childIndex = 1;
-
+                  
                       return (
                         <div key={item.groupId} className="mb-2">
-                          <p 
-                          className={`text-[12px] mb-2 font-medium cursor-pointer  ${
-                            activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
-                          }`}
-                          onClick={() => scrollToSection(item.groupId)}
+                          {/* Show the parent title (group) */}
+                          <p
+                            className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                              activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                            }`}
+                            onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
                           >
                             {sectionOrder}.{currentGroupIndex} {item.title}
                           </p>
+                  
+                          {/* Render selected children */}
                           {visibleChildren.map((child) => {
-                            const childLabel = `${sectionOrder}.${currentGroupIndex}.${childIndex++} ${
-                              child.label
-                            }`;
+                            const labelText =
+                              child.label?.trim() !== "" ? child.label : item.title;
+                  
                             return (
                               <p
                                 key={child.id}
                                 className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                                  activeSection === child.id
-                                    ? "text-blue-400"
-                                    : ""
+                                  activeSection === child.id ? "text-blue-400" : ""
                                 }`}
                                 onClick={() => scrollToSection(child.id)}
                               >
-                                {childLabel}
+                                {sectionOrder}.{currentGroupIndex}.{childIndex++} {labelText}
                               </p>
                             );
                           })}
                         </div>
                       );
                     } else {
-                      if (
-                        !selectedSubsections.some((sec) => sec.id === item.id)
-                      )
-                        return null;
-
-                      const label = `${sectionOrder}.${groupIndex++} ${
-                        item.label
-                      }`;
+                      // Standalone item
+                      if (!selectedSubsections.some((sec) => sec.id === item.id)) return null;
+                  
+                      const label = `${sectionOrder}.${groupIndex++} ${item.label}`;
                       return (
                         <p
                           key={item.id}

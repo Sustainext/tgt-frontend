@@ -38,7 +38,6 @@ useEffect(() => {
 }, []);
 
   const apiCalledRef = useRef(false);
-  const [initialData, setInitialData] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const description = useSelector((state) => state.screen4Slice.description);
   const dispatch = useDispatch();

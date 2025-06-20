@@ -50,37 +50,42 @@ const Community = forwardRef(({
 
   const dispatch = useDispatch()
 
+  const isWithReference = reportType === 'GRI Report: With Reference to';
+
+  // Dynamically build groupedSubsections
   const groupedSubsections = [
     {
       groupId: "community_engagement",
       title: "Community Engagement",
-      children: [ 
-        { 
-        id: 'community_engagement_material_topic_management', 
-      },
-      { 
-        id: 'violation_rights_indigenous_people', 
-      }
-    ],
+      children: [
+        !isWithReference && {
+          id: 'community_engagement_material_topic_management',
+        },
+        {
+          id: 'violation_rights_indigenous_people',
+        }
+      ].filter(Boolean),
     },
     {
       id: 'csr',
       label: 'CSR',
     }
   ];
-
+  
+  // Dynamically build subsectionMapping
   const subsectionMapping = {
     community_engagement: {
       component: Section1,
       title: "Community Engagement",
       subSections: [],
     },
-    community_engagement_material_topic_management: {
-      component: Section2,
-      title: "Management of material topic",
-      // subTitle: "Restatement of information",
-      subSections: [],
-    },
+    ...(!isWithReference && {
+      community_engagement_material_topic_management: {
+        component: Section2,
+        title: "Management of material topic",
+        subSections: [],
+      }
+    }),
     violation_rights_indigenous_people: {
       component: Section3,
       title: "Incidents of Violation of Rights of Indigenous People",
@@ -90,8 +95,9 @@ const Community = forwardRef(({
       component: Section4,
       title: "CSR",
       subSections: [],
-    },
+    }
   };
+  
   const getSubsectionsToShow = () => {
     if (reportType === "Custom ESG Report") {
       const userSelected = Array.isArray(subsections) ? subsections : [];

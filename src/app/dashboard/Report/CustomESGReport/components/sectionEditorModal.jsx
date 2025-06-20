@@ -118,25 +118,58 @@ const currentDisplaySection = useSelector(selectCurrentDisplaySectionForReportTy
   // };
 
 
+  // const toggleSubsection = (sectionId, subsectionId) => {
+  //   const sectionSubs = subsections[sectionId] || [];
+  //   const subsection = sectionSubs.find(s => s.id === subsectionId);
+  //   const current = localSelectedSubsections[sectionId] || [];
+  
+  //   let updated = [];
+  //   if (current.includes(subsectionId)) {
+  //     // Uncheck - also remove children if any
+  //     updated = current.filter(id => id !== subsectionId && !subsection?.children?.some(child => child.id === id));
+  //   } else {
+  //     // Check - just add
+  //     updated = [...current, subsectionId];
+  //   }
+  
+  //   setLocalSelectedSubsections((prev) => ({
+  //     ...prev,
+  //     [sectionId]: updated,
+  //   }));
+  // };
+
   const toggleSubsection = (sectionId, subsectionId) => {
     const sectionSubs = subsections[sectionId] || [];
     const subsection = sectionSubs.find(s => s.id === subsectionId);
     const current = localSelectedSubsections[sectionId] || [];
   
-    let updated = [];
-    if (current.includes(subsectionId)) {
-      // Uncheck - also remove children if any
-      updated = current.filter(id => id !== subsectionId && !subsection?.children?.some(child => child.id === id));
+    let updated = [...current];
+  
+    const isCurrentlyChecked = current.includes(subsectionId);
+  
+    if (isCurrentlyChecked) {
+      // Uncheck parent and all its children
+      updated = updated.filter(id => id !== subsectionId);
+  
+      if (subsection?.children?.length) {
+        const childIds = subsection.children.map(child => child.id);
+        updated = updated.filter(id => !childIds.includes(id));
+      }
     } else {
-      // Check - just add
-      updated = [...current, subsectionId];
+      // Check parent and all its children
+      updated.push(subsectionId);
+      if (subsection?.children?.length) {
+        const childIds = subsection.children.map(child => child.id);
+        updated = Array.from(new Set([...updated, ...childIds])); // avoid duplicates
+      }
     }
   
-    setLocalSelectedSubsections((prev) => ({
+    setLocalSelectedSubsections(prev => ({
       ...prev,
       [sectionId]: updated,
     }));
   };
+  
   
   const toggleNestedSubsection = (sectionId, parentId, childId) => {
     toggleSubsection(sectionId, childId);
@@ -258,13 +291,13 @@ const currentDisplaySection = useSelector(selectCurrentDisplaySectionForReportTy
     const target = updated[targetIndex];
   
     // If moving between enabled/disabled
-    if (source.enabled !== target.enabled) {
-      updated[sourceIndex] = { ...source, enabled: target.enabled };
+    if (source?.enabled !== target?.enabled) {
+      updated[sourceIndex] = { ...source, enabled: target?.enabled };
     }
   
     // Reorder only within same list
-    const enabledList = updated.filter((s) => s.enabled);
-    const disabledList = updated.filter((s) => !s.enabled);
+    const enabledList = updated.filter((s) => s?.enabled);
+    const disabledList = updated.filter((s) => !s?.enabled);
   
     const reorder = (list, draggedId, targetId) => {
       const oldIndex = list.findIndex((s) => s.id === draggedId);
@@ -276,7 +309,7 @@ const currentDisplaySection = useSelector(selectCurrentDisplaySectionForReportTy
     };
   
     let newEnabledList = enabledList;
-    if (source.enabled && target.enabled) {
+    if (source.enabled && target?.enabled) {
       newEnabledList = reorder(enabledList, active.id, over.id);
     }
   
@@ -301,7 +334,16 @@ setLocalSelectedSubsections(cleanedSubsections);
     const enabledSections = localSections.filter(s => s.enabled);
     const errors = enabledSections.filter(s => !(localSelectedSubsections[s.id]?.length > 0)).map(s => s.title);
     if (errors.length > 0) {
-      alert(`Please select at least one subsection for:\n- ${errors.join("\n- ")}`);
+      toast.warn(`Please select at least one subsection for:\n ${errors.join("\n,")}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       return;
     }
   
@@ -349,13 +391,13 @@ setLocalSelectedSubsections(cleanedSubsections);
 
     return (
       <DraggableItem key={section.id} id={section.id}>
-        <div className="rounded p-3 mb-2 bg-white border-b border-gray-200 cursor-pointer" onClick={() => toggleDropdown(section.id)}>
-          <div className="flex justify-between items-center">
+        <div className="rounded p-3 mb-2 bg-white border-b border-gray-200">
+          <div className="flex justify-between items-center cursor-pointer"  onClick={() => toggleDropdown(section.id)}>
             <p className="text-[#344054] text-sm pl-4">
               {section.title}
             </p>
             {items.length > 0 && (
-              <button onClick={() => toggleDropdown(section.id)} className="text-gray-500">
+              <button  className="text-gray-500">
                 {expanded ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
               </button>
             )}

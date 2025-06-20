@@ -1,8 +1,9 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { useSelector } from "react-redux";
 
-const Section5 = ({ section10_3_1Ref, data,
+const Section5 = ({ section10_3_1Ref, data,reportType,
   sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'10.3.1':'',
   sectionTitle = 'Management of Material Topics',
   sectionOrder = 9,

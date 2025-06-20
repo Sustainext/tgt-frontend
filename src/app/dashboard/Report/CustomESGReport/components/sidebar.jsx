@@ -1,21 +1,16 @@
 'use client';
 
-import { useState,useMemo } from "react";
+import { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { MdOutlineEdit } from "react-icons/md";
+import { MdKeyboardArrowLeft, MdOutlineEdit } from 'react-icons/md';
 
-// Redux selectors and actions
+// Redux
 import {
   selectEnabledSections,
-  selectSubsections,
-  selectSelectedSubsections,
   selectCurrentReportPage,
   setSectionEditorOpen,
   selectIsSectionEditorOpen,
-  setCurrentReportPage,
-  selectSectionsToShow,
-  setCurrentReportPageForReportType,
+  setCurrentReportPage
 } from '../../../../../lib/redux/features/reportBuilderSlice';
 
 import SectionEditorModal from './sectionEditorModal';
@@ -24,93 +19,86 @@ const ESGSidebarContent = ({
   closeMobile,
   onEditClick,
   reportType,
-  allSections, // Pass all sections for non-custom reports
+  allSections,
   submitData
 }) => {
   const dispatch = useDispatch();
   const currentReportPage = useSelector(selectCurrentReportPage);
-  
-  // Use the new selector to get sections to show
-  const sectionsToShow = reportType !== 'Custom ESG Report' ? allSections : useSelector(selectEnabledSections);
+  const sectionsToShow = reportType !== 'Custom ESG Report'
+    ? allSections
+    : useSelector(selectEnabledSections);
   const showEditButton = reportType === 'Custom ESG Report';
 
   const filteredSections = useMemo(() => {
     if (reportType === 'GRI Report: In accordance With') {
       return sectionsToShow.filter(
-        (section) => section.id !== 'reference_management_of_material_topic'
+        section => section.id !== 'reference_management_of_material_topic'
       );
     }
     return sectionsToShow;
   }, [reportType, sectionsToShow]);
 
- 
-
-
   const handleSectionClick = (sectionIndex) => {
-    submitData('toggle')
+    submitData('toggle');
     dispatch(setCurrentReportPage(sectionIndex));
     if (closeMobile) closeMobile();
   };
 
   return (
-    <div className="font-medium">
-      {/* Header */}
+    <div className="font-medium w-full">
+      {/* Mobile Header */}
       <div className="xl:hidden lg:hidden">
-      {showEditButton && (
-        <div className="flex justify-between items-start">
-          <button
-            onClick={onEditClick}
-            className="text-[12px] flex gap-2 mx-2 text-[#556A7D] px-1 mb-3 pb-3 w-[80%] text-left py-1 border-b-2 border-gray-200"
-          >
-            Edit Report Template <MdOutlineEdit className="w-4 h-4"/>
-          </button>
-           <button onClick={closeMobile} className="text-gray-700">
-           <MdKeyboardArrowLeft className="h-6 w-6" />
-         </button>
-        </div>
-          
+        {showEditButton && (
+          <div className="flex justify-between items-start">
+            <button
+              onClick={onEditClick}
+              className="text-[12px] flex gap-2 mx-2 text-[#556A7D] px-1 mb-3 pb-3 w-[80%] text-left py-1 border-b-2 border-gray-200"
+            >
+              Edit Report Template <MdOutlineEdit className="w-4 h-4" />
+            </button>
+          </div>
         )}
-      <div className="flex items-center justify-between mb-4 px-2">
-        <span className="text-[16px] font-[600] text-[#727272] p-1">Report Module</span>
-       
+        <div className="flex items-center justify-between mb-4 px-2">
+          <span className="text-[16px] font-[600] text-[#727272] p-1">Report Module</span>
+          <button onClick={closeMobile} className="text-gray-700">
+              <MdKeyboardArrowLeft className="h-6 w-6" />
+            </button>
+        </div>
       </div>
-      </div>
-     
 
-      {/* Desktop Header with Edit */}
+      {/* Desktop Header */}
       <div className="hidden xl:block">
-      {showEditButton && (
+        {showEditButton && (
           <button
             onClick={onEditClick}
             className="text-[12px] flex gap-2 mx-5 text-[#556A7D] px-1 mb-1 pb-2 w-[80%] text-left py-1 border-b-2 border-gray-200"
           >
-            Edit Report Template <MdOutlineEdit className="w-4 h-4"/>
+            Edit Report Template <MdOutlineEdit className="w-4 h-4" />
           </button>
         )}
-      <div className="justify-between items-center px-4 py-2 text-[#727272] font-bold">
-        <span className="text-[16px] font-[600] p-1">Report Module</span>
-        
+        <div className="justify-between items-center px-4 py-2 text-[#727272] font-bold">
+          <span className="text-[16px] font-[600] p-1">Report Module</span>
+        </div>
       </div>
-      </div>
-     
 
       {/* Section List */}
-      <div className="mb-3">
+      <div className="flex flex-col w-full mb-3">
         {filteredSections.map((section, index) => {
           const isActive = currentReportPage === index;
-          
+
           return (
-            <p
-              key={section.id}
-              className={`text-[13px] text-[#727272] cursor-pointer my-1 transition-colors ${
-                isActive
-                  ? "bg-[#007eef0d] p-2 px-5 border-r-2 border-blue-500"
-                  : "bg-transparent p-2 px-5 hover:bg-gray-50"
-              }`}
-              onClick={() => handleSectionClick(index)}
-            >
-              {index + 1}. {section.title}
-            </p>
+            <div
+  key={section.id}
+  onClick={() => handleSectionClick(index)}
+  className={`cursor-pointer transition-colors my-1 w-full px-5 py-2 text-[13px] text-[#727272] break-words ${
+    isActive
+      ? 'bg-[#007eef0d] border-r-2 border-blue-500'
+      : 'hover:bg-gray-50'
+  }`}
+>
+  {index + 1}. {section.title?.trim()}
+</div>
+
           );
         })}
       </div>
@@ -121,8 +109,8 @@ const ESGSidebarContent = ({
 const ESGSidebar = ({
   setIsOpenMobile = () => {},
   isOpenMobile = false,
-  reportType = 'Custom ESG Report', // Add reportType prop
-  allSections = [], // Add allSections prop for non-custom reports
+  reportType = 'Custom ESG Report',
+  allSections = [],
   submitData
 }) => {
   const dispatch = useDispatch();
@@ -131,9 +119,9 @@ const ESGSidebar = ({
 
   const handleEditClick = () => {
     if (showEditModal) {
-      submitData('toggle')
+      submitData('toggle');
       dispatch(setSectionEditorOpen(true));
-      setIsOpenMobile(false)
+      setIsOpenMobile(false);
     }
   };
 
@@ -145,8 +133,8 @@ const ESGSidebar = ({
     <>
       {/* Desktop Sidebar */}
       <div className="m-3 ml-2 border border-r-2 border-b-2 shadow-lg rounded-lg hidden xl:block lg:block">
-        <div className="flex items-start py-4 min-h-screen rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
-        <ESGSidebarContent
+        <div className="flex items-start py-4 min-h-screen rounded-lg overflow-x-hidden text-[0.875rem] w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
+          <ESGSidebarContent
             onEditClick={handleEditClick}
             reportType={reportType}
             allSections={allSections}
@@ -166,7 +154,7 @@ const ESGSidebar = ({
       {/* Mobile Sidebar */}
       <div
         className={`fixed top-[7rem] left-0 h-full z-50 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
-          isOpenMobile ? "translate-x-0" : "-translate-x-full"
+          isOpenMobile ? 'translate-x-0' : '-translate-x-full'
         } w-72`}
       >
         <div className="p-4">
@@ -180,11 +168,9 @@ const ESGSidebar = ({
         </div>
       </div>
 
-      {/* Modal for editing section/subsection - only show for custom reports */}
+      {/* Modal */}
       {isSectionEditorOpen && showEditModal && (
-        <SectionEditorModal
-          onClose={handleCloseModal}
-        />
+        <SectionEditorModal onClose={handleCloseModal} />
       )}
     </>
   );

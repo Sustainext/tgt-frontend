@@ -50,6 +50,8 @@ const MainValidationPopup = ({
   const allSections = useSelector(selectSections);
   const isContentIndexSelected = useSelector((state)=> state.reportCreation.includeContentIndex)
 
+  console.log(isContentIndexSelected,"check")
+
   useEffect(() => {
     setFieldStatuses({});
     setFieldValues({});
@@ -446,17 +448,19 @@ const MainValidationPopup = ({
                         }`}
                         disabled={isAnyFieldFilled}
                         onClick={() => {
-                          if(isContentIndexSelected){
-                            dispatch(handleNext());
+                          if(!isContentIndexSelected && reportType==='Custom ESG Report'){
                           // if (reportType === 'GRI Report: In accordance With') {
                           //   setActiveStep(16);
                           // } else {
                           //   setActiveStep(17);
                           // }
-                         
+                          console.log("called if")
+                          setIsDownloadReportModalOpen(true)
                           }
                           else{
-                            setIsDownloadReportModalOpen(true)
+                            console.log("called leave")
+                            dispatch(handleNext());
+                           
                           }
                           setIsModalOpen(false);
                         }}
@@ -471,11 +475,11 @@ const MainValidationPopup = ({
                         }`}
                         disabled={!isAnyFieldFilled}
                         onClick={() => {
-                          if(isContentIndexSelected){
-                            dispatch(handleNext());
+                          if(!isContentIndexSelected && reportType==='Custom ESG Report'){
+                            setIsDownloadReportModalOpen(true)
                           }
                           else{
-                            setIsDownloadReportModalOpen(true)
+                            dispatch(handleNext());
                           }
                           setIsModalOpen(false);
                         }}

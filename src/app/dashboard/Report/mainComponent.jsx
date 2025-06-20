@@ -98,6 +98,9 @@ const Report = () => {
   const [corpName,setCorpName]=useState('')
   const [orgName,setOrgName]=useState('')
   const [selectedYear, setSelectedYear] = useState("");
+  const includeMaterialTopics = useSelector(selectIncludeMaterialTopics);
+  const includeContentIndex = useSelector(selectIncludeContentIndex);
+  
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("token")?.replace(/"/g, "");
