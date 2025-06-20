@@ -50,60 +50,56 @@ const AboutTheReport = forwardRef(({ onSubmitSuccess }, ref) => {
     setLoOpen(false);
   };
 
-  const submitForm = async (type) => {
-    LoaderOpen();
-    
-    const data = {
-      description: {
-        page: "about_report",
-        label: "2. About the Report",
-        subLabel: "Overview of TCFD and Purpose",
-        type: "textarea",
-        content: aboutReport.description,
-        field: "description",
-        isSkipped: false,
+const submitForm = async (type) => {
+  LoaderOpen();
+
+  const formData = new FormData();
+  formData.append('report', reportid);
+  formData.append('screen_name', 'about_report');
+  
+  const dataPayload = {
+    description: {
+      page: "about_report",
+      label: "2. About the Report",
+      subLabel: "Overview of TCFD and Purpose",
+      type: "textarea",
+      content: aboutReport.description,
+      field: "description",
+      isSkipped: false,
+    },
+  };
+  
+  formData.append('data', JSON.stringify(dataPayload));
+
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
+
+  try {
+    const response = await axiosInstance.put(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    };
+    });
 
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/about_report/${reportid}/`;
-    try {
-      const response = await axiosInstance.put(url, data);
-
-      if (response.status === 200) {
-        if (type === "next") {
-          toast.success("Data added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-
-        if (onSubmitSuccess) {
-          onSubmitSuccess(true);
-        }
-        LoaderClose();
-        return true;
-      } else {
-        toast.error("Oops, something went wrong", {
+    if (response.status === 200) {
+      if (type === "next") {
+        toast.success("Data added successfully", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
         });
-        LoaderClose();
-        return false;
       }
-    } catch (error) {
+
+      if (onSubmitSuccess) {
+        onSubmitSuccess(true);
+      }
       LoaderClose();
+      return true;
+    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -114,27 +110,47 @@ const AboutTheReport = forwardRef(({ onSubmitSuccess }, ref) => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
       return false;
     }
-  };
+  } catch (error) {
+    LoaderClose();
+    toast.error("Oops, something went wrong", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    return false;
+  }
+};
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    dispatch(setAboutReportDescription(""));
+const loadFormData = async () => {
+  LoaderOpen();
+  dispatch(setAboutReportDescription(""));
+  
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/about_report/`;
+  try {
+    const response = await axiosInstance.get(url);
     
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/about_report/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.data) {
-        setData(response.data);
-        dispatch(setAboutReportDescription(response.data.description?.content || ""));
-      }
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      LoaderClose();
+    if (response.data && response.data.data) {
+      console.log("response.data", response.data);
+      console.log("response.data.data", response.data.data);
+      console.log("response.data.data.report_data", response.data.data.report_data);
+      
+      setData(response.data.data.report_data);
+      dispatch(setAboutReportDescription(response.data.data.report_data.description?.content || ""));
     }
-  };
+    LoaderClose();
+  } catch (error) {
+    console.error("API call failed:", error);
+    LoaderClose();
+  }
+};
 
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {

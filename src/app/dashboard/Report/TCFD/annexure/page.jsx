@@ -86,60 +86,56 @@ const Annexure = forwardRef(({ onSubmitSuccess }, ref) => {
     setAnnexureContent(content);
   };
 
-  const submitForm = async (type) => {
-    LoaderOpen();
-    
-    const data = {
-      annexure_content: {
-        page: "annexure",
-        label: "9. Annexure",
-        subLabel: "Additional Information and Appendices",
-        type: "textarea",
-        content: annexureContent,
-        field: "annexure_content",
-        isSkipped: false,
+ const submitForm = async (type) => {
+  LoaderOpen();
+
+  const formData = new FormData();
+  formdata?.append('report', reportid);
+  formdata?.append('screen_name', 'annexure');
+  
+  const dataPayload = {
+    annexure_content: {
+      page: "annexure",
+      label: "9. Annexure",
+      subLabel: "Additional Information and Appendices",
+      type: "textarea",
+      content: annexureContent,
+      field: "annexure_content",
+      isSkipped: false,
+    },
+  };
+  
+  formdata?.append('data', JSON.stringify(dataPayload));
+
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
+
+  try {
+    const response = await axiosInstance.put(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    };
+    });
 
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/annexure/${reportid}/`;
-    try {
-      const response = await axiosInstance.put(url, data);
-
-      if (response.status === 200) {
-        if (type === "next") {
-          toast.success("Annexure completed successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-
-        if (onSubmitSuccess) {
-          onSubmitSuccess(true);
-        }
-        LoaderClose();
-        return true;
-      } else {
-        toast.error("Oops, something went wrong", {
+    if (response.status === 200) {
+      if (type === "next") {
+        toast.success("Annexure completed successfully", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
         });
-        LoaderClose();
-        return false;
       }
-    } catch (error) {
+
+      if (onSubmitSuccess) {
+        onSubmitSuccess(true);
+      }
       LoaderClose();
+      return true;
+    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -150,27 +146,47 @@ const Annexure = forwardRef(({ onSubmitSuccess }, ref) => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
       return false;
     }
-  };
+  } catch (error) {
+    LoaderClose();
+    toast.error("Oops, something went wrong", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    return false;
+  }
+};
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    setAnnexureContent("");
+const loadFormData = async () => {
+  LoaderOpen();
+  setAnnexureContent("");
+  
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/annexure/`;
+  try {
+    const response = await axiosInstance.get(url);
     
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/annexure/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.data) {
-        setData(response.data);
-        setAnnexureContent(response.data.annexure_content?.content || "");
-      }
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      LoaderClose();
+    if (response.data && response.data?.data) {
+      console.log("response.data", response.data);
+      console.log("response.data?.data", response.data?.data);
+      console.log("response.data?.data?.report_data", response.data?.data?.report_data);
+      
+      setData(response.data?.data?.report_data);
+      setAnnexureContent(response.data?.data?.report_data?.annexure_content?.content || "");
     }
-  };
+    LoaderClose();
+  } catch (error) {
+    console.error("API call failed:", error);
+    LoaderClose();
+  }
+};
 
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {
@@ -221,7 +237,7 @@ const Annexure = forwardRef(({ onSubmitSuccess }, ref) => {
               (Response "Provide definitions of risk terminology used or references to existing risk classification frameworks used" field group, without heading) ------------------------------------------------------------.
             </p>
             <div className="text-sm text-gray-700">
-              {data.risk_terminology || "Risk terminology definitions and framework references will be displayed here based on API response."}
+              {data?.risk_terminology || "Risk terminology definitions and framework references will be displayed here based on API response."}
             </div>
           </div>
 
@@ -230,16 +246,16 @@ const Annexure = forwardRef(({ onSubmitSuccess }, ref) => {
               Fetch document uploaded for the above-mentioned question.
             </p>
             <div className="text-sm text-gray-700">
-              {data.risk_terminology_document ? (
+              {data?.risk_terminology_document ? (
                 <div className="mt-2">
                   <p className="font-medium">Uploaded Document:</p>
                   <a 
-                    href={data.risk_terminology_document.url} 
+                    href={data?.risk_terminology_document.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:underline"
                   >
-                    {data.risk_terminology_document.name}
+                    {data?.risk_terminology_document.name}
                   </a>
                 </div>
               ) : (

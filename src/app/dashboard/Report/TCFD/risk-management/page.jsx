@@ -55,87 +55,83 @@ const RiskManagement = forwardRef(({ onSubmitSuccess }, ref) => {
     setLoOpen(false);
   };
 
-  const submitForm = async (type) => {
-    LoaderOpen();
-    
-    const data = {
-      identification_process: {
-        page: "risk_management",
-        label: "6. Risk Management",
-        subLabel: "Risk Identification & Assessment Process",
-        type: "textarea",
-        content: riskManagement.identificationProcess,
-        field: "identification_process",
-        isSkipped: false,
-      },
-      assessment_process: {
-        page: "risk_management",
-        label: "6.2 Climate Risk Management",
-        subLabel: "Assessment Process",
-        type: "textarea",
-        content: riskManagement.assessmentProcess,
-        field: "assessment_process",
-        isSkipped: false,
-      },
-      management_process: {
-        page: "risk_management",
-        label: "6.2 Climate Risk Management",
-        subLabel: "Management Process",
-        type: "textarea",
-        content: riskManagement.managementProcess,
-        field: "management_process",
-        isSkipped: false,
-      },
-      integration_into_overall: {
-        page: "risk_management",
-        label: "6.3 Integration with Overall Risk Management",
-        subLabel: "Integration Process",
-        type: "textarea",
-        content: riskManagement.integrationIntoOverall,
-        field: "integration_into_overall",
-        isSkipped: false,
-      },
-    };
+const submitForm = async (type) => {
+  LoaderOpen();
 
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/risk_management/${reportid}/`;
-    try {
-      const response = await axiosInstance.put(url, data);
+  const formData = new FormData();
+  formData.append('report', reportid);
+  formData.append('screen_name', 'risk_management');
+  
+  const dataPayload = {
+    identification_process: {
+      page: "risk_management",
+      label: "6. Risk Management",
+      subLabel: "Risk Identification & Assessment Process",
+      type: "textarea",
+      content: riskManagement.identificationProcess,
+      field: "identification_process",
+      isSkipped: false,
+    },
+    assessment_process: {
+      page: "risk_management",
+      label: "6.2 Climate Risk Management",
+      subLabel: "Assessment Process",
+      type: "textarea",
+      content: riskManagement.assessmentProcess,
+      field: "assessment_process",
+      isSkipped: false,
+    },
+    management_process: {
+      page: "risk_management",
+      label: "6.2 Climate Risk Management",
+      subLabel: "Management Process",
+      type: "textarea",
+      content: riskManagement.managementProcess,
+      field: "management_process",
+      isSkipped: false,
+    },
+    integration_into_overall: {
+      page: "risk_management",
+      label: "6.3 Integration with Overall Risk Management",
+      subLabel: "Integration Process",
+      type: "textarea",
+      content: riskManagement.integrationIntoOverall,
+      field: "integration_into_overall",
+      isSkipped: false,
+    },
+  };
+  
+  formData.append('data', JSON.stringify(dataPayload));
 
-      if (response.status === 200) {
-        if (type === "next") {
-          toast.success("Data added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
 
-        if (onSubmitSuccess) {
-          onSubmitSuccess(true);
-        }
-        LoaderClose();
-        return true;
-      } else {
-        toast.error("Oops, something went wrong", {
+  try {
+    const response = await axiosInstance.put(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (response.status === 200) {
+      if (type === "next") {
+        toast.success("Data added successfully", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
         });
-        LoaderClose();
-        return false;
       }
-    } catch (error) {
+
+      if (onSubmitSuccess) {
+        onSubmitSuccess(true);
+      }
       LoaderClose();
+      return true;
+    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -146,34 +142,53 @@ const RiskManagement = forwardRef(({ onSubmitSuccess }, ref) => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
       return false;
     }
-  };
+  } catch (error) {
+    LoaderClose();
+    toast.error("Oops, something went wrong", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    return false;
+  }
+};
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    dispatch(setIdentificationProcess(""));
-    dispatch(setAssessmentProcess(""));
-    dispatch(setManagementProcess(""));
-    dispatch(setIntegrationIntoOverall(""));
+const loadFormData = async () => {
+  LoaderOpen();
+  dispatch(setIdentificationProcess(""));
+  dispatch(setAssessmentProcess(""));
+  dispatch(setManagementProcess(""));
+  dispatch(setIntegrationIntoOverall(""));
+  
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/risk_management/`;
+  try {
+    const response = await axiosInstance.get(url);
     
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/risk_management/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.data) {
-        setData(response.data);
-        dispatch(setIdentificationProcess(response.data.identification_process?.content || ""));
-        dispatch(setAssessmentProcess(response.data.assessment_process?.content || ""));
-        dispatch(setManagementProcess(response.data.management_process?.content || ""));
-        dispatch(setIntegrationIntoOverall(response.data.integration_into_overall?.content || ""));
-      }
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      LoaderClose();
+    if (response.data && response.data.data) {
+      console.log("response.data", response.data);
+      console.log("response.data.data", response.data.data);
+      console.log("response.data.data.report_data", response.data.data.report_data);
+      
+      setData(response.data.data.report_data);
+      dispatch(setIdentificationProcess(response.data.data.report_data.identification_process?.content || ""));
+      dispatch(setAssessmentProcess(response.data.data.report_data.assessment_process?.content || ""));
+      dispatch(setManagementProcess(response.data.data.report_data.management_process?.content || ""));
+      dispatch(setIntegrationIntoOverall(response.data.data.report_data.integration_into_overall?.content || ""));
     }
-  };
-
+    LoaderClose();
+  } catch (error) {
+    console.error("API call failed:", error);
+    LoaderClose();
+  }
+};
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {
       apiCalledRef.current = true;

@@ -139,7 +139,7 @@ const Section3 = ({ section7_3Ref, data, orgName }) => {
               (Response from TCFD M&T-C "Targets used to manage climate related risks and opportunities and performance against targets" without heading)
             </p>
             <div className="text-sm text-gray-700">
-              {data.climate_targets_response || "Climate targets and performance data will be displayed here from TCFD calculations."}
+              {data?.climate_targets_response || "Climate targets and performance data will be displayed here from TCFD calculations."}
             </div>
           </div>
 
@@ -168,7 +168,7 @@ const Section3 = ({ section7_3Ref, data, orgName }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {(data.climateTargetsTable || mockTargetsData).map((row, index) => (
+                    {(data?.climateTargetsTable || mockTargetsData).map((row, index) => (
                       <tr
                         key={index}
                         className="bg-white border-t border-blue-200 hover:bg-blue-25 transition-colors"

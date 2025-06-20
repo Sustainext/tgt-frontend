@@ -57,96 +57,92 @@ const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
     setLoOpen(false);
   };
 
-  const submitForm = async (type) => {
-    LoaderOpen();
-    
-    const data = {
-      climate_metrics: {
-        page: "metrics_targets",
-        label: "7. Metrics and Targets",
-        subLabel: "Climate-Related Metrics",
-        type: "textarea",
-        content: metricsTargets.climateMetrics,
-        field: "climate_metrics",
-        isSkipped: false,
-      },
-      scope1_emissions: {
-        page: "metrics_targets",
-        label: "7.2 Scope 1 Emissions",
-        subLabel: "Scope 1 GHG Emissions",
-        type: "textarea",
-        content: metricsTargets.scope1Emissions,
-        field: "scope1_emissions",
-        isSkipped: false,
-      },
-      scope2_emissions: {
-        page: "metrics_targets",
-        label: "7.3 Scope 2 Emissions",
-        subLabel: "Scope 2 GHG Emissions",
-        type: "textarea",
-        content: metricsTargets.scope2Emissions,
-        field: "scope2_emissions",
-        isSkipped: false,
-      },
-      scope3_emissions: {
-        page: "metrics_targets",
-        label: "7.4 Scope 3 Emissions",
-        subLabel: "Scope 3 GHG Emissions",
-        type: "textarea",
-        content: metricsTargets.scope3Emissions,
-        field: "scope3_emissions",
-        isSkipped: false,
-      },
-      climate_targets: {
-        page: "metrics_targets",
-        label: "7.5 Targets and Performance",
-        subLabel: "Climate Targets",
-        type: "textarea",
-        content: metricsTargets.climateTargets,
-        field: "climate_targets",
-        isSkipped: false,
-      },
-    };
+const submitForm = async (type) => {
+  LoaderOpen();
 
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/metrics_targets/${reportid}/`;
-    try {
-      const response = await axiosInstance.put(url, data);
+  const formData = new FormData();
+  formData.append('report', reportid);
+  formData.append('screen_name', 'metrics_targets');
+  
+  const dataPayload = {
+    climate_metrics: {
+      page: "metrics_targets",
+      label: "7. Metrics and Targets",
+      subLabel: "Climate-Related Metrics",
+      type: "textarea",
+      content: metricsTargets.climateMetrics,
+      field: "climate_metrics",
+      isSkipped: false,
+    },
+    scope1_emissions: {
+      page: "metrics_targets",
+      label: "7.2 Scope 1 Emissions",
+      subLabel: "Scope 1 GHG Emissions",
+      type: "textarea",
+      content: metricsTargets.scope1Emissions,
+      field: "scope1_emissions",
+      isSkipped: false,
+    },
+    scope2_emissions: {
+      page: "metrics_targets",
+      label: "7.3 Scope 2 Emissions",
+      subLabel: "Scope 2 GHG Emissions",
+      type: "textarea",
+      content: metricsTargets.scope2Emissions,
+      field: "scope2_emissions",
+      isSkipped: false,
+    },
+    scope3_emissions: {
+      page: "metrics_targets",
+      label: "7.4 Scope 3 Emissions",
+      subLabel: "Scope 3 GHG Emissions",
+      type: "textarea",
+      content: metricsTargets.scope3Emissions,
+      field: "scope3_emissions",
+      isSkipped: false,
+    },
+    climate_targets: {
+      page: "metrics_targets",
+      label: "7.5 Targets and Performance",
+      subLabel: "Climate Targets",
+      type: "textarea",
+      content: metricsTargets.climateTargets,
+      field: "climate_targets",
+      isSkipped: false,
+    },
+  };
+  
+  formData.append('data', JSON.stringify(dataPayload));
 
-      if (response.status === 200) {
-        if (type === "next") {
-          toast.success("Data added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
 
-        if (onSubmitSuccess) {
-          onSubmitSuccess(true);
-        }
-        LoaderClose();
-        return true;
-      } else {
-        toast.error("Oops, something went wrong", {
+  try {
+    const response = await axiosInstance.put(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (response.status === 200) {
+      if (type === "next") {
+        toast.success("Data added successfully", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
         });
-        LoaderClose();
-        return false;
       }
-    } catch (error) {
+
+      if (onSubmitSuccess) {
+        onSubmitSuccess(true);
+      }
       LoaderClose();
+      return true;
+    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -157,35 +153,55 @@ const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
       return false;
     }
-  };
+  } catch (error) {
+    LoaderClose();
+    toast.error("Oops, something went wrong", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    return false;
+  }
+};
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    dispatch(setClimateMetrics(""));
-    dispatch(setScope1Emissions(""));
-    dispatch(setScope2Emissions(""));
-    dispatch(setScope3Emissions(""));
-    dispatch(setClimateTargets(""));
+const loadFormData = async () => {
+  LoaderOpen();
+  dispatch(setClimateMetrics(""));
+  dispatch(setScope1Emissions(""));
+  dispatch(setScope2Emissions(""));
+  dispatch(setScope3Emissions(""));
+  dispatch(setClimateTargets(""));
+  
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/metrics_targets/`;
+  try {
+    const response = await axiosInstance.get(url);
     
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/metrics_targets/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.data) {
-        setData(response.data);
-        dispatch(setClimateMetrics(response.data.climate_metrics?.content || ""));
-        dispatch(setScope1Emissions(response.data.scope1_emissions?.content || ""));
-        dispatch(setScope2Emissions(response.data.scope2_emissions?.content || ""));
-        dispatch(setScope3Emissions(response.data.scope3_emissions?.content || ""));
-        dispatch(setClimateTargets(response.data.climate_targets?.content || ""));
-      }
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      LoaderClose();
+    if (response.data && response.data.data) {
+      console.log("response.data", response.data);
+      console.log("response.data.data", response.data.data);
+      console.log("response.data.data.report_data", response.data.data.report_data);
+      
+      setData(response.data.data.report_data);
+      dispatch(setClimateMetrics(response.data.data.report_data.climate_metrics?.content || ""));
+      dispatch(setScope1Emissions(response.data.data.report_data.scope1_emissions?.content || ""));
+      dispatch(setScope2Emissions(response.data.data.report_data.scope2_emissions?.content || ""));
+      dispatch(setScope3Emissions(response.data.data.report_data.scope3_emissions?.content || ""));
+      dispatch(setClimateTargets(response.data.data.report_data.climate_targets?.content || ""));
     }
-  };
+    LoaderClose();
+  } catch (error) {
+    console.error("API call failed:", error);
+    LoaderClose();
+  }
+};
 
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {

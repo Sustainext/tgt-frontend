@@ -236,8 +236,8 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
           <MetricsTable
             title="Metrics used to assess climate-related risks and opportunities"
             data={
-              data.climateRelatedMetrics ||
-              mockMetricsData.climateRelatedMetrics
+              data?.climateRelatedMetrics ||
+              mockMetricsData?.climateRelatedMetrics
             }
             columns={[
               "Metric",
@@ -252,7 +252,7 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
           <MetricsTable
             title="Metrics used to assess climate-related opportunities"
             data={
-              data.scopeRelatedMetrics || mockMetricsData.scopeRelatedMetrics
+              data?.scopeRelatedMetrics || mockMetricsData?.scopeRelatedMetrics
             }
             columns={["Scope", "Emissions", "Unit", "Percentage of Total"]}
           />
@@ -269,7 +269,7 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
                 without heading)
               </p>
               <div className="text-sm text-gray-700">
-                {data.remuneration_integration ||
+                {data?.remuneration_integration ||
                   "Information about climate metrics integration into remuneration policies will be displayed here."}
               </div>
             </div>
@@ -289,7 +289,7 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
                 Yes, please provide details" without heading)
               </p>
               <div className="text-sm text-gray-700">
-                {data.carbon_pricing ||
+                {data?.carbon_pricing ||
                   "Internal carbon pricing mechanism information will be displayed here."}
               </div>
             </div>
@@ -310,7 +310,7 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
                 without heading)
               </p>
               <div className="text-sm text-gray-700">
-                {data.low_carbon_revenue ||
+                {data?.low_carbon_revenue ||
                   "Revenue from low-carbon products and services information will be displayed here."}
               </div>
             </div>

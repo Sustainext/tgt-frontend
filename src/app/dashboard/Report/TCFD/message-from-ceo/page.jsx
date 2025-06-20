@@ -110,69 +110,61 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
     }
   };
 
-  const submitForm = async (type) => {
-    LoaderOpen();
+const submitForm = async (type) => {
+  LoaderOpen();
 
-    const formData = new FormData();
-    formData.append("message_content", messageCEO.messageContent);
-    if (signatureFile) {
-      formData.append("signature", signatureFile);
-    }
+  const formData = new FormData();
+  formData.append('report', reportid);
+  formData.append('screen_name', 'message_ceo');
+  
+  const dataPayload = {
+    message_content: {
+      page: "message_ceo",
+      label: "1. Message From CEO/MD/Chairman",
+      subLabel: "Add message from CEO/MD/Chairman",
+      type: "textarea",
+      content: messageCEO.messageContent,
+      field: "message_content",
+      isSkipped: false,
+    },
+  };
+  
+  formData.append('data', JSON.stringify(dataPayload));
+  
+  // Add signature file if exists
+  if (signatureFile) {
+    formData.append('signature', signatureFile);
+  }
 
-    const data = {
-      message_content: {
-        page: "message_ceo",
-        label: "1. Message From CEO/MD/Chairman",
-        subLabel: "Add message from CEO/MD/Chairman",
-        type: "textarea",
-        content: messageCEO.messageContent,
-        field: "message_content",
-        isSkipped: false,
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
+
+  try {
+    const response = await axiosInstance.put(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    };
+    });
 
-    // For now, we'll use the JSON approach. In a real implementation,
-    // you might want to handle file uploads separately
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/message_ceo/${reportid}/`;
-
-    try {
-      const response = await axiosInstance.put(url, data);
-
-      if (response.status === 200) {
-        if (type === "next") {
-          toast.success("Data added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-
-        if (onSubmitSuccess) {
-          onSubmitSuccess(true);
-        }
-        LoaderClose();
-        return true;
-      } else {
-        toast.error("Oops, something went wrong", {
+    if (response.status === 200) {
+      if (type === "next") {
+        toast.success("Data added successfully", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
         });
-        LoaderClose();
-        return false;
       }
-    } catch (error) {
+
+      if (onSubmitSuccess) {
+        onSubmitSuccess(true);
+      }
       LoaderClose();
+      return true;
+    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -183,34 +175,55 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
       return false;
     }
-  };
+  } catch (error) {
+    LoaderClose();
+    toast.error("Oops, something went wrong", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    return false;
+  }
+};
 
   const loadFormData = async () => {
-    LoaderOpen();
-    dispatch(setMessageContent(""));
-    dispatch(setSignatureUrl(""));
+  LoaderOpen();
+  dispatch(setMessageContent(""));
+  dispatch(setSignatureUrl(""));
 
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/message_ceo/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.data) {
-        setData(response.data);
-        dispatch(
-          setMessageContent(response.data.message_content?.content || "")
-        );
-        // Handle signature loading if it exists
-        if (response.data.signature_url) {
-          dispatch(setSignatureUrl(response.data.signature_url));
-        }
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/message_ceo/`;
+  try {
+    const response = await axiosInstance.get(url);
+
+    if (response.data && response.data.data) {
+      console.log("response.data", response.data);
+      console.log("response.data.data", response.data.data);
+      console.log("response.data.data.report_data", response.data.data.report_data);
+      console.log("response.data.data.report_data.message_content", response.data.data.report_data.message_content);
+      
+      setData(response.data.data.report_data);
+      dispatch(
+        setMessageContent(response.data.data.report_data.message_content?.content || "")
+      );
+      // Handle signature loading if it exists
+      if (response.data.data.signature_url) {
+        dispatch(setSignatureUrl(response.data.data.signature_url));
       }
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      LoaderClose();
     }
-  };
+    LoaderClose();
+  } catch (error) {
+    console.error("API call failed:", error);
+    LoaderClose();
+  }
+};
 
   useEffect(() => {
     // Ensure API is only called once

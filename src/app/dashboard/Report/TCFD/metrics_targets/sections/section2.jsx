@@ -226,7 +226,7 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
               </tr>
             </thead>
             <tbody>
-              {data.map((row, index) => (
+              {data?.map((row, index) => (
                 <tr
                   key={index}
                   className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
@@ -319,13 +319,13 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
               (Response from GHG 1.1 "Scope 1 - Total emissions")
             </p>
             <div className="text-sm text-gray-700">
-              {data.scope1_total || "Total Scope 1 emissions data will be displayed here from GHG calculations."}
+              {data?.scope1_total || "Total Scope 1 emissions data will be displayed here from GHG calculations."}
             </div>
           </div>
 
           <ScopeTable
             title="Scope 1 Emissions Breakdown"
-            data={data.scope1Breakdown || mockScope1Data}
+            data={data?.scope1Breakdown || mockScope1Data}
             columns={["Category", "Subcategory", "Activity", "Emissions (tCO2e)"]}
           />
 
@@ -363,13 +363,13 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
               (Response from GHG 2.1 "Scope 2 - Total emissions")
             </p>
             <div className="text-sm text-gray-700">
-              {data.scope2_total || "Total Scope 2 emissions data will be displayed here from GHG calculations."}
+              {data?.scope2_total || "Total Scope 2 emissions data will be displayed here from GHG calculations."}
             </div>
           </div>
 
           <ScopeTable
             title="Scope 2 Emissions Breakdown"
-            data={data.scope2Breakdown || mockScope2Data}
+            data={data?.scope2Breakdown || mockScope2Data}
             columns={["Category", "Subcategory", "Activity", "Emissions (tCO2e)"]}
           />
 
@@ -407,13 +407,13 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
               (Response from GHG 3.1 "Scope 3 - Total emissions")
             </p>
             <div className="text-sm text-gray-700">
-              {data.scope3_total || "Total Scope 3 emissions data will be displayed here from GHG calculations."}
+              {data?.scope3_total || "Total Scope 3 emissions data will be displayed here from GHG calculations."}
             </div>
           </div>
 
           <ScopeTable
             title="Scope 3 Emissions Breakdown"
-            data={data.scope3Breakdown || mockScope3Data}
+            data={data?.scope3Breakdown || mockScope3Data}
             columns={["Category", "Subcategory", "Activity", "Emissions (tCO2e)"]}
           />
 
@@ -450,7 +450,7 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
 
           <ScopeTable
             title="GHG Emissions by Scope"
-            data={data.emissionsByScope || mockByScopeData}
+            data={data?.emissionsByScope || mockByScopeData}
             columns={["Scope", "Emissions (tCO2e)", "Percentage of Total"]}
           />
 
@@ -485,7 +485,7 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
 
           <ScopeTable
             title="GHG Emissions by Source"
-            data={data.emissionsBySource || mockBySourceData}
+            data={data?.emissionsBySource || mockBySourceData}
             columns={["Emission Source", "Emissions (tCO2e)", "Percentage of Total"]}
           />
 
@@ -521,7 +521,7 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
 
           <ScopeTable
             title="GHG Emissions by Location"
-            data={data.emissionsByLocation || mockByLocationData}
+            data={data?.emissionsByLocation || mockByLocationData}
             columns={["Geographic Location", "Emissions (tCO2e)", "Percentage of Total"]}
           />
 
@@ -556,7 +556,7 @@ const Section2 = ({ section7_2Ref, data, orgName }) => {
 
           <ScopeTable
             title="GHG Emissions Intensity Metrics"
-            data={data.intensityMetrics || mockIntensityData}
+            data={data?.intensityMetrics || mockIntensityData}
             columns={["Intensity Metric", "Value", "Unit"]}
           />
 

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import STARSVG from "../../../../../../../public/star.svg";
 import {
-  setClimateRisksOpportunities,
+  setImpactOnBusiness,
   selectStrategy,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 

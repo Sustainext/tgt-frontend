@@ -29,6 +29,7 @@ import optimiseSliceReduceer from "./features/optimiseSlice";
 import Bills201 from "./features/Bills201";
 import BillScreen1Slice from "./features/Billsreport/Billscreen1Slice"
 import TcfdSlice from "./features/TCFD/TcfdSlice"
+import TCFDReportReducer from "./features/TCFDSlice/tcfdslice"
 const rootReducer = combineReducers({
   counter: counterReducer,
   emissions: emissionReducer,
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
   bils201filter: Bills201,
   BillScreen1About: BillScreen1Slice,
   Tcfd:TcfdSlice,
+  tcfdReport: TCFDReportReducer
 });
 
 export const makeStore = () => {

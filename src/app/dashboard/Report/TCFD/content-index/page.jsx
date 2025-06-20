@@ -35,60 +35,55 @@ const TCFDContentIndex = forwardRef(({ onSubmitSuccess }, ref) => {
   };
 
   const submitForm = async (type) => {
-    LoaderOpen();
-    
-    // No specific data to submit for content index - it's mainly a reference table
-    const data = {
-      content_index_completed: {
-        page: "tcfd_content_index",
-        label: "8. TCFD Content Index",
-        subLabel: "Content Index Table",
-        type: "boolean",
-        content: true,
-        field: "content_index_completed",
-        isSkipped: false,
+  LoaderOpen();
+
+  const formData = new FormData();
+  formData.append('report', reportid);
+  formData.append('screen_name', 'tcfd_content_index');
+  
+  const dataPayload = {
+    content_index_completed: {
+      page: "tcfd_content_index",
+      label: "8. TCFD Content Index",
+      subLabel: "Content Index Table",
+      type: "boolean",
+      content: true,
+      field: "content_index_completed",
+      isSkipped: false,
+    },
+  };
+  
+  formData.append('data', JSON.stringify(dataPayload));
+
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
+
+  try {
+    const response = await axiosInstance.put(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    };
+    });
 
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/content_index/${reportid}/`;
-    try {
-      const response = await axiosInstance.put(url, data);
-
-      if (response.status === 200) {
-        if (type === "next") {
-          toast.success("Content index completed", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-
-        if (onSubmitSuccess) {
-          onSubmitSuccess(true);
-        }
-        LoaderClose();
-        return true;
-      } else {
-        toast.error("Oops, something went wrong", {
+    if (response.status === 200) {
+      if (type === "next") {
+        toast.success("Content index completed", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
         });
-        LoaderClose();
-        return false;
       }
-    } catch (error) {
+
+      if (onSubmitSuccess) {
+        onSubmitSuccess(true);
+      }
       LoaderClose();
+      return true;
+    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -99,25 +94,47 @@ const TCFDContentIndex = forwardRef(({ onSubmitSuccess }, ref) => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
       return false;
     }
-  };
+  } catch (error) {
+    LoaderClose();
+    toast.error("Oops, something went wrong", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    return false;
+  }
+};
 
-  const loadFormData = async () => {
-    LoaderOpen();
+const loadFormData = async () => {
+  LoaderOpen();
+  
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/tcfd_content_index/`;
+  try {
+    const response = await axiosInstance.get(url);
     
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/content_index/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.data) {
-        setData(response.data);
-      }
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      LoaderClose();
+    if (response.data && response.data.data) {
+      console.log("response.data", response.data);
+      console.log("response.data.data", response.data.data);
+      console.log("response.data.data.report_data", response.data.data.report_data);
+      
+      setData(response.data.data.report_data);
+      // Since this is mainly a reference table, we might not need to set specific Redux state
+      // but we can still store the completion status if needed
     }
-  };
+    LoaderClose();
+  } catch (error) {
+    console.error("API call failed:", error);
+    LoaderClose();
+  }
+};
 
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {
