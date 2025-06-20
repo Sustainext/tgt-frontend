@@ -7,8 +7,8 @@ import { setViolationOfRights } from "../../../../../../lib/redux/features/ESGSl
 
 
 const Section2 = ({ section14_1_1Ref,section14_1_2Ref, data,orgName,reportType,
-  sectionNumber = "14.1.1",
-  sectionTitle = 'Management of material topic',
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'14.1.1':'',
+  sectionTitle = 'Management of material topics',
   sectionOrder = 14,
  }) => {
 const shouldRender = useSelector((state)=> state.reportCreation.includeMaterialTopics)

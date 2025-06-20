@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setViolationOfRights } from "../../../../../../lib/redux/features/ESGSlice/screen14Slice";
 
 const Section3 = ({ section14_1_2Ref, data,orgName,reportType,
-  sectionNumber = reportType=='GRI Report: In accordance With'?'14.1.2':'14.1.1',
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'14.1.2':'14.1.1',
   sectionTitle = 'Incidents of Violation of Rights of Indigenous People',
   sectionOrder = 14,
  }) => {

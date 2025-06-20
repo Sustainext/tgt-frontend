@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 const Section3 = ({ section15_1_2Ref, data,reportType,
-  sectionNumber = reportType=='GRI Report: In accordance With'?'15.1.2':'15.1.1',
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'15.1.2':'15.1.1',
   sectionTitle = 'Health and Safety Impacts of Product and Service Categories',
   sectionOrder = 15,
  }) => {

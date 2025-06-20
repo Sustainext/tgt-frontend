@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMarketingPractices } from "../../../../../../lib/redux/features/ESGSlice/screen15Slice";
 
 const Section7 = ({ section15_2_2Ref, data,reportType,
-  sectionNumber = reportType=='GRI Report: In accordance With'?'15.2.2':'15.2.1',
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'15.2.2':'15.2.1',
+ 
   sectionTitle = 'Marketing',
   sectionOrder = 15,
  }) => {

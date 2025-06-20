@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section6 = ({ section10_3_2Ref, data,reportType,
-  sectionNumber = reportType=='GRI Report: In accordance With'?'10.3.2':'10.3.1',
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'10.3.2':'10.3.1',
   sectionTitle = 'Local Suppliers',
  }) => {
   const [content, setContent] = useState(

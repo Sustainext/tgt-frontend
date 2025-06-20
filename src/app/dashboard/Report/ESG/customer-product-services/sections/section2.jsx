@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const Section2 = ({ section15_1_1Ref, data,reportType,
-  sectionNumber = "15.1.1",
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'15.1.1':'',
   sectionTitle = 'Management of material topic',
   sectionOrder = 15,
  }) => {

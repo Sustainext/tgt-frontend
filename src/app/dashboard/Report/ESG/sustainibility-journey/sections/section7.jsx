@@ -6,7 +6,7 @@ import SustainabilityJourneyTable from "../table";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section7 = ({ section10_3_3Ref, data,reportType,
-  sectionNumber = reportType=='GRI Report: In accordance With'?'10.3.3':'10.3.2',
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'10.3.3':'10.3.2',
   sectionTitle = 'Negative Environmental & Social Impacts in the Supply Chain',
  }) => {
   const [content, setContent] = useState(

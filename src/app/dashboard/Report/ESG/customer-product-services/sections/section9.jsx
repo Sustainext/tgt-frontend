@@ -9,7 +9,8 @@ import { setConclusion } from "../../../../../../lib/redux/features/ESGSlice/scr
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section9 = ({ section15_3_1Ref, orgName, data, reportType,
-  sectionNumber = '15.3.1',
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'15.3.1':'',
+ 
   sectionTitle = 'Management of material topic',
   sectionOrder = 15,
  }) => {
