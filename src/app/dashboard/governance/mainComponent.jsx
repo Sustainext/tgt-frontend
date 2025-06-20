@@ -34,6 +34,7 @@ import Tcfdmanagementrole from "./Governances/Tcfd-management-role/page";
 import RiskdentificationAssessment from "./RiskManagement/Risk-dentification-Assessment/page";
 import ClimateRiskManagement from "./RiskManagement/Climate-Risk-Management/page";
 import ClimateRiskIntegration from "./RiskManagement/Climate-Risk-Integration/page";
+import { setActivesection } from "../../../lib/redux/features/TCFD/TcfdSlice";
 import Cookies from "js-cookie";
 const Governance = () => {
   const { open } = GlobalState();
@@ -49,6 +50,7 @@ const Governance = () => {
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+     dispatch(setActivesection(""));
     setMobileopen(false);
   };
     const emissionTabs = [

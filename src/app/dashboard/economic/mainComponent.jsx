@@ -48,6 +48,7 @@ import Climatebusiness from "./risks-opportunities/climate-business/page";
 import Climaterelatedtargets from "./risks-opportunities/climate-related-targets/page";
 import Climaterelatedmetrics from "./risks-opportunities/climate-related-metrics/page";
 import Cookies from "js-cookie";
+import { setActivesection } from "../../../lib/redux/features/TCFD/TcfdSlice";
 const Economic = () => {
   const { open } = GlobalState();
   const activestap = useSelector((state) => state.Tcfd.activesection);
@@ -87,6 +88,7 @@ const Economic = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     setMobileopen(false);
+      dispatch(setActivesection(""));
   };
 
   useEffect(() => {
@@ -175,27 +177,31 @@ const Economic = () => {
   }, [activeTab, dispatch]);
 
 useEffect(() => {
-    const allTabs = [
-      ...materialnewTabs,
-      ...emissionTabs,
-      ...energyTabs,
-      ...wasteTabs,
-      ...materialTabs,
-      ...supplierTabs,
-      ...TaxTabs,
-      ...PoliticalTabs,
-    ];
-    if (activestap && allTabs.includes(activestap)) {
-      setActiveTab(activestap);
-    } else if (data && data.governance) {
-      if (data.governance.GovEconomicPerformance?.is_material_topic) {
-        setActiveTab("Management of Material topic Economic Performance");
-      } else {
-        setActiveTab("Direct economic value generated & distributed");
-      }
+  const allTabs = [
+    ...materialnewTabs,
+    ...emissionTabs,
+    ...energyTabs,
+    ...wasteTabs,
+    ...materialTabs,
+    ...supplierTabs,
+    ...TaxTabs,
+    ...PoliticalTabs,
+  ];
+
+  if (activestap && allTabs.includes(activestap)) {
+    setActiveTab(activestap);
+    return;
+  }
+
+  // Don't override if user already picked a tab!
+  if (!activeTab && data && data.governance) {
+    if (data.governance.GovEconomicPerformance?.is_material_topic) {
+      setActiveTab("Management of Material topic Economic Performance");
+    } else {
+      setActiveTab("Direct economic value generated & distributed");
     }
-    // else: stay with previous
-  }, [activestap, data]);
+  }
+}, [activestap, data]); // <--- Do NOT add activeTab to deps or it will run again on every click
 
   return (
     <>

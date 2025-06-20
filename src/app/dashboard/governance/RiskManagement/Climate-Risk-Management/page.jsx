@@ -62,7 +62,7 @@ const ClimateRiskManagement = ({ setMobileopen }) => {
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Risk Identification & Assessment
+            Climate Risk Management
           </h6>
         </div>
         <div

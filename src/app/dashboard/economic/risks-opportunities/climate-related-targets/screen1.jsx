@@ -31,7 +31,6 @@ const schema = {
           "Scope 1 Emissions",
           "Scope 2 Emissions",
           "Scope 3 Emissions",
-          "Anonymous reporting system",
           "Others (please specify)",
         ],
       },

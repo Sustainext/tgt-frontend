@@ -53,6 +53,7 @@ import {
 } from "../../../lib/redux/features/emissionSlice";
 import StakeholderEngagement from "./BioDiversity/StakeholderEngagement/page";
 import ManagementOfBiodiversityImpact from "./BioDiversity/ManagementOfBioDiversityImpact/page";
+import { setActivesection } from "../../../lib/redux/features/TCFD/TcfdSlice";
 import Cookies from "js-cookie";
 const environment = () => {
   const { open } = GlobalState();
@@ -95,6 +96,7 @@ const environment = () => {
     setActiveTab(tab);
     dispatch(f_setSectionName(tab));
     setMobileopen(false);
+      dispatch(setActivesection(""));
   };
 
   useEffect(() => {
@@ -221,15 +223,21 @@ useEffect(() => {
     ...airQualityTab,
     ...bioDiversityTab,
   ];
+  
   if (activestap && allTabNames.includes(activestap)) {
     setActiveTab(activestap);
-  } else if (data && data.environment) {
+    return;
+  }
+
+  // Don't override if user already picked a tab!
+  if (!activeTab && data && data.environment) {
     if (data.environment.EnvGhgEmission?.is_material_topic) {
-      setActiveTab("Management of Material topic emission");
+     setActiveTab("Management of Material topic emission");
     } else {
       setActiveTab("GHG Emissions");
     }
   }
+ 
 }, [activestap, data]);
   return (
     <>
