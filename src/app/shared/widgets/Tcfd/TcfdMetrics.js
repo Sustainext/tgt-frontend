@@ -269,10 +269,17 @@ const TcfdMetrics = ({ formData = [], onChange, formContext, uiSchema }) => {
           <input
             type="text"
             value={value}
-            onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
+            onChange={(e) => {
+              let val = e.target.value;
+              if (key === "KeyMetric") {
+                // Only A-Z, a-z, and spaces
+                val = val.replace(/[^a-zA-Z ]/g, "");
+              }
+              handleFieldChange(rowIndex, key, val);
+            }}
             className="border-b focus:outline-none px-2 py-1 rounded w-full min-w-[250px] text-[12px]"
             disabled={isDisabled}
-             placeholder="Enter data"
+            placeholder="Enter data"
           />
         );
     }
