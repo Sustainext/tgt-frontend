@@ -55,12 +55,14 @@ import {
   selectCorporates,
   selectErrors,
   selectIsLoading,
+  resetToggleToDefaults,
   selectReportExists,
   selectSelectedOrgName,
   selectSelectedCorpName,
   selectIsFormValid,
   selectFormData,
 } from "../../../lib/redux/features/reportCreationSlice"; // Adjust import path
+import {initializeForCustomReport,resetToDefaults,fetchReportBuilderData} from '../../../lib/redux/features/reportBuilderSlice'
 
 
 const Report = () => {
@@ -721,12 +723,14 @@ const Report = () => {
     setIsModalOpen(true);
     setMassgeshow(false);
     setIsMenuOpen(false);
-    dispatch(
-      setIncludeMaterialTopics(false)
-    )
-    dispatch(
-      setIncludeContentIndex(false)
-    )
+    // dispatch(
+    //   setIncludeMaterialTopics(false)
+    // )
+    // dispatch(
+    //   setIncludeContentIndex(false)
+    // )
+     dispatch(resetToDefaults())
+    dispatch(resetToggleToDefaults())
   };
 
   const handleCloseModal = () => {
@@ -743,12 +747,14 @@ const Report = () => {
     setError({});
     setReportExist(false)
     setEntities([])
-    dispatch(
-      setIncludeMaterialTopics(false)
-    )
-    dispatch(
-      setIncludeContentIndex(false)
-    )
+    dispatch(resetToDefaults())
+    dispatch(resetToggleToDefaults())
+    // dispatch(
+    //   setIncludeMaterialTopics(false)
+    // )
+    // dispatch(
+    //   setIncludeContentIndex(false)
+    // )
     // setshowInvestmentMessage(false)
   };
 
