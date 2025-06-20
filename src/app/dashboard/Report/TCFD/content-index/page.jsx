@@ -222,14 +222,14 @@ const TCFDContentIndex = forwardRef(({ onSubmitSuccess }, ref) => {
         <div className="overflow-x-auto mb-6">
           <table className="w-full border-collapse border border-gray-300 text-sm">
             <thead>
-              <tr className="bg-[#4ECDC4] text-white">
-                <th className="border border-gray-300 p-3 text-left font-semibold">
+              <tr className="bg-[#1BA9CF] text-white">
+                <th className="border border-gray-300 py-10 px-4 text-left font-semibold">
                   TCFD core elements
                 </th>
-                <th className="border border-gray-300 p-3 text-left font-semibold">
+                <th className="border border-gray-300 py-10 px-4 text-left font-semibold">
                   Recommended Disclosures
                 </th>
-                <th className="border border-gray-300 p-3 text-left font-semibold">
+                <th className="border border-gray-300 py-10 px-4 text-left font-semibold">
                   Location
                 </th>
               </tr>

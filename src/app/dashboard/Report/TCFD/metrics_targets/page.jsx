@@ -24,7 +24,6 @@ import {
 import Section1 from "./sections/section1";
 import Section2 from "./sections/section2";
 import Section3 from "./sections/section3";
-import Section4 from "./sections/section4";
 
 const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
   const dispatch = useDispatch();
@@ -225,16 +224,11 @@ const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
               data={data}
               orgName={orgName}
             />
-            {/* <Section3
+            <Section3
               section7_3Ref={section7_3Ref}
               data={data}
               orgName={orgName}
             />
-            <Section4
-              section7_4Ref={section7_4Ref}
-              data={data}
-              orgName={orgName}
-            /> */}
           </div>
 
           {/* Page sidebar */}

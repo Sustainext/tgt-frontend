@@ -202,10 +202,10 @@ const TCFDReport = () => {
         return <RiskManagement ref={sectionRefs.risk_management} {...commonProps} />;
       case 'metrics_targets':
         return <MetricsTargets ref={sectionRefs.metrics_targets} {...commonProps} />;
-      // case 'tcfd_content_index':
-      //   return <TCFDContentIndex ref={sectionRefs.tcfd_content_index} {...commonProps} />;
-      // case 'annexure':
-      //   return <Annexure ref={sectionRefs.annexure} {...commonProps} />;
+      case 'tcfd_content_index':
+        return <TCFDContentIndex ref={sectionRefs.tcfd_content_index} {...commonProps} />;
+      case 'annexure':
+        return <Annexure ref={sectionRefs.annexure} {...commonProps} />;
       default:
         return (
           <div className="p-8 text-center">
