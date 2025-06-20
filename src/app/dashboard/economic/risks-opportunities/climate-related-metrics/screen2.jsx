@@ -120,7 +120,7 @@ const uiSchema = {
           key: "MetricCategory",
           title: "Metric Category",
           tooltip:
-            "Indicate the appropriate metric category related to the selected climate risk.",
+            "Indicate the appropriate metric category related to the selected climate opportunity.",
           option: [
             "GHG Emissions",
             "Transition Risks",
@@ -138,20 +138,20 @@ const uiSchema = {
           key: "KeyMetric",
           title: "Key Metric",
           tooltip:
-            "Specify the key metric used to measure the climate-related risk.",
+            "Specify the key metric used to measure the climate-related opportunity.",
           type: "input",
         },
         {
           key: "MetricValue",
           title: "Metric Value",
           tooltip:
-            "Enter the value of the metric used to measure the climate-related risk.",
+            "Enter the value of the metric used to measure the climate-related opportunity.",
           type: "input",
         },
         {
           key: "MetricUnit",
           title: "Metric Unit",
-          tooltip: "Select the unit of measurement for the key metric.",
+          tooltip: "Select the unit of measurement for the key metric..",
           type: "input",
         },
         {
