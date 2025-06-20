@@ -91,7 +91,40 @@ const MultiselectTableWidget = ({
   const [othersInputs, setOthersInputs] = useState([]);
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownRefs = useRef([]);
+ // Descending [currentYear, ..., 1995]
+function getBaseYearOptionsDesc() {
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  for (let y = currentYear; y >= 1995; y--) years.push(y);
+  return years;
+}
 
+// Descending target year options [baseYear+50, ..., baseYear+1]
+function getTargetYearOptionsDesc(baseYear) {
+  if (!baseYear) return [];
+  let start = parseInt(baseYear, 10) + 1;
+  let end = parseInt(baseYear, 10) + 60;
+  const years = [];
+  for (let y = end; y >= start; y--) years.push(y);
+  return years;
+}
+  const handleSelectCbaseyear = (rowIndex, key, newBaseYear) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
+    updatedValues[rowIndex][key] = newBaseYear;
+
+    // Optionally, reset targetyear if baseyear changes
+    updatedValues[rowIndex]["targetyear"] = "";
+
+    setLocalValue(updatedValues);
+  };
+
+  const handleSelectCtargetyear = (rowIndex, key, newTargetYear) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
+    updatedValues[rowIndex][key] = newTargetYear;
+    setLocalValue(updatedValues);
+  };
   const updatedMultiSelectStyle = {
     control: (base) => ({
       ...base,
@@ -498,8 +531,46 @@ const MultiselectTableWidget = ({
                         onDateChange={(newRange) =>
                           handleDateRangeChange(rowIndex, key, newRange)
                         }
+                        dateRangeValidation={true}
                         className="block   leading-6  sm:leading-5 border-b-2 border-gray-300"
                       />
+                    ) : layoutType === "baseyer" ? (
+                      <select
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={(e) =>
+                          handleSelectCbaseyear(rowIndex, key, e.target.value)
+                        }
+                        className="text-[12px] pl-2 py-2 w-full border-b "
+                      >
+                        <option value="">Select base year</option>
+                        {getBaseYearOptionsDesc().map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
+                    ) : layoutType === "targetyear" ? (
+                      <select
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={(e) =>
+                          handleSelectCtargetyear(rowIndex, key, e.target.value)
+                        }
+                        className="text-[12px] pl-2 py-2 w-full border-b "
+                        disabled={!localValue[rowIndex]["BaseYear"]}
+                      >
+                        <option value="">
+                          {localValue[rowIndex]["BaseYear"]
+                            ? "Select target year"
+                            : "Select base year first"}
+                        </option>
+                        {getTargetYearOptionsDesc(
+                          localValue[rowIndex]["BaseYear"]
+                        ).map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
                     ) : null}
                   </td>
                 );
