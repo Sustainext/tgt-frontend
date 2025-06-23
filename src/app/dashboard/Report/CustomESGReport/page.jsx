@@ -758,7 +758,7 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
   .unwrap()
   .then(() => {
     LoaderClose()
-    toast.success('Report updated successfully!');
+    toast.success('Report Created Successfully!');
     setStep(2);
   })
   .catch(err => {

@@ -1563,7 +1563,7 @@ if (subsectionsToShow.includes("base_year")) {
 
           {/* Page sidebar - only show if there are subsections */}
           {selectedSubsections.length > 0 && (
-             <div className={`p-4 border border-r-2 border-b-2 shadow-lg rounded-lg ${selectedSubsections.length < 10 ? 'h-[500px]' : 'h-fit'} top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block`}>
+             <div className={`p-4 border border-r-2 border-b-2 shadow-lg rounded-lg ${selectedSubsections.length < 14 ? 'h-[500px]' : 'h-fit'} top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block`}>
               <p className="text-[11px] text-[#727272] mb-2 uppercase">
                 {sectionOrder}. Environment
               </p>
