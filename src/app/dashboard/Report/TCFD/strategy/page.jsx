@@ -56,77 +56,73 @@ const Strategy = forwardRef(({ onSubmitSuccess }, ref) => {
   };
 
   const submitForm = async (type) => {
-    LoaderOpen();
-    
-    const data = {
-      climate_risks_opportunities: {
-        page: "strategy",
-        label: "5. Strategy",
-        subLabel: "Climate-Related Risks and Opportunities Assessment",
-        type: "textarea",
-        content: strategy.climateRisksOpportunities,
-        field: "climate_risks_opportunities",
-        isSkipped: false,
-      },
-      impact_on_business: {
-        page: "strategy",
-        label: "5.1 Climate-Related Risks and Opportunities Assessment", 
-        subLabel: "Company's approach for identification",
-        type: "textarea",
-        content: strategy.impactOnBusiness,
-        field: "impact_on_business",
-        isSkipped: false,
-      },
-      resilience_of_strategy: {
-        page: "strategy",
-        label: "5.3 Scenario Analysis & Strategic Resilience",
-        subLabel: "Strategic Resilience",
-        type: "textarea",
-        content: strategy.resilienceOfStrategy,
-        field: "resilience_of_strategy",
-        isSkipped: false,
-      },
-    };
+  LoaderOpen();
 
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/strategy/${reportid}/`;
-    try {
-      const response = await axiosInstance.put(url, data);
+  const formData = new FormData();
+  formData.append('report', reportid);
+  formData.append('screen_name', 'strategy');
+  
+  const dataPayload = {
+    climate_risks_opportunities: {
+      page: "strategy",
+      label: "5. Strategy",
+      subLabel: "Climate-Related Risks and Opportunities Assessment",
+      type: "textarea",
+      content: strategy.climateRisksOpportunities,
+      field: "climate_risks_opportunities",
+      isSkipped: false,
+    },
+    impact_on_business: {
+      page: "strategy",
+      label: "5.1 Climate-Related Risks and Opportunities Assessment", 
+      subLabel: "Company's approach for identification",
+      type: "textarea",
+      content: strategy.impactOnBusiness,
+      field: "impact_on_business",
+      isSkipped: false,
+    },
+    resilience_of_strategy: {
+      page: "strategy",
+      label: "5.3 Scenario Analysis & Strategic Resilience",
+      subLabel: "Strategic Resilience",
+      type: "textarea",
+      content: strategy.resilienceOfStrategy,
+      field: "resilience_of_strategy",
+      isSkipped: false,
+    },
+  };
+  
+  formData.append('data', JSON.stringify(dataPayload));
 
-      if (response.status === 200) {
-        if (type === "next") {
-          toast.success("Data added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
 
-        if (onSubmitSuccess) {
-          onSubmitSuccess(true);
-        }
-        LoaderClose();
-        return true;
-      } else {
-        toast.error("Oops, something went wrong", {
+  try {
+    const response = await axiosInstance.put(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (response.status === 200) {
+      if (type === "next") {
+        toast.success("Data added successfully", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
         });
-        LoaderClose();
-        return false;
       }
-    } catch (error) {
+
+      if (onSubmitSuccess) {
+        onSubmitSuccess(true);
+      }
       LoaderClose();
+      return true;
+    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -137,31 +133,51 @@ const Strategy = forwardRef(({ onSubmitSuccess }, ref) => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
       return false;
     }
-  };
+  } catch (error) {
+    LoaderClose();
+    toast.error("Oops, something went wrong", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    return false;
+  }
+};
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    dispatch(setClimateRisksOpportunities(""));
-    dispatch(setImpactOnBusiness(""));
-    dispatch(setResilienceOfStrategy(""));
+const loadFormData = async () => {
+  LoaderOpen();
+  dispatch(setClimateRisksOpportunities(""));
+  dispatch(setImpactOnBusiness(""));
+  dispatch(setResilienceOfStrategy(""));
+  
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/strategy/`;
+  try {
+    const response = await axiosInstance.get(url);
     
-    const url = `${process.env.BACKEND_API_URL}/tcfd_report/strategy/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.data) {
-        setData(response.data);
-        dispatch(setClimateRisksOpportunities(response.data.climate_risks_opportunities?.content || ""));
-        dispatch(setImpactOnBusiness(response.data.impact_on_business?.content || ""));
-        dispatch(setResilienceOfStrategy(response.data.resilience_of_strategy?.content || ""));
-      }
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      LoaderClose();
+    if (response.data && response.data.data) {
+      console.log("response.data", response.data);
+      console.log("response.data.data", response.data.data);
+      console.log("response.data.data.report_data", response.data.data.report_data);
+      
+      setData(response.data.data.report_data);
+      dispatch(setClimateRisksOpportunities(response.data.data.report_data.climate_risks_opportunities?.content || ""));
+      dispatch(setImpactOnBusiness(response.data.data.report_data.impact_on_business?.content || ""));
+      dispatch(setResilienceOfStrategy(response.data.data.report_data.resilience_of_strategy?.content || ""));
     }
-  };
+    LoaderClose();
+  } catch (error) {
+    console.error("API call failed:", error);
+    LoaderClose();
+  }
+};
 
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {
