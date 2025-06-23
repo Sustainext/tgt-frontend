@@ -1021,22 +1021,34 @@ const ESGReport = () => {
   
                   {isInContentIndexPhase && (
                     <div>
-                      {isOmissionSubmitted ? (
+                       {reportType === "GRI Report: In accordance With" || reportType==='Custom ESG Report'?(
+                          <div>
+                          {isOmissionSubmitted ? (
+                            <button
+                              onClick={() => setIsCreateReportModalOpen(true)}
+                              className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                            >
+                              Save and Create Report {">"}
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => setIsModalOpen(true)}
+                              className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                            >
+                              Add Reasons for Omission {">"}
+                            </button>
+                          )}
+                        </div>
+                       ):(
                         <button
-                          onClick={() => setIsCreateReportModalOpen(true)}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Save and Create Report {">"}
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => setIsModalOpen(true)}
-                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                        >
-                          Add Reasons for Omission {">"}
-                        </button>
-                      )}
+                        onClick={() => setIsCreateReportModalOpen(true)}
+                        className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                      >
+                        Save and Create Report {">"}
+                      </button>
+                       )}
                     </div>
+                    
                   )}
                 </div>
               </div>

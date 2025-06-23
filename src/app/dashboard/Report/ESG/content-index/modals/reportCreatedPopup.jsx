@@ -19,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ImFileExcel } from "react-icons/im";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
 
 const ReportCreatedPopup = ({
   reportname,
@@ -183,7 +184,8 @@ const ReportCreatedPopup = ({
         <div className="modal-overlay z-50">
           <div className="modal-center">
             <div className="bg-white p-5 rounded-lg shadow-md xl:w-[45%]">
-              <div className="flex justify-between items-center pt-2 w-full">
+              {/* <div className="flex justify-between items-center pt-2 w-full">
+                <div className="flex justify-between">
                 <div className="flex gap-2">
                   <Image
                     src={CorrectSVG}
@@ -203,7 +205,37 @@ const ReportCreatedPopup = ({
                     <div></div>
                   </div>
                 </div>
-              </div>
+                <div className="flex justify-end">
+                  <IoMdClose className="w-5 h-5 cursor-pointer" onClick={()=>{setIsCreateReportModalOpen(false)}} />
+                </div>
+                </div>
+                
+              </div> */}
+              <div className="flex justify-between items-start pt-2 w-full">
+  {/* Left side: content */}
+  <div className="flex gap-2">
+    <Image
+      src={CorrectSVG}
+      className="w-7 h-7 mr-2"
+      alt="gri-logo"
+    />
+    <div>
+      <h2 className="text-black text-[18px] font-bold mb-1">
+        {reportName} has been created
+      </h2>
+      <p className="text-[14px] text-[#667085] font-normal">
+        To proceed, select an option from the below.
+      </p>
+    </div>
+  </div>
+
+  {/* Right side: Close icon */}
+  <IoMdClose
+    className="w-5 h-5 cursor-pointer"
+    onClick={() => setIsCreateReportModalOpen(false)}
+  />
+</div>
+
               <div className="mt-6 mb-2">
                 <div className="relative" ref={dropdownRef}>
                   <button
