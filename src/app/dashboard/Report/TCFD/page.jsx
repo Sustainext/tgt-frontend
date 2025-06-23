@@ -143,24 +143,24 @@ const TCFDReport = () => {
     };
 
     if (type === "next") {
-      // const isSubmitted = await submitAndProceed();
-      if (true) {
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
         setCurrentPage(prev => prev + 1);
       }
     } else if (type === "last") {
-      // const isSubmitted = await submitAndProceed();
+      const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
         // Handle final submission
         toast.success("Report completed successfully!");
       }
     } else {
-      // const isSubmitted = await submitAndProceed();
-      // if (isSubmitted) {
-      //   showDraftSavedToast();
-      //   setTimeout(() => {
-      //     router.push("/dashboard/Report");
-      //   }, 4000);
-      // }
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
+        showDraftSavedToast();
+        setTimeout(() => {
+          router.push("/dashboard/Report");
+        }, 4000);
+      }
     }
   };
 
