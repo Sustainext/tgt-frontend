@@ -57,7 +57,7 @@ const DisclosureTable = ({ data }) => {
 
   return (
     <>
-      <div className="overflow-x-auto border border-gray-200 rounded-md">
+      <div className="overflow-x-auto overflow-y-hidden border border-gray-200 rounded-md">
         {/* Table for desktop and tablet view */}
         <div className="hidden sm:block">
           <table className="min-w-full table-auto">

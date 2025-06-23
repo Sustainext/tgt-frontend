@@ -11,6 +11,7 @@ import StatementPopup from "../content-index/modals/statementPopup";
 import DisclosureTable from "./tables/refDisclosureTable";
 import ReportCreatedPopup from "../content-index/modals/reportCreatedPopup";
 import NotifyGRI from "../content-index/modals/notifyGRIPopup";
+import {setCurrentReportPage} from '../../../../../lib/redux/features/reportBuilderSlice'
 // import OmissionPopup from "./modals/omissionPopup";
 
 const ReferenceContentIndex = ({
@@ -25,6 +26,7 @@ const ReferenceContentIndex = ({
   reportType
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch=useDispatch()
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const userName =
@@ -176,7 +178,7 @@ const ReferenceContentIndex = ({
         <div className="flex justify-end mb-4">
         <button
               onClick={() => {
-                setActiveStep(1);
+                dispatch(setCurrentReportPage(0))
               }}
               className="flex gap-1 w-[auto] justify-center rounded-md bg-transparent px-2 py-1.5 text-[12px] font-semibold leading-6 text-[#2196F3] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2 border border-blue-400"
             >

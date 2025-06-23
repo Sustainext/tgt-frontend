@@ -8,7 +8,13 @@ import { setConclusion } from "../../../../../../lib/redux/features/ESGSlice/scr
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section9 = ({ section15_3_1Ref, orgName, data }) => {
+const Section9 = ({ section15_3_1Ref, orgName, data, reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'15.3.1':'',
+ 
+  sectionTitle = 'Management of material topic',
+  sectionOrder = 15,
+ }) => {
+  const shouldRender = useSelector((state)=> state.reportCreation.includeMaterialTopics)
   const conclusion = useSelector((state) => state.screen15Slice.conclusion);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -76,9 +82,11 @@ Sustainability is embedded in our corporate strategy, and we are dedicated to co
   };
   return (
     <>
-      <div id="setion15_3_1" ref={section15_3_1Ref}>
+     {
+      reportType=='GRI Report: In accordance With' || (reportType==='Custom ESG Report' && shouldRender)?(
+        <div id="setion15_3_1" ref={section15_3_1Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          15.3.1 Management of material topic
+          {sectionNumber} {sectionTitle}
         </h3>
         {data["3-3cde_15-3-1"] && data["3-3cde_15-3-1"].length > 0 ? (
           data["3-3cde_15-3-1"].map((val, index) => (
@@ -94,36 +102,11 @@ Sustainability is embedded in our corporate strategy, and we are dedicated to co
         ) : (
           <p className="text-sm mb-4">No data available</p>
         )}
-        <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
-          <p className="text-[15px] text-[#344054] mb-2 mt-3">
-            Add a conclusion to the report
-          </p>
-          <button
-            className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            onClick={loadContent}
-          >
-            {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
-            <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
-            Auto Fill
-          </button>
-        </div>
-        {/* <textarea
-            onChange={handleEditorChange}
-          value={conclusion}
-          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
-          rows={4}
-        /> */}
-        <div>
-          <JoditEditor
-            // ref={editor}
-            // className="whitespace-pre-wrap"
-            value={conclusion}
-            config={config}
-            tabIndex={1}
-            onBlur={handleEditorChange}
-          />
-        </div>
       </div>
+      ):(
+        <div></div>
+      )
+     }
     </>
   );
 };

@@ -10,7 +10,11 @@ import {
   setExternalAssurance,
 } from "../../../../../../lib/redux/features/ESGSlice/screen7Slice";
 
-const Section1 = ({ section7_1Ref, orgName, data }) => {
+const Section1 = ({ section7_1Ref, orgName, data,
+  sectionNumber = "7.1",
+  sectionTitle = 'Reporting Period, Frequency, and Point of Contact',
+  sectionOrder = 7,
+ }) => {
   const description = useSelector((state) => state.screen7Slice.aboutReport);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -55,7 +59,7 @@ stakeholders informed of our progress.`
         />
         <div id="setion7_1" ref={section7_1Ref}>
           <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-            7.1 Reporting Period, Frequency, and Point of Contact
+            {sectionOrder}.1 Reporting Period, Frequency, and Point of Contact
           </h3>
 
           {

@@ -13,13 +13,58 @@ import {
   setHeadertext2,
   setHeaderdisplay,
 } from "../../../lib/redux/features/topheaderSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { GoArrowRight } from "react-icons/go";
 import { IoIosWarning } from "react-icons/io";
 import Link from "next/link";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import {
+  setReportName,
+  setReportType,
+  setReportBy,
+  setSelectedOrganization,
+  setSelectedCorporate,
+  setStartDate,
+  setEndDate,
+  setIncludeMaterialTopics,
+  setIncludeContentIndex,
+  setInvestmentCorporates,
+  toggleInvestmentCorporate,
+  setOwnershipRatio,
+  setSelectedAssessmentId,
+  setOrganizations,
+  setCorporates,
+  setErrors,
+  setLoading,
+  setReportExists,
+  resetForm,
+  selectReportName,
+  selectReportType,
+  selectReportBy,
+  selectSelectedOrganization,
+  selectSelectedCorporate,
+  selectStartDate,
+  selectEndDate,
+  selectIncludeMaterialTopics,
+  selectIncludeContentIndex,
+  selectInvestmentCorporates,
+  selectSelectedAssessmentId,
+  selectOrganizations,
+  selectCorporates,
+  selectErrors,
+  selectIsLoading,
+  resetToggleToDefaults,
+  selectReportExists,
+  selectSelectedOrgName,
+  selectSelectedCorpName,
+  selectIsFormValid,
+  selectFormData,
+} from "../../../lib/redux/features/reportCreationSlice"; // Adjust import path
+import {initializeForCustomReport,resetToDefaults,fetchReportBuilderData} from '../../../lib/redux/features/reportBuilderSlice'
+
+
 const Report = () => {
   const [isExpandedpage, setIsExpandedpage] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,6 +98,9 @@ const Report = () => {
   const [corpName,setCorpName]=useState('')
   const [orgName,setOrgName]=useState('')
   const [selectedYear, setSelectedYear] = useState("");
+  const includeMaterialTopics = useSelector(selectIncludeMaterialTopics);
+  const includeContentIndex = useSelector(selectIncludeContentIndex);
+  
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("token")?.replace(/"/g, "");
@@ -394,19 +442,40 @@ const Report = () => {
         corporate_id: entity.id,
         ownership_ratio: parseInt(entity.ownershipRatio),
       }));
-    const sandData = {
-      name: reportname,
-      report_type: reporttype,
-      report_by: firstSelection,
-      start_date: startdate,
-      end_date: enddate,
-      organization: selectedOrg,
-      corporate: selectedCorp,
-      investment_corporates: selectedEntities,
-      assessment_id: assessment_id ? assessment_id : null,
-    };
 
-    await post(`/sustainapp/report_create/`, sandData)
+      
+      let sendData={}
+    if(reporttype==='Custom ESG Report'){
+       sendData = {
+        name: reportname,
+        report_type: reporttype,
+        report_by: firstSelection,
+        start_date: startdate,
+        end_date: enddate,
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        investment_corporates: selectedEntities,
+        assessment_id:assessment_id?assessment_id:null,
+        include_management_material_topics: includeMaterialTopics,
+        include_content_index:includeContentIndex
+      };
+    }  
+    else{
+       sendData = {
+        name: reportname,
+        report_type: reporttype,
+        report_by: firstSelection,
+        start_date: startdate,
+        end_date: enddate,
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        investment_corporates: selectedEntities,
+        assessment_id:assessment_id?assessment_id:null
+      };
+    }
+    
+
+    await post(`/sustainapp/report_create/`, sendData)
       .then((response) => {
         if (response.status == "200") {
           toast.success("Report has been added successfully", {
@@ -466,7 +535,8 @@ const Report = () => {
           window.localStorage.setItem('reportCorpName',corpName)
           if (
             reporttype == "GRI Report: In accordance With" ||
-            reporttype == "GRI Report: With Reference to"
+            reporttype == "GRI Report: With Reference to" ||
+            reporttype === 'Custom ESG Report'
           ) {
             router.push("/dashboard/Report/ESG");
           } else if (reporttype == "canada_bill_s211_v2") {
@@ -740,6 +810,14 @@ const Report = () => {
     window.localStorage.setItem("reportCorpName", '');
     window.localStorage.setItem("reportby", '');
     setIsMenuOpen(false);
+    // dispatch(
+    //   setIncludeMaterialTopics(false)
+    // )
+    // dispatch(
+    //   setIncludeContentIndex(false)
+    // )
+     dispatch(resetToDefaults())
+    dispatch(resetToggleToDefaults())
   };
 
   const handleCloseModal = () => {
@@ -757,6 +835,14 @@ const Report = () => {
     setReportExist(false);
     setEntities([]);
     setSelectedYear("");
+    dispatch(resetToDefaults())
+    dispatch(resetToggleToDefaults())
+    // dispatch(
+    //   setIncludeMaterialTopics(false)
+    // )
+    // dispatch(
+    //   setIncludeContentIndex(false)
+    // )
     // setshowInvestmentMessage(false)
   };
 
@@ -1002,6 +1088,7 @@ const Report = () => {
                             Bill S-211
                           </option>
                           <option value="TCFD">TCFD</option>
+                          <option>Custom ESG Report</option>
                         </select>
                         {error.reporttype && (
                           <p className="text-red-500 text-sm ml-1">
@@ -1349,6 +1436,95 @@ const Report = () => {
                     <div></div>
                   )}
 
+{reporttype === "Custom ESG Report" && (
+                    <div className="border border-gray-300 p-4 rounded-lg space-y-4">
+                      {/* Include Management of Material Topics */}
+                      <div className="flex items-start gap-3">
+                        <div className="flex items-center pt-0.5">
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={includeMaterialTopics}
+                              onChange={(e) =>
+                                dispatch(
+                                  setIncludeMaterialTopics(e.target.checked)
+                                )
+                              }
+                              className="sr-only"
+                            />
+                            <div
+                              className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${
+                                includeMaterialTopics
+                                  ? "bg-green-500"
+                                  : "bg-gray-300"
+                              }`}
+                            >
+                              <div
+                                className={`w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-200 ease-in-out ${
+                                  includeMaterialTopics
+                                    ? "translate-x-5"
+                                    : "translate-x-0"
+                                } mt-0.5 ml-0.5`}
+                              ></div>
+                            </div>
+                          </label>
+                        </div>
+                        <div className="flex-1">
+                          <label className="text-sm font-medium text-gray-900 block leading-6">
+                            Include Management of Material Topics
+                          </label>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Checking this option will include the disclosures on
+                            management of material topics for all selected
+                            sections.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Include Content Index */}
+                      <div className="flex items-start gap-3">
+                        <div className="flex items-center pt-0.5">
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={includeContentIndex}
+                              onChange={(e) =>
+                                dispatch(
+                                  setIncludeContentIndex(e.target.checked)
+                                )
+                              }
+                              className="sr-only"
+                            />
+                            <div
+                              className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${
+                                includeContentIndex
+                                  ? "bg-green-500"
+                                  : "bg-gray-300"
+                              }`}
+                            >
+                              <div
+                                className={`w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-200 ease-in-out ${
+                                  includeContentIndex
+                                    ? "translate-x-5"
+                                    : "translate-x-0"
+                                } mt-0.5 ml-0.5`}
+                              ></div>
+                            </div>
+                          </label>
+                        </div>
+                        <div className="flex-1">
+                          <label className="text-sm font-medium text-gray-900 block leading-6">
+                            Include Content Index
+                          </label>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Checking this option will add a GRI content index at
+                            the end of the report
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                 
                   <div className="flex justify-center mt-5">
                     <div className="">
                       <button

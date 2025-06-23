@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setParentalLeaves } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section5 = ({ section13_1_4Ref, data, reportType }) => {
+const Section5 = ({ section13_1_4Ref, data, reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.1.4':'13.1.3',
+  sectionTitle = "Parental Leaves", 
+  sectionOrder = 13
+ }) => {
   const content = useSelector((state) => state.screen13Slice.parental_leaves);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -140,7 +144,7 @@ const Section5 = ({ section13_1_4Ref, data, reportType }) => {
     <>
       <div id="section13_1_4" ref={section13_1_4Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'13.1.4':'13.1.3'} Parental Leaves
+          {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">

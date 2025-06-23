@@ -12,6 +12,7 @@ import DisclosureTable from "./tables/disclosureTable";
 import ReportCreatedPopup from "./modals/reportCreatedPopup";
 import NotifyGRI from "./modals/notifyGRIPopup";
 import OmissionPopup from "./modals/omissionPopup";
+import {setCurrentReportPage} from '../../../../../lib/redux/features/reportBuilderSlice'
 
 const ContentIndex = ({
   reportName,
@@ -24,6 +25,7 @@ const ContentIndex = ({
   setIsCreateReportModalOpen,
   reportType
 }) => {
+  const dispatch=useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
@@ -52,6 +54,8 @@ const ContentIndex = ({
       fromDate ? fromDate : "start date"
     } to ${toDate ? toDate : "end date"}.`
   );
+
+  console.log(isModalOpen,"check the state")
   const handleChange = (e) => {
     setStatement(e.target.value);
   };
@@ -251,7 +255,7 @@ const ContentIndex = ({
           ) : (
             <button
               onClick={() => {
-                setActiveStep(1);
+               dispatch(setCurrentReportPage(0))
               }}
               className="flex gap-1 w-[auto] justify-center rounded-md bg-transparent px-2 py-1.5 text-[12px] font-semibold leading-6 text-[#2196F3] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2 border border-blue-400"
             >

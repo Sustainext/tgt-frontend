@@ -332,17 +332,18 @@ const Screen1 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
     updateFormData();
     console.log("Form data:", formData);
   };
-  console.log("Location data: locationdata", locationdata);
+ 
 
   const customWidgets = useMemo(() => ({
-        ...widgets,
-        LoctiondropdwonTable: (props) => (
-          <LoctiondropdwonTable
-            {...props}
-            locationdata={locationdata}
-          />
-        ),
-      }), [widgets, locationdata]);
+    ...widgets,
+    LoctiondropdwonTable: (props) => (
+      <LoctiondropdwonTable
+        {...props}
+        locationdata={locationdata}
+      />
+    ),
+  }), [widgets, locationdata]);
+  
   return (
     <>
       <div

@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setFramework } from "../../../../../../lib/redux/features/ESGSlice/screen7Slice";
 
-const Section3 = ({ section7_2Ref }) => {
+const Section3 = ({ section7_2Ref,
+  sectionNumber = "7.2",
+  sectionTitle = 'Frameworks',
+  sectionOrder = 7,
+ }) => {
   const framework = useSelector((state) => state.screen7Slice.framework);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -26,7 +30,7 @@ United Nations Sustainable Development Goals (SDGs): Our initiatives and perform
       <div>
         <div id="setion7_2" ref={section7_2Ref}>
           <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-            7.2 Frameworks
+            {sectionNumber} {sectionTitle}
           </h3>
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
             <p className="text-[15px] text-[#344054] mb-2 mt-3">

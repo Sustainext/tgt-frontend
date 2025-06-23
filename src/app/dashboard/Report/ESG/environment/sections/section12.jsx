@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setRecyclingProcess } from "../../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Section12 = ({ section12_2_2Ref, data,reportType }) => {
+const Section12 = ({ section12_2_2Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.2.2':'12.2.1',
+  sectionTitle = 'Recycled Input Materials Used',
+  sectionOrder = 12,
+ }) => {
   const content = useSelector((state) => state.screen12Slice.recycling_process);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -52,7 +56,7 @@ const Section12 = ({ section12_2_2Ref, data,reportType }) => {
     <>
       <div id="section12_2_2" ref={section12_2_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'12.2.2':'12.2.1'}  Recycled Input Materials Used
+       {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

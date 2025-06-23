@@ -5,7 +5,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setInfrastructureInvestment } from "../../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
-const Section5 = ({ section11_2Ref }) => {
+const Section5 = ({ section11_2Ref,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.2':'11.2',
+  sectionTitle = 'Infrastructure Investment and Services Supported',
+  sectionOrder = 11,
+ }) => {
   const data = useSelector((state) => state.screen11Slice.getdata);
   const content = useSelector(
     (state) => state.screen11Slice.infrastructure_investement
@@ -26,7 +30,7 @@ const Section5 = ({ section11_2Ref }) => {
     <>
       <div id="section11_2" ref={section11_2Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          11.2 Infrastructure Investment and Services Supported
+         {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

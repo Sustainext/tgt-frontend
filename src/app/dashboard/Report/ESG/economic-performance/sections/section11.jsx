@@ -3,7 +3,11 @@ import { useState, useRef, useEffect } from "react";
 import Risktable from "../tables/risktable";
 import { useDispatch, useSelector } from "react-redux";
 
-const Section11 = ({ section11_3_4Ref,reportType }) => {
+const Section11 = ({ section11_3_4Ref,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.3.2.2':'11.3.1.2',
+  sectionTitle = 'Climate-related Opportunities',
+  sectionOrder = 11,
+ }) => {
   // Fetch data from Redux store
   const data = useSelector((state) => state.screen11Slice.getdata);
   // Map the specific part of the API response
@@ -50,7 +54,7 @@ const Section11 = ({ section11_3_4Ref,reportType }) => {
     <>
       <div id="section11_3_4" ref={section11_3_4Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'11.3.2.2':'11.3.1.2'}  Climate-related Opportunities
+       {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="rounded-md shadow-md mb-4">

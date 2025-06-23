@@ -6,7 +6,11 @@ import { setCustomers } from "../../../../../../lib/redux/features/ESGSlice/scre
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 
-const Section8 = ({ section15_3Ref, data }) => {
+const Section8 = ({ section15_3Ref, data,
+  sectionNumber = '15.3',
+  sectionTitle = 'Customers',
+  sectionOrder = 15,
+ }) => {
   const customers = useSelector(
     (state) => state.screen15Slice.customers
   );
@@ -31,7 +35,7 @@ const Section8 = ({ section15_3Ref, data }) => {
     <>
       <div id="setion15_3" ref={section15_3Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          15.3 Customers
+          {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
