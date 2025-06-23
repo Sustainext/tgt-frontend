@@ -1,22 +1,21 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-const Section24 = ({ section12_5Ref, section12_5_1Ref, data,reportType }) => {
-  const [content, setContent] = useState(
-    `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam minus, voluptates obcaecati velit fuga tempore laudantium consequuntur illo`
-  );
+const Section24 = ({ section12_5Ref, section12_5_1Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.5.1':'',
+  sectionTitle = 'Management of Material Topics',
+  sectionOrder = 12,
+ }) => {
+  const shouldRender = useSelector((state)=> state.reportCreation.includeMaterialTopics)
 
   return (
     <>
-      <div id="section12_5" ref={section12_5Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          12.5 Waste
-        </h3>
-      </div>
-      {reportType=='GRI Report: In accordance With'?(
+      
+      {reportType=='GRI Report: In accordance With' || (shouldRender && reportType==='Custom ESG Report')?(
          <div id="section12_5_1" ref={section12_5_1Ref}>
          <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-           12.5.1 Management of Material Topic
+          {sectionNumber} {sectionTitle}
          </h3>
  
          {data["3-3cde_12-5-1"] && data["3-3cde_12-5-1"].length > 0 ? (
@@ -37,6 +36,7 @@ const Section24 = ({ section12_5Ref, section12_5_1Ref, data,reportType }) => {
       ):(
         <div></div>
       )}
+
      
     </>
   );

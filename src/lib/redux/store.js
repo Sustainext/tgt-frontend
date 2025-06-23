@@ -27,8 +27,12 @@ import materialitySliceReducer from "./features/materialitySlice";
 import FileInfoSliceReducer from "./features/FileInfoSlice";
 import optimiseSliceReduceer from "./features/optimiseSlice";
 import Bills201 from "./features/Bills201";
-import BillScreen1Slice from "./features/Billsreport/Billscreen1Slice"
+import BillScreen1Slice from "./features/Billsreport/Billscreen1Slice";
+import reportBuilderReducer from './features/reportBuilderSlice';
+import reportCreationReducer from './features/reportCreationSlice'
+
 import TcfdSlice from "./features/TCFD/TcfdSlice"
+import TCFDReportReducer from "./features/TCFDSlice/tcfdslice"
 const rootReducer = combineReducers({
   counter: counterReducer,
   emissions: emissionReducer,
@@ -57,6 +61,9 @@ const rootReducer = combineReducers({
   bils201filter: Bills201,
   BillScreen1About: BillScreen1Slice,
   Tcfd:TcfdSlice,
+  reportBuilder: reportBuilderReducer,
+  reportCreation: reportCreationReducer,
+  tcfdReport: TCFDReportReducer
 });
 
 export const makeStore = () => {

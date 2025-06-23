@@ -4,13 +4,17 @@ import { useState, useRef, useEffect } from "react";
 
 
 
-const Section4=({section8_1_3Ref,data})=>{
+const Section4=({section8_1_3Ref,data,
+    sectionNumber = "8.1.3",
+    sectionTitle = 'Materiality Assessment Process',
+    sectionOrder = 8,
+})=>{
    
     return (
         <>
         <div id="section8_1_3" ref={section8_1_3Ref}>
         <p className="text-[17px] text-[#344054] mb-4 font-semibold">
-        8.1.3 Materiality assessment
+       {sectionNumber}{sectionTitle}
             </p>
 
             <p className="text-sm mb-4">Our materiality assessment process involves several key steps:</p>

@@ -2,7 +2,11 @@
 import { useState, useRef, useEffect } from "react";
 import LeaveTable from "../tables/leaveTable";
 
-const Section9 = ({ section13_2_2Ref, data,reportType }) => {
+const Section9 = ({ section13_2_2Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.2.2':'13.1.1',
+  sectionTitle = "Workers Who Are Not Employees", 
+  sectionOrder = 13
+ }) => {
   const [columns] = useState([
     "Type of Worker",
     "Total number of Workers",
@@ -49,7 +53,7 @@ const Section9 = ({ section13_2_2Ref, data,reportType }) => {
     <>
       <div id="section13_2_2" ref={section13_2_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'13.2.2':'13.2.1'}   Workers Who Are Not Employees
+       {sectionNumber} {sectionTitle} 
         </h3>
         <p className="text-[15px]  mb-2 font-semibold">
           Methodologies and Assumptions used

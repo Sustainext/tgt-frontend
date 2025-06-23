@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setChildLaborPosition } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section11 = ({ section13_3Ref, data }) => {
+const Section11 = ({ section13_3Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.3':'13.3',
+  sectionTitle = "Incidents of Child Labour", 
+  sectionOrder = 13
+ }) => {
   const content = useSelector(
     (state) => state.screen13Slice.child_labor_position
   );
@@ -204,7 +208,7 @@ const Section11 = ({ section13_3Ref, data }) => {
     <>
       <div id="section13_3" ref={section13_3Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          13.3 Incidents of Child Labour
+          {sectionNumber} {sectionTitle}
         </h3>
         <p className="text-[15px]  mb-2 font-semibold">
           Measures taken by the organization

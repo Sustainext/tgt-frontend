@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setdescription } from "../../../../../../lib/redux/features/ESGSlice/screen6Slice";
 
-const Section1 = ({ orgName, data }) => {
+const Section1 = ({ orgName, data,sectionOrder=6 }) => {
   const description = useSelector((state) => state.screen6Slice.description);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -56,7 +56,7 @@ const Section1 = ({ orgName, data }) => {
           rows={4}
         />
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          6.1 Approach to Stakeholder Engagement
+          {sectionOrder}.1 Approach to Stakeholder Engagement
         </h3>
 
         <div className="text-sm mb-6">

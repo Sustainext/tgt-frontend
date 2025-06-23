@@ -1,14 +1,18 @@
 "use client";
 import { useSelector } from "react-redux";
 
-const Section20 = ({ section11_6Ref, section11_6_1Ref,reportType }) => {
+const Section20 = ({ section11_6Ref, section11_6_1Ref,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.6':'11.6',
+  sectionTitle = 'Political Contributions',
+  sectionOrder = 11,
+ }) => {
   const data = useSelector((state) => state.screen11Slice.getdata);
 
   return (
     <>
       <div id="section11_6" ref={section11_6Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          11.6. Political Contributions
+          {sectionNumber} {sectionTitle}
         </h3>
 
         {data['415_1a'] && data['415_1a'].length>0?data['415_1a'].map((val)=>(

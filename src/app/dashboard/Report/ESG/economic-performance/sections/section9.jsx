@@ -2,14 +2,18 @@
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const Section9 = ({ section11_3_2Ref,reportType }) => {
+const Section9 = ({ section11_3_2Ref,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.3.2':'11.3.1',
+  sectionTitle = 'Climate-related Financial Implications',
+  sectionOrder = 11,
+ }) => {
   const data = useSelector((state) => state.screen11Slice.getdata);
 
   return (
     <>
       <div id="section11_3_2" ref={section11_3_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-       {reportType=='GRI Report: In accordance With'?'11.3.2.':'11.3.1.'} Climate-related Financial Implications
+      {sectionNumber} {sectionTitle} 
         </h3>
 
        <p className="text-sm mb-4">
