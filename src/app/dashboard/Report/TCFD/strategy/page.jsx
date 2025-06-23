@@ -34,7 +34,8 @@ const Strategy = forwardRef(({ onSubmitSuccess }, ref) => {
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   
   const apiCalledRef = useRef(false);
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
+  const [tcfdCollectData, setTcfdCollectData] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("section5_1");
 
@@ -103,7 +104,7 @@ const Strategy = forwardRef(({ onSubmitSuccess }, ref) => {
       },
     });
 
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201) {
       if (type === "next") {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -163,18 +164,30 @@ const loadFormData = async () => {
     const response = await axiosInstance.get(url);
     
     if (response.data && response.data.data) {
-      console.log("response.data", response.data);
-      console.log("response.data.data", response.data.data);
-      console.log("response.data.data.report_data", response.data.data.report_data);
+      console.log("Strategy response.data", response.data);
       
-      setData(response.data.data.report_data);
-      dispatch(setClimateRisksOpportunities(response.data.data.report_data.climate_risks_opportunities?.content || ""));
-      dispatch(setImpactOnBusiness(response.data.data.report_data.impact_on_business?.content || ""));
-      dispatch(setResilienceOfStrategy(response.data.data.report_data.resilience_of_strategy?.content || ""));
+      // Handle both report_data and tcfd_collect_data
+      const reportData = response.data.data.report_data || {};
+      const tcfdData = response.data.data.tcfd_collect_data || {};
+      
+      setData(reportData);
+      setTcfdCollectData(tcfdData);
+      
+      // Set Redux state from report_data if available
+      dispatch(setClimateRisksOpportunities(reportData?.climate_risks_opportunities?.content || ""));
+      dispatch(setImpactOnBusiness(reportData?.impact_on_business?.content || ""));
+      dispatch(setResilienceOfStrategy(reportData?.resilience_of_strategy?.content || ""));
+      
+      console.log("Strategy TCFD Collect Data:", tcfdData);
+    } else {
+      setData({});
+      setTcfdCollectData({});
     }
     LoaderClose();
   } catch (error) {
     console.error("API call failed:", error);
+    setData({});
+    setTcfdCollectData({});
     LoaderClose();
   }
 };
@@ -209,50 +222,22 @@ const loadFormData = async () => {
             <Section1
               section5_1Ref={section5_1Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
             <Section2
               section5_2Ref={section5_2Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
             <Section3
               section5_3Ref={section5_3Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
           </div>
-
-          {/* Page sidebar */}
-          {/* <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              5. Strategy
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section5_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section5_1Ref, "section5_1")}
-            >
-              5.1 Climate-Related Risks and Opportunities Assessment
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section5_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section5_2Ref, "section5_2")}
-            >
-              5.2 Impact on Business, Strategy, and Financial Planning
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section5_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section5_3Ref, "section5_3")}
-            >
-              5.3 Scenario Analysis & Strategic Resilience
-            </p>
-          </div> */}
         </div>
       </div>
       

@@ -11,10 +11,13 @@ import {
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section2 = ({ section5_2Ref, data, orgName }) => {
+const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
   const dispatch = useDispatch();
   const strategy = useSelector(selectStrategy);
   const editorRef = useRef(null);
+
+  // Extract business impact data from tcfdCollectData
+  const businessImpactData = tcfdCollectData?.general_business_impact?.[0] || {};
 
   // Jodit Editor configuration
   const config = {
@@ -43,61 +46,63 @@ const Section2 = ({ section5_2Ref, data, orgName }) => {
     dispatch(setImpactOnBusiness(content));
   };
 
-  // Mock data for business impact tables
-  const mockBusinessImpact = {
-    climateRelatedRiskImpact: [
-      { item: "Supply Chain", impact: "Disruption potential", rating: "Medium" },
-      { item: "Operations", impact: "Cost increases", rating: "High" },
-      { item: "Revenue", impact: "Market volatility", rating: "Medium" }
-    ],
-    businessAreasAffected: [
-      { area: "Manufacturing", effect: "Energy costs", impact: "High" },
-      { area: "Logistics", effect: "Transportation efficiency", impact: "Medium" },
-      { area: "R&D", effect: "Innovation focus", impact: "High" }
-    ]
+  // Helper function to render array values
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.map((item, index) => (
+        <div key={index}>{item}</div>
+      ));
+    }
+    return value || '';
   };
 
-const BusinessImpactTable = ({ title, data, columns }) => (
-  <div className="mb-8">
-    <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">{title}</h4>
-    <div className="overflow-x-auto">
-      <div className="border border-gray-200 rounded-lg overflow-hidden">
-        <table className="w-full border-collapse text-sm">
-          <thead>
-            <tr className="">
-              {columns.map((col, index) => (
-                <th 
-                  key={index} 
-                  className={`py-8 px-4 text-left text-gray-600 font-medium ${
-                    index < columns.length - 1 ? 'border-r border-gray-200' : ''
-                  }`}
-                >
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data?.map((row, index) => (
-              <tr key={index} className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors">
-                {Object.values(row).map((value, cellIndex) => (
-                  <td 
-                    key={cellIndex} 
-                    className={`p-4 text-gray-700 ${
-                      cellIndex < Object.values(row).length - 1 ? 'border-r border-gray-200' : ''
+  const BusinessImpactTable = ({ title, data, columns }) => (
+    <div className="mb-8">
+      <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">{title}</h4>
+      <div className="overflow-x-auto">
+        <div className="border border-gray-200 rounded-lg overflow-hidden">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="">
+                {columns.map((col, index) => (
+                  <th 
+                    key={index} 
+                    className={`py-8 px-4 text-left text-gray-600 font-medium ${
+                      index < columns.length - 1 ? 'border-r border-gray-200' : ''
                     }`}
                   >
-                    {value || 'Data'}
-                  </td>
+                    {col}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data?.map((row, index) => (
+                <tr key={index} className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors">
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {row.label || ''}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderArrayValue(row.selectedOptions)}
+                  </td>
+                  <td className="p-4 text-gray-700">
+                    {row.impact || ''}
+                  </td>
+                </tr>
+              ))}
+              {(!data || data.length === 0) && (
+                <tr className="bg-white border-t border-gray-200">
+                  <td colSpan={columns.length} className="p-4 text-center text-gray-500">
+                    No data available
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 
   return (
     <>
@@ -131,40 +136,52 @@ const BusinessImpactTable = ({ title, data, columns }) => (
             />
           </div>
 
-          {/* Blue placeholder text sections */}
-          <div className="mb-6 bg-blue-50 p-3 rounded border">
-            <p className="text-blue-600 text-sm font-medium mb-2">
-              (Response from TCFD-STG-B "General Business Impact" field group, without heading)
-            </p>
-            <p className="text-sm">
-              The following table outlines how climate-related issues have influenced our organization's strategy, planning, and operations across key business areas:
-            </p>
-          </div>
+          {/* General Business Impact from Q1 data */}
+          {businessImpactData?.Q1 && (
+            <div className="mb-6">
+              <p className="text-sm mb-4">
+                The following table outlines how climate-related issues have influenced our organization's strategy, planning, and operations across key business areas:
+              </p>
+              
+              <BusinessImpactTable 
+                title="Climate-Related Risk and Opportunity Impact"
+                data={businessImpactData.Q1}
+                columns={["Climate-Related Risk/Opportunity", "Business Areas Affected", "Impact"]}
+              />
+            </div>
+          )}
 
-          <BusinessImpactTable 
-            title="Climate-Related Risk Impact"
-            data={data?.climateRelatedRiskImpact || mockBusinessImpact.climateRelatedRiskImpact}
-            columns={["Climate-Related Risk/Opportunity", "Business Areas Affected", "Impact"]}
-          />
+          {/* Additional Q&A sections */}
+          {businessImpactData?.Q2 && (
+            <div className="mb-6">
+              <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+                Financial Planning Prioritization
+              </h4>
+              <div className="text-sm">
+                {businessImpactData.Q2}
+              </div>
+            </div>
+          )}
 
-          <BusinessImpactTable 
-            title="Business Areas Affected"
-            data={data?.businessAreasAffected || mockBusinessImpact.businessAreasAffected}
-            columns={["Business Areas", "Type of Risks", "Impact"]}
-          />
+          {businessImpactData?.Q3 && (
+            <div className="mb-6">
+              <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+                Impact on Financial Planning
+              </h4>
+              <div className="text-sm">
+                {businessImpactData.Q3}
+              </div>
+            </div>
+          )}
 
-          {/* Additional placeholder sections */}
-          <div className="mb-6 bg-blue-50 p-3 rounded border">
-            <p className="text-blue-600 text-sm">
-              (Response from "Describe how climate-related risks and opportunities are prioritised in financial planning" question, without heading)
-            </p>
-          </div>
-
-          <div className="mb-6 bg-blue-50 p-3 rounded border">
-            <p className="text-blue-600 text-sm">
-              (Response from "What impacts have climate-related issues had on your financial planning" question, without heading)
-            </p>
-          </div>
+          {/* Show message if no business impact data */}
+          {(!businessImpactData?.Q1 && !businessImpactData?.Q2 && !businessImpactData?.Q3) && (
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-blue-700 text-sm">
+                No business impact data available. Please complete the questionnaire to see detailed business impact information here.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>

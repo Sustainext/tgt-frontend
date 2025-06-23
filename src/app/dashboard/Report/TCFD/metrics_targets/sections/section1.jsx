@@ -12,11 +12,15 @@ import {
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section1 = ({ section7_1Ref, data, orgName }) => {
+const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
   const dispatch = useDispatch();
   const metricsTargets = useSelector(selectMetricsTargets);
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
+
+  // Extract metrics data from tcfdCollectData
+  const riskMetrics = tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities || [];
+  const opportunityMetrics = tcfdCollectData?.metrics_used_to_assess_climate_related_opportunities || [];
 
   // Jodit Editor configuration
   const config = {
@@ -46,7 +50,7 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
   };
 
   const loadAutoFillContent = () => {
-    const autoFillContent = `<p>(Fetch company name here) ${orgName || '[Company Name]'} applies a systematic process to track and manage climate-related risks and opportunities through clearly defined metrics and targets. Metrics help monitor and evaluate climate performance, while targets provide directional goals to guide decision-making and track long-term progress. Together, they support alignment with the company's overall business and sustainability objectives.</p>`;
+    const autoFillContent = `<p>${orgName || '[Company Name]'} applies a systematic process to track and manage climate-related risks and opportunities through clearly defined metrics and targets. Metrics help monitor and evaluate climate performance, while targets provide directional goals to guide decision-making and track long-term progress. Together, they support alignment with the company's overall business and sustainability objectives.</p>`;
 
     dispatch(setClimateMetrics(autoFillContent));
     
@@ -57,7 +61,7 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
   };
 
   const loadAutoFillContent2 = () => {
-    const autoFillContent = `<p>As ${orgName || '[Company Name]'} applies a systematic process to track and manage climate-related risks and opportunities through clearly defined metrics and targets. Metrics help monitor and evaluate climate performance, while targets provide directional goals to guide decision-making and track long-term progress. Together, they support alignment with the company’s overall business and sustainability objectives. >`;
+    const autoFillContent = `<p>As ${orgName || '[Company Name]'} operates in a dynamic business environment, we recognize the importance of integrating sector-specific considerations into our climate metrics and targets framework. Our approach includes industry-specific indicators, regulatory compliance metrics, and stakeholder-relevant performance measures that align with sector best practices and emerging standards.</p>`;
 
     dispatch(setSectorInfo(autoFillContent));
     
@@ -75,51 +79,12 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
     dispatch(setSectorInfo(content));
   };
 
-  // Mock data for metrics tables
-  const mockMetricsData = {
-    climateRelatedMetrics: [
-      {
-        metric: "Total GHG Emissions",
-        unit: "tCO2e",
-        current: "15,420",
-        previous: "16,250",
-        change: "-5.1%",
-      },
-      {
-        metric: "Energy Consumption",
-        unit: "MWh",
-        current: "8,750",
-        previous: "9,100",
-        change: "-3.8%",
-      },
-      {
-        metric: "Water Usage",
-        unit: "m³",
-        current: "12,500",
-        previous: "13,200",
-        change: "-5.3%",
-      },
-    ],
-    scopeRelatedMetrics: [
-      {
-        scope: "Scope 1",
-        emissions: "3,245",
-        unit: "tCO2e",
-        percentage: "21%",
-      },
-      {
-        scope: "Scope 2",
-        emissions: "7,890",
-        unit: "tCO2e",
-        percentage: "51%",
-      },
-      {
-        scope: "Scope 3",
-        emissions: "4,285",
-        unit: "tCO2e",
-        percentage: "28%",
-      },
-    ],
+  // Helper function to render array values
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.join(', ');
+    }
+    return value || '';
   };
 
   const MetricsTable = ({ title, data, columns }) => (
@@ -145,25 +110,37 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
               </tr>
             </thead>
             <tbody>
-              {data.map((row, index) => (
+              {data.length > 0 ? data.map((row, index) => (
                 <tr
                   key={index}
                   className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
                 >
-                  {Object.values(row).map((value, cellIndex) => (
-                    <td
-                      key={cellIndex}
-                      className={`p-4 text-gray-700 ${
-                        cellIndex < Object.values(row).length - 1
-                          ? "border-r border-gray-200"
-                          : ""
-                      }`}
-                    >
-                      {value || "Data"}
-                    </td>
-                  ))}
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderArrayValue(row.MetricCategory)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {row.KeyMetric || ''}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {row.ClimateRelatedRisk || ''}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {row.MetricValue || ''}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {row.MetricUnit || ''}
+                  </td>
+                  <td className="p-4 text-gray-700">
+                    {row.TimeHorizon || ''}
+                  </td>
                 </tr>
-              ))}
+              )) : (
+                <tr className="bg-white border-t border-gray-200">
+                  <td colSpan={columns.length} className="p-4 text-center text-gray-500">
+                    No data available
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -202,12 +179,6 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
           <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
             7.1 Climate-Related Metrics
           </h3>
-          
-          <div className="bg-blue-50 p-4 rounded border mb-6">
-            <p className="text-blue-600 text-sm mb-2">
-              (This will be a text box with autofill button)
-            </p>
-          </div>
 
           <div className="text-gray-500 text-base font-normal font-['Manrope'] leading-tight mb-6">
             <p className="mb-4">
@@ -232,79 +203,73 @@ const Section1 = ({ section7_1Ref, data, orgName }) => {
             </p>
           </div>
 
-          {/* Climate-Related Metrics Table */}
+          {/* Climate-Related Risk Metrics Table */}
           <MetricsTable
-            title="Metrics used to assess climate-related risks and opportunities"
-            data={
-              data?.climateRelatedMetrics ||
-              mockMetricsData?.climateRelatedMetrics
-            }
+            title="Metrics used to assess climate-related risks"
+            data={riskMetrics}
             columns={[
-              "Metric",
-              "Unit",
-              "Current Year",
-              "Previous Year",
-              "Change (%)",
+              "Metric Category",
+              "Key Metric",
+              "Climate Related Risk",
+              "Metric Value",
+              "Metric Unit",
+              "Time Horizon"
             ]}
           />
 
+          {/* Climate-Related Opportunity Metrics Table */}
+          <MetricsTable
+            title="Metrics used to assess climate-related opportunities"
+            data={opportunityMetrics}
+            columns={[
+              "Metric Category",
+              "Key Metric",
+              "Climate Related Opportunity",
+              "Metric Value",
+              "Metric Unit",
+              "Time Horizon"
+            ]}
+          />
 
-          {/* Additional sections */}
+          {/* Show message if no metrics data available */}
+          {riskMetrics.length === 0 && opportunityMetrics.length === 0 && (
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-blue-700 text-sm">
+                No climate-related metrics data available. Please complete the questionnaire to see detailed metrics information here.
+              </p>
+            </div>
+          )}
+
+          {/* Integration of Climate Related Metrics into Remuneration Policies */}
           <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Integration of Climate-Related Metrics into Remuneration Policies
             </h4>
-            <div className="bg-blue-50 p-4 rounded border">
-              <p className="text-blue-600 text-sm mb-2">
-                (Response from "Does climate-related metrics being part of the
-                remuneration linked policies of the organization" question,
-                without heading)
-              </p>
-              <div className="text-sm text-gray-700">
-                {data?.remuneration_integration ||
-                  "Information about climate metrics integration into remuneration policies will be displayed here."}
-              </div>
+            <div className="text-sm">
+              {/* This will be populated from API when available */}
+              {data?.remuneration_integration || "Information about climate metrics integration into remuneration policies will be displayed here when available."}
             </div>
           </div>
 
+          {/* Internal Carbon Pricing Mechanisms */}
           <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Internal Carbon Pricing Mechanisms
             </h4>
-            <div className="bg-blue-50 p-4 rounded border">
-              <p className="text-blue-600 text-sm mb-2">
-                (Note for devs: A tailored version of the "Metrics used to
-                assess climate related opportunities" section's data is required
-                here. i.e. skip yes/no response) (If 'Yes' option is selected
-                for the question "Has your organization implemented an internal
-                carbon pricing mechanism?", fetch response from TCFD-M&T-A, "If
-                Yes, please provide details" without heading)
-              </p>
-              <div className="text-sm text-gray-700">
-                {data?.carbon_pricing ||
-                  "Internal carbon pricing mechanism information will be displayed here."}
-              </div>
+            <div className="text-sm">
+              {/* This will be populated from API when available */}
+              {data?.carbon_pricing || "Internal carbon pricing mechanism information will be displayed here when available."}
             </div>
           </div>
 
+          {/* Revenue from Low-Carbon Products and Services */}
           <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Revenue from Low-Carbon Products and Services
             </h4>
-            <div className="bg-blue-50 p-4 rounded border">
-              <p className="text-blue-600 text-sm mb-2">
-                (Note for devs: A tailored version of the "Metrics used to
-                assess climate related opportunities" section's data is required
-                here. i.e. skip yes/no response) (If 'Yes' option is selected
-                for the question "Does your organization generate revenue from
-                products or services designed for a low-carbon economy?", fetch
-                response from TCFD-M&T-A "If Yes, please provide details"
-                without heading)
-              </p>
-              <div className="text-sm text-gray-700">
-                {data?.low_carbon_revenue ||
-                  "Revenue from low-carbon products and services information will be displayed here."}
-              </div>
+            <div className="text-sm">
+              {/* This will be populated from API when available */}
+              {data?.low_carbon_revenue || "Revenue from low-carbon products and services information will be displayed here when available."}
             </div>
           </div>
 

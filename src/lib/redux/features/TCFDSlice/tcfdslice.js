@@ -27,6 +27,7 @@ const initialState = {
   // Governance section
   governance: {
     boardOversight: '',
+    tcfdFrameworkDescription: '',
     managementRole: '',
     governanceStructure: '',
     skillsCompetencies: '',
@@ -112,6 +113,9 @@ const tcfdSlice = createSlice({
     // Governance actions
     setBoardOversight: (state, action) => {
       state.governance.boardOversight = action.payload;
+    },
+    setTcfdFrameworkDescription: (state, action) => { // New action
+      state.governance.tcfdFrameworkDescription = action.payload;
     },
     setManagementRole: (state, action) => {
       state.governance.managementRole = action.payload;
@@ -244,6 +248,7 @@ export const {
   
   // Governance
   setBoardOversight,
+  setTcfdFrameworkDescription,
   setManagementRole,
   setGovernanceStructure,
   setSkillsCompetencies,
@@ -293,8 +298,13 @@ export const {
 export const selectMessageCEO = (state) => state.tcfdReport?.messageCEO || { messageContent: '', signatureUrl: '' };
 export const selectAboutReport = (state) => state.tcfdReport?.aboutReport || { description: '', reportingPeriod: '', reportingFrequency: '', pointOfContact: '' };
 export const selectAboutCompany = (state) => state.tcfdReport?.aboutCompany || { companyOverview: '', businessModel: '', geographicalPresence: '', keyOperations: '' };
-export const selectGovernance = (state) => state.tcfdReport?.governance || { boardOversight: '', managementRole: '', governanceStructure: '', skillsCompetencies: '' };
-export const selectStrategy = (state) => state.tcfdReport?.strategy || { climateRisksOpportunities: '', impactOnBusiness: '', resilienceOfStrategy: '', scenarioAnalysis: '' };
+export const selectGovernance = (state) => state.tcfdReport?.governance || { 
+  boardOversight: '', 
+  tcfdFrameworkDescription: '', 
+  managementRole: '', 
+  governanceStructure: '', 
+  skillsCompetencies: '' 
+};export const selectStrategy = (state) => state.tcfdReport?.strategy || { climateRisksOpportunities: '', impactOnBusiness: '', resilienceOfStrategy: '', scenarioAnalysis: '' };
 export const selectRiskManagement = (state) => state.tcfdReport?.riskManagement || { identificationProcess: '', assessmentProcess: '', managementProcess: '', integrationIntoOverall: '' };
 export const selectMetricsTargets = (state) => state.tcfdReport?.metricsTargets || { 
   climateMetrics: '', 

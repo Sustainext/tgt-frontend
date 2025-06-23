@@ -11,10 +11,14 @@ import {
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section2 = ({ section4_2Ref, data, orgName }) => {
+const Section2 = ({ section4_2Ref, data, tcfdCollectData, orgName }) => {
   const dispatch = useDispatch();
   const governance = useSelector(selectGovernance);
   const editorRef = useRef(null);
+
+  // Extract data from tcfdCollectData
+  const managementRoleData = tcfdCollectData?.managements_role_in_assessing_and_managing_climate_related_risks_and_opportunities?.[0] || {};
+  const governanceStructureData = tcfdCollectData?.governance_structure?.[0] || {};
 
   // Jodit Editor configuration
   const config = {
@@ -44,17 +48,6 @@ const Section2 = ({ section4_2Ref, data, orgName }) => {
 
   const handleEditorChange = (content) => {
     dispatch(setManagementRole(content));
-  };
-
-  // Mock data structure - replace with actual data when available
-  const mockData = {
-    "2-9-a": {
-      governance_structure: "Climate Risk Committee, Sustainability Team, Executive Leadership"
-    },
-    "TCFD-GOV-B": {
-      management_processes: "Monthly climate risk assessments and quarterly reporting to executive leadership.",
-      monitoring_processes: "Continuous monitoring through established KPIs and regular stakeholder engagement."
-    }
   };
 
   return (
@@ -93,8 +86,16 @@ const Section2 = ({ section4_2Ref, data, orgName }) => {
             <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
               Organization Structure
             </h4>
-            <div className="bg-gray-50 p-3 rounded border text-sm text-blue-600">
-              {data["2-9-a"]?.governance_structure || mockData["2-9-a"].governance_structure}
+            <div className="text-sm">
+              {Array.isArray(governanceStructureData?.Q1) ? (
+                governanceStructureData.Q1.map((item, index) => (
+                  <div key={index}>
+                    {Array.isArray(item) ? item.join(' - ') : item}
+                  </div>
+                ))
+              ) : (
+                governanceStructureData?.Q1 || ''
+              )}
             </div>
           </div>
 
@@ -102,21 +103,19 @@ const Section2 = ({ section4_2Ref, data, orgName }) => {
             <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
               Processes for Informing the Management on Climate-Related Issues
             </h4>
-            <div className="bg-gray-50 p-4 rounded border">
-              <div className="text-sm text-gray-600 mb-2">
-                Note for devs: A tailored version of the "Management's role in assessing and managing climate related risks and opportunities" section's data is 
-                required here. i.e. skip yes/no response)
-              </div>
-              <div className="text-sm text-blue-600 mb-2">
-                (If 'Yes' option is selected for the question "Whether the organization has assigned climate-related responsibilities to management-level 
-                positions or committees:", fetch response from TCFD-GOV-B. "Mention the processes by which management is informed about climate-related 
-                issues" without heading)
-              </div>
-              <div className="text-sm text-blue-600 mb-2">
-                (If 'No' option is selected skip entire section).
-              </div>
+            <div>
               <div className="mt-2 text-sm">
-                {data["TCFD-GOV-B"]?.management_processes || mockData["TCFD-GOV-B"].management_processes}
+                {managementRoleData?.Q1 === 'Yes' ? (
+                  Array.isArray(managementRoleData?.Q4) ? (
+                    managementRoleData.Q4.map((item, index) => (
+                      <div key={index}>
+                        {Array.isArray(item) ? item.join(' - ') : item}
+                      </div>
+                    ))
+                  ) : (
+                    managementRoleData?.Q4 || ''
+                  )
+                ) : ''}
               </div>
             </div>
           </div>
@@ -125,21 +124,19 @@ const Section2 = ({ section4_2Ref, data, orgName }) => {
             <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
               Management Monitoring of Climate Related Issues
             </h4>
-            <div className="bg-gray-50 p-4 rounded border">
-              <div className="text-sm text-gray-600 mb-2">
-                Note for devs: A tailored version of the "Management's role in assessing and managing climate related risks and opportunities" section's data is 
-                required here. i.e. skip yes/no response)
-              </div>
-              <div className="text-sm text-blue-600 mb-2">
-                (If 'Yes' option is selected for the question "Whether those responsibilities include assessing and/or managing climate-related issues", fetch 
-                response from TCFD-GOV-B "Describe how the management (through specific positions and/or management committees) monitors climate-
-                related issues" without heading)
-              </div>
-              <div className="text-sm text-blue-600 mb-2">
-                (If 'No' option is selected skip entire section).
-              </div>
+            <div className="">
               <div className="mt-2 text-sm">
-                {data["TCFD-GOV-B"]?.monitoring_processes || mockData["TCFD-GOV-B"].monitoring_processes}
+                {managementRoleData?.Q3 === 'Yes' ? (
+                  Array.isArray(managementRoleData?.Q5) ? (
+                    managementRoleData.Q5.map((item, index) => (
+                      <div key={index}>
+                        {Array.isArray(item) ? item.join(' - ') : item}
+                      </div>
+                    ))
+                  ) : (
+                    managementRoleData?.Q5 || ''
+                  )
+                ) : ''}
               </div>
             </div>
           </div>

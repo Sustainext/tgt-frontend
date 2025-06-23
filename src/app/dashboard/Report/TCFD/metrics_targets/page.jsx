@@ -35,7 +35,8 @@ const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   
   const apiCalledRef = useRef(false);
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
+  const [tcfdCollectData, setTcfdCollectData] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("section7_1");
 
@@ -123,7 +124,7 @@ const submitForm = async (type) => {
       },
     });
 
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201) {
       if (type === "next") {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -185,20 +186,32 @@ const loadFormData = async () => {
     const response = await axiosInstance.get(url);
     
     if (response.data && response.data.data) {
-      console.log("response.data", response.data);
-      console.log("response.data.data", response.data.data);
-      console.log("response.data.data.report_data", response.data.data.report_data);
+      console.log("Metrics & Targets response.data", response.data);
       
-      setData(response.data.data.report_data);
-      dispatch(setClimateMetrics(response.data.data.report_data.climate_metrics?.content || ""));
-      dispatch(setScope1Emissions(response.data.data.report_data.scope1_emissions?.content || ""));
-      dispatch(setScope2Emissions(response.data.data.report_data.scope2_emissions?.content || ""));
-      dispatch(setScope3Emissions(response.data.data.report_data.scope3_emissions?.content || ""));
-      dispatch(setClimateTargets(response.data.data.report_data.climate_targets?.content || ""));
+      // Handle both report_data and tcfd_collect_data
+      const reportData = response.data.data.report_data || {};
+      const tcfdData = response.data.data.tcfd_collect_data || {};
+      
+      setData(reportData);
+      setTcfdCollectData(tcfdData);
+      
+      // Set Redux state from report_data if available
+      dispatch(setClimateMetrics(reportData?.climate_metrics?.content || ""));
+      dispatch(setScope1Emissions(reportData?.scope1_emissions?.content || ""));
+      dispatch(setScope2Emissions(reportData?.scope2_emissions?.content || ""));
+      dispatch(setScope3Emissions(reportData?.scope3_emissions?.content || ""));
+      dispatch(setClimateTargets(reportData?.climate_targets?.content || ""));
+      
+      console.log("Metrics & Targets TCFD Collect Data:", tcfdData);
+    } else {
+      setData({});
+      setTcfdCollectData({});
     }
     LoaderClose();
   } catch (error) {
     console.error("API call failed:", error);
+    setData({});
+    setTcfdCollectData({});
     LoaderClose();
   }
 };
@@ -233,58 +246,22 @@ const loadFormData = async () => {
             <Section1
               section7_1Ref={section7_1Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
             <Section2
               section7_2Ref={section7_2Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
             <Section3
               section7_3Ref={section7_3Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
           </div>
-
-          {/* Page sidebar */}
-          {/* <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[600px] top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              7. Metrics and Targets
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section7_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section7_1Ref, "section7_1")}
-            >
-              7.1 Climate-Related Metrics
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section7_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section7_2Ref, "section7_2")}
-            >
-              7.2 Scope 1 Emissions
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section7_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section7_3Ref, "section7_3")}
-            >
-              7.3 Scope 2 Emissions
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section7_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section7_4Ref, "section7_4")}
-            >
-              7.4 Scope 3 Emissions & Targets
-            </p>
-          </div> */}
         </div>
       </div>
       
