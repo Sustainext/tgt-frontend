@@ -214,17 +214,17 @@ const subsectionMapping = {
   
     // Filter and organize selected subsections
     const getSelectedSubsections = () => {
-      console.log("Processing subsections:", subsectionsToShow);
+      //console.log("Processing subsections:", subsectionsToShow);
   
       if (!subsectionsToShow || subsectionsToShow.length === 0) {
-        console.log("No subsections found");
+        //console.log("No subsections found");
         return [];
       }
   
       const result = subsectionsToShow
         .filter((subId) => {
           const exists = subsectionMapping[subId];
-          console.log(`Subsection ${subId} exists in mapping:`, !!exists);
+          //console.log(`Subsection ${subId} exists in mapping:`, !!exists);
           return exists;
         })
         .map((subId, index) => {
@@ -234,11 +234,11 @@ const subsectionMapping = {
             order: index + 1,
             sectionNumber: `${sectionOrder}.${index + 1}`,
           };
-          console.log(`Mapped subsection:`, mapped);
+          //console.log(`Mapped subsection:`, mapped);
           return mapped;
         });
   
-      console.log("Final selected subsections:", result);
+      //console.log("Final selected subsections:", result);
       return result;
     };
     const selectedSubsections = getSelectedSubsections();
@@ -527,7 +527,7 @@ const subsectionMapping = {
       const SectionComponent = subsectionMapping[section.id]?.component;
       const ref = sectionRefs.current[section.id] || createRef();
       sectionRefs.current[section.id] = ref;
-      console.log(section.sectionNumber,"See the sections")
+      //console.log(section.sectionNumber,"See the sections")
   
       const commonProps = {
         orgName,

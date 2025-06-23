@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 
 const StakeholderTable=({tableData})=>{
 
-    console.log(tableData,"look")
+    //console.log(tableData,"look")
     const col=[
         "Stakeholder",
         "Representative Group",

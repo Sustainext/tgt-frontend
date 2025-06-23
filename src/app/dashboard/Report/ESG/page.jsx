@@ -50,6 +50,7 @@ import {
   setCurrentReportPage,
   selectSectionsForReportType,
   initializeForNonCustomReport,
+  handleNext
 } from "../../../../lib/redux/features/reportBuilderSlice";
 
 import {
@@ -347,6 +348,21 @@ const ESGReport = () => {
     dispatch(setHeadertext2("ESG Report"));
   }, [dispatch]);
 
+  function formatDate(inputDate) {
+    const date = new Date(inputDate);
+  
+    // Check for invalid date
+    if (isNaN(date)) {
+      return "Invalid date";
+    }
+  
+    const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const year = date.getFullYear();
+  
+    return `${day}-${month}-${year}`;
+  }
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setCreatedOn(localStorage.getItem('reportCreatedOn') || '');
@@ -359,7 +375,7 @@ const ESGReport = () => {
       setReportid(localStorage.getItem('reportid') || '');
       setReportType(localStorage.getItem('reportType') || '');
       setReportName(localStorage.getItem('reportname') || '');
-      setReportingPeriod(localStorage.getItem('reportstartdate') +" to "+ localStorage.getItem('reportenddate'))
+      setReportingPeriod(formatDate(localStorage.getItem('reportstartdate')) +" to "+ formatDate(localStorage.getItem('reportenddate')))
     }
   }, []);
 
@@ -372,7 +388,11 @@ const ESGReport = () => {
           setMissingFields(response.data);
           setIsValidationModalOpen(true);
         } else {
-          toast.error('Opps! Something went wrong')
+           if (!isContentIndexSelected && reportType === "Custom ESG Report") {
+             setIsDownloadReportModalOpen(true);
+           } else {
+             dispatch(handleNext());
+           }
         }
       }
     } catch (error) {
