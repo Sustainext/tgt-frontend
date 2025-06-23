@@ -50,7 +50,7 @@ const MainValidationPopup = ({
   const allSections = useSelector(selectSections);
   const isContentIndexSelected = useSelector((state)=> state.reportCreation.includeContentIndex)
 
-  console.log(isContentIndexSelected,"check")
+  //console.log(isContentIndexSelected,"check")
 
   useEffect(() => {
     setFieldStatuses({});
@@ -287,6 +287,19 @@ const MainValidationPopup = ({
 
   const isAnyFieldFilled = Object.values(fieldStatuses).includes("filled");
 
+  // After field statuses are set, compute number filled
+const totalFields = Object.values(groupedFields).reduce(
+  (acc, arr) => acc + arr.length, 0
+);
+
+// A field is filled if marked "filled" or "skipped"
+const numFilled = Object.values(fieldStatuses).filter(
+  val => val === "filled" || val === "skipped"
+).length;
+
+// All fields are filled/skipped if numFilled === totalFields && totalFields > 0
+const allFieldsFilled = totalFields > 0 && numFilled === totalFields;
+
   // Debug information (remove in production)
   const debugInfo = reportType === 'Custom ESG Report' ? {
     enabledSections: enabledSections.map(s => ({ id: s.id, title: s.title, order: s.order })),
@@ -444,9 +457,9 @@ const MainValidationPopup = ({
                     <div className="flex justify-center gap-3 mt-1">
                       <button
                         className={`py-2 px-10 bg-transparent text-gray-700 rounded-lg shadow border border-gray-300 ${
-                          isAnyFieldFilled ? "opacity-30 cursor-not-allowed" : ""
+                          allFieldsFilled ? "opacity-30 cursor-not-allowed" : ""
                         }`}
-                        disabled={isAnyFieldFilled}
+                        disabled={allFieldsFilled}
                         onClick={() => {
                           if(!isContentIndexSelected && reportType==='Custom ESG Report'){
                           // if (reportType === 'GRI Report: In accordance With') {
@@ -454,11 +467,11 @@ const MainValidationPopup = ({
                           // } else {
                           //   setActiveStep(17);
                           // }
-                          console.log("called if")
+                          //console.log("called if")
                           setIsDownloadReportModalOpen(true)
                           }
                           else{
-                            console.log("called leave")
+                            //console.log("called leave")
                             dispatch(handleNext());
                            
                           }
@@ -469,11 +482,11 @@ const MainValidationPopup = ({
                       </button>
                       <button
                         className={`py-2 px-10 bg-blue-500 text-white rounded-lg shadow ${
-                          isAnyFieldFilled
+                          allFieldsFilled
                             ? "hover:bg-blue-600"
                             : "opacity-30 cursor-not-allowed"
                         }`}
-                        disabled={!isAnyFieldFilled}
+                        disabled={!allFieldsFilled}
                         onClick={() => {
                           if(!isContentIndexSelected && reportType==='Custom ESG Report'){
                             setIsDownloadReportModalOpen(true)

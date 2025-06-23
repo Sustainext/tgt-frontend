@@ -100,7 +100,7 @@ const Report = () => {
   const [selectedYear, setSelectedYear] = useState("");
   const includeMaterialTopics = useSelector(selectIncludeMaterialTopics);
   const includeContentIndex = useSelector(selectIncludeContentIndex);
-  
+
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("token")?.replace(/"/g, "");
@@ -133,7 +133,6 @@ const Report = () => {
           axiosConfig
         );
         if (response.status == 200) {
-          console.log(response.data, "look");
           setMaterialityAssessmentLen(response.data);
           if (response.data.length == 1) {
             setAssessmentId(response.data[0].id);
@@ -320,7 +319,7 @@ const Report = () => {
         params: { organization_id: selectedId },
       });
 
-      console.log("Corporates:", response.data);
+      // console.log("Corporates:", response.data);
       setCorporates(response.data);
     } catch (e) {
       console.log(
@@ -796,7 +795,7 @@ const Report = () => {
   });
 
   const handleValueChange = (newValue) => {
-    console.log("newValue:", newValue);
+    // console.log("newValue:", newValue);
     setValue(newValue);
   };
   const handleClick = () => {

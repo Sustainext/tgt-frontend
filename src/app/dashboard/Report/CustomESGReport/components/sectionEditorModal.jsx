@@ -83,7 +83,7 @@ const SectionEditorModal = () => {
 
    const sections = useSelector(selectSections);
 
-   console.log(sections,"see the updated one bro")
+  //  console.log(sections,"see the updated one bro")
 
   const reportid =
   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
@@ -219,7 +219,7 @@ const currentDisplaySection = useSelector(selectCurrentDisplaySectionForReportTy
                 ? toggleNestedSubsection(sectionId, parentId, subsection.id)
                 : toggleSubsection(sectionId, subsection.id)
             }
-            className="w-3 h-3 green-checkbox-small"
+            className="w-3 h-3 flex-shrink-0 green-checkbox-small"
             disabled={parentId && !isParentChecked}
           />
           <span className={parentId && !isParentChecked ? "text-gray-400" : ""}>{subsection.label}</span>

@@ -37,12 +37,20 @@ export default function SortableSectionItem({
         <div {...attributes} {...listeners} className="cursor-grab text-gray-400 mt-1">
           <FaGripVertical />
         </div>
-        <input
+        {/* <input
             type="checkbox"
             checked={enabled}
             onChange={onToggle}
             className="w-4 h-4 green-checkbox cursor-pointer mt-1"
+          /> */}
+           <div className="flex-shrink-0 flex items-center">
+          <input
+            type="checkbox"
+            checked={enabled}
+            onChange={onToggle}
+            className="w-4 h-4 green-checkbox cursor-pointer mt-1 flex-shrink-0"
           />
+        </div>
         <div>
         <p className="text-sm font-medium">
           {order}. {title}
