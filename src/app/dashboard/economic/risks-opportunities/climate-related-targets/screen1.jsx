@@ -146,7 +146,7 @@ const uiSchema = {
       {
         key: "TargetTimeFrame",
         title: "Target Year",
-        tooltip: "Select the timeframe to achieve the specified target.",
+        tooltip: "Select the year by which the specified target is to be achieved.",
  
         layouttype: "targetyear",
       },

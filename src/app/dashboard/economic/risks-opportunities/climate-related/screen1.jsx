@@ -43,6 +43,8 @@ const Screen1 = ({
   year,
   month,
   tcfdtag = [],
+  frameworkId,
+  selectid,
   togglestatus,
 }) => {
   const [formData, setFormData] = useState([{}]);
@@ -51,6 +53,7 @@ const Screen1 = ({
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
 
+console.log(selectid,"test disclosures screen");
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -261,6 +264,10 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{
+              frameworkId,
+              selectid,
+            }}
           />
         </div>
 
