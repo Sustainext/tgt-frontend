@@ -37,7 +37,7 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
   };
 
   const loadAutoFillContent = () => {
-    const autoFillContent = `<p>Climate-related risks and opportunities are influencing ${orgName || '[Company Name]'}'s strategic direction and outlook for the future. This section outlines how these factors are integrated into our core business strategy, financial planning processes, and long-term decision-making.</p>`;
+    const autoFillContent = `Climate-related risks and opportunities are increasingly influencing how we operate, invest, and plan for the future. This section outlines how these factors are integrated into our core business strategy, financial planning processes, and long-term decision-making. </p>`;
     
     dispatch(setImpactOnBusiness(autoFillContent));
   };

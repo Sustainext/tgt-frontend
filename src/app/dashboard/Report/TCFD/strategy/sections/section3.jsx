@@ -161,13 +161,13 @@ const Section3 = ({ section5_3Ref, data, tcfdCollectData, orgName }) => {
             <p className="text-[15px] text-[#667085] mb-2 mt-3">
               Add sector-specific (e.g., financial or non-financial) information relevant to the Strategy disclosures, in line with TCFD sector guidance (if applicable). 
             </p>
-            <button
+            {/* <button
               className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
               onClick={loadAutoFillContent}
             >
               <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
               Auto Fill
-            </button>
+            </button> */}
           </div>
 
           <div className="mb-6">

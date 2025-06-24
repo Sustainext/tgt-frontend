@@ -21,7 +21,12 @@ const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
   const dispatch = useDispatch();
   const metricsTargets = useSelector(selectMetricsTargets);
-  const editorRef1 = useRef(null);
+  
+  // Separate refs for each editor
+  const editorRefMain = useRef(null);
+  const editorRefScope1 = useRef(null);
+  const editorRefScope2 = useRef(null);
+  const editorRefScope3 = useRef(null);
 
   // Extract emission data from tcfdCollectData
   const emissionAnalyse = tcfdCollectData?.emission_analyse || {};
@@ -29,6 +34,11 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
   const allEmissionBySource = emissionAnalyse?.all_emission_by_source || [];
   const allEmissionByLocation = emissionAnalyse?.all_emission_by_location || [];
   const ghgEmissionIntensity = emissionAnalyse?.ghg_emission_intensity || [];
+
+  // Extract scope-specific data
+  const scope1Data = tcfdCollectData.scope_1 || [];
+  const scope2Data = tcfdCollectData.scope_2 || [];
+  const scope3Data = tcfdCollectData.scope_3 || [];
 
   // Jodit Editor configuration
   const config = {
@@ -47,34 +57,67 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
     ],
   };
 
-  const loadSectionAutoFillContent = () => {
+  // Main section autofill
+  const loadMainAutoFillContent = () => {
     const autoFillContent = `<p>We manage our emissions through a comprehensive strategy that includes setting reduction targets, implementing energy-efficient technologies, and monitoring our progress across all scopes of our operations.</p>`;
     dispatch(setScope1Emissions(autoFillContent));
-    if (editorRef1.current) {
-      editorRef1.current.value = autoFillContent;
+    if (editorRefMain.current) {
+      editorRefMain.current.value = autoFillContent;
     }
   };
 
-  const handleEditorChange = (content) => {
+  // Scope 1 autofill
+  const loadScope1AutoFillContent = () => {
+    const autoFillContent = `<p>Scope 1 emissions are direct greenhouse gas (GHG) emissions from our operations, such as fuel combustion on-site. We measure and report these emissions annually, striving to reduce them through process optimization and cleaner technologies.</p>`;
+    dispatch(setScope1Emissions(autoFillContent));
+    if (editorRefScope1.current) {
+      editorRefScope1.current.value = autoFillContent;
+    }
+  };
+
+  // Scope 2 autofill
+  const loadScope2AutoFillContent = () => {
+    const autoFillContent = `<p>Scope 2 emissions are indirect GHG emissions from the consumption of purchased electricity, heat, or steam. We aim to reduce Scope 2 emissions by increasing our use of renewable energy and improving energy efficiency.</p>`;
+    dispatch(setScope2Emissions(autoFillContent));
+    if (editorRefScope2.current) {
+      editorRefScope2.current.value = autoFillContent;
+    }
+  };
+
+  // Scope 3 autofill
+  const loadScope3AutoFillContent = () => {
+    const autoFillContent = `<p>Scope 3 emissions include all other indirect emissions in our value chain, such as those from suppliers and product use. We collaborate with suppliers to reduce these emissions and support initiatives that promote sustainable practices throughout our supply chain.</p>`;
+    dispatch(setScope3Emissions(autoFillContent));
+    if (editorRefScope3.current) {
+      editorRefScope3.current.value = autoFillContent;
+    }
+  };
+
+  // Change handlers
+  const handleMainEditorChange = (content) => {
     dispatch(setScope1Emissions(content));
   };
 
-  // Helper function to render array values
-  const renderArrayValue = (value) => {
-    if (Array.isArray(value)) {
-      return value.join(', ');
-    }
-    return value || '';
+  const handleScope1EditorChange = (content) => {
+    dispatch(setScope1Emissions(content));
   };
 
-  const ScopeTable = ({ title, data, columns }) => (
+  const handleScope2EditorChange = (content) => {
+    dispatch(setScope2Emissions(content));
+  };
+
+  const handleScope3EditorChange = (content) => {
+    dispatch(setScope3Emissions(content));
+  };
+
+  const ScopeTable = ({ title, data, columns, dataType }) => (
     <div className="mb-8">
-      <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">{title}</h4>
+      {title && <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">{title}</h4>}
       <div className="overflow-x-auto">
         <div className="border border-gray-200 rounded-lg overflow-hidden">
           <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="">
+              <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
                 {columns.map((col, index) => (
                   <th
                     key={index}
@@ -95,18 +138,34 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                   key={index}
                   className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
                 >
-                  {Object.values(row).map((value, cellIndex) => (
-                    <td
-                      key={cellIndex}
-                      className={`p-4 text-gray-700 ${
-                        cellIndex < Object.values(row).length - 1
-                          ? "border-r border-gray-200"
-                          : ""
-                      }`}
-                    >
-                      {renderArrayValue(value)}
-                    </td>
-                  ))}
+                  {dataType === 'scope' && (
+                    <>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">{row.scope || '-'}</td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">{row.total || '-'} {row.Units || 'tCO2e'}</td>
+                      <td className="p-4 text-gray-700">{row.contribution || '-'}%</td>
+                    </>
+                  )}
+                  {dataType === 'source' && (
+                    <>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">{row.source || '-'}</td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">{row.total || '-'} {row.Units || 'tCO2e'}</td>
+                      <td className="p-4 text-gray-700">{row.contribution || '-'}%</td>
+                    </>
+                  )}
+                  {dataType === 'location' && (
+                    <>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">{row.location || '-'}</td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">{row.total || '-'} {row.Units || 'tCO2e'}</td>
+                      <td className="p-4 text-gray-700">{row.contribution || '-'}%</td>
+                    </>
+                  )}
+                  {dataType === 'intensity' && (
+                    <>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">{row.intensityMetric || '-'}</td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">{row.value || '-'}</td>
+                      <td className="p-4 text-gray-700">{row.unit || '-'}</td>
+                    </>
+                  )}
                 </tr>
               )) : (
                 <tr className="bg-white border-t border-gray-200">
@@ -137,7 +196,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
             </p>
             <button
               className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-              onClick={loadSectionAutoFillContent}
+              onClick={loadMainAutoFillContent}
             >
               <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
               Auto Fill
@@ -146,15 +205,211 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
 
           <div className="mb-6">
             <JoditEditor
-              ref={editorRef1}
+              ref={editorRefMain}
               value={metricsTargets.scope1Emissions}
               config={{...config, placeholder: "Add statement about company's strategy to reduce GHG emissions"}}
               tabIndex={1}
-              onBlur={handleEditorChange}
-              onChange={handleEditorChange}
+              onBlur={handleMainEditorChange}
+              onChange={handleMainEditorChange}
             />
           </div>
 
+          {/* SCOPE 1 GHG EMISSIONS SECTION */}
+          <div className="mb-8">
+            <h4 className="text-[16px] text-[#344054] mb-4 text-left font-semibold">
+              Scope 1 GHG Emissions
+            </h4>
+
+            <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
+              <p className="text-[15px] text-[#667085] mb-2 mt-0">
+                Add statement about company's scope 1 emissions
+              </p>
+              <button
+                className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
+                onClick={loadScope1AutoFillContent}
+              >
+                <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
+                Auto Fill
+              </button>
+            </div>
+
+            <div className="mb-4">
+              <JoditEditor
+                ref={editorRefScope1}
+                value={metricsTargets.scope1Emissions}
+                config={{...config, placeholder: "Add statement about company's scope 1 emissions"}}
+                tabIndex={2}
+                onBlur={handleScope1EditorChange}
+                onChange={handleScope1EditorChange}
+              />
+            </div>
+
+            {/* Response from GRI 305-1 placeholder */}
+            <div className="mb-4 rounded-lg">
+              <div className="mt-2">
+                <div className="overflow-x-auto">
+                  <div className="border border-gray-200 rounded-lg overflow-hidden">
+                    <table className="w-full text-sm border-collapse">
+                      <thead>
+                        <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">Category</th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">Sub Category</th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">Activity</th>
+                          <th className="text-left py-2 px-4 font-medium text-gray-600">Emissions (tCO2e)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {scope1Data.length > 0 ? scope1Data.map((item, index) => (
+                          <tr key={index} className="border-t border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Category || 'Scope 1'}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Subcategory}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Activity}</td>
+                            <td className="py-2 px-4 text-gray-700">{item.total || '-'} {item.Units || 'tCO2e'}</td>
+                          </tr>
+                        )) : (
+                          <tr className="border-t border-gray-200">
+                            <td colSpan="4" className="py-2 px-4 text-center text-gray-500">No Scope 1 data available</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* SCOPE 2 GHG EMISSIONS SECTION */}
+          <div className="mb-8">
+            <h4 className="text-[16px] text-[#344054] mb-4 text-left font-semibold">
+              Scope 2 GHG Emissions
+            </h4>
+
+            <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
+              <p className="text-[15px] text-[#667085] mb-2 mt-0">
+                Add statement about company's scope 2 emissions
+              </p>
+              <button
+                className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
+                onClick={loadScope2AutoFillContent}
+              >
+                <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
+                Auto Fill
+              </button>
+            </div>
+
+            <div className="mb-4">
+              <JoditEditor
+                ref={editorRefScope2}
+                value={metricsTargets.scope2Emissions}
+                config={{...config, placeholder: "Add statement about company's scope 2 emissions"}}
+                tabIndex={3}
+                onBlur={handleScope2EditorChange}
+                onChange={handleScope2EditorChange}
+              />
+            </div>
+
+            {/* Response from GRI 305-2 placeholder */}
+            <div className="mb-4 rounded-lg">
+              <div className="mt-2">
+                <div className="overflow-x-auto">
+                  <div className="border border-gray-200 rounded-lg overflow-hidden">
+                    <table className="w-full text-sm border-collapse">
+                      <thead>
+                        <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">Category</th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">Sub Category</th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">Activity</th>
+                          <th className="text-left py-2 px-4 font-medium text-gray-600">Emissions (tCO2e)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {scope2Data.length > 0 ? scope2Data.map((item, index) => (
+                          <tr key={index} className="border-t border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Category || ''}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Subcategory}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Activity}</td>
+                            <td className="py-2 px-4 text-gray-700">{item.total || '-'} {item.Units || 'tCO2e'}</td>
+                          </tr>
+                        )) : (
+                          <tr className="border-t border-gray-200">
+                            <td colSpan="4" className="py-2 px-4 text-center text-gray-500">No Scope 2 data available</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* SCOPE 3 GHG EMISSIONS SECTION */}
+          <div className="mb-8">
+            <h4 className="text-[16px] text-[#344054] mb-4 text-left font-semibold">
+              Scope 3 GHG Emissions
+            </h4>
+
+            <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
+              <p className="text-[15px] text-[#667085] mb-2 mt-0">
+                Add statement about company's scope 3 emissions
+              </p>
+              <button
+                className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
+                onClick={loadScope3AutoFillContent}
+              >
+                <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
+                Auto Fill
+              </button>
+            </div>
+
+            <div className="mb-4">
+              <JoditEditor
+                ref={editorRefScope3}
+                value={metricsTargets.scope3Emissions}
+                config={{...config, placeholder: "Add statement about company's scope 3 emissions"}}
+                tabIndex={4}
+                onBlur={handleScope3EditorChange}
+                onChange={handleScope3EditorChange}
+              />
+            </div>
+
+            {/* Response from GRI 305-3 placeholder */}
+            <div className="mb-4 rounded-lg">
+              <div className="mt-2">
+                <div className="overflow-x-auto">
+                  <div className="border border-gray-200 rounded-lg overflow-hidden">
+                    <table className="w-full text-sm border-collapse">
+                      <thead>
+                        <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">Category</th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">Sub Category</th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">Activity</th>
+                          <th className="text-left py-2 px-4 font-medium text-gray-600">Emissions (tCO2e)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {scope3Data.length > 0 ? scope3Data.map((item, index) => (
+                          <tr key={index} className="border-t border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Category || ''}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Subcategory}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Activity}</td>
+                            <td className="py-2 px-4 text-gray-700">{item.total || '-'} {item.Units || 'tCO2e'}</td>
+                          </tr>
+                        )) : (
+                          <tr className="border-t border-gray-200">
+                            <td colSpan="4" className="py-2 px-4 text-center text-gray-500">No Scope 3 data available</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* CONSOLIDATED EMISSIONS TABLES */}
           {/* GHG EMISSIONS BY SCOPE SECTION */}
           {allEmissionByScope.length > 0 && (
             <>
@@ -165,6 +420,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                 title=""
                 data={allEmissionByScope}
                 columns={["Scope", "Emissions (tCO2e)", "Percentage of Total"]}
+                dataType="scope"
               />
             </>
           )}
@@ -179,6 +435,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                 title=""
                 data={allEmissionBySource}
                 columns={["Emission Source", "Emissions (tCO2e)", "Percentage of Total"]}
+                dataType="source"
               />
             </>
           )}
@@ -193,6 +450,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                 title=""
                 data={allEmissionByLocation}
                 columns={["Geographic Location", "Emissions (tCO2e)", "Percentage of Total"]}
+                dataType="location"
               />
             </>
           )}
@@ -207,6 +465,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                 title=""
                 data={ghgEmissionIntensity}
                 columns={["Intensity Metric", "Value", "Unit"]}
+                dataType="intensity"
               />
             </>
           )}

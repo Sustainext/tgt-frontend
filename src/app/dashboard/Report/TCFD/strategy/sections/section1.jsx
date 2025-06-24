@@ -6,7 +6,7 @@ import Image from "next/image";
 import STARSVG from "../../../../../../../public/star.svg";
 import {
   setClimateRisksOpportunities,
-  setImpactOnBusiness,
+  setClimateRisksOpportunities2,
   selectStrategy,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
@@ -42,7 +42,7 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
 
   // Auto fill for first editor
   const loadAutoFillContent1 = () => {
-    const autoFillContent = `<p>Climate-related risks and opportunities have the potential to impact our business strategy, operations, and long-term value creation. In this section, we describe how (Fetch company name here) [Company Name] assesses, responds to, and integrates climate-related considerations into our core business strategy and financial planning.</p>`;
+    const autoFillContent = `<p>Climate-related risks and opportunities have the potential to impact our business strategy, operations, and long-term value creation. In this section, we describe how ${orgName} assesses, responds to, and integrates climate-related considerations into our core business strategy and financial planning.</p>`;
     
     dispatch(setClimateRisksOpportunities(autoFillContent));
     
@@ -56,7 +56,7 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
   const loadAutoFillContent2 = () => {
     const autoFillContent = `<p>We have identified a range of climate-related risks and opportunities across short-, medium-, and long-term time horizons, using internal assessments, scenario planning, and stakeholder input. These are broadly categorized as:</p>`;
     
-    dispatch(setImpactOnBusiness(autoFillContent));
+    dispatch(setClimateRisksOpportunities2(autoFillContent));
     
     // Force update the JoditEditor if it's mounted
     if (editorRef2.current) {
@@ -69,7 +69,7 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
   };
 
   const handleEditor2Change = (content) => {
-    dispatch(setImpactOnBusiness(content));
+    dispatch(setClimateRisksOpportunities2(content));
   };
 
   // Helper function to render array values
@@ -207,7 +207,7 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
           <div className="mb-6">
             <JoditEditor
               ref={editorRef2}
-              value={strategy.impactOnBusiness}
+              value={strategy.climateRisksOpportunities2}
               config={{...config, placeholder: "Add a statement about company's approach for identification of climate risks and opportunities"}}
               tabIndex={2}
               onBlur={handleEditor2Change}

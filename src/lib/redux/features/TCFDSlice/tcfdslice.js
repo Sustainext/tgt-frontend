@@ -36,6 +36,7 @@ const initialState = {
   // Strategy section
   strategy: {
     climateRisksOpportunities: '',
+    climateRisksOpportunities2: '',
     impactOnBusiness: '',
     resilienceOfStrategy: '',
     scenarioAnalysis: '',
@@ -52,6 +53,7 @@ const initialState = {
   // Metrics and Targets section
   metricsTargets: {
     climateMetrics: '',
+    metricsDescription: '', // New field for 7.1 description
     scope1Emissions: '',
     scope2Emissions: '',
     scope3Emissions: '',
@@ -114,7 +116,7 @@ const tcfdSlice = createSlice({
     setBoardOversight: (state, action) => {
       state.governance.boardOversight = action.payload;
     },
-    setTcfdFrameworkDescription: (state, action) => { // New action
+    setTcfdFrameworkDescription: (state, action) => {
       state.governance.tcfdFrameworkDescription = action.payload;
     },
     setManagementRole: (state, action) => {
@@ -130,6 +132,9 @@ const tcfdSlice = createSlice({
     // Strategy actions
     setClimateRisksOpportunities: (state, action) => {
       state.strategy.climateRisksOpportunities = action.payload;
+    },
+    setClimateRisksOpportunities2: (state, action) => {
+      state.strategy.climateRisksOpportunities2 = action.payload;
     },
     setImpactOnBusiness: (state, action) => {
       state.strategy.impactOnBusiness = action.payload;
@@ -158,6 +163,9 @@ const tcfdSlice = createSlice({
     // Metrics and Targets actions
     setClimateMetrics: (state, action) => {
       state.metricsTargets.climateMetrics = action.payload;
+    },
+    setMetricsDescription: (state, action) => { // New action for 7.1 description
+      state.metricsTargets.metricsDescription = action.payload;
     },
     setScope1Emissions: (state, action) => {
       state.metricsTargets.scope1Emissions = action.payload;
@@ -255,6 +263,7 @@ export const {
   
   // Strategy
   setClimateRisksOpportunities,
+  setClimateRisksOpportunities2,
   setImpactOnBusiness,
   setResilienceOfStrategy,
   setScenarioAnalysis,
@@ -267,6 +276,7 @@ export const {
   
   // Metrics and Targets
   setClimateMetrics,
+  setMetricsDescription, // New export
   setScope1Emissions,
   setScope2Emissions,
   setScope3Emissions,
@@ -304,10 +314,23 @@ export const selectGovernance = (state) => state.tcfdReport?.governance || {
   managementRole: '', 
   governanceStructure: '', 
   skillsCompetencies: '' 
-};export const selectStrategy = (state) => state.tcfdReport?.strategy || { climateRisksOpportunities: '', impactOnBusiness: '', resilienceOfStrategy: '', scenarioAnalysis: '' };
-export const selectRiskManagement = (state) => state.tcfdReport?.riskManagement || { identificationProcess: '', assessmentProcess: '', managementProcess: '', integrationIntoOverall: '' };
+};
+export const selectStrategy = (state) => state.tcfdReport?.strategy || { 
+  climateRisksOpportunities: '', 
+  climateRisksOpportunities2: '', 
+  impactOnBusiness: '', 
+  resilienceOfStrategy: '', 
+  scenarioAnalysis: '' 
+};
+export const selectRiskManagement = (state) => state.tcfdReport?.riskManagement || { 
+  identificationProcess: '', 
+  assessmentProcess: '', 
+  managementProcess: '', 
+  integrationIntoOverall: '' 
+};
 export const selectMetricsTargets = (state) => state.tcfdReport?.metricsTargets || { 
   climateMetrics: '', 
+  metricsDescription: '', // New field in selector
   scope1Emissions: '', 
   scope2Emissions: '', 
   scope3Emissions: '', 

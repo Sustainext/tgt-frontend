@@ -182,9 +182,9 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
 
           {/* Closing Remarks Section */}
           <div className="mt-8">
-            <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
-              Closing Remarks
-            </h4>
+            <h6 className="text-[15px] text-[#344054] mb-3 font-semibold">
+              Add your closing remarks here
+            </h6>
 
             <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
               <div className="flex-1"></div>
@@ -201,7 +201,7 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
               <JoditEditor
                 ref={editorRef2}
                 value={metricsTargets.climateTargets}
-                config={{...config, placeholder: "Add closing remarks about climate targets and future commitments"}}
+                config={{...config, placeholder: "Add your closing remarks here."}}
                 tabIndex={2}
                 onBlur={handleTargetsEditorChange}
                 onChange={handleTargetsEditorChange}
