@@ -408,7 +408,7 @@ const form_parent = response.data.form_data;
                 onChange={handleChange}
                 validator={validator}
                 widgets={widgets}
-                formContext={{ locationdata }}
+            formContext={{ locationdata,scopes: "bio1" }}
               />
             </div>
           </div>
