@@ -7,7 +7,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setEnergyConsumptionOutsideOrganization } from "../../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Section21 = ({ section12_4_3Ref, data, reportType }) => {
+const Section21 = ({ section12_4_3Ref, data, reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.4.3':'12.4.2',
+  sectionTitle = 'Energy Consumption Outside of the Organization',
+  sectionOrder = 12,
+ }) => {
   const content = useSelector(
     (state) => state.screen12Slice.energy_consumption_outside_organization
   );
@@ -65,7 +69,7 @@ const Section21 = ({ section12_4_3Ref, data, reportType }) => {
     <>
       <div id="section12_4_3" ref={section12_4_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'12.4.3':'12.4.2'} Energy Consumption Outside of the Organization
+        {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

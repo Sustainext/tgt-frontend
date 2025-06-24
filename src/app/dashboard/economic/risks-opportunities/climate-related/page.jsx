@@ -63,6 +63,9 @@ const Climaterelated = ({
   ];
   const tcfd = [];
   const tcfdtag = [];
+const selectedDisclosure = frameworkId === "6" && 
+  disclosures?.Strategy?.disclosures?.find((d) => d.id === 3 && d.selected);
+const selectid = selectedDisclosure ? selectedDisclosure.id : null;
 
   if (frameworkId === "6" && disclosures?.Strategy?.disclosures) {
     const govDisclosures = disclosures.Strategy.disclosures;
@@ -79,6 +82,7 @@ const Climaterelated = ({
       tcfdtag.push({
         tagName: "TCFD-STG-A",
       });
+     
     }
   }
   return (
@@ -194,6 +198,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         selectedLocation={selectedLocation}
         togglestatus={togglestatus}
         tcfdtag={tcfdtag}
+        frameworkId={frameworkId}
+        selectid={selectid}
       />
     </>
   );

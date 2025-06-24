@@ -10,7 +10,11 @@ import {
   setPolicyPublic,
 } from "../../../../../../lib/redux/features/ESGSlice/screen9Slice";
 
-const Section2 = ({ section9_1Ref, section9_1_1Ref, data }) => {
+const Section2 = ({ section9_1Ref, section9_1_1Ref, data,
+  sectionNumber = "9.1.1",
+  sectionTitle = 'Governance structure and composition',
+  sectionOrder = 9,
+ }) => {
   const board_gov_statement = useSelector(
     (state) => state.screen9Slice.board_gov_statement
   );
@@ -31,14 +35,10 @@ const Section2 = ({ section9_1Ref, section9_1_1Ref, data }) => {
 
   return (
     <>
-      <div id="section9_1" ref={section9_1Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          9.1 Board of Directors 
-        </h3>
-      </div>
+      
       <div id="section9_1_1" ref={section9_1_1Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          9.1.1 Governance structure and composition
+          {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

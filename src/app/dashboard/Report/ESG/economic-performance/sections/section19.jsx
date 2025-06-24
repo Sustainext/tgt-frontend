@@ -3,7 +3,11 @@ import DynamicTable from "../tables/dynamicTable";
 import DynamicTable2 from "../tables/dynamicTable2";
 import { useSelector } from "react-redux";
 
-const Section19 = ({ section11_5_4Ref,reportType }) => {
+const Section19 = ({ section11_5_4Ref,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.5.4':'11.5.3',
+  sectionTitle = 'Training on Anti-Corruption',
+  sectionOrder = 11,
+ }) => {
   // Extract data from Redux state
   const data = useSelector((state) => state.screen11Slice.getdata);
 
@@ -160,7 +164,7 @@ const Section19 = ({ section11_5_4Ref,reportType }) => {
   return (
     <div id="section11_5_4" ref={section11_5_4Ref}>
       <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-      {reportType=='GRI Report: In accordance With'?'11.5.4.':'11.5.3.'}  Training on Anti-Corruption
+      {sectionNumber} {sectionTitle}
       </h3>
 
       {/* Table 1: Governance Body Members - Communication */}

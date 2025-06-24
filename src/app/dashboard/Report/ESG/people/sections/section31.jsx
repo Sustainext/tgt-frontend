@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setViolationDiscriminationPolicy } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section31 = ({ section13_8Ref, data }) => {
+const Section31 = ({ section13_8Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.8':'13.8',
+  sectionTitle = "Incidents of Violation/Discrimination", 
+  sectionOrder = 13
+ }) => {
   const content = useSelector(
     (state) => state.screen13Slice.violation_discrimination_policy
   );
@@ -58,7 +62,7 @@ const Section31 = ({ section13_8Ref, data }) => {
     <>
       <div id="section13_8" ref={section13_8Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          13.8 Incidents of Violation/Discrimination
+          {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

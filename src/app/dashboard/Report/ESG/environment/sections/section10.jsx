@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setMaterialManagementStrategy } from "../../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Section10 = ({ section12_2Ref, data }) => {
+const Section10 = ({ section12_2Ref, data,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.2':'12.2',
+  sectionTitle = 'Materials',
+  sectionOrder = 12,
+ }) => {
   const content = useSelector(
     (state) => state.screen12Slice.material_management_strategy
   );
@@ -44,7 +48,7 @@ const Section10 = ({ section12_2Ref, data }) => {
     <>
       <div id="section12_2" ref={section12_2Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          12.2 Materials
+          {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

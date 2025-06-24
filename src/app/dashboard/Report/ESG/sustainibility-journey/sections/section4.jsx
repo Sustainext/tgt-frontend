@@ -6,7 +6,10 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setSupplyChainSustainability } from "../../../../../../lib/redux/features/ESGSlice/screen10Slice";
 
-const Section4 = ({ section10_3Ref,data }) => {
+const Section4 = ({ section10_3Ref,data,
+  sectionNumber = "10.3",
+  sectionTitle = 'Supply Chain Sustainability',
+ }) => {
   const approach_to_supply_chain_sustainability = useSelector(
     (state) => state.screen10Slice.approach_to_supply_chain_sustainability
   );
@@ -31,7 +34,7 @@ const Section4 = ({ section10_3Ref,data }) => {
     <>
       <div ref={section10_3Ref} id="section10_3">
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          10.3 Supply Chain Sustainability
+          {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">

@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmployeeSkillUpgradePrograms } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section17 = ({ section13_5_2Ref, data, reportType }) => {
+const Section17 = ({ section13_5_2Ref, data, reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.5.2':'13.5.1',
+  sectionTitle = "Programs for Upgrading Employee Skills and Transition", 
+  sectionOrder = 13
+ }) => {
   const content = useSelector(
     (state) => state.screen13Slice.employee_skill_upgrade_programs
   );
@@ -118,7 +122,7 @@ const Section17 = ({ section13_5_2Ref, data, reportType }) => {
     <>
       <div id="section13_5_2" ref={section13_5_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'13.5.2':'13.5.1'}   Programs for Upgrading Employee Skills and Transition
+       {sectionNumber} {sectionTitle}
           Assistance Programs 
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">

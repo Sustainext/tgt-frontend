@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setFreedomOfAssociationViews } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section30 = ({ section13_7_2Ref, orgName, data }) => {
+const Section30 = ({ section13_7_2Ref, orgName, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.7.1':'13.7.1',
+  sectionTitle = "Operations and Suppliers in Which the Right to Freedom of Association and Collective Bargaining May Be at Risk", 
+  sectionOrder = 13
+ }) => {
   const content = useSelector(
     (state) => state.screen13Slice.freedom_of_association_views
   );
@@ -99,8 +103,7 @@ const Section30 = ({ section13_7_2Ref, orgName, data }) => {
     <>
       <div id="section13_7_2" ref={section13_7_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          13.7.1 Operations and Suppliers in Which the Right to Freedom of
-          Association and Collective Bargaining May Be at Risk
+          {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

@@ -7,14 +7,18 @@ const stripHTML = (htmlString) => {
   return tempDiv.textContent || tempDiv.innerText || "";
 };
 
-const Section14 = ({ section11_4_3Ref,reportType }) => {
+const Section14 = ({ section11_4_3Ref,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.4.3':'11.4.2',
+  sectionTitle = 'Tax Governance and Risk Management',
+  sectionOrder = 11,
+ }) => {
   const data = useSelector((state) => state.screen11Slice.getdata);
 
   return (
     <>
       <div id="section11_4_3" ref={section11_4_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'11.4.3':'11.4.2'} Tax Governance and Risk Management
+       {sectionNumber} {sectionTitle}
         </h3>
 
         <p className="text-[15px] mb-2 font-semibold">

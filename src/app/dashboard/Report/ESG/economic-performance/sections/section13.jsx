@@ -23,7 +23,11 @@ const headerKeyMap = {
   "Reasons for the difference between corporate income tax accrued on profit/loss and the tax due if the statutory tax rate is applied to profit/loss before tax.": "reasons_for_difference_in_accrued_and_statutory_tax",
 };
 
-const Section13 = ({ section11_4_2Ref,reportType }) => {
+const Section13 = ({ section11_4_2Ref,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.4.2':'11.4.1',
+  sectionTitle = 'Approach to Tax',
+  sectionOrder = 11,
+ }) => {
   const data = useSelector((state) => state.screen11Slice.getdata);
   const col = Object.keys(headerKeyMap);
   
@@ -38,7 +42,7 @@ const Section13 = ({ section11_4_2Ref,reportType }) => {
     <>
       <div id="section11_4_2" ref={section11_4_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-         {reportType=='GRI Report: In accordance With'?'11.4.2':'11.4.1'}  Approach to Tax
+         {sectionNumber} {sectionTitle}
         </h3>
 
         {/* Mapping through 207_1a */}

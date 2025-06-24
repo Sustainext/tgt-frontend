@@ -10,7 +10,10 @@ import {
   setImpactAssessment,
 } from "../../../../../../lib/redux/features/ESGSlice/screen14Slice";
 
-const Section1 = ({ section14_1Ref, data }) => {
+const Section1 = ({ section14_1Ref, data,
+  sectionNumber=14.1,
+  sectionOrder = 14,
+ }) => {
   const community_engagement_statement = useSelector(
     (state) => state.screen14Slice.community_engagement_statement
   );
@@ -47,7 +50,7 @@ const Section1 = ({ section14_1Ref, data }) => {
       <div ref={section14_1Ref} id="section14_1">
         <div>
           <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-            14.1 Community Engagement
+            {sectionNumber} Community Engagement
           </h3>
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
             <p className="text-[15px] text-[#344054] mb-2 mt-3">

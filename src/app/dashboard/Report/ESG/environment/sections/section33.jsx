@@ -384,7 +384,11 @@ function removeContributionColumn(columns) {
   return columns.filter((column) => column.dataIndex !== "contribution");
 }
 
-const Section33 = ({ section12_7Ref, data }) => {
+const Section33 = ({ section12_7Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.7':'12.7',
+  sectionTitle = 'Air Quality',
+  sectionOrder = 12,
+ }) => {
   const content = useSelector(
     (state) => state.screen12Slice.air_quality_protection_commitment
   );
@@ -530,7 +534,7 @@ const Section33 = ({ section12_7Ref, data }) => {
     <>
       <div id="section12_7" ref={section12_7Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          12.7 Air Quality
+          {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

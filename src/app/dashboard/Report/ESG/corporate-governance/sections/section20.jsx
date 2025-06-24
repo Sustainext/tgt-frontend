@@ -2,7 +2,10 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const Section20=({section9_6Ref,section9_6_1Ref,data})=>{
+const Section20=({section9_6Ref,section9_6_1Ref,data,
+    sectionOrder = 9,
+    sectionNumber=9.6
+})=>{
     const [content,setContent] = useState(
         `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam minus, voluptates obcaecati velit fuga tempore laudantium consequuntur illo`
     )
@@ -11,7 +14,7 @@ const Section20=({section9_6Ref,section9_6_1Ref,data})=>{
         <>
         <div id="section9_6" ref={section9_6Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-        9.6 Policy
+        {sectionNumber} Policy
             </h3>
            
            
