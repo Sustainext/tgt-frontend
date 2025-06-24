@@ -78,6 +78,15 @@ const Governance = forwardRef(({ onSubmitSuccess }, ref) => {
         field: "management_role",
         isSkipped: false,
       },
+      description: {
+        page: "governance",
+        label: "4.1. Board's Oversight of Climate-Related Risks and Opportunitiess",
+        subLabel: "description",
+        type: "textarea",
+        content: governance.tcfdFrameworkDescription,
+        field: "description",
+        isSkipped: false,
+      },
     };
     
     formData.append('data', JSON.stringify(dataPayload));

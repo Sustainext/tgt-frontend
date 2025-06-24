@@ -39,7 +39,7 @@ const Section2 = ({ section4_2Ref, data, tcfdCollectData, orgName }) => {
   };
 
   const loadAutoFillContent = () => {
-    const autoFillContent = `<p>${orgName || '[Company Name]'} has established a formalized approach to ensure climate-related responsibilities are embedded across management structures. In line with TCFD recommendations, our organization has developed clear internal processes to assign roles, enable reporting, and support operational oversight of climate-related issues. Climate-related responsibilities have been assigned to relevant management-level positions and committees, which are actively involved in assessing and managing climate-related risks and opportunities.</p>
+    const autoFillContent = `<p>${orgName || '[Company Name]'} has established a formalized approach to ensure climate-related responsibilities are embedded within management structures. In line with TCFD recommendations, the organization has developed clear internal processes to assign roles, enable reporting, and support operational oversight of climate-related issues. Climate-related responsibilities have been assigned to relevant management-level positions and committees, which are actively involved in assessing and managing climate-related risks and opportunities.</p>
 
 <p>Structured processes have been defined for informing management about climate-related issues, and these are tracked through established monitoring mechanisms. Overall, ${orgName || '[Company Name]'}'s approach ensures that management has both the responsibility and the information required to effectively assess, manage, and report on climate-related risks and opportunities, while maintaining alignment with the company's broader strategic, financial, and sustainability objectives.</p>`;
     
@@ -60,7 +60,7 @@ const Section2 = ({ section4_2Ref, data, tcfdCollectData, orgName }) => {
 
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
             <p className="text-[15px] text-[#667085] mb-2 mt-3">
-              Add a statement about how the company's management identifies and handles climate-related risks
+              Add a statement about how the company’s management identifies and handles climate-related risks and opportunities.
             </p>
             <button
               className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"

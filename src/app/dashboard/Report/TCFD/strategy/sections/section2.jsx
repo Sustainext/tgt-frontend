@@ -144,7 +144,7 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
               </p>
               
               <BusinessImpactTable 
-                title="Climate-Related Risk and Opportunity Impact"
+                title=""
                 data={businessImpactData.Q1}
                 columns={["Climate-Related Risk/Opportunity", "Business Areas Affected", "Impact"]}
               />

@@ -42,7 +42,7 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
 
   // Auto fill for first editor
   const loadAutoFillContent1 = () => {
-    const autoFillContent = `<p>Climate-related risks and opportunities have the potential to impact our business strategy, operations, and long-term value creation. In this section, we describe how ${orgName || '[Company Name]'} currently views these issues, based on our assessments, scenario planning, and long-term value creation financial planning.</p>`;
+    const autoFillContent = `<p>Climate-related risks and opportunities have the potential to impact our business strategy, operations, and long-term value creation. In this section, we describe how (Fetch company name here) [Company Name] assesses, responds to, and integrates climate-related considerations into our core business strategy and financial planning.</p>`;
     
     dispatch(setClimateRisksOpportunities(autoFillContent));
     
@@ -215,23 +215,13 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
             />
           </div>
 
-          <div className="mb-6 text-sm leading-relaxed">
-            <p className="mb-4">
-              We have identified a range of climate-related risks and opportunities across short-, medium-, and long-term 
-              time horizons, using internal assessments, scenario planning, and stakeholder input. These are broadly 
-              categorized as:
-            </p>
-          </div>
-
           <RiskTable title="Physical Risks" riskData={physicalRisks} isPhysical={true} />
           <RiskTable title="Transition Risks" riskData={transitionRisks} isTransition={true} />
           <RiskTable title="Other Risks" riskData={otherRisks} isOther={true} />
 
           <div className="mb-6 text-sm leading-relaxed py-4 rounded">
             <p className="mb-2">
-              We define our climate-related time horizons to ensure a consistent and forward-looking approach to assessing risks 
-              and opportunities. These are categorized as immediate term (0-1 years), short-term (1-3 years), and long-term (3+ 
-              years) to support decision-making.
+              We define our climate-related time horizons to ensure a consistent and forward-looking approach to assessing risks and opportunities. These are categorized as Immediate-term (0–1 year), Short-term (1–3 years), Medium-term (3–5 years), and Long-term (5+ years), providing a structured basis for strategic planning.  
             </p>
           </div>
         </div>
