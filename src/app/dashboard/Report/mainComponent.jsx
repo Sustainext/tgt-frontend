@@ -63,7 +63,7 @@ import {
   selectFormData,
 } from "../../../lib/redux/features/reportCreationSlice"; // Adjust import path
 import {initializeForCustomReport,resetToDefaults,fetchReportBuilderData} from '../../../lib/redux/features/reportBuilderSlice'
-
+import {setActivesection} from '../../../lib/redux/features/TCFD/TcfdSlice'
 
 const Report = () => {
   const [isExpandedpage, setIsExpandedpage] = useState(true);
@@ -183,7 +183,7 @@ const Report = () => {
     }   
    getReportExist();
     setMassgeshow(false);
-    setMassgename();
+    setMassgename("");
   }, [
     firstSelection,
     startdate,
@@ -803,6 +803,11 @@ const Report = () => {
     setIsExpandedpage(!isExpandedpage);
   };
 
+  const handlePass = (link, step) => {
+    router.push(link); // Navigate to the provided link
+    dispatch(setActivesection(step)); // Set the current section (like "Structure")
+  };
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
     setMassgeshow(false);
@@ -831,6 +836,7 @@ const Report = () => {
     setMassgeshow(false);
     setMaterialityAssessmentLen([]);
     setError({});
+    setMassgename(""),
     setReportExist(false);
     setEntities([]);
     setSelectedYear("");
@@ -976,13 +982,16 @@ const Report = () => {
                             <p className="text-[#0D024D] text-[12px]">
                               Proceed to Collect &gt;
                             </p>
-                            <Link
-                              href="/dashboard/general"
-                              className="text-blue-500 text-sm font-semibold flex"
+                            <p
+                              // href="/dashboard/general"
+                              onClick={()=>{
+                                handlePass('/dashboard/general','Org Details')
+                              }}
+                              className="text-blue-500 text-sm font-semibold flex cursor-pointer"
                             >
                               General &gt; GRI Reporting Info
                               <GoArrowRight className="font-bold mt-1 ml-2" />
-                            </Link>
+                            </p>
                           </div>
                         </div>
                         <div className="ml-auto">
@@ -1529,8 +1538,9 @@ const Report = () => {
                       <button
                         type="submit"
                         // value="Create Report"
-                        className="w-[100%] h-[31px] mb-2 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex cursor-pointer text-white"
+                        className={`w-[100%] ${massgename === "esg_report" && reporttype==='GRI Report: In accordance With'?'opacity-30 cursor-not-allowed':'cursor-pointe'} bg-sky-600 h-[31px] mb-2 px-[22px] py-2  rounded shadow flex-col justify-center items-center inline-flex text-white`}
                         onClick={handleSubmit}
+                        disabled={massgename === "esg_report" && reporttype==='GRI Report: In accordance With'}
                       >
                         Create Report
                       </button>
