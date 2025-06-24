@@ -54,7 +54,7 @@ const Section2 = ({ section2_2Ref, data }) => {
           
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
             <p className="text-[15px] text-[#344054] mb-2 mt-3">
-              ***** ADD TEXT*******
+             Add a brief statement explaining the purpose of this report
             </p>
             <button
               className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"

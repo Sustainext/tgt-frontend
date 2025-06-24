@@ -11,10 +11,13 @@ import {
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section3 = ({ section5_3Ref, data, orgName }) => {
+const Section3 = ({ section5_3Ref, data, tcfdCollectData, orgName }) => {
   const dispatch = useDispatch();
   const strategy = useSelector(selectStrategy);
   const editorRef = useRef(null);
+
+  // Extract resilience data from tcfdCollectData
+  const resilienceData = tcfdCollectData?.strategy_resilience_to_climate_related_risks_and_opportunities?.[0] || {};
 
   // Jodit Editor configuration
   const config = {
@@ -55,6 +58,16 @@ const Section3 = ({ section5_3Ref, data, orgName }) => {
     dispatch(setResilienceOfStrategy(content));
   };
 
+  // Helper function to render array values
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.map((item, index) => (
+        <div key={index}>{item}</div>
+      ));
+    }
+    return value || '';
+  };
+
   return (
     <>
       <div>
@@ -67,40 +80,82 @@ const Section3 = ({ section5_3Ref, data, orgName }) => {
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Scenario Analysis
             </h4>
-            <div className="bg-blue-50 p-3 rounded border text-sm text-blue-600">
-              (Note for devs: A tailored version of the 'Climate Scenarios & Financial Impact' section's data is required here. i.e. skip yes/no response)
-            </div>
-            <div className="bg-blue-50 p-3 rounded border text-sm text-blue-600 mt-2">
-              (If 'yes' option is selected, fetch response from "If yes, please describe climate scenario(s) and/or associated time horizon(s) considered" question, without heading)
-            </div>
-            <div className="bg-blue-50 p-3 rounded border text-sm text-blue-600 mt-2">
-              (If 'No' option is selected skip entire section).
-            </div>
+            {resilienceData?.Q1 === 'Yes' && resilienceData?.Q2 ? (
+              <div className="text-sm">
+                {renderArrayValue(resilienceData.Q2)}
+              </div>
+            ) : (
+              <div className="text-sm text-gray-500">
+                {resilienceData?.Q1 === 'No' ? 'No scenario analysis conducted.' : 'No scenario analysis data available.'}
+              </div>
+            )}
           </div>
 
           <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Strategic Resilience and Evolution of Business Strategy
             </h4>
-            <div className="bg-blue-50 p-3 rounded border text-sm text-blue-600 mb-2">
-              (Response from "Describe how your organisation's strategy is resilient to climate related risks and opportunities, including use of a 2°C or lower scenario" question, without heading)
-            </div>
-            <div className="bg-blue-50 p-3 rounded border text-sm text-blue-600 mb-2">
-              (Response from "When your organisation's strategy was affected by climate-related risks and opportunities?" question, without heading)
-            </div>
-            <div className="bg-blue-50 p-3 rounded border text-sm text-blue-600">
-              (Response from "How is your organisation's strategy expected to evolve in response to identified climate-related risks and opportunities?" question, without heading)
-            </div>
+            
+            {/* Strategic Resilience */}
+            {resilienceData?.Q3 && (
+              <div className="mb-4">
+                <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                  Strategy Resilience to Climate Risks
+                </h5>
+                <div className="text-sm">
+                  {renderArrayValue(resilienceData.Q3)}
+                </div>
+              </div>
+            )}
+
+            {/* Strategy Affected by Climate Issues */}
+            {resilienceData?.Q4 && (
+              <div className="mb-4">
+                <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                  How Strategy Was Affected by Climate-Related Issues
+                </h5>
+                <div className="text-sm">
+                  {renderArrayValue(resilienceData.Q4)}
+                </div>
+              </div>
+            )}
+
+            {/* Strategy Evolution */}
+            {resilienceData?.Q5 && (
+              <div className="mb-4">
+                <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                  Expected Strategy Evolution
+                </h5>
+                <div className="text-sm">
+                  {renderArrayValue(resilienceData.Q5)}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Financial Impacts
             </h4>
-            <div className="bg-blue-50 p-3 rounded border text-sm text-blue-600">
-              (Response from "How have you been able to your organisation's strategy to climate-related issues considering potential impacts on financial planning under different climate scenarios?" question, without heading)
-            </div>
+            {resilienceData?.Q6 ? (
+              <div className="text-sm">
+                {renderArrayValue(resilienceData.Q6)}
+              </div>
+            ) : (
+              <div className="text-sm text-gray-500">
+                No financial impact data available.
+              </div>
+            )}
           </div>
+
+          {/* Show message if no resilience data */}
+          {Object.keys(resilienceData).length === 0 && (
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-blue-700 text-sm">
+                No strategy resilience data available. Please complete the questionnaire to see detailed resilience and scenario analysis information here.
+              </p>
+            </div>
+          )}
 
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between mt-6">
             <p className="text-[15px] text-[#667085] mb-2 mt-3">
