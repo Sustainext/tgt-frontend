@@ -4170,4 +4170,309 @@ export const Energydata = [
     ],
     link: "",
   },
+  {
+    category: ["62"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 304: Biodiversity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 304-1 Operational sites owned, leased, managed in, or
+            adjacent to, protected areas and areas of high biodiversity value
+            outside protected areas
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Monitoring which activities are taking place in both protected
+              areas and areas of high biodiversity value outside protected areas
+              makes it possible for the organization to reduce the risks of
+              impacts. It also makes it possible for the organization to manage
+              impacts on biodiversity or to avoid mismanagement.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://globalreporting.org/pdf.ashx?id=12499",
+  },
+  {
+    category: ["63"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-06.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-cyan-500 text-[17px] font-bold ml-2">SDG 6</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 6: Ensure availability and sustainable
+            management of water and sanitation for all
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, substantially increase water-use efficiency across all
+              sectors and ensure sustainable withdrawals and supply of
+              freshwater to address water scarcity and substantially reduce the
+              number of people suffering from water scarcity
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Change in water-use efficiency over time
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">6.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Level of water stress: freshwater withdrawal as a proportion of
+              available freshwater resources
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.a</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, expand international cooperation and capacity-building
+              support to developing countries in water- and sanitation-related
+              activities and programmes, including water harvesting,
+              desalination, water efficiency, wastewater treatment, recycling
+              and reuse technologies.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.a.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Amount of water- and sanitation-related official development
+              assistance that is part of a government-coordinated spending plan
+            </p>
+
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of local administrative units with established and
+              operational policies and procedures for participation of local
+              communities in water and sanitation management.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal6",
+  },
+  {
+    category: ["64"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-14.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#007dbc] text-[17px] font-bold ml-2">SDG 14</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Conserve and sustainably use the oceans, seas and marine resources
+            for sustainable development
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 14.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2020, sustainably manage and protect marine and coastal
+              ecosystems to avoid significant adverse impacts, including by
+              strengthening their resilience, and take action for their
+              restoration in order to achieve healthy and productive oceans
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">14.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Number of countries using ecosystem-based approaches to managing
+              marine areas
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal14",
+  },
+  {
+    category: ["65"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-15.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-600 text-[17px] font-bold ml-2">SDG 15</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Conserve and sustainably use the oceans, seas and marine resources
+            for sustainable development
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 15.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2020, ensure the conservation, restoration and sustainable use
+              of terrestrial and inland freshwater ecosystems and their
+              services, in particular forests, wetlands, mountains and drylands,
+              in line with obligations under international agreements
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">15.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Forest area as a proportion of total land area
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">15.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of important sites for terrestrial and freshwater
+              biodiversity that are covered by protected areas, by ecosystem
+              type
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 15.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Take urgent and significant action to reduce the degradation of
+              natural habitats, halt the loss of biodiversity and, by 2020,
+              protect and prevent the extinction of threatened species
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">Target 15.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">Red List Index</p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal15",
+  },
+  {
+    category: ["66"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 304: Biodiversity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 304-2 Significant impacts of activities, products and
+            services on biodiversity
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">Guidance</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Indirect impacts on biodiversity can include impacts in the supply
+              chain. Areas of impact are not limited to areas that are formally
+              protected and include consideration of impacts on buffer zones, as
+              well as formally designated areas of special importance or
+              sensitivity
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure provides the background for understanding (and
+              developing) an organization’s strategy to mitigate significant
+              direct and indirect impacts on biodiversity. By presenting
+              structured and qualitative information, the disclosure enables
+              comparison of the relative size, scale, and nature of impacts over
+              time and across organizations.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://globalreporting.org/pdf.ashx?id=12499",
+  },
+  {
+    category: ["67"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 304: Biodiversity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 304-3 Habitats protected or restored
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure addresses the extent of an organization’s
+              prevention and remediation activities with respect to its impacts
+              on biodiversity. This disclosure refers to areas where remediation
+              has been completed or where the area is actively protected. Areas
+              where operations are still active can be counted if they conform
+              to the definitions of ‘area restored’ or ‘area protected’.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://globalreporting.org/pdf.ashx?id=12499",
+  },
+  {
+    category: ["68"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 304: Biodiversity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 304-4 IUCN Red List species and national conservation
+            list species with habitats in areas affected by operations
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure helps an organization to identify where its
+              activities pose a threat to endangered plant and animal species.
+              By identifying these threats, the organization can initiate
+              appropriate steps to avoid harm and to prevent the extinction of
+              species. The International Union for Conservation of Nature (IUCN)
+              ‘Red List of Threatened Species’ (an inventory of the global
+              conservation status of plant and animal species) and national
+              conservation lists serve as authorities on the sensitivity of
+              habitat in areas affected by operations, and on the relative
+              importance of these habitats from a management perspective.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://globalreporting.org/pdf.ashx?id=12499",
+  },
 ];

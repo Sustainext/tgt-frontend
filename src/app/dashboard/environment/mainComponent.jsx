@@ -30,6 +30,10 @@ import Standards from "./Emissions/standards/page";
 import EmissionIntensity from "./Emissions/emission-Intensity/page";
 import Emissionreductioninitiativesnew from "./Emissions/emission-reduction-initiatives/page";
 import BioDiversityPolicies from "./BioDiversity/BioDiversityPolicies/page";
+import OperationalSites from "./BioDiversity/OperationalSites/page";
+import Significantimpacts from "./BioDiversity/Significantimpacts/page";
+import Habitatprotected from "./BioDiversity/Habitatprotected/page";
+import IUCNnational from "./BioDiversity/IUCNnational/page"
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -179,6 +183,7 @@ const materialnewTabs = [
       "Management of biodiversity impacts",
       "Synergies, Trade-offs & Stakeholder Engagement",
       "Access and benefit-sharing",
+      "Operational Sites",
     ];
   useEffect(() => {
  
@@ -569,7 +574,20 @@ useEffect(() => {
               )}
               {activeTab === "Emissions ODS" && (
                 <EmissionsODS apiData={data} setMobileopen={setMobileopen} />
+              )}  
+               {activeTab === "Operational Sites" && (
+                <OperationalSites apiData={data} setMobileopen={setMobileopen} />
               )}
+               {activeTab === "Significant impacts" && (
+                <Significantimpacts apiData={data} setMobileopen={setMobileopen} />
+              )} 
+              {activeTab === "Habitat Protected" && (
+                <Habitatprotected apiData={data} setMobileopen={setMobileopen} />
+              )}  
+                  {activeTab === "IUCN" && (
+                <IUCNnational apiData={data} setMobileopen={setMobileopen} />
+              )}  
+              
             </div>
           )}
         </div>
