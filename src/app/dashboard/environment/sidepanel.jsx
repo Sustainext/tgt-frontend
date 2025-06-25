@@ -268,6 +268,19 @@ const menu = [
         key: "Access and benefit-sharing",
         label: "Access and benefit-sharing",
       },
+      { key: "Identification of biodiversity impacts", label: "Identification of biodiversity impacts" },
+      {
+        key: "Location with Significant impacts on Biodiversity",
+        label: "Location with Significant impacts on Biodiversity",
+      },
+      {
+        key: "Changes in Ecosystem Use and Biodiversity Condition",
+        label: "Changes in Ecosystem Use and Biodiversity Condition",
+      },
+      {
+        key: "Ecosystem services and beneficiaries",
+        label: "Ecosystem services and beneficiaries",
+      },
     ],
   },
   {
@@ -433,7 +446,25 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
                         <p className="text-[12px] ml-3 text-gray-400">
                           Bio diversity 2021 &gt; Topic Management Disclosure
                         </p>
-                        {section.tabs.slice(4).map((tab) => (
+                        {section.tabs.slice(4,8).map((tab) => (
+                          <p
+                            key={tab.key}
+                            className={`flex text-start ml-4 px-2 py-2 focus:outline-none w-full text-[12px] cursor-pointer ${
+                              activeTab === tab.key
+                                ? "text-blue-400"
+                                : "bg-transparent text-[#727272]"
+                            }`}
+                            onClick={() => handleTabClick(tab.key)}
+                          >
+                            {tab.label}
+                          </p>
+                        ))}
+
+                        {/* Topic Disclosure */}
+                        <p className="text-[12px] ml-3 text-gray-400">
+                        Topic disclosure
+                        </p>
+                        {section.tabs.slice(8).map((tab) => (
                           <p
                             key={tab.key}
                             className={`flex text-start ml-4 px-2 py-2 focus:outline-none w-full text-[12px] cursor-pointer ${
