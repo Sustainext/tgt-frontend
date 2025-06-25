@@ -6,6 +6,7 @@ import Image from "next/image";
 import STARSVG from "../../../../../../../public/star.svg";
 import {
   setClimateTargets,
+  setClosingRemarks, // Add this new action to your Redux slice
   selectMetricsTargets,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
@@ -40,9 +41,9 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
   // Auto-fill functions
   const loadTargetsAutoFillContent = () => {
     const autoFillContent = `<p>${orgName || '[Company Name]'} has adopted a formal process for setting and monitoring climate-related targets as part of its broader sustainability and risk management strategy. These targets guide the company's response to climate-related risks and opportunities, ensuring alignment with long-term business and sustainability goals.</p>
-
+<br/>
 <p>To ensure clarity and comparability, targets are defined using established metric categories and key performance indicators.</p>
-
+<br/>
 <p>Overall, ${orgName || '[Company Name]'}'s approach to climate target-setting reflects a commitment to proactive climate management and supports its transition to a more sustainable and resilient operating model.</p>`;
     
     dispatch(setClimateTargets(autoFillContent));
@@ -54,7 +55,7 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
   const loadClosingRemarksAutoFillContent = () => {
     const autoFillContent = `<p>As climate-related risks and opportunities continue to evolve, ${orgName || '[Company Name]'} remains committed to enhancing the transparency, consistency, and depth of our climate-related disclosures. This report reflects our ongoing efforts to integrate climate considerations into our governance, strategy, risk management, and performance monitoring processes. We recognize that collective action is paramount, and we will continue to strengthen our capabilities, refine our approach, and engage with stakeholders to build a resilient, low-carbon future.</p>`;
     
-    dispatch(setClimateTargets(autoFillContent));
+    dispatch(setClosingRemarks(autoFillContent));
     if (editorRef2.current) {
       editorRef2.current.value = autoFillContent;
     }
@@ -62,6 +63,10 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
 
   const handleTargetsEditorChange = (content) => {
     dispatch(setClimateTargets(content));
+  };
+
+  const handleClosingRemarksEditorChange = (content) => {
+    dispatch(setClosingRemarks(content));
   };
 
   // Helper function to render array values
@@ -78,7 +83,7 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
         <div className="border border-gray-200 rounded-lg overflow-hidden">
           <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="">
+              <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
                 {columns.map((col, index) => (
                   <th
                     key={index}
@@ -99,18 +104,17 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
                   key={index}
                   className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
                 >
-                  {Object.values(row).map((value, cellIndex) => (
-                    <td
-                      key={cellIndex}
-                      className={`p-4 text-gray-700 ${
-                        cellIndex < Object.values(row).length - 1
-                          ? "border-r border-gray-200"
-                          : ""
-                      }`}
-                    >
-                      {renderArrayValue(value)}
-                    </td>
-                  ))}
+                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.RelatedTarget || '-'}</td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">{renderArrayValue(row.MetricCategory)}</td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.TargetType || '-'}</td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.MetricUnit || '-'}</td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.BaseYear || '-'}</td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.BaselineValue || '-'}</td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.TargetTimeFrame || '-'}</td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.TargetValue || '-'}</td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.TargetGoals || '-'}</td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.PerformanceIndicators || '-'}</td>
+                  <td className="p-4 text-gray-700">{row.MethodologyUsed || '-'}</td>
                 </tr>
               )) : (
                 <tr className="bg-white border-t border-gray-200">
@@ -169,7 +173,13 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
                 "Target Metric Category",
                 "Target Type",
                 "Metric Unit",
-                "Base Year"
+                "Base Year",
+                "Base line value",
+                "Target Time Frame",
+                "Target Value",
+                "Target Goals",
+                "Key Performance Indicator",
+                "Methodology Used"
               ]}
             />
           ) : (
@@ -200,11 +210,11 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
             <div className="mb-6">
               <JoditEditor
                 ref={editorRef2}
-                value={metricsTargets.climateTargets}
+                value={metricsTargets.closingRemarks}
                 config={{...config, placeholder: "Add your closing remarks here."}}
                 tabIndex={2}
-                onBlur={handleTargetsEditorChange}
-                onChange={handleTargetsEditorChange}
+                onBlur={handleClosingRemarksEditorChange}
+                onChange={handleClosingRemarksEditorChange}
               />
             </div>
           </div>

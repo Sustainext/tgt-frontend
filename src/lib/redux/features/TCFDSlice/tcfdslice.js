@@ -53,7 +53,8 @@ const initialState = {
   // Metrics and Targets section
   metricsTargets: {
     climateMetrics: '',
-    metricsDescription: '', // New field for 7.1 description
+    metricsDescription: '',
+    mainContentEmissions: '',
     scope1Emissions: '',
     scope2Emissions: '',
     scope3Emissions: '',
@@ -63,6 +64,7 @@ const initialState = {
     ghgByBusiness: '',
     ghgByLocation: '',
     climateTargets: '',
+    closingRemarks: '',
     sectorInfo: '',
   },
   
@@ -167,6 +169,9 @@ const tcfdSlice = createSlice({
     setMetricsDescription: (state, action) => { // New action for 7.1 description
       state.metricsTargets.metricsDescription = action.payload;
     },
+    setMainContentEmissions: (state, action) => {
+      state.metricsTargets.mainContentEmissions = action.payload;
+    },
     setScope1Emissions: (state, action) => {
       state.metricsTargets.scope1Emissions = action.payload;
     },
@@ -194,6 +199,9 @@ const tcfdSlice = createSlice({
     setClimateTargets: (state, action) => {
       state.metricsTargets.climateTargets = action.payload;
     },
+    setClosingRemarks: (state, action) => {
+  state.metricsTargets.closingRemarks = action.payload;
+},
     setSectorInfo: (state, action) => {
       state.metricsTargets.sectorInfo = action.payload;
     },
@@ -277,6 +285,7 @@ export const {
   // Metrics and Targets
   setClimateMetrics,
   setMetricsDescription, // New export
+  setMainContentEmissions,
   setScope1Emissions,
   setScope2Emissions,
   setScope3Emissions,
@@ -286,6 +295,7 @@ export const {
   setGhgByBusiness,
   setGhgByLocation,
   setClimateTargets,
+  setClosingRemarks,
   setSectorInfo,
   
   // General
@@ -331,6 +341,7 @@ export const selectRiskManagement = (state) => state.tcfdReport?.riskManagement 
 export const selectMetricsTargets = (state) => state.tcfdReport?.metricsTargets || { 
   climateMetrics: '', 
   metricsDescription: '', // New field in selector
+  mainContentEmissions: '',
   scope1Emissions: '', 
   scope2Emissions: '', 
   scope3Emissions: '', 
@@ -340,6 +351,7 @@ export const selectMetricsTargets = (state) => state.tcfdReport?.metricsTargets 
   ghgByBusiness: '',
   ghgByLocation: '',
   climateTargets: '',
+  closingRemarks: '', 
   sectorInfo: ''
 };
 export const selectCurrentSection = (state) => state.tcfdReport?.currentSection || 0;
