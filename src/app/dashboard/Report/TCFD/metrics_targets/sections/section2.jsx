@@ -30,21 +30,35 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
   const editorRefScope2 = useRef(null);
   const editorRefScope3 = useRef(null);
   const editorRefIntensity = useRef(null);
-    const editorRefSectorInfo = useRef(null); // Add this line
-
+  const editorRefSectorInfo = useRef(null);
 
   // Extract emission data from tcfdCollectData
   const emissionAnalyse = tcfdCollectData?.emission_analyse || {};
   const allEmissionByScope = emissionAnalyse?.all_emission_by_scope || [];
   const allEmissionBySource = emissionAnalyse?.top_5_emisson_by_source || [];
-  const allEmissionByLocation =
-    emissionAnalyse?.top_5_emisson_by_location || [];
+  const allEmissionByLocation = emissionAnalyse?.top_5_emisson_by_location || [];
   const ghgEmissionIntensity = emissionAnalyse?.ghg_emission_intensity || [];
 
   // Extract scope-specific data
   const scope1Data = tcfdCollectData.scope_1 || [];
   const scope2Data = tcfdCollectData.scope_2 || [];
   const scope3Data = tcfdCollectData.scope_3 || [];
+
+  // Helper function to safely render any data value
+  const safeRenderValue = (value) => {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    
+    if (typeof value === 'object') {
+      if (value.start && value.end) {
+        return `${value.start} - ${value.end}`;
+      }
+      return JSON.stringify(value);
+    }
+    
+    return String(value);
+  };
 
   // Jodit Editor configuration
   const config = {
@@ -127,12 +141,10 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
     }
   };
 
-  // 4. Add the change handler with your existing change handlers
   const handleSectorInfoEditorChange = (content) => {
     dispatch(setSectorInfo(content));
   };
 
-  // Add this change handler for GHG Intensity
   const handleGhgIntensityEditorChange = (content) => {
     dispatch(setGhgIntensity(content));
   };
@@ -190,51 +202,51 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                     {dataType === "scope" && (
                       <>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {row.scope || "-"}
+                          {safeRenderValue(row.scope) || "-"}
                         </td>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {row.total || "-"} {row.Units || "tCO2e"}
+                          {safeRenderValue(row.total) || "-"} {safeRenderValue(row.Units) || "tCO2e"}
                         </td>
                         <td className="p-4 text-gray-700">
-                          {row.contribution || "-"}%
+                          {safeRenderValue(row.contribution) || "-"}%
                         </td>
                       </>
                     )}
                     {dataType === "source" && (
                       <>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {row.source || "-"}
+                          {safeRenderValue(row.source) || "-"}
                         </td>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {row.total || "-"} {row.Units || "tCO2e"}
+                          {safeRenderValue(row.total) || "-"} {safeRenderValue(row.Units) || "tCO2e"}
                         </td>
                         <td className="p-4 text-gray-700">
-                          {row.contribution || "-"}%
+                          {safeRenderValue(row.contribution) || "-"}%
                         </td>
                       </>
                     )}
                     {dataType === "location" && (
                       <>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {row.location || "-"}
+                          {safeRenderValue(row.location) || "-"}
                         </td>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {row.total || "-"} {row.Units || "tCO2e"}
+                          {safeRenderValue(row.total) || "-"} {safeRenderValue(row.Units) || "tCO2e"}
                         </td>
                         <td className="p-4 text-gray-700">
-                          {row.contribution || "-"}%
+                          {safeRenderValue(row.contribution) || "-"}%
                         </td>
                       </>
                     )}
                     {dataType === "intensity" && (
                       <>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {row.intensityMetric || "-"}
+                          {safeRenderValue(row.intensityMetric) || "-"}
                         </td>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {row.value || "-"}
+                          {safeRenderValue(row.value) || "-"}
                         </td>
-                        <td className="p-4 text-gray-700">{row.unit || "-"}</td>
+                        <td className="p-4 text-gray-700">{safeRenderValue(row.unit) || "-"}</td>
                       </>
                     )}
                   </tr>
@@ -327,7 +339,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
               />
             </div>
 
-            {/* Response from GRI 305-1 placeholder */}
+            {/* Scope 1 Data Table */}
             <div className="mb-4 rounded-lg">
               <div className="mt-2">
                 <div className="overflow-x-auto">
@@ -357,17 +369,17 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                               className="border-t border-gray-200 hover:bg-gray-50 transition-colors"
                             >
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {item.category || ""}
+                                {safeRenderValue(item.category)}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {item.subcategory}
+                                {safeRenderValue(item.subcategory)}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {item.activity}
+                                {safeRenderValue(item.activity)}
                               </td>
                               <td className="py-2 px-4 text-gray-700">
-                                {item.emission_unit || "-"}{" "}
-                                {item.Units || "tCO2e"}
+                                {safeRenderValue(item.emission_unit) || "-"}{" "}
+                                {safeRenderValue(item.Units) || "tCO2e"}
                               </td>
                             </tr>
                           ))
@@ -423,7 +435,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
               />
             </div>
 
-            {/* Response from GRI 305-2 placeholder */}
+            {/* Scope 2 Data Table */}
             <div className="mb-4 rounded-lg">
               <div className="mt-2">
                 <div className="overflow-x-auto">
@@ -453,17 +465,17 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                               className="border-t border-gray-200 hover:bg-gray-50 transition-colors"
                             >
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {item.category || ""}
+                                {safeRenderValue(item.category)}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {item.subcategory}
+                                {safeRenderValue(item.subcategory)}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {item.activity}
+                                {safeRenderValue(item.activity)}
                               </td>
                               <td className="py-2 px-4 text-gray-700">
-                                {item.emission_unit || "-"}{" "}
-                                {item.Units || "tCO2e"}
+                                {safeRenderValue(item.emission_unit) || "-"}{" "}
+                                {safeRenderValue(item.Units) || "tCO2e"}
                               </td>
                             </tr>
                           ))
@@ -519,7 +531,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
               />
             </div>
 
-            {/* Response from GRI 305-3 placeholder */}
+            {/* Scope 3 Data Table */}
             <div className="mb-4 rounded-lg">
               <div className="mt-2">
                 <div className="overflow-x-auto">
@@ -549,16 +561,16 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                               className="border-t border-gray-200 hover:bg-gray-50 transition-colors"
                             >
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {item.category || ""}
+                                {safeRenderValue(item.category)}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {item.subcategory}
+                                {safeRenderValue(item.subcategory)}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {item.activity}
+                                {safeRenderValue(item.activity)}
                               </td>
                               <td className="py-2 px-4 text-gray-700">
-                                {item.emission || "-"}
+                                {safeRenderValue(item.emission) || "-"}
                               </td>
                             </tr>
                           ))
@@ -668,7 +680,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
               />
             </div>
 
-            {/* Response from Analysis+Environment+Emissions placeholder */}
+            {/* GHG Intensity Data Table */}
             <div className="mb-4 rounded-lg">
               <div className="mt-2">
                 <div className="overflow-x-auto">
@@ -701,18 +713,20 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                               className="border-t border-gray-200 hover:bg-gray-50 transition-colors"
                             >
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                Data
+                                {safeRenderValue(item.organizationMetric) || "Data"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                Data
+                                {safeRenderValue(item.quantity) || "Data"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                Data
+                                {safeRenderValue(item.unit) || "Data"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                Data
+                                {safeRenderValue(item.typeOfGHG) || "Data"}
                               </td>
-                              <td className="py-2 px-4 text-gray-700">Data</td>
+                              <td className="py-2 px-4 text-gray-700">
+                                {safeRenderValue(item.ghgEmissionIntensity) || "Data"}
+                              </td>
                             </tr>
                           ))
                         ) : (
@@ -734,7 +748,6 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
           </div>
 
           <div className="mb-8">
-
             <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
               <p className="text-[15px] text-[#667085] mb-2 mt-0 w-4/5">
                 Add sector-specific (e.g. financial or non-financial) information relevant to the 'metrics & targets' disclosures, in line with TCFD recommendations
@@ -763,7 +776,6 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
               />
             </div>
           </div>
-
 
           {/* Show message if no emissions data available */}
           {allEmissionByScope.length === 0 &&
