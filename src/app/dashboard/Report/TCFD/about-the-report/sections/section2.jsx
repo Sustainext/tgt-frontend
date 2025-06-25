@@ -19,7 +19,7 @@ const Section2 = ({ section2_2Ref, data }) => {
   // Jodit Editor configuration
   const config = {
     readonly: false,
-    placeholder: "***** ADD TEXT*******",
+    placeholder: "Add a brief statement explaining the purpose of this report",
     height: 200,
     toolbarSticky: false,
     showCharsCounter: false,
