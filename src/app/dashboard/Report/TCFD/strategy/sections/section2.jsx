@@ -17,7 +17,11 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
   const editorRef = useRef(null);
 
   // Extract business impact data from tcfdCollectData
-  const businessImpactData = tcfdCollectData?.general_business_impact?.[0] || {};
+  const businessImpactData =
+    tcfdCollectData?.general_business_impact?.[0] || {};
+
+      const ghgEmissionsData = tcfdCollectData?.ghg_emissions_reduction_commitments?.[0] || {};
+
 
   // Jodit Editor configuration
   const config = {
@@ -28,17 +32,26 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
     showWordsCounter: false,
     showXPathInStatusbar: false,
     buttons: [
-      'bold', 'italic', 'underline', '|',
-      'ul', 'ol', '|',
-      'font', 'fontsize', '|',
-      'align', '|',
-      'undo', 'redo'
+      "bold",
+      "italic",
+      "underline",
+      "|",
+      "ul",
+      "ol",
+      "|",
+      "font",
+      "fontsize",
+      "|",
+      "align",
+      "|",
+      "undo",
+      "redo",
     ],
   };
 
   const loadAutoFillContent = () => {
     const autoFillContent = `Climate-related risks and opportunities are increasingly influencing how we operate, invest, and plan for the future. This section outlines how these factors are integrated into our core business strategy, financial planning processes, and long-term decision-making. </p>`;
-    
+
     dispatch(setImpactOnBusiness(autoFillContent));
   };
 
@@ -49,11 +62,9 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
   // Helper function to render array values
   const renderArrayValue = (value) => {
     if (Array.isArray(value)) {
-      return value.map((item, index) => (
-        <div key={index}>{item}</div>
-      ));
+      return value.map((item, index) => <div key={index}>{item}</div>);
     }
-    return value || '';
+    return value || "";
   };
 
   const BusinessImpactTable = ({ title, data, columns }) => (
@@ -65,10 +76,12 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
             <thead>
               <tr className="">
                 {columns.map((col, index) => (
-                  <th 
-                    key={index} 
+                  <th
+                    key={index}
                     className={`py-8 px-4 text-left text-gray-600 font-medium ${
-                      index < columns.length - 1 ? 'border-r border-gray-200' : ''
+                      index < columns.length - 1
+                        ? "border-r border-gray-200"
+                        : ""
                     }`}
                   >
                     {col}
@@ -78,21 +91,25 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
             </thead>
             <tbody>
               {data?.map((row, index) => (
-                <tr key={index} className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors">
+                <tr
+                  key={index}
+                  className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
+                >
                   <td className="border-r border-gray-200 p-4 text-gray-700">
-                    {row.label || ''}
+                    {row.label || ""}
                   </td>
                   <td className="border-r border-gray-200 p-4 text-gray-700">
                     {renderArrayValue(row.selectedOptions)}
                   </td>
-                  <td className="p-4 text-gray-700">
-                    {row.impact || ''}
-                  </td>
+                  <td className="p-4 text-gray-700">{row.impact || ""}</td>
                 </tr>
               ))}
               {(!data || data.length === 0) && (
                 <tr className="bg-white border-t border-gray-200">
-                  <td colSpan={columns.length} className="p-4 text-center text-gray-500">
+                  <td
+                    colSpan={columns.length}
+                    className="p-4 text-center text-gray-500"
+                  >
                     No data available
                   </td>
                 </tr>
@@ -114,7 +131,8 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
 
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
             <p className="text-[15px] text-[#667085] mb-2 mt-3">
-              Add statement about impact of climate related issues on company's business, strategy and financial planning
+              Add statement about impact of climate related issues on company's
+              business, strategy and financial planning
             </p>
             <button
               className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
@@ -129,7 +147,11 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
             <JoditEditor
               ref={editorRef}
               value={strategy.impactOnBusiness}
-              config={{...config, placeholder: "Add statement about impact of climate related issues on company's business, strategy and financial planning"}}
+              config={{
+                ...config,
+                placeholder:
+                  "Add statement about impact of climate related issues on company's business, strategy and financial planning",
+              }}
               tabIndex={1}
               onBlur={handleEditorChange}
               onChange={() => {}}
@@ -140,13 +162,19 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
           {businessImpactData?.Q1 && (
             <div className="mb-6">
               <p className="text-sm mb-4">
-                The following table outlines how climate-related issues have influenced our organization's strategy, planning, and operations across key business areas:
+                The following table outlines how climate-related issues have
+                influenced our organization's strategy, planning, and operations
+                across key business areas:
               </p>
-              
-              <BusinessImpactTable 
+
+              <BusinessImpactTable
                 title=""
                 data={businessImpactData.Q1}
-                columns={["Climate-Related Risk/Opportunity", "Business Areas Affected", "Impact"]}
+                columns={[
+                  "Climate-Related Risk/Opportunity",
+                  "Business Areas Affected",
+                  "Impact",
+                ]}
               />
             </div>
           )}
@@ -157,9 +185,7 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
               <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
                 Financial Planning Prioritization
               </h4>
-              <div className="text-sm">
-                {businessImpactData.Q2}
-              </div>
+              <div className="text-sm">{businessImpactData.Q2}</div>
             </div>
           )}
 
@@ -168,20 +194,51 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
               <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
                 Impact on Financial Planning
               </h4>
-              <div className="text-sm">
-                {businessImpactData.Q3}
-              </div>
+              <div className="text-sm">{businessImpactData.Q3}</div>
             </div>
           )}
 
           {/* Show message if no business impact data */}
-          {(!businessImpactData?.Q1 && !businessImpactData?.Q2 && !businessImpactData?.Q3) && (
-            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-blue-700 text-sm">
-                No business impact data available. Please complete the questionnaire to see detailed business impact information here.
-              </p>
-            </div>
-          )}
+          {!businessImpactData?.Q1 &&
+            !businessImpactData?.Q2 &&
+            !businessImpactData?.Q3 && (
+              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-blue-700 text-sm">
+                  No business impact data available. Please complete the
+                  questionnaire to see detailed business impact information
+                  here.
+                </p>
+              </div>
+            )}
+
+          {/* GHG Emission Reduction Commitments Section */}
+          <div className="mb-6">
+            <h4 className="text-[16px] text-[#344054] mb-4 font-semibold">
+              GHG Emission Reduction Commitments
+            </h4>
+            
+            {/* Check if GHG emissions data exists */}
+            {Object.keys(ghgEmissionsData).length > 0 ? (
+              <div className="space-y-4">
+                {/* Q1 - Commitment Details */}
+                {ghgEmissionsData.Q1 === 'Yes' && (
+                  <div className="mb-4">
+
+                    <div className="rounded-lg text-sm text-gray-700">
+                      {ghgEmissionsData.Q2}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-blue-700 text-sm">
+                  No GHG emission reduction commitments data available. Please complete the
+                  questionnaire to see detailed emission reduction commitment information here.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>
