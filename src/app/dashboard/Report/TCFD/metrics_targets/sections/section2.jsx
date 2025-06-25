@@ -261,10 +261,10 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                       <tbody>
                         {scope1Data.length > 0 ? scope1Data.map((item, index) => (
                           <tr key={index} className="border-t border-gray-200 hover:bg-gray-50 transition-colors">
-                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Category || 'Scope 1'}</td>
-                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Subcategory}</td>
-                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Activity}</td>
-                            <td className="py-2 px-4 text-gray-700">{item.total || '-'} {item.Units || 'tCO2e'}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.category || ''}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.subcategory}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.activity}</td>
+                            <td className="py-2 px-4 text-gray-700">{item.emission_unit || '-'} {item.Units || 'tCO2e'}</td>
                           </tr>
                         )) : (
                           <tr className="border-t border-gray-200">
@@ -326,10 +326,10 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                       <tbody>
                         {scope2Data.length > 0 ? scope2Data.map((item, index) => (
                           <tr key={index} className="border-t border-gray-200 hover:bg-gray-50 transition-colors">
-                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Category || ''}</td>
-                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Subcategory}</td>
-                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Activity}</td>
-                            <td className="py-2 px-4 text-gray-700">{item.total || '-'} {item.Units || 'tCO2e'}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.category || ''}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.subcategory}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.activity}</td>
+                            <td className="py-2 px-4 text-gray-700">{item.emission_unit || '-'} {item.Units || 'tCO2e'}</td>
                           </tr>
                         )) : (
                           <tr className="border-t border-gray-200">
@@ -391,10 +391,10 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                       <tbody>
                         {scope3Data.length > 0 ? scope3Data.map((item, index) => (
                           <tr key={index} className="border-t border-gray-200 hover:bg-gray-50 transition-colors">
-                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Category || ''}</td>
-                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Subcategory}</td>
-                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.Activity}</td>
-                            <td className="py-2 px-4 text-gray-700">{item.total || '-'} {item.Units || 'tCO2e'}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.category || ''}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.subcategory}</td>
+                            <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.activity}</td>
+                            <td className="py-2 px-4 text-gray-700">{item.emission_unit || '-'} {item.Units || 'tCO2e'}</td>
                           </tr>
                         )) : (
                           <tr className="border-t border-gray-200">
