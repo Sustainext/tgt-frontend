@@ -18,7 +18,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
   const metricsTargets = useSelector(selectMetricsTargets);
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
-  const editorRef3 = useRef(null); // New ref for metrics description
+  const editorRef3 = useRef(null);
 
   // Extract metrics data from tcfdCollectData
   const riskMetrics = tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities || [];
@@ -63,13 +63,11 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
 
     dispatch(setClimateMetrics(autoFillContent));
     
-    // Force update the JoditEditor if it's mounted
     if (editorRef1.current) {
       editorRef1.current.value = autoFillContent;
     }
   };
 
-  // New autofill function for metrics description
   const loadAutoFillDescriptionContent = () => {
     const autoFillContent = `<p>${orgName || '[Company Name]'} uses clearly defined metrics to monitor and evaluate climate-related risks and opportunities as part of its broader sustainability management framework. These metrics support risk assessment, strategic planning, and operational decision-making.</p>
 <br/>
@@ -81,7 +79,6 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
 
     dispatch(setMetricsDescription(autoFillContent));
     
-    // Force update the JoditEditor if it's mounted
     if (editorRef3.current) {
       editorRef3.current.value = autoFillContent;
     }
@@ -92,7 +89,6 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
 
     dispatch(setSectorInfo(autoFillContent));
     
-    // Force update the JoditEditor if it's mounted
     if (editorRef2.current) {
       editorRef2.current.value = autoFillContent;
     }
@@ -110,12 +106,40 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
     dispatch(setSectorInfo(content));
   };
 
-  // Helper function to render array values
+  // Fixed helper function to render array values and handle objects
   const renderArrayValue = (value) => {
     if (Array.isArray(value)) {
       return value.join(', ');
     }
+    
+    // Handle objects (like date ranges with start/end)
+    if (value && typeof value === 'object') {
+      // Check if it's a date range object
+      if (value.start && value.end) {
+        return `${value.start} - ${value.end}`;
+      }
+      // Handle other object types by converting to JSON string
+      return JSON.stringify(value);
+    }
+    
+    // Handle primitive values
     return value || '';
+  };
+
+  // Helper function to safely render any data value
+  const safeRenderValue = (value) => {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    
+    if (typeof value === 'object') {
+      if (value.start && value.end) {
+        return `${value.start} - ${value.end}`;
+      }
+      return JSON.stringify(value);
+    }
+    
+    return String(value);
   };
 
   const MetricsTable = ({ title, data, columns }) => (
@@ -150,19 +174,19 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
                     {renderArrayValue(row.MetricCategory)}
                   </td>
                   <td className="border-r border-gray-200 p-4 text-gray-700">
-                    {row.KeyMetric || ''}
+                    {safeRenderValue(row.KeyMetric)}
                   </td>
                   <td className="border-r border-gray-200 p-4 text-gray-700">
-                    {row.ClimateRelatedRisk || ''}
+                    {safeRenderValue(row.ClimateRelatedRisk)}
                   </td>
                   <td className="border-r border-gray-200 p-4 text-gray-700">
-                    {row.MetricValue || ''}
+                    {safeRenderValue(row.MetricValue)}
                   </td>
                   <td className="border-r border-gray-200 p-4 text-gray-700">
-                    {row.MetricUnit || ''}
+                    {safeRenderValue(row.MetricUnit)}
                   </td>
                   <td className="p-4 text-gray-700">
-                    {row.TimeHorizon || ''}
+                    {safeRenderValue(row.TimeHorizon)}
                   </td>
                 </tr>
               )) : (
@@ -203,7 +227,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
               config={config}
               tabIndex={1}
               onBlur={handleEditorChange}
-              onChange={() => {}} // Empty onChange to prevent focus loss
+              onChange={() => {}}
             />
           </div>
 
@@ -211,7 +235,6 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
             7.1 Metrics used to assess climate related risks and opportunities 
           </h3>
 
-          {/* New JoditEditor section for description */}
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start mb-4">
             <p className="text-[15px] text-[#667085] mb-2 mt-0">
               Add a statement about the metrics used to assess climate-related risks and opportunities
@@ -232,7 +255,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
               config={descriptionConfig}
               tabIndex={3}
               onBlur={handleMetricsDescriptionChange}
-              onChange={() => {}} // Empty onChange to prevent focus loss
+              onChange={() => {}}
             />
           </div>
 
@@ -279,8 +302,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
               Integration of Climate-Related Metrics into Remuneration Policies
             </h4>
             <div className="text-sm">
-              {/* This will be populated from API when available */}
-              {data?.remuneration_integration || "Information about climate metrics integration into remuneration policies will be displayed here when available."}
+              {safeRenderValue(data?.remuneration_integration) || "Information about climate metrics integration into remuneration policies will be displayed here when available."}
             </div>
           </div>
 
@@ -290,8 +312,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
               Internal Carbon Pricing Mechanisms
             </h4>
             <div className="text-sm">
-              {/* This will be populated from API when available */}
-              {data?.carbon_pricing || "Internal carbon pricing mechanism information will be displayed here when available."}
+              {safeRenderValue(data?.carbon_pricing) || "Internal carbon pricing mechanism information will be displayed here when available."}
             </div>
           </div>
 
@@ -301,8 +322,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
               Revenue from Low-Carbon Products and Services
             </h4>
             <div className="text-sm">
-              {/* This will be populated from API when available */}
-              {data?.low_carbon_revenue || "Revenue from low-carbon products and services information will be displayed here when available."}
+              {safeRenderValue(data?.low_carbon_revenue) || "Revenue from low-carbon products and services information will be displayed here when available."}
             </div>
           </div>
 
@@ -310,13 +330,6 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
             <p className="text-[15px] text-[#667085] mb-2 mt-0">
               Add sector-specific (e.g., financial or non-financial) information relevant to the 'metrics & targets' disclosures, in line with TCFD sector guidance (if applicable).
             </p>
-            {/* <button
-              className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-              onClick={loadAutoFillContent2} 
-            >
-              <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
-              Auto Fill
-            </button> */}
           </div>
 
           <div className="mb-6">
@@ -326,7 +339,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
               config={{...config, placeholder: "Add sector-specific information relevant to the 'metrics & targets' disclosures"}}
               tabIndex={2}
               onBlur={handleSectorInfoChange}
-              onChange={() => {}} // Empty onChange to prevent focus loss
+              onChange={() => {}}
             />
           </div>
         </div>
