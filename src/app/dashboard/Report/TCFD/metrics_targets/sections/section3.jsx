@@ -211,7 +211,7 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
                 config={{...config, placeholder: "Add your closing remarks here."}}
                 tabIndex={2}
                 onBlur={handleClosingRemarksEditorChange}
-                onChange={handleClosingRemarksEditorChange}
+                onChange={()=>{}}
               />
             </div>
           </div>

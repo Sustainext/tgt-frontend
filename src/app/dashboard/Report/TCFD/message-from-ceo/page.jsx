@@ -281,7 +281,7 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
         content: signatureFileName,
         field: "signature_file_name",
         isSkipped: false,
-      }
+      },
     };
 
     formData.append("data", JSON.stringify(dataPayload));
@@ -378,7 +378,7 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
         }
 
         // Load signature information
-       if (
+        if (
           reportData &&
           reportData.signature_url &&
           reportData.signature_url.content

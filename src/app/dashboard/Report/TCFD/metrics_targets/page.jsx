@@ -12,11 +12,20 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import {
-  setClimateMetrics,
+   setClimateMetrics,
+  setMetricsDescription,          // Add this
+  setMainContentEmissions,        // Add this
   setScope1Emissions,
   setScope2Emissions,
   setScope3Emissions,
+  setGhgIntensity,               // Add this
+  setGhgByScope,                 // Add this
+  setGhgBySource,                // Add this
+  setGhgByBusiness,              // Add this
+  setGhgByLocation,              // Add this
   setClimateTargets,
+  setClosingRemarks,             // Add this
+  setSectorInfo,                 // Add this
   selectMetricsTargets,
 } from "../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
@@ -255,53 +264,83 @@ const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
   };
 
   const loadFormData = async () => {
-    LoaderOpen();
-    dispatch(setClimateMetrics(""));
-    dispatch(setScope1Emissions(""));
-    dispatch(setScope2Emissions(""));
-    dispatch(setScope3Emissions(""));
-    dispatch(setClimateTargets(""));
+  LoaderOpen();
+  
+  // Reset all Redux state to empty strings
+  dispatch(setClimateMetrics(""));
+  dispatch(setMetricsDescription(""));
+  dispatch(setMainContentEmissions(""));
+  dispatch(setScope1Emissions(""));
+  dispatch(setScope2Emissions(""));
+  dispatch(setScope3Emissions(""));
+  dispatch(setGhgIntensity(""));
+  dispatch(setGhgByScope(""));
+  dispatch(setGhgBySource(""));
+  dispatch(setGhgByBusiness(""));
+  dispatch(setGhgByLocation(""));
+  dispatch(setClimateTargets(""));
+  dispatch(setClosingRemarks(""));
+  dispatch(setSectorInfo(""));
 
-    const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/metrics_targets/`;
-    try {
-      const response = await axiosInstance.get(url);
+  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/metrics_targets/`;
+  try {
+    const response = await axiosInstance.get(url);
 
-      if (response.data && response.data.data) {
-        console.log("Metrics & Targets response.data", response.data);
+    if (response.data && response.data.data) {
+      console.log("Metrics & Targets response.data", response.data);
 
-        // Handle both report_data and tcfd_collect_data
-        const reportData = response.data.data.report_data || {};
-        const tcfdData = response.data.data.tcfd_collect_data || {};
+      // Handle both report_data and tcfd_collect_data
+      const reportData = response.data.data.report_data || {};
+      const tcfdData = response.data.data.tcfd_collect_data || {};
 
-        setData(reportData);
-        setTcfdCollectData(tcfdData);
+      setData(reportData);
+      setTcfdCollectData(tcfdData);
 
-        // Set Redux state from report_data if available
-        dispatch(setClimateMetrics(reportData?.climate_metrics?.content || ""));
-        dispatch(
-          setScope1Emissions(reportData?.scope1_emissions?.content || "")
-        );
-        dispatch(
-          setScope2Emissions(reportData?.scope2_emissions?.content || "")
-        );
-        dispatch(
-          setScope3Emissions(reportData?.scope3_emissions?.content || "")
-        );
-        dispatch(setClimateTargets(reportData?.climate_targets?.content || ""));
+      // Set ALL Redux state from report_data if available
+      dispatch(setClimateMetrics(reportData?.climate_metrics?.content || ""));
+      dispatch(setMetricsDescription(reportData?.metrics_description?.content || ""));
+      dispatch(setMainContentEmissions(reportData?.main_content_emissions?.content || ""));
+      dispatch(setScope1Emissions(reportData?.scope1_emissions?.content || ""));
+      dispatch(setScope2Emissions(reportData?.scope2_emissions?.content || ""));
+      dispatch(setScope3Emissions(reportData?.scope3_emissions?.content || ""));
+      dispatch(setGhgIntensity(reportData?.ghg_intensity?.content || ""));
+      dispatch(setGhgByScope(reportData?.ghg_by_scope?.content || ""));
+      dispatch(setGhgBySource(reportData?.ghg_by_source?.content || ""));
+      dispatch(setGhgByBusiness(reportData?.ghg_by_business?.content || ""));
+      dispatch(setGhgByLocation(reportData?.ghg_by_location?.content || ""));
+      dispatch(setClimateTargets(reportData?.climate_targets?.content || ""));
+      dispatch(setClosingRemarks(reportData?.closing_remarks?.content || ""));
+      dispatch(setSectorInfo(reportData?.sector_info?.content || ""));
 
-        console.log("Metrics & Targets TCFD Collect Data:", tcfdData);
-      } else {
-        setData({});
-        setTcfdCollectData({});
-      }
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
+      console.log("Metrics & Targets TCFD Collect Data:", tcfdData);
+      console.log("Loaded Redux State:", {
+        climateMetrics: reportData?.climate_metrics?.content || "",
+        metricsDescription: reportData?.metrics_description?.content || "",
+        mainContentEmissions: reportData?.main_content_emissions?.content || "",
+        scope1Emissions: reportData?.scope1_emissions?.content || "",
+        scope2Emissions: reportData?.scope2_emissions?.content || "",
+        scope3Emissions: reportData?.scope3_emissions?.content || "",
+        ghgIntensity: reportData?.ghg_intensity?.content || "",
+        ghgByScope: reportData?.ghg_by_scope?.content || "",
+        ghgBySource: reportData?.ghg_by_source?.content || "",
+        ghgByBusiness: reportData?.ghg_by_business?.content || "",
+        ghgByLocation: reportData?.ghg_by_location?.content || "",
+        climateTargets: reportData?.climate_targets?.content || "",
+        closingRemarks: reportData?.closing_remarks?.content || "",
+        sectorInfo: reportData?.sector_info?.content || "",
+      });
+    } else {
       setData({});
       setTcfdCollectData({});
-      LoaderClose();
     }
-  };
+    LoaderClose();
+  } catch (error) {
+    console.error("API call failed:", error);
+    setData({});
+    setTcfdCollectData({});
+    LoaderClose();
+  }
+};
 
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {
