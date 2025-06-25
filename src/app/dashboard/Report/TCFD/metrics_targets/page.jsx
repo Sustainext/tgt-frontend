@@ -28,12 +28,12 @@ import Section3 from "./sections/section3";
 const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
   const dispatch = useDispatch();
   const metricsTargets = useSelector(selectMetricsTargets);
-  
+
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
-  
+
   const apiCalledRef = useRef(false);
   const [data, setData] = useState({});
   const [tcfdCollectData, setTcfdCollectData] = useState({});
@@ -58,92 +58,188 @@ const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
     setLoOpen(false);
   };
 
-const submitForm = async (type) => {
-  LoaderOpen();
+  const submitForm = async (type) => {
+    LoaderOpen();
 
-  const formData = new FormData();
-  formData.append('report', reportid);
-  formData.append('screen_name', 'metrics_targets');
-  
-  const dataPayload = {
-    climate_metrics: {
-      page: "metrics_targets",
-      label: "7. Metrics and Targets",
-      subLabel: "Climate-Related Metrics",
-      type: "textarea",
-      content: metricsTargets.climateMetrics,
-      field: "climate_metrics",
-      isSkipped: false,
-    },
-    scope1_emissions: {
-      page: "metrics_targets",
-      label: "7.2 Scope 1 Emissions",
-      subLabel: "Scope 1 GHG Emissions",
-      type: "textarea",
-      content: metricsTargets.scope1Emissions,
-      field: "scope1_emissions",
-      isSkipped: false,
-    },
-    scope2_emissions: {
-      page: "metrics_targets",
-      label: "7.3 Scope 2 Emissions",
-      subLabel: "Scope 2 GHG Emissions",
-      type: "textarea",
-      content: metricsTargets.scope2Emissions,
-      field: "scope2_emissions",
-      isSkipped: false,
-    },
-    scope3_emissions: {
-      page: "metrics_targets",
-      label: "7.4 Scope 3 Emissions",
-      subLabel: "Scope 3 GHG Emissions",
-      type: "textarea",
-      content: metricsTargets.scope3Emissions,
-      field: "scope3_emissions",
-      isSkipped: false,
-    },
-    climate_targets: {
-      page: "metrics_targets",
-      label: "7.5 Targets and Performance",
-      subLabel: "Climate Targets",
-      type: "textarea",
-      content: metricsTargets.climateTargets,
-      field: "climate_targets",
-      isSkipped: false,
-    },
-  };
-  
-  formData.append('data', JSON.stringify(dataPayload));
+    const formData = new FormData();
+    formData.append("report", reportid);
+    formData.append("screen_name", "metrics_targets");
 
-  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
-
-  try {
-    const response = await axiosInstance.put(url, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
+    const dataPayload = {
+      climate_metrics: {
+        page: "metrics_targets",
+        label: "7. Metrics and Targets",
+        subLabel: "Climate-Related Metrics",
+        type: "textarea",
+        content: metricsTargets.climateMetrics,
+        field: "climate_metrics",
+        isSkipped: false,
       },
-    });
+      metrics_description: {
+        page: "metrics_targets",
+        label: "7.1 Metrics Description",
+        subLabel: "Metrics Assessment Description",
+        type: "textarea",
+        content: metricsTargets.metricsDescription,
+        field: "metrics_description",
+        isSkipped: false,
+      },
+      main_content_emissions: {
+        page: "metrics_targets",
+        label: "7.2 GHG Emissions",
+        subLabel: "GHG Emissions Strategy",
+        type: "textarea",
+        content: metricsTargets.mainContentEmissions,
+        field: "main_content_emissions",
+        isSkipped: false,
+      },
+      scope1_emissions: {
+        page: "metrics_targets",
+        label: "7.2 Scope 1 Emissions",
+        subLabel: "Scope 1 GHG Emissions",
+        type: "textarea",
+        content: metricsTargets.scope1Emissions,
+        field: "scope1_emissions",
+        isSkipped: false,
+      },
+      scope2_emissions: {
+        page: "metrics_targets",
+        label: "7.3 Scope 2 Emissions",
+        subLabel: "Scope 2 GHG Emissions",
+        type: "textarea",
+        content: metricsTargets.scope2Emissions,
+        field: "scope2_emissions",
+        isSkipped: false,
+      },
+      scope3_emissions: {
+        page: "metrics_targets",
+        label: "7.4 Scope 3 Emissions",
+        subLabel: "Scope 3 GHG Emissions",
+        type: "textarea",
+        content: metricsTargets.scope3Emissions,
+        field: "scope3_emissions",
+        isSkipped: false,
+      },
+      ghg_intensity: {
+        page: "metrics_targets",
+        label: "7.2 GHG Emissions Intensity",
+        subLabel: "GHG Emission Intensity",
+        type: "textarea",
+        content: metricsTargets.ghgIntensity,
+        field: "ghg_intensity",
+        isSkipped: false,
+      },
+      ghg_by_scope: {
+        page: "metrics_targets",
+        label: "7.2 GHG By Scope",
+        subLabel: "GHG Emissions by Scope",
+        type: "textarea",
+        content: metricsTargets.ghgByScope,
+        field: "ghg_by_scope",
+        isSkipped: false,
+      },
+      ghg_by_source: {
+        page: "metrics_targets",
+        label: "7.2 GHG By Source",
+        subLabel: "GHG Emissions by Source",
+        type: "textarea",
+        content: metricsTargets.ghgBySource,
+        field: "ghg_by_source",
+        isSkipped: false,
+      },
+      ghg_by_business: {
+        page: "metrics_targets",
+        label: "7.2 GHG By Business",
+        subLabel: "GHG Emissions by Business",
+        type: "textarea",
+        content: metricsTargets.ghgByBusiness,
+        field: "ghg_by_business",
+        isSkipped: false,
+      },
+      ghg_by_location: {
+        page: "metrics_targets",
+        label: "7.2 GHG By Location",
+        subLabel: "GHG Emissions by Location",
+        type: "textarea",
+        content: metricsTargets.ghgByLocation,
+        field: "ghg_by_location",
+        isSkipped: false,
+      },
+      climate_targets: {
+        page: "metrics_targets",
+        label: "7.5 Targets and Performance",
+        subLabel: "Climate Targets",
+        type: "textarea",
+        content: metricsTargets.climateTargets,
+        field: "climate_targets",
+        isSkipped: false,
+      },
+      closing_remarks: {
+        page: "metrics_targets",
+        label: "7.5 Closing Remarks",
+        subLabel: "Closing Remarks",
+        type: "textarea",
+        content: metricsTargets.closingRemarks,
+        field: "closing_remarks",
+        isSkipped: false,
+      },
+      sector_info: {
+        page: "metrics_targets",
+        label: "7.1 Sector Information",
+        subLabel: "Sector-Specific Information",
+        type: "textarea",
+        content: metricsTargets.sectorInfo,
+        field: "sector_info",
+        isSkipped: false,
+      },
+    };
 
-    if (response.status === 200 || response.status === 201) {
-      if (type === "next") {
-        toast.success("Data added successfully", {
+    formData.append("data", JSON.stringify(dataPayload));
+
+    const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
+
+    try {
+      const response = await axiosInstance.put(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        if (type === "next") {
+          toast.success("Data added successfully", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+
+        if (onSubmitSuccess) {
+          onSubmitSuccess(true);
+        }
+        LoaderClose();
+        return true;
+      } else {
+        toast.error("Oops, something went wrong", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: "colored",
         });
+        LoaderClose();
+        return false;
       }
-
-      if (onSubmitSuccess) {
-        onSubmitSuccess(true);
-      }
+    } catch (error) {
       LoaderClose();
-      return true;
-    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -154,67 +250,58 @@ const submitForm = async (type) => {
         progress: undefined,
         theme: "colored",
       });
-      LoaderClose();
       return false;
     }
-  } catch (error) {
-    LoaderClose();
-    toast.error("Oops, something went wrong", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-    return false;
-  }
-};
+  };
 
-const loadFormData = async () => {
-  LoaderOpen();
-  dispatch(setClimateMetrics(""));
-  dispatch(setScope1Emissions(""));
-  dispatch(setScope2Emissions(""));
-  dispatch(setScope3Emissions(""));
-  dispatch(setClimateTargets(""));
-  
-  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/metrics_targets/`;
-  try {
-    const response = await axiosInstance.get(url);
-    
-    if (response.data && response.data.data) {
-      console.log("Metrics & Targets response.data", response.data);
-      
-      // Handle both report_data and tcfd_collect_data
-      const reportData = response.data.data.report_data || {};
-      const tcfdData = response.data.data.tcfd_collect_data || {};
-      
-      setData(reportData);
-      setTcfdCollectData(tcfdData);
-      
-      // Set Redux state from report_data if available
-      dispatch(setClimateMetrics(reportData?.climate_metrics?.content || ""));
-      dispatch(setScope1Emissions(reportData?.scope1_emissions?.content || ""));
-      dispatch(setScope2Emissions(reportData?.scope2_emissions?.content || ""));
-      dispatch(setScope3Emissions(reportData?.scope3_emissions?.content || ""));
-      dispatch(setClimateTargets(reportData?.climate_targets?.content || ""));
-      
-      console.log("Metrics & Targets TCFD Collect Data:", tcfdData);
-    } else {
+  const loadFormData = async () => {
+    LoaderOpen();
+    dispatch(setClimateMetrics(""));
+    dispatch(setScope1Emissions(""));
+    dispatch(setScope2Emissions(""));
+    dispatch(setScope3Emissions(""));
+    dispatch(setClimateTargets(""));
+
+    const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/metrics_targets/`;
+    try {
+      const response = await axiosInstance.get(url);
+
+      if (response.data && response.data.data) {
+        console.log("Metrics & Targets response.data", response.data);
+
+        // Handle both report_data and tcfd_collect_data
+        const reportData = response.data.data.report_data || {};
+        const tcfdData = response.data.data.tcfd_collect_data || {};
+
+        setData(reportData);
+        setTcfdCollectData(tcfdData);
+
+        // Set Redux state from report_data if available
+        dispatch(setClimateMetrics(reportData?.climate_metrics?.content || ""));
+        dispatch(
+          setScope1Emissions(reportData?.scope1_emissions?.content || "")
+        );
+        dispatch(
+          setScope2Emissions(reportData?.scope2_emissions?.content || "")
+        );
+        dispatch(
+          setScope3Emissions(reportData?.scope3_emissions?.content || "")
+        );
+        dispatch(setClimateTargets(reportData?.climate_targets?.content || ""));
+
+        console.log("Metrics & Targets TCFD Collect Data:", tcfdData);
+      } else {
+        setData({});
+        setTcfdCollectData({});
+      }
+      LoaderClose();
+    } catch (error) {
+      console.error("API call failed:", error);
       setData({});
       setTcfdCollectData({});
+      LoaderClose();
     }
-    LoaderClose();
-  } catch (error) {
-    console.error("API call failed:", error);
-    setData({});
-    setTcfdCollectData({});
-    LoaderClose();
-  }
-};
+  };
 
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {
@@ -264,7 +351,7 @@ const loadFormData = async () => {
           </div>
         </div>
       </div>
-      
+
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval

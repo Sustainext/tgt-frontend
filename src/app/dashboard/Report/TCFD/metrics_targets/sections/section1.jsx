@@ -125,7 +125,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
         <div className="border border-gray-200 rounded-lg overflow-hidden">
           <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="">
+              <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
                 {columns.map((col, index) => (
                   <th
                     key={index}
@@ -203,7 +203,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
               config={config}
               tabIndex={1}
               onBlur={handleEditorChange}
-              onChange={handleEditorChange}
+              onChange={() => {}} // Empty onChange to prevent focus loss
             />
           </div>
 
@@ -232,7 +232,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
               config={descriptionConfig}
               tabIndex={3}
               onBlur={handleMetricsDescriptionChange}
-              onChange={handleMetricsDescriptionChange}
+              onChange={() => {}} // Empty onChange to prevent focus loss
             />
           </div>
 
@@ -326,7 +326,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
               config={{...config, placeholder: "Add sector-specific information relevant to the 'metrics & targets' disclosures"}}
               tabIndex={2}
               onBlur={handleSectorInfoChange}
-              onChange={handleSectorInfoChange}
+              onChange={() => {}} // Empty onChange to prevent focus loss
             />
           </div>
         </div>

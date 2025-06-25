@@ -270,7 +270,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
               }}
               tabIndex={1}
               onBlur={handleMainEditorChange}
-              onChange={handleMainEditorChange}
+              onChange={() => {}}
             />
           </div>
 
@@ -304,7 +304,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                 }}
                 tabIndex={2}
                 onBlur={handleScope1EditorChange}
-                onChange={handleScope1EditorChange}
+                onChange={() => {}}
               />
             </div>
 
@@ -400,7 +400,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                 }}
                 tabIndex={3}
                 onBlur={handleScope2EditorChange}
-                onChange={handleScope2EditorChange}
+                onChange={() => {}}
               />
             </div>
 
@@ -496,7 +496,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                 }}
                 tabIndex={4}
                 onBlur={handleScope3EditorChange}
-                onChange={handleScope3EditorChange}
+                onChange={() => {}}
               />
             </div>
 
@@ -645,7 +645,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                 }}
                 tabIndex={5}
                 onBlur={handleGhgIntensityEditorChange}
-                onChange={handleGhgIntensityEditorChange}
+                onChange={() => {}}
               />
             </div>
 
