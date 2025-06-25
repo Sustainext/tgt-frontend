@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setSafetyTraining } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section26 = ({ section13_6_9Ref, data,reportType }) => {
+const Section26 = ({ section13_6_9Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.6.9':'13.6.8',
+  sectionTitle = "Safety Training", 
+  sectionOrder = 13
+ }) => {
   const content = useSelector((state) => state.screen13Slice.safety_training);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -65,7 +69,7 @@ const Section26 = ({ section13_6_9Ref, data,reportType }) => {
     <>
       <div id="section13_6_9" ref={section13_6_9Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'13.6.9':'13.6.8'} Safety Training
+       {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

@@ -2,7 +2,11 @@
 import { useState, useRef, useEffect } from "react";
 import ComplianceTable from "../tables/complianceTable";
 
-const Section19=({section9_5_3Ref,data})=>{
+const Section19=({section9_5_3Ref,data,
+    sectionNumber = "9.5.3",
+    sectionTitle = 'Compliance',
+    sectionOrder = 9,
+})=>{
     const [content,setContent] = useState(
         `We maintain strict compliance with all applicable laws and regulations, including environmental, labor, and corporate governance standards`
     )
@@ -28,7 +32,7 @@ const Section19=({section9_5_3Ref,data})=>{
         <div id="section9_5_3" ref={section9_5_3Ref} >
         
             <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-            9.5.3 Compliance
+          {sectionNumber} {sectionTitle}
             </h3>
             <p className="text-sm mb-4">{data["2_27_a"]?data["2_27_a"].significant_non_compliance_occurred=="No"?data["2_27_a"].significant_non_compliance_occurred:'':"No data available"}</p>
             {/* <p className="text-[15px] text-[#344054] mb-4 font-semibold">

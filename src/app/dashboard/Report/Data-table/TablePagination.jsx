@@ -23,6 +23,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import FilterComponent from './FilterComponent'
+import {initializeForCustomReport,resetToDefaults,fetchReportBuilderData} from '../../../../lib/redux/features/reportBuilderSlice'
+import {resetToggleToDefaults} from '../../../../lib/redux/features/reportCreationSlice'
+import { useDispatch } from "react-redux";
 
 import axiosInstance, { del } from "@/app/utils/axiosMiddleware";
 
@@ -35,6 +38,7 @@ const TableWithPagination = ({
   setIsMenuOpen,
   setData
 }) => {
+  const dispatch=useDispatch()
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
   const [totalPages, setTotalPages] = useState(0);
@@ -68,7 +72,8 @@ else{
   const ActionMenu = ({ item }) => {
     const isGRIReport =
       item.report_type === "GRI Report: In accordance With" ||
-      item.report_type === "GRI Report: With Reference to";
+      item.report_type === "GRI Report: With Reference to" ||
+      item.report_type == "Custom ESG Report"
     return (
       <div   className={`absolute bg-white shadow-lg rounded-lg py-2 w-[211px] z-10 right-8 ${
         menuDirection === "up" ? "bottom-full mb-2" : " top-full mt-2"
@@ -431,14 +436,20 @@ else{
     window.localStorage.setItem("organizationcountry", organization_country);
     window.localStorage.setItem("reportCreatedOn", created_at);
     window.localStorage.setItem("reportType", report_type);
+    window.localStorage.setItem("reportname", name);
     // sessionStorage.setItem('reportData',newdata);
     // if (corporate_name !== undefined){
     // }
     window.localStorage.setItem("reportCorpName", corporate_name?corporate_name:'');
-
+    if(report_type==='Custom ESG Report'){
+      // dispatch(initializeForCustomReport());
+      dispatch(resetToDefaults())
+      dispatch(resetToggleToDefaults())
+      dispatch(fetchReportBuilderData(id));
+    }
     router.push("/dashboard/Report/ESG");
 
-    window.localStorage.setItem("reportname", name);
+   
   };
 
   useEffect(() => {

@@ -145,7 +145,7 @@ const submitForm = async (type) => {
       },
     });
 
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201) {
       if (type === "next") {
         toast.success("Data added successfully", {
           position: "top-right",

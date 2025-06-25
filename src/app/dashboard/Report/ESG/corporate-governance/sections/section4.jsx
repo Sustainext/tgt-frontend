@@ -2,7 +2,12 @@
 import { useState, useRef, useEffect } from "react";
 import RatioTable from "../tables/ratioTable";
 
-const Section4 = ({ section9_2_2Ref, data }) => {
+const Section4 = ({ section9_2_2Ref, data,
+  sectionNumber = "9.2.2",
+  sectionTitle = 'Chair of the Highest Governance Body',
+  sectionOrder = 9,
+
+ }) => {
   const col = [
     "Their function within the organization",
     "Reasons for this arrangement",
@@ -17,7 +22,7 @@ const Section4 = ({ section9_2_2Ref, data }) => {
     <>
       <div id="section9_2_2" ref={section9_2_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          9.2.2 Chair of the Highest Governance Body
+         {sectionNumber} {sectionTitle}
         </h3>
         <p className="text-sm mb-4">
           {data["2_11_b"]

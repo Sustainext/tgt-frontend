@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setExternalAssurance } from "../../../../../../lib/redux/features/ESGSlice/screen7Slice";
 
-const Section4 = ({ section7_3Ref, data }) => {
+const Section4 = ({ section7_3Ref, data,
+  sectionNumber = "7.3",
+  sectionTitle = 'External Assurance',
+  sectionOrder=7
+ }) => {
   const externalAssurance = useSelector(
     (state) => state.screen7Slice.externalAssurance
   );
@@ -28,7 +32,7 @@ const Section4 = ({ section7_3Ref, data }) => {
       <div>
         <div id="setion7_3" ref={section7_3Ref}>
           <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-            7.3 External Assurance
+            {sectionNumber} {sectionTitle}
           </h3>
           <p className="text-sm mb-4">
             {data["2-5-a"]

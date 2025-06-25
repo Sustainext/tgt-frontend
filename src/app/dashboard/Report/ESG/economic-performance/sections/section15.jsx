@@ -1,6 +1,10 @@
 import { useSelector } from "react-redux";
 
-const Section15 = ({ section11_4_4Ref,reportType }) => {
+const Section15 = ({ section11_4_4Ref,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.4.4':'11.4.3',
+  sectionTitle = 'Stakeholder Engagement and Management of Concerns Related to Tax',
+  sectionOrder = 11,
+ }) => {
   const data = useSelector((state) => state.screen11Slice.getdata);
 
   // Accessing the data assuming it is an object with Q1, Q2, Q3 keys
@@ -9,7 +13,7 @@ const Section15 = ({ section11_4_4Ref,reportType }) => {
   return (
     <div id="section11_4_4" ref={section11_4_4Ref}>
       <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-      {reportType=='GRI Report: In accordance With'?'11.4.4':'11.4.3'}   Stakeholder Engagement and Management of Concerns Related to Tax
+     {sectionNumber} {sectionTitle}
       </h3>
       {sectionData ? (
         <div className="mb-4">

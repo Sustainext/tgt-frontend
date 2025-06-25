@@ -16,10 +16,21 @@ import { Oval } from "react-loader-spinner";
 import { setdescription } from "../../../../../lib/redux/features/ESGSlice/screen8Slice";
 
 const ReferenceMateriality = forwardRef(({ onSubmitSuccess,hasChanges }, ref) => {
-  const orgName =
-    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
-  const reportid =
-    typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  // const orgName =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  // const reportid =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const [reportid, setReportid] = useState("");
+  const [reportType, setReportType] = useState("");
+  const [orgName, setOrgname] = useState("");
+  
+  // Update after mount on client only
+  useEffect(() => {
+    setReportid(localStorage.getItem("reportid") || "");
+    setReportType(localStorage.getItem("reportType") || "");
+    setOrgname(localStorage.getItem("reportorgname") || "");
+  }, []);
+  
   const apiCalledRef = useRef(false);
   const [loopen, setLoOpen] = useState(false);
   const [initialData, setInitialData] = useState({});

@@ -23,17 +23,28 @@ import Section1 from "./sections/section1";
 import { useDispatch, useSelector } from "react-redux";
 import { setdescription } from "../../../../../lib/redux/features/ESGSlice/screen6Slice";
 
-const StakeholderEngagement = forwardRef(({ onSubmitSuccess,hasChanges }, ref) => {
-  const orgName =
-    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
-  const reportid =
-    typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+const StakeholderEngagement = forwardRef(({ onSubmitSuccess,sectionOrder=6,hasChanges }, ref) => {
+  // const orgName =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  // const reportid =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const [reportid, setReportid] = useState("");
+  const [reportType, setReportType] = useState("");
+  const [orgName, setOrgname] = useState("");
+  
+  // Update after mount on client only
+  useEffect(() => {
+    setReportid(localStorage.getItem("reportid") || "");
+    setReportType(localStorage.getItem("reportType") || "");
+    setOrgname(localStorage.getItem("reportorgname") || "");
+  }, []);
+  
   const apiCalledRef = useRef(false);
   const [loopen, setLoOpen] = useState(false);
-  const [initialData, setInitialData] = useState({});
   const [data, setData] = useState("");
   const description = useSelector((state) => state.screen6Slice.description);
   const dispatch = useDispatch();
+  const [initialData, setInitialData] = useState({});
   useImperativeHandle(ref, () => ({
     submitForm,
   }));
@@ -45,7 +56,6 @@ const StakeholderEngagement = forwardRef(({ onSubmitSuccess,hasChanges }, ref) =
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
   const currentData={
     description
   }
@@ -55,10 +65,14 @@ const StakeholderEngagement = forwardRef(({ onSubmitSuccess,hasChanges }, ref) =
       LoaderClose();
       return false;
     }
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       description: {
         page: "screen_six",
-        label: "6. Stakeholder Engagement",
+        label: `${sectionOrder}. Stakeholder Engagement`,
         subLabel: "Add statement about stakeholder engagement",
         type: "textarea",
         content: description,
@@ -128,11 +142,11 @@ const StakeholderEngagement = forwardRef(({ onSubmitSuccess,hasChanges }, ref) =
       const response = await axiosInstance.get(url);
       if (response.data) {
         const flatData = {};
-  Object.keys(response.data).forEach((key) => {
-    flatData[key] = response.data[key]?.content || "";
-  });
-
-  setInitialData(flatData);
+        Object.keys(response.data).forEach((key) => {
+          flatData[key] = response.data[key]?.content || "";
+        });
+      
+        setInitialData(flatData);
         setData(response.data);
         dispatch(setdescription(response.data.description?.content || ""));
       }
@@ -156,21 +170,21 @@ const StakeholderEngagement = forwardRef(({ onSubmitSuccess,hasChanges }, ref) =
     <>
       <div className="mx-2 p-2">
         <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          6. Stakeholder Engagement 
+          {sectionOrder}. Stakeholder Engagement 
         </h3>
         <div className="flex gap-4">
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
-            <Section1 orgName={orgName} data={data} />
+            <Section1 orgName={orgName} data={data} sectionOrder={sectionOrder} />
           </div>
           {/* page sidebar */}
           <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36  md:fixed 
   md:top-[19rem]
   md:right-4  hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
             <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              6. Stakeholder Engagement 
+              {sectionOrder}. Stakeholder Engagement 
             </p>
             <p className="text-[12px] text-blue-400 mb-2">
-              6.1 Approach to stakeholder engagement. 
+              {sectionOrder}.1 Approach to stakeholder engagement. 
             </p>
           </div>
         </div>

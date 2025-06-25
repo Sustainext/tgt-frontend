@@ -7,7 +7,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setEnergyConsumptionReductionCommitment } from "../../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Section23 = ({ section12_4_5Ref, data,reportType }) => {
+const Section23 = ({ section12_4_5Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.4.5':'12.4.4',
+  sectionTitle = 'Reduction in Energy consumption',
+  sectionOrder = 12,
+ }) => {
   const content = useSelector(
     (state) => state.screen12Slice.energy_consumption_reduction_commitment
   );
@@ -137,7 +141,7 @@ const Section23 = ({ section12_4_5Ref, data,reportType }) => {
     <>
       <div id="section12_4_5" ref={section12_4_5Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'12.4.5':'12.4.4'}  Reduction in Energy consumption
+        {sectionNumber} {sectionTitle}
         </h3>
 
         {/* <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

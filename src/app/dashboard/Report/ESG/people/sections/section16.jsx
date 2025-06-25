@@ -7,7 +7,11 @@ import {
   setSecurityPersonnelExternalTraining,
 } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section16 = ({ section13_5Ref, section13_5_1Ref, data,reportType }) => {
+const Section16 = ({ section13_5Ref, section13_5_1Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.5.1':'',
+  sectionTitle = "Management of material topic", 
+  sectionOrder = 13
+ }) => {
   const dispatch = useDispatch();
   const trainingIntheOrg = useSelector(
     (state) => state.screen13Slice.security_personnel_internal_training
@@ -111,147 +115,36 @@ const Section16 = ({ section13_5Ref, section13_5_1Ref, data,reportType }) => {
   //           "No data available",
   //       },
   //     ];
-
+  const shouldRender = useSelector((state)=> state.reportCreation.includeMaterialTopics)
   return (
     <>
-      <div id="section13_5" ref={section13_5Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          13.5 Training & Education
-        </h3>
-        {/* <p className="text-[15px]  mb-2 font-semibold">
-          Training requirements apply to third party organisations
-        </p>
-        <p className="text-sm mb-4">
-          {data["410-1b-training_requirements"]
-            ? data["410-1b-training_requirements"].data
-              ? data["410-1b-training_requirements"].data.length > 0
-                ? data["410-1b-training_requirements"].data[0].Q1
-                  ? data["410-1b-training_requirements"].data[0].Q1
-                  : "No data available"
-                : "No data available"
-              : "No data available"
-            : "No data available"}
-        </p>
-        <p className="text-[15px]  mb-2 font-semibold">
-          Average training hours per employee:
-        </p>
-        <p className="text-sm mb-4">
-          {data["404_social_analyse"]
-            ? data["404_social_analyse"][
-                "average_hours_of_training_provided_to_employees"
-              ]
-              ? data["404_social_analyse"][
-                  "average_hours_of_training_provided_to_employees"
-                ].length > 0
-                ? data["404_social_analyse"][
-                    "average_hours_of_training_provided_to_employees"
-                  ].map((val) => val.average_training_hours_per_employee)
-                : "No data available"
-              : "No data available"
-            : "No data available"}
-        </p>
-        <p className="text-[15px]  mb-2 font-semibold">
-          Average training hours per female employee:
-        </p>
-        <p className="text-sm mb-4">
-          {data["404_social_analyse"]
-            ? data["404_social_analyse"][
-                "average_hours_of_training_provided_to_employees"
-              ]
-              ? data["404_social_analyse"][
-                  "average_hours_of_training_provided_to_employees"
-                ].length > 0
-                ? data["404_social_analyse"][
-                    "average_hours_of_training_provided_to_employees"
-                  ].map((val) => val.average_training_hours_per_female_employee)
-                : "No data available"
-              : "No data available"
-            : "No data available"}
-        </p>
-        <p className="text-[15px]  mb-2 font-semibold">
-          Average training hours per male employee:
-        </p>
-        <p className="text-sm mb-4">
-          {data["404_social_analyse"]
-            ? data["404_social_analyse"][
-                "average_hours_of_training_provided_to_employees"
-              ]
-              ? data["404_social_analyse"][
-                  "average_hours_of_training_provided_to_employees"
-                ].length > 0
-                ? data["404_social_analyse"][
-                    "average_hours_of_training_provided_to_employees"
-                  ].map((val) => val.average_training_hours_per_male_employee)
-                : "No data available"
-              : "No data available"
-            : "No data available"}
-        </p>
+     
 
-        <p className="text-[15px]  mb-2 font-semibold">
-          Average hours of training provided to employees by category
-        </p>
-        <div className="shadow-md mb-4 rounded-md">
-          <LeaveTable columns={col} data={Tabledata} />
-        </div>
-
-        <p className="text-[15px]  mb-1 font-semibold">
-          Security personnel trained in human rights policies or procedures
-        </p>
-        <p className="text-[14px]  mb-2">
-          Percentage of security personnel who have received formal training
-        </p>
-        <div className="shadow-md mb-4 rounded-md">
-          <LeaveTable columns={col2} data={Tabledata2} />
-        </div> */}
-
-        {/* <p className="text-[15px]  mb-2 font-semibold">
-            Percentage of security personnel who have received formal training in the organisation: 
-            </p>
-            
-            <textarea
-            placeholder="Enter the data"
-            onChange={handleChangetrainingIntheOrg}
-          value={trainingIntheOrg}
-          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
-          rows={4}
-        />
-            <p className="text-[15px]  mb-2 font-semibold">
-            Percentage of security personnel who have received formal training from third-party organisation: 
-            </p>
-            
-            <textarea
-            placeholder="Enter the data"
-            onChange={handleChangetrainingOutsidetheOrg}
-          value={trainingOutsidetheOrg}
-          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
-          rows={4}
-        /> */}
-      </div>
-
-      {reportType=='GRI Report: In accordance With'?(
-          <div id="section13_5_1" ref={section13_5_1Ref}>
-          <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-            13.5.1 Management of material topic
-          </h3>
-  
-          {data["3-3cde_13-5-1"] && data["3-3cde_13-5-1"].length > 0 ? (
-            data["3-3cde_13-5-1"].map((val, index) => (
-              <div key={index}>
-                <p className="text-sm mb-2">
-                  {val.GRI33cd ? val.GRI33cd : "No data available"}
-                </p>
-                <p className="text-sm mb-4">
-                  {val.GRI33e ? val.GRI33e : "No data available"}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p className="text-sm mb-4">No data available</p>
-          )}
-        </div>
+     {reportType=='GRI Report: In accordance With' || (shouldRender && reportType==='Custom ESG Report')?(
+         <div id="section13_5_1" ref={section13_5_1Ref}>
+         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
+          {sectionNumber} {sectionTitle}
+         </h3>
+ 
+         {data["3-3cde_13-5-1"] && data["3-3cde_13-5-1"].length > 0 ? (
+           data["3-3cde_13-5-1"].map((val, index) => (
+             <div key={index}>
+               <p className="text-sm mb-2">
+                 {val.GRI33cd ? val.GRI33cd : "No data available"}
+               </p>
+               <p className="text-sm mb-4">
+                 {val.GRI33e ? val.GRI33e : "No data available"}
+               </p>
+             </div>
+           ))
+         ) : (
+           <p className="text-sm mb-4">No data available</p>
+         )}
+       </div>
       ):(
         <div></div>
       )}
+
     
     </>
   );

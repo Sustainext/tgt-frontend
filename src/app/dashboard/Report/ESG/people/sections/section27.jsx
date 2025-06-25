@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setOHSManagementSystem } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section27 = ({ section13_6_10Ref, data, reportType }) => {
+const Section27 = ({ section13_6_10Ref, data, reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.6.10':'13.6.9',
+  sectionTitle = "Workers Covered by OHS Management System", 
+  sectionOrder = 13
+ }) => {
   const content = useSelector(
     (state) => state.screen13Slice.ohs_management_system
   );
@@ -66,7 +70,7 @@ const Section27 = ({ section13_6_10Ref, data, reportType }) => {
     <>
       <div id="section13_6_10" ref={section13_6_10Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'13.6.10':'13.6.9'} Workers Covered by OHS Management System
+        {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

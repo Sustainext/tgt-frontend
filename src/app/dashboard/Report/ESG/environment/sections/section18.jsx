@@ -7,7 +7,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setWaterConsumptionGoals } from "../../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Section18 = ({ section12_3_4Ref, data,reportType }) => {
+const Section18 = ({ section12_3_4Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.3.4':'12.3.3',
+  sectionTitle = 'Water Consumption',
+  sectionOrder = 12,
+ }) => {
   const content = useSelector(
     (state) => state.screen12Slice.water_consumption_goals
   );
@@ -255,7 +259,7 @@ const Section18 = ({ section12_3_4Ref, data,reportType }) => {
     <>
       <div id="section12_3_4" ref={section12_3_4Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'12.3.4':'12.3.3'} Water Consumption 
+        {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">

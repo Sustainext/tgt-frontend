@@ -25,11 +25,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { GlobalState } from "@/Context/page";
 import TCFD from "./TCFD-Disclosure/page";
 import Cookies from "js-cookie";
+import {setActivesection} from '../../../lib/redux/features/TCFD/TcfdSlice'
+
 const General = () => {
   const { open } = GlobalState();
   const frameworkId = Cookies.get("selected_framework_id");
+  const activestap = useSelector((state) => state.Tcfd.activesection);
   const initialTab =
-    frameworkId === "6" ? "TCFD Disclosure Selection" : "Org Details";
+  activestap?activestap:frameworkId === "6" ? "TCFD Disclosure Selection" : "Org Details";
   const [activeTab, setActiveTab] = useState(initialTab);
   const [mobileopen, setMobileopen] = useState(false);
 
@@ -38,6 +41,7 @@ const General = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     setMobileopen(false);
+    dispatch(setActivesection(""))
   };
 
   useEffect(() => {

@@ -4,7 +4,10 @@ import dynamic from "next/dynamic";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section6 = ({ section10_3_2Ref, data,reportType }) => {
+const Section6 = ({ section10_3_2Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'10.3.2':'10.3.1',
+  sectionTitle = 'Local Suppliers',
+ }) => {
   const [content, setContent] = useState(
     `Our approach to supply chain sustainability focuses on ensuring that our suppliers adhere to high environmental and social standards. We engage with our suppliers through regular assessments, audits, and capacity-building programs to help them improve their sustainability performance.`
   );
@@ -12,7 +15,7 @@ const Section6 = ({ section10_3_2Ref, data,reportType }) => {
     <>
       <div ref={section10_3_2Ref} id="section10_3_2">
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-         {reportType=='GRI Report: In accordance With'?'10.3.2':'10.3.1'}  Local Suppliers
+         {sectionNumber} {sectionTitle}
         </h3>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
           Percentage of the procurement budget used for significant locations of
