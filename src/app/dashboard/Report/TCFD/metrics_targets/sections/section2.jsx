@@ -394,7 +394,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                             <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.category || ''}</td>
                             <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.subcategory}</td>
                             <td className="py-2 px-4 border-r border-gray-200 text-gray-700">{item.activity}</td>
-                            <td className="py-2 px-4 text-gray-700">{item.emission_unit || '-'} {item.Units || 'tCO2e'}</td>
+                            <td className="py-2 px-4 text-gray-700">{item.emission || '-'}</td>
                           </tr>
                         )) : (
                           <tr className="border-t border-gray-200">
