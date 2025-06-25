@@ -30,15 +30,22 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
   const editorRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  const orgName = typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
-  const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
-  const useremail = typeof window !== 'undefined' ? localStorage.getItem("userEmail") : '';
-  const roles = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("textcustomrole")) || '' : '';
+  const orgName =
+    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  const reportid =
+    typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const useremail =
+    typeof window !== "undefined" ? localStorage.getItem("userEmail") : "";
+  const roles =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("textcustomrole")) || ""
+      : "";
 
   const apiCalledRef = useRef(false);
   const [data, setData] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const [signatureFile, setSignatureFile] = useState(null);
+  const [signatureFileName, setSignatureFileName] = useState("");
   const [error, setError] = useState("");
 
   // Jodit Editor configuration
@@ -96,10 +103,10 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoginlogDetails = async (status, actionType) => {
     const backendUrl = process.env.BACKEND_API_URL;
     const userDetailsUrl = `${backendUrl}/sustainapp/post_logs/`;
-  
+
     try {
       const ipAddress = await getIPAddress();
-  
+
       const data = {
         event_type: "Report",
         event_details: "File",
@@ -110,7 +117,7 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
         ip_address: ipAddress,
         logs: `TCFD Report > Message from CEO > Signature Upload`,
       };
-  
+
       const response = await axiosInstance.post(userDetailsUrl, data);
       return response.data;
     } catch (error) {
@@ -155,9 +162,13 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
 
   // Auto fill content function
   const loadAutoFillContent = () => {
-    const autoFillContent = `<p>At ${orgName || '[Company Name]'}, we recognize that climate change is not just an environmental issue—it is a strategic business risk and opportunity that affects our stakeholders, operations, and future resilience. As part of our commitment to long-term value creation, we are proud to present our TCFD report aligned with the recommendations of the Task Force on Climate-related Financial Disclosures (TCFD).</p>
+    const autoFillContent = `<p>At ${
+      orgName || "[Company Name]"
+    }, we recognize that climate change is not just an environmental issue—it is a strategic business risk and opportunity that affects our stakeholders, operations, and future resilience. As part of our commitment to long-term value creation, we are proud to present our TCFD report aligned with the recommendations of the Task Force on Climate-related Financial Disclosures (TCFD).</p>
 <br/>
-<p>The TCFD framework has helped us deepen our understanding of how climate-related risks and opportunities intersect with our business strategy and financial planning. In this report, we outline how ${orgName || '[Company Name]'} is identifying, assessing, and managing climate-related risks, while also seizing opportunities that support our transition toward a low-carbon economy.</p>
+<p>The TCFD framework has helped us deepen our understanding of how climate-related risks and opportunities intersect with our business strategy and financial planning. In this report, we outline how ${
+      orgName || "[Company Name]"
+    } is identifying, assessing, and managing climate-related risks, while also seizing opportunities that support our transition toward a low-carbon economy.</p>
 <br/>
 <p>Our leadership team plays an active role in the governance of climate-related matters. We have integrated climate considerations into our governance structures, risk management practices, and strategic decision-making. This ensures we are well-positioned to address evolving regulatory requirements, physical climate risks, and shifting market expectations.</p>
 <br/>
@@ -165,7 +176,7 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
 <br/>
 <p><strong>[Full Name]</strong><br>
 <strong>[Title: CEO/Chairman/MD]</strong><br>
-<strong>${orgName || '[Company Name]'}</strong></p>`;
+<strong>${orgName || "[Company Name]"}</strong></p>`;
 
     dispatch(setMessageContent(autoFillContent));
   };
@@ -179,25 +190,28 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
   const handleSignatureUpload = async (e) => {
     const selectedFile = e.target.files[0];
     setSignatureFile(selectedFile);
-    
+
     let errorMessages = "";
-  
+
     if (!selectedFile) {
       return;
     }
-  
+
     // Validate file type and size
     if (selectedFile.type !== "image/png") {
       errorMessages = "Only PNG images are allowed.";
     } else if (selectedFile.size > 1048576) {
       errorMessages = "Maximum file size allowed is 1MB";
     } else {
-      const newFileName = `tcfd_signature_${reportid}_${Date.now()}_${selectedFile.name}`;
-  
+      // Generate proper filename with timestamp and report ID
+      const timestamp = Date.now();
+      const newFileName = `tcfd_signature_${reportid}_${timestamp}_${selectedFile.name}`;
+      setSignatureFileName(newFileName); // Store the filename
+
       try {
         // Upload the file to Azure Blob Storage
         const url = await uploadFileToAzure(selectedFile, newFileName);
-    
+
         if (url) {
           setTimeout(() => {
             LoginlogDetails("Success", "Uploaded");
@@ -212,8 +226,19 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
         errorMessages = "An error occurred while uploading the signature.";
       }
     }
-  
+
     setError(errorMessages);
+  };
+
+  // 3. Modify handleFileCancel to reset filename
+  const handleFileCancel = () => {
+    setSignatureFile(null);
+    setSignatureFileName(""); // Reset filename
+    setError("");
+    setTimeout(() => {
+      LoginlogDetails("Success", "Deleted");
+    }, 500);
+    dispatch(setSignatureUrl(""));
   };
 
   // Handle button click for file upload
@@ -221,71 +246,52 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
     fileInputRef.current.click();
   };
 
-  // Handle file cancel
-  const handleFileCancel = () => {
-    setSignatureFile(null);
-    setError('');
-    setTimeout(() => {
-      LoginlogDetails("Success", "Deleted");
-    }, 500);
-    dispatch(setSignatureUrl(''));
-  };
-
   // Submit form function
   const submitForm = async (type) => {
     LoaderOpen();
 
-    // Get current value from the editor before submitting
-    let currentMessageContent = messageCEO.messageContent;
-    
-    if (editorRef.current && editorRef.current.value) {
-      currentMessageContent = editorRef.current.value;
-      dispatch(setMessageContent(currentMessageContent));
-    }
-
     const formData = new FormData();
-    
-    // Add the main message content
-    formData.append(
-      "message_content",
-      JSON.stringify({
+    formData.append("report", reportid);
+    formData.append("screen_name", "message_ceo");
+
+    const dataPayload = {
+      message_content: {
         page: "message_ceo",
         label: "1. Message From CEO/MD/Chairman",
         subLabel: "Add message from CEO/MD/Chairman",
         type: "textarea",
-        content: currentMessageContent,
+        content: messageCEO.messageContent,
         field: "message_content",
         isSkipped: false,
-      })
-    );
-
-    // Add signature details
-    formData.append(
-      "signature_url", 
-      JSON.stringify({
+      },
+      signature_url: {
         page: "message_ceo",
-        label: "1. Signature Image",
-        subLabel: "CEO/MD/Chairman Signature",
-        type: "image",
-        content: messageCEO.signatureUrl || "",
+        label: "2. Signature",
+        subLabel: "Upload signature",
+        type: "file",
+        content: messageCEO.signatureUrl,
         field: "signature_url",
         isSkipped: false,
-      })
-    );
+      },
+      signature_file_name: {
+        page: "message_ceo",
+        label: "2. Signature",
+        subLabel: "Upload signature",
+        type: "file",
+        content: signatureFileName,
+        field: "signature_file_name",
+        isSkipped: false,
+      }
+    };
 
-    // Add signature filename if file exists
-    formData.append("signature_filename", signatureFile ? signatureFile.name : "");
-
-    // Add additional required fields
-    formData.append("report", reportid);
-    formData.append("screen_name", "message_ceo");
+    formData.append("data", JSON.stringify(dataPayload));
 
     const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
 
     try {
       const response = await axiosInstance.put(url, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -324,7 +330,6 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
       }
     } catch (error) {
       LoaderClose();
-      console.error("Submit error:", error);
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -338,13 +343,13 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
       return false;
     }
   };
-
   // Load form data function
   const loadFormData = async () => {
     LoaderOpen();
     dispatch(setMessageContent(""));
     dispatch(setSignatureUrl(""));
     setSignatureFile(null);
+    setSignatureFileName(""); // Reset filename
     setError("");
 
     const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/message_ceo/`;
@@ -353,33 +358,47 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
 
       if (response.data && response.data.data) {
         console.log("Full API Response:", response.data);
-        
+
         const reportData = response.data.data.report_data;
         const additionalData = response.data.data;
-        
+
         setData(reportData);
-        
+
         // Load message content
-        if (reportData && reportData.message_content && reportData.message_content.content) {
-          console.log("Loading message content:", reportData.message_content.content);
+        if (
+          reportData &&
+          reportData.message_content &&
+          reportData.message_content.content
+        ) {
+          console.log(
+            "Loading message content:",
+            reportData.message_content.content
+          );
           dispatch(setMessageContent(reportData.message_content.content));
         }
-        
+
         // Load signature information
-        if (reportData && reportData.signature_url && reportData.signature_url.content) {
-          console.log("Loading signature URL:", reportData.signature_url.content);
+       if (
+          reportData &&
+          reportData.signature_url &&
+          reportData.signature_url.content
+        ) {
+          console.log(
+            "Loading signature URL:",
+            reportData.signature_url.content
+          );
           dispatch(setSignatureUrl(reportData.signature_url.content));
-          
-          // If there's a signature filename, create a mock file object for display
-          if (additionalData.signature_filename) {
-            console.log("Loading signature filename:", additionalData.signature_filename);
-            const mockFile = {
-              name: additionalData.signature_filename,
-              type: "image/png",
-              size: 0
-            };
-            setSignatureFile(mockFile);
-          }
+        }
+        if (
+          reportData &&
+          reportData.signature_file_name &&
+          reportData.signature_file_name.content
+        ) {
+          console.log(
+            "Loading signature file name:",
+            reportData.signature_file_name.content
+          );
+          setSignatureFileName(reportData.signature_file_name.content);
         }
       }
       LoaderClose();
@@ -433,13 +452,13 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
               <p className="text-[15px] text-[#344054] mb-2 font-semibold">
                 Upload Signature Image:
               </p>
-              
+
               {messageCEO.signatureUrl && (
                 <div className="mb-4">
-                  <img 
-                    src={messageCEO.signatureUrl} 
-                    alt="Signature" 
-                    className="max-w-[200px] max-h-[100px] object-contain border border-gray-300 rounded" 
+                  <img
+                    src={messageCEO.signatureUrl}
+                    alt="Signature"
+                    className="max-w-[200px] max-h-[100px] object-contain border border-gray-300 rounded"
                   />
                 </div>
               )}
@@ -452,13 +471,18 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
                   style={{ display: "none" }}
                   accept="image/png"
                 />
-                
-                {(signatureFile && signatureFile.name) || messageCEO.signatureUrl ? (
+
+                {(signatureFile && (signatureFile.name || signatureFileName)) ||
+                messageCEO.signatureUrl ? (
                   <label className="flex">
                     <div className="flex items-center text-center mt-2 relative">
                       <div className="truncate text-sky-600 text-sm flex text-center">
                         <MdFilePresent className="w-6 h-6 mr-2 text-green-500" />
-                        {signatureFile ? signatureFile.name : "Signature uploaded"}
+                        {/* Display filename properly - prefer signatureFileName over file.name */}
+                        {signatureFileName ||
+                          (signatureFile
+                            ? signatureFile.name
+                            : "Signature uploaded")}
                       </div>
                       <div className="absolute right-[-15px] top-[-2px]">
                         <MdCancel
@@ -473,7 +497,10 @@ const MessageFromCEO = forwardRef(({ onSubmitSuccess }, ref) => {
                     onClick={handleButtonClick}
                     className="flex bg-transparent py-2 text-center text-[#007EEF] text-[15px] rounded-md"
                   >
-                    <MdOutlineFileUpload className="mt-1" style={{ fontSize: "16px" }} />
+                    <MdOutlineFileUpload
+                      className="mt-1"
+                      style={{ fontSize: "16px" }}
+                    />
                     <span className="ml-2">Upload Signature</span>
                   </button>
                 )}

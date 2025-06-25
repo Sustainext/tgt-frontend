@@ -15,6 +15,7 @@ import {
   setGhgByBusiness,
   setGhgByLocation,
   selectMetricsTargets,
+  setSectorInfo
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
@@ -29,6 +30,8 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
   const editorRefScope2 = useRef(null);
   const editorRefScope3 = useRef(null);
   const editorRefIntensity = useRef(null);
+    const editorRefSectorInfo = useRef(null); // Add this line
+
 
   // Extract emission data from tcfdCollectData
   const emissionAnalyse = tcfdCollectData?.emission_analyse || {};
@@ -111,6 +114,22 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
     if (editorRefIntensity.current) {
       editorRefIntensity.current.value = autoFillContent;
     }
+  };
+
+  const loadSectorInfoAutoFillContent = () => {
+    const autoFillContent = `<p>As a company operating in the ${orgName ? orgName.toLowerCase() : '[sector]'} sector, we recognize the unique climate-related challenges and opportunities that are specific to our industry. Our sector-specific metrics and targets align with TCFD recommendations and industry best practices.</p>
+<p>We track and report on key performance indicators that are material to our sector, including sector-specific emission intensities, climate-related financial metrics, and operational resilience measures. These metrics help us benchmark our performance against industry peers and demonstrate our commitment to sector-wide climate action.</p>
+<p>Our targets are designed to contribute to broader sectoral decarbonization goals while maintaining competitiveness and operational efficiency within our industry context.</p>`;
+    
+    dispatch(setSectorInfo(autoFillContent));
+    if (editorRefSectorInfo.current) {
+      editorRefSectorInfo.current.value = autoFillContent;
+    }
+  };
+
+  // 4. Add the change handler with your existing change handlers
+  const handleSectorInfoEditorChange = (content) => {
+    dispatch(setSectorInfo(content));
   };
 
   // Add this change handler for GHG Intensity
@@ -713,6 +732,38 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
               </div>
             </div>
           </div>
+
+          <div className="mb-8">
+
+            <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
+              <p className="text-[15px] text-[#667085] mb-2 mt-0 w-4/5">
+                Add sector-specific (e.g. financial or non-financial) information relevant to the 'metrics & targets' disclosures, in line with TCFD recommendations
+              </p>
+              <button
+                className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
+                onClick={loadSectorInfoAutoFillContent}
+              >
+                <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
+                Auto Fill
+              </button>
+            </div>
+
+            <div className="mb-6">
+              <JoditEditor
+                ref={editorRefSectorInfo}
+                value={metricsTargets.sectorInfo}
+                config={{
+                  ...config,
+                  placeholder:
+                    "Add sector-specific (e.g. financial or non-financial) information relevant to the 'metrics & targets' disclosures, in line with TCFD recommendations",
+                }}
+                tabIndex={6}
+                onBlur={handleSectorInfoEditorChange}
+                onChange={() => {}}
+              />
+            </div>
+          </div>
+
 
           {/* Show message if no emissions data available */}
           {allEmissionByScope.length === 0 &&

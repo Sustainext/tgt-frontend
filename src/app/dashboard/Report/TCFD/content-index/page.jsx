@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
+import { set } from "lodash";
 
 const TCFDContentIndex = forwardRef(({ onSubmitSuccess }, ref) => {
   const orgName =
@@ -20,6 +21,7 @@ const TCFDContentIndex = forwardRef(({ onSubmitSuccess }, ref) => {
   
   const apiCalledRef = useRef(false);
   const [data, setData] = useState("");
+  const [collectData,setCollectData] = useState({})
   const [loopen, setLoOpen] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -126,6 +128,7 @@ const loadFormData = async () => {
       console.log("response.data.data.report_data", response.data.data.report_data);
       
       setData(response.data.data.report_data);
+      setCollectData(response.data.data.tcfd_collect_data);
       // Since this is mainly a reference table, we might not need to set specific Redux state
       // but we can still store the completion status if needed
     }
