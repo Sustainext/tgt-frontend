@@ -156,12 +156,12 @@ const Economictablemultipal = ({ id, value, onChange,formContext}) => {
       tooltipdisplay: "block",
       options: [],
     },
-        {
+     {
       id: 7,
-      key: "FinancialImplications",
-      title: "Financial Implications",
+      key: "ManagementMethods",
+      title: "Management Methods",
       tooltip:
-        "Please describe the specific financial benefits that may result from the chosen opportunity.",
+        "Select the strategies and actions the organization will implement to capitalize on the opportunity.",
       tooltipdisplay: "block",
       options: [],
     },
