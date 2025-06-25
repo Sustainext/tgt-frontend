@@ -6,7 +6,7 @@ import Image from "next/image";
 import STARSVG from "../../../../../../../public/star.svg";
 import {
   setClimateTargets,
-  setClosingRemarks, // Add this new action to your Redux slice
+  setClosingRemarks,
   selectMetricsTargets,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
@@ -20,6 +20,40 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
 
   // Extract targets data from tcfdCollectData
   const climateTargets = tcfdCollectData?.targets_used_to_manage_climate_related_risks_and_opportunities_and_performance_against_targets || [];
+
+  // Helper function to safely render any data value
+  const safeRenderValue = (value) => {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    
+    if (typeof value === 'object') {
+      if (value.start && value.end) {
+        return `${value.start} - ${value.end}`;
+      }
+      return JSON.stringify(value);
+    }
+    
+    return String(value);
+  };
+
+  // Helper function to render array values safely
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.join(', ');
+    }
+    
+    // Handle objects (like date ranges with start/end)
+    if (value && typeof value === 'object') {
+      if (value.start && value.end) {
+        return `${value.start} - ${value.end}`;
+      }
+      return JSON.stringify(value);
+    }
+    
+    // Handle primitive values
+    return value || '';
+  };
 
   // Jodit Editor configuration
   const config = {
@@ -69,14 +103,6 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
     dispatch(setClosingRemarks(content));
   };
 
-  // Helper function to render array values
-  const renderArrayValue = (value) => {
-    if (Array.isArray(value)) {
-      return value.join(', ');
-    }
-    return value || '';
-  };
-
   const TargetsTable = ({ title, data, columns }) => (
     <div className="mb-8">
       <div className="overflow-x-auto">
@@ -104,17 +130,39 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
                   key={index}
                   className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
                 >
-                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.RelatedTarget || '-'}</td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">{renderArrayValue(row.MetricCategory)}</td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.TargetType || '-'}</td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.MetricUnit || '-'}</td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.BaseYear || '-'}</td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.BaselineValue || '-'}</td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.TargetTimeFrame || '-'}</td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.TargetValue || '-'}</td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.TargetGoals || '-'}</td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">{row.PerformanceIndicators || '-'}</td>
-                  <td className="p-4 text-gray-700">{row.MethodologyUsed || '-'}</td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.RelatedTarget)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderArrayValue(row.MetricCategory)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.TargetType)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.MetricUnit)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.BaseYear)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.BaselineValue)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.TargetTimeFrame)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.TargetValue)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.TargetGoals)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.PerformanceIndicators)}
+                  </td>
+                  <td className="p-4 text-gray-700">
+                    {safeRenderValue(row.MethodologyUsed)}
+                  </td>
                 </tr>
               )) : (
                 <tr className="bg-white border-t border-gray-200">
@@ -159,7 +207,7 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
               config={{...config, placeholder: "Add a statement about targets set to manage climate risks and opportunities, and the company's performance against them."}}
               tabIndex={1}
               onBlur={handleTargetsEditorChange}
-              onChange={handleTargetsEditorChange}
+              onChange={() => {}}
             />
           </div>
 
@@ -192,7 +240,6 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
 
           {/* Closing Remarks Section */}
           <div className="mt-8">
-
             <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
               <div className="text-slate-700 text-base font-normal font-['Manrope'] leading-tight">Add your closing remarks here</div>
               <button
@@ -211,7 +258,7 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
                 config={{...config, placeholder: "Add your closing remarks here."}}
                 tabIndex={2}
                 onBlur={handleClosingRemarksEditorChange}
-                onChange={()=>{}}
+                onChange={() => {}}
               />
             </div>
           </div>
