@@ -22,7 +22,7 @@ const CustomOptionnew = ({ children, ...props }) => {
         alignItems: "center",
 
         textAlign: "left",
-        cursor:'pointer'
+        cursor: "pointer",
       }}
     >
       <input
@@ -30,7 +30,7 @@ const CustomOptionnew = ({ children, ...props }) => {
         className="green-checkbox"
         checked={isSelected}
         readOnly
-        style={{flexShrink:0,marginRight:'8px'}}
+        style={{ flexShrink: 0, marginRight: "8px" }}
       />
 
       {children}
@@ -78,8 +78,7 @@ const CustomMultiValueContainer = ({ children, ...props }) => {
   return null;
 };
 
-
-const Economictablemultipal = ({ id, value, onChange,formContext}) => {
+const Economictablemultipal = ({ id, value, onChange, formContext }) => {
   const titles = [
     {
       id: 1,
@@ -156,12 +155,12 @@ const Economictablemultipal = ({ id, value, onChange,formContext}) => {
       tooltipdisplay: "block",
       options: [],
     },
-        {
+     {
       id: 7,
-      key: "FinancialImplications",
-      title: "Financial Implications",
+      key: "ManagementMethods",
+      title: "Management Methods",
       tooltip:
-        "Please describe the specific financial benefits that may result from the chosen opportunity.",
+        "Select the strategies and actions the organization will implement to capitalize on the opportunity.",
       tooltipdisplay: "block",
       options: [],
     },
@@ -172,7 +171,6 @@ const Economictablemultipal = ({ id, value, onChange,formContext}) => {
       tooltip:
         "Select the strategies and actions the organization will implement to capitalize on the opportunity.",
       tooltipdisplay: "block",
-     
     },
     {
       id: 9,
@@ -319,10 +317,10 @@ const Economictablemultipal = ({ id, value, onChange,formContext}) => {
           "Others (please specify)",
         ],
         "Sustainable Supply Chain": [
-          "Competitive Advantage", 
-          "Cost Reduction through Efficiency",   
+          "Competitive Advantage",
+          "Cost Reduction through Efficiency",
           "Increased Supplier Costs",
-          "Improved Risk Management  Enhanced", 
+          "Improved Risk Management  Enhanced",
           "Brand Reputation",
           "Others (please specify)",
         ],
@@ -680,15 +678,15 @@ const Economictablemultipal = ({ id, value, onChange,formContext}) => {
   const updatedMultiSelectStyle = {
     control: (base) => ({
       ...base,
-      border:'none',
-      padding: '4px 10px', // Equivalent to py-3
-      minHeight: '48px', // Ensure height matches your other elements
+      border: "none",
+      padding: "4px 10px", // Equivalent to py-3
+      minHeight: "48px", // Ensure height matches your other elements
       // borderColor: '#d1d5db', // Matches Tailwind's gray-300 border
       // borderRadius: '0.375rem', // Matches Tailwind's rounded-md
     }),
     valueContainer: (base) => ({
       ...base,
-      padding: '0', // Reset inner padding to fit the custom height
+      padding: "0", // Reset inner padding to fit the custom height
     }),
     menu: (provided) => ({
       ...provided,
@@ -703,20 +701,20 @@ const Economictablemultipal = ({ id, value, onChange,formContext}) => {
     }),
 
     menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
-      multiValue: (base) => ({
-        ...base,
-        backgroundColor: '#dbeafe', // Light blue background (Tailwind's blue-100)
-        borderRadius: '0.375rem', // Rounded corners
-      }),
-      multiValueLabel: (base) => ({
-        ...base,
-        color: '#1e40af', // Blue text (Tailwind's blue-800)
-        fontWeight: '600',
-      }),
-      multiValueRemove: (base) => ({
-        ...base,
-        color: '#6A6E70'
-      }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: "#dbeafe", // Light blue background (Tailwind's blue-100)
+      borderRadius: "0.375rem", // Rounded corners
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      color: "#1e40af", // Blue text (Tailwind's blue-800)
+      fontWeight: "600",
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+      color: "#6A6E70",
+    }),
   };
 
   const getColumnWidth = (key) => {
@@ -731,13 +729,19 @@ const Economictablemultipal = ({ id, value, onChange,formContext}) => {
     }
     return "desktop-narrow";
   };
-const shouldShowProcessDescription =
-  formContext?.frameworkId?.toString() === "6" && formContext?.selectid?.toString() === "3";
+  const shouldShowProcessDescription =
+    formContext?.frameworkId?.toString() === "6" &&
+    formContext?.selectid?.toString() === "3";
 
-const visibleTitles = titles.filter(
-  (item) => item.id !== 8 || shouldShowProcessDescription
-);
-console.log('FrameworkId:', formContext.frameworkId, 'SelectId:', formContext.selectid);
+  const visibleTitles = titles.filter(
+    (item) => item.id !== 8 || shouldShowProcessDescription
+  );
+  console.log(
+    "FrameworkId:",
+    formContext.frameworkId,
+    "SelectId:",
+    formContext.selectid
+  );
   return (
     <>
       <div
@@ -751,66 +755,81 @@ console.log('FrameworkId:', formContext.frameworkId, 'SelectId:', formContext.se
         }}
         className="mb-2 pb-2 table-scrollbar"
       >
-        <table id={id} className="table-fixed border border-gray-300  w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
-      <thead className="gradient-background">
-  <tr className="h-[102px]">
-    {visibleTitles.map((item, idx) => (
-      <th
-        key={idx}
-        style={{ textAlign: "left" }}
-        className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-4 py-3 relative border-gray-300 ${getColumnWidth(item.key)}`}
-      >
-        <div
-          className={`flex items-center ${item.textdriction === "start" ? "justify-start" : "justify-center"}`}
+        <table
+          id={id}
+          className="table-fixed border border-gray-300  w-full rounded-md"
+          style={{ borderCollapse: "separate", borderSpacing: 0 }}
         >
-          <p className="text-[12px]">{item.title}</p>
-          {item.tooltipdisplay !== "none" && (
-            <p>
-              <MdInfoOutline
-                data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
-                data-tooltip-content={item.tooltip}
-                className="ml-2 cursor-pointer"
-              />
-              <ReactTooltip
-                id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
-                place="top"
-                effect="solid"
-                style={{
-                  width:"400px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  zIndex:"1000",
-                }}
-              />
-            </p>
-          )}
-        </div>
-      </th>
-    ))}
-    <th
-      className="text-[12px] px-4 py-3 relative"
-      style={{ width: "5vw" }}
-    >
-      {" "}
-    </th>
-  </tr>
-</thead>
+          <thead className="gradient-background">
+            <tr className="h-[102px]">
+              {visibleTitles.map((item, idx) => (
+                <th
+                  key={idx}
+                  style={{ textAlign: "left" }}
+                  className={` ${
+                    idx === 0 ? "" : "border-l"
+                  } text-[12px] px-4 py-3 relative border-gray-300 ${getColumnWidth(
+                    item.key
+                  )}`}
+                >
+                  <div
+                    className={`flex items-center ${
+                      item.textdriction === "start"
+                        ? "justify-start"
+                        : "justify-center"
+                    }`}
+                  >
+                    <p className="text-[12px]">{item.title}</p>
+                    {item.tooltipdisplay !== "none" && (
+                      <p>
+                        <MdInfoOutline
+                          data-tooltip-id={`tooltip-${item.title.replace(
+                            /\s+/g,
+                            "-"
+                          )}`}
+                          data-tooltip-content={item.tooltip}
+                          className="ml-2 cursor-pointer"
+                        />
+                        <ReactTooltip
+                          id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                          place="top"
+                          effect="solid"
+                          style={{
+                            width: "400px",
+                            backgroundColor: "#000",
+                            color: "white",
+                            fontSize: "12px",
+                            boxShadow: 3,
+                            borderRadius: "8px",
+                            zIndex: "1000",
+                          }}
+                        />
+                      </p>
+                    )}
+                  </div>
+                </th>
+              ))}
+              <th
+                className="text-[12px] px-4 py-3 relative"
+                style={{ width: "5vw" }}
+              >
+                {" "}
+              </th>
+            </tr>
+          </thead>
           <tbody>
             {localValue.map((row, rowIndex) => (
-              <tr key={rowIndex} 
-              className="border-r border-gray-300">
-              {visibleTitles.map((item, cellIndex) => {
+              <tr key={rowIndex} className="border-r border-gray-300">
+                {visibleTitles.map((item, cellIndex) => {
                   const isEnum = Array.isArray(item.options);
                   const isMulti = isMultiSelect(item.key);
 
                   return (
                     <td
                       key={cellIndex}
-                      className={` ${cellIndex === 0 ? "" :"border-l " }  border-t border-gray-300 text-center`}
-                 
+                      className={` ${
+                        cellIndex === 0 ? "" : "border-l "
+                      }  border-t border-gray-300 text-center`}
                     >
                       {isEnum ? (
                         isMulti ? (
@@ -844,10 +863,10 @@ console.log('FrameworkId:', formContext.frameworkId, 'SelectId:', formContext.se
                               }))}
                               className="text-[12px] w-full"
                               placeholder="Select options"
-                               components={{
-                                                              Option: CustomOptionnew,
-                                                              MultiValueContainer:CustomMultiValueContainer
-                                                            }}
+                              components={{
+                                Option: CustomOptionnew,
+                                MultiValueContainer: CustomMultiValueContainer,
+                              }}
                               closeMenuOnSelect={false}
                               hideSelectedOptions={false}
                               styles={updatedMultiSelectStyle}
