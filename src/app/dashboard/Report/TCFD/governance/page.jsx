@@ -31,7 +31,8 @@ const Governance = forwardRef(({ onSubmitSuccess }, ref) => {
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   
   const apiCalledRef = useRef(false);
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
+  const [tcfdCollectData, setTcfdCollectData] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("section4_1");
 
@@ -51,65 +52,89 @@ const Governance = forwardRef(({ onSubmitSuccess }, ref) => {
     setLoOpen(false);
   };
 
-const submitForm = async (type) => {
-  LoaderOpen();
+  const submitForm = async (type) => {
+    LoaderOpen();
 
-  const formData = new FormData();
-  formData.append('report', reportid);
-  formData.append('screen_name', 'governance');
-  
-  const dataPayload = {
-    board_oversight: {
-      page: "governance",
-      label: "4. Governance",
-      subLabel: "Board's Oversight of Climate-Related Risks and Opportunities",
-      type: "textarea",
-      content: governance.boardOversight,
-      field: "board_oversight",
-      isSkipped: false,
-    },
-    management_role: {
-      page: "governance",
-      label: "4.2 Management's role in assessing and managing climate related risks and opportunities",
-      subLabel: "Management Role",
-      type: "textarea",
-      content: governance.managementRole,
-      field: "management_role",
-      isSkipped: false,
-    },
-  };
-  
-  formData.append('data', JSON.stringify(dataPayload));
-
-  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
-
-  try {
-    const response = await axiosInstance.put(url, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
+    const formData = new FormData();
+    formData.append('report', reportid);
+    formData.append('screen_name', 'governance');
+    
+    const dataPayload = {
+      board_oversight: {
+        page: "governance",
+        label: "4. Governance",
+        subLabel: "Board's Oversight of Climate-Related Risks and Opportunities",
+        type: "textarea",
+        content: governance.boardOversight,
+        field: "board_oversight",
+        isSkipped: false,
       },
-    });
+      management_role: {
+        page: "governance",
+        label: "4.2 Management's role in assessing and managing climate related risks and opportunities",
+        subLabel: "Management Role",
+        type: "textarea",
+        content: governance.managementRole,
+        field: "management_role",
+        isSkipped: false,
+      },
+      description: {
+        page: "governance",
+        label: "4.1. Board's Oversight of Climate-Related Risks and Opportunitiess",
+        subLabel: "description",
+        type: "textarea",
+        content: governance.tcfdFrameworkDescription,
+        field: "description",
+        isSkipped: false,
+      },
+    };
+    
+    formData.append('data', JSON.stringify(dataPayload));
 
-    if (response.status === 200) {
-      if (type === "next") {
-        toast.success("Data added successfully", {
+    const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
+
+    try {
+      const response = await axiosInstance.put(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        if (type === "next") {
+          toast.success("Data added successfully", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+
+        if (onSubmitSuccess) {
+          onSubmitSuccess(true);
+        }
+        LoaderClose();
+        return true;
+      } else {
+        toast.error("Oops, something went wrong", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: "colored",
         });
+        LoaderClose();
+        return false;
       }
-
-      if (onSubmitSuccess) {
-        onSubmitSuccess(true);
-      }
+    } catch (error) {
       LoaderClose();
-      return true;
-    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -120,52 +145,46 @@ const submitForm = async (type) => {
         progress: undefined,
         theme: "colored",
       });
-      LoaderClose();
       return false;
     }
-  } catch (error) {
-    LoaderClose();
-    toast.error("Oops, something went wrong", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-    return false;
-  }
-};
+  };
 
-const loadFormData = async () => {
-  LoaderOpen();
-  dispatch(setBoardOversight(""));
-  dispatch(setManagementRole(""));
-  
-  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/governance/`;
-  try {
-    const response = await axiosInstance.get(url);
+  const loadFormData = async () => {
+    LoaderOpen();
+    dispatch(setBoardOversight(""));
+    dispatch(setManagementRole(""));
     
-    if (response.data && response.data.data) {
-      console.log("response.data", response.data);
-      console.log("response.data.data", response.data.data);
-      console.log("response.data.data.report_data", response.data.data.report_data);
+    const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/governance/`;
+    try {
+      const response = await axiosInstance.get(url);
       
-      setData(response.data.data.report_data || {}); // Add fallback to empty object
-      dispatch(setBoardOversight(response.data.data.report_data?.board_oversight?.content || ""));
-      dispatch(setManagementRole(response.data.data.report_data?.management_role?.content || ""));
-    } else {
-      setData({}); // Set empty object if no data
+      if (response.data && response.data.data) {
+        console.log("Full response:", response.data);
+        
+        // Handle both report_data and tcfd_collect_data
+        const reportData = response.data.data.report_data || {};
+        const tcfdData = response.data.data.tcfd_collect_data || {};
+        
+        setData(reportData);
+        setTcfdCollectData(tcfdData);
+        
+        // Set Redux state from report_data if available
+        dispatch(setBoardOversight(reportData?.board_oversight?.content || ""));
+        dispatch(setManagementRole(reportData?.management_role?.content || ""));
+        
+        console.log("TCFD Collect Data:", tcfdData);
+      } else {
+        setData({});
+        setTcfdCollectData({});
+      }
+      LoaderClose();
+    } catch (error) {
+      console.error("API call failed:", error);
+      setData({});
+      setTcfdCollectData({});
+      LoaderClose();
     }
-    LoaderClose();
-  } catch (error) {
-    console.error("API call failed:", error);
-    setData({}); // Set empty object on error
-    LoaderClose();
-  }
-};
+  };
 
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {
@@ -197,37 +216,16 @@ const loadFormData = async () => {
             <Section1
               section4_1Ref={section4_1Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
             <Section2
               section4_2Ref={section4_2Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
           </div>
-
-          {/* Page sidebar */}
-          {/* <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              4. Governance
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section4_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section4_1Ref, "section4_1")}
-            >
-              4.1 Board's Oversight of Climate-Related Risks and Opportunities
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section4_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section4_2Ref, "section4_2")}
-            >
-              4.2 Management's role in assessing and managing climate related risks and opportunities
-            </p>
-          </div> */}
         </div>
       </div>
       

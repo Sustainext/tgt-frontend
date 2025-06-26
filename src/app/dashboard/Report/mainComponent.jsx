@@ -64,6 +64,7 @@ import {
 } from "../../../lib/redux/features/reportCreationSlice"; // Adjust import path
 import {initializeForCustomReport,resetToDefaults,fetchReportBuilderData} from '../../../lib/redux/features/reportBuilderSlice'
 import {setActivesection} from '../../../lib/redux/features/TCFD/TcfdSlice'
+import { isTCFDAvailable } from '../../utils/frameworkChecker'
 
 const Report = () => {
   const [isExpandedpage, setIsExpandedpage] = useState(true);
@@ -1095,7 +1096,7 @@ const Report = () => {
                           <option value="canada_bill_s211_v2">
                             Bill S-211
                           </option>
-                          <option value="TCFD">TCFD</option>
+                          { isTCFDAvailable() && <option value="TCFD">TCFD</option>}
                           <option>Custom ESG Report</option>
                         </select>
                         {error.reporttype && (

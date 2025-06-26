@@ -11,10 +11,16 @@ import {
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section1 = ({ section6_1Ref, data, orgName }) => {
+const Section1 = ({ section6_1Ref, data, tcfdCollectData, orgName }) => {
   const dispatch = useDispatch();
   const riskManagement = useSelector(selectRiskManagement);
   const editorRef = useRef(null);
+
+  // Extract risk management data from tcfdCollectData
+  const identificationData = tcfdCollectData?.climate_related_risk_identification_assessment_process?.[0] || {};
+  const significanceData = tcfdCollectData?.risk_significance?.[0] || {};
+  const regulatoryData = tcfdCollectData?.regulatory_considerations?.[0] || {};
+  const scopeData = tcfdCollectData?.size_scope_of_risk?.[0] || {};
 
   // Jodit Editor configuration
   const config = {
@@ -42,6 +48,40 @@ const Section1 = ({ section6_1Ref, data, orgName }) => {
 
   const handleEditorChange = (content) => {
     dispatch(setIdentificationProcess(content));
+  };
+
+  // Helper function to render array values
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.map((item, index) => (
+        <div key={index}>{item}</div>
+      ));
+    }
+    return value || '';
+  };
+
+  // Helper function to render file information
+  const renderFileInfo = (fileData) => {
+    if (fileData && typeof fileData === 'object' && fileData.fileName) {
+      return (
+        <div className="mt-2 p-2 bg-gray-50 rounded border">
+          <div className="text-sm">
+            <strong>Attached File:</strong> {fileData.fileName}
+          </div>
+          {fileData.fileURL && (
+            <a 
+              href={fileData.fileURL} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 text-sm underline"
+            >
+              View Document
+            </a>
+          )}
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -76,65 +116,54 @@ const Section1 = ({ section6_1Ref, data, orgName }) => {
             6.1 Risk Identification & Assessment Process
           </h3>
 
-          {/* Response placeholders */}
-          <div className="mb-6 bg-blue-50 p-4 rounded border">
-            <p className="text-blue-600 text-sm mb-2">
-              (Response from "Describe your organization's overall approach to identifying and assessing climate-related risks." question, without heading)
-            </p>
-            <div className="border-b border-blue-200 my-2"></div>
-            <div className="text-sm text-gray-700">
-              {data?.identification_approach || "Climate risk identification and assessment process details will be displayed here based on API response."}
-            </div>
-          </div>
-
-          <div className="mb-6 bg-blue-50 p-4 rounded border">
-            <p className="text-blue-600 text-sm mb-2">
-              (Response from "How do you determine the relative significance of climate-related risks compared to other types of risks?" question, without heading)
-            </p>
-            <div className="border-b border-blue-200 my-2"></div>
-            <div className="text-sm text-gray-700">
-              {data?.risk_significance || "Risk significance determination process details will be displayed here based on API response."}
-            </div>
-          </div>
-
-          {/* Regulatory Considerations */}
           <div className="mb-6">
-            <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
-              Regulatory Considerations
-            </h4>
-            <div className="text-blue-600 text-sm mb-2">Conditional section</div>
-            
-            <div className="bg-blue-50 p-4 rounded border mb-4">
-              <p className="text-blue-600 text-sm mb-2">
-                (Note for devs: A tailored version of the 'Regulatory Considerations' section's data is required here. i.e. skip yes/no response)
-              </p>
-              <p className="text-blue-600 text-sm mb-2">
-                (If yes option is selected, fetch response from "If yes, describe how the regulatory requirements are considered." question, without heading)
-              </p>
-              <div className="border-b border-blue-200 my-2"></div>
-              <p className="text-blue-600 text-sm">
-                (If 'No' option is selected skip entire section).
-              </p>
-            </div>
-            
-            <div className="text-sm text-gray-700">
-              {data?.regulatory_considerations || "Regulatory considerations details will be displayed here if applicable."}
+            {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+              Organization's Overall Approach to Identifying and Assessing Climate-Related Risks
+            </h4> */}
+            <div className="text-sm">
+              {renderArrayValue(identificationData?.Q1)}
             </div>
           </div>
 
-          {/* Size & scope of risk */}
           <div className="mb-6">
-            <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
-              Size & scope of risk
-            </h4>
-            <div className="bg-blue-50 p-4 rounded border">
-              <p className="text-blue-600 text-sm mb-2">
-                (Response from "Describe the process of assessing the potential size and scope of identified climate-related risks." question, without heading)
-              </p>
-              <div className="border-b border-blue-200 my-2"></div>
-              <div className="text-sm text-gray-700">
-                {data?.risk_scope_assessment || "Risk size and scope assessment process details will be displayed here based on API response."}
+            {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+              Determining Relative Significance of Climate-Related Risks
+            </h4> */}
+            <div className="text-sm">
+              {renderArrayValue(significanceData?.Q1)}
+            </div>
+          </div>
+
+          {/* Regulatory Considerations - Only show if Q1 is Yes */}
+          {regulatoryData?.Q1 === 'Yes' && (
+            <div className="mb-6">
+              <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+                Regulatory Considerations
+              </h4>
+              <div className="text-sm">
+                {renderArrayValue(regulatoryData?.Q2)}
               </div>
+            </div>
+          )}
+
+          <div className="mb-6">
+            <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+              Size & Scope of Risk
+            </h4>
+            <div className="text-sm">
+              {renderArrayValue(scopeData?.Q1)}
+              {/* {scopeData?.Q2 && (
+                <div className="mt-3">
+                  {typeof scopeData.Q2 === 'object' && scopeData.Q2.text ? (
+                    <div>
+                      <div className="mb-2">{scopeData.Q2.text}</div>
+                      {renderFileInfo(scopeData.Q2)}
+                    </div>
+                  ) : (
+                    <div>{renderArrayValue(scopeData.Q2)}</div>
+                  )}
+                </div>
+              )} */}
             </div>
           </div>
         </div>

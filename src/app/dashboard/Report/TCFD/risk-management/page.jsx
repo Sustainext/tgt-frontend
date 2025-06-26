@@ -34,7 +34,8 @@ const RiskManagement = forwardRef(({ onSubmitSuccess }, ref) => {
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   
   const apiCalledRef = useRef(false);
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
+  const [tcfdCollectData, setTcfdCollectData] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("section6_1");
 
@@ -72,33 +73,33 @@ const submitForm = async (type) => {
       field: "identification_process",
       isSkipped: false,
     },
-    assessment_process: {
-      page: "risk_management",
-      label: "6.2 Climate Risk Management",
-      subLabel: "Assessment Process",
-      type: "textarea",
-      content: riskManagement.assessmentProcess,
-      field: "assessment_process",
-      isSkipped: false,
-    },
-    management_process: {
-      page: "risk_management",
-      label: "6.2 Climate Risk Management",
-      subLabel: "Management Process",
-      type: "textarea",
-      content: riskManagement.managementProcess,
-      field: "management_process",
-      isSkipped: false,
-    },
-    integration_into_overall: {
-      page: "risk_management",
-      label: "6.3 Integration with Overall Risk Management",
-      subLabel: "Integration Process",
-      type: "textarea",
-      content: riskManagement.integrationIntoOverall,
-      field: "integration_into_overall",
-      isSkipped: false,
-    },
+    // assessment_process: {
+    //   page: "risk_management",
+    //   label: "6.2 Climate Risk Management",
+    //   subLabel: "Assessment Process",
+    //   type: "textarea",
+    //   content: riskManagement.assessmentProcess,
+    //   field: "assessment_process",
+    //   isSkipped: false,
+    // },
+    // management_process: {
+    //   page: "risk_management",
+    //   label: "6.2 Climate Risk Management",
+    //   subLabel: "Management Process",
+    //   type: "textarea",
+    //   content: riskManagement.managementProcess,
+    //   field: "management_process",
+    //   isSkipped: false,
+    // },
+    // integration_into_overall: {
+    //   page: "risk_management",
+    //   label: "6.3 Integration with Overall Risk Management",
+    //   subLabel: "Integration Process",
+    //   type: "textarea",
+    //   content: riskManagement.integrationIntoOverall,
+    //   field: "integration_into_overall",
+    //   isSkipped: false,
+    // },
   };
   
   formData.append('data', JSON.stringify(dataPayload));
@@ -112,7 +113,7 @@ const submitForm = async (type) => {
       },
     });
 
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201) {
       if (type === "next") {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -173,22 +174,35 @@ const loadFormData = async () => {
     const response = await axiosInstance.get(url);
     
     if (response.data && response.data.data) {
-      console.log("response.data", response.data);
-      console.log("response.data.data", response.data.data);
-      console.log("response.data.data.report_data", response.data.data.report_data);
+      console.log("Risk Management response.data", response.data);
       
-      setData(response.data.data.report_data);
-      dispatch(setIdentificationProcess(response.data.data.report_data.identification_process?.content || ""));
-      dispatch(setAssessmentProcess(response.data.data.report_data.assessment_process?.content || ""));
-      dispatch(setManagementProcess(response.data.data.report_data.management_process?.content || ""));
-      dispatch(setIntegrationIntoOverall(response.data.data.report_data.integration_into_overall?.content || ""));
+      // Handle both report_data and tcfd_collect_data
+      const reportData = response.data.data.report_data || {};
+      const tcfdData = response.data.data.tcfd_collect_data || {};
+      
+      setData(reportData);
+      setTcfdCollectData(tcfdData);
+      
+      // Set Redux state from report_data if available
+      dispatch(setIdentificationProcess(reportData?.identification_process?.content || ""));
+      dispatch(setAssessmentProcess(reportData?.assessment_process?.content || ""));
+      dispatch(setManagementProcess(reportData?.management_process?.content || ""));
+      dispatch(setIntegrationIntoOverall(reportData?.integration_into_overall?.content || ""));
+      
+      console.log("Risk Management TCFD Collect Data:", tcfdData);
+    } else {
+      setData({});
+      setTcfdCollectData({});
     }
     LoaderClose();
   } catch (error) {
     console.error("API call failed:", error);
+    setData({});
+    setTcfdCollectData({});
     LoaderClose();
   }
 };
+
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {
       apiCalledRef.current = true;
@@ -219,50 +233,22 @@ const loadFormData = async () => {
             <Section1
               section6_1Ref={section6_1Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
             <Section2
               section6_2Ref={section6_2Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
             <Section3
               section6_3Ref={section6_3Ref}
               data={data}
+              tcfdCollectData={tcfdCollectData}
               orgName={orgName}
             />
           </div>
-
-          {/* Page sidebar */}
-          {/* <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              6. Risk Management
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section6_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section6_1Ref, "section6_1")}
-            >
-              6.1 Risk Identification & Assessment Process
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section6_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section6_2Ref, "section6_2")}
-            >
-              6.2 Climate Risk Management
-            </p>
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section6_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section6_3Ref, "section6_3")}
-            >
-              6.3 Integration with Overall Risk Management
-            </p>
-          </div> */}
         </div>
       </div>
       

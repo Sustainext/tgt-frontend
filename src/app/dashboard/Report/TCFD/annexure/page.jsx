@@ -24,7 +24,8 @@ const Annexure = forwardRef(({ onSubmitSuccess }, ref) => {
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   
   const apiCalledRef = useRef(false);
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
+  const [tcfdCollectData, setTcfdCollectData] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [annexureContent, setAnnexureContent] = useState("");
   const editorRef = useRef(null);
@@ -86,56 +87,98 @@ const Annexure = forwardRef(({ onSubmitSuccess }, ref) => {
     setAnnexureContent(content);
   };
 
- const submitForm = async (type) => {
-  LoaderOpen();
-
-  const formData = new FormData();
-  formdata?.append('report', reportid);
-  formdata?.append('screen_name', 'annexure');
-  
-  const dataPayload = {
-    annexure_content: {
-      page: "annexure",
-      label: "9. Annexure",
-      subLabel: "Additional Information and Appendices",
-      type: "textarea",
-      content: annexureContent,
-      field: "annexure_content",
-      isSkipped: false,
-    },
+  // Helper function to render file information
+  const renderFileInfo = (fileData) => {
+    if (fileData && typeof fileData === 'object' && fileData.fileName) {
+      return (
+        <div className="mt-2 p-3 bg-gray-50 rounded border">
+          <div className="text-sm">
+            <strong>Attached Document:</strong> {fileData.fileName}
+          </div>
+          <div className="text-xs text-gray-600 mt-1">
+            File type: {fileData.filetype} | Size: {Math.round(fileData.filesize / 1024)} KB
+          </div>
+          {fileData.fileURL && (
+            <a 
+              href={fileData.fileURL} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 text-sm underline mt-2 inline-block"
+            >
+              View Document
+            </a>
+          )}
+        </div>
+      );
+    }
+    return null;
   };
-  
-  formdata?.append('data', JSON.stringify(dataPayload));
 
-  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
+  const submitForm = async (type) => {
+    LoaderOpen();
 
-  try {
-    const response = await axiosInstance.put(url, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
+    const formData = new FormData(); // Fixed typo: was 'formdata'
+    formData.append('report', reportid);
+    formData.append('screen_name', 'annexure');
+    
+    const dataPayload = {
+      annexure_content: {
+        page: "annexure",
+        label: "9. Annexure",
+        subLabel: "Additional Information and Appendices",
+        type: "textarea",
+        content: annexureContent,
+        field: "annexure_content",
+        isSkipped: false,
       },
-    });
+    };
+    
+    formData.append('data', JSON.stringify(dataPayload));
 
-    if (response.status === 200) {
-      if (type === "next") {
-        toast.success("Annexure completed successfully", {
+    const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/upsert-tcfd-report/`;
+
+    try {
+      const response = await axiosInstance.put(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        if (type === "next") {
+          toast.success("Annexure completed successfully", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+
+        if (onSubmitSuccess) {
+          onSubmitSuccess(true);
+        }
+        LoaderClose();
+        return true;
+      } else {
+        toast.error("Oops, something went wrong", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: "colored",
         });
+        LoaderClose();
+        return false;
       }
-
-      if (onSubmitSuccess) {
-        onSubmitSuccess(true);
-      }
+    } catch (error) {
       LoaderClose();
-      return true;
-    } else {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -146,47 +189,53 @@ const Annexure = forwardRef(({ onSubmitSuccess }, ref) => {
         progress: undefined,
         theme: "colored",
       });
-      LoaderClose();
       return false;
     }
-  } catch (error) {
-    LoaderClose();
-    toast.error("Oops, something went wrong", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-    return false;
-  }
-};
+  };
 
-const loadFormData = async () => {
-  LoaderOpen();
-  setAnnexureContent("");
-  
-  const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/annexure/`;
-  try {
-    const response = await axiosInstance.get(url);
+  const loadFormData = async () => {
+    LoaderOpen();
+    setAnnexureContent("");
     
-    if (response.data && response.data?.data) {
-      console.log("response.data", response.data);
-      console.log("response.data?.data", response.data?.data);
-      console.log("response.data?.data?.report_data", response.data?.data?.report_data);
+    const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/annexure/`;
+    try {
+      const response = await axiosInstance.get(url);
       
-      setData(response.data?.data?.report_data);
-      setAnnexureContent(response.data?.data?.report_data?.annexure_content?.content || "");
+      if (response.data && response.data.data) {
+        console.log("Annexure response.data", response.data);
+        
+        // Handle both report_data and tcfd_collect_data
+        const reportData = response.data.data.report_data || {};
+        const tcfdData = response.data.data.tcfd_collect_data || {};
+        
+        setData(reportData);
+        setTcfdCollectData(tcfdData);
+        setAnnexureContent(reportData?.annexure_content?.content || "");
+        
+        console.log("Annexure TCFD Collect Data:", tcfdData);
+      } else {
+        setData({});
+        setTcfdCollectData({});
+      }
+      LoaderClose();
+    } catch (error) {
+      console.error("API call failed:", error);
+      setData({});
+      setTcfdCollectData({});
+      LoaderClose();
     }
-    LoaderClose();
-  } catch (error) {
-    console.error("API call failed:", error);
-    LoaderClose();
-  }
-};
+  };
+
+  // Extract risk terminology data from tcfdCollectData
+  const riskTerminologyData = tcfdCollectData?.size_scope_of_risk?.[0] || {};
+
+  // Helper function to render array values
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.join(', ');
+    }
+    return value || '';
+  };
 
   useEffect(() => {
     if (!apiCalledRef.current && reportid) {
@@ -202,86 +251,36 @@ const loadFormData = async () => {
           9. Annexure
         </h3>
 
-        {/* <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between mb-4">
-          <p className="text-[15px] text-[#667085] mb-2 mt-3">
-            Add any additional information, appendices, or supporting documents here.
-          </p>
-          <button
-            className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            onClick={loadAutoFillContent}
-          >
-            <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
-            Auto Fill
-          </button>
-        </div>
-
-        <div className="mb-6">
-          <JoditEditor
-            ref={editorRef}
-            value={annexureContent}
-            config={config}
-            tabIndex={1}
-            onBlur={handleEditorChange}
-            onChange={() => {}}
-          />
-        </div> */}
-
         {/* Risk Terminology Used Section */}
         <div className="mb-8">
           <h4 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
             Risk Terminology Used
           </h4>
           
-          <div className="mb-6 bg-blue-50 p-4 rounded border">
-            <p className="text-blue-600 text-sm mb-2">
-              (Response "Provide definitions of risk terminology used or references to existing risk classification frameworks used" field group, without heading) ------------------------------------------------------------.
-            </p>
-            <div className="text-sm text-gray-700">
-              {data?.risk_terminology || "Risk terminology definitions and framework references will be displayed here based on API response."}
+          {/* <div className="mb-6">
+            <div className="text-sm">
+              {renderArrayValue(riskTerminologyData?.Q1)}
             </div>
-          </div>
+          </div> */}
 
-          <div className="mb-6 bg-blue-50 p-4 rounded border">
-            <p className="text-blue-600 text-sm mb-2">
+          <div className="mb-6">
+            {/* <div className="text-sm">
               Fetch document uploaded for the above-mentioned question.
-            </p>
-            <div className="text-sm text-gray-700">
-              {data?.risk_terminology_document ? (
-                <div className="mt-2">
-                  <p className="font-medium">Uploaded Document:</p>
-                  <a 
-                    href={data?.risk_terminology_document.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
-                  >
-                    {data?.risk_terminology_document.name}
-                  </a>
-                </div>
-              ) : (
-                "No document uploaded for risk terminology."
-              )}
-            </div>
+            </div> */}
+            {riskTerminologyData?.Q2 && (
+              <div className="mt-3">
+                {typeof riskTerminologyData.Q2 === 'object' && riskTerminologyData.Q2.text ? (
+                  <div>
+                    <div className="mb-2">{riskTerminologyData.Q2.text}</div>
+                    {renderFileInfo(riskTerminologyData.Q2)}
+                  </div>
+                ) : (
+                  <div>{renderArrayValue(riskTerminologyData.Q2)}</div>
+                )}
+              </div>
+            )}
           </div>
         </div>
-
-        {/* <div className="bg-gray-50 p-4 rounded border">
-          <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
-            Common Annexure Content
-          </h4>
-          <p className="text-sm text-gray-700 mb-2">
-            Typical annexure sections for TCFD reports may include:
-          </p>
-          <ul className="text-sm text-gray-700 list-disc ml-6 space-y-1">
-            <li>Detailed methodology and calculation approaches</li>
-            <li>Data sources and verification processes</li>
-            <li>Glossary of terms and definitions</li>
-            <li>Additional data tables and charts</li>
-            <li>Third-party assurance statements</li>
-            <li>References to external frameworks and standards</li>
-            <li>Contact information for inquiries</li>
-          </ul>
-        </div> */}
       </div>
       
       {loopen && (
