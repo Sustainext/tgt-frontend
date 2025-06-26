@@ -47,6 +47,7 @@ const Preferences = () => {
       setTargets(org_data.target);
       setCertifications(org_data.certification);
       setRatings(org_data.rating);
+      localStorage.setItem("framework", JSON.stringify(org_data.framework));
       LoaderClose();
     } catch (error) {
       const errorMessage =

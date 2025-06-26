@@ -346,31 +346,54 @@ const TCFDReport = () => {
   };
 
   const handleDownload = async (reportId) => {
-    setIsDownloading(true);
-    try {
-      const response = await axiosInstance(
-        `${process.env.BACKEND_API_URL}/tcfd_framework/get-tcfd-report-pdf/${reportId}/?download=true`,
-        {
-          headers: {
-            Authorization:
-              "Bearer " + localStorage.getItem("token")?.replace(/"/g, ""),
-          },
-        }
-      );
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = downloadUrl;
-      link.setAttribute("download", `tcfd_report_${reportId}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading file:", error);
-    } finally {
-      setIsDownloading(false);
+  setIsDownloading(true);
+  
+  try {
+    const response = await axiosInstance.get(
+      `${process.env.BACKEND_API_URL}/tcfd_framework/get-tcfd-report-pdf/${reportId}/?download=true`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")?.replace(/"/g, ""),
+        },
+        responseType: 'blob', // This is crucial for binary data
+      }
+    );
+
+    // Create blob from response data
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const downloadUrl = window.URL.createObjectURL(blob);
+    
+    // Create and trigger download
+    const link = document.createElement("a");
+    link.href = downloadUrl;
+    link.setAttribute("download", `tcfd_report_${reportId}.pdf`);
+    document.body.appendChild(link);
+    link.click();
+    
+    // Cleanup
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(downloadUrl);
+    
+    toast.success("Report downloaded successfully!");
+    
+  } catch (error) {
+    console.error("Error downloading file:", error);
+    
+    // Show user-friendly error message
+    toast.error("Failed to download the report. Please try again later.");
+    
+    // Log more details for debugging
+    if (error.response) {
+      console.error("Response error:", error.response.status, error.response.data);
+    } else if (error.request) {
+      console.error("Request error:", error.request);
+    } else {
+      console.error("Error:", error.message);
     }
-  };
+  } finally {
+    setIsDownloading(false);
+  }
+};
 
   // Component mapping for sections
   const renderSectionComponent = () => {

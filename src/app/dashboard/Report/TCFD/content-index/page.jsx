@@ -303,17 +303,6 @@ const TCFDContentIndex = forwardRef(({ onSubmitSuccess }, ref) => {
           8. TCFD Content Index
         </h3>
 
-        {/* Debug info - remove in production */}
-        {process.env.NODE_ENV === 'development' && (
-          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-xs">
-            <strong>Debug Info:</strong>
-            <div>Data type: {Array.isArray(tcfdContentIndex) ? 'Array' : typeof tcfdContentIndex}</div>
-            <div>Length: {tcfdContentIndex?.length || 0}</div>
-            <div>Source: {collectData && Object.keys(collectData).length > 0 ? 'API collectData' : 'Default'}</div>
-            <div>Categories: {tcfdContentIndex?.map(cat => cat.category).join(', ') || 'None'}</div>
-          </div>
-        )}
-
         {/* TCFD Content Index Table */}
         <div className="overflow-x-auto mb-6">
           <table className="w-full border-collapse border border-gray-300 text-sm">
