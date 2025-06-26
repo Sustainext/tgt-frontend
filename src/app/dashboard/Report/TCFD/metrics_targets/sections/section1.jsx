@@ -328,8 +328,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
 
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start mt-6">
             <p className="text-[15px] text-[#667085] mb-2 mt-0">
-              Add sector-specific (e.g., financial or non-financial) information relevant to the 'metrics & targets' disclosures, in line with TCFD sector guidance (if applicable).
-            </p>
+Add sector-specific (e.g., financial or non-financial) information relevant to the ‘metrics & targets’ disclosures, in line with TCFD sector guidance (if applicable).             </p>
           </div>
 
           <div className="mb-6">

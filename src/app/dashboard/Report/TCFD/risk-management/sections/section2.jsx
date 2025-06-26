@@ -34,18 +34,18 @@ const Section2 = ({ section6_2Ref, data, tcfdCollectData, orgName }) => {
           </h3>
 
           <div className="mb-6">
-            <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+            {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
               Risk Prioritization Process
-            </h4>
+            </h4> */}
             <div className="text-sm">
               {renderArrayValue(materialityData?.Q1)}
             </div>
           </div>
 
           <div className="mb-6">
-            <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+            {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
               Climate Risk Management Process
-            </h4>
+            </h4> */}
             <div className="text-sm">
               {renderArrayValue(managementProcessData?.Q1)}
             </div>

@@ -257,11 +257,11 @@ const Annexure = forwardRef(({ onSubmitSuccess }, ref) => {
             Risk Terminology Used
           </h4>
           
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <div className="text-sm">
               {renderArrayValue(riskTerminologyData?.Q1)}
             </div>
-          </div>
+          </div> */}
 
           <div className="mb-6">
             {/* <div className="text-sm">

@@ -88,7 +88,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
 
   // Main section autofill
   const loadMainAutoFillContent = () => {
-    const autoFillContent = `<p>We manage our emissions through a comprehensive strategy that includes setting reduction targets, implementing energy-efficient technologies, and monitoring our progress across all scopes of our operations.</p>`;
+    const autoFillContent = `<p>We manage our emissions through a comprehensive strategy that includes setting reduction targets, implementing energy-efficient technologies, and monitoring our progress.</p>`;
     dispatch(setMainContentEmissions(autoFillContent));
     if (editorRefMain.current) {
       editorRefMain.current.value = autoFillContent;
@@ -357,7 +357,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                             Activity
                           </th>
                           <th className="text-left py-2 px-4 font-medium text-gray-600">
-                            Emissions (tCO2e)
+                            Total Emissions (tCO2e)
                           </th>
                         </tr>
                       </thead>
@@ -378,8 +378,8 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                                 {safeRenderValue(item.activity)}
                               </td>
                               <td className="py-2 px-4 text-gray-700">
-                                {safeRenderValue(item.emission_unit) || "-"}{" "}
-                                {safeRenderValue(item.Units) || "tCO2e"}
+                                {safeRenderValue(item.emission) || "-"}{" "}
+                                {/* {safeRenderValue(item.Units) || "tCO2e"} */}
                               </td>
                             </tr>
                           ))
@@ -453,7 +453,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                             Activity
                           </th>
                           <th className="text-left py-2 px-4 font-medium text-gray-600">
-                            Emissions (tCO2e)
+                            Total Emissions (tCO2e)
                           </th>
                         </tr>
                       </thead>
@@ -474,8 +474,8 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                                 {safeRenderValue(item.activity)}
                               </td>
                               <td className="py-2 px-4 text-gray-700">
-                                {safeRenderValue(item.emission_unit) || "-"}{" "}
-                                {safeRenderValue(item.Units) || "tCO2e"}
+                                {safeRenderValue(item.emission) || "-"}{" "}
+                                {/* {safeRenderValue(item.Units) || "tCO2e"} */}
                               </td>
                             </tr>
                           ))
@@ -549,7 +549,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                             Activity
                           </th>
                           <th className="text-left py-2 px-4 font-medium text-gray-600">
-                            Emissions (tCO2e)
+                            Total Emissions (tCO2e)
                           </th>
                         </tr>
                       </thead>
@@ -602,7 +602,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
               <ScopeTable
                 title=""
                 data={allEmissionByScope}
-                columns={["Scope", "Emissions (tCO2e)", "Percentage of Total"]}
+                columns={["Scope", "Total Emissions (tCO2e)", "Percentage of Total"]}
                 dataType="scope"
               />
             </>
@@ -619,7 +619,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                 data={allEmissionBySource}
                 columns={[
                   "Emission Source",
-                  "Emissions (tCO2e)",
+                  "Total Emissions (tCO2e)",
                   "Percentage of Total",
                 ]}
                 dataType="source"
@@ -638,7 +638,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                 data={allEmissionByLocation}
                 columns={[
                   "Geographic Location",
-                  "Emissions (tCO2e)",
+                  "Total Emissions (tCO2e)",
                   "Percentage of Total",
                 ]}
                 dataType="location"
@@ -750,15 +750,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
           <div className="mb-8">
             <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
               <p className="text-[15px] text-[#667085] mb-2 mt-0 w-4/5">
-                Add sector-specific (e.g. financial or non-financial) information relevant to the 'metrics & targets' disclosures, in line with TCFD recommendations
-              </p>
-              <button
-                className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-                onClick={loadSectorInfoAutoFillContent}
-              >
-                <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
-                Auto Fill
-              </button>
+Add sector-specific (e.g., financial or non-financial) information relevant to the ‘metrics & targets ‘ disclosures, in line with TCFD sector guidance (if applicable).               </p>
             </div>
 
             <div className="mb-6">
