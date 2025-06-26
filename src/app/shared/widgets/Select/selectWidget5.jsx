@@ -54,16 +54,19 @@ const SelectWidget5 = ({
       <div className="relative w-[100%]">
         {id.startsWith("root_0") && (
           <>
-            <p className="flex text-[13px] 4k:text-[15px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px] ml-1">
-              {label}
+            <p className="flex text-[13px] 4k:text-[15px] text-neutral-950 font-[400] mb-2 leading-[15px] ml-1">
+             {uiSchema["ui:title"]}
               <MdInfoOutline
-                data-tooltip-id={tooltipId}
-                data-tooltip-html={schema.tooltiptext}
+               data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
+                  /\s+/g,
+                  "-"
+                )}`}
+                data-tooltip-html={uiSchema["ui:tooltipstitle"]}
                 className="mt-0.5 ml-2 w-[30px] text-[14px]"
-                style={{ display: schema.display }}
+                style={{ display: uiSchema["ui:titletooltipdisplay"] }}
               />
               <ReactTooltip
-                id={tooltipId}
+                id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
                 place="top"
                 effect="solid"
                 style={{
@@ -86,7 +89,7 @@ const SelectWidget5 = ({
         {/* Render select or input based on state */}
         {!showOtherInput ? (
           <select
-            className={`block w-full py-2 text-[12px] 4k:text-[14px]  custom-select focus:outline-none focus:border-blue-300 border-2 rounded-md p-2 border-gray-200 capitalize table-scrollbar ${hasError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`block w-[560px] py-2 text-[12px] 4k:text-[14px] mb-6  custom-select focus:outline-none focus:border-blue-300 border-2 rounded-md p-2 border-gray-200 capitalize table-scrollbar ${hasError ? 'border-red-500' : 'border-gray-300'}`}
             value={value}
             onChange={handleChange}
             disabled={options.disabled}

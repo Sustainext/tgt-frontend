@@ -11,9 +11,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import MultitypefiledWidget from "../../../../../shared/widgets/Environment/MultitypefiledWidget";
+// import MultitypefiledWidget from "../../../../../shared/widgets/Environment/MultitypefiledWidget";
+import BioDiversityTwoTableWidget from '../../../../../shared/widgets/Environment/BioDiversityTwoTableWidget'
 const widgets = {
-  MultitypefiledWidget: MultitypefiledWidget,
+  BioDiversityTwoTableWidget: BioDiversityTwoTableWidget,
 };
 
 const view_path =
@@ -28,102 +29,129 @@ const schema = {
     properties: {
       col1: {
         type: "string",
-        title: "Operational sites",
+        title: "Type",
+         enum: [
+          "Plant",
+          "Animal",
+          "Fungi",
+          "Coral",
+          "Others (please specify)",
+        ],
       },
 
       col2: {
         type: "string",
-        title: "Size of Operational Site",
+        title: "Harvested Wild Species",
       },
       col3: {
         type: "string",
-        title: "Unit",
-        enum: [
-          "Square meter (m²)",
-          "Hectare (ha)",
-          "Square kilometer (km²)",
-          "Square foot (ft²)",
-          "Square yard (yd²)",
-          "Acre",
-          "Square mile (mi²)",
-        ],
+        title: "Quantity",
       },
       col4: {
         type: "string",
-        title: "Metric Unit",
+        title: "Extinction Risk",
         enum: [
-          "Office",
-          "Manufacturing",
-          "Extractive",
-          "Others (please specify)",
+          "Least Concern",
+          "Near Threatened",
+          "Vulnerable",
+          "Endangered",
+          "Critically Endangered",
+          "Extinct in the Wild",
+          "Extinct"
         ],
       },
-      col5: {
-        type: "string",
-        title: "Position in Relation to Protected Area",
-        enum: [
-          "in the area",
-          "in adjacent to the area",
-          "Containing portions of the protected area",
-        ],
-      },
-
-      col6: {
-        type: "string",
-        title: "Is the operational site subsurface or underground land?",
-        enum: ["Subsurface", "Underground land"],
-      },
-      col7: {
-        type: "string",
-        title: "Does the operational site contain biodiversity value?",
-        enum: ["Yes", "No"],
-      },
-      col8: {
-        type: "string",
-        title: "Ecosystem Type",
-        enum: ["Terrestrial", "Freshwater", "Maritime Ecosystem"],
-      },
-      col9: {
-        type: "string",
-        title: "Target Goals",
-        enum: [
-          "IUCN",
-          "Protected Area Management Categories",
-          "Ramsar Convention",
-          "National Legislation",
-          "Others (please specify)",
-        ],
-      },
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
+      
     },
   },
 };
 
 const uiSchema = {
-  "ui:widget": "MultitypefiledWidget",
+  "ui:widget": "BioDiversityTwoTableWidget",
   "ui:options": {
     titles: [
       {
         key: "col1",
-        title: "Operational sites",
+        title: "Type",
         tooltip:
-          "<p>List each operational site owned, leased, managed in, or adjacent to, protected areas and areas of high biodiversity value outside protected areas.</p> <p>Areas of high biodiversity value include habitats that are a priority for conservation,which are often defined in National Biodiversity Strategies and Action Plansprepared under the United Nations (UN) Convention, ‘Convention on Biological Diversity’, 1992.</p> <p>GRI defines Area of high biodiversity value as:area not subject to legal protection, but recognized for important biodiversity features by a number of governmental and non-governmental organizations.</p>",
-        layouttype: "locationsearch",
+          "<p>Please specify the type of wild species harvested</p>",
+        layouttype: "select",
         tooltipdispaly: "block",
       },
       {
         key: "col2",
-        title: "Size of Operational Site",
+        title: "Harvested Wild Species",
         tooltip:
-          "Report the size of the operational site in square kilometers (km2) or another appropriate unit of measurement.",
+          "Provide information on wild species harvested at the selected location. Harvesting wild species means collecting, catching, or hunting wild animals, plants, or fungi including any taken by accident as part of the organization’s activities.",
+        layouttype: "input",
+        tooltipdispaly: "block",
+      },
+      {
+        key: "col3",
+        title: "Quantity",
+        tooltip:
+          "Provide details on total quantity of wild species harvested.",
+        layouttype: "inputonlynumber",
+        tooltipdispaly: "block",
+      },
+      {
+        key: "col4",
+        title: "Extinction Risk",
+        tooltip:
+          "<p>Indicate the level of extinction risk of the species harvested.<br/> Critically Endangered: Species facing an extremely high risk of extinction in the wild in the immediate future.<br/> Endangered: Species facing a very high risk of extinction in the wild in the near future.<br/> Vulnerable: Species considered to be facing a high risk of extinction in the wild in the medium term.<br/> Near Threatened: Species that do not currently meet the criteria for being endangered or vulnerable but are close to qualifying or are likely to qualify in the near future.<br/> Least Concern: Species that have been evaluated and found to be at low risk of extinction. They are widespread and abundant.<br/> Extinct in the Wild: Survives only in captivity or outside its natural habitat; no individuals left in the wild.<br/> Extinct: No known individuals remaining anywhere. </p>",
+        layouttype: "select",
+        tooltipdispaly: "block",
+      },
+     
+    ],
+  },
+};
+
+const schema2 = {
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      col1: {
+        type: "string",
+        title: "Water withdrawal",
+      },
+
+      col2: {
+        type: "string",
+        title: "Water Consumption",
+      },
+      col3: {
+        type: "string",
+        title: "Unit",
+        enum: [
+          "Liter",
+          "Megalitre",
+          "Cubic meter",
+          "Kiloliter",
+          "Milion litres per day",
+        ],
+      },
+    },
+  },
+};
+
+const uiSchema2 = {
+  "ui:widget": "BioDiversityTwoTableWidget",
+  "ui:options": {
+    titles: [
+      {
+        key: "col1",
+        title: "Water withdrawal",
+        tooltip:
+          "<p>What is the total amount of water withdrawn at the site?<br/> Water withdrawal: sum of all water drawn from surface water, groundwater, seawater, or a third party for any use over the course of the reporting period.</p>",
+        layouttype: "inputonlynumber",
+        tooltipdispaly: "block",
+      },
+      {
+        key: "col2",
+        title: "Water Consumption",
+        tooltip:
+          "<p>What is the total water consumption at the site?<br/> Water consumption: sum of all water that has been withdrawn and incorporated into products, used in the production of crops or generated as waste, has evaporated, transpired, or been consumed by humans or livestock, or is polluted to the point of being unusable by other users, and is therefore not released back to surface water, groundwater, seawater, or a third party over the course of the reporting period.</p>",
         layouttype: "inputonlynumber",
         tooltipdispaly: "block",
       },
@@ -131,91 +159,36 @@ const uiSchema = {
         key: "col3",
         title: "Unit",
         tooltip:
-          "Select whether the target is absolute (total change) or intensity based (change per unit of business activity)",
+          "Select the correct unit corresponding to the quantity of water withdrawal/consumption.",
         layouttype: "select",
         tooltipdispaly: "block",
       },
-      {
-        key: "col4",
-        title: "Type of Operation",
-        tooltip:
-          "Specify the type of operation being conducted at the site, such as office, manufacturing or production, or extractive operations.",
-        layouttype: "select",
-        tooltipdispaly: "block",
-      },
-      {
-        key: "col5",
-        title: "Position in Relation to Protected Area",
-        tooltip:
-          " <p>Admin:Position in relation to the protected area or the high biodiversity value area outside protected areas:</p> <p>Indicate whether the site is within the protected area, adjacent to it, or contains portions of the protected area.</p>",
-        layouttype: "select",
-        tooltipdispaly: "block",
-      },
-      {
-        key: "col6",
-        title: "Is the operational site subsurface or underground land?",
-        tooltip:
-          "Indicate whether the organisation's site is subsurface or underground land. (that could be owned, leased or managed).",
-        layouttype: "select",
-        tooltipdispaly: "block",
-      },
-      {
-        key: "col7",
-        title: "Does the operational site contain biodiversity value?",
-        tooltip:
-          "Indicate whether the company's operational site contains any high biodiveristy value area (e.g.terrestrial, freshwater, or maritime ecosystem).",
-        layouttype: "select",
-        tooltipdispaly: "block",
-      },
-      {
-        key: "col8",
-        title: "Ecosystem Type",
-        tooltip:
-          "Indicate the ecosystem type, such as terrestrial, freshwater, or maritime present at the operational site. ",
-        layouttype: "multiselect",
-        tooltipdispaly: "block",
-        keytack: "col7",
-        disable: "col8",
-        disableIfNotValue: "Yes",
-      },
-      {
-        key: "col9",
-        title: "Protection Status",
-        tooltip:
-          "Describe any regulatory requirements or market constraints or other goals (may include efficiency or financial goals, financial loss tolerances, avoided GHG emissions through the entire product life cycle, or net revenue goals for products and services designed for a low-carbon economy) linked to the specified target.",
-        layouttype: "select",
-        tooltipdispaly: "none",
-      },
-    
-          {
-        key: "AssignTo",
-        title: "",
-        tooltip:
-          "",
-        layouttype: "AssignTo",
-        tooltipdispaly: "none",
-      },
-            {
-        key: "FileUpload",
-         title: "",
-        tooltip:
-          "",
-        layouttype: "FileUpload",
-        tooltipdispaly: "none",
-         scopes:"bio1"
-      },
+     
     ],
   },
 };
 
 const Screen2Comp = ({ location, year, month }) => {
-  const [formData, setFormData] = useState([{}]);
-//   const [formData, setFormData] = useState({
-//     wildSpecies: [{}],
-//     waterConsumption: [{}]
-//   });
-  const [r_schema, setRemoteSchema] = useState({});
-  const [r_ui_schema, setRemoteUiSchema] = useState({});
+  // const [formData, setFormData] = useState([{}]);
+  // const [r_schema, setRemoteSchema] = useState({});
+  // const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const apiDataAvailable=true;
+  const isTopicSelected=false;
+  const [formData, setFormData] = useState({
+  wildSpecies: [{}],
+  waterConsumption: [{}]
+});
+
+const [schemas, setSchemas] = useState({
+  wildSpecies: {},
+  waterConsumption: {}
+});
+
+const [uiSchemas, setUiSchemas] = useState({
+  wildSpecies: {},
+  waterConsumption: {}
+});
+
   const [loopen, setLoOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [locationdata, setLocationdata] = useState();
@@ -231,37 +204,81 @@ const Screen2Comp = ({ location, year, month }) => {
   const handleChange = (e) => {
     setFormData(e.formData);
   };
+  const handleFormChange = (formKey) => (e) => {
+  setFormData((prev) => ({
+    ...prev,
+    [formKey]: e.formData,
+  }));
+};
+
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
  
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-    try {
-      const response = await axiosInstance.get(url);
-      console.log("API called successfully:", response.data);
-      setRemoteSchema(response.data.form[0].schema);
-      setRemoteUiSchema(response.data.form[0].ui_schema);
-const form_parent = response.data.form_data;
-      const f_data = form_parent[0].data[0].formData;
-      const option_data = form_parent[0].data[0].selectedOption;
-    //   setFormData({
-    //     wildSpecies: fetchedData.wildSpecies || [{}],
-    //     waterConsumption: fetchedData.waterConsumption || [{}]
-    //   });
-      setFormData(f_data);
-      setSelectedOption(option_data);
-    } catch (error) {
-      setFormData([{}]);
-      LoaderClose();
-    } finally {
-      LoaderClose();
-    }
-  };
+//   const loadFormData = async () => {
+//     LoaderOpen();
+//     setFormData([{}]);
+//     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+//     try {
+//       const response = await axiosInstance.get(url);
+//       console.log("API called successfully:", response.data);
+//       setRemoteSchema(response.data.form[0].schema);
+//       setRemoteUiSchema(response.data.form[0].ui_schema);
+// const form_parent = response.data.form_data;
+//       const f_data = form_parent[0].data[0].formData;
+//       const option_data = form_parent[0].data[0].selectedOption;
+//     //   setFormData({
+//     //     wildSpecies: fetchedData.wildSpecies || [{}],
+//     //     waterConsumption: fetchedData.waterConsumption || [{}]
+//     //   });
+//       setFormData(f_data);
+//       setSelectedOption(option_data);
+//     } catch (error) {
+//       setFormData([{}]);
+//       LoaderClose();
+//     } finally {
+//       LoaderClose();
+//     }
+//   };
  
+const loadFormData = async () => {
+  LoaderOpen();
+  const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+  
+  try {
+    const response = await axiosInstance.get(url);
+    console.log("API called successfully:", response.data);
+
+    const forms = response.data.form || [];
+    const formDatas = response.data.form_data || [];
+
+    const tempSchemas = {};
+    const tempUiSchemas = {};
+    const tempFormData = {};
+
+    forms.forEach((form, idx) => {
+      const key = form.slug || (idx === 0 ? "wildSpecies" : "waterConsumption");
+      tempSchemas[key] = form.schema;
+      tempUiSchemas[key] = form.ui_schema;
+
+      const dataEntry = formDatas[idx]?.data?.[0] || {};
+      tempFormData[key] = dataEntry.formData || [{}];
+    });
+
+    setSchemas(tempSchemas);
+    setUiSchemas(tempUiSchemas);
+    setFormData(tempFormData);
+
+    const option_data = formDatas[0]?.data?.[0]?.selectedOption || "";
+    setSelectedOption(option_data);
+  } catch (error) {
+    setFormData({ wildSpecies: [{}], waterConsumption: [{}] });
+    LoaderClose();
+  } finally {
+    LoaderClose();
+  }
+};
 
   const updateFormData = async () => {
     LoaderOpen();
@@ -269,12 +286,22 @@ const form_parent = response.data.form_data;
       client_id: client_id,
       user_id: user_id,
       path: view_path,
+      // form_data: [
+      //   {
+      //     formData: formData,
+      //     selectedOption: selectedOption,
+      //   },
+      // ],
       form_data: [
-        {
-          formData: formData,
-          selectedOption: selectedOption,
-        },
-      ],
+      {
+        formData: formData.wildSpecies,
+        selectedOption: selectedOption,
+      },
+      {
+        formData: formData.waterConsumption,
+        selectedOption: selectedOption,
+      },
+    ],
       location,
       year,
       month,
@@ -326,9 +353,9 @@ const form_parent = response.data.form_data;
 
   
   //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
+  // useEffect(() => {
+  //   //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
+  // }, [r_schema, r_ui_schema]);
 
   // console log the form data change
   useEffect(() => {
@@ -336,19 +363,19 @@ const form_parent = response.data.form_data;
   }, [formData]);
 
   // fetch backend and replace initialized forms
-  useEffect(() => {
-    if (location && year && month) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
-    } else {
-      // Only show the toast if it has not been shown already
-      if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
-      }
-    }
-    // console.log('From loaded , ready for trigger')
-    // loadFormData()
-  }, [location, year, month]);
+  // useEffect(() => {
+  //   if (location && year && month) {
+  //     loadFormData();
+  //     toastShown.current = false; // Reset the flag when valid data is present
+  //   } else {
+  //     // Only show the toast if it has not been shown already
+  //     if (!toastShown.current) {
+  //       toastShown.current = true; // Set the flag to true after showing the toast
+  //     }
+  //   }
+  //   // console.log('From loaded , ready for trigger')
+  //   // loadFormData()
+  // }, [location, year, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -420,7 +447,7 @@ const form_parent = response.data.form_data;
           </div>
         </label>
             <div>
-              <Form
+              {/* <Form
                 schema={schema}
                 uiSchema={uiSchema}
                 formData={formData}
@@ -431,7 +458,16 @@ const form_parent = response.data.form_data;
                 validator={validator}
                 widgets={widgets}
                 formContext={{ locationdata }}
-              />
+              /> */}
+              <Form
+  schema={schema}
+  uiSchema={uiSchema}
+  formData={formData.wildSpecies}
+  onChange={handleFormChange("wildSpecies")}
+  validator={validator}
+  widgets={widgets}
+  // formContext={{ locationdata }}
+/>
             </div>
           </div>
           <div className="mb-4 mt-2">
@@ -439,9 +475,9 @@ const form_parent = response.data.form_data;
           Exploitation of natural resources (Water consumption)
         </label>
             <div>
-              <Form
-                schema={schema}
-                uiSchema={uiSchema}
+              {/* <Form
+                schema={schema2}
+                uiSchema={uiSchema2}
                 // formData.waterConsumption
                 formData={formData}
                 // onChange={(e) =>
@@ -451,7 +487,20 @@ const form_parent = response.data.form_data;
                 validator={validator}
                 widgets={widgets}
                 formContext={{ locationdata }}
-              />
+              /> */}
+              <Form
+  schema={schema2}
+  uiSchema={uiSchema2}
+  formData={formData.waterConsumption}
+  onChange={handleFormChange("waterConsumption")}
+  validator={validator}
+  widgets={widgets}
+  formContext={{
+    readonlyData: apiDataAvailable,     // ✅ pass via formContext
+    topicSelected: isTopicSelected      // ✅ pass via formContext
+  }}
+  // formContext={{ locationdata }}
+/>
             </div>
           </div>
         </>

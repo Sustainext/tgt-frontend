@@ -4,7 +4,7 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-// import Screen1Comp from './components/screen1Comp'
+import Screen1Comp from './components/screen1comp'
 
 const AccordionItem = ({
   title,
@@ -154,7 +154,7 @@ const Screen1 = ({
           year={year}
           setYearMessage={setYearMessage}
         >
-          {/* <Screen1Comp location={location} year={year} month={month} /> */}
+          <Screen1Comp location={location} year={year} month={month} />
         </AccordionItem>
       </div>
     </>

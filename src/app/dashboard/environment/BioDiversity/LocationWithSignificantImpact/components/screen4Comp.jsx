@@ -51,9 +51,10 @@ const uiSchema = {
     ],
 
     AlienInvasion: {
+      "ui:title":"How are invasive alien species introduced or potentially introduced by the organisation?",
       "ui:widget": "SelectWidget",  // Dropdown (Select Entry)
-      "ui:tooltip": "Indicate the species that are or may be introduced by the organisation. Invasive alien species can be introduced accidentally (e.g., transport, discharge of ballast waters) or on purpose (e.g., for pest control, horticulture, pets, zoological gardens, and aquaria). For example, an organization imports ornamental plants to new areas, which may threaten local biodiversity. Note: Non-invasive alien species are not required to be reported under 101-6-d",
-      "ui:tooltipdisplay": "block",
+      "ui:tooltipstitle": "Indicate the species that are or may be introduced by the organisation. Invasive alien species can be introduced accidentally (e.g., transport, discharge of ballast waters) or on purpose (e.g., for pest control, horticulture, pets, zoological gardens, and aquaria). For example, an organization imports ornamental plants to new areas, which may threaten local biodiversity. Note: Non-invasive alien species are not required to be reported under 101-6-d",
+      "ui:titletooltipdisplay": "block",
       "ui:options": {
         label: false,
       },

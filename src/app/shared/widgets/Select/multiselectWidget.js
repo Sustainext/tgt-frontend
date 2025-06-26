@@ -277,7 +277,7 @@ const MultiselectWidget = ({
           onChange={handleOtherChange}
           placeholder="Please specify"
           required={required}
-          className={`w-full border-b border-gray-400 mb-4 ${hasError ? "border-red-500" : "border-gray-400"} px-2 py-1 text-sm`}
+          className={`w-[690px] border-b border-gray-400 mb-4 ${hasError ? "border-red-500" : "border-gray-400"} px-2 py-1 text-sm`}
         />
       )}
       
