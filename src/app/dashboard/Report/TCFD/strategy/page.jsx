@@ -13,6 +13,7 @@ import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import {
   setClimateRisksOpportunities,
+  setClimateRisksOpportunities2,     // Added this import
   setImpactOnBusiness,
   setResilienceOfStrategy,
   setScenarioAnalysis,
@@ -73,10 +74,19 @@ const Strategy = forwardRef(({ onSubmitSuccess }, ref) => {
       field: "climate_risks_opportunities",
       isSkipped: false,
     },
+    climate_risks_opportunities2: {
+      page: "strategy",
+      label: "5.1 Climate-Related Risks and Opportunities Assessment",
+      subLabel: "Company's approach for identification",
+      type: "textarea",
+      content: strategy.climateRisksOpportunities2,
+      field: "climate_risks_opportunities2",     // Fixed: Changed from "climate_risks_opportunities" to "climate_risks_opportunities2"
+      isSkipped: false,
+    },
     impact_on_business: {
       page: "strategy",
-      label: "5.1 Climate-Related Risks and Opportunities Assessment", 
-      subLabel: "Company's approach for identification",
+      label: "5.2 Impact on Business", 
+      subLabel: "Impact on Business Strategy",
       type: "textarea",
       content: strategy.impactOnBusiness,
       field: "impact_on_business",
@@ -89,6 +99,15 @@ const Strategy = forwardRef(({ onSubmitSuccess }, ref) => {
       type: "textarea",
       content: strategy.resilienceOfStrategy,
       field: "resilience_of_strategy",
+      isSkipped: false,
+    },
+    scenario_analysis: {
+      page: "strategy",
+      label: "5.3 Scenario Analysis & Strategic Resilience",
+      subLabel: "Scenario Analysis",
+      type: "textarea",
+      content: strategy.scenarioAnalysis,
+      field: "scenario_analysis",
       isSkipped: false,
     },
   };
@@ -155,9 +174,13 @@ const Strategy = forwardRef(({ onSubmitSuccess }, ref) => {
 
 const loadFormData = async () => {
   LoaderOpen();
+  
+  // Reset all Redux state to empty strings
   dispatch(setClimateRisksOpportunities(""));
+  dispatch(setClimateRisksOpportunities2(""));    // Added this dispatch
   dispatch(setImpactOnBusiness(""));
   dispatch(setResilienceOfStrategy(""));
+  dispatch(setScenarioAnalysis(""));
   
   const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/strategy/`;
   try {
@@ -175,10 +198,19 @@ const loadFormData = async () => {
       
       // Set Redux state from report_data if available
       dispatch(setClimateRisksOpportunities(reportData?.climate_risks_opportunities?.content || ""));
+      dispatch(setClimateRisksOpportunities2(reportData?.climate_risks_opportunities2?.content || ""));    // Fixed: Now properly loads this field
       dispatch(setImpactOnBusiness(reportData?.impact_on_business?.content || ""));
       dispatch(setResilienceOfStrategy(reportData?.resilience_of_strategy?.content || ""));
+      dispatch(setScenarioAnalysis(reportData?.scenario_analysis?.content || ""));
       
       console.log("Strategy TCFD Collect Data:", tcfdData);
+      console.log("Loaded Redux State:", {
+        climateRisksOpportunities: reportData?.climate_risks_opportunities?.content || "",
+        climateRisksOpportunities2: reportData?.climate_risks_opportunities2?.content || "",
+        impactOnBusiness: reportData?.impact_on_business?.content || "",
+        resilienceOfStrategy: reportData?.resilience_of_strategy?.content || "",
+        scenarioAnalysis: reportData?.scenario_analysis?.content || "",
+      });
     } else {
       setData({});
       setTcfdCollectData({});

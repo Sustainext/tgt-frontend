@@ -99,9 +99,9 @@ const Section3 = ({ section5_3Ref, data, tcfdCollectData, orgName }) => {
             {/* Strategic Resilience */}
             {resilienceData?.Q3 && (
               <div className="mb-4">
-                <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
                   Strategy Resilience to Climate Risks
-                </h5>
+                </h5> */}
                 <div className="text-sm">
                   {renderArrayValue(resilienceData.Q3)}
                 </div>
@@ -111,9 +111,9 @@ const Section3 = ({ section5_3Ref, data, tcfdCollectData, orgName }) => {
             {/* Strategy Affected by Climate Issues */}
             {resilienceData?.Q4 && (
               <div className="mb-4">
-                <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
                   How Strategy Was Affected by Climate-Related Issues
-                </h5>
+                </h5> */}
                 <div className="text-sm">
                   {renderArrayValue(resilienceData.Q4)}
                 </div>
@@ -123,9 +123,9 @@ const Section3 = ({ section5_3Ref, data, tcfdCollectData, orgName }) => {
             {/* Strategy Evolution */}
             {resilienceData?.Q5 && (
               <div className="mb-4">
-                <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
                   Expected Strategy Evolution
-                </h5>
+                </h5> */}
                 <div className="text-sm">
                   {renderArrayValue(resilienceData.Q5)}
                 </div>

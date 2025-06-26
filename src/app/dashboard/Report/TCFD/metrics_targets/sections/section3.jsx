@@ -106,6 +106,7 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
   const TargetsTable = ({ title, data, columns }) => (
     <div className="mb-8">
       <div className="overflow-x-auto">
+              <h4 className="my-4 text-sm font-semibold">{title}</h4>
         <div className="border border-gray-200 rounded-lg overflow-hidden">
           <table className="w-full border-collapse text-sm">
             <thead>

@@ -34,9 +34,9 @@ const Section3 = ({ section6_3Ref, data, tcfdCollectData, orgName }) => {
           {/* Only show if Q1 is Yes */}
           {integrationData?.Q1 === 'Yes' && (
             <div className="mb-6">
-              <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+              {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
                 Integration of Climate Risk Processes into Overall Risk Management Framework
-              </h4>
+              </h4> */}
               <div className="text-sm">
                 {renderArrayValue(integrationData?.Q2)}
               </div>

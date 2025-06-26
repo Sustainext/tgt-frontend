@@ -76,18 +76,11 @@ const Section1 = ({ section4_1Ref, data, tcfdCollectData, orgName }) => {
   };
 
   const loadTcfdFrameworkAutoFill = () => {
-    const tcfdFrameworkContent = `<p>The Task Force on Climate-related Financial Disclosures (TCFD) was established by the Financial Stability Board (FSB) to develop voluntary, consistent disclosures that enable companies, investors, lenders, and insurers to understand and communicate climate-related financial risks and opportunities. The TCFD framework supports organizations in assessing the material financial impacts of climate-related issues and provides guidance to communicate them effectively. This improves transparency and supports more informed decision-making by stakeholders.</p>
-
-<p>The TCFD framework is structured around four key thematic areas that represent core elements of how organizations operate:</p>
-
-<ul>
-<li><strong>Governance</strong> – The organization's governance around climate-related risks and opportunities.</li>
-<li><strong>Strategy</strong> – The actual and potential impacts of climate-related risks and opportunities on the organization's businesses, strategy, and financial planning.</li>
-<li><strong>Risk Management</strong> – How the organization identifies, assesses, and manages climate-related risks.</li>
-<li><strong>Metrics and Targets</strong> – The metrics and targets used to assess and manage relevant climate-related risks and opportunities.</li>
-</ul>
-
-<p>By aligning with the TCFD recommendations, we strengthen the quality and comparability of climate-related financial disclosures and demonstrate our readiness to navigate a rapidly evolving regulatory and environmental landscape.</p>`;
+    const tcfdFrameworkContent = `<p>The Board of Directors at ${orgName || 'Company name'} provides oversight of climate-related risks and opportunities through formal mechanisms embedded within the company's governance structure. Oversight is exercised via dedicated board-level committees and supplemented by regular engagement with senior management.  
+<br/>
+Climate-related risks and opportunities are identified through internal risk assessments and are aligned with international disclosure frameworks. These matters are brought to the Board’s attention through scheduled reporting cycles and are reviewed as part of structured board agendas and risk oversight protocols. 
+<br/>
+Climate-related risks and opportunities are considered in the context of broader corporate decision-making. Monitoring and oversight are conducted through qualitative and quantitative indicators, scenario-based assessments, and internal review mechanisms. The Board reviews these inputs to assess progress on mitigation efforts and to ensure alignment with the company’s broader climate strategy and regulatory requirements. Information related to these matters is presented through periodic updates by management, which the Board uses to support long-term value creation and explore pathways to align the business with global decarbonization and sustainable development agendas. </p>`;
 
     dispatch(setTcfdFrameworkDescription(tcfdFrameworkContent));
   };
@@ -137,7 +130,7 @@ const Section1 = ({ section4_1Ref, data, tcfdCollectData, orgName }) => {
           <div className="mb-6">
             <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
               <p className="text-[15px] text-[#667085] mb-2 mt-3">
-                Add TCFD framework description and background information
+                Add a statement about how the board is informed of and oversees climate-related risks and opportunities 
               </p>
               <button
                 className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"

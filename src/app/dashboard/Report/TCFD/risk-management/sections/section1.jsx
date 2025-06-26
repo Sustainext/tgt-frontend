@@ -117,18 +117,18 @@ const Section1 = ({ section6_1Ref, data, tcfdCollectData, orgName }) => {
           </h3>
 
           <div className="mb-6">
-            <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+            {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
               Organization's Overall Approach to Identifying and Assessing Climate-Related Risks
-            </h4>
+            </h4> */}
             <div className="text-sm">
               {renderArrayValue(identificationData?.Q1)}
             </div>
           </div>
 
           <div className="mb-6">
-            <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+            {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
               Determining Relative Significance of Climate-Related Risks
-            </h4>
+            </h4> */}
             <div className="text-sm">
               {renderArrayValue(significanceData?.Q1)}
             </div>
@@ -137,9 +137,9 @@ const Section1 = ({ section6_1Ref, data, tcfdCollectData, orgName }) => {
           {/* Regulatory Considerations - Only show if Q1 is Yes */}
           {regulatoryData?.Q1 === 'Yes' && (
             <div className="mb-6">
-              <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+              {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
                 Regulatory Considerations
-              </h4>
+              </h4> */}
               <div className="text-sm">
                 {renderArrayValue(regulatoryData?.Q2)}
               </div>
@@ -147,12 +147,12 @@ const Section1 = ({ section6_1Ref, data, tcfdCollectData, orgName }) => {
           )}
 
           <div className="mb-6">
-            <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+            {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
               Size & Scope of Risk
-            </h4>
+            </h4> */}
             <div className="text-sm">
               {renderArrayValue(scopeData?.Q1)}
-              {scopeData?.Q2 && (
+              {/* {scopeData?.Q2 && (
                 <div className="mt-3">
                   {typeof scopeData.Q2 === 'object' && scopeData.Q2.text ? (
                     <div>
@@ -163,7 +163,7 @@ const Section1 = ({ section6_1Ref, data, tcfdCollectData, orgName }) => {
                     <div>{renderArrayValue(scopeData.Q2)}</div>
                   )}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>

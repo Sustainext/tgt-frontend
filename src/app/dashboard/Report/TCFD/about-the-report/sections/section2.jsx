@@ -35,7 +35,7 @@ const Section2 = ({ section2_2Ref, data }) => {
   };
 
   const loadAutoFillContent = () => {
-    const autoFillContent = `<p>This report has been prepared in alignment with the TCFD recommendations to provide stakeholders with a clear understanding of how [Company Name] identifies, manages, and responds to climate-related risks and opportunities.</p>`;
+    const autoFillContent = `<p>This report has been prepared in alignment with the TCFD recommendations to provide stakeholders with a clear understanding of how [${orgName} || Company Name] identifies, manages, and responds to climate-related risks and opportunities.</p>`;
     
     dispatch(setAboutReportDescription(autoFillContent));
   };
