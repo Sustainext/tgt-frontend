@@ -15,7 +15,7 @@ import {
   setGhgByBusiness,
   setGhgByLocation,
   selectMetricsTargets,
-  setSectorInfo,
+  setSectorInfo2,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
@@ -138,14 +138,14 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
 <p>We track and report on key performance indicators that are material to our sector, including sector-specific emission intensities, climate-related financial metrics, and operational resilience measures. These metrics help us benchmark our performance against industry peers and demonstrate our commitment to sector-wide climate action.</p>
 <p>Our targets are designed to contribute to broader sectoral decarbonization goals while maintaining competitiveness and operational efficiency within our industry context.</p>`;
 
-    dispatch(setSectorInfo(autoFillContent));
+    dispatch(setSectorInf2o(autoFillContent));
     if (editorRefSectorInfo.current) {
       editorRefSectorInfo.current.value = autoFillContent;
     }
   };
 
   const handleSectorInfoEditorChange = (content) => {
-    dispatch(setSectorInfo(content));
+    dispatch(setSectorInfo2(content));
   };
 
   const handleGhgIntensityEditorChange = (content) => {
@@ -910,7 +910,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
             <div className="mb-6">
               <JoditEditor
                 ref={editorRefSectorInfo}
-                value={metricsTargets.sectorInfo}
+                value={metricsTargets.sectorInfo2}
                 config={{
                   ...config,
                   placeholder:
