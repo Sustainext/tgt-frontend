@@ -15,6 +15,8 @@ const Section2 = ({ section2_2Ref, data }) => {
   const dispatch = useDispatch();
   const aboutReport = useSelector(selectAboutReport);
   const editorRef = useRef(null);
+  const orgName =
+    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
 
   // Jodit Editor configuration
   const config = {
@@ -35,7 +37,7 @@ const Section2 = ({ section2_2Ref, data }) => {
   };
 
   const loadAutoFillContent = () => {
-    const autoFillContent = `<p>This report has been prepared in alignment with the TCFD recommendations to provide stakeholders with a clear understanding of how [${orgName} || Company Name] identifies, manages, and responds to climate-related risks and opportunities.</p>`;
+    const autoFillContent = `<p>This report has been prepared in alignment with the TCFD recommendations to provide stakeholders with a clear understanding of how ${orgName} identifies, manages, and responds to climate-related risks and opportunities.</p>`;
     
     dispatch(setAboutReportDescription(autoFillContent));
   };

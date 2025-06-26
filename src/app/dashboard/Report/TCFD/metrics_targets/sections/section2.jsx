@@ -15,7 +15,7 @@ import {
   setGhgByBusiness,
   setGhgByLocation,
   selectMetricsTargets,
-  setSectorInfo
+  setSectorInfo,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
@@ -36,7 +36,8 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
   const emissionAnalyse = tcfdCollectData?.emission_analyse || {};
   const allEmissionByScope = emissionAnalyse?.all_emission_by_scope || [];
   const allEmissionBySource = emissionAnalyse?.top_5_emisson_by_source || [];
-  const allEmissionByLocation = emissionAnalyse?.top_5_emisson_by_location || [];
+  const allEmissionByLocation =
+    emissionAnalyse?.top_5_emisson_by_location || [];
   const ghgEmissionIntensity = emissionAnalyse?.ghg_emission_intensity || [];
 
   // Extract scope-specific data
@@ -47,16 +48,16 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
   // Helper function to safely render any data value
   const safeRenderValue = (value) => {
     if (value === null || value === undefined) {
-      return '';
+      return "";
     }
-    
-    if (typeof value === 'object') {
+
+    if (typeof value === "object") {
       if (value.start && value.end) {
         return `${value.start} - ${value.end}`;
       }
       return JSON.stringify(value);
     }
-    
+
     return String(value);
   };
 
@@ -131,10 +132,12 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
   };
 
   const loadSectorInfoAutoFillContent = () => {
-    const autoFillContent = `<p>As a company operating in the ${orgName ? orgName.toLowerCase() : '[sector]'} sector, we recognize the unique climate-related challenges and opportunities that are specific to our industry. Our sector-specific metrics and targets align with TCFD recommendations and industry best practices.</p>
+    const autoFillContent = `<p>As a company operating in the ${
+      orgName ? orgName.toLowerCase() : "[sector]"
+    } sector, we recognize the unique climate-related challenges and opportunities that are specific to our industry. Our sector-specific metrics and targets align with TCFD recommendations and industry best practices.</p>
 <p>We track and report on key performance indicators that are material to our sector, including sector-specific emission intensities, climate-related financial metrics, and operational resilience measures. These metrics help us benchmark our performance against industry peers and demonstrate our commitment to sector-wide climate action.</p>
 <p>Our targets are designed to contribute to broader sectoral decarbonization goals while maintaining competitiveness and operational efficiency within our industry context.</p>`;
-    
+
     dispatch(setSectorInfo(autoFillContent));
     if (editorRefSectorInfo.current) {
       editorRefSectorInfo.current.value = autoFillContent;
@@ -205,7 +208,8 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                           {safeRenderValue(row.scope) || "-"}
                         </td>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {safeRenderValue(row.total) || "-"} {safeRenderValue(row.Units) || "tCO2e"}
+                          {safeRenderValue(row.total) || "-"}{" "}
+                          {/* {safeRenderValue(row.Units) || "tCO2e"} */}
                         </td>
                         <td className="p-4 text-gray-700">
                           {safeRenderValue(row.contribution) || "-"}%
@@ -218,7 +222,8 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                           {safeRenderValue(row.source) || "-"}
                         </td>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {safeRenderValue(row.total) || "-"} {safeRenderValue(row.Units) || "tCO2e"}
+                          {safeRenderValue(row.total) || "-"}{" "}
+                          {/* {safeRenderValue(row.Units) || "tCO2e"} */}
                         </td>
                         <td className="p-4 text-gray-700">
                           {safeRenderValue(row.contribution) || "-"}%
@@ -231,7 +236,8 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                           {safeRenderValue(row.location) || "-"}
                         </td>
                         <td className="border-r border-gray-200 p-4 text-gray-700">
-                          {safeRenderValue(row.total) || "-"} {safeRenderValue(row.Units) || "tCO2e"}
+                          {safeRenderValue(row.total) || "-"}{" "}
+                          {/* {safeRenderValue(row.Units) || "tCO2e"} */}
                         </td>
                         <td className="p-4 text-gray-700">
                           {safeRenderValue(row.contribution) || "-"}%
@@ -246,7 +252,9 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                         <td className="border-r border-gray-200 p-4 text-gray-700">
                           {safeRenderValue(row.value) || "-"}
                         </td>
-                        <td className="p-4 text-gray-700">{safeRenderValue(row.unit) || "-"}</td>
+                        <td className="p-4 text-gray-700">
+                          {safeRenderValue(row.unit) || "-"}
+                        </td>
                       </>
                     )}
                   </tr>
@@ -602,7 +610,11 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
               <ScopeTable
                 title=""
                 data={allEmissionByScope}
-                columns={["Scope", "Total Emissions (tCO2e)", "Percentage of Total"]}
+                columns={[
+                  "Scope",
+                  "Total Emissions (tCO2e)",
+                  "Percentage of Total",
+                ]}
                 dataType="scope"
               />
             </>
@@ -688,20 +700,70 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                     <table className="w-full text-sm border-collapse">
                       <thead>
                         <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
-                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">
-                            Organization Metric
+                          <th
+                            rowSpan="2"
+                            className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600"
+                          >
+                            Organisation Metric
                           </th>
-                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">
+                          <th
+                            rowSpan="2"
+                            className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600"
+                          >
                             Quantity
                           </th>
-                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">
+                          <th
+                            rowSpan="2"
+                            className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600"
+                          >
                             Unit
                           </th>
+                          <th
+                            rowSpan="2"
+                            className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600"
+                          >
+                            Type of GHGs
+                          </th>
+                          <th
+                            rowSpan="2"
+                            className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600"
+                          >
+                            GHG Emission Intensity
+                          </th>
+                          <th
+                            rowSpan="2"
+                            className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600"
+                          >
+                            Unit
+                          </th>
+                          <th
+                            colSpan="7"
+                            className="text-center py-2 px-4 font-medium text-gray-600"
+                          >
+                            Gases included in the calculation
+                          </th>
+                        </tr>
+                        <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
                           <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">
-                            Type of GHG
+                            CO<sub>2</sub>
+                          </th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">
+                            N<sub>2</sub>O
+                          </th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">
+                            CH<sub>4</sub>
+                          </th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">
+                            HFCs
+                          </th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">
+                            PFCs
+                          </th>
+                          <th className="text-left py-2 px-4 border-r border-gray-200 font-medium text-gray-600">
+                            SF<sub>6</sub>
                           </th>
                           <th className="text-left py-2 px-4 font-medium text-gray-600">
-                            GHG Emission Intensity
+                            NF<sub>3</sub>
                           </th>
                         </tr>
                       </thead>
@@ -713,29 +775,118 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                               className="border-t border-gray-200 hover:bg-gray-50 transition-colors"
                             >
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {safeRenderValue(item.organizationMetric) || "Data"}
+                                {safeRenderValue(
+                                  item.organizationMetric ||
+                                    item.organization_metric ||
+                                    item.metric
+                                ) || "-"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {safeRenderValue(item.quantity) || "Data"}
+                                {safeRenderValue(item.quantity || item.value) ||
+                                  "-"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {safeRenderValue(item.unit) || "Data"}
+                                {safeRenderValue(item.unit || item.units) ||
+                                  "-"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {safeRenderValue(item.typeOfGHG) || "Data"}
+                                {safeRenderValue(
+                                  item.typeOfGHG ||
+                                    item.type_of_ghg ||
+                                    item.ghg_type
+                                ) || "-"}
                               </td>
-                              <td className="py-2 px-4 text-gray-700">
-                                {safeRenderValue(item.ghgEmissionIntensity) || "Data"}
+                              <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
+                                {safeRenderValue(
+                                  item.ghgEmissionIntensity ||
+                                    item.ghg_emission_intensity ||
+                                    item.intensity
+                                ) || "-"}
                               </td>
+                              <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
+                                {safeRenderValue(
+                                  item.intensityUnit || item.intensity_unit
+                                ) || "tCO2e"}
+                              </td>
+                              <td className="py-2 px-4 border-r border-gray-200 text-gray-700 text-center">
+                                {(item.CO2 || item.co2) === true ||
+                                (item.CO2 || item.co2) === "true" ||
+                                (item.CO2 || item.co2) === "yes" ? (
+                                  <span className="text-green-600">✓</span>
+                                ) : (
+                                  <span className="text-gray-400">☐</span>
+                                )}
+                              </td>
+                              <td className="py-2 px-4 border-r border-gray-200 text-gray-700 text-center">
+                                {(item.N2O || item.n2o) === true ||
+                                (item.N2O || item.n2o) === "true" ||
+                                (item.N2O || item.n2o) === "yes" ? (
+                                  <span className="text-green-600">✓</span>
+                                ) : (
+                                  <span className="text-gray-400">☐</span>
+                                )}
+                              </td>
+                              <td className="py-2 px-4 border-r border-gray-200 text-gray-700 text-center">
+                                {(item.CH4 || item.ch4) === true ||
+                                (item.CH4 || item.ch4) === "true" ||
+                                (item.CH4 || item.ch4) === "yes" ? (
+                                  <span className="text-green-600">✓</span>
+                                ) : (
+                                  <span className="text-gray-400">☐</span>
+                                )}
+                              </td>
+                              <td className="py-2 px-4 border-r border-gray-200 text-gray-700 text-center">
+                                {(item.HFCs || item.hfcs) === true ||
+                                (item.HFCs || item.hfcs) === "true" ||
+                                (item.HFCs || item.hfcs) === "yes" ? (
+                                  <span className="text-green-600">✓</span>
+                                ) : (
+                                  <span className="text-gray-400">☐</span>
+                                )}
+                              </td>
+                              <td className="py-2 px-4 border-r border-gray-200 text-gray-700 text-center">
+                                {(item.PFCs || item.pfcs) === true ||
+                                (item.PFCs || item.pfcs) === "true" ||
+                                (item.PFCs || item.pfcs) === "yes" ? (
+                                  <span className="text-green-600">✓</span>
+                                ) : (
+                                  <span className="text-gray-400">☐</span>
+                                )}
+                              </td>
+                              <td className="py-2 px-4 border-r border-gray-200 text-gray-700 text-center">
+                                {(item.SF6 || item.sf6) === true ||
+                                (item.SF6 || item.sf6) === "true" ||
+                                (item.SF6 || item.sf6) === "yes" ? (
+                                  <span className="text-green-600">✓</span>
+                                ) : (
+                                  <span className="text-gray-400">☐</span>
+                                )}
+                              </td>
+                              <td className="py-2 px-4 text-gray-700 text-center">
+                                {(item.NF3 || item.nf3) === true ||
+                                (item.NF3 || item.nf3) === "true" ||
+                                (item.NF3 || item.nf3) === "yes" ? (
+                                  <span className="text-green-600">✓</span>
+                                ) : (
+                                  <span className="text-gray-400">☐</span>
+                                )}
+                              </td>
+                              {/* <td className="py-2 px-4 text-gray-700">
+                                {safeRenderValue(
+                                  item.gasesIncluded ||
+                                    item.gases_included ||
+                                    item.included_gases
+                                ) || "-"}
+                              </td> */}
                             </tr>
                           ))
                         ) : (
                           <tr className="border-t border-gray-200">
                             <td
-                              colSpan="5"
+                              colSpan="14"
                               className="py-2 px-4 text-center text-gray-500"
                             >
-                              No data available
+                              No GHG intensity data available
                             </td>
                           </tr>
                         )}
@@ -750,7 +901,10 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
           <div className="mb-8">
             <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
               <p className="text-[15px] text-[#667085] mb-2 mt-0 w-4/5">
-Add sector-specific (e.g., financial or non-financial) information relevant to the ‘metrics & targets ‘ disclosures, in line with TCFD sector guidance (if applicable).               </p>
+                Add sector-specific (e.g., financial or non-financial)
+                information relevant to the ‘metrics & targets ‘ disclosures, in
+                line with TCFD sector guidance (if applicable).{" "}
+              </p>
             </div>
 
             <div className="mb-6">

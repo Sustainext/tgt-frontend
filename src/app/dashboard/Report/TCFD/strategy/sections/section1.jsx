@@ -153,8 +153,8 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
         <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
           {title}
         </h4>
-        <div className="overflow-x-auto">
-          <div className="border border-gray-200 rounded-lg overflow-x-auto">
+        <div className="">
+          <div className="border border-gray-200 rounded-lg overflow-x-scroll">
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">

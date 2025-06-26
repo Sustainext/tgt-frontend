@@ -533,7 +533,7 @@ const TCFDReport = () => {
 
               {/* Desktop navigation */}
               <div className="hidden md:block lg:block xl:block">
-                <div className="float-right mr-2 flex items-center justify-center">
+                <div className={`float-right ${currentPage === 4 ? 'mr-[7rem]' : 'mr-2'} flex items-center justify-center`}>
                   <div className="flex items-center justify-center">
                     <button
                       style={{
