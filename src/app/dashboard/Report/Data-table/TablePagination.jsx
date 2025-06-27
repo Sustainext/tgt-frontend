@@ -69,220 +69,217 @@ else{
   setFilterData(data)
 }
  },[data,selectedCreators])
-  const ActionMenu = ({ item }) => {
-    const isGRIReport =
-      item.report_type === "GRI Report: In accordance With" ||
-      item.report_type === "GRI Report: With Reference to" ||
-      item.report_type == "Custom ESG Report"
-    return (
-      <div   className={`absolute bg-white shadow-lg rounded-lg py-2 w-[211px] z-10 right-8 ${
-        menuDirection === "up" ? "bottom-full mb-2" : " top-full mt-2"
-      }`}>
+ // Add this function with other download handlers
+const handleTCFDDownloadpdf = async (id, name) => {
+  setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
 
-        {item.report_type === "canada_bill_s211_v2" ? (
-  <>
-    <button
-      className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
-    onClick={() => {handleBills211Downloadpdf(item.id, item.name);
-        }
-      }
-    >
-      <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
-      Download Report PDF
-    </button>
-
-    <button
-      className="flex items-center p-2 w-full text-left text-[#d1d5db] cursor-not-allowed"
-      disabled
-    >
-      <BsFileEarmarkWord className="mr-2 w-4 h-4" />
-      Download Report Word
-    </button>
-  </>
-) : (
-  <>
-    <button
-      className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
-      onClick={() => {
-        if (isGRIReport) {
-          handleDownloadESGpdf(item.id, item.name, false);
-        } else {
-          handleDownloadpdf(item.id, item.name);
-        }
-      }}
-    >
-      {loadingByIdpdf[item.id] ? (
-        <Oval height={20} width={20} color="#00BFFF" />
-      ) : (
-        <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
-      )}
-      Download Report PDF
-    </button>
-
-    <button
-      className={`flex items-center p-2 w-full text-left ${isGRIReport?'text-[#d1d5db] cursor-not-allowed':'text-[#344054] gradient-sky-blue'}`}
-      onClick={() => {
-        if (!isGRIReport) handleDownloaddocx(item.id, item.name);
-      }}
-    >
-      {loadingById[item.id] ? (
-        <Oval height={20} width={20} color="#00BFFF" />
-      ) : (
-        <BsFileEarmarkWord className="mr-2 w-4 h-4" />
-      )}
-      Download Report Word
-    </button>
-  </>
-)}
-        {/* <button
-          className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
-          onClick={() => {
-            if (isGRIReport) {
-              handleDownloadESGpdf(item.id, item.name, false);
-            } else {
-              handleDownloadpdf(item.id, item.name);
-            }
-          }}
-        >
-          {loadingByIdpdf[item.id] ? (
-            <Oval
-              height={20}
-              width={20}
-              color="#00BFFF"
-              secondaryColor="#f3f3f3"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          ) : (
-            <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
-          )}
-          Download Report PDF
-        </button>
-
-        <button
-          className={`flex items-center p-2 w-full text-left   ${
-            isGRIReport ? "text-[#d1d5db]" : "text-[#344054] gradient-sky-blue"
-          }`}
-          onClick={() => {
-            if (isGRIReport) {
-              // handleESGDownloaddocx()
-            } else {
-              handleDownloaddocx(item.id, item.name);
-            }
-          }}
-        >
-          {loadingById[item.id] ? (
-            <Oval
-              height={20}
-              width={20}
-              color="#00BFFF"
-              secondaryColor="#f3f3f3"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          ) : (
-            <BsFileEarmarkWord className="mr-2 w-4 h-4" />
-          )}
-          Download Report Word
-        </button> */}
-
-        {/* Conditional Rendering for Additional GRI Options */}
-        {isGRIReport && (
-          <>
-            <button
-              className={
-                "flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"
-              }
-              onClick={() => handleDownloadESGpdf(item.id, item.name, true)}
-            >
-              {isCIDownloading ? (
-                <Oval
-                  height={20}
-                  width={20}
-                  color="#00BFFF"
-                  secondaryColor="#f3f3f3"
-                  strokeWidth={2}
-                  strokeWidthSecondary={2}
-                />
-              ) : (
-                <BsFileEarmarkPdf className="mr-2 text-[#344054] w-4 h-4" />
-              )}
-              Download Content Index PDF
-            </button>
-            <button
-              className={
-                "flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"
-              }
-              onClick={() => handleDownloadExcel(item.id, item.name,item.report_type)}
-            >
-              {isCIXLDownloading ? (
-                <Oval
-                  height={20}
-                  width={20}
-                  color="#00BFFF"
-                  secondaryColor="#f3f3f3"
-                  strokeWidth={2}
-                  strokeWidthSecondary={2}
-                />
-              ) : (
-                <ImFileExcel className="mr-2 text-[#344054] w-4 h-4" />
-              )}
-              Download Content Index Excel
-            </button>
-            <button
-              onClick={() => console.log("Notify GRI")}
-              className="flex items-center p-2 w-full text-left  text-[#d1d5db]"
-            >
-              <MdOutlineEmail className="mr-2 text-[#d1d5db] w-4 h-4" /> Notify
-              GRI
-            </button>
-          </>
-        )}
-
-        <button
-          className={`flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]`}
-          onClick={() => {
-            if (isGRIReport) {
-              handleSetESGdata(
-                item.id,
-                item.organization_name,
-                item.start_date,
-                item.end_date,
-                item.organization_country,
-                item.name,
-                item.created_at,
-                item.report_type,
-                item.corporate_name,
-              );
-            } else {
-              handleSetdata(
-                item.id,
-                item.organization_name,
-                item.start_date,
-                item.end_date,
-                item.organization_country,
-                item.name,
-                item.report_by,
-                item.corporate_name,
-                item.report_type
-              );
-            }
-          }}
-        >
-          <AiOutlineEdit className="mr-2 w-4 h-4" /> Edit Report
-        </button>
-
-        <button
-          className="flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]"
-          onClick={() =>
-            openModal(item.id, item.name, item.report_type, item.start_date)
-          }
-        >
-          <MdDeleteOutline className="mr-2 w-4 h-4" /> Delete Report
-        </button>
-      </div>
+  try {
+    const response = await fetch(
+      `${process.env.BACKEND_API_URL}/tcfd_framework/get-tcfd-report-pdf/${id}/?download=true`,
+      axiosConfig
     );
-  };
+    const blob = await response.blob();
+    const downloadUrl = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = downloadUrl;
+    link.setAttribute("download", `${name}.pdf`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error("Error downloading TCFD file:", error);
+    toast.error("Error downloading the file", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  } finally {
+    setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+    setIsMenuOpen(false);
+  }
+};
+
+ const ActionMenu = ({ item }) => {
+  const isGRIReport =
+    item.report_type === "GRI Report: In accordance With" ||
+    item.report_type === "GRI Report: With Reference to" ||
+    item.report_type == "Custom ESG Report";
+    
+  const isTCFDReport = item.report_type === "TCFD";
+
+  return (
+    <div className={`absolute bg-white shadow-lg rounded-lg py-2 w-[211px] z-10 right-8 ${
+      menuDirection === "up" ? "bottom-full mb-2" : " top-full mt-2"
+    }`}>
+
+      {item.report_type === "canada_bill_s211_v2" ? (
+        <>
+          <button
+            className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+            onClick={() => {handleBills211Downloadpdf(item.id, item.name);}}>
+            <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
+            Download Report PDF
+          </button>
+
+          <button
+            className="flex items-center p-2 w-full text-left text-[#d1d5db] cursor-not-allowed"
+            disabled>
+            <BsFileEarmarkWord className="mr-2 w-4 h-4" />
+            Download Report Word
+          </button>
+        </>
+      ) : isTCFDReport ? (
+        <>
+          <button
+            className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+            onClick={() => {handleTCFDDownloadpdf(item.id, item.name);}}>
+            {loadingByIdpdf[item.id] ? (
+              <Oval height={20} width={20} color="#00BFFF" />
+            ) : (
+              <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
+            )}
+            Download Report PDF
+          </button>
+
+          <button
+            className="flex items-center p-2 w-full text-left text-[#d1d5db] cursor-not-allowed"
+            disabled>
+            <BsFileEarmarkWord className="mr-2 w-4 h-4" />
+            Download Report Word
+          </button>
+        </>
+      ) : (
+        <>
+          <button
+            className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+            onClick={() => {
+              if (isGRIReport) {
+                handleDownloadESGpdf(item.id, item.name, false);
+              } else {
+                handleDownloadpdf(item.id, item.name);
+              }
+            }}>
+            {loadingByIdpdf[item.id] ? (
+              <Oval height={20} width={20} color="#00BFFF" />
+            ) : (
+              <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
+            )}
+            Download Report PDF
+          </button>
+
+          <button
+            className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
+            onClick={() => {
+              handleDownloaddocx(item.id, item.name);
+            }}>
+            {loadingById[item.id] ? (
+              <Oval height={20} width={20} color="#00BFFF" />
+            ) : (
+              <BsFileEarmarkWord className="mr-2 w-4 h-4" />
+            )}
+            Download Report Word
+          </button>
+        </>
+      )}
+
+      {/* Conditional Rendering for Additional GRI Options */}
+      {isGRIReport && (
+        <>
+          <button
+            className={
+              "flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"
+            }
+            onClick={() => handleDownloadESGpdf(item.id, item.name, true)}>
+            {isCIDownloading ? (
+              <Oval
+                height={20}
+                width={20}
+                color="#00BFFF"
+                secondaryColor="#f3f3f3"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
+            ) : (
+              <BsFileEarmarkPdf className="mr-2 text-[#344054] w-4 h-4" />
+            )}
+            Download Content Index PDF
+          </button>
+          <button
+            className={
+              "flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"
+            }
+            onClick={() => handleDownloadExcel(item.id, item.name,item.report_type)}>
+            {isCIXLDownloading ? (
+              <Oval
+                height={20}
+                width={20}
+                color="#00BFFF"
+                secondaryColor="#f3f3f3"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
+            ) : (
+              <ImFileExcel className="mr-2 text-[#344054] w-4 h-4" />
+            )}
+            Download Content Index Excel
+          </button>
+          <button
+            onClick={() => console.log("Notify GRI")}
+            className="flex items-center p-2 w-full text-left  text-[#d1d5db]">
+            <MdOutlineEmail className="mr-2 text-[#d1d5db] w-4 h-4" /> Notify
+            GRI
+          </button>
+        </>
+      )}
+
+      <button
+        className={`flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]`}
+        onClick={() => {
+          if (isGRIReport) {
+            handleSetESGdata(
+              item.id,
+              item.organization_name,
+              item.start_date,
+              item.end_date,
+              item.organization_country,
+              item.name,
+              item.created_at,
+              item.report_type,
+              item.corporate_name,
+            );
+          } else {
+            handleSetdata(
+              item.id,
+              item.organization_name,
+              item.start_date,
+              item.end_date,
+              item.organization_country,
+              item.name,
+              item.report_by,
+              item.corporate_name,
+              item.report_type
+            );
+          }
+        }}>
+        <AiOutlineEdit className="mr-2 w-4 h-4" /> Edit Report
+      </button>
+
+      <button
+        className="flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]"
+        onClick={() =>
+          openModal(item.id, item.name, item.report_type, item.start_date)
+        }>
+        <MdDeleteOutline className="mr-2 w-4 h-4" /> Delete Report
+      </button>
+    </div>
+  );
+};
 
   
 

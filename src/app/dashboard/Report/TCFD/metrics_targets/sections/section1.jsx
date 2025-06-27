@@ -8,7 +8,7 @@ import {
   setClimateMetrics,
   setMetricsDescription,
   selectMetricsTargets,
-  setSectorInfo
+  setSectorInfo,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
@@ -21,8 +21,14 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
   const editorRef3 = useRef(null);
 
   // Extract metrics data from tcfdCollectData
-  const riskMetrics = tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities || [];
-  const opportunityMetrics = tcfdCollectData?.metrics_used_to_assess_climate_related_opportunities || [];
+  const riskMetrics =
+    tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities_table_data ||
+    [];
+  const opportunityMetrics =
+    tcfdCollectData?.metrics_used_to_assess_climate_related_opportunities_table_data || [];
+  
+  const integrationAnswer = tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities_question_answer_data || {};
+  const internalAndRevenueAnswer = tcfdCollectData?.metrics_used_to_assess_climate_related_opportunities_question_answer_data || {};
 
   // Jodit Editor configuration
   const config = {
@@ -54,41 +60,50 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
   // Configuration for metrics description editor
   const descriptionConfig = {
     ...config,
-    placeholder: "Add description about how the company uses metrics to assess climate-related risks and opportunities...",
+    placeholder:
+      "Add description about how the company uses metrics to assess climate-related risks and opportunities...",
     height: 250,
   };
 
   const loadAutoFillContent = () => {
-    const autoFillContent = `<p>${orgName || '[Company Name]'} applies a systematic process to track and manage climate-related risks and opportunities through clearly defined metrics and targets. Metrics help monitor and evaluate climate performance, while targets provide directional goals to guide decision-making and track long-term progress. Together, they support alignment with the company's overall business and sustainability objectives.</p>`;
+    const autoFillContent = `<p>${
+      orgName || "[Company Name]"
+    } applies a systematic process to track and manage climate-related risks and opportunities through clearly defined metrics and targets. Metrics help monitor and evaluate climate performance, while targets provide directional goals to guide decision-making and track long-term progress. Together, they support alignment with the company's overall business and sustainability objectives.</p>`;
 
     dispatch(setClimateMetrics(autoFillContent));
-    
+
     if (editorRef1.current) {
       editorRef1.current.value = autoFillContent;
     }
   };
 
   const loadAutoFillDescriptionContent = () => {
-    const autoFillContent = `<p>${orgName || '[Company Name]'} uses clearly defined metrics to monitor and evaluate climate-related risks and opportunities as part of its broader sustainability management framework. These metrics support risk assessment, strategic planning, and operational decision-making.</p>
+    const autoFillContent = `<p>${
+      orgName || "[Company Name]"
+    } uses clearly defined metrics to monitor and evaluate climate-related risks and opportunities as part of its broader sustainability management framework. These metrics support risk assessment, strategic planning, and operational decision-making.</p>
 <br/>
-<p>To understand potential vulnerabilities and exposures from evolving environmental, regulatory, or market conditions, ${orgName || '[Company Name]'} applies climate-related metrics that are periodically reviewed to inform risk management strategies and ensure alignment with long-term business objectives.</p>
+<p>To understand potential vulnerabilities and exposures from evolving environmental, regulatory, or market conditions, ${
+      orgName || "[Company Name]"
+    } applies climate-related metrics that are periodically reviewed to inform risk management strategies and ensure alignment with long-term business objectives.</p>
 <br/>
 <p>Where applicable, both historical and forward-looking performance is tracked to assess past trends and anticipate future outcomes. The scope and timeframe of assessment are determined based on internal relevance and materiality.</p>
 <br/>
 <p>All methodologies for calculating and interpreting metrics follow industry-aligned practices and internal protocols. These may evolve over time to reflect improvements in data quality and reporting standards. In certain cases, climate-related metrics are also incorporated into business planning and performance evaluation frameworks, further embedding climate considerations across operations and governance.</p>`;
 
     dispatch(setMetricsDescription(autoFillContent));
-    
+
     if (editorRef3.current) {
       editorRef3.current.value = autoFillContent;
     }
   };
 
   const loadAutoFillContent2 = () => {
-    const autoFillContent = `<p>As ${orgName || '[Company Name]'} operates in a dynamic business environment, we recognize the importance of integrating sector-specific considerations into our climate metrics and targets framework. Our approach includes industry-specific indicators, regulatory compliance metrics, and stakeholder-relevant performance measures that align with sector best practices and emerging standards.</p>`;
+    const autoFillContent = `<p>As ${
+      orgName || "[Company Name]"
+    } operates in a dynamic business environment, we recognize the importance of integrating sector-specific considerations into our climate metrics and targets framework. Our approach includes industry-specific indicators, regulatory compliance metrics, and stakeholder-relevant performance measures that align with sector best practices and emerging standards.</p>`;
 
     dispatch(setSectorInfo(autoFillContent));
-    
+
     if (editorRef2.current) {
       editorRef2.current.value = autoFillContent;
     }
@@ -109,11 +124,11 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
   // Fixed helper function to render array values and handle objects
   const renderArrayValue = (value) => {
     if (Array.isArray(value)) {
-      return value.join(', ');
+      return value.join(", ");
     }
-    
+
     // Handle objects (like date ranges with start/end)
-    if (value && typeof value === 'object') {
+    if (value && typeof value === "object") {
       // Check if it's a date range object
       if (value.start && value.end) {
         return `${value.start} - ${value.end}`;
@@ -121,28 +136,28 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
       // Handle other object types by converting to JSON string
       return JSON.stringify(value);
     }
-    
+
     // Handle primitive values
-    return value || '';
+    return value || "";
   };
 
   // Helper function to safely render any data value
   const safeRenderValue = (value) => {
     if (value === null || value === undefined) {
-      return '';
+      return "";
     }
-    
-    if (typeof value === 'object') {
+
+    if (typeof value === "object") {
       if (value.start && value.end) {
         return `${value.start} - ${value.end}`;
       }
       return JSON.stringify(value);
     }
-    
+
     return String(value);
   };
 
-  const MetricsTable = ({ title, data, columns }) => (
+  const MetricsTable = ({ title, data, columns, tableType }) => (
     <div className="mb-8">
       <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">{title}</h4>
       <div className="overflow-x-auto">
@@ -153,7 +168,7 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
                 {columns.map((col, index) => (
                   <th
                     key={index}
-                    className={`py-8 px-4 text-left text-gray-600 font-medium ${
+                    className={`py-2 px-4 text-left text-gray-600 font-medium ${
                       index < columns.length - 1
                         ? "border-r border-gray-200"
                         : ""
@@ -165,33 +180,94 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
               </tr>
             </thead>
             <tbody>
-              {data.length > 0 ? data.map((row, index) => (
-                <tr
-                  key={index}
-                  className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
-                >
-                  <td className="border-r border-gray-200 p-4 text-gray-700">
-                    {renderArrayValue(row.MetricCategory)}
-                  </td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">
-                    {safeRenderValue(row.KeyMetric)}
-                  </td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">
-                    {safeRenderValue(row.ClimateRelatedRisk)}
-                  </td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">
-                    {safeRenderValue(row.MetricValue)}
-                  </td>
-                  <td className="border-r border-gray-200 p-4 text-gray-700">
-                    {safeRenderValue(row.MetricUnit)}
-                  </td>
-                  <td className="p-4 text-gray-700">
-                    {safeRenderValue(row.TimeHorizon)}
-                  </td>
-                </tr>
-              )) : (
+              {data.length > 0 ? (
+                data.map((row, index) => (
+                  <tr
+                    key={index}
+                    className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
+                  >
+                    <td className="border-r border-gray-200 p-4 text-gray-700">
+                      {safeRenderValue(
+                        tableType === "risk"
+                          ? row.ClimateRelatedRisk ||
+                              row.climate_related_risk ||
+                              row.risk ||
+                              row.description
+                          : row.ClimateRelatedOpportunity ||
+                              row.climate_related_opportunity ||
+                              row.opportunity ||
+                              row.description
+                      ) || "-"}
+                    </td>
+                    <td className="border-r border-gray-200 p-4 text-gray-700">
+                      {safeRenderValue(
+                        row.MetricCategory ||
+                          row.metric_category ||
+                          row.category
+                      ) || "-"}
+                    </td>
+                    <td className="border-r border-gray-200 p-4 text-gray-700">
+                      {safeRenderValue(
+                        row.KeyMetric || row.key_metric || row.metric
+                      ) || "-"}
+                    </td>
+                    <td className="border-r border-gray-200 p-4 text-gray-700">
+                      {safeRenderValue(
+                        row.MetricValue || row.metric_value || row.value
+                      ) || "-"}
+                    </td>
+                    <td className="border-r border-gray-200 p-4 text-gray-700">
+                      {safeRenderValue(
+                        row.MetricUnit || row.metric_unit || row.unit
+                      ) || "-"}
+                    </td>
+                    <td className="border-r border-gray-200 p-4 text-gray-700">
+                      {safeRenderValue(row.Scope || row.scope) || "-"}
+                    </td>
+                    <td className="border-r border-gray-200 p-4 text-gray-700">
+                      {safeRenderValue(
+                        row.HistoricalMetricReported ||
+                          row.historical_metric_reported ||
+                          row.historical_reported
+                      ) || "-"}
+                    </td>
+                    <td className="border-r border-gray-200 p-4 text-gray-700">
+                      {safeRenderValue(
+                        row.HistoricalPeriodCovered ||
+                          row.historical_period_covered ||
+                          row.historical_period
+                      ) || "-"}
+                    </td>
+                    <td className="border-r border-gray-200 p-4 text-gray-700">
+                      {safeRenderValue(
+                        row.ForwardLookingMetricReported ||
+                          row.forward_looking_metric_reported ||
+                          row.forward_looking_reported
+                      ) || "-"}
+                    </td>
+                    <td className="border-r border-gray-200 p-4 text-gray-700">
+                      {safeRenderValue(
+                        row.ForwardLookingTimeHorizon ||
+                          row.forward_looking_time_horizon ||
+                          row.TimeHorizon ||
+                          row.time_horizon
+                      ) || "-"}
+                    </td>
+                    <td className="p-4 text-gray-700">
+                      {safeRenderValue(
+                        row.MethodologyUsed ||
+                          row.methodology_used ||
+                          row.methodology
+                      ) || "-"}
+                    </td>
+                  </tr>
+                ))
+              ) : (
                 <tr className="bg-white border-t border-gray-200">
-                  <td colSpan={columns.length} className="p-4 text-center text-gray-500">
+                  <td
+                    colSpan={columns.length}
+                    className="p-4 text-center text-gray-500"
+                  >
                     No data available
                   </td>
                 </tr>
@@ -209,7 +285,8 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
         <div id="section7_1" ref={section7_1Ref}>
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
             <p className="text-[15px] text-[#667085] mb-2 mt-0">
-              Add a statement about the company's climate-related metrics and targets.
+              Add a statement about the company's climate-related metrics and
+              targets.
             </p>
             <button
               className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
@@ -232,12 +309,13 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
           </div>
 
           <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-            7.1 Metrics used to assess climate related risks and opportunities 
+            7.1 Metrics used to assess climate related risks and opportunities
           </h3>
 
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start mb-4">
             <p className="text-[15px] text-[#667085] mb-2 mt-0">
-              Add a statement about the metrics used to assess climate-related risks and opportunities
+              Add a statement about the metrics used to assess climate-related
+              risks and opportunities
             </p>
             <button
               className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
@@ -263,13 +341,19 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
           <MetricsTable
             title="Metrics used to assess climate-related risks"
             data={riskMetrics}
+            tableType="risk"
             columns={[
+              "Climate Related Risk",
               "Metric Category",
               "Key Metric",
-              "Climate Related Risk",
               "Metric Value",
               "Metric Unit",
-              "Time Horizon"
+              "Scope",
+              "Historical Metric Reported?",
+              "Historical Period Covered",
+              "Forward-Looking Metric Reported?",
+              "Forward-Looking Time Horizon",
+              "Methodology Used",
             ]}
           />
 
@@ -277,13 +361,19 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
           <MetricsTable
             title="Metrics used to assess climate-related opportunities"
             data={opportunityMetrics}
+            tableType="opportunity"
             columns={[
+              "Climate Related Opportunity",
               "Metric Category",
               "Key Metric",
-              "Climate Related Opportunity",
               "Metric Value",
               "Metric Unit",
-              "Time Horizon"
+              "Scope",
+              "Historical Metric Reported?",
+              "Historical Period Covered",
+              "Forward-Looking Metric Reported?",
+              "Forward-Looking Time Horizon",
+              "Methodology Used",
             ]}
           />
 
@@ -291,51 +381,68 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
           {riskMetrics.length === 0 && opportunityMetrics.length === 0 && (
             <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-blue-700 text-sm">
-                No climate-related metrics data available. Please complete the questionnaire to see detailed metrics information here.
+                No climate-related metrics data available. Please complete the
+                questionnaire to see detailed metrics information here.
               </p>
             </div>
           )}
 
           {/* Integration of Climate Related Metrics into Remuneration Policies */}
-          <div className="mb-6">
+          {
+            integrationAnswer?.Q2 === "Yes" && <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Integration of Climate-Related Metrics into Remuneration Policies
             </h4>
             <div className="text-sm">
-              {safeRenderValue(data?.remuneration_integration) || "Information about climate metrics integration into remuneration policies will be displayed here when available."}
+              {safeRenderValue(integrationAnswer?.Q3) ||
+                "Information about climate metrics integration into remuneration policies will be displayed here when available."}
             </div>
           </div>
+          }
 
           {/* Internal Carbon Pricing Mechanisms */}
-          <div className="mb-6">
+          {
+            internalAndRevenueAnswer?.Q2 === "Yes" && <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Internal Carbon Pricing Mechanisms
             </h4>
             <div className="text-sm">
-              {safeRenderValue(data?.carbon_pricing) || "Internal carbon pricing mechanism information will be displayed here when available."}
+              {safeRenderValue(internalAndRevenueAnswer?.Q3) ||
+                "Internal carbon pricing mechanism information will be displayed here when available."}
             </div>
           </div>
+          }
 
           {/* Revenue from Low-Carbon Products and Services */}
-          <div className="mb-6">
+          {
+            internalAndRevenueAnswer?.Q4 === "Yes" && <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Revenue from Low-Carbon Products and Services
             </h4>
             <div className="text-sm">
-              {safeRenderValue(data?.low_carbon_revenue) || "Revenue from low-carbon products and services information will be displayed here when available."}
+              {safeRenderValue(internalAndRevenueAnswer?.Q5) ||
+                "Revenue from low-carbon products and services information will be displayed here when available."}
             </div>
           </div>
+          }
 
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start mt-6">
             <p className="text-[15px] text-[#667085] mb-2 mt-0">
-Add sector-specific (e.g., financial or non-financial) information relevant to the ‘metrics & targets’ disclosures, in line with TCFD sector guidance (if applicable).             </p>
+              Add sector-specific (e.g., financial or non-financial) information
+              relevant to the ‘metrics & targets’ disclosures, in line with TCFD
+              sector guidance (if applicable).{" "}
+            </p>
           </div>
 
           <div className="mb-6">
             <JoditEditor
               ref={editorRef2}
               value={metricsTargets.sectorInfo}
-              config={{...config, placeholder: "Add sector-specific information relevant to the 'metrics & targets' disclosures"}}
+              config={{
+                ...config,
+                placeholder:
+                  "Add sector-specific information relevant to the 'metrics & targets' disclosures",
+              }}
               tabIndex={2}
               onBlur={handleSectorInfoChange}
               onChange={() => {}}

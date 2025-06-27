@@ -137,9 +137,9 @@ const Section1 = ({ section6_1Ref, data, tcfdCollectData, orgName }) => {
           {/* Regulatory Considerations - Only show if Q1 is Yes */}
           {regulatoryData?.Q1 === 'Yes' && (
             <div className="mb-6">
-              {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+              <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
                 Regulatory Considerations
-              </h4> */}
+              </h4>
               <div className="text-sm">
                 {renderArrayValue(regulatoryData?.Q2)}
               </div>
@@ -147,9 +147,9 @@ const Section1 = ({ section6_1Ref, data, tcfdCollectData, orgName }) => {
           )}
 
           <div className="mb-6">
-            {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+            <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
               Size & Scope of Risk
-            </h4> */}
+            </h4>
             <div className="text-sm">
               {renderArrayValue(scopeData?.Q1)}
               {/* {scopeData?.Q2 && (

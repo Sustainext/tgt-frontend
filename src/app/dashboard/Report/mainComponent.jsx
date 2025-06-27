@@ -1096,7 +1096,7 @@ const Report = () => {
                           <option value="canada_bill_s211_v2">
                             Bill S-211
                           </option>
-                          { isTCFDAvailable && <option value="TCFD">TCFD</option>}
+                          { isTCFDAvailable() && <option value="TCFD">TCFD</option>}
                           <option>Custom ESG Report</option>
                         </select>
                         {error.reporttype && (

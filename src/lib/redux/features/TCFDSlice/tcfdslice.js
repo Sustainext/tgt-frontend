@@ -1,73 +1,74 @@
 // lib/redux/features/TCFDSlice/tcfdSlice.js
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   // Message from CEO section
   messageCEO: {
-    messageContent: '',
-    signatureUrl: '',
+    messageContent: "",
+    signatureUrl: "",
   },
-  
+
   // About the Report section
   aboutReport: {
-    description: '',
-    reportingPeriod: '',
-    reportingFrequency: '',
-    pointOfContact: '',
+    description: "",
+    reportingPeriod: "",
+    reportingFrequency: "",
+    pointOfContact: "",
   },
-  
+
   // About Company & Operations section
   aboutCompany: {
-    companyOverview: '',
-    businessModel: '',
-    geographicalPresence: '',
-    keyOperations: '',
+    companyOverview: "",
+    businessModel: "",
+    geographicalPresence: "",
+    keyOperations: "",
   },
-  
+
   // Governance section
   governance: {
-    boardOversight: '',
-    tcfdFrameworkDescription: '',
-    managementRole: '',
-    governanceStructure: '',
-    skillsCompetencies: '',
+    boardOversight: "",
+    tcfdFrameworkDescription: "",
+    managementRole: "",
+    governanceStructure: "",
+    skillsCompetencies: "",
   },
-  
+
   // Strategy section
   strategy: {
-    climateRisksOpportunities: '',
-    climateRisksOpportunities2: '',
-    impactOnBusiness: '',
-    resilienceOfStrategy: '',
-    scenarioAnalysis: '',
+    climateRisksOpportunities: "",
+    climateRisksOpportunities2: "",
+    impactOnBusiness: "",
+    resilienceOfStrategy: "",
+    scenarioAnalysis: "",
   },
-  
+
   // Risk Management section
   riskManagement: {
-    identificationProcess: '',
-    assessmentProcess: '',
-    managementProcess: '',
-    integrationIntoOverall: '',
+    identificationProcess: "",
+    assessmentProcess: "",
+    managementProcess: "",
+    integrationIntoOverall: "",
   },
-  
+
   // Metrics and Targets section
   metricsTargets: {
-    climateMetrics: '',
-    metricsDescription: '',
-    mainContentEmissions: '',
-    scope1Emissions: '',
-    scope2Emissions: '',
-    scope3Emissions: '',
-    ghgIntensity: '',
-    ghgByScope: '',
-    ghgBySource: '',
-    ghgByBusiness: '',
-    ghgByLocation: '',
-    climateTargets: '',
-    closingRemarks: '',
-    sectorInfo: '',
+    climateMetrics: "",
+    metricsDescription: "",
+    mainContentEmissions: "",
+    scope1Emissions: "",
+    scope2Emissions: "",
+    scope3Emissions: "",
+    ghgIntensity: "",
+    ghgByScope: "",
+    ghgBySource: "",
+    ghgByBusiness: "",
+    ghgByLocation: "",
+    climateTargets: "",
+    closingRemarks: "",
+    sectorInfo: "",
+    sectorInfo2: "",
   },
-  
+
   // General state
   currentSection: 0,
   isLoading: false,
@@ -75,7 +76,7 @@ const initialState = {
 };
 
 const tcfdSlice = createSlice({
-  name: 'tcfd',
+  name: "tcfd",
   initialState,
   reducers: {
     // Message from CEO actions
@@ -85,7 +86,7 @@ const tcfdSlice = createSlice({
     setSignatureUrl: (state, action) => {
       state.messageCEO.signatureUrl = action.payload;
     },
-    
+
     // About Report actions
     setAboutReportDescription: (state, action) => {
       state.aboutReport.description = action.payload;
@@ -99,7 +100,7 @@ const tcfdSlice = createSlice({
     setPointOfContact: (state, action) => {
       state.aboutReport.pointOfContact = action.payload;
     },
-    
+
     // About Company actions
     setCompanyOverview: (state, action) => {
       state.aboutCompany.companyOverview = action.payload;
@@ -113,7 +114,7 @@ const tcfdSlice = createSlice({
     setKeyOperations: (state, action) => {
       state.aboutCompany.keyOperations = action.payload;
     },
-    
+
     // Governance actions
     setBoardOversight: (state, action) => {
       state.governance.boardOversight = action.payload;
@@ -130,7 +131,7 @@ const tcfdSlice = createSlice({
     setSkillsCompetencies: (state, action) => {
       state.governance.skillsCompetencies = action.payload;
     },
-    
+
     // Strategy actions
     setClimateRisksOpportunities: (state, action) => {
       state.strategy.climateRisksOpportunities = action.payload;
@@ -147,7 +148,7 @@ const tcfdSlice = createSlice({
     setScenarioAnalysis: (state, action) => {
       state.strategy.scenarioAnalysis = action.payload;
     },
-    
+
     // Risk Management actions
     setIdentificationProcess: (state, action) => {
       state.riskManagement.identificationProcess = action.payload;
@@ -161,12 +162,13 @@ const tcfdSlice = createSlice({
     setIntegrationIntoOverall: (state, action) => {
       state.riskManagement.integrationIntoOverall = action.payload;
     },
-    
+
     // Metrics and Targets actions
     setClimateMetrics: (state, action) => {
       state.metricsTargets.climateMetrics = action.payload;
     },
-    setMetricsDescription: (state, action) => { // New action for 7.1 description
+    setMetricsDescription: (state, action) => {
+      // New action for 7.1 description
       state.metricsTargets.metricsDescription = action.payload;
     },
     setMainContentEmissions: (state, action) => {
@@ -200,12 +202,15 @@ const tcfdSlice = createSlice({
       state.metricsTargets.climateTargets = action.payload;
     },
     setClosingRemarks: (state, action) => {
-  state.metricsTargets.closingRemarks = action.payload;
-},
+      state.metricsTargets.closingRemarks = action.payload;
+    },
     setSectorInfo: (state, action) => {
       state.metricsTargets.sectorInfo = action.payload;
     },
-    
+    setSectorInfo2: (state, action) => {
+      state.metricsTargets.sectorInfo2 = action.payload;
+    },
+
     // General actions
     setCurrentSection: (state, action) => {
       state.currentSection = action.payload;
@@ -216,7 +221,7 @@ const tcfdSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
-    
+
     // Reset actions
     resetMessageCEO: (state) => {
       state.messageCEO = initialState.messageCEO;
@@ -249,39 +254,39 @@ export const {
   // Message from CEO
   setMessageContent,
   setSignatureUrl,
-  
+
   // About Report
   setAboutReportDescription,
   setReportingPeriod,
   setReportingFrequency,
   setPointOfContact,
-  
+
   // About Company
   setCompanyOverview,
   setBusinessModel,
   setGeographicalPresence,
   setKeyOperations,
-  
+
   // Governance
   setBoardOversight,
   setTcfdFrameworkDescription,
   setManagementRole,
   setGovernanceStructure,
   setSkillsCompetencies,
-  
+
   // Strategy
   setClimateRisksOpportunities,
   setClimateRisksOpportunities2,
   setImpactOnBusiness,
   setResilienceOfStrategy,
   setScenarioAnalysis,
-  
+
   // Risk Management
   setIdentificationProcess,
   setAssessmentProcess,
   setManagementProcess,
   setIntegrationIntoOverall,
-  
+
   // Metrics and Targets
   setClimateMetrics,
   setMetricsDescription, // New export
@@ -297,12 +302,13 @@ export const {
   setClimateTargets,
   setClosingRemarks,
   setSectorInfo,
-  
+  setSectorInfo2,
+
   // General
   setCurrentSection,
   setLoading,
   setError,
-  
+
   // Reset actions
   resetMessageCEO,
   resetAboutReport,
@@ -315,46 +321,65 @@ export const {
 } = tcfdSlice.actions;
 
 // Selectors
-export const selectMessageCEO = (state) => state.tcfdReport?.messageCEO || { messageContent: '', signatureUrl: '' };
-export const selectAboutReport = (state) => state.tcfdReport?.aboutReport || { description: '', reportingPeriod: '', reportingFrequency: '', pointOfContact: '' };
-export const selectAboutCompany = (state) => state.tcfdReport?.aboutCompany || { companyOverview: '', businessModel: '', geographicalPresence: '', keyOperations: '' };
-export const selectGovernance = (state) => state.tcfdReport?.governance || { 
-  boardOversight: '', 
-  tcfdFrameworkDescription: '', 
-  managementRole: '', 
-  governanceStructure: '', 
-  skillsCompetencies: '' 
-};
-export const selectStrategy = (state) => state.tcfdReport?.strategy || { 
-  climateRisksOpportunities: '', 
-  climateRisksOpportunities2: '', 
-  impactOnBusiness: '', 
-  resilienceOfStrategy: '', 
-  scenarioAnalysis: '' 
-};
-export const selectRiskManagement = (state) => state.tcfdReport?.riskManagement || { 
-  identificationProcess: '', 
-  assessmentProcess: '', 
-  managementProcess: '', 
-  integrationIntoOverall: '' 
-};
-export const selectMetricsTargets = (state) => state.tcfdReport?.metricsTargets || { 
-  climateMetrics: '', 
-  metricsDescription: '', // New field in selector
-  mainContentEmissions: '',
-  scope1Emissions: '', 
-  scope2Emissions: '', 
-  scope3Emissions: '', 
-  ghgIntensity: '',
-  ghgByScope: '',
-  ghgBySource: '',
-  ghgByBusiness: '',
-  ghgByLocation: '',
-  climateTargets: '',
-  closingRemarks: '', 
-  sectorInfo: ''
-};
-export const selectCurrentSection = (state) => state.tcfdReport?.currentSection || 0;
+export const selectMessageCEO = (state) =>
+  state.tcfdReport?.messageCEO || { messageContent: "", signatureUrl: "" };
+export const selectAboutReport = (state) =>
+  state.tcfdReport?.aboutReport || {
+    description: "",
+    reportingPeriod: "",
+    reportingFrequency: "",
+    pointOfContact: "",
+  };
+export const selectAboutCompany = (state) =>
+  state.tcfdReport?.aboutCompany || {
+    companyOverview: "",
+    businessModel: "",
+    geographicalPresence: "",
+    keyOperations: "",
+  };
+export const selectGovernance = (state) =>
+  state.tcfdReport?.governance || {
+    boardOversight: "",
+    tcfdFrameworkDescription: "",
+    managementRole: "",
+    governanceStructure: "",
+    skillsCompetencies: "",
+  };
+export const selectStrategy = (state) =>
+  state.tcfdReport?.strategy || {
+    climateRisksOpportunities: "",
+    climateRisksOpportunities2: "",
+    impactOnBusiness: "",
+    resilienceOfStrategy: "",
+    scenarioAnalysis: "",
+  };
+export const selectRiskManagement = (state) =>
+  state.tcfdReport?.riskManagement || {
+    identificationProcess: "",
+    assessmentProcess: "",
+    managementProcess: "",
+    integrationIntoOverall: "",
+  };
+export const selectMetricsTargets = (state) =>
+  state.tcfdReport?.metricsTargets || {
+    climateMetrics: "",
+    metricsDescription: "", // New field in selector
+    mainContentEmissions: "",
+    scope1Emissions: "",
+    scope2Emissions: "",
+    scope3Emissions: "",
+    ghgIntensity: "",
+    ghgByScope: "",
+    ghgBySource: "",
+    ghgByBusiness: "",
+    ghgByLocation: "",
+    climateTargets: "",
+    closingRemarks: "",
+    sectorInfo: "",
+    sectorInfo2: "",
+  };
+export const selectCurrentSection = (state) =>
+  state.tcfdReport?.currentSection || 0;
 export const selectIsLoading = (state) => state.tcfdReport?.isLoading || false;
 export const selectError = (state) => state.tcfdReport?.error || null;
 

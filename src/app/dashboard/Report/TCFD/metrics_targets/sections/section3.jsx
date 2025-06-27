@@ -87,7 +87,7 @@ const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
   };
 
   const loadClosingRemarksAutoFillContent = () => {
-    const autoFillContent = `<p>As climate-related risks and opportunities continue to evolve, ${orgName || '[Company Name]'} remains committed to enhancing the transparency, consistency, and depth of our climate-related disclosures. This report reflects our ongoing efforts to integrate climate considerations into our governance, strategy, risk management, and performance monitoring processes. We recognize that collective action is paramount, and we will continue to strengthen our capabilities, refine our approach, and engage with stakeholders to build a resilient, low-carbon future.</p>`;
+    const autoFillContent = `<p>As climate-related risks and opportunities continue to evolve, ${orgName} remains committed to enhancing the transparency, consistency, and depth of our climate-related disclosures. This report reflects our ongoing efforts to integrate climate considerations into our governance, strategy, risk management, and performance measurement frameworks. We recognize that addressing climate change is a journey, and we will continue to strengthen our capabilities, refine our approach, and engage with stakeholders to support a resilient, low-carbon future. .</p>`;
     
     dispatch(setClosingRemarks(autoFillContent));
     if (editorRef2.current) {
