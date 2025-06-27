@@ -16,16 +16,21 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
   const strategy = useSelector(selectStrategy);
   const editorRef = useRef(null);
 
-  // Extract business impact data from tcfdCollectData - Updated to handle array structure
-  const businessImpactData = tcfdCollectData?.general_business_impact || [];
+  // Extract business impact data with better error handling
+  const generalBusinessImpact = tcfdCollectData?.general_business_impact?.[0] || {};
+  const businessImpactData = generalBusinessImpact?.Q1 || [];
+  const prioritizationData = generalBusinessImpact?.Q2 || "";
+  const planningImpactData = generalBusinessImpact?.Q3 || "";
   
-  // Extract GHG emissions data - Updated to handle array structure
+  // Extract GHG emissions data
   const ghgEmissionsData = tcfdCollectData?.ghg_emissions_reduction_commitments?.[0] || {};
   
-  // Extract strategy resilience data - New addition
+  // Extract strategy resilience data
   const strategyResilienceData = tcfdCollectData?.strategy_resilience_to_climate_related_risks_and_opportunities?.[0] || {};
 
   console.log('businessImpactData', businessImpactData);
+  console.log('prioritizationData', prioritizationData);
+  console.log('planningImpactData', planningImpactData);
   console.log('ghgEmissionsData', ghgEmissionsData);
   console.log('strategyResilienceData', strategyResilienceData);
 
@@ -68,9 +73,9 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
   // Helper function to render array values
   const renderArrayValue = (value) => {
     if (Array.isArray(value)) {
-      return value.map((item, index) => <div key={index}>{item}</div>);
+      return value.map((item, index) => <div key={index}>{safeRenderValue(item)}</div>);
     }
-    return value || "";
+    return safeRenderValue(value) || "";
   };
 
   // Helper function to safely render text content
@@ -78,6 +83,14 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
     if (value === null || value === undefined) {
       return "";
     }
+    
+    if (typeof value === 'object') {
+      if (value.start && value.end) {
+        return `${value.start} - ${value.end}`;
+      }
+      return JSON.stringify(value);
+    }
+    
     return String(value);
   };
 
@@ -177,9 +190,9 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
             />
           </div>
 
-          {/* General Business Impact Table - Updated to handle array structure */}
+          {/* General Business Impact Table */}
           {businessImpactData.length > 0 && (
-            <div className="mb-6">
+            <div className="mb-8">
               <p className="text-sm mb-4">
                 The following table outlines how climate-related issues have
                 influenced our organization's strategy, planning, and operations
@@ -198,44 +211,42 @@ const Section2 = ({ section5_2Ref, data, tcfdCollectData, orgName }) => {
             </div>
           )}
 
-          {/* GHG Emission Reduction Commitments Section - Updated */}
-          <div className="mb-6">
-            {/* <h4 className="text-[16px] text-[#344054] mb-4 font-semibold">
-              GHG Emission Reduction Commitments
-            </h4> */}
-            
-            {/* Check if GHG emissions data exists */}
-            {/* {Object.keys(ghgEmissionsData).length > 0 ? (
-              <div className="space-y-4"> */}
-                {/* Q1 - Commitment Status */}
-                {/* {ghgEmissionsData.Q1 === 'Yes' && ghgEmissionsData.Q2 && (
-                  <div className="mb-4">
-                    <div className="rounded-lg text-sm text-gray-700">
-                      {safeRenderValue(ghgEmissionsData.Q2)}
-                    </div>
+          {/* Financial Planning Prioritization and Impact */}
+          {(prioritizationData || planningImpactData) && (
+            <div className="mb-8">
+              {/* <h4 className="text-[16px] text-[#344054] mb-4 font-semibold">
+                Financial Planning Considerations
+              </h4> */}
+              
+              {prioritizationData && (
+                <div className="mb-4">
+                  {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                    Financial Planning Prioritization
+                  </h5> */}
+                  <div className="rounded-lg text-sm text-gray-700">
+                    {safeRenderValue(prioritizationData)}
                   </div>
-                )}
+                </div>
+              )}
 
-                {ghgEmissionsData.Q1 === 'No' && (
-                  <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                    <p className="text-yellow-700 text-sm">
-                      No current GHG emission reduction commitments have been made.
-                    </p>
+              {planningImpactData && (
+                <div className="mb-4">
+                  {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                    Impact on Financial Planning
+                  </h5> */}
+                  <div className="rounded-lg text-sm text-gray-700">
+                    {safeRenderValue(planningImpactData)}
                   </div>
-                )}
-              </div>
-            ) : (
-              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <p className="text-blue-700 text-sm">
-                  No GHG emission reduction commitments data available. Please complete the
-                  questionnaire to see detailed emission reduction commitment information here.
-                </p>
-              </div>
-            )} */}
-          </div>
+                </div>
+              )}
+            </div>
+          )}
+
 
           {/* Show message if no data available */}
           {businessImpactData.length === 0 &&
+            !prioritizationData &&
+            !planningImpactData &&
             Object.keys(strategyResilienceData).length === 0 &&
             Object.keys(ghgEmissionsData).length === 0 && (
               <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">

@@ -16,8 +16,38 @@ const Section3 = ({ section5_3Ref, data, tcfdCollectData, orgName }) => {
   const strategy = useSelector(selectStrategy);
   const editorRef = useRef(null);
 
-  // Extract resilience data from tcfdCollectData
+  // Extract resilience data from tcfdCollectData with better error handling
   const resilienceData = tcfdCollectData?.strategy_resilience_to_climate_related_risks_and_opportunities?.[0] || {};
+
+  console.log('resilienceData', resilienceData);
+
+  // Helper function to safely render any data value
+  const safeRenderValue = (value) => {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    
+    if (typeof value === 'object') {
+      if (value.start && value.end) {
+        return `${value.start} - ${value.end}`;
+      }
+      return JSON.stringify(value);
+    }
+    
+    return String(value);
+  };
+
+  // Helper function to render array values
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.map((item, index) => (
+        <div key={index} className="mb-1">
+          {safeRenderValue(item)}
+        </div>
+      ));
+    }
+    return safeRenderValue(value) || '';
+  };
 
   // Jodit Editor configuration
   const config = {
@@ -58,16 +88,6 @@ const Section3 = ({ section5_3Ref, data, tcfdCollectData, orgName }) => {
     dispatch(setResilienceOfStrategy(content));
   };
 
-  // Helper function to render array values
-  const renderArrayValue = (value) => {
-    if (Array.isArray(value)) {
-      return value.map((item, index) => (
-        <div key={index}>{item}</div>
-      ));
-    }
-    return value || '';
-  };
-
   return (
     <>
       <div>
@@ -76,110 +96,150 @@ const Section3 = ({ section5_3Ref, data, tcfdCollectData, orgName }) => {
             5.3 Scenario Analysis & Strategic Resilience
           </h3>
 
-          <div className="mb-6">
-            <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
+          {/* Scenario Analysis Section */}
+          <div className="mb-8">
+            <h4 className="text-[16px] text-[#344054] mb-4 font-semibold">
               Scenario Analysis
             </h4>
-            {resilienceData?.Q1 === 'Yes' && resilienceData?.Q2 ? (
-              <div className="text-sm">
-                {renderArrayValue(resilienceData.Q2)}
+            
+            {resilienceData?.Q1 === 'Yes' ? (
+              <div className="space-y-4">
+                {resilienceData?.Q2 && (
+                  <div className="rounded-lg text-sm text-gray-700">
+                    {safeRenderValue(resilienceData.Q2)}
+                  </div>
+                )}
+                {!resilienceData?.Q2 && (
+                  <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-yellow-700 text-sm">
+                      Scenario analysis is conducted, but details are not available.
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : resilienceData?.Q1 === 'No' ? (
+              <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <p className="text-yellow-700 text-sm">
+                  No scenario analysis has been conducted.
+                </p>
               </div>
             ) : (
-              <div className="text-sm text-gray-500">
-                {resilienceData?.Q1 === 'No' ? 'No scenario analysis conducted.' : 'No scenario analysis data available.'}
+              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-blue-700 text-sm">
+                  No scenario analysis data available.
+                </p>
               </div>
             )}
           </div>
 
-          <div className="mb-6">
-            <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
-              Strategic Resilience and Evolution of Business Strategy
+          {/* Strategic Resilience Section */}
+          <div className="mb-8">
+            <h4 className="text-[16px] text-[#344054] mb-4 font-semibold">
+              Strategic Resilience and Evolution
             </h4>
             
-            {/* Strategic Resilience */}
-            {resilienceData?.Q3 && (
-              <div className="mb-4">
-                {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
-                  Strategy Resilience to Climate Risks
-                </h5> */}
-                <div className="text-sm">
-                  {renderArrayValue(resilienceData.Q3)}
+            <div className="space-y-6">
+              {/* Strategy Resilience */}
+              {resilienceData?.Q3 && (
+                <div>
+                  {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                    Strategy Resilience to Climate Risks and Opportunities
+                  </h5> */}
+                  <div className="rounded-lg text-sm text-gray-700">
+                    {safeRenderValue(resilienceData.Q3)}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Strategy Affected by Climate Issues */}
-            {resilienceData?.Q4 && (
-              <div className="mb-4">
-                {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
-                  How Strategy Was Affected by Climate-Related Issues
-                </h5> */}
-                <div className="text-sm">
-                  {renderArrayValue(resilienceData.Q4)}
+              {/* Strategy Impact Areas */}
+              {resilienceData?.Q4 && (
+                <div>
+                  {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                    How Strategy Is Affected by Climate-Related Issues
+                  </h5> */}
+                  <div className="rounded-lg text-sm text-gray-700">
+                    {safeRenderValue(resilienceData.Q4)}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Strategy Evolution */}
-            {resilienceData?.Q5 && (
-              <div className="mb-4">
-                {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
-                  Expected Strategy Evolution
-                </h5> */}
-                <div className="text-sm">
-                  {renderArrayValue(resilienceData.Q5)}
+              {/* Strategy Evolution */}
+              {resilienceData?.Q5 && (
+                <div>
+                  {/* <h5 className="text-[14px] text-[#344054] mb-2 font-medium">
+                    Expected Evolution of Business Strategy
+                  </h5> */}
+                  <div className="rounded-lg text-sm text-gray-700">
+                    {safeRenderValue(resilienceData.Q5)}
+                  </div>
                 </div>
+              )}
+            </div>
+
+            {/* Show message if no strategic resilience data */}
+            {!resilienceData?.Q3 && !resilienceData?.Q4 && !resilienceData?.Q5 && (
+              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-blue-700 text-sm">
+                  No strategic resilience data available.
+                </p>
               </div>
             )}
           </div>
 
-          <div className="mb-6">
-            <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
-              Financial Impacts
+          {/* Financial Impact Assessment Section */}
+          <div className="mb-8">
+            <h4 className="text-[16px] text-[#344054] mb-4 font-semibold">
+              Financial Impact Assessment
             </h4>
+            
             {resilienceData?.Q6 ? (
-              <div className="text-sm">
-                {renderArrayValue(resilienceData.Q6)}
+              <div className="rounded-lg text-sm text-gray-700">
+                {safeRenderValue(resilienceData.Q6)}
               </div>
             ) : (
-              <div className="text-sm text-gray-500">
-                No financial impact data available.
+              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-blue-700 text-sm">
+                  No financial impact assessment data available.
+                </p>
               </div>
             )}
           </div>
 
-          {/* Show message if no resilience data */}
+          {/* Sector-Specific Information Section */}
+          <div className="mb-8">
+            <h4 className="text-[16px] text-[#344054] mb-4 font-semibold">
+              Sector-Specific Strategy Considerations
+            </h4>
+
+            <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
+              <p className="text-[15px] text-[#667085] mb-2 mt-0">
+                Add sector-specific (e.g., financial or non-financial) information relevant to the Strategy disclosures, in line with TCFD sector guidance (if applicable).
+              </p>
+            </div>
+
+            <div className="mb-6">
+              <JoditEditor
+                ref={editorRef}
+                value={strategy.resilienceOfStrategy}
+                config={{
+                  ...config, 
+                  placeholder: "Add sector-specific (e.g., financial or non-financial) information relevant to the Strategy disclosures, in line with TCFD sector guidance (if applicable)."
+                }}
+                tabIndex={1}
+                onBlur={handleEditorChange}
+                onChange={() => {}}
+              />
+            </div>
+          </div>
+
+          {/* Show comprehensive message if no data available */}
           {Object.keys(resilienceData).length === 0 && (
             <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-blue-700 text-sm">
-                No strategy resilience data available. Please complete the questionnaire to see detailed resilience and scenario analysis information here.
+                No strategy resilience data available. Please complete the questionnaire to see detailed resilience, scenario analysis, and financial impact information here.
               </p>
             </div>
           )}
-
-          <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between mt-6">
-            <p className="text-[15px] text-[#667085] mb-2 mt-3">
-              Add sector-specific (e.g., financial or non-financial) information relevant to the Strategy disclosures, in line with TCFD sector guidance (if applicable). 
-            </p>
-            {/* <button
-              className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-              onClick={loadAutoFillContent}
-            >
-              <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
-              Auto Fill
-            </button> */}
-          </div>
-
-          <div className="mb-6">
-            <JoditEditor
-              ref={editorRef}
-              value={strategy.resilienceOfStrategy}
-              config={{...config, placeholder: "Add sector-specific (e.g., financial or non-financial) information relevant to the Strategy disclosures, in line with TCFD sector guidance (if applicable). "}}
-              tabIndex={1}
-              onBlur={handleEditorChange}
-              onChange={handleEditorChange}
-            />
-          </div>
         </div>
       </div>
     </>

@@ -22,10 +22,13 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
 
   // Extract metrics data from tcfdCollectData
   const riskMetrics =
-    tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities ||
+    tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities_table_data ||
     [];
   const opportunityMetrics =
-    tcfdCollectData?.metrics_used_to_assess_climate_related_opportunities || [];
+    tcfdCollectData?.metrics_used_to_assess_climate_related_opportunities_table_data || [];
+  
+  const integrationAnswer = tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities_question_answer_data || {};
+  const internalAndRevenueAnswer = tcfdCollectData?.metrics_used_to_assess_climate_related_opportunities_question_answer_data || {};
 
   // Jodit Editor configuration
   const config = {
@@ -385,37 +388,43 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
           )}
 
           {/* Integration of Climate Related Metrics into Remuneration Policies */}
-          <div className="mb-6">
+          {
+            integrationAnswer?.Q2 === "Yes" && <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Integration of Climate-Related Metrics into Remuneration Policies
             </h4>
             <div className="text-sm">
-              {safeRenderValue(data?.remuneration_integration) ||
+              {safeRenderValue(integrationAnswer?.Q3) ||
                 "Information about climate metrics integration into remuneration policies will be displayed here when available."}
             </div>
           </div>
+          }
 
           {/* Internal Carbon Pricing Mechanisms */}
-          <div className="mb-6">
+          {
+            internalAndRevenueAnswer?.Q2 === "Yes" && <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Internal Carbon Pricing Mechanisms
             </h4>
             <div className="text-sm">
-              {safeRenderValue(data?.carbon_pricing) ||
+              {safeRenderValue(internalAndRevenueAnswer?.Q3) ||
                 "Internal carbon pricing mechanism information will be displayed here when available."}
             </div>
           </div>
+          }
 
           {/* Revenue from Low-Carbon Products and Services */}
-          <div className="mb-6">
+          {
+            internalAndRevenueAnswer?.Q4 === "Yes" && <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Revenue from Low-Carbon Products and Services
             </h4>
             <div className="text-sm">
-              {safeRenderValue(data?.low_carbon_revenue) ||
+              {safeRenderValue(internalAndRevenueAnswer?.Q5) ||
                 "Revenue from low-carbon products and services information will be displayed here when available."}
             </div>
           </div>
+          }
 
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start mt-6">
             <p className="text-[15px] text-[#667085] mb-2 mt-0">
