@@ -5,20 +5,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { FaCheckCircle, FaFileAlt } from 'react-icons/fa';
-import { MdDownload, MdKeyboardArrowDown, MdClose, MdKeyboardArrowRight } from 'react-icons/md';
+import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
+import {
+  MdDownload,
+  MdKeyboardArrowDown,
+  MdClose,
+  MdKeyboardArrowRight,
+} from "react-icons/md";
 
-const DownloadModal = ({ 
-  isOpen = true, 
-  onClose = () => {}, 
-  onExitToReports = () => {}, 
+const DownloadModal = ({
+  isOpen = true,
+  onClose = () => {},
+  onExitToReports = () => {},
   onDownload = () => {},
-  reportName = "Report A" 
+  reportName = "Report A",
 }) => {
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
 
   const downloadOptions = [
-    { id: 'pdf', label: 'Download as PDF', icon: FaFileAlt },
+    { id: "pdf", label: "Download as PDF", icon: FaFileAlt },
     // { id: 'word', label: 'Download as Word', icon: FaFileAlt }
   ];
 
@@ -32,14 +37,14 @@ const DownloadModal = ({
   return (
     <>
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
         onClick={onClose}
       />
-      
+
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div 
+        <div
           className="bg-white rounded-xl shadow-2xl w-full max-w-2xl mx-auto transform transition-all"
           onClick={(e) => e.stopPropagation()}
         >
@@ -57,16 +62,16 @@ const DownloadModal = ({
           <div className="px-6 pb-6">
             <div className="flex justify-start items-center gap-12">
               {/* Success Icon */}
-            <div className="flex justify-center mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <FaCheckCircle className="w-8 h-8 text-green-600" />
+              <div className="flex justify-center mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                  <FaCheckCircle className="w-8 h-8 text-green-600" />
+                </div>
               </div>
-            </div>
 
-            {/* Title */}
-            <h2 className="text-xl font-semibold text-gray-900 text-center mb-2">
-              {reportName} has been created.
-            </h2>
+              {/* Title */}
+              <h2 className="text-xl font-semibold text-gray-900 text-center mb-2">
+                {reportName} has been created.
+              </h2>
             </div>
 
             {/* Subtitle */}
@@ -93,7 +98,11 @@ const DownloadModal = ({
                 >
                   <MdDownload className="w-4 h-4" />
                   Download Report
-                  <MdKeyboardArrowDown className={`w-4 h-4 transition-transform ${showDownloadOptions ? 'rotate-180' : ''}`} />
+                  <MdKeyboardArrowDown
+                    className={`w-4 h-4 transition-transform ${
+                      showDownloadOptions ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
 
                 {/* Dropdown Menu */}
@@ -346,54 +355,66 @@ const TCFDReport = () => {
   };
 
   const handleDownload = async (reportId) => {
-  setIsDownloading(true);
-  
-  try {
-    const response = await axiosInstance.get(
-      `${process.env.BACKEND_API_URL}/tcfd_framework/get-tcfd-report-pdf/${reportId}/?download=true`,
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token")?.replace(/"/g, ""),
-        },
-        responseType: 'blob', // This is crucial for binary data
-      }
-    );
+    setIsDownloading(true);
 
-    // Create blob from response data
-    const blob = new Blob([response.data], { type: 'application/pdf' });
-    const downloadUrl = window.URL.createObjectURL(blob);
-    
-    // Create and trigger download
-    const link = document.createElement("a");
-    link.href = downloadUrl;
-    link.setAttribute("download", `tcfd_report_${reportId}.pdf`);
-    document.body.appendChild(link);
-    link.click();
-    
-    // Cleanup
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(downloadUrl);
-    
-    toast.success("Report downloaded successfully!");
-    
-  } catch (error) {
-    console.error("Error downloading file:", error);
-    
-    // Show user-friendly error message
-    toast.error("Failed to download the report. Please try again later.");
-    
-    // Log more details for debugging
-    if (error.response) {
-      console.error("Response error:", error.response.status, error.response.data);
-    } else if (error.request) {
-      console.error("Request error:", error.request);
-    } else {
-      console.error("Error:", error.message);
+    try {
+      const response = await axiosInstance.get(
+        `${process.env.BACKEND_API_URL}/tcfd_framework/get-tcfd-report-pdf/${reportId}/?download=true`,
+        {
+          headers: {
+            Authorization:
+              "Bearer " + localStorage.getItem("token")?.replace(/"/g, ""),
+          },
+          responseType: "blob", // This is crucial for binary data
+        }
+      );
+
+      // Create blob from response data
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      // Create and trigger download
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `tcfd_report_${reportId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+
+      toast.success("Report downloaded successfully!");
+    } catch (error) {
+      console.error("Error downloading file:", error);
+
+      // Show user-friendly error message
+      toast.error("Failed to download the report. Please try again later.");
+
+      // Log more details for debugging
+      if (error.response) {
+        console.error(
+          "Response error:",
+          error.response.status,
+          error.response.data
+        );
+      } else if (error.request) {
+        console.error("Request error:", error.request);
+      } else {
+        console.error("Error:", error.message);
+      }
+    } finally {
+      setIsDownloading(false);
     }
-  } finally {
-    setIsDownloading(false);
-  }
-};
+  };
+
+  // Add this computed value after your state declarations
+  const reportingPeriod = useMemo(() => {
+    if (fromDate && toDate) {
+      return `${fromDate} to ${toDate}`;
+    }
+    return "";
+  }, [fromDate, toDate]);
 
   // Component mapping for sections
   const renderSectionComponent = () => {
@@ -511,21 +532,34 @@ const TCFDReport = () => {
                               {orgName} {corpName ? " / " : ""}
                               {corpName}{" "}
                             </p>
+                            <p className="text-[#667085] text-[13px]">
+                              Reporting Period: {reportingPeriod}
+                            </p>
                           </div>
                         </div>
                       </div>
 
                       {/* Desktop section */}
-                      <div className="hidden xl:block lg:block">
-                        <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
-                          {reportName}
-                        </p>
-                        <p className="mt-2 text-[#667085] text-[13px] ml-3">
-                          Organization{corpName ? " / Corporate" : ""}:{" "}
-                          {orgName} {corpName ? " / " : ""}
-                          {corpName}{" "}
-                        </p>
-                      </div>
+<div className="hidden xl:block lg:block">
+  <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
+    {reportName}
+  </p>
+  <div className="flex items-center gap-4 mt-2 ml-3">
+    <p className="text-[#667085] text-[13px]">
+      Organization{corpName ? " / Corporate" : ""}:{" "}
+      {orgName} {corpName ? " / " : ""}
+      {corpName}
+    </p>
+    {reportingPeriod && (
+      <>
+        <span className="text-[#667085] text-[16px]">|</span>
+        <p className="text-[#667085] text-[13px]">
+          Reporting Period: {reportingPeriod}
+        </p>
+      </>
+    )}
+  </div>
+</div>
                     </div>
                   </div>
                 </div>
@@ -533,7 +567,11 @@ const TCFDReport = () => {
 
               {/* Desktop navigation */}
               <div className="hidden md:block lg:block xl:block">
-                <div className={`float-right ${currentPage === 4 ? 'mr-[7rem]' : 'mr-2'} flex items-center justify-center`}>
+                <div
+                  className={`float-right ${
+                    currentPage === 4 ? "mr-[7rem]" : "mr-2"
+                  } flex items-center justify-center`}
+                >
                   <div className="flex items-center justify-center">
                     <button
                       style={{
