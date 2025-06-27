@@ -540,26 +540,28 @@ const TCFDReport = () => {
                       </div>
 
                       {/* Desktop section */}
-<div className="hidden xl:block lg:block">
-  <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
-    {reportName}
-  </p>
-  <div className="flex items-center gap-4 mt-2 ml-3">
-    <p className="text-[#667085] text-[13px]">
-      Organization{corpName ? " / Corporate" : ""}:{" "}
-      {orgName} {corpName ? " / " : ""}
-      {corpName}
-    </p>
-    {reportingPeriod && (
-      <>
-        <span className="text-[#667085] text-[16px]">|</span>
-        <p className="text-[#667085] text-[13px]">
-          Reporting Period: {reportingPeriod}
-        </p>
-      </>
-    )}
-  </div>
-</div>
+                      <div className="hidden xl:block lg:block">
+                        <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
+                          {reportName}
+                        </p>
+                        <div className="flex items-center gap-4 mt-2 ml-3">
+                          <p className="text-[#667085] text-[13px]">
+                            Organization{corpName ? " / Corporate" : ""}:{" "}
+                            {orgName} {corpName ? " / " : ""}
+                            {corpName}
+                          </p>
+                          {reportingPeriod && (
+                            <>
+                              <span className="text-[#667085] text-[16px]">
+                                |
+                              </span>
+                              <p className="text-[#667085] text-[13px]">
+                                Reporting Period: {reportingPeriod}
+                              </p>
+                            </>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -569,7 +571,7 @@ const TCFDReport = () => {
               <div className="hidden md:block lg:block xl:block">
                 <div
                   className={`float-right ${
-                    currentPage === 4 ? "mr-[7rem]" : "mr-2"
+                    currentPage === 4 ? "mr-[10rem]" : "mr-2"
                   } flex items-center justify-center`}
                 >
                   <div className="flex items-center justify-center">

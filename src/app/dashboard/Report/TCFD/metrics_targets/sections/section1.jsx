@@ -157,127 +157,146 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
     return String(value);
   };
 
-  const MetricsTable = ({ title, data, columns, tableType }) => (
-    <div className="mb-8">
-      <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">{title}</h4>
-      <div className="overflow-x-auto">
-        <div className="border border-gray-200 rounded-lg overflow-hidden">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
-                {columns.map((col, index) => (
-                  <th
-                    key={index}
-                    className={`py-2 px-4 text-left text-gray-600 font-medium ${
-                      index < columns.length - 1
-                        ? "border-r border-gray-200"
-                        : ""
-                    }`}
-                  >
-                    {col}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.length > 0 ? (
-                data.map((row, index) => (
-                  <tr
-                    key={index}
-                    className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        tableType === "risk"
-                          ? row.ClimateRelatedRisk ||
-                              row.climate_related_risk ||
-                              row.risk ||
-                              row.description
-                          : row.ClimateRelatedOpportunity ||
-                              row.climate_related_opportunity ||
-                              row.opportunity ||
-                              row.description
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.MetricCategory ||
-                          row.metric_category ||
-                          row.category
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.KeyMetric || row.key_metric || row.metric
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.MetricValue || row.metric_value || row.value
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.MetricUnit || row.metric_unit || row.unit
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(row.Scope || row.scope) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.HistoricalMetricReported ||
-                          row.historical_metric_reported ||
-                          row.historical_reported
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.HistoricalPeriodCovered ||
-                          row.historical_period_covered ||
-                          row.historical_period
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.ForwardLookingMetricReported ||
-                          row.forward_looking_metric_reported ||
-                          row.forward_looking_reported
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.ForwardLookingTimeHorizon ||
-                          row.forward_looking_time_horizon ||
-                          row.TimeHorizon ||
-                          row.time_horizon
-                      ) || "-"}
-                    </td>
-                    <td className="p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.MethodologyUsed ||
-                          row.methodology_used ||
-                          row.methodology
-                      ) || "-"}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr className="bg-white border-t border-gray-200">
-                  <td
-                    colSpan={columns.length}
-                    className="p-4 text-center text-gray-500"
-                  >
-                    No data available
+  // Add this helper function before the MetricsTable component
+const renderValueWithTags = (value) => {
+  if (Array.isArray(value)) {
+    return (
+      <div className="flex flex-wrap gap-1">
+        {value.map((item, index) => (
+          <span
+            key={index}
+            className="inline-block text-black-800 text-xs"
+          >
+            {safeRenderValue(item)},
+          </span>
+        ))}
+      </div>
+    );
+  }
+  return safeRenderValue(value) || "-";
+};
+
+const MetricsTable = ({ title, data, columns, tableType }) => (
+  <div className="mb-8">
+    <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">{title}</h4>
+    <div className="overflow-x-auto">
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
+              {columns.map((col, index) => (
+                <th
+                  key={index}
+                  className={`py-2 px-4 text-left text-gray-600 font-medium ${
+                    index < columns.length - 1
+                      ? "border-r border-gray-200"
+                      : ""
+                  }`}
+                >
+                  {col}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.length > 0 ? (
+              data.map((row, index) => (
+                <tr
+                  key={index}
+                  className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
+                >
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      tableType === "risk"
+                        ? row.ClimateRelatedRisk ||
+                            row.climate_related_risk ||
+                            row.risk ||
+                            row.description
+                        : row.ClimateRelatedRisk || row.ClimateRelatedOpportunity ||
+                            row.climate_related_opportunity ||
+                            row.opportunity ||
+                            row.description
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.MetricCategory ||
+                        row.metric_category ||
+                        row.category
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.KeyMetric || row.key_metric || row.metric
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.MetricValue || row.metric_value || row.value
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.MetricUnit || row.metric_unit || row.unit
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(row.Scope || row.scope)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.HistoricalMetric ||
+                        row.historical_metric ||
+                        row.historical_reported
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.HistoricalPeriodCovered ||
+                        row.historical_period_covered ||
+                        row.historical_period
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.MetricReported ||
+                        row.forward_looking_metric_reported ||
+                        row.forward_looking_reported
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.ForwardLookingTimeHorizon ||
+                        row.forward_looking_time_horizon ||
+                        row.TimeHorizon ||
+                        row.time_horizon
+                    )}
+                  </td>
+                  <td className="p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.MethodologyUsed ||
+                        row.methodology_used ||
+                        row.methodology
+                    )}
                   </td>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              ))
+            ) : (
+              <tr className="bg-white border-t border-gray-200">
+                <td
+                  colSpan={columns.length}
+                  className="p-4 text-center text-gray-500"
+                >
+                  No data available
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
-  );
+  </div>
+);
 
   return (
     <>
