@@ -169,6 +169,25 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
     dispatch(setScope3Emissions(content));
   };
 
+    // Add this helper function before the MetricsTable component
+const renderValueWithTags = (value) => {
+  if (Array.isArray(value)) {
+    return (
+      <div className="flex flex-wrap gap-1">
+        {value.map((item, index) => (
+          <span
+            key={index}
+            className="inline-block text-black-800 text-xs"
+          >
+            {safeRenderValue(item)},
+          </span>
+        ))}
+      </div>
+    );
+  }
+  return safeRenderValue(value) || "-";
+};
+
   const ScopeTable = ({ title, data, columns, dataType }) => (
     <div className="mb-8">
       {title && (
@@ -775,37 +794,37 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                               className="border-t border-gray-200 hover:bg-gray-50 transition-colors"
                             >
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {safeRenderValue(
+                                {renderValueWithTags(
                                   item.organizationMetric ||
                                     item.organization_metric ||
                                     item.metric
                                 ) || "-"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {safeRenderValue(item.quantity || item.value) ||
+                                {renderValueWithTags(item.quantity || item.value) ||
                                   "-"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {safeRenderValue(item.unit || item.units) ||
+                                {renderValueWithTags(item.unit || item.units) ||
                                   "-"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {safeRenderValue(
+                                {renderValueWithTags(
                                   item.typeOfGHG ||
                                     item.type_of_ghg ||
                                     item.ghg_type
                                 ) || "-"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {safeRenderValue(
+                                {renderValueWithTags(
                                   item.ghgEmissionIntensity ||
                                     item.ghg_emission_intensity ||
                                     item.intensity
                                 ) || "-"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700">
-                                {safeRenderValue(
-                                  item.intensityUnit || item.intensity_unit
+                                {renderValueWithTags(
+                                  item.ghg_intensity_unit || item.intensity_unit
                                 ) || "tCO2e"}
                               </td>
                               <td className="py-2 px-4 border-r border-gray-200 text-gray-700 text-center">
@@ -872,7 +891,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
                                 )}
                               </td>
                               {/* <td className="py-2 px-4 text-gray-700">
-                                {safeRenderValue(
+                                {renderValueWithTags(
                                   item.gasesIncluded ||
                                     item.gases_included ||
                                     item.included_gases
