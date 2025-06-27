@@ -22,10 +22,13 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
 
   // Extract metrics data from tcfdCollectData
   const riskMetrics =
-    tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities ||
+    tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities_table_data ||
     [];
   const opportunityMetrics =
-    tcfdCollectData?.metrics_used_to_assess_climate_related_opportunities || [];
+    tcfdCollectData?.metrics_used_to_assess_climate_related_opportunities_table_data || [];
+  
+  const integrationAnswer = tcfdCollectData?.metrics_used_to_assess_climate_related_risks_and_opportunities_question_answer_data || {};
+  const internalAndRevenueAnswer = tcfdCollectData?.metrics_used_to_assess_climate_related_opportunities_question_answer_data || {};
 
   // Jodit Editor configuration
   const config = {
@@ -154,127 +157,146 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
     return String(value);
   };
 
-  const MetricsTable = ({ title, data, columns, tableType }) => (
-    <div className="mb-8">
-      <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">{title}</h4>
-      <div className="overflow-x-auto">
-        <div className="border border-gray-200 rounded-lg overflow-hidden">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
-                {columns.map((col, index) => (
-                  <th
-                    key={index}
-                    className={`py-2 px-4 text-left text-gray-600 font-medium ${
-                      index < columns.length - 1
-                        ? "border-r border-gray-200"
-                        : ""
-                    }`}
-                  >
-                    {col}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.length > 0 ? (
-                data.map((row, index) => (
-                  <tr
-                    key={index}
-                    className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        tableType === "risk"
-                          ? row.ClimateRelatedRisk ||
-                              row.climate_related_risk ||
-                              row.risk ||
-                              row.description
-                          : row.ClimateRelatedOpportunity ||
-                              row.climate_related_opportunity ||
-                              row.opportunity ||
-                              row.description
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.MetricCategory ||
-                          row.metric_category ||
-                          row.category
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.KeyMetric || row.key_metric || row.metric
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.MetricValue || row.metric_value || row.value
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.MetricUnit || row.metric_unit || row.unit
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(row.Scope || row.scope) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.HistoricalMetricReported ||
-                          row.historical_metric_reported ||
-                          row.historical_reported
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.HistoricalPeriodCovered ||
-                          row.historical_period_covered ||
-                          row.historical_period
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.ForwardLookingMetricReported ||
-                          row.forward_looking_metric_reported ||
-                          row.forward_looking_reported
-                      ) || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.ForwardLookingTimeHorizon ||
-                          row.forward_looking_time_horizon ||
-                          row.TimeHorizon ||
-                          row.time_horizon
-                      ) || "-"}
-                    </td>
-                    <td className="p-4 text-gray-700">
-                      {safeRenderValue(
-                        row.MethodologyUsed ||
-                          row.methodology_used ||
-                          row.methodology
-                      ) || "-"}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr className="bg-white border-t border-gray-200">
-                  <td
-                    colSpan={columns.length}
-                    className="p-4 text-center text-gray-500"
-                  >
-                    No data available
+  // Add this helper function before the MetricsTable component
+const renderValueWithTags = (value) => {
+  if (Array.isArray(value)) {
+    return (
+      <div className="flex flex-wrap gap-1">
+        {value.map((item, index) => (
+          <span
+            key={index}
+            className="inline-block text-black-800 text-xs"
+          >
+            {safeRenderValue(item)},
+          </span>
+        ))}
+      </div>
+    );
+  }
+  return safeRenderValue(value) || "-";
+};
+
+const MetricsTable = ({ title, data, columns, tableType }) => (
+  <div className="mb-8">
+    <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">{title}</h4>
+    <div className="overflow-x-auto">
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
+              {columns.map((col, index) => (
+                <th
+                  key={index}
+                  className={`py-2 px-4 text-left text-gray-600 font-medium ${
+                    index < columns.length - 1
+                      ? "border-r border-gray-200"
+                      : ""
+                  }`}
+                >
+                  {col}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.length > 0 ? (
+              data.map((row, index) => (
+                <tr
+                  key={index}
+                  className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
+                >
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      tableType === "risk"
+                        ? row.ClimateRelatedRisk ||
+                            row.climate_related_risk ||
+                            row.risk ||
+                            row.description
+                        : row.ClimateRelatedRisk || row.ClimateRelatedOpportunity ||
+                            row.climate_related_opportunity ||
+                            row.opportunity ||
+                            row.description
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.MetricCategory ||
+                        row.metric_category ||
+                        row.category
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.KeyMetric || row.key_metric || row.metric
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.MetricValue || row.metric_value || row.value
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.MetricUnit || row.metric_unit || row.unit
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(row.Scope || row.scope)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.HistoricalMetric ||
+                        row.historical_metric ||
+                        row.historical_reported
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.HistoricalPeriodCovered ||
+                        row.historical_period_covered ||
+                        row.historical_period
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.MetricReported ||
+                        row.forward_looking_metric_reported ||
+                        row.forward_looking_reported
+                    )}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.ForwardLookingTimeHorizon ||
+                        row.forward_looking_time_horizon ||
+                        row.TimeHorizon ||
+                        row.time_horizon
+                    )}
+                  </td>
+                  <td className="p-4 text-gray-700">
+                    {renderValueWithTags(
+                      row.MethodologyUsed ||
+                        row.methodology_used ||
+                        row.methodology
+                    )}
                   </td>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              ))
+            ) : (
+              <tr className="bg-white border-t border-gray-200">
+                <td
+                  colSpan={columns.length}
+                  className="p-4 text-center text-gray-500"
+                >
+                  No data available
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
-  );
+  </div>
+);
 
   return (
     <>
@@ -385,37 +407,43 @@ const Section1 = ({ section7_1Ref, data, tcfdCollectData, orgName }) => {
           )}
 
           {/* Integration of Climate Related Metrics into Remuneration Policies */}
-          <div className="mb-6">
+          {
+            integrationAnswer?.Q2 === "Yes" && <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Integration of Climate-Related Metrics into Remuneration Policies
             </h4>
             <div className="text-sm">
-              {safeRenderValue(data?.remuneration_integration) ||
+              {safeRenderValue(integrationAnswer?.Q3) ||
                 "Information about climate metrics integration into remuneration policies will be displayed here when available."}
             </div>
           </div>
+          }
 
           {/* Internal Carbon Pricing Mechanisms */}
-          <div className="mb-6">
+          {
+            internalAndRevenueAnswer?.Q2 === "Yes" && <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Internal Carbon Pricing Mechanisms
             </h4>
             <div className="text-sm">
-              {safeRenderValue(data?.carbon_pricing) ||
+              {safeRenderValue(internalAndRevenueAnswer?.Q3) ||
                 "Internal carbon pricing mechanism information will be displayed here when available."}
             </div>
           </div>
+          }
 
           {/* Revenue from Low-Carbon Products and Services */}
-          <div className="mb-6">
+          {
+            internalAndRevenueAnswer?.Q4 === "Yes" && <div className="mb-6">
             <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
               Revenue from Low-Carbon Products and Services
             </h4>
             <div className="text-sm">
-              {safeRenderValue(data?.low_carbon_revenue) ||
+              {safeRenderValue(internalAndRevenueAnswer?.Q5) ||
                 "Revenue from low-carbon products and services information will be displayed here when available."}
             </div>
           </div>
+          }
 
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start mt-6">
             <p className="text-[15px] text-[#667085] mb-2 mt-0">

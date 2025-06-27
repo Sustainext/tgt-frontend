@@ -26,6 +26,7 @@ import {
   setClimateTargets,
   setClosingRemarks,             // Add this
   setSectorInfo,                 // Add this
+  setSectorInfo2,
   selectMetricsTargets,
 } from "../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
@@ -201,6 +202,15 @@ const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
         field: "sector_info",
         isSkipped: false,
       },
+      sector_info2: {
+        page: "metrics_targets",
+        label: "7.1 Sector Information",
+        subLabel: "Sector-Specific Information",
+        type: "textarea",
+        content: metricsTargets.sectorInfo2,
+        field: "sector_info2",
+        isSkipped: false,
+      },
     };
 
     formData.append("data", JSON.stringify(dataPayload));
@@ -281,6 +291,7 @@ const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
   dispatch(setClimateTargets(""));
   dispatch(setClosingRemarks(""));
   dispatch(setSectorInfo(""));
+  dispatch(setSectorInfo2(""));
 
   const url = `${process.env.BACKEND_API_URL}/tcfd_framework/report/get-tcfd-report-data/${reportid}/metrics_targets/`;
   try {

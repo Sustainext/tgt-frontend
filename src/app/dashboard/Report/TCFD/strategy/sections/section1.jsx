@@ -23,6 +23,34 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
   const transitionRisks = tcfdCollectData?.transition_risk || [];
   const otherRisks = tcfdCollectData?.other_risks || [];
 
+  // Helper function to safely render any data value
+  const safeRenderValue = (value) => {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    
+    if (typeof value === 'object') {
+      if (value.start && value.end) {
+        return `${value.start} - ${value.end}`;
+      }
+      return JSON.stringify(value);
+    }
+    
+    return String(value);
+  };
+
+  // Helper function to render array values
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.map((item, index) => (
+        <div key={index} className="mb-1">
+          {safeRenderValue(item)}
+        </div>
+      ));
+    }
+    return safeRenderValue(value) || "-";
+  };
+
   // Jodit Editor configuration
   const config = {
     readonly: false,
@@ -51,7 +79,7 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
 
   // Auto fill for first editor
   const loadAutoFillContent1 = () => {
-    const autoFillContent = `<p>Climate-related risks and opportunities have the potential to impact our business strategy, operations, and long-term value creation. In this section, we describe how ${orgName} assesses, responds to, and integrates climate-related considerations into our core business strategy and financial planning.</p>`;
+    const autoFillContent = `<p>Climate-related risks and opportunities have the potential to impact our business strategy, operations, and long-term value creation. In this section, we describe how ${orgName || '[Company Name]'} assesses, responds to, and integrates climate-related considerations into our core business strategy and financial planning.</p>`;
 
     dispatch(setClimateRisksOpportunities(autoFillContent));
 
@@ -79,18 +107,6 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
 
   const handleEditor2Change = (content) => {
     dispatch(setClimateRisksOpportunities2(content));
-  };
-
-  // Helper function to render array values
-  const renderArrayValue = (value) => {
-    if (Array.isArray(value)) {
-      return value.map((item, index) => (
-        <div key={index} className="mb-1">
-          {item}
-        </div>
-      ));
-    }
-    return value || "-";
   };
 
   const RiskTable = ({ title, riskData, riskType }) => {
@@ -153,7 +169,7 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
         <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
           {title}
         </h4>
-        <div className="">
+        <div className="overflow-x-auto">
           <div className="border border-gray-200 rounded-lg overflow-x-scroll">
             <table className="w-full border-collapse text-sm">
               <thead>
@@ -161,7 +177,11 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
                   {columns.map((col, index) => (
                     <th
                       key={index}
-                      className="border-r border-gray-200 py-8 px-4 text-left text-gray-600 font-medium"
+                      className={`py-2 px-4 text-left text-gray-600 font-medium ${
+                        index < columns.length - 1
+                          ? "border-r border-gray-200"
+                          : ""
+                      }`}
                     >
                       {col}
                     </th>
@@ -169,83 +189,84 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
                 </tr>
               </thead>
               <tbody>
-                {riskData?.map((risk, index) => (
-                  <tr
-                    key={index}
-                    className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {riskType === "physical" && "Physical Risk"}
-                      {riskType === "transition" && "Transition Risk"}
-                      {riskType === "other" &&
-                        (risk.RiskCategory || "Other Risk")}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {riskType === "physical" && (risk.TypeofRisk || "-")}
-                      {riskType === "transition" && (risk.TypeofRisk || "-")}
-                      {riskType === "other" && (risk.TypeofRiskoth || "-")}
-                    </td>
-                    {riskType === "physical" && (
+                {riskData && riskData.length > 0 ? (
+                  riskData.map((risk, index) => (
+                    <tr
+                      key={index}
+                      className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
+                    >
                       <td className="border-r border-gray-200 p-4 text-gray-700">
-                        {risk.SeverityofRisk || "-"}
+                        {riskType === "physical" && "Physical Risk"}
+                        {riskType === "transition" && "Transition Risk"}
+                        {riskType === "other" &&
+                          (safeRenderValue(risk.RiskCategory) || "Other Risk")}
                       </td>
-                    )}
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {riskType === "physical" &&
-                        renderArrayValue(risk.PotentialImpact)}
-                      {riskType === "transition" &&
-                        renderArrayValue(risk.PotentialImpact)}
-                      {riskType === "other" && (risk.PotentialImpactoth || "-")}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {riskType === "physical" &&
-                        (risk.Likelihoodofimpact || "-")}
-                      {riskType === "transition" &&
-                        (risk.Likelihoodofimpact || "-")}
-                      {riskType === "other" && "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {risk.MagnitudeofImpact || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {risk.FinancialEffect || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {renderArrayValue(risk.FinancialImplications)}
-                    </td>
-                    {(riskType === "physical" || riskType === "transition") && (
                       <td className="border-r border-gray-200 p-4 text-gray-700">
-                        {risk.ProcessDescription || "-"}
+                        {riskType === "physical" && (safeRenderValue(risk.TypeofRisk) || "-")}
+                        {riskType === "transition" && (safeRenderValue(risk.TypeofRisk) || "-")}
+                        {riskType === "other" && (safeRenderValue(risk.TypeofRiskoth) || "-")}
                       </td>
-                    )}
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {riskType === "physical" &&
-                        renderArrayValue(risk.ManagementMethods)}
-                      {riskType === "transition" &&
-                        renderArrayValue(risk.ManagementMethods)}
-                      {riskType === "other" &&
-                        (risk.ManagementMethodsoth || "-")}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {risk.TimeFrame || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {risk.DirectImpacts || "-"}
-                    </td>
-                    <td className="border-r border-gray-200 p-4 text-gray-700">
-                      {risk.ImplementedMitigationStrategies || "-"}
-                    </td>
-                    <td className="p-4 text-gray-700">
-                      {riskType === "physical" &&
-                        (risk.MitigationStrategies || "-")}
-                      {riskType === "transition" &&
-                        (risk.MitigationStrategies || "-")}
-                      {riskType === "other" &&
-                        (risk.MitigationStrategiesoth || "-")}
-                    </td>
-                  </tr>
-                ))}
-                {(!riskData || riskData.length === 0) && (
+                      {riskType === "physical" && (
+                        <td className="border-r border-gray-200 p-4 text-gray-700">
+                          {safeRenderValue(risk.SeverityofRisk) || "-"}
+                        </td>
+                      )}
+                      <td className="border-r border-gray-200 p-4 text-gray-700">
+                        {riskType === "physical" &&
+                          renderArrayValue(risk.PotentialImpact)}
+                        {riskType === "transition" &&
+                          renderArrayValue(risk.PotentialImpact)}
+                        {riskType === "other" && (safeRenderValue(risk.PotentialImpactoth) || "-")}
+                      </td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">
+                        {riskType === "physical" &&
+                          (safeRenderValue(risk.Likelihoodofimpact) || "-")}
+                        {riskType === "transition" &&
+                          (safeRenderValue(risk.Likelihoodofimpact) || "-")}
+                        {riskType === "other" && (safeRenderValue(risk.Likelihoodofimpact) || "-")}
+                      </td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">
+                        {safeRenderValue(risk.MagnitudeofImpact) || "-"}
+                      </td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">
+                        {safeRenderValue(risk.FinancialEffect) || "-"}
+                      </td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">
+                        {renderArrayValue(risk.FinancialImplications)}
+                      </td>
+                      {(riskType === "physical" || riskType === "transition") && (
+                        <td className="border-r border-gray-200 p-4 text-gray-700">
+                          {safeRenderValue(risk.ProcessDescription) || "-"}
+                        </td>
+                      )}
+                      <td className="border-r border-gray-200 p-4 text-gray-700">
+                        {riskType === "physical" &&
+                          renderArrayValue(risk.ManagementMethods)}
+                        {riskType === "transition" &&
+                          renderArrayValue(risk.ManagementMethods)}
+                        {riskType === "other" &&
+                          (safeRenderValue(risk.ManagementMethodsoth) || "-")}
+                      </td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">
+                        {safeRenderValue(risk.TimeFrame) || "-"}
+                      </td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">
+                        {safeRenderValue(risk.DirectImpacts) || "-"}
+                      </td>
+                      <td className="border-r border-gray-200 p-4 text-gray-700">
+                        {safeRenderValue(risk.ImplementedMitigationStrategies) || "-"}
+                      </td>
+                      <td className="p-4 text-gray-700">
+                        {riskType === "physical" &&
+                          (safeRenderValue(risk.MitigationStrategies) || "-")}
+                        {riskType === "transition" &&
+                          (safeRenderValue(risk.MitigationStrategies) || "-")}
+                        {riskType === "other" &&
+                          (safeRenderValue(risk.MitigationStrategiesoth) || "-")}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
                   <tr className="bg-white border-t border-gray-200">
                     <td
                       colSpan={columns.length}
@@ -292,7 +313,7 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
               }}
               tabIndex={1}
               onBlur={handleEditor1Change}
-              onChange={handleEditor1Change}
+              onChange={() => {}}
             />
           </div>
 
@@ -325,35 +346,47 @@ const Section1 = ({ section5_1Ref, data, tcfdCollectData, orgName }) => {
               }}
               tabIndex={2}
               onBlur={handleEditor2Change}
-              onChange={handleEditor2Change}
+              onChange={() => {}}
             />
           </div>
 
           {/* Risk Tables */}
-          <div className="overflow-x-auto">
+          <div className="space-y-6">
             <RiskTable
-            title="Physical Risks"
-            riskData={physicalRisks}
-            riskType="physical"
-          />
-          <RiskTable
-            title="Transition Risks"
-            riskData={transitionRisks}
-            riskType="transition"
-          />
-          <RiskTable
-            title="Other Risks"
-            riskData={otherRisks}
-            riskType="other"
-          />
+              title="Physical Risks"
+              riskData={physicalRisks}
+              riskType="physical"
+            />
+            <RiskTable
+              title="Transition Risks"
+              riskData={transitionRisks}
+              riskType="transition"
+            />
+            <RiskTable
+              title="Other Risks"
+              riskData={otherRisks}
+              riskType="other"
+            />
           </div>
 
-          <div className=" text-slate-700 text-base font-normal font-['Manrope'] leading-tight mb-6">
+          {/* Show message if no risk data available */}
+          {physicalRisks.length === 0 &&
+            transitionRisks.length === 0 &&
+            otherRisks.length === 0 && (
+              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-blue-700 text-sm">
+                  No climate-related risks data available. Please complete the
+                  questionnaire to see detailed risk information here.
+                </p>
+              </div>
+            )}
+
+          <div className="text-slate-700 text-base font-normal font-['Manrope'] leading-tight mb-6">
             We define our climate-related time horizons to ensure a consistent
             and forward-looking approach to assessing risks and opportunities.
             These are categorized as Immediate-term (0–1 year), Short-term (1–3
             years), Medium-term (3–5 years), and Long-term (5+ years), providing
-            a structured basis for strategic planning.{" "}
+            a structured basis for strategic planning.
           </div>
         </div>
       </div>
