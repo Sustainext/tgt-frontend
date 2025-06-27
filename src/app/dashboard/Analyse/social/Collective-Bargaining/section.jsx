@@ -1,12 +1,17 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TableSidebar from "./TableSidebar";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import Table1 from "./Table";
 import { columns1, columns2 } from "./data"; // Assuming these are correct
 import { Oval } from "react-loader-spinner";
-const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
-
+const Section = ({
+  selectedOrg,
+  selectedCorp,
+  dateRange,
+  isBoxOpen,
+  togglestatus,
+}) => {
   const [loopen, setLoOpen] = useState(false);
   const [operationBargainingData, setOperationBargainingData] = useState([]);
   const [supplierBargainingData, setSupplierBargainingData] = useState([]);
@@ -14,15 +19,11 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
   const LoaderOpen = () => setLoOpen(true);
   const LoaderClose = () => setLoOpen(false);
 
-
-
   const fetchData = async () => {
-
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `sustainapp/get_collective_bargaining_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`,
-      
+        `sustainapp/get_collective_bargaining_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${dateRange.start}&end=${dateRange.end}`
       );
       const { operation_bargaining, supplier_bargaining } = response.data;
       setOperationBargainingData(operation_bargaining);
@@ -34,21 +35,28 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && dateRange.start<dateRange.end) {
+    if (selectedOrg &&  dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
         fetchData();
-        toastShown.current = false;
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setOperationBargainingData([]);
+          setSupplierBargainingData([]);
+      } else {
+        fetchData();
+      }
+
+      toastShown.current = false;
     } else {
-        if (!toastShown.current) {
-            toastShown.current = true;
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-}, [selectedOrg, dateRange, selectedCorp]);
- 
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus]);
+
 
   return (
     <div>
       <div className="mb-2 flex-col items-center gap-6">
-     
         <div className="flex">
           <div className={`ps-4 w-[100%] me-4`}>
             <div className="mb-6">
@@ -56,8 +64,8 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                  <p className="mb-2">
                     Operations where workers' freedom of association or
                     collective bargaining is at risk
                   </p>
@@ -77,8 +85,8 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
                 id="ep2"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="mb-2">
                     Suppliers in which the right to freedom of association or
                     collective bargaining may be at risk
                   </p>
@@ -103,7 +111,7 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+              className="mb-8 me-2 hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

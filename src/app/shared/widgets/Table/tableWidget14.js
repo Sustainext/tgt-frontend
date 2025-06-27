@@ -67,6 +67,7 @@ const CustomTableWidget14 = ({
       totalAge: "",
       minorityGroup: "",
       vulnerableCommunities: "",
+      isNew: true, // <-- Add this line
     };
     onChange([...value, newRow]);
   };
@@ -83,7 +84,7 @@ const CustomTableWidget14 = ({
   }, [value]);
 
   return (
-    <div style={{ overflowY: "auto", maxHeight: "400px" }}>
+    <div style={{ overflowY: "auto", maxHeight: "400px" }} className="custom-scrollbar mb-5">
       <table
         id={id}
         className="rounded-md border border-gray-300 w-full"
@@ -100,6 +101,7 @@ const CustomTableWidget14 = ({
                     : "text-center border-r border-gray-300"
                 }`}
                 colSpan={item.colSpan}
+                style={{ minWidth: "150px" }}
               >
                 <div className="relative">
                   <p
@@ -179,45 +181,43 @@ const CustomTableWidget14 = ({
           </tr>
         </thead>
         <tbody>
-          {value.map((item, rowIndex) => (
-            <tr key={`row-${rowIndex}`}>
-              {Object.keys(item).map((key, cellIndex) => {
-                const inputType =
-                  options.subTitles.find(
-                    (sub) =>
-                      sub.title2.trim().toLowerCase() ===
-                      key.trim().toLowerCase()
-                  )?.type || "text";
+  {value.map((item, rowIndex) => (
+    <tr key={`row-${rowIndex}`}>
+      {Object.keys(item)
+        .filter((key) => key !== "isNew") // Exclude isNew from rendering
+        .map((key, cellIndex) => {
+          const inputType =
+            options.subTitles.find(
+              (sub) => sub.title2.trim().toLowerCase() === key.trim().toLowerCase()
+            )?.type || "text";
 
-                return (
-                  <td
-                    key={`cell-${rowIndex}-${cellIndex}`}
-                    className="border-r border-t border-gray-300 p-3"
-                  >
-                    <InputField
-                      type={inputType}
-                      required={required}
-                      value={item[key]}
-                      readOnly={
-                        key === "totalGender" ||
-                        key === "totalAge" ||
-                        (key === "category" && value[rowIndex]?.category?.trim() !== "")
-                      }
-                      onChange={(newValue) =>
-                        updateField(rowIndex, key, newValue)
-                      }
-                    />
-                  </td>
-                );
-              })}
-              <td className="p-3">
-                <button onClick={() => handleRemoveRow(rowIndex)}>
-                  <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+          return (
+            <td
+              key={`cell-${rowIndex}-${cellIndex}`}
+              className="border-r border-t border-gray-300 p-3"
+            >
+              <InputField
+                type={inputType}
+                required={required}
+                value={item[key]}
+                fieldName={key}
+                isNew={item.isNew} // Pass the isNew flag here
+                readOnly={key === "totalGender" || key === "totalAge"}
+                onChange={(newValue) => updateField(rowIndex, key, newValue)}
+              />
+            </td>
+          );
+        })}
+      <td className="p-3">
+        <button onClick={() => handleRemoveRow(rowIndex)}>
+          <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
+
       </table>
       <div className="flex right-1 mx-2">
         <button
@@ -232,39 +232,49 @@ const CustomTableWidget14 = ({
   );
 };
 
-const InputField = ({ type, required, value, onChange, readOnly }) => {
+const InputField = ({ type, required, value, onChange, readOnly, fieldName, isNew }) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
-    setInputValue(value); // Update the local state when the value prop changes
+    setInputValue(value);
   }, [value]);
 
   const handleInputChange = (e) => {
     let newValue = e.target.value;
 
-    // Handle integer inputs for specific fields
     if (type === "number") {
-      newValue = newValue ? parseInt(newValue, 10) : ""; // Parse integers
-    } else if (type === "text") {
-      newValue = String(newValue); // Ensure the value is treated as a string
+      newValue = newValue ? parseInt(newValue, 10) : "";
+    } else {
+      newValue = String(newValue);
     }
 
-    setInputValue(newValue); // Update local state
-    onChange(newValue); // Propagate changes up
+    setInputValue(newValue);
+    onChange(newValue);
   };
+
+  // Only make category read-only if it's not new and has a value
+  const isReadOnly = fieldName === "category" && !isNew && value !== "";
 
   return (
     <input
       type={type === "number" ? "number" : "text"}
       required={required}
-      readOnly={readOnly}
+      readOnly={readOnly || isReadOnly}
       value={inputValue}
       onChange={handleInputChange}
-      style={{ width: "100%" }}
+      style={{
+        width: "100%",
+        minWidth: "120px", // Increased minimum width for better mobile experience
+       
+      }}
       placeholder="Enter data"
       className="text-sm pl-2 py-2 text-center"
     />
   );
 };
+
+
+
+
 
 export default CustomTableWidget14;

@@ -20,6 +20,15 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   const [countdown, setCountdown] = useState(90);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [supersetUrl, setSupersetUrl] = useState("");
+  const [userID, setUserID] = useState(null);
+
+  // Load user ID from local storage
+  useEffect(() => {
+    const userID = loadFromLocalStorage("user_id");
+    if (userID) {
+      setUserID(userID);
+    }
+  })
 
   const POWERBI_REFRESH_INTERVAL = 15000;
   const SUPERSET_REFRESH_INTERVAL = 90000;
@@ -27,11 +36,11 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   const filter = {
     $schema: "http://powerbi.com/product/schema#basic",
     target: {
-      table: "Client_Info",
-      column: "uuid",
+      table: "Org_Info",
+      column: "Custom User ID",
     },
     operator: "In",
-    values: [loadFromLocalStorage("client_key")],
+    values: [userID],
   };
 
   const tabs = [
@@ -220,7 +229,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
           </div>
         )}
       </div>
-      <div className="w-full flex-grow flex justify-center items-center">
+      <div className="w-full xl:flex-grow xl:flex xl:justify-center items-center">
         {activeTab.startsWith("powerbi") && powerBIToken ? (
           <div style={embedContainerStyle}>
             <PowerBIEmbed

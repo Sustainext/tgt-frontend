@@ -21,7 +21,7 @@ const TextareaWidget2 = (props) => {
   return (
     <>
       <div className="mb-6 px-1">
-        <div className="flex justify-between items-center mb-2 w-full">
+        <div className="flex justify-between items-center mb-2 w-full xl:w-[95%] lg:w-[95%] 2xl:w-[95%] 4k:w-[95%] 2k:w-[95%] md:w-[95%]">
           <div className="flex relative">
             <div>
               <h6
@@ -60,7 +60,7 @@ const TextareaWidget2 = (props) => {
               ></ReactTooltip>
             </div>
           </div>
-          <div style={{ display: uiSchema["ui:gridisplay"] }} className="">
+          <div style={{ display: uiSchema["ui:gridisplay"] }} className="ml-2 xl:ml-0 lg:ml-0 2xl:ml-0 4k:ml-0 2k:ml-0 md:w-0">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
                 {uiSchema["ui:Gri"]}
@@ -79,7 +79,7 @@ const TextareaWidget2 = (props) => {
                 "-"
               )}`}
               data-tooltip-html={uiSchema["ui:tooltipstitle"]}
-              className="mt-1 mr-3 text-[#344054] text-[14px]"
+              className="mt-1 mr-3 text-[#344054] text-[14px] w-[20%] xl:w-0 lg:w-0 2xl:w-0 md:w-0 4k:w-0 2k:w-0"
               style={{ display: uiSchema["ui:titletooltipdisplay"] }}
             />
 

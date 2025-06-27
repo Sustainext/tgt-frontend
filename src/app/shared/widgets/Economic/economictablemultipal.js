@@ -4,7 +4,82 @@ import { MdInfoOutline, MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Select from "react-select";
-const Economictablemultipal = ({ id, value, onChange }) => {
+import { components } from "react-select";
+
+const CustomOptionnew = ({ children, ...props }) => {
+  const { isSelected, isFocused, innerProps } = props;
+
+  return (
+    <div
+      {...innerProps}
+      style={{
+        backgroundColor: isSelected ? "white" : isFocused ? "#f0f0f0" : "white",
+
+        padding: "8px",
+
+        display: "flex",
+
+        alignItems: "center",
+
+        textAlign: "left",
+        cursor:'pointer'
+      }}
+    >
+      <input
+        type="checkbox"
+        className="green-checkbox"
+        checked={isSelected}
+        readOnly
+        style={{flexShrink:0,marginRight:'8px'}}
+      />
+
+      {children}
+    </div>
+  );
+};
+
+const CustomMultiValueContainer = ({ children, ...props }) => {
+  const { data, selectProps } = props;
+  const { value } = selectProps;
+
+  // Find the index of this value in the selected values array
+  const valueIndex = value.findIndex((val) => val.value === data.value);
+  // console.log(valueIndex,"See")
+  // Always show the first two values
+  if (valueIndex < 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        {children}
+      </components.MultiValueContainer>
+    );
+  }
+
+  // For the third position, show "+X more" if there are more than 2 values
+  if (value.length > 2 && valueIndex == 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        <div
+          style={{
+            backgroundColor: "#dbeafe",
+            borderRadius: "0.375rem",
+            padding: "2px 5px",
+            color: "#1e40af",
+            fontWeight: "600",
+            // fontSize: '0.875rem'
+          }}
+        >
+          +{value.length - 2} more
+        </div>
+      </components.MultiValueContainer>
+    );
+  }
+
+  // Hide any additional values
+  return null;
+};
+
+
+const Economictablemultipal = ({ id, value, onChange,formContext}) => {
   const titles = [
     {
       id: 1,
@@ -81,7 +156,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       tooltipdisplay: "block",
       options: [],
     },
-    {
+     {
       id: 7,
       key: "ManagementMethods",
       title: "Management Methods",
@@ -92,6 +167,15 @@ const Economictablemultipal = ({ id, value, onChange }) => {
     },
     {
       id: 8,
+      key: "ProcessDescription",
+      title: "Process Description",
+      tooltip:
+        "Provide a description of the process(es) used to determine financial impact on the organization based on the mentioned risk.",
+      tooltipdisplay: "block",
+     
+    },
+    {
+      id: 9,
       key: "TimeFrame",
       title: "Time Frame",
       tooltip:
@@ -105,7 +189,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       ],
     },
     {
-      id: 9,
+      id: 10,
       key: "DirectorIndirectImpacts",
       title: "Direct or Indirect Impacts",
       tooltip:
@@ -114,7 +198,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       options: ["Indirect", "Direct", "Not Sure"],
     },
     {
-      id: 10,
+      id: 11,
       key: "ImplementedMitigationStrategies",
       title: "Implemented Mitigation Strategies",
       tooltip:
@@ -123,7 +207,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       options: ["Yes", "No"],
     },
     {
-      id: 11,
+      id: 12,
       key: "MitigationStrategies",
       title: "Mitigation Strategies",
       tooltip:
@@ -593,6 +677,48 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       maxHeight: "200px", // Adjust this value as needed
     }),
   };
+  const updatedMultiSelectStyle = {
+    control: (base) => ({
+      ...base,
+      border:'none',
+      padding: '4px 10px', // Equivalent to py-3
+      minHeight: '48px', // Ensure height matches your other elements
+      // borderColor: '#d1d5db', // Matches Tailwind's gray-300 border
+      // borderRadius: '0.375rem', // Matches Tailwind's rounded-md
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: '0', // Reset inner padding to fit the custom height
+    }),
+    menu: (provided) => ({
+      ...provided,
+
+      position: "relative",
+
+      bottom: "100%",
+
+      top: 0,
+
+      zIndex: 1000,
+    }),
+
+    menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
+      multiValue: (base) => ({
+        ...base,
+        backgroundColor: '#dbeafe', // Light blue background (Tailwind's blue-100)
+        borderRadius: '0.375rem', // Rounded corners
+      }),
+      multiValueLabel: (base) => ({
+        ...base,
+        color: '#1e40af', // Blue text (Tailwind's blue-800)
+        fontWeight: '600',
+      }),
+      multiValueRemove: (base) => ({
+        ...base,
+        color: '#6A6E70'
+      }),
+  };
+
   const getColumnWidth = (key) => {
     if (
       [
@@ -601,10 +727,17 @@ const Economictablemultipal = ({ id, value, onChange }) => {
         "PotentialImpact",
       ].includes(key)
     ) {
-      return "25vw";
+      return "desktop-wide";
     }
-    return "17vw";
+    return "desktop-narrow";
   };
+const shouldShowProcessDescription =
+  formContext?.frameworkId?.toString() === "6" && formContext?.selectid?.toString() === "3";
+
+const visibleTitles = titles.filter(
+  (item) => item.id !== 8 || shouldShowProcessDescription
+);
+console.log('FrameworkId:', formContext.frameworkId, 'SelectId:', formContext.selectid);
   return (
     <>
       <div
@@ -616,68 +749,60 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           minWidth: "100%",
           width: "80vw",
         }}
-        className="mb-2 pb-2"
+        className="mb-2 pb-2 table-scrollbar"
       >
         <table id={id} className="table-fixed border border-gray-300  w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
-          <thead className="gradient-background">
-            <tr className="h-[102px]">
-              {titles.map((item, idx) => (
-                <th
-                  key={idx}
-                  style={{ width: getColumnWidth(item.key), textAlign: "left" }}
-                  className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-4 py-3 relative border-gray-300`}
-
-                >
-                  <div
-                    className={`flex items-center ${
-                      item.textdriction === "start"
-                        ? "justify-start"
-                        : "justify-center"
-                    }`}
-                  >
-                    <p className="text-[12px]">{item.title}</p>
-                    {item.tooltipdisplay !== "none" && (
-                      <p>
-                        <MdInfoOutline
-                          data-tooltip-id={`tooltip-${item.title.replace(
-                            /\s+/g,
-                            "-"
-                          )}`}
-                          data-tooltip-content={item.tooltip}
-                          className="ml-2 cursor-pointer"
-                        />
-                        <ReactTooltip
-                          id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
-                          place="top"
-                          effect="solid"
-                          style={{
-                            width:"400px",
-                            backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            zIndex:"1000",
-                          }}
-                        />
-                      </p>
-                    )}
-                  </div>
-                </th>
-              ))}
-              <th
-              className="text-[12px] px-4 py-3 relative"
-                style={{ width: "5vw" }}
-              >
-                {" "}
-              </th>
-            </tr>
-          </thead>
+      <thead className="gradient-background">
+  <tr className="h-[102px]">
+    {visibleTitles.map((item, idx) => (
+      <th
+        key={idx}
+        style={{ textAlign: "left" }}
+        className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-4 py-3 relative border-gray-300 ${getColumnWidth(item.key)}`}
+      >
+        <div
+          className={`flex items-center ${item.textdriction === "start" ? "justify-start" : "justify-center"}`}
+        >
+          <p className="text-[12px]">{item.title}</p>
+          {item.tooltipdisplay !== "none" && (
+            <p>
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                data-tooltip-content={item.tooltip}
+                className="ml-2 cursor-pointer"
+              />
+              <ReactTooltip
+                id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                place="top"
+                effect="solid"
+                style={{
+                  width:"400px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  zIndex:"1000",
+                }}
+              />
+            </p>
+          )}
+        </div>
+      </th>
+    ))}
+    <th
+      className="text-[12px] px-4 py-3 relative"
+      style={{ width: "5vw" }}
+    >
+      {" "}
+    </th>
+  </tr>
+</thead>
           <tbody>
             {localValue.map((row, rowIndex) => (
               <tr key={rowIndex} 
               className="border-r border-gray-300">
-                {titles.map((item, cellIndex) => {
+              {visibleTitles.map((item, cellIndex) => {
                   const isEnum = Array.isArray(item.options);
                   const isMulti = isMultiSelect(item.key);
 
@@ -719,10 +844,13 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                               }))}
                               className="text-[12px] w-full"
                               placeholder="Select options"
-                              components={{ Option: CustomOption }}
+                               components={{
+                                                              Option: CustomOptionnew,
+                                                              MultiValueContainer:CustomMultiValueContainer
+                                                            }}
                               closeMenuOnSelect={false}
                               hideSelectedOptions={false}
-                              styles={customStyles}
+                              styles={updatedMultiSelectStyle}
                             />
                           </>
                         ) : (

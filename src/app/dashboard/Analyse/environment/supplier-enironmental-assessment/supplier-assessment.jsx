@@ -6,7 +6,7 @@ import { columns1, columns2, columns3 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from "react-loader-spinner";
 
-const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
+const Supplierassessment = ({ selectedOrg, selectedCorp, year,togglestatus }) => {
   const [newSuppliers, setNewSuppliers] = useState([]);
   const [negativeEnvImpact, setNegativeEnvImpact] = useState([]);
   const [terminatedRelationship, setTerminatedRelationship] = useState([]);
@@ -79,18 +79,28 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
     }
   };
 
-
-
   useEffect(() => {
-    if (selectedOrg && year) {
-      fetchData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        fetchData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setNewSuppliers([]);
+        setTerminatedRelationship([]);
+        setNegativeEnvImpact([]);
+    
+      } else {
+        fetchData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
+
+ 
 
   return (
     <div>
@@ -103,8 +113,8 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-neutral-700 text-[15px] font-bold">
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between items-center mb-2">
+                  <p className="text-neutral-700 text-[15px] font-bold mb-3">
                     Percentage of new suppliers that were screened using
                     environmental criteria.
                   </p>
@@ -126,15 +136,15 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-neutral-700 text-[15px] font-bold w-[880px]">
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between items-center mb-2">
+                  <p className="text-neutral-700 text-[15px] font-bold mb-3">
                     Percentage of suppliers identified as having significant
                     actual and potential negative environmental impacts with
                     which improvements were agreed upon as a result of
                     assessment
                   </p>
 
-                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center inline-flex">
+                  <div className="w-[70px] md:w-[120px] xl:w-[70px] lg:w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 308-2d
                     </div>
@@ -151,14 +161,14 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-neutral-700 text-[15px] font-bold">
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between items-center mb-2">
+                  <p className="text-neutral-700 text-[15px] font-bold mb-3">
                     Percentage of Suppliers identified as having significant
                     actual and potential negative environmental impacts with
                     terminated Relationship
                   </p>
 
-                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="w-[70px] md:w-[120px] xl:w-[70px] lg:w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                       GRI 308-2e
                     </div>

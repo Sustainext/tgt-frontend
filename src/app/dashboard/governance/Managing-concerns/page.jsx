@@ -1,14 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdInfoOutline, MdOutlineClear,MdChevronRight } from "react-icons/md";
+import { MdInfoOutline, MdOutlineClear, MdChevronRight } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
 import GovernanceHeader2 from "../GovernanceHeader2";
 import { Socialdata } from "../../social/data/socialgriinfo";
 import AdviceAndConcerns from "./Advice-and-concerns/page";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { ToastContainer } from "react-toastify";
-
-const ManagingConcerns = () => {
+import GovernancesTopBar from "../governancesTopBar";
+const ManagingConcerns = ({ setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [year, setYear] = useState();
   const [data, setData] = useState([]);
@@ -16,7 +16,7 @@ const ManagingConcerns = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(false);
   };
@@ -37,12 +37,35 @@ const ManagingConcerns = () => {
     });
     setData(newData);
   }, [category]);
-
+  const griData = [
+    {
+      tagName: "GRI 2 - 26",
+      toggle: "90",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 16",
+      toggle: "15",
+      textColor: "#fff",
+      bgColor: "bg-pink-500",
+    },
+  ];
   return (
     <>
-    <ToastContainer style={{ fontSize: "12px" }} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+        <GovernancesTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          griData={griData}
+          // brsr={brsr}
+          title={"Managing Concerns"}
+          setMobileopen={setMobileopen}
+        />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Governance</p>
@@ -71,36 +94,36 @@ const ManagingConcerns = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Mechanisms for seeking advice and raising concerns
-          <MdInfoOutline
-                data-tooltip-id={`tooltip-$e17`}
-                data-tooltip-content="This section documents the data corresponding to the organization’s mechanisms for individuals to seek advice and raise
+            Mechanisms for seeking advice and raising concerns
+            <MdInfoOutline
+              data-tooltip-id={`tooltip-$e17`}
+              data-tooltip-content="This section documents the data corresponding to the organization’s mechanisms for individuals to seek advice and raise
 concerns about responsible business conduct in the organization's operations and business
 relationships."
-                className="mt-1.5 ml-2 text-[15px]"
-              />
-              <ReactTooltip
-                id={`tooltip-$e17`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                }}
-              ></ReactTooltip>
+              className="mt-1.5 ml-2 text-[15px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$e17`}
+              place="top"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+              }}
+            ></ReactTooltip>
           </h6>
         </div>
-            <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -124,9 +147,15 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
-                <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
-                  {program.data}
+                <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
+                  <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                    {program.data}
+                  </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                  <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                    {program.data}
+                  </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -152,12 +181,14 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <AdviceAndConcerns
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
     </>
   );

@@ -13,10 +13,12 @@ const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section2 = ({
   section2_1_1Ref,
-  section2_1_2Ref,
   section2_1Ref,
   orgName,
   data,
+  sectionNumber = "2.1.1",
+  sectionTitle = "Activities, Value Chain, and Other Business Relationships",
+  sectionOrder = 2,
 }) => {
   const [content, setContent] = useState(
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut at ipsum molestias dicta blanditiis harum laborum saepe expedita"
@@ -31,7 +33,7 @@ const Section2 = ({
       setEntitiesInclude(
         `<p>This report includes sustainability performance data from all entities under ${
           orgName ? orgName : "[Company Name]"
-        } operational control.</p>`
+        } operational control. This encompasses:</p>`
       )
     );
   };
@@ -50,9 +52,9 @@ const Section2 = ({
   };
   const config = {
     enter: "BR", // Or customize behavior on Enter key
-  cleanHTML: true,
-    enablePasteHTMLFilter: false, 
-    askBeforePasteHTML: false, 
+    cleanHTML: true,
+    enablePasteHTMLFilter: false,
+    askBeforePasteHTML: false,
     askBeforePasteFromWord: false,
     style: {
       fontSize: "14px",
@@ -105,17 +107,15 @@ const Section2 = ({
   };
   return (
     <>
-      <div className="mb-2" id="setion2_1" ref={section2_1Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          2.1 Business Model and Impact 
-        </h3>
-      </div>
+      
       <div className="mb-2" id="setion2_1_1" ref={section2_1_1Ref}>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-          2.1.1 Activities, Value Chain, and Other Business Relationships
+          {sectionNumber} {sectionTitle}
         </p>
-        <div className="flex justify-between">
-          <p className="text-[15px] text-[#344054] mb-2 mt-3">Add Introduction about company’s domain</p>
+        <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
+          <p className="text-[15px] text-[#344054] mb-2 mt-3">
+            Add Introduction about company’s domain
+          </p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
             onClick={loadContent2}
@@ -143,7 +143,8 @@ const Section2 = ({
         <div className="text-sm mb-4">
           <ul className="list-disc ml-4">
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
-              We are active in the following sectors:
+              {orgName ? orgName + " is" : "We are"} active in the following
+              sectors:
             </li>
             {/* <p className="mb-4">{content}</p> */}
             {data["2-6-a"] && data["2-6-a"].length > 0 ? (
@@ -206,38 +207,8 @@ const Section2 = ({
             </li>
           </ul>
         </div>
-      </div>
-      <div className="mb-2" id="setion2_1_2" ref={section2_1_2Ref}>
-        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-          2.1.2 Entities Included in the Organization's Sustainability Reporting
-        </p>
-        {data["2-2-a"]?.map((item, index) => (
-          <p className="mb-2 font-normal">{item}</p>
-        ))}
-
-        <div className="flex justify-between">
-          <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about sustainability performance data  for all entities.</p>
-          <button
-            className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            onClick={loadContent}
-          >
-            {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
-            <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
-            Auto Fill
-          </button>
-        </div>
-        <div className="mb-4">
-          <JoditEditor
-            // ref={editor}
-            value={content3}
-            config={config}
-            tabIndex={1}
-            onBlur={handleEditorChange}
-          />
-        </div>
-        <p className="text-[15px] text-[#344054] mb-2">
-          Each entity adheres to our comprehensive sustainability framework,
-          ensuring consistent ESG practices across our entire organization. 
+        <p className="mb-4 text-sm font-normal">
+            {data && data["2-6-d"] || "No data available"}
         </p>
       </div>
     </>

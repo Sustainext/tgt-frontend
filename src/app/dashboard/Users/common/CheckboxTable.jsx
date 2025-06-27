@@ -14,7 +14,7 @@ const CheckboxTable = ({
   return (
     <div className="w-full my-6 h-[420px] border-2 border-[#edeae9] rounded-lg flex flex-col">
       <div
-        className={`flex justify-start items-center w-full gradient-background bg-opacity-10 sticky top-0 z-10 ${
+        className={`flex justify-start items-center w-full gradient-background bg-opacity-10 sticky top-0 z-10 h-[56px] ${
           title === "Select Organizations"
             ? "bg-[rgba(106, 223, 35, 0.07)]"
             : ""
@@ -62,6 +62,7 @@ const CheckboxTable = ({
                 <div className="flex items-center gap-2 w-full">
                   <input
                     type="checkbox"
+                    className="green-checkbox"
                     checked={selections.includes(item.id)} // Check if item.id is in selections array
                     onChange={() => onToggle(item.id)} // Call onToggle with item.id on change
                   />

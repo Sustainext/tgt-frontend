@@ -3,6 +3,7 @@ import MyResponsivePie from "./PieChart";
 import MyResponsivesouresdata from "./PieChart2";
 import MyResponsiveloction from "./PieChart3";
 import Moment from "react-moment";
+import EmissionByInvestment from './PieChart4'
 
 function Results({ exdata, totalContributionScope, souresdata, locatiodata }) {
   let totalScope1 = 0;
@@ -12,9 +13,9 @@ function Results({ exdata, totalContributionScope, souresdata, locatiodata }) {
   // Loop through each corporate's scopes to sum up the emissions by scope
   exdata.forEach((corporate) => {
     corporate.scopes.forEach((scope) => {
-      if (scope.scope_name === "Scope-1") {
+      if (scope.scope_name === "Scope-1" && corporate.corporate_type === "Regular") {
         totalScope1 += parseFloat(scope.total_co2e);
-      } else if (scope.scope_name === "Scope-2") {
+      } else if (scope.scope_name === "Scope-2" && corporate.corporate_type === "Regular") {
         totalScope2 += parseFloat(scope.total_co2e);
       } else if (scope.scope_name === "Scope-3") {
         totalScope3 += parseFloat(scope.total_co2e);
@@ -33,7 +34,7 @@ function Results({ exdata, totalContributionScope, souresdata, locatiodata }) {
 
   return (
     <>
-      <div className="px-3">
+      <div className="xl:px-3 w-[95%]">
         <h3 className="text-left mb-2 p-3">
           <b>RESULTS</b>
         </h3>
@@ -101,14 +102,17 @@ function Results({ exdata, totalContributionScope, souresdata, locatiodata }) {
           </div>
         </div>
       </div>
-      <div className="h-[401px] w-full mb-5">
+      <div className="h-[401px] w-[90%] mb-5">
         <MyResponsivePie exdata={exdata} />
       </div>
-      <div className="h-[401px] w-full mt-16 mb-5 ">
+      <div className="h-[401px] w-[90%]  mt-16 mb-5 ">
         <MyResponsivesouresdata souresdata={souresdata} />
       </div>
-      <div className="h-[401px] w-full mt-16 mb-5">
+      <div className="h-[401px] w-[90%]  mt-16 mb-5">
         <MyResponsiveloction locatiodata={locatiodata} />
+      </div>
+      <div className="h-[401px] w-[90%]  mt-16 mb-5">
+        <EmissionByInvestment souresdata={souresdata} />
       </div>
     </>
   );

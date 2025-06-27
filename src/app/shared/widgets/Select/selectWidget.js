@@ -54,7 +54,7 @@ const SelectWidget = ({
       <div className="relative w-[100%]">
         {id.startsWith("root_0") && (
           <>
-            <p className="flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px] ml-1">
+            <p className="flex text-[13px] 4k:text-[15px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px] ml-1">
               {label}
               <MdInfoOutline
                 data-tooltip-id={tooltipId}
@@ -86,9 +86,10 @@ const SelectWidget = ({
         {/* Render select or input based on state */}
         {!showOtherInput ? (
           <select
-            className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize table-scrollbar ${hasError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`block w-[56vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2xl:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize table-scrollbar ${hasError ? 'border-red-500' : 'border-gray-300'}`}
             value={value}
             onChange={handleChange}
+            disabled={options.disabled}
           >
             <option value="" disabled={!value} className="text-gray-500">
               {`Select ${label}` || "Select..."}
@@ -102,7 +103,7 @@ const SelectWidget = ({
         ) : (
           <input
             type="text"
-            className={`block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 ${
+            className={`block w-[56vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2xl:w-[20vw]  4k:w-[8vw] py-2 text-[12px] 4k:text-[14px] border-b-2 border-gray-300 ${
               id.startsWith("root_0") ? "mt-[0.38rem]" : "mt-0.5"
             }`}
             placeholder={`Specify other ${label}`}

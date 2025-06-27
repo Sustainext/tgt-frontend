@@ -66,7 +66,7 @@ const uiSchema = {
   },
 };
 
-const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen4 = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -152,16 +152,26 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
       }
+    } else {
+      loadFormData();             // Organization tab: always try to load
     }
-  }, [selectedOrg, year, selectedCorp]);
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const [validationErrors, setValidationErrors] = useState([]);
 
@@ -232,7 +242,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
               <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html="<p>Specify the number of suppliers identified as having significant actual and potential negative environmental impacts with which improvements were agreed upon as a result of the assessment during the reporting period.</p>"
-                className="mt-1.5 ml-2 text-[15px] flex-shrink-0"
+                className="mt-1.5 ml-2 text-[15px] w-[20%] xl:w-0 lg:w-0 2xl:w-0 md:w-0 4k:w-0 2k:w-0"
               />
               <ReactTooltip
                 id={`es30`}
@@ -275,10 +285,17 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

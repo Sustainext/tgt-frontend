@@ -38,18 +38,18 @@ const CustomTableWidget6 = ({
   }, [localValue, debouncedUpdate]);
 
   return (
-    <div style={{ maxHeight: "400px" }} className="mb-2">
-      <table id={id} className="rounded-md w-full">
+    <div style={{ maxHeight: "400px" }} className="mb-2 overflow-x-auto">
+      <table id={id} className="rounded-md w-full min-w-[600px]">
         <thead className="gradient-background">
           <tr>
             <th className="border-r"></th>
             <th colSpan="3" className="font-normal text-[14px] py-2 border-l border-gray-300 ">
               {formContext.newMonth}
             </th>
-            <th  rowSpan={2} className="text-[12px] border-b border-x border-gray-300 px-2 py-2 text-center w-[20%]">
+            <th  rowSpan={2} className="text-[12px] border-b border-x border-gray-300 px-2 py-2 text-center w-auto xl:w-[20%] lg:w-[20%] md:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] 3xl:w-[20%]">
             Total number of employees  (at the beginning of the reporting period)
             </th>
-            <th rowSpan={2} className="text-[12px] border-b border-l border-gray-300 px-2 py-2 text-center w-[20%]">
+            <th rowSpan={2} className="text-[12px] border-b border-l border-gray-300 px-2 py-2 text-center w-auto xl:w-[20%] lg:w-[20%] md:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] 3xl:w-[20%]">
             Total number of employees  (at the end of the reporting period)
             </th>
           </tr>

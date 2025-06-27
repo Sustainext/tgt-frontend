@@ -131,12 +131,12 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
             autoClose: 3000,
           }
         );
-        dispatch(setCollect(true));
-        dispatch(setAnalyse(true));
-        dispatch(setReport(false));
-        dispatch(setOptimise(false));
-        dispatch(setTrack(false));
-        dispatch(setPermissionscheckbox(false));
+        dispatch(setCollect(collect));
+        dispatch(setAnalyse(analyse));
+        dispatch(setReport(report));
+        dispatch(setOptimise(optimise));
+        dispatch(setTrack(track));
+        dispatch(setPermissionscheckbox(permissions_checkbox));
         dispatch(setOrgList([]));
         dispatch(setCorpList([]));
         dispatch(setLocList([]));
@@ -187,12 +187,12 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
 
   const addNewUser = () => {
 
-    dispatch(setCollect(true));
-    dispatch(setAnalyse(true));
-    dispatch(setReport(false));
-    dispatch(setOptimise(false));
-    dispatch(setTrack(false));
-    dispatch(setPermissionscheckbox(false));
+    dispatch(setCollect(collect));
+    dispatch(setAnalyse(analyse));
+    dispatch(setReport(report));
+    dispatch(setOptimise(optimise));
+    dispatch(setTrack(track));
+    dispatch(setPermissionscheckbox(permissions_checkbox));
     dispatch(setOrgList([]));
     dispatch(setCorpList([]));
     dispatch(setLocList([]));
@@ -212,12 +212,13 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
 
     if (isAdmin) {
       // If admin, enable all permissions by default
-      dispatch(setCollect(true));
-      dispatch(setAnalyse(true));
-      dispatch(setReport(true));
-      dispatch(setOptimise(true));
-      dispatch(setTrack(true));
-      dispatch(setPermissionscheckbox(false)); // Override default permissions
+      dispatch(setCollect(currentUser.collect ?? true));
+      dispatch(setAnalyse(currentUser.analyse ?? true));
+      dispatch(setReport(currentUser.report ?? true));
+      dispatch(setOptimise(currentUser.optimise ?? true));
+      dispatch(setTrack(currentUser.track ?? true));
+      dispatch(setPermissionscheckbox(currentUser.permissions_checkbox ?? false));
+      console.log(currentUser,"test data currentUser");
     }
     else if (edit && currentUser) {
       dispatch(setCollect(currentUser.collect || false));
@@ -234,7 +235,7 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
       dispatch(setTrack(false));
       dispatch(setPermissionscheckbox(false));
     }
-  }, [edit, currentUser]); // Dependencies on edit mode and currentUser changes
+  }, [edit, currentUser]); 
 
   const descriptions = {
     collect:
@@ -269,7 +270,7 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
             </label>
             <input
               type="checkbox"
-              className=""
+              className="green-checkbox"
               value={permissions_checkbox}
               checked={permissions_checkbox}
               onChange={handleOverrideChange}
@@ -340,7 +341,7 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
 
       {isSubmitted && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-sm">
+          <div className="bg-white rounded-lg shadow-lg w-full xl:max-w-sm md:max-w-sm mx-2">
             <UserAddedModal addNewUser={addNewUser} edit={edit} />
           </div>
         </div>

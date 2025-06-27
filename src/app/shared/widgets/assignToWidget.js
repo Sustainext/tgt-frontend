@@ -129,7 +129,7 @@ const AssignToWidget = ({
       </div>
       <div className="flex justify-center items-center mt-2 ">
         <button
-          className="bg-blue-200 text-white text-[12px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-200"
+          className="bg-blue-200 text-white text-[12px] 4k:text-[14px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-200"
           type="button"
           // onClick={openModal}
         >

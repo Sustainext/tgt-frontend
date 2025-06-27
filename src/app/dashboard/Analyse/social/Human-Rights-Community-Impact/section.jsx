@@ -7,7 +7,7 @@ import Table2 from "./Table2";
 import { columns,columns2 } from "./data"; // assuming columns are predefined
 import { Oval } from "react-loader-spinner";
 
-const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpen }) => {
+const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpen,togglestatus }) => {
   const [OperationsWithLocalCommunity, setOperationsWithLocalCommunity] = useState([]);
   const [Securitypersonnel, setSecuritypersonnel] = useState([]);
   const [loopen, setLoOpen] = useState(false);
@@ -21,7 +21,7 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
     setOperationsWithLocalCommunity([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_human_rights_and_community_impact_analysis??corporate=${selectedCorp}&organisation=${selectedOrg}&location=${selectedLocation}&start=${dateRange.start}&end=${dateRange.end}`
+        `/sustainapp/get_human_rights_and_community_impact_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&location=${selectedLocation}&start=${dateRange.start}&end=${dateRange.end}`
       );
       setOperationsWithLocalCommunity(response.data.community_engagement);
       setSecuritypersonnel(response.data.security_personnel);
@@ -32,16 +32,41 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    // Only fetch data if both start and end dates are present
-    if (selectedOrg && dateRange.start && dateRange.end)  {
-      fetchData();
+
+    if (selectedOrg && dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate") {
+        if (selectedCorp) {
+          fetchData();
+        
+        } else {
+          setOperationsWithLocalCommunity([]);
+          setSecuritypersonnel([]);
+      
+        }
+      } else if (togglestatus === "Location") {
+        if (selectedLocation) {
+          fetchData();
+        
+        } else {
+          setOperationsWithLocalCommunity([]);
+          setSecuritypersonnel([]);
+        }
+      } else {
+        console.log("Calling loadFormData for Other");
+        fetchData();
+       
+      }
+  
       toastShown.current = false;
-    } else if (!toastShown.current) {
-      toastShown.current = true;
+    } else {
+      if (!toastShown.current) {
+        console.log("Toast should be shown");
+        toastShown.current = true;
+      }
     }
-  }, [selectedOrg,selectedLocation, selectedCorp,dateRange]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus, selectedLocation]);
+ 
 
   return (
     <div>
@@ -53,8 +78,8 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
               id="ep1"
               className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3"
             >
-              <div className="flex justify-between items-center mb-2">
-                <p>
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                <p className="mb-2">
                 Percentage of operations implemented by engaging local communities
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -76,8 +101,8 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
               id="ep2"
               className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-black text-[13px] font-[400]">
+              <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                 <p className="text-black text-[13px] font-[400] mb-2">
                 Percentage of security personnel who have received formal training
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -101,7 +126,7 @@ const Section = ({selectedLocation,dateRange,selectedOrg, selectedCorp, isBoxOpe
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className="mb-8 me-2"
+              className="mb-8 me-2 hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block"
         >
           <TableSidebar />
         </div>

@@ -1,110 +1,137 @@
-
 'use client';
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import Moment from "react-moment";
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { debounce } from 'lodash';
+
 function Carbonaccountingobjectives({ value, setValue, roles, setRoles }) {
   const orgname = localStorage.getItem("reportorgname");
   const reportstartdateStr = localStorage.getItem("reportstartdate");
   const reportenddateStr = localStorage.getItem("reportenddate");
-  const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
-  const editor = useRef(null);
-  const [content, setContent] = useState("");
-  const config = {
-    askBeforePasteHTML: false,
+  
+  // Memoize the editor config to prevent unnecessary re-renders
+  const config = useMemo(() => ({
+    enter: "BR",
+    cleanHTML: true,
+    enablePasteHTMLFilter: false, 
+    askBeforePasteHTML: false, 
     askBeforePasteFromWord: false,
+    style: {
+      fontSize: "14px",
+      color: "#667085"
+    },
+    height: 400,
+    allowResizeY: false,
     defaultActionOnPaste: 'insert_clear_html',
-    height: 400, // sets the height to 400 pixels
+    toolbarSticky: false,
+    toolbar: true,
+    buttons: [
+      'bold', 'italic', 'underline', 'strikeThrough', 'align', 
+      'outdent', 'indent', 'ul', 'ol', 'paragraph', 'link', 
+      'table', 'undo', 'redo', 'hr', 'fontsize', 'selectall'
+    ],
+    removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 
+                   'find', 'changeMode', 'paintFormat', 'image', 'brush', 'font'],
+  }), []);
+
+  // Debounce the input change handler
+  const debouncedSetValue = debounce((val) => {
+    setValue(val);
+  }, 300);
+
+  const handleInputChange = (e) => {
+    debouncedSetValue(e.target.value);
   };
-  const handleEditorChange = (newContent) => {
-    setRoles(newContent);
-  };
+
+  // Load JoditEditor dynamically with memoization
+  const JoditEditor = useMemo(() => dynamic(() => import('jodit-react'), { 
+    ssr: false,
+    loading: () => <div>Loading editor...</div>
+  }), []);
+
   return (
-    <>
-      <div className="div">
-        <div className="px-3">
-          <h3 className="text-left mb-2 p-3">
-            <b>CARBON ACCOUNTING OBJECTIVES</b>
-          </h3>
-          <div className="box rounded-lg p-4">
-            <p className="text-left mb-4">
-              <b>The carbon accounting report aims to:</b>{" "}
-            </p>
-            <div className="ml-4">
-              <ul className="text-left list-disc wordsping">
-                <li>
-                  Quantify {orgname} GHG emissions during the period{" "}
-                  <Moment format="DD-MMM-YYYY">{reportstartdateStr}</Moment> to{" "}
-                  <Moment format="DD-MMM-YYYY">{reportenddateStr}</Moment>
-                </li>
-                <li>
-                  Identify gaps and to identify emission reduction opportunities
-                </li>
-                <li>
-                  Communicate results to the third-party agency for
-                  verification.
-                </li>
-                <li>Support development of sustainability strategies.</li>
-                <li>
-                  Increase opportunities to register in voluntary GHG programs.
-                </li>
-              </ul>
-            </div>
+    <div className="div">
+      <div className="xl:px-3">
+        <h3 className="text-left mb-2 p-3">
+          <b>CARBON ACCOUNTING OBJECTIVES</b>
+        </h3>
+        <div className="box rounded-lg p-4">
+          <p className="text-left mb-4">
+            <b>The carbon accounting report aims to:</b>{" "}
+          </p>
+          <div className="ml-4">
+            <ul className="text-left list-disc wordsping">
+              <li>
+                Quantify {orgname} GHG emissions during the period{" "}
+                <Moment format="DD-MMM-YYYY">{reportstartdateStr}</Moment> to{" "}
+                <Moment format="DD-MMM-YYYY">{reportenddateStr}</Moment>
+              </li>
+              <li>
+                Identify gaps and to identify emission reduction opportunities
+              </li>
+              <li>
+                Communicate results to the third-party agency for verification.
+              </li>
+              <li>Support development of sustainability strategies.</li>
+              <li>
+                Increase opportunities to register in voluntary GHG programs.
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        <div className="px-3">
-          <div className="box rounded-lg p-4">
-            <h4 className="text-left mb-2">
-              <b>Roles and Responsibilities</b>
-            </h4>
-            <div className="mb-2">
-              <JoditEditor
-                ref={editor}
-                value={roles}
-                config={config}
-                tabIndex={1} // tabIndex of textarea
-                onBlur={handleEditorChange} // preferred to use only this option to update the content for performance reasons
-              // onChange={newContent => {}}
-              // onChange={handleEditorChange}
-              />
-            </div>
-            <p className="text-left wordsping">
-              The quantification of {orgname} carbon emissions was led by the
-              <input
-                type="text"
-                placeholder="Designation of Organizational Admin"
-                className=" ml-2 w-[25%] border appearance-none text-xs text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-              ></input>{" "}
-              Data has been collected using the Sustainext.ai platform.
-            </p>
+      <div className="px-3">
+        <div className="box rounded-lg p-4">
+          <h4 className="text-left mb-2">
+            <b>Roles and Responsibilities</b>
+          </h4>
+          <div className="mb-2">
+            <JoditEditor
+              value={roles}
+              config={config}
+              onBlur={setRoles}
+              tabIndex={1}
+            />
           </div>
+          <p className="text-left wordsping px-">
+            The quantification of {orgname} carbon emissions was led by the
+            <input
+              type="text"
+              placeholder="Designation of Organizational Admin"
+              className="xl:ml-2 xl:w-[25%] w-full border appearance-none text-xs text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
+              defaultValue={value}
+              onChange={handleInputChange}
+            />{" "}
+            Data has been collected using the Sustainext.ai platform.
+          </p>
         </div>
-        <div className="px-3">
-          <div className="box rounded-lg p-4">
-            <h4 className="text-left mb-2">
-              <b>Methodology Used </b>
-            </h4>
-            <p className="text-left">
-              This report follows the GHG protocol corporate standard and
-              specifications for quantification of GHG Emissions. The
-              methodology can be summarized as follows:
-            </p>
-            <div className="mt-3">
-              <Image
-                src="/report1.png"
-                alt="Description of the image"
-                width={1050}
-                height={500}
-              />
+      </div>
 
-            </div>
+      {/* Rest of your components remain the same */}
+      <div className="px-3">
+        <div className="box rounded-lg p-4">
+          <h4 className="text-left mb-2">
+            <b>Methodology Used </b>
+          </h4>
+          <p className="text-left">
+            This report follows the GHG protocol corporate standard and
+            specifications for quantification of GHG Emissions. The
+            methodology can be summarized as follows:
+          </p>
+          <div className="mt-3">
+            <Image
+              src="/report1.png"
+              alt="Description of the image"
+              width={1050}
+              height={500}
+            />
           </div>
         </div>
-        <div className="px-3">
+      </div>
+
+      <div className="px-3">
           <div className="box rounded-lg p-4">
             <h4 className="text-left mb-2">
               <b>Principles of Carbon Accounting </b>
@@ -149,8 +176,8 @@ function Carbonaccountingobjectives({ value, setValue, roles, setRoles }) {
             </p>
           </div>
         </div>
-      </div>
-    </>
+    </div>
   );
-};
+}
+
 export default Carbonaccountingobjectives;

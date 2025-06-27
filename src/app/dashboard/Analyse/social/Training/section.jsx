@@ -8,7 +8,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2, columns3, columns4 } from "./data";
 import { Oval } from "react-loader-spinner";
 
-const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
+const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen,togglestatus}) => {
  
   const [loopen, setLoOpen] = useState(false);
   const [table1, setTable1] = useState([]);
@@ -99,16 +99,26 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
   };
 
 
-  useEffect(() => {
-    if (selectedOrg && dateRange.start<dateRange.end) {
+useEffect(() => {
+    if (selectedOrg &&  dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
         fetchData();
-        toastShown.current = false;
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setTable1([]);
+        setTable2([]);
+        setTable3([]);
+      
+      } else {
+        fetchData();
+      }
+
+      toastShown.current = false;
     } else {
-        if (!toastShown.current) {
-            toastShown.current = true;
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-}, [selectedOrg, dateRange, selectedCorp]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus]);
 
   return (
     <div>
@@ -121,8 +131,8 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
               
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-[15px] font-bold">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                  <p className="text-[15px] font-bold mb-2">
                     Average hours of training provided to employees
                   </p>
 
@@ -143,8 +153,8 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
             
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-[15px] font-bold">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                  <p className="text-[15px] font-bold mb-2">
                     Average hours of training provided to employees
                   </p>
 
@@ -165,8 +175,8 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
                
-                <div className="flex justify-between items-center">
-                  <p className="text-[15px] font-bold">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center">
+                  <p className="text-[15px] font-bold mb-2">
                   Percentage of employees receiving regular performance and career development reviews
                   </p>
 
@@ -192,7 +202,7 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+            className="mb-8 me-2 hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

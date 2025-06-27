@@ -12,7 +12,7 @@ import EnvironmentHeade2 from "../../environmentheader2";
 import WasteTopBar from '../wasteTopBar'
 import { useSelector } from "react-redux";
 
-const Significantwaste = ({apiData}) => {
+const Significantwaste = ({apiData,setMobileopen}) => {
   const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
       (state) => state.materialitySlice
     );
@@ -26,6 +26,7 @@ const Significantwaste = ({apiData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
+    const [togglestatus, setToggleStatus] = useState("Organization");
   const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -60,14 +61,18 @@ const Significantwaste = ({apiData}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const griData = [
+    {
+      tagName:'GRI 306 - 1',
+      toggle:'24',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
 
   const sdgData=[
-    {
-        tagName:'GRI 306 - 1',
-        toggle:'24',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
-    },
+
     {
         tagName:'SDG 3',
         toggle:'46',
@@ -97,7 +102,7 @@ const Significantwaste = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-       <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData}  />
+       <WasteTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} griData={griData} setMobileopen={setMobileopen} />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -142,9 +147,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -168,11 +180,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Significantwastebody
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        togglestatus={togglestatus}
       />
     </>
   );

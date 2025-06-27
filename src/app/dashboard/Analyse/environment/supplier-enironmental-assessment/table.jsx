@@ -5,14 +5,14 @@ const DynamicTable2 = ({ data, columns }) => {
   const isEmptyData = data.every(row => Object.keys(row).length === 0);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border-collapse  block md:table w-full rounded-lg overflow-hidden">
-        <thead className="block md:table-header-group border">
-          <tr className="border border-gray-300 md:table-row gradient-background">
+    <div className="overflow-x-auto custom-scrollbar ">
+      <table className="rounded-md border border-gray-300  w-full min-w-[828px]" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+        <thead className=" border">
+          <tr className="border border-gray-300  gradient-background">
             {columns.map((column, index) => (
               <th
                 key={column}
-                className={`px-2 py-3  text-[#727272] block md:table-cell w-[50%] text-[12px] ${index==0?'text-center':'text-left'} `}
+                className={`px-2 py-3  text-[#727272]  w-[50%] text-[12px] ${index==0?'text-center':'text-left'} `}
               >
                 
                 {column}
@@ -20,19 +20,19 @@ const DynamicTable2 = ({ data, columns }) => {
             ))}
           </tr>
         </thead>
-        <tbody className="block md:table-row-group">
+        <tbody className="">
           {data.length === 0 || isEmptyData ? (
                <tr className='border'>
               <td
                 colSpan={columns.length}
-               className="text-center py-4 text-[12px] font-[400]"
+               className="text-center py-4 text-[12px] font-[400] w-full"
               >
                 No data available
               </td>
             </tr>
           ) : (
             data.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border border-gray-300 md:table-row">
+              <tr key={rowIndex} className="border border-gray-300 ">
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}

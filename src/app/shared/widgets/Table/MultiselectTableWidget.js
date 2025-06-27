@@ -3,6 +3,81 @@ import { debounce } from "lodash";
 import { MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import Select from "react-select";
+import { components } from "react-select";
+import DateRangePickerEmission from "@/app/utils/DatePickerComponentemission";
+const CustomOptionnew = ({ children, ...props }) => {
+  const { isSelected, isFocused, innerProps } = props;
+
+  return (
+    <div
+      {...innerProps}
+      style={{
+        backgroundColor: isSelected ? "white" : isFocused ? "#f0f0f0" : "white",
+
+        padding: "8px",
+
+        display: "flex",
+
+        alignItems: "center",
+
+        textAlign: "left",
+        cursor: "pointer",
+      }}
+    >
+      <input
+        type="checkbox"
+        className="green-checkbox"
+        checked={isSelected}
+        readOnly
+        style={{ flexShrink: 0, marginRight: "8px" }}
+      />
+
+      {children}
+    </div>
+  );
+};
+
+const CustomMultiValueContainer = ({ children, ...props }) => {
+  const { data, selectProps } = props;
+  const { value } = selectProps;
+
+  // Find the index of this value in the selected values array
+  const valueIndex = value.findIndex((val) => val.value === data.value);
+  // console.log(valueIndex,"See")
+  // Always show the first two values
+  if (valueIndex < 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        {children}
+      </components.MultiValueContainer>
+    );
+  }
+
+  // For the third position, show "+X more" if there are more than 2 values
+  if (value.length > 2 && valueIndex == 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        <div
+          style={{
+            backgroundColor: "#dbeafe",
+            borderRadius: "0.375rem",
+            padding: "2px 5px",
+            color: "#1e40af",
+            fontWeight: "600",
+            // fontSize: '0.875rem'
+          }}
+        >
+          +{value.length - 2} more
+        </div>
+      </components.MultiValueContainer>
+    );
+  }
+
+  // Hide any additional values
+  return null;
+};
+
 const MultiselectTableWidget = ({
   id,
   options,
@@ -16,6 +91,82 @@ const MultiselectTableWidget = ({
   const [othersInputs, setOthersInputs] = useState([]);
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownRefs = useRef([]);
+ // Descending [currentYear, ..., 1995]
+function getBaseYearOptionsDesc() {
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  for (let y = currentYear; y >= 1995; y--) years.push(y);
+  return years;
+}
+
+// Descending target year options [baseYear+50, ..., baseYear+1]
+function getTargetYearOptionsDesc(baseYear) {
+  if (!baseYear) return [];
+  let start = parseInt(baseYear, 10) + 1;
+  let end = parseInt(baseYear, 10) + 60;
+  const years = [];
+  for (let y = end; y >= start; y--) years.push(y);
+  return years;
+}
+  const handleSelectCbaseyear = (rowIndex, key, newBaseYear) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
+    updatedValues[rowIndex][key] = newBaseYear;
+
+    // Optionally, reset targetyear if baseyear changes
+    updatedValues[rowIndex]["targetyear"] = "";
+
+    setLocalValue(updatedValues);
+  };
+
+  const handleSelectCtargetyear = (rowIndex, key, newTargetYear) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
+    updatedValues[rowIndex][key] = newTargetYear;
+    setLocalValue(updatedValues);
+  };
+  const updatedMultiSelectStyle = {
+    control: (base) => ({
+      ...base,
+      border: "none",
+      padding: "4px 10px", // Equivalent to py-3
+      minHeight: "48px", // Ensure height matches your other elements
+      // borderColor: '#d1d5db', // Matches Tailwind's gray-300 border
+      // borderRadius: '0.375rem', // Matches Tailwind's rounded-md
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: "0", // Reset inner padding to fit the custom height
+    }),
+    menu: (provided) => ({
+      ...provided,
+
+      position: "relative",
+
+      bottom: "100%",
+
+      top: 0,
+
+      zIndex: 1000,
+    }),
+
+    menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: "#dbeafe", // Light blue background (Tailwind's blue-100)
+      borderRadius: "0.375rem", // Rounded corners
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      color: "#1e40af", // Blue text (Tailwind's blue-800)
+      fontWeight: "600",
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+      color: "#6A6E70",
+    }),
+  };
+
   useEffect(() => {
     if (Array.isArray(value) && value.length > 0) {
       setLocalValue(value);
@@ -62,30 +213,51 @@ const MultiselectTableWidget = ({
     };
   }, [openDropdown]);
 
-  const handleCheckboxChange = (rowIndex, key, option) => {
+  // const handleCheckboxChange = (rowIndex, key, option) => {
+  //   const updatedValues = [...localValue];
+  //   if (!updatedValues[rowIndex]) {
+  //     updatedValues[rowIndex] = {};
+  //   }
+  //   const currentValues = updatedValues[rowIndex][key] || [];
+
+  //   if (currentValues.includes(option)) {
+  //     updatedValues[rowIndex][key] = currentValues.filter(
+  //       (item) => item !== option
+  //     );
+  //   } else {
+  //     updatedValues[rowIndex][key] = [...currentValues, option];
+  //   }
+
+  //   const updatedOthersInputs = [...othersInputs];
+  //   if (!updatedOthersInputs[rowIndex]) {
+  //     updatedOthersInputs[rowIndex] = {};
+  //   }
+  //   updatedOthersInputs[rowIndex][key] = updatedValues[rowIndex][key]?.includes(
+  //     "Others (please specify)"
+  //   );
+  //   setOthersInputs(updatedOthersInputs);
+
+  //   setLocalValue(updatedValues);
+  // };
+
+  const handleCheckboxChange = (rowIndex, key, values) => {
     const updatedValues = [...localValue];
     if (!updatedValues[rowIndex]) {
       updatedValues[rowIndex] = {};
     }
-    const currentValues = updatedValues[rowIndex][key] || [];
 
-    if (currentValues.includes(option)) {
-      updatedValues[rowIndex][key] = currentValues.filter(
-        (item) => item !== option
-      );
-    } else {
-      updatedValues[rowIndex][key] = [...currentValues, option];
-    }
+    updatedValues[rowIndex][key] = values;
 
     const updatedOthersInputs = [...othersInputs];
     if (!updatedOthersInputs[rowIndex]) {
       updatedOthersInputs[rowIndex] = {};
     }
-    updatedOthersInputs[rowIndex][key] = updatedValues[rowIndex][key]?.includes(
+
+    updatedOthersInputs[rowIndex][key] = values?.includes(
       "Others (please specify)"
     );
-    setOthersInputs(updatedOthersInputs);
 
+    setOthersInputs(updatedOthersInputs);
     setLocalValue(updatedValues);
   };
 
@@ -154,6 +326,22 @@ const MultiselectTableWidget = ({
     updatedValues[rowIndex][key] = newValue; // Directly update the value for the input field
     setLocalValue(updatedValues);
   };
+  const handletextareaChange = (rowIndex, key, newValue) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) {
+      updatedValues[rowIndex] = {};
+    }
+    updatedValues[rowIndex][key] = newValue; // Directly update the value for the input field
+    setLocalValue(updatedValues);
+  };
+  const handleDateRangeChange = (rowIndex, key, newRange) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) {
+      updatedValues[rowIndex] = {};
+    }
+    updatedValues[rowIndex][key] = newRange;
+    setLocalValue(updatedValues);
+  };
   return (
     <div
       style={{
@@ -177,7 +365,7 @@ const MultiselectTableWidget = ({
                 style={{ textAlign: "left" }}
                 className={`${
                   idx === 0 ? "" : " border-l"
-                } text-[12px] p-3 text-center border-gray-300 px-2 py-2 relative w-[25vw]`}
+                } text-[12px] p-3 text-center border-gray-300 px-2 py-2 relative w-[45vw] xl:w-[25vw] lg:w-[25vw] md:w-[25vw] 2xl:w-[25vw] 4k:w-[25vw] 2k:w-[25vw]`}
               >
                 <div className="flex items-center relative">
                   <p className="w-[80%]">{item.title}</p>
@@ -206,7 +394,7 @@ const MultiselectTableWidget = ({
                 </div>
               </th>
             ))}
-            <th className="text-[12px] p-3 text-center border-gray-300 px-2 py-2 w-[3vw]"></th>
+            <th className="text-[12px] p-3 text-center border-gray-300 px-2 py-2 w-[25vw] xl:w-[3vw] lg:w-[3vw] md:w-[10vw] 2xl:w-[3vw] 4k:w-[3vw] 2k:w-[3vw]"></th>
           </tr>
         </thead>
         <tbody>
@@ -228,50 +416,35 @@ const MultiselectTableWidget = ({
                   >
                     {layoutType === "multiselect" && propertySchema.enum ? (
                       <div className="relative ">
-                        <div
-                          className="border-b rounded-md w-full px-3 py-2 text-left text-[12px] cursor-pointer z-[999]"
-                          onClick={() =>
-                            setOpenDropdown(
-                              openDropdown === `${rowIndex}-${key}`
-                                ? null
-                                : `${rowIndex}-${key}`
+                        <Select
+                          isMulti
+                          options={propertySchema?.enum?.map((option) => ({
+                            value: option,
+                            label: option,
+                          }))}
+                          // Ensure `item.intensityratio` is an array before calling `.map()`
+                          value={(localValue[rowIndex][key] || []).map(
+                            (option) => ({
+                              value: option,
+                              label: option,
+                            })
+                          )}
+                          onChange={(selectedOptions) =>
+                            handleCheckboxChange(
+                              rowIndex,
+                              key,
+                              selectedOptions.map((opt) => opt.value)
                             )
                           }
-                        >
-                          {localValue[rowIndex][key]?.length > 0
-                            ? localValue[rowIndex][key].join(", ")
-                            : "Select options"}
-                        </div>
-                        {openDropdown === `${rowIndex}-${key}` && (
-                          <div
-                            ref={(el) =>
-                              (dropdownRefs.current[`${rowIndex}-${key}`] = el)
-                            }
-                            className=" top-full left-0 bg-white border-b rounded-md shadow-lg z-[999] "
-                          >
-                            {propertySchema.enum.map((option) => (
-                              <label
-                                key={option}
-                                className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                              >
-                                <input
-                                  type="checkbox"
-                                  value={option}
-                                  checked={
-                                    localValue[rowIndex][key]?.includes(
-                                      option
-                                    ) || false
-                                  }
-                                  onChange={() =>
-                                    handleCheckboxChange(rowIndex, key, option)
-                                  }
-                                  className="mr-2"
-                                />
-                                <span className="text-[12px]">{option}</span>
-                              </label>
-                            ))}
-                          </div>
-                        )}
+                          styles={updatedMultiSelectStyle}
+                          closeMenuOnSelect={false}
+                          hideSelectedOptions={false}
+                          components={{
+                            Option: CustomOptionnew,
+                            MultiValueContainer: CustomMultiValueContainer,
+                          }}
+                          className="block xl:w-[22vw] md:w-[22vw] lg:w-[22vw] 2xl:w-[22vw] 2k:w-[22vw]  4k:w-[10vw] text-[12px] border-b border-gray-300 focus:outline-none"
+                        />
                         {othersInputs[rowIndex]?.[key] && (
                           <input
                             type="text"
@@ -336,9 +509,68 @@ const MultiselectTableWidget = ({
                           (e) =>
                             handleInputChange(rowIndex, key, e.target.value) // Use the new handler here
                         }
-                        className="text-[12px] pl-2 py-2 w-full border rounded-md"
+                        className="text-[12px] pl-2 py-2 w-full border-b rounded-md"
                         placeholder="Enter"
                       />
+                    ) : layoutType === "multilinetextbox" ? (
+                      <textarea
+                        required={required}
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={
+                          (e) =>
+                            handletextareaChange(rowIndex, key, e.target.value) // Use the new handler here
+                        }
+                        className="text-[12px] pl-2 py-2 w-full border-b rounded-md"
+                        placeholder="Enter data"
+                        rows={2}
+                      />
+                    ) : layoutType === "daterange" ? (
+                      <DateRangePickerEmission
+                        startDate={localValue[rowIndex][key]?.start || null}
+                        endDate={localValue[rowIndex][key]?.end || null}
+                        onDateChange={(newRange) =>
+                          handleDateRangeChange(rowIndex, key, newRange)
+                        }
+                        dateRangeValidation={true}
+                        className="block   leading-6  sm:leading-5 border-b-2 border-gray-300"
+                      />
+                    ) : layoutType === "baseyer" ? (
+                      <select
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={(e) =>
+                          handleSelectCbaseyear(rowIndex, key, e.target.value)
+                        }
+                        className="text-[12px] pl-2 py-2 w-full border-b "
+                      >
+                        <option value="">Select base year</option>
+                        {getBaseYearOptionsDesc().map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
+                    ) : layoutType === "targetyear" ? (
+                      <select
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={(e) =>
+                          handleSelectCtargetyear(rowIndex, key, e.target.value)
+                        }
+                        className="text-[12px] pl-2 py-2 w-full border-b "
+                        disabled={!localValue[rowIndex]["BaseYear"]}
+                      >
+                        <option value="">
+                          {localValue[rowIndex]["BaseYear"]
+                            ? "Select target year"
+                            : "Select base year first"}
+                        </option>
+                        {getTargetYearOptionsDesc(
+                          localValue[rowIndex]["BaseYear"]
+                        ).map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
                     ) : null}
                   </td>
                 );

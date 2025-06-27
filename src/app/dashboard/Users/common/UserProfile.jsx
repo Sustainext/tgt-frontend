@@ -10,7 +10,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import Moment from 'react-moment';
 const UserProfile = ({ onClose, user }) => {
   return (
-    <div className="relative bg-white px-6 py-4  w-full max-h-[92vh] min-h-[92vh] overflow-y-auto scrollable-content  pb-4">
+    <div className="relative bg-white px-6 py-4  w-full xl:max-h-[95vh] min-h-[92vh] max-h-[110vh] overflow-y-auto scrollable-content   pb-4">
       {/* Close button in top-right corner */}
   
 
@@ -63,8 +63,8 @@ const UserProfile = ({ onClose, user }) => {
             </div>
           </div>
           <div>
-            <div className="text-[13px] font-semibold">Department</div>
-            <div className="text-[13px] text-gray-500">
+            <div className="text-[13px] font-semibold text-right">Department</div>
+            <div className="text-[13px] text-gray-500 text-right">
               {user.department || ""}
             </div>
           </div>

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getTodayDate } from "./TaskUtils";
-import { toast } from "react-toastify";
+import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
@@ -12,6 +12,17 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
     assigned_to: "",
     status: "not_started",
   });
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    // Retrieve email from localStorage
+    const storedEmail = localStorage.getItem("user_id");
+
+    // Check if email exists in localStorage
+    if (storedEmail) {
+      setUserEmail(storedEmail);
+    }
+  }, []);
 
   const isFormValid = formData.task_name && formData.deadline;
 
@@ -27,6 +38,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    setIsStatusDropdownOpen(false)
   };
 
   const handleSubmit = async (e) => {
@@ -43,7 +55,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: "light",
       });
       return;
     }
@@ -67,19 +79,48 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
 
       if (response) {
         onClose();
+        setFormData({
+          task_name: "",
+          description: "",
+          deadline: "",
+          assigned_to: "",
+          status: "not_started",
+        });
       } else {
         throw new Error("Failed to add task");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error(error.message || "Failed to add task");
+      toast.error(error.message || "Failed to add task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
+  const isFieldDisabled = () => {
+    console.log("comparing", formData.assigned_to, userEmail);
+
+    if (formData.assigned_to === userEmail) return false;
+    else if (formData.assigned_to !== ""){
+      // setIsStatusDropdownOpen(false);
+      return true;
+    } 
+    else return false;
+  };
+
   return (
+    <>
+    {/* <ToastContainer style={{ fontSize: "12px" }} /> */}
     <div className="modal-overlay z-50">
       <div className="modal-center">
-        <div className="modal-content bg-white rounded-lg shadow-xl p-6 min-w-[450px] max-w-[450px] relative">
+<div className="modal-content bg-white rounded-lg shadow-xl p-6 min-w-[450px] max-w-[450px] min-h-[20em] max-h-[45em] relative overflow-y-auto scrollable-content ">
           {/* Header */}
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Add Task</h2>
           <p className="text-gray-600 text-sm mb-6">
@@ -89,9 +130,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Status Dropdown */}
-            <div
-              className={`${formData.assigned_to !== "" ? "opacity-70" : ""}`}
-            >
+            <div className={`${isFieldDisabled() ? "opacity-70" : ""}`}>
               <label className={`block text-sm font-medium text-gray-700 mb-1`}>
                 Status
               </label>
@@ -100,7 +139,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
                   type="button"
                   className="flex items-center w-full rounded-md py-2 text-left text-sm text-gray-700 bg-white focus:outline-none"
                   onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
-                  disabled={formData.assigned_to !== ""}
+                  disabled={isFieldDisabled()}
                 >
                   <div className="flex items-center gap-2">
                     {formData.status === "not_started" && (
@@ -151,13 +190,17 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
                           <span className="w-4 h-4 rounded-full bg-[#FDB022]"></span>
                         ),
                       },
-                      {
-                        id: "completed",
-                        label: "Completed",
-                        icon: (
-                          <span className="w-4 h-4 rounded-full bg-[#12B76A]"></span>
-                        ),
-                      },
+                      ...(formData.assigned_to !== userEmail
+                        ? [
+                            {
+                              id: "completed",
+                              label: "Completed",
+                              icon: (
+                                <span className="w-4 h-4 rounded-full bg-[#12B76A]"></span>
+                              ),
+                            },
+                          ]
+                        : []),
                     ].map((status) => (
                       <button
                         key={status.id}
@@ -240,7 +283,10 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
                 <option value="">Select User</option>
                 {users?.data?.map((user) => (
                   <option key={user.id} value={user.id}>
-                    {user.username}
+                    {user.username === userEmail
+                      ? "Assign to self"
+                      : user.username}
+                    {/* {user.username} */}
                   </option>
                 ))}
               </select>
@@ -291,6 +337,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, users }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

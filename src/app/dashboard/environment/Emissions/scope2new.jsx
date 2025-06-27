@@ -235,11 +235,11 @@ const Scope2 = forwardRef(
         console.log("Updated data after removal:", updatedData);
 
         dispatch(
-          updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
+          updateScopeDataLocal({ scope: 2, data: { data: updatedData } })
         );
 
         // Debug validation errors
-        const currentValidationErrors = validationErrors?.scope1?.fields || {};
+        const currentValidationErrors = validationErrors?.scope2?.fields || {};
         console.log("Current validation errors:", currentValidationErrors);
         console.log("Full validation state:", validationErrors);
 
@@ -285,8 +285,8 @@ const Scope2 = forwardRef(
             console.log("Dispatching updated validation errors");
             dispatch(
               setValidationErrors({
-                scope1: {
-                  ...validationErrors.scope1,
+                scope2: {
+                  ...validationErrors.scope2,
                   fields: newValidationFields,
                 },
               })
@@ -490,6 +490,7 @@ const Scope2 = forwardRef(
 
     return (
       <>
+   <div  className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block">
         <div>
           <Form
             schema={r_schema}
@@ -526,6 +527,48 @@ const Scope2 = forwardRef(
               <span>{dataError}</span>
             </div>
           )} */}
+        </div>
+        </div>
+            {/* mobile version */}
+        <div  className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden">
+
+        <div className="overflow-auto custom-scrollbar">
+          <Form
+            schema={r_schema}
+            uiSchema={r_ui_schema}
+            formData={formData}
+            onChange={handleChange}
+            validator={validator}
+            widgets={{
+              EmissionWidget: (props) => (
+                <EmissionWidget
+                  {...props}
+                  scope="scope2"
+                  year={year}
+                  countryCode={countryCode}
+                  onRemove={handleRemoveRow}
+                  index={props.id.split("_")[1]}
+                  activityCache={activityCache}
+                  updateCache={updateCache}
+                />
+              ),
+            }}
+          />
+        </div>
+        <div className="flex justify-between items-center">
+          <button
+            className="mt-4 text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
+            onClick={handleAddNew}
+          >
+            + Add new
+          </button>
+          {/* {showError && (
+            <div className="text-xs text-red-500 mt-4 flex items-center">
+              <MdError />
+              <span>{dataError}</span>
+            </div>
+          )} */}
+        </div>
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

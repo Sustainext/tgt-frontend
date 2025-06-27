@@ -23,7 +23,11 @@ const headerKeyMap = {
   "Reasons for the difference between corporate income tax accrued on profit/loss and the tax due if the statutory tax rate is applied to profit/loss before tax.": "reasons_for_difference_in_accrued_and_statutory_tax",
 };
 
-const Section13 = ({ section11_4_2Ref }) => {
+const Section13 = ({ section11_4_2Ref,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.4.2':'11.4.1',
+  sectionTitle = 'Approach to Tax',
+  sectionOrder = 11,
+ }) => {
   const data = useSelector((state) => state.screen11Slice.getdata);
   const col = Object.keys(headerKeyMap);
   
@@ -38,18 +42,57 @@ const Section13 = ({ section11_4_2Ref }) => {
     <>
       <div id="section11_4_2" ref={section11_4_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          11.4.2 Approach to Tax
+         {sectionNumber} {sectionTitle}
         </h3>
 
         {/* Mapping through 207_1a */}
         {data?.["207_1a"]?.map((item, index) => (
           <div key={`tax_strategy_${index}`} className="mb-4">
-            <p className="text-sm mb-1">{item.Q1 || "No data available"}</p>
-            {item.Q2 && <p className="text-sm mb-1">{item.Q2}</p>}
-            {item.Q3 && <p className="text-sm mb-1">{stripHTML(item.Q3)}</p>}
-            {item.Q4 && <p className="text-sm mb-1">{item.Q4}</p>}
-            {item.Q5 && <p className="text-sm mb-1">{item.Q5}</p>}
-            {item.Q6 && <p className="text-sm mb-1">{stripHTML(item.Q6)}</p>}
+            <p className="text-sm mb-1">{item.Q1?item.Q1=="No"?item.Q1:'':'No data available'}</p>
+            {item.Q2 && (
+              <div>
+                <p className="text-[15px] mb-2 font-semibold text-[#344054]">
+              The tax strategy can be accessed publicly at
+            </p>
+            <p className="text-sm mb-4">{item.Q2?item.Q2:'No data available'}</p>
+              </div>
+            )
+            }
+            {item.Q3 &&
+            (
+              <div>
+                  <p className="text-[15px] mb-2 font-semibold text-[#344054]">
+                  The tax strategy is formally reviewed and approved by
+            </p>
+            <p className="text-sm mb-4">{item.Q3?stripHTML(item.Q3):'No data available'}</p>
+              </div>
+            )
+            
+           }
+            {item.Q4 &&
+            (
+              <div>
+                <p className="text-[15px] mb-2 font-semibold text-[#344054]">
+                Frequency the tax strategy review
+            </p>
+            <p className="text-sm mb-4">{item.Q4?item.Q4:'No data available'}</p>
+              </div>
+            )
+            
+            }
+            
+            {item.Q5 &&
+            (
+              <div>
+                   <p className="text-[15px] mb-2 font-semibold text-[#344054]">
+             Approach taken by the organisation for tax related regulatory compliance
+            </p>
+            <p className="text-sm mb-2">{item.Q5?item.Q5:'No data available'}</p>
+            {item.Q6 && <p className="text-sm mb-4">{stripHTML(item.Q6)}</p>}
+              </div>
+            )
+           }
+           
           </div>
         ))}
 
@@ -58,6 +101,10 @@ const Section13 = ({ section11_4_2Ref }) => {
           <p className="text-sm mb-4">No data available</p>
         )}
       </div>
+
+      <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+      Our tax strategy is designed to support our business objectives while ensuring we meet our legal and ethical obligations.
+      </p>
 
       {/* New div to display tax jurisdictions from 207_4a */}
       <div className="shadow-md rounded-md mb-4 p-6">

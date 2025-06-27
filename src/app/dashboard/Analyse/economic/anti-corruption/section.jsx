@@ -1,11 +1,11 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DynamicTable2 from "./customTable";
 import DynamicTable from "./customTable2";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2, columns3, columns4, columns5 } from "./data";
 import { Oval } from "react-loader-spinner";
-const Section = ({selectedOrg,selectedCorp,year}) => {
+const Section = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const [strategypolicy, setStrategypolicy] = useState([]);
   const [strategypolicy2, setStrategypolicy2] = useState([]);
   const [strategypolicy3, setStrategypolicy3] = useState([]);
@@ -22,15 +22,11 @@ const Section = ({selectedOrg,selectedCorp,year}) => {
     setLoOpen(false);
   };
 
-
   const fetchData = async () => {
-
-
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_economic_communication_and_training?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`,
-    
+        `/sustainapp/get_economic_communication_and_training?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`
       );
 
       const data = response.data;
@@ -183,18 +179,27 @@ const Section = ({selectedOrg,selectedCorp,year}) => {
     }
   };
 
-
-
   useEffect(() => {
-    if (selectedOrg && year) {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
         fetchData();
-        toastShown.current = false;
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setStrategypolicy([]);
+        setStrategypolicy2([]);
+        setStrategypolicy3([]);
+        setStrategypolicy4([]);
+        setStrategypolicy5([]);
+      } else {
+        fetchData();
+      }
+
+      toastShown.current = false;
     } else {
-        if (!toastShown.current) {
-            toastShown.current = true;
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-}, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   return (
     <div>
@@ -203,7 +208,7 @@ const Section = ({selectedOrg,selectedCorp,year}) => {
           Communication and training about anti-corruption policies and
           procedures
         </h2>
- 
+
         <div className="flex justify-between">
           <div className={`ps-4  w-full me-4`}>
             <div className="mb-6">
@@ -211,8 +216,8 @@ const Section = ({selectedOrg,selectedCorp,year}) => {
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center mb-2">
+                  <p className="mb-2">
                     Total number of governance body members that the
                     organization’s anti-corruption policies and procedures have
                     been communicated to, broken down by region.
@@ -234,8 +239,8 @@ const Section = ({selectedOrg,selectedCorp,year}) => {
                 id="ep2"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center mb-2">
+                  <p className="mb-2">
                     Total number and percentage of employees that the
                     organization’s anti-corruption policies and procedures have
                     been communicated to, broken down by employee category and
@@ -258,8 +263,8 @@ const Section = ({selectedOrg,selectedCorp,year}) => {
                 id="ep3"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center mb-2">
+                  <p className="mb-2">
                     Total number and percentage of business partners that the
                     organization’s anti-corruption policies and procedures have
                     been communicated to, broken down by type of business
@@ -282,8 +287,8 @@ const Section = ({selectedOrg,selectedCorp,year}) => {
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center mb-2">
+                  <p className="mb-2">
                     Total number and percentage of governance body members that
                     have received training on anti-corruption, broken down by
                     region.
@@ -305,8 +310,8 @@ const Section = ({selectedOrg,selectedCorp,year}) => {
                 id="ep3"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center mb-2">
+                  <p className="mb-2">
                     Total number and percentage of employees that have received
                     training on anti-corruption, broken down by region.
                   </p>

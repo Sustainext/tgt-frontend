@@ -16,6 +16,7 @@ function CoverSheet({
   const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const reportreportorgname = typeof window !== 'undefined' ? localStorage.getItem("reportorgname") : '';
+  const corpName = typeof window !== 'undefined' ? localStorage.getItem("reportCorpName") : '';
   const reportname = typeof window !== 'undefined' ? localStorage.getItem("reportname") : '';
   const reportby = typeof window !== 'undefined' ? localStorage.getItem("reportby") : '';
   useEffect(() => {
@@ -35,8 +36,8 @@ function CoverSheet({
 
     if (selectedFile.type !== "image/png") {
       errorMessages = "Only PNG images are allowed.";
-    } else if (selectedFile.size > 1048576) {
-      errorMessages = "Maximum file size allowed is 1MB";
+    } else if (selectedFile.size > 2097152) {
+      errorMessages = "Maximum file size allowed is 2MB";
     } else {
       const reader = new FileReader();
 
@@ -58,18 +59,18 @@ function CoverSheet({
 
   return (
     <>
-      <div className="box rounded-lg p-4 h-[497px]">
-        <div className="flex items-center justify-between">
+      <div className="box rounded-lg p-2 h-[497px]">
+        <div className="xl:flex items-center justify-between">
           <div className="flex mt-5">
             <h1 className="text-lg">
-              <p className="text-gray-500">{reportby} name</p>
+              <p className="text-gray-500">{reportby} Name</p>
             </h1>
             <h1 className="ml-2">-</h1>
-            <h1 className="text-lg text-gray-500 ml-2">{reportreportorgname}</h1>
+            <h1 className="text-lg text-gray-500 ml-2">{reportby==='Corporate'?corpName:reportreportorgname}</h1>
           </div>
           <div className="flex mt-5">
             <h1 className="text-lg">
-              <p className="text-gray-500">Year</p>
+              <p className="text-gray-500">Reporting Year</p>
             </h1>
             <h1 className="ml-2">:</h1>
             <h1 className="text-lg text-gray-500 ml-2">{display}</h1>
@@ -102,12 +103,15 @@ function CoverSheet({
           </button>
         </div>
         <div>
-          <h1 className="text-sm mt-2 text-gray-500">
-            Upload image file of organization
+          <h1 className="text-sm mt-3 text-gray-500">
+          Upload your organization logo
+          </h1>
+          <h1 className="text-sm mt-1 text-gray-500">
+          Maximum size - 2MB
           </h1>
           {error && <p className="text-gray-500 text-sm mt-4">{error}</p>}
         </div>
-        <div className="mt-5 flex mb-12">
+        <div className="mt-3 flex mb-12">
           <h1 className="text-sm text-left">
             <b>Provided by -</b>
           </h1>

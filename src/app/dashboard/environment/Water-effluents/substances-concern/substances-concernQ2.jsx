@@ -148,16 +148,20 @@ const validateRows = (data) => {
     if (!row.Methodologiesused) {
       rowErrors.Methodologiesused = "Methodologies used is required";
     }
-  
+
     if (!row.Assumptionsconsidered) {
       rowErrors.Assumptionsconsidered = "Assumptions considered is required";
     }
 
- 
     return rowErrors;
   });
 };
-const SubstancesconcernQ2 = ({ selectedOrg, year, selectedCorp }) => {
+const SubstancesconcernQ2 = ({
+  selectedOrg,
+  year,
+  selectedCorp,
+  togglestatus,
+}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -245,16 +249,26 @@ const SubstancesconcernQ2 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
       }
+    } else {
+      loadFormData();             // Organization tab: always try to load
     }
-  }, [selectedOrg, year, selectedCorp]);
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => ({
       ...item, // Ensure each item retains its structure
@@ -267,8 +281,10 @@ const SubstancesconcernQ2 = ({ selectedOrg, year, selectedCorp }) => {
     const errors = validateRows(formData);
     setValidationErrors(errors);
     console.log("Validation Errors:", errors); // Debugging log
-  
-    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
     if (!hasErrors) {
       console.log("No validation errors, proceeding to update data"); // Debugging log
       updateFormData();
@@ -344,21 +360,34 @@ const SubstancesconcernQ2 = ({ selectedOrg, year, selectedCorp }) => {
         )}
       </div>
       <div></div>
+      {(togglestatus === "Corporate" && selectedCorp) ||
+      (togglestatus !== "Corporate" && selectedOrg && year) ? (
+        <div className="flex justify-start mt-4 right-1">
+          <button
+            type="button"
+            className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5"
+            onClick={handleAddNew}
+          >
+            <MdAdd className="text-lg" /> Add Row
+          </button>
+        </div>
+      ) : null}
 
-      <div className="flex justify-start mt-4 right-1">
-        <button
-          type="button"
-          className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5"
-          onClick={handleAddNew}
-        >
-          <MdAdd className="text-lg" /> Add Row
-        </button>
-      </div>
       <div className="mb-4">
         <button
           type="button"
-          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
+          className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+            (!selectedCorp && togglestatus === "Corporate") ||
+            !selectedOrg ||
+            !year
+              ? "cursor-not-allowed opacity-90"
+              : ""
+          }`}
           onClick={handleSubmit}
+          disabled={
+            (togglestatus === "Corporate" && !selectedCorp) ||
+            (togglestatus !== "Corporate" && (!selectedOrg || !year))
+          }
         >
           Submit
         </button>

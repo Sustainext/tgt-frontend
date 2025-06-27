@@ -1,113 +1,120 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import { GlobalState } from '../../../../../Context/page';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import { GlobalState } from "../../../../../Context/page";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
 import TextareaWidget2 from "../../../../shared/widgets/Textarea/TextareaWidget2";
-import axios from 'axios';
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 const widgets = {
-    TextareaWidgetnew: TextareaWidget2,
+  TextareaWidgetnew: TextareaWidget2,
 };
 
-const view_path = 'gri-environment-water-303-2a-management_water_discharge'
-const client_id = 1
-const user_id = 1
+const view_path = "gri-environment-water-303-2a-management_water_discharge";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
-    type: 'array',
-    items: {
-        type: 'object',
-        properties: {
-            Q1: {
-                type: "string",
-                format: 'textarea',
-            },
-            Q2: {
-                type: "string",
-                format: 'textarea',
-            },
-            Q3: {
-                type: "string",
-                format: 'textarea',
-            },
-            Q4: {
-                type: "string",
-                format: 'textarea',
-            },
-            // Define other properties as needed
-        }
-    }
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      Q1: {
+        type: "string",
+        format: "textarea",
+      },
+      Q2: {
+        type: "string",
+        format: "textarea",
+      },
+      Q3: {
+        type: "string",
+        format: "textarea",
+      },
+      Q4: {
+        type: "string",
+        format: "textarea",
+      },
+      // Define other properties as needed
+    },
+  },
 };
 
-
 const uiSchema = {
-    items: {
-        Q1: {
-            "ui:hadding": "Discharge Standards Used",
-            "ui:title": "Describe any minimum standards set for the quality of effluent discharge.",
-            "ui:tooltipstitle": "Include a description of standards used to set the quality of effluent discharge.",
-            "ui:haddingdisplay": "block",
-            "ui:titlediplay": "block",
-            "ui:haddingtooltipdisplay": "none",
-            "ui:titletooltipdisplay": "block",
-            "ui:Gri": "GRI 303-2a",
-            'ui:widget': 'TextareaWidgetnew', 
-            'ui:options': {
-                label: false
-            },
-        },
-        Q2: {
-            "ui:hadding": "Discharge Standards",
-            "ui:title": "Describe the process of determining discharge standards for facilities with no local discharge requirements",
-            "ui:tooltipstitle": "Indicate how the company determine discharge standards for facilities without local discharge requirements.(Please specify the identification method use to determine standards (if any)",
-            "ui:haddingdisplay": "block",
-            "ui:titlediplay": "block",
-            "ui:haddingtooltipdisplay": "none",
-            "ui:titletooltipdisplay": "block",
-            "ui:Gri": "GRI 303-2a",
-            'ui:widget': 'TextareaWidgetnew', 
-            'ui:options': {
-                label: false
-            },
-        },
-        Q3: {
-            "ui:hadding": "Internal Water Quality Standards",
-            "ui:title": "Describe internally developed water quality standards or guidelines used (if any)",
-            "ui:tooltipstitle": "Describe how the internally developed water quality standards or guidelines were determined.",
-            "ui:haddingdisplay": "block",
-            "ui:titlediplay": "block",
-            "ui:haddingtooltipdisplay": "none",
-            "ui:titletooltipdisplay": "block",
-            "ui:Gri": "GRI 303-2a",
-            'ui:widget': 'TextareaWidgetnew', 
-            'ui:options': {
-                label: false
-            },
-        },
-        Q4: {
-            "ui:hadding": "Sector-specific Standards",
-            "ui:title": "Describe the sector-specific standards or guidelines used (if any)",
-            "ui:tooltipstitle": " Provide a description of how the sector-specific standards were considered",
-            "ui:haddingdisplay": "block",
-            "ui:titlediplay": "block",
-            "ui:haddingtooltipdisplay": "none",
-            "ui:titletooltipdisplay": "block",
-            "ui:Gri": "GRI 303-2a",
-            'ui:widget': 'TextareaWidgetnew', 
-            'ui:options': {
-                label: false
-            },
-        },
-          'ui:options': {
-            orderable: false, 
-            addable: false, 
-            removable: false, 
-            layout: 'horizontal', 
-        }
-    }
+  items: {
+    Q1: {
+      "ui:hadding": "Discharge Standards Used",
+      "ui:title":
+        "Describe any minimum standards set for the quality of effluent discharge.",
+      "ui:tooltipstitle":
+        "Include a description of standards used to set the quality of effluent discharge.",
+      "ui:haddingdisplay": "block",
+      "ui:titlediplay": "block",
+      "ui:haddingtooltipdisplay": "none",
+      "ui:titletooltipdisplay": "block",
+      "ui:Gri": "GRI 303-2a",
+      "ui:widget": "TextareaWidgetnew",
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q2: {
+      "ui:hadding": "Discharge Standards",
+      "ui:title":
+        "Describe the process of determining discharge standards for facilities with no local discharge requirements",
+      "ui:tooltipstitle":
+        "Indicate how the company determine discharge standards for facilities without local discharge requirements.(Please specify the identification method use to determine standards (if any)",
+      "ui:haddingdisplay": "block",
+      "ui:titlediplay": "block",
+      "ui:haddingtooltipdisplay": "none",
+      "ui:titletooltipdisplay": "block",
+      "ui:Gri": "GRI 303-2a",
+      "ui:widget": "TextareaWidgetnew",
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q3: {
+      "ui:hadding": "Internal Water Quality Standards",
+      "ui:title":
+        "Describe internally developed water quality standards or guidelines used (if any)",
+      "ui:tooltipstitle":
+        "Describe how the internally developed water quality standards or guidelines were determined.",
+      "ui:haddingdisplay": "block",
+      "ui:titlediplay": "block",
+      "ui:haddingtooltipdisplay": "none",
+      "ui:titletooltipdisplay": "block",
+      "ui:Gri": "GRI 303-2a",
+      "ui:widget": "TextareaWidgetnew",
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q4: {
+      "ui:hadding": "Sector-specific Standards",
+      "ui:title":
+        "Describe the sector-specific standards or guidelines used (if any)",
+      "ui:tooltipstitle":
+        " Provide a description of how the sector-specific standards were considered",
+      "ui:haddingdisplay": "block",
+      "ui:titlediplay": "block",
+      "ui:haddingtooltipdisplay": "none",
+      "ui:titletooltipdisplay": "block",
+      "ui:Gri": "GRI 303-2a",
+      "ui:widget": "TextareaWidgetnew",
+      "ui:options": {
+        label: false,
+      },
+    },
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
+  },
 };
 const validateRows = (data) => {
   return data.map((row) => {
@@ -118,32 +125,32 @@ const validateRows = (data) => {
     if (!row.Q2 || row.Q2.trim() === "") {
       rowErrors.Q2 = "This field is required";
     }
- 
+
     return rowErrors;
   });
 };
-const Sharedresource = ({ selectedOrg, year, selectedCorp }) => {
-    const { open } = GlobalState();
-    const [formData, setFormData] = useState([{}]);
-    const [r_schema, setRemoteSchema] = useState({})
-    const [r_ui_schema, setRemoteUiSchema] = useState({})
-    const [validationErrors, setValidationErrors] = useState([]);
-    const [loopen, setLoOpen] = useState(false);
-    const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
+const Sharedresource = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
+  const { open } = GlobalState();
+  const [formData, setFormData] = useState([{}]);
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [loopen, setLoOpen] = useState(false);
+  const toastShown = useRef(false);
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
 
-    const LoaderOpen = () => {
-      setLoOpen(true);
-    };
-    const LoaderClose = () => {
-      setLoOpen(false);
-    };
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
   const handleChange = (e) => {
     setFormData(e.formData);
   };
@@ -151,23 +158,23 @@ const Sharedresource = ({ selectedOrg, year, selectedCorp }) => {
   // The below code on updateFormData
   let axiosConfig = {
     headers: {
-      Authorization: 'Bearer ' + token,
+      Authorization: "Bearer " + token,
     },
   };
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
-      client_id : client_id,
-      user_id : user_id,
+      client_id: client_id,
+      user_id: user_id,
       path: view_path,
       form_data: formData,
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
-    }
+    };
 
-    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-    try{
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    try {
       const response = await axios.post(url, data, axiosConfig);
 
       if (response.status === 200) {
@@ -183,8 +190,7 @@ const Sharedresource = ({ selectedOrg, year, selectedCorp }) => {
         });
         LoaderClose();
         loadFormData();
-
-      }else {
+      } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
@@ -212,44 +218,54 @@ const Sharedresource = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
 
-    const loadFormData = async () => {
-      LoaderOpen();
-      setFormData([{}])
-      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
-      try {
-          const response = await axios.get(url, axiosConfig);
-          console.log('API called successfully:', response.data);
-          setRemoteSchema(response.data.form[0].schema);
-          setRemoteUiSchema(response.data.form[0].ui_schema);
-          const form_parent = response.data.form_data;
-          setFormData(form_parent[0].data);
-      } catch (error) {
-          console.error('API call failed:', error);
-      } finally {
-          LoaderClose();
-      }
+  const loadFormData = async () => {
+    LoaderOpen();
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    try {
+      const response = await axios.get(url, axiosConfig);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      const form_parent = response.data.form_data;
+      setFormData(form_parent[0].data);
+    } catch (error) {
+      console.error("API call failed:", error);
+    } finally {
+      LoaderClose();
+    }
   };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
+  }, [r_schema, r_ui_schema]);
 
   // console log the form data change
   useEffect(() => {
-    console.log('Form data is changed -', formData)
-  },[formData])
+    console.log("Form data is changed -", formData);
+  }, [formData]);
 
   // fetch backend and replace initialized forms
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
       }
+    } else {
+      loadFormData();             // Organization tab: always try to load
     }
-  }, [selectedOrg, year, selectedCorp]);
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -257,8 +273,10 @@ const Sharedresource = ({ selectedOrg, year, selectedCorp }) => {
     const errors = validateRows(formData);
     setValidationErrors(errors);
     console.log("Validation Errors:", errors); // Debugging log
-  
-    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
     if (!hasErrors) {
       console.log("No validation errors, proceeding to update data"); // Debugging log
       updateFormData();
@@ -267,39 +285,54 @@ const Sharedresource = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
 
-
   return (
     <>
-      <div >
+      <div>
         <div>
-        <Form
-          schema={r_schema}
-          uiSchema={r_ui_schema}
-          formData={formData}
-          onChange={handleChange}
-          validator={validator}
-          widgets={widgets}
-          formContext={{ validationErrors }}
-        />
+          <Form
+            schema={r_schema}
+            uiSchema={r_ui_schema}
+            formData={formData}
+            onChange={handleChange}
+            validator={validator}
+            widgets={widgets}
+            formContext={{ validationErrors }}
+          />
         </div>
       </div>
-      <div className='mb-4'>
-      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      <div className="mb-4">
+        <button
+          type="button"
+          className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+            (!selectedCorp && togglestatus === "Corporate") ||
+            !selectedOrg ||
+            !year
+              ? "cursor-not-allowed opacity-90"
+              : ""
+          }`}
+          onClick={handleSubmit}
+          disabled={
+            (togglestatus === "Corporate" && !selectedCorp) ||
+            (togglestatus !== "Corporate" && (!selectedOrg || !year))
+          }
+        >
+          Submit
+        </button>
       </div>
       {loopen && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <Oval
-              height={50}
-              width={50}
-              color="#00BFFF"
-              secondaryColor="#f3f3f3"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          </div>
-        )}
-        </>
-    );
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
+    </>
+  );
 };
 
 export default Sharedresource;

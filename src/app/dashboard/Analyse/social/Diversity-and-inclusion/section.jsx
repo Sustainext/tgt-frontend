@@ -14,6 +14,7 @@ const Section = ({
   dateRange,
   selectedLocation,
   isBoxOpen,
+  togglestatus,
 }) => {
   const [analyseData, setAnalyseData] = useState([]);
 
@@ -51,17 +52,17 @@ const Section = ({
       );
 
       const data = response.data;
-      console.log(data, "testing");
+      
 
       const formattedData = data.percentage_of_employees_within_government_bodies.map((item) => [
-        item.male,
-        item.female,
-        item.nonBinary,
-        item.lessThan30,
-        item.between30and50,
-        item.moreThan50,
-        item.minorityGroup,
-        item.vulnerableCommunities,
+        item.male_percentage,
+        item.female_percentage,
+        item.nonBinary_percentage,
+        item.lessThan30_percentage,
+        item.between30and50_percentage,
+        item.moreThan50_percentage,
+        item.minorityGroup_percentage,
+        item.vulnerableCommunities_percentage,
       ]);
       
       
@@ -93,18 +94,47 @@ const Section = ({
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && dateRange.start < dateRange.end) {
-      fetchData();
-      fetchLocationData();
+
+    if (selectedOrg && dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate") {
+        if (selectedCorp) {
+          fetchData();
+          fetchLocationData();
+        } else {
+          setChilddata1([]);
+          setChilddata2([]);
+          setChilddata3([]);
+          setChilddata4([]);
+          setLocationdata([]);
+        
+        }
+      } else if (togglestatus === "Location") {
+        if (selectedLocation) {
+          fetchData();
+          fetchLocationData();
+        } else {
+          setChilddata1([]);
+          setChilddata2([]);
+          setChilddata3([]);
+          setChilddata4([]);
+          setLocationdata([]);
+        }
+      } else {
+        console.log("Calling loadFormData for Other");
+        fetchData();
+        fetchLocationData();
+      }
+  
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
+        console.log("Toast should be shown");
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, dateRange, selectedCorp, selectedLocation]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus, selectedLocation]);
+
 
 
   return (
@@ -117,8 +147,8 @@ const Section = ({
                   id="ep1"
                   className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <p>
+                  <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                    <p className="mb-2">
                       Percentage of individuals within the organization’s
                       governance bodies{" "}
                     </p>
@@ -142,8 +172,8 @@ const Section = ({
                   id="ep2"
                   className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <p>
+                  <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                    <p className="mb-2">
                     Ratio of basic salary by Gender					
                     </p>
  
@@ -165,8 +195,8 @@ const Section = ({
                   id="ep3"
                   className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <p>
+                  <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                    <p className="mb-2">
                     Ratio of remuneration by Gender										
                     </p>
  
@@ -188,8 +218,8 @@ const Section = ({
                   id="ep4"
                   className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <p>
+                  <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                    <p className="mb-2">
                     Ratio of the entry-level wage to the minimum wage by gender and significant locations of operation 													
                     </p>
  
@@ -217,7 +247,7 @@ const Section = ({
                 backgroundColor: "white",
                 paddingBottom: "1rem",
               }}
-              className=" mb-8 me-2"
+                   className="mb-8 me-2 hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block"
             >
               <TableSidebar />
             </div>

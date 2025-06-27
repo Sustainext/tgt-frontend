@@ -103,7 +103,7 @@ const CurrencyWidget = (props) => {
           </div>
         </div>
 
-        <div className="flex items-center border border-gray-300 rounded-md w-[50%]">
+        <div className="flex items-center border border-gray-300 rounded-md w-[100%] xl:w-[50%] lg:w-[50%] md:w-[50%] 2k:w-[50%] 4k:w-[50%] 2xl:w-[50%]">
           <input
             type={uiSchema["ui:inputfildtype"] || "text"}
             placeholder="Enter amount"

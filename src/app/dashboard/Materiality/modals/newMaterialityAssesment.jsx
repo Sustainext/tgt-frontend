@@ -574,7 +574,7 @@ const handleDateChange = (newRange) => {
                     type="radio"
                     value="accordance"
                     checked={assessmentApproach === "accordance"}
-                    className="form-radio h-4 w-4 accent-[#008000]"
+                    className="form-radio h-4 w-4 accent-green-600"
                   />
                   <label
                     htmlFor="accordance"
@@ -602,7 +602,7 @@ const handleDateChange = (newRange) => {
                     type="radio"
                     value="reference"
                     checked={assessmentApproach === "reference"}
-                    className="form-radio h-4 w-4 accent-[#008000]"
+                    className="form-radio h-4 w-4 accent-green-600"
                   />
                   <label
                     htmlFor="reference"
@@ -848,7 +848,7 @@ const handleDateChange = (newRange) => {
               </div>
               <div className="flex justify-end items-center mt-5">
                 <button
-                  className="w-2/6 h-full mr-2 py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+                  className="xl:w-2/6 h-full mr-2 py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
                   onClick={handleSubmit}
                 >
                   Start Materiality Assessment

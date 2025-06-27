@@ -63,7 +63,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
   const [currencyValue, setCurrencyValue] = useState(value.currencyValue || "");
   const [wages, setWages] = useState(value.wages || {});
   const [error, setError] = useState(""); // Error state for duplicate locations
-
+console.log("locations data",locations);
   // Debounce the onChange handler to prevent too many updates
   const debouncedOnChange = useDebounce((formData) => {
     onChange(formData);
@@ -193,7 +193,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
             <button
               type="button"
               onClick={addRow}
-              className="text-blue-500 flex items-center ml-1"
+              className="text-blue-500 flex items-center ml-1 text-[14px]"
             >
               Add Row <MdAdd className="ml-2" />
             </button>
@@ -275,7 +275,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
         <p className="text-[14px] text-gray-500  flex mb-4">Select Currency</p>
         <Select
           styles={customStyles}
-          className="block w-[20vw] text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-[12px] sm:leading-5 border-b-2 border-gray-300 mb-4"
+          className="block w-[64vw] xl:w-[20vw] lg:w-[20vw] md:w-[20vw] 2x:w-[20vw] 4k:w-[20vw] 2k:w-[20vw] 3xl:w-[20vw] text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-[12px] sm:leading-5 border-b-2 border-gray-300 mb-4"
           onChange={handleCurrencyChange}
           value={
             currencyOptions.find((option) => option.value === currencyValue) ||

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import {MdFilePresent} from "react-icons/md";
 
@@ -67,6 +67,18 @@ const MyTaskReviewModal = ({
     onClose();
   };
 
+  const getStatusLabel = (status) => {
+    const labels = {
+      not_started: "Not Started",
+      in_progress: "In Progress",
+      under_review: "Under Review",
+      completed: "Completed",
+      approved: "Approved",
+      reject: "Rejected",
+    };
+    return labels[status] || status;
+  };
+
   const statusMap = {
     in_progress: "text-yellow-500",
     approved: "text-green-600",
@@ -125,29 +137,29 @@ const MyTaskReviewModal = ({
                     statusMap[task.task_status] || "text-gray-500"
                   }`}
                 >
-                  {task.task_status.replace("_", " ")}{" "}
+                  {getStatusLabel(task.task_status)}
                 </div>
 
                 {/* Assigned on */}
                 <div className="text-gray-600 text-sm">Assigned on</div>
                 <div className="col-span-2 text-sm">
-                  {task?.assigned_date || "24/10/2025"}
+                  {task?.created_at.split('T')[0] || "Not available"}
                 </div>
 
                 {/* Due Date */}
                 <div className="text-gray-600 text-sm">Due Date</div>
                 <div className="col-span-2 text-sm">
-                  {task?.deadline || "24/10/2025"}
+                  {task?.deadline || "Not available"}
                 </div>
 
                 {/* Assigned By */}
                 <div className="text-gray-600 text-sm">Assigned by</div>
                 <div className="col-span-2">
                   <p className="text-sm">
-                    {task?.assign_by_user_name || "George Washington Bunny"}
+                    {task?.assign_by_user_name || "Not available"}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {task?.assign_by_email || "Bugs@acmecorp.com"}
+                    {task?.assign_by_email || "Not available"}
                   </p>
                 </div>
 
@@ -164,7 +176,7 @@ const MyTaskReviewModal = ({
                 {/* Comments */}
                 <div className="text-gray-600 text-sm">Comments</div>
                 <div className="col-span-2 text-sm whitespace-pre-wrap">
-                  {task?.comments_assignee}
+                  {task?.comments_assignee || '-'}
                 </div>
 
                 {/* Attachment */}
@@ -172,24 +184,24 @@ const MyTaskReviewModal = ({
                 <div className="col-span-2">
                   <div className="flex items-center gap-2 text-sm">
                     <MdFilePresent className="w-7 h-7 text-green-600" />
-                    <div>
+                    {task.file_data?.url ? <div>
                       <button
                         onClick={() => setShowFilePreview(true)}
                         className="text-blue-600 hover:underline"
                       >
-                        {task.file_data.name}
+                        {task.file_data?.name}
                       </button>
                       <p className="text-xs text-gray-500">
                         {new Date(
-                          task.file_data.uploadDateTime
+                          task.file_data?.uploadDateTime
                         ).toLocaleDateString("en-GB", {
                           day: "2-digit",
                           month: "2-digit",
                           year: "2-digit",
                         })}{" "}
-                        • {task.file_data.size / 1000} kB
+                        • {task.file_data?.size / 1000} kB
                       </p>
-                    </div>
+                    </div> : "No file available"}
                   </div>
                 </div>
               </div>
@@ -256,7 +268,7 @@ const MyTaskReviewModal = ({
                         value={usernameasssin}
                         onChange={(e) => setUsernameassin(e.target.value)}
                       >
-                        <option value="">Select new user</option>
+                        <option value="">Select new user*</option>
                         {userlist?.map((item, index) => (
                           <option key={index} value={item.id}>
                             {item.username}
@@ -267,7 +279,7 @@ const MyTaskReviewModal = ({
 
                     <div className="mb-5">
                       <h5 className="text-left text-sm mb-1">
-                        Assign a new due date
+                        Assign a new due date*
                       </h5>
                       <input
                         type="date"
@@ -291,7 +303,7 @@ const MyTaskReviewModal = ({
                   <>
                     <div className="mb-5">
                       <h5 className="text-left text-sm mb-1">
-                        Assign a new due date
+                        Assign a new due date*
                       </h5>
                       <input
                         type="date"

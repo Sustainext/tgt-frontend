@@ -84,9 +84,13 @@ export function AuthProvider({ children }) {
       saveToLocalStorage("client_key", client_key);
       saveToLocalStorage("permissions", permissions);
       saveToLocalStorage("custom_role", newrole);
-      saveToLocalStorage("isAdmin", newrole);
+      saveToLocalStorage("isAdmin", Boolean(newrole));
       saveToLocalStorage("textcustomrole", customrole);
       Cookies.set("permissions", JSON.stringify(permissions), {
+        secure: true,
+        sameSite: "strict",
+      });
+      Cookies.set("refresh", JSON.stringify(refreshToken), {
         secure: true,
         sameSite: "strict",
       });
@@ -244,6 +248,10 @@ export function AuthProvider({ children }) {
       Cookies.remove("token");
       Cookies.remove("permissions");
       Cookies.remove("isAdmin");
+      Cookies.remove("selected_framework_id");
+      Cookies.remove("selected_disclosures");
+      Cookies.remove("tcfd_sector");
+      Cookies.remove("tcfd_sector_type");
       localStorage.clear();
     } catch (error) {
       console.error("Logout error:", error);

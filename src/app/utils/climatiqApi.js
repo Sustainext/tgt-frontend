@@ -1,64 +1,73 @@
-import {
-  categoriesToAppend,
-  categoryMappings,
-} from "../shared/data/customActivities";
+import { 
+  categoriesToAppend, 
+  categoryMappings, 
+  shouldFetchFromCustomMapping 
+} from "../shared/data/customActivities";  
 
 // Cache for storing API responses
 const requestCache = new Map();
 const CACHE_TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
-const createCacheKey = (params) => {
-  return JSON.stringify(params);
-};
+const createCacheKey = (params) => JSON.stringify(params);
 
-export async function fetchClimatiqActivities({
-  subcategory,
-  page = 1,
-  region,
-  year,
-  customFetchExecuted = false,
+export async function fetchClimatiqActivities({ 
+  subcategory, 
+  unit_type='*',
+  page = 1, 
+  region, 
+  year, 
+  customFetchExecuted = false, 
 }) {
+  console.log(`\n=== fetchClimatiqActivities called ===`);
+  console.log(`Params:`, { subcategory, unit_type, page, region, year }); // Log unit_type
+
   // Adjust year if it's 2025
   const adjustedYear = year === "2025" || year === 2025 ? "2024" : year;
-
-  const cacheKey = createCacheKey({
-    subcategory,
-    page,
-    region,
-    year: adjustedYear,
-    customFetchExecuted,
+  
+  const cacheKey = createCacheKey({ 
+    subcategory, 
+    unit_type, // Include unit_type in cache key
+    page, 
+    region, 
+    year: adjustedYear
   });
 
-  // Check cache
+  // Check cache with single return point
   const now = Date.now();
-  const cachedResponse = requestCache.get(cacheKey);
-  if (cachedResponse && now - cachedResponse.timestamp < CACHE_TIMEOUT) {
-    return cachedResponse.data;
+  if (requestCache.has(cacheKey)) {
+    const cachedResponse = requestCache.get(cacheKey);
+    if (now - cachedResponse.timestamp < CACHE_TIMEOUT) {
+      console.log(`Returning cached data for key: ${cacheKey}`);
+      return cachedResponse.data;
+    }
   }
 
   let activitiesData = [];
   let wildcardActivitiesData = [];
   let yearlyResponseData = [];
   let customFetchData = [];
+  let wildcardFetched = false; // Prevent multiple wildcard fetches
 
   // Helper function to make the API call
   const fetchData = async (params) => {
-    // Ensure year is adjusted in the helper function as well
-    if (params.year === "2025" || params.year === 2025) {
-      params.year = "2024";
+    console.log(`Fetching data with params:`, params);
+
+    // Adjust year for Electricity
+    if (params.year === "2024" && params.subcategory === "Electricity") {
+      params.year = "2023";
     }
 
-    if (
-      params.region &&
-      !params.region.endsWith("*") &&
-      params.region !== "*"
-    ) {
+    // Append '*' to the region if needed
+    if (params.region && !params.region.endsWith("*") && params.region !== "*") {
       params.region = `${params.region}*`;
     }
 
     const queryString = new URLSearchParams(params).toString();
+    console.log(`Final API Request: /api/climatiq?${queryString}`);
+
     const response = await fetch(`/api/climatiq?${queryString}`);
     if (!response.ok) {
+      console.error("API request failed:", response.statusText);
       throw new Error("Failed to fetch activities");
     }
     return response.json();
@@ -66,17 +75,16 @@ export async function fetchClimatiqActivities({
 
   // Helper function to fetch all pages
   const fetchAllPages = async (params, initialResponse) => {
+    console.log(`Fetching all pages for`, params);
     const allResults = [...initialResponse.results];
     const totalPages = initialResponse.last_page;
 
     if (totalPages > 1) {
       const pagePromises = [];
       for (let pageNum = 2; pageNum <= totalPages; pageNum++) {
+        console.log(`Fetching additional page: ${pageNum}`);
         pagePromises.push(
-          fetchData({
-            ...params,
-            page: pageNum,
-          })
+          fetchData({ ...params, page: pageNum })
         );
       }
 
@@ -86,20 +94,25 @@ export async function fetchClimatiqActivities({
       });
     }
 
+    console.log(`Fetched ${allResults.length} results across all pages.`);
     return allResults;
   };
 
   try {
-    // Initial fetch with region
-    const initialData = await fetchData({
-      subcategory,
-      region,
-      year: adjustedYear,
-      page,
+    console.log(`Starting initial data fetch...`);
+    
+    // Initial fetch with region and unit_type
+    const initialData = await fetchData({ 
+      subcategory, 
+      unit_type, // Pass unit_type to API
+      region, 
+      year: adjustedYear, 
+      page, 
     });
 
+    console.log(`Initial fetch returned ${initialData.results.length} results.`);
     activitiesData = await fetchAllPages(
-      { subcategory, region, year: adjustedYear },
+      { subcategory, unit_type, region, year: adjustedYear }, // Include unit_type
       initialData
     );
 
@@ -109,107 +122,110 @@ export async function fetchClimatiqActivities({
       (count, activity) => count + (activity.access_type === "private" ? 1 : 0),
       0
     );
-
     const effectiveCount = totalResults - totalPrivateResults;
 
-    if (effectiveCount <= 5) {
-      // Wildcard search
+    console.log(`Total Results: ${totalResults}, Private Results: ${totalPrivateResults}, Effective Count: ${effectiveCount}`);
+
+    if (effectiveCount <= 5 && !wildcardFetched) {
+      console.log(`Performing wildcard search...`);
+      wildcardFetched = true; // Prevent second wildcard fetch
       const wildcardInitialData = await fetchData({
         subcategory,
+        unit_type, // Include unit_type in wildcard search
         page,
         region: "*",
         year: adjustedYear,
       });
 
       wildcardActivitiesData = await fetchAllPages(
-        { subcategory, region: "*", year: adjustedYear },
+        { subcategory, unit_type, region: "*", year: adjustedYear }, // Include unit_type
         wildcardInitialData
       );
 
-      if (wildcardInitialData.last_page === 0) {
-        // Historical data search
-        for (let i = parseInt(adjustedYear) - 1; i >= 2019; i--) {
-          const yearlyInitialData = await fetchData({
-            subcategory,
-            page,
-            region,
-            year: i,
-          });
-
-          if (yearlyInitialData.results.length > 0) {
-            yearlyResponseData = await fetchAllPages(
-              { subcategory, region, year: i },
-              yearlyInitialData
-            );
-            break;
-          }
-        }
-      }
+      wildcardActivitiesData = wildcardActivitiesData.filter(
+        (activity) => activity.access_type !== "private"
+      );
     }
 
-    // Custom activities fetch if needed
+    // Custom Fetch Logic
     if (
       categoriesToAppend.includes(subcategory) &&
       categoryMappings[subcategory] &&
       !customFetchExecuted
     ) {
-      const customFetchPromises = categoryMappings[subcategory].map(async (entry) => {
-        const initialCustomData = await fetchData({
-          subcategory,
-          page,
-          year: entry.year === "2025" || entry.year === 2025 ? "2024" : entry.year,
-          source: entry.source,
-        });
-
-        return fetchAllPages(
-          {
+      console.log(`Fetching custom category mappings...`);
+      const customFetchPromises = categoryMappings[subcategory]
+        .filter((entry) => {
+          if (!entry.checkConditions) return true;
+          return shouldFetchFromCustomMapping(entry, {
+            year: adjustedYear,
+            region,
+            unit_type, // Pass unit_type to condition check
+          });
+        })
+        .map(async (entry) => {
+          console.log(`Fetching custom data from source: ${entry.source}`);
+          const initialCustomData = await fetchData({
             subcategory,
-            year: entry.year === "2025" || entry.year === 2025 ? "2024" : entry.year,
+            unit_type, // Include unit_type in custom fetch
+            page,
+            year: entry.year,
             source: entry.source,
-          },
-          initialCustomData
-        );
-      });
+            ...(entry.category && { category: entry.category }),
+            ...(entry.region && { region: entry.region }),
+          });
+
+          return fetchAllPages(
+            { 
+              subcategory, 
+              unit_type, // Include unit_type
+              year: entry.year, 
+              source: entry.source 
+            },
+            initialCustomData
+          );
+        });
 
       const customResults = await Promise.all(customFetchPromises);
       customFetchData = customResults.flat();
     }
 
-    // Combine all results
+    // Combine and sort results
     const combinedResults = [
       ...activitiesData,
       ...wildcardActivitiesData,
       ...yearlyResponseData,
       ...customFetchData,
-    ];
-
-    // Sort results
-    combinedResults.sort((a, b) => {
-      if (a.access_type === "private" && b.access_type !== "private") return -1;
-      if (a.access_type !== "private" && b.access_type === "private") return 1;
-      return a.name.localeCompare(b.name);
+    ].sort((a, b) => {
+      const nameA = (a.name || "").toLowerCase();
+      const nameB = (b.name || "").toLowerCase();
+      return nameA.localeCompare(nameB);
     });
+
+    console.log(`Total combined results: ${combinedResults.length}`);
 
     const result = {
       results: combinedResults,
-      totalPages: 1, // Since we're returning all results, we set totalPages to 1
+      totalPages: 1,
       hasCustomData: customFetchData.length > 0,
     };
 
     // Cache the result
-    requestCache.set(cacheKey, {
-      data: result,
-      timestamp: now,
-    });
+    requestCache.set(cacheKey, { data: result, timestamp: now });
 
-    // Clean up old cache entries
-    for (const [key, value] of requestCache.entries()) {
-      if (now - value.timestamp > CACHE_TIMEOUT) {
+    // Clear cache when subcategory or unit_type changes
+    requestCache.forEach((value, key) => {
+      if (
+        !key.includes(`"subcategory":"${subcategory}"`) || 
+        (unit_type && !key.includes(`"unit_type":"${unit_type}"`))
+      ) {
         requestCache.delete(key);
       }
-    }
+    });
 
+    console.log(`Returning final data set with ${result.results.length} results.`);
     return result;
+
   } catch (error) {
     console.error("Error fetching activities:", error);
     throw error;

@@ -26,7 +26,7 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      category: { type: "string", title: "Employee Category" },
+      category: { type: "string", title: "Category" },
       male: { type: "string", title: "Male" },
       female: { type: "string", title: "Female" },
       nonBinary: { type: "string", title: "Non-Binary" },
@@ -49,7 +49,6 @@ const schema = {
         title: "Vulnerable Communities",
       },
     },
-
   },
 };
 
@@ -58,28 +57,30 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        title: "Employee Category",
-        tooltip: "Please specify the category of the organisation's governance body.",
+        title: "Category",
+        tooltip:
+          "Please specify the category of the organisation's governance body.",
         colSpan: 1,
-        tooltipdispaly:"block",
+        tooltipdispaly: "block",
       },
       {
         title: "Gender",
         tooltip: "Please specify the gender of individuals.",
         colSpan: 4,
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
         title: "Age Group",
         tooltip: "Please specify the age group of individuals.",
         colSpan: 4,
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
         title: "Diversity groups",
-        tooltip: "Please specify the diversity group. Indicator of diversity: indicator of diversity for which the organization gathers data Examples: age, ancestry and ethnic origin, citizenship, creed, disability, gender",
+        tooltip:
+          "Please specify the diversity group. Indicator of diversity: indicator of diversity for which the organization gathers data Examples: age, ancestry and ethnic origin, citizenship, creed, disability, gender",
         colSpan: 2,
-        tooltipdispaly:"block",
+        tooltipdispaly: "block",
       },
     ],
     subTitles: [
@@ -89,7 +90,7 @@ const uiSchema = {
         tooltip: "Please specify the category.",
         colSpan: 1,
         type: "text",
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
         title: "Male",
@@ -97,7 +98,7 @@ const uiSchema = {
         tooltip: "Please specify the number of male individuals.",
         colSpan: 1,
         type: "number",
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
         title: "Female",
@@ -105,7 +106,7 @@ const uiSchema = {
         tooltip: "Please specify the number of female individuals.",
         colSpan: 1,
         type: "number",
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
         title: "Non-Binary",
@@ -113,15 +114,15 @@ const uiSchema = {
         tooltip: "Please specify the number of non-binary individuals.",
         colSpan: 1,
         type: "number",
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
-        title: "Total number of employee",
+        title: "Total number of individuals within the organisation's governance bodies",
         title2: "totalGender",
         tooltip: "Please specify the total number of individuals.",
         colSpan: 1,
         type: "number",
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
         title: "< 30 years",
@@ -129,7 +130,7 @@ const uiSchema = {
         tooltip: "Please specify the number of individuals under 30 years old.",
         colSpan: 1,
         type: "number",
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
         title: "30-50 years",
@@ -138,7 +139,7 @@ const uiSchema = {
           "Please specify the number of individuals between 30 and 50 years old.",
         colSpan: 1,
         type: "number",
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
         title: "> 50 years",
@@ -146,15 +147,15 @@ const uiSchema = {
         tooltip: "Please specify the number of individuals over 50 years old.",
         colSpan: 1,
         type: "number",
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
-        title: "Total number of employee",
+        title: "Total number of individuals within the organisation's governance bodies",
         title2: "totalAge",
         tooltip: "Please specify the total number of individuals.",
         colSpan: 1,
         type: "number",
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
         title: "Minority group",
@@ -162,7 +163,7 @@ const uiSchema = {
         tooltip: "Please specify the number of minority group individuals.",
         colSpan: 1,
         type: "number",
-        tooltipdispaly:"none",
+        tooltipdispaly: "none",
       },
       {
         title: "Vulnerable Groups",
@@ -171,13 +172,20 @@ const uiSchema = {
           "Please specify the type of vulnerable group and the number of individuals from the vulnerable groups present in the organisation's governance body. Vunerable Group definition: Group of individuals with a specific condition or characteristic (e.g., economic, physical, political, social) that could experience negative impacts as a result of the organization’s activities more severely than the general population.",
         colSpan: 1,
         type: "number",
-        tooltipdispaly:"block",
+        tooltipdispaly: "block",
       },
     ],
   },
 };
 
-const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const Screen1 = ({
+  selectedOrg,
+  selectedCorp,
+  location,
+  year,
+  month,
+  togglestatus,
+}) => {
   const initialFormData = [
     {
       category: "",
@@ -286,15 +294,24 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -309,10 +326,16 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Number of individuals within the organization’s governance bodies
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -338,9 +361,9 @@ age group and diversity group. "
             </h2>
           </div>
 
-          <div className="w-[20%]">
-            <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 405-1a
                 </div>
@@ -366,10 +389,17 @@ age group and diversity group. "
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

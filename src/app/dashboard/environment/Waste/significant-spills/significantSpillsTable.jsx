@@ -6,7 +6,7 @@ import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import dateWidget from "../../../../shared/widgets/Input/dateWidget";
 import selectWidget from "../../../../shared/widgets/Select/selectWidget";
-import CustomUnitWidget from '../../../../shared/widgets/Select/CustomUnitWidget'
+import CustomUnitWidget from "../../../../shared/widgets/Select/CustomUnitWidget";
 import inputWidget from "../../../../shared/widgets/Input/inputWidget";
 import CustomFileUploadWidget from "../../../../shared/widgets/CustomFileUploadWidget";
 import AssignToWidget from "../../../../shared/widgets/assignToWidget";
@@ -21,7 +21,7 @@ import { Oval } from "react-loader-spinner";
 import selectWidget3 from "../../../../shared/widgets/Select/selectWidget3";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import TextareasectionWidgets from "../../../../shared/widgets/Textarea/TextareasectionWidgets";
-import DisabledTextAreaWidget from '../../../../shared/widgets/Textarea/DisabledTextArea'
+import DisabledTextAreaWidget from "../../../../shared/widgets/Textarea/DisabledTextArea";
 import LocationSelectWidget from "../../../../shared/widgets/Select/locationSelectWidget";
 const widgets = {
   inputWidget: inputWidget,
@@ -34,7 +34,7 @@ const widgets = {
   selectWidget3: selectWidget3,
   DisabledTextAreaWidget: DisabledTextAreaWidget,
   LocationSelectWidget: LocationSelectWidget,
-  CustomUnitWidget:CustomUnitWidget
+  CustomUnitWidget: CustomUnitWidget,
 };
 
 const view_path = "gri_environment_waste_significant_spills_306_3b_3c_q1";
@@ -84,7 +84,7 @@ const schema = {
           "Gallon (US)",
           "Barrel (bb)",
           "Thousands of barrel",
-          "Other (please specify)"
+          "Other (please specify)",
         ],
         tooltiptext: "Select the correct unit from the given dropdown",
         display: "block",
@@ -223,7 +223,7 @@ const validateRows = (data) => {
     if (!row.SpillSignificant) {
       rowErrors.SpillSignificant = "Significant of Spill is required";
     }
-    if (row.SpillSignificant=="Yes" && !row.Impact) {
+    if (row.SpillSignificant == "Yes" && !row.Impact) {
       rowErrors.Impact = "Impact is required";
     }
 
@@ -231,7 +231,12 @@ const validateRows = (data) => {
   });
 };
 
-const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
+const SignificantSpillsTable = ({
+  selectedCorp,
+  year,
+  selectedOrg,
+  togglestatus,
+}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -342,39 +347,59 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      fetchloctiondata();
-      toastShown.current = false; // Reset the flag when valid data is present
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+        fetchloctiondata();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+        fetchloctiondata();
+      }
+
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
+  // useEffect(() => {
+  //   if (selectedOrg && year) {
+  //     loadFormData();
+  //     fetchloctiondata();
+  //     toastShown.current = false; // Reset the flag when valid data is present
+  //   } else {
+  //     // Only show the toast if it has not been shown already
+  //     if (!toastShown.current) {
+  //       toastShown.current = true; // Set the flag to true after showing the toast
+  //     }
+  //   }
+  // }, [selectedOrg, year, selectedCorp]);
 
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => {
-      const updatedItem = { ...item }; 
+      const updatedItem = { ...item };
 
       if (updatedItem.SpillSignificant === "Yes") {
         setEnabledRows((prev) => {
           const newEnabledRows = [...prev];
-          newEnabledRows[index] = true; 
+          newEnabledRows[index] = true;
           return newEnabledRows;
         });
       } else if (updatedItem.SpillSignificant === "No") {
         setEnabledRows((prev) => {
           const newEnabledRows = [...prev];
-          newEnabledRows[index] = false; 
+          newEnabledRows[index] = false;
           return newEnabledRows;
         });
-      
       }
       return updatedItem;
     });
-    setFormData(newData); 
+    setFormData(newData);
   };
 
   const handleSubmit = (e) => {
@@ -389,7 +414,7 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
     );
     if (!hasErrors) {
       console.log("No validation errors, proceeding to update data"); // Debugging log
-        updateFormData();
+      updateFormData();
     } else {
       console.log("Validation errors found, submission aborted"); // Debugging log
     }
@@ -398,7 +423,7 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-    setEnabledRows((prev) => [...prev, false]); 
+    setEnabledRows((prev) => [...prev, false]);
   };
 
   const updateFormDatanew = (updatedData) => {
@@ -409,7 +434,7 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
-    setEnabledRows((prev) => prev.filter((_, i) => i !== index)); 
+    setEnabledRows((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -425,21 +450,22 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
                 formData={formData}
                 onChange={handleChange}
                 validator={validator}
-                formContext={{enabledRows, validationErrors }}
+                formContext={{ enabledRows, validationErrors }}
                 widgets={{
                   ...widgets,
 
-                  DisabledTextAreaWidget:(props)=>{
+                  DisabledTextAreaWidget: (props) => {
                     const match = props.id.match(/^root_(\d+)/);
-                const index = match ? parseInt(match[1], 10) : null;
-                    const isEnabled = index !== null ? enabledRows[index] : false
-              
-                    return(
+                    const index = match ? parseInt(match[1], 10) : null;
+                    const isEnabled =
+                      index !== null ? enabledRows[index] : false;
+
+                    return (
                       <DisabledTextAreaWidget
-                      {...props}
-                      isEnabled={isEnabled} // Pass it as a prop if needed
-                    />
-                    )
+                        {...props}
+                        isEnabled={isEnabled} // Pass it as a prop if needed
+                      />
+                    );
                   },
 
                   LocationSelectWidget: (props) => (
@@ -490,21 +516,34 @@ const SignificantSpillsTable = ({ selectedCorp, year, selectedOrg }) => {
         )}
       </div>
       <div></div>
+      {(togglestatus === "Corporate" && selectedCorp) ||
+      (togglestatus !== "Corporate" && selectedOrg && year) ? (
+        <div className="flex justify-start mt-4 right-1">
+          <button
+            type="button"
+            className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5"
+            onClick={handleAddNew}
+          >
+            <MdAdd className="text-lg" /> Add Row
+          </button>
+        </div>
+      ) : null}
 
-      <div className="flex justify-start mt-4 right-1">
-        <button
-          type="button"
-          className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5"
-          onClick={handleAddNew}
-        >
-          <MdAdd className="text-lg" /> Add Row
-        </button>
-      </div>
       <div className="mb-4">
         <button
           type="button"
-          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
+          className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+            (!selectedCorp && togglestatus === "Corporate") ||
+            !selectedOrg ||
+            !year
+              ? "cursor-not-allowed opacity-90"
+              : ""
+          }`}
           onClick={handleSubmit}
+          disabled={
+            (togglestatus === "Corporate" && !selectedCorp) ||
+            (togglestatus !== "Corporate" && (!selectedOrg || !year))
+          }
         >
           Submit
         </button>

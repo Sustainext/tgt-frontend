@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -9,22 +9,32 @@ import Screen1 from "./skill-upgrade";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
-import SocialTopBar from '../../socialTopBar'
+import SocialTopBar from "../../socialTopBar";
 
-const Skillupgrade = ({apiData}) => {
-  const { corporate_id, organization_id,materiality_year, start_date, end_date, loading, error } = useSelector(
-        (state) => state.materialitySlice
-      );
-      const [year, setYear] = useState(materiality_year?materiality_year:'');
-      const [selectedOrg, setSelectedOrg] = useState(organization_id?organization_id:'');
-      const [selectedCorp, setSelectedCorp] = useState(corporate_id?corporate_id:'');
+const Skillupgrade = ({ apiData,setMobileopen }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
- 
+
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
- 
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -44,36 +54,55 @@ const Skillupgrade = ({apiData}) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 404 - 2',
-        toggle:'46',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName: "GRI 404 - 2",
+      toggle: "46",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P3-E8",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-8",
     },
     {
-      tagName:'SDG 8',
-      toggle:'47',
-      textColor:"#fff",
-      bgColor:"bg-red-900"
-  },
-   
-   
-   
-   
-]
+      tagName: "BRSR C-P3-L4",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Leadership  Indicators-4",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 8",
+      toggle: "47",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
+    },
+  ];
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Training and Development'} topic={'SocHumanCapitalDevelopment'} />
-       
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Training and Development"}
+          topic={"SocHumanCapitalDevelopment"}
+          brsr={brsr}
+          griData={griData}
+          setMobileopen={setMobileopen}
+        />
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Programs for upgrading employee skills and transition assistance programs
+            Programs for upgrading employee skills and transition assistance
+            programs
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -89,8 +118,8 @@ const Skillupgrade = ({apiData}) => {
                         </ReactTooltip> */}
           </h6>
         </div>
-       <div
-           className={`${
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -114,9 +143,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -142,12 +178,14 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        togglestatus={togglestatus}
       />
     </>
   );

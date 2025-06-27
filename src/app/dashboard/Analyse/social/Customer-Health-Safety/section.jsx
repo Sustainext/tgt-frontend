@@ -7,7 +7,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from "react-loader-spinner";
-const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
+const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen,togglestatus }) => {
   const [customerhealth, setCustomerhealth] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -57,17 +57,25 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && dateRange.start<dateRange.end) {
+    if (selectedOrg &&  dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
         fetchData();
-        toastShown.current = false;
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setCustomerhealth([]);
+       
+      } else {
+        fetchData();
+      }
+
+      toastShown.current = false;
     } else {
-        if (!toastShown.current) {
-            toastShown.current = true;
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-}, [selectedOrg, dateRange, selectedCorp]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus]);
   return (
-    <div>
+    <div  className="h-[100vh]">
       <div>
     
         <div className="flex">
@@ -83,8 +91,8 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
                     service categories
                   </p>
                 </div>
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500 text-[13px]">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex justify-between items-center mb-2">
+                  <p className="text-gray-500 text-[13px] mb-2">
                     Percentage of significant product and service categories
                   </p>
 
@@ -109,7 +117,7 @@ const Section = ({ selectedOrg,selectedCorp,dateRange,isBoxOpen }) => {
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className=" mb-8 me-2"
+            className="mb-8 me-2 hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

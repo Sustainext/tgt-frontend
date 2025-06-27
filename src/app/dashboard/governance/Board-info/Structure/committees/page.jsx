@@ -67,6 +67,8 @@ const CommitteeOfHighestGovernanceBody = ({
   selectedOrg,
   selectedCorp,
   year,
+  togglestatus,
+  tcfdtaga = [],
 }) => {
   const [formData, setFormData] = useState([
     {
@@ -177,16 +179,21 @@ const CommitteeOfHighestGovernanceBody = ({
     }
   };
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      }  else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -196,9 +203,16 @@ const CommitteeOfHighestGovernanceBody = ({
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
+    
+    <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Committees of the highest governance body
               <MdInfoOutline
@@ -222,15 +236,33 @@ const CommitteeOfHighestGovernanceBody = ({
               />
             </h2>
           </div>
-          <div className="w-[20%]">
-            <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 2-9-b
+           <div className="w-full xl:w-[35%] lg:w-[35%] md:w-[35%] 2xl:w-[35%] 4k:w-[35%] 2k:w-[35%] mb-4">
+            <div
+              className={`flex flex-wrap gap-2 items-center ${
+              tcfdtaga.length === 0 ? "justify-end" : "justify-end"
+              }`}
+            >
+           
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
+                   GRI 2-9-b
                 </div>
               </div>
+
+           
+                  {(tcfdtaga ?? []).map((item) => (
+                <div
+                  key={item.id || item.tagName}
+                  className="w-[110px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center"
+                >
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
+                    {item.tagName}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+       
     
         </div>
         <div className="mx-2">
@@ -247,10 +279,17 @@ const CommitteeOfHighestGovernanceBody = ({
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

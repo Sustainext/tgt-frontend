@@ -12,7 +12,7 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-
+  const [togglestatus, setToggleStatus] = useState("Organization");
   return (
     <>
       <AnalyseHeader7
@@ -24,6 +24,7 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
         setDateRange={setDateRange}
         selectedLocation={selectedLocation}
         setSelectedLocation={setSelectedLocation}
+        setToggleStatus={setToggleStatus}
       />
       <Section
         selectedOrg={selectedOrg}
@@ -31,6 +32,7 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
         dateRange={dateRange}
         selectedLocation={selectedLocation}
         isBoxOpen={isBoxOpen}
+        togglestatus={togglestatus}
       />
     </>
   );

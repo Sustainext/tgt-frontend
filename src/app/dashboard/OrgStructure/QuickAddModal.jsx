@@ -3,7 +3,9 @@ import { Country, State, City } from "country-state-city";
 import industryList from "@/app/shared/data/sectors";
 import { post } from "@/app/utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
-
+import { showToast } from "@/app/utils/toastUtils";
+import axiosInstance from "../../utils/axiosMiddleware";
+import SearchableCityDropdown from "./forms/SearchableCityDropdown";
 const INITIAL_FORM_STATE = {
   name: "",
   country: "",
@@ -14,53 +16,181 @@ const INITIAL_FORM_STATE = {
   locationType: "",
 };
 
-const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
+const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
   const router = useRouter();
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
   const [subIndustries, setSubIndustries] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [formErrors, setFormErrors] = useState({});
-
+  const [countriesids, setCountriesids] = useState();
+  const [statesids, setStatesids] = useState();
+  const [selectedCountry, setSelectedCountry] = useState(``);
+  const [selectedState, setSelectedState] = useState(``);
+  const [selectedCity, setSelectedCity] = useState("");
   const handleCancel = () => {
     setFormData(INITIAL_FORM_STATE);
     setFormErrors({});
     setSubIndustries([]);
     setStates([]);
     setCities([]);
+    setSelectedCountry(``);
     onClose();
+
   };
+  const handleAddCity = async (cityName) => {
+    try {
+      // API request to create a new city
+      const response = await axiosInstance.post("geo_data/cities/create/", {
+        city_name: cityName,
+        state: statesids,
+      });
 
-  useEffect(() => {
-    // Only handle state/city updates for location type
-    if (type === "location" && formData.country) {
-      const statesOfCountry = State.getStatesOfCountry(formData.country);
-      setStates(statesOfCountry);
-      setCities([]);
-      setFormData((prev) => ({ ...prev, state: "", city: "" }));
-    }
-  }, [formData.country, type]);
+      // Assuming the response contains the newly created city object
+      const newCity = response.data;
 
-  useEffect(() => {
-    // Only handle city updates for location type
-    if (type === "location" && formData.country && formData.state) {
-      const citiesOfState = City.getCitiesOfState(
-        formData.country,
-        formData.state
-      );
-      setCities(citiesOfState);
-      setFormData((prev) => ({ ...prev, city: "" }));
+      // Add the newly created city to the state
+      setCities((prevCities) => [...prevCities, newCity]);
+
+      // Show a success toast message
+      toast.success("City added successfully!");
+
+      // Return the newly added city (optional)
+      return newCity;
+    } catch (error) {
+      console.error("Error adding city:", error);
+      // Show an error toast message
+      toast.error("Failed to add city. Please try again.");
+      // Handle error accordingly
+      throw new Error("Failed to add city");
     }
-  }, [formData.state, type]);
+  };
+  useEffect(() => {
+    const loadCountries = async () => {
+      try {
+        const response = await axiosInstance.get("/geo_data/countries/");
+        setCountries(response.data);
+      } catch (error) {
+        console.error("Failed to load countries:", error);
+      }
+    };
+
+    loadCountries();
+  }, []);
+  useEffect(() => {
+    const fetchStates = async () => {
+      if (type === "location" && countriesids) {
+        try {
+          const response = await axiosInstance.get(
+            `/geo_data/states/?country_id=${countriesids}`
+          );
+          setStates(response.data);
+          setCities([]);
+          setFormData((prev) => ({ ...prev, state: "", city: "" }));
+        } catch (err) {
+          console.error("Failed to fetch states:", err);
+        }
+      }
+    };
+
+    fetchStates();
+  }, [countriesids, type]);
+  useEffect(() => {
+    const fetchCities = async () => {
+      if (type === "location" && statesids) {
+        try {
+          const response = await axiosInstance.get(
+            `/geo_data/cities/?state_id=${statesids}`
+          );
+          setCities(response.data);
+          setFormData((prev) => ({ ...prev, city: "" }));
+        } catch (err) {
+          console.error("Failed to fetch cities:", err);
+        }
+      }
+    };
+
+    fetchCities();
+  }, [statesids, type]);
+
+  // useEffect(() => {
+  //   // Only handle state/city updates for location type
+  //   if (type === "location" && formData.country) {
+  //     const statesOfCountry = State.getStatesOfCountry(formData.country);
+  //     setStates(statesOfCountry);
+  //     setCities([]);
+  //     setFormData((prev) => ({ ...prev, state: "", city: "" }));
+  //   }
+  // }, [formData.country, type]);
+
+  // useEffect(() => {
+  //   // Only handle city updates for location type
+  //   if (type === "location" && formData.country && formData.state) {
+  //     const citiesOfState = City.getCitiesOfState(
+  //       formData.country,
+  //       formData.state
+  //     );
+  //     setCities(citiesOfState);
+  //     setFormData((prev) => ({ ...prev, city: "" }));
+  //   }
+  // }, [formData.state, type]);
+
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+
+  //   // Clear error when field is changed
+  //   setFormErrors((prev) => ({
+  //     ...prev,
+  //     [name]: "",
+  //   }));
+
+  //   if (name === "sector") {
+  //     const selectedIndustry = industryList.find(
+  //       (industry) => industry.industry === value
+  //     );
+  //     setSubIndustries(selectedIndustry?.subIndustries || []);
+  //   }
+  // };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
 
-    // Clear error when field is changed
+    if (name === "country") {
+      const [countryId, countryCode] = value.split(":");
+      setCountriesids(countryId);
+      setSelectedCountry(value);
+      console.log(value,"chekc selecte value");
+      setFormData((prev) => ({
+        ...prev,
+        country: countryCode,
+
+        state: "",
+        city: "",
+      }));
+    } else if (name === "state") {
+      const [stateId, stateName] = value.split(":");
+      setStatesids(stateId);
+      setSelectedState(value);
+      setFormData((prev) => ({
+        ...prev,
+        state: stateName,
+        city: "",
+      }));
+    } else if (name === "city") {
+      setSelectedCity(value);
+    } 
+    else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+
     setFormErrors((prev) => ({
       ...prev,
       [name]: "",
@@ -80,17 +210,27 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
     if (!formData.name.trim()) {
       errors.name = "Name is required";
     }
+    if (!formData.country) {
+      errors.country = "Country is required";
+    }
+
+    if (!formData.sector && (type === "corporate" || type === "organization")) {
+      errors.sector = "Sector is required";
+    }
+
+    if (type === "corporate") {
+      if (!formData.subIndustry) {
+        errors.subIndustry = "Sub Industry is required";
+      }
+    }
 
     if (type === "location") {
-      if (!formData.country) {
-        errors.country = "Country is required";
+      if (!formData.state) {
+        errors.state = "State is required";
       }
-      // if (!formData.state) {
-      //   errors.state = "State is required";
-      // }
-      // if (!formData.city) {
-      //   errors.city = "City is required";
-      // }
+      if (!formData.city) {
+        errors.city = "City is required";
+      }
     }
 
     setFormErrors(errors);
@@ -119,106 +259,224 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
 
     let endpoint = "";
     let payload = {};
+    let entityType = "";
 
     switch (type) {
       case "organization":
         endpoint = "/organization";
+        entityType = "Organization";
+        // payload = {
+        //   name: formData.name,
+        //   countryoperation: formData.country,
+        //   sector: formData.sector,
+        //   type_corporate_entity: "Office",
+        //   owner: "Default",
+        //   phone: 9876543210,
+        //   mobile: 9876543210,
+        //   website: "https://www.sustainext.ai",
+        //   fax: 234567,
+        //   employeecount: 100,
+        //   revenue: 100000,
+        //   date_format: "mm/dd/yyyy",
+        //   currency: "USD",
+        //   timezone: "+00:00",
+        //   language: "English",
+        //   active: true,
+        //   framework: "GRI",
+        //   subindustry: formData.subIndustry || "Default",
+        //   address: formData.address || "Bengaluru",
+        //   state: formData.state || "Karnataka",
+        //   city: formData.city || "Bengaluru",
+        //   from_date: formData.from_date || null,
+        //   to_date: formData.to_date || null,
+        //   no_of_employees: 100,
+        //   amount: null,
+        //   ownership_and_legal_form: null,
+        //   group: null,
+        //   type_of_corporate_entity: formData.type || "Default",
+        //   location_of_headquarters: formData.location || "Bengaluru",
+        //   sub_industry: "Default",
+        //   type_of_business_activities: null,
+        //   type_of_product: null,
+        //   type_of_services: null,
+        //   sdg: "SDG1",
+        //   rating: "rating1",
+        //   certification: null,
+        //   target: null,
+        //   username: "mahinder.singh@sustainext.ai",
+        // };
         payload = {
-          name: formData.name,
-          countryoperation: formData.country,
-          sector: formData.sector,
-          type_corporate_entity: "Office",
-          owner: "Default",
-          phone: 9876543210,
-          mobile: 9876543210,
-          website: "https://www.sustainext.ai",
-          fax: 234567,
-          employeecount: 100,
-          revenue: 100000,
-          date_format: "mm/dd/yyyy",
+          name: formData.name || "Entity 1",
+          type_corporate_entity: "Not Specified",
+          owner: "",
+          location_of_headquarters: "Not Specified",
+          phone: 9999999999,
+          mobile: "",
+          website: "Not Provided",
+          fax: "",
+          employeecount: 0,
+          revenue: 0,
+          sector: formData.sector || "General",
+          subindustry: formData.subIndustry || "General",
+          address: formData.address || "Not Provided",
+          country: formData.country || "N/A",
+          state: formData.state || "N/A",
+          city: formData.city || "N/A",
+          date_format: "YYYY/MM/DD",
           currency: "USD",
-          timezone: "+00:00",
-          language: "English",
-          active: true,
-          framework: "GRI",
-          subindustry: formData.subIndustry || "Default",
-          address: formData.address || "Bengaluru",
-          state: formData.state || "Karnataka",
-          city: formData.city || "Bengaluru",
+          timezone: "UTC",
           from_date: formData.from_date || null,
           to_date: formData.to_date || null,
-          no_of_employees: 100,
-          amount: null,
-          ownership_and_legal_form: null,
-          group: null,
-          type_of_corporate_entity: formData.type || "Default",
-          location_of_headquarters: formData.location || "Bengaluru",
-          sub_industry: "Default",
-          type_of_business_activities: null,
-          type_of_product: null,
-          type_of_services: null,
-          sdg: "SDG1",
-          rating: "rating1",
-          certification: null,
-          target: null,
-          username: "mahinder.singh@sustainext.ai",
+          sdg: [],
+          rating: [],
+          certification: [],
+          target: [],
+          framework: [1],
+          // language: data.generalDetails.language || 'English',
+          // active: true,
+          // no_of_employees: 100,
+          // amount: null,
+          // ownership_and_legal_form: null,
+          // group: null,
+          // type_of_corporate_entity: data.generalDetails.type || 'Default',
+          // sub_industry: 'General',
+          // type_of_business_activities: null,
+          // type_of_product: null,
+          // type_of_services: null,
+          // username: 'mahinder.singh@sustainext.ai',
         };
         break;
 
       case "corporate":
         endpoint = "/corporate";
+        entityType = "Corporate entity";
+        // payload = {
+        //   name: formData.name,
+        //   Country: formData.country,
+        //   sector: formData.sector,
+        //   subindustry: formData.subIndustry,
+        //   organization: parentNode.name,
+        //   corporatetype: "Default",
+        //   ownershipnature: "Default",
+        //   location_headquarters: "Default",
+        //   phone: 9876543210,
+        //   mobile: 9876543210,
+        //   website: "https://www.sustainext.ai",
+        //   fax: 234567,
+        //   employeecount: 100,
+        //   revenue: 100000,
+        //   currency: "USD",
+        //   timezone: "+00:00",
+        //   language: "English",
+        //   date_format: "mm/dd/yyyy",
+        //   framework: "GRI: With reference to",
+        // };
+
         payload = {
-          name: formData.name,
-          Country: formData.country,
-          sector: formData.sector,
-          subindustry: formData.subIndustry,
-          organization: parentNode.name,
-          corporatetype: "Default",
-          ownershipnature: "Default",
-          location_headquarters: "Default",
-          phone: 9876543210,
-          mobile: 9876543210,
-          website: "https://www.sustainext.ai",
-          fax: 234567,
-          employeecount: 100,
-          revenue: 100000,
+          name: formData.name || "Test Corp",
+          corporatetype: "Not Specified",
+          ownershipnature: "",
+          location_headquarters: "Not Specified",
+          phone: 9999999999,
+          mobile: "",
+          website: "Not Provided",
+          fax: "",
+          employeecount: 0,
+          revenue: 0,
+          organization: parentName.id,
+          sector: formData.sector || "General",
+          subindustry: formData.subIndustry || "General",
+          address: "Not Provided",
+          country: formData.country || "N/A",
+          state: "N/A",
+          city: "N/A",
+          // zipcode:  null,
+          date_format: "YYYY/MM/DD",
           currency: "USD",
-          timezone: "+00:00",
-          language: "English",
-          date_format: "mm/dd/yyyy",
-          framework: "GRI: With reference to",
+          timezone: "UTC",
+          from_date: null,
+          to_date: null,
+          // legalform: "1",
+          // ownership:  "",
+          // group: null,
+          // location_of_headquarters: "Not Specified",
+          // amount: null,
+          // type_of_business_activities: null,
+          // type_of_product: null,
+          // type_of_services: null,
+          // type_of_business_relationship: null,
+          framework: [1],
+          sdg: [],
+          rating: [],
+          certification: [],
+          target: [],
         };
         break;
 
       case "location":
         endpoint = "/locationonlyview";
+        entityType = "Location";
+        // payload = {
+        //   name: formData.name,
+        //   typelocation: formData.locationType,
+        //   country: formData.country,
+        //   state: formData.state,
+        //   city: formData.city,
+        //   corporateentity: parentName.name,
+        //   currency: "USD",
+        //   dateformat: "mm/dd/yyyy",
+        //   phone: 9876543210,
+        //   mobile: 9876543210,
+        //   website: "https://www.sustainext.ai",
+        //   fax: 234567,
+        //   timezone: "+00:00",
+        //   employeecount: 100,
+        //   language: "English",
+        //   revenue: 100000,
+        //   area: 56775,
+        // };
+
         payload = {
-          name: formData.name,
-          typelocation: formData.locationType,
-          country: formData.country,
-          state: formData.state,
-          city: formData.city,
-          corporateentity: parentNode.name,
+          corporateentity: parentName.id,
+          name: formData.name || "Location 1",
+          phone: 9999999999,
+          mobile: "",
+          website: "Not Provided",
+          fax: "",
+          employeecount: 0,
+          revenue: 0,
+          sector: "General",
+          sub_industry: "General",
+          streetaddress: "Not Provided",
+          zipcode: "N/A",
+          state: formData.state || "N/A",
+          city: formData.city || "N/A",
+          country: formData.country || "N/A",
+          latitude: null,
+          longitude: null,
+          timezone: "UTC",
           currency: "USD",
-          dateformat: "mm/dd/yyyy",
-          phone: 9876543210,
-          mobile: 9876543210,
-          website: "https://www.sustainext.ai",
-          fax: 234567,
-          timezone: "+00:00",
-          employeecount: 100,
+          dateformat: "YYYY/MM/DD",
+          from_date: null,
+          to_date: null,
           language: "English",
-          revenue: 100000,
-          area: 56775,
+          location_type: formData.locationType || "Default",
         };
         break;
     }
 
     try {
-      await post(endpoint, payload);
+      const response = await post(endpoint, payload);
+      showToast(`${entityType} added successfully`);
       onClose();
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
+      const message =
+        error?.response?.data?.message[0] ||
+        `Failed to add ${entityType.toLowerCase()}`;
+      showToast(message, "error");
       console.error("Error adding:", error);
     }
   };
@@ -255,16 +513,19 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
           </label>
           <select
             name="country"
-            value={formData.country}
+            value={selectedCountry}
             onChange={handleInputChange}
             className={`w-full border ${
               formErrors.country ? "border-red-500" : "border-gray-300"
             } rounded-md p-2 text-sm`}
           >
             <option value="">Select Country</option>
-            {Country.getAllCountries().map((country) => (
-              <option key={country.isoCode} value={country.isoCode}>
-                {country.name}
+            {countries.map((country) => (
+              <option
+                key={country.id}
+                value={`${country.id}:${country.sortname}`}
+              >
+                {country.country_name}
               </option>
             ))}
           </select>
@@ -275,11 +536,11 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
 
         <div className="mb-3">
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            State
+            State *
           </label>
           <select
             name="state"
-            value={formData.state}
+            value={selectedState}
             onChange={handleInputChange}
             className={`w-full border ${
               formErrors.state ? "border-red-500" : "border-gray-300"
@@ -288,8 +549,8 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
           >
             <option value="">Select State</option>
             {states.map((state) => (
-              <option key={state.isoCode} value={state.isoCode}>
-                {state.name}
+              <option key={state.id} value={`${state.id}:${state.state_name}`}>
+                {state.state_name}
               </option>
             ))}
           </select>
@@ -299,8 +560,23 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            City
+          <SearchableCityDropdown
+            cities={cities}
+            selectedCity={formData.city} // Directly bind to formData.city
+            onSelectCity={(cityName) => {
+              setSelectedCity(cityName);
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                city: cityName, // Directly update city in the form data
+              }));
+           
+            }}
+            onAddCity={handleAddCity}
+            error={formErrors.city }
+          />
+
+          {/* <label className="block text-sm font-medium text-gray-700 mb-1">
+            City *
           </label>
           <select
             name="city"
@@ -313,14 +589,14 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
           >
             <option value="">Select City</option>
             {cities.map((city) => (
-              <option key={city.name} value={city.name}>
-                {city.name}
+              <option key={city.id} value={city.city_name}>
+                {city.city_name}
               </option>
             ))}
           </select>
           {formErrors.city && (
             <p className="text-red-500 text-xs mt-1">{formErrors.city}</p>
-          )}
+          )} */}
         </div>
       </>
     );
@@ -336,13 +612,13 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
             <div className="flex flex-col">
               <div className="text-sm text-gray-600 mb-1">Organization</div>
               <div className="inline-block px-3 py-1 rounded-md text-sm bg-blue-100 text-blue-800">
-                {parentNode.organization}
+                {parentName.organization}
               </div>
             </div>
             <div className="flex flex-col">
               <div className="text-sm text-gray-600 mb-1">Corporate Entity</div>
               <div className="inline-block px-3 py-1 rounded-md text-sm bg-green-100 text-green-800">
-                {parentNode.name}
+                {parentName.name}
               </div>
             </div>
           </div>
@@ -350,7 +626,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
           <div>
             <div className="text-sm text-gray-600 mb-2">Organization</div>
             <div className="inline-block px-3 py-1 rounded-md text-sm bg-blue-100 text-blue-800">
-              {parentNode.name}
+              {parentName.name}
             </div>
           </div>
         )}
@@ -396,21 +672,29 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
         {type !== "location" && (
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Country
+              Country *
             </label>
             <select
               name="country"
-              value={formData.country}
+              value={selectedCountry}
               onChange={handleInputChange}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm"
+              className={`w-full border ${
+                formErrors.country ? "border-red-500" : "border-gray-300"
+              } rounded-md p-2 text-sm`}
             >
               <option value="">Select Country</option>
-              {Country.getAllCountries().map((country) => (
-                <option key={country.isoCode} value={country.isoCode}>
-                  {country.name}
+              {countries.map((country) => (
+                <option
+                  key={country.id}
+                  value={`${country.id}:${country.sortname}`}
+                >
+                  {country.country_name}
                 </option>
               ))}
             </select>
+            {formErrors.country && (
+              <p className="text-red-500 text-xs mt-1">{formErrors.country}</p>
+            )}
           </div>
         )}
 
@@ -418,13 +702,15 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
           <>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Sector
+                Sector *
               </label>
               <select
                 name="sector"
                 value={formData.sector}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm"
+                className={`w-full border ${
+                  formErrors.sector ? "border-red-500" : "border-gray-300"
+                } rounded-md p-2 text-sm`}
               >
                 <option value="">Select Sector</option>
                 {industryList.map((industry) => (
@@ -433,18 +719,25 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
                   </option>
                 ))}
               </select>
+              {formErrors.sector && (
+                <p className="text-red-500 text-xs mt-1">{formErrors.sector}</p>
+              )}
             </div>
 
             {type === "corporate" && (
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Sub Industry
+                  Sub Industry *
                 </label>
                 <select
                   name="subIndustry"
                   value={formData.subIndustry}
                   onChange={handleInputChange}
-                  className="w-full border border-gray-300 rounded-md p-2 text-sm"
+                  className={`w-full border ${
+                    formErrors.subIndustry
+                      ? "border-red-500"
+                      : "border-gray-300"
+                  } rounded-md p-2 text-sm`}
                   disabled={!formData.sector}
                 >
                   <option value="">Select Sub Industry</option>
@@ -454,6 +747,11 @@ const QuickAddModal = ({ isOpen, onClose, type, parentNode }) => {
                     </option>
                   ))}
                 </select>
+                {formErrors.subIndustry && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {formErrors.subIndustry}
+                  </p>
+                )}
               </div>
             )}
           </>

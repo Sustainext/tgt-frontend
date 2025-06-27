@@ -1,41 +1,45 @@
-'use client'
+"use client";
 import { useState, useRef, useEffect } from "react";
+import {useSelector} from 'react-redux'
 
+const Section2 = ({ section13_1Ref, section13_1_1Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.1.1':'',
+  sectionTitle = "Management of material topic", 
+  sectionOrder = 13
+ }) => {
+  const shouldRender = useSelector((state)=> state.reportCreation.includeMaterialTopics)
 
-const Section2=({section13_1Ref,section13_1_1Ref,data})=>{
-    const [content,setContent] = useState(
-        `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam minus, voluptates obcaecati velit fuga tempore laudantium consequuntur illo`
-    )
-    
-    return (
-        <>
-        <div id="section13_1" ref={section13_1Ref}>
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-        13.1 Employees
-            </h3>
-           
-           
-        </div>
-        <div id="section13_1_1" ref={section13_1_1Ref}>
+  return (
+    <>
+     
+     {reportType=='GRI Report: In accordance With' || (shouldRender && reportType==='Custom ESG Report')?(
+         <div id="section13_1_1" ref={section13_1_1Ref}>
+         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
+          {sectionNumber} {sectionTitle}
+         </h3>
+ 
+         {data["3-3cde_13-1-1"] && data["3-3cde_13-1-1"].length > 0 ? (
+           data["3-3cde_13-1-1"].map((val, index) => (
+             <div key={index}>
+               <p className="text-sm mb-2">
+                 {val.GRI33cd ? val.GRI33cd : "No data available"}
+               </p>
+               <p className="text-sm mb-4">
+                 {val.GRI33e ? val.GRI33e : "No data available"}
+               </p>
+             </div>
+           ))
+         ) : (
+           <p className="text-sm mb-4">No data available</p>
+         )}
+       </div>
+      ):(
+        <div></div>
+      )}
 
-<h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-13.1.1 Management of material topic 
-</h3>
+     
+    </>
+  );
+};
 
-{data["3-3cde_13-1-1"] && data["3-3cde_13-1-1"].length > 0 ? (
-    data["3-3cde_13-1-1"].map((val, index) => (
-        <div key={index}>
-            <p className="text-sm mb-2">{val.GRI33cd ? val.GRI33cd : 'No data available'}</p>
-            <p className="text-sm mb-4">{val.GRI33e ? val.GRI33e : 'No data available'}</p>
-        </div>
-    ))
-) : (
-    <p className="text-sm mb-4">No data available</p>
-)}
-
-</div>
-        </>
-    )
-}
-
-export default Section2
+export default Section2;

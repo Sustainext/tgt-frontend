@@ -83,7 +83,7 @@ const CustomTableWidget7 = ({
   }, [value]);
 
   return (
-    <div style={{ overflowY: "auto", maxHeight: "400px" }}>
+    <div style={{ overflow: "auto", maxHeight: "400px" }} className="custom-scrollbar">
       <table
         id={id}
         className="rounded-md border border-gray-300 w-full"
@@ -145,7 +145,7 @@ const CustomTableWidget7 = ({
                 className="text-[12px] border-t border-r border-gray-300  px-2 py-2"
                 colSpan={item.colSpan}
               >
-                <div className="relative">
+                <div className="relative w-[150px] xl:w-auto lg:w-auto  md:w-[150px] 2xl:w-auto  4k:w-auto  2k:w-auto">
                   <p className="flex justify-center">
                     {item.title}{" "}
                     <MdInfoOutline

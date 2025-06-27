@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiX, FiFileText, FiDownload } from "react-icons/fi";
 import Moment from "react-moment";
+import { getLocationName } from "../../../utils/locationName";
 
 const TaskDetailsModal = ({ isOpen, onClose, task }) => {
   const [showFilePreview, setShowFilePreview] = useState(false);
-
-  if (!isOpen || !task) return null;
 
   const handleFileClick = (e) => {
     e.preventDefault();
@@ -13,6 +12,41 @@ const TaskDetailsModal = ({ isOpen, onClose, task }) => {
       setShowFilePreview(true);
     }
   };
+
+  const getStatusLabel = (status) => {
+    const labels = {
+      not_started: "Not Started",
+      in_progress: "In Progress",
+      under_review: "Under Review",
+      completed: "Completed",
+      approved: "Approved",
+      reject: "Rejected",
+    };
+    return labels[status] || status;
+  };
+
+  const [locationName,setLocationName] = useState('')
+
+    useEffect(() => {
+        const fetchLocationName = async () => {
+          if (task?.location) {
+            try {
+              console.log('data of location', task.location);
+              const name = await getLocationName(task.location);
+              console.log('name of location', name);
+              
+              setLocationName(name);
+            } catch (error) {
+              console.error("Error fetching location name:", error);
+              setLocationName(task.location);
+            }
+          }
+        };
+    
+        fetchLocationName();
+      }, [task?.location]);
+
+      if (!isOpen || !task) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -22,9 +56,9 @@ const TaskDetailsModal = ({ isOpen, onClose, task }) => {
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
+            className="absolute right-2 top-2 text-gray-500 hover:text-gray-700"
           >
-            <FiX size={24} />
+            <FiX size={18} />
           </button>
 
           {/* Task Name */}
@@ -37,7 +71,14 @@ const TaskDetailsModal = ({ isOpen, onClose, task }) => {
             <div className="flex">
               <span className="w-32 text-gray-600 text-sm">Status</span>
               <span className="text-green-600 font-medium text-sm">
-                {task.task_status}
+                {getStatusLabel(task.task_status)}
+              </span>
+            </div>
+
+            <div className="flex">
+              <span className="w-32 text-gray-600 text-sm">Assigned On</span>
+              <span className="text-gray-700 text-sm">
+                <Moment format="DD/MM/YYYY">{task.created_at}</Moment>
               </span>
             </div>
 
@@ -64,7 +105,7 @@ const TaskDetailsModal = ({ isOpen, onClose, task }) => {
           <div className="space-y-4 mb-8">
             <div className="flex">
               <span className="w-32 text-gray-600 text-sm">Location</span>
-              <span className="text-gray-700 text-sm">{task.location}</span>
+              <span className="text-gray-700 text-sm">{locationName || "loading..."}</span>
             </div>
 
             <div className="flex">
@@ -79,7 +120,7 @@ const TaskDetailsModal = ({ isOpen, onClose, task }) => {
 
             <div className="flex">
               <span className="w-32 text-gray-600 text-sm">Scope</span>
-              <span className="text-gray-700 text-sm">{task.scope}</span>
+              <span className="text-gray-700 text-sm">Scope {task.scope}</span>
             </div>
 
             <div className="flex">

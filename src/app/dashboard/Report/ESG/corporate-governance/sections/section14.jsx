@@ -2,7 +2,11 @@
 import { useState, useRef, useEffect } from "react";
 import RatioTable2 from "../tables/ratioTable2";
 
-const Section14=({section9_3_8Ref,data})=>{
+const Section14=({section9_3_8Ref,data,
+    sectionNumber = "9.3.8",
+    sectionTitle = 'Annual Compensation Ratio',
+    sectionOrder = 9,
+})=>{
     const col=[
         "Ratio of annual total compensation",
         "Ratio of percentage  increase in annual total compensation",
@@ -14,10 +18,15 @@ const Section14=({section9_3_8Ref,data})=>{
         <div id="section9_3_8" ref={section9_3_8Ref} >
         
             <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-            9.3.8 Annual Compensation Ratio
+           {sectionNumber} {sectionTitle}
             </h3>
-            <p className="text-sm mb-4">We disclose the ratio of the annual total compensation of our CEO to the median annual total compensation of all other employees. This metric provides transparency and helps stakeholders understand our compensation practices. </p>
-            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            <p className="text-sm mb-4">
+                {
+                    data['2_21_c']?data['2_21_c']:'No data available'
+                }
+            </p>
+            {/* <p className="text-sm mb-4">We disclose the ratio of the annual total compensation of our CEO to the median annual total compensation of all other employees. This metric provides transparency and helps stakeholders understand our compensation practices. </p> */}
+            {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Annual total compensation for the organization's highest paid-individual:
             </p>
             <p className="text-sm mb-4">{data["2_21_a"]?data["2_21_a"].Q1?data["2_21_a"].Q1:"No data available":"No data available"}</p>
@@ -46,7 +55,7 @@ const Section14=({section9_3_8Ref,data})=>{
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Contextual information to understand data compilation:
             </p>
-            <p className="text-sm mb-4">{data["2_21_a"]?data["2_21_c"]:"No data available"}</p>
+            <p className="text-sm mb-4">{data["2_21_a"]?data["2_21_c"]:"No data available"}</p> */}
 
            
            

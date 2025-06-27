@@ -1,26 +1,38 @@
 "use client";
-import MyGoals from "./MyGoals";
-import MyTasks from "./TasksNew/MyTask";
-import Preferences from "./Preferences/page";
-import { ToastContainer } from "react-toastify";
+import { useState, useEffect } from "react";
+// import MyGoals from "./MyGoals";
+// import MyTasks from "./TasksNew/MyTask";
+// import Preferences from "./Preferences/page";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+import MobileLayout from "./MobileLayout";
+import DesktopLayout from "./DesktopLayout";
 
-const HomeDashboard = () => {
+const HomeDashboard = ({ setActiveTab }) => {
+
+  const [mobileTab, setMobileTab] = useState("tasks"); 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Assume mobile if the screen width is less than 768px
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initialize on mount
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
   return (
     <>
-    <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
-      <div className="flex space-x-3 pe-4 ">
-        <div className="w-1/2 space-y-4 mb-8">
-          <div>
-            <MyTasks />
-          </div>
-          <div className="col-start-1 row-start-2 rounded-lg">
-            <MyGoals />
-          </div>
-        </div>
-        <div className="row-span-2 col-start-2 row-start-1 rounded-lg shadow border border-gray-200 p-4 h-[660px] w-3/5 overflow-auto table-scrollbar">
-          <Preferences />
-        </div>
-      </div>
+      {isMobile ? (
+        // Mobile version of ToastContainer with specific styles
+        <MobileLayout setActiveTab={setActiveTab} />
+      ) : (
+        // Desktop version of ToastContainer with different styles
+        <DesktopLayout setActiveTab={setActiveTab} />
+      )}
     </>
   );
 };

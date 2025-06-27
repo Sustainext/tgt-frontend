@@ -1,453 +1,509 @@
-'use client'
+"use client";
 import { useState, useRef, useEffect } from "react";
 import WaterTable from "../tables/waterTable";
 
-const Section17=({section12_3_3Ref,data})=>{
-    const [content,setContent] = useState(
-        `We manage water discharge to minimize its impact on local ecosystems. This includes treating wastewater to meet regulatory standards and monitoring the quality of discharged water. Following are the standards used:`
-    )
+const Section17 = ({ section12_3_3Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.3.3':'12.3.2',
+  sectionTitle = 'Water Discharge & Management of Associated Impacts',
+  sectionOrder = 12,
+ }) => {
+  const [content, setContent] = useState(
+    `We manage water discharge to minimize its impact on local ecosystems. This includes treating wastewater to meet regulatory standards and monitoring the quality of discharged water. Following are the standards used:`
+  );
 
-    let waterDischargeByLocation={
-       total:'',
-      unit:''
-    }
-    let waterDischargeBySource={
-        total:'',
-      unit:''
-    }
-    let waterDischargeByBusinessOperation={
-        total:'',
-      unit:''
-    }
-    let waterDischargeByBusiness={
-       total:'',
-      unit:''
-    }
-    let waterDischargeByStressArea={
-       total:'',
-      unit:''
-    }
+  let waterDischargeByLocation = {
+    total: "",
+    unit: "",
+  };
+  let waterDischargeBySource = {
+    total: "",
+    unit: "",
+  };
+  let waterDischargeByBusinessOperation = {
+    total: "",
+    unit: "",
+  };
+  let waterDischargeByBusiness = {
+    total: "",
+    unit: "",
+  };
+  let waterDischargeByStressArea = {
+    total: "",
+    unit: "",
+  };
 
-    const column2 = [
-        'Source', 
-        'Water Type', 
-        'Contribution %', 
-        'Total water Discharge', 
-        'Unit'
-      ];
+  const column2 = [
+    "Source",
+    "Water Type",
+    "Contribution %",
+    "Total water Discharge",
+    "Unit",
+  ];
 
-      const data2 =
-      data["water_analyse"] &&
-      data["water_analyse"]["total_water_discharge_by_water_type"].length > 0
-        ? data["water_analyse"]["total_water_discharge_by_water_type"].reduce(
-            (acc, val) => {
-              if (val.Total !== undefined) {
-                waterDischargeBySource = {
-                  total: val.Total,
-                  unit: val.Unit,
-                };
-              } else {
-                acc.push({
-                  Source: val.source,
-        
-          'Water Type': val.water_type,
-          'Contribution %': val.contribution+"%",
-          'Total water Discharge': val.total_water_discharge,
-          Unit: val.Unit
-                });
-              }
-              return acc;
-            },
-            []
-          )
-        : [
-            {
-              Source: 'No data available',
-        
-          'Water Type': 'No data available',
-          'Contribution %': 'No data available',
-          'Total water Discharge': 'No data available',
-          Unit: 'No data available'
-            },
-          ];
+  const data2 =
+    data["water_analyse"] &&
+    data["water_analyse"]["total_water_discharge_by_water_type"].length > 0
+      ? data["water_analyse"]["total_water_discharge_by_water_type"].reduce(
+          (acc, val) => {
+            if (val.Total !== undefined) {
+              waterDischargeBySource = {
+                total: val.Total,
+                unit: val.Unit,
+              };
+            } else {
+              acc.push({
+                Source: val.source,
 
-
-      const column1 = [
-        'Business Operation', 
-        'Contribution %', 
-        'Total water Discharge', 
-        'Unit', 
-      ];
-
-
-      const data1 =
-      data["water_analyse"] &&
-      data["water_analyse"]["total_fresh_water_discharge_by_business_operation"].length > 0
-        ? data["water_analyse"]["total_fresh_water_discharge_by_business_operation"].reduce(
-            (acc, val) => {
-              if (val.Total !== undefined) {
-                waterDischargeByBusiness = {
-                  total: val.Total,
-                  unit: val.Unit,
-                };
-              } else {
-                acc.push({
-                  "Business Operation": val.business_operation,
-          'Contribution %': val.contribution+"%",
-          'Total water Discharge': val.discharge,
-          "Unit": val.Unit
-                });
-              }
-              return acc;
-            },
-            []
-          )
-        : [
-            {
-              "Business Operation": 'No data available',
-          'Contribution %': 'No data available',
-          'Total water Discharge': 'No data available',
-          "Unit": 'No data available'
-            },
-          ]
-
-      const column3 = [
-        'Location/country', 
-        'Contribution %', 
-        'Total water Discharge', 
-        'Unit', 
-      ];
-    
-
-      const data3 =
-      data["water_analyse"] &&
-      data["water_analyse"]["get_total_fresh_water_discharge_by_location_country"].length > 0
-        ? data["water_analyse"]["get_total_fresh_water_discharge_by_location_country"].reduce(
-            (acc, val) => {
-              if (val.Total !== undefined) {
-                waterDischargeByLocation = {
-                  total: val.Total,
-                  unit: val.Unit,
-                };
-              } else {
-                acc.push({
-                  "Location/country": val.location,
-                  'Contribution %': val.contribution+"%",
-                  'Total water Discharge': val.total_water_discharge,
-                  "Unit": val.Unit
-                });
-              }
-              return acc;
-            },
-            []
-          )
-        : [
-            {
-              "Location/country": 'No data available',
-              'Contribution %': 'No data available',
-              'Total water Discharge': 'No data available',
-              "Unit": 'No data available'
-            },
-          ];
-
-      const column4 = [
-        'Name of Water Stress Area', 
-        "Business Operation",
-        'Contribution %', 
-        'Total water Discharge', 
-        'Unit', 
-      ];
-     
-      const data4 =
-      data["water_analyse"] &&
-      data["water_analyse"]["total_water_discharge_from_water_stress_area_by_business_operation"].length > 0
-        ? data["water_analyse"]["total_water_discharge_from_water_stress_area_by_business_operation"].reduce(
-            (acc, val) => {
-              if (val.Total !== undefined) {
-                waterDischargeByBusinessOperation = {
-                  total: val.Total,
-                  unit: val.Unit,
-                };
-              } else {
-                acc.push({
-                  "Name of Water Stress Area": val.water_stress,
-            "Business Operation":val.business_operation,
-          "Contribution %":val.contribution+"%",
-          'Total water Discharge': val.total_discharge,
-          "Unit": val.Unit
-                });
-              }
-              return acc;
-            },
-            []
-          )
-        : [
-            {
-              "Name of Water Stress Area": 'No data available',
-            "Business Operation":"No data available",
-          "Contribution %":"No data available",
-          'Total water Discharge': 'No data available',
-          "Unit": 'No data available'
-            },
-          ]
-      const column5 = [
-        'Name of Water Stress Area', 
-        "Type of water",
-        'Contribution %', 
-        'Total water Discharge', 
-        'Unit', 
-      ];
-
-      const data5 =
-      data["water_analyse"] &&
-      data["water_analyse"]["total_water_discharge_by_water_type_from_water_stress_area"].length > 0
-        ? data["water_analyse"]["total_water_discharge_by_water_type_from_water_stress_area"].reduce(
-            (acc, val) => {
-              if (val.Total !== undefined) {
-                waterDischargeByStressArea = {
-                  total: val.Total,
-                  unit: val.Unit,
-                };
-              } else {
-                acc.push({
-                  "Name of Water Stress Area": val.water_stress,
-            "Type of water":val.water_type,
-          "Contribution %":val.contribution+"%",
-          'Total water Discharge': val.total_discharge,
-          "Unit": val.Unit
-                });
-              }
-              return acc;
-            },
-            []
-          )
-        : [
-            {
-              "Name of Water Stress Area": 'No data available',
-            "Type of water":"No data available",
-          "Contribution %":"No data available",
-          'Total water Discharge': 'No data available',
-          "Unit": 'No data available'
-            },
-          ]
-
-      const column6 = [
-        'Volume of third-party water send  to use for other organizations', 
-        'Contribution %', 
-        'Unit', 
-      ];
-      
-      const data6 =
-      data["water_analyse"] &&
-      data["water_analyse"]["third_party_water_discharge_sent_to_use_for_other_organizations"].length > 0
-        ? data["water_analyse"]["third_party_water_discharge_sent_to_use_for_other_organizations"].reduce(
-            (acc, val) => {
-              if (val.Total !== undefined) {
-              } else {
-                acc.push({
-                  "Volume of third-party water send  to use for other organizations": val.volume,
-          "Contribution %":val.contribution+"%",
-          "Unit": val.Unit
-                });
-              }
-              return acc;
-            },
-            []
-          )
-        : [
-            {
-              "Volume of third-party water send  to use for other organizations": 'No data available',
-              "Contribution %":"No data available",
-              "Unit": 'No data available'
-            },
-          ]
-      
-          const column7 = [
-            'Do you discharge any substances of concern', 
-            'Substances of concern', 
-            'Method used to define priority substances of concern',
-            'No. of non-compliance incidents',
-            'Approach for setting discharge limits for priority substances of concern' 
-          ];
-
-          const data7 =
-  data["303_4d_substances_of_concern"] &&
-  data["303_4d_substances_of_concern"].length > 0
-    ? data["303_4d_substances_of_concern"]
-        .filter(val => val.Discharge === "Yes") // Filter out rows with Discharge === "No"
-        .map((val, index) => {
-          return {
-            'Do you discharge any substances of concern': val.Discharge,
-            'Substances of concern': val.Substanceconcern,
-            'Method used to define priority substances of concern': val.Priority,
-            'No. of non-compliance incidents': val.Noncompliance,
-            'Approach for setting discharge limits for priority substances of concern': val.Approach
-          };
-        })
-    : [
-        {
-          'Do you discharge any substances of concern': 'No data available',
-          'Substances of concern': 'No data available',
-          'Method used to define priority substances of concern': 'No data available',
-          'No. of non-compliance incidents': 'No data available',
-          'Approach for setting discharge limits for priority substances of concern': 'No data available'
-        },
-      ];
-
-             
-
-          const column8 = [
-            'Standards Used', 
-            'Methodologies used', 
-            'Assumptions considered', 
-          ];
-
-          const data8 =
-          data["303_3d_4e_sma"] &&
-          data["303_3d_4e_sma"]["data"]?data["303_3d_4e_sma"]["data"].length > 0
-            ? data["303_3d_4e_sma"]["data"].map((val,index)=>{
-              return (
-            
-                {
-                  "Standards Used": val.StandardsUsed,
-                  "Methodologies used": val.Methodologiesused,
-                  "Assumptions considered": val.Assumptionsconsidered
-                }
-            
+                "Water Type": val.water_type,
+                "Contribution %": val.contribution + "%",
+                "Total water Discharge": val.total_water_discharge,
+                Unit: val.Unit,
+              });
+            }
+            return acc;
+          },
+          []
         )
-            })
-            : [
-                {
-                  "Standards Used": 'No data available',
-                  "Methodologies used":"No data available",
-                  "Assumptions considered": 'No data available'
-                },
-              ]
-              :
-              [
-                {
-                  "Standards Used": 'No data available',
-                  "Methodologies used":"No data available",
-                  "Assumptions considered": 'No data available'
-                },
-              ]
-    
+      : [
+          {
+            Source: "No data available",
 
-              
-    return (
-        <>
-       
-        <div id="section12_3_3" ref={section12_3_3Ref}>
+            "Water Type": "No data available",
+            "Contribution %": "No data available",
+            "Total water Discharge": "No data available",
+            Unit: "No data available",
+          },
+        ];
 
-<h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-12.3.3 Water Discharge & Management of Associated Impacts
-</h3>
+  const column1 = [
+    "Business Operation",
+    "Contribution %",
+    "Total water Discharge",
+    "Unit",
+  ];
 
-<p className="text-sm mb-4">{content}</p>
+  const data1 =
+    data["water_analyse"] &&
+    data["water_analyse"]["total_fresh_water_discharge_by_business_operation"]
+      .length > 0
+      ? data["water_analyse"][
+          "total_fresh_water_discharge_by_business_operation"
+        ].reduce((acc, val) => {
+          if (val.Total !== undefined) {
+            waterDischargeByBusiness = {
+              total: val.Total,
+              unit: val.Unit,
+            };
+          } else {
+            acc.push({
+              "Business Operation": val.business_operation,
+              "Contribution %": val.contribution + "%",
+              "Total water Discharge": val.discharge,
+              Unit: val.Unit,
+            });
+          }
+          return acc;
+        }, [])
+      : [
+          {
+            "Business Operation": "No data available",
+            "Contribution %": "No data available",
+            "Total water Discharge": "No data available",
+            Unit: "No data available",
+          },
+        ];
 
-<p className="text-[15px]  mb-2 font-semibold">
-Discharge Standard used: 
-        </p>
-        <p className="text-sm mb-4">{data["303-2a-management_water_discharge"]?data["303-2a-management_water_discharge"].data?data["303-2a-management_water_discharge"].data.length>0?data["303-2a-management_water_discharge"].data[0].Q1?data["303-2a-management_water_discharge"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
+  const column3 = [
+    "Location/country",
+    "Contribution %",
+    "Total water Discharge",
+    "Unit",
+  ];
+
+  const data3 =
+    data["water_analyse"] &&
+    data["water_analyse"]["get_total_fresh_water_discharge_by_location_country"]
+      .length > 0
+      ? data["water_analyse"][
+          "get_total_fresh_water_discharge_by_location_country"
+        ].reduce((acc, val) => {
+          if (val.Total !== undefined) {
+            waterDischargeByLocation = {
+              total: val.Total,
+              unit: val.Unit,
+            };
+          } else {
+            acc.push({
+              "Location/country": val.location,
+              "Contribution %": val.contribution + "%",
+              "Total water Discharge": val.total_water_discharge,
+              Unit: val.Unit,
+            });
+          }
+          return acc;
+        }, [])
+      : [
+          {
+            "Location/country": "No data available",
+            "Contribution %": "No data available",
+            "Total water Discharge": "No data available",
+            Unit: "No data available",
+          },
+        ];
+
+  const column4 = [
+    "Name of Water Stress Area",
+    "Business Operation",
+    "Contribution %",
+    "Total water Discharge",
+    "Unit",
+  ];
+
+  const data4 =
+    data["water_analyse"] &&
+    data["water_analyse"][
+      "total_water_discharge_from_water_stress_area_by_business_operation"
+    ].length > 0
+      ? data["water_analyse"][
+          "total_water_discharge_from_water_stress_area_by_business_operation"
+        ].reduce((acc, val) => {
+          if (val.Total !== undefined) {
+            waterDischargeByBusinessOperation = {
+              total: val.Total,
+              unit: val.Unit,
+            };
+          } else {
+            acc.push({
+              "Name of Water Stress Area": val.water_stress,
+              "Business Operation": val.business_operation,
+              "Contribution %": val.contribution + "%",
+              "Total water Discharge": val.total_discharge,
+              Unit: val.Unit,
+            });
+          }
+          return acc;
+        }, [])
+      : [
+          {
+            "Name of Water Stress Area": "No data available",
+            "Business Operation": "No data available",
+            "Contribution %": "No data available",
+            "Total water Discharge": "No data available",
+            Unit: "No data available",
+          },
+        ];
+  const column5 = [
+    "Name of Water Stress Area",
+    "Type of water",
+    "Contribution %",
+    "Total water Discharge",
+    "Unit",
+  ];
+
+  const data5 =
+    data["water_analyse"] &&
+    data["water_analyse"][
+      "total_water_discharge_by_water_type_from_water_stress_area"
+    ].length > 0
+      ? data["water_analyse"][
+          "total_water_discharge_by_water_type_from_water_stress_area"
+        ].reduce((acc, val) => {
+          if (val.Total !== undefined) {
+            waterDischargeByStressArea = {
+              total: val.Total,
+              unit: val.Unit,
+            };
+          } else {
+            acc.push({
+              "Name of Water Stress Area": val.water_stress,
+              "Type of water": val.water_type,
+              "Contribution %": val.contribution + "%",
+              "Total water Discharge": val.total_discharge,
+              Unit: val.Unit,
+            });
+          }
+          return acc;
+        }, [])
+      : [
+          {
+            "Name of Water Stress Area": "No data available",
+            "Type of water": "No data available",
+            "Contribution %": "No data available",
+            "Total water Discharge": "No data available",
+            Unit: "No data available",
+          },
+        ];
+
+  const column6 = [
+    "Volume of third-party water send  to use for other organizations",
+    "Contribution %",
+    "Unit",
+  ];
+
+  const data6 =
+    data["water_analyse"] &&
+    data["water_analyse"][
+      "third_party_water_discharge_sent_to_use_for_other_organizations"
+    ].length > 0
+      ? data["water_analyse"][
+          "third_party_water_discharge_sent_to_use_for_other_organizations"
+        ].reduce((acc, val) => {
+          if (val.Total !== undefined) {
+          } else {
+            acc.push({
+              "Volume of third-party water send  to use for other organizations":
+                val.volume,
+              "Contribution %": val.contribution + "%",
+              Unit: val.Unit,
+            });
+          }
+          return acc;
+        }, [])
+      : [
+          {
+            "Volume of third-party water send  to use for other organizations":
+              "No data available",
+            "Contribution %": "No data available",
+            Unit: "No data available",
+          },
+        ];
+
+  const column7 = [
+    "Do you discharge any substances of concern",
+    "Substances of concern",
+    "Method used to define priority substances of concern",
+    "No. of non-compliance incidents",
+    "Approach for setting discharge limits for priority substances of concern",
+  ];
+
+  const data7 =
+    data["303_4d_substances_of_concern"] &&
+    data["303_4d_substances_of_concern"].length > 0
+      ? data["303_4d_substances_of_concern"]
+          .filter((val) => val.Discharge === "Yes") // Filter out rows with Discharge === "No"
+          .map((val, index) => {
+            return {
+              "Do you discharge any substances of concern": val.Discharge,
+              "Substances of concern": val.Substanceconcern,
+              "Method used to define priority substances of concern":
+                val.Priority,
+              "No. of non-compliance incidents": val.Noncompliance,
+              "Approach for setting discharge limits for priority substances of concern":
+                val.Approach,
+            };
+          })
+      : [
+          {
+            "Do you discharge any substances of concern": "No data available",
+            "Substances of concern": "No data available",
+            "Method used to define priority substances of concern":
+              "No data available",
+            "No. of non-compliance incidents": "No data available",
+            "Approach for setting discharge limits for priority substances of concern":
+              "No data available",
+          },
+        ];
+
+  const column8 = [
+    "Standards Used",
+    "Methodologies used",
+    "Assumptions considered",
+  ];
+
+  const data8 =
+    data["303_3d_4e_sma"] && data["303_3d_4e_sma"]["data"]
+      ? data["303_3d_4e_sma"]["data"].length > 0
+        ? data["303_3d_4e_sma"]["data"].map((val, index) => {
+            return {
+              "Standards Used": val.StandardsUsed,
+              "Methodologies used": val.Methodologiesused,
+              "Assumptions considered": val.Assumptionsconsidered,
+            };
+          })
+        : [
+            {
+              "Standards Used": "No data available",
+              "Methodologies used": "No data available",
+              "Assumptions considered": "No data available",
+            },
+          ]
+      : [
+          {
+            "Standards Used": "No data available",
+            "Methodologies used": "No data available",
+            "Assumptions considered": "No data available",
+          },
+        ];
+
+  return (
+    <>
+      <div id="section12_3_3" ref={section12_3_3Ref}>
+        <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
+        {sectionNumber} {sectionTitle}
+        </h3>
+
+        {/* <p className="text-sm mb-4">{content}</p> */}
+
         <p className="text-[15px]  mb-2 font-semibold">
-        Process to determine discharge standards: 
+          Discharge Standard used:
         </p>
-        <p className="text-sm mb-4">{data["303-2a-management_water_discharge"]?data["303-2a-management_water_discharge"].data?data["303-2a-management_water_discharge"].data.length>0?data["303-2a-management_water_discharge"].data[0].Q2?data["303-2a-management_water_discharge"].data[0].Q2:"No data available":"No data available":"No data available":"No data available"}</p>
+        <p className="text-sm mb-4">
+          {data["303-2a-management_water_discharge"]
+            ? data["303-2a-management_water_discharge"].data
+              ? data["303-2a-management_water_discharge"].data.length > 0
+                ? data["303-2a-management_water_discharge"].data[0].Q1
+                  ? data["303-2a-management_water_discharge"].data[0].Q1
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
         <p className="text-[15px]  mb-2 font-semibold">
-        Internal water quality standards:
+          Process to determine discharge standards:
         </p>
-        <p className="text-sm mb-4">{data["303-2a-management_water_discharge"]?data["303-2a-management_water_discharge"].data?data["303-2a-management_water_discharge"].data.length>0?data["303-2a-management_water_discharge"].data[0].Q3?data["303-2a-management_water_discharge"].data[0].Q3:"No data available":"No data available":"No data available":"No data available"}</p>
+        <p className="text-sm mb-4">
+          {data["303-2a-management_water_discharge"]
+            ? data["303-2a-management_water_discharge"].data
+              ? data["303-2a-management_water_discharge"].data.length > 0
+                ? data["303-2a-management_water_discharge"].data[0].Q2
+                  ? data["303-2a-management_water_discharge"].data[0].Q2
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-[15px]  mb-2 font-semibold">
+          Internal water quality standards:
+        </p>
+        <p className="text-sm mb-4">
+          {data["303-2a-management_water_discharge"]
+            ? data["303-2a-management_water_discharge"].data
+              ? data["303-2a-management_water_discharge"].data.length > 0
+                ? data["303-2a-management_water_discharge"].data[0].Q3
+                  ? data["303-2a-management_water_discharge"].data[0].Q3
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-[15px]  mb-2 font-semibold">
+        Sector specific standards: 
+        </p>
+        <p className="text-sm mb-4">
+          {data["303-2a-management_water_discharge"]
+            ? data["303-2a-management_water_discharge"].data
+              ? data["303-2a-management_water_discharge"].data.length > 0
+                ? data["303-2a-management_water_discharge"].data[0].Q4
+                  ? data["303-2a-management_water_discharge"].data[0].Q4
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
 
-        
-<p className="text-[15px]  mb-2 font-semibold">
-Total Water Discharge by Location
+        <p className="text-[15px]  mb-2 font-semibold">
+          Total Water Discharge by Location
         </p>
-<div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column3} data={data3} consumption="Total water discharge" unit={waterDischargeByLocation.unit}
-            total={waterDischargeByLocation.total}/>
-</div>
+        <div className="shadow-md rounded-md mb-4">
+          <WaterTable
+            columns={column3}
+            data={data3}
+            consumption="Total water discharge"
+            unit={waterDischargeByLocation.unit}
+            total={waterDischargeByLocation.total}
+          />
+        </div>
 
-<p className="text-[15px]  mb-2 font-semibold">
-Total Water Discharge by source and type of water
+        <p className="text-[15px]  mb-2 font-semibold">
+          Total Water Discharge by source and type of water
         </p>
-<div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column2} data={data2} consumption="Total water discharge" unit={waterDischargeBySource.unit}
-            total={waterDischargeBySource.total}/>
-</div>
-{/* <p className="text-[15px]  mb-2 font-semibold">
+        <div className="shadow-md rounded-md mb-4">
+          <WaterTable
+            columns={column2}
+            data={data2}
+            consumption="Total water discharge"
+            unit={waterDischargeBySource.unit}
+            total={waterDischargeBySource.total}
+          />
+        </div>
+        {/* <p className="text-[15px]  mb-2 font-semibold">
 Water withdrawal by water type 
 
         </p> */}
-<p className="text-[15px]  mb-2 font-semibold">
-Total Water Discharge (from water stress area) by Business Operation
+        <p className="text-[15px]  mb-2 font-semibold">
+          Total Water Discharge (from water stress area) by Business Operation
         </p>
-<div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column4} data={data4} consumption="Total water discharge" 
-unit={waterDischargeByBusinessOperation.unit}
-total={waterDischargeByBusinessOperation.total}
-/>
-</div>
+        <div className="shadow-md rounded-md mb-4">
+          <WaterTable
+            columns={column4}
+            data={data4}
+            consumption="Total water discharge"
+            unit={waterDischargeByBusinessOperation.unit}
+            total={waterDischargeByBusinessOperation.total}
+          />
+        </div>
 
-
-<p className="text-[15px]  mb-2 font-semibold">
-Total Water Discharge by Business Operation
+        <p className="text-[15px]  mb-2 font-semibold">
+          Total Water Discharge by Business Operation
         </p>
-<div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column1} data={data1} consumption="Total water discharge" 
-unit={waterDischargeByBusiness.unit}
-total={waterDischargeByBusiness.total}
-/>
-</div>
+        <div className="shadow-md rounded-md mb-4">
+          <WaterTable
+            columns={column1}
+            data={data1}
+            consumption="Total water discharge"
+            unit={waterDischargeByBusiness.unit}
+            total={waterDischargeByBusiness.total}
+          />
+        </div>
 
-{/* <p className="text-[15px]  mb-2 font-semibold">
+        {/* <p className="text-[15px]  mb-2 font-semibold">
 Water discharge (from water stress areas) by water type 
 
 
         </p> */}
 
-<p className="text-[15px]  mb-2 font-semibold">
-Total Water Discharge by Water type (from water stress area)
+        <p className="text-[15px]  mb-2 font-semibold">
+          Total Water Discharge by Water type (from water stress area)
         </p>
-<div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column5} data={data5} consumption="Total water discharge" unit={waterDischargeByStressArea.unit} total={waterDischargeByStressArea.total}/>
-</div>
+        <div className="shadow-md rounded-md mb-4">
+          <WaterTable
+            columns={column5}
+            data={data5}
+            consumption="Total water discharge"
+            unit={waterDischargeByStressArea.unit}
+            total={waterDischargeByStressArea.total}
+          />
+        </div>
 
-<p className="text-[15px]  mb-2 font-semibold">
-Third-party Water discharge sent to use for other organizations
+        <p className="text-[15px]  mb-2 font-semibold">
+          Third-party Water discharge sent to use for other organizations
         </p>
-<div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column6} data={data6}/>
-</div>
+        <div className="shadow-md rounded-md mb-4">
+          <WaterTable columns={column6} data={data6} />
+        </div>
 
-{data7&&data7.length>0?(
-<div>
-<p className="text-[15px]  mb-2 font-semibold">
-Substances of concern
+        {data7 && data7.length > 0 ? (
+          <div>
+            <p className="text-[15px]  mb-2 font-semibold">
+              Substances of concern
+            </p>
+            <div className="shadow-md rounded-md mb-4">
+              <WaterTable columns={column7} data={data7} />
+            </div>
+          </div>
+        ) : (
+          <div></div>
+        )}
+
+        <p className="text-[15px]  mb-2 font-semibold">
+          Standards, methodologies, and assumptions used
         </p>
-<div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column7} data={data7}/>
-</div>
-</div>
-):(
-  <div></div>
-)}
+        <div className="shadow-md rounded-md mb-4">
+          <WaterTable columns={column8} data={data8} />
+        </div>
+      </div>
+    </>
+  );
+};
 
-
-
-<p className="text-[15px]  mb-2 font-semibold">
-Standards, methodologies, and assumptions used
-        </p>
-<div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column8} data={data8}/>
-</div>
-
-
-
-
-
-</div>
-        </>
-    )
-}
-
-export default Section17
+export default Section17;

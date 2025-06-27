@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useMemo } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
@@ -14,7 +14,6 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import LoctiondropdwonTable from "../../../../shared/widgets/Economic/loctiondropdwonTable";
 
 const widgets = {
-
   LoctiondropdwonTable: LoctiondropdwonTable,
 };
 
@@ -43,8 +42,6 @@ const schema = {
   },
 };
 
-
-
 const uiSchema = {
   "ui:order": ["Q1"],
   items: {
@@ -54,13 +51,16 @@ const uiSchema = {
         titles: [
           {
             title: "Location Name",
-            tooltip: "Specify name of the region from which governance body members have received training on anti-corruption,",
+            tooltip:
+              "Specify name of the region from which governance body members have received training on anti-corruption,",
             widgettype: "select",
             tooltipdisplay: "block",
           },
           {
-            title: "Total number of governance body members that have received training on anti-corruption",
-            tooltip: "Mention the total number of governance body members that have received training on anti-corruption.",
+            title:
+              "Total number of governance body members that have received training on anti-corruption",
+            tooltip:
+              "Mention the total number of governance body members that have received training on anti-corruption.",
             widgettype: "input",
             tooltipdisplay: "block",
           },
@@ -81,11 +81,15 @@ const uiSchema = {
   },
 };
 
-
-const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
+const Screen4 = ({
+  selectedOrg,
+  year,
+  selectedCorp,
+  setDatarefreshtwo,
+  togglestatus,
+}) => {
   const [formData, setFormData] = useState([
     {
- 
       Q1: [
         {
           RegionName: "",
@@ -183,7 +187,17 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+      setFormData([
+          {
+            Q1: [
+              {
+                RegionName: "",
+                Totalnumberanticorruption: "",
+                Totalnumberbodymembers: "",
+              },
+            ],
+          },
+        ]);
 
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
@@ -194,21 +208,61 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+         setFormData([
+          {
+            Q1: [
+              {
+                RegionName: "",
+                Totalnumberanticorruption: "",
+                Totalnumberbodymembers: "",
+              },
+            ],
+          },
+        ]);
     } finally {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      facthloctiondata();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+        facthloctiondata();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([
+          {
+            Q1: [
+              {
+                RegionName: "",
+                Totalnumberanticorruption: "",
+                Totalnumberbodymembers: "",
+              },
+            ],
+          },
+        ]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+        facthloctiondata();
+      }
+
       toastShown.current = false;
-    } else if (!toastShown.current) {
-      toastShown.current = true;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
+  // useEffect(() => {
+  //   if (selectedOrg && year) {
+  //     loadFormData();
+  //     facthloctiondata();
+  //     toastShown.current = false;
+  //   } else if (!toastShown.current) {
+  //     toastShown.current = true;
+  //   }
+  // }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -216,17 +270,34 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
     console.log("Form data:", formData);
   };
   console.log("Location data: locationdata", locationdata);
+
+  const customWidgets = useMemo(() => ({
+    ...widgets,
+    LoctiondropdwonTable: (props) => (
+      <LoctiondropdwonTable
+        {...props}
+        locationdata={locationdata}
+      />
+    ),
+  }), [widgets, locationdata]);
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-2 flex">
-          <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Total number of governance body members that have received training on anti-corruption, broken down by region.
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Total number of governance body members that have received
+              training on anti-corruption, broken down by region.
               <MdInfoOutline
                 data-tooltip-id={`es26`}
                 data-tooltip-html="Specify the total number of governance body members that have received training on anti-corruption, broken down by region."
-                className="mt-1.5 ml-2 text-[15px]"
+                className="mt-1.5 ml-2 text-[15px] w-[20%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
               />
               <ReactTooltip
                 id={`es26`}
@@ -244,9 +315,9 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
               />
             </h2>
           </div>
-          <div className="w-[20%]">
-            <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 205-2d
                 </div>
@@ -254,42 +325,40 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
             </div>
           </div>
         </div>
-
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
-              widgets={{
-                ...widgets,
-                LoctiondropdwonTable: (props) => (
-                  <LoctiondropdwonTable
-                    {...props}
-                    locationdata={locationdata}
-                  />
-                ),
-              }}
+              widgets={customWidgets}
             />
           </div>
         ) : (
           <div className="mx-2"></div>
         )}
-
         <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>
         </div>
+
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

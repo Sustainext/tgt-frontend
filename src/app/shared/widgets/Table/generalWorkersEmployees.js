@@ -13,6 +13,7 @@ const GeneralWorkersEmployees = ({
   schema,
   formContext = {},
 }) => {
+
   const [localValue, setLocalValue] = useState(value || []);
   const [othersInputs, setOthersInputs] = useState([]);
   const [localErrors, setLocalErrors] = useState(formContext.validationErrors || []);
@@ -21,6 +22,12 @@ const GeneralWorkersEmployees = ({
   useEffect(() => {
     setLocalErrors(formContext.validationErrors || []);
   }, [formContext.validationErrors]);
+
+   useEffect(() => {
+      if (Array.isArray(value) && value.length > 0) {
+        setLocalValue(value);
+      }
+    }, [value]);
 
   useEffect(() => {
     const initializeOthersInputs = () => {
@@ -110,7 +117,7 @@ const GeneralWorkersEmployees = ({
   }, [localValue, debouncedUpdate]);
 
   return (
-    <div style={{ maxHeight: "400px" }} className="mb-2">
+    <div style={{ maxHeight: "400px" }} className="mb-2 overflow-auto custom-scrollbar">
       {isValueEmpty && (
         <div className="text-red-500 text-[12px] mb-2">
           Please add at least one row with valid data.

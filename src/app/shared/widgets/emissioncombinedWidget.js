@@ -269,7 +269,6 @@ const CombinedWidget = React.memo(
 
       if (unitConfig && unitConfig.units) {
         const unitKeys = Object.keys(unitConfig.units);
-        console.log("Unit keys:", unitKeys);
         const units1 = unitKeys.length > 0 ? unitConfig.units[unitKeys[0]] : [];
         const units2 = unitKeys.length > 1 ? unitConfig.units[unitKeys[1]] : [];
 

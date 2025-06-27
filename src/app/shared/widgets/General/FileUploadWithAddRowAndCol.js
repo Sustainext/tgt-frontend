@@ -222,13 +222,13 @@ const FileUploadWithAddRowAndCol = (props) => {
 
         {localMembershipAssociations.length > 0 && localMembershipAssociations[0].length > 0 && (
           localMembershipAssociations.map((row, rowIndex) => (
-            <div key={rowIndex} className="mb-2">
-              <div className="flex">
+            <div key={rowIndex} className="mb-2 flex flex-col gap-2 overflow-x-auto custom-scrollbar g">
+              <div className="flex items-center gap-2">
                 {row.map((col, colIndex) => (
                   <textarea
                     key={colIndex}
                     placeholder="Enter data"
-                    className="border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mr-2"
+                   className="border appearance-none text-xs py-4 border-gray-400 text-neutral-600 pl-2 rounded-md  leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full min-w-[100px] max-w-[648px]"
                     value={col}
                     onChange={(event) => handleTextChange(rowIndex, colIndex, event)}
                     rows={2}
@@ -293,10 +293,13 @@ const FileUploadWithAddRowAndCol = (props) => {
         </div>
            {showModal && (
                 <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-                  <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-12">
+                  <div className="bg-white p-1 rounded-lg w-[96%] h-[100%]  xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%] mt-12">
                     <div className="flex justify-between mt-4 mb-4">
                       <div>
-                        <h5 className="mb-4 ml-2 font-semibold">{fileInfo.fileName}</h5>
+                      <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] xl:w-[400px] md:w-[400px] lg:w-[400px] 2xl:w-[400px] 4k:w-[400px] 2k:w-[400px] overflow-hidden whitespace-nowrap">
+                     
+                          {fileInfo.fileName}
+                          </h5>
                       </div>
                       <div className="flex">
                         <div className="mb-4">
@@ -317,8 +320,8 @@ const FileUploadWithAddRowAndCol = (props) => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex justify-between">
-                      <div className="relative w-[760px] h-[580px]">
+                    <div className="block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
+                    <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
                     
                         {fileInfo.fileType.startsWith("image") ? (
                           <img
@@ -332,11 +335,20 @@ const FileUploadWithAddRowAndCol = (props) => {
                             title="PDF Preview"
                             className="w-full h-full"
                           />
-                        ) : (
-                          <p>File preview not available. Please download and verify.</p>
-                        )}
+                        ) : <div className="flex flex-col items-center justify-center h-full">
+                      <p>
+                        File preview not available.Please download and verify
+                      </p>
+                      <a
+                        href={fileInfo.fileUrl}
+                        download={fileInfo.fileName}
+                        className="mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                      >
+                        Download File
+                      </a>
+                    </div>}
                       </div>
-                      <div className="w-[211px]">
+                      <div className="w-[211px] ml-6">
                         <div className="mb-4 mt-2">
                           <h2 className="text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide">
                             File information
@@ -346,7 +358,7 @@ const FileUploadWithAddRowAndCol = (props) => {
                           <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                             FILE NAME
                           </h2>
-                          <h2 className="text-[14px] truncate leading-relaxed tracking-wide">
+                          <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
                             {fileInfo.fileName}
                           </h2>
                         </div>
@@ -362,7 +374,7 @@ const FileUploadWithAddRowAndCol = (props) => {
                           <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                             FILE TYPE
                           </h2>
-                          <h2 className="text-[14px] leading-relaxed tracking-wide">
+                          <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
                             {fileInfo.fileType}
                           </h2>
                         </div>

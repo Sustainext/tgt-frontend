@@ -1,9 +1,82 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Select from 'react-select';
 import { MdOutlineDeleteOutline, MdAdd, MdInfoOutline } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+import { components } from "react-select";
+import { debounce } from "lodash";
+const CustomOptionnew = ({ children, ...props }) => {
+  const { isSelected, isFocused, innerProps } = props;
+
+  return (
+    <div
+      {...innerProps}
+      style={{
+        backgroundColor: isSelected ? "white" : isFocused ? "#f0f0f0" : "white",
+
+        padding: "8px",
+
+        display: "flex",
+
+        alignItems: "center",
+
+        textAlign: "left",
+        cursor:'pointer'
+      }}
+    >
+      <input
+        type="checkbox"
+        className='green-checkbox'
+        checked={isSelected}
+        readOnly
+        style={{flexShrink:0,marginRight:'8px'}}
+      />
+
+      {children}
+    </div>
+  );
+};
+
+const CustomMultiValueContainer = ({ children, ...props }) => {
+  const { data, selectProps } = props;
+  const { value } = selectProps;
+
+  // Find the index of this value in the selected values array
+  const valueIndex = value.findIndex((val) => val.value === data.value);
+  // console.log(valueIndex,"See")
+  // Always show the first two values
+  if (valueIndex < 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        {children}
+      </components.MultiValueContainer>
+    );
+  }
+
+  // For the third position, show "+X more" if there are more than 2 values
+  if (value.length > 2 && valueIndex == 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        <div
+          style={{
+            backgroundColor: "#dbeafe",
+            borderRadius: "0.375rem",
+            padding: "2px 5px",
+            color: "#1e40af",
+            fontWeight: "600",
+            // fontSize: '0.875rem'
+          }}
+        >
+          +{value.length - 2} more
+        </div>
+      </components.MultiValueContainer>
+    );
+  }
+
+  // Hide any additional values
+  return null;
+};
 
 const CustomTableWidget8 = ({
   id,
@@ -18,6 +91,7 @@ const CustomTableWidget8 = ({
   const locationOptions = locationdata.map((loc) => ({
     value: loc.location_name,
     label: loc.location_name,
+
   }));
 
   const updateField = (index, key, newValue) => {
@@ -31,6 +105,15 @@ const CustomTableWidget8 = ({
     onChange(localData);
   };
 
+  // Debounced function to sync data with the parent
+  const debouncedSyncWithParent = debounce(syncWithParent, 800); // 500ms debounce
+
+  const handleChange = (e, rowIndex, key) => {
+    const value = e.target.value;
+    updateField(rowIndex, key, value);
+    debouncedSyncWithParent(); // Call debounced sync to avoid frequent re-renders
+  };
+
   const handleAddRow = () => {
     const newRow = {
       category: '',
@@ -40,14 +123,24 @@ const CustomTableWidget8 = ({
       locationandoperation: [],
     };
     setLocalData([...localData, newRow]);
-    syncWithParent(); // Update parent
+    // syncWithParent(); // Update parent
   };
 
   const handleRemoveRow = (index) => {
     const updatedRows = localData.filter((_, rowIndex) => rowIndex !== index);
     setLocalData(updatedRows);
-    syncWithParent(); // Update parent
+    // syncWithParent(); // Update parent
   };
+  useEffect(() => {
+    debouncedSyncWithParent(); // Sync with parent after the initial render
+    return () => debouncedSyncWithParent.cancel(); // Cleanup on unmount
+  }, [localData]);
+
+useEffect(() => {
+    if (Array.isArray(value)) {
+      setLocalData(value);
+    }
+  }, [value]);
 
   const customStyles = {
     control: (provided) => ({
@@ -78,6 +171,47 @@ const CustomTableWidget8 = ({
     }),
   };
 
+  const updatedMultiSelectStyle = {
+    control: (base) => ({
+      ...base,
+      padding: '4px 10px', // Equivalent to py-3
+      minHeight: '48px', // Ensure height matches your other elements
+      borderColor: '#d1d5db', // Matches Tailwind's gray-300 border
+      borderRadius: '0.375rem', // Matches Tailwind's rounded-md
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: '0', // Reset inner padding to fit the custom height
+    }),
+    menu: (provided) => ({
+      ...provided,
+
+      position: "relative",
+
+      bottom: "100%",
+
+      top: 0,
+
+      zIndex: 1000,
+    }),
+
+    menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
+      multiValue: (base) => ({
+        ...base,
+        backgroundColor: '#dbeafe', // Light blue background (Tailwind's blue-100)
+        borderRadius: '0.375rem', // Rounded corners
+      }),
+      multiValueLabel: (base) => ({
+        ...base,
+        color: '#1e40af', // Blue text (Tailwind's blue-800)
+        fontWeight: '600',
+      }),
+      multiValueRemove: (base) => ({
+        ...base,
+        color: '#6A6E70'
+      }),
+  };
+
   const CustomOption = (props) => {
     const { data, isSelected, innerRef, innerProps } = props;
 
@@ -105,7 +239,7 @@ const CustomTableWidget8 = ({
   };
 
   return (
-    <div style={{ overflowY: 'auto', maxHeight: '400px' }}>
+    <div style={{ overflowY: 'auto', maxHeight: '400px' }} className='custom-scrollbar'>
       <table
         id={id}
         className="rounded-md w-full border border-gray-300"
@@ -127,7 +261,7 @@ const CustomTableWidget8 = ({
                   }`}
                   colSpan={item.colSpan}
                 >
-                  <div className="relative">
+                  <div className="relative  w-[250px] xl:w-auto lg:w-auto  md:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto">
                     <p className={`flex justify-center`}>
                       {item.title}
                       {(idx === 0 || idx === 2 || idx === 1) && (
@@ -199,15 +333,19 @@ const CustomTableWidget8 = ({
                       onChange={(selectedOptions) => {
                         const updatedValues = selectedOptions.map((opt) => opt.value);
                         updateField(rowIndex, key, updatedValues);
+                        debouncedSyncWithParent();
                       }}
-                      onBlur={syncWithParent} // Sync with parent on blur
+               
                       options={locationOptions}
                       className="text-[12px] w-full border-b"
-                      styles={customStyles}
+                      styles={updatedMultiSelectStyle}
                       placeholder="Select options"
                       closeMenuOnSelect={false}
                       hideSelectedOptions={false}
-                      components={{ Option: CustomOption }}
+                     components={{
+                          Option: CustomOptionnew,
+                          MultiValueContainer:CustomMultiValueContainer
+                                                                                 }}
                     />
                   ) : (
                     <input
@@ -218,8 +356,8 @@ const CustomTableWidget8 = ({
                       }
                       required={required}
                       value={row[key] || ''}
-                      onChange={(e) => updateField(rowIndex, key, e.target.value)}
-                      onBlur={syncWithParent} // Sync with parent on blur
+                      onChange={(e) => handleChange(e, rowIndex, key)}
+             
                       className="text-[12px] pl-2 py-2  border border-gray-300 rounded-md w-full"
                       placeholder="Enter data"
                     />

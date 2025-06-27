@@ -4,6 +4,80 @@ import { MdInfoOutline, MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Select from "react-select";
+import { components } from "react-select";
+
+const CustomOptionnew = ({ children, ...props }) => {
+  const { isSelected, isFocused, innerProps } = props;
+
+  return (
+    <div
+      {...innerProps}
+      style={{
+        backgroundColor: isSelected ? "white" : isFocused ? "#f0f0f0" : "white",
+
+        padding: "8px",
+
+        display: "flex",
+
+        alignItems: "center",
+
+        textAlign: "left",
+        cursor: "pointer",
+      }}
+    >
+      <input
+        type="checkbox"
+        className="green-checkbox"
+        checked={isSelected}
+        readOnly
+        style={{ flexShrink: 0, marginRight: "8px" }}
+      />
+
+      {children}
+    </div>
+  );
+};
+
+const CustomMultiValueContainer = ({ children, ...props }) => {
+  const { data, selectProps } = props;
+  const { value } = selectProps;
+
+  // Find the index of this value in the selected values array
+  const valueIndex = value.findIndex((val) => val.value === data.value);
+  // console.log(valueIndex,"See")
+  // Always show the first two values
+  if (valueIndex < 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        {children}
+      </components.MultiValueContainer>
+    );
+  }
+
+  // For the third position, show "+X more" if there are more than 2 values
+  if (value.length > 2 && valueIndex == 2) {
+    return (
+      <components.MultiValueContainer {...props}>
+        <div
+          style={{
+            backgroundColor: "#dbeafe",
+            borderRadius: "0.375rem",
+            padding: "2px 5px",
+            color: "#1e40af",
+            fontWeight: "600",
+            // fontSize: '0.875rem'
+          }}
+        >
+          +{value.length - 2} more
+        </div>
+      </components.MultiValueContainer>
+    );
+  }
+
+  // Hide any additional values
+  return null;
+};
+
 const Economictable = ({
   id,
   options,
@@ -44,7 +118,7 @@ const Economictable = ({
     // Reset ManagementMethods if the TypeofRisk has changed
     if (key === "TypeofRisk") {
       updatedValues[index]["ManagementMethods"] = [];
-      updatedValues[index]["MitigationStrategies"] = [];  // Clear selected ManagementMethods
+      updatedValues[index]["MitigationStrategies"] = []; // Clear selected ManagementMethods
     }
 
     updatedValues[index][key] = newValue;
@@ -152,7 +226,7 @@ const Economictable = ({
           "Ventilation improvements",
           "Others (please specify)",
         ],
-        "Heatwaves": [
+        Heatwaves: [
           "Investment in cooling technologies",
           "Adjusting work schedules",
           "Health and safety programs",
@@ -326,7 +400,7 @@ const Economictable = ({
           "Others (please specify)",
         ],
 
-        "Heatwaves": [
+        Heatwaves: [
           "Installation of air conditioning systems",
           "Shading and ventilation improvements",
           "Employee wellness programs",
@@ -485,6 +559,48 @@ const Economictable = ({
       maxHeight: "200px", // Adjust this value as needed
     }),
   };
+  const updatedMultiSelectStyle = {
+    control: (base) => ({
+      ...base,
+      border: "none",
+      padding: "4px 10px", // Equivalent to py-3
+      minHeight: "48px", // Ensure height matches your other elements
+      // borderColor: '#d1d5db', // Matches Tailwind's gray-300 border
+      // borderRadius: '0.375rem', // Matches Tailwind's rounded-md
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: "0", // Reset inner padding to fit the custom height
+    }),
+    menu: (provided) => ({
+      ...provided,
+
+      position: "relative",
+
+      bottom: "100%",
+
+      top: 0,
+
+      zIndex: 1000,
+    }),
+
+    menuList: (provided) => ({ ...provided, maxHeight: "200px" }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: "#dbeafe", // Light blue background (Tailwind's blue-100)
+      borderRadius: "0.375rem", // Rounded corners
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      color: "#1e40af", // Blue text (Tailwind's blue-800)
+      fontWeight: "600",
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+      color: "#6A6E70",
+    }),
+  };
+
   const getColumnWidth = (key) => {
     if (
       [
@@ -493,9 +609,9 @@ const Economictable = ({
         "PotentialImpact",
       ].includes(key)
     ) {
-      return "25vw";
+      return "desktop-wide";
     }
-    return "17vw";
+    return "desktop-narrow";
   };
 
   return (
@@ -508,62 +624,76 @@ const Economictable = ({
           minWidth: "100%",
           width: "80vw",
         }}
-        className="mb-2 pb-2"
+        className="mb-2 pb-2 table-scrollbar"
       >
-        <table id={id} className="table-fixed border border-gray-300  w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+        <table
+          id={id}
+          className="table-fixed border border-gray-300  w-full rounded-md"
+          style={{ borderCollapse: "separate", borderSpacing: 0 }}
+        >
           <thead className="gradient-background">
             <tr className="h-[102px]">
               {formContext.view === 1 && (
-                <th
-                  className="text-[12px] border-b border-gray-300 px-4 py-3 relative"
-                  style={{ width: "17vw" }}
-                >
+                <th className="text-[12px] border-b border-gray-300 px-4 py-3 relative w-[30vw] xl:w-[17vw] lg:w-[17vw] md:w-[17vw] 2xl:w-[17vw] 4k:w-[17vw] 2k:w-[17vw]">
                   {formContext.colhadding}
                 </th>
               )}
-              {options.titles.map((item, idx) => (
-                <th
-                  key={idx}
-                  style={{ width: getColumnWidth(item.key), textAlign: "left" }}
-                  className="text-[12px] border-l border-gray-300 px-2 py-3 relative"
-                >
-                  <div
-                    className={`flex items-center ${
-                      item.textdriction === "start"
-                        ? "justify-start"
-                        : "justify-center"
-                    }`}
+              {options.titles
+                .filter((item) => {
+                  if (
+                    (item.key === "ProcessDescription" ||
+                      item.key === "SeverityofRisk") &&
+                    formContext?.frameworkId !== "6"
+                  ) {
+                    return false;
+                  }
+                  return true;
+                })
+                .map((item, idx) => (
+                  <th
+                    key={idx}
+                    style={{ textAlign: "left" }}
+                    className={`text-[12px] border-l border-gray-300 px-2 py-3 relative ${getColumnWidth(
+                      item.key
+                    )}`}
                   >
-                    <p className="text-[12px]">{item.title}</p>
-                    {item.tooltipdisplay !== "none" && (
-                      <p>
-                        <MdInfoOutline
-                          data-tooltip-id={`tooltip-${item.title.replace(
-                            /\s+/g,
-                            "-"
-                          )}`}
-                          data-tooltip-content={item.tooltip}
-                          className="ml-2 cursor-pointer"
-                        />
-                        <ReactTooltip
-                          id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
-                          place="top"
-                          effect="solid"
-                          style={{
-                            width:"400px",
-                            backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            zIndex:"1000",
-                          }}
-                        />
-                      </p>
-                    )}
-                  </div>
-                </th>
-              ))}
+                    <div
+                      className={`flex items-center ${
+                        item.textdriction === "start"
+                          ? "justify-start"
+                          : "justify-center"
+                      }`}
+                    >
+                      <p className="text-[12px]">{item.title}</p>
+                      {item.tooltipdisplay !== "none" && (
+                        <p>
+                          <MdInfoOutline
+                            data-tooltip-id={`tooltip-${item.title.replace(
+                              /\s+/g,
+                              "-"
+                            )}`}
+                            data-tooltip-content={item.tooltip}
+                            className="ml-2 cursor-pointer"
+                          />
+                          <ReactTooltip
+                            id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                            place="top"
+                            effect="solid"
+                            style={{
+                              width: "400px",
+                              backgroundColor: "#000",
+                              color: "white",
+                              fontSize: "12px",
+                              boxShadow: 3,
+                              borderRadius: "8px",
+                              zIndex: "1000",
+                            }}
+                          />
+                        </p>
+                      )}
+                    </div>
+                  </th>
+                ))}
               <th
                 className="text-[12px] px-4 py-3 relative"
                 style={{ width: "5vw" }}
@@ -583,106 +713,130 @@ const Economictable = ({
                     <p className="text-[12px]"> {formContext.colname}</p>
                   </td>
                 )}
-                {Object.keys(schema.items.properties).map((key, cellIndex) => {
-                  const propertySchema = schema.items.properties[key];
-                  const isEnum =
-                    propertySchema && propertySchema.hasOwnProperty("enum");
-                  const isMulti = isMultiSelect(key); // Correctly place the isMulti check for each key
+                {Object.keys(schema.items.properties)
+                  .filter((key) => {
+                    // Exclude ProcessDescription and SeverityofRisk unless fremwork is 2
+                    if (
+                      (key === "ProcessDescription" ||
+                        key === "SeverityofRisk") &&
+                      formContext?.frameworkId !== "6"
+                    ) {
+                      return false;
+                    }
+                    return true;
+                  })
+                  .map((key, cellIndex) => {
+                    const propertySchema = schema.items.properties[key];
+                    const isEnum =
+                      propertySchema && propertySchema.hasOwnProperty("enum");
+                    const isMulti = isMultiSelect(key); // Correctly place the isMulti check for each key
 
-                  return (
-                    <td
-                      key={cellIndex}
-                      className="border-l border-y border-gray-300 text-center"
-                    >
-                      {isEnum ? (
-                        isMulti ? (
-                          <>
-                            <Select
-                              isMulti
-                              value={
-                                localValue[rowIndex][key]
-                                  ? localValue[rowIndex][key].map((val) => ({
-                                      value: val,
-                                      label: val,
-                                    }))
-                                  : []
-                              }
-                              onChange={(selectedOptions) =>
-                                handleFieldChange(
-                                  rowIndex,
-                                  key,
-                                  selectedOptions.map((option) => option.value)
-                                )
-                              }
-                              options={(key === "ManagementMethods"
-                                ? getConditionalOptions(rowIndex, key)
-                                : propertySchema.enum
-                              ).map((option) => ({
-                                value: option,
-                                label: option,
-                              }))}
-                              className="text-[12px] w-full"
-                              placeholder="Select options"
-                              components={{ Option: CustomOption }}
-                              closeMenuOnSelect={false}
-                              hideSelectedOptions={false}
-                              styles={customStyles}
-                            />
-                          </>
+                    return (
+                      <td
+                        key={cellIndex}
+                        className="border-l border-y border-gray-300 text-center"
+                      >
+                        {isEnum ? (
+                          isMulti ? (
+                            <>
+                              <Select
+                                isMulti
+                                value={
+                                  localValue[rowIndex][key]
+                                    ? localValue[rowIndex][key].map((val) => ({
+                                        value: val,
+                                        label: val,
+                                      }))
+                                    : []
+                                }
+                                onChange={(selectedOptions) =>
+                                  handleFieldChange(
+                                    rowIndex,
+                                    key,
+                                    selectedOptions.map(
+                                      (option) => option.value
+                                    )
+                                  )
+                                }
+                                options={(key === "ManagementMethods"
+                                  ? getConditionalOptions(rowIndex, key)
+                                  : propertySchema.enum
+                                ).map((option) => ({
+                                  value: option,
+                                  label: option,
+                                }))}
+                                className="text-[12px] w-full"
+                                placeholder="Select options"
+                                components={{
+                                  Option: CustomOptionnew,
+                                  MultiValueContainer:
+                                    CustomMultiValueContainer,
+                                }}
+                                closeMenuOnSelect={false}
+                                hideSelectedOptions={false}
+                                styles={updatedMultiSelectStyle}
+                              />
+                            </>
+                          ) : (
+                            <>
+                              <select
+                                value={localValue[rowIndex][key] || ""}
+                                onChange={(e) =>
+                                  handleFieldChange(
+                                    rowIndex,
+                                    key,
+                                    e.target.value
+                                  )
+                                }
+                                className="text-[12px] pl-2 py-2 w-full border-b"
+                              >
+                                <option value="">Select</option>
+                                {(key === "MitigationStrategies"
+                                  ? getConditionalOptions(rowIndex, key)
+                                  : propertySchema.enum
+                                ).map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </>
+                          )
                         ) : (
-                          <>
-                            <select
-                              value={localValue[rowIndex][key] || ""}
-                              onChange={(e) =>
-                                handleFieldChange(rowIndex, key, e.target.value)
-                              }
-                              className="text-[12px] pl-2 py-2 w-full border-b"
-                            >
-                              <option value="">Select</option>
-                              {(key === "MitigationStrategies"
-                                ? getConditionalOptions(rowIndex, key)
-                                : propertySchema.enum
-                              ).map((option) => (
-                                <option key={option} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select>
-                          </>
-                        )
-                      ) : (
-                        <input
-                          type="text"
-                          value={localValue[rowIndex][key] || ""}
-                          onChange={(e) =>
-                            handleFieldChange(rowIndex, key, e.target.value)
-                          }
-                          className="text-[12px] pl-2 py-2 w-full"
-                          placeholder="Enter value"
-                        />
-                      )}
-                      {othersInputs[rowIndex] &&
-                        othersInputs[rowIndex][key] &&
-                        localValue[rowIndex][key]?.includes(
-                          "Others (please specify)"
-                        ) && (
                           <input
                             type="text"
-                            value={localValue[rowIndex][`${key}_others`] || ""}
+                            value={localValue[rowIndex][key] || ""}
                             onChange={(e) =>
-                              handleFieldChange(
-                                rowIndex,
-                                `${key}_others`,
-                                e.target.value
-                              )
+                              handleFieldChange(rowIndex, key, e.target.value)
                             }
-                            className="text-[12px] pl-2 py-2 w-full mt-2"
-                            placeholder="Please specify"
+                            className="text-[12px] pl-2 py-2 w-full"
+                            placeholder="Enter"
                           />
                         )}
-                    </td>
-                  );
-                })}
+                        {othersInputs[rowIndex] &&
+                          othersInputs[rowIndex][key] &&
+                          localValue[rowIndex][key]?.includes(
+                            "Others (please specify)"
+                          ) && (
+                            <input
+                              type="text"
+                              value={
+                                localValue[rowIndex][`${key}_others`] || ""
+                              }
+                              onChange={(e) =>
+                                handleFieldChange(
+                                  rowIndex,
+                                  `${key}_others`,
+                                  e.target.value
+                                )
+                              }
+                              className="text-[12px] pl-2 py-2 w-full mt-2"
+                              placeholder="Please specify"
+                            />
+                          )}
+                      </td>
+                    );
+                  })}
                 <td className="border-y border-gray-300 p-4 text-center w-[45%]">
                   <button
                     type="button"

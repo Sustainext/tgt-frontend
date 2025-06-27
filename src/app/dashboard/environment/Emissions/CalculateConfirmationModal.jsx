@@ -7,24 +7,24 @@ import { useSelector } from "react-redux";
 const ReadOnlyTable = ({ data }) => {
   return (
     <table
-      className="w-full table-fixed border-separate"
+      className="w-full table-fixed border-separate " 
       style={{ borderSpacing: "0 3px" }}
     >
       <thead>
         <tr className="bg-gray-50">
-          <th className="pl-3 pr-2 py-2 text-left text-xs font-semibold text-gray-600 w-2/9">
+          <th className="pl-3 pr-2 py-2 text-left text-xs font-semibold text-gray-600 w-[150px] xl:w-2/9 lg:w-2/9 2xl:w-2/9 4k:w-2/9 2k:w-2/9 md:w-2/9 lg:w-2/9 2xl:w-2/9 4k:w-2/9 2k:w-2/9 md:w-2/9">
             Category
           </th>
-          <th className="pl-3 pr-2 py-2 text-left text-xs font-semibold text-gray-600 w-2/9">
+          <th className="pl-3 pr-2 py-2 text-left text-xs font-semibold text-gray-600 w-[150px] xl:w-2/9 lg:w-2/9 2xl:w-2/9 4k:w-2/9 2k:w-2/9 md:w-2/9">
             Sub-Category
           </th>
-          <th className="pl-3 pr-2 py-2 text-left text-xs font-semibold text-gray-600 w-2/9">
+          <th className="pl-3 pr-2 py-2 text-left text-xs font-semibold text-gray-600 w-[150px] xl:w-2/9 lg:w-2/9 2xl:w-2/9 4k:w-2/9 2k:w-2/9 md:w-2/9">
             Activity
           </th>
-          <th className="pl-3 pr-2 py-2 text-left text-xs font-semibold text-gray-600 w-2/9">
+          <th className="pl-3 pr-2 py-2 text-left text-xs font-semibold text-gray-600 w-[150px] xl:w-2/9 lg:w-2/9 2xl:w-2/9 4k:w-2/9 2k:w-2/9 md:w-2/9">
             Quantity
           </th>
-          <th className="pl-3 pr-2 py-2 text-left text-xs font-semibold text-gray-600 w-1/9">
+          <th className="pl-3 pr-2 py-2 text-left text-xs font-semibold text-gray-600 w-[150px] xl:w-1/9 lg:w-1/9 2xl:w-1/9 4k:w-1/9 2k:w-1/9 md:w-1/9">
             Assignee
           </th>
         </tr>
@@ -101,7 +101,7 @@ const CalculateConfirmationModal = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-[1001] flex items-center justify-center overflow-y-auto">
-      <div className="bg-white rounded-lg shadow-xl w-[75vw] min-h-[70vh] max-h-[85vh] overflow-hidden relative">
+      <div className="bg-white rounded-lg shadow-xl w-[120vw] xl:w-[75vw] md:w-[75vw] lg:w-[75vw] 2xl:w-[75vw] 4k:w-[75vw] 2k:w-[75vw]  min-h-[70vh] max-h-[85vh] overflow-hidden relative">
         <div className="p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
@@ -121,11 +121,11 @@ const CalculateConfirmationModal = ({
           </div>
 
           {/* Content */}
-          <div className="space-y-6 overflow-y-auto max-h-[calc(70vh-180px)]">
+          <div className="space-y-6 overflow-y-auto max-h-[calc(70vh-180px)] bg-[#f2f8fe] ">
             {Object.entries(scopeData).map(
               ([scope, data]) =>
                 data.length > 0 && (
-                  <div key={scope} className="bg-[#f2f8fe] p-4 rounded-lg">
+                  <div key={scope} className=" p-4 rounded-lg">
                     <h3 className="font-semibold mb-3 text-[#344053] text-[14px]">
                       {scope}
                     </h3>

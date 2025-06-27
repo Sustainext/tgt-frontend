@@ -1,0 +1,54 @@
+'use client';
+import { useEffect, useState } from "react";
+import MaterialityTable from "../../materilality/tables/table";
+
+const Section2 = ({ section8_1_1Ref, data }) => {
+  const col = [
+    "ESG Pillar",
+    "Material Topic",
+    // "GRI disclosure number",
+    // "Linked UN SDG",
+  ];
+
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    if (data?.["8_1_1"]) {
+      const parseData = (response) => {
+        const categories = ["environment","social","governance"]; // Extend with other ESG pillars if needed.
+        let rows = [];
+
+        categories.forEach((category) => {
+          if (response[category]) {
+            response[category].forEach((topic) => {
+              const { name: materialTopic } = topic;
+
+              rows.push({
+                "ESG Pillar":
+                  category.charAt(0).toUpperCase() + category.slice(1),
+                "Material Topic": materialTopic,
+              });
+            });
+          }
+        });
+
+        return rows;
+      };
+
+      setTableData(parseData(data["8_1_1"]));
+    }
+  }, [data]);
+
+  return (
+    <div id="section8_1_1" ref={section8_1_1Ref}>
+      <p className="text-[17px] text-[#344054] mb-4 font-semibold">
+        8.1.1 List of material topics
+      </p>
+      <div className="shadow-md rounded-md mb-6">
+      <MaterialityTable col={col} value={tableData} />
+      </div>
+    </div>
+  );
+};
+
+export default Section2;

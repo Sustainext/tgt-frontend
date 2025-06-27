@@ -80,7 +80,9 @@ const MaterialityTable = ({ col, value }) => {
                         {group.materialTopic}
                       </td>
                     )}
-                    <td className="border-t border-r border-gray-200 p-4 text-left">
+                    {col?.length===4?(
+                      <>
+                      <td className="border-t border-r border-gray-200 p-4 text-left">
                       {row["GRI disclosure number"]}
                     </td>
                     <td className="border-t border-r border-gray-200 p-4 text-left">
@@ -108,13 +110,27 @@ const MaterialityTable = ({ col, value }) => {
                         row["Linked UN SDG"]
                       )}
                     </td>
+                      </>
+                      
+                    ):(
+                      <></>
+                    )}
+                    
                   </tr>
                 ))}
               </React.Fragment>
             ))
           ) : (
             <tr className="text-[13px]">
-              <td className="border-t border-r border-gray-200 p-4 text-left">
+              {
+                col && col.length>0 && col.map((val)=>(
+                  <td className="border-t border-r border-gray-200 p-4 text-left">
+                  No Data available
+                </td>
+                ))
+              }
+             
+              {/* <td className="border-t border-r border-gray-200 p-4 text-left">
                 No Data available
               </td>
               <td className="border-t border-r border-gray-200 p-4 text-left">
@@ -122,10 +138,7 @@ const MaterialityTable = ({ col, value }) => {
               </td>
               <td className="border-t border-r border-gray-200 p-4 text-left">
                 No Data available
-              </td>
-              <td className="border-t border-r border-gray-200 p-4 text-left">
-                No Data available
-              </td>
+              </td> */}
             </tr>
           )}
         </tbody>

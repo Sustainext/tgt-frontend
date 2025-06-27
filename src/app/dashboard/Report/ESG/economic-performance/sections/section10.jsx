@@ -3,7 +3,11 @@ import { useState, useRef, useEffect } from "react";
 import Risktable from "../tables/risktable";
 import { useDispatch, useSelector } from 'react-redux';
 
-const Section10 = ({ section11_3_3Ref }) => {
+const Section10 = ({ section11_3_3Ref,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.3.2.1':'11.3.1.1',
+  sectionTitle = 'Climate-related Risks',
+  sectionOrder = 11,
+ }) => {
   // Safely access the data from the Redux state
   const data = useSelector(state => state.screen11Slice.getdata);
 
@@ -84,7 +88,7 @@ const Section10 = ({ section11_3_3Ref }) => {
     <>
       <div id="section11_3_3" ref={section11_3_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          11.3.2.1 Climate-related Risks
+       {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="rounded-md shadow-md mb-4">

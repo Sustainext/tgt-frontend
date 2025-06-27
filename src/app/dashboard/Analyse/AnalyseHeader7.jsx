@@ -12,6 +12,7 @@ const AnalyseHeader7 = ({
   setDateRange,
   selectedLocation,
   setSelectedLocation,
+  setToggleStatus
 }) => {
   const [formState, setFormState] = useState({
     selectedCorp: selectedCorp,
@@ -21,6 +22,16 @@ const AnalyseHeader7 = ({
     end: dateRange.end,
   });
   const [reportType, setReportType] = useState("Organization");
+  const handleReportTypeChange = (type) => {
+    setReportType(type);
+    setToggleStatus(type);
+  
+    if (type === "Organization") {
+      setSelectedCorp(""); 
+      setSelectedLocation(""); 
+    }
+  };
+  
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
     organization: "Please select Organisation",
@@ -153,7 +164,7 @@ const AnalyseHeader7 = ({
       setLocations([]);
       setSelectedLocation("");
     }
-
+  
     setDateRange("");
     setIsDateRangeValid(false);
     setErrors((prevErrors) => ({
@@ -166,20 +177,20 @@ const AnalyseHeader7 = ({
 
   const handleLocationChange = (e) => {
     const newLocation = e.target.value;
-    console.log("test loction",newLocation);
+ 
     setSelectedLocation(newLocation);
-
+  
     setErrors((prevErrors) => ({
       ...prevErrors,
       location: newLocation ? "" : "Please select a location",
     }));
   };
-
+ 
   return (
     <>
       <div>
-        <div className="flex-col items-center">
-          <div className="mt-4 pb-3 mx-5 text-left">
+      <div className="flex-col items-center ">
+      <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2 text-left">
             <div className="mb-2 flex-col items-center">
               <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
@@ -190,7 +201,7 @@ const AnalyseHeader7 = ({
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
-                    onClick={() => setReportType("Organization")}
+                    onClick={() => handleReportTypeChange("Organization")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Organization
@@ -200,7 +211,7 @@ const AnalyseHeader7 = ({
                     className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
-                    onClick={() => setReportType("Corporate")}
+                    onClick={() => handleReportTypeChange("Corporate")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Corporate
@@ -210,7 +221,7 @@ const AnalyseHeader7 = ({
                     className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Location" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
-                    onClick={() => setReportType("Location")}
+                    onClick={() => handleReportTypeChange("Location")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Locations
@@ -219,7 +230,7 @@ const AnalyseHeader7 = ({
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                 className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[100%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${
                   reportType !== "" ? "visible" : "hidden"
                 }`}
               >
@@ -281,7 +292,7 @@ const AnalyseHeader7 = ({
                     </div>
                   </div>
                 )}
-                {reportType === "Location" && (
+                {( reportType === "Location") && (
                   <div className="mr-2">
                     <label
                       htmlFor="location"

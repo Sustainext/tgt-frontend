@@ -69,9 +69,9 @@ const PerformanceTable = ({ value = {}, onChange }) => {
   };
 
   return (
-    <div className="p-4">
+    <div style={{ overflowY: "auto", maxHeight: "400px" }} className="custom-scrollbar mb-5 p-4">
       <table
-        className="min-w-full rounded-md border border-gray-300 w-full"
+        className="min-w-[600px] rounded-md border border-gray-300 w-full"
         style={{ borderCollapse: "separate", borderSpacing: 0 }}
       >
         <thead className="gradient-background">
@@ -136,82 +136,85 @@ const PerformanceTable = ({ value = {}, onChange }) => {
           </tr>
         </thead>
         <tbody>
-  {/* If employeeCategories is empty, show a message */}
-  {employeeCategories.length === 0 ? (
-    <tr>
-      <td
-        colSpan="4"
-        className="border-t border-gray-300 px-4 py-2 text-center text-[12px] text-[#00000]"
-      >
-        No employee categories available. Please add data to continue.
-      </td>
-    </tr>
-  ) : (
-    // Render Employee Categories if not empty
-    employeeCategories.map((row, index) => (
-      <tr key={`employee-${index}`}>
-        {index === 0 && (
-          <td
-            className="border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000] gradient-background text-center"
-            rowSpan={employeeCategories.length}
-          >
-            <div className="flex items-center relative">
-              <p>Employee Category</p>
-              <MdInfoOutline
-                data-tooltip-id={`test126`}
-                data-tooltip-content="Please specify the employee category."
-                className="cursor-pointer ml-1 w-[20%]"
-              />
-              <ReactTooltip
-                id={`test126`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "400px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  zIndex: "1000",
-                }}
-              />
-            </div>
-          </td>
-        )}
-        <td className="border-l border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000]">
-          {row.category}
-        </td>
-        <td className="border-l border-t border-gray-300 px-4 py-2 text-center">
-          <input
-            type="number"
-            value={row.performance}
-            onChange={(e) =>
-              handleEmployeeCategoryChange(index, "performance", e.target.value)
-            }
-            className="border p-1 w-full text-center text-[12px]"
-          />
-        </td>
-        <td className="border-t border-l border-gray-300 px-4 py-2 text-center">
-          <input
-            type="number"
-            value={row.careerDevelopment}
-            onChange={(e) =>
-              handleEmployeeCategoryChange(
-                index,
-                "careerDevelopment",
-                e.target.value
-              )
-            }
-            className="border p-1 w-full text-center text-[12px]"
-          />
-        </td>
-      </tr>
-    ))
-  )}
+          {/* If employeeCategories is empty, show a message */}
+          {employeeCategories.length === 0 ? (
+            <tr>
+              <td
+                colSpan="4"
+                className="border-t border-gray-300 px-4 py-2 text-center text-[12px] text-[#00000]"
+              >
+                No employee categories available. Please add data to continue.
+              </td>
+            </tr>
+          ) : (
+            // Render Employee Categories if not empty
+            employeeCategories.map((row, index) => (
+              <tr key={`employee-${index}`}>
+                {index === 0 && (
+                  <td
+                    className="border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000] gradient-background text-center"
+                    rowSpan={employeeCategories.length}
+                  >
+                    <div className="flex items-center relative">
+                      <p>Employee Category</p>
+                      <MdInfoOutline
+                        data-tooltip-id={`test126`}
+                        data-tooltip-content="Please specify the employee category."
+                        className="cursor-pointer ml-1 w-[20%]"
+                      />
+                      <ReactTooltip
+                        id={`test126`}
+                        place="top"
+                        effect="solid"
+                        style={{
+                          width: "400px",
+                          backgroundColor: "#000",
+                          color: "white",
+                          fontSize: "12px",
+                          boxShadow: 3,
+                          borderRadius: "8px",
+                          zIndex: "1000",
+                        }}
+                      />
+                    </div>
+                  </td>
+                )}
+                <td className="border-l border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000]">
+                  {row.category}
+                </td>
+                <td className="border-l border-t border-gray-300 px-4 py-2 text-center">
+                  <input
+                    type="number"
+                    value={row.performance}
+                    onChange={(e) =>
+                      handleEmployeeCategoryChange(
+                        index,
+                        "performance",
+                        e.target.value
+                      )
+                    }
+                    className="border p-1 w-full text-center text-[12px]"
+                  />
+                </td>
+                <td className="border-t border-l border-gray-300 px-4 py-2 text-center">
+                  <input
+                    type="number"
+                    value={row.careerDevelopment}
+                    onChange={(e) =>
+                      handleEmployeeCategoryChange(
+                        index,
+                        "careerDevelopment",
+                        e.target.value
+                      )
+                    }
+                    className="border p-1 w-full text-center text-[12px]"
+                  />
+                </td>
+              </tr>
+            ))
+          )}
 
-
-{employeeCategories.length > 0 &&
+          {employeeCategories.length > 0 &&
             genders.map((row, index) => (
               <tr key={`gender-${index}`}>
                 {index === 0 && (
@@ -240,7 +243,11 @@ const PerformanceTable = ({ value = {}, onChange }) => {
                     type="number"
                     value={row.careerDevelopment1}
                     onChange={(e) =>
-                      handleGenderChange(index, "careerDevelopment1", e.target.value)
+                      handleGenderChange(
+                        index,
+                        "careerDevelopment1",
+                        e.target.value
+                      )
                     }
                     className="border p-1 w-full text-center text-[12px]"
                   />
@@ -248,25 +255,22 @@ const PerformanceTable = ({ value = {}, onChange }) => {
               </tr>
             ))}
 
-
-  {/* Totals Row */}
-  {employeeCategories.length > 0 ? (
-    <tr>
-      <td className="border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000] gradient-background text-center">
-        Total employee
-      </td>
-      <td className="border-l border-t border-gray-300 px-4 py-2 text-center"></td>
-      <td className="border-l border-t border-gray-300 px-4 py-2 text-center text-[12px] text-[#00000]">
-        {totals.totalPerformance}
-      </td>
-      <td className="border-l border-t border-gray-300 px-4 py-2 text-center text-[12px] text-[#00000]">
-        {totals.totalCareerDevelopment}
-      </td>
-    </tr>
-  ) : null}
-</tbody>
-
-
+          {/* Totals Row */}
+          {employeeCategories.length > 0 ? (
+            <tr>
+              <td className="border-t border-gray-300 px-4 py-2 text-[12px] text-[#00000] gradient-background text-center">
+                Total employee
+              </td>
+              <td className="border-l border-t border-gray-300 px-4 py-2 text-center"></td>
+              <td className="border-l border-t border-gray-300 px-4 py-2 text-center text-[12px] text-[#00000]">
+                {totals.totalPerformance}
+              </td>
+              <td className="border-l border-t border-gray-300 px-4 py-2 text-center text-[12px] text-[#00000]">
+                {totals.totalCareerDevelopment}
+              </td>
+            </tr>
+          ) : null}
+        </tbody>
       </table>
     </div>
   );

@@ -106,17 +106,17 @@ const ViewMyTaskDetailsModal = ({ isOpen, onClose, task }) => {
                       onClick={() => setShowFilePreview(true)}
                       className="text-blue-600 hover:underline"
                     >
-                      {task.file_data.name}
+                      {task.file_data?.name}
                     </button>
                     <p className="text-xs text-gray-500">
                       {new Date(
-                        task.file_data.uploadDateTime
+                        task.file_data?.uploadDateTime
                       ).toLocaleDateString("en-GB", {
                         day: "2-digit",
                         month: "2-digit",
                         year: "2-digit",
                       })}{" "}
-                      • {task.file_data.size / 1000} kB
+                      • {task.file_data?.size / 1000} kB
                     </p>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ const ViewMyTaskDetailsModal = ({ isOpen, onClose, task }) => {
           <div className="bg-white rounded-lg w-[800px] h-full flex flex-col">
             <div className="p-4 border-b border-gray-200 flex justify-between items-center">
               <h3 className="text-lg font-medium text-gray-900 truncate">
-                {task.file_data.name}
+                {task.file_data?.name}
               </h3>
               <button
                 onClick={() => setShowFilePreview(false)}

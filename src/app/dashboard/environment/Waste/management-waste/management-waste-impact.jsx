@@ -165,7 +165,7 @@ const uiSchema = {
   },
 };
 
-const Managementwasteimpact = ({ selectedOrg, year, selectedCorp }) => {
+const Managementwasteimpact = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -273,16 +273,26 @@ const Managementwasteimpact = ({ selectedOrg, year, selectedCorp }) => {
     console.log("Form data is changed -", formData);
   }, [formData]);
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
       }
+    } else {
+      loadFormData();             // Organization tab: always try to load
     }
-  }, [selectedOrg, year, selectedCorp]);
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   // Add validation state
   const [validationErrors, setValidationErrors] = useState([]);
@@ -371,14 +381,24 @@ const Managementwasteimpact = ({ selectedOrg, year, selectedCorp }) => {
         )}
       </div>
       <div className="mb-4">
-        <button
-          type="button"
-          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
-      </div>
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
+          >
+            Submit
+          </button>
+        </div>
     </>
   );
 };

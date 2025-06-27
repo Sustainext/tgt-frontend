@@ -10,7 +10,7 @@ import axiosInstance from "../../../../../utils/axiosMiddleware";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-
+import AccordionItem from "./AccordionItem";
 const Step1 = ({ handleNext, esgSeleted }) => {
   const router = useRouter();
   const [envChecked, setEnvChecked] = useState(false);
@@ -186,7 +186,7 @@ const Step1 = ({ handleNext, esgSeleted }) => {
       </div>
 
       {/* checkbox */}
-      <div className="mx-5">
+      <div className="mx-5 hidden xl:block md:hidden lg:block 4k:block 2k:block 2xl:block">
         <div className="flex justify-between items-start">
           <div className="shadow-lg rounded-lg  w-[32.5%]">
             <div className="relative gradient-background p-2 rounded-t-lg flex justify-between">
@@ -224,7 +224,7 @@ pollution, climate change mitigation,
                 type="checkbox"
                 name="env"
                 checked={envChecked}
-                className="h-3.5 w-3.5 mt-3 mx-2 accent-[#008000]"
+                className="h-3.5 w-3.5 mt-3 mx-2 green-checkbox"
                 onChange={handleChecked}
               />
             </div>
@@ -234,6 +234,7 @@ pollution, climate change mitigation,
               setFormData={setFormData}
             />
           </div>
+
           <div className="shadow-lg rounded-lg  w-[32.5%]">
             <div className="relative gradient-background p-2 rounded-t-lg flex justify-between">
               <p className="text-[#2E0B34] text-[17px] mx-2 pt-2 flex">
@@ -267,7 +268,7 @@ customer relations, and community engagement. </p>`}
                 type="checkbox"
                 name="soc"
                 checked={socChecked}
-                className="h-3.5 w-3.5 mt-3 mx-2 accent-[#008000]" //green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white
+                className="h-3.5 w-3.5 mt-3 mx-2 green-checkbox" //green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white
                 onChange={handleChecked}
               />
             </div>
@@ -277,6 +278,7 @@ customer relations, and community engagement. </p>`}
               setFormData={setFormData}
             />
           </div>
+
           <div className="shadow-lg rounded-lg  w-[32.5%]">
             <div className="relative gradient-background p-2 rounded-t-lg flex justify-between">
               <p className="text-[#2E0B34] text-[17px] mx-2 pt-2 flex">
@@ -310,7 +312,7 @@ and transparency in reporting. </p>`}
                 type="checkbox"
                 name="gov"
                 checked={govChecked}
-                className="h-3.5 w-3.5 mt-3 mx-2 accent-[#008000]"
+                className="h-3.5 w-3.5 mt-3 mx-2 green-checkbox"
                 onChange={handleChecked}
               />
             </div>
@@ -322,9 +324,74 @@ and transparency in reporting. </p>`}
           </div>
         </div>
       </div>
+{/* mobile and tablet version */}
+      <div className="block xl:hidden md:block lg:hidden 4k:hidden 2k:hidden 2xl:hidden">
+        <AccordionItem
+          title="Environmental"
+          tooltipId="tooltip-env"
+          tooltipContent={`<p>The environmental component of ESG 
+focuses on an organization’s 
+interactions with the natural environment,
+ including its use of resources, emissions, 
+and ecological footprint. It encompasses 
+energy consumption, water use, waste generation, 
+pollution, climate change mitigation,
+ and biodiversity conservation. </p>`}
+          checked={envChecked}
+          onCheck={handleChecked}
+          name="env"
+          id="env"
+        >
+          <Enviroment
+            envChecked={envChecked}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        </AccordionItem>
+
+        <AccordionItem
+          title="Social"
+          tooltipId="tooltip-soc"
+          tooltipContent={`<p>The social aspect of ESG refers to how a company 
+manages relationships with employees, 
+communities, and other stakeholders. It includes labor 
+practices, diversity and inclusion, human rights, 
+customer relations, and community engagement. </p>`}
+          checked={socChecked}
+          onCheck={handleChecked}
+          name="soc"
+          id="soc"
+        >
+          <Social
+            socChecked={socChecked}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        </AccordionItem>
+
+        <AccordionItem
+          title="Governance"
+          tooltipId="tooltip-gov"
+          tooltipContent={`<p>Governance in ESG deals with the structures and 
+processes that guide company 
+leadership and decision-making. It includes corporate ethics, 
+board diversity, executive compensation, anti-corruption efforts, 
+and transparency in reporting. </p>`}
+          checked={govChecked}
+          onCheck={handleChecked}
+          name="gov"
+          id="gov"
+        >
+          <Governance
+            govChecked={govChecked}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        </AccordionItem>
+      </div>
 
       {/* buttons */}
-      <div className="flex justify-end w-full gap-4 mt-4">
+      <div className="flex justify-end w-full gap-4 mt-4 mb-2">
         <button
           className="w-auto h-full mr-2 py-2 px-3 text-[#727272]  cursor-pointer"
           onClick={() => {

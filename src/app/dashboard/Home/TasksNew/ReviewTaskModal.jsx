@@ -53,7 +53,16 @@ const ReviewTaskModal = ({
       await onApprove(taskassigndata.id);
     } else if (isModalOpenReassign) {
       if (!date || !usernameasssin) {
-        toast.error("Please fill in all fields");
+        toast.error("Please fill in all fields", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         return;
       }
       await onReassign(taskassigndata.id, {
@@ -62,7 +71,16 @@ const ReviewTaskModal = ({
       });
     } else if (isModalOpenReject) {
       if (!date || !comments) {
-        toast.error("Please fill in all fields");
+        toast.error("Please fill in all fields", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         return;
       }
       await onReject(taskassigndata.id, {
@@ -180,7 +198,7 @@ const ReviewTaskModal = ({
           {/* Data Review Section */}
           <div className="mb-4 bg-[#007eef0d] p-4 rounded-md">
             <h5 className="text-left text-black text-sm mb-3">
-              Data to be added:
+              Data to be reviewed:
             </h5>
 
             {/* Activity */}
@@ -437,7 +455,7 @@ const ReviewTaskModal = ({
 
         {/* File Preview */}
         {isPdfViewerOpen && (
-          <div className="bg-white rounded-lg w-[800px] min-h-[89vh] relative flex flex-col shadow-lg ms-3">
+          <div className="bg-white rounded-lg w-[800px] min-h-[89vh] h-[650px] relative flex flex-col shadow-lg ms-3">
             {/* Header Section */}
             <div className="p-4 border-b border-gray-200 flex justify-between items-center">
               <h3 className="text-lg font-medium text-gray-900 truncate">

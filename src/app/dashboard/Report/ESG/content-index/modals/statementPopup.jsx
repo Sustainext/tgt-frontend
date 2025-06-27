@@ -8,9 +8,11 @@ import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../../../../utils/axiosMiddleware";
+import {setCurrentReportPage} from '../../../../../../lib/redux/features/reportBuilderSlice'
+import { useSelector,useDispatch } from "react-redux";
 
 const StatementPopup = ({reportid, statement,setStatement,handleChange,isModalOpen, setIsModalOpen,setActiveStep,orgName,fromDate,toDate }) => {
- 
+    const dispatch=useDispatch()
     const handleSubmit = async () => {
         const data={
             "statement_of_use": statement
@@ -31,6 +33,7 @@ const StatementPopup = ({reportid, statement,setStatement,handleChange,isModalOp
                     theme: "light",
                 });
                 setIsModalOpen(false);
+                
             }
             else{
                 toast.error("Oops, something went wrong 1", {
@@ -66,7 +69,7 @@ const StatementPopup = ({reportid, statement,setStatement,handleChange,isModalOp
       {isModalOpen && (
         <div className="modal-overlay z-50">
           <div className="modal-center">
-            <div className="bg-white p-5 rounded-lg shadow-md w-auto">
+            <div className="bg-white p-5 rounded-lg shadow-md xl:w-auto w-[95%]">
               <div className="flex justify-between items-center pt-6 w-full">
                 <div className="flex gap-2">
                   <Image src={GRISVG} className="w-7 h-7 mr-2" alt="gri-logo" />
@@ -112,7 +115,7 @@ has reported in accordance with the GRI Standards for the period [reporting peri
               <div className="flex justify-end mt-3 mb-3">
               <button className="w-auto h-full mr-3  py-2 px-4 bg-transparent text-[#4F4F4F] rounded-[8px] shadow cursor-pointer border border-gray-200"
                   onClick={() => {
-                    setActiveStep(1);
+                    dispatch(setCurrentReportPage(0))
                   }}
                   >
                     Back to Report
@@ -135,6 +138,7 @@ has reported in accordance with the GRI Standards for the period [reporting peri
         </div>
       )}
     </>
+    
   );
 };
 

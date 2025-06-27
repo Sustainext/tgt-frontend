@@ -21,7 +21,6 @@ const TableSidebar = () => {
         "materials1",
         "materials2",
         "materials3",
-        "materials4",
 
       ];
 
@@ -63,10 +62,6 @@ const TableSidebar = () => {
         {
           id: "materials3",
           name: "Percentage of recycled materials used (Production)",
-        },
-        {
-          id: "materials4",
-          name: "Reclaimed products and their packaging materials",
         },
 
       ].map((link) => (

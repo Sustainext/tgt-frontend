@@ -12,7 +12,8 @@ import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen4 from "./screen4";
 import { Oval } from "react-loader-spinner";
-const ReportDetails = () => {
+import GeneralTopBar from "../../generalTopBar";
+const ReportDetails = ({setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -26,6 +27,7 @@ const ReportDetails = () => {
   const screen3Ref = useRef(null);
   const screen4Ref = useRef(null);
   const [loopen, setLoOpen] = useState(false);
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -79,11 +81,50 @@ const ReportDetails = () => {
   };
   const LoaderOpen = () => setLoOpen(true); // Show loader
   const LoaderClose = () => setLoOpen(false); // Hide loader
+  const griData = [
+    {
+      tagName: "GRI 2 - 3",
+      toggle: "94",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR A-I-9",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section A-I-9",
+    },
+    {
+      tagName: "BRSR A-I-6",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section A-I-6",
+    },
+    {
+      tagName: "BRSR A-I-7",
+      id: "tooltip-$brsr3",
+      content: "BRSR-Section A-I-7",
+    },
+    {
+      tagName: "BRSR A-I-12",
+      id: "tooltip-$brsr4",
+      content: "BRSR-Section A-I-12",
+    },
+ 
+  ];
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <GeneralTopBar
+          toggleDrawer={toggleDrawer}
+          brsr={brsr}
+          griData={griData}
+          title={"Report Details"}
+          setMobileopen={setMobileopen}
+        />
+        {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">General</p>
@@ -98,15 +139,114 @@ const ReportDetails = () => {
           </div>
           <div className="w-full float-end ">
             <div className="flex float-end border-l">
-              <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("94")}
-              >
-                GRI 2 - 3
-              </button>
+              <div>
+                <button
+                  className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                  onClick={() => toggleDrawer("94")}
+                >
+                  GRI 2 - 3
+                </button>
+              </div>
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr1`}
+                  data-tooltip-content="BRSR-Section A-I-9"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR A-I-9
+                </button>
+                <ReactTooltip
+                  id={`tooltip-$brsr1`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                    width: "170px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr2`}
+                  data-tooltip-content="BRSR-Section A-I-6"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR A-I-6
+                </button>
+
+                <ReactTooltip
+                  id={`tooltip-$brsr2`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                    width: "170px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr3`}
+                  data-tooltip-content="BRSR-Section A-I-7"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR A-I-7
+                </button>
+                <ReactTooltip
+                  id={`tooltip-$brsr3`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                    width: "170px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
+              <div className=" relative">
+                <button
+                  data-tooltip-id={`tooltip-$brsr4`}
+                  data-tooltip-content="BRSR-Section A-I-12"
+                  className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
+                  // onClick={() => toggleDrawer("92")}
+                >
+                  BRSR A-I-12
+                </button>
+                <ReactTooltip
+                  id={`tooltip-$brsr4`}
+                  place="bottom"
+                  effect="solid"
+                  style={{
+                    width: "170px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                ></ReactTooltip>
+              </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -157,9 +297,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -185,6 +332,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
         selectedOrg={selectedOrg}
@@ -193,6 +341,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         ref={screen1Ref}
+        togglestatus={togglestatus}
       />
 
       <Screen2
@@ -202,6 +351,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         ref={screen2Ref}
+        togglestatus={togglestatus}
       />
 
       <Screen3
@@ -211,6 +361,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         ref={screen3Ref}
+        togglestatus={togglestatus}
       />
       <Screen4
         selectedOrg={selectedOrg}
@@ -219,15 +370,23 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         ref={screen4Ref}
+        togglestatus={togglestatus}
       />
-      <div className="mt-4">
+      <div className="mt-4 mr-1.5">
         <button
           type="button"
-          className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end mr-1 ${
-            !selectedOrg || !year ? "cursor-not-allowed" : ""
+          className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+            (!selectedCorp && togglestatus === "Corporate") ||
+            !selectedOrg ||
+            !year
+              ? "cursor-not-allowed opacity-90"
+              : ""
           }`}
           onClick={handleSubmit}
-          disabled={!selectedOrg || !year}
+          disabled={
+            (togglestatus === "Corporate" && !selectedCorp) ||
+            (togglestatus !== "Corporate" && (!selectedOrg || !year))
+          }
         >
           Submit
         </button>

@@ -12,7 +12,7 @@ import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import SocialTopBar from '../../socialTopBar'
 
-const SoicalProcurementPractices = ({apiData}) => {
+const SoicalProcurementPractices = ({apiData,setMobileopen}) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -64,7 +64,7 @@ const SoicalProcurementPractices = ({apiData}) => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Supply Chain Labor Standards'} topic={'SocSupplyChainLabour'} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Supply Chain Labor Standards'} topic={'SocSupplyChainLabour'} setMobileopen={setMobileopen} />
        
 
         <div className="ml-3 flex relative">
@@ -116,9 +116,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

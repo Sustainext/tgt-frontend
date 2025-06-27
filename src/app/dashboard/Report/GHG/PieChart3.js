@@ -1,13 +1,21 @@
 // install (please try to align the version of installed @nivo packages)
 // yarn add @nivo/pie
 import { ResponsivePie } from "@nivo/pie";
-
+import { useEffect, useState } from "react";
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
 function MyResponsiveloction({ locatiodata }) {
+      const [isMobile, setIsMobile] = useState(false);
+    
+      useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+      }, []);
   const locationsData = locatiodata.reduce((acc, corporate) => {
     // Optionally, you can add more details to each location object here
     const locations = corporate.locations.map(location => ({
@@ -25,16 +33,22 @@ function MyResponsiveloction({ locatiodata }) {
     color: `hsl(${Math.random() * 360}, 70%, 50%)` // Random color for each location
   }));
 
+
   return (
     <>
-      <h3 className="text-left mb-2 p-3 mt-3">
+    {
+      transformedData.length>0 && (
+        <h3 className="text-left mb-2 p-3 mt-3">
         <b>Emissions by location</b>
       </h3>
+      )
+    }
+     
 
       <ResponsivePie
         data={transformedData}
         enableArcLabels={false}
-        margin={{ top: 40, right: 250, bottom: 80, left: 0 }}
+        margin={{ top: 40, right: isMobile ? 10 : 250, bottom: isMobile ? 120 : 80, left: 0 }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
@@ -125,13 +139,13 @@ function MyResponsiveloction({ locatiodata }) {
         ]}
         legends={[
           {
-              anchor: 'right',
-              direction: 'column',
+            anchor: isMobile ? "bottom" : "right",
+            direction: isMobile ? "row" : "column",
               justify: false,
-              translateX: 120, // Adjust this value to move the legend closer or further from the chart
-              translateY: 0,
-              itemsSpacing: 2,
-              itemWidth: 80, // Adjust based on your text length
+              translateX: isMobile ? 0 : 120,
+              translateY: isMobile ? 60 : 0,
+              itemsSpacing: isMobile ? 20 : 2,
+              itemWidth: isMobile ? 80 : 80,
               itemHeight: 20,
               itemTextColor: '#999',
               itemDirection: 'left-to-right',

@@ -1,83 +1,96 @@
-
-'use client'
-import React, { useState, useEffect } from 'react';
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
-import { Socialdata } from "../../data/socialgriinfo"
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css'
+"use client";
+import React, { useState, useEffect } from "react";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
+import { Socialdata } from "../../data/socialgriinfo";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 import Section2 from "./Section2/page";
-import SocialTopBar from '../../socialTopBar'
+import SocialTopBar from "../../socialTopBar";
 
-const IllhealthHazard = ({apiData}) => {
+const IllhealthHazard = ({ apiData,setMobileopen }) => {
+  const [data, setData] = useState();
+  const [category, setCategory] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
-    const [data, setData] = useState();
-    const [category, setCategory] = useState("");
-    const [isOpen, setIsOpen] = useState(false);
+  const toggleDrawerclose = () => {
+    setIsOpen(!isOpen);
+  };
+  const toggleDrawer = (selected) => {
+    setIsOpen(!isOpen);
+    setCategory(selected);
+  };
+  useEffect(() => {
+    var newData = [];
+    Socialdata.map((program) => {
+      program.category.map((tag) => {
+        if (tag === category) {
+          newData.push(program);
+        }
+      });
+    });
+    // //console.log(newData);
+    setData(newData);
+  }, [category]);
+  const griData = [
+    {
+      tagName: "GRI 403 - 10",
+      toggle: "42",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
+  ];
 
-    const toggleDrawerclose = () => {
-        setIsOpen(!isOpen);
-    }
-    const toggleDrawer = (selected) => {
-        setIsOpen(!isOpen);
-        setCategory(selected);
-    };
-    useEffect(() => {
-        var newData = [];
-        Socialdata.map((program) => {
-            program.category.map((tag) => {
-                if (tag === category) {
-                    newData.push(program);
-                }
-            })
-        })
-        // //console.log(newData);
-        setData(newData);
-    }, [category])
-
-    const sdgData=[
-      {
-          tagName:'GRI 403 - 10',
-          toggle:'42',
-          textColor:"#007EEF",
-          bgColor:"bg-slate-200"
-      },
-      {
-        tagName:'SDG 3',
-        toggle:'43',
-        textColor:"#fff",
-        bgColor:"bg-green-600"
+  const brsr = [
+    {
+      tagName: "BRSR C-P3-E12",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-12",
     },
     {
-      tagName:'SDG 8',
-      toggle:'44',
-      textColor:"#fff",
-      bgColor:"bg-red-900"
-  },
-  {
-    tagName:'SDG 16',
-    toggle:'45',
-    textColor:"#fff",
-    bgColor:"bg-blue-900"
-},
-   
-     
-     
-     
-     
-  ]
+      tagName: "BRSR C-P3-E15",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-15",
+    },
+  ];
+  const sdgData = [
+    {
+      tagName: "SDG 3",
+      toggle: "43",
+      textColor: "#fff",
+      bgColor: "bg-green-600",
+    },
+    {
+      tagName: "SDG 8",
+      toggle: "44",
+      textColor: "#fff",
+      bgColor: "bg-red-900",
+    },
+    {
+      tagName: "SDG 16",
+      toggle: "45",
+      textColor: "#fff",
+      bgColor: "bg-blue-900",
+    },
+  ];
 
-    return (
-        <>
-            <div className="flex flex-col justify-start overflow-x-hidden ">
-            <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
-               
+  return (
+    <>
+      <div className="flex flex-col justify-start overflow-x-hidden ">
+        <SocialTopBar
+          toggleDrawer={toggleDrawer}
+          sdgData={sdgData}
+          apiData={apiData}
+          title={"Occupational Health and Safety"}
+          topic={"SocHealthSafety"}
+          griData={griData}
+          brsr={brsr}
+          setMobileopen={setMobileopen}
+        />
 
-
-                <div className="ml-3 flex">
-                    <h6 className="text-[17px] mb-4 font-semibold flex">
-
-                    Work-related Hazards
-                        {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+        <div className="ml-3 flex">
+          <h6 className="text-[17px] mb-4 font-semibold flex">
+            Work-related Hazards
+            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
@@ -90,10 +103,10 @@ const IllhealthHazard = ({apiData}) => {
                         }}>
 
                         </ReactTooltip> */}
-                    </h6>
-                </div>
-                    <div
-           className={`${
+          </h6>
+        </div>
+        <div
+          className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
@@ -117,9 +130,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}
@@ -135,11 +155,10 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
               </div>
             ))}
         </div>
-            </div>
-         
-            <Section2/>
+      </div>
 
-        </>
-    );
+      <Section2 />
+    </>
+  );
 };
 export default IllhealthHazard;

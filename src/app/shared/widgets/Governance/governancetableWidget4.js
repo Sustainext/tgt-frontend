@@ -164,29 +164,28 @@ const GovernancetableWidget4 = ({
           uploadDateTime: "",
         };
       }
-  
+
       // Update the state
       setInternalValue(updatedValue);
       debouncedOnChange(updatedValue);
-  
+
       // Close the modal and reset selected file details
       setSelectedFileDetails(null);
       setShowModal(false);
-  
+
       // Log the deletion action
       setTimeout(() => {
         LoginlogDetails("Success", "Deleted");
       }, 500);
     } catch (error) {
       console.error("Error deleting file:", error.message);
-  
+
       // Log the failed deletion action
       setTimeout(() => {
         LoginlogDetails("Failed", "Deleted");
       }, 500);
     }
   };
-  
 
   const handlePreview = (rowIndex) => {
     setSelectedFileDetails(internalValue[rowIndex]);
@@ -200,102 +199,119 @@ const GovernancetableWidget4 = ({
 
   return (
     <>
-      <table
-        className="rounded-md border border-gray-300 w-full"
-        style={{ borderCollapse: "separate", borderSpacing: 0 }}
+      <div
+        style={{ maxHeight: "400px" }}
+        className="mb-2  overflow-auto custom-scrollbar"
       >
-        <tbody>
-          {uiSchema["ui:options"].rowLabels.map((label, rowIndex) => (
-            <tr key={rowIndex}>
-              <td className="border-t border-gray-300 p-3 text-left">
-                <div className="flex relative">
-                  <span className="text-[12px]">{label.title}</span>
-                  <MdInfoOutline
-                    data-tooltip-id={`tooltip-${label.title.replace(
-                      /\s+/g,
-                      "-"
-                    )}`}
-                    data-tooltip-content={label.tooltip}
-                    className="ml-1 cursor-pointer mt-1 text-[12px]"
-                    style={{ display: label.display }}
-                  />
-                  <ReactTooltip
-                    id={`tooltip-${label.title.replace(/\s+/g, "-")}`}
-                    place="top"
-                    effect="solid"
-                  />
-                </div>
-              </td>
-              <td className="border-t border-l border-gray-300 p-3 text-left">
-                {label.type === "text" ? (
-                  <input
-                    type="text"
-                    value={internalValue[rowIndex]?.column1 || ""}
-                    onChange={(e) => handleInputChange(e, "column1", rowIndex)}
-                    className="text-[12px] pl-2 py-2 w-full border-b"
-                  />
-                ) : (
-                  <>
-                    <select
+        <table
+          className="rounded-md border border-gray-300 w-full"
+          style={{ borderCollapse: "separate", borderSpacing: 0 }}
+        >
+          <tbody>
+            {uiSchema["ui:options"].rowLabels.map((label, rowIndex) => (
+              <tr key={rowIndex}>
+                <td className="border-t border-gray-300 p-3 text-left">
+                  <div className="flex relative  w-[357px] xl:w-auto lg:w-auto  md:w-auto  2xl:w-auto  4k:w-auto  2k:w-auto">
+                    <span className="text-[12px]">{label.title}</span>
+                    <MdInfoOutline
+                      data-tooltip-id={`tooltip-${label.title.replace(
+                        /\s+/g,
+                        "-"
+                      )}`}
+                      data-tooltip-content={label.tooltip}
+                      className="ml-1 cursor-pointer mt-1 text-[12px]"
+                      style={{ display: label.display }}
+                    />
+                    <ReactTooltip
+                      id={`tooltip-${label.title.replace(/\s+/g, "-")}`}
+                      place="top"
+                      effect="solid"
+                    />
+                  </div>
+                </td>
+                <td className="border-t border-l border-gray-300 p-3 text-left">
+                  {label.type === "text" ? (
+                    <input
+                      type="text"
                       value={internalValue[rowIndex]?.column1 || ""}
                       onChange={(e) =>
                         handleInputChange(e, "column1", rowIndex)
                       }
-                      className="text-[12px] pl-2 py-2 w-full border-b"
-                    >
-                      <option value="">Select</option>
-                      {label.selectoption.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </>
-                )}
-              </td>
-              <td className="border-t border-l border-gray-300 p-3 text-left">
-                <input
-                  type="file"
-                  id={`fileInput-${rowIndex}`}
-                  onChange={(e) => handleFileChange(e, rowIndex)}
-                  style={{ display: "none" }}
-                />
-                {internalValue[rowIndex]?.fileName ? (
-                  <label className="flex cursor-pointer">
-                    <div className="flex items-center text-center mt-2">
-                      <div
-                        className="text-sky-600 text-[12px] flex text-center w-[180px] truncate"
-                        onClick={() => handlePreview(rowIndex)}
+                      className="text-[12px] pl-2 py-2  w-[300px] xl:w-full lg:w-full  md:w-full  2xl:w-full  4k:w-full 2k:w-full border-b"
+                    />
+                  ) : (
+                    <>
+                      <select
+                        value={internalValue[rowIndex]?.column1 || ""}
+                        onChange={(e) =>
+                          handleInputChange(e, "column1", rowIndex)
+                        }
+                        className="text-[12px] pl-2 py-2 w-full border-b"
                       >
-                        <MdFilePresent className="w-6 h-6 mr-1 text-green-500" />
-                        <p className="flex items-center">
-                          {internalValue[rowIndex]?.fileName}
-                        </p>
+                        <option value="">Select</option>
+                        {label.selectoption.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                      {internalValue[rowIndex]?.column1 === "Yes" && (
+                        <input
+                          type="text"
+                          placeholder="Enter details"
+                          value={internalValue[rowIndex]?.column1_details || ""}
+                          onChange={(e) =>
+                            handleInputChange(e, "column1_details", rowIndex)
+                          }
+                          className="text-[12px] pl-2 py-2 mt-2 w-full border-b"
+                        />
+                      )}
+                    </>
+                  )}
+                </td>
+                <td className="border-t border-l border-gray-300 p-3 text-left">
+                  <input
+                    type="file"
+                    id={`fileInput-${rowIndex}`}
+                    onChange={(e) => handleFileChange(e, rowIndex)}
+                    style={{ display: "none" }}
+                  />
+                  {internalValue[rowIndex]?.fileName ? (
+                    <label className="flex cursor-pointer">
+                      <div className="flex items-center text-center mt-2">
+                        <div
+                          className="text-sky-600 text-[12px] flex text-center w-[180px] truncate"
+                          onClick={() => handlePreview(rowIndex)}
+                        >
+                          <MdFilePresent className="w-6 h-6 mr-1 text-green-500" />
+                          <p className="flex items-center">
+                            {internalValue[rowIndex]?.fileName}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </label>
-                ) : (
-                  <label
-                    htmlFor={`fileInput-${rowIndex}`}
-                    className="flex cursor-pointer"
-                  >
-                    <div className="flex text-center mt-2">
-                      <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
-                      <div className="truncate text-center text-[#007EEF] text-[13px] ml-1">
-                        Upload Documentation
+                    </label>
+                  ) : (
+                    <label
+                      htmlFor={`fileInput-${rowIndex}`}
+                      className="flex cursor-pointer"
+                    >
+                      <div className="flex text-center mt-2">
+                        <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
+                        <div className="truncate text-center text-[#007EEF] text-[13px] ml-1">
+                          Upload Documentation
+                        </div>
                       </div>
-                    </div>
-                  </label>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
+                    </label>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {showModal && selectedFileDetails && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-12">
+          <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-6">
             <div className="flex justify-between mt-4 mb-4">
               <div>
                 <h5 className="mb-4 ml-2 font-semibold">
@@ -306,7 +322,13 @@ const GovernancetableWidget4 = ({
                 <div className="mb-4">
                   <button
                     className="px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white"
-                    onClick={() => handleDelete(internalValue.findIndex(item => item === selectedFileDetails))}
+                    onClick={() =>
+                      handleDelete(
+                        internalValue.findIndex(
+                          (item) => item === selectedFileDetails
+                        )
+                      )
+                    }
                   >
                     <MdDelete className="text-xl" /> Delete File
                   </button>
@@ -322,7 +344,7 @@ const GovernancetableWidget4 = ({
               </div>
             </div>
             <div className="flex justify-between">
-              <div className="relative w-[760px] h-[580px]">
+              <div className="relative w-[55vw] h-[45vw]">
                 {selectedFileDetails.fileType?.startsWith("image") ? (
                   <img
                     src={selectedFileDetails.fileUrl}
@@ -333,10 +355,19 @@ const GovernancetableWidget4 = ({
                   <iframe
                     src={selectedFileDetails.fileUrl}
                     title="PDF Preview"
-                    className="w-full h-96"
+                    className="w-full h-full"
                   />
                 ) : (
-                  <p>Preview not available. Please download the file.</p>
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <p>File preview not available.Please download and verify</p>
+                    <a
+                      href={selectedFileDetails.fileUrl}
+                      download={selectedFileDetails.fileName}
+                      className="mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    >
+                      Download File
+                    </a>
+                  </div>
                 )}
               </div>
 
@@ -350,7 +381,7 @@ const GovernancetableWidget4 = ({
                   <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                     FILE NAME
                   </h2>
-                  <h2 className="text-[14px] truncate leading-relaxed tracking-wide">
+                  <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
                     {selectedFileDetails.fileName}
                   </h2>
                 </div>
@@ -366,7 +397,7 @@ const GovernancetableWidget4 = ({
                   <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                     FILE TYPE
                   </h2>
-                  <h2 className="text-[14px] leading-relaxed tracking-wide">
+                  <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
                     {selectedFileDetails.fileType}
                   </h2>
                 </div>

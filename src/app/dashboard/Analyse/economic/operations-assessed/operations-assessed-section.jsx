@@ -4,7 +4,7 @@ import DynamicTable2 from "./customTable";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
 import { Oval } from "react-loader-spinner";
-const Operationsassessedsection = ({ selectedOrg, selectedCorp, year }) => {
+const Operationsassessedsection = ({ selectedOrg, selectedCorp, year,togglestatus }) => {
   const [strategypolicy, setStrategypolicy] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
@@ -49,17 +49,24 @@ const Operationsassessedsection = ({ selectedOrg, selectedCorp, year }) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && year) {
-      fetchData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        fetchData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setStrategypolicy([]);
+      } else {
+        fetchData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
+
 
   return (
     <div>
@@ -72,8 +79,8 @@ const Operationsassessedsection = ({ selectedOrg, selectedCorp, year }) => {
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>Operations assessed for risks related to corruption</p>
+                 <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center mb-2">
+                  <p className="mb-2">Operations assessed for risks related to corruption</p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">

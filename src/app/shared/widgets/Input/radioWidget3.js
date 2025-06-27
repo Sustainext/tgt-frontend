@@ -48,7 +48,7 @@ const RadioWidget3 = ({
                 "-"
               )}`}
               data-tooltip-html={uiSchema["ui:tooltipshadding"]}
-              className="mt-1 ml-1 text-[14px]"
+              className="mt-1 ml-1 text-[14px] "
               style={{ display: uiSchema["ui:haddingtooltipdisplay"] }}
             />
             {/* Tooltip */}
@@ -90,7 +90,7 @@ const RadioWidget3 = ({
                 "-"
               )}`}
               data-tooltip-html={uiSchema["ui:tooltipstitle"]}
-              className="mt-1 mr-4 text-[#344054] text-[14px]"
+              className="mt-1 mr-4 text-[#344054] text-[14px] w-[20%] xl:w-0 lg:w-0 md:w-0 2xl:w-0 4k:w-0 2k:-0"
               style={{ display: uiSchema["ui:titletooltipdisplay"] }}
             />
 

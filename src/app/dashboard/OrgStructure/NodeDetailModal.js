@@ -4,6 +4,7 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
+import { showToast } from "@/app/utils/toastUtils";
 
 const NodeDetailModal = ({
   isOpen,
@@ -29,7 +30,7 @@ const NodeDetailModal = ({
         filteredDetails = {
           id: details.id,
           name: details.name,
-          type_corporate_entity: details.type_of_corporate_entity,
+          type_corporate_entity: details.type_corporate_entity,
           owner: details.owner,
           phone: details.phone,
           mobile: details.mobile,
@@ -39,8 +40,8 @@ const NodeDetailModal = ({
           revenue: details.revenue,
           sector: details.sector,
           subindustry: details.subindustry || details.sub_industry,
-          address: details.address,
-          countryoperation: details.countryoperation,
+          street: details.address,
+          country: details.country,
           state: details.state,
           city: details.city,
           timezone: details.timezone,
@@ -68,8 +69,8 @@ const NodeDetailModal = ({
         filteredDetails = {
           id: details.id,
           name: details.name,
-          corporatetype: details.corporatetype || details.type,
-          ownershipnature: details.ownershipnature || details.ownership,
+          corporatetype: details.corporatetype,
+          owner: details.ownershipnature || details.ownership,
           legalform: details.legalform,
           ownership: details.ownership,
           revenue: details.revenue,
@@ -77,17 +78,17 @@ const NodeDetailModal = ({
           subindustry: details.subindustry,
           website: details.website,
           employeecount: details.employeecount,
-          address: details.address,
-          city: details.city,
+          street: details.address,
+          country: details.country,
           state: details.state,
-          Country: details.Country || details.country,
+          city: details.city,
           from_date: details.from_date,
           to_date: details.to_date,
           currency: details.currency,
           date_format: details.date_format,
           timezone: details.timezone,
           language: details.language,
-          location_headquarters:
+          location_of_headquarters:
             details.location_headquarters || details.location_of_headquarters,
           phone: details.phone,
           mobile: details.mobile,
@@ -113,8 +114,16 @@ const NodeDetailModal = ({
           timezone: details.timezone,
           employeecount: details.employeecount,
           language: details.language,
+          corporate_data: {
+            id: details.corporate_data.id,
+            name: details.corporate_data.name,
+            country: details.corporate_data.country,
+            state: details.corporate_data.state,
+            city: details.corporate_data.city,
+            address: details.corporate_data.address
+          },
           revenue: details.revenue,
-          streetaddress: details.streetaddress || details.address,
+          street: details.streetaddress,
           country: details.country,
           state: details.state,
           city: details.city,
@@ -163,26 +172,34 @@ const NodeDetailModal = ({
   const handleEntityDelete = async () => {
     try {
       let endpoint = "";
+      let entityTypeDisplay = "";
       console.log("node type delete triggered!", nodeType);
       switch (nodeType) {
         case "organization":
           endpoint = `/organization_activity/${details.id}/`;
+          entityTypeDisplay = "Organization";
           break;
         case "corporate":
           endpoint = `/corporate/${details.id}/`;
+          entityTypeDisplay = "Corporate entity";
           break;
         case "location":
           endpoint = `/location/${details.id}/`;
+          entityTypeDisplay = "Location";
           break;
         default:
           throw new Error(`Invalid entity type: ${nodeType}`);
       }
 
       await axiosInstance.delete(endpoint);
+      showToast(`${entityTypeDisplay} deleted successfully`);
       setIsDeleteModalOpen(false);
       onClose();
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
+      showToast("Failed to delete entity", "error");
       console.error(
         "Error deleting entity:",
         error.response?.data || error.message
@@ -199,15 +216,15 @@ const NodeDetailModal = ({
           // Find organization containing this location
           const org = rawData.find((o) =>
             o.corporatenetityorg?.some((c) =>
-              c.location?.some((l) => l.name === nodeData.name)
+              c.location?.some((l) => l.id === nodeData.id)
             )
           );
           // Find corporate entity containing this location
           const corp = org?.corporatenetityorg?.find((c) =>
-            c.location?.some((l) => l.name === nodeData.name)
+            c.location?.some((l) => l.id === nodeData.id)
           );
           // Find the location itself
-          const loc = corp?.location?.find((l) => l.name === nodeData.name);
+          const loc = corp?.location?.find((l) => l.id === nodeData.id);
 
           foundDetails = {
             ...loc,
@@ -215,17 +232,24 @@ const NodeDetailModal = ({
             organization: org?.name,
             corporate: corp?.name,
             organization_data: org,
-            corporate_data: corp,
+            corporate_data: {
+              id: corp?.id,
+              name: corp?.name,
+              country: corp?.country,
+              state: corp?.state,
+              city: corp?.city,
+              address: corp?.address
+            },
             breadcrumb: [org?.name, corp?.name, loc?.name],
           };
           break;
         }
         case "corporate": {
           const org = rawData.find((o) =>
-            o.corporatenetityorg?.some((c) => c.name === nodeData.name)
+            o.corporatenetityorg?.some((c) => c.id === nodeData.id)
           );
           const entity = org?.corporatenetityorg?.find(
-            (c) => c.name === nodeData.name
+            (c) => c.id === nodeData.id
           );
 
           foundDetails = {
@@ -243,7 +267,7 @@ const NodeDetailModal = ({
           break;
         }
         case "organization": {
-          const org = rawData.find((o) => o.name === nodeData.name);
+          const org = rawData.find((o) => o.id === nodeData.id);
           foundDetails = {
             ...org,
             type: "organization",
@@ -267,10 +291,10 @@ const NodeDetailModal = ({
 
   return (
     <>
-      <div className="fixed right-0 top-[5rem] z-50 flex justify-end border border-gray-300 rounded-xl h-[110vh]">
+      <div className="fixed xl:right-0 right-2 top-[5rem] z-50 xl:flex xl:justify-end border border-gray-300 rounded-xl h-[110vh]">
         <div
           ref={modalRef}
-          className="w-[480px] bg-white shadow-xl h-full overflow-y-auto"
+          className=" bg-white shadow-xl h-full overflow-y-auto xl:w-[29vw] w-[120vw] "
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b">
@@ -397,9 +421,7 @@ const NodeDetailModal = ({
                     Employee Count
                   </label>
                   <p className="text-sm text-gray-900">
-                    {details.employeecount ||
-                      details.no_of_employees ||
-                      "Default"}
+                    {details.employeecount || details.no_of_employees || 0}
                   </p>
                 </div>
                 <div>
@@ -407,7 +429,7 @@ const NodeDetailModal = ({
                   <p className="text-sm text-gray-900">
                     {details.revenue
                       ? `${details.currency || ""} ${details.revenue}`
-                      : "Default"}
+                      : 0}
                   </p>
                 </div>
               </div>
@@ -447,12 +469,14 @@ const NodeDetailModal = ({
                         "-"}
                     </p>
                   </div>
-                  <div>
-                    <label className="text-sm text-gray-600">Zip Code</label>
-                    <p className="text-sm text-gray-900">
-                      {details.zipCode || details.zipcode || "-"}
-                    </p>
-                  </div>
+                  {nodeType === "location" && (
+                    <div>
+                      <label className="text-sm text-gray-600">Zip Code</label>
+                      <p className="text-sm text-gray-900">
+                        {details.zipCode || details.zipcode || "-"}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -476,14 +500,14 @@ const NodeDetailModal = ({
                     {details.to_date || "-"}
                   </p>
                 </div>
-                <div className="col-span-2">
+                {/* <div className="col-span-2">
                   <label className="text-sm text-gray-600">
                     Reporting Frameworks
                   </label>
                   <p className="text-sm text-gray-900">
                     {details.framework || "-"}
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
             <hr />

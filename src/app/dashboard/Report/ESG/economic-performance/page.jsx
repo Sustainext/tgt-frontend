@@ -4,6 +4,7 @@ import {
   useImperativeHandle,
   useState,
   useRef,
+  createRef,
   useEffect,
 } from "react";
 import Section1 from "./sections/section1";
@@ -26,6 +27,7 @@ import Section17 from "./sections/section17";
 import Section18 from "./sections/section18";
 import Section19 from "./sections/section19";
 import Section20 from "./sections/section20";
+import Section21 from './sections/section21'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,99 +37,643 @@ import {
   setCompanyeconomic,
   setFinancialassistanc,
   setIntroductionto,
+  setInfrastructureInvestment,
   setgetdata,
 } from "../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
-const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
+const EconomicPerformance = forwardRef(
+  (
+    {
+      onSubmitSuccess,
+      subsections = [],
+      sectionOrder = 11,
+      sectionId,
+      sectionTitle,
+      hasChanges,
+    },
+    ref
+  ) => {
+    const [data, setData] = useState("");
+    const [initialData, setInitialData] = useState({});
+    // const reportid =
+    //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+    // const orgName =
+    //   typeof window !== "undefined"
+    //     ? localStorage.getItem("reportorgname")
+    //     : "";
+    // const reportType =
+    //   typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+    const [reportid, setReportid] = useState("");
+    const [reportType, setReportType] = useState("");
+    const [orgName, setOrgname] = useState("");
+    
+    // Update after mount on client only
+    useEffect(() => {
+      setReportid(localStorage.getItem("reportid") || "");
+      setReportType(localStorage.getItem("reportType") || "");
+      setOrgname(localStorage.getItem("reportorgname") || "");
+    }, []);
+    
+    const company_economic_performance_statement = useSelector(
+      (state) => state.screen11Slice.company_economic_performance_statement
+    );
+    const financial_assistance_from_government = useSelector(
+      (state) => state.screen11Slice.financial_assistance_from_government
+    ); // Assuming imageceo is a File object
+    const introduction_to_economic_value_creation = useSelector(
+      (state) => state.screen11Slice.introduction_to_economic_value_creation
+    );
 
-  const [data,setData]=useState("")
-  const reportid =
-    typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
-  const orgName =
-    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
-  const company_economic_performance_statement = useSelector(
-    (state) => state.screen11Slice.company_economic_performance_statement
-  );
-  const financial_assistance_from_government = useSelector(
-    (state) => state.screen11Slice.financial_assistance_from_government
-  ); // Assuming imageceo is a File object
-  const introduction_to_economic_value_creation = useSelector(
-    (state) => state.screen11Slice.introduction_to_economic_value_creation
-  );
+    const infrastructure_investement = useSelector(
+      (state) => state.screen11Slice.infrastructure_investement
+    );
 
-  const [activeSection, setActiveSection] = useState("section11_1");
-  const section11_1Ref = useRef(null);
-  const section11_2Ref = useRef(null);
-  const section11_3Ref = useRef(null);
-  const section11_4Ref = useRef(null);
-  const section11_5Ref = useRef(null);
-  const section11_6Ref = useRef(null);
-  const section11_1_1Ref = useRef(null);
-  const section11_1_2Ref = useRef(null);
-  const section11_1_3Ref = useRef(null);
-  const section11_2_1Ref = useRef(null);
-  const section11_2_2Ref = useRef(null);
-  const section11_3_1Ref = useRef(null);
-  const section11_3_2Ref = useRef(null);
-  const section11_3_3Ref = useRef(null);
-  const section11_3_4Ref = useRef(null);
-  const section11_4_1Ref = useRef(null);
-  const section11_4_2Ref = useRef(null);
-  const section11_4_3Ref = useRef(null);
-  const section11_4_4Ref = useRef(null);
-  const section11_5_1Ref = useRef(null);
-  const section11_5_2Ref = useRef(null);
-  const section11_5_3Ref = useRef(null);
-  const section11_5_4Ref = useRef(null);
-  const section11_6_1Ref = useRef(null);
-  const apiCalledRef = useRef(false);
-  const [loopen, setLoOpen] = useState(false);
-  const dispatch = useDispatch();
+    const [activeSection, setActiveSection] = useState(`economic_highlights`);
+    const apiCalledRef = useRef(false);
+    const [loopen, setLoOpen] = useState(false);
+    const dispatch = useDispatch();
 
-  useImperativeHandle(ref, () => ({
-    submitForm,
-  }));
-  const LoaderOpen = () => {
-    setLoOpen(true);
-  };
+    const isWithReference = reportType === "GRI Report: With Reference to";
 
-  const LoaderClose = () => {
-    setLoOpen(false);
-  };
-  const submitForm = async (type) => {
-    LoaderOpen();
-    const data = {
-      company_economic_performance_statement:
-      {"page":"screen_eleven","label":"11. Economic Performance","subLabel":"Add statement about company’s economic performance","type":"textarea","content":company_economic_performance_statement,"field":"company_economic_performance_statement","isSkipped":false},
-      introduction_to_economic_value_creation:
-      {"page":"screen_eleven","label":"11.1.2 Economic Value Creation","subLabel":"Add introduction for company’s economic value creation","type":"textarea","content":introduction_to_economic_value_creation,"field":"introduction_to_economic_value_creation","isSkipped":false},
-      financial_assistance_from_government:
-      {"page":"screen_eleven","label":"11.1.3 Financial Assistance Received from Government","subLabel":"Add introduction about financial assistance received from government","type":"textarea","content":financial_assistance_from_government,"field":"financial_assistance_from_government","isSkipped":false},
-         };
+    const groupedSubsections = [
+      {
+        groupId: "economic_highlights",
+        title: "Highlights",
+        children: [
+          !isWithReference && {
+            id: "highlights_material_topic_management",
+            label: "Management Of Material Topics",
+          },
+          {
+            id: "economic_value_creation",
+            label: "Economic Value Creation",
+          },
+          {
+            id: "financial_assistance_government",
+            label: "Financial Assistance Received From Government",
+          },
+        ].filter(Boolean),
+      },
+      {
+        groupId: "infrastructure_investment",
+        title: "Infrastructure Investment And Services Supported",
+        children: [
+          !isWithReference && {
+            id: "infrastructure_material_topic_management",
+            label: "Management Of Material Topics",
+          },
+          {
+            id: "indirect_economic_impacts",
+            label: "Indirect Economic Impacts",
+          },
+        ].filter(Boolean),
+      },
+      {
+        groupId: "climate_financials",
+        title: "Climate-Related Financial Implications, Risks And Opportunities",
+        children: [
+          !isWithReference && {
+            id: "climate_material_topic_management",
+            label: "Management Of Material Topics",
+          },
+          {
+            groupId: "climate_financial_implications",
+            title: "Climate-Related Financial Implications",
+            children: [
+              {
+                id: "climate_related_risks",
+                label: "Climate-Related Risks",
+              },
+              {
+                id: "climate_related_opportunities",
+                label: "Climate-Related Opportunities",
+              },
+            ],
+          },
+        ].filter(Boolean),
+      },
+      {
+        groupId: "tax",
+        title: "Tax",
+        children: [
+          !isWithReference && {
+            id: "tax_material_topic_management",
+            label: "Management Of Material Topic",
+          },
+          {
+            id: "approach_to_tax",
+            label: "Approach To Tax",
+          },
+          {
+            id: "tax_governance_risk",
+            label: "Tax Governance And Risk Management",
+          },
+          {
+            id: "tax_stakeholder_engagement",
+            label: "Stakeholder Engagement And Management Of Concerns Related To Tax",
+          },
+        ].filter(Boolean),
+      },
+      {
+        groupId: "anti_corruption",
+        title: "Anti-Corruption",
+        children: [
+          !isWithReference && {
+            id: "anti_corruption_material_topic_management",
+            label: "Management Of Material Topic",
+          },
+          {
+            id: "risk_assessment_anti_corruption",
+            label: "Operations Assessed For Risks Related To Anti-Corruption",
+          },
+          {
+            id: "incidents_anti_corruption",
+            label: "Incidents Of Anti-Corruption",
+          },
+          {
+            id: "training_anti_corruption",
+            label: "Training On Anti-Corruption",
+          },
+        ].filter(Boolean),
+      },
+      {
+        groupId: "political_contribution",
+        title: "Political Contribution",
+        children: [
+          !isWithReference && {
+            id: "political_contribution_material_topic_management",
+            label: "Management Of Material Topic",
+          },
+        ].filter(Boolean),
+      },
+    ];
+    
+    
 
-    const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
-    try {
-      const response = await axiosInstance.put(url, data);
+    const subsectionMapping = {
+      // Economic Highlights
+      economic_highlights: {
+        component: ({ section11_1Ref,sectionNumber = "11.1",
+          sectionTitle = 'Highlights',
+          sectionOrder = 11, })=>{
+          return (
+            <div id="section11_1" ref={section11_1Ref}>
+        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+         {sectionNumber} {sectionTitle}
+        </h3>
+      </div>
+          )
+        },
+        title: "Highlights",
+        subSections: [],
+      },
+      ...(!isWithReference && {
+        highlights_material_topic_management: {
+          component: Section2,
+          title: "Management Of Material Topics",
+          subSections: [],
+        }
+      }),
+      economic_value_creation: {
+        component: Section3,
+        title: "Economic Value Creation",
+        subSections: [],
+      },
+      financial_assistance_government: {
+        component: Section4,
+        title: "Financial Assistance Received From Government",
+        subSections: [],
+      },
+    
+      // Infrastructure Investment
+      infrastructure_investment: {
+        component: Section5,
+        title: "Infrastructure Investment And Services Supported",
+        subSections: [],
+      },
+      ...(!isWithReference && { infrastructure_material_topic_management: {
+        component: Section6,
+        title: "Management Of Material Topics",
+        subSections: [],
+      }}),
+      indirect_economic_impacts: {
+        component: Section7,
+        title: "Indirect Economic Impacts",
+        subSections: [],
+      },
+    
+      // Climate Financials
+      climate_financials: {
+        component: ({section11_3Ref,sectionNumber = "11.3",
+          sectionTitle = 'Climate-related Impacts, Risks, and Opportunities',
+          sectionOrder = 11})=>{
+          return (
+            <div id="section11_3" ref={section11_3Ref}>
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+             {sectionNumber} {sectionTitle}
+            </h3>
+          </div>
+          )
+        },
+        title: "Climate-Related Financial Implications, Risks And Opportunities",
+        subSections: [],
+      },
+      ...(!isWithReference && { climate_material_topic_management: {
+        component: Section8,
+        title: "Management Of Material Topics",
+        subSections: [],
+      }}),
+      climate_financial_implications: {
+        component: Section9,
+        title: "Climate-Related Financial Implications",
+        subSections: [],
+      },
+      climate_related_risks: {
+        component: Section10,
+        title: "Climate-Related Risks",
+        subSections: [],
+      },
+      climate_related_opportunities: {
+        component: Section11,
+        title: "Climate-Related Opportunities",
+        subSections: [],
+      },
+    
+      // Tax
+      tax: {
+        component: ({section11_4Ref,sectionNumber = "11.4",
+          sectionTitle = 'Tax',
+          sectionOrder = 11})=>{
+          return (
+            <div id="section11_4" ref={section11_4Ref}>
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+             {sectionNumber} {sectionTitle}
+            </h3>
+          </div>
+          )
+        },
+        title: "Tax",
+        subSections: [],
+      },
+      ...(!isWithReference && { tax_material_topic_management: {
+        component: Section12,
+        title: "Management Of Material Topic",
+        subSections: [],
+      }}),
+      approach_to_tax: {
+        component: Section13,
+        title: "Approach To Tax",
+        subSections: [],
+      },
+      tax_governance_risk: {
+        component: Section14,
+        title: "Tax Governance And Risk Management",
+        subSections: [],
+      },
+      tax_stakeholder_engagement: {
+        component: Section15,
+        title: "Stakeholder Engagement And Management Of Concerns Related To Tax",
+        subSections: [],
+      },
+    
+      // Anti-Corruption
+      anti_corruption: {
+        component: ({section11_5Ref,sectionNumber = "11.5",
+          sectionTitle = 'Anti-Corruption',
+          sectionOrder = 11})=>{
+          return (
+            <div id="section11_5" ref={section11_5Ref}>
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+             {sectionNumber} {sectionTitle}
+            </h3>
+          </div>
+          )
+        },
+        title: "Anti-Corruption",
+        subSections: [],
+      },
+      ...(!isWithReference && { anti_corruption_material_topic_management: {
+        component: Section16,
+        title: "Management Of Material Topic",
+        subSections: [],
+      }}),
+      risk_assessment_anti_corruption: {
+        component: Section17,
+        title: "Operations Assessed For Risks Related To Anti-Corruption",
+        subSections: [],
+      },
+      incidents_anti_corruption: {
+        component: Section18,
+        title: "Incidents Of Anti-Corruption",
+        subSections: [],
+      },
+      training_anti_corruption: {
+        component: Section19,
+        title: "Training On Anti-Corruption",
+        subSections: [],
+      },
+    
+      // Political Contribution
+      political_contribution: {
+        component: Section20,
+        title: "Political Contribution",
+        subSections: [],
+      },
+      ...(!isWithReference && { political_contribution_material_topic_management: {
+        component: Section21,
+        title: "Management Of Material Topic",
+        subSections: [],
+      }}),
+    };
+    
+    const getSubsectionsToShow = () => {
+      if (reportType === "Custom ESG Report") {
+        const userSelected = Array.isArray(subsections) ? subsections : [];
 
-      if (response.status === 200) {
-        if (type == "next") {
-          toast.success("Data added successfully", {
+        // Get default order
+        const defaultOrder = [
+          "economic_highlights",
+          "highlights_material_topic_management",
+          "economic_value_creation",
+          "financial_assistance_government",
+          "infrastructure_investment",
+          "infrastructure_material_topic_management",
+          "indirect_economic_impacts",
+          "climate_financials",
+          "climate_material_topic_management",
+          "climate_financial_implications",
+          "climate_related_risks",
+          "climate_related_opportunities",
+          "tax",
+          "tax_material_topic_management",
+          "approach_to_tax",
+          "tax_governance_risk",
+          "tax_stakeholder_engagement",
+          "anti_corruption",
+          "anti_corruption_material_topic_management",
+          "risk_assessment_anti_corruption",
+          "incidents_anti_corruption",
+          "training_anti_corruption",
+          "political_contribution",
+          "political_contribution_material_topic_management",
+        ];
+
+        // Return sorted list based on fixed order
+        return defaultOrder.filter((id) => userSelected.includes(id));
+      } else {
+        return[
+          "economic_highlights",
+          "highlights_material_topic_management",
+          "economic_value_creation",
+          "financial_assistance_government",
+          "infrastructure_investment",
+          "infrastructure_material_topic_management",
+          "indirect_economic_impacts",
+          "climate_financials",
+          "climate_material_topic_management",
+          "climate_financial_implications",
+          "climate_related_risks",
+          "climate_related_opportunities",
+          "tax",
+          "tax_material_topic_management",
+          "approach_to_tax",
+          "tax_governance_risk",
+          "tax_stakeholder_engagement",
+          "anti_corruption",
+          "anti_corruption_material_topic_management",
+          "risk_assessment_anti_corruption",
+          "incidents_anti_corruption",
+          "training_anti_corruption",
+          "political_contribution",
+          "political_contribution_material_topic_management",
+        ];
+      }
+    };
+
+    const subsectionsToShow = getSubsectionsToShow();
+
+    // Filter and organize selected subsections
+    const getSelectedSubsections = () => {
+      //console.log("Processing subsections:", subsectionsToShow);
+
+      if (!subsectionsToShow || subsectionsToShow.length === 0) {
+        //console.log("No subsections found");
+        return [];
+      }
+
+      const result = subsectionsToShow
+        .filter((subId) => {
+          const exists = subsectionMapping[subId];
+          //console.log(`Subsection ${subId} exists in mapping:`, !!exists);
+          return exists;
+        })
+        .map((subId, index) => {
+          const mapped = {
+            id: subId,
+            ...subsectionMapping[subId],
+            order: index + 1,
+            sectionNumber: `${sectionOrder}.${index + 1}`,
+          };
+          //console.log(`Mapped subsection:`, mapped);
+          return mapped;
+        });
+
+      //console.log("Final selected subsections:", result);
+      return result;
+    };
+    const selectedSubsections = getSelectedSubsections();
+
+    const getDynamicSectionMap = () => {
+      let groupIndex = 1;
+      const dynamicMap = [];
+    
+      groupedSubsections.forEach((group) => {
+        if (group.children) {
+          const parentSelected = selectedSubsections.some((s) => s.id === group.groupId);
+          const visibleChildren = group.children.filter((child) =>
+            selectedSubsections.some((s) => s.id === child.id)
+          );
+    
+          // Render the parent (if selected)
+          if (parentSelected) {
+            dynamicMap.push({
+              id: group.groupId,
+              sectionNumber: `${sectionOrder}.${groupIndex}`,
+              groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+            });
+          }
+    
+          // Render children (if any selected)
+          if (visibleChildren.length > 0) {
+            let childIndex = 1;
+            visibleChildren.forEach((child) => {
+              dynamicMap.push({
+                id: child.id,
+                sectionNumber: `${sectionOrder}.${groupIndex}.${childIndex++}`,
+                groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+              });
+            });
+          }
+    
+          // Increase group index if either parent or children are rendered
+          if (parentSelected || visibleChildren.length > 0) {
+            groupIndex++;
+          }
+        } else {
+          const isVisible = selectedSubsections.some((s) => s.id === group.id);
+          if (!isVisible) return;
+    
+          dynamicMap.push({
+            id: group.id,
+            sectionNumber: `${sectionOrder}.${groupIndex++}`,
+          });
+        }
+      });
+    
+      return dynamicMap;
+    };
+
+    const numberedSubsections = getDynamicSectionMap();
+
+    // Set initial active section
+    useEffect(() => {
+      if (selectedSubsections.length > 0 && !activeSection) {
+        setActiveSection(selectedSubsections[0].id);
+      }
+    }, [selectedSubsections, activeSection]);
+
+    const scrollToSection = (sectionId) => {
+      setActiveSection(sectionId);
+      const sectionRef = sectionRefs.current[sectionId];
+
+      if (sectionRef?.current) {
+        const elementTop =
+          sectionRef.current.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: elementTop - 250,
+          behavior: "smooth",
+        });
+      }
+    };
+    const sectionRefs = useRef({});
+
+    useImperativeHandle(ref, () => ({
+      submitForm,
+    }));
+    const LoaderOpen = () => {
+      setLoOpen(true);
+    };
+
+    const LoaderClose = () => {
+      setLoOpen(false);
+    };
+
+    const dynamicSectionNumberMap = numberedSubsections.reduce((acc, item) => {
+      acc[item.id] = item.sectionNumber;
+      return acc;
+    }, {});
+
+    const currentData = {
+      company_economic_performance_statement,
+      introduction_to_economic_value_creation,
+      financial_assistance_from_government,
+      infrastructure_investement,
+    };
+    const submitForm = async (type) => {
+      LoaderOpen();
+      if (!hasChanges(initialData, currentData)) {
+        LoaderClose();
+        return false;
+      }
+
+      const data={};
+      data.company_economic_performance_statement={
+        page: "screen_eleven",
+        label: `${sectionOrder}. Economic Performance`,
+        subLabel: "Add statement about company’s economic performance",
+        type: "textarea",
+        content: company_economic_performance_statement,
+        field: "company_economic_performance_statement",
+        isSkipped: false,
+      }
+      if (subsectionsToShow.includes("economic_value_creation")) {
+        const sectionNumber = dynamicSectionNumberMap["economic_value_creation"];
+        data.introduction_to_economic_value_creation= {
+          page: "screen_eleven",
+          label: `${sectionNumber} Economic Value Creation`,
+          subLabel: "Add introduction for company’s economic value creation",
+          type: "textarea",
+          content: introduction_to_economic_value_creation,
+          field: "introduction_to_economic_value_creation",
+          isSkipped: false,
+        }
+      }
+      if (subsectionsToShow.includes("financial_assistance_government")) {
+        const sectionNumber = dynamicSectionNumberMap["financial_assistance_government"];
+        data.financial_assistance_from_government={
+          page: "screen_eleven",
+          label: `${sectionNumber} Financial Assistance Received from Government`,
+          subLabel:
+            "Add introduction about financial assistance received from government",
+          type: "textarea",
+          content: financial_assistance_from_government,
+          field: "financial_assistance_from_government",
+          isSkipped: false,
+        
+      }
+    }
+      if (subsectionsToShow.includes("infrastructure_investment")) {
+        const sectionNumber = dynamicSectionNumberMap["infrastructure_investment"];
+        data.infrastructure_investement= {
+          page: "screen_eleven",
+          label: `${sectionNumber} Infrastructure Investment and Services Supported`,
+          subLabel:
+            "Add statement for infrastructure investment and services provided",
+          type: "textarea",
+          content: infrastructure_investement,
+          field: "infrastructure_investement",
+          isSkipped: false,
+        }
+      }
+
+      const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
+      try {
+        const response = await axiosInstance.put(url, data);
+
+        if (response.status === 200) {
+          if (type == "next") {
+            toast.success("Data added successfully", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+          if (onSubmitSuccess) {
+            onSubmitSuccess(true); // Notify the parent of successful submission
+          }
+          LoaderClose();
+          return true;
+        } else {
+          toast.error("Oops, something went wrong", {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: "light",
+            theme: "colored",
           });
+          LoaderClose();
+          return false;
         }
-        if (onSubmitSuccess) {
-          onSubmitSuccess(true); // Notify the parent of successful submission
-        }
+      } catch (error) {
         LoaderClose();
-        return true;
-      } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
@@ -138,348 +684,354 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
           progress: undefined,
           theme: "colored",
         });
+        return false; // Indicate failure
+      }
+    };
+
+    const loadFormData = async () => {
+      LoaderOpen();
+      dispatch(setCompanyeconomic(""));
+      dispatch(setFinancialassistanc(""));
+      dispatch(setIntroductionto(""));
+      dispatch(setInfrastructureInvestment(""));
+
+      const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
+      try {
+        const response = await axiosInstance.get(url);
+        if (response.data) {
+          console.error("API response data11", response.data);
+          const flatData = {};
+          Object.keys(response.data).forEach((key) => {
+            flatData[key] = response.data[key]?.content || "";
+          });
+
+          setInitialData(flatData);
+          setData(response.data);
+          dispatch(setgetdata(response.data));
+          dispatch(
+            setCompanyeconomic(
+              response.data.company_economic_performance_statement?.content ||
+                ""
+            )
+          );
+          dispatch(
+            setIntroductionto(
+              response.data.introduction_to_economic_value_creation?.content ||
+                ""
+            )
+          );
+          dispatch(
+            setFinancialassistanc(
+              response.data.financial_assistance_from_government?.content || ""
+            )
+          );
+          dispatch(
+            setInfrastructureInvestment(
+              response.data.infrastructure_investement?.content || ""
+            )
+          );
+        }
+
         LoaderClose();
-        return false;
+      } catch (error) {
+        console.error("API call failed:", error);
+        LoaderClose();
       }
-    } catch (error) {
-      LoaderClose();
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      return false; // Indicate failure
-    }
-  };
+    };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    dispatch(setCompanyeconomic(""));
-    dispatch(setFinancialassistanc(""));
-    dispatch(setIntroductionto(""));
+    useEffect(() => {
+       // Ensure API is only called once
+       if (!apiCalledRef.current && reportid) {
+         apiCalledRef.current = true; // Set the flag to true to prevent future calls
+         loadFormData(); // Call the API only once
+       }
+     }, [reportid]);
+   
+      useEffect(() => {
+               selectedSubsections.forEach((section) => {
+                 if (!sectionRefs.current[section.id]) {
+                   sectionRefs.current[section.id] = createRef();
+                 }
+               });
+             }, [selectedSubsections]);
+     
+       
+     
+        const renderSection = (section) => {
+               const SectionComponent = subsectionMapping[section.id]?.component;
+               const ref = sectionRefs.current[section.id] || createRef();
+               sectionRefs.current[section.id] = ref;
+         
+               const commonProps = {
+                 orgName,
+                 data,
+                 sectionNumber: section.sectionNumber,
+                 sectionOrder,
+                 reportType
+               };
+         
+               if (!SectionComponent) return null;
+         
+               return (
+                 <div key={section.id} ref={ref}>
+                   {section.groupTitle && (
+                     <div className="mb-2">
+                       {/* <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+                       {section.groupTitle}
+                     </h3> */}
+                     </div>
+                   )}
+                   <SectionComponent {...commonProps} />
+                 </div>
+               );
+             };
+       
+       
+             if (
+               reportType === "Custom ESG Report" &&
+               selectedSubsections.length === 0
+             ) {
+               return (
+                 <div className="mx-2 p-2">
+                   <div>
+                     <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+                       {sectionOrder}. About the company and operations
+                     </h3>
+                   </div>
+                   <div className="text-center py-8">
+                     <p className="text-gray-500">
+                       No subsections selected for this section.
+                     </p>
+                   </div>
+                 </div>
+               );
+             }
 
-    const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.data) {
-        console.error("API response data11", response.data);
-        setData(response.data)
-        dispatch(setgetdata(response.data));
-        dispatch(setCompanyeconomic(response.data.company_economic_performance_statement?.content || ""));
-        dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation?.content || ""));
-        dispatch(setFinancialassistanc(response.data.financial_assistance_from_government?.content || ""));
-        
-      }
-
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      LoaderClose();
-    }
-  };
-
-  useEffect(() => {
- 
-    if (!apiCalledRef.current && reportid) {
-      apiCalledRef.current = true; 
-      loadFormData(); 
-    }
-  }, [reportid]);
-  
-
-  const scrollToSection = (sectionRef, sectionId) => {
-    setActiveSection(sectionId);
-
-    const elementTop =
-      sectionRef.current?.getBoundingClientRect().top + window.scrollY;
-
-    // Scroll smoothly to the section, ensuring it scrolls up as well
-    window.scrollTo({
-      top: elementTop - 100, // Adjust 100 to the height of any sticky header
-      behavior: "smooth",
-    });
-  };
 
   return (
     <>
       <div className="mx-2 p-2">
-        <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          11. Economic Performance 
-        </h3>
+        <div>
+          <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+            {sectionOrder}. Economic Performance
+          </h3>
+        </div>
         <div className="flex gap-4">
-          <div className="w-[80%]">
-            <Section1 orgName={orgName} data={data}/>
-            <Section2
-              data={data}
-              section11_1Ref={section11_1Ref}
-              section11_1_1Ref={section11_1_1Ref}
-            
-            />
-        <Section3 section11_1_2Ref={section11_1_2Ref}  orgName={orgName} data={data} />
-              <Section4 section11_1_3Ref={section11_1_3Ref} orgName={orgName} data={data} />
-            <Section5 section11_2Ref={section11_2Ref} data={data} />
-              <Section6 section11_2_1Ref={section11_2_1Ref} data={data} />
-            <Section7 section11_2_2Ref={section11_2_2Ref} data={data} />
-           <Section8
-              section11_3Ref={section11_3Ref}
-              section11_3_1Ref={section11_3_1Ref}
-              data={data}
-            /> 
-          <Section9 section11_3_2Ref={section11_3_2Ref} data={data} />
-            <Section10 section11_3_3Ref={section11_3_3Ref} data={data} />
-            <Section11 section11_3_4Ref={section11_3_4Ref} data={data} />
-            <Section12
-              section11_4Ref={section11_4Ref}
-              section11_4_1Ref={section11_4_1Ref}
-              data={data}
-            /> 
-          <Section13 section11_4_2Ref={section11_4_2Ref} data={data} />
-          <Section14 section11_4_3Ref={section11_4_3Ref} data={data} /> 
-          <Section15 section11_4_4Ref={section11_4_4Ref} data={data} /> 
-           <Section16
-              section11_5Ref={section11_5Ref}
-              section11_5_1Ref={section11_5_1Ref}
-              data={data}
-            />  
-        <Section17 section11_5_2Ref={section11_5_2Ref} data={data} />
-            <Section18 section11_5_3Ref={section11_5_3Ref} data={data} />
-            <Section19 section11_5_4Ref={section11_5_4Ref} data={data} />
-            <Section20
-              section11_6Ref={section11_6Ref}
-              section11_6_1Ref={section11_6_1Ref}
-              data={data}
-            /> 
+          <div className="xl:w-[80%] md:w-[75%] lg:w-[80%] 2k:w-[80%] 4k:w-[80%] 2xl:w-[80%] w-full">
+            {/* {selectedSubsections.map(section => renderSection(section))} */}
+            {/* {subsectionsToShow.includes("materiality_assessment") && (
+                <div ref={sectionRefs.current["materiality_assessment"] || createRef()}>
+                  <Section1
+                    orgName={orgName}
+                    data={data}
+                    sectionOrder={sectionOrder}
+                    sectionNumber={null} // Not numbered
+                  />
+                </div>
+              )} */}
+               <Section1
+                    orgName={orgName}
+                    data={data}
+                    sectionOrder={sectionOrder}
+                    sectionNumber={null} // Not numbered
+                  />
+            {numberedSubsections.map((section) => renderSection(section))}
           </div>
-          {/* page sidebar */}
 
-          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-36 sticky mt-2 w-[20%]">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              11. Economic Performance
-            </p>
+          {/* Page sidebar - only show if there are subsections */}
+          {selectedSubsections.length > 0 && (
+             <div className={`p-4 border border-r-2 border-b-2 shadow-lg rounded-lg ${selectedSubsections.length < 5 ? 'h-[500px]' : 'h-fit'} top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block`}>
+              <p className="text-[11px] text-[#727272] mb-2 uppercase">
+                {sectionOrder}. Economic Performance 
+              </p>
 
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section11_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_1Ref, "section11_1")}
-            >
-              11.1 Highlights
-            </p>
+              {(() => {
+                let groupIndex = 1;
 
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_1_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_1_1Ref, "section11_1_1")}
-            >
-              11.1.1. Management of Material Topics
-            </p>
+                const groupedSidebar = [
+                  {
+                    groupId: "economic_highlights",
+                    title: "Highlights",
+                    children: [
+                      {
+                        id: "highlights_material_topic_management",
+                        label: "Management Of Material Topics",
+                      },
+                      {
+                        id: "economic_value_creation",
+                        label: "Economic Value Creation",
+                      },
+                      {
+                        id: "financial_assistance_government",
+                        label: "Financial Assistance Received From Government",
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "infrastructure_investment",
+                    title: "Infrastructure Investment And Services Supported",
+                    children: [
+                      {
+                        id: "infrastructure_material_topic_management",
+                        label: "Management Of Material Topics",
+                      },
+                      {
+                        id: "indirect_economic_impacts",
+                        label: "Indirect Economic Impacts",
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "climate_financials",
+                    title: "Climate-Related Financial Implications, Risks And Opportunities",
+                    children: [
+                      {
+                        id: "climate_material_topic_management",
+                        label: "Management Of Material Topics",
+                      },
+                      {
+                        groupId: "climate_financial_implications",
+                        title: "Climate-Related Financial Implications",
+                        children: [
+                          {
+                            id: "climate_related_risks",
+                            label: "Climate-Related Risks",
+                          },
+                          {
+                            id: "climate_related_opportunities",
+                            label: "Climate-Related Opportunities",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "tax",
+                    title: "Tax",
+                    children: [
+                      {
+                        id: "tax_material_topic_management",
+                        label: "Management Of Material Topic",
+                      },
+                      {
+                        id: "approach_to_tax",
+                        label: "Approach To Tax",
+                      },
+                      {
+                        id: "tax_governance_risk",
+                        label: "Tax Governance And Risk Management",
+                      },
+                      {
+                        id: "tax_stakeholder_engagement",
+                        label: "Stakeholder Engagement And Management Of Concerns Related To Tax",
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "anti_corruption",
+                    title: "Anti-Corruption",
+                    children: [
+                      {
+                        id: "anti_corruption_material_topic_management",
+                        label: "Management Of Material Topic",
+                      },
+                      {
+                        id: "risk_assessment_anti_corruption",
+                        label: "Operations Assessed For Risks Related To Anti-Corruption",
+                      },
+                      {
+                        id: "incidents_anti_corruption",
+                        label: "Incidents Of Anti-Corruption",
+                      },
+                      {
+                        id: "training_anti_corruption",
+                        label: "Training On Anti-Corruption",
+                      },
+                    ],
+                  },
+                  {
+                    groupId: "political_contribution",
+                    title: "Political Contribution",
+                    children: [
+                      {
+                        id: "political_contribution_material_topic_management",
+                        label: "Management Of Material Topic",
+                      },
+                    ],
+                  },
+                ];
+                
+                
 
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_1_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_1_2Ref, "section11_1_2")}
-            >
-              11.1.2. Economic value creation
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_1_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_1_3Ref, "section11_1_3")}
-            >
-              11.1.3. Financial assistance received from government
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section11_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_2Ref, "section11_2")}
-            >
-              11.2. Infrastructure investment and services supported
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_2_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_2_1Ref, "section11_2_1")}
-            >
-              11.2.1. Management of Material Topics
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_2_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_2_2Ref, "section11_2_2")}
-            >
-              11.2.2. Indirect economic impacts
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section11_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_3Ref, "section11_3")}
-            >
-              11.3. Climate-related financial implications, risks and
-              opportunities
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_3_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_3_1Ref, "section11_3_1")}
-            >
-              11.3.1. Management of Material Topics
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_3_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_3_2Ref, "section11_3_2")}
-            >
-              11.3.2. Climate Financial Implications
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_3_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_3_3Ref, "section11_3_3")}
-            >
-              11.3.3. Climate-related Risks
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_3_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_3_4Ref, "section11_3_4")}
-            >
-              11.3.4. Climate-related Opportunities
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section11_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_4Ref, "section11_4")}
-            >
-              11.4. Tax
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_4_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_4_1Ref, "section11_4_1")}
-            >
-              11.4.1. Management of material topic
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_4_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_4_2Ref, "section11_4_2")}
-            >
-              11.4.2. Approach to tax
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_4_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_4_3Ref, "section11_4_3")}
-            >
-              11.4.3. Tax governance and risk management
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_4_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_4_4Ref, "section11_4_4")}
-            >
-              11.4.4. Stakeholder engagement and management of concerns related
-              to tax
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section11_5" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_5Ref, "section11_5")}
-            >
-              11.5. Anti-corruption
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_5_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_5_1Ref, "section11_5_1")}
-            >
-              11.5.1. Management of material topic
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_5_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_5_2Ref, "section11_5_2")}
-            >
-              11.5.2. Operations assessed for risks related to anti-corruption
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_5_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_5_3Ref, "section11_5_3")}
-            >
-              11.5.3. Incidents of anti-corruption
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_5_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_5_4Ref, "section11_5_4")}
-            >
-              11.5.4. Training on anti-corruption
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section11_6" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_6Ref, "section11_6")}
-            >
-              11.6. Political contribution
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section11_6_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section11_6_1Ref, "section11_6_1")}
-            >
-              11.6.1. Management of Material Topic
-            </p>
-          </div>
+                return groupedSidebar.map((item) => {
+                  if (item.children) {
+                    const isGroupSelected = selectedSubsections.some(
+                      (sec) => sec.id === item.groupId
+                    );
+                
+                    const visibleChildren = item.children.filter((child) =>
+                      selectedSubsections.some((sec) => sec.id === child.id)
+                    );
+                
+                    // Show group if parent OR any child is selected
+                    if (!isGroupSelected && visibleChildren.length === 0) return null;
+                
+                    const currentGroupIndex = groupIndex++;
+                    let childIndex = 1;
+                
+                    return (
+                      <div key={item.groupId} className="mb-2">
+                        {/* Show the parent title (group) */}
+                        <p
+                          className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                                activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                              }`}
+                          onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
+                        >
+                          {sectionOrder}.{currentGroupIndex} {item.title}
+                        </p>
+                
+                        {/* Render selected children */}
+                        {visibleChildren.map((child) => {
+                          const labelText =
+                            child.label?.trim() !== "" ? child.label : item.title;
+                
+                          return (
+                            <p
+                              key={child.id}
+                              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                                activeSection === child.id ? "text-blue-400" : ""
+                              }`}
+                              onClick={() => scrollToSection(child.id)}
+                            >
+                              {sectionOrder}.{currentGroupIndex}.{childIndex++} {labelText}
+                            </p>
+                          );
+                        })}
+                      </div>
+                    );
+                  } else {
+                    // Standalone item
+                    if (!selectedSubsections.some((sec) => sec.id === item.id)) return null;
+                
+                    const label = `${sectionOrder}.${groupIndex++} ${item.label}`;
+                    return (
+                      <p
+                        key={item.id}
+                        className={`text-[12px] mb-2 cursor-pointer ${
+                          activeSection === item.id ? "text-blue-400" : ""
+                        }`}
+                        onClick={() => scrollToSection(item.id)}
+                      >
+                        {label}
+                      </p>
+                    );
+                  }
+                });
+                
+              })()}
+            </div>
+          )}
         </div>
       </div>
       {loopen && (
@@ -496,6 +1048,9 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
       )}
     </>
   );
-});
+}
+);
+
+EconomicPerformance.displayName = "EconomicPerformance";
 
 export default EconomicPerformance;

@@ -1,64 +1,51 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
-import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
+import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import RadioWidget2 from '../../../../shared/widgets/Input/radioWidget2';
-import axios from 'axios';
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import { Oval } from "react-loader-spinner";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget2,
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = 'gri-social-notice_period-402-1a-collective_bargaining'
-const client_id = 1
-const user_id = 1
+const view_path = "gri-social-notice_period-402-1a-collective_bargaining";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
       Q1: {
         type: "string",
         title: "Collective bargaining agreements",
-
       },
       Q2: {
         type: "string",
         title: "Notice Period Specified",
-        enum: [
-          'Yes',
-          'No',
-
-        ],
+        enum: ["Yes", "No"],
       },
 
       Q3: {
         type: "string",
         title: "Consultation Provisions",
-        enum: [
-          'Yes',
-          'No',
-
-        ],
+        enum: ["Yes", "No"],
       },
 
       Q4: {
         type: "string",
         title: "Negotiation Provisions",
-        enum: [
-          'Yes',
-          'No',
-
-        ],
+        enum: ["Yes", "No"],
       },
     },
   },
@@ -66,53 +53,57 @@ const schema = {
 
 const uiSchema = {
   items: {
-    'ui:order': ['Q1', 'Q2', 'Q3', 'Q4'],
+    "ui:order": ["Q1", "Q2", "Q3", "Q4"],
     Q1: {
       "ui:title": "Collective bargaining agreements",
-      "ui:tooltip": "Please enter the name of the relevant Collective Bargaining Agreement (CBA).Collective bargaining definition:all negotiations that take place between one or more employers or employers' organizations, on the one hand, and one or more workers' organizations (e.g., trade unions), on the other, for determining working conditions and terms of employment or for regulating relations between employers and workers",
+      "ui:tooltip":
+        "Please enter the name of the relevant Collective Bargaining Agreement (CBA).Collective bargaining definition:all negotiations that take place between one or more employers or employers' organizations, on the one hand, and one or more workers' organizations (e.g., trade unions), on the other, for determining working conditions and terms of employment or for regulating relations between employers and workers",
       "ui:tooltipdisplay": "block",
-      'ui:widget': 'inputWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
 
     Q2: {
       "ui:title": "Notice Period Specified",
-      "ui:tooltip": "Select Yes if your collective bargaining agreements address this provision (notice period).Select No if it is not addressed.",
+      "ui:tooltip":
+        "Select Yes if your collective bargaining agreements address this provision (notice period).Select No if it is not addressed.",
       "ui:tooltipdisplay": "block",
-      'ui:widget': 'RadioWidget2',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "RadioWidget2",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Q3: {
       "ui:title": "Consultation Provisions",
-      "ui:tooltip": "Select Yes if your collective bargaining agreements address this provision (consultation).Select No if it is not addressed.",
+      "ui:tooltip":
+        "Select Yes if your collective bargaining agreements address this provision (consultation).Select No if it is not addressed.",
       "ui:tooltipdisplay": "block",
-      'ui:widget': 'RadioWidget2',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "RadioWidget2",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Q4: {
       "ui:title": "Negotiation Provisions",
-      "ui:tooltip": "Select Yes if your collective bargaining agreements address this provision (negotiation).Select No if it is not addressed.",
+      "ui:tooltip":
+        "Select Yes if your collective bargaining agreements address this provision (negotiation).Select No if it is not addressed.",
       "ui:tooltipdisplay": "block",
-      'ui:widget': 'RadioWidget2',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "RadioWidget2",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
-    'ui:options': {
+    "ui:options": {
       orderable: false,
       addable: false,
       removable: false,
-      layout: 'horizontal',
+      layout: "horizontal",
     },
   },
 };
@@ -138,12 +129,11 @@ const validateRows = (data) => {
 
 const Screen2 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
-  const [r_schema, setRemoteSchema] = useState({})
-  const [r_ui_schema, setRemoteUiSchema] = useState({})
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [validationErrors, setValidationErrors] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -156,7 +146,6 @@ const Screen2 = ({ location, year, month }) => {
     setFormData(e.formData);
   };
 
-
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -166,9 +155,9 @@ const Screen2 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-    }
+    };
 
-    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
@@ -184,7 +173,6 @@ const Screen2 = ({ location, year, month }) => {
         });
         LoaderClose();
         loadFormData();
-
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -223,7 +211,7 @@ const Screen2 = ({ location, year, month }) => {
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
-      console.log('API called successfully:', response.data);
+      console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
@@ -233,7 +221,6 @@ const Screen2 = ({ location, year, month }) => {
       LoaderClose();
     }
   };
-
 
   // fetch backend and replace initialized forms
   useEffect(() => {
@@ -246,13 +233,13 @@ const Screen2 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year])
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validateRows(formData);
     setValidationErrors(errors);
- 
+
     const hasErrors = Object.keys(errors).length > 0;
     if (!hasErrors) {
       updateFormData();
@@ -263,39 +250,53 @@ const Screen2 = ({ location, year, month }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className='mb-4 flex'>
-         <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Collective bargaining agreements
-              <MdInfoOutline data-tooltip-id={`tooltip-$e25`}
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e25`}
                 data-tooltip-content="This section documents data corresponding to the presence or
 absence of provisions within your organization's
 collective bargaining agreements regarding employee notice
-periods, consultation, and negotiation procedures for major operational changes." className="mt-1.5 ml-2 text-[15px]" />
-              <ReactTooltip id={`tooltip-$e25`} place="top" effect="solid" style={{
-                width: "290px", backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: 'left',
-              }}>
-              </ReactTooltip>
+periods, consultation, and negotiation procedures for major operational changes."
+                className="mt-1.5 ml-2 text-[15px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e25`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
 
-          <div className='w-[20%]'>
-          <div className="float-end">
-            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 402-1b
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 402-1b
+                </div>
               </div>
-            </div>
             </div>
           </div>
         </div>
-        <div className='mx-2'>
+        <div className="mx-2">
           <Form
             schema={r_schema}
             uiSchema={r_ui_schema}
@@ -306,17 +307,17 @@ periods, consultation, and negotiation procedures for major operational changes.
             formContext={{ validationErrors }}
           />
         </div>
-    <div className='mt-4'>
+        <div className="mt-4">
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
-              }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !location || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
             disabled={!location || !year}
           >
             Submit
           </button>
-
         </div>
       </div>
       {loopen && (

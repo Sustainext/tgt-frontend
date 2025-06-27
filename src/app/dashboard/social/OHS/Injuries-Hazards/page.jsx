@@ -7,7 +7,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import Section2 from "./Section2/page";
 import SocialTopBar from '../../socialTopBar'
 
-const InjuriesHazards = ({apiData}) => {
+const InjuriesHazards = ({apiData,setMobileopen}) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -31,14 +31,29 @@ const InjuriesHazards = ({apiData}) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-
-  const sdgData=[
+  const griData = [
     {
-        tagName:'GRI 403 - 9',
-        toggle:'38',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
+      tagName:'GRI 403 - 9',
+      toggle:'38',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+    {
+      tagName: "BRSR C-P3-E12",
+      id: "tooltip-$brsr1",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-12",
     },
+    {
+      tagName: "BRSR C-P3-E15",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-15",
+    },
+  ];
+  const sdgData=[
+
     {
       tagName:'SDG 3',
       toggle:'39',
@@ -57,17 +72,12 @@ const InjuriesHazards = ({apiData}) => {
   textColor:"#fff",
   bgColor:"bg-blue-900"
 },
- 
-   
-   
-   
-   
 ]
 
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} brsr={brsr} griData={griData} setMobileopen={setMobileopen} />
         
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
@@ -112,9 +122,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

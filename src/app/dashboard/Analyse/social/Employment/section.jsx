@@ -14,6 +14,7 @@ const Section = ({
   dateRange,
   selectedLocation,
   isBoxOpen,
+  togglestatus,
 }) => {
   const [analyseData, setAnalyseData] = useState([]);
 
@@ -172,18 +173,55 @@ const Section = ({
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && dateRange.start < dateRange.end) {
-      fetchData();
-      fetchLocationData();
+
+    if (selectedOrg && dateRange.start && dateRange.end && togglestatus) {
+      if (togglestatus === "Corporate") {
+        if (selectedCorp) {
+          fetchData();
+          fetchLocationData();
+        } else {
+          setChilddata1([]);
+          setChilddata2([]);
+          setChilddata3([]);
+          setChilddata4([]);
+          setChilddata5([]);
+          setFulltimebe([]);
+          setParttimbe([]);
+          setTempebe([]);
+          setLocationdata([]);
+        
+        }
+      } else if (togglestatus === "Location") {
+        if (selectedLocation) {
+          fetchData();
+          fetchLocationData();
+        } else {
+          setChilddata1([]);
+          setChilddata2([]);
+          setChilddata3([]);
+          setChilddata4([]);
+          setChilddata5([]);
+          setFulltimebe([]);
+          setParttimbe([]);
+          setTempebe([]);
+          setLocationdata([]);
+        }
+      } else {
+        console.log("Calling loadFormData for Other");
+        fetchData();
+        fetchLocationData();
+      }
+  
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
+        console.log("Toast should be shown");
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, dateRange, selectedCorp, selectedLocation]);
+  }, [selectedOrg, dateRange, selectedCorp, togglestatus, selectedLocation]);
+
 
   const data = [
     {
@@ -272,7 +310,7 @@ const Section = ({
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex  justify-between items-center mb-2">
                   <p className="text-black text-[13px] font-[400]">
                     New Employee Hires
                   </p>
@@ -286,7 +324,7 @@ const Section = ({
                 <div className="mb-4">
                   <DynamicTable columns={columns1} data={childdata1} />
                 </div>
-                <div className="flex justify-between items-center mb-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex  justify-between items-center mb-2">
                   <p className="text-black text-[13px] font-[400]">
                     New Employee Turnover
                   </p>
@@ -309,7 +347,7 @@ const Section = ({
                 id="ep2"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex  justify-between items-center mb-2">
                   <p className="text-black text-[13px] font-[400]">
                     Benefits provided to full-time employees by location
                   </p>
@@ -324,7 +362,7 @@ const Section = ({
                   <BenefitTable locationdata={locationdata} data={fulltimebe} />
                 </div>
 
-                <div className="flex justify-between items-center mb-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex  justify-between items-center mb-2">
                   <p className="text-black text-[13px] font-[400]">
                     Benefits provided to part-time employees by location
                   </p>
@@ -339,7 +377,7 @@ const Section = ({
                   <BenefitTable locationdata={locationdata} data={parttimebe} />
                 </div>
 
-                <div className="flex justify-between items-center mb-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex  justify-between items-center mb-2">
                   <p className="text-black text-[13px] font-[400]">
                     Benefits provided to temporary-time employees by location
                   </p>
@@ -364,7 +402,7 @@ const Section = ({
                 id="ep3"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
+                <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex  justify-between items-center mb-2">
                   <p className="text-black text-[13px] font-[400]">
                     Parental leave
                   </p>
@@ -402,7 +440,7 @@ const Section = ({
                 id="ep4"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-            <div className="flex justify-between items-center mb-2">
+            <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex  justify-between items-center mb-2">
                   <p className="text-black text-[15px] font-bold ">
                     Return to work rate and retention rate of employee
                   </p>
@@ -421,7 +459,7 @@ const Section = ({
                 id="ep5"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-            <div className="flex justify-between items-center mb-2">
+            <div className="xl:flex lg:flex md:flex 2xl:flex 2k:flex 4k:flex  justify-between items-center mb-2">
                   <p className="text-black text-[15px] font-bold ">
                   Percentage of employee per employee category 
                   </p>
@@ -446,7 +484,7 @@ const Section = ({
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className="mb-8 me-2"
+          className="mb-8 me-2 hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block"
           >
             <TableSidebar />
           </div>

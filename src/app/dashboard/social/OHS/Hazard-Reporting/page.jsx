@@ -5,7 +5,7 @@ import { Socialdata } from "../../data/socialgriinfo";
 import Section2 from "./Section2/page"
 import SocialTopBar from '../../socialTopBar'
 
-const HazardReporting = ({apiData}) => {
+const HazardReporting = ({apiData,setMobileopen}) => {
 
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
@@ -30,31 +30,39 @@ const HazardReporting = ({apiData}) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const griData = [
+    {
+      tagName:'GRI 403 - 2',
+      toggle:'23',
+      textColor:"#007EEF",
+      bgColor:"bg-slate-200"
+  },
+  ];
+
+  const brsr = [
+
+    {
+      tagName: "BRSR C-P3-E10c",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section C-Principle 3-Essential Indicators-10c",
+    },
+  ];
 
   const sdgData=[
-    {
-        tagName:'GRI 403 - 2',
-        toggle:'23',
-        textColor:"#007EEF",
-        bgColor:"bg-slate-200"
-    },
+
     {
       tagName:'SDG 8',
       toggle:'24',
       textColor:"#fff",
       bgColor:"bg-red-900"
   },
- 
-   
-   
-   
-   
+
 ]
 
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} />
+      <SocialTopBar toggleDrawer={toggleDrawer} sdgData={sdgData} apiData={apiData} title={'Occupational Health and Safety'} topic={'SocHealthSafety'} brsr={brsr} griData={griData} setMobileopen={setMobileopen} />
         
 
      
@@ -83,9 +91,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
-                {/* Data Content */}
+            
+                    <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
+                </div>
+                </div>
+                <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden 3xl:hidden">
+                <div className="h-[calc(90vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
                 </div>
 
                 {/* Footer (Learn more link) */}

@@ -2,30 +2,28 @@
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const Section9 = ({ section11_3_2Ref }) => {
+const Section9 = ({ section11_3_2Ref,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'11.3.2':'11.3.1',
+  sectionTitle = 'Climate-related Financial Implications',
+  sectionOrder = 11,
+ }) => {
   const data = useSelector((state) => state.screen11Slice.getdata);
 
   return (
     <>
       <div id="section11_3_2" ref={section11_3_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          11.3.2. Climate-related Financial Implications
+      {sectionNumber} {sectionTitle} 
         </h3>
 
-        {/* Map through financial_implications-201-2a */}
-        {data["financial_implications-201-2a"]?.map((item, index) => (
-          <div key={`financial_implications_${index}`} className="mb-4">
-            <p className="text-sm">{item.Q1 || "No data available"}</p>
-            
-            {/* Only show Q2 if Q1 is not 'Yes' and Q2 has a value */}
-            {item.Q1 !== "Yes" && item.Q2 && <p className="text-sm">{item.Q2}</p>}
-          </div>
-        ))}
+       <p className="text-sm mb-4">
+        {
+          data['financial_implications-201-2a']?
+          data['financial_implications-201-2a']?.length>0?
+          data['financial_implications-201-2a'][0]?.Q1=="No"?data['financial_implications-201-2a'][0]?.Q2:'Yes':'No data available':'No data available'
+        }
 
-        {/* Fallback if no data is available */}
-        {(!data["financial_implications-201-2a"] || data["financial_implications-201-2a"].length === 0) && (
-          <p className="text-sm mb-4">No data available</p>
-        )}
+       </p>
       </div>
     </>
   );

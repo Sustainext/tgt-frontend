@@ -49,24 +49,25 @@ const schema = {
         },
       },
     },
-
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2"],
+    "ui:order": ["Q1", "Q2"],
     Q1: {
-      "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
-      "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
-      "ui:haddingdisplay":"none",
-      "ui:haddingtooltipdisplay":"none",
+      "ui:hadding":
+        "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingtooltips":
+        "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingdisplay": "none",
+      "ui:haddingtooltipdisplay": "none",
       "ui:title": "Select Currency",
       "ui:tooltip": "Specify the frequency of sustainability reporting..",
       "ui:tooltipdisplay": "none",
       "ui:widget": "CurrencyselectWidget",
       "ui:widgtclass":
-        "block w-[20vw]  py-2  text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+        "block w-[64vw] xl:w-[20vw] lg:w-[20vw] md:w-[33vw] 2x:w-[20vw] 4k:w-[20vw] 2k:w-[20vw] 3xl:w-[20vw] py-2  text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -127,15 +128,13 @@ const uiSchema = {
           },
           {
             title: "Profit/Loss before tax",
-            tooltip:
-              "Mention profit/Loss before tax for a tax jurisdiction.",
+            tooltip: "Mention profit/Loss before tax for a tax jurisdiction.",
             type: "text",
             tooltipdisplay: "block",
             widgettype: "input",
           },
           {
-            title:
-              "Tangible assets other than cash and cash equivalents",
+            title: "Tangible assets other than cash and cash equivalents",
             tooltip:
               "Specify tangible assets other than cash and cash equivalents for a tax jurisdiction.",
             type: "number",
@@ -170,7 +169,6 @@ const uiSchema = {
       },
     },
 
-
     "ui:options": {
       orderable: false,
       addable: false,
@@ -180,11 +178,10 @@ const uiSchema = {
   },
 };
 
-
-const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
+const Screen2 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const initialFormData = [
     {
-      Q1: "",  // For the currency selection widget
+      Q1: "", // For the currency selection widget
       Q2: [
         {
           Taxjurisdictioncol1: "",
@@ -198,11 +195,11 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
           Taxjurisdictioncol9: "",
           Taxjurisdictioncol10: "",
           Taxjurisdictioncol11: "",
-        }
-      ]
-    }
+        },
+      ],
+    },
   ];
-  
+
   const [formData, setFormData] = useState(initialFormData);
   const [loopen, setLoOpen] = useState(false);
   const [r_schema, setRemoteSchema] = useState({});
@@ -229,7 +226,6 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
- 
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -274,15 +270,24 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -293,7 +298,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
     setFormData((prevData) => {
       // Ensure Q2 is always an array within the first item of the formData array
       const updatedQ2 = Array.isArray(prevData[0]?.Q2) ? prevData[0].Q2 : [];
-  
+
       // Add a new committee row
       const newCommittee = {
         Taxjurisdictioncol1: "",
@@ -308,7 +313,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
         Taxjurisdictioncol10: "",
         Taxjurisdictioncol11: "",
       };
-  
+
       // Update the formData with the new Q2 array
       const updatedFormData = [
         {
@@ -316,19 +321,19 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
           Q2: [...updatedQ2, newCommittee], // Add the new row to the Q2 array
         },
       ];
-  
+
       return updatedFormData;
     });
   };
-  
+
   const handleRemoveCommittee = (index) => {
     setFormData((prevData) => {
       // Ensure Q2 is an array within the first item of the formData array
       const updatedQ2 = Array.isArray(prevData[0]?.Q2) ? prevData[0].Q2 : [];
-  
+
       // Filter out the item at the given index
       const filteredQ2 = updatedQ2.filter((_, i) => i !== index);
-  
+
       // Update the formData with the filtered Q2 array
       const updatedFormData = [
         {
@@ -336,25 +341,29 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
           Q2: filteredQ2, // Remove the row from the Q2 array
         },
       ];
-  
+
       return updatedFormData;
     });
   };
-  
-
 
   return (
     <>
-   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+   <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               For each tax jurisdiction reported above (for the reporting
               period),
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e18`}
                 data-tooltip-content="In this disclosure, country-by-country information is to be reported at the level of tax jurisdictions and not at the level of individual entities."
-                className="mt-1.5 ml-2 text-[15px]"
+                className="mt-1.5 ml-2 text-[15px] w-[20%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
               />
               <ReactTooltip
                 id={`tooltip-$e18`}
@@ -372,21 +381,20 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
               />
             </h2>
           </div>
-          <div className="w-[20%]">
-            <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
+            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 207-4b
+                  GRI 207-4b
                 </div>
               </div>
             </div>
           </div>
-       
         </div>
         <div className="mx-2">
           <Form
-             schema={r_schema}
-             uiSchema={r_ui_schema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -396,25 +404,34 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
             }}
           />
         </div>
-        {selectedOrg && year && (
-        <div className="flex right-1 mx-2">
-          <button
-            type="button"
-            className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
-            onClick={handleAddCommittee}
-          >
-            Add Row <MdAdd className="text-lg" />
-          </button>
-        </div>
-      )} 
+        {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
+          <div className="flex right-1 mx-2">
+            <button
+              type="button"
+              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+              onClick={handleAddCommittee}
+            >
+              Add Row <MdAdd className="text-lg" />
+            </button>
+          </div>
+        ) : null}
+
         <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>

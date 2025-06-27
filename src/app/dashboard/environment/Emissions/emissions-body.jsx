@@ -32,7 +32,9 @@ const AccordionItem = ({ title, children, scops, icons, onAccordionClick, scope 
   const scope_emission = useSelector((state) => state.emissions.climatiqData[scope]);
 
   return (
-    <div className="shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200">
+    <>
+       {/* desktop version */}
+    <div className="shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 hidden xl:block md:block 4k:block 2k:block lg:block 2xl:block">
       <button
         className="py-3 w-[100%] text-left flex"
         onClick={handleAccordionClick}
@@ -80,6 +82,63 @@ const AccordionItem = ({ title, children, scops, icons, onAccordionClick, scope 
       )}{" "}
       {/* Pass setIsOpen as setAccordionOpen */}
     </div>
+   
+          {/* mobile version */}
+    <div className="shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 block xl:hidden md:hidden 4k:hidden 2k:hidden lg:hidden 2xl:hidden">
+      <button
+        className="py-3 w-[100%] text-left "
+        onClick={handleAccordionClick}
+      >
+        <div className="flex mb-2">
+        <div className="flex items-center px-3 w-[30%]">
+          <h5 className="text-[18px]">{icons}</h5>{" "}
+          <h5 className="text-[15px] text-[#344054] pt-1 px-3 font-[500]">
+            {scops}
+          </h5>
+        </div>
+        <div className="w-[60%]">
+          <h5 className="text-[15px] text-[#344054] pt-1 px-3 font-[500] text-center">
+            {title}
+          </h5>
+        </div>
+        <span>
+              <MdKeyboardArrowDown
+                className={`text-2xl ${isOpen && "rotate-180"}`}
+              />
+            </span>
+        </div>
+  
+        <div className="w-full">
+          <div className=" flex items-center px-3">
+            <div className="h-4 opacity-80 justify-start items-center inline-flex mr-4">
+              <div className="text-[#0056a4] text-xs font-medium font-['Manrope'] leading-none">
+                GHG Emissions =
+              </div>
+              <div>
+                <span class="text-[#146152] text-xs font-medium font-['Manrope'] leading-none">
+                  {" "}
+                  {scope_emission} tCO
+                </span>
+                <sub class="text-[#146152] text-xs font-medium font-['Manrope'] leading-none">
+                  2
+                </sub>
+                <span class="text-[#146152] text-xs font-medium font-['Manrope'] leading-none">
+                  e
+                </span>
+              </div>
+            </div>
+      
+          </div>
+        </div>
+      </button>
+      {isOpen && (
+        <div className="p-4">{children({ setAccordionOpen: setIsOpen })}</div>
+      )}{" "}
+      {/* Pass setIsOpen as setAccordionOpen */}
+    </div>
+    </>
+ 
+    
   );
 };
 
@@ -112,21 +171,6 @@ const Emissionsnbody = ({
   const [scope2DataError, setScope2DataError] = useState("");
   const [scope3DataError, setScope3DataError] = useState("");
   const [showError, setShowError] = useState(false);
-
-  // When dataError changes
-  // useEffect(() => {
-  //   if (scope1DataError || scope2DataError || scope3DataError) {
-  //     setShowError(true);
-  //     const timer = setTimeout(() => {
-  //       setShowError(false);
-  //       setScope1DataError("");
-  //       setScope2DataError("");
-  //       setScope3DataError("");
-  //     }, 6000);
-
-  //     return () => clearTimeout(timer); // Cleanup timeout
-  //   }
-  // }, [scope1DataError, scope2DataError, scope3DataError]);
 
   const handleAccordionClick = () => {
     if (!location) {
@@ -252,7 +296,7 @@ const Emissionsnbody = ({
 
   return (
     <>
-      <div className="mx-3">
+      <div className="xl:mx-3 lg:mx-3 md:mx-3 2xl:mx-3 4k:mx-3 2k:mx-3 mx-1">
         <AccordionItem
           title="Direct emission from operations"
           scops="Scope 1"

@@ -1,4 +1,11 @@
 import { MdChevronRight } from "react-icons/md";
+import Cookies from "js-cookie";
+const tcfd = Cookies.get("tcfd_sector");
+const tcfdsector = tcfd ? JSON.parse(tcfd) : [];
+const tcfdsectortypenew = Cookies.get("tcfd_sector_type");
+
+const tcfdsectortype = tcfdsectortypenew ? JSON.parse(tcfdsectortypenew) : [];
+
 export const Socialdata = [
   //Employee Hires & Turnover//
   {
@@ -24,7 +31,6 @@ export const Socialdata = [
               <li className="text-[11px] text-[#727272]">Over 50 years old.</li>
             </ul>
           </div>
-      
         </div>
       </>,
     ],
@@ -63,7 +69,6 @@ export const Socialdata = [
               and monitor equality and non‑discrimination on the basis of sex.
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -121,7 +126,6 @@ export const Socialdata = [
               employment or training.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -164,7 +168,6 @@ export const Socialdata = [
               international human rights law.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -200,7 +203,6 @@ export const Socialdata = [
               programs.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -245,7 +247,6 @@ export const Socialdata = [
               Neonatal mortality rate.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -294,7 +295,6 @@ export const Socialdata = [
               previous 12 months, by age and place of occurrence.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -341,7 +341,6 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -365,7 +364,6 @@ export const Socialdata = [
               the prior reporting periods.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -416,7 +414,6 @@ export const Socialdata = [
               age and location.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -461,11 +458,10 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-     
         </div>
       </>,
     ],
-     link: "https://sdgs.un.org/goals/goal8",
+    link: "https://sdgs.un.org/goals/goal8",
   },
   //   Child Labour //
   {
@@ -507,7 +503,6 @@ export const Socialdata = [
               work.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -556,7 +551,6 @@ export const Socialdata = [
               previous 12 months, by age and place of occurrence.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -597,7 +591,6 @@ export const Socialdata = [
               labour, by sex and age.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -656,7 +649,6 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -695,7 +687,6 @@ export const Socialdata = [
               for further guidance
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -744,7 +735,6 @@ export const Socialdata = [
               previous 12 months, by age and place of occurrence.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -817,7 +807,6 @@ export const Socialdata = [
               identification and registering.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -876,7 +865,6 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -919,7 +907,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -966,7 +953,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -1017,7 +1003,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-         
         </div>
       </>,
     ],
@@ -1064,7 +1049,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -1118,7 +1102,6 @@ export const Socialdata = [
               other favorable or unfavorable treatment
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -1165,7 +1148,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-    
         </div>
       </>,
     ],
@@ -1256,7 +1238,6 @@ export const Socialdata = [
               such committees.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -1303,7 +1284,6 @@ export const Socialdata = [
               legislation, by sex and migrant statu
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -1330,7 +1310,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div >
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Ensure responsive, inclusive, participatory and representative
@@ -1351,7 +1331,6 @@ export const Socialdata = [
               and responsive, by sex, age, disability and population group.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -1403,7 +1382,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -1450,7 +1428,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -1562,7 +1539,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-        
         </div>
       </>,
     ],
@@ -1678,7 +1654,6 @@ export const Socialdata = [
               health as a share of total household expenditure or income.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -1711,7 +1686,6 @@ export const Socialdata = [
               business relationships.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -1758,7 +1732,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -1833,7 +1806,6 @@ export const Socialdata = [
               sole or shared control), and location, among others.
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -1880,7 +1852,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -2149,7 +2120,6 @@ export const Socialdata = [
               if needed.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -2210,7 +2180,6 @@ export const Socialdata = [
               Mortality rate attributed to unintentional poisoning.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -2257,7 +2226,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -2316,7 +2284,6 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2461,7 +2428,6 @@ export const Socialdata = [
               information.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -2555,7 +2521,6 @@ export const Socialdata = [
               Mortality rate attributed to unintentional poisoning.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2602,7 +2567,6 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2661,7 +2625,6 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -2741,7 +2704,6 @@ export const Socialdata = [
               supported in their transition from work to retirement.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -2797,7 +2759,6 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -2837,7 +2798,6 @@ export const Socialdata = [
               agreements, as well as via ongoing collaboration with suppliers.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -2882,7 +2842,6 @@ export const Socialdata = [
               impacts in the supply chain
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -2923,7 +2882,6 @@ export const Socialdata = [
               certain segments of the governance bodies or employees.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -2979,7 +2937,6 @@ export const Socialdata = [
               (b) local governments.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3005,7 +2962,6 @@ export const Socialdata = [
               employee category bygender.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -3048,7 +3004,6 @@ export const Socialdata = [
               international human rights law.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3099,7 +3054,6 @@ export const Socialdata = [
               number of employees in category
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3166,7 +3120,6 @@ export const Socialdata = [
               indicators on this list that can be disaggregated.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3207,7 +3160,6 @@ export const Socialdata = [
               approaches skills enhancement.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -3251,7 +3203,6 @@ export const Socialdata = [
               circumstances that led to the incident no longer exist.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3290,7 +3241,6 @@ export const Socialdata = [
               guidance.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -3324,7 +3274,6 @@ export const Socialdata = [
               monitoring programs, or grievance mechanisms.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -3374,7 +3323,6 @@ export const Socialdata = [
               indigenous status.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3450,7 +3398,6 @@ export const Socialdata = [
               groups are avoided, minimized, mitigated or compensated
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -3499,7 +3446,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -3549,7 +3495,6 @@ export const Socialdata = [
               tenure.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -3595,7 +3540,6 @@ export const Socialdata = [
               circumvent such legislation.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3644,7 +3588,6 @@ export const Socialdata = [
               previous 12 months
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3671,7 +3614,6 @@ export const Socialdata = [
               exist at a regional level.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -3726,7 +3668,6 @@ export const Socialdata = [
               services.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -3781,7 +3722,6 @@ export const Socialdata = [
               services.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3834,7 +3774,6 @@ export const Socialdata = [
               resolution mechanism, by type of mechanism.
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -3877,7 +3816,6 @@ export const Socialdata = [
               to collect data by lawful means, and to be transparent.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -3950,7 +3888,6 @@ export const Socialdata = [
               information.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -3981,7 +3918,6 @@ export const Socialdata = [
               customers to make informed purchasing choices.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -4027,7 +3963,6 @@ export const Socialdata = [
               education; and (d) student assessment.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -4067,7 +4002,6 @@ export const Socialdata = [
               reporting period or not.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -4107,7 +4041,6 @@ export const Socialdata = [
               reporting period or not.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -4138,7 +4071,6 @@ export const Socialdata = [
               body.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -4169,7 +4101,6 @@ export const Socialdata = [
               is reported under Disclosure 2-5 in this Standard.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -4195,7 +4126,6 @@ export const Socialdata = [
               statements or equivalent documents.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -4241,7 +4171,6 @@ export const Socialdata = [
               public services
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -4269,7 +4198,6 @@ export const Socialdata = [
               in this Standard for more information.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -4339,7 +4267,6 @@ export const Socialdata = [
               employees.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -4548,7 +4475,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-         
         </div>
       </>,
     ],
@@ -4564,46 +4490,45 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div> 
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-9-c
+          <div>
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-9-c
+              </div>
+              The organization can describe the composition of the highest
+              governance body and its committees by additional indicators of
+              diversity, such as age, ancestry and ethnic origin, citizenship,
+              creed, disability, or any other indicators of diversity that are
+              relevant for reporting.
             </div>
-            The organization can describe the composition of the highest
-            governance body and its committees by additional indicators of
-            diversity, such as age, ancestry and ethnic origin, citizenship,
-            creed, disability, or any other indicators of diversity that are
-            relevant for reporting.
-          </div>
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-9-c-ii
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-9-c-ii
+              </div>
+              ‘Independence’ refers to conditions that enable the members of the
+              highest governance body to exercise independent judgment free from
+              any external influence or conflicts of interest. See reference
+              [20] in the Bibliography for more information on independence
+              criteria for governance bodies.
             </div>
-            ‘Independence’ refers to conditions that enable the members of the
-            highest governance body to exercise independent judgment free from
-            any external influence or conflicts of interest. See reference [20]
-            in the Bibliography for more information on independence criteria
-            for governance bodies.
-          </div>
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-9-c-iv
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-9-c-iv
+              </div>
+              A position or commitment held by a highest governance body member
+              is significant when the time and attention it demands compromises
+              the member’s ability to perform its duties in the organization.
+              Significant positions can include cross-board memberships.
             </div>
-            A position or commitment held by a highest governance body member is
-            significant when the time and attention it demands compromises the
-            member’s ability to perform its duties in the organization.
-            Significant positions can include cross-board memberships.
-          </div>
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-9-c-vii
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-9-c-vii
+              </div>
+              Competencies relevant to the impacts of the organization include
+              competencies relevant to impacts commonly associated with the
+              organization’s sectors, products, and geographic locations
             </div>
-            Competencies relevant to the impacts of the organization include
-            competencies relevant to impacts commonly associated with the
-            organization’s sectors, products, and geographic locations
           </div>
-          </div>
-         
         </div>
       </>,
     ],
@@ -4619,27 +4544,26 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div> 
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-10-b-iii
+          <div>
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-10-b-iii
+              </div>
+              ‘Independence’ refers to conditions that enable the members of the
+              highest governance body to exercise independent judgment free from
+              any external influence or conflicts of interest. See reference
+              [20] in the Bibliography for more information on independence
+              criteria for governance bodies.
             </div>
-            ‘Independence’ refers to conditions that enable the members of the
-            highest governance body to exercise independent judgment free from
-            any external influence or conflicts of interest. See reference [20]
-            in the Bibliography for more information on independence criteria
-            for governance bodies.
-          </div>
-          <div className="text-[11px] text-[#727272] mb-4">
-            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
-              Guidance to 2-10-b-iv
+            <div className="text-[11px] text-[#727272] mb-4">
+              <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+                Guidance to 2-10-b-iv
+              </div>
+              Competencies relevant to the impacts of the organization include
+              competencies relevant to impacts commonly associated with the
+              organization’s sectors, products, and geographic locations.
             </div>
-            Competencies relevant to the impacts of the organization include
-            competencies relevant to impacts commonly associated with the
-            organization’s sectors, products, and geographic locations.
           </div>
-          </div>
-        
         </div>
       </>,
     ],
@@ -4674,7 +4598,6 @@ export const Socialdata = [
             competencies relevant to impacts commonly associated with the
             organization’s sectors, products, and geographic locations.
           </div>
-         
         </div>
       </>,
     ],
@@ -4694,15 +4617,15 @@ export const Socialdata = [
             Guidance
           </div>
           <div>
-          <p className="text-[11px] text-[#727272] mb-4">
-          Remuneration policies are established to ensure that the remuneration
-          arrangements help recruit, motivate, and retain the highest governance
-          body members, senior executives, and other employees. Remuneration
-          policies further support the organization’s strategy and contribution
-          to sustainable development and align with stakeholders' interests.
-          </p>
-        </div>
-         
+            <p className="text-[11px] text-[#727272] mb-4">
+              Remuneration policies are established to ensure that the
+              remuneration arrangements help recruit, motivate, and retain the
+              highest governance body members, senior executives, and other
+              employees. Remuneration policies further support the
+              organization’s strategy and contribution to sustainable
+              development and align with stakeholders' interests.
+            </p>
+          </div>
         </div>
       </>,
     ],
@@ -4761,7 +4684,6 @@ export const Socialdata = [
             excluding the highest-paid individual)
             <br />
           </div>
-        
         </div>
       </>,
     ],
@@ -4805,7 +4727,6 @@ export const Socialdata = [
             regarding its contribution to sustainable development for the next
             year and the coming three to five years.
           </div>
-        
         </div>
       </>,
     ],
@@ -4825,43 +4746,43 @@ export const Socialdata = [
             Guidance
           </div>
           <div>
-          <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
-            This disclosure gives insight into how the organization embeds its
-            policy commitments for responsible business conduct, including the
-            commitment to respect human rights, throughout its activities and
-            business relationships. This ensures that people at all levels act
-            responsibly and with awareness of and respect for human rights.
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              This disclosure gives insight into how the organization embeds its
+              policy commitments for responsible business conduct, including the
+              commitment to respect human rights, throughout its activities and
+              business relationships. This ensures that people at all levels act
+              responsibly and with awareness of and respect for human rights.
+            </div>
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+              Guidance to 2-24-a-i
+            </div>
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              Examples of different levels within an organization include the
+              highest governance body, senior executives, and operational
+              levels.
+              <br />
+              <br />
+              The organization can report:
+              <br />• the most senior level with oversight of, or accountability
+              for, the implementation of the policy commitments;
+              <br />
+              <br />• the functions in the organization with day-to-day
+              responsibility for implementing each of the policy commitments
+              (e.g., human resources with the responsibility for implementing
+              the commitment to respect the rights of workers), including:
+              <br />- their reporting lines to senior decision-making levels;
+              <br />- the reason for allocating the responsibility to them;
+              <br />
+              <br />• whether responsible business conduct is formally discussed
+              at meetings of the highest governance body or senior executives
+              and, if so, which topics are discussed;
+              <br />
+              <br />• whether there are other formal or systematic means for
+              discussions about responsible business conduct between different
+              levels or functions in the organization (e.g., a crossfunctional
+              working group).
+            </div>
           </div>
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
-            Guidance to 2-24-a-i
-          </div>
-          <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
-            Examples of different levels within an organization include the
-            highest governance body, senior executives, and operational levels.
-            <br />
-            <br />
-            The organization can report:
-            <br />• the most senior level with oversight of, or accountability
-            for, the implementation of the policy commitments;
-            <br />
-            <br />• the functions in the organization with day-to-day
-            responsibility for implementing each of the policy commitments
-            (e.g., human resources with the responsibility for implementing the
-            commitment to respect the rights of workers), including:
-            <br />- their reporting lines to senior decision-making levels;
-            <br />- the reason for allocating the responsibility to them;
-            <br />
-            <br />• whether responsible business conduct is formally discussed
-            at meetings of the highest governance body or senior executives and,
-            if so, which topics are discussed;
-            <br />
-            <br />• whether there are other formal or systematic means for
-            discussions about responsible business conduct between different
-            levels or functions in the organization (e.g., a crossfunctional
-            working group).
-          </div>
-          </div>
-         
         </div>
       </>,
     ],
@@ -4881,66 +4802,66 @@ export const Socialdata = [
             Guidance
           </div>
           <div>
-          <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
-            This disclosure covers the organization’s mechanisms for individuals
-            to seek advice and raise concerns about responsible business conduct
-            in the organization's operations and business relationships.
-            Examples of these mechanisms include confidential interviews during
-            site visits, escalation processes (to raise issues through
-            management levels), hotlines, mechanisms to report non-compliance
-            with laws and regulations, and whistleblowing mechanisms.
-            <br />
-            <br />
-            These mechanisms enable individuals to raise concerns about
-            wrongdoing or breaches of the law in the organization’s operations
-            or business relationships, regardless of whether the individuals
-            themselves are harmed or not. They are distinct from grievance
-            mechanisms, which enable stakeholders to raise concerns about, and
-            seek remedy / remediation for, the organization’s potential and
-            actual negative impacts on them. Grievance mechanisms are reported
-            under Disclosure 2-25 in this Standard.
-            <br />
-            <br />
-            If the organization’s grievance mechanisms and its mechanisms for
-            seeking advice and raising concerns about responsible business
-            conduct operate in a similar way, the organization can provide a
-            single description of how these mechanisms operate and explain which
-            mechanisms the description covers.
-            <br />
-            <br />
-            The organization can report:
-            <br />• who the intended users of the mechanisms are;
-            <br />• how the mechanisms operate and which level or function in
-            the organization is assigned responsibility for them;
-            <br />• whether the mechanisms are operated independently of the
-            organization (e.g., by a third party);
-            <br />• the process through which concerns are investigated;
-            <br />• whether requests for advice and concerns raised are treated
-            confidentially;
-            <br />• whether the mechanisms can be used anonymously.
-            <br />
-            <br />
-            Additionally, the organization can report information about the
-            effectiveness of the mechanisms, including:
-            <br />• whether and how the intended users are informed about the
-            mechanisms and trained on how to use them;
-            <br />• the accessibility of the mechanisms, such as the number of
-            hours per day or days per week they are available, and their
-            availability in different languages;
-            <br />• how the organization seeks to ensure it respects users’
-            human rights and protects them against reprisals (i.e.,
-            non-retaliation for raising concerns);
-            <br />• how satisfied users are with the mechanisms and with the
-            resulting outcomes;
-            <br />• the number and types of requests for advice received during
-            the reporting period, and the percentage of requests that were
-            answered;
-            <br />• the number and types of concerns raised during the reporting
-            period, and the percentage of concerns that were addressed and
-            resolved or found to be unsubstantiated.
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              This disclosure covers the organization’s mechanisms for
+              individuals to seek advice and raise concerns about responsible
+              business conduct in the organization's operations and business
+              relationships. Examples of these mechanisms include confidential
+              interviews during site visits, escalation processes (to raise
+              issues through management levels), hotlines, mechanisms to report
+              non-compliance with laws and regulations, and whistleblowing
+              mechanisms.
+              <br />
+              <br />
+              These mechanisms enable individuals to raise concerns about
+              wrongdoing or breaches of the law in the organization’s operations
+              or business relationships, regardless of whether the individuals
+              themselves are harmed or not. They are distinct from grievance
+              mechanisms, which enable stakeholders to raise concerns about, and
+              seek remedy / remediation for, the organization’s potential and
+              actual negative impacts on them. Grievance mechanisms are reported
+              under Disclosure 2-25 in this Standard.
+              <br />
+              <br />
+              If the organization’s grievance mechanisms and its mechanisms for
+              seeking advice and raising concerns about responsible business
+              conduct operate in a similar way, the organization can provide a
+              single description of how these mechanisms operate and explain
+              which mechanisms the description covers.
+              <br />
+              <br />
+              The organization can report:
+              <br />• who the intended users of the mechanisms are;
+              <br />• how the mechanisms operate and which level or function in
+              the organization is assigned responsibility for them;
+              <br />• whether the mechanisms are operated independently of the
+              organization (e.g., by a third party);
+              <br />• the process through which concerns are investigated;
+              <br />• whether requests for advice and concerns raised are
+              treated confidentially;
+              <br />• whether the mechanisms can be used anonymously.
+              <br />
+              <br />
+              Additionally, the organization can report information about the
+              effectiveness of the mechanisms, including:
+              <br />• whether and how the intended users are informed about the
+              mechanisms and trained on how to use them;
+              <br />• the accessibility of the mechanisms, such as the number of
+              hours per day or days per week they are available, and their
+              availability in different languages;
+              <br />• how the organization seeks to ensure it respects users’
+              human rights and protects them against reprisals (i.e.,
+              non-retaliation for raising concerns);
+              <br />• how satisfied users are with the mechanisms and with the
+              resulting outcomes;
+              <br />• the number and types of requests for advice received
+              during the reporting period, and the percentage of requests that
+              were answered;
+              <br />• the number and types of concerns raised during the
+              reporting period, and the percentage of concerns that were
+              addressed and resolved or found to be unsubstantiated.
+            </div>
           </div>
-          </div>
-         
         </div>
       </>,
     ],
@@ -5178,7 +5099,6 @@ export const Socialdata = [
               </p>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -5234,7 +5154,6 @@ export const Socialdata = [
               organization’s impacts.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -5291,7 +5210,6 @@ export const Socialdata = [
               not controlled by the parent entity.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -5328,7 +5246,6 @@ export const Socialdata = [
               as its financial reporting, where this is possible.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -5410,7 +5327,6 @@ export const Socialdata = [
               requirement.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -5466,7 +5382,6 @@ export const Socialdata = [
               organization’s sustainability reporting.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -5642,7 +5557,6 @@ export const Socialdata = [
               or changes in the location of its suppliers.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -5761,7 +5675,6 @@ export const Socialdata = [
               fact is sufficient to comply with the requirement.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -5811,7 +5724,6 @@ export const Socialdata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -5876,7 +5788,6 @@ export const Socialdata = [
               with the requirement.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -5980,7 +5891,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-         
         </div>
       </>,
     ],
@@ -6008,7 +5918,6 @@ export const Socialdata = [
               association that is critical to the organization’s own activities.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -6141,7 +6050,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
@@ -6236,7 +6144,6 @@ export const Socialdata = [
               of this fact is sufficient to comply with this requirement.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -6272,7 +6179,6 @@ export const Socialdata = [
               contribution to the economy
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -6332,7 +6238,6 @@ export const Socialdata = [
               CO2 emission per unit of value added
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -6374,7 +6279,6 @@ export const Socialdata = [
               transport, by sex, age and persons with disabilities
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -6470,7 +6374,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-         
         </div>
       </>,
     ],
@@ -6537,7 +6440,6 @@ export const Socialdata = [
               tenure.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -6584,7 +6486,6 @@ export const Socialdata = [
               1,000 women in that age group
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -6656,7 +6557,6 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -6699,7 +6599,6 @@ export const Socialdata = [
               and sex
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -6732,7 +6631,6 @@ export const Socialdata = [
               economy, and maintain community relations.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -6781,7 +6679,6 @@ export const Socialdata = [
               ability to understand local needs.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -6999,7 +6896,6 @@ export const Socialdata = [
               local economies.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7050,7 +6946,6 @@ export const Socialdata = [
               Annual growth rate of real GDP per employed person.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -7128,7 +7023,6 @@ export const Socialdata = [
               Researchers (in full-time equivalent) per million inhabitants
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -7219,7 +7113,6 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-        
         </div>
       </>,
     ],
@@ -7270,7 +7163,6 @@ export const Socialdata = [
               risk reduction strategies
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7338,7 +7230,6 @@ export const Socialdata = [
               strategic planning on the part of the employer.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7377,7 +7268,6 @@ export const Socialdata = [
               Bibliography.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7419,7 +7309,6 @@ export const Socialdata = [
               policies and procedures to combat corruption.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7456,7 +7345,6 @@ export const Socialdata = [
               customers, and clients.
             </p>
           </div>
-     
         </div>
       </>,
     ],
@@ -7495,7 +7383,6 @@ export const Socialdata = [
               the organization as well as punitive measures.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7592,7 +7479,6 @@ export const Socialdata = [
               conduct.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -7647,7 +7533,6 @@ export const Socialdata = [
               newborns, work-injury victims and the poor and the vulnerable
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -7689,7 +7574,6 @@ export const Socialdata = [
               Redistributive impact of fiscal policy
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -7748,7 +7632,6 @@ export const Socialdata = [
               of total GDP
             </p>
           </div>
-          
         </div>
       </>,
     ],
@@ -7900,7 +7783,6 @@ export const Socialdata = [
               documents.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -7998,7 +7880,6 @@ export const Socialdata = [
               its risks and impacts.
             </p>
           </div>
-         
         </div>
       </>,
     ],
@@ -8213,7 +8094,6 @@ export const Socialdata = [
               jurisdictions where the tax was paid.
             </p>
           </div>
-       
         </div>
       </>,
     ],
@@ -8222,27 +8102,39 @@ export const Socialdata = [
   {
     category: ["132"],
     header: [
-      <h5 className="text-sky-600 text-[17px] font-bold">GRI 202: Market Presence 2016</h5>,
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 202: Market Presence 2016
+      </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 202-1 Ratios of standard entry level wage
-          by gender compared to local minimum wage
-
+            Disclosure 202-1 Ratios of standard entry level wage by gender
+            compared to local minimum wage
           </p>
           <div>
-            <p className="text-[13px] text-[#222222] mb-2">
-            Background:
-            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Background:</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            This disclosure applies to those organizations in which a substantial portion of their employees, and workers (excluding employees) performing the organization’s activities, are compensated in a manner or scale that is closely linked to laws or regulations on minimum wage. Providing wages above the minimum wage can help contribute to the economic well-being of workers performing the organization’s activities. The impacts of wage levels are immediate, and they directly affect individuals, organizations, countries and economies. The distribution of wages is crucial for eliminating inequalities, such as wage gap differences between women and men, or nationals and migrants. Also, entry level wages paid compared to local minimum wages show the competitiveness of an organization’s wages and provide information relevant for assessing the effect of wages on the local labor market. Comparing this information by gender can also be a measure of an organization’s approach to equal opportunity in the workplace.
+              This disclosure applies to those organizations in which a
+              substantial portion of their employees, and workers (excluding
+              employees) performing the organization’s activities, are
+              compensated in a manner or scale that is closely linked to laws or
+              regulations on minimum wage. Providing wages above the minimum
+              wage can help contribute to the economic well-being of workers
+              performing the organization’s activities. The impacts of wage
+              levels are immediate, and they directly affect individuals,
+              organizations, countries and economies. The distribution of wages
+              is crucial for eliminating inequalities, such as wage gap
+              differences between women and men, or nationals and migrants.
+              Also, entry level wages paid compared to local minimum wages show
+              the competitiveness of an organization’s wages and provide
+              information relevant for assessing the effect of wages on the
+              local labor market. Comparing this information by gender can also
+              be a measure of an organization’s approach to equal opportunity in
+              the workplace.
             </p>
-
-           
           </div>
-         
         </div>
       </>,
     ],
@@ -8285,9 +8177,7 @@ export const Socialdata = [
               Proportion of men, women and children of all ages living in
               poverty in all its dimensions according to national definitions
             </p>
-           
           </div>
-      
         </div>
       </>,
     ],
@@ -8313,8 +8203,6 @@ export const Socialdata = [
             Sustainable Development Goal 5: Gender equality
           </p>
           <div>
-        
-          
             <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Recognize and value unpaid care and domestic work through the
@@ -8329,7 +8217,6 @@ export const Socialdata = [
               age and location.
             </p>
           </div>
-        
         </div>
       </>,
     ],
@@ -8375,10 +8262,7 @@ export const Socialdata = [
             <p className="text-[11px] text-[#727272] mb-2">
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
-           
-         
           </div>
-         
         </div>
       </>,
     ],
@@ -8388,28 +8272,30 @@ export const Socialdata = [
     category: ["136"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-      GRI 205: Anti-corruption 2016
+        GRI 205: Anti-corruption 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 205-2 Communication and training about anti-corruption policies and procedures
+            Disclosure 205-2 Communication and training about anti-corruption
+            policies and procedures
           </p>
           <div>
             <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.
+              In the context of this GRI Standard, the term ‘business partners’
+              includes, among others, suppliers, agents, lobbyists and other
+              intermediaries, joint venture and consortia partners, governments,
+              customers, and clients.
             </p>
-            <p className="text-[13px] text-[#222222] mb-4">
-            Background:
-            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Communication and training build the internal and external awareness and the necessary capacity to combat corruption.
+              Communication and training build the internal and external
+              awareness and the necessary capacity to combat corruption.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -8419,43 +8305,44 @@ export const Socialdata = [
     category: ["137"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-        GRI 308: Supplier Environmental
-        Assessment 2016
+        GRI 308: Supplier Environmental Assessment 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 308-1 New suppliers that were screened
-          using environmental criteria
+            Disclosure 308-1 New suppliers that were screened using
+            environmental criteria
           </p>
           <div>
             {/* <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p> */}
             <p className="text-[11px] text-[#727272] mb-2">
-            Environmental criteria can include the topics covered in other GRI Topic Standards (e.g., GRI
-
+              Environmental criteria can include the topics covered in other GRI
+              Topic Standards (e.g., GRI
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions 2016)
+              302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305:
+              Emissions 2016)
             </p>
             <p className="text-[11px] text-black mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            This disclosure informs stakeholders about the percentage of suppliers selected or contracted subject to due diligence processes for environmental impacts.
-
+              This disclosure informs stakeholders about the percentage of
+              suppliers selected or contracted subject to due diligence
+              processes for environmental impacts.
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            An organization is expected to initiate due diligence as early as possible in the development of a new relationship with a supplier.
-
+              An organization is expected to initiate due diligence as early as
+              possible in the development of a new relationship with a supplier.
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Impacts may be prevented or mitigated at the stage of structuring contracts or other agreements,
-as well as via ongoing collaboration with suppliers.
+              Impacts may be prevented or mitigated at the stage of structuring
+              contracts or other agreements, as well as via ongoing
+              collaboration with suppliers.
             </p>
           </div>
-      
         </div>
       </>,
     ],
@@ -8465,44 +8352,1057 @@ as well as via ongoing collaboration with suppliers.
     category: ["138"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-      GRI 308: Supplier Environmental
-      Assessment 2016
+        GRI 308: Supplier Environmental Assessment 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 308-2 Negative environmental impacts in
-the supply chain and actions taken
+            Disclosure 308-2 Negative environmental impacts in the supply chain
+            and actions taken
           </p>
           <div>
-            <p className="text-[11px] text-black mb-2">
-            Guidance :
+            <p className="text-[11px] text-black mb-2">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Negative impacts include those that are either caused or
+              contributed to by an organization, or that are directly linked to
+              its operations, products, or services by its relationship with a
+              supplier. Assessments for environmental impacts can include the
+              topics covered in other GRI Topic Standards (e.g., GRI 302: Energy
+              2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions 2016).
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Negative impacts include those that are either caused or contributed to by an organization, or that are directly linked to its operations, products, or services by its relationship with a supplier. Assessments for environmental impacts can include the topics covered in other GRI Topic Standards (e.g., GRI 302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions
-2016).
-
-            </p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            Assessments can be made against agreed performance expectations that are set and communicated to the suppliers prior to the assessment. Assessments can be informed by audits, contractual reviews, two-way engagement, and complaint and grievance mechanisms.
-
+              Assessments can be made against agreed performance expectations
+              that are set and communicated to the suppliers prior to the
+              assessment. Assessments can be informed by audits, contractual
+              reviews, two-way engagement, and complaint and grievance
+              mechanisms.
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Improvements can include changing an organization’s procurement practices, the adjustment of performance expectations, capacity building, training, and changes to processes
+              Improvements can include changing an organization’s procurement
+              practices, the adjustment of performance expectations, capacity
+              building, training, and changes to processes
             </p>
             <p className="text-[11px] text-black mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            This disclosure informs stakeholders about an organization’s awareness of significant actual
-            and potential negative environmental impacts in the supply chain.
+              This disclosure informs stakeholders about an organization’s
+              awareness of significant actual and potential negative
+              environmental impacts in the supply chain.
             </p>
-            
           </div>
-        
         </div>
       </>,
     ],
     link: "https://www.globalreporting.org/pdf.ashx?id=12532",
+  },
+  {
+    category: ["139"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">Bill S-211</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Overview of the reporting process
+          </p>
+          <div>
+            <p className="text-[11px] text-black mb-2">1. Prepare a report</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Entities should review the reporting requirements outlined in this
+              guidance to respond to each of the Act's requirements. Refer to
+              the list of questions in the online questionnaire to determine
+              what information is required and what internal consultations may
+              be necessary to develop their annual report.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              2. Approval and attestation
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Once an entity completes a report that meets the requirements
+              outlined in this guidance, it must obtain approval of the report
+              by the appropriate governing body or bodies of the entity or
+              entities. The annual PDF report submitted to Public Safety Canada
+              must also include a signed attestation of approval. See an example
+              of attestation language that an entity may include in their
+              report.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              3. Complete online questionnaire
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              To submit their annual report, entities must complete the online
+              questionnaire. The questionnaire collects information that
+              responds to the Act's reporting requirements and is the mechanism
+              for submitting an annual report to Public Safety Canada. Entities
+              must ensure that their responses to the questionnaire are accurate
+              and that the information is consistent with their annual report..
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              4. Upload approved report to online questionnaire
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              At the end of the questionnaire, entities must upload their annual
+              report in PDF format, and select “submit”. Entities will receive a
+              confirmation email following submission and will have the option
+              to download a copy of their responses to the questionnaire.
+              Entities that opt to submit their report in both Canadian official
+              languages can upload two separate PDF files at the end of the
+              questionnaire.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              5. Publish report to entity's website
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              On providing a report to Public Safety Canada, entities must
+              publish their report in a prominent place on their website.
+              Reports submitted to Public Safety Canada will also be made
+              publicly available in a searchable online catalogue. Only the PDF
+              reports and select information submitted through the online
+              questionnaire will be published on the Public Safety Canada
+              website.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.publicsafety.gc.ca/cnt/cntrng-crm/frcd-lbr-cndn-spply-chns/prpr-rprt-en.aspx",
+  },
+  {
+    category: ["140"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Board's oversight of climate related issues screen - Governance
+        [TCFD-GOV-A]
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              In describing the board’s oversight of climate-related issues,
+              organizations should consider including a discussion of the
+              following:
+            </p>
+            <ul className="list-disc ml-6  mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Processes and frequency by which the board and/or board
+                committees (e.g., audit, risk, or other committees) are informed
+                about climate-related issues
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Whether the board and/or board committees consider
+                climate-related issues when reviewing and guiding strategy,
+                major plans of action, risk management policies, annual budgets,
+                and business plans as well as setting the organization’s
+                performance objectives, monitoring implementation and
+                performance, and overseeing major capital expenditures,
+                acquisitions, and divestitures; and
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                How the board monitors and oversees progress against goals and
+                targets for addressing climate-related issues.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["141"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Management’s role in assessing and managing climate related issues
+        screen - Governance [TCFD-GOV-B]
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              In describing management’s role related to the assessment and
+              management of climate related issues, organizations should
+              consider including the following information:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Whether the organization has assigned climate-related
+                responsibilities to management-level positions or committees;
+                and, if so, whether such management positions or committees
+                report to the board or a committee of the board and whether
+                those responsibilities include assessing and/or managing
+                climate-related issues;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                A description of the associated organizational structure(s)
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Processes by which management is informed about climate-related
+                issues and
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                How management (through specific positions and/or management
+                committees) monitors climate-related issues.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["142"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Risk Identification & Assessment screen - Risk Management (TCFD-RM-A)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsector === "asset_management" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Managers
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset managers should describe, where appropriate, engagement
+                activity with investee companies to encourage better disclosure
+                and practices related to climate-related risks in order to
+                improve data availability and asset managers’ ability to assess
+                climate-related risks.
+              </p>
+              <p>
+                Asset managers should also describe how they identify and assess
+                material climate related risks for each product or investment
+                strategy. This might include a description of the resources and
+                tools used in the process.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe, where appropriate, engagement
+                activity with investee companies to encourage better disclosure
+                and practices related to climate-related risks to improve data
+                availability and asset owners’ ability to assess climate-related
+                risks.
+              </p>
+              <p>
+                In addition to WACI, asset owners should consider providing
+                other carbon footprinting metrics they believe are useful for
+                decision-making.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Insurance companies should describe the processes for
+                identifying and assessing climate-related risks on re-/insurance
+                portfolios by geography, business division, or product segments,
+                including the following risks:
+              </p>
+              <ul className="list-disc ml-6  mb-4">
+                <li className="text-[11px] text-[#727272]">
+                  Physical risks from changing frequencies and intensities of
+                  weather-related perils;
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  Transition risks resulting from a reduction in insurable
+                  interest due to a decline in value, changing energy costs, or
+                  implementation of carbon regulation; and Liability risks that
+                  could intensify due to a possible increase in litigation.
+                </li>
+              </ul>
+            </div>
+          )}
+          {tcfdsector === "banking" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Banks
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should consider characterizing their climate-related risks
+                in the context of traditional banking industry risk categories
+                such as credit risk, market risk, liquidity risk, and
+                operational risk.
+              </p>
+            </div>
+          )}
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should describe their risk management processes for
+              identifying and assessing climate-related risks. An important
+              aspect of this description is how organizations determine the
+              relative significance of climate-related risks in relation to
+              other risks.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations should describe whether they consider existing and
+              emerging regulatory requirements related to climate change (e.g.,
+              limits on emissions) as well as other relevant factors considered.
+              Organizations should also consider disclosing the following:
+            </p>
+            <ul className="list-disc ml-6  mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Processes for assessing the potential size and scope of
+                identified climate-related risks and
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Definitions of risk terminology used or references to existing
+                risk classification frameworks used
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["143"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate Risk Management screen - Risk Management (TCFD-RM-B)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsector === "asset_management" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Managers
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset managers should describe how they manage material
+                climate-related risks for each product or investment strategy.
+              </p>
+              <p>
+                Asset managers should also describe how they identify and assess
+                material climate related risks for each product or investment
+                strategy. This might include a description of the resources and
+                tools used in the process.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe how they consider the positioning
+                of their total portfolio with respect to the transition to a
+                low-carbon energy supply, production, and use. This could
+                include explaining how asset owners actively manage their
+                portfolios’ positioning in relation to this transition"
+              </p>
+              <p>
+                In addition to WACI, asset owners should consider providing
+                other carbon footprinting metrics they believe are useful for
+                decision-making.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe how they consider the positioning
+                of their total portfolio with respect to the transition to a
+                low-carbon energy supply, production, and use. This could
+                include explaining how asset owners actively manage their
+                portfolios’ positioning in relation to this transition
+              </p>
+            </div>
+          )}
+
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should describe their processes for managing
+              climate-related risks, including how they make decisions to
+              mitigate, transfer, accept, or control those risks. In addition,
+              organizations should describe their processes for prioritizing
+              climate-related risks, including how materiality determinations
+              are made within their organizations. In describing their processes
+              for managing climate-related risks, organizations should address
+              the risks included in Tables A1.1 and A1.2 (pp. 75–76), as
+              appropriate.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["144"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate Risk Integration screen - Risk Management (TCFD-RM-C)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should describe how their processes for identifying,
+              assessing, and managing climate-related risks are integrated into
+              their overall risk management
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["145"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate related risks and opportunities screen - Strategy (TCFD-STG-A)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsector === "banking" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Banks
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should describe significant concentrations of credit
+                exposure to carbon-related assets. Additionally, banks should
+                consider disclosing their climate-related risks (transition and
+                physical) in their lending and other financial intermediary
+                business activities.
+              </p>
+            </div>
+          )}
+
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should provide the following information:
+            </p>
+            <ul className="list-disc ml-6  mb-4">
+              <li className="text-[11px] text-[#727272]">
+                A description of what they consider to be the relevant short-,
+                medium-, and long term time horizons, taking into consideration
+                the useful life of the organization’s assets or infrastructure
+                and the fact that climate-related issues often manifest
+                themselves over the medium and longer terms;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                A description of the specific climate-related issues potentially
+                arising in each time horizon (short, medium, and long term) that
+                could have a material financial impact on the organization; and
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                A description of the process(es) used to determine which risks
+                and opportunities could have a material financial impact on the
+                organization.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should consider providing a description of their
+              risks and opportunities by sector and/or geography, as
+              appropriate.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["146"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Impact of Climate related Issues on Business screen - Strategy
+        (TCFD-STG-B)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsectortype === "non_financial" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Non-Financial Group
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Organizations should consider discussing how climate-related
+                risks and opportunities are integrated into their current
+                decision-making and strategy formulation, including planning
+                assumptions and objectives around climate change mitigation,
+                adaptation, or opportunities such as:
+              </p>
+              <ul className="list-disc ml-6 mb-4">
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Research and development (R&D) and adoption of new
+                  technology.
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Existing and committed future activities such as
+                  investments, restructuring, writedowns, or impairment of
+                  assets.
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Critical planning assumptions around legacy assets, for
+                  example, strategies to lower carbon-, energy-, and/or
+                  water-intensive operations.
+                </li>
+                <li className="text-[11px] text-[#727272]">
+                  ‒ How GHG emissions, energy, and water and other physical risk
+                  exposures, if applicable, are considered in capital planning
+                  and allocation; this could include a discussion of major
+                  acquisitions and divestments, joint-ventures, and investments
+                  in technology, innovation, and new business areas in light of
+                  changing climaterelated risks and opportunities.
+                </li>
+                <li className="text-[11px] text-[#727272]">
+                  ‒ The organization’s flexibility in positioning/repositioning
+                  capital to address emerging climate-related risks and
+                  opportunities
+                </li>
+              </ul>
+            </div>
+          )}
+          {tcfdsector === "asset_management" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Managers
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset managers should describe how climate-related risks and
+                opportunities are factored into relevant products or investment
+                strategies.
+              </p>
+              <p>
+                Asset managers should also describe how each product or
+                investment strategy might be affected by the transition to a
+                low-carbon economy.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe how climate-related risks and
+                opportunities are factored into relevant investment strategies.
+                This could be described from the perspective of the total fund
+                or investment strategy or individual investment strategies for
+                various asset classes.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Insurance companies should describe the potential impacts of
+                climate-related risks and opportunities as well as provide
+                supporting quantitative information where available, on their
+                core businesses, products, and services, including: Information
+                at the business division, sector, or geography levels; How the
+                potential impacts influence client or broker selection; and
+                Whether specific climate-related products or competencies are
+                under development, such as insurance of green infrastructure,
+                specialty climate-related risk advisory services, and
+                climate-related client engagement
+              </p>
+            </div>
+          )}
+
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Building on recommended disclosure (a), organizations should
+              discuss how identified climate-related issues have affected their
+              businesses, strategy, and financial planning.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations should consider including the impact on their
+              businesses, strategy, and financial planning in the following
+              areas:
+            </p>
+            <ul className="list-disc ml-6  mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Products and services
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Supply chain and/or value chain
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Adaptation and mitigation activities
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Investment in research and development
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Operations (including types of operations and location of
+                facilities)
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Acquisitions or divestments
+              </li>
+              <li className="text-[11px] text-[#727272]">Access to capital</li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations should describe how climate-related issues serve as
+              an input to their financial planning process, the time period(s)
+              used, and how these risks and opportunities are prioritized.
+              Organizations’ disclosures should reflect a holistic picture of
+              the interdependencies among the factors that affect their ability
+              to create value over time.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations should describe the impact of climate-related issues
+              on their financial performance (e.g., revenues, costs) and
+              financial position (e.g., assets, liabilities). If climate-related
+              scenarios were used to inform the organization’s strategy and
+              financial planning, such scenarios should be described.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations that have made GHG emissions reduction commitments,
+              operate in jurisdictions that have made such commitments, or have
+              agreed to meet investor expectations regarding GHG emissions
+              reductions should describe their plans for transitioning to a
+              low-carbon economy, which could include GHG emissions targets and
+              specific activities intended to reduce GHG emissions in their
+              operations and value chain or to otherwise support the transition.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["147"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Resilience of the Organisation's Strategy screen - Strategy (TCFD-STG-C)
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsectortype === "non_financial" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Non-Financial Groups
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Organizations with more than one billion U.S. dollar equivalent
+                (USDE) in annual revenue should consider conducting more robust
+                scenario analysis to assess the resilience of their strategies
+                against a range of climate-related scenarios, including a 2°C or
+                lower scenario and, where relevant to the organization,
+                scenarios consistent with increased physical climate-related
+                risks. Organizations should consider discussing the implications
+                of different policy assumptions, macro-economic trends, energy
+                pathways, and technology assumptions used in publicly available
+                climate-related scenarios to assess the resilience of their
+                strategies. For the climate-related scenarios used,
+                organizations should consider providing information on the
+                following factors to allow investors and others to understand
+                how conclusions were drawn from scenario analysis:
+              </p>
+              <ul className="list-disc ml-6 mb-4">
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Critical input parameters, assumptions, and analytical
+                  choices for the climaterelated scenarios used, particularly as
+                  they relate to key areas such as policy assumptions, energy
+                  deployment pathways, technology pathways, and related timing
+                  assumptions.
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Existing and committed future activities such as
+                  investments, restructuring, writedowns, or impairment of
+                  assets.
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  ‒ Potential qualitative or quantitative financial implications
+                  of the climate-related scenarios, if any
+                </li>
+              </ul>
+            </div>
+          )}
+
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners that perform scenario analysis should consider
+                providing a discussion of how climate-related scenarios are
+                used, such as to inform investments in specific assets.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                nsurance companies that perform climate-related scenario
+                analysis on their underwriting activities should provide the
+                following information:
+              </p>
+              <ul className="list-disc ml-6 mb-4">
+                <li className="text-[11px] text-[#727272]">
+                  Description of the climate-related scenarios used, including
+                  the critical input parameters, assumptions and considerations,
+                  and analytical choices. In addition to a 2°C scenario,
+                  insurance companies with substantial exposure to
+                  weather-related
+                </li>
+
+                <li className="text-[11px] text-[#727272]">
+                  Perils should consider using a greater than 2°C scenario to
+                  account for physical effects of climate change and Time frames
+                  used for the climate-related scenarios, including short-,
+                  medium-, and long-term milestones.
+                </li>
+              </ul>
+            </div>
+          )}
+
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should describe how resilient their strategies are
+              to climate-related risks and opportunities, taking into
+              consideration a transition to a low-carbon economy consistent with
+              a 2°C or lower scenario and, where relevant to the organization,
+              scenarios consistent with increased physical climate-related
+              risks.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Organizations should consider discussing:
+            </p>
+            <ul className="list-disc ml-6  mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Where they believe their strategies may be affected by
+                climate-related risks and opportunities;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                How their strategies might change to address such potential
+                risks and opportunities;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The potential impact of climate-related issues on financial
+                performance (e.g., revenues, costs) and financial position
+                (e.g., assets, liabilities); and
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The climate-related scenarios and associated time horizon(s)
+                considered.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Refer to Section D in the Task Force’s report for information on
+              applying scenarios to forward-looking analysis.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["148"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate Related Metrics screen - Metrics and Targets [TCFD-M&T-A]
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsectortype === "non_financial" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Non-Financial Groups
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                For all relevant metrics, organizations should consider
+                providing historical trends and forward-looking projections (by
+                relevant country and/or jurisdiction, business line, or asset
+                type). Organizations should also consider disclosing metrics
+                that support their scenario analysis and strategic planning
+                process and that are used to monitor the organization’s business
+                environment from a strategic and risk management perspective.
+                Organizations should consider providing key metrics related to
+                GHG emissions, energy, water and other physical risk exposures,
+                land use, and, if relevant, investments in climate adaptation
+                and mitigation that address potential financial aspects of
+                shifting demand, expenditures, asset valuation, and cost of
+                financing.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_management" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Managers
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe metrics used to assess
+                climate-related risks and opportunities in each fund or
+                investment strategy. Where relevant, asset owners should also
+                describe how these metrics have changed over time. Where
+                appropriate, asset owners should provide metrics considered in
+                investment decisions and monitoring. Asset owners should
+                describe the extent to which assets they own and their funds and
+                investment strategies, where relevant, are aligned with a well
+                below 2°C scenario, using whichever approach or metrics best
+                suit their organizational context or capabilities. Asset owners
+                should also indicate which asset classes are included.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should describe metrics used to assess
+                climate-related risks and opportunities in each fund or
+                investment strategy. Where relevant, asset owners should also
+                describe how these metrics have changed over time. Where
+                appropriate, asset owners should provide metrics considered in
+                investment decisions and monitoring. Asset owners should
+                describe the extent to which assets they own and their funds and
+                investment strategies, where relevant, are aligned with a well
+                below 2°C scenario, using whichever approach or metrics best
+                suit their organizational context or capabilities. Asset owners
+                should also indicate which asset classes are included.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Supplemental Guidance for Insurance Companies Insurance
+                companies should provide aggregated risk exposure to
+                weather-related catastrophes of their property business (i.e.,
+                annual aggregated expected losses from weather-related
+                catastrophes) by relevant jurisdiction. Insurance companies
+                should describe the extent to which their insurance underwriting
+                activities, where relevant, are aligned with a well below 2°C
+                scenario, using whichever approach or metrics best suit their
+                organizational context or capabilities. Insurance companies
+                should also indicate which insurance underwriting ac
+              </p>
+            </div>
+          )}
+          {tcfdsector === "banking" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Banks
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should provide the metrics used to assess the impact of
+                (transition and physical) climate-related risks on their lending
+                and other financial intermediary business activities in the
+                short, medium, and long term. Metrics provided may relate to
+                credit exposure, equity and debt holdings, or trading positions,
+                broken down by:
+              </p>
+              <ul className="list-disc ml-6  mb-4">
+                <li className="text-[11px] text-[#727272]">Industry</li>
+
+                <li className="text-[11px] text-[#727272]">Geography</li>
+                <li className="text-[11px] text-[#727272]">
+                  Credit quality (e.g., investment grade or non-investment
+                  grade, internal rating system)
+                </li>
+                <li className="text-[11px] text-[#727272]">Average tenor</li>
+              </ul>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should also provide the amount and percentage of
+                carbon-related assets relative to total assets as well as the
+                amount of lending and other financing connected with
+                climate-related opportunities.
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should describe the extent to which their lending and
+                other financial intermediary business activities, where
+                relevant, are aligned with a well below 2°C scenario, using
+                whichever approach or metrics best suit their organizational
+                context or capabilities.
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should also indicate which financial intermediary business
+                activities (e.g., loans to specific sectors or industries) are
+                included.
+              </p>
+            </div>
+          )}
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should provide the key metrics used to measure and
+              manage climate related risks and opportunities, as well as metrics
+              consistent with the cross-industry, climate-related metric
+              categories described. Organizations should consider including
+              metrics on climate-related risks associated with water, energy,
+              land use, and waste management where relevant and applicable.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Where climate-related issues are material, organizations should
+              consider describing whether and how related performance metrics
+              are incorporated into remuneration policies.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Where relevant, organizations should provide their internal carbon
+              prices as well as climate-related opportunity metrics such as
+              revenue from products and services designed for a low-carbon
+              economy.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              Metrics should be provided for historical periods to allow for
+              trend analysis. Where appropriate, organizations should consider
+              providing forward-looking metrics for the cross-industry,
+              climate-related metric categories consistent with their business
+              or strategic planning time horizons. In addition, where not
+              apparent, organizations should provide a description of the
+              methodologies used to calculate or estimate climate-related
+              metrics.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
+  },
+  {
+    category: ["149"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate Related Targets screen - Metrics and Targets [TCFD-M&T-C]
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should provide the key metrics used to measure and
+              manage climaterelated risks and opportunities, as well as metrics
+              consistent with the cross-industry, climate-related metric
+              categories described. Organizations should consider including
+              metrics on climate-related risks associated with water, energy,
+              land use, and waste management where relevant and applicable.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Where climate-related issues are material, organizations should
+              consider describing whether and how related performance metrics
+              are incorporated into remuneration policies.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Where relevant, organizations should provide their internal carbon
+              prices as well as climate-related opportunity metrics such as
+              revenue from products and services designed for a low-carbon
+              economy.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Metrics should be provided for historical periods to allow for
+              trend analysis. Where appropriate, organizations should consider
+              providing forward-looking metrics for the cross-industry,
+              climate-related metric categories consistent with their business
+              or strategic planning time horizons. In addition, where not
+              apparent, organizations should provide a description of the
+              methodologies used to calculate or estimate climate-related
+              metrics.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
   },
 ];

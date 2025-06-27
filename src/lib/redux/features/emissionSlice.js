@@ -217,7 +217,13 @@ const formatTaskData = (task, commonData) => ({
   subcategory: task.Emission.Subcategory,
   activity: task.Emission.Activity || "",
   activity_id: task.Emission.activity_id || "",
+  act_id: task.Emission.act_id || "",
+  factor: task.Emission.Factor || "",
   unit_type: task.Emission.unit_type || "",
+  value1: task.Emission.Quantity || task.Emission.quantity1 || "",
+  value2: task.Emission.Quantity2 || task.Emission.quantity2 || "",
+  unit1: task.Emission.Unit || task.Emission.unit1 || "",
+  unit2: task.Emission.Unit2 || task.Emission.unit2 || "",
   task_name: `${commonData.locationName}-${commonData.month}-${
     task.Emission.Activity || task.Emission.Subcategory
   }`,
@@ -331,10 +337,9 @@ export const fetchLocations = createAsyncThunk(
 const emissionsSlice = createSlice({
   name: "emissions",
   initialState: {
-    userData: [],
     locations: {
       data: [],
-      status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+      status: "idle", 
       error: null,
     },
     location: "",
@@ -426,8 +431,64 @@ const emissionsSlice = createSlice({
       field: null,
     },
     validationErrors: {},
+    activitiesCache: {}, // Store for cached activities by key
+    activeRequests: [],
   },
   reducers: {
+    addActiveRequest: (state, action) => {
+      const requestKey = action.payload;
+      if (!state.activeRequests.includes(requestKey)) {
+        state.activeRequests.push(requestKey);
+      }
+    },
+    
+    // Remove request from active tracking
+    removeActiveRequest: (state, action) => {
+      const requestKey = action.payload;
+      state.activeRequests = state.activeRequests.filter(
+        request => request !== requestKey
+      );
+    },
+    
+    // Store activity data in cache
+    setActivitiesForRow: (state, action) => {
+      const { key, activities } = action.payload;
+      if (key && activities) {
+        state.activitiesCache[key] = activities;
+      }
+    },
+    
+    // Clear cache for specific keys or patterns
+    clearActivitiesCache: (state, action) => {
+      const pattern = action.payload;
+      if (!pattern) {
+        // Clear entire cache if no pattern provided
+        state.activitiesCache = {};
+      } else {
+        // Clear only entries matching the pattern
+        Object.keys(state.activitiesCache).forEach(key => {
+          if (key.includes(pattern)) {
+            delete state.activitiesCache[key];
+          }
+        });
+      }
+    },
+    
+    // Clear cache entries older than specified time
+    pruneActivitiesCache: (state, action) => {
+      const maxAge = action.payload || 60 * 60 * 1000; // Default: 1 hour
+      const now = Date.now();
+      
+      Object.entries(state.activitiesCache).forEach(([key, entry]) => {
+        if (entry.timestamp && now - entry.timestamp > maxAge) {
+          delete state.activitiesCache[key];
+        }
+      });
+    },
+    setActivitiesForRow: (state, action) => {
+      const { requestKey, data } = action.payload;
+      state.activitiesCache[requestKey] = data;
+    },
     setUserData: (state, action) => {
       state.userData = action.payload;
     },
@@ -620,6 +681,10 @@ const emissionsSlice = createSlice({
     clearValidationErrors: (state) => {
       state.validationErrors = {};
     },
+    setActivitiesForRow: (state, action) => {
+      const { rowId, activities } = action.payload;
+      state.activitiesCache[rowId] = activities;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -764,6 +829,16 @@ const emissionsSlice = createSlice({
       .addCase(fetchLocations.rejected, (state, action) => {
         state.locations.status = "failed";
         state.locations.error = action.payload;
+      })
+      .addCase(setLocation, (state, action) => {
+        state.location = action.payload;
+        // Clear activities cache when location changes
+        state.activitiesCache = {};
+      })
+      .addCase(setYear, (state, action) => {
+        state.year = action.payload;
+        // Clear activities cache when year changes
+        state.activitiesCache = {};
       });
   },
 });
@@ -796,6 +871,11 @@ export const {
   clearFocusedField,
   setValidationErrors,
   clearValidationErrors,
+  addActiveRequest,
+  removeActiveRequest,
+  setActivitiesForRow,
+  clearActivitiesCache,
+  pruneActivitiesCache,
 } = emissionsSlice.actions;
 
 export default emissionsSlice.reducer;

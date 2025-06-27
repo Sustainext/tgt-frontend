@@ -58,14 +58,19 @@ const validateRows = (data) => {
     if (!row.Q1) {
       rowErrors.Q1 = "This field is required";
     }
-   
+
     if (row.Q1 === "Yes" && (!row.details || row.details.trim() === "")) {
       rowErrors.details = "Details are required when 'Yes' is selected.";
     }
     return rowErrors;
   });
 };
-const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
+const Receivingwaterbody = ({
+  selectedOrg,
+  year,
+  selectedCorp,
+  togglestatus,
+}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{ Q1: "", details: "" }]); // Initial form data
   const [r_schema, setRemoteSchema] = useState({});
@@ -101,7 +106,6 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
   // };
   const handleChange = (e) => {
     setFormData(e.formData);
-    
   };
   // The below code on updateFormData
   let axiosConfig = {
@@ -197,16 +201,26 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
   }, [formData]);
 
   // fetch backend and replace initialized forms
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
       }
+    } else {
+      loadFormData();             // Organization tab: always try to load
     }
-  }, [selectedOrg, year, selectedCorp]);
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -215,8 +229,10 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
     const errors = validateRows(formData);
     setValidationErrors(errors);
     console.log("Validation Errors:", errors); // Debugging log
-  
-    const hasErrors = errors.some(rowErrors => Object.keys(rowErrors).length > 0);
+
+    const hasErrors = errors.some(
+      (rowErrors) => Object.keys(rowErrors).length > 0
+    );
     if (!hasErrors) {
       console.log("No validation errors, proceeding to update data"); // Debugging log
       updateFormData();
@@ -229,11 +245,11 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
     <>
       <div>
         <div className="flex mb-2">
-          <div className="w-[95%] relative">
+          <div className="w-[80%] xl:w-[95%]  lg:w-[95%]  md:w-[95%] 2xl:w-[95%] 4k:w-[95%] 2k:w-[95%]  relative">
             <h2 className="text-[14px] font-medium text-[#344054]">
               Profile of Receiving Waterbody
             </h2>
-            <p className="text-[14px] text-[#727272] w-[560px] flex">
+            <p className="text-[14px] text-[#727272] w-[360px] xl:w-[560px] lg:w-[560px] 2xl:w-[560px] md:w-[560px] 4k:w-[560px] 2k:w-[560px] flex">
               Have you considered the profile of the receiving waterbody?
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -273,7 +289,7 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
           uiSchema={r_ui_schema}
           validator={validator}
           widgets={widgets}
-          formContext={{validationErrors }}
+          formContext={{ validationErrors }}
         >
           {formData[0].Q1 === "Yes" && (
             <>
@@ -281,7 +297,9 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
               <textarea
                 placeholder="Enter a description..."
                 className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full ${
-                  validationErrors[0]?.details ? "border-red-500" : "border-gray-300"
+                  validationErrors[0]?.details
+                    ? "border-red-500"
+                    : "border-gray-300"
                 } `}
                 id="details"
                 value={formData[0].details}
@@ -296,17 +314,29 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
                 }}
                 rows={7}
               />
-        {validationErrors[0]?.details && (
-      <p className="text-red-500 text-xs mt-1">{validationErrors[0].details}</p>
-    )}
+              {validationErrors[0]?.details && (
+                <p className="text-red-500 text-xs mt-1">
+                  {validationErrors[0].details}
+                </p>
+              )}
             </>
           )}
         </Form>
         <div className="mb-4">
           <button
             type="button"
-            className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              (!selectedCorp && togglestatus === "Corporate") ||
+              !selectedOrg ||
+              !year
+                ? "cursor-not-allowed opacity-90"
+                : ""
+            }`}
             onClick={handleSubmit}
+            disabled={
+              (togglestatus === "Corporate" && !selectedCorp) ||
+              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+            }
           >
             Submit
           </button>
