@@ -82,7 +82,7 @@ useEffect(() => {
               checked={selectedValues.includes(option.value.label)} // Check if the value is in the array
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className='form-checkbox h-3 w-3 accent-[#008000]' // Changed from 'form-radio' to 'form-checkbox'
+              className='form-checkbox h-2 w-2 green-checkbox' // Changed from 'form-radio' to 'form-checkbox'
               disabled={!(options.envChecked || options.socChecked || options.govChecked)}
             />
             {option.value.value}

@@ -2,7 +2,11 @@
 import { useState, useRef, useEffect } from "react";
 import WasteTable from "../tables/waterTable";
 
-const Section25 = ({ section12_5_2Ref, data, reportType }) => {
+const Section25 = ({ section12_5_2Ref, data, reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.5.2':'12.5.1',
+  sectionTitle = 'Waste Generation and Impacts',
+  sectionOrder = 12,
+ }) => {
   const [content, setContent] = useState(
     `We set targets for reducing energy consumption and implement various initiatives, such as upgrading equipment, improving insulation, and optimizing processes to achieve these goals.`
   );
@@ -135,7 +139,7 @@ const Section25 = ({ section12_5_2Ref, data, reportType }) => {
     <>
       <div id="section12_5_2" ref={section12_5_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'12.5.2':'12.5.1'} Waste Generation and Impacts
+        {sectionNumber} {sectionTitle}
         </h3>
 
         <p className="text-[15px]  mb-2">
@@ -149,9 +153,9 @@ const Section25 = ({ section12_5_2Ref, data, reportType }) => {
         </p>
         <p className="text-sm mb-4">
           {data["306_1ab"]
-            ? data["306_1ab"].data
-              ? data["306_1ab"].data[0]
-                ? data["306_1ab"].data[0].Q1
+            ? data["306_1ab"]
+              ? data["306_1ab"][0]
+                ? data["306_1ab"][0].Q1
                 : "No data available"
               : "No data available"
             : "No data available"}
@@ -162,9 +166,9 @@ const Section25 = ({ section12_5_2Ref, data, reportType }) => {
         </p>
         <p className="text-sm mb-4">
           {data["306_1ab"]
-            ? data["306_1ab"].data
-              ? data["306_1ab"].data[0]
-                ? data["306_1ab"].data[0].Q2
+            ? data["306_1ab"]
+              ? data["306_1ab"][0]
+                ? data["306_1ab"][0].Q2
                 : "No data available"
               : "No data available"
             : "No data available"}

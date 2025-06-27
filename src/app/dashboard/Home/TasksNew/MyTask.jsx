@@ -91,6 +91,7 @@ const MyTask = ({ HomeActiveTab }) => {
     subcategory: "",
     year: "",
     activity: "",
+    unit_type: "",
     value1: "",
     value2: "",
     unit1: "",
@@ -177,7 +178,9 @@ const MyTask = ({ HomeActiveTab }) => {
             ...foundActivity,
             unit_type: type,
             units: matchingUnitType.units,
-            activity_id: foundActivity.id, // Use id directly from the found activity
+            activity_id: foundActivity.id,
+            act_id: foundActivity.id,
+            factor: foundActivity.factor,
           });
         }
       }
@@ -628,6 +631,7 @@ const MyTask = ({ HomeActiveTab }) => {
           subcategory: task.subcategory,
           year: task.year,
           activity: task.activity,
+          unit_type: task.unit_type,
           value1: task.value1,
           value2: task.value2,
           unit1: task.unit1,
@@ -651,9 +655,24 @@ const MyTask = ({ HomeActiveTab }) => {
   const SubmitFilledData = async (e) => {
     e.preventDefault();
 
-    const { value1, unit1 } = taskassigndata;
+    const { value1, unit1, value2, unit2, unit_type } = taskassigndata;
 
     if (!value1 || !unit1) {
+      toast.error("Data cannot be empty", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+    
+    // Only check value2 and unit2 if unit_type contains 'Over'
+    if (unit_type && unit_type.includes('Over') && (!value2 || !unit2)) {
       toast.error("Data cannot be empty", {
         position: "top-right",
         autoClose: 3000,
@@ -761,12 +780,16 @@ const MyTask = ({ HomeActiveTab }) => {
 
           // Use for loop to find the activity_id (more reliable than find())
           let foundActivityId = null;
+          let foundFactorId = null;
+          let foundFactor = null;
           for (let i = 0; i < activitiesList.length; i++) {
             const act = activitiesList[i];
             const fullActivityName = `${act.name} - (${act.source}) - ${act.unit_type}`;
 
             if (fullActivityName === activityName) {
               foundActivityId = act.activity_id;
+              foundFactorId = act.id;
+              foundFactor = act.factor;
               break;
             }
           }
@@ -778,6 +801,8 @@ const MyTask = ({ HomeActiveTab }) => {
               .split("-")
               [activityName.split("-").length - 1].trim(),
             activity_id: foundActivityId,
+            act_id: foundFactorId,
+            factor: foundFactor,
           });
         }}
         onTaskDataChange={(changes) => {

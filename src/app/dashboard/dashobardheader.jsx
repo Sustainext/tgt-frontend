@@ -149,7 +149,7 @@ const DashboardHeader = () => {
 
     // Cleanup interval
     return () => clearInterval(interval);
-  }, [userDetails]); // Depend on userDetails from context
+  }, [userDetails,refresh]); // Depend on userDetails from context
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -263,7 +263,7 @@ const DashboardHeader = () => {
 
           {text1 !== "" && (
             <>
-              <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold">
+              <span className="text-[#222222] hover:text-[#222222]">
                 {text1}
               </span>
               <span className="text-[#222222] mx-1">&gt;</span>
@@ -287,9 +287,9 @@ const DashboardHeader = () => {
           
           <div className="text-[#007EEF] flex relative items-center whitespace-nowrap">
   <span className="text-[#007EEF] me-1">Hi,</span>
-  <span title={userData?.first_name ? `${userData.first_name} ${userData.last_name}` : userData?.username} 
+  <span title={userProfileData?.firstname ? `${userProfileData.firstname} ${userProfileData.lastname}` : userData?.username} 
   className="me-4 truncate max-w-[200px] overflow-hidden inline-block">
-    {userData?.first_name ? `${userData.first_name} ${userData.last_name}` : userData?.username}
+    {userProfileData?.firstname ? `${userProfileData.firstname} ${userProfileData.lastname}` : userData?.username}
   </span>
   {/* <ReactTooltip
                     id={`tooltip-$e1`}

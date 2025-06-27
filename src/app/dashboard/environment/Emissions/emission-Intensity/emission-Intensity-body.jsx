@@ -19,6 +19,7 @@ const AccordionItem = ({
   year,
   setYearMessage,
   selectedOrg,
+  tcfdtag,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
@@ -101,6 +102,16 @@ const AccordionItem = ({
                         </p>
                       </div>
                     ))}
+                  {tcfdtag.map((item, index) => (
+                    <div
+                      key={index}
+                      className="w-[110px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center"
+                    >
+                      <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
+                        {item.tagName}
+                      </div>
+                    </div>
+                  ))}
                 </>
               ) : (
                 <>
@@ -115,6 +126,16 @@ const AccordionItem = ({
                         </p>
                       </div>
                     ))}
+                  {tcfdtag.map((item, index) => (
+                    <div
+                      key={index}
+                      className="w-[110px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center"
+                    >
+                      <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
+                        {item.tagName}
+                      </div>
+                    </div>
+                  ))}
                 </>
               )}
               <MdKeyboardArrowDown
@@ -135,6 +156,7 @@ const EmissionIntensitybody = ({
   selectedOrg,
   selectedCorp,
   year,
+  tcfdtag,
   togglestatus,
 }) => {
   return (
@@ -150,6 +172,7 @@ to the energy intensity ratio of the organisation.`}
           selectedCorp={selectedCorp}
           year={year}
           togglestatus={togglestatus}
+          tcfdtag={tcfdtag}
         >
           <Screen1
             selectedOrg={selectedOrg}

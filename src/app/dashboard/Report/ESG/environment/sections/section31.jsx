@@ -1,16 +1,20 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-const Section31 = ({ section12_6_1Ref, data }) => {
-  const [content, setContent] = useState(
-    `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam minus, voluptates obcaecati velit fuga tempore laudantium consequuntur illo`
-  );
+const Section31 = ({ section12_6_1Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.6.1':'',
+  sectionTitle = 'Management of material topics',
+  sectionOrder = 12,
+ }) => {
+  const shouldRender = useSelector((state)=> state.reportCreation.includeMaterialTopics)
 
   return (
     <>
-      <div id="section12_6_1" ref={section12_6_1Ref}>
+      {reportType=='GRI Report: In accordance With' || (shouldRender && reportType==='Custom ESG Report')?(
+        <div id="section12_6_1" ref={section12_6_1Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          12.6.1 Management of material topic
+          {sectionNumber} {sectionTitle}
         </h3>
 
         {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
@@ -22,6 +26,9 @@ Process used to track the effectiveness of the actions and mention goals, target
 </p> */}
         {/* <p className="text-sm mb-4">No data available</p> */}
       </div>
+      ):(
+        <div></div>
+      )}
     </>
   );
 };

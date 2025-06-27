@@ -1,45 +1,44 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import STARSVG from "../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setPoliciesdiligence } from "../../../../../lib/redux/features/Billsreport/Billscreen1Slice";
 import dynamic from "next/dynamic";
+import { Oval } from "react-loader-spinner";
+import axiosInstance from "../../../../utils/axiosMiddleware";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Policiesdiligence = ({ orgName, data }) => {
+const Policiesdiligence = forwardRef(({ orgName, data, reportId }, ref) => {
+  const [loopen, setLoOpen] = useState(false);
+  const [p1q2, setP1q2] = useState("");
+  const [p2q2, setP2q2] = useState("");
+  const [p2q3, setP2q3] = useState("");
+
+  const isMounted = useRef(true);
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
   const content = useSelector(
     (state) => state.BillScreen1About.policies_diligence_processes
   );
   const dispatch = useDispatch();
 
   const loadContent = () => {
-    dispatch(
-      setPoliciesdiligence(
-        `<p style="margin-bottom: 8px;">ABC maintains a supply chain network that includes direct and indirect suppliers providing
-goods, services, and logistics support.
-</p>
-        <p style="margin-bottom: 8px;">The supply chain spans across 10 countries and includes:
-
-</p>
-<ul style="list-style-type: disc; padding-left: 40px; margin-bottom: 16px;">
-  <li style="margin-bottom: 5px;">Suppliers: IT components, consumer electronics parts, finished appliances, sourced from China, Vietnam, and Mexico
-</li>
-  <li style="margin-bottom: 5px;">and Mexico
-Service Providers: Logistics, warehousing, and IT services from Canada, the United States, and Singapore
-</li>
-  <li style="margin-bottom: 5px;">Third-Party Distributors/Retailers: Partnerships for sales and distribution with major retailers in North America, Europe, and Asia
-</li>
-</ul>
-
-<p>
-In 2024, ABC worked with approximately 250 suppliers in Canada and globally. It continues to
-enhance supply chain visibility and ensure compliance with sustainability, ethical sourcing, and
-human rights commitments
-</p>`
-      )
-    );
+    dispatch(setPoliciesdiligence(p1q2));
   };
 
   const config = {
@@ -89,9 +88,108 @@ human rights commitments
       "font",
     ],
   };
+  const fetchDatareport = async () => {
+    try {
+      dispatch(setPoliciesdiligence(""));
 
+      LoaderOpen();
+
+      const response = await axiosInstance.get(
+        "/canada_bill_s211/v2/get-report-data",
+        {
+          params: {
+            report: reportId,
+            screen: 5,
+          },
+        }
+      );
+
+      setP2q2(response.data.part_2_screen3_q1);
+      setP2q3(response.data.part_2_screen3_q2);
+      const reportData =
+        response?.data?.report_data?.policies_diligence_processes;
+      if (reportData) {
+        // Use the existing filled content from API
+        dispatch(setPoliciesdiligence(reportData));
+        setP1q2(reportData);
+      } else {
+        const companyName =
+          response?.data?.part_1_screen1_q2 || "[Company Name – P1-Q2]";
+        const filledContent = `<p style="margin-bottom: 8px;">${companyName} has implemented policies to prevent, and address forced labour and child labour, including:  </p>
+<ul style="list-style-type: disc; padding-left: 40px; margin-bottom: 16px;">
+  <li style="margin-bottom: 5px;">Responsible Sourcing Policy  </li>
+  <li style="margin-bottom: 5px;">Supplier Code of Conduct </li>
+  <li style="margin-bottom: 5px;">Human Rights Policy  </li>
+    <li style="margin-bottom: 5px;">Third-Party Risk Assessment Procedures  </li>
+</ul>`;
+
+        setP1q2(filledContent);
+      }
+    } catch (error) {
+      console.error("Error fetching report data:", error);
+    } finally {
+      LoaderClose();
+    }
+  };
+
+  useEffect(() => {
+    if (isMounted.current) {
+      fetchDatareport();
+      isMounted.current = false;
+    }
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+  useImperativeHandle(ref, () => ({
+    async submitForm(type) {
+      try {
+ 
+
+        const payload = {
+          report: reportId,
+          screen: 5,
+          data: {
+            policies_diligence_processes: content,
+          },
+        };
+
+        const response = await axiosInstance.put(
+          "/canada_bill_s211/v2/create-report-data/",
+          payload
+        );
+
+        // ✅ Check for status 200 and show toast
+        if (response.status === 200) {
+          toast.success("Data saved successfully!", {
+            position: "top-right",
+            autoClose: 3000,
+            pauseOnHover: true,
+            closeOnClick: true,
+            theme: "light",
+          });
+        }
+
+        return true;
+      } catch (error) {
+        console.error("Error submitting About the Report:", error);
+
+        // Optional: error toast
+        toast.error("Failed to save About the Report.", {
+          position: "top-right",
+          autoClose: 3000,
+          pauseOnHover: true,
+          closeOnClick: true,
+          theme: "light",
+        });
+
+        return false;
+      }
+    },
+  }));
   const handleEditorChange = (value) => {
     dispatch(setPoliciesdiligence(value));
+    setP1q2(value);
   };
 
   return (
@@ -133,30 +231,35 @@ human rights commitments
       </div>
 
       <div>
-        <p className="text-[15px] text-[#344054] mb-2 mt-3">
-          Due diligence processes include:
-        </p>
-
-        <ul className="list-disc pl-6">
-          <li className="text-[14px] text-[#344054] mb-2">
-            Embedding responsible business conduct into policies and management
-            systems
-          </li>
-          <li className="text-[14px] text-[#344054] mb-2">
-            Identifying and assessing potential and actual adverse impacts in
-            operations, supply chains and business relationships
-          </li>
-          <li className="text-[14px] text-[#344054] mb-2">
-            Ceasing, preventing or mitigating potential and actual adverse
-            impacts
-          </li>
-          <li className="text-[14px] text-[#344054] mb-2">
-            Tracking implementation and resultsts
-          </li>
-        </ul>
+        {p2q2 === "Yes" && p2q3?.length > 0 && (
+          <>
+            <p className="text-[15px] text-[#344054] mb-2 mt-3">
+              Due diligence processes include:
+            </p>
+            <ul className="list-disc pl-6">
+              {p2q3 && p2q3.map((item, index) => (
+                <li key={index} className="text-[14px] text-[#344054] mb-2">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
-};
+});
 
 export default Policiesdiligence;

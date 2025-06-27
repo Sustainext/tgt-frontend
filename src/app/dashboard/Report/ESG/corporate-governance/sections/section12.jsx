@@ -1,7 +1,12 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section12 = ({ section9_3_6Ref, data }) => {
+const Section12 = ({ section9_3_6Ref, data,
+
+  sectionNumber = "9.3.6",
+  sectionTitle = 'Evaluation of the Performance of the Highest Governance Body',
+  sectionOrder = 9,
+ }) => {
   const [content, setContent] = useState(
     `Our Board of Directors comprises a diverse group of experienced professionals who bring a broad range of expertise and perspectives. The Board is structured to provide balanced oversight and strategic guidance, with committees dedicated to specific areas such as audit, risk management, and sustainability. `
   );
@@ -9,7 +14,7 @@ const Section12 = ({ section9_3_6Ref, data }) => {
     <>
       <div id="section9_3_6" ref={section9_3_6Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-          9.3.6 Evaluation of the Performance of the Highest Governance Body
+         {sectionNumber} {sectionTitle}
         </h3>
         <p className="text-[15px] text-[#344054] mb-2 text-left font-semibold">
           Processes for evaluating the performance of the highest governance

@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setWorkRelatedHealthInjuries } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section25 = ({ section13_6_8Ref, data, reportType }) => {
+const Section25 = ({ section13_6_8Ref, data, reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.6.8':'13.6.7',
+  sectionTitle = "Work-Related Ill-Health & Injuries", 
+  sectionOrder = 13
+ }) => {
   const content = useSelector(
     (state) => state.screen13Slice.work_related_health_injuries
   );
@@ -294,7 +298,7 @@ const Section25 = ({ section13_6_8Ref, data, reportType }) => {
     <>
       <div id="section13_6_8" ref={section13_6_8Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'13.6.8':'13.6.7'} Work-Related Ill-Health & Injuries
+       {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
@@ -348,6 +352,17 @@ const Section25 = ({ section13_6_8Ref, data, reportType }) => {
               ? data["403_9c_9d"].data.length > 0
                 ? data["403_9c_9d"].data[0].Q3
                   ? data["403_9c_9d"].data[0].Q3
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-sm mb-4">
+          {data["403_9c_9d"]
+            ? data["403_9c_9d"].data
+              ? data["403_9c_9d"].data.length > 0
+                ? data["403_9c_9d"].data[0].Q4
+                  ? data["403_9c_9d"].data[0].Q4
                   : "No data available"
                 : "No data available"
               : "No data available"
@@ -482,6 +497,10 @@ const Section25 = ({ section13_6_8Ref, data, reportType }) => {
         </div>
 
         <p className="text-[15px]  mb-2 font-semibold">
+          Ill Health
+        </p>
+
+        <p className="text-[15px]  mb-2 font-semibold">
           Health for all employees
         </p>
         <div className="rounded-md mb-4 shadow-md">
@@ -495,9 +514,7 @@ const Section25 = ({ section13_6_8Ref, data, reportType }) => {
         <div className="rounded-md mb-4 shadow-md">
           <LeaveTable columns={col4} data={Tabledata4} />
         </div>
-        <p className="text-[15px]  mb-2 font-semibold">
-          Ill Health
-        </p>
+        
         <p className="text-[15px]  mb-2 font-semibold">
           Work-related hazards that pose a risk of ill health
         </p>

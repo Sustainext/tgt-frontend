@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setWaterWithdrawalTracking } from "../../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Section16 = ({ section12_3_2Ref, data,reportType }) => {
+const Section16 = ({ section12_3_2Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.3.2':'12.3.1',
+  sectionTitle = 'Water Withdrawal',
+  sectionOrder = 12,
+ }) => {
   const content = useSelector(
     (state) => state.screen12Slice.water_withdrawal_tracking
   );
@@ -249,7 +253,7 @@ const Section16 = ({ section12_3_2Ref, data,reportType }) => {
     <>
       <div id="section12_3_2" ref={section12_3_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'12.3.2':'12.3.1'} Water Withdrawal
+        {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
@@ -306,8 +310,8 @@ const Section16 = ({ section12_3_2Ref, data,reportType }) => {
             columns={column3}
             data={data3}
             consumption="Total water withdrawal"
-            unit={waterWithdrawlBySource.unit}
-            total={waterWithdrawlBySource.total}
+            unit={waterWithdrawlByLocation.unit}
+            total={waterWithdrawlByLocation.total}
           />
         </div>
 

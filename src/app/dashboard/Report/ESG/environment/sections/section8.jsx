@@ -9,7 +9,11 @@ import { setGHGEmissionReductionEfforts } from "../../../../../../lib/redux/feat
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section8 = ({ section12_1_8Ref, data,reportType }) => {
+const Section8 = ({ section12_1_8Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.1.8':'12.1.7',
+  sectionTitle = 'Reduction in GHG Emissions',
+  sectionOrder = 12,
+ }) => {
   const content = useSelector(
     (state) => state.screen12Slice.ghg_emission_reduction_efforts
   );
@@ -165,7 +169,7 @@ const Section8 = ({ section12_1_8Ref, data,reportType }) => {
     <>
       <div id="section12_1_8" ref={section12_1_8Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'12.1.8':'12.1.7'}  Reduction in GHG Emissions
+       {sectionNumber} {sectionTitle}
         </h3>
 
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
@@ -262,21 +266,25 @@ const Section8 = ({ section12_1_8Ref, data,reportType }) => {
           Assumptions Considered
         </p>
         {data["emission_collect"] &&
-        data["emission_collect"]["consolidation_assumption_considered"] &&
-        data["emission_collect"]["consolidation_assumption_considered"].length >
-          0 ? (
-          data["emission_collect"]["consolidation_assumption_considered"].map(
-            (val, index) => (
-              <div key={index}>
-                <p className="text-sm mb-4">
-                  {val.Q1 ? val.Q1 : "No data available"}
-                </p>
-              </div>
-            )
-          )
-        ) : (
-          <p className="text-sm mb-4">No data available</p>
-        )}
+data["emission_collect"]["consolidation_assumption_considered"] &&
+data["emission_collect"]["consolidation_assumption_considered"].length > 0 ? (
+  data["emission_collect"]["consolidation_assumption_considered"].map(
+    (val, index) => {
+      const plainText = val.Q1
+        ? val.Q1.replace(/<[^>]+>/g, '') // Remove HTML tags
+        : "No data available";
+
+      return (
+        <div key={index}>
+          <p className="text-sm mb-4">{plainText}</p>
+        </div>
+      );
+    }
+  )
+) : (
+  <p className="text-sm mb-4">No data available</p>
+)}
+
       </div>
     </>
   );

@@ -321,7 +321,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
                 disabled={!isChecked}
-                className={`mr-3 pt-1 scale-90 rounded-xl ${isChecked?'cursor-pointer':''}`}
+                className={`mr-3 pt-1 rounded-xl green-checkbox-small ${isChecked?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -364,7 +364,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
                 disabled={!isCheckedone}
-                className={`mr-3 pt-1 scale-90 rounded-xl ${isCheckedone?'cursor-pointer':''}`}
+                className={`mr-3 pt-1 rounded-xl green-checkbox-small ${isCheckedone?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -402,7 +402,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
 
-                className={`mr-3 pt-1 scale-90 rounded-xl ${isChecked?'cursor-pointer':''}`}
+                className={`mr-3 pt-1 rounded-xl green-checkbox-small ${isChecked?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -445,7 +445,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
 
-                className={`mr-3 pt-1 scale-90 rounded-xl ${isCheckedone?'cursor-pointer':''}`}
+                className={`mr-3 pt-1 rounded-xl green-checkbox-small ${isCheckedone?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -475,7 +475,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                       name="isCheckednew"
                       checked={isCheckednew}
                       onChange={handleCheckboxChangenew("isCheckednew")}
-                      className="mr-3 pt-1 cursor-pointer"
+                      className="mr-3 pt-1 cursor-pointer green-checkbox scale-90"
                     />
                     Listed on a stock exchange in Canada
                   </label>
@@ -488,7 +488,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                         name="isChecked"
                         checked={isChecked}
                         onChange={handleCheckboxChange("isChecked")}
-                        className="mr-3 pt-1 cursor-pointer"
+                        className="mr-3 pt-1 cursor-pointer green-checkbox scale-90"
                       />
                       Canadian business presence (select all that apply)
                     </label>
@@ -501,7 +501,7 @@ const Screenfive = ({ nextStep, prevStep,selectedCorp,selectedOrg,year,reportTyp
                         name="isCheckedone"
                         checked={isCheckedone}
                         onChange={handleCheckboxChange("isCheckedone")}
-                        className="mr-3 pt-1 cursor-pointer"
+                        className="mr-3 pt-1 cursor-pointer green-checkbox scale-90"
                       />
                       Meets size-related thresholds (select all that apply):
                     </label>

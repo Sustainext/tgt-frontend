@@ -27,9 +27,10 @@ const CustomOptionnew = ({ children, ...props }) => {
     >
       <input
         type="checkbox"
+        className="green-checkbox"
         checked={isSelected}
         readOnly
-        style={{ marginRight: "8px", accentColor: "#16a34a" }}
+        style={{flexShrink:0,marginRight:'8px'}}
       />
 
       {children}
@@ -78,7 +79,7 @@ const CustomMultiValueContainer = ({ children, ...props }) => {
 };
 
 
-const Economictablemultipal = ({ id, value, onChange }) => {
+const Economictablemultipal = ({ id, value, onChange,formContext}) => {
   const titles = [
     {
       id: 1,
@@ -155,7 +156,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       tooltipdisplay: "block",
       options: [],
     },
-    {
+     {
       id: 7,
       key: "ManagementMethods",
       title: "Management Methods",
@@ -166,6 +167,15 @@ const Economictablemultipal = ({ id, value, onChange }) => {
     },
     {
       id: 8,
+      key: "ProcessDescription",
+      title: "Process Description",
+      tooltip:
+        "Provide a description of the process(es) used to determine financial impact on the organization based on the mentioned risk.",
+      tooltipdisplay: "block",
+     
+    },
+    {
+      id: 9,
       key: "TimeFrame",
       title: "Time Frame",
       tooltip:
@@ -179,7 +189,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       ],
     },
     {
-      id: 9,
+      id: 10,
       key: "DirectorIndirectImpacts",
       title: "Direct or Indirect Impacts",
       tooltip:
@@ -188,7 +198,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       options: ["Indirect", "Direct", "Not Sure"],
     },
     {
-      id: 10,
+      id: 11,
       key: "ImplementedMitigationStrategies",
       title: "Implemented Mitigation Strategies",
       tooltip:
@@ -197,7 +207,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       options: ["Yes", "No"],
     },
     {
-      id: 11,
+      id: 12,
       key: "MitigationStrategies",
       title: "Mitigation Strategies",
       tooltip:
@@ -721,6 +731,13 @@ const Economictablemultipal = ({ id, value, onChange }) => {
     }
     return "desktop-narrow";
   };
+const shouldShowProcessDescription =
+  formContext?.frameworkId?.toString() === "6" && formContext?.selectid?.toString() === "3";
+
+const visibleTitles = titles.filter(
+  (item) => item.id !== 8 || shouldShowProcessDescription
+);
+console.log('FrameworkId:', formContext.frameworkId, 'SelectId:', formContext.selectid);
   return (
     <>
       <div
@@ -735,65 +752,57 @@ const Economictablemultipal = ({ id, value, onChange }) => {
         className="mb-2 pb-2 table-scrollbar"
       >
         <table id={id} className="table-fixed border border-gray-300  w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
-          <thead className="gradient-background">
-            <tr className="h-[102px]">
-              {titles.map((item, idx) => (
-                <th
-                  key={idx}
-                  style={{ textAlign: "left" }}
-                  className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-4 py-3 relative border-gray-300 ${getColumnWidth(item.key)}`}
-
-                >
-                  <div
-                    className={`flex items-center ${
-                      item.textdriction === "start"
-                        ? "justify-start"
-                        : "justify-center"
-                    }`}
-                  >
-                    <p className="text-[12px]">{item.title}</p>
-                    {item.tooltipdisplay !== "none" && (
-                      <p>
-                        <MdInfoOutline
-                          data-tooltip-id={`tooltip-${item.title.replace(
-                            /\s+/g,
-                            "-"
-                          )}`}
-                          data-tooltip-content={item.tooltip}
-                          className="ml-2 cursor-pointer"
-                        />
-                        <ReactTooltip
-                          id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
-                          place="top"
-                          effect="solid"
-                          style={{
-                            width:"400px",
-                            backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            zIndex:"1000",
-                          }}
-                        />
-                      </p>
-                    )}
-                  </div>
-                </th>
-              ))}
-              <th
-              className="text-[12px] px-4 py-3 relative"
-                style={{ width: "5vw" }}
-              >
-                {" "}
-              </th>
-            </tr>
-          </thead>
+      <thead className="gradient-background">
+  <tr className="h-[102px]">
+    {visibleTitles.map((item, idx) => (
+      <th
+        key={idx}
+        style={{ textAlign: "left" }}
+        className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-4 py-3 relative border-gray-300 ${getColumnWidth(item.key)}`}
+      >
+        <div
+          className={`flex items-center ${item.textdriction === "start" ? "justify-start" : "justify-center"}`}
+        >
+          <p className="text-[12px]">{item.title}</p>
+          {item.tooltipdisplay !== "none" && (
+            <p>
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                data-tooltip-content={item.tooltip}
+                className="ml-2 cursor-pointer"
+              />
+              <ReactTooltip
+                id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                place="top"
+                effect="solid"
+                style={{
+                  width:"400px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  zIndex:"1000",
+                }}
+              />
+            </p>
+          )}
+        </div>
+      </th>
+    ))}
+    <th
+      className="text-[12px] px-4 py-3 relative"
+      style={{ width: "5vw" }}
+    >
+      {" "}
+    </th>
+  </tr>
+</thead>
           <tbody>
             {localValue.map((row, rowIndex) => (
               <tr key={rowIndex} 
               className="border-r border-gray-300">
-                {titles.map((item, cellIndex) => {
+              {visibleTitles.map((item, cellIndex) => {
                   const isEnum = Array.isArray(item.options);
                   const isMulti = isMultiSelect(item.key);
 

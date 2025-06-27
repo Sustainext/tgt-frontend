@@ -5,7 +5,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmission } from "../../../../../../lib/redux/features/ESGSlice/screen12Slice";
 
-const Section2 = ({ section12_1Ref }) => {
+const Section2 = ({ section12_1Ref,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.1':'12.1',
+  sectionTitle = 'Emissions',
+  sectionOrder = 12,
+ }) => {
   const content = useSelector((state) => state.screen12Slice.emissions);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -24,7 +28,7 @@ const Section2 = ({ section12_1Ref }) => {
     <>
       <div id="section12_1" ref={section12_1Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          12.1 Emissions
+         {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

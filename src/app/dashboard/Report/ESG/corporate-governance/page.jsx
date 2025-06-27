@@ -2,6 +2,7 @@
 import {
   forwardRef,
   useImperativeHandle,
+  createRef,
   useState,
   useRef,
   useEffect,
@@ -42,57 +43,36 @@ import {
   setPolicyPublic,
 } from "../../../../../lib/redux/features/ESGSlice/screen9Slice";
 
-const CorporateGovernance = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
-  const [activeSection, setActiveSection] = useState("section9_1");
-  const section9_1Ref = useRef(null);
-  const section9_2Ref = useRef(null);
-  const section9_3Ref = useRef(null);
-  const section9_4Ref = useRef(null);
-  const section9_5Ref = useRef(null);
-  const section9_6Ref = useRef(null);
-  const section9_1_1Ref = useRef(null);
-  const section9_2_1Ref = useRef(null);
-  const section9_2_2Ref = useRef(null);
-  const section9_2_3Ref = useRef(null);
-  const section9_2_4Ref = useRef(null);
-  const section9_3_1Ref = useRef(null);
-  const section9_3_2Ref = useRef(null);
-  const section9_3_3Ref = useRef(null);
-  const section9_3_4Ref = useRef(null);
-  const section9_3_5Ref = useRef(null);
-  const section9_3_6Ref = useRef(null);
-  const section9_3_7Ref = useRef(null);
-  const section9_3_8Ref = useRef(null);
-  const section9_4_1Ref = useRef(null);
-  const section9_4_2Ref = useRef(null);
-  const section9_5_1Ref = useRef(null);
-  const section9_5_2Ref = useRef(null);
-  const section9_5_3Ref = useRef(null);
-  const section9_6_1Ref = useRef(null);
-  const section9_6_2Ref = useRef(null);
-  const section9_6_3Ref = useRef(null);
-  const section9_6_4Ref = useRef(null);
-  const section9_6_5Ref = useRef(null);
-  const section9_7Ref = useRef(null);
+const CorporateGovernance = forwardRef(({
+  onSubmitSuccess,
+  subsections = [],
+  sectionOrder = 9,
+  sectionId,
+  sectionTitle,
+  hasChanges
+}, ref) => {
+  const [activeSection, setActiveSection] = useState("board_of_directors");
+ 
 
-  const scrollToSection = (sectionRef, sectionId) => {
-    setActiveSection(sectionId);
+  // const orgName =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  // const reportid =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  //   const reportType =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+  const [reportid, setReportid] = useState("");
+const [reportType, setReportType] = useState("");
+const [orgName, setOrgname] = useState("");
 
-    const elementTop =
-      sectionRef.current?.getBoundingClientRect().top + window.scrollY;
+// Update after mount on client only
+useEffect(() => {
+  setReportid(localStorage.getItem("reportid") || "");
+  setReportType(localStorage.getItem("reportType") || "");
+  setOrgname(localStorage.getItem("reportorgname") || "");
+}, []);
 
-    // Scroll smoothly to the section, ensuring it scrolls up as well
-    window.scrollTo({
-      top: elementTop - 100, // Adjust 100 to the height of any sticky header
-      behavior: "smooth",
-    });
-  };
-
-  const orgName =
-    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
-  const reportid =
-    typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const apiCalledRef = useRef(false);
+  const [initialData, setInitialData] = useState({});
   const [data, setData] = useState("");
   const [loopen, setLoOpen] = useState(false);
   const statement = useSelector((state) => state.screen9Slice.statement);
@@ -107,6 +87,476 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess,reportType }, ref) => 
   );
 
   const dispatch = useDispatch();
+  const isWithReference = reportType === "GRI Report: With Reference to";
+  const groupedSubsections = [
+    {
+      groupId: "board_of_directors",
+      title: "Board of Directors",
+      children: [
+        { id: "governance_structure_composition" }
+      ],
+    },
+    {
+      groupId: "general_governance",
+      title: "General Governance",
+      children: [
+        { id: "nomination_selection" },
+        { id: "chair_highest_governance_body" },
+        { id: "senior_management_local" },
+        !isWithReference &&{ id: "management_of_material_topic" },
+      ].filter(Boolean),
+    },
+    {
+      groupId: "board_responsibility_evaluation_remuneration",
+      title: "Responsibility, Evaluation and Remuneration of the Board",
+      children: [
+        { id: "role_highest_governance_body" },
+        { id: "collective_knowledge" },
+        { id: "sustainability_reporting_role" },
+        { id: "delegation_of_responsibility" },
+        { id: "communication_critical_concerns" },
+        { id: "performance_evaluation" },
+        { id: "remuneration_policies_process" },
+        { id: "annual_compensation_ratio" },
+      ],
+    },
+    {
+      groupId: "strategy",
+      title: "Strategy",
+      children: [
+        { id: "sustainable_strategy_statement" },
+        { id: "membership_association" },
+      ],
+    },
+    {
+      groupId: "risk_management",
+      title: "Risk Management",
+      children: [
+        { id: "remediation_negative_impacts" },
+        { id: "advice_mechanism" },
+        { id: "compliance" },
+      ],
+    },
+    {
+      groupId: "policy",
+      title: "Policy",
+      children: [
+        { id: "embedding_policy_commitment" },
+        { id: "anti_trust_behavior" },
+        { id: "retirement_benefits" },
+      ],
+    },
+    {
+      id: "conflict_of_interest",
+      title: "Conflict of interest",
+    },
+  ];
+  
+    
+  const subsectionMapping = {
+    board_of_directors: {
+      component: ({section9_1Ref,data, sectionNumber = "9.1", sectionTitle = "Board of Directors", sectionOrder = 9})=>{
+        return(
+          <div id="section9_1" ref={section9_1Ref}>
+        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+         {sectionNumber} {sectionTitle}
+        </h3>
+      </div>
+        )
+      },
+      title: "Board of Directors",
+      subSections: [],
+    },
+    governance_structure_composition: {
+      component: Section2,
+      title: "Governance structure and composition",
+      subSections: [],
+    },
+    general_governance:{
+      component: ({section9_2Ref,data, sectionNumber = "9.2", sectionTitle = "General Governance", sectionOrder = 9})=>{
+        return(
+          <div id="section9_2" ref={section9_2Ref}>
+        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+         {sectionNumber} {sectionTitle}
+        </h3>
+      </div>
+        )
+      },
+      title: "General Governance",
+      subSections: [],
+    },
+    nomination_selection: {
+      component: Section3,
+      title: "Nomination, selection of the highest governance body",
+      subSections: [],
+    },
+    chair_highest_governance_body: {
+      component: Section4,
+      title: "Chair of the highest governance body",
+      subSections: [],
+    },
+    senior_management_local: {
+      component: Section5,
+      title: "Senior management hired from local community",
+      subSections: [],
+    },
+    ...(!isWithReference && { management_of_material_topic: {
+      component: Section6,
+      title: "Management of material topic",
+      subSections: [],
+    }}),
+    board_responsibility_evaluation_remuneration:{
+      component: ({section9_3Ref,data, sectionNumber = "9.3", sectionTitle = "Responsibility, Evaluation, and Remuneration of the Board", sectionOrder = 9})=>{
+        return (
+          <div id="section9_3" ref={section9_3Ref}>
+          <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+            {sectionNumber} {sectionTitle}
+          </h3>
+        </div>
+        )
+      },
+      title: "Responsibility, Evaluation, and Remuneration of the Board ",
+      subSections: [],
+    },
+    role_highest_governance_body: {
+      component: Section7,
+      title: "Role of the highest governance body",
+      subSections: [],
+    },
+    collective_knowledge: {
+      component: Section8,
+      title: "Collective knowledge of the highest governance body",
+      subSections: [],
+    },
+    sustainability_reporting_role: {
+      component: Section9,
+      title: "Role of the highest governance body in sustainability reporting",
+      subSections: [],
+    },
+    delegation_of_responsibility: {
+      component: Section10,
+      title: "Delegation of responsibility for managing impacts",
+      subSections: [],
+    },
+    communication_critical_concerns: {
+      component: Section11,
+      title: "Communication of critical concerns",
+      subSections: [],
+    },
+    performance_evaluation: {
+      component: Section12,
+      title: "Evaluation of the performance of the highest governance body",
+      subSections: [],
+    },
+    remuneration_policies_process: {
+      component: Section13,
+      title: "Remuneration policies & process to determine remuneration",
+      subSections: [],
+    },
+    annual_compensation_ratio: {
+      component: Section14,
+      title: "Annual compensation ratio",
+      subSections: [],
+    },
+    strategy:{
+      component: ({section9_4Ref,data, sectionNumber = "9.4", sectionTitle = "Strategy", sectionOrder = 9})=>{
+        return(
+          <div id="section9_4" ref={section9_4Ref}>
+        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+        {sectionNumber} {sectionTitle}
+            </h3>
+        </div>
+        )
+      },
+      title: "Strategy",
+      subSections: [],
+    },
+    sustainable_strategy_statement: {
+      component: Section15,
+      title: "Statement on sustainable development strategy",
+      subSections: [],
+    },
+    membership_association: {
+      component: Section16,
+      title: "Membership association",
+      subSections: [],
+    },
+    risk_management:{
+      component: ({section9_5Ref,data, sectionNumber = "9.5", sectionTitle = "Risk Management", sectionOrder = 9})=>{
+        return(
+          <div id="section9_5" ref={section9_5Ref}>
+          <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+         {sectionNumber} {sectionTitle}
+              </h3>
+              
+          
+          </div>
+        )
+      },
+      title: "Risk Management",
+      subSections: [],
+    },
+    remediation_negative_impacts: {
+      component: Section17,
+      title: "Remediation of negative impacts",
+      subSections: [],
+    },
+    advice_mechanism: {
+      component: Section18,
+      title: "Mechanism for seeking advice and raising concerns",
+      subSections: [],
+    },
+    compliance: {
+      component: Section19,
+      title: "Compliance",
+      subSections: [],
+    },
+    policy: {
+      component: Section20,
+      title: "Policy",
+      subSections: [],
+    },
+    embedding_policy_commitment: {
+      component: Section21,
+      title: "Embedding policy commitment",
+      subSections: [],
+    },
+    anti_trust_behavior: {
+      component: Section22,
+      title: "Anti-trust, anti-competitive behavior, monopoly practices",
+      subSections: [],
+    },
+    retirement_benefits: {
+      component: Section23,
+      title: "Defined benefit plan obligations and other retirement plans",
+      subSections: [],
+    },
+    conflict_of_interest: {
+      component: Section25,
+      title: "Conflict of interest",
+      subSections: [],
+    },
+  };
+  
+  
+      const getSubsectionsToShow = () => {
+        if (reportType === "Custom ESG Report") {
+          const userSelected = Array.isArray(subsections) ? subsections : [];
+    
+          // Get default order
+          const defaultOrder = [
+            "board_of_directors",
+            "governance_structure_composition",
+            "general_governance",
+            "nomination_selection",
+            "chair_highest_governance_body",
+            "senior_management_local",
+            "management_of_material_topic",
+            "board_responsibility_evaluation_remuneration",
+            "role_highest_governance_body",
+            "collective_knowledge",
+            "sustainability_reporting_role",
+            "delegation_of_responsibility",
+            "communication_critical_concerns",
+            "performance_evaluation",
+            "remuneration_policies_process",
+            "annual_compensation_ratio",
+            "strategy",
+            "sustainable_strategy_statement",
+            "membership_association",
+            "risk_management",
+            "remediation_negative_impacts",
+            "advice_mechanism",
+            "compliance",
+            "policy",
+            "embedding_policy_commitment",
+            "anti_trust_behavior",
+            "retirement_benefits",
+            "conflict_of_interest"
+          ];
+          
+    
+          // Return sorted list based on fixed order
+          return defaultOrder.filter((id) => userSelected.includes(id));
+        } else {
+          return [
+            "board_of_directors",
+            "governance_structure_composition",
+            "general_governance",
+            "nomination_selection",
+            "chair_highest_governance_body",
+            "senior_management_local",
+            "management_of_material_topic",
+            "board_responsibility_evaluation_remuneration",
+            "role_highest_governance_body",
+            "collective_knowledge",
+            "sustainability_reporting_role",
+            "delegation_of_responsibility",
+            "communication_critical_concerns",
+            "performance_evaluation",
+            "remuneration_policies_process",
+            "annual_compensation_ratio",
+            "strategy",
+            "sustainable_strategy_statement",
+            "membership_association",
+            "risk_management",
+            "remediation_negative_impacts",
+            "advice_mechanism",
+            "compliance",
+            "policy",
+            "embedding_policy_commitment",
+            "anti_trust_behavior",
+            "retirement_benefits",
+            "conflict_of_interest"
+          ];
+        }
+      };
+    
+      const subsectionsToShow = getSubsectionsToShow();
+
+  
+      // Filter and organize selected subsections
+      const getSelectedSubsections = () => {
+        //console.log("Processing subsections:", subsectionsToShow);
+    
+        if (!subsectionsToShow || subsectionsToShow.length === 0) {
+          //console.log("No subsections found");
+          return [];
+        }
+    
+        const result = subsectionsToShow
+          .filter((subId) => {
+            const exists = subsectionMapping[subId];
+            //console.log(`Subsection ${subId} exists in mapping:`, !!exists);
+            return exists;
+          })
+          .map((subId, index) => {
+            const mapped = {
+              id: subId,
+              ...subsectionMapping[subId],
+              order: index + 1,
+              sectionNumber: `${sectionOrder}.${index + 1}`,
+            };
+            //console.log(`Mapped subsection:`, mapped);
+            return mapped;
+          });
+    
+        //console.log("Final selected subsections:", result);
+        return result;
+      };
+      const selectedSubsections = getSelectedSubsections();
+    
+      // const getDynamicSectionMap = () => {
+      //   let groupIndex = 1;
+      //   const dynamicMap = [];
+    
+      //   groupedSubsections.forEach((group) => {
+      //     if (group.children) {
+      //       const visibleChildren = group.children.filter((child) =>
+      //         selectedSubsections.some((s) => s.id === child.id)
+      //       );
+    
+      //       if (visibleChildren.length === 0) return;
+    
+      //       let childIndex = 1;
+      //       visibleChildren.forEach((child) => {
+      //         dynamicMap.push({
+      //           id: child.id,
+      //           sectionNumber: `${sectionOrder}.${groupIndex}.${childIndex++}`,
+      //           groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+      //         });
+      //       });
+    
+      //       groupIndex++;
+      //     } else {
+      //       const isVisible = selectedSubsections.some((s) => s.id === group.id);
+      //       if (!isVisible) return;
+    
+      //       dynamicMap.push({
+      //         id: group.id,
+      //         sectionNumber: `${sectionOrder}.${groupIndex++}`,
+      //       });
+      //     }
+      //   });
+    
+      //   return dynamicMap;
+      // };
+    
+      const getDynamicSectionMap = () => {
+        let groupIndex = 1;
+        const dynamicMap = [];
+      
+        groupedSubsections.forEach((group) => {
+          if (group.children) {
+            const parentSelected = selectedSubsections.some((s) => s.id === group.groupId);
+            const visibleChildren = group.children.filter((child) =>
+              selectedSubsections.some((s) => s.id === child.id)
+            );
+      
+            // Render the parent (if selected)
+            if (parentSelected) {
+              dynamicMap.push({
+                id: group.groupId,
+                sectionNumber: `${sectionOrder}.${groupIndex}`,
+                groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+              });
+            }
+      
+            // Render children (if any selected)
+            if (visibleChildren.length > 0) {
+              let childIndex = 1;
+              visibleChildren.forEach((child) => {
+                dynamicMap.push({
+                  id: child.id,
+                  sectionNumber: `${sectionOrder}.${groupIndex}.${childIndex++}`,
+                  groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+                });
+              });
+            }
+      
+            // Increase group index if either parent or children are rendered
+            if (parentSelected || visibleChildren.length > 0) {
+              groupIndex++;
+            }
+          } else {
+            const isVisible = selectedSubsections.some((s) => s.id === group.id);
+            if (!isVisible) return;
+      
+            dynamicMap.push({
+              id: group.id,
+              sectionNumber: `${sectionOrder}.${groupIndex++}`,
+            });
+          }
+        });
+      
+        return dynamicMap;
+      };
+      const numberedSubsections = getDynamicSectionMap();
+    
+      
+      // Set initial active section
+      useEffect(() => {
+        if (selectedSubsections.length > 0 && !activeSection) {
+          setActiveSection(selectedSubsections[0].id);
+        }
+      }, [selectedSubsections, activeSection]);
+    
+     
+    
+      const scrollToSection = (sectionId) => {
+        setActiveSection(sectionId);
+        const sectionRef = sectionRefs.current[sectionId];
+    
+        if (sectionRef?.current) {
+          const elementTop =
+            sectionRef.current.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementTop - 250,
+            behavior: "smooth",
+          });
+        }
+      };
+      const sectionRefs = useRef({});
 
   useImperativeHandle(ref, () => ({
     submitForm,
@@ -119,47 +569,70 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess,reportType }, ref) => 
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const dynamicSectionNumberMap = numberedSubsections.reduce((acc, item) => {
+    acc[item.id] = item.sectionNumber;
+    return acc;
+  }, {});
+  const currentData={
+    statement,
+    board_gov_statement,
+    remuneration_policies,
+    policy_not_public_reason
+  }
   const submitForm = async (type) => {
     LoaderOpen();
-    const data = {
-      statement: {
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
+    const data={}
+    data.statement= {
+      page: "screen_nine",
+      label: `${sectionOrder}. Corporate Governance`,
+      subLabel: "Add statement about company’s corporate governance",
+      type: "textarea",
+      content: statement,
+      field: "statement",
+      isSkipped: false,
+    }
+    if(subsectionsToShow.includes("governance_structure_composition")){
+      const sectionNumber = dynamicSectionNumberMap["governance_structure_composition"];
+      data. board_gov_statement= {
         page: "screen_nine",
-        label: "9. Corporate Governance",
-        subLabel: "Add statement about company’s corporate governance",
-        type: "textarea",
-        content: statement,
-        field: "statement",
-        isSkipped: false,
-      },
-      board_gov_statement: {
-        page: "screen_nine",
-        label: "9.1.1 Governance structure and composition",
+        label: `${sectionNumber} Governance structure and composition`,
         subLabel: "Add statement about company’s board of directors",
         type: "textarea",
         content: board_gov_statement,
         field: "board_gov_statement",
         isSkipped: false,
-      },
-      remuneration_policies: {
+      }
+    }
+    if(subsectionsToShow.includes("remuneration_policies_process")){
+      const sectionNumber = dynamicSectionNumberMap["remuneration_policies_process"];
+      data.remuneration_policies= {
         page: "screen_nine",
         label:
-          "9.3.7 Remuneration Policies & Process to Determine Remuneration",
+          `${sectionNumber} Remuneration Policies & Process to Determine Remuneration`,
         subLabel: "Add statement about company’s remuneration policies",
         type: "textarea",
         content: remuneration_policies,
         field: "remuneration_policies",
         isSkipped: false,
-      },
-      policy_not_public_reason: {
+      }
+    }
+    if(subsectionsToShow.includes("embedding_policy_commitment")){
+      const sectionNumber = dynamicSectionNumberMap["embedding_policy_commitment"];
+      data. policy_not_public_reason= {
         page: "screen_nine",
-        label: "9.6.2 Reason why policy is not publicly available",
-        subLabel: "Add statement about company’s sustainability policies",
+        label: `${sectionNumber} Embedding Policy Commitment`,
+        subLabel: "Add statement about embedding policy commitment",
         type: "textarea",
         content: policy_not_public_reason,
         field: "policy_not_public_reason",
         isSkipped: false,
-      },
-    };
+      }
+    }
+   
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_nine/${reportid}/`;
     try {
@@ -224,6 +697,12 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess,reportType }, ref) => 
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(setStatement(response.data.statement?.content || ""));
         dispatch(setBoardGov(response.data.board_gov_statement?.content || ""));
@@ -252,353 +731,326 @@ const CorporateGovernance = forwardRef(({ onSubmitSuccess,reportType }, ref) => 
     }
   }, [reportid]);
 
-  return (
-    <>
-      <div className="mx-2 p-2">
-        <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          9. Corporate Governance 
-        </h3>
-        <div className="flex gap-4">
-          <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
-            <Section1 orgName={orgName} />
-             <Section2
-              section9_1Ref={section9_1Ref}
-              section9_1_1Ref={section9_1_1Ref}
-              data={data}
-            />
-            <Section3
-              section9_2Ref={section9_2Ref}
-              section9_2_1Ref={section9_2_1Ref}
-              data={data}
-            />
-            <Section4 section9_2_2Ref={section9_2_2Ref} data={data} />
-            <Section5 section9_2_3Ref={section9_2_3Ref} data={data} />
-           {reportType=='GRI Report: In accordance With' &&  <Section6 section9_2_4Ref={section9_2_4Ref} data={data} />}
-            <Section7
-              section9_3_1Ref={section9_3_1Ref}
-              section9_3Ref={section9_3Ref}
-              data={data}
-            />
-            <Section8 section9_3_2Ref={section9_3_2Ref} data={data} />
-            <Section9 section9_3_3Ref={section9_3_3Ref} data={data} />
-            <Section10 section9_3_4Ref={section9_3_4Ref} data={data} />
-            <Section11 section9_3_5Ref={section9_3_5Ref} data={data} />
-            <Section12 section9_3_6Ref={section9_3_6Ref} data={data} />
-            <Section13 section9_3_7Ref={section9_3_7Ref} data={data} />
-            <Section14 section9_3_8Ref={section9_3_8Ref} data={data} />
-            <Section15
-              section9_4_1Ref={section9_4_1Ref}
-              section9_4Ref={section9_4Ref}
-              data={data}
-            />
-            <Section16 section9_4_2Ref={section9_4_2Ref} data={data} />
-            <Section17
-              section9_5_1Ref={section9_5_1Ref}
-              section9_5Ref={section9_5Ref}
-              data={data}
-            />
-            <Section18 section9_5_2Ref={section9_5_2Ref} data={data} />
-            <Section19 section9_5_3Ref={section9_5_3Ref} data={data} />
-            <Section20
-              section9_6_1Ref={section9_6_1Ref}
-              section9_6Ref={section9_6Ref}
-              data={data}
-            />
-            <Section21
-              section9_6_2Ref={section9_6_2Ref}
-              data={data}
-              orgName={orgName}
-            />
-           <Section22 section9_6_3Ref={section9_6_3Ref} data={data} />
-            <Section23 section9_6_4Ref={section9_6_4Ref} data={data} />
-            <Section25 section9_7Ref={section9_7Ref} data={data} />
+   useEffect(() => {
+            selectedSubsections.forEach((section) => {
+              if (!sectionRefs.current[section.id]) {
+                sectionRefs.current[section.id] = createRef();
+              }
+            });
+          }, [selectedSubsections]);
+  
+    
+  
+     const renderSection = (section) => {
+            const SectionComponent = subsectionMapping[section.id]?.component;
+            const ref = sectionRefs.current[section.id] || createRef();
+            sectionRefs.current[section.id] = ref;
+      
+            const commonProps = {
+              orgName,
+              data,
+              sectionNumber: section.sectionNumber,
+              sectionOrder,
+              reportType
+            };
+      
+            if (!SectionComponent) return null;
+      
+            return (
+              <div key={section.id} ref={ref}>
+                {section.groupTitle && (
+                  <div className="mb-2">
+                    {/* <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+                    {section.groupTitle}
+                  </h3> */}
+                  </div>
+                )}
+                <SectionComponent {...commonProps} />
+              </div>
+            );
+          };
+    
+    
+          if (
+            reportType === "Custom ESG Report" &&
+            selectedSubsections.length === 0
+          ) {
+            return (
+              <div className="mx-2 p-2">
+                <div>
+                  <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+                    {sectionOrder}. About the company and operations
+                  </h3>
+                </div>
+                <div className="text-center py-8">
+                  <p className="text-gray-500">
+                    No subsections selected for this section.
+                  </p>
+                </div>
+              </div>
+            );
+          }
+  
+
+  
+
+  
+return (
+      <>
+        <div className="mx-2 p-2">
+          <div>
+            <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionOrder}. Corporate Governance
+            </h3>
           </div>
-          {/* page sidebar */}
-
-          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36  md:fixed 
-  md:top-[19rem]
-  md:right-4  hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              9. Corporate Governance
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section9_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_1Ref, "section9_1")}
-            >
-              9.1. Board of Directors
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_1_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_1_1Ref, "section9_1_1")}
-            >
-              9.1.1 Governance structure and composition
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section9_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_2Ref, "section9_2")}
-            >
-              9.2. General Governance
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_2_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_2_1Ref, "section9_2_1")}
-            >
-              9.2.1 Nomination, selection of the highest governance body
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_2_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_2_2Ref, "section9_2_2")}
-            >
-              9.2.2 Chair of the highest governance body
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_2_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_2_3Ref, "section9_2_3")}
-            >
-              9.2.3 Senior management hired from local community
-            </p>
-
-            {
-           reportType=='GRI Report: In accordance With'   &&  <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_2_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_2_4Ref, "section9_2_4")}
-            >
-              9.2.4 Management of material topic
-            </p>
-            }
-                
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section9_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_3Ref, "section9_3")}
-            >
-              9.3 Responsibility, evaluation and remuneration of the Board
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_3_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_3_1Ref, "section9_3_1")}
-            >
-              9.3.1 Role of the highest governance body
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_3_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_3_2Ref, "section9_3_2")}
-            >
-              9.3.2 Collective knowledge of the highest governance body
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_3_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_3_3Ref, "section9_3_3")}
-            >
-              9.3.3 Role of the highest governance body in sustainability
-              reporting
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_3_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_3_4Ref, "section9_3_4")}
-            >
-              9.3.4 Delegation of responsibility for managing impacts
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_3_5" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_3_5Ref, "section9_3_5")}
-            >
-              9.3.5 Communication of critical concerns
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_3_6" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_3_6Ref, "section9_3_6")}
-            >
-              9.3.6 Evaluation of the performance of the highest governance body
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_3_7" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_3_7Ref, "section9_3_7")}
-            >
-              9.3.7 Remuneration policies & Process to determine remuneration
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_3_8" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_3_8Ref, "section9_3_8")}
-            >
-              9.3.8 Annual compensation ratio
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section9_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_4Ref, "section9_4")}
-            >
-              9.4 Strategy
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_4_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_4_1Ref, "section9_4_1")}
-            >
-              9.4.1 Statement on sustainable development strategy
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_4_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_4_2Ref, "section9_4_2")}
-            >
-              9.4.2 Membership association
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section9_5" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_5Ref, "section9_5")}
-            >
-              9.5 Risk Management
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_5_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_5_1Ref, "section9_5_1")}
-            >
-              9.5.1 Remediation of negative impacts
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_5_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_5_2Ref, "section9_5_2")}
-            >
-              9.5.2 Mechanism for seeking advice and raising concerns
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_5_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_5_3Ref, "section9_5_3")}
-            >
-              9.5.3 Compliance
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section9_6" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_6Ref, "section9_6")}
-            >
-              9.6 Policy
-            </p>
-
-            {/* <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_1Ref, 'section9_6_1')}>
-    9.6.1 Management of material topic
-   
-  </p> */}
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_6_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_6_2Ref, "section9_6_2")}
-            >
-              9.6.1 Embedding policy Commitment
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_6_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_6_3Ref, "section9_6_3")}
-            >
-              9.6.2 Anti-trust, anti-competitive behavior, monopoly practices
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section9_6_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_6_4Ref, "section9_6_4")}
-            >
-              9.6.3 Defined benefit plan obligations and other retirement plans
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section9_7" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section9_7Ref, "section9_7")}
-            >
-              9.7 Conflict of interest
-            </p>
+          <div className="flex gap-4">
+            <div className="xl:w-[80%] md:w-[75%] lg:w-[80%] 2k:w-[80%] 4k:w-[80%] 2xl:w-[80%] w-full">
+              {/* {selectedSubsections.map(section => renderSection(section))} */}
+              {/* {subsectionsToShow.includes("materiality_assessment") && (
+                  <div ref={sectionRefs.current["materiality_assessment"] || createRef()}>
+                    <Section1
+                      orgName={orgName}
+                      data={data}
+                      sectionOrder={sectionOrder}
+                      sectionNumber={null} // Not numbered
+                    />
+                  </div>
+                )} */}
+                 <Section1
+                      orgName={orgName}
+                      data={data}
+                      sectionOrder={sectionOrder}
+                      sectionNumber={null} // Not numbered
+                    />
+              {numberedSubsections.map((section) => renderSection(section))}
+            </div>
+  
+            {/* Page sidebar - only show if there are subsections */}
+            {selectedSubsections.length > 0 && (
+              <div className={`p-4 border border-r-2 border-b-2 shadow-lg rounded-lg ${selectedSubsections.length < 5 ? 'h-[500px]' : 'h-fit'} top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block`}>
+                <p className="text-[11px] text-[#727272] mb-2 uppercase">
+                  {sectionOrder}. Corporate Governance 
+                </p>
+  
+                {(() => {
+                  let groupIndex = 1;
+  
+                  const groupedSidebar = [
+                    {
+                      groupId: "board_of_directors",
+                      title: "Board of Directors",
+                      children: [
+                        {
+                          id: "governance_structure_composition",
+                          label: "Governance structure and composition",
+                        },
+                      ],
+                    },
+                    {
+                      groupId: "general_governance",
+                      title: "General Governance",
+                      children: [
+                        {
+                          id: "nomination_selection",
+                          label: "Nomination, selection of the highest governance body",
+                        },
+                        {
+                          id: "chair_highest_governance_body",
+                          label: "Chair of the highest governance body",
+                        },
+                        {
+                          id: "senior_management_local",
+                          label: "Senior management hired from local community",
+                        },
+                        {
+                          id: "management_of_material_topic",
+                          label: "Management of material topic",
+                        },
+                      ],
+                    },
+                    {
+                      groupId: "board_responsibility_evaluation_remuneration",
+                      title: "Responsibility, Evaluation and Remuneration of the Board",
+                      children: [
+                        {
+                          id: "role_highest_governance_body",
+                          label: "Role of the highest governance body",
+                        },
+                        {
+                          id: "collective_knowledge",
+                          label: "Collective knowledge of the highest governance body",
+                        },
+                        {
+                          id: "sustainability_reporting_role",
+                          label: "Role of the highest governance body in sustainability reporting",
+                        },
+                        {
+                          id: "delegation_of_responsibility",
+                          label: "Delegation of responsibility for managing impacts",
+                        },
+                        {
+                          id: "communication_critical_concerns",
+                          label: "Communication of critical concerns",
+                        },
+                        {
+                          id: "performance_evaluation",
+                          label: "Evaluation of the performance of the highest governance body",
+                        },
+                        {
+                          id: "remuneration_policies_process",
+                          label: "Remuneration policies & process to determine remuneration",
+                        },
+                        {
+                          id: "annual_compensation_ratio",
+                          label: "Annual compensation ratio",
+                        },
+                      ],
+                    },
+                    {
+                      groupId: "strategy",
+                      title: "Strategy",
+                      children: [
+                        {
+                          id: "sustainable_strategy_statement",
+                          label: "Statement on sustainable development strategy",
+                        },
+                        {
+                          id: "membership_association",
+                          label: "Membership association",
+                        },
+                      ],
+                    },
+                    {
+                      groupId: "risk_management",
+                      title: "Risk Management",
+                      children: [
+                        {
+                          id: "remediation_negative_impacts",
+                          label: "Remediation of negative impacts",
+                        },
+                        {
+                          id: "advice_mechanism",
+                          label: "Mechanism for seeking advice and raising concerns",
+                        },
+                        {
+                          id: "compliance",
+                          label: "Compliance",
+                        },
+                      ],
+                    },
+                    {
+                      groupId: "policy",
+                      title: "Policy",
+                      children: [
+                        {
+                          id: "embedding_policy_commitment",
+                          label: "Embedding policy commitment",
+                        },
+                        {
+                          id: "anti_trust_behavior",
+                          label: "Anti-trust, anti-competitive behavior, monopoly practices",
+                        },
+                        {
+                          id: "retirement_benefits",
+                          label: "Defined benefit plan obligations and other retirement plans",
+                        },
+                      ],
+                    },
+                    {
+                      groupId: "conflict_of_interest",
+                      title: "Conflict of interest",
+                      children: [],
+                    },
+                  ];
+                  
+  
+                  return groupedSidebar.map((item) => {
+                    if (item.children) {
+                      const isGroupSelected = selectedSubsections.some(
+                        (sec) => sec.id === item.groupId
+                      );
+                  
+                      const visibleChildren = item.children.filter((child) =>
+                        selectedSubsections.some((sec) => sec.id === child.id)
+                      );
+                  
+                      // Show group if parent OR any child is selected
+                      if (!isGroupSelected && visibleChildren.length === 0) return null;
+                  
+                      const currentGroupIndex = groupIndex++;
+                      let childIndex = 1;
+                  
+                      return (
+                        <div key={item.groupId} className="mb-2">
+                          {/* Show the parent title (group) */}
+                          <p
+                            className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                              activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                            }`}
+                            onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
+                          >
+                            {sectionOrder}.{currentGroupIndex} {item.title}
+                          </p>
+                  
+                          {/* Render selected children */}
+                          {visibleChildren.map((child) => {
+                            const labelText =
+                              child.label?.trim() !== "" ? child.label : item.title;
+                  
+                            return (
+                              <p
+                                key={child.id}
+                                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                                  activeSection === child.id ? "text-blue-400" : ""
+                                }`}
+                                onClick={() => scrollToSection(child.id)}
+                              >
+                                {sectionOrder}.{currentGroupIndex}.{childIndex++} {labelText}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      );
+                    } else {
+                      // Standalone item
+                      if (!selectedSubsections.some((sec) => sec.id === item.id)) return null;
+                  
+                      const label = `${sectionOrder}.${groupIndex++} ${item.label}`;
+                      return (
+                        <p
+                          key={item.id}
+                          className={`text-[12px] mb-2 cursor-pointer ${
+                            activeSection === item.id ? "text-blue-400" : ""
+                          }`}
+                          onClick={() => scrollToSection(item.id)}
+                        >
+                          {label}
+                        </p>
+                      );
+                    }
+                  });
+                  
+                })()}
+              </div>
+            )}
           </div>
         </div>
-      </div>
-      {loopen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <Oval
-            height={50}
-            width={50}
-            color="#00BFFF"
-            secondaryColor="#f3f3f3"
-            strokeWidth={2}
-            strokeWidthSecondary={2}
-          />
-        </div>
-      )}
-    </>
-  );
+        {loopen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
+      </>
+    );
 });
+
+CorporateGovernance.displayName = "CorporateGovernance";
 
 export default CorporateGovernance;

@@ -15,13 +15,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { Oval } from "react-loader-spinner";
 import { setdescription } from "../../../../../lib/redux/features/ESGSlice/screen8Slice";
 
-const ReferenceMateriality = forwardRef(({ onSubmitSuccess }, ref) => {
-  const orgName =
-    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
-  const reportid =
-    typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+const ReferenceMateriality = forwardRef(({ onSubmitSuccess,hasChanges }, ref) => {
+  // const orgName =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  // const reportid =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const [reportid, setReportid] = useState("");
+  const [reportType, setReportType] = useState("");
+  const [orgName, setOrgname] = useState("");
+  
+  // Update after mount on client only
+  useEffect(() => {
+    setReportid(localStorage.getItem("reportid") || "");
+    setReportType(localStorage.getItem("reportType") || "");
+    setOrgname(localStorage.getItem("reportorgname") || "");
+  }, []);
+  
   const apiCalledRef = useRef(false);
   const [loopen, setLoOpen] = useState(false);
+  const [initialData, setInitialData] = useState({});
   const [data, setData] = useState("");
   const description = useSelector((state) => state.screen8Slice.description);
   const dispatch = useDispatch();
@@ -36,8 +48,15 @@ const ReferenceMateriality = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const currentData = {
+    statement: description,
+  };
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       statement: {
         page: "screen_eight",
@@ -110,6 +129,12 @@ const ReferenceMateriality = forwardRef(({ onSubmitSuccess }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
         setData(response.data);
         dispatch(setdescription(response.data.statement?.content || ""));
       }

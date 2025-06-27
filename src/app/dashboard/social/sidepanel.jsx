@@ -305,7 +305,7 @@ const Aside = ({
                 }`}
                 onClick={toggleBillS211}
               >
-                <div className="w-[20%]">
+                <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                   <FaCanadianMapleLeaf className="w-5 h-5 mr-2" />
                 </div>
                 <div className="w-[67%] text-left ">
@@ -389,7 +389,7 @@ const Aside = ({
               }`}
               onClick={toggleWasteVisible}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
@@ -722,7 +722,7 @@ const Aside = ({
               }`}
               onClick={toggleLegal}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
@@ -889,7 +889,7 @@ const Aside = ({
               }`}
               onClick={toggleEnergySectionVisibility}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
@@ -1006,7 +1006,7 @@ const Aside = ({
               }`}
               onClick={toggleTax}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
@@ -1127,7 +1127,7 @@ const Aside = ({
               }`}
               onClick={toggleEmission}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2" />
               </div>
               <div className="w-[50%] text-left ">
@@ -1301,7 +1301,7 @@ const Aside = ({
               }`}
               onClick={toggleMaterialsVisible}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
@@ -1439,7 +1439,7 @@ const Aside = ({
               }`}
               onClick={togglePrivacy}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
@@ -1559,7 +1559,7 @@ const Aside = ({
               }`}
               onClick={toggleSafety}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
@@ -1701,7 +1701,7 @@ const Aside = ({
               }`}
               onClick={toggleMarketing}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
@@ -1891,7 +1891,7 @@ const Aside = ({
               }`}
               onClick={toggleSupplyChain}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
@@ -2028,7 +2028,7 @@ const Aside = ({
               }`}
               onClick={toggleWaterVisible}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">
@@ -2164,7 +2164,7 @@ const Aside = ({
               }`}
               onClick={toggleSupplierSectionVisibility}
             >
-              <div className="w-[20%]">
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
                 <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
               </div>
               <div className="w-[50%] text-left ">

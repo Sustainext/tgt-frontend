@@ -23,13 +23,25 @@ import { setdescription } from "../../../../../lib/redux/features/ESGSlice/scree
 
 import Screen1 from "./sections/section1";
 
-const SustainibilityRoadmap = forwardRef(({ onSubmitSuccess }, ref) => {
-  const reportid =
-    typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+const SustainibilityRoadmap = forwardRef(({ onSubmitSuccess,sectionOrder = 4,hasChanges }, ref) => {
+  // const reportid =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const [reportid, setReportid] = useState("");
+const [reportType, setReportType] = useState("");
+const [orgName, setOrgname] = useState("");
+
+// Update after mount on client only
+useEffect(() => {
+  setReportid(localStorage.getItem("reportid") || "");
+  setReportType(localStorage.getItem("reportType") || "");
+  setOrgname(localStorage.getItem("reportorgname") || "");
+}, []);
+
   const apiCalledRef = useRef(false);
   const [loopen, setLoOpen] = useState(false);
   const description = useSelector((state) => state.screen4Slice.description);
   const dispatch = useDispatch();
+  const [initialData, setInitialData] = useState({});
   useImperativeHandle(ref, () => ({
     submitForm,
   }));
@@ -41,12 +53,19 @@ const SustainibilityRoadmap = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const currentData={
+    description
+  }
   const submitForm = async (type) => {
     LoaderOpen();
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
     const data = {
       description: {
         page: "screen_four",
-        label: "4. Sustainability Roadmap",
+        label: `${sectionOrder}. Sustainability Roadmap`,
         subLabel: "",
         type: "richTextarea",
         content: description,
@@ -115,6 +134,12 @@ const SustainibilityRoadmap = forwardRef(({ onSubmitSuccess }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+        Object.keys(response.data).forEach((key) => {
+          flatData[key] = response.data[key]?.content || "";
+        });
+      
+        setInitialData(flatData);
         dispatch(setdescription(response.data.description.content));
       }
 
@@ -136,7 +161,7 @@ const SustainibilityRoadmap = forwardRef(({ onSubmitSuccess }, ref) => {
     <>
       <div className="mx-2 p-2">
         <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          4. Sustainability Roadmap
+          {sectionOrder}. Sustainability Roadmap
         </h3>
         <div className="flex gap-4">
           <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
@@ -145,10 +170,10 @@ const SustainibilityRoadmap = forwardRef(({ onSubmitSuccess }, ref) => {
           {/* page sidebar */}
           <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky  w-[20%] md:w-[25%] lg:w-[20%] hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
             <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              4. Sustainability Roadmap  
+              {sectionOrder}. Sustainability Roadmap  
             </p>
             <p className="text-[12px] text-blue-400 mb-2">
-              1. Sustainability Roadmap  
+              {sectionOrder}.1 Sustainability Roadmap  
             </p>
           </div>
         </div>

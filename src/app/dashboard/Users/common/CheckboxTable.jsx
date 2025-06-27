@@ -62,6 +62,7 @@ const CheckboxTable = ({
                 <div className="flex items-center gap-2 w-full">
                   <input
                     type="checkbox"
+                    className="green-checkbox"
                     checked={selections.includes(item.id)} // Check if item.id is in selections array
                     onChange={() => onToggle(item.id)} // Call onToggle with item.id on change
                   />

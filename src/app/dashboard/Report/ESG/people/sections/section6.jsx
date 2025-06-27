@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setStandardWage } from "../../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const Section6 = ({ section13_1_5Ref, data, reportType }) => {
+const Section6 = ({ section13_1_5Ref, data, reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.1.5':'13.1.4',
+  sectionTitle = "Standard Wage", 
+  sectionOrder = 13
+ }) => {
   const content = useSelector((state) => state.screen13Slice.standard_wage);
   const dispatch = useDispatch();
   const loadContent = () => {
@@ -121,7 +125,7 @@ const Section6 = ({ section13_1_5Ref, data, reportType }) => {
     <>
       <div id="section13_1_5" ref={section13_1_5Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'13.1.5':'13.1.4'}  Standard Wage
+        {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">

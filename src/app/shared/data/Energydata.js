@@ -1,5 +1,7 @@
 import { MdChevronRight } from "react-icons/md";
-
+import Cookies from "js-cookie";
+const tcfd = Cookies.get("tcfd_sector");
+const tcfdsector = tcfd ? JSON.parse(tcfd) : [];
 export const Energydata = [
   {
     category: ["1"],
@@ -4120,41 +4122,53 @@ export const Energydata = [
     category: ["57"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-       GRI 305: Emissions 2016
+        GRI 305: Emissions 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 305-6 Emissions of ozone-depleting substances (ODS)
+            Disclosure 305-6 Emissions of ozone-depleting substances (ODS)
           </p>
           <div className="">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            2.11 When compiling the information specified in Disclosure 305-6, the reporting
-            organization shall:
+              2.11 When compiling the information specified in Disclosure 305-6,
+              the reporting organization shall:
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            2.11.1 calculate the production of ODS as the amount of ODS produced, minus the
-amount destroyed by approved technologies, and minus the amount entirely
-used as feedstock in the manufacture of other chemicals;
+              2.11.1 calculate the production of ODS as the amount of ODS
+              produced, minus the amount destroyed by approved technologies, and
+              minus the amount entirely used as feedstock in the manufacture of
+              other chemicals;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Production of ODS = ODS produced - ODS destroyed by approved
+              technologies - ODS entirely used as feedstock in the manufacture
+              of other chemicals. 2.11.2 exclude ODS recycled and reused.
+            </p>
 
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 305-6
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Production of ODS = ODS produced - ODS destroyed by approved technologies - ODS entirely used as feedstock in the manufacture of other chemicals.
-            2.11.2 exclude ODS recycled and reused.
-            </p>
-           
-            <p className="text-[11px] text-black mb-2">Guidance for Disclosure 305-6</p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            The reporting organization can report separate or combined data for the substances included in the calculation.
+              The reporting organization can report separate or combined data
+              for the substances included in the calculation.
             </p>
             <p className="text-[11px] text-black mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Measuring ODS production, imports, and exports helps to indicate how an organization complies with legislation. This is particularly relevant if the organization produces or uses ODS in its processes, products and services and is subject to phase-out commitments. Results on ODS phase-out help to indicate the organization’s position in any markets affected by regulation on ODS. This disclosure covers the substances included in Annexes A, B, C, and E of the ‘Montreal Protocol’ as well as any other ODS produced, imported, or exported by an organization.
+              Measuring ODS production, imports, and exports helps to indicate
+              how an organization complies with legislation. This is
+              particularly relevant if the organization produces or uses ODS in
+              its processes, products and services and is subject to phase-out
+              commitments. Results on ODS phase-out help to indicate the
+              organization’s position in any markets affected by regulation on
+              ODS. This disclosure covers the substances included in Annexes A,
+              B, C, and E of the ‘Montreal Protocol’ as well as any other ODS
+              produced, imported, or exported by an organization.
             </p>
           </div>
         </div>
@@ -4166,42 +4180,150 @@ used as feedstock in the manufacture of other chemicals;
     category: ["58"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-       GRI 305: Emissions 2016
+        GRI 305: Emissions 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 305-7 Nitrogen oxides (NOx), sulfur oxides (SOx), and other significant air emissions
+            Disclosure 305-7 Nitrogen oxides (NOx), sulfur oxides (SOx), and
+            other significant air emissions
           </p>
           <div className="">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            2.13 When compiling the information specified in Disclosure 305-7, the reporting organization shall select one of the following approaches for calculating significant air emissions:
+              2.13 When compiling the information specified in Disclosure 305-7,
+              the reporting organization shall select one of the following
+              approaches for calculating significant air emissions:
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            2.13.1 Direct measurement of emissions (such as online analyzers);
-
+              2.13.1 Direct measurement of emissions (such as online analyzers);
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            2.13.2 Calculation based on site-specific data;
+              2.13.2 Calculation based on site-specific data;
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            2.13.3 Calculation based on published emission factors;
+              2.13.3 Calculation based on published emission factors;
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            2.13.4 Estimation. If estimations are used due to a lack of default figures, the
-            organization shall indicate the basis on which figures were estimated.
+              2.13.4 Estimation. If estimations are used due to a lack of
+              default figures, the organization shall indicate the basis on
+              which figures were estimated.
             </p>
-           
           </div>
         </div>
       </>,
     ],
     link: "https://www.globalreporting.org/publications/documents/english/gri-305-emissions-2016/",
+  },
+  {
+    category: ["59"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Climate Related Targets screen - Metrics and Targets [TCFD-M&T-B]
+      </h5>
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          {tcfdsector === "asset_management" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Managers
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset managers should disclose GHG emissions for their assets
+                under management and the weighted average carbon intensity
+                (WACI) for each product or investment strategy, where data and
+                methodologies allow. These emissions should be calculated in
+                line with the Global GHG Accounting and Reporting Standard for
+                the Financial Industry developed by the Partnership for Carbon
+                Accounting Financials (PCAF Standard) or a comparable
+                methodology.
+              </p>
+              <p>
+                In addition to WACI, asset managers should consider providing
+                other carbon footprinting metrics they believe are useful for
+                decision-making.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "asset_owner" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Asset Owners
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Asset owners should disclose GHG emissions for assets they own
+                and the weighted average carbon intensity (WACI) for each fund
+                or investment strategy, where data and methodologies allow.
+                These emissions should be calculated in line with the Global GHG
+                Accounting and Reporting Standard for the Financial Industry
+                developed by the Partnership for Carbon Accounting Financials
+                (PCAF Standard) or a comparable methodology
+              </p>
+              <p>
+                In addition to WACI, asset owners should consider providing
+                other carbon footprinting metrics they believe are useful for
+                decision-making.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "insurance" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Insurance Companies
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Insurance companies should disclose weighted average carbon
+                intensity or GHG emissions associated with commercial property
+                and specialty lines of business where data and methodologies
+                allow.
+              </p>
+            </div>
+          )}
+          {tcfdsector === "banking" && (
+            <div>
+              <p className="text-[11px] text-black mb-2">
+                Supplemental Guidance for Banks
+              </p>
+              <p className="text-[11px] text-[#727272] mb-2">
+                Banks should disclose GHG emissions for their lending and other
+                financial intermediary business activities where data and
+                methodologies allow. These emissions should be calculated in
+                line with the Global GHG Accounting and Reporting Standard for
+                the Financial Industry developed by the Partnership for Carbon
+                Accounting Financials (PCAF Standard) or a comparable
+                methodology
+              </p>
+            </div>
+          )}
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for All Sectors
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Organizations should provide their Scope 1 and Scope 2 GHG
+              emissions independent of a materiality assessment, and, if
+              appropriate, Scope 3 GHG emissions and the related risks. All
+              organizations should consider disclosing Scope 3 GHG emissions.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              {" "}
+              GHG emissions should be calculated in line with the GHG Protocol
+              methodology to allow for aggregation and comparability across
+              organizations and jurisdictions. As appropriate, organizations
+              should consider providing related, generally accepted
+              industry-specific GHG efficiency ratios.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://assets.bbhub.io/company/sites/60/2021/07/2021-TCFD-Implementing_Guidance.pdf",
   },
   //  sdg contet start//
   {

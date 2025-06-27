@@ -3,7 +3,11 @@ import { useState, useRef, useEffect } from "react";
 import LegalActionTable2 from "../tables/legalActionTable2";
 import LegalActionTable1 from "../tables/legalActionTable1";
 
-const Section22=({section9_6_3Ref,data})=>{
+const Section22=({section9_6_3Ref,data,
+        sectionNumber = "9.6.2",
+        sectionTitle = 'Anti-trust, Anti-competitive Behavior, Monopoly Practices',
+        sectionOrder = 9,
+})=>{
     const tableData1=data["206_1a"]?Object.values(data["206_1a"].number_legal_actions_anti_competitive_behavior):""
     const tableData2=data["206_1b"]?data["206_1b"]:[]
     return (
@@ -11,7 +15,7 @@ const Section22=({section9_6_3Ref,data})=>{
         <div id="section9_6_3" ref={section9_6_3Ref}>
 
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-9.6.2 Anti-trust, Anti-competitive Behavior, Monopoly Practices
+{sectionNumber} {sectionTitle}
 </h3>
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Any public legal cases regarding corruption brought against the organization or its employees during the reporting period

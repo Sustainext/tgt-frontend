@@ -325,7 +325,7 @@ const Screenthree = ({
                           value={option.value}
                           checked={selectedOptions.includes(option.value)}
                           onChange={handleCheckboxChange}
-                          className="mr-3"
+                          className="mr-3 green-checkbox-small"
                         />
                         {option.label}
                       </label>

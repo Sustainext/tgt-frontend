@@ -2,7 +2,11 @@
 import { useState, useRef, useEffect } from "react";
 import WaterTable from "../tables/waterTable";
 
-const Section17 = ({ section12_3_3Ref, data,reportType }) => {
+const Section17 = ({ section12_3_3Ref, data,reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.3.3':'12.3.2',
+  sectionTitle = 'Water Discharge & Management of Associated Impacts',
+  sectionOrder = 12,
+ }) => {
   const [content, setContent] = useState(
     `We manage water discharge to minimize its impact on local ecosystems. This includes treating wastewater to meet regulatory standards and monitoring the quality of discharged water. Following are the standards used:`
   );
@@ -335,7 +339,7 @@ const Section17 = ({ section12_3_3Ref, data,reportType }) => {
     <>
       <div id="section12_3_3" ref={section12_3_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'12.3.3':'12.3.2'} Water Discharge & Management of Associated Impacts
+        {sectionNumber} {sectionTitle}
         </h3>
 
         {/* <p className="text-sm mb-4">{content}</p> */}
@@ -377,6 +381,20 @@ const Section17 = ({ section12_3_3Ref, data,reportType }) => {
               ? data["303-2a-management_water_discharge"].data.length > 0
                 ? data["303-2a-management_water_discharge"].data[0].Q3
                   ? data["303-2a-management_water_discharge"].data[0].Q3
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-[15px]  mb-2 font-semibold">
+        Sector specific standards: 
+        </p>
+        <p className="text-sm mb-4">
+          {data["303-2a-management_water_discharge"]
+            ? data["303-2a-management_water_discharge"].data
+              ? data["303-2a-management_water_discharge"].data.length > 0
+                ? data["303-2a-management_water_discharge"].data[0].Q4
+                  ? data["303-2a-management_water_discharge"].data[0].Q4
                   : "No data available"
                 : "No data available"
               : "No data available"

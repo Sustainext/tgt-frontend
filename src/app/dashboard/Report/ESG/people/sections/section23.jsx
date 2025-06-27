@@ -1,14 +1,18 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section23 = ({ section13_6_6Ref, data, reportType }) => {
+const Section23 = ({ section13_6_6Ref, data, reportType,
+  sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'13.6.6':'13.6.5',
+  sectionTitle = "Prevention and Mitigation of OHS Impacts", 
+  sectionOrder = 13
+ }) => {
   const [content, setContent] = useState(``);
 
   return (
     <>
       <div id="section13_6_6" ref={section13_6_6Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        {reportType=='GRI Report: In accordance With'?'13.6.6':'13.6.5'}  Prevention and Mitigation of OHS Impacts
+        {sectionNumber} {sectionTitle}
         </h3>
 
         <p className="text-[15px]  mb-2 font-semibold">

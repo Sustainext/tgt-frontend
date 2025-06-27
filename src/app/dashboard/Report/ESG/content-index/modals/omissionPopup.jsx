@@ -15,7 +15,7 @@ const OmissionPopup = ({ onSave,reportid, data,isModalOpen, setIsModalOpen,setAc
       {isModalOpen && (
         <div className={`modal-overlay z-50 ${open?'xl:ml-[120px]':'mx-auto'} `}>
           <div className="modal-center">
-            <div className="bg-white p-5 rounded-lg shadow-md xl:w-auto w-[95%] mt-14">
+            <div className="bg-white p-5 rounded-lg shadow-md xl:w-auto w-[95%] lg:w-auto mt-14">
               <div className="flex justify-between items-center drop-shadow-lg  w-full">
                 <div className="flex gap-2">
                   {/* <Image src={GRISVG} className="w-7 h-7 mr-2" alt="gri-logo" /> */}

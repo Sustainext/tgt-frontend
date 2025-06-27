@@ -469,7 +469,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportT
                               value={option.label}
                               checked={selectedOptions.includes(option.label)}
                               onChange={handleCheckboxChange}
-                              className="mr-3"
+                              className="mr-3 green-checkbox-small"
                             />
                             {option.label}
                           </label>
@@ -523,7 +523,7 @@ const Screenfour = ({ nextStep, prevStep,selectedCorp, selectedOrg, year,reportT
                                 optionsone.label
                               )}
                               onChange={handleCheckboxChangeone}
-                              className="mr-3"
+                              className="mr-3 green-checkbox-small"
                             />
                             {optionsone.label}
                           </label>

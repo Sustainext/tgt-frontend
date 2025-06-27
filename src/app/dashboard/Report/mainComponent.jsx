@@ -13,13 +13,59 @@ import {
   setHeadertext2,
   setHeaderdisplay,
 } from "../../../lib/redux/features/topheaderSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { GoArrowRight } from "react-icons/go";
 import { IoIosWarning } from "react-icons/io";
 import Link from "next/link";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import {
+  setReportName,
+  setReportType,
+  setReportBy,
+  setSelectedOrganization,
+  setSelectedCorporate,
+  setStartDate,
+  setEndDate,
+  setIncludeMaterialTopics,
+  setIncludeContentIndex,
+  setInvestmentCorporates,
+  toggleInvestmentCorporate,
+  setOwnershipRatio,
+  setSelectedAssessmentId,
+  setOrganizations,
+  setCorporates,
+  setErrors,
+  setLoading,
+  setReportExists,
+  resetForm,
+  selectReportName,
+  selectReportType,
+  selectReportBy,
+  selectSelectedOrganization,
+  selectSelectedCorporate,
+  selectStartDate,
+  selectEndDate,
+  selectIncludeMaterialTopics,
+  selectIncludeContentIndex,
+  selectInvestmentCorporates,
+  selectSelectedAssessmentId,
+  selectOrganizations,
+  selectCorporates,
+  selectErrors,
+  selectIsLoading,
+  resetToggleToDefaults,
+  selectReportExists,
+  selectSelectedOrgName,
+  selectSelectedCorpName,
+  selectIsFormValid,
+  selectFormData,
+} from "../../../lib/redux/features/reportCreationSlice"; // Adjust import path
+import {initializeForCustomReport,resetToDefaults,fetchReportBuilderData} from '../../../lib/redux/features/reportBuilderSlice'
+import {setActivesection} from '../../../lib/redux/features/TCFD/TcfdSlice'
+import { isTCFDAvailable } from '../../utils/frameworkChecker'
+
 const Report = () => {
   const [isExpandedpage, setIsExpandedpage] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,15 +87,20 @@ const Report = () => {
   const router = useRouter();
   const [entities, setEntities] = useState([]);
   const [massgeshow, setMassgeshow] = useState(false);
+  const [massgename, setMassgename] = useState("");
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(null);
-  const [materialityAssessmentLen,setMaterialityAssessmentLen]=useState([])
-  const [assessment_id,setAssessmentId]=useState(null)
-  const [reportExist,setReportExist]=useState(false)
-  const [selectedOrgName,setSelectedOrgName]=useState("")
-  const [selectedCorpName,setSelectedCorpName]=useState("")
-  const [showInvestmentMessage,setshowInvestmentMessage]=useState(false)
-
+  const [materialityAssessmentLen, setMaterialityAssessmentLen] = useState([]);
+  const [assessment_id, setAssessmentId] = useState(null);
+  const [reportExist, setReportExist] = useState(false);
+  const [selectedOrgName, setSelectedOrgName] = useState("");
+  const [selectedCorpName, setSelectedCorpName] = useState("");
+  const [showInvestmentMessage, setshowInvestmentMessage] = useState(false);
+  const [corpName,setCorpName]=useState('')
+  const [orgName,setOrgName]=useState('')
+  const [selectedYear, setSelectedYear] = useState("");
+  const includeMaterialTopics = useSelector(selectIncludeMaterialTopics);
+  const includeContentIndex = useSelector(selectIncludeContentIndex);
 
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
@@ -57,6 +108,7 @@ const Report = () => {
     }
     return "";
   };
+
   const token = getAuthToken();
 
   let axiosConfig = {
@@ -64,73 +116,93 @@ const Report = () => {
       Authorization: "Bearer " + token,
     },
   };
-  
-  const getMaterialityAssessment= async()=>{
-    if(firstSelection&&startdate&&enddate&&selectedOrg){
-      try{
+  const handleYearChange = (event) => {
+    const year = event.target.value;
+    setSelectedYear(year);
+    setStartdate(`${year}-01-01`);
+    setEnddate(`${year}-12-31`);
+  };
+  const getMaterialityAssessment = async () => {
+    if (firstSelection && startdate && enddate && selectedOrg) {
+      try {
         const response = await axiosInstance.get(
           `${
             process.env.BACKEND_API_URL
-          }/materiality_dashboard/get_materiality_assessment_for_report/?start_date=${startdate}&end_date=${enddate}&organization_id=${selectedOrg}&report_by=${firstSelection}&corporate_id=${selectedCorp?selectedCorp:null}`,
+          }/materiality_dashboard/get_materiality_assessment_for_report/?start_date=${startdate}&end_date=${enddate}&organization_id=${selectedOrg}&report_by=${firstSelection}&&approach=${reporttype=='GRI Report: With Reference to'?'reference':'accordance'}&corporate_id=${
+            selectedCorp ? selectedCorp : null
+          }`,
           axiosConfig
         );
-        if(response.status==200){
-          console.log(response.data,"look")
-          setMaterialityAssessmentLen(response.data)
-          if(response.data.length==1){
-            setAssessmentId(response.data[0].id)
+        if (response.status == 200) {
+          setMaterialityAssessmentLen(response.data);
+          if (response.data.length == 1) {
+            setAssessmentId(response.data[0].id);
           }
         }
-        
-      }
-      catch(err){
-        console.error(err)
+      } catch (err) {
+        console.error(err);
       }
     }
-  }
+  };
 
-  const getReportExist= async()=>{
-    if(firstSelection&&startdate&&enddate&&selectedOrg&&reporttype&&firstSelection){
-      try{
+  const getReportExist = async () => {
+    if (
+      firstSelection &&
+      startdate &&
+      enddate &&
+      selectedOrg &&
+      reporttype &&
+      firstSelection
+    ) {
+      try {
         const response = await axiosInstance.get(
           `${
             process.env.BACKEND_API_URL
-          }/sustainapp/report_exists/?start_date=${startdate}&end_date=${enddate}&report_type=${reporttype}&report_by=${firstSelection}&organization=${selectedOrg}&corporate=${selectedCorp?selectedCorp:""}`,
+          }/sustainapp/report_exists/?start_date=${startdate}&end_date=${enddate}&report_type=${reporttype}&report_by=${firstSelection}&organization=${selectedOrg}&corporate=${
+            selectedCorp ? selectedCorp : ""
+          }`,
           axiosConfig
         );
-        if(response.status==200){
-          if(response.data.message=="Report Found"){
-            setReportExist(true)
-            setSelectedCorpName(response.data.corporate)
-            setSelectedOrgName(response.data.organization)
-          }
-          else{
-            setReportExist(false)
+        if (response.status == 200) {
+          if (response.data.message == "Report Found") {
+            setReportExist(true);
+            setSelectedCorpName(response.data.corporate);
+            setSelectedOrgName(response.data.organization);
+          } else {
+            setReportExist(false);
           }
         }
-        
-      }
-      catch(err){
-        console.error(err)
+      } catch (err) {
+        console.error(err);
       }
     }
-  }
+  };
 
-  useEffect(()=>{
-    getMaterialityAssessment()
-    getReportExist()
-    setMassgeshow(false)
-  },[firstSelection,startdate,enddate,selectedOrg,selectedCorp,reporttype])
+  useEffect(() => {
+    if(['GRI Report: With Reference to','GRI Report: In accordance With'].includes(reporttype)){
+      getMaterialityAssessment();
+    }   
+   getReportExist();
+    setMassgeshow(false);
+    setMassgename("");
+  }, [
+    firstSelection,
+    startdate,
+    enddate,
+    selectedOrg,
+    selectedCorp,
+    reporttype,
+  ]);
 
   useEffect(() => {
     dispatch(setHeadertext1(""));
     dispatch(setHeaderdisplay("none"));
     dispatch(setHeadertext2("Report"));
   }, [dispatch]);
-  const handleCheckboxChange = (index,hasData) => {
+  const handleCheckboxChange = (index, hasData) => {
     const newEntities = [...entities];
     newEntities[index].checked = !newEntities[index].checked;
-    newEntities[index].ownershipRatio="";
+    newEntities[index].ownershipRatio = "";
     setEntities(newEntities);
     // setshowInvestmentMessage(hasData)
   };
@@ -146,57 +218,53 @@ const Report = () => {
 
   const handleOwnershipRatioChange = (index, input) => {
     // Remove % if pasted in
-    const sanitized = input.replace('%', '');
-  
+    const sanitized = input.replace("%", "");
+
     // Allow empty input
-    if (sanitized === '') {
+    if (sanitized === "") {
       const updatedEntities = [...entities];
-      updatedEntities[index].ownershipRatio = '';
+      updatedEntities[index].ownershipRatio = "";
       setEntities(updatedEntities);
       return;
     }
-  
+
     // Allow decimals, e.g., "25", "25.5", "25."
     if (!/^\d{0,3}(\.\d{0,2})?$/.test(sanitized)) return;
-  
+
     const numericValue = Number(sanitized);
-  
+
     // Reject if 0 or over 100
     if (numericValue === 0 || numericValue > 100) return;
-  
+
     const updatedEntities = [...entities];
     updatedEntities[index].ownershipRatio = sanitized;
     setEntities(updatedEntities);
   };
-  
-  
-  
+
   const handleChangeallcrop = async (event) => {
     const selectedId = event.target.value;
     setSelectedOrg(selectedId);
   };
 
-  const fetchInvestementCorporate=async()=>{
+  const fetchInvestementCorporate = async () => {
     try {
       const response = await axiosInstance.get(
         `/sustainapp/all_corporate_list/`,
         {
-          params: { 
+          params: {
             organisation: selectedOrg,
-            corporate:selectedCorp,
-            start:startdate,
-            end:enddate,
-            reportBy:firstSelection
-           },
+            corporate: selectedCorp,
+            start: startdate,
+            end: enddate,
+            reportBy: firstSelection,
+          },
         }
       );
       setEntities(response.data);
     } catch (e) {
-      console.log(
-        "failed fetching organization", e
-      );
+      console.log("failed fetching organization", e);
     }
-  }
+  };
 
   const fetchOrg = async () => {
     try {
@@ -223,12 +291,11 @@ const Report = () => {
     };
   }, []);
 
-  useEffect(()=>{
-    if(selectedOrg && startdate && enddate){
-      fetchInvestementCorporate()
+  useEffect(() => {
+    if (selectedOrg && startdate && enddate) {
+      fetchInvestementCorporate();
     }
-  },[selectedOrg,startdate,enddate,selectedCorp])
-
+  }, [selectedOrg, startdate, enddate, selectedCorp]);
 
   useEffect(() => {
     // Remove items from local storage when the component mounts
@@ -244,6 +311,8 @@ const Report = () => {
     // Update the state with the new selection
     const selectedId = event.target.value;
     setSelectedOrg(selectedId);
+    const selected = organisations.find((org) => org.id == selectedId);
+    setOrgName(selected?.name || "");
 
     // Perform the API call with the selected ID
     try {
@@ -251,7 +320,7 @@ const Report = () => {
         params: { organization_id: selectedId },
       });
 
-      console.log("Corporates:", response.data);
+      // console.log("Corporates:", response.data);
       setCorporates(response.data);
     } catch (e) {
       console.log(
@@ -263,9 +332,9 @@ const Report = () => {
 
   const handleFirstSelectChange = (event) => {
     setFirstSelection(event.target.value);
-    setSelectedCorp()
-    setSelectedOrg()
-    setReportExist(false)
+    setSelectedCorp();
+    setSelectedOrg();
+    setReportExist(false);
     setShowSecondSelect(true); // Show the second select box when an option is selected
   };
   // const handleOrgselect = (event) => {
@@ -338,21 +407,32 @@ const Report = () => {
     const now = new Date();
 
     const day = now.getDate();
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
     const month = monthNames[now.getMonth()];
     const year = now.getFullYear();
 
-   
     let hours = now.getHours();
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'pm' : 'am';
-    hours = hours % 12 || 12; 
-
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    const ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12 || 12;
 
     const formattedDate = `${day} ${month} ${year} ${hours}:${minutes}:${seconds} ${ampm}`;
     return formattedDate;
-}
+  }
 
   const submitForm = async () => {
     LoaderOpen();
@@ -362,19 +442,40 @@ const Report = () => {
         corporate_id: entity.id,
         ownership_ratio: parseInt(entity.ownershipRatio),
       }));
-    const sandData = {
-      name: reportname,
-      report_type: reporttype,
-      report_by: firstSelection,
-      start_date: startdate,
-      end_date: enddate,
-      organization: selectedOrg,
-      corporate: selectedCorp,
-      investment_corporates: selectedEntities,
-      assessment_id:assessment_id?assessment_id:null
-    };
 
-    await post(`/sustainapp/report_create/`, sandData)
+      
+      let sendData={}
+    if(reporttype==='Custom ESG Report'){
+       sendData = {
+        name: reportname,
+        report_type: reporttype,
+        report_by: firstSelection,
+        start_date: startdate,
+        end_date: enddate,
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        investment_corporates: selectedEntities,
+        assessment_id:assessment_id?assessment_id:null,
+        include_management_material_topics: includeMaterialTopics,
+        include_content_index:includeContentIndex
+      };
+    }  
+    else{
+       sendData = {
+        name: reportname,
+        report_type: reporttype,
+        report_by: firstSelection,
+        start_date: startdate,
+        end_date: enddate,
+        organization: selectedOrg,
+        corporate: selectedCorp,
+        investment_corporates: selectedEntities,
+        assessment_id:assessment_id?assessment_id:null
+      };
+    }
+    
+
+    await post(`/sustainapp/report_create/`, sendData)
       .then((response) => {
         if (response.status == "200") {
           toast.success("Report has been added successfully", {
@@ -399,27 +500,51 @@ const Report = () => {
           setFirstSelection();
 
           window.localStorage.setItem("reportid", response.data.id);
-          window.localStorage.setItem(
-            "reportorgname",
-            response.data.organization_name
-          );
+          if(response.data.report_by=='Organization'){
+            window.localStorage.setItem(
+              "reportorgname",
+              response.data.organization_name
+            );
+          }
+          else if (response.data.report_by=='Corporate'){
+            window.localStorage.setItem(
+              "reportCorpName",
+              response.data.organization_name
+            );
+            window.localStorage.setItem(
+              "reportorgname",
+              orgName
+            );
+          }
+         
           window.localStorage.setItem(
             "reportstartdate",
             response.data.start_date
           );
           window.localStorage.setItem("reportenddate", response.data.end_date);
-          window.localStorage.setItem("reportCreatedOn", response.data.created_at);
+          window.localStorage.setItem(
+            "reportCreatedOn",
+            response.data.created_at
+          );
           window.localStorage.setItem(
             "organizationcountry",
             response.data.organization_country
           );
           window.localStorage.setItem("reportType", reporttype);
+          window.localStorage.setItem('reportby',firstSelection)
+          window.localStorage.setItem('reportCorpName',corpName)
           if (
             reporttype == "GRI Report: In accordance With" ||
-            reporttype == "GRI Report: With Reference to"
+            reporttype == "GRI Report: With Reference to" ||
+            reporttype === 'Custom ESG Report'
           ) {
             router.push("/dashboard/Report/ESG");
-          } else {
+          } else if (reporttype == "canada_bill_s211_v2") {
+            router.push("/dashboard/Report/Bills211");
+          } else if (reporttype == "TCFD") {
+            router.push("/dashboard/Report/TCFD");
+          }
+           else {
             router.push("/dashboard/Report/GHG/Ghgtemplates");
           }
 
@@ -447,23 +572,21 @@ const Report = () => {
         }
       })
       .catch((error) => {
-        if (error.status === 400) {
+        const responseData = error.response?.data;
+
+        if (
+          error.response?.status === 400 &&
+          responseData?.message?.report_type
+        ) {
           LoaderClose();
-          // setReportname();
-          // setReporttype();
-          // setStartdate();
-          // setEnddate();
-          // setSelectedOrg();
-          // setSelectedCorp();
-          // setFirstSelection();
           setMassgeshow(true);
+          setMassgename(responseData.message.report_type);
+          // You could also store the error text if needed:
+          // setErrorMessage(responseData.message.data);
         } else {
           const errorMessage =
-            error.response && error.response.data && error.response.data.message
-              ? error.response.data.message
-              : "An unexpected error occurred";
+            responseData?.message || "An unexpected error occurred";
           toast.error(errorMessage, {
-            // Corrected 'error.message'
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -480,8 +603,8 @@ const Report = () => {
           setEnddate();
           setSelectedOrg();
           setSelectedCorp();
-          LoaderClose();
           setFirstSelection();
+          LoaderClose();
         }
       });
   };
@@ -517,24 +640,50 @@ const Report = () => {
       newErrors.enddate = "Please select a date";
     }
 
+    // if (
+    //   reporttype === "GHG Report - Investments" &&
+    //   entities?.length > 0
+    // ) {
+    //   const validCheckedEntities = entities.filter(
+    //     (entity) =>
+    //       entity.emission_data &&
+    //       entity.checked &&
+    //       entity.ownershipRatio !== "" &&
+    //       !isNaN(entity.ownershipRatio) &&
+    //       Number(entity.ownershipRatio) > 0 &&
+    //       Number(entity.ownershipRatio) <= 100
+    //   );
+  
+    //   if (validCheckedEntities.length === 0) {
+    //     newErrors.investmentEntities = "Please check and enter ownership ratio (1–100%) for at least one investment corporate with data.";
+    //   }
+    // }
     if (
       reporttype === "GHG Report - Investments" &&
       entities?.length > 0
     ) {
-      const validCheckedEntities = entities.filter(
-        (entity) =>
-          entity.emission_data &&
-          entity.checked &&
-          entity.ownershipRatio !== "" &&
-          !isNaN(entity.ownershipRatio) &&
-          Number(entity.ownershipRatio) > 0 &&
-          Number(entity.ownershipRatio) <= 100
-      );
-  
-      if (validCheckedEntities.length === 0) {
-        newErrors.investmentEntities = "Please check and enter ownership ratio (1–100%) for at least one investment corporate with data.";
+      const checkedEntities = entities.filter(entity => entity.checked);
+      
+      if (checkedEntities.length === 0) {
+        newErrors.investmentEntities = "Please select at least one investment corporate.";
+      } else {
+        const allCheckedHaveValidOwnership = checkedEntities.every(
+          entity =>
+            entity.emission_data &&
+            entity.ownershipRatio !== "" &&
+            !isNaN(entity.ownershipRatio) &&
+            Number(entity.ownershipRatio) > 0 &&
+            Number(entity.ownershipRatio) <= 100
+        );
+    
+        if (!allCheckedHaveValidOwnership) {
+          newErrors.investmentEntities = checkedEntities.length === 1
+            ? "Please enter a valid ownership ratio (1–100%) for the selected corporate with data."
+            : "Please enter valid ownership ratios (1–100%) for all selected corporates with data.";
+        }
       }
     }
+    
 
     return newErrors;
   };
@@ -614,7 +763,13 @@ const Report = () => {
                 <select
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                   value={selectedCorp}
-                  onChange={(e) => setSelectedCorp(e.target.value)}
+                  // onChange={(e) => setSelectedCorp(e.target.value)}
+                  onChange={(e) => {
+                    const selectedId = e.target.value;
+                    const selected = corporates.find((corp) => corp.id == selectedId);
+                    setSelectedCorp(selectedId);
+                    setCorpName(selected?.name || "");
+                  }}
                 >
                   <option value="">--Select Corporate--- </option>
                   {corporates?.map((corp) => (
@@ -641,7 +796,7 @@ const Report = () => {
   });
 
   const handleValueChange = (newValue) => {
-    console.log("newValue:", newValue);
+    // console.log("newValue:", newValue);
     setValue(newValue);
   };
   const handleClick = () => {
@@ -649,10 +804,25 @@ const Report = () => {
     setIsExpandedpage(!isExpandedpage);
   };
 
+  const handlePass = (link, step) => {
+    router.push(link); // Navigate to the provided link
+    dispatch(setActivesection(step)); // Set the current section (like "Structure")
+  };
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
     setMassgeshow(false);
+    window.localStorage.setItem("reportCorpName", '');
+    window.localStorage.setItem("reportby", '');
     setIsMenuOpen(false);
+    // dispatch(
+    //   setIncludeMaterialTopics(false)
+    // )
+    // dispatch(
+    //   setIncludeContentIndex(false)
+    // )
+     dispatch(resetToDefaults())
+    dispatch(resetToggleToDefaults())
   };
 
   const handleCloseModal = () => {
@@ -665,16 +835,26 @@ const Report = () => {
     setSelectedCorp();
     setFirstSelection();
     setMassgeshow(false);
-    setMaterialityAssessmentLen([])
+    setMaterialityAssessmentLen([]);
     setError({});
-    setReportExist(false)
-    setEntities([])
+    setMassgename(""),
+    setReportExist(false);
+    setEntities([]);
+    setSelectedYear("");
+    dispatch(resetToDefaults())
+    dispatch(resetToggleToDefaults())
+    // dispatch(
+    //   setIncludeMaterialTopics(false)
+    // )
+    // dispatch(
+    //   setIncludeContentIndex(false)
+    // )
     // setshowInvestmentMessage(false)
   };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const options = { year: "numeric", month: "long" }; 
+    const options = { year: "numeric", month: "long" };
     return date.toLocaleDateString(undefined, options);
   };
 
@@ -750,64 +930,103 @@ const Report = () => {
               </div>
               {/* validation code */}
               {massgeshow && (
-                <div className="mt-5 px-7 ">
-                  <div className="flex items-start p-4  border-t-2 border-[#F98845] rounded shadow-md">
-                    <div className="flex-shrink-0">
-                      <FaExclamationTriangle className="text-[#F98845] w-6 h-6" />
-                    </div>
-                    <div className="ml-3">
-                      <p className="font-bold text-left text-[#0D024D] ">
-                        Mandatory GRI: General Disclosures missing
-                      </p>
-                      <p className="text-[12px] text-[#0D024D]  mt-1">
-                        Please fill the missing disclosures of GRI Reporting
-                        Info under
-                        <strong> Collect &gt; General</strong> section to
-                        proceed.
-                      </p>
-                      <div className="mt-2 text-left flex">
-                        <p className="text-[#0D024D] text-[12px]">
-                          {" "}
-                          Proceed to Collect &gt;
-                        </p>
-                        <Link
-                          href="/dashboard/general"
-                          className="text-blue-500  text-sm font-semibold flex"
-                        >
-                          General &gt; GRI Reporting Info{" "}
-                          <GoArrowRight className="font-bold mt-1 ml-2" />
-                        </Link>
+                <>
+                  {massgename === "canada_bill_s211_v2" && (
+                    <div className="mt-5 xl:px-7 lg:px-5 ">
+                      <div className="flex items-start p-2 border-t-2 border-[#F98845] rounded shadow-md">
+                        <div className="flex-shrink-0">
+                          <FaExclamationTriangle className="text-[#F98845] w-6 h-6" />
+                        </div>
+                        <div className="ml-3">
+                          <p className="font-bold text-left text-[#0D024D]">
+                            Data Incomplete
+                          </p>
+                          <p className="text-[12px] text-[#0D024D] mt-1 text-start">
+                            The Bill S-211 questionnaire data for the selected
+                            year is incomplete. Please answer all the mandatory
+                            questions to continue.
+                          </p>
+                          <div className="mt-2 text-left flex gap-2">
+                            <p className="text-[#0D024D] text-[12px]">
+                              Proceed to
+                            </p>
+                            <Link
+                              href="/dashboard/social"
+                              className="text-blue-500 text-sm font-semibold flex"
+                            >
+                              Collect &gt; Social &gt; Bill S-211
+                              <GoArrowRight className="font-bold mt-1 ml-2" />
+                            </Link>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="ml-auto">
-                      <p
-                        className="text-sm text-blue-500  ml-4"
-                        data-tooltip-id={`tooltip-$e86`}
-                        data-tooltip-html="<p>Requirement 2 as per GRI: General Disclosures 2021 states that reasons for omission are not permitted for Disclosures 2-1, 2-2, 2-3, 2-4, and 2-5, as reporting on these disclosures is mandatory. Please fill the data here:</p> <br> <p>COLLECT>GENERAL>GRI Reporting Info before creating the report.</p>"
-                      >
-                        Learn more
-                      </p>
-                      <ReactTooltip
-                        id={`tooltip-$e86`}
-                        place="top"
-                        effect="solid"
-                        style={{
-                          width: "290px",
-                          backgroundColor: "#FFF",
-                          color: "#000",
-                          fontSize: "12px",
-                          boxShadow: 3,
-                          borderRadius: "8px",
-                          textAlign: "left",
-                          zIndex: 100,
-                          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                          opacity: 1,
-                        }}
-                      ></ReactTooltip>
+                  )}
+
+                  {massgename === "esg_report" && (
+                    <div className="mt-5 xl:px-7 lg:px-5 ">
+                      <div className="flex items-start p-2 border-t-2 border-[#F98845] rounded shadow-md">
+                        <div className="flex-shrink-0">
+                          <FaExclamationTriangle className="text-[#F98845] w-6 h-6" />
+                        </div>
+                        <div className="ml-3">
+                          <p className="font-bold text-left text-[#0D024D]">
+                            Mandatory GRI: General Disclosures missing
+                          </p>
+                          <p className="text-[12px] text-[#0D024D] mt-1 text-start">
+                            Please fill the missing disclosures of GRI Reporting
+                            Info under
+                            <strong> Collect &gt; General</strong> section to
+                            proceed.
+                          </p>
+                          <div className="mt-2 text-left flex">
+                            <p className="text-[#0D024D] text-[12px]">
+                              Proceed to Collect &gt;
+                            </p>
+                            <p
+                              // href="/dashboard/general"
+                              onClick={()=>{
+                                handlePass('/dashboard/general','Org Details')
+                              }}
+                              className="text-blue-500 text-sm font-semibold flex cursor-pointer"
+                            >
+                              General &gt; GRI Reporting Info
+                              <GoArrowRight className="font-bold mt-1 ml-2" />
+                            </p>
+                          </div>
+                        </div>
+                        <div className="ml-auto">
+                          <p
+                            className="text-sm text-blue-500 ml-4"
+                            data-tooltip-id="tooltip-$e86"
+                            data-tooltip-html="<p>Requirement 2 as per GRI: General Disclosures 2021 states that reasons for omission are not permitted for Disclosures 2-1, 2-2, 2-3, 2-4, and 2-5, as reporting on these disclosures is mandatory. Please fill the data here:</p> <br> <p>COLLECT&gt;GENERAL&gt;GRI Reporting Info before creating the report.</p>"
+                          >
+                            Learn more
+                          </p>
+                          <ReactTooltip
+                            id="tooltip-$e86"
+                            place="top"
+                            effect="solid"
+                            style={{
+                              width: "290px",
+                              backgroundColor: "#FFF",
+                              color: "#000",
+                              fontSize: "12px",
+                              borderRadius: "8px",
+                              textAlign: "left",
+                              zIndex: 100,
+                              boxShadow:
+                                "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                              opacity: 1,
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  )}
+                </>
               )}
+
               {reportExist && (
                 <div className="mt-5 px-7 ">
                   <div className="flex items-start p-4  border-t-2 border-[#F98845] rounded shadow-md">
@@ -816,7 +1035,10 @@ const Report = () => {
                     </div>
                     <div className="ml-3">
                       <p className="text-left text-[#0D024D] text-[15px]">
-                      A report already exists for {selectedOrgName} {selectedCorpName?`and ${selectedCorpName}`:''} for the selected period. Do you want to create another report?
+                        A report already exists for {selectedOrgName}{" "}
+                        {selectedCorpName ? `and ${selectedCorpName}` : ""} for
+                        the selected period. Do you want to create another
+                        report?
                       </p>
                     </div>
                   </div>
@@ -846,7 +1068,9 @@ const Report = () => {
                       />
                     </div>
                     {error.reportname && (
-                      <p className="text-red-500 text-sm ml-1">{error.reportname}</p>
+                      <p className="text-red-500 text-sm ml-1">
+                        {error.reportname}
+                      </p>
                     )}
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-4">
@@ -869,6 +1093,11 @@ const Report = () => {
                           <option>GHG Report - Investments</option>
                           <option>GRI Report: In accordance With</option>
                           <option>GRI Report: With Reference to</option>
+                          <option value="canada_bill_s211_v2">
+                            Bill S-211
+                          </option>
+                          { isTCFDAvailable() && <option value="TCFD">TCFD</option>}
+                          <option>Custom ESG Report</option>
                         </select>
                         {error.reporttype && (
                           <p className="text-red-500 text-sm ml-1">
@@ -906,8 +1135,90 @@ const Report = () => {
                   <div className="mb-3">
                     {showSecondSelect && renderSecondSelect()}
                   </div>
-                 
-                  <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-4">
+                  {reporttype === "canada_bill_s211_v2" ? (
+                    <div className="mb-4">
+                      <label
+                        htmlFor="yearSelect"
+                        className="block text-neutral-800 text-[13px] font-normal"
+                      >
+                        Select Year
+                      </label>
+                      <div className="mt-2">
+                        <select
+                          id="yearSelect"
+                          value={selectedYear}
+                          onChange={handleYearChange}
+                          className="block w-full rounded-md border-0 py-2 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
+                        >
+                          <option value="">Select Year</option>
+                          <option value="2024">2024</option>
+                          <option value="2025">2025</option>
+                        </select>
+                        {(error.startdate || error.enddate) && (
+                          <p className="text-red-500 text-sm ml-1">
+                            {error.startdate || error.enddate}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 mb-4">
+                      <div>
+                        <label
+                          htmlFor="sdate"
+                          className="block text-neutral-800 text-[13px] font-normal"
+                        >
+                          Reporting Period (From)
+                        </label>
+                        <div className="mt-2 xl:mr-4">
+                          <input
+                            id="sdate"
+                            name="startdate"
+                            type="date"
+                            autoComplete="sdate"
+                            value={startdate}
+                            onChange={handleChangeStartdate}
+                            required
+                            placeholder="Select Fiscal Year"
+                            className="block w-full px-1 rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
+                          />
+                        </div>
+                        {error.startdate && (
+                          <p className="text-red-500 text-sm ml-1">
+                            {error.startdate}
+                          </p>
+                        )}
+                      </div>
+                      <div className="xl:ml-3 w-full">
+                        <label
+                          htmlFor="edate"
+                          className="block text-neutral-800 text-[13px] font-normal"
+                        >
+                          Reporting Period (To)
+                        </label>
+                        <div className="mt-2 xl:mr-3">
+                          <input
+                            id="edate"
+                            name="enddate"
+                            type="date"
+                            autoComplete="edate"
+                            value={enddate}
+                            onChange={handleChangeEnddate}
+                            required
+                            placeholder="End date"
+                            className="block w-full px-1 rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
+                          />
+                        </div>
+                        {error.enddate && (
+                          <p className="text-red-500 text-sm ml-1">
+                            {error.enddate}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-4">
                     <div>
                       <label
                         htmlFor="sdate"
@@ -929,7 +1240,9 @@ const Report = () => {
                         />
                       </div>
                       {error.startdate && (
-                        <p className="text-red-500 text-sm ml-1">{error.startdate}</p>
+                        <p className="text-red-500 text-sm ml-1">
+                          {error.startdate}
+                        </p>
                       )}
                     </div>
                     <div className="xl:ml-3 w-full">
@@ -953,14 +1266,16 @@ const Report = () => {
                         />
                       </div>
                       {error.enddate && (
-                        <p className="text-red-500 text-sm ml-1">{error.enddate}</p>
+                        <p className="text-red-500 text-sm ml-1">
+                          {error.enddate}
+                        </p>
                       )}
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* investment corporate */}
-                  {reporttype === "GHG Report - Investments" && entities?.length>0 ?
-                   (
+                  {reporttype === "GHG Report - Investments" &&
+                  entities?.length > 0 ? (
                     <div className={``}>
                       <label
                         htmlFor="sdate"
@@ -968,7 +1283,11 @@ const Report = () => {
                       >
                         Select Investment Corporate
                       </label>
-                      <div className={`mt-2 border border-gray-300 rounded-md ${entities?.length>0?'h-[200px]':'h-auto'} overflow-y-auto table-scrollbar`}>
+                      <div
+                        className={`mt-2 border border-gray-300 rounded-md ${
+                          entities?.length > 0 ? "h-[200px]" : "h-auto"
+                        } overflow-y-auto table-scrollbar`}
+                      >
                         <div className="p-3">
                           <div className="grid grid-cols-2 gap-2">
                             <div className="text-gray-400 font-semibold text-[13px]">
@@ -980,42 +1299,56 @@ const Report = () => {
 
                             {entities.map((entity, index) => (
                               <React.Fragment key={index}>
-                                <div className={`flex relative items-center space-x-2 ${!entity.emission_data?'opacity-30':''}`}>
+                                <div
+                                  className={`flex relative items-center space-x-2 ${
+                                    !entity.emission_data ? "opacity-30" : ""
+                                  }`}
+                                >
                                   <input
                                     id={entity.id}
                                     type="checkbox"
                                     disabled={!entity.emission_data}
                                     checked={entity.checked}
-                                    onChange={() => handleCheckboxChange(index,entity.emission_data)}
-                                    className="form-checkbox h-4 w-4 accent-green-600"
+                                    onChange={() =>
+                                      handleCheckboxChange(
+                                        index,
+                                        entity.emission_data
+                                      )
+                                    }
+                                    className="form-checkbox h-4 w-4 green-checkbox"
                                     value={entity.id}
                                   />
                                   <label
                                     htmlFor={entity.id}
                                     className="text-gray-800 text-[13px] cursor-pointer"
                                     data-tooltip-id={`tooltip-${entity.id}`}
-                        data-tooltip-html={`${!entity.emission_data?'<p>No data available for the selected Reporting period</p>':''}`}
+                                    data-tooltip-html={`${
+                                      !entity.emission_data
+                                        ? "<p>No data available for the selected Reporting period</p>"
+                                        : ""
+                                    }`}
                                   >
                                     {entity.name}
                                   </label>
                                 </div>
                                 <ReactTooltip
-                        id={`tooltip-${entity.id}`}
-                        place="top"
-                        effect="solid"
-                        style={{
-                          width: "290px",
-                          backgroundColor: "#FFF",
-                          color: "#000",
-                          fontSize: "12px",
-                          boxShadow: 3,
-                          borderRadius: "8px",
-                          textAlign: "left",
-                          zIndex: 100,
-                          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                          opacity: 1,
-                        }}
-                      ></ReactTooltip>
+                                  id={`tooltip-${entity.id}`}
+                                  place="top"
+                                  effect="solid"
+                                  style={{
+                                    width: "290px",
+                                    backgroundColor: "#FFF",
+                                    color: "#000",
+                                    fontSize: "12px",
+                                    boxShadow: 3,
+                                    borderRadius: "8px",
+                                    textAlign: "left",
+                                    zIndex: 100,
+                                    boxShadow:
+                                      "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                                    opacity: 1,
+                                  }}
+                                ></ReactTooltip>
                                 {/* <input
                                   type="number"
                                   placeholder="Enter Ownership Ratio %"
@@ -1030,64 +1363,175 @@ const Report = () => {
                                   }
                                 /> */}
                                 <div className="relative w-full">
-  <input
-    type="text"
-    placeholder="Enter Ownership Ratio"
-    className={`border-b p-2 rounded w-full text-[13px] pr-6 ${!entity.checked ? 'opacity-35' : ''}`}
-    disabled={!entity.checked}
-    value={entity.ownershipRatio}
-    onChange={(e) => handleOwnershipRatioChange(index, e.target.value)}
-  />
-  <span className="absolute right-2 top-2 text-[13px] text-gray-500 pointer-events-none">%</span>
-</div>
-
-
-
+                                  <input
+                                    type="text"
+                                    placeholder="Enter Ownership Ratio"
+                                    className={`border-b p-2 rounded w-full text-[13px] pr-6 ${
+                                      !entity.checked ? "opacity-35" : ""
+                                    }`}
+                                    disabled={!entity.checked}
+                                    value={entity.ownershipRatio}
+                                    onChange={(e) =>
+                                      handleOwnershipRatioChange(
+                                        index,
+                                        e.target.value
+                                      )
+                                    }
+                                  />
+                                  <span className="absolute right-2 top-2 text-[13px] text-gray-500 pointer-events-none">
+                                    %
+                                  </span>
+                                </div>
                               </React.Fragment>
                             ))}
                           </div>
                         </div>
                       </div>
                       {error.investmentEntities && (
-                      <p className="text-red-500 text-sm mt-1 ml-1">{error.investmentEntities}</p>
-                    )}
+                        <p className="text-red-500 text-sm mt-1 ml-1">
+                          {error.investmentEntities}
+                        </p>
+                      )}
                     </div>
-
-                  ):(
+                  ) : (
                     <div>
-                       {/* {showInvestmentMessage && (
+                      {/* {showInvestmentMessage && (
                       <div className="flex gap-2 mb-2">
                       <IoIosWarning className="text-[#F98845] w-5 h-5" />
                     <p className="text-[14px] text-[#F98845] font-[500]">No Investment corporate data is available for the selected Corporate</p>
                     </div>
                     )} */}
                     </div>
-                   
-                    
                   )}
                   {/* materiality assessment */}
-                  {materialityAssessmentLen&&materialityAssessmentLen.length>1?(
-                     <div>
-                     <div className="flex gap-2 mb-2">
-                       <IoIosWarning className="text-[#F98845] w-5 h-5" />
-                     <p className="text-[14px] text-[#F98845] font-[500]">More than one materiality assessment is present in the  selected date range</p>
-                     </div>
-                     <div>
-                       <p className="text-neutral-800 text-[13px] font-normal">Select Materiality Assessment *</p>
-                       <select className="mt-1 block w-[34%] py-2 bg-white rounded-md focus:outline-none sm:text-sm mb-2"
-                       onChange={(e) => setAssessmentId(e.target.value)}
-                       >
-                       <option  value="" disabled selected>Select Assessment</option>
-                       {materialityAssessmentLen&&materialityAssessmentLen.map((val)=>(
-                       <option class="text-black text-sm hover:bg-blue-100" value={val.id}>{`${formatDate(val.start_date)} - ${formatDate(val.end_date)}`}</option>
-                       ))}
-                     </select>
-                     <p className="text-[#ACACAC] text-[12px] font-normal">Select one of the materiality assessment found in the date range</p>
-                     </div>
-                     
-                 </div>
-                  ):(
+                  {materialityAssessmentLen &&
+                  materialityAssessmentLen.length > 1 ? (
+                    <div>
+                      <div className="flex gap-2 mb-2">
+                        <IoIosWarning className="text-[#F98845] w-5 h-5" />
+                        <p className="text-[14px] text-[#F98845] font-[500]">
+                          More than one materiality assessment is present in the
+                          selected date range
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-neutral-800 text-[13px] font-normal">
+                          Select Materiality Assessment *
+                        </p>
+                        <select
+                          className="mt-1 block w-[34%] py-2 bg-white rounded-md focus:outline-none sm:text-sm mb-2"
+                          onChange={(e) => setAssessmentId(e.target.value)}
+                        >
+                          <option value="" disabled selected>
+                            Select Assessment
+                          </option>
+                          {materialityAssessmentLen &&
+                            materialityAssessmentLen.map((val) => (
+                              <option
+                                class="text-black text-sm hover:bg-blue-100"
+                                value={val.id}
+                              >{`${formatDate(val.start_date)} - ${formatDate(
+                                val.end_date
+                              )}`}</option>
+                            ))}
+                        </select>
+                        <p className="text-[#ACACAC] text-[12px] font-normal">
+                          Select one of the materiality assessment found in the
+                          date range
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
                     <div></div>
+                  )}
+
+{reporttype === "Custom ESG Report" && (
+                    <div className="border border-gray-300 p-4 rounded-lg space-y-4">
+                      {/* Include Management of Material Topics */}
+                      <div className="flex items-start gap-3">
+                        <div className="flex items-center pt-0.5">
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={includeMaterialTopics}
+                              onChange={(e) =>
+                                dispatch(
+                                  setIncludeMaterialTopics(e.target.checked)
+                                )
+                              }
+                              className="sr-only"
+                            />
+                            <div
+                              className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${
+                                includeMaterialTopics
+                                  ? "bg-green-500"
+                                  : "bg-gray-300"
+                              }`}
+                            >
+                              <div
+                                className={`w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-200 ease-in-out ${
+                                  includeMaterialTopics
+                                    ? "translate-x-5"
+                                    : "translate-x-0"
+                                } mt-0.5 ml-0.5`}
+                              ></div>
+                            </div>
+                          </label>
+                        </div>
+                        <div className="flex-1">
+                          <label className="text-sm font-medium text-gray-900 block leading-6">
+                            Include Management of Material Topics
+                          </label>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Checking this option will include the disclosures on
+                            management of material topics for all selected
+                            sections.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Include Content Index */}
+                      <div className="flex items-start gap-3">
+                        <div className="flex items-center pt-0.5">
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={includeContentIndex}
+                              onChange={(e) =>
+                                dispatch(
+                                  setIncludeContentIndex(e.target.checked)
+                                )
+                              }
+                              className="sr-only"
+                            />
+                            <div
+                              className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${
+                                includeContentIndex
+                                  ? "bg-green-500"
+                                  : "bg-gray-300"
+                              }`}
+                            >
+                              <div
+                                className={`w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-200 ease-in-out ${
+                                  includeContentIndex
+                                    ? "translate-x-5"
+                                    : "translate-x-0"
+                                } mt-0.5 ml-0.5`}
+                              ></div>
+                            </div>
+                          </label>
+                        </div>
+                        <div className="flex-1">
+                          <label className="text-sm font-medium text-gray-900 block leading-6">
+                            Include Content Index
+                          </label>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Checking this option will add a GRI content index at
+                            the end of the report
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   )}
                  
                   <div className="flex justify-center mt-5">
@@ -1095,8 +1539,9 @@ const Report = () => {
                       <button
                         type="submit"
                         // value="Create Report"
-                        className="w-[100%] h-[31px] mb-2 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex cursor-pointer text-white"
+                        className={`w-[100%] ${massgename === "esg_report" && reporttype==='GRI Report: In accordance With'?'opacity-30 cursor-not-allowed':'cursor-pointe'} bg-sky-600 h-[31px] mb-2 px-[22px] py-2  rounded shadow flex-col justify-center items-center inline-flex text-white`}
                         onClick={handleSubmit}
+                        disabled={massgename === "esg_report" && reporttype==='GRI Report: In accordance With'}
                       >
                         Create Report
                       </button>

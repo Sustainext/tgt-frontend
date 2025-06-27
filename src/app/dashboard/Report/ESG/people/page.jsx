@@ -3,6 +3,7 @@ import {
   forwardRef,
   useImperativeHandle,
   useState,
+  createRef,
   useRef,
   useEffect,
 } from "react";
@@ -67,51 +68,34 @@ import {
   setSecurityPersonnelExternalTraining,
 } from "../../../../../lib/redux/features/ESGSlice/screen13Slice";
 
-const People = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
-  const [activeSection, setActiveSection] = useState("section13_1");
-
-  const section13_1Ref = useRef(null);
-  const section13_2Ref = useRef(null);
-  const section13_3Ref = useRef(null);
-  const section13_4Ref = useRef(null);
-  const section13_5Ref = useRef(null);
-  const section13_6Ref = useRef(null);
-  const section13_7Ref = useRef(null);
-  const section13_8Ref = useRef(null);
-  const section13_1_1Ref = useRef(null);
-  const section13_1_2Ref = useRef(null);
-  const section13_1_3Ref = useRef(null);
-  const section13_1_4Ref = useRef(null);
-  const section13_1_5Ref = useRef(null);
-  const section13_1_6Ref = useRef(null);
-  const section13_2_1Ref = useRef(null);
-  const section13_2_2Ref = useRef(null);
-  const section13_2_3Ref = useRef(null);
-  const section13_3_1Ref = useRef(null);
-  const section13_4_1Ref = useRef(null);
-  const section13_4_2Ref = useRef(null);
-  const section13_4_3Ref = useRef(null);
-  const section13_5_1Ref = useRef(null);
-  const section13_5_2Ref = useRef(null);
-  const section13_6_1Ref = useRef(null);
-  const section13_6_2Ref = useRef(null);
-  const section13_6_3Ref = useRef(null);
-  const section13_6_4Ref = useRef(null);
-  const section13_6_5Ref = useRef(null);
-  const section13_6_6Ref = useRef(null);
-  const section13_6_7Ref = useRef(null);
-  const section13_6_8Ref = useRef(null);
-  const section13_6_9Ref = useRef(null);
-  const section13_6_10Ref = useRef(null);
-  const section13_7_1Ref = useRef(null);
-  const section13_7_2Ref = useRef(null);
-  const section13_8_1Ref = useRef(null);
-  const section13_8_2Ref = useRef(null);
-
-  const orgName =
-    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
-  const reportid =
-    typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+const People = forwardRef(({
+  onSubmitSuccess,
+  subsections = [],
+  sectionOrder = 13,
+  sectionId,
+  sectionTitle,
+  hasChanges,
+}, ref) => {
+  const [activeSection, setActiveSection] = useState("employees");
+  const [initialData, setInitialData] = useState({});
+ 
+  // const orgName =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  // const reportid =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  // const reportType =
+  //   typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+  const [reportid, setReportid] = useState("");
+  const [reportType, setReportType] = useState("");
+  const [orgName, setOrgname] = useState("");
+  
+  // Update after mount on client only
+  useEffect(() => {
+    setReportid(localStorage.getItem("reportid") || "");
+    setReportType(localStorage.getItem("reportType") || "");
+    setOrgname(localStorage.getItem("reportorgname") || "");
+  }, []);
+  
   const apiCalledRef = useRef(false);
   const [data, setData] = useState("");
   const [loopen, setLoOpen] = useState(false);
@@ -176,6 +160,548 @@ const People = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
 
   const dispatch = useDispatch();
 
+  const isWithReference = reportType === "GRI Report: With Reference to";
+
+
+  const groupedSubsections = [
+    {
+      groupId: "employees",
+      title: "Employees",
+      children: [
+        !isWithReference && { id: "employees_material_topic_management", label: "Management Of Material Topics" },
+        { id: "employee_hiring_turnover", label: "Employee Hire, Turnover" },
+        { id: "employee_benefits_health", label: "Employee Benefits And Health Services" },
+        { id: "parental_leaves", label: "Parental Leaves" },
+        { id: "standard_wages", label: "Standard Wage" },
+        { id: "career_development_reviews", label: "Performance And Career Development Reviews Of Employees" },
+      ].filter(Boolean),
+    },
+    {
+      groupId: "labour_management",
+      title: "Labour Management",
+      children: [
+        !isWithReference && { id: "labour_material_topic_management", label: "Management Of Material Topics" },
+        { id: "non_employee_workers", label: "Workers Who Are Not Employees" },
+        { id: "forced_labour", label: "Forced Or Compulsory Labour" },
+      ].filter(Boolean),
+    },
+    {
+      groupId: "child_labour",
+      title: "Incidents Of Child Labour",
+      children: [
+        !isWithReference && { id: "child_labour_material_topic_management", label: "Management Of Material Topic" },
+      ].filter(Boolean),
+    },
+    {
+      groupId: "diversity_inclusion",
+      title: "Diversity, Inclusion",
+      children: [
+        !isWithReference && { id: "diversity_material_topic_management", label: "Management Of Material Topics" },
+        { id: "diversity_governance_employees", label: "Diversity Of Governance Bodies And Employees" },
+        { id: "diversity_remuneration", label: "Remuneration" },
+      ].filter(Boolean),
+    },
+    {
+      groupId: "training_education",
+      title: "Training & Education",
+      children: [
+        !isWithReference && { id: "training_material_topic_management", label: "Management Of Material Topics" },
+        { id: "training_programs_upgrading_skills", label: "Programs For Upgrading Employee Skills And Transition Assistance Programs" },
+      ].filter(Boolean),
+    },
+    {
+      groupId: "occupational_health_safety",
+      title: "Occupational Health And Safety",
+      children: [
+        !isWithReference && { id: "ohs_material_topic_management", label: "Management Of Material Topic" },
+        { id: "ohs_management_system", label: "OHS Management System" },
+        { id: "occupational_health_services", label: "Occupational Health Services" },
+        { id: "worker_ohs_participation", label: "Worker Participation, Consultation, And Communication On OHS" },
+        { id: "promotion_worker_health", label: "Promotion Of Worker Health" },
+        { id: "ohs_impact_prevention", label: "Prevention And Mitigation Of OHS Impacts" },
+        { id: "hazard_risk_identification", label: "Hazard, Risk Identification And Investigation" },
+        { id: "work_related_illness_injuries", label: "Work-Related Ill-Health & Injuries" },
+        { id: "safety_training", label: "Safety Training" },
+        { id: "workers_covered_ohs", label: "Workers Covered By OHS Management System" },
+      ].filter(Boolean),
+    },
+    {
+      groupId: "collective_bargaining",
+      title: "Collective Bargaining",
+      children: [
+        { id: "freedom_of_association_risks", label: "Operations And Suppliers In Which The Right To Freedom Of Association And Collective Bargaining May Be At Risk" },
+      ]
+    },
+    {
+      groupId: "violations_discrimination",
+      title: "Incidents Of Violation/Discrimination",
+      children: [
+        !isWithReference && { id: "violations_material_topic_management", label: "Management Of Material Topic" },
+      ].filter(Boolean),
+    }
+  ];
+  
+  
+  
+  
+
+  const subsectionMapping = {
+    // Employees
+    employees: {
+      component: ({ section13_1Ref, sectionNumber = "13.1", sectionTitle = "Employees", sectionOrder = 13 }) => {
+        return (
+          <div id="section13_1" ref={section13_1Ref}>
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionNumber} {sectionTitle}
+            </h3>
+          </div>
+        );
+      },
+      title: "Employees",
+      subSections: [],
+    },
+    ...(!isWithReference && {
+      employees_material_topic_management: {
+        component: Section2,
+        title: "Management Of Material Topics",
+        subSections: [],
+      }
+    }),
+    employee_hiring_turnover: {
+      component: Section3,
+      title: "Employee Hire, Turnover",
+      subSections: [],
+    },
+    employee_benefits_health: {
+      component: Section4,
+      title: "Employee Benefits And Health Services",
+      subSections: [],
+    },
+    parental_leaves: {
+      component: Section5,
+      title: "Parental Leaves",
+      subSections: [],
+    },
+    standard_wages: {
+      component: Section6,
+      title: "Standard Wage",
+      subSections: [],
+    },
+    career_development_reviews: {
+      component: Section7,
+      title: "Performance And Career Development Reviews Of Employees",
+      subSections: [],
+    },
+  
+    // Labour Management
+    labour_management: {
+      component: ({ section13_2Ref, data, sectionNumber = "13.2", sectionTitle = "Labour Management", sectionOrder = 13 }) => {
+        return (
+          <div id="section13_2" ref={section13_2Ref}>
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionNumber} {sectionTitle}
+            </h3>
+            <p className="text-sm mb-4">
+              {data?.["409-1b"]?.data?.[0]?.Q1 || "No data available"}
+            </p>
+          </div>
+        );
+      },
+      title: "Labour Management",
+      subSections: [],
+    },
+    ...(!isWithReference && {
+      labour_material_topic_management: {
+        component: Section8,
+        title: "Management Of Material Topics",
+        subSections: [],
+      }
+    }),
+    non_employee_workers: {
+      component: Section9,
+      title: "Workers Who Are Not Employees",
+      subSections: [],
+    },
+    forced_labour: {
+      component: Section10,
+      title: "Forced Or Compulsory Labour",
+      subSections: [],
+    },
+  
+    // Child Labour
+    child_labour: {
+      component: Section11,
+      title: "Incidents Of Child Labour",
+      subSections: [],
+    },
+    ...(!isWithReference && {
+      child_labour_material_topic_management: {
+        component: Section12,
+        title: "Management Of Material Topic",
+        subSections: [],
+      }
+    }),
+  
+    // Diversity & Inclusion
+    diversity_inclusion: {
+      component: ({ section13_4Ref, data, sectionNumber = "13.4", sectionTitle = "Diversity, Inclusion", sectionOrder = 13 }) => {
+        return (
+          <div id="section13_4" ref={section13_4Ref}>
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionNumber} {sectionTitle}
+            </h3>
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+              Significant Locations of Operation
+            </p>
+            <p className="text-sm mb-4">
+              {data?.["405-2b-significant_locations"]?.data?.[0]?.Q1 || "No data available"}
+            </p>
+          </div>
+        );
+      },
+      title: "Diversity, Inclusion",
+      subSections: [],
+    },
+    ...(!isWithReference && {
+      diversity_material_topic_management: {
+        component: Section13,
+        title: "Management Of Material Topics",
+        subSections: [],
+      }
+    }),
+    diversity_governance_employees: {
+      component: Section14,
+      title: "Diversity Of Governance Bodies And Employees",
+      subSections: [],
+    },
+    diversity_remuneration: {
+      component: Section15,
+      title: "Remuneration",
+      subSections: [],
+    },
+  
+    // Training & Education
+    training_education: {
+      component: ({ section13_5Ref, data, sectionNumber = "13.5", sectionTitle = "Training & Education", sectionOrder = 13 }) => {
+        return (
+          <div id="section13_5" ref={section13_5Ref}>
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionNumber} {sectionTitle}
+            </h3>
+          </div>
+        );
+      },
+      title: "Training & Education",
+      subSections: [],
+    },
+    ...(!isWithReference && {
+      training_material_topic_management: {
+        component: Section16,
+        title: "Management Of Material Topics",
+        subSections: [],
+      }
+    }),
+    training_programs_upgrading_skills: {
+      component: Section17,
+      title: "Programs For Upgrading Employee Skills And Transition Assistance Programs",
+      subSections: [],
+    },
+  
+    // Occupational Health & Safety
+    occupational_health_safety: {
+      component: ({ section13_6Ref, data, sectionNumber = "13.6", sectionTitle = "Occupational Health and Safety", sectionOrder = 13 }) => {
+        return (
+          <div id="section13_6" ref={section13_6Ref}>
+            <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+              {sectionNumber} {sectionTitle}
+            </h3>
+          </div>
+        );
+      },
+      title: "Occupational Health And Safety",
+      subSections: [],
+    },
+    ...(!isWithReference && {
+      ohs_material_topic_management: {
+        component: Section18,
+        title: "Management Of Material Topic",
+        subSections: [],
+      }
+    }),
+    ohs_management_system: {
+      component: Section19,
+      title: "OHS Management System",
+      subSections: [],
+    },
+    occupational_health_services: {
+      component: Section20,
+      title: "Occupational Health Services",
+      subSections: [],
+    },
+    worker_ohs_participation: {
+      component: Section21,
+      title: "Worker Participation, Consultation, And Communication On OHS",
+      subSections: [],
+    },
+    promotion_worker_health: {
+      component: Section22,
+      title: "Promotion Of Worker Health",
+      subSections: [],
+    },
+    ohs_impact_prevention: {
+      component: Section23,
+      title: "Prevention And Mitigation Of OHS Impacts",
+      subSections: [],
+    },
+    hazard_risk_identification: {
+      component: Section24,
+      title: "Hazard, Risk Identification And Investigation",
+      subSections: [],
+    },
+    work_related_illness_injuries: {
+      component: Section25,
+      title: "Work-Related Ill-Health & Injuries",
+      subSections: [],
+    },
+    safety_training: {
+      component: Section26,
+      title: "Safety Training",
+      subSections: [],
+    },
+    workers_covered_ohs: {
+      component: Section27,
+      title: "Workers Covered By OHS Management System",
+      subSections: [],
+    },
+  
+    // Collective Bargaining
+    collective_bargaining: {
+      component: Section28,
+      title: "Collective Bargaining",
+      subSections: [],
+    },
+    freedom_of_association_risks: {
+      component: Section30,
+      title: "Operations And Suppliers In Which The Right To Freedom Of Association And Collective Bargaining May Be At Risk",
+      subSections: [],
+    },
+  
+    // Violations / Discrimination
+    violations_discrimination: {
+      component: Section31,
+      title: "Incidents Of Violation/Discrimination",
+      subSections: [],
+    },
+    ...(!isWithReference && {
+      violations_material_topic_management: {
+        component: Section32,
+        title: "Management Of Material Topic",
+        subSections: [],
+      }
+    }),
+  };
+  
+  
+  
+  //console.log(subsections,"subsections")
+  const getSubsectionsToShow = () => {
+    if (reportType === "Custom ESG Report") {
+      const userSelected = Array.isArray(subsections) ? subsections : [];
+
+      // Get default order
+      const defaultOrder = [
+        "employees",
+        "employees_material_topic_management",
+        "employee_hiring_turnover",
+        "employee_benefits_health",
+        "parental_leaves",
+        "standard_wages",
+        "career_development_reviews",
+        "labour_management",
+        "labour_material_topic_management",
+        "non_employee_workers",
+        "forced_labour",
+        "child_labour",
+        "child_labour_material_topic_management",
+        "diversity_inclusion",
+        "diversity_material_topic_management",
+        "diversity_governance_employees",
+        "diversity_remuneration",
+        "training_education",
+        "training_material_topic_management",
+        "training_programs_upgrading_skills",
+        "occupational_health_safety",
+        "ohs_material_topic_management",
+        "ohs_management_system",
+        "occupational_health_services",
+        "worker_ohs_participation",
+        "promotion_worker_health",
+        "ohs_impact_prevention",
+        "hazard_risk_identification",
+        "work_related_illness_injuries",
+        "safety_training",
+        "workers_covered_ohs",
+        "collective_bargaining",
+        "freedom_of_association_risks",
+        "violations_discrimination",
+        "violations_material_topic_management"
+      ]
+      
+      
+
+      // Return sorted list based on fixed order
+      return defaultOrder.filter((id) => userSelected.includes(id));
+    } else {
+     return [
+        "employees",
+        "employees_material_topic_management",
+        "employee_hiring_turnover",
+        "employee_benefits_health",
+        "parental_leaves",
+        "standard_wages",
+        "career_development_reviews",
+        "labour_management",
+        "labour_material_topic_management",
+        "non_employee_workers",
+        "forced_labour",
+        "child_labour",
+        "child_labour_material_topic_management",
+        "diversity_inclusion",
+        "diversity_material_topic_management",
+        "diversity_governance_employees",
+        "diversity_remuneration",
+        "training_education",
+        "training_material_topic_management",
+        "training_programs_upgrading_skills",
+        "occupational_health_safety",
+        "ohs_material_topic_management",
+        "ohs_management_system",
+        "occupational_health_services",
+        "worker_ohs_participation",
+        "promotion_worker_health",
+        "ohs_impact_prevention",
+        "hazard_risk_identification",
+        "work_related_illness_injuries",
+        "safety_training",
+        "workers_covered_ohs",
+        "collective_bargaining",
+        "freedom_of_association_risks",
+        "violations_discrimination",
+        "violations_material_topic_management"
+      ];
+    }
+  };
+
+  const subsectionsToShow = getSubsectionsToShow();
+
+  // Filter and organize selected subsections
+  const getSelectedSubsections = () => {
+    //console.log("Processing subsections:", subsectionsToShow);
+
+    if (!subsectionsToShow || subsectionsToShow.length === 0) {
+      //console.log("No subsections found");
+      return [];
+    }
+
+    const result = subsectionsToShow
+      .filter((subId) => {
+        const exists = subsectionMapping[subId];
+        //console.log(`Subsection ${subId} exists in mapping:`, !!exists);
+        return exists;
+      })
+      .map((subId, index) => {
+        const mapped = {
+          id: subId,
+          ...subsectionMapping[subId],
+          order: index + 1,
+          sectionNumber: `${sectionOrder}.${index + 1}`,
+        };
+        //console.log(`Mapped subsection:`, mapped);
+        return mapped;
+      });
+
+    //console.log("Final selected subsections:", result);
+    return result;
+  };
+  const selectedSubsections = getSelectedSubsections();
+
+  //console.log(selectedSubsections,"selectedSubsections")
+
+  const getDynamicSectionMap = () => {
+    let groupIndex = 1;
+    const dynamicMap = [];
+  
+    groupedSubsections.forEach((group) => {
+      if (group.children) {
+        const parentSelected = selectedSubsections.some((s) => s.id === group.groupId);
+        const visibleChildren = group.children.filter((child) =>
+          selectedSubsections.some((s) => s.id === child.id)
+        );
+  
+        // Render the parent (if selected)
+        if (parentSelected) {
+          dynamicMap.push({
+            id: group.groupId,
+            sectionNumber: `${sectionOrder}.${groupIndex}`,
+            groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+          });
+        }
+  
+        // Render children (if any selected)
+        if (visibleChildren.length > 0) {
+          let childIndex = 1;
+          visibleChildren.forEach((child) => {
+            dynamicMap.push({
+              id: child.id,
+              sectionNumber: `${sectionOrder}.${groupIndex}.${childIndex++}`,
+              groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+            });
+          });
+        }
+  
+        // Increase group index if either parent or children are rendered
+        if (parentSelected || visibleChildren.length > 0) {
+          groupIndex++;
+        }
+      } else {
+        const isVisible = selectedSubsections.some((s) => s.id === group.id);
+        if (!isVisible) return;
+  
+        dynamicMap.push({
+          id: group.id,
+          sectionNumber: `${sectionOrder}.${groupIndex++}`,
+        });
+      }
+    });
+  
+    return dynamicMap;
+  };
+
+  const numberedSubsections = getDynamicSectionMap();
+  //console.log(numberedSubsections,"see the sections of screen 13")
+
+  // Set initial active section
+  useEffect(() => {
+    if (selectedSubsections.length > 0 && !activeSection) {
+      setActiveSection(selectedSubsections[0].id);
+    }
+  }, [selectedSubsections, activeSection]);
+
+  const scrollToSection = (sectionId) => {
+    setActiveSection(sectionId);
+    const sectionRef = sectionRefs.current[sectionId];
+
+    if (sectionRef?.current) {
+      const elementTop =
+        sectionRef.current.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elementTop - 250,
+        behavior: "smooth",
+      });
+    }
+  };
+  const sectionRefs = useRef({});
+
   useImperativeHandle(ref, () => ({
     submitForm,
   }));
@@ -187,206 +713,234 @@ const People = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const dynamicSectionNumberMap = numberedSubsections.reduce((acc, item) => {
+    acc[item.id] = item.sectionNumber;
+    return acc;
+  }, {});
+
+  const currentData = {
+    employee_policies_statement,
+    workforce_hire_retention_statement,
+    parental_leaves,
+    standard_wage,
+    performance_review_process,
+    forced_labor_position,
+    // child_labor_position,
+    employee_diversity_position,
+    employee_skill_upgrade_programs,
+    remuneration_practices,
+    ohs_policies,
+    hazard_risk_assessment,
+    work_related_health_injuries,
+    safety_training,
+    ohs_management_system,
+    freedom_of_association_views,
+    violation_discrimination_policy,
+    // indigenous_rights_policy,
+    // security_personnel_external_training,
+    // security_personnel_internal_training,
+  };
+  
   const submitForm = async (type) => {
     LoaderOpen();
-    const data = {
-      employee_policies_statement: {
-        page: "screen_thirteen",
-        label: "13. People",
-        subLabel: "Add statement about company’s employees and their policies",
-        type: "textarea",
-        content: employee_policies_statement,
-        field: "employee_policies_statement",
-        isSkipped: false,
-      },
-      workforce_hire_retention_statement: {
-        page: "screen_thirteen",
-        label: "13.1.2 Employee Hire, Turnover",
-        subLabel: "Add statement about company’s workforce hire and retention",
-        type: "textarea",
-        content: workforce_hire_retention_statement,
-        field: "workforce_hire_retention_statement",
-        isSkipped: false,
-      },
-      parental_leaves: {
-        page: "screen_thirteen",
-        label: "13.1.4 Parental Leaves",
-        subLabel: "Add statement about company’s policy on parental leave",
-        type: "textarea",
-        content: parental_leaves,
-        field: "parental_leaves",
-        isSkipped: false,
-      },
-      standard_wage: {
-        page: "screen_thirteen",
-        label: "13.1.5 Standard Wage",
-        subLabel:
-          "Add statement about company’s Policy on employee compensation",
-        type: "textarea",
-        content: standard_wage,
-        field: "standard_wage",
-        isSkipped: false,
-      },
-      performance_review_process: {
-        page: "screen_thirteen",
-        label: "13.1.6 Performance and Career Development Reviews of Employees",
-        subLabel:
-          "Add statement about company’s process for performance review of employees",
-        type: "textarea",
-        content: performance_review_process,
-        field: "performance_review_process",
-        isSkipped: false,
-      },
-      forced_labor_position: {
-        page: "screen_thirteen",
-        label: "13.2.3 Forced or Compulsory Labour",
-        subLabel:
-          "Add statement about company’s position on forced / compulsory labor",
-        type: "textarea",
-        content: forced_labor_position,
-        field: "forced_labor_position",
-        isSkipped: false,
-      },
-      child_labor_position: {
-        page: "screen_thirteen",
-        label: "13.3 Incidents of Child Labour",
-        subLabel: "Add statement about company’s position on child labor",
-        type: "textarea",
-        content: child_labor_position,
-        field: "child_labor_position",
-        isSkipped: false,
-      },
-      employee_diversity_position: {
-        page: "screen_thirteen",
-        label: "13.4.2 Diversity of Governance Bodies and Employees",
-        subLabel:
-          "Add statement about company’s position on diversity of employees",
-        type: "textarea",
-        content: employee_diversity_position,
-        field: "employee_diversity_position",
-        isSkipped: false,
-      },
-      employee_skill_upgrade_programs: {
-        page: "screen_thirteen",
-        label:
-          "13.5.2 Programs for Upgrading Employee Skills and Transition Assistance Programs",
-        subLabel:
-          "Add statement about company’s programs for upgrading employee’s skills",
-        type: "textarea",
-        content: employee_skill_upgrade_programs,
-        field: "employee_skill_upgrade_programs",
-        isSkipped: false,
-      },
-      remuneration_practices: {
-        page: "screen_thirteen",
-        label: "13.4.3 Remuneration",
-        subLabel:
-          "Add statement about company’s remuneration practices & policies.",
-        type: "textarea",
-        content: remuneration_practices,
-        field: "remuneration_practices",
-        isSkipped: false,
-      },
-      ohs_policies: {
-        page: "screen_thirteen",
-        label:
-          "13.6.4 Worker Participation, Consultation, and Communication on OHS",
-        subLabel: "Add statement about company’s OHS policies",
-        type: "textarea",
-        content: ohs_policies,
-        field: "ohs_policies",
-        isSkipped: false,
-      },
-      hazard_risk_assessment: {
-        page: "screen_thirteen",
-        label: "13.6.7 Hazard, Risk Identification and Investigation",
-        subLabel:
-          "Add statement about company’s process of Hazard and risk assessment",
-        type: "textarea",
-        content: hazard_risk_assessment,
-        field: "hazard_risk_assessment",
-        isSkipped: false,
-      },
-      work_related_health_injuries: {
-        page: "screen_thirteen",
-        label: "13.6.8 Work-Related Ill-Health & Injuries",
-        subLabel:
-          "Add statement about work related ill health and injuries in company",
-        type: "textarea",
-        content: work_related_health_injuries,
-        field: "work_related_health_injuries",
-        isSkipped: false,
-      },
-      safety_training: {
-        page: "screen_thirteen",
-        label: "13.6.9 Safety Training",
-        subLabel: "Add statement about company’s safety training",
-        type: "textarea",
-        content: safety_training,
-        field: "safety_training",
-        isSkipped: false,
-      },
-      ohs_management_system: {
-        page: "screen_thirteen",
-        label: "13.6.10 Workers Covered by OHS Management System",
-        subLabel: "Add statement about company’s OHS management system",
-        type: "textarea",
-        content: ohs_management_system,
-        field: "ohs_management_system",
-        isSkipped: false,
-      },
-      freedom_of_association_views: {
-        page: "screen_thirteen",
-        label:
-          "13.7.2 Operations and Suppliers in Which the Right to Freedom of Association and Collective Bargaining May Be at Risk",
-        subLabel:
-          "Add statement about company’s views on freedom of association and collective bargaining",
-        type: "textarea",
-        content: freedom_of_association_views,
-        field: "freedom_of_association_views",
-        isSkipped: false,
-      },
-      violation_discrimination_policy: {
-        page: "screen_thirteen",
-        label: "13.8 Incidents of Violation/Discrimination",
-        subLabel:
-          "Add statement about company’s policy for addressing violation/ discrimination",
-        type: "textarea",
-        content: violation_discrimination_policy,
-        field: "violation_discrimination_policy",
-        isSkipped: false,
-      },
-      indigenous_rights_policy: {
-        page: "screen_thirteen",
-        label: "13.8.2 Incidents of Violation of Rights of Indigenous People",
-        subLabel:
-          "Add statement about company’s policy on violation of rights of indigenous people",
-        type: "textarea",
-        content: indigenous_rights_policy,
-        field: "indigenous_rights_policy",
-        isSkipped: false,
-      },
-      security_personnel_external_training: {
-        page: "screen_thirteen",
-        label:
-          "Percentage of security personnel who have received formal training from third-party organisation",
-        subLabel: "",
-        type: "textarea",
-        content: security_personnel_external_training,
-        field: "security_personnel_external_training",
-        isSkipped: false,
-      },
-      security_personnel_internal_training: {
-        page: "screen_thirteen",
-        label:
-          "Percentage of security personnel who have received formal training in the organisation",
-        subLabel: "",
-        type: "textarea",
-        content: security_personnel_internal_training,
-        field: "security_personnel_internal_training",
-        isSkipped: false,
-      },
-    };
+    if (!hasChanges(initialData, currentData)) {
+      LoaderClose();
+      return false;
+    }
+
+    const data = {};
+
+data.employee_policies_statement = {
+  page: "screen_thirteen",
+  label: `${sectionOrder}. People`,
+  subLabel: "Add statement about company’s employees and their policies",
+  type: "textarea",
+  content: employee_policies_statement,
+  field: "employee_policies_statement",
+  isSkipped: false,
+};
+
+if (subsectionsToShow.includes("employee_hiring_turnover")) {
+  const sectionNumber = dynamicSectionNumberMap["employee_hiring_turnover"];
+  data.workforce_hire_retention_statement = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Employee Hire, Turnover`,
+    subLabel: "Add statement about company’s workforce hire and retention",
+    type: "textarea",
+    content: workforce_hire_retention_statement,
+    field: "workforce_hire_retention_statement",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("parental_leaves")) {
+  const sectionNumber = dynamicSectionNumberMap["parental_leaves"];
+  data.parental_leaves = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Parental Leaves`,
+    subLabel: "Add statement about company’s policy on parental leave",
+    type: "textarea",
+    content: parental_leaves,
+    field: "parental_leaves",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("standard_wages")) {
+  const sectionNumber = dynamicSectionNumberMap["standard_wages"];
+  data.standard_wage = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Standard Wage`,
+    subLabel: "Add statement about company’s policy on employee compensation",
+    type: "textarea",
+    content: standard_wage,
+    field: "standard_wage",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("career_development_reviews")) {
+  const sectionNumber = dynamicSectionNumberMap["career_development_reviews"];
+  data.performance_review_process = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Performance and Career Development Reviews of Employees`,
+    subLabel: "Add statement about company’s process for performance review of employees",
+    type: "textarea",
+    content: performance_review_process,
+    field: "performance_review_process",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("forced_labour")) {
+  const sectionNumber = dynamicSectionNumberMap["forced_labour"];
+  data.forced_labor_position = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Forced or Compulsory Labour`,
+    subLabel: "Add statement about company’s position on forced / compulsory labor",
+    type: "textarea",
+    content: forced_labor_position,
+    field: "forced_labor_position",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("diversity_governance_employees")) {
+  const sectionNumber = dynamicSectionNumberMap["diversity_governance_employees"];
+  data.employee_diversity_position = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Diversity of Governance Bodies and Employees`,
+    subLabel: "Add statement about company’s position on diversity",
+    type: "textarea",
+    content: employee_diversity_position,
+    field: "employee_diversity_position",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("training_programs_upgrading_skills")) {
+  const sectionNumber = dynamicSectionNumberMap["training_programs_upgrading_skills"];
+  data.employee_skill_upgrade_programs = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Programs for Upgrading Employee Skills and Transition Assistance Programs`,
+    subLabel: "Add statement about company’s programs for upgrading employee’s skills",
+    type: "textarea",
+    content: employee_skill_upgrade_programs,
+    field: "employee_skill_upgrade_programs",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("diversity_remuneration")) {
+  const sectionNumber = dynamicSectionNumberMap["diversity_remuneration"];
+  data.remuneration_practices = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Remuneration`,
+    subLabel: "Add statement about company’s remuneration practices",
+    type: "textarea",
+    content: remuneration_practices,
+    field: "remuneration_practices",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("worker_ohs_participation")) {
+  const sectionNumber = dynamicSectionNumberMap["worker_ohs_participation"];
+  data.ohs_policies = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Worker Participation, Consultation, and Communication on OHS`,
+    subLabel: "Add statement about company’s OHS policies",
+    type: "textarea",
+    content: ohs_policies,
+    field: "ohs_policies",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("hazard_risk_identification")) {
+  const sectionNumber = dynamicSectionNumberMap["hazard_risk_identification"];
+  data.hazard_risk_assessment = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Hazard, Risk Identification and Investigation`,
+    subLabel: "Add statement about company’s process of Hazard and risk assessment",
+    type: "textarea",
+    content: hazard_risk_assessment,
+    field: "hazard_risk_assessment",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("work_related_illness_injuries")) {
+  const sectionNumber = dynamicSectionNumberMap["work_related_illness_injuries"];
+  data.work_related_health_injuries = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Work-Related Ill-Health & Injuries`,
+    subLabel: "Add statement about work related ill health and injuries in company",
+    type: "textarea",
+    content: work_related_health_injuries,
+    field: "work_related_health_injuries",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("safety_training")) {
+  const sectionNumber = dynamicSectionNumberMap["safety_training"];
+  data.safety_training = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Safety Training`,
+    subLabel: "Add statement about company’s safety training",
+    type: "textarea",
+    content: safety_training,
+    field: "safety_training",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("workers_covered_ohs")) {
+  const sectionNumber = dynamicSectionNumberMap["workers_covered_ohs"];
+  data.ohs_management_system = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Workers Covered by OHS Management System`,
+    subLabel: "Add statement about company’s OHS management system",
+    type: "textarea",
+    content: ohs_management_system,
+    field: "ohs_management_system",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("freedom_of_association_risks")) {
+  const sectionNumber = dynamicSectionNumberMap["freedom_of_association_risks"];
+  data.freedom_of_association_views = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Operations and Suppliers in Which the Right to Freedom of Association and Collective Bargaining May Be at Risk`,
+    subLabel: "Add statement about company’s views on freedom of association and collective bargaining",
+    type: "textarea",
+    content: freedom_of_association_views,
+    field: "freedom_of_association_views",
+    isSkipped: false,
+  };
+}
+if (subsectionsToShow.includes("violations_discrimination")) {
+  const sectionNumber = dynamicSectionNumberMap["violations_discrimination"];
+  data.violation_discrimination_policy = {
+    page: "screen_thirteen",
+    label: `${sectionNumber} Incidents of Violation/Discrimination`,
+    subLabel: "Add statement about company’s policy for addressing violation/ discrimination",
+    type: "textarea",
+    content: violation_discrimination_policy,
+    field: "violation_discrimination_policy",
+    isSkipped: false,
+  };
+}
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_thirteen/${reportid}/`;
     try {
@@ -468,6 +1022,13 @@ const People = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
     try {
       const response = await axiosInstance.get(url);
       if (response.data) {
+        const flatData = {};
+  Object.keys(response.data).forEach((key) => {
+    flatData[key] = response.data[key]?.content || "";
+  });
+
+  setInitialData(flatData);
+
         setData(response.data);
         dispatch(
           setEmployeePoliciesStatement(
@@ -574,469 +1135,278 @@ const People = forwardRef(({ onSubmitSuccess,reportType }, ref) => {
     }
   }, [reportid]);
 
-  const scrollToSection = (sectionRef, sectionId) => {
-    setActiveSection(sectionId);
-
-    const elementTop =
-      sectionRef.current?.getBoundingClientRect().top + window.scrollY;
-
-    // Scroll smoothly to the section, ensuring it scrolls up as well
-    window.scrollTo({
-      top: elementTop - 100, // Adjust 100 to the height of any sticky header
-      behavior: "smooth",
-    });
-  };
-
-  return (
-    <>
-      <div className="mx-2 p-2">
-        <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          13. People
-        </h3>
-        <div className="flex gap-4">
-          <div className="xl:w-[80%] md:w-[75%] lg:w-[80%]  2k:w-[80%] 4k:w-[80%] 2xl:w-[80%]  w-full">
-            <Section1 />
-            <Section2
-              section13_1Ref={section13_1Ref}
-              section13_1_1Ref={section13_1_1Ref}
-              data={data}
-              reportType={reportType}
-            />
-            <Section3 section13_1_2Ref={section13_1_2Ref} data={data} reportType={reportType} />
-            <Section4 section13_1_3Ref={section13_1_3Ref} data={data} reportType={reportType} />
-            <Section5 section13_1_4Ref={section13_1_4Ref} data={data} reportType={reportType} />
-            <Section6 section13_1_5Ref={section13_1_5Ref} data={data} reportType={reportType} />
-            <Section7 section13_1_6Ref={section13_1_6Ref} data={data} reportType={reportType}/>
-            <Section8
-              section13_2_1Ref={section13_2_1Ref}
-              section13_2Ref={section13_2Ref}
-              data={data}
-              reportType={reportType}
-            />
-            <Section9 section13_2_2Ref={section13_2_2Ref} data={data} reportType={reportType} />
-            <Section10 section13_2_3Ref={section13_2_3Ref} data={data} reportType={reportType} />
-            <Section11 section13_3Ref={section13_3Ref} data={data} reportType={reportType} />
-            {reportType=='GRI Report: In accordance With' &&   <Section12 section13_3_1Ref={section13_3_1Ref} data={data} reportType={reportType} />}
-            <Section13
-              section13_4Ref={section13_4Ref}
-              section13_4_1Ref={section13_4_1Ref}
-              data={data}
-              reportType={reportType}
-            />
-            <Section14 section13_4_2Ref={section13_4_2Ref} data={data} reportType={reportType} />
-            <Section15 section13_4_3Ref={section13_4_3Ref} data={data} reportType={reportType} />
-            <Section16
-              section13_5Ref={section13_5Ref}
-              section13_5_1Ref={section13_5_1Ref}
-              data={data}
-              reportType={reportType}
-            />
-            <Section17 section13_5_2Ref={section13_5_2Ref} data={data} reportType={reportType} />
-            <Section18
-              section13_6Ref={section13_6Ref}
-              section13_6_1Ref={section13_6_1Ref}
-              data={data}
-              reportType={reportType}
-            />
-            <Section19 section13_6_2Ref={section13_6_2Ref} data={data} reportType={reportType} />
-            <Section20 section13_6_3Ref={section13_6_3Ref} data={data} reportType={reportType}/>
-            <Section21 section13_6_4Ref={section13_6_4Ref} data={data} reportType={reportType} />
-            <Section22 section13_6_5Ref={section13_6_5Ref} data={data} reportType={reportType} />
-            <Section23 section13_6_6Ref={section13_6_6Ref} data={data} reportType={reportType} />
-            <Section24 section13_6_7Ref={section13_6_7Ref} data={data} reportType={reportType} />
-            <Section25 section13_6_8Ref={section13_6_8Ref} data={data} reportType={reportType} />
-            <Section26 section13_6_9Ref={section13_6_9Ref} data={data} reportType={reportType} />
-            <Section27 section13_6_10Ref={section13_6_10Ref} data={data} reportType={reportType} />
-            <Section28 section13_7Ref={section13_7Ref} data={data} reportType={reportType} />
-            <Section29 section13_7_1Ref={section13_7_1Ref} data={data} reportType={reportType} />
-            <Section30
-              section13_7_2Ref={section13_7_2Ref}
-              data={data}
-              orgName={orgName}
-              reportType={reportType}
-            />
-            <Section31 section13_8Ref={section13_8Ref} data={data} reportType={reportType} />
-            {reportType=='GRI Report: In accordance With' &&  <Section32
-              section13_8_1Ref={section13_8_1Ref}
-              data={data}
-              orgName={orgName}
-              reportType={reportType}
-            />}
-            <Section33
-              section13_8_2Ref={section13_8_2Ref}
-              data={data}
-              orgName={orgName}
-              reportType={reportType}
-            />
-          </div>
-          {/* page sidebar */}
-
-          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-20 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36  md:fixed 
-  md:top-[19rem]
-  md:right-4  hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              13. People
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section13_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_1Ref, "section13_1")}
-            >
-              13.1. Employees
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-               <p
-               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                 activeSection === "section13_1_1" ? "text-blue-400" : ""
-               }`}
-               onClick={() => scrollToSection(section13_1_1Ref, "section13_1_1")}
-             >
-               13.1.1. Management of Material Topics
-             </p>
-            ):(
-              <div></div>
-            )}
-
+   useEffect(() => {
+                   selectedSubsections.forEach((section) => {
+                     if (!sectionRefs.current[section.id]) {
+                       sectionRefs.current[section.id] = createRef();
+                     }
+                   });
+                 }, [selectedSubsections]);
+         
            
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_1_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_1_2Ref, "section13_1_2")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.1.2.':'13.1.1.'}   Employee hire, turnover
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_1_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_1_3Ref, "section13_1_3")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.1.3.':'13.1.2.'}  Employee benefits and health services
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_1_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_1_4Ref, "section13_1_4")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.1.4.':'13.1.3.'}  Personal leaves
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_1_5" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_1_5Ref, "section13_1_5")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.1.5.':'13.1.4.'} Standard wages
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_1_6" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_1_6Ref, "section13_1_6")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.1.6.':'13.1.5.'} Performance and career development reviews of employees
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section13_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_2Ref, "section13_2")}
-            >
-              13.2. Labour Management
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-               <p
-               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                 activeSection === "section13_2_1" ? "text-blue-400" : ""
-               }`}
-               onClick={() => scrollToSection(section13_2_1Ref, "section13_2_1")}
-             >
-               13.2.1. Management of Material Topics
-             </p>
-            ):(
-              <div></div>
-            )}
+         
+            const renderSection = (section) => {
+                   const SectionComponent = subsectionMapping[section.id]?.component;
+                   const ref = sectionRefs.current[section.id] || createRef();
+                   sectionRefs.current[section.id] = ref;
+             
+                   const commonProps = {
+                     orgName,
+                     data,
+                     sectionNumber: section.sectionNumber,
+                     sectionOrder,
+                     reportType
+                   };
+             
+                   if (!SectionComponent) return null;
+             
+                   return (
+                     <div key={section.id} ref={ref}>
+                       {section.groupTitle && (
+                         <div className="mb-2">
+                           {/* <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+                           {section.groupTitle}
+                         </h3> */}
+                         </div>
+                       )}
+                       <SectionComponent {...commonProps} />
+                     </div>
+                   );
+                 };
            
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_2_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_2_2Ref, "section13_2_2")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.2.2.':'13.2.1.'}   Workers who are not employees
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_2_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_2_3Ref, "section13_2_3")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.2.3.':'13.2.2.'}  Forced or compulsory labour
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section13_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_3Ref, "section13_3")}
-            >
-              13.3. Incidents of child labour
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-               <p
-               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                 activeSection === "section13_3_1" ? "text-blue-400" : ""
-               }`}
-               onClick={() => scrollToSection(section13_3_1Ref, "section13_3_1")}
-             >
-               13.3.1. Management of Material Topic
-             </p>
-            ):(
-              <div></div>
-            )}
            
+                 if (
+                   reportType === "Custom ESG Report" &&
+                   selectedSubsections.length === 0
+                 ) {
+                   return (
+                     <div className="mx-2 p-2">
+                       <div>
+                         <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+                           {sectionOrder}. About the company and operations
+                         </h3>
+                       </div>
+                       <div className="text-center py-8">
+                         <p className="text-gray-500">
+                           No subsections selected for this section.
+                         </p>
+                       </div>
+                     </div>
+                   );
+                 }
+  
 
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section13_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_4Ref, "section13_4")}
-            >
-              13.4. Diversity, Inclusion
-            </p>
-            {
-              reportType=='GRI Report: In accordance With'?(
-                <p
-                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                  activeSection === "section13_4_1" ? "text-blue-400" : ""
-                }`}
-                onClick={() => scrollToSection(section13_4_1Ref, "section13_4_1")}
-              >
-                13.4.1. Management of Material Topics
-              </p>
-              ):(
-                <div></div>
-              )
-            }
-           
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_4_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_4_2Ref, "section13_4_2")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.4.2.':'13.4.1.'}   Diversity of governance bodies and employees
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_4_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_4_3Ref, "section13_4_3")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.4.3.':'13.4.2.'}  Remuneration
-            </p>
+ 
 
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section13_5" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_5Ref, "section13_5")}
-            >
-              13.5. Training & education
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-                <p
-                className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                  activeSection === "section13_5_1" ? "text-blue-400" : ""
-                }`}
-                onClick={() => scrollToSection(section13_5_1Ref, "section13_5_1")}
-              >
-                13.5.1. Management of Material Topics
-              </p>
-            ):(
-                <div></div>
-            )}
-            
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_5_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_5_2Ref, "section13_5_2")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.5.2.':'13.5.1.'}   Programs for upgrading employee skills and transition
-              assistance programs
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section13_6" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_6Ref, "section13_6")}
-            >
-              13.6. Occupational Health and Safety
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-                 <p
-                 className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                   activeSection === "section13_6_1" ? "text-blue-400" : ""
-                 }`}
-                 onClick={() => scrollToSection(section13_6_1Ref, "section13_6_1")}
-               >
-                 13.6.1. Management of Material Topic
-               </p>
-            ):(
-                <div></div>
-            )}
-           
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_6_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_6_2Ref, "section13_6_2")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.6.2.':'13.6.1.'}   OHS management system
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_6_3" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_6_3Ref, "section13_6_3")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.6.3.':'13.6.2.'} Occupational health sevices
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_6_4" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_6_4Ref, "section13_6_4")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.6.4.':'13.6.3.'}   Worker participation, consultation, and communication on
-              OHS
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_6_5" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_6_5Ref, "section13_6_5")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.6.5.':'13.6.4.'} Promotion of worker health
-            </p>
-
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_6_6" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_6_6Ref, "section13_6_6")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.6.6.':'13.6.5.'}  Prevention and mitigation of OHS impacts
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_6_7" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_6_7Ref, "section13_6_7")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.6.7.':'13.6.6.'}  Hazard, risk identification and investigation
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_6_8" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_6_8Ref, "section13_6_8")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.6.8.':'13.6.7.'}  Worked related ill-health & injuries
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_6_9" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_6_9Ref, "section13_6_9")}
-            >
-            {reportType=='GRI Report: In accordance With'?'13.6.9.':'13.6.8.'}  Safety training
-            </p>
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_6_10" ? "text-blue-400" : ""
-              }`}
-              onClick={() =>
-                scrollToSection(section13_6_10Ref, "section13_6_10")
-              }
-            >
-            {reportType=='GRI Report: In accordance With'?'13.6.10.':'13.6.9.'}  Workers covered by OHS management system
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section13_7" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_7Ref, "section13_7")}
-            >
-              13.7. Collective Bargaining 
-            </p>
-            {/* <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section13_7_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section13_7_1Ref, 'section13_7_1')} >
-    13.7.1. Management of Material Topics
-  </p> */}
-            <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_7_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_7_2Ref, "section13_7_2")}
-            >
-              13.7.1. Operations and suppliers in which the right to freedom of
-              association and collectie bargaining may be at risk 
-            </p>
-
-            <p
-              className={`text-[12px] mb-2 cursor-pointer ${
-                activeSection === "section13_8" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_8Ref, "section13_8")}
-            >
-              13.8. Incidents of violation/discrimination
-            </p>
-            {reportType=='GRI Report: In accordance With'?(
-              <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_8_1" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_8_1Ref, "section13_8_1")}
-            >
-              13.8.1. Management of material topic
-            </p>
-            ):(
-              <div></div>
-            )}
-            
-            {/* <p
-              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === "section13_8_2" ? "text-blue-400" : ""
-              }`}
-              onClick={() => scrollToSection(section13_8_2Ref, "section13_8_2")}
-            >
-              13.8.2. Incidents of violation of rights of indigenous people
-            </p> */}
-          </div>
-        </div>
-      </div>
-      {loopen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <Oval
-            height={50}
-            width={50}
-            color="#00BFFF"
-            secondaryColor="#f3f3f3"
-            strokeWidth={2}
-            strokeWidthSecondary={2}
-          />
-        </div>
-      )}
-    </>
-  );
+                 return (
+                  <>
+                    <div className="mx-2 p-2">
+                      <div>
+                        <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+                          {sectionOrder}. People
+                        </h3>
+                      </div>
+                      <div className="flex gap-4">
+                        <div className="xl:w-[80%] md:w-[75%] lg:w-[80%] 2k:w-[80%] 4k:w-[80%] 2xl:w-[80%] w-full">
+                          {/* {selectedSubsections.map(section => renderSection(section))} */}
+                          {/* {subsectionsToShow.includes("materiality_assessment") && (
+                              <div ref={sectionRefs.current["materiality_assessment"] || createRef()}>
+                                <Section1
+                                  orgName={orgName}
+                                  data={data}
+                                  sectionOrder={sectionOrder}
+                                  sectionNumber={null} // Not numbered
+                                />
+                              </div>
+                            )} */}
+                             <Section1
+                                  orgName={orgName}
+                                  data={data}
+                                  sectionOrder={sectionOrder}
+                                  sectionNumber={null} // Not numbered
+                                />
+                          {numberedSubsections.map((section) => renderSection(section))}
+                        </div>
+              
+                        {/* Page sidebar - only show if there are subsections */}
+                        {selectedSubsections.length > 0 && (
+                          <div className={`p-4 border border-r-2 border-b-2 shadow-lg rounded-lg ${selectedSubsections.length < 13 ? 'h-[500px]' : 'h-fit'} top-36 sticky mt-2 w-[20%] md:w-[25%] lg:w-[20%] xl:sticky xl:top-36 lg:sticky lg:top-36 md:fixed md:top-[19rem] md:right-4 hidden xl:block md:block lg:block 2k:block 4k:block 2xl:block`}>
+                            <p className="text-[11px] text-[#727272] mb-2 uppercase">
+                              {sectionOrder}. People
+                            </p>
+              
+                            {(() => {
+                              let groupIndex = 1;
+              
+                              const groupedSidebar = [
+                                {
+                                  groupId: "employees",
+                                  title: "Employees",
+                                  children: [
+                                    { id: "employees_material_topic_management", label: "Management Of Material Topics" },
+                                    { id: "employee_hiring_turnover", label: "Employee Hire, Turnover" },
+                                    { id: "employee_benefits_health", label: "Employee Benefits And Health Services" },
+                                    { id: "parental_leaves", label: "Parental Leaves" },
+                                    { id: "standard_wages", label: "Standard Wage" },
+                                    { id: "career_development_reviews", label: "Performance And Career Development Reviews Of Employees" }
+                                  ]
+                                },
+                                {
+                                  groupId: "labour_management",
+                                  title: "Labour Management",
+                                  children: [
+                                    { id: "labour_material_topic_management", label: "Management Of Material Topics" },
+                                    { id: "non_employee_workers", label: "Workers Who Are Not Employees" },
+                                    { id: "forced_labour", label: "Forced Or Compulsory Labour" }
+                                  ]
+                                },
+                                {
+                                  groupId: "child_labour",
+                                  title: "Incidents Of Child Labour",
+                                  children: [
+                                    { id: "child_labour_material_topic_management", label: "Management Of Material Topic" }
+                                  ]
+                                },
+                                {
+                                  groupId: "diversity_inclusion",
+                                  title: "Diversity, Inclusion",
+                                  children: [
+                                    { id: "diversity_material_topic_management", label: "Management Of Material Topics" },
+                                    { id: "diversity_governance_employees", label: "Diversity Of Governance Bodies And Employees" },
+                                    { id: "diversity_remuneration", label: "Remuneration" }
+                                  ]
+                                },
+                                {
+                                  groupId: "training_education",
+                                  title: "Training & Education",
+                                  children: [
+                                    { id: "training_material_topic_management", label: "Management Of Material Topics" },
+                                    { id: "training_programs_upgrading_skills", label: "Programs For Upgrading Employee Skills And Transition Assistance Programs" }
+                                  ]
+                                },
+                                {
+                                  groupId: "occupational_health_safety",
+                                  title: "Occupational Health And Safety",
+                                  children: [
+                                    { id: "ohs_material_topic_management", label: "Management Of Material Topic" },
+                                    { id: "ohs_management_system", label: "OHS Management System" },
+                                    { id: "occupational_health_services", label: "Occupational Health Services" },
+                                    { id: "worker_ohs_participation", label: "Worker Participation, Consultation, And Communication On OHS" },
+                                    { id: "promotion_worker_health", label: "Promotion Of Worker Health" },
+                                    { id: "ohs_impact_prevention", label: "Prevention And Mitigation Of OHS Impacts" },
+                                    { id: "hazard_risk_identification", label: "Hazard, Risk Identification And Investigation" },
+                                    { id: "work_related_illness_injuries", label: "Work-Related Ill-Health & Injuries" },
+                                    { id: "safety_training", label: "Safety Training" },
+                                    { id: "workers_covered_ohs", label: "Workers Covered By OHS Management System" }
+                                  ]
+                                },
+                                {
+                                  groupId: "collective_bargaining",
+                                  title: "Collective Bargaining",
+                                  children: [
+                                    { id: "freedom_of_association_risks", label: "Operations And Suppliers In Which The Right To Freedom Of Association And Collective Bargaining May Be At Risk" }
+                                  ]
+                                },
+                                {
+                                  groupId: "violations_discrimination",
+                                  title: "Incidents Of Violation/Discrimination",
+                                  children: [
+                                    { id: "violations_material_topic_management", label: "Management Of Material Topic" }
+                                  ]
+                                }
+                              ];
+                              
+                              
+                              
+                              
+              
+                              return groupedSidebar.map((item) => {
+                                if (item.children) {
+                                  const isGroupSelected = selectedSubsections.some(
+                                    (sec) => sec.id === item.groupId
+                                  );
+                              
+                                  const visibleChildren = item.children.filter((child) =>
+                                    selectedSubsections.some((sec) => sec.id === child.id)
+                                  );
+                              
+                                  // Show group if parent OR any child is selected
+                                  if (!isGroupSelected && visibleChildren.length === 0) return null;
+                              
+                                  const currentGroupIndex = groupIndex++;
+                                  let childIndex = 1;
+                              
+                                  return (
+                                    <div key={item.groupId} className="mb-2">
+                                      {/* Show the parent title (group) */}
+                                      <p
+                                        className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                                              activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                                            }`}
+                                        onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
+                                      >
+                                        {sectionOrder}.{currentGroupIndex} {item.title}
+                                      </p>
+                              
+                                      {/* Render selected children */}
+                                      {visibleChildren.map((child) => {
+                                        const labelText =
+                                          child.label?.trim() !== "" ? child.label : item.title;
+                              
+                                        return (
+                                          <p
+                                            key={child.id}
+                                            className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                                              activeSection === child.id ? "text-blue-400" : ""
+                                            }`}
+                                            onClick={() => scrollToSection(child.id)}
+                                          >
+                                            {sectionOrder}.{currentGroupIndex}.{childIndex++} {labelText}
+                                          </p>
+                                        );
+                                      })}
+                                    </div>
+                                  );
+                                } else {
+                                  // Standalone item
+                                  if (!selectedSubsections.some((sec) => sec.id === item.id)) return null;
+                              
+                                  const label = `${sectionOrder}.${groupIndex++} ${item.label}`;
+                                  return (
+                                    <p
+                                      key={item.id}
+                                      className={`text-[12px] mb-2 cursor-pointer ${
+                                        activeSection === item.id ? "text-blue-400" : ""
+                                      }`}
+                                      onClick={() => scrollToSection(item.id)}
+                                    >
+                                      {label}
+                                    </p>
+                                  );
+                                }
+                              });
+                              
+                            })()}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    {loopen && (
+                      <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                        <Oval
+                          height={50}
+                          width={50}
+                          color="#00BFFF"
+                          secondaryColor="#f3f3f3"
+                          strokeWidth={2}
+                          strokeWidthSecondary={2}
+                        />
+                      </div>
+                    )}
+                  </>
+                );
 });
+
+People.displayName = "People";
 
 export default People;

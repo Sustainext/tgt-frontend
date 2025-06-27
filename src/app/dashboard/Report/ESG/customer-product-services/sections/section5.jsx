@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductInfo } from "../../../../../../lib/redux/features/ESGSlice/screen15Slice";
 
-const Section5 = ({ section15_2Ref, data }) => {
+const Section5 = ({ section15_2Ref, data,
+  sectionNumber = 15.2,
+  sectionTitle = 'Product and Service Information and Labelling',
+  sectionOrder = 15,
+ }) => {
   const product_info_labelling = useSelector(
     (state) => state.screen15Slice.product_info_labelling
   );
@@ -31,7 +35,7 @@ const Section5 = ({ section15_2Ref, data }) => {
     <>
       <div id="setion15_2" ref={section15_2Ref}>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-          15.2 Product and Service Information and Labelling
+         {sectionNumber} {sectionTitle}
         </h3>
         <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex 2xl:flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">
@@ -64,7 +68,7 @@ const Section5 = ({ section15_2Ref, data }) => {
                   <p className="text-sm mb-4">No</p>
                 ) : (
                   <div>
-                    <p className="text-[15px] mb-2 font-semibold">
+                    <p className="text-[14px] mb-2 font-semibold">
                       Source of Components
                     </p>
                     <p className="text-sm mb-2">
@@ -72,7 +76,7 @@ const Section5 = ({ section15_2Ref, data }) => {
                         ? data["417_1a"].data[0].Q2
                         : "No data available"}
                     </p>
-                    <p className="text-[15px] mb-2 font-semibold">
+                    <p className="text-[14px] mb-2 font-semibold">
                       Substances that might produce an environmental or social
                       impact
                     </p>
@@ -81,7 +85,7 @@ const Section5 = ({ section15_2Ref, data }) => {
                         ? data["417_1a"].data[0].Q3
                         : "No data available"}
                     </p>
-                    <p className="text-[15px] mb-2 font-semibold">
+                    <p className="text-[14px] mb-2 font-semibold">
                       Safe use of the product or service
                     </p>
                     <p className="text-sm mb-2">
@@ -89,12 +93,20 @@ const Section5 = ({ section15_2Ref, data }) => {
                         ? data["417_1a"].data[0].Q4
                         : "No data available"}
                     </p>
-                    <p className="text-[15px] mb-2 font-semibold">
+                    <p className="text-[14px] mb-2 font-semibold">
                       Disposal of the product
                     </p>
-                    <p className="text-sm mb-4">
+                    <p className="text-sm mb-2">
                       {data["417_1a"].data[0].Q5
                         ? data["417_1a"].data[0].Q5
+                        : "No data available"}
+                    </p>
+                    <p className="text-[14px] mb-2 font-semibold">
+                     Other
+                    </p>
+                    <p className="text-sm mb-4">
+                      {data["417_1a"].data[0].Q6
+                        ? data["417_1a"].data[0].Q6
                         : "No data available"}
                     </p>
                   </div>

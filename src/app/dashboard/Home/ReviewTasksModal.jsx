@@ -52,27 +52,41 @@ const ReviewTasksModal = ({
       }
     }
 
-    const taskIds = tasks.map((task) => ({
-      id: task.id,
-      ...(selectedAction !== "reject" && {
-        task_status: selectedAction === "approve" ? "approved" : "in_progress",
-      }),
-      ...(selectedAction === "reassign" && {
-        assigned_to: bulkData.assigned_to,
-        deadline: bulkData.deadline,
-      }),
-    }));
-
     try {
-      const payload = [...taskIds];
-      if (selectedAction === "reject") {
-        payload.push({
-          id: taskIds[0].id,
+      let payload;
+
+      if (selectedAction === "approve") {
+        payload = tasks.map((task) => ({
+          id: task.id,
+          task_status: "approved",
+        }));
+      } else if (selectedAction === "reassign") {
+        payload = tasks.map((task) => ({
+          id: task.id,
+          task_status: "in_progress",
+          assigned_to: bulkData.assigned_to,
+          deadline: bulkData.deadline,
+          value1: "",
+          value2: "",
+          unit1: "",
+          unit2: "",
+          file_data: {},
+          user_client: 1,
+        }));
+      } else if (selectedAction === "reject") {
+        payload = tasks.map((task) => ({
+          id: task.id,
           task_status: "reject",
           deadline: bulkData.deadline,
           comments: bulkData.comments,
-        });
+          file_data: {},
+          value1: "",
+          value2: "",
+          unit1: "",
+          unit2: "",
+        }));
       }
+
       console.log("Payload:", payload);
 
       await handleTaskAction(null, "bulk_update", payload);

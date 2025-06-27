@@ -11,6 +11,7 @@ import StatementPopup from "../content-index/modals/statementPopup";
 import DisclosureTable from "./tables/refDisclosureTable";
 import ReportCreatedPopup from "../content-index/modals/reportCreatedPopup";
 import NotifyGRI from "../content-index/modals/notifyGRIPopup";
+import {setCurrentReportPage} from '../../../../../lib/redux/features/reportBuilderSlice'
 // import OmissionPopup from "./modals/omissionPopup";
 
 const ReferenceContentIndex = ({
@@ -22,8 +23,10 @@ const ReferenceContentIndex = ({
   isOmissionModalOpen,
   isCreateReportModalOpen,
   setIsCreateReportModalOpen,
+  reportType
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch=useDispatch()
   const orgName =
     typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const userName =
@@ -67,7 +70,7 @@ const ReferenceContentIndex = ({
   };
   const loadFormData = async () => {
     LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/esg_report/content_index/${reportid}/`;
+    const url = `${process.env.BACKEND_API_URL}/esg_report/content_index_referenec/${reportid}/`;
     const statementUrl = `${process.env.BACKEND_API_URL}/esg_report/statement_of_use/${reportid}/`;
     try {
       const response = await axiosInstance.get(url);
@@ -120,6 +123,8 @@ const ReferenceContentIndex = ({
     );
   };
 
+  //console.log(data,"see the data")
+
   return (
     <>
       <div className="mx-2 p-2">
@@ -161,7 +166,7 @@ const ReferenceContentIndex = ({
             className="w-4 h-4 mt-[3px] text-[#727272] cursor-pointer"
           />
         </div>
-        <div className="rounded-md p-4 flex gap-2 bg-[#F1F7FF] xl:w-[85%] md:w-[85%] lg:w-[85%] 2k:w-[85%] 4k:w-[85%] 2xl:w-[85%] w-full mb-6">
+        {/* <div className="rounded-md p-4 flex gap-2 bg-[#F1F7FF] xl:w-[85%] md:w-[85%] lg:w-[85%] 2k:w-[85%] 4k:w-[85%] 2xl:w-[85%] w-full mb-6">
           <IoIosInformationCircleOutline className="xl:w-7 w-14 h-7 text-blue-500 mt-1" />
           <p className="text-[14px] text-[#051833]">
             The requirement omitted are displayed in red below. As GRI-Report in
@@ -169,33 +174,28 @@ const ReferenceContentIndex = ({
             these disclosures are needed to be filled . Click on the add reason
             for omission button to add this data to the report.
           </p>
-        </div>
+        </div> */}
         <div className="flex justify-end mb-4">
-          {isOmissionSubmitted ? (
-            <button
+        <button
               onClick={() => {
-                setIsOmissionModalOpen(true);
-              }}
-              className="flex gap-1 w-[auto] justify-center rounded-md bg-transparent px-2 py-1.5 text-[12px] font-semibold leading-6 text-[#2196F3] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2 border border-blue-400"
-            >
-              Edit reasons for omission
-              <MdOutlineModeEditOutline className="w-4 h-4 mt-[3px]" />
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                setActiveStep(1);
+                dispatch(setCurrentReportPage(0))
               }}
               className="flex gap-1 w-[auto] justify-center rounded-md bg-transparent px-2 py-1.5 text-[12px] font-semibold leading-6 text-[#2196F3] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2 border border-blue-400"
             >
               Edit Report
               <MdOutlineModeEditOutline className="w-4 h-4 mt-[3px]" />
             </button>
-          )}
         </div>
-        <div>
+        {
+          data && data?.length>0?(
+            <div>
           <DisclosureTable data={data ? data : []} />
         </div>
+          ):(
+              <div></div>
+          )
+        }
+        
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -240,6 +240,7 @@ const ReferenceContentIndex = ({
         reportName={reportName}
         isCreateReportModalOpen={isCreateReportModalOpen}
         setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+        reportType={reportType}
       />
     </>
   );

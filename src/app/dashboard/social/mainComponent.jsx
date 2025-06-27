@@ -95,7 +95,16 @@ const Social = () => {
     loading,
     error,
   } = useSelector((state) => state.materialitySlice);
-
+   useEffect(() => {
+    // Only initialize when materiality data is loaded AND nothing is active
+    if (!activeTab && data && data.environment) {
+      if (data.environment.EnvGhgEmission?.is_material_topic) {
+        setActiveTab("Management of Material topic emission");
+      } else {
+        setActiveTab("GHG Emissions");
+      }
+    }
+  }, [activeTab, data]);
   const loadMaterialityDashboard = () => {
     dispatch(
       fetchMaterialityData({

@@ -6,17 +6,16 @@ import { loadFromLocalStorage } from "../../utils/storage";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
-const Breadcrumb = () => {
+const BreadcrumbAlternative = () => {
   const [userData, setUserData] = useState({
     username: "",
     email: "",
     initials: "",
   });
-  const { logout, userDetails } = useAuth(); // Get userDetails from Auth context
+  const { logout, userDetails } = useAuth();
   const router = useRouter();
   const profileRef = useRef(null);
   const drawerRef = useRef(null);
-  // Redux selectors
   const text1 = useSelector((state) => state.header.headertext1);
   const text2 = useSelector((state) => state.header.headertext2);
   const headerdisplay = useSelector((state) => state.header.headerdisplay);
@@ -34,10 +33,8 @@ const Breadcrumb = () => {
     return input.includes("@") ? input.split("@")[0] : input;
   };
 
-  // Combined effect for initializing user data
   useEffect(() => {
     const initializeUserData = () => {
-      // First try to get data from Auth context
       if (userDetails?.user_detail?.[0]) {
         const email = userDetails.user_detail[0].username;
         setUserData({
@@ -47,8 +44,6 @@ const Breadcrumb = () => {
         });
         return;
       }
-
-      // Fallback to localStorage if context is empty
       const localUserDetails = loadFromLocalStorage("userData");
       if (localUserDetails?.user_detail?.[0]) {
         const email = localUserDetails.user_detail[0].username;
@@ -62,57 +57,47 @@ const Breadcrumb = () => {
 
     initializeUserData();
 
-    // Set up interval to check for user data
     const interval = setInterval(() => {
       if (!userData.username) {
         initializeUserData();
       }
     }, 1000);
 
-    // Cleanup interval
     return () => clearInterval(interval);
-  }, [userDetails]); // Depend on userDetails from context
-
-
-
-
+  }, [userDetails]);
 
   return (
-    <>
-     
-        <div
-          className={`flex justify-start items-center py-2 `}
-        >
-          <Link href="/dashboard">
-            <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold">
-              Home
-            </span>
-          </Link>
-          <span className="text-[#222222] mx-1">&gt;</span>
+    <div className="flex justify-start items-center py-2">
+      <Link href="/dashboard">
+        <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold cursor-pointer">
+          Home
+        </span>
+      </Link>
+      <span className="text-[#222222] mx-1">{'>'}</span>
 
-          {text1 !== "" && (
-            <>
-              <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold w-auto">
-                {text1}
-              </span>
-              <span className="text-[#222222] mx-1">&gt;</span>
-            </>
-          )}
+      {text1 !== "" && (
+        <>
+          <span className="text-[#222222] hover:text-[#222222] cursor-pointer">
+            {text1}
+          </span>
+          <span className="text-[#222222] mx-1">{'>'}</span>
+        </>
+      )}
 
-          {headerdisplay === "block" && (
-            <>
-              <span className="text-[#222222] hover:text-[#222222]">
-                {middlename}
-              </span>
-              <span className="text-[#222222] mx-1">&gt;</span>
-            </>
-          )}
+      {headerdisplay === "block" && (
+        <>
+          <span className="text-[#222222] hover:text-[#222222] cursor-pointer">
+            {middlename}
+          </span>
+      <span className="text-[#222222] mx-1">{'>'}</span>
+        </>
+      )}
 
-          <span className="text-[#222222] hover:text-[#222222] truncate w-[200px] xl:w-[400px] md:w-[400px] lg:w-[400px] 2xl:w-[400px] 4k:w-[400px] 2k:w-[400px] overflow-hidden whitespace-nowrap">{text2}</span>
-        </div>
-
-    </>
+      <span className="text-[#222222] truncate w-[200px] xl:w-[400px] md:w-[400px] lg:w-[400px] 2xl:w-[400px] 4k:w-[400px] 2k:w-[400px] overflow-hidden whitespace-nowrap cursor-pointer">
+        {text2}
+      </span>
+    </div>
   );
 };
 
-export default Breadcrumb;
+export default BreadcrumbAlternative;

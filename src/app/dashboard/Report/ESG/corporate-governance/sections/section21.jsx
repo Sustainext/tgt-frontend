@@ -8,7 +8,11 @@ import ComplianceTable from "../tables/complianceTable";
 import {setPolicyPublic} from "../../../../../../lib/redux/features/ESGSlice/screen9Slice"
 
 
-const Section21=({section9_6_2Ref,orgName,data})=>{
+const Section21=({section9_6_2Ref,orgName,data,
+    sectionNumber = "9.6.1",
+    sectionTitle = 'Embedding Policy Commitment',
+    sectionOrder = 9,
+})=>{
     const policy_not_public_reason = useSelector(state => state.screen9Slice.policy_not_public_reason);
     const dispatch = useDispatch();
     const loadContent = () => {
@@ -64,7 +68,7 @@ const Section21=({section9_6_2Ref,orgName,data})=>{
         <div id="section9_6_2" ref={section9_6_2Ref}>
 
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-9.6.1 Embedding Policy Commitment
+{sectionNumber} {sectionTitle}
 </h3>
 {/* <p className="text-[15px] text-[#344054] mb-2">
 {orgName ? orgName : "[Company Name]"} is committed to integrating sustainable development into our core business strategy. Our approach focuses on reducing environmental impact, enhancing social value, and maintaining strong governance. We aim to create long-term value for our stakeholders while contributing to a more sustainable future. 
@@ -216,6 +220,8 @@ Level of approval: Policy commitments
 <div className="shadow-md rounded-md mb-4">
         <LeaveTable col={col} tableData={tableData}/>
 </div>
+<p className="text-sm mb-4">{data["2_23_e"]?data["2_23_e"] || "No data available":"No data available"}</p>
+<p className="text-sm mb-4">{data["2_23_f"]?data["2_23_f"] || "No data available":"No data available"}</p>
 </div>
         </>
     )
