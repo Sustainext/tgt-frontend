@@ -2,7 +2,7 @@ const { watch } = require("fs");
 module.exports = {
   apps: [
     {
-      name: 'sustainextv2',
+      name: 'dev',
       script: 'npm',
       args: 'run start',
       // watch: false,
