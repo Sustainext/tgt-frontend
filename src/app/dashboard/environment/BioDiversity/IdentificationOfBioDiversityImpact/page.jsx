@@ -86,7 +86,7 @@ const IdentificationOfBioDiversityImpact = ({ apiData, isSidepanelOpen,setMobile
   const griData = [
     {
       tagName: "GRI 101-4",
-      toggle: "59",
+      toggle: "69",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },

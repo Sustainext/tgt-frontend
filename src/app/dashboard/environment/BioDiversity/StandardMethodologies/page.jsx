@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import EnvironmentHeade3 from "../../environmentheader3";
-// import Standardsmethodologybody from "./standards-methodology-body";
+import EnvironmentHeader2 from "../../environmentheader2";
 import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
@@ -9,20 +8,37 @@ import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BioDiversityTopBar from "../bioDiversityTopBar";
-import Screen1 from './screen1'
-import Screen2 from "./screen2";
-import Screen3 from './screen3'
-import Screen4 from "./screen4";
+import { useSelector } from "react-redux";
+import Screen1 from "./screen1";
 
-const LocationWithSignificantImpact = ({ open, apiData, setMobileopen }) => {
+
+const IdentificationOfBioDiversityImpact = ({ apiData, isSidepanelOpen,setMobileopen }) => {
+  const {
+    corporate_id,
+    organization_id,
+    materiality_year,
+    start_date,
+    end_date,
+    loading,
+    error,
+  } = useSelector((state) => state.materialitySlice);
+  const materialityEnvData =
+    apiData && apiData.environment ? apiData.environment : {};
+  const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  const [selectedOrg, setSelectedOrg] = useState(
+    organization_id ? organization_id : ""
+  );
+  const [selectedCorp, setSelectedCorp] = useState(
+    corporate_id ? corporate_id : ""
+  );
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
+  const [togglestatus, setToggleStatus] = useState("Organization");
   const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -60,50 +76,32 @@ const LocationWithSignificantImpact = ({ open, apiData, setMobileopen }) => {
 
   const sdgData = [
     // {
-    //   tagName: "GRI 302-1",
-    //   toggle: "1",
-    //   textColor: "#007EEF",
-    //   bgColor: "bg-slate-200",
+    //     tagName:'SDG 15',
+    //     toggle:'57',
+    //     textColor:"#fff",
+    //    bgColor:"bg-[#40AE49]"
     // },
-    // {
-    //   tagName: "GRI 302-2",
-    //   toggle: "15",
-    //   textColor: "#007EEF",
-    //   bgColor: "bg-slate-200",
-    // },
-    // {
-    //   tagName: "GRI 302-4",
-    //   toggle: "17",
-    //   textColor: "#007EEF",
-    //   bgColor: "bg-slate-200",
-    // },
-    // {
-    //   tagName: "GRI 302-5",
-    //   toggle: "18",
-    //   textColor: "#007EEF",
-    //   bgColor: "bg-slate-200",
-    // },
+
   ];
   const griData = [
     {
-      tagName: "GRI 101-5",
-      toggle: "70",
+      tagName: "GRI 101-6",
+      toggle: "75",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
-    {
-        tagName: "GRI 101-6",
-        toggle: "71",
-        textColor: "#007EEF",
-        bgColor: "bg-slate-200",
-      },
+     {
+      tagName: "GRI 101-7",
+      toggle: "76",
+      textColor: "#007EEF",
+      bgColor: "bg-slate-200",
+    },
   ];
-
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-      <BioDiversityTopBar
+        <BioDiversityTopBar
           toggleDrawer={toggleDrawer}
           sdgData={sdgData}
           apiData={apiData}
@@ -111,13 +109,29 @@ const LocationWithSignificantImpact = ({ open, apiData, setMobileopen }) => {
           setMobileopen={setMobileopen}
         />
 
-        <div className="ml-3 relative">
-          <h6 className="text-[17px] mb-1 font-semibold flex">
-          Location with Significant impacts on Biodiversity
+        <div className="ml-3 flex relative">
+          <h6 className="text-[17px] mb-4 font-semibold flex">
+        Standards, methodologies, assumptions and calculation tools used
+            {/* <MdInfoOutline
+              data-tooltip-id={`tooltip-$e1`}
+              data-tooltip-content="This section documents data corresponding to the organisation's policies or commitments to halt and reverse biodiversity loss."
+              className="mt-1.5 ml-2 text-[15px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$e1`}
+              place="top"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+              }}
+            ></ReactTooltip> */}
           </h6>
-          <p className="mt-1 mb-6 text-[13px] text-[#667085]">
-          Select the location with the most significant impacts on biodiversity
-          </p>
         </div>
         <div
           ref={drawerRef}
@@ -145,6 +159,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                   </div>
                 </div>
 
+            
                     <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block 3xl:block">
                 <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
                   {program.data}
@@ -170,48 +185,28 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <EnvironmentHeade3
-        activeMonth={activeMonth}
+      <EnvironmentHeader2
+        month={activeMonth}
         setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
         year={year}
         setYear={setYear}
-        locationMessage={locationMessage}
-        setLocationMessage={setLocationMessage}
         yearMessage={yearMessage}
         setYearMessage={setYearMessage}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
+        setToggleStatus={setToggleStatus}
       />
       <Screen1
-        location={location}
         year={year}
-        month={activeMonth}
-        setLocationMessage={setLocationMessage}
         setYearMessage={setYearMessage}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        togglestatus={togglestatus}
       />
-       <Screen2
-        location={location}
-        year={year}
-        month={activeMonth}
-        setLocationMessage={setLocationMessage}
-        setYearMessage={setYearMessage}
-      />
-      <Screen3
-        location={location}
-        year={year}
-        month={activeMonth}
-        setLocationMessage={setLocationMessage}
-        setYearMessage={setYearMessage}
-      />
-      <Screen4
-        location={location}
-        year={year}
-        month={activeMonth}
-        setLocationMessage={setLocationMessage}
-        setYearMessage={setYearMessage}
-      />
+     
     </>
   );
 };
-
-export default LocationWithSignificantImpact;
+export default IdentificationOfBioDiversityImpact;

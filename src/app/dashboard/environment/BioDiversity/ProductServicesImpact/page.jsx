@@ -13,6 +13,7 @@ import Screen1 from './screen1'
 import Screen2 from "./screen2";
 import Screen3 from './screen3'
 import Screen4 from "./screen4";
+import Screen5 from "./screen5";
 
 const LocationWithSignificantImpact = ({ open, apiData, setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState(1);
@@ -87,13 +88,13 @@ const LocationWithSignificantImpact = ({ open, apiData, setMobileopen }) => {
   const griData = [
     {
       tagName: "GRI 101-5",
-      toggle: "70",
+      toggle: "78",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
     {
         tagName: "GRI 101-6",
-        toggle: "71",
+        toggle: "77",
         textColor: "#007EEF",
         bgColor: "bg-slate-200",
       },
@@ -113,11 +114,8 @@ const LocationWithSignificantImpact = ({ open, apiData, setMobileopen }) => {
 
         <div className="ml-3 relative">
           <h6 className="text-[17px] mb-1 font-semibold flex">
-          Location with Significant impacts on Biodiversity
+         Products/Services with impact on Biodiversity
           </h6>
-          <p className="mt-1 mb-6 text-[13px] text-[#667085]">
-          Select the location with the most significant impacts on biodiversity
-          </p>
         </div>
         <div
           ref={drawerRef}
@@ -204,6 +202,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setYearMessage={setYearMessage}
       />
       <Screen4
+        location={location}
+        year={year}
+        month={activeMonth}
+        setLocationMessage={setLocationMessage}
+        setYearMessage={setYearMessage}
+      />
+      <Screen5
         location={location}
         year={year}
         month={activeMonth}

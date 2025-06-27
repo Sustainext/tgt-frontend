@@ -94,9 +94,9 @@ const Screen1 = ({ year, selectedOrg, selectedCorp, setOrgMessage, togglestatus 
   return (
     <div className="xl:mx-3 lg:mx-3 md:mx-3 2xl:mx-3 4k:mx-3 2k:mx-3 mx-1">
       <AccordionItem
-        title="Identification of biodiversity impacts"
+        title="Standards, methodologies, assumptions and calculation tools used"
         // tooltiptext="This section documents the data corresponding to the transformative actions taken by the organisation."
-        sdg={["GRI 101-4a"]}
+        sdg={["GRI 101-6f","GRI 101-7b"]}
         display="none"
         selectedOrg={selectedOrg}
         setOrgMessage={setOrgMessage}

@@ -84,7 +84,7 @@ const EcosystemServices = ({ open, apiData, setMobileopen }) => {
   const griData = [
     {
       tagName: "GRI 101-8",
-      toggle: "59",
+      toggle: "74",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },

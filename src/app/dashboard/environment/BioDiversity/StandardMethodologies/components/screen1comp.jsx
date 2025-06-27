@@ -27,7 +27,15 @@ const schema = {
       properties: {
         Q1: {
           type: "string",
-          title: "How does the organization identify  which its sites and which of its products and services in its supply chain have the most significant actual and potential impacts on biodiversity?",
+          title: "Please mention the standards used while compiling the information for GRI 101 Biodiversity disclosures?",
+        },
+         Q2: {
+          type: "string",
+          title: "Please mention the methodologies used while compiling the information for  for GRI 101 Biodiversity disclosures?",
+        },
+         Q3: {
+          type: "string",
+          title: "Please mention the assumptions used while compiling the information for  for GRI 101 Biodiversity disclosures?",
         },
       }
     }
@@ -36,14 +44,38 @@ const schema = {
 
   const uiSchema = {
     items: {
-      "ui:order": ["Q1"],
+      "ui:order": ["Q1","Q2","Q3"],
       Q1: {
         "ui:title":
-          "How does the organization identify  which its sites and which of its products and services in its supply chain have the most significant actual and potential impacts on biodiversity?",
+          "Please mention the standards used while compiling the information for GRI 101 Biodiversity disclosures?",
         "ui:tooltipstitle":
           "Here, the organization can describe the methods used and the assumptions made to determine which of its sites and which products and services in its supply chain have the most significant actual and potential impacts on biodiversity. Supply chain: range of activities carried out by entities upstream from the organization, which provide products or services that are used in the development of the organization’s own products or services. Impact: effect the organization has or could have on the economy, environment, and people, including on their human rights, which in turn can indicate its contribution (negative or positive) to sustainable development.",
         "ui:titlediplay": "block",
-        "ui:titletooltipdisplay": "block",
+        "ui:titletooltipdisplay": "none",
+        "ui:widget": "TextareaWidgetnew",
+        "ui:options": {
+          label: false,
+        },
+      },
+       Q2: {
+        "ui:title":
+          "Please mention the methodologies used while compiling the information for  for GRI 101 Biodiversity disclosures?",
+        "ui:tooltipstitle":
+          "Here, the organization can describe the methods used and the assumptions made to determine which of its sites and which products and services in its supply chain have the most significant actual and potential impacts on biodiversity. Supply chain: range of activities carried out by entities upstream from the organization, which provide products or services that are used in the development of the organization’s own products or services. Impact: effect the organization has or could have on the economy, environment, and people, including on their human rights, which in turn can indicate its contribution (negative or positive) to sustainable development.",
+        "ui:titlediplay": "block",
+        "ui:titletooltipdisplay": "none",
+        "ui:widget": "TextareaWidgetnew",
+        "ui:options": {
+          label: false,
+        },
+      },
+       Q3: {
+        "ui:title":
+          "Please mention the assumptions used while compiling the information for  for GRI 101 Biodiversity disclosures?",
+        "ui:tooltipstitle":
+          "Here, the organization can describe the methods used and the assumptions made to determine which of its sites and which products and services in its supply chain have the most significant actual and potential impacts on biodiversity. Supply chain: range of activities carried out by entities upstream from the organization, which provide products or services that are used in the development of the organization’s own products or services. Impact: effect the organization has or could have on the economy, environment, and people, including on their human rights, which in turn can indicate its contribution (negative or positive) to sustainable development.",
+        "ui:titlediplay": "block",
+        "ui:titletooltipdisplay": "none",
         "ui:widget": "TextareaWidgetnew",
         "ui:options": {
           label: false,
@@ -149,26 +181,26 @@ const Screen1Comp = ({ selectedOrg, year, selectedCorp, togglestatus }) => {
       LoaderClose();
     }
   };
-useEffect(() => {
-  if (selectedOrg && year && togglestatus) {
-    if (togglestatus === "Corporate") {
-      if (selectedCorp) {
-        loadFormData();           // <-- Only load if a corporate is picked
-      } else {
-        setFormData([{}]); 
-        setRemoteSchema({});
-        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-      }
-    } else {
-      loadFormData();             // Organization tab: always try to load
-    }
-    toastShown.current = false;
-  } else {
-    if (!toastShown.current) {
-      toastShown.current = true;
-    }
-  }
-}, [selectedOrg, year, selectedCorp, togglestatus]);
+// useEffect(() => {
+//   if (selectedOrg && year && togglestatus) {
+//     if (togglestatus === "Corporate") {
+//       if (selectedCorp) {
+//         loadFormData();           // <-- Only load if a corporate is picked
+//       } else {
+//         setFormData([{}]); 
+//         setRemoteSchema({});
+//         setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+//       }
+//     } else {
+//       loadFormData();             // Organization tab: always try to load
+//     }
+//     toastShown.current = false;
+//   } else {
+//     if (!toastShown.current) {
+//       toastShown.current = true;
+//     }
+//   }
+// }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -218,8 +250,8 @@ useEffect(() => {
         </div> */}
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

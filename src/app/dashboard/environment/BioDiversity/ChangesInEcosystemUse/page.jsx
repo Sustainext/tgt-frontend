@@ -84,13 +84,13 @@ const ChangesInEcosysyemUse = ({ open, apiData, setMobileopen }) => {
   const griData = [
     {
       tagName: "GRI 101-6",
-      toggle: "59",
+      toggle: "72",
       textColor: "#007EEF",
       bgColor: "bg-slate-200",
     },
     {
         tagName: "GRI 101-7",
-        toggle: "59",
+        toggle: "73",
         textColor: "#007EEF",
         bgColor: "bg-slate-200",
       },

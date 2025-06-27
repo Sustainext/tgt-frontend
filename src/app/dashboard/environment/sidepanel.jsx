@@ -70,7 +70,13 @@ const sectionTabMap = {
     "Operational Sites",
     "Significant impacts",
     "Habitat Protected",
-    "IUCN"
+    "IUCN",
+    "Identification of biodiversity impacts",
+    "Location with Significant impacts on Biodiversity",
+    "Changes in Ecosystem Use and Biodiversity Condition",
+    "Ecosystem services and beneficiaries",
+    "Products/Services with impact on Biodiversity",
+    "Standards, methodologies, and assumptions"
   ],
   supplier: [
     "Management of Material topic Supplier",
@@ -281,6 +287,15 @@ const menu = [
         key: "Ecosystem services and beneficiaries",
         label: "Ecosystem services and beneficiaries",
       },
+      {
+        key:"Products/Services with impact on Biodiversity",
+        label:"Products/Services with impact on Biodiversity"
+      },
+      {
+        key:"Standards, methodologies, and assumptions",
+        label:"Standards, methodologies, and assumptions"
+      }
+      
     ],
   },
   {

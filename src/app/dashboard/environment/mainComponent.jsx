@@ -38,6 +38,8 @@ import IdentificationOfBioDiversityImpact from './BioDiversity/IdentificationOfB
 import LocationWithSignificantImpact from './BioDiversity/LocationWithSignificantImpact/page'
 import EcosystemServices from  './BioDiversity/EcosystemServices/page'
 import ChangesInEcosystemUse from './BioDiversity/ChangesInEcosystemUse/page'
+import StandardMethodologies from './BioDiversity/StandardMethodologies/page'
+import ProductServicesImpact from './BioDiversity/ProductServicesImpact/page'
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -607,6 +609,16 @@ useEffect(() => {
               {
                 activeTab==='Changes in Ecosystem Use and Biodiversity Condition' && (
                   <ChangesInEcosystemUse apiData={data} setMobileopen={setMobileopen}/>
+                )
+              }
+              {
+                activeTab ==='Standards, methodologies, and assumptions' && (
+                  <StandardMethodologies apiData={data} setMobileopen={setMobileopen}/>
+                )
+              }
+              {
+                activeTab ==='Products/Services with impact on Biodiversity' && (
+                  <ProductServicesImpact apiData={data} setMobileopen={setMobileopen}/>
                 )
               }
               
